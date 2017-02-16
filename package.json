@@ -1,0 +1,52 @@
+{
+  "name": "reactivesearch",
+  "version": "0.0.1",
+  "description": "A data aware UI components library for building search experiences",
+  "main": "lib/app.js",
+  "scripts": {
+    "test": "react-scripts test --env=jsdom",
+    "webpack-server": "webpack-dev-server --hot --inline --progress --colors --port 8012",
+    "web-server": "http-server -p 3000 .",
+    "start": "concurrently \"npm run webpack-server\" \"gulp watch\" ",
+    "build": "cross-env NODE_ENV=production && webpack -p && gulp",
+    "build:lib": "gulp && cross-env NODE_ENV=production && babel app --out-dir lib",
+    "build:umd": "cross-env NODE_ENV=development && webpack --config webpack.config.umd.js app/app.js umd/reactivesearch.js",
+    "build-bro": "browserify -t [ babelify --presets [ es2015 stage-0 react ] ] main.js -o dist/main.bundle.js"
+  },
+  "files": [
+    "lib/",
+    "dist/",
+    "umd/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/appbaseio/reactivesearch.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/appbaseio/reactivesearch/issues"
+  },
+  "homepage": "https://github.com/appbaseio/reactivesearch#readme",
+  "dependencies": {
+    "@appbaseio/reactivebase": "^0.4.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "concurrently": "^2.0.0",
+    "cross-env": "^3.1.3",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.1",
+    "gulp-uglify": "^1.5.3",
+    "shebang-loader": "0.0.1",
+    "lodash-webpack-plugin": "^0.10.6",
+    "webpack": "^1.13.1"
+  }
+}
