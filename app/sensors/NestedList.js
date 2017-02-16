@@ -130,7 +130,7 @@ export class NestedList extends Component {
 				value: {
 					queryType: this.type,
 					inputData: this.props.appbaseField[0],
-					customQuery: this.customQuery
+					customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery
 				}
 		};
 		helper.selectedSensor.setSensorInfo(obj);
@@ -159,23 +159,26 @@ export class NestedList extends Component {
 		});
 	}
 
-	// Create a channel which passes the actuate and receive results whenever actuate changes
+	// Create a channel which passes the react and receive results whenever react changes
 	createChannel() {
-		// Set the actuate - add self aggs query as well with actuate
-		let actuate = this.props.actuate ? this.props.actuate : {};
-		actuate['aggs'] = {
+		// Set the react - add self aggs query as well with react
+		let react = this.props.react ? this.props.react : {};
+		react['aggs'] = {
 			key: this.props.appbaseField[0],
 			sort: this.props.sortBy,
 			size: this.props.size,
 			sortRef: this.nested[0]
 		};
-		actuate[this.nested[0]] = {
-			'operation': 'must'
-		};
+		if(react && react.and && typeof react.and === 'string') {
+			react.and = [react.and];
+		} else {
+			react.and = react.and ? react.and : [];
+		}
+		react.and.push(this.nested[0]);
 		this.includeAggQuery();
 
 		// create a channel and listen the changes
-		var channelObj = manager.create(this.context.appbaseRef, this.context.type, actuate);
+		var channelObj = manager.create(this.context.appbaseRef, this.context.type, react);
 		this.channelId = channelObj.channelId;
 		this.channelListener = channelObj.emitter.addListener(this.channelId, function(res) {
 			let data = res.data;
@@ -196,18 +199,17 @@ export class NestedList extends Component {
 	// Create a channel for sub category
 	createSubChannel() {
 		this.setSubCategory();
-		let actuate = {
+		let react = {
 			'aggs': {
 				key: this.props.appbaseField[1],
 				sort: this.props.sortBy,
 				size: this.props.size,
 				sortRef: this.nested[1]
 			},
-			'subCategory': { operation: "must" },
-			[this.nested[1]]: { operation: "must" }
+			'and': ['subCategory', this.nested[1]]
 		};
 		// create a channel and listen the changes
-		var subChannelObj = manager.create(this.context.appbaseRef, this.context.type, actuate);
+		var subChannelObj = manager.create(this.context.appbaseRef, this.context.type, react);
 		this.subChannelId = subChannelObj.channelId;
 		this.subChannelListener = subChannelObj.emitter.addListener(this.subChannelId, function(res) {
 			let data = res.data;
@@ -423,6 +425,12 @@ NestedList.defaultProps = {
 	showSearch: false,
 	title: null,
 	placeholder: 'Search'
+};
+
+// context type
+NestedList.contextTypes = {
+	appbaseRef: React.PropTypes.any.isRequired,
+	type: React.PropTypes.any.isRequired
 };
 
 // context type
