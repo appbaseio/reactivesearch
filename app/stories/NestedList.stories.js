@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { ReactiveBase, NestedList, ReactiveList, AppbaseSensorHelper as helper } from '../app.js';
+import React, { Component } from "react";
+import { ReactiveBase, NestedList, ReactiveList, AppbaseSensorHelper as helper } from "../app";
 
-require('./list.css');
+require("./list.css");
 
 export default class NestedListDefault extends Component {
 	constructor(props) {
@@ -14,19 +14,18 @@ export default class NestedListDefault extends Component {
 	}
 
 	onData(response) {
-		let res = response.res;
+		const res = response.res;
 		let result = null;
-		if(res) {
+		if (res) {
 			let combineData = res.currentData;
-			if(res.mode === 'historic') {
+			if (res.mode === "historic") {
 				combineData = res.currentData.concat(res.newData);
-			}
-			else if(res.mode === 'streaming') {
+			}			else if (res.mode === "streaming") {
 				combineData = helper.combineStreamData(res.currentData, res.newData);
 			}
 			if (combineData) {
-				result = combineData.map((markerData, index) => {
-					let marker = markerData._source;
+				result = combineData.map((markerData) => {
+					const marker = markerData._source;
 					return this.itemMarkup(marker, markerData);
 				});
 			}
@@ -36,19 +35,20 @@ export default class NestedListDefault extends Component {
 
 	itemMarkup(marker, markerData) {
 		return (
-			<a className="full_row single-record single_record_for_clone"
-				href="#"
-				key={markerData._id}>
-				<div className="text-container full_row" style={{'paddingLeft': '10px'}}>
+			<a
+				className="full_row single-record single_record_for_clone"
+				key={markerData._id}
+			>
+				<div className="text-container full_row" style={{ paddingLeft: "10px" }}>
 					<div className="text-head text-overflow full_row">
 						<span className="text-head-info text-overflow">
-							{marker.name ? marker.name : ''} - {marker.brand ? marker.brand : ''}
+							{marker.name ? marker.name : ""} - {marker.brand ? marker.brand : ""}
 						</span>
-						<span className="text-head-city">{marker.brand ? marker.brand : ''}</span>
+						<span className="text-head-city">{marker.brand ? marker.brand : ""}</span>
 					</div>
 					<div className="text-description text-overflow full_row">
 						<ul className="highlight_tags">
-							{marker.price ? `Priced at $${marker.price}` : 'Free Test Drive'}
+							{marker.price ? `Priced at $${marker.price}` : "Free Test Drive"}
 						</ul>
 					</div>
 				</div>
@@ -76,13 +76,13 @@ export default class NestedListDefault extends Component {
 					<div className="col s6 col-xs-6">
 						<ReactiveList
 							componentId="SearchResult"
-							appbaseField={this.props.mapping.name}
+							appbaseField={this.props.mapping.brand}
 							title="Results"
 							from={0}
 							size={20}
 							onData={this.onData}
 							react={{
-								"and": "CategorySensor"
+								and: "CategorySensor"
 							}}
 						/>
 					</div>
@@ -94,7 +94,14 @@ export default class NestedListDefault extends Component {
 
 NestedListDefault.defaultProps = {
 	mapping: {
-		brand: 'brand.raw',
-		model: 'model.raw'
+		brand: "brand.raw",
+		model: "model.raw"
 	}
+};
+
+NestedListDefault.propTypes = {
+	mapping: React.PropTypes.shape({
+		brand: React.PropTypes.string,
+		model: React.PropTypes.string
+	})
 };

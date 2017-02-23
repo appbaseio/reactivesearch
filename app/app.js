@@ -1,12 +1,12 @@
-import {NestedList} from './sensors/NestedList';
-import reactivebase from '@appbaseio/reactivebase';
+import reactivebase from "@appbaseio/reactivebase";
+import { NestedList } from "./sensors/NestedList";
 
-var combineObj = {
-	NestedList: NestedList
+const combineObj = {
+	NestedList
 };
 
-for(let component in reactivebase) {
+Object.keys(reactivebase).forEach((component) => {
 	combineObj[component] = reactivebase[component];
-}
+});
 
 module.exports = combineObj;

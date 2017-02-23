@@ -1,32 +1,40 @@
-import { default as React, Component } from 'react';
-import { render } from 'react-dom';
+import React, { Component } from "react";
 
-export class StaticSearch extends Component {
+export default class StaticSearch extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			searchValue: ''
+			searchValue: ""
 		};
 		this.handleChange = this.handleChange.bind(this);
 	}
 
 	handleChange(event) {
-		let value = event.target.value;
+		const value = event.target.value;
+
 		this.setState({
 			searchValue: value
-		}, function () {
+		}, () => {
 			this.props.changeCallback(this.state.searchValue);
-		}.bind(this));
+		});
 	}
 
 	render() {
 		return (
 			<div className="rbc-search-container col s12 col-xs-12">
-				<input type="text" className="rbc-input col s12 col-xs-12 form-control"
+				<input
+					type="text"
+					className="rbc-input col s12 col-xs-12 form-control"
 					value={this.state.searchValue}
 					placeholder={this.props.placeholder}
-					onChange={this.handleChange} />
+					onChange={this.handleChange}
+				/>
 			</div>
 		);
 	}
 }
+
+StaticSearch.propTypes = {
+	changeCallback: React.PropTypes.func.isRequired,
+	placeholder: React.PropTypes.string
+};

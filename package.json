@@ -4,6 +4,8 @@
   "description": "A data aware UI components library for building search experiences",
   "main": "lib/app.js",
   "scripts": {
+    "lint": "esw app --color --watch",
+    "fixit": "eslint app --fix",
     "test": "react-scripts test --env=jsdom",
     "webpack-server": "webpack-dev-server --hot --inline --progress --colors --port 8012",
     "web-server": "http-server -p 3000 .",
@@ -24,18 +26,17 @@
     "type": "git",
     "url": "git+https://github.com/appbaseio/reactivesearch.git"
   },
-  "author": "",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/appbaseio/reactivesearch/issues"
   },
   "homepage": "https://github.com/appbaseio/reactivesearch#readme",
   "dependencies": {
-    "@appbaseio/reactivebase": "^0.4.0",
-    "lodash": "^4.15.0",
+    "@appbaseio/reactivebase": "^1.0.0-alpha",
     "classnames": "^2.2.5",
-    "react": "^15.1.0",
-    "react-dom": "^15.1.0"
+    "lodash": "^4.15.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
   },
   "devDependencies": {
     "@appbaseio/reactivemaps-manual": "^0.2.0",
@@ -43,16 +44,22 @@
     "@kadira/storybook-addon-knobs": "^1.7.1",
     "@kadira/storybook-addon-options": "^1.0.1",
     "babel-core": "^6.9.1",
+    "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "concurrently": "^2.0.0",
     "cross-env": "^3.1.3",
     "css-loader": "^0.26.1",
+    "eslint": "^3.16.1",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0",
+    "eslint-watch": "^3.0.0",
     "file-loader": "^0.9.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
-    "gulp-jshint": "^2.0.0",
     "gulp-minify-css": "^1.2.4",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.1",
