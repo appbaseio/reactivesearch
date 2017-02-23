@@ -5,7 +5,6 @@
   "main": "lib/app.js",
   "scripts": {
     "lint": "esw app --color --watch",
-    "fixit": "eslint app --fix",
     "test": "react-scripts test --env=jsdom",
     "webpack-server": "webpack-dev-server --hot --inline --progress --colors --port 8012",
     "web-server": "http-server -p 3000 .",
