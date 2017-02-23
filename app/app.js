@@ -1,8 +1,10 @@
 import reactivebase from "@appbaseio/reactivebase";
-import { NestedList } from "./sensors/NestedList";
+import NestedList from "./sensors/NestedList";
+import ToggleList from "./sensors/ToggleList";
 
 const combineObj = {
-	NestedList
+	NestedList,
+	ToggleList
 };
 
 Object.keys(reactivebase).forEach((component) => {

@@ -4,8 +4,10 @@ import { withKnobs, text, boolean, number, array, select } from "@kadira/storybo
 import withReadme from "storybook-readme/with-readme";
 
 import NestedListReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/NestedList.md";
+import ToggleButtonReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/ToggleButton.md";
 
 import NestedListDefault from "./NestedList.stories";
+import ToggleListDefault from "./ToggleList.stories";
 
 require("../../node_modules/materialize-css/dist/css/materialize.min.css");
 require("../../dist/css/style.min.css");
@@ -40,3 +42,18 @@ storiesOf("NestedList", module)
 		/>
 	)));
 
+storiesOf("ToggleList", module)
+	.addDecorator(withKnobs)
+	.add("Basic", withReadme(removeFirstLine(ToggleButtonReadme), () => (
+		<ToggleListDefault />
+	)))
+	.add("With Default Selected", withReadme(removeFirstLine(ToggleButtonReadme), () => (
+		<ToggleListDefault defaultSelected={["Social"]} />
+	)))
+	.add("Playground", withReadme(removeFirstLine(ToggleButtonReadme), () => (
+		<ToggleListDefault
+			title={text("title", "ToggleList: Meetup Categories")}
+			multiSelect={boolean("multiSelect", true)}
+			defaultSelected={array("defaultSelected", ["Social", "Travel"])}
+		/>
+	)));
