@@ -233,7 +233,10 @@ export default class DynamicRangeSlider extends Component {
 
 	render() {
 		let title = null,
-			histogram = null;
+			histogram = null,
+			marks = {};
+
+		const { min, max } = this.state.range;
 
 		if (this.props.title) {
 			title = (<h4 className="rbc-title col s12 col-xs-12">{this.props.title}</h4>);
@@ -243,9 +246,19 @@ export default class DynamicRangeSlider extends Component {
 			histogram = (<HistoGramComponent data={this.state.counts} />);
 		}
 
+		if (this.props.rangeLabels && min !== null && max !== null) {
+			const labels = this.props.rangeLabels(min, max);
+			marks = {
+				[min]: labels.start,
+				[max]: labels.end
+			};
+		}
+
 		const cx = classNames({
 			"rbc-title-active": this.props.title,
 			"rbc-title-inactive": !this.props.title,
+			"rbc-rangelabels-active": this.props.rangeLabels,
+			"rbc-rangelabels-inactive": !this.props.rangeLabels,
 			"rbc-initialloader-active": this.props.initialLoader,
 			"rbc-initialloader-inactive": !this.props.initialLoader
 		});
@@ -258,10 +271,11 @@ export default class DynamicRangeSlider extends Component {
 					<Slider
 						range
 						value={[this.state.values.min, this.state.values.max]}
-						min={this.state.range.min}
-						max={this.state.range.max}
+						min={min}
+						max={max}
 						onChange={this.handleResults}
 						step={this.props.stepValue}
+						marks={marks}
 					/>
 				</div>
 				{this.props.initialLoader && this.state.queryStart ? (<InitialLoader defaultText={this.props.initialLoader} />) : null}
@@ -276,6 +290,7 @@ DynamicRangeSlider.propTypes = {
 	title: React.PropTypes.string,
 	stepValue: React.PropTypes.number,
 	showHistogram: React.PropTypes.bool,
+	rangeLabels: React.PropTypes.func,
 	customQuery: React.PropTypes.func,
 	initialLoader: React.PropTypes.oneOfType([
 		React.PropTypes.string,

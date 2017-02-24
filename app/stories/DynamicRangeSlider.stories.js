@@ -109,7 +109,7 @@ DynamicRangeSliderDefault.defaultProps = {
 
 DynamicRangeSliderDefault.propTypes = {
 	mapping: React.PropTypes.shape({
-		guests: React.PropTypes.number,
+		guests: React.PropTypes.string,
 		topic: React.PropTypes.string
 	})
 };
