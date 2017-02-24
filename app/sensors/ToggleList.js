@@ -5,6 +5,8 @@ import {
 	AppbaseSensorHelper as helper
 } from "@appbaseio/reactivebase";
 
+const _ = require("lodash");
+
 export default class ToggleList extends Component {
 	constructor(props) {
 		super(props);
@@ -12,7 +14,7 @@ export default class ToggleList extends Component {
 			selected: []
 		};
 		this.type = "term";
-		this.defaultSelected = this.props.defaultSelected;
+		this.defaultSelected = null;
 		this.handleChange = this.handleChange.bind(this);
 		this.customQuery = this.customQuery.bind(this);
 	}
@@ -20,24 +22,53 @@ export default class ToggleList extends Component {
 	// Set query information
 	componentDidMount() {
 		this.setQueryInfo();
-		if (this.defaultSelected) {
-			const records = this.props.data.filter(record => this.defaultSelected.indexOf(record.label) > -1);
-			if (records && records.length) {
-				records.forEach((singleRecord) => {
-					setTimeout(this.handleChange.bind(this, singleRecord), 1000);
-				});
-			}
-		}
+		this.initialize(this.props);
 	}
 
-	componentWillUpdate() {
-		if (this.defaultSelected !== this.props.defaultSelected) {
-			this.defaultSelected = this.props.defaultSelected;
-			const records = this.props.data.filter(record => this.defaultSelected.indexOf(record.label) > -1);
-			if (records && records.length) {
-				records.forEach((singleRecord) => {
-					setTimeout(this.handleChange.bind(this, singleRecord), 1000);
-				});
+	componentWillReceiveProps(nextProps) {
+		this.initialize(nextProps);
+	}
+
+	initialize(props) {
+		if (props.defaultSelected) {
+			if (!props.multiSelect) {
+				if (typeof props.defaultSelected === "string") {
+					if (this.defaultSelected !== props.defaultSelected) {
+						this.defaultSelected = props.defaultSelected;
+						const records = props.data.filter(record => this.defaultSelected.indexOf(record.label) > -1);
+
+						this.setState({
+							selected: records
+						});
+						const obj = {
+							key: props.componentId,
+							value: records
+						};
+						helper.selectedSensor.set(obj, true);
+					}
+				} else {
+					console.error(`${props.componentId} - defaultSelected prop should be of type "string"`);
+				}
+			} else {
+				if (typeof props.defaultSelected === "object") {
+					if (!_.isEqual(this.defaultSelected, props.defaultSelected)) {
+						this.defaultSelected = props.defaultSelected;
+						let records = [];
+						this.defaultSelected.forEach((item) => {
+							records = records.concat(props.data.filter(record => item.indexOf(record.label) > -1));
+						});
+						this.setState({
+							selected: records
+						});
+						const obj = {
+							key: props.componentId,
+							value: records
+						};
+						helper.selectedSensor.set(obj, true);
+					}
+				} else {
+					console.error(`${props.componentId} - defaultSelected prop should be an "array"`);
+				}
 			}
 		}
 	}
