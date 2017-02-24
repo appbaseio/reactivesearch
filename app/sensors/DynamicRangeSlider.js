@@ -45,7 +45,7 @@ export default class DynamicRangeSlider extends Component {
 		this.createChannel();
 	}
 
-	componentWillReceiveProps() {
+	componentWillReceiveProps(nextProps) {
 		this.updateValues(nextProps.defaultSelected);
 	}
 
@@ -59,24 +59,6 @@ export default class DynamicRangeSlider extends Component {
 		}
 		if (this.loadListener) {
 			this.loadListener.remove();
-		}
-	}
-
-	updateValues(defaultSelected) {
-		if (defaultSelected) {
-			const { min, max } = this.state.range;
-			const { start, end } = defaultSelected(min, max);
-
-			if (start >= min && end <= max) {
-				this.setState({
-					values: {
-						min: start,
-						max: end
-					}
-				});
-			} else {
-				console.error(`defaultSelected values must lie between ${min} and ${max}`);
-			}
 		}
 	}
 
@@ -227,6 +209,24 @@ export default class DynamicRangeSlider extends Component {
 			});
 		}
 		this.updateValues(this.props.defaultSelected);
+	}
+
+	updateValues(defaultSelected) {
+		if (defaultSelected) {
+			const { min, max } = this.state.range;
+			const { start, end } = defaultSelected(min, max);
+
+			if (start >= min && end <= max) {
+				this.setState({
+					values: {
+						min: start,
+						max: end
+					}
+				});
+			} else {
+				console.error(`defaultSelected values must lie between ${min} and ${max}`);
+			}
+		}
 	}
 
 	// Handle function when slider option change is completed
