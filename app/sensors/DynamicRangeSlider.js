@@ -45,6 +45,10 @@ export default class DynamicRangeSlider extends Component {
 		this.createChannel();
 	}
 
+	componentWillReceiveProps() {
+		this.updateValues(nextProps.defaultSelected);
+	}
+
 	// stop streaming request and remove listener when component will unmount
 	componentWillUnmount() {
 		if (this.channelId) {
@@ -55,6 +59,24 @@ export default class DynamicRangeSlider extends Component {
 		}
 		if (this.loadListener) {
 			this.loadListener.remove();
+		}
+	}
+
+	updateValues(defaultSelected) {
+		if (defaultSelected) {
+			const { min, max } = this.state.range;
+			const { start, end } = defaultSelected(min, max);
+
+			if (start >= min && end <= max) {
+				this.setState({
+					values: {
+						min: start,
+						max: end
+					}
+				});
+			} else {
+				console.error(`defaultSelected values must lie between ${min} and ${max}`);
+			}
 		}
 	}
 
@@ -204,6 +226,7 @@ export default class DynamicRangeSlider extends Component {
 				this.handleResults(null, { min, max });
 			});
 		}
+		this.updateValues(this.props.defaultSelected);
 	}
 
 	// Handle function when slider option change is completed
@@ -291,6 +314,7 @@ DynamicRangeSlider.propTypes = {
 	stepValue: React.PropTypes.number,
 	showHistogram: React.PropTypes.bool,
 	rangeLabels: React.PropTypes.func,
+	defaultSelected: React.PropTypes.func,
 	customQuery: React.PropTypes.func,
 	initialLoader: React.PropTypes.oneOfType([
 		React.PropTypes.string,
@@ -315,6 +339,8 @@ DynamicRangeSlider.types = {
 	componentId: TYPES.STRING,
 	appbaseField: TYPES.STRING,
 	title: TYPES.STRING,
+	rangeLabels: TYPES.FUNCTION,
+	defaultSelected: TYPES.FUNCTION,
 	react: TYPES.OBJECT,
 	stepValue: TYPES.NUMBER,
 	showHistogram: TYPES.BOOLEAN,

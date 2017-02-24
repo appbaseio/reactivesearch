@@ -75,6 +75,12 @@ storiesOf("DynamicRangeSlider", module)
 			rangeLabels={(min, max) => ({ start: min, end: max })}
 		/>
 	)))
+	.add("With defaultSelected", withReadme(removeFirstLine(RangeSliderReadme), () => (
+		<DynamicRangeSliderDefault
+			rangeLabels={(min, max) => ({ start: min, end: max })}
+			defaultSelected={(min, max) => ({ start: min+10, end: max-10 })}
+		/>
+	)))
 	.add("Playground", withReadme(removeFirstLine(RangeSliderReadme), () => (
 		<DynamicRangeSliderDefault
 			title={text("title", "DynamicRangeSlider: Guest RSVPs")}
