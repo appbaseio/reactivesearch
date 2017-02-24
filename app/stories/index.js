@@ -5,9 +5,11 @@ import withReadme from "storybook-readme/with-readme";
 
 import NestedListReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/NestedList.md";
 import ToggleButtonReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/ToggleButton.md";
+import RangeSliderReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/RangeSlider.md";
 
 import NestedListDefault from "./NestedList.stories";
 import ToggleListDefault from "./ToggleList.stories";
+import DynamicRangeSliderDefault from "./DynamicRangeSlider.stories";
 
 require("../../node_modules/materialize-css/dist/css/materialize.min.css");
 require("../../dist/css/style.min.css");
@@ -55,5 +57,23 @@ storiesOf("ToggleList", module)
 			title={text("title", "ToggleList: Meetup Categories")}
 			multiSelect={boolean("multiSelect", true)}
 			defaultSelected={array("defaultSelected", ["Social", "Travel"])}
+		/>
+	)));
+
+storiesOf("DynamicRangeSlider", module)
+	.addDecorator(withKnobs)
+	.add("Basic", withReadme(removeFirstLine(RangeSliderReadme), () => (
+		<DynamicRangeSliderDefault />
+	)))
+	.add("Without histogram", withReadme(removeFirstLine(RangeSliderReadme), () => (
+		<DynamicRangeSliderDefault
+			showHistogram={false}
+		/>
+	)))
+	.add("Playground", withReadme(removeFirstLine(RangeSliderReadme), () => (
+		<DynamicRangeSliderDefault
+			title={text("title", "DynamicRangeSlider: Guest RSVPs")}
+			stepValue={number("stepValue", 1)}
+			showHistogram={boolean("showHistogram", true)}
 		/>
 	)));

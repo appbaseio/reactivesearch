@@ -1,23 +1,11 @@
 import React, { Component } from "react";
-import { ReactiveBase, ToggleList, ReactiveList, AppbaseSensorHelper as helper } from "../app";
+import { ReactiveBase, DynamicRangeSlider, ReactiveList, AppbaseSensorHelper as helper } from "../app";
 
 require("./list.css");
 
-export default class ToggleListDefault extends Component {
+export default class DynamicRangeSliderDefault extends Component {
 	constructor(props) {
 		super(props);
-
-		this.toggleData = [{
-			label: "Social",
-			value: "Social"
-		}, {
-			label: "Travel",
-			value: "Travel"
-		}, {
-			label: "Outdoors",
-			value: "Outdoors"
-		}];
-
 		this.onData = this.onData.bind(this);
 	}
 
@@ -77,17 +65,17 @@ export default class ToggleListDefault extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="meetup_demo"
-				username="LPpISlEBe"
-				password="2a8935f5-0f63-4084-bc3e-2b2b4d1a8e02"
+				app="reactivemap_demo"
+				username="y4pVxY2Ok"
+				password="c92481e2-c07f-4473-8326-082919282c18"
 			>
 				<div className="row">
 					<div className="col s6 col-xs-6">
-						<ToggleList
-							appbaseField={this.props.mapping.topic}
-							componentId="MeetupTops"
-							title="ToggleList"
-							data={this.toggleData}
+						<DynamicRangeSlider
+							componentId="RangeSensor"
+							appbaseField={this.props.mapping.guests}
+							stepValue={2}
+							title="DynamicRangeSlider"
 							{...this.props}
 						/>
 					</div>
@@ -95,14 +83,14 @@ export default class ToggleListDefault extends Component {
 					<div className="col s6 col-xs-6">
 						<ReactiveList
 							componentId="SearchResult"
-							appbaseField="group.group_topics.topic_name_raw"
+							appbaseField={this.props.mapping.topic}
 							title="Results"
 							sortBy="asc"
 							from={0}
 							size={20}
 							onData={this.onData}
 							react={{
-								and: "MeetupTops"
+								and: "RangeSensor"
 							}}
 						/>
 					</div>
@@ -112,14 +100,16 @@ export default class ToggleListDefault extends Component {
 	}
 }
 
-ToggleListDefault.defaultProps = {
+DynamicRangeSliderDefault.defaultProps = {
 	mapping: {
-		topic: "group.group_topics.topic_name_raw.raw"
+		guests: "guests",
+		topic: "group.group_topics.topic_name_raw"
 	}
 };
 
-ToggleListDefault.propTypes = {
+DynamicRangeSliderDefault.propTypes = {
 	mapping: React.PropTypes.shape({
+		guests: React.PropTypes.number,
 		topic: React.PropTypes.string
 	})
 };
