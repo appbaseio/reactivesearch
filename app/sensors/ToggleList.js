@@ -49,26 +49,24 @@ export default class ToggleList extends Component {
 				} else {
 					console.error(`${props.componentId} - defaultSelected prop should be of type "string"`);
 				}
-			} else {
-				if (typeof props.defaultSelected === "object") {
-					if (!_.isEqual(this.defaultSelected, props.defaultSelected)) {
-						this.defaultSelected = props.defaultSelected;
-						let records = [];
-						this.defaultSelected.forEach((item) => {
-							records = records.concat(props.data.filter(record => item.indexOf(record.label) > -1));
-						});
-						this.setState({
-							selected: records
-						});
-						const obj = {
-							key: props.componentId,
-							value: records
-						};
-						helper.selectedSensor.set(obj, true);
-					}
-				} else {
-					console.error(`${props.componentId} - defaultSelected prop should be an "array"`);
+			} else if (typeof props.defaultSelected === "object") {
+				if (!_.isEqual(this.defaultSelected, props.defaultSelected)) {
+					this.defaultSelected = props.defaultSelected;
+					let records = [];
+					this.defaultSelected.forEach((item) => {
+						records = records.concat(props.data.filter(record => item.indexOf(record.label) > -1));
+					});
+					this.setState({
+						selected: records
+					});
+					const obj = {
+						key: props.componentId,
+						value: records
+					};
+					helper.selectedSensor.set(obj, true);
 				}
+			} else {
+				console.error(`${props.componentId} - defaultSelected prop should be an "array"`);
 			}
 		}
 	}

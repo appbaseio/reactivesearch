@@ -1,0 +1,24 @@
+.rbc.rbc-tagcloud {
+	padding: 0;
+	overflow-y: scroll;
+
+	.rbc-list-container {
+		margin: 10px;
+		height: auto;
+
+		.rbc-list-item {
+			display: inline-block;
+			margin: 0 4px 0 0;
+			padding: 4px 6px;
+			border-radius: 3px;
+
+			&.active {
+				background-color: #eee;
+			}
+
+			.rbc-count {
+				padding: 0 0.3em;
+			}
+		}
+	}
+}

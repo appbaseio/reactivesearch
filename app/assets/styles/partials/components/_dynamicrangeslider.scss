@@ -1,0 +1,35 @@
+.rbc.rbc-rangeslider {
+	.rbc-rangeslider-container {
+		margin: 25px 0;
+
+		.rbc-title {
+			padding: 0;
+			padding-bottom: 15px;
+		}
+		.inputRangeContainer {
+			padding: 15px 6px;
+		}
+	}
+
+	&.rbc-labels-active .rbc-rangeslider-container {
+		margin: 25px 0 35px;
+	}
+}
+
+.rbc-bar-container {
+	position: relative;
+	height: 50px;
+	width: 100%;
+
+	.rbc-bar-item {
+		display: inline-block;
+		background: darken($light-grey, 2%);
+		position: relative;
+
+		.bar {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+	}
+}

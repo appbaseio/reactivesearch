@@ -287,7 +287,7 @@ export default class DynamicRangeSlider extends Component {
 		});
 
 		return (
-			<div className={`rbc rbc-rangeslider card thumbnail col s12 col-xs-12 ${cx}`}>
+			<div className={`rbc rbc-dynamicrangeslider card thumbnail col s12 col-xs-12 ${cx}`}>
 				{title}
 				{histogram}
 				<div className="rbc-rangeslider-container col s12 col-xs-12">

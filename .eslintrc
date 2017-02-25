@@ -30,6 +30,7 @@
 		"react/require-extension": 0,
 		"react/jsx-uses-react": 2,
 		"react/jsx-uses-vars": 2,
+		"react/jsx-boolean-value": [2, "never"],
 		"react/forbid-prop-types": 1,
 		"react/react-in-jsx-scope": 2,
 		"react/jsx-indent": [2, "tab"],

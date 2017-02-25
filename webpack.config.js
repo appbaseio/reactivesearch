@@ -15,10 +15,7 @@ module.exports = {
 			{
 				test: /.jsx?$/,
 				loader: 'babel-loader',
-				exclude: /node_modules/,
-				query: {
-					presets: ['es2015','stage-0', 'react']
-				}
+				exclude: /node_modules/
 			},
 			{
 				test: /node_modules\/JSONStream\/index\.js$/,

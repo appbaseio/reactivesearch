@@ -56,3 +56,43 @@
   padding: 0; }
   .rbc.rbc-togglelist .rbc-list-item {
     margin: 10px 0; }
+
+.rbc.rbc-rangeslider .rbc-rangeslider-container {
+  margin: 25px 0; }
+  .rbc.rbc-rangeslider .rbc-rangeslider-container .rbc-title {
+    padding: 0;
+    padding-bottom: 15px; }
+  .rbc.rbc-rangeslider .rbc-rangeslider-container .inputRangeContainer {
+    padding: 15px 6px; }
+
+.rbc.rbc-rangeslider.rbc-labels-active .rbc-rangeslider-container {
+  margin: 25px 0 35px; }
+
+.rbc-bar-container {
+  position: relative;
+  height: 50px;
+  width: 100%; }
+  .rbc-bar-container .rbc-bar-item {
+    display: inline-block;
+    background: whitesmoke;
+    position: relative; }
+    .rbc-bar-container .rbc-bar-item .bar {
+      display: block;
+      width: 100%;
+      height: 100%; }
+
+.rbc.rbc-tagcloud {
+  padding: 0;
+  overflow-y: scroll; }
+  .rbc.rbc-tagcloud .rbc-list-container {
+    margin: 10px;
+    height: auto; }
+    .rbc.rbc-tagcloud .rbc-list-container .rbc-list-item {
+      display: inline-block;
+      margin: 0 4px 0 0;
+      padding: 4px 6px;
+      border-radius: 3px; }
+      .rbc.rbc-tagcloud .rbc-list-container .rbc-list-item.active {
+        background-color: #eee; }
+      .rbc.rbc-tagcloud .rbc-list-container .rbc-list-item .rbc-count {
+        padding: 0 0.3em; }
