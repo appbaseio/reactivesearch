@@ -1,0 +1,32 @@
+.rbc.rbc-ratingsfilter {
+	padding: 0;
+	margin: 0;
+
+	.row {
+		margin: 4px 0;
+	}
+
+	.rbc-label {
+		cursor: pointer;
+
+		& > div {
+			display: inline-block;
+		}
+
+		& > span {
+			display: inline-block;
+			margin-left: 8px;
+			position: relative;
+			top: -5px;
+		}
+
+		&:hover {
+			color: #424242;
+		}
+
+		&.active {
+			font-family: $font-bold;
+			color: #333;
+		}
+	}
+}

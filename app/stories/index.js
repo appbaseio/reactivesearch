@@ -7,11 +7,13 @@ import NestedListReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/
 import ToggleButtonReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/ToggleButton.md";
 import RangeSliderReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/RangeSlider.md";
 import SingleListReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/SingleList.md";
+import SingleRangeReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/SingleRange.md";
 
 import NestedListDefault from "./NestedList.stories";
 import ToggleListDefault from "./ToggleList.stories";
 import DynamicRangeSliderDefault from "./DynamicRangeSlider.stories";
 import TagCloudDefault from "./TagCloud.stories";
+import RatingsFilterDefault from "./RatingsFilter.stories";
 
 require("../../node_modules/materialize-css/dist/css/materialize.min.css");
 require("../../dist/css/style.min.css");
@@ -111,5 +113,19 @@ storiesOf("TagCloud", module)
 			size={number("size", 100)}
 			defaultSelected={text("defaultSelected", "Auckland")}
 			showCount={boolean("showCount", true)}
+		/>
+	)));
+
+storiesOf("RatingsFilter", module)
+	.addDecorator(withKnobs)
+	.add("Basic", withReadme(removeFirstLine(SingleRangeReadme), () => (
+		<RatingsFilterDefault />
+	)))
+	.add("With defaultSelected", withReadme(removeFirstLine(SingleRangeReadme), () => (
+		<RatingsFilterDefault defaultSelected={{ start: 2, end: 5 }} />
+	)))
+	.add("Playground", withReadme(removeFirstLine(SingleRangeReadme), () => (
+		<RatingsFilterDefault
+			title={text("title", "RatingsFilter")}
 		/>
 	)));

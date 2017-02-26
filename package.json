@@ -34,9 +34,10 @@
     "@appbaseio/reactivebase": "^1.0.0-alpha",
     "classnames": "^2.2.5",
     "lodash": "^4.15.0",
+    "rc-slider": "^5.4.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "rc-slider": "^5.4.0"
+    "react-stars": "^2.1.0"
   },
   "devDependencies": {
     "@appbaseio/reactivemaps-manual": "^0.2.0",
