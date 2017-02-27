@@ -57,16 +57,17 @@
   .rbc.rbc-togglelist .rbc-list-item {
     margin: 10px 0; }
 
-.rbc.rbc-rangeslider .rbc-rangeslider-container {
-  margin: 25px 0; }
-  .rbc.rbc-rangeslider .rbc-rangeslider-container .rbc-title {
-    padding: 0;
-    padding-bottom: 15px; }
-  .rbc.rbc-rangeslider .rbc-rangeslider-container .inputRangeContainer {
-    padding: 15px 6px; }
-
-.rbc.rbc-rangeslider.rbc-labels-active .rbc-rangeslider-container {
-  margin: 25px 0 35px; }
+.rbc.rbc-dynamicrangeslider {
+  padding: 0 6px; }
+  .rbc.rbc-dynamicrangeslider .rbc-rangeslider-container {
+    margin: 25px 0; }
+    .rbc.rbc-dynamicrangeslider .rbc-rangeslider-container .rbc-title {
+      padding: 0;
+      padding-bottom: 15px; }
+    .rbc.rbc-dynamicrangeslider .rbc-rangeslider-container .inputRangeContainer {
+      padding: 15px 6px; }
+  .rbc.rbc-dynamicrangeslider.rbc-labels-active .rbc-rangeslider-container {
+    margin: 25px 0 35px; }
 
 .rbc-bar-container {
   position: relative;

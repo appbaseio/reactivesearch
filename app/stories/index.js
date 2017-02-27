@@ -8,12 +8,14 @@ import ToggleButtonReadme from "@appbaseio/reactivemaps-manual/docs/v1/component
 import RangeSliderReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/RangeSlider.md";
 import SingleListReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/SingleList.md";
 import SingleRangeReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/SingleRange.md";
+import DataSearchReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/DataSearch.md";
 
 import NestedListDefault from "./NestedList.stories";
 import ToggleListDefault from "./ToggleList.stories";
 import DynamicRangeSliderDefault from "./DynamicRangeSlider.stories";
 import TagCloudDefault from "./TagCloud.stories";
 import RatingsFilterDefault from "./RatingsFilter.stories";
+import CategorySearchDefault from "./CategorySearch.stories";
 
 require("../../node_modules/materialize-css/dist/css/materialize.min.css");
 require("../../dist/css/style.min.css");
@@ -127,5 +129,20 @@ storiesOf("RatingsFilter", module)
 	.add("Playground", withReadme(removeFirstLine(SingleRangeReadme), () => (
 		<RatingsFilterDefault
 			title={text("title", "RatingsFilter")}
+		/>
+	)));
+
+storiesOf("CategorySearch", module)
+	.addDecorator(withKnobs)
+	.add("Basic", withReadme(removeFirstLine(DataSearchReadme), () => (
+		<CategorySearchDefault
+			title="CategorySearch"
+			placeholder="Search Car"
+		/>
+	)))
+	.add("Playground", withReadme(removeFirstLine(DataSearchReadme), () => (
+		<CategorySearchDefault
+			title={text("title", "CategorySearch")}
+			placeholder={text("placeholder", "Search Car")}
 		/>
 	)));

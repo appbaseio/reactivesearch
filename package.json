@@ -31,13 +31,14 @@
   },
   "homepage": "https://github.com/appbaseio/reactivesearch#readme",
   "dependencies": {
-    "@appbaseio/reactivebase": "^1.0.0-alpha",
+    "@appbaseio/reactivebase": "^1.0.0-alpha4",
     "classnames": "^2.2.5",
     "lodash": "^4.15.0",
     "rc-slider": "^5.4.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-stars": "^2.1.0"
+    "react-stars": "^2.1.0",
+    "react-select": "^1.0.0-rc.3"
   },
   "devDependencies": {
     "@appbaseio/reactivemaps-manual": "^0.2.0",

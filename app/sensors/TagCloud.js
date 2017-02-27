@@ -153,7 +153,7 @@ export default class TagCloud extends Component {
 			react.and = react.and ? react.and : [];
 		}
 		react.and.push(`${this.props.componentId}-sort`);
-		react.and.push("nativeListChanges");
+		react.and.push("tagCloudChanges");
 		this.includeAggQuery();
 		// create a channel and listen the changes
 		const channelObj = manager.create(this.context.appbaseRef, this.context.type, react);
@@ -183,7 +183,7 @@ export default class TagCloud extends Component {
 		if (executeChannel) {
 			setTimeout(() => {
 				const obj = {
-					key: "nativeListChanges",
+					key: "tagCloudChanges",
 					value: ""
 				};
 				helper.selectedSensor.set(obj, true);
