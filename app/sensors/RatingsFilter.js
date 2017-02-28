@@ -140,7 +140,7 @@ RatingsFilter.propTypes = {
 	appbaseField: React.PropTypes.string.isRequired,
 	title: React.PropTypes.string,
 	data: React.PropTypes.any.isRequired,
-	defaultSelected: React.PropTypes.string,
+	defaultSelected: React.PropTypes.object,
 	customQuery: React.PropTypes.func
 };
 
@@ -160,6 +160,6 @@ RatingsFilter.types = {
 	appbaseField: TYPES.STRING,
 	title: TYPES.STRING,
 	data: TYPES.OBJECT,
-	defaultSelected: TYPES.STRING,
+	defaultSelected: TYPES.OBJECT,
 	customQuery: TYPES.FUNCTION
 };

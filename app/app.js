@@ -7,6 +7,7 @@ import RatingsFilter from "./sensors/RatingsFilter";
 import CategorySearch from "./sensors/CategorySearch";
 
 import ResultCard from "./actuators/ResultCard";
+import ResultList from "./actuators/ResultList";
 
 const combineObj = {
 	NestedList,
@@ -15,7 +16,8 @@ const combineObj = {
 	TagCloud,
 	RatingsFilter,
 	CategorySearch,
-	ResultCard
+	ResultCard,
+	ResultList
 };
 
 Object.keys(reactivebase).forEach((component) => {

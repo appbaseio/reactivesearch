@@ -1,0 +1,114 @@
+.rbc-resultlist-scroll-container {
+	position: relative;
+	overflow: auto;
+	padding: 0;
+
+	.rbc-resultlist {
+		display: block;
+		width: 100%;
+		height: auto;
+		padding: 12px 0;
+		
+		@include element("image") {
+			width: 200px;
+			height: 200px;
+			float: left;
+			background-color: #fcfcfc;
+			background-size: contain;
+			background-position: center center;
+			background-repeat: no-repeat;
+		}
+
+		@include element("title") {
+			width: calc(100% - 200px);
+			padding: 8px 8px 0;
+			font-family: $font-bold;
+			float: left;
+			color: #777;
+			font-size: 14px;
+			line-height: 18px;
+			letter-spacing: 0.02em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			-webkit-transition: all .3s ease;
+			transition: all .3s ease;
+
+			&:hover {
+				color: #555;
+				text-decoration: underline;
+			}
+		}
+
+		@include element("desc") {
+			width: calc(100% - 200px);
+			float: left;
+			padding: 0 8px;
+			float: left;
+			color: #777;
+			font-size: 14px;
+			letter-spacing: 0.02em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		@include element("rating") {
+			width: calc(100% - 200px);
+			float: left;
+			padding: 0 8px;
+		}
+	}
+}
+
+@media all and (max-width: 767px) {
+	.rbc-resultlist-scroll-container {
+		.rbc-resultlist {
+			@include element("image") {
+				width: 120px;
+				height: 120px;
+			}
+
+			@include element("title") {
+				width: calc(100% - 120px);
+			}
+
+			@include element("rating") {
+				width: calc(100% - 120px);
+			}
+
+			@include element("desc") {
+				width: calc(100% - 120px);
+			}
+		}
+	}
+}
+
+.rbc-resultlist-container {
+	height: auto;
+	max-height: 700px;
+	overflow: auto;
+	margin: 5px 0;
+	padding-bottom: 45px;
+
+	.rbc-placeholder {
+		padding: 60px 15px;
+		text-align: center;
+	}
+
+	&.rbc-sort-active {
+		.rbc-sortoptions {
+			position: absolute;
+			right: 0;
+			margin: 10px 0;
+
+			select {
+				height: 32px;
+			}
+		}
+	}
+}
+
+.rbc-resultlist-wrapper {
+	position: relative;
+}

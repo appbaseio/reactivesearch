@@ -18,6 +18,7 @@ import TagCloudDefault from "./TagCloud.stories";
 import RatingsFilterDefault from "./RatingsFilter.stories";
 import CategorySearchDefault from "./CategorySearch.stories";
 import ResultCardDefault from "./ResultCard.stories";
+import ResultListDefault from "./ResultList.stories";
 
 require("../../node_modules/materialize-css/dist/css/materialize.min.css");
 require("../../dist/css/style.min.css");
@@ -153,4 +154,10 @@ storiesOf("ResultCard", module)
 	.addDecorator(withKnobs)
 	.add("Basic", withReadme(removeFirstLine(ReactiveListReadme), () => (
 		<ResultCardDefault />
+	)));
+
+storiesOf("ResultList", module)
+	.addDecorator(withKnobs)
+	.add("Basic", withReadme(removeFirstLine(ReactiveListReadme), () => (
+		<ResultListDefault />
 	)));
