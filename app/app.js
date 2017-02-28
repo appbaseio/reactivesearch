@@ -6,13 +6,16 @@ import TagCloud from "./sensors/TagCloud";
 import RatingsFilter from "./sensors/RatingsFilter";
 import CategorySearch from "./sensors/CategorySearch";
 
+import ResultCard from "./actuators/ResultCard";
+
 const combineObj = {
 	NestedList,
 	ToggleList,
 	DynamicRangeSlider,
 	TagCloud,
 	RatingsFilter,
-	CategorySearch
+	CategorySearch,
+	ResultCard
 };
 
 Object.keys(reactivebase).forEach((component) => {

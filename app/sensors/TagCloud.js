@@ -279,7 +279,7 @@ export default class TagCloud extends Component {
 					className={`rbc-list-item ${cx}`}
 					onClick={() => this.setValue(item.key)}
 					key={item.key}
-					style={{ fontSize: `${size}em`, lineHeight: `${size}em` }}
+					style={{ fontSize: `${size}em`}}
 				>
 					{item.key} {this.props.showCount ? (<span className="rbc-count">{item.doc_count}</span>) : ""}
 				</a>

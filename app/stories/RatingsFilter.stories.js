@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ReactiveBase, RatingsFilter, ReactiveList, AppbaseSensorHelper as helper } from "../app";
+import { ReactiveBase, RatingsFilter, ResultCard, AppbaseSensorHelper as helper } from "../app";
 
 require("./list.css");
 
@@ -14,21 +14,13 @@ export default class RatingsFilterDefault extends Component {
 	}
 
 	onData(res) {
-		let result = null;
-		if (res) {
-			let combineData = res.currentData;
-			if (res.mode === "historic") {
-				combineData = res.currentData.concat(res.newData);
-			} else if (res.mode === "streaming") {
-				combineData = helper.combineStreamData(res.currentData, res.newData);
-			}
-			if (combineData) {
-				result = combineData.map((markerData) => {
-					const marker = markerData._source;
-					return this.itemMarkup(marker, markerData);
-				});
-			}
-		}
+		let result = {
+			image: "https://www.enterprise.com/content/dam/global-vehicle-images/cars/FORD_FOCU_2012-1.png",
+			title: res.name,
+			rating: res.rating,
+			desc: res.brand,
+			url: "#"
+		};
 		return result;
 	}
 
@@ -80,13 +72,19 @@ export default class RatingsFilterDefault extends Component {
 					</div>
 
 					<div className="col s6 col-xs-6">
-						<ReactiveList
+						<ResultCard
 							componentId="SearchResult"
 							appbaseField={this.props.mapping.name}
 							title="Results"
 							from={0}
 							size={20}
 							onData={this.onData}
+							card={{
+								image: "image",
+								title: "name",
+								desc: "brand",
+								rating: "rating"
+							}}
 							react={{
 								and: "RatingsSensor"
 							}}
@@ -107,7 +105,7 @@ RatingsFilterDefault.defaultProps = {
 
 RatingsFilterDefault.propTypes = {
 	mapping: React.PropTypes.shape({
-		rating: React.PropTypes.number,
+		rating: React.PropTypes.string,
 		name: React.PropTypes.string
 	})
 };

@@ -1,4 +1,5 @@
 @import "partials/base/fonts",
+		"partials/tools/mixins",
 		"partials/settings/variables";
 
 @import "partials/theme/default";
@@ -7,4 +8,5 @@
 		"partials/components/togglelist",
 		"partials/components/dynamicrangeslider",
 		"partials/components/tagcloud",
-		"partials/components/ratingsfilter";
+		"partials/components/ratingsfilter",
+		"partials/components/resultcard";

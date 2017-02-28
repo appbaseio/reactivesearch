@@ -1,0 +1,94 @@
+.rbc-resultcard-scroll-container {
+	position: relative;
+	overflow: auto;
+	padding: 0;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+
+	.rbc-resultcard {
+		display: block;
+		width: 50%;
+		min-height: 300px;
+		height: auto;
+		max-width: 280px;
+		border: 1px solid #eee;
+		
+		@include element("image") {
+			width: 100%;
+			height: 220px;
+			background-color: #fcfcfc;
+			background-size: contain;
+			background-position: center center;
+			background-repeat: no-repeat;
+		}
+
+		@include element("title") {
+			padding: 8px 8px 0;
+			font-family: $font-bold;
+			color: #777;
+			font-size: 14px;
+			line-height: 18px;
+			letter-spacing: 0.02em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			-webkit-transition: all .3s ease;
+			transition: all .3s ease;
+
+			&:hover {
+				color: #555;
+				text-decoration: underline;
+			}
+		}
+
+		@include element("desc") {
+			padding: 0 8px;
+			color: #777;
+			font-size: 14px;
+			letter-spacing: 0.02em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		@include element("rating") {
+			padding: 0 8px;
+		}
+	}
+}
+
+.rbc-resultcard-container {
+	height: auto;
+	max-height: 700px;
+	overflow: auto;
+	margin: 5px 0;
+	padding-bottom: 45px;
+
+	.rbc-placeholder {
+		padding: 60px 15px;
+		text-align: center;
+	}
+
+	&.rbc-sort-active {
+		.rbc-sortoptions {
+			position: absolute;
+			right: 0;
+			margin: 10px 0;
+
+			select {
+				height: 32px;
+			}
+		}
+	}
+}
+
+.rbc-resultcard-wrapper {
+	position: relative;
+}
+

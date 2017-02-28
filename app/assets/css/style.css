@@ -92,7 +92,8 @@
       display: inline-block;
       margin: 0 4px 0 0;
       padding: 4px 6px;
-      border-radius: 3px; }
+      border-radius: 3px;
+      line-height: 1.2em; }
       .rbc.rbc-tagcloud .rbc-list-container .rbc-list-item.active {
         background-color: #eee; }
       .rbc.rbc-tagcloud .rbc-list-container .rbc-list-item .rbc-count {
@@ -117,3 +118,74 @@
     .rbc.rbc-ratingsfilter .rbc-label.active {
       font-family: "Lato Bold";
       color: #333; }
+
+.rbc-resultcard-scroll-container {
+  position: relative;
+  overflow: auto;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
+  .rbc-resultcard-scroll-container .rbc-resultcard {
+    display: block;
+    width: 50%;
+    min-height: 300px;
+    height: auto;
+    max-width: 280px;
+    border: 1px solid #eee; }
+    .rbc-resultcard-scroll-container .rbc-resultcard__image {
+      width: 100%;
+      height: 220px;
+      background-color: #fcfcfc;
+      background-size: contain;
+      background-position: center center;
+      background-repeat: no-repeat; }
+    .rbc-resultcard-scroll-container .rbc-resultcard__title {
+      padding: 8px 8px 0;
+      font-family: "Lato Bold";
+      color: #777;
+      font-size: 14px;
+      line-height: 18px;
+      letter-spacing: 0.02em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      -webkit-transition: all .3s ease;
+      transition: all .3s ease; }
+      .rbc-resultcard-scroll-container .rbc-resultcard__title:hover {
+        color: #555;
+        text-decoration: underline; }
+    .rbc-resultcard-scroll-container .rbc-resultcard__desc {
+      padding: 0 8px;
+      color: #777;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
+    .rbc-resultcard-scroll-container .rbc-resultcard__rating {
+      padding: 0 8px; }
+
+.rbc-resultcard-container {
+  height: auto;
+  max-height: 700px;
+  overflow: auto;
+  margin: 5px 0;
+  padding-bottom: 45px; }
+  .rbc-resultcard-container .rbc-placeholder {
+    padding: 60px 15px;
+    text-align: center; }
+  .rbc-resultcard-container.rbc-sort-active .rbc-sortoptions {
+    position: absolute;
+    right: 0;
+    margin: 10px 0; }
+    .rbc-resultcard-container.rbc-sort-active .rbc-sortoptions select {
+      height: 32px; }
+
+.rbc-resultcard-wrapper {
+  position: relative; }
