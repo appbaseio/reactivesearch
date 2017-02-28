@@ -3,7 +3,7 @@ import { ReactiveBase, RatingsFilter, ResultCard, AppbaseSensorHelper as helper 
 
 require("./list.css");
 
-export default class RatingsFilterDefault extends Component {
+export default class ResultCardDefault extends Component {
 	constructor(props) {
 		super(props);
 		this.onData = this.onData.bind(this);
@@ -55,7 +55,37 @@ export default class RatingsFilterDefault extends Component {
 				username="cf7QByt5e"
 				password="d2d60548-82a9-43cc-8b40-93cbbe75c34c"
 			>
-				<div className="row">
+				<div className="row reverse">
+					<div className="col s6 col-xs-6">
+						<ResultCard
+							componentId="SearchResult"
+							appbaseField={this.props.mapping.name}
+							title="Results"
+							from={0}
+							size={20}
+							onData={this.onData}
+							sortOptions={[
+								{
+									label: "Lowest Price First",
+									appbaseField: "price",
+									sortBy: "asc"
+								},
+								{
+									label: "Highest Price First",
+									appbaseField: "price",
+									sortBy: "desc"
+								},
+								{
+									label: "Most rated",
+									appbaseField: "rating",
+									sortBy: "desc"
+								}
+							]}
+							react={{
+								and: "RatingsSensor"
+							}}
+						/>
+					</div>
 					<div className="col s6 col-xs-6">
 						<RatingsFilter
 							componentId="RatingsSensor"
@@ -70,34 +100,20 @@ export default class RatingsFilterDefault extends Component {
 							{...this.props}
 						/>
 					</div>
-
-					<div className="col s6 col-xs-6">
-						<ResultCard
-							componentId="SearchResult"
-							appbaseField={this.props.mapping.name}
-							title="Results"
-							from={0}
-							size={20}
-							onData={this.onData}
-							react={{
-								and: "RatingsSensor"
-							}}
-						/>
-					</div>
 				</div>
 			</ReactiveBase>
 		);
 	}
 }
 
-RatingsFilterDefault.defaultProps = {
+ResultCardDefault.defaultProps = {
 	mapping: {
 		rating: "rating",
 		name: "name"
 	}
 };
 
-RatingsFilterDefault.propTypes = {
+ResultCardDefault.propTypes = {
 	mapping: React.PropTypes.shape({
 		rating: React.PropTypes.string,
 		name: React.PropTypes.string

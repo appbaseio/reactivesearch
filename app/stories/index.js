@@ -3,12 +3,13 @@ import { storiesOf, addDecorator } from "@kadira/storybook";
 import { withKnobs, text, boolean, number, array, select } from "@kadira/storybook-addon-knobs";
 import withReadme from "storybook-readme/with-readme";
 
-import NestedListReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/NestedList.md";
-import ToggleButtonReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/ToggleButton.md";
-import RangeSliderReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/RangeSlider.md";
-import SingleListReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/SingleList.md";
-import SingleRangeReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/SingleRange.md";
-import DataSearchReadme from "@appbaseio/reactivemaps-manual/docs/v1/components/DataSearch.md";
+import NestedListReadme from "@appbaseio/reactivemaps-manual/docs/v1.0.0/components/NestedList.md";
+import ToggleButtonReadme from "@appbaseio/reactivemaps-manual/docs/v1.0.0/components/ToggleButton.md";
+import RangeSliderReadme from "@appbaseio/reactivemaps-manual/docs/v1.0.0/components/RangeSlider.md";
+import SingleListReadme from "@appbaseio/reactivemaps-manual/docs/v1.0.0/components/SingleList.md";
+import SingleRangeReadme from "@appbaseio/reactivemaps-manual/docs/v1.0.0/components/SingleRange.md";
+import DataSearchReadme from "@appbaseio/reactivemaps-manual/docs/v1.0.0/components/DataSearch.md";
+import ReactiveListReadme from "@appbaseio/reactivemaps-manual/docs/v1.0.0/components/ReactiveList.md";
 
 import NestedListDefault from "./NestedList.stories";
 import ToggleListDefault from "./ToggleList.stories";
@@ -16,6 +17,7 @@ import DynamicRangeSliderDefault from "./DynamicRangeSlider.stories";
 import TagCloudDefault from "./TagCloud.stories";
 import RatingsFilterDefault from "./RatingsFilter.stories";
 import CategorySearchDefault from "./CategorySearch.stories";
+import ResultCardDefault from "./ResultCard.stories";
 
 require("../../node_modules/materialize-css/dist/css/materialize.min.css");
 require("../../dist/css/style.min.css");
@@ -145,4 +147,10 @@ storiesOf("CategorySearch", module)
 			title={text("title", "CategorySearch")}
 			placeholder={text("placeholder", "Search Car")}
 		/>
+	)));
+
+storiesOf("ResultCard", module)
+	.addDecorator(withKnobs)
+	.add("Basic", withReadme(removeFirstLine(ReactiveListReadme), () => (
+		<ResultCardDefault />
 	)));

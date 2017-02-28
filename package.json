@@ -42,7 +42,7 @@
     "react-stars": "^2.1.0"
   },
   "devDependencies": {
-    "@appbaseio/reactivemaps-manual": "^0.2.0",
+    "@appbaseio/reactivemaps-manual": "1.0.0-alpha",
     "@kadira/storybook": "^2.21.0",
     "@kadira/storybook-addon-knobs": "^1.7.1",
     "@kadira/storybook-addon-options": "^1.0.1",
