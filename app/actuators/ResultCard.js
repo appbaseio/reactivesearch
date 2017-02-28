@@ -134,7 +134,7 @@ export default class ResultCard extends Component {
 		// Set the react - add self aggs query as well with react
 		const react = this.props.react ? this.props.react : {};
 		if (react && react.and) {
-			if(typeof react.and === "string") {
+			if (typeof react.and === "string") {
 				react.and = [react.and];
 			}
 		} else {
@@ -267,8 +267,8 @@ export default class ResultCard extends Component {
 	cardMarkup(res) {
 		let markup = null;
 		const data = res.currentData.concat(res.newData);
-		markup = data.map(item => {
-			let result = this.props.onData(item._source);
+		markup = data.map((item) => {
+			const result = this.props.onData(item._source);
 			return (
 				<a
 					key={item._id}
@@ -276,11 +276,11 @@ export default class ResultCard extends Component {
 					href={result.url}
 					rel="noopener noreferrer"
 				>
-					<div className="rbc-resultcard__image" style={{backgroundImage: `url(${result.image})`}}></div>
+					<div className="rbc-resultcard__image" style={{ backgroundImage: `url(${result.image})` }} />
 					<div className="rbc-resultcard__title">{result.title}</div>
 					<div className="rbc-resultcard__desc">{result.desc}</div>
 					{
-						this.props.card.rating ?
+						result.rating ?
 						(<div className="rbc-resultcard__rating">
 							<ReactStars
 								count={5}
@@ -476,7 +476,7 @@ export default class ResultCard extends Component {
 
 		return (
 			<div className="rbc rbc-resultcard-wrapper">
-				<div ref={(div) => { this.listParentElement = div }} className={`rbc-resultcard-container card thumbnail ${cx}`} style={this.props.componentStyle}>
+				<div ref={(div) => { this.listParentElement = div; }} className={`rbc-resultcard-container card thumbnail ${cx}`} style={this.props.componentStyle}>
 					{title}
 					{sortOptions}
 					{this.props.showResultStats && this.state.resultStats.resultFound ? (<ResultStats onResultStats={this.props.onResultStats} took={this.state.resultStats.took} total={this.state.resultStats.total} />) : null}
@@ -552,7 +552,6 @@ ResultCard.types = {
 	appbaseField: TYPES.STRING,
 	title: TYPES.STRING,
 	react: TYPES.OBJECT,
-	card: TYPES.OBJECT,
 	sortBy: TYPES.STRING,
 	sortOptions: TYPES.OBJECT,
 	from: TYPES.NUMBER,
