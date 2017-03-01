@@ -17,6 +17,7 @@ import DynamicRangeSliderDefault from "./DynamicRangeSlider.stories";
 import TagCloudDefault from "./TagCloud.stories";
 import RatingsFilterDefault from "./RatingsFilter.stories";
 import CategorySearchDefault from "./CategorySearch.stories";
+import MultiLevelMenuDefault from "./MultiLevelMenu.stories";
 import ResultCardDefault from "./ResultCard.stories";
 import ResultListDefault from "./ResultList.stories";
 
@@ -147,6 +148,32 @@ storiesOf("CategorySearch", module)
 		<CategorySearchDefault
 			title={text("title", "CategorySearch")}
 			placeholder={text("placeholder", "Search Car")}
+		/>
+	)));
+
+storiesOf("MultiLevelMenu", module)
+	.addDecorator(withKnobs)
+	.add("Basic", withReadme(removeFirstLine(NestedListReadme), () => (
+		<MultiLevelMenuDefault />
+	)))
+	.add("With Title", withReadme(removeFirstLine(NestedListReadme), () => (
+		<MultiLevelMenuDefault
+			title={text("title", "Car Category")}
+		/>
+	)))
+	.add("Default selection", withReadme(removeFirstLine(NestedListReadme), () => (
+		<MultiLevelMenuDefault
+			defaultSelected={["bmw", "x series"]}
+		/>
+	))).add("Playground", withReadme(removeFirstLine(NestedListReadme), () => (
+		<MultiLevelMenuDefault
+			title={text("title", "MultiLevelMenu: Car Filter")}
+			size={number("size", 100)}
+			sortBy={select("sortBy", { asc: "asc", desc: "desc", count: "count" }, "count")}
+			defaultSelected={array("defaultSelected", ["bmw", "x series"])}
+			showCount={boolean("showCount", true)}
+			showSearch={boolean("showSearch", true)}
+			placeholder={text("placeholder", "Search Cars")}
 		/>
 	)));
 
