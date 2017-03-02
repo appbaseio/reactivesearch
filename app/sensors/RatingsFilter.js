@@ -22,7 +22,10 @@ export default class RatingsFilter extends Component {
 	componentDidMount() {
 		this.setQueryInfo();
 		if (this.defaultSelected && this.defaultSelected.start) {
-			const records = this.props.data.filter(record => record.start === this.defaultSelected.start);
+			const records = this.props.data.filter((record) => {
+				return (record.start === this.defaultSelected.start &&
+						record.end === this.defaultSelected.end)
+			});
 			if (records && records.length) {
 				setTimeout(this.handleChange.bind(this, records[0]), 300);
 			}
@@ -33,7 +36,10 @@ export default class RatingsFilter extends Component {
 		setTimeout(() => {
 			if (this.defaultSelected && this.defaultSelected.start !== this.props.defaultSelected.start) {
 				this.defaultSelected = this.props.defaultSelected;
-				const records = this.props.data.filter(record => record.start === this.defaultSelected.start);
+				const records = this.props.data.filter((record) => {
+					return (record.start === this.defaultSelected.start &&
+							record.end === this.defaultSelected.end)
+				});
 				if (records && records.length) {
 					setTimeout(this.handleChange.bind(this, records[0]), 300);
 				}
@@ -88,13 +94,18 @@ export default class RatingsFilter extends Component {
 		let buttons;
 		const selectedItem = this.state.selected && this.state.selected.start ? this.state.selected.start : this.props.data.start;
 		if (this.props.data) {
+			let maxEnd = 5;
+			this.props.data.forEach((item) => {
+				maxEnd = item.end > maxEnd ? item.end : maxEnd;
+			});
+
 			buttons = this.props.data.map((record) => {
 				const cx = selectedItem === record.start ? "active" : "";
 				return (
 					<div className="rbc-list-item row" key={record.label} onClick={() => this.handleChange(record)}>
 						<label className={`rbc-label ${cx}`}>
 							<ReactStars
-								count={5}
+								count={maxEnd}
 								value={record.start}
 								size={20}
 								color1={"#bbb"}
