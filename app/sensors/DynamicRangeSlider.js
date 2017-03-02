@@ -282,6 +282,8 @@ export default class DynamicRangeSlider extends Component {
 			"rbc-title-inactive": !this.props.title,
 			"rbc-rangelabels-active": this.props.rangeLabels,
 			"rbc-rangelabels-inactive": !this.props.rangeLabels,
+			"rbc-histogram-active": this.props.showHistogram,
+			"rbc-histogram-inactive": !this.props.showHistogram,
 			"rbc-initialloader-active": this.props.initialLoader,
 			"rbc-initialloader-inactive": !this.props.initialLoader
 		});

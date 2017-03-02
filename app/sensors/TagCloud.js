@@ -297,6 +297,8 @@ export default class TagCloud extends Component {
 		const cx = classNames({
 			"rbc-title-active": this.props.title,
 			"rbc-title-inactive": !this.props.title,
+			"rbc-count-active": this.props.showCount,
+			"rbc-count-inactive": !this.props.showCount,
 			"rbc-multiSelect-active": this.props.multiSelect,
 			"rbc-multiSelect-inactive": !this.props.multiSelect,
 			"rbc-initialloader-active": this.props.initialLoader,
