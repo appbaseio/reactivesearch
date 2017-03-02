@@ -33,14 +33,13 @@ export default class MultiLevelMenu extends Component {
 		this.sortObj = {
 			aggSort: this.props.sortBy
 		};
-		this.channelId = null;
-		this.channelListener = null;
+		this.channelObj = [];
+		this.channelId = [];
+		this.channelListener = [];
 		this.defaultSelected = this.props.defaultSelected;
-		this.filterBySearch = this.filterBySearch.bind(this);
-		this.onItemSelect = this.onItemSelect.bind(this);
-		this.reset = this.reset.bind(this);
 		this.customQuery = this.customQuery.bind(this);
-		this.handleSelect = this.handleSelect.bind(this);
+		this.firstLevelAggCustomQuery = this.firstLevelAggCustomQuery.bind(this);
+		this.secondLevelAggCustomQuery = this.secondLevelAggCustomQuery.bind(this);
 		this.type = "Term";
 	}
 
@@ -48,7 +47,6 @@ export default class MultiLevelMenu extends Component {
 	componentWillMount() {
 		this.setQueryInfo();
 		this.createChannel();
-		this.createSubChannel();
 	}
 
 	componentDidMount() {
@@ -74,33 +72,17 @@ export default class MultiLevelMenu extends Component {
 				});
 				this.handleSelect(this.defaultSelected);
 			}
-			if (this.sortBy !== this.props.sortBy) {
-				this.sortBy = this.props.sortBy;
-				this.handleSortSelect();
-			}
 		}, 300);
 	}
 
 	// stop streaming request and remove listener when component will unmount
 	componentWillUnmount() {
-		if (this.channelId) {
-			manager.stopStream(this.channelId);
-		}
-		if (this.subChannelId) {
-			manager.stopStream(this.subChannelId);
-		}
-		if (this.channelListener) {
-			this.channelListener.remove();
-		}
-		if (this.subChannelListener) {
-			this.subChannelListener.remove();
-		}
-		if (this.loadListenerParent) {
-			this.loadListenerParent.remove();
-		}
-		if (this.loadListenerChild) {
-			this.loadListenerChild.remove();
-		}
+		this.channelId.forEach((channelId) => {
+			manager.stopStream(channelId);
+		});
+		this.channelListener.forEach((channelListener) => {
+			channelListener.remove();
+		});
 	}
 
 	// build query for this sensor only
@@ -134,151 +116,179 @@ export default class MultiLevelMenu extends Component {
 			}
 		};
 		helper.selectedSensor.setSensorInfo(obj);
-	}
-
-	includeAggQuery() {
-		this.nested.forEach((name) => {
+		function setInternalQuery(key, level) {
 			const obj = {
-				key: name,
-				value: this.sortObj
+				key: key,
+				value: {
+					queryType: "term",
+					inputData: this.props.appbaseField[level],
+					customQuery: function() {
+						return null;
+					}
+				}
 			};
-			helper.selectedSensor.setSortInfo(obj);
-		});
+			helper.selectedSensor.setSensorInfo(obj);
+		}
+		setInternalQuery.call(this, "subCategory", 0);
+		setInternalQuery.call(this, "lastCategory", 1);
 	}
 
-	handleSortSelect() {
-		this.sortObj = {
-			aggSort: this.props.sortBy
+	getReact(level) {
+		let react = {
+			aggs: {
+				key: this.props.appbaseField[level],
+				size: this.props.size
+			},
+			and: []
 		};
-		this.nested.forEach((name) => {
-			const obj = {
-				key: name,
-				value: this.sortObj
-			};
-			helper.selectedSensor.set(obj, true, "sortChange");
-		});
+		if(level === 1) {
+			react.aggs.customQuery = this.firstLevelAggCustomQuery
+			react.and.push('subCategory');
+		}
+		else if(level === 2) {
+			react.aggs.customQuery = this.secondLevelAggCustomQuery
+			react.and.push('lastCategory');
+		}
+		return react;
 	}
 
 	// Create a channel which passes the react and receive results whenever react changes
 	createChannel() {
-		// Set the react - add self aggs query as well with react
-		const react = this.props.react ? this.props.react : {};
-		react.aggs = {
-			key: this.props.appbaseField[0],
-			sort: this.props.sortBy,
-			size: this.props.size,
-			sortRef: this.nested[0]
-		};
-		if (react && react.and && typeof react.and === "string") {
-			react.and = [react.and];
-		} else {
-			react.and = react.and ? react.and : [];
+		let level = 0;
+		for(let level = 1; level < this.props.appbaseField.length; level++) {
+			const react = this.getReact(level);
+			// create a channel and listen the changes
+			this.channelObj[level] = manager.create(this.context.appbaseRef, this.context.type, react);
+			this.channelId[level] = this.channelObj[level].channelId;
+			this.channelListener[level] = this.localChannel(level, react);
+			// this.listenLoadingChannel(channelObj, "loadListenerParent");
 		}
-		react.and.push(this.nested[0]);
-		this.includeAggQuery();
-
-		// create a channel and listen the changes
-		const channelObj = manager.create(this.context.appbaseRef, this.context.type, react);
-		this.channelId = channelObj.channelId;
-		this.channelListener = channelObj.emitter.addListener(this.channelId, (res) => {
-			if (res.error) {
-				this.setState({
-					queryStart: false
-				});
-			}
-			if (res.appliedQuery) {
-				const data = res.data;
-				let rawData;
-				if (res.mode === "streaming") {
-					rawData = this.state.rawData;
-					rawData.hits.hits.push(res.data);
-				} else if (res.mode === "historic") {
-					rawData = data;
-				}
-				this.setState({
-					queryStart: false,
-					rawData
-				});
-				this.setData(rawData, 0);
-			}
-		});
-		this.listenLoadingChannel(channelObj, "loadListenerParent");
+		this.setInitialData();
 	}
 
-	listenLoadingChannel(channelObj, listener) {
-		this[listener] = channelObj.emitter.addListener(`${channelObj.channelId}-query`, (res) => {
-			if (res.appliedQuery) {
-				this.setState({
-					queryStart: res.queryState
-				});
-			}
-		});
+	setInitialData() {
+		setTimeout(() => {
+			const data = {
+				aggregations: this.props.data
+			};
+			this.setSensorData(data, 0);
+		}, 100);
 	}
 
-	// Create a channel for sub category
-	createSubChannel() {
-		this.setSubCategory();
-		const react = {
-			aggs: {
-				key: this.props.appbaseField[1],
-				sort: this.props.sortBy,
-				size: this.props.size,
-				sortRef: this.nested[1]
-			},
-			and: ["subCategory", this.nested[1]]
-		};
-		// create a channel and listen the changes
-		const subChannelObj = manager.create(this.context.appbaseRef, this.context.type, react);
-		this.subChannelId = subChannelObj.channelId;
-		this.subChannelListener = subChannelObj.emitter.addListener(this.subChannelId, (res) => {
-			if (res.error) {
-				this.setState({
-					queryStart: false
-				});
-			}
-			if (res.appliedQuery) {
-				const data = res.data;
-				let rawData;
-				if (res.mode === "streaming") {
-					rawData = this.state.subRawData;
-					rawData.hits.hits.push(res.data);
-				} else if (res.mode === "historic") {
-					rawData = data;
+	localChannel(level, react) {
+		return this.channelObj[level].emitter.addListener(this.channelId[level], (res) => {
+			if(res.appliedQuery) {
+				if(level === 1) {
+					this.setSensorData(res.data, level);
 				}
-				if (this.state.selectedValues.length) {
-					this.setState({
-						queryStart: false,
-						subRawData: rawData
-					});
-					this.setData(rawData, 1);
+				else if(level === 2) {
+					this.setData(res.data);
 				}
 			}
 		});
-		this.listenLoadingChannel(subChannelObj, "loadListenerChild");
-		const obj = {
-			key: "subCategory",
-			value: ""
-		};
-		helper.selectedSensor.set(obj, true);
 	}
 
-	// set the query type and input data
-	setSubCategory() {
-		const obj = {
-			key: "subCategory",
-			value: {
-				queryType: "term",
-				inputData: this.props.appbaseField[0]
-			}
+	setSensorData(data, level) {
+		let obj = {
+			levelName: "firstLevelMenu",
+			key: "subCategory"
 		};
-
-		helper.selectedSensor.setSensorInfo(obj);
-	}
-
-	setData(data, level) {
-		if (data && data.aggregations && data.aggregations[this.props.appbaseField[level]] && data.aggregations[this.props.appbaseField[level]].buckets) {
-			this.addItemsToList(data.aggregations[this.props.appbaseField[level]].buckets, level);
+		if(level === 1) {
+			obj.levelName = "secondLevelMenu";
+			obj.key = "lastCategory";
 		}
+		if (data && data.aggregations && data.aggregations) {
+			if(level === 0) {
+				this[obj.levelName] = data.aggregations.map(item => item.value);
+			} else if(level === 1) {
+				this[obj.levelName] = data.aggregations;
+			}
+		}
+
+		let sensorObj = {
+			key: obj.key,
+			value: this[obj.levelName]
+		};
+		helper.selectedSensor.set(sensorObj, true);
+	}
+
+	firstLevelAggCustomQuery() {
+		let query = null;
+		if (this.firstLevelMenu) {
+			query = {};
+			this.firstLevelMenu.forEach((item) => {
+				let aggQuery = this.createAggquery(item, 0, [item]);
+				query[aggQuery.key] = aggQuery.value;
+			});
+		}
+		return query;
+	}
+
+	secondLevelAggCustomQuery() {
+		let query = null;
+		if (this.secondLevelMenu) {
+			query = {};
+			Object.keys(this.secondLevelMenu).forEach((item) => {
+				let combineItems = [item];
+				this.secondLevelMenu[item][this.props.appbaseField[1]].buckets.forEach((nestedItem) => {
+					let aggQuery = this.createAggquery(item+'@rbc-level-rbc@'+nestedItem.key, 1, [item, nestedItem.key]);
+					query[aggQuery.key] = aggQuery.value;
+				});
+			});
+		}
+		return query;
+	}
+
+	createAggquery(label, level, items) {
+		let obj = {
+			key: label
+		};
+		obj.value = {
+			"filter": this.getAggFilterQuery(items),
+			"aggs": {
+				[this.props.appbaseField[level + 1]]: {
+					"terms": {
+						"field": this.props.appbaseField[level + 1]
+					}
+				}
+			}
+		}
+		return obj;
+	}
+
+	getAggFilterQuery(items) {
+		let query = {
+			bool: {
+				must: []
+			}
+		};
+		items.forEach((item, index) => {
+			let obj = {
+				"term": {
+					[this.props.appbaseField[index]]: item
+				}
+			};
+			query.bool.must.push(obj);
+		});
+		return query;
+	}
+
+	setData(data) {
+		const finalData = {};
+		Object.keys(data.aggregations).forEach((level1) => {
+			let menu = level1.split('@rbc-level-rbc@');
+			let finalMenu = data.aggregations[level1][this.props.appbaseField[2]].buckets.map((item) => item.key);
+			if(Object.keys(finalData).indexOf(menu[0]) < 0) {
+				finalData[menu[0]] = {
+					[menu[1]]: finalMenu
+				}
+			} else {
+				finalData[menu[0]][menu[1]] = finalMenu
+			}
+		});
+		this.setState({
+			finalData: finalData
+		});
 	}
 
 	addItemsToList(newItems, level) {
@@ -287,63 +297,17 @@ export default class MultiLevelMenu extends Component {
 			item.status = !!(this.defaultSelected && this.defaultSelected.indexOf(item.key) > -1);
 			return item;
 		});
-		const itemVar = level === 0 ? "items" : "subItems";
+		let itemVar;
+		if (level === 0) {
+			itemVar = "items"
+		} else if (level === 1) {
+			itemVar = "subItems"
+		} else if (level === 2) {
+			itemVar = "lastItems"
+		}
 		this.setState({
 			[itemVar]: newItems,
 			storedItems: newItems
-		});
-	}
-
-	// set value
-	setValue(value, isExecuteQuery = false) {
-		const obj = {
-			key: this.props.componentId,
-			value
-		};
-		helper.selectedSensor.set(obj, isExecuteQuery);
-	}
-
-	handleSelect() {
-		if (this.props.defaultSelected) {
-			this.props.defaultSelected.forEach((value, index) => {
-				this.onItemSelect(value, index);
-			});
-		}
-	}
-
-	// filter
-	filterBySearch(value) {
-		if (value) {
-			const items = this.state.storedItems.filter(item => item.key && item.key.toLowerCase().indexOf(value.toLowerCase()) > -1);
-			this.setState({
-				items
-			});
-		} else {
-			this.setState({
-				items: this.state.storedItems
-			});
-		}
-	}
-
-	onItemSelect(key, level) {
-		const selectedValues = this.state.selectedValues;
-		let stateItems = {};
-		selectedValues[level] = key;
-		stateItems = {
-			selectedValues
-		};
-		const obj = {
-			key: "subCategory",
-			value: key
-		};
-		helper.selectedSensor.set(obj, true);
-		this.setValue(selectedValues, true);
-		this.setState(stateItems);
-	}
-
-	reset() {
-		this.setState({
-			selectedValues: []
 		});
 	}
 
@@ -376,11 +340,34 @@ export default class MultiLevelMenu extends Component {
 	renderList() {
 		if (this.state.selectedValues.length) {
 			const list = this.state.subItems.map(item => (
-				<li key={item.key}>{item.key}</li>
+				<li key={item.key}>
+					<a onMouseEnter={() => this.onItemSelect(item.key, 1)}>
+						{item.key}
+					</a>
+				</li>
 			));
 
 			return (
 				<ul className="rbc-sublist-container col s12 col-xs-12">
+					{list}
+				</ul>
+			);
+		}
+		return "";
+	}
+
+	renderLastList() {
+		if (this.state.selectedValues.length && this.state.lastItems && this.state.lastItems.length) {
+			const list = this.state.lastItems.map(item => (
+				<li key={item.key}>
+					<a>
+						{item.key}
+					</a>
+				</li>
+			));
+
+			return (
+				<ul className="rbc-lastlist-container col s12 col-xs-12">
 					{list}
 				</ul>
 			);
@@ -406,6 +393,7 @@ export default class MultiLevelMenu extends Component {
 					{listComponent}
 				</div>
 				{this.renderList()}
+				{this.renderLastList()}
 				{this.props.initialLoader && this.state.queryStart ? (<InitialLoader defaultText={this.props.initialLoader} />) : null}
 			</div>
 		);
