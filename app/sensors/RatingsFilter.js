@@ -100,7 +100,7 @@ export default class RatingsFilter extends Component {
 			});
 
 			buttons = this.props.data.map((record) => {
-				const cx = selectedItem === record.start ? "active" : "";
+				const cx = selectedItem === record.start ? "rbc-active" : "";
 				return (
 					<div className="rbc-list-item row" key={record.label} onClick={() => this.handleChange(record)}>
 						<label className={`rbc-label ${cx}`}>
