@@ -23,11 +23,7 @@ export default class MultiLevelMenu extends Component {
 				}
 			},
 			subItems: [],
-			selectedValue: null,
-			maxItems: 4
-		};
-		this.sortObj = {
-			aggSort: this.props.sortBy
+			selectedValue: null
 		};
 		this.channelObj = [];
 		this.channelId = [];
@@ -348,15 +344,16 @@ export default class MultiLevelMenu extends Component {
 		if (this.state.selectedValue) {
 			const data = this.state.finalData[this.state.selectedValue];
 			let markup = [];
-
+			let count = 0;
 			for (let list in data) {
-				if(this.notInBlackListed(list)) {
+				count += 1;
+				if(this.notInBlackListed(list) && count <= this.props.maxCategories) {
 					markup.push(
 						(
 							<div key={list} className="rbc-list-container">
 								<h3 className="rbc-list-title">{list}</h3>
 								<ul>
-									{this.filterBlackList(data[list]).slice(0, this.state.maxItems).map(item => (
+									{this.filterBlackList(data[list]).slice(0, this.props.maxItems).map(item => (
 										<li key={`${list}-${item}`}><a onClick={() => this.selectItem(item, list)}>{item}</a></li>
 									))}
 								</ul>
@@ -401,6 +398,8 @@ MultiLevelMenu.propTypes = {
 		label: React.PropTypes.string.isRequired,
 		value: React.PropTypes.string.isRequired,
 	})),
+	maxCategories: React.PropTypes.number,
+	maxItems: React.PropTypes.number,
 	blacklist: React.PropTypes.arrayOf(React.PropTypes.string),
 	size: helper.sizeValidation,
 	customQuery: React.PropTypes.func,
@@ -409,9 +408,10 @@ MultiLevelMenu.propTypes = {
 
 // Default props value
 MultiLevelMenu.defaultProps = {
-	sortBy: "count",
 	size: 100,
-	blacklist: []
+	blacklist: [],
+	maxCategories: 10,
+	maxItems: 4
 };
 
 // context type
@@ -425,7 +425,9 @@ MultiLevelMenu.types = {
 	appbaseField: TYPES.ARRAY,
 	react: TYPES.OBJECT,
 	size: TYPES.NUMBER,
-	sortBy: TYPES.STRING,
+	maxCategories: TYPES.NUMBER,
+	maxItems: TYPES.NUMBER,
+	blacklist: TYPES.ARRAY,
 	data: TYPES.OBJECT,
 	customQuery: TYPES.FUNCTION,
 	initialLoader: TYPES.OBJECT

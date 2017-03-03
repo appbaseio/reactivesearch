@@ -160,13 +160,26 @@ storiesOf("MultiLevelMenu", module)
 		<MultiLevelMenuDefault
 			blacklist={["golf", "unknown"]}
 		/>
-	))).add("Playground", withReadme(removeFirstLine(NestedListReadme), () => (
+	)))
+	.add("With maxCategories", withReadme(removeFirstLine(NestedListReadme), () => (
+		<MultiLevelMenuDefault
+			maxCategories={6}
+		/>
+	)))
+	.add("With maxItems", withReadme(removeFirstLine(NestedListReadme), () => (
+		<MultiLevelMenuDefault
+			maxItems={3}
+		/>
+	)))
+	.add("Playground", withReadme(removeFirstLine(NestedListReadme), () => (
 		<MultiLevelMenuDefault
 			data={object("data", [
 				{label: "Volkswagen", value: "volkswagen"},
 				{label: "BMW", value: "bmw"}
 			])}
 			blacklist={array("blacklist", ["golf", "unknown"])}
+			maxCategories={number("maxCategories", 10)}
+			maxItems={number("maxItems", 4)}
 		/>
 	)));
 
