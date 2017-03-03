@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf, addDecorator } from "@kadira/storybook";
-import { withKnobs, text, boolean, number, array, select } from "@kadira/storybook-addon-knobs";
+import { withKnobs, text, boolean, number, array, select, object } from "@kadira/storybook-addon-knobs";
 import withReadme from "storybook-readme/with-readme";
 
 import NestedListReadme from "@appbaseio/reactivemaps-manual/docs/v1.0.0/components/NestedList.md";
@@ -156,24 +156,17 @@ storiesOf("MultiLevelMenu", module)
 	.add("Basic", withReadme(removeFirstLine(NestedListReadme), () => (
 		<MultiLevelMenuDefault />
 	)))
-	.add("With Title", withReadme(removeFirstLine(NestedListReadme), () => (
+	.add("With Blacklist", withReadme(removeFirstLine(NestedListReadme), () => (
 		<MultiLevelMenuDefault
-			title={text("title", "Car Category")}
-		/>
-	)))
-	.add("Default selection", withReadme(removeFirstLine(NestedListReadme), () => (
-		<MultiLevelMenuDefault
-			defaultSelected={["bmw", "x series"]}
+			blacklist={["golf", "unknown"]}
 		/>
 	))).add("Playground", withReadme(removeFirstLine(NestedListReadme), () => (
 		<MultiLevelMenuDefault
-			title={text("title", "MultiLevelMenu: Car Filter")}
-			size={number("size", 100)}
-			sortBy={select("sortBy", { asc: "asc", desc: "desc", count: "count" }, "count")}
-			defaultSelected={array("defaultSelected", ["bmw", "x series"])}
-			showCount={boolean("showCount", true)}
-			showSearch={boolean("showSearch", true)}
-			placeholder={text("placeholder", "Search Cars")}
+			data={object("data", [
+				{label: "Volkswagen", value: "volkswagen"},
+				{label: "BMW", value: "bmw"}
+			])}
+			blacklist={array("blacklist", ["golf", "unknown"])}
 		/>
 	)));
 

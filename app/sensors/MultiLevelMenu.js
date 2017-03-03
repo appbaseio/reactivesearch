@@ -41,44 +41,36 @@ export default class MultiLevelMenu extends Component {
 
 	// Get the items from Appbase when component is mounted
 	componentWillMount() {
+		this.initialize();
+	}
+
+	initialize() {
 		this.setQueryInfo();
 		this.createChannel();
 	}
 
-	componentDidMount() {
-		if (this.props.defaultSelected) {
-			this.defaultSelected = this.props.defaultSelected;
-			setTimeout(this.handleSelect.bind(this), 100);
-		}
-	}
-
-	componentWillUpdate() {
-		setTimeout(() => {
-			if (!_.isEqual(this.defaultSelected, this.props.defaultSelected)) {
-				this.defaultSelected = this.props.defaultSelected;
-				let items = this.state.items;
-				items = items.map((item) => {
-					item.key = item.key.toString();
-					item.status = !!(this.defaultSelected.length && this.defaultSelected.indexOf(item.key) > -1);
-					return item;
-				});
-				this.setState({
-					items,
-					storedItems: items
-				});
-				this.handleSelect(this.defaultSelected);
-			}
-		}, 300);
-	}
-
 	// stop streaming request and remove listener when component will unmount
 	componentWillUnmount() {
+		this.removeChannels();
+	}
+
+	removeChannels() {
 		this.channelId.forEach((channelId) => {
 			manager.stopStream(channelId);
 		});
 		this.channelListener.forEach((channelListener) => {
 			channelListener.remove();
 		});
+	}
+
+	componentWillUpdate() {
+		setTimeout(() => {
+			if (!_.isEqual(this.defaultData, this.props.data)) {
+				this.defaultData = this.props.data;
+				this.removeChannels();
+				this.initialize();
+			}
+		}, 300);
 	}
 
 	// build query for this sensor only
@@ -344,24 +336,34 @@ export default class MultiLevelMenu extends Component {
 		helper.selectedSensor.set(obj, true);
 	}
 
+	filterBlackList(list) {
+		return list.filter(item => this.notInBlackListed(item));
+	}
+
+	notInBlackListed(item) {
+		return this.props.blacklist.indexOf(item) === -1 ? true : false;
+	}
+
 	renderList() {
 		if (this.state.selectedValue) {
 			const data = this.state.finalData[this.state.selectedValue];
 			let markup = [];
 
 			for (let list in data) {
-				markup.push(
-					(
-						<div className="rbc-list-container">
-							<h3 className="rbc-list-title">{list}</h3>
-							<ul>
-								{data[list].slice(0, this.state.maxItems).map(item => (
-									<li key={`${list}-${item}`}><a onClick={() => this.selectItem(item, list)}>{item}</a></li>
-								))}
-							</ul>
-						</div>
+				if(this.notInBlackListed(list)) {
+					markup.push(
+						(
+							<div key={list} className="rbc-list-container">
+								<h3 className="rbc-list-title">{list}</h3>
+								<ul>
+									{this.filterBlackList(data[list]).slice(0, this.state.maxItems).map(item => (
+										<li key={`${list}-${item}`}><a onClick={() => this.selectItem(item, list)}>{item}</a></li>
+									))}
+								</ul>
+							</div>
+						)
 					)
-				)
+				}
 			}
 
 			return (<div className="rbc-sublist-container">{markup}</div>);
@@ -399,21 +401,17 @@ MultiLevelMenu.propTypes = {
 		label: React.PropTypes.string.isRequired,
 		value: React.PropTypes.string.isRequired,
 	})),
-	sortBy: React.PropTypes.oneOf(["count", "asc", "desc"]),
+	blacklist: React.PropTypes.arrayOf(React.PropTypes.string),
 	size: helper.sizeValidation,
-	defaultSelected: React.PropTypes.array,
 	customQuery: React.PropTypes.func,
-	initialLoader: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.element
-	]),
 	react: React.PropTypes.object
 };
 
 // Default props value
 MultiLevelMenu.defaultProps = {
 	sortBy: "count",
-	size: 100
+	size: 100,
+	blacklist: []
 };
 
 // context type
