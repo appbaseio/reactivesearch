@@ -124,6 +124,11 @@ export default class MultiLevelMenu extends Component {
 				}
 			};
 			helper.selectedSensor.setSensorInfo(obj);
+			const obj1 = {
+				key: key,
+				value: ""
+			};
+			helper.selectedSensor.set(obj);
 		}
 		setInternalQuery.call(this, "subCategory", 0);
 		setInternalQuery.call(this, "lastCategory", 1);
@@ -331,6 +336,14 @@ export default class MultiLevelMenu extends Component {
 		}
 	}
 
+	selectItem(item, list) {
+		const obj = {
+			key: this.props.componentId,
+			value: [this.state.selectedValue, list, item]
+		};
+		helper.selectedSensor.set(obj, true);
+	}
+
 	renderList() {
 		if (this.state.selectedValue) {
 			const data = this.state.finalData[this.state.selectedValue];
@@ -343,7 +356,7 @@ export default class MultiLevelMenu extends Component {
 							<h3 className="rbc-list-title">{list}</h3>
 							<ul>
 								{data[list].slice(0, this.state.maxItems).map(item => (
-									<li key={item}><a>{item}</a></li>
+									<li key={`${list}-${item}`}><a onClick={() => this.selectItem(item, list)}>{item}</a></li>
 								))}
 							</ul>
 						</div>
