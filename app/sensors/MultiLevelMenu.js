@@ -23,13 +23,9 @@ export default class MultiLevelMenu extends Component {
 				}
 			},
 			subItems: [],
-			selectedValues: []
+			selectedValue: null,
+			maxItems: 4
 		};
-		this.nested = [
-			"nestedParentaggs",
-			"nestedChildaggs",
-			"nestedGrandChildaggs"
-		];
 		this.sortObj = {
 			aggSort: this.props.sortBy
 		};
@@ -311,68 +307,52 @@ export default class MultiLevelMenu extends Component {
 		});
 	}
 
-	renderItems(items, level) {
-		const arr = items.map(item => item.key);
-		const filteredItems = this.props.data ?
-			this.props.data.filter(item => arr.indexOf(item.value) > -1) :
-			items.map(item => {
-				return {
-					label: item.key,
-					value: item.key
-				}
-			});
-
-		return filteredItems.map((item) => {
-			const cx = classNames({
-				"rbc-item-active": (item.value === this.state.selectedValues[level]),
-				"rbc-item-inactive": !(item.value === this.state.selectedValues[level])
-			});
-			return (
-				<li key={item.value}>
-					<a className={`rbc-list-item ${cx}`} onMouseEnter={() => this.onItemSelect(item.value, level)}>
-						<span className="rbc-label">{item.label}</span>
-					</a>
-				</li>
-			);
+	handleHover(selectedValue) {
+		this.setState({
+			selectedValue
 		});
 	}
 
-	renderList() {
-		if (this.state.selectedValues.length) {
-			const list = this.state.subItems.map(item => (
-				<li key={item.key}>
-					<a onMouseEnter={() => this.onItemSelect(item.key, 1)}>
-						{item.key}
-					</a>
-				</li>
-			));
-
-			return (
-				<ul className="rbc-sublist-container col s12 col-xs-12">
-					{list}
-				</ul>
-			);
+	renderItems(items, level) {
+		if (this.state.finalData) {
+			return this.props.data.map((item) => {
+				const cx = classNames({
+					"rbc-item-active": (item.value === this.state.selectedValue),
+					"rbc-item-inactive": !(item.value === this.state.selectedValue)
+				});
+				return (
+					<li key={item.value}>
+						<a className={`rbc-list-item ${cx}`} onMouseEnter={() => this.handleHover(item.value)}>
+							<span className="rbc-label">{item.label}</span>
+						</a>
+					</li>
+				);
+			});
 		}
-		return "";
 	}
 
-	renderLastList() {
-		if (this.state.selectedValues.length && this.state.lastItems && this.state.lastItems.length) {
-			const list = this.state.lastItems.map(item => (
-				<li key={item.key}>
-					<a>
-						{item.key}
-					</a>
-				</li>
-			));
+	renderList() {
+		if (this.state.selectedValue) {
+			const data = this.state.finalData[this.state.selectedValue];
+			let markup = [];
 
-			return (
-				<ul className="rbc-lastlist-container col s12 col-xs-12">
-					{list}
-				</ul>
-			);
+			for (let list in data) {
+				markup.push(
+					(
+						<div className="rbc-list-container">
+							<h3 className="rbc-list-title">{list}</h3>
+							<ul>
+								{data[list].slice(0, this.state.maxItems).map(item => (
+									<li key={item}><a>{item}</a></li>
+								))}
+							</ul>
+						</div>
+					)
+				)
+			}
+
+			return (<div className="rbc-sublist-container">{markup}</div>);
 		}
-		return "";
 	}
 
 	render() {
@@ -388,12 +368,11 @@ export default class MultiLevelMenu extends Component {
 		});
 
 		return (
-			<div className="rbc rbc-multilevelmenu-container card thumbnail col s12 col-xs-12" onMouseLeave={this.reset}>
+			<div className="rbc rbc-multilevelmenu-container card thumbnail col s12 col-xs-12" onMouseLeave={() => this.handleHover(null)}>
 				<div className={`rbc rbc-multilevelmenu col s12 col-xs-12 ${cx}`}>
 					{listComponent}
 				</div>
 				{this.renderList()}
-				{this.renderLastList()}
 				{this.props.initialLoader && this.state.queryStart ? (<InitialLoader defaultText={this.props.initialLoader} />) : null}
 			</div>
 		);
