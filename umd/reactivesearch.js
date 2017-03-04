@@ -90852,7 +90852,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			value: function componentDidMount() {
 				this.size = this.props.size;
 				this.setQueryInfo();
-				this.createChannel(true);
+				this.createChannel();
 			}
 		}, {
 			key: "componentWillUpdate",
@@ -90963,8 +90963,6 @@ return /******/ (function(modules) { // webpackBootstrap
 			value: function createChannel() {
 				var _this3 = this;
 
-				var executeChannel = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
 				// Set the react - add self aggs query as well with react
 				var react = this.props.react ? this.props.react : {};
 				react.aggs = {
@@ -91006,15 +91004,6 @@ return /******/ (function(modules) { // webpackBootstrap
 						_this3.setData(rawData);
 					}
 				});
-				if (executeChannel) {
-					setTimeout(function () {
-						var obj = {
-							key: "tagCloudChanges",
-							value: ""
-						};
-						_reactivebase.AppbaseSensorHelper.selectedSensor.set(obj, true);
-					}, 100);
-				}
 				this.listenLoadingChannel(channelObj);
 			}
 		}, {
@@ -91817,7 +91806,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			_this.channelListener = null;
 			_this.fieldType = _typeof(_this.props.appbaseField);
 			_this.handleSearch = _this.handleSearch.bind(_this);
-			_this.handleInputChange = _this.handleInputChange.bind(_this);
+			_this.optionRenderer = _this.optionRenderer.bind(_this);
 			_this.setValue = _this.setValue.bind(_this);
 			_this.defaultSearchQuery = _this.defaultSearchQuery.bind(_this);
 			_this.previousSelectedSensor = {};
@@ -91885,7 +91874,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			value: function setValue(value) {
 				var obj = {
 					key: this.searchInputId,
-					value: value
+					value: { value: value }
 				};
 				_reactivebase.AppbaseSensorHelper.selectedSensor.set(obj, true);
 				if (value && value.trim() !== "") {
@@ -91919,26 +91908,31 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		}, {
 			key: "defaultSearchQuery",
-			value: function defaultSearchQuery(value) {
-				if (value) {
+			value: function defaultSearchQuery(input) {
+				if (input && input.value) {
 					var query = [];
 					if (this.fieldType === "string") {
 						query.push({
-							match_phrase_prefix: _defineProperty({}, this.props.appbaseField, value)
+							match_phrase_prefix: _defineProperty({}, this.props.appbaseField, input.value)
 						});
 					} else {
 						this.props.appbaseField.forEach(function (field) {
 							query.push({
-								match_phrase_prefix: _defineProperty({}, field, value)
+								match_phrase_prefix: _defineProperty({}, field, input.value)
 							});
 						});
 					}
 
-					if (this.selectedCategory !== null) {
-						query.push({
-							term: _defineProperty({}, this.props.categoryField, this.selectedCategory)
-						});
+					if (input.category && input.category !== null) {
+						return {
+							bool: {
+								must: [query, {
+									term: _defineProperty({}, this.props.categoryField, input.category)
+								}]
+							}
+						};
 					}
+
 					return {
 						bool: {
 							should: query,
@@ -92029,20 +92023,23 @@ return /******/ (function(modules) { // webpackBootstrap
 						var _options;
 
 						var suggestions = [{
-							label: this.state.currentValue + " in All Categories",
+							label: this.state.currentValue,
+							markup: this.state.currentValue + " &nbsp;<span class=\"rbc-strong\">in All Categories</span>",
 							value: this.state.currentValue
 						}, {
-							label: this.state.currentValue + " in " + aggs[0].key,
+							label: this.state.currentValue,
+							markup: this.state.currentValue + " &nbsp;<span class=\"rbc-strong\">in " + aggs[0].key + "</span>",
 							value: this.state.currentValue + "--rbc1",
 							category: aggs[0].key
 						}, {
-							label: this.state.currentValue + " in " + aggs[1].key,
+							label: this.state.currentValue,
+							markup: this.state.currentValue + " &nbsp;<span class=\"rbc-strong\">in " + aggs[1].key + "</span>",
 							value: this.state.currentValue + "--rbc2",
 							category: aggs[1].key
 						}];
 						(_options = options).unshift.apply(_options, suggestions);
 					}
-					options = this.removeDuplicates(options, "label");
+					options = this.removeDuplicates(options, "value");
 					this.setState({
 						options: options,
 						isLoadingOptions: false
@@ -92067,13 +92064,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: "handleSearch",
 			value: function handleSearch(currentValue) {
 				var value = currentValue ? currentValue.value : null;
-				var finalVal = value;
+				var finalVal = { value: value };
 
 				if (currentValue && currentValue.category) {
-					this.selectedCategory = currentValue.category;
-					finalVal = finalVal.slice(0, -6);
+					finalVal.category = currentValue.category;
+					finalVal.value = finalVal.value.slice(0, -6);
 				} else {
-					this.selectedCategory = null;
+					finalVal.category = null;
 				}
 
 				var obj = {
@@ -92087,20 +92084,17 @@ return /******/ (function(modules) { // webpackBootstrap
 				});
 			}
 		}, {
-			key: "handleInputChange",
-			value: function handleInputChange(event) {
-				var inputVal = event.target.value;
-				this.setState({
-					currentValue: inputVal
-				});
-				var obj = {
-					key: this.props.componentId,
-					value: inputVal
-				};
+			key: "optionRenderer",
+			value: function optionRenderer(option) {
+				if (option.markup) {
+					return _react2.default.createElement("div", { key: option.value, dangerouslySetInnerHTML: { __html: option.markup } });
+				}
 
-				// pass the selected sensor value with componentId as key,
-				var isExecuteQuery = true;
-				_reactivebase.AppbaseSensorHelper.selectedSensor.set(obj, isExecuteQuery);
+				return _react2.default.createElement(
+					"div",
+					{ key: option.value },
+					option.label
+				);
 			}
 		}, {
 			key: "render",
@@ -92122,13 +92116,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				return _react2.default.createElement(
 					"div",
-					{ className: "rbc rbc-datasearch col s12 col-xs-12 card thumbnail " + cx },
+					{ className: "rbc rbc-categorysearch col s12 col-xs-12 card thumbnail " + cx },
 					title,
 					_react2.default.createElement(_reactSelect2.default, _extends({
 						isLoading: this.state.isLoadingOptions,
 						value: this.state.currentValue,
 						options: this.state.options,
 						onInputChange: this.setValue,
+						optionRenderer: this.optionRenderer,
 						onChange: this.handleSearch,
 						onBlurResetsInput: false
 					}, this.props))
@@ -92197,10 +92192,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactivebase = __webpack_require__(2);
 
-	var _StaticSearch = __webpack_require__(487);
-
-	var _StaticSearch2 = _interopRequireDefault(_StaticSearch);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -92236,7 +92227,6 @@ return /******/ (function(modules) { // webpackBootstrap
 			_this.channelObj = [];
 			_this.channelId = [];
 			_this.channelListener = [];
-			_this.defaultSelected = _this.props.defaultSelected;
 			_this.customQuery = _this.customQuery.bind(_this);
 			_this.firstLevelAggCustomQuery = _this.firstLevelAggCustomQuery.bind(_this);
 			_this.secondLevelAggCustomQuery = _this.secondLevelAggCustomQuery.bind(_this);
@@ -92253,10 +92243,17 @@ return /******/ (function(modules) { // webpackBootstrap
 				this.initialize();
 			}
 		}, {
-			key: "initialize",
-			value: function initialize() {
-				this.setQueryInfo();
-				this.createChannel();
+			key: "componentWillUpdate",
+			value: function componentWillUpdate() {
+				var _this2 = this;
+
+				setTimeout(function () {
+					if (!_.isEqual(_this2.defaultData, _this2.props.data)) {
+						_this2.defaultData = _this2.props.data;
+						_this2.removeChannels();
+						_this2.initialize();
+					}
+				}, 300);
 			}
 
 			// stop streaming request and remove listener when component will unmount
@@ -92277,17 +92274,10 @@ return /******/ (function(modules) { // webpackBootstrap
 				});
 			}
 		}, {
-			key: "componentWillUpdate",
-			value: function componentWillUpdate() {
-				var _this2 = this;
-
-				setTimeout(function () {
-					if (!_.isEqual(_this2.defaultData, _this2.props.data)) {
-						_this2.defaultData = _this2.props.data;
-						_this2.removeChannels();
-						_this2.initialize();
-					}
-				}, 300);
+			key: "initialize",
+			value: function initialize() {
+				this.setQueryInfo();
+				this.createChannel();
 			}
 
 			// build query for this sensor only
@@ -92318,7 +92308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: "setQueryInfo",
 			value: function setQueryInfo() {
-				var obj = {
+				var ob = {
 					key: this.props.componentId,
 					value: {
 						queryType: this.type,
@@ -92326,7 +92316,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery
 					}
 				};
-				_reactivebase.AppbaseSensorHelper.selectedSensor.setSensorInfo(obj);
+				_reactivebase.AppbaseSensorHelper.selectedSensor.setSensorInfo(ob);
 				function setInternalQuery(key, level) {
 					var obj = {
 						key: key,
@@ -92343,7 +92333,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						key: key,
 						value: ""
 					};
-					_reactivebase.AppbaseSensorHelper.selectedSensor.set(obj);
+					_reactivebase.AppbaseSensorHelper.selectedSensor.set(obj1);
 				}
 				setInternalQuery.call(this, "subCategory", 0);
 				setInternalQuery.call(this, "lastCategory", 1);
@@ -92354,16 +92344,16 @@ return /******/ (function(modules) { // webpackBootstrap
 				var react = {
 					aggs: {
 						key: this.props.appbaseField[level],
-						size: this.props.size
+						size: 10
 					},
 					and: []
 				};
 				if (level === 1) {
 					react.aggs.customQuery = this.firstLevelAggCustomQuery;
-					react.and.push('subCategory');
+					react.and.push("subCategory");
 				} else if (level === 2) {
 					react.aggs.customQuery = this.secondLevelAggCustomQuery;
-					react.and.push('lastCategory');
+					react.and.push("lastCategory");
 				}
 				return react;
 			}
@@ -92373,13 +92363,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: "createChannel",
 			value: function createChannel() {
-				var level = 0;
-				for (var _level = 1; _level < this.props.appbaseField.length; _level++) {
-					var react = this.getReact(_level);
+				for (var level = 1; level < this.props.appbaseField.length; level += 1) {
+					var react = this.getReact(level);
 					// create a channel and listen the changes
-					this.channelObj[_level] = _reactivebase.AppbaseChannelManager.create(this.context.appbaseRef, this.context.type, react);
-					this.channelId[_level] = this.channelObj[_level].channelId;
-					this.channelListener[_level] = this.localChannel(_level, react);
+					this.channelObj[level] = _reactivebase.AppbaseChannelManager.create(this.context.appbaseRef, this.context.type, react);
+					this.channelId[level] = this.channelObj[level].channelId;
+					this.channelListener[level] = this.localChannel(level, react);
 					// this.listenLoadingChannel(channelObj, "loadListenerParent");
 				}
 				this.setInitialData();
@@ -92398,7 +92387,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 		}, {
 			key: "localChannel",
-			value: function localChannel(level, react) {
+			value: function localChannel(level) {
 				var _this4 = this;
 
 				return this.channelObj[level].emitter.addListener(this.channelId[level], function (res) {
@@ -92462,9 +92451,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				if (this.secondLevelMenu) {
 					query = {};
 					Object.keys(this.secondLevelMenu).forEach(function (item) {
-						var combineItems = [item];
 						_this6.secondLevelMenu[item][_this6.props.appbaseField[1]].buckets.forEach(function (nestedItem) {
-							var aggQuery = _this6.createAggquery(item + '@rbc-level-rbc@' + nestedItem.key, 1, [item, nestedItem.key]);
+							var aggQuery = _this6.createAggquery(item + "@rbc-level-rbc@" + nestedItem.key, 1, [item, nestedItem.key]);
 							query[aggQuery.key] = aggQuery.value;
 						});
 					});
@@ -92478,10 +92466,10 @@ return /******/ (function(modules) { // webpackBootstrap
 					key: label
 				};
 				obj.value = {
-					"filter": this.getAggFilterQuery(items),
-					"aggs": _defineProperty({}, this.props.appbaseField[level + 1], {
-						"terms": {
-							"field": this.props.appbaseField[level + 1]
+					filter: this.getAggFilterQuery(items),
+					aggs: _defineProperty({}, this.props.appbaseField[level + 1], {
+						terms: {
+							field: this.props.appbaseField[level + 1]
 						}
 					})
 				};
@@ -92499,7 +92487,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				};
 				items.forEach(function (item, index) {
 					var obj = {
-						"term": _defineProperty({}, _this7.props.appbaseField[index], item)
+						term: _defineProperty({}, _this7.props.appbaseField[index], item)
 					};
 					query.bool.must.push(obj);
 				});
@@ -92512,7 +92500,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				var finalData = {};
 				Object.keys(data.aggregations).forEach(function (level1) {
-					var menu = level1.split('@rbc-level-rbc@');
+					var menu = level1.split("@rbc-level-rbc@");
 					var finalMenu = data.aggregations[level1][_this8.props.appbaseField[2]].buckets.map(function (item) {
 						return item.key;
 					});
@@ -92529,12 +92517,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: "addItemsToList",
 			value: function addItemsToList(newItems, level) {
-				var _this9 = this,
-				    _setState;
+				var _setState;
 
 				newItems = newItems.map(function (item) {
 					item.key = item.key.toString();
-					item.status = !!(_this9.defaultSelected && _this9.defaultSelected.indexOf(item.key) > -1);
 					return item;
 				});
 				var itemVar = void 0;
@@ -92556,14 +92542,14 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 		}, {
 			key: "renderItems",
-			value: function renderItems(items, level) {
-				var _this10 = this;
+			value: function renderItems() {
+				var _this9 = this;
 
 				if (this.state.finalData) {
 					return this.props.data.map(function (item) {
 						var cx = (0, _classnames2.default)({
-							"rbc-item-active": item.value === _this10.state.selectedValue,
-							"rbc-item-inactive": !(item.value === _this10.state.selectedValue)
+							"rbc-item-active": item.value === _this9.state.selectedValue,
+							"rbc-item-inactive": !(item.value === _this9.state.selectedValue)
 						});
 						return _react2.default.createElement(
 							"li",
@@ -92571,7 +92557,7 @@ return /******/ (function(modules) { // webpackBootstrap
 							_react2.default.createElement(
 								"a",
 								{ className: "rbc-list-item " + cx, onMouseEnter: function onMouseEnter() {
-										return _this10.handleHover(item.value);
+										return _this9.handleHover(item.value);
 									} },
 								_react2.default.createElement(
 									"span",
@@ -92595,21 +92581,21 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: "filterBlackList",
 			value: function filterBlackList(list) {
-				var _this11 = this;
+				var _this10 = this;
 
 				return list.filter(function (item) {
-					return _this11.notInBlackListed(item);
+					return _this10.notInBlackListed(item);
 				});
 			}
 		}, {
 			key: "notInBlackListed",
 			value: function notInBlackListed(item) {
-				return this.props.blacklist.indexOf(item) === -1 ? true : false;
+				return this.props.blacklist.indexOf(item) === -1;
 			}
 		}, {
 			key: "renderList",
 			value: function renderList() {
-				var _this12 = this;
+				var _this11 = this;
 
 				if (this.state.selectedValue) {
 					var data = this.state.finalData[this.state.selectedValue];
@@ -92618,7 +92604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 					var _loop = function _loop(list) {
 						count += 1;
-						if (_this12.notInBlackListed(list) && count <= _this12.props.maxCategories) {
+						if (_this11.notInBlackListed(list) && count <= _this11.props.maxCategories) {
 							markup.push(_react2.default.createElement(
 								"div",
 								{ key: list, className: "rbc-list-container" },
@@ -92630,14 +92616,14 @@ return /******/ (function(modules) { // webpackBootstrap
 								_react2.default.createElement(
 									"ul",
 									null,
-									_this12.filterBlackList(data[list]).slice(0, _this12.props.maxItems).map(function (item) {
+									_this11.filterBlackList(data[list]).slice(0, _this11.props.maxItems).map(function (item) {
 										return _react2.default.createElement(
 											"li",
 											{ key: list + "-" + item },
 											_react2.default.createElement(
 												"a",
 												{ onClick: function onClick() {
-														return _this12.selectItem(item, list);
+														return _this11.selectItem(item, list);
 													} },
 												item
 											)
@@ -92662,31 +92648,25 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: "render",
 			value: function render() {
-				var _this13 = this;
+				var _this12 = this;
 
 				var listComponent = _react2.default.createElement(
 					"ul",
 					{ className: "row rbc-list-container" },
-					this.renderItems(this.state.items, 0)
+					this.renderItems()
 				);
-
-				var cx = (0, _classnames2.default)({
-					"rbc-initialloader-active": this.props.initialLoader,
-					"rbc-initialloader-inactive": !this.props.initialLoader
-				});
 
 				return _react2.default.createElement(
 					"div",
 					{ className: "rbc rbc-multilevelmenu-container card thumbnail col s12 col-xs-12", onMouseLeave: function onMouseLeave() {
-							return _this13.handleHover(null);
+							return _this12.handleHover(null);
 						} },
 					_react2.default.createElement(
 						"div",
-						{ className: "rbc rbc-multilevelmenu col s12 col-xs-12 " + cx },
+						{ className: "rbc rbc-multilevelmenu col s12 col-xs-12" },
 						listComponent
 					),
-					this.renderList(),
-					this.props.initialLoader && this.state.queryStart ? _react2.default.createElement(_reactivebase.InitialLoader, { defaultText: this.props.initialLoader }) : null
+					this.renderList()
 				);
 			}
 		}]);
@@ -92707,14 +92687,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		maxCategories: _react2.default.PropTypes.number,
 		maxItems: _react2.default.PropTypes.number,
 		blacklist: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string),
-		size: _reactivebase.AppbaseSensorHelper.sizeValidation,
 		customQuery: _react2.default.PropTypes.func,
 		react: _react2.default.PropTypes.object
 	};
 
 	// Default props value
 	MultiLevelMenu.defaultProps = {
-		size: 100,
 		blacklist: [],
 		maxCategories: 10,
 		maxItems: 4
@@ -92730,13 +92708,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		componentId: _reactivebase.TYPES.STRING,
 		appbaseField: _reactivebase.TYPES.ARRAY,
 		react: _reactivebase.TYPES.OBJECT,
-		size: _reactivebase.TYPES.NUMBER,
 		maxCategories: _reactivebase.TYPES.NUMBER,
 		maxItems: _reactivebase.TYPES.NUMBER,
 		blacklist: _reactivebase.TYPES.ARRAY,
 		data: _reactivebase.TYPES.OBJECT,
-		customQuery: _reactivebase.TYPES.FUNCTION,
-		initialLoader: _reactivebase.TYPES.OBJECT
+		customQuery: _reactivebase.TYPES.FUNCTION
 	};
 
 /***/ },
