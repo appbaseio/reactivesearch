@@ -74,7 +74,7 @@ export default class TagCloudDefault extends Component {
 							componentId="CitySensor"
 							appbaseField={this.props.mapping.city}
 							title="TagCloud"
-							size={1500}
+							size={100}
 							customQuery={this.customQuery}
 							{...this.props}
 						/>
