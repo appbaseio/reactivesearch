@@ -126,7 +126,7 @@ export default class MultiLevelMenu extends Component {
 		let react = {
 			aggs: {
 				key: this.props.appbaseField[level],
-				size: this.props.size
+				size: 10
 			},
 			and: []
 		};
@@ -408,7 +408,6 @@ MultiLevelMenu.propTypes = {
 
 // Default props value
 MultiLevelMenu.defaultProps = {
-	size: 100,
 	blacklist: [],
 	maxCategories: 10,
 	maxItems: 4
@@ -424,7 +423,6 @@ MultiLevelMenu.types = {
 	componentId: TYPES.STRING,
 	appbaseField: TYPES.ARRAY,
 	react: TYPES.OBJECT,
-	size: TYPES.NUMBER,
 	maxCategories: TYPES.NUMBER,
 	maxItems: TYPES.NUMBER,
 	blacklist: TYPES.ARRAY,

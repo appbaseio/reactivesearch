@@ -1,0 +1,78 @@
+.rbc.rbc-categorysearch {
+	margin-top: 10px;
+	padding: 0;
+
+	.is-focused:not(.is-open)>.Select-control {
+		box-shadow: none;
+		border: 0;
+	}
+	
+	.Select-control {
+		border: 0;
+		height: 48px;
+		border-radius: 0;
+		font-family: $font-regular;
+		background: darken($light-grey, 2%);
+		outline: none;
+
+		&:hover, &:focus {
+			outline: none;
+		}
+
+		.Select-arrow-zone {
+			position: absolute;
+			right: 6px;
+			top: 12px;
+
+			.Select-arrow {
+				border: 0;
+				width: 30px;
+				height: 30px;
+				display: inline-block;
+				font: normal normal normal 14px/1 FontAwesome;
+				font-size: inherit;
+				text-rendering: auto;
+				-webkit-font-smoothing: antialiased;
+
+				&:before {
+				  content: "\f002";
+				}
+			}
+		}
+	}
+
+	.Select--single>.Select-control .Select-value, .Select-placeholder {
+		line-height: 50px;
+	}
+
+	.Select-placeholder, 
+	.Select-control,
+	.Select--single>.Select-control .Select-value {
+		padding-right: 30px;
+	}
+	
+	.Select-input {
+		height: 48px;
+
+		input {
+			height: 48px;
+			line-height: 36px;
+			padding: 0;
+			-webkit-transition: none;
+			-moz-transition: none;
+			-ms-transition: none;
+			-o-transition: none;
+			transition: none;
+
+		}
+
+		&:hover, &:focus {
+			outline: none;
+		}
+	}
+
+	.rbc-strong {
+		font-family: $font-bold;
+		color: $primary-color;
+	}
+}
