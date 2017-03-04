@@ -30,5 +30,8 @@ npm-debug.log.*
 bower_components
 website/bower_components
 
+#SWP files
+*.swp
+
 # .DS_Store
 .DS_Store
