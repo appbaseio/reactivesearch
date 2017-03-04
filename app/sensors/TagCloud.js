@@ -40,7 +40,7 @@ export default class TagCloud extends Component {
 	componentDidMount() {
 		this.size = this.props.size;
 		this.setQueryInfo();
-		this.createChannel(true);
+		this.createChannel();
 	}
 
 	componentWillUpdate() {
@@ -138,7 +138,7 @@ export default class TagCloud extends Component {
 		helper.selectedSensor.setSortInfo(obj);
 	}
 
-	createChannel(executeChannel = false) {
+	createChannel() {
 		// Set the react - add self aggs query as well with react
 		const react = this.props.react ? this.props.react : {};
 		react.aggs = {
@@ -180,15 +180,6 @@ export default class TagCloud extends Component {
 				this.setData(rawData);
 			}
 		});
-		if (executeChannel) {
-			setTimeout(() => {
-				const obj = {
-					key: "tagCloudChanges",
-					value: ""
-				};
-				helper.selectedSensor.set(obj, true);
-			}, 100);
-		}
 		this.listenLoadingChannel(channelObj);
 	}
 
