@@ -55,7 +55,7 @@ export default class ResultCardDefault extends Component {
 				username="cf7QByt5e"
 				password="d2d60548-82a9-43cc-8b40-93cbbe75c34c"
 			>
-				<div className="row reverse">
+				<div className="row reverse-labels">
 					<div className="col s6 col-xs-6">
 						<ResultCard
 							componentId="SearchResult"
