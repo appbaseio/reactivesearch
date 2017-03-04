@@ -29,7 +29,7 @@ export default class CategorySearch extends Component {
 		this.channelListener = null;
 		this.fieldType = typeof this.props.appbaseField;
 		this.handleSearch = this.handleSearch.bind(this);
-		this.handleInputChange = this.handleInputChange.bind(this);
+		this.optionRenderer = this.optionRenderer.bind(this);
 		this.setValue = this.setValue.bind(this);
 		this.defaultSearchQuery = this.defaultSearchQuery.bind(this);
 		this.previousSelectedSensor = {};
@@ -82,7 +82,7 @@ export default class CategorySearch extends Component {
 	setValue(value) {
 		const obj = {
 			key: this.searchInputId,
-			value
+			value: { value }
 		};
 		helper.selectedSensor.set(obj, true);
 		if (value && value.trim() !== "") {
@@ -108,32 +108,37 @@ export default class CategorySearch extends Component {
 	}
 
 	// default query
-	defaultSearchQuery(value) {
-		if (value) {
+	defaultSearchQuery(input) {
+		if (input && input.value) {
 			const query = [];
 			if (this.fieldType === "string") {
 				query.push({
 					match_phrase_prefix: {
-						[this.props.appbaseField]: value
+						[this.props.appbaseField]: input.value
 					}
 				});
 			} else {
 				this.props.appbaseField.forEach((field) => {
 					query.push({
 						match_phrase_prefix: {
-							[field]: value
+							[field]: input.value
 						}
 					});
 				});
 			}
 
-			if (this.selectedCategory !== null) {
-				query.push({
-					term: {
-						[this.props.categoryField]: this.selectedCategory
+			if (input.category && input.category !== null) {
+				return {
+					bool: {
+						must: [ query, {
+							term: {
+								[this.props.categoryField]: input.category
+							}
+						}]
 					}
-				});
+				};
 			}
+
 			return {
 				bool: {
 					should: query,
@@ -212,23 +217,26 @@ export default class CategorySearch extends Component {
 			if (this.state.currentValue && this.state.currentValue.trim() !== "" && aggs.length) {
 				const suggestions = [
 					{
-						label: `${this.state.currentValue} in All Categories`,
+						label: this.state.currentValue,
+						markup: `${this.state.currentValue} &nbsp;<span class="rbc-strong">in All Categories</span>`,
 						value: this.state.currentValue
 					},
 					{
-						label: `${this.state.currentValue} in ${aggs[0].key}`,
+						label: this.state.currentValue,
+						markup: `${this.state.currentValue} &nbsp;<span class="rbc-strong">in ${aggs[0].key}</span>`,
 						value: `${this.state.currentValue}--rbc1`,
 						category: aggs[0].key
 					},
 					{
-						label: `${this.state.currentValue} in ${aggs[1].key}`,
+						label: this.state.currentValue,
+						markup: `${this.state.currentValue} &nbsp;<span class="rbc-strong">in ${aggs[1].key}</span>`,
 						value: `${this.state.currentValue}--rbc2`,
 						category: aggs[1].key
 					}
 				];
 				options.unshift(...suggestions);
 			}
-			options = this.removeDuplicates(options, "label");
+			options = this.removeDuplicates(options, "value");
 			this.setState({
 				options,
 				isLoadingOptions: false
@@ -249,13 +257,13 @@ export default class CategorySearch extends Component {
 	// When user has selected a search value
 	handleSearch(currentValue) {
 		const value = currentValue ? currentValue.value : null;
-		let finalVal = value;
+		let finalVal = { value };
 
 		if (currentValue && currentValue.category) {
-			this.selectedCategory = currentValue.category;
-			finalVal = finalVal.slice(0, -6);
+			finalVal.category = currentValue.category;
+			finalVal.value = finalVal.value.slice(0, -6);
 		} else {
-			this.selectedCategory = null;
+			finalVal.category = null;
 		}
 
 		const obj = {
@@ -269,19 +277,12 @@ export default class CategorySearch extends Component {
 		});
 	}
 
-	handleInputChange(event) {
-		const inputVal = event.target.value;
-		this.setState({
-			currentValue: inputVal
-		});
-		const obj = {
-			key: this.props.componentId,
-			value: inputVal
-		};
+	optionRenderer(option) {
+		if (option.markup) {
+			return (<div key={option.value} dangerouslySetInnerHTML={{__html: option.markup}} />);
+		}
 
-		// pass the selected sensor value with componentId as key,
-		const isExecuteQuery = true;
-		helper.selectedSensor.set(obj, isExecuteQuery);
+		return (<div key={option.value}>{option.label}</div>);
 	}
 
 	render() {
@@ -297,13 +298,14 @@ export default class CategorySearch extends Component {
 		});
 
 		return (
-			<div className={`rbc rbc-datasearch col s12 col-xs-12 card thumbnail ${cx}`}>
+			<div className={`rbc rbc-categorysearch col s12 col-xs-12 card thumbnail ${cx}`}>
 				{title}
 				<Select
 					isLoading={this.state.isLoadingOptions}
 					value={this.state.currentValue}
 					options={this.state.options}
 					onInputChange={this.setValue}
+					optionRenderer={this.optionRenderer}
 					onChange={this.handleSearch}
 					onBlurResetsInput={false}
 					{...this.props}

@@ -52,6 +52,59 @@
     .rbc.rbc-nestedlist-container .rbc.rbc-nestedlist .rbc-search-container {
       padding: 0; }
 
+.rbc.rbc-categorysearch {
+  margin-top: 10px;
+  padding: 0; }
+  .rbc.rbc-categorysearch .is-focused:not(.is-open) > .Select-control {
+    box-shadow: none;
+    border: 0; }
+  .rbc.rbc-categorysearch .Select-control {
+    border: 0;
+    height: 48px;
+    border-radius: 0;
+    font-family: "Lato Regular";
+    background: whitesmoke;
+    outline: none; }
+    .rbc.rbc-categorysearch .Select-control:hover, .rbc.rbc-categorysearch .Select-control:focus {
+      outline: none; }
+    .rbc.rbc-categorysearch .Select-control .Select-arrow-zone {
+      position: absolute;
+      right: 6px;
+      top: 12px; }
+      .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
+        border: 0;
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased; }
+        .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow:before {
+          content: "\f002"; }
+  .rbc.rbc-categorysearch .Select--single > .Select-control .Select-value, .rbc.rbc-categorysearch .Select-placeholder {
+    line-height: 50px; }
+  .rbc.rbc-categorysearch .Select-placeholder,
+  .rbc.rbc-categorysearch .Select-control,
+  .rbc.rbc-categorysearch .Select--single > .Select-control .Select-value {
+    padding-right: 30px; }
+  .rbc.rbc-categorysearch .Select-input {
+    height: 48px; }
+    .rbc.rbc-categorysearch .Select-input input {
+      height: 48px;
+      line-height: 36px;
+      padding: 0;
+      -webkit-transition: none;
+      -moz-transition: none;
+      -ms-transition: none;
+      -o-transition: none;
+      transition: none; }
+    .rbc.rbc-categorysearch .Select-input:hover, .rbc.rbc-categorysearch .Select-input:focus {
+      outline: none; }
+  .rbc.rbc-categorysearch .rbc-strong {
+    font-family: "Lato Bold";
+    color: #1893e7; }
+
 .rbc.rbc-togglelist {
   padding: 0; }
   .rbc.rbc-togglelist .rbc-list-item {
