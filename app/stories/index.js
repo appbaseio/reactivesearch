@@ -1,5 +1,5 @@
 import React from "react";
-import { storiesOf, addDecorator } from "@kadira/storybook";
+import { storiesOf } from "@kadira/storybook";
 import { withKnobs, text, boolean, number, array, select, object } from "@kadira/storybook-addon-knobs";
 import withReadme from "storybook-readme/with-readme";
 
@@ -31,7 +31,9 @@ function removeFirstLine(str) {
 storiesOf("NestedList", module)
 	.addDecorator(withKnobs)
 	.add("Basic", withReadme(removeFirstLine(NestedListReadme), () => (
-		<NestedListDefault />
+		<NestedListDefault
+			title=""
+		/>
 	)))
 	.add("With Title", withReadme(removeFirstLine(NestedListReadme), () => (
 		<NestedListDefault
@@ -40,7 +42,7 @@ storiesOf("NestedList", module)
 	)))
 	.add("Default selection", withReadme(removeFirstLine(NestedListReadme), () => (
 		<NestedListDefault
-			defaultSelected={["bmw", "x series"]}
+			defaultSelected={array("defaultSelected", ["bmw", "x series"])}
 		/>
 	))).add("Playground", withReadme(removeFirstLine(NestedListReadme), () => (
 		<NestedListDefault
@@ -60,12 +62,19 @@ storiesOf("ToggleList", module)
 		<ToggleListDefault />
 	)))
 	.add("With Default Selected", withReadme(removeFirstLine(ToggleButtonReadme), () => (
-		<ToggleListDefault defaultSelected={["Social"]} />
+		<ToggleListDefault
+			defaultSelected={array("defaultSelected", ["Social"])}
+		/>
 	)))
 	.add("Playground", withReadme(removeFirstLine(ToggleButtonReadme), () => (
 		<ToggleListDefault
 			title={text("title", "ToggleList: Meetup Categories")}
 			multiSelect={boolean("multiSelect", true)}
+			data={object("data", [
+					{ label: "Social", value: "Social" },
+					{ label: "Travel", value: "Travel" },
+					{ label: "Outdoors", value: "Outdoors" }
+			])}
 			defaultSelected={array("defaultSelected", ["Social", "Travel"])}
 		/>
 	)));
@@ -77,7 +86,7 @@ storiesOf("DynamicRangeSlider", module)
 	)))
 	.add("Without histogram", withReadme(removeFirstLine(RangeSliderReadme), () => (
 		<DynamicRangeSliderDefault
-			showHistogram={false}
+			showHistogram={boolean("showHistogram", false)}
 		/>
 	)))
 	.add("With RangeLabels", withReadme(removeFirstLine(RangeSliderReadme), () => (
@@ -105,19 +114,27 @@ storiesOf("TagCloud", module)
 		<TagCloudDefault />
 	)))
 	.add("With multiSelect", withReadme(removeFirstLine(SingleListReadme), () => (
-		<TagCloudDefault multiSelect />
+		<TagCloudDefault
+			multiSelect={boolean("multiSelect", true)}
+		/>
 	)))
 	.add("With defaultSelected", withReadme(removeFirstLine(SingleListReadme), () => (
-		<TagCloudDefault defaultSelected="Auckland" />
+		<TagCloudDefault
+			defaultSelected={text("defaultSelected", "Auckland")}
+		/>
 	)))
 	.add("With multiSelect and defaultSelected", withReadme(removeFirstLine(SingleListReadme), () => (
-		<TagCloudDefault multiSelect defaultSelected={["Auckland", "Amsterdam"]} />
+		<TagCloudDefault
+			multiSelect={boolean("multiSelect", true)}
+			defaultSelected={array("defaultSelected", ["Auckland", "Amsterdam"])}
+		/>
 	)))
 	.add("Playground", withReadme(removeFirstLine(SingleListReadme), () => (
 		<TagCloudDefault
 			title={text("title", "TagCloud: City Filter")}
 			size={number("size", 100)}
-			defaultSelected={text("defaultSelected", "Auckland")}
+			multiSelect={boolean("multiSelect", "true")}
+			defaultSelected={array("defaultSelected", ["Auckland"])}
 			showCount={boolean("showCount", true)}
 		/>
 	)));
@@ -128,11 +145,18 @@ storiesOf("RatingsFilter", module)
 		<RatingsFilterDefault />
 	)))
 	.add("With defaultSelected", withReadme(removeFirstLine(SingleRangeReadme), () => (
-		<RatingsFilterDefault defaultSelected={{ start: 2, end: 5 }} />
+		<RatingsFilterDefault
+			defaultSelected={object("defaultSelected", { start: 2, end: 5 })}
+		/>
 	)))
 	.add("Playground", withReadme(removeFirstLine(SingleRangeReadme), () => (
 		<RatingsFilterDefault
 			title={text("title", "RatingsFilter")}
+			data={object("data", [{ start: 4, end: 5, label: "4 stars and up" },
+				{ start: 3, end: 5, label: "3 stars and up" },
+				{ start: 2, end: 5, label: "2 stars and up" },
+				{ start: 1, end: 5, label: "> 1 stars" }])}
+			defaultSelected={object("defaultSelected", { start: 2, end: 5 })}
 		/>
 	)));
 
@@ -147,6 +171,9 @@ storiesOf("CategorySearch", module)
 	.add("Playground", withReadme(removeFirstLine(DataSearchReadme), () => (
 		<CategorySearchDefault
 			title={text("title", "CategorySearch")}
+			appbaseField={array("appbaseField", ["name"])}
+			categoryField={text("categoryField", "brand.raw")}
+			defaultSelected={text("defaultSelected", "")}
 			placeholder={text("placeholder", "Search Car")}
 		/>
 	)));
@@ -158,24 +185,24 @@ storiesOf("MultiLevelMenu", module)
 	)))
 	.add("With Blacklist", withReadme(removeFirstLine(NestedListReadme), () => (
 		<MultiLevelMenuDefault
-			blacklist={["golf", "unknown"]}
+			blacklist={array("blacklist", ["golf", "unknown"])}
 		/>
 	)))
 	.add("With maxCategories", withReadme(removeFirstLine(NestedListReadme), () => (
 		<MultiLevelMenuDefault
-			maxCategories={6}
+			maxCategories={number("maxCategories", 6)}
 		/>
 	)))
 	.add("With maxItems", withReadme(removeFirstLine(NestedListReadme), () => (
 		<MultiLevelMenuDefault
-			maxItems={3}
+			maxItems={number("maxItems", 3)}
 		/>
 	)))
 	.add("Playground", withReadme(removeFirstLine(NestedListReadme), () => (
 		<MultiLevelMenuDefault
 			data={object("data", [
-				{label: "Volkswagen", value: "volkswagen"},
-				{label: "BMW", value: "bmw"}
+				{ label: "Volkswagen", value: "volkswagen" },
+				{ label: "BMW", value: "bmw" }
 			])}
 			blacklist={array("blacklist", ["golf", "unknown"])}
 			maxCategories={number("maxCategories", 10)}
