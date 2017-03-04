@@ -2,12 +2,10 @@
 import React, { Component } from "react";
 import classNames from "classnames";
 import {
-	InitialLoader,
 	TYPES,
 	AppbaseChannelManager as manager,
 	AppbaseSensorHelper as helper
 } from "@appbaseio/reactivebase";
-import StaticSearch from "../addons/StaticSearch";
 
 const _ = require("lodash");
 
@@ -28,7 +26,6 @@ export default class MultiLevelMenu extends Component {
 		this.channelObj = [];
 		this.channelId = [];
 		this.channelListener = [];
-		this.defaultSelected = this.props.defaultSelected;
 		this.customQuery = this.customQuery.bind(this);
 		this.firstLevelAggCustomQuery = this.firstLevelAggCustomQuery.bind(this);
 		this.secondLevelAggCustomQuery = this.secondLevelAggCustomQuery.bind(this);
@@ -40,9 +37,14 @@ export default class MultiLevelMenu extends Component {
 		this.initialize();
 	}
 
-	initialize() {
-		this.setQueryInfo();
-		this.createChannel();
+	componentWillUpdate() {
+		setTimeout(() => {
+			if (!_.isEqual(this.defaultData, this.props.data)) {
+				this.defaultData = this.props.data;
+				this.removeChannels();
+				this.initialize();
+			}
+		}, 300);
 	}
 
 	// stop streaming request and remove listener when component will unmount
@@ -59,14 +61,9 @@ export default class MultiLevelMenu extends Component {
 		});
 	}
 
-	componentWillUpdate() {
-		setTimeout(() => {
-			if (!_.isEqual(this.defaultData, this.props.data)) {
-				this.defaultData = this.props.data;
-				this.removeChannels();
-				this.initialize();
-			}
-		}, 300);
+	initialize() {
+		this.setQueryInfo();
+		this.createChannel();
 	}
 
 	// build query for this sensor only
@@ -91,7 +88,7 @@ export default class MultiLevelMenu extends Component {
 
 	// set the query type and input data
 	setQueryInfo() {
-		const obj = {
+		const ob = {
 			key: this.props.componentId,
 			value: {
 				queryType: this.type,
@@ -99,52 +96,50 @@ export default class MultiLevelMenu extends Component {
 				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery
 			}
 		};
-		helper.selectedSensor.setSensorInfo(obj);
+		helper.selectedSensor.setSensorInfo(ob);
 		function setInternalQuery(key, level) {
 			const obj = {
-				key: key,
+				key,
 				value: {
 					queryType: "term",
 					inputData: this.props.appbaseField[level],
-					customQuery: function() {
+					customQuery() {
 						return null;
 					}
 				}
 			};
 			helper.selectedSensor.setSensorInfo(obj);
 			const obj1 = {
-				key: key,
+				key,
 				value: ""
 			};
-			helper.selectedSensor.set(obj);
+			helper.selectedSensor.set(obj1);
 		}
 		setInternalQuery.call(this, "subCategory", 0);
 		setInternalQuery.call(this, "lastCategory", 1);
 	}
 
 	getReact(level) {
-		let react = {
+		const react = {
 			aggs: {
 				key: this.props.appbaseField[level],
 				size: 10
 			},
 			and: []
 		};
-		if(level === 1) {
-			react.aggs.customQuery = this.firstLevelAggCustomQuery
-			react.and.push('subCategory');
-		}
-		else if(level === 2) {
-			react.aggs.customQuery = this.secondLevelAggCustomQuery
-			react.and.push('lastCategory');
+		if (level === 1) {
+			react.aggs.customQuery = this.firstLevelAggCustomQuery;
+			react.and.push("subCategory");
+		}		else if (level === 2) {
+			react.aggs.customQuery = this.secondLevelAggCustomQuery;
+			react.and.push("lastCategory");
 		}
 		return react;
 	}
 
 	// Create a channel which passes the react and receive results whenever react changes
 	createChannel() {
-		let level = 0;
-		for(let level = 1; level < this.props.appbaseField.length; level++) {
+		for (let level = 1; level < this.props.appbaseField.length; level += 1) {
 			const react = this.getReact(level);
 			// create a channel and listen the changes
 			this.channelObj[level] = manager.create(this.context.appbaseRef, this.context.type, react);
@@ -164,13 +159,12 @@ export default class MultiLevelMenu extends Component {
 		}, 100);
 	}
 
-	localChannel(level, react) {
+	localChannel(level) {
 		return this.channelObj[level].emitter.addListener(this.channelId[level], (res) => {
-			if(res.appliedQuery) {
-				if(level === 1) {
+			if (res.appliedQuery) {
+				if (level === 1) {
 					this.setSensorData(res.data, level);
-				}
-				else if(level === 2) {
+				}				else if (level === 2) {
 					this.setData(res.data);
 				}
 			}
@@ -178,23 +172,23 @@ export default class MultiLevelMenu extends Component {
 	}
 
 	setSensorData(data, level) {
-		let obj = {
+		const obj = {
 			levelName: "firstLevelMenu",
 			key: "subCategory"
 		};
-		if(level === 1) {
+		if (level === 1) {
 			obj.levelName = "secondLevelMenu";
 			obj.key = "lastCategory";
 		}
 		if (data && data.aggregations && data.aggregations) {
-			if(level === 0) {
+			if (level === 0) {
 				this[obj.levelName] = data.aggregations.map(item => item.value);
-			} else if(level === 1) {
+			} else if (level === 1) {
 				this[obj.levelName] = data.aggregations;
 			}
 		}
 
-		let sensorObj = {
+		const sensorObj = {
 			key: obj.key,
 			value: this[obj.levelName]
 		};
@@ -206,7 +200,7 @@ export default class MultiLevelMenu extends Component {
 		if (this.firstLevelMenu) {
 			query = {};
 			this.firstLevelMenu.forEach((item) => {
-				let aggQuery = this.createAggquery(item, 0, [item]);
+				const aggQuery = this.createAggquery(item, 0, [item]);
 				query[aggQuery.key] = aggQuery.value;
 			});
 		}
@@ -218,9 +212,8 @@ export default class MultiLevelMenu extends Component {
 		if (this.secondLevelMenu) {
 			query = {};
 			Object.keys(this.secondLevelMenu).forEach((item) => {
-				let combineItems = [item];
 				this.secondLevelMenu[item][this.props.appbaseField[1]].buckets.forEach((nestedItem) => {
-					let aggQuery = this.createAggquery(item+'@rbc-level-rbc@'+nestedItem.key, 1, [item, nestedItem.key]);
+					const aggQuery = this.createAggquery(`${item}@rbc-level-rbc@${nestedItem.key}`, 1, [item, nestedItem.key]);
 					query[aggQuery.key] = aggQuery.value;
 				});
 			});
@@ -229,31 +222,31 @@ export default class MultiLevelMenu extends Component {
 	}
 
 	createAggquery(label, level, items) {
-		let obj = {
+		const obj = {
 			key: label
 		};
 		obj.value = {
-			"filter": this.getAggFilterQuery(items),
-			"aggs": {
+			filter: this.getAggFilterQuery(items),
+			aggs: {
 				[this.props.appbaseField[level + 1]]: {
-					"terms": {
-						"field": this.props.appbaseField[level + 1]
+					terms: {
+						field: this.props.appbaseField[level + 1]
 					}
 				}
 			}
-		}
+		};
 		return obj;
 	}
 
 	getAggFilterQuery(items) {
-		let query = {
+		const query = {
 			bool: {
 				must: []
 			}
 		};
 		items.forEach((item, index) => {
-			let obj = {
-				"term": {
+			const obj = {
+				term: {
 					[this.props.appbaseField[index]]: item
 				}
 			};
@@ -265,34 +258,33 @@ export default class MultiLevelMenu extends Component {
 	setData(data) {
 		const finalData = {};
 		Object.keys(data.aggregations).forEach((level1) => {
-			let menu = level1.split('@rbc-level-rbc@');
-			let finalMenu = data.aggregations[level1][this.props.appbaseField[2]].buckets.map((item) => item.key);
-			if(Object.keys(finalData).indexOf(menu[0]) < 0) {
+			const menu = level1.split("@rbc-level-rbc@");
+			const finalMenu = data.aggregations[level1][this.props.appbaseField[2]].buckets.map(item => item.key);
+			if (Object.keys(finalData).indexOf(menu[0]) < 0) {
 				finalData[menu[0]] = {
 					[menu[1]]: finalMenu
-				}
+				};
 			} else {
-				finalData[menu[0]][menu[1]] = finalMenu
+				finalData[menu[0]][menu[1]] = finalMenu;
 			}
 		});
 		this.setState({
-			finalData: finalData
+			finalData
 		});
 	}
 
 	addItemsToList(newItems, level) {
 		newItems = newItems.map((item) => {
 			item.key = item.key.toString();
-			item.status = !!(this.defaultSelected && this.defaultSelected.indexOf(item.key) > -1);
 			return item;
 		});
 		let itemVar;
 		if (level === 0) {
-			itemVar = "items"
+			itemVar = "items";
 		} else if (level === 1) {
-			itemVar = "subItems"
+			itemVar = "subItems";
 		} else if (level === 2) {
-			itemVar = "lastItems"
+			itemVar = "lastItems";
 		}
 		this.setState({
 			[itemVar]: newItems,
@@ -306,7 +298,7 @@ export default class MultiLevelMenu extends Component {
 		});
 	}
 
-	renderItems(items, level) {
+	renderItems() {
 		if (this.state.finalData) {
 			return this.props.data.map((item) => {
 				const cx = classNames({
@@ -337,17 +329,17 @@ export default class MultiLevelMenu extends Component {
 	}
 
 	notInBlackListed(item) {
-		return this.props.blacklist.indexOf(item) === -1 ? true : false;
+		return this.props.blacklist.indexOf(item) === -1;
 	}
 
 	renderList() {
 		if (this.state.selectedValue) {
 			const data = this.state.finalData[this.state.selectedValue];
-			let markup = [];
+			const markup = [];
 			let count = 0;
-			for (let list in data) {
+			for (const list in data) {
 				count += 1;
-				if(this.notInBlackListed(list) && count <= this.props.maxCategories) {
+				if (this.notInBlackListed(list) && count <= this.props.maxCategories) {
 					markup.push(
 						(
 							<div key={list} className="rbc-list-container">
@@ -359,7 +351,7 @@ export default class MultiLevelMenu extends Component {
 								</ul>
 							</div>
 						)
-					)
+					);
 				}
 			}
 
@@ -370,22 +362,16 @@ export default class MultiLevelMenu extends Component {
 	render() {
 		const listComponent = (
 			<ul className="row rbc-list-container">
-				{this.renderItems(this.state.items, 0)}
+				{this.renderItems()}
 			</ul>
 		);
 
-		const cx = classNames({
-			"rbc-initialloader-active": this.props.initialLoader,
-			"rbc-initialloader-inactive": !this.props.initialLoader
-		});
-
 		return (
 			<div className="rbc rbc-multilevelmenu-container card thumbnail col s12 col-xs-12" onMouseLeave={() => this.handleHover(null)}>
-				<div className={`rbc rbc-multilevelmenu col s12 col-xs-12 ${cx}`}>
+				<div className="rbc rbc-multilevelmenu col s12 col-xs-12">
 					{listComponent}
 				</div>
 				{this.renderList()}
-				{this.props.initialLoader && this.state.queryStart ? (<InitialLoader defaultText={this.props.initialLoader} />) : null}
 			</div>
 		);
 	}
@@ -396,12 +382,11 @@ MultiLevelMenu.propTypes = {
 	appbaseField: React.PropTypes.array.isRequired,
 	data: React.PropTypes.arrayOf(React.PropTypes.shape({
 		label: React.PropTypes.string.isRequired,
-		value: React.PropTypes.string.isRequired,
+		value: React.PropTypes.string.isRequired
 	})),
 	maxCategories: React.PropTypes.number,
 	maxItems: React.PropTypes.number,
 	blacklist: React.PropTypes.arrayOf(React.PropTypes.string),
-	size: helper.sizeValidation,
 	customQuery: React.PropTypes.func,
 	react: React.PropTypes.object
 };
@@ -427,6 +412,5 @@ MultiLevelMenu.types = {
 	maxItems: TYPES.NUMBER,
 	blacklist: TYPES.ARRAY,
 	data: TYPES.OBJECT,
-	customQuery: TYPES.FUNCTION,
-	initialLoader: TYPES.OBJECT
+	customQuery: TYPES.FUNCTION
 };

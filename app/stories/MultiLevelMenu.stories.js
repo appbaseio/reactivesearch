@@ -69,11 +69,11 @@ export default class MultiLevelMenuDefault extends Component {
 							appbaseField={["brand.raw", "vehicleType.raw", "model.raw"]}
 							title="MultiLevelMenu"
 							data={[
-								{label: "Volkswagen", value: "volkswagen"},
-								{label: "BMW", value: "bmw"},
-								{label: "Audi", value: "audi"},
-								{label: "Nissan", value: "nissan"},
-								{label: "Fiat", value: "fiat"}
+								{ label: "Volkswagen", value: "volkswagen" },
+								{ label: "BMW", value: "bmw" },
+								{ label: "Audi", value: "audi" },
+								{ label: "Nissan", value: "nissan" },
+								{ label: "Fiat", value: "fiat" }
 							]}
 							{...this.props}
 						/>

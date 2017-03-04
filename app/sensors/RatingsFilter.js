@@ -22,10 +22,8 @@ export default class RatingsFilter extends Component {
 	componentDidMount() {
 		this.setQueryInfo();
 		if (this.defaultSelected && this.defaultSelected.start) {
-			const records = this.props.data.filter((record) => {
-				return (record.start === this.defaultSelected.start &&
-						record.end === this.defaultSelected.end)
-			});
+			const records = this.props.data.filter(record => (record.start === this.defaultSelected.start &&
+						record.end === this.defaultSelected.end));
 			if (records && records.length) {
 				setTimeout(this.handleChange.bind(this, records[0]), 300);
 			}
@@ -36,10 +34,8 @@ export default class RatingsFilter extends Component {
 		setTimeout(() => {
 			if (this.defaultSelected && this.defaultSelected.start !== this.props.defaultSelected.start) {
 				this.defaultSelected = this.props.defaultSelected;
-				const records = this.props.data.filter((record) => {
-					return (record.start === this.defaultSelected.start &&
-							record.end === this.defaultSelected.end)
-				});
+				const records = this.props.data.filter(record => (record.start === this.defaultSelected.start &&
+							record.end === this.defaultSelected.end));
 				if (records && records.length) {
 					setTimeout(this.handleChange.bind(this, records[0]), 300);
 				}

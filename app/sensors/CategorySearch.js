@@ -130,7 +130,7 @@ export default class CategorySearch extends Component {
 			if (input.category && input.category !== null) {
 				return {
 					bool: {
-						must: [ query, {
+						must: [query, {
 							term: {
 								[this.props.categoryField]: input.category
 							}
@@ -257,7 +257,7 @@ export default class CategorySearch extends Component {
 	// When user has selected a search value
 	handleSearch(currentValue) {
 		const value = currentValue ? currentValue.value : null;
-		let finalVal = { value };
+		const finalVal = { value };
 
 		if (currentValue && currentValue.category) {
 			finalVal.category = currentValue.category;
@@ -279,7 +279,7 @@ export default class CategorySearch extends Component {
 
 	optionRenderer(option) {
 		if (option.markup) {
-			return (<div key={option.value} dangerouslySetInnerHTML={{__html: option.markup}} />);
+			return (<div key={option.value} dangerouslySetInnerHTML={{ __html: option.markup }} />);
 		}
 
 		return (<div key={option.value}>{option.label}</div>);
