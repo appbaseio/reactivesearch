@@ -384,3 +384,17 @@
 
 .rbc-resultlist-wrapper {
   position: relative; }
+
+.rbc.rbc-viewswitcher {
+  background-color: transparent; }
+  .rbc.rbc-viewswitcher .rbc-list-container {
+    display: flex;
+    justify-content: flex-end; }
+    .rbc.rbc-viewswitcher .rbc-list-container .rbc-list-item {
+      padding: 3px 10px;
+      background-color: #fff;
+      border: 1px solid #eaeaea;
+      border-left: 0;
+      cursor: pointer; }
+      .rbc.rbc-viewswitcher .rbc-list-container .rbc-list-item:first-child {
+        border-left: 1px solid #eaeaea; }

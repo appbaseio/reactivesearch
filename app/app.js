@@ -9,6 +9,7 @@ import MultiLevelMenu from "./sensors/MultiLevelMenu";
 
 import ResultCard from "./actuators/ResultCard";
 import ResultList from "./actuators/ResultList";
+import ViewSwitcher from "./actuators/ViewSwitcher";
 
 const combineObj = {
 	NestedList,
@@ -19,7 +20,8 @@ const combineObj = {
 	CategorySearch,
 	MultiLevelMenu,
 	ResultCard,
-	ResultList
+	ResultList,
+	ViewSwitcher
 };
 
 Object.keys(reactivebase).forEach((component) => {

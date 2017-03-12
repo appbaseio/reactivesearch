@@ -20,6 +20,7 @@ import CategorySearchDefault from "./CategorySearch.stories";
 import MultiLevelMenuDefault from "./MultiLevelMenu.stories";
 import ResultCardDefault from "./ResultCard.stories";
 import ResultListDefault from "./ResultList.stories";
+import ViewSwitcherDefault from "./ViewSwitcher.stories";
 
 require("../../node_modules/materialize-css/dist/css/materialize.min.css");
 require("../../dist/css/style.min.css");
@@ -220,4 +221,10 @@ storiesOf("ResultList", module)
 	.addDecorator(withKnobs)
 	.add("Basic", withReadme(removeFirstLine(ReactiveListReadme), () => (
 		<ResultListDefault />
+	)));
+
+storiesOf("ViewSwitcher", module)
+	.addDecorator(withKnobs)
+	.add("Basic", withReadme(removeFirstLine(ReactiveListReadme), () => (
+		<ViewSwitcherDefault />
 	)));
