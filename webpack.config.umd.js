@@ -28,8 +28,11 @@ var umd_config = {
 				test: /node_modules\/JSONStream\/index\.js$/,
 				loaders: ['shebang', 'babel']
 			}
-		]
+		],
+		noParse: ['ws']
 	},
+
+	externals: ['ws'],
 
 	resolve: {
 		alias: {
@@ -68,8 +71,7 @@ var umd_config = {
 			}
 		},
 		'ws'
-	]
-	},
+	],
 
 	plugins: [
 		new LodashModuleReplacementPlugin({
