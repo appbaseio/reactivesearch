@@ -3,7 +3,7 @@ import classNames from "classnames";
 import {
 	TYPES,
 	AppbaseSensorHelper as helper
-} from "@appbaseio/reactivebase";
+} from "@appbaseio/reactivemaps";
 
 const _ = require("lodash");
 

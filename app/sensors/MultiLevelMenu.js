@@ -5,7 +5,7 @@ import {
 	TYPES,
 	AppbaseChannelManager as manager,
 	AppbaseSensorHelper as helper
-} from "@appbaseio/reactivebase";
+} from "@appbaseio/reactivemaps";
 
 const _ = require("lodash");
 

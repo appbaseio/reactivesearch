@@ -3,7 +3,7 @@ import classNames from "classnames";
 import {
 	TYPES,
 	AppbaseSensorHelper as helper
-} from "@appbaseio/reactivebase";
+} from "@appbaseio/reactivemaps";
 import ReactStars from "react-stars";
 
 export default class RatingsFilter extends Component {

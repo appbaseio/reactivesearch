@@ -6,7 +6,7 @@ import {
 	TYPES,
 	AppbaseChannelManager as manager,
 	AppbaseSensorHelper as helper
-} from "@appbaseio/reactivebase";
+} from "@appbaseio/reactivemaps";
 import StaticSearch from "../addons/StaticSearch";
 
 const _ = require("lodash");

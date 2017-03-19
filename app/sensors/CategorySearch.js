@@ -6,7 +6,7 @@ import {
 	TYPES,
 	AppbaseChannelManager as manager,
 	AppbaseSensorHelper as helper
-} from "@appbaseio/reactivebase";
+} from "@appbaseio/reactivemaps";
 
 export default class CategorySearch extends Component {
 	constructor(props) {

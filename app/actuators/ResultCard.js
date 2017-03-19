@@ -9,7 +9,7 @@ import {
 	TYPES,
 	AppbaseChannelManager as manager,
 	AppbaseSensorHelper as helper
-} from "@appbaseio/reactivebase";
+} from "@appbaseio/reactivemaps";
 import ReactStars from "react-stars";
 
 const $ = require("jquery");
