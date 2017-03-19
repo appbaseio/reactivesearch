@@ -66,8 +66,7 @@ export default class DynamicRangeSliderDefault extends Component {
 		return (
 			<ReactiveBase
 				app="reactivemap_demo"
-				username="y4pVxY2Ok"
-				password="c92481e2-c07f-4473-8326-082919282c18"
+				credentials="y4pVxY2Ok:c92481e2-c07f-4473-8326-082919282c18"
 			>
 				<div className="row">
 					<div className="col s6 col-xs-6">

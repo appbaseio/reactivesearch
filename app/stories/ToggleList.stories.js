@@ -78,8 +78,7 @@ export default class ToggleListDefault extends Component {
 		return (
 			<ReactiveBase
 				app="meetup_demo"
-				username="LPpISlEBe"
-				password="2a8935f5-0f63-4084-bc3e-2b2b4d1a8e02"
+				credentials="LPpISlEBe:2a8935f5-0f63-4084-bc3e-2b2b4d1a8e02"
 			>
 				<div className="row">
 					<div className="col s6 col-xs-6">

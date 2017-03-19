@@ -21,6 +21,8 @@ module.exports = {
 				test: /node_modules\/JSONStream\/index\.js$/,
 				loaders: ['shebang', 'babel']
 			}
-		]
+		],
+		noParse: ['ws']
 	},
+	externals: ['ws']
 };
