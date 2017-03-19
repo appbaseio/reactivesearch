@@ -9,7 +9,7 @@ var dir_path = './app/';
 var files = {
 	css: {
 		main: [
-			'node_modules/@appbaseio/reactivebase/dist/css/style.min.css',
+			'node_modules/@appbaseio/reactivemaps/dist/css/style.min.css',
 			dir_path+'assets/css/style.css'
 		],
 		sassFile: [dir_path+'assets/styles/*.scss'],
