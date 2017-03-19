@@ -1,0 +1,187 @@
+/// Block Element
+/// @param {String} $element - Element's name
+@mixin element($element) {
+	&__#{$element} {
+		@content;
+	}
+}
+
+/// Block Modifier
+/// @param {String} $modifier - Modifier's name
+@mixin modifier($modifier) {
+	&--#{$modifier} {
+		@content;
+	}
+}
+
+nav {
+	width: 100%;
+	height: 65px;
+	background-color: #5053AA;
+	margin-bottom: 12px;
+
+	.brand {
+		width: 200px;
+		height: 65px;
+		float: left;
+		text-align: center;
+		display: block;
+		color: #fff;
+		font-size: 24px;
+		letter-spacing: 0.08em;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	.rbc.rbc-categorysearch {
+		margin: 8px 0;
+		line-height: 22px;
+		background-color: transparent;
+	}
+}
+
+.rbc.rbc-multilist {
+	height: 400px !important;
+}
+
+.color-sensor {
+	.rbc.rbc-multilist {
+		height: 260px !important;
+	}
+}
+
+.rbc-blue .rbc.rbc-resultstats {
+	padding: 0 20px;
+	text-align: right;
+	background-color: transparent;
+	margin-bottom: -10px;
+}
+
+.rbc.rbc-pagination {
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+	text-align: center;
+}
+
+.rbc.rbc-reactivelist {
+	background-color: #fafafa;
+	height: auto;
+	max-height: none;
+	min-height: 600px;
+	margin-top: -11px;
+	box-shadow: none;
+}
+
+.rbc.rbc-reactivelist .rbc-list-item {
+	max-width: 400px;
+	margin: 20px;
+	width: calc(33.33% - 40px);
+	border: 0;
+}
+
+.rbc.rbc-reactivelist .rbc-reactivelist-scroll-container {
+	height: auto !important;
+}
+
+.product {
+	width: 100%;
+	max-width: 400px;
+	text-decoration: none;
+	overflow: hidden;
+	margin: 0;
+	float: left;
+	background-color: #fff;
+	min-height: 425px;
+	border: 0;
+	box-shadow: 0px 3px 8px -4px rgba(0,0,0,0.15);
+	position: relative;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+
+	&:hover, &:focus {
+		text-decoration: none;
+		outline: none;
+		box-shadow: 0 8px 8px rgba(0,0,0,0.24),0 0 8px rgba(0,0,0,0.12);
+	}
+
+	@include element('price') {
+		display: inline-block;
+		position: absolute;
+		right: 0;
+		top: 0;
+		height: 48px;
+		color: #fff;
+		padding: 11px 20px;
+		font-size: 20px;
+		background-color: #2fdab8;
+		-webkit-transition: all 0.3s ease;
+		transition: all 0.3s ease;
+	}
+
+	@include element('image') {
+		-ms-flex-positive: 1;
+		flex-grow: 1;
+		/*margin: 60px 20px 5px;*/
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+
+	@include element('info') {
+		height: 34px;
+		padding: 8px 15px 14px;
+		font-size: 14px;
+		font-weight: bold;
+		color: #999;
+		text-align: left;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	@include element('seller') {
+		height: 28px;
+		font-size: 14px;
+		color: #888;
+		padding: 0 15px;
+		text-align: left;
+
+		& > div {
+			display: inline-block;
+			float: right;
+			top: -5px;
+		}
+	}
+
+	@include element('footer') {
+		height: 56px;
+		font-size: 14px;
+		border-top: 1px solid #fcfcfc;
+		padding: 12px 15px;
+		text-align: left;
+
+		.tag {
+			display: inline-block;
+			padding: 3px 6px;
+			background-color: #fafafa;
+			color: #aaa;
+			border: 1px solid #f8f8f8;
+			border-radius: 3px;
+			margin-right: 4px;
+		}
+
+		.metadata {
+			display: inline-block;
+			float: right;
+			font-size: 11px;
+			font-weight: bold;
+			color: #999;
+			letter-spacing: 0.01em;
+		}
+	}
+}

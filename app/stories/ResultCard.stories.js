@@ -24,30 +24,6 @@ export default class ResultCardDefault extends Component {
 		return result;
 	}
 
-	itemMarkup(marker, markerData) {
-		return (
-			<a
-				className="full_row single-record single_record_for_clone"
-				key={markerData._id}
-			>
-				<div className="text-container full_row" style={{ paddingLeft: "10px" }}>
-					<div className="text-head text-overflow full_row">
-						<span className="text-head-info text-overflow">
-							{marker.name ? marker.name : ""} - {marker.brand ? marker.brand : ""}
-						</span>
-						<span className="text-head-city">{marker.brand ? marker.brand : ""}</span>
-					</div>
-					<div className="text-description text-overflow full_row">
-						<ul className="highlight_tags">
-							{marker.price ? `Priced at $${marker.price}` : "Free Test Drive"}
-							{`Rated ${marker.rating}`}
-						</ul>
-					</div>
-				</div>
-			</a>
-		);
-	}
-
 	render() {
 		return (
 			<ReactiveBase

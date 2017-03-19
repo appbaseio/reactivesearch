@@ -1,0 +1,182 @@
+/// Block Element
+/// @param {String} $element - Element's name
+@mixin element($element) {
+    &__#{$element} {
+        @content;
+    }
+}
+
+/// Block Modifier
+/// @param {String} $modifier - Modifier's name
+@mixin modifier($modifier) {
+    &--#{$modifier} {
+        @content;
+    }
+}
+
+.row {
+	margin-bottom: 0;
+}
+
+nav {
+	width: 100%;
+	height: 65px;
+	margin-bottom: 0;
+	background-color: #FF5A5F;
+	position: fixed;
+	z-index: 2;
+
+	.brand {
+		width: 200px;
+		height: 65px;
+		float: left;
+		text-align: center;
+		display: block;
+		color: #fff;
+		font-size: 24px;
+		letter-spacing: 0.08em;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	.rbc.rbc-datasearch {
+		margin: 8px 0;
+		line-height: 22px;
+		background-color: transparent;
+	}
+}
+
+.left {
+	width: 60%;
+	float: left;
+}
+
+.right {
+	border: 0;
+	border-radius: 0;
+	margin: 0;
+	position: fixed;
+	top: 65px;
+	right: 0;
+	width: 40%;
+	height: calc(100% - 65px);
+}
+
+.row .sensor-wrapper {
+	background-color: #fff;
+	width: 100%;
+	height: auto;
+	padding: 20px;
+	margin-top: 65px;
+
+	.rbc {
+		border: 0;
+		box-shadow: none;
+	}
+}
+
+.rbc-blue .rbc.rbc-resultstats {
+	padding: 0 20px;
+	text-align: right;
+	background-color: transparent;
+	margin-top: 12px;
+	margin-bottom: -10px;
+}
+
+.rbc.rbc-togglelist .col.s12.col-xs-12{
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+.rbc.rbc-togglelist .rbc-list-item {
+	width: calc(33.33% - 15px);
+	display: inline-block;
+	padding: 12px;
+	background-color: #f3f3f3;
+	border: 1px solid #eee;
+
+	.rbc-label:before {
+		top: 1px;
+	}
+}
+
+.rbc.rbc-resultcard-wrapper .rbc-resultcard-container {
+	background-color: #fafafa;
+	height: auto;
+	max-height: none;
+	box-shadow: none;
+
+	.rbc-resultcard-scroll-container{
+		height: auto !important;
+		justify-content: space-between;
+		margin-top: 20px;
+	}
+
+	.rbc-resultcard {
+		width: calc(50% - 20px);
+		max-width: none;
+		margin: 0;
+		border: 0;
+		position: relative;
+
+		.host {
+			border: 2px solid #fefefe;
+			border-radius: 50%;
+			overflow: hidden;
+			width: 60px;
+			height: 60px;
+			position: absolute;
+			bottom: 50px;
+			right: 20px;
+			background-color: #fefefe;
+			background-size: cover;
+			background-position: center center;
+		}
+
+		.price {
+			display: inline-block;
+			position: absolute;
+			left: 0;
+			top: 150px;
+			height: 48px;
+			color: #fff;
+			padding: 11px 20px;
+			font-size: 20px;
+			background-color: #424242;
+		}
+
+		.rbc-resultcard__image {
+			background-size: cover;
+		}
+
+		.rbc-resultcard__title {
+			padding-left: 0;
+		}
+
+		.rbc-resultcard__desc {
+			padding: 0;
+
+			p {
+				margin: 2px 0;
+			}
+		}
+	}
+}
+
+.popover {
+	.listing {
+		width: 100%;
+		margin: 0;
+		height: 200px;
+		margin-bottom: 20px;
+	}
+}
+
+.gm-style .gm-style-iw {
+	top: 18px !important;
+	left: 24px !important;
+}
