@@ -98,15 +98,18 @@ export default class ResultList extends Component {
 	}
 
 	applyScroll() {
-		const resultElement = $(".rbc-resultlist-container");
-		const scrollElement = $(".rbc-resultlist-scroll-container");
+		const resultElement = $(this.listParentElement);
+		const scrollElement = $(this.listChildElement);
 		const padding = 45;
 
 		function checkHeight() {
 			const flag = resultElement.get(0).scrollHeight - padding > resultElement.height();
 			const scrollFlag = scrollElement.get(0).scrollHeight > scrollElement.height();
 			if (!flag && !scrollFlag && scrollElement.length) {
-				scrollElement.css("height", resultElement.height() - 100);
+				const scrollHeight = resultElement.height() - 100;
+				if (scrollHeight > 0) {
+					scrollElement.css("height", scrollHeight);
+				}
 			}
 		}
 

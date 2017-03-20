@@ -180,7 +180,7 @@ class Main extends Component {
 								onPopoverTrigger={this.onPopoverTrigger}
 								defaultZoom={15}
 								size={60}
-								center={{ lat: 47.6062, lng: -122.3321 }}
+								defaultCenter={{ lat: 47.6062, lng: -122.3321 }}
 								react={{
 									and: ["PlaceSensor", "PriceSensor"]
 								}}
