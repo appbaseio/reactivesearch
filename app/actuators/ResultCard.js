@@ -10,6 +10,7 @@ import {
 	AppbaseChannelManager as manager,
 	AppbaseSensorHelper as helper
 } from "@appbaseio/reactivemaps";
+import Pagination from "../addons/Pagination";
 import ReactStars from "react-stars";
 
 const $ = require("jquery");
@@ -56,6 +57,16 @@ export default class ResultCard extends Component {
 		this.appliedQuery = {};
 	}
 
+	componentWillMount() {
+		if (this.props.showPagination) {
+			this.showPagination = this.props.showPagination;
+			this.paginationAtVal = this.props.paginationAt;
+			this.setQueryInfo();
+			this.setReact();
+			this.executePaginationUpdate();
+		}
+	}
+
 	componentDidMount() {
 		this.streamProp = this.props.stream;
 		this.requestOnScroll = this.props.requestOnScroll;
@@ -70,8 +81,8 @@ export default class ResultCard extends Component {
 				this.removeChannel();
 				this.initialize(true);
 			}
-			if (this.requestOnScroll !== this.props.requestOnScroll) {
-				this.requestOnScroll = this.props.requestOnScroll;
+			if (this.showPagination !== this.props.showPagination) {
+				this.showPagination = this.props.showPagination;
 				this.listComponent();
 			}
 			if (this.size !== this.props.size) {
@@ -81,6 +92,10 @@ export default class ResultCard extends Component {
 				});
 				this.removeChannel();
 				this.initialize(true);
+			}
+			if (this.showPagination && this.paginationAtVal !== this.props.paginationAt) {
+				this.paginationAtVal = this.props.paginationAt;
+				this.executePaginationUpdate();
 			}
 		}, 300);
 	}
@@ -95,6 +110,60 @@ export default class ResultCard extends Component {
 	// stop streaming request and remove listener when component will unmount
 	componentWillUnmount() {
 		this.removeChannel();
+	}
+
+	customQuery() {
+		return null;
+	}
+
+	// set the query type and input data
+	setQueryInfo() {
+		const valObj = {
+			queryType: "match",
+			inputData: this.props.appbaseField,
+			customQuery: this.customQuery
+		};
+		const obj = {
+			key: "paginationChanges",
+			value: valObj
+		};
+		helper.selectedSensor.setSensorInfo(obj);
+	}
+
+	setReact() {
+		this.react = this.props.react ? this.props.react : {};
+		this.react.pagination = {};
+		if (this.react && this.react.and && typeof this.react.and === "string") {
+			this.react.and = [this.react.and];
+		}
+		this.react.and.push("paginationChanges");
+	}
+
+	executePaginationUpdate() {
+		setTimeout(() => {
+			const obj = {
+				key: "paginationChanges",
+				value: Math.random()
+			};
+			helper.selectedSensor.set(obj, true);
+		}, 100);
+	}
+
+	paginationAt(method) {
+		let pageinationComp;
+
+		if (this.props.paginationAt === method || this.props.paginationAt === "both") {
+			pageinationComp = (
+				<div className="rbc-pagination-container col s12 col-xs-12">
+					<Pagination
+						className={`rbc-pagination-${method}`}
+						componentId="pagination"
+						onPageChange={this.props.onPageChange}
+						title={this.props.paginationTitle} />
+				</div>
+			);
+		}
+		return pageinationComp;
 	}
 
 	applyScroll() {
@@ -215,7 +284,7 @@ export default class ResultCard extends Component {
 	listenLoadingChannel(channelObj) {
 		this.loadListener = channelObj.emitter.addListener(`${channelObj.channelId}-query`, (res) => {
 			if (res.appliedQuery) {
-				const showInitialLoader = !(this.props.requestOnScroll && res.appliedQuery.body && res.appliedQuery.body.from);
+				const showInitialLoader = (this.showPagination || !res.appliedQuery.body || !res.appliedQuery.body.from);
 				this.setState({
 					queryStart: res.queryState,
 					showInitialLoader
@@ -304,7 +373,7 @@ export default class ResultCard extends Component {
 	// normalize current data
 	normalizeCurrentData(res, rawData, newData) {
 		const appliedQuery = JSON.parse(JSON.stringify(res.appliedQuery));
-		if (this.props.requestOnScroll && appliedQuery && appliedQuery.body) {
+		if (!this.showPagination && appliedQuery && appliedQuery.body) {
 			delete appliedQuery.body.from;
 			delete appliedQuery.body.size;
 		}
@@ -390,7 +459,7 @@ export default class ResultCard extends Component {
 
 	initialize(executeChannel = false) {
 		this.createChannel(executeChannel);
-		if (this.props.requestOnScroll) {
+		if (!this.showPagination) {
 			this.listComponent();
 		}
 	}
@@ -412,7 +481,7 @@ export default class ResultCard extends Component {
 		function setScroll(node) {
 			if (node) {
 				node.addEventListener("scroll", () => {
-					if (this.props.requestOnScroll && $(node).scrollTop() + $(node).innerHeight() >= node.scrollHeight && this.state.resultStats.total > this.state.currentData.length && !this.state.queryStart) {
+					if (!this.showPagination && $(node).scrollTop() + $(node).innerHeight() >= node.scrollHeight && this.state.resultStats.total > this.state.currentData.length && !this.state.queryStart) {
 						this.nextPage();
 					}
 				});
@@ -437,10 +506,11 @@ export default class ResultCard extends Component {
 		helper.selectedSensor.set(obj, true, "sortChange");
 	}
 
-	render() {
+	renderResult() {
 		let title = null,
 			placeholder = null,
 			sortOptions = null;
+
 		const cx = classNames({
 			"rbc-title-active": this.props.title,
 			"rbc-title-inactive": !this.props.title,
@@ -479,25 +549,38 @@ export default class ResultCard extends Component {
 
 		return (
 			<div className="rbc rbc-resultcard-wrapper">
-				<div ref={(div) => { this.listParentElement = div; }} className={`rbc-resultcard-container card thumbnail ${cx}`} style={this.props.componentStyle}>
+				<div ref={(div) => { this.listParentElement = div }} className={`rbc-resultcard-container card thumbnail ${cx}`} style={this.props.componentStyle}>
 					{title}
 					{sortOptions}
 					{this.props.showResultStats && this.state.resultStats.resultFound ? (<ResultStats onResultStats={this.props.onResultStats} took={this.state.resultStats.took} total={this.state.resultStats.total} />) : null}
 					<div ref={(div) => { this.listChildElement = div; }} className="rbc-resultcard-scroll-container col s12 col-xs-12">
 						{this.state.resultMarkup}
 					</div>
-					{
-						this.state.isLoading ?
-							<div className="rbc-loader" /> :
-						null
-					}
+					{this.state.isLoading ? <div className="rbc-loader" /> : null}
 					{this.state.showPlaceholder ? placeholder : null}
-				</div >
+				</div>
 				{this.props.noResults && this.state.visibleNoResults ? (<NoResults defaultText={this.props.noResults} />) : null}
 				{this.props.initialLoader && this.state.queryStart && this.state.showInitialLoader ? (<InitialLoader defaultText={this.props.initialLoader} />) : null}
 				<PoweredBy />
 			</div>
+
 		);
+	}
+
+	render() {
+		if (this.showPagination) {
+			return (
+				<div className="row">
+					{this.paginationAt("top")}
+					<div className="rbc-pagination-container col s12 col-xs-12">
+						{this.renderResult()}
+					</div>
+					{this.paginationAt("bottom")}
+				</div>
+			);
+		} else {
+			return (<div>{this.renderResult()}</div>);
+		}
 	}
 }
 
@@ -516,7 +599,8 @@ ResultCard.propTypes = {
 	from: helper.validation.resultListFrom,
 	onData: React.PropTypes.func,
 	size: helper.sizeValidation,
-	requestOnScroll: React.PropTypes.bool,
+	showPagination: React.PropTypes.bool,
+	paginationAt: React.PropTypes.oneOf(["top", "bottom", "both"]),
 	stream: React.PropTypes.bool,
 	componentStyle: React.PropTypes.object,
 	initialLoader: React.PropTypes.oneOfType([
@@ -539,7 +623,8 @@ ResultCard.propTypes = {
 ResultCard.defaultProps = {
 	from: 0,
 	size: 20,
-	requestOnScroll: true,
+	showPagination: false,
+	paginationAt: "bottom",
 	stream: false,
 	componentStyle: {},
 	showResultStats: true
@@ -560,7 +645,8 @@ ResultCard.types = {
 	from: TYPES.NUMBER,
 	onData: TYPES.FUNCTION,
 	size: TYPES.NUMBER,
-	requestOnScroll: TYPES.BOOLEAN,
+	showPagination: TYPES.BOOLEAN,
+	paginationAt: TYPES.STRING,
 	stream: TYPES.BOOLEAN,
 	componentStyle: TYPES.OBJECT,
 	initialLoader: TYPES.STRING,
