@@ -1,0 +1,43 @@
+#top {
+	padding: 0 0 70px 0;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+
+.index-container h1 {
+	font-size: 36px;
+	line-height: 50px;
+	text-align: center;
+	margin: 30px auto;
+}
+
+.index-container ul {
+	list-style: none;
+}
+
+.index-container ul.indexList {
+	border: 1px solid #eee;
+}
+
+.index-container ul.indexList li {
+	padding: 0;
+}
+
+.indexLinkContainer {
+	margin-bottom: 100px;
+}
+
+.index-container li a {
+	font-size: 24px;
+	line-height: 60px;
+}
+
+.index-container li a:hover {
+	background: #f0f0f0;
+	text-decoration: none;
+}

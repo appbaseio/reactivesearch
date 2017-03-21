@@ -1,0 +1,44 @@
+#home {
+	.navbar {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 70px;
+		background: transparent;
+		border: 0;
+		border-radius: 0;
+		margin-bottom: 0;
+		.navbar-collapse {
+			text-align: center;
+			.navbar-center {
+				float: none;
+				display: inline-block;
+				margin-bottom: -5px;
+				clear: both;
+			}
+		}
+		.navbar-brand {
+			img {
+				width: 30px;
+			}
+		}
+		.navbar-nav {
+			li.active {
+				a {
+					background: transparent;
+				}
+			}
+			li {
+				background: $primary-color;
+				padding: 15px 20px 5px;
+				z-index: 10;
+			}
+			li a {
+				color: #fff;
+				font-size: 17px;
+				font-weight: bold;
+			}
+		}
+	}
+}

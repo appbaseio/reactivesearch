@@ -1,0 +1,281 @@
+html, body {
+	font-size: 18px;
+	color: $font-color;
+	font-family: $font-light;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	-moz-osx-font-smoothing: grayscale;
+	-moz-font-feature-settings: "liga" on;
+	@media screen and (max-width: 768px) {
+		font-size: 14px;
+	}
+}
+
+section {
+	padding: 100px 0;
+	.section-head {
+		.title {
+			color: $primary-color;
+			font-family: $font-semi-bold;
+			margin: 0;
+			padding-bottom: 5px;
+			font-size: 2rem;
+		}
+	}
+}
+
+#top {
+	padding-top: 120px;
+	background-color: $primary-color;
+	color: #fff;
+
+	.row {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+
+	.landing-section {
+		padding: 40px 15px;
+	}
+
+	.last-section {
+		padding-bottom: 0;
+	}
+
+	.website-title {
+		font-size: 5.4rem;
+		line-height: 100%;
+		margin: 0 0 24px;
+		font-family: $font-black;
+	}
+
+	p {
+		font-size: 1.5rem;
+		font-family: $font-light;
+	}
+
+	.star-frame {
+		padding-left: 30px;
+		.github-btn-large .gh-btn, .github-btn-large .gh-count {
+			font-size: 2rem;
+		}
+	}
+
+	@media screen and (max-width: 768px) {
+		.landing-content {
+			text-align: center;
+		}
+	}
+}
+
+#features {
+	margin: 80px 0px;
+	background: #fff;
+	.feature {
+		.img-container {
+			height: 200px;
+			display: flex;
+			img {
+				margin: auto;
+			}
+		}
+		.title {
+			font-size: 1.5rem;
+			font-family: $font-semi-bold;
+		}
+		.description {
+			font-size: 1.2rem;
+			max-width: 300px;
+			padding: 5px 15px;
+			margin: 20px auto;
+			.inner-description {
+				font-size: 0.8rem;
+			}
+		}
+	}
+}
+
+#ui-components {
+	background: $secondary-color;
+	color: #fff;
+
+	.container {
+		width: 95%;
+		max-width: 1250px;
+	}
+
+	.section-head .title {
+		color: #fff;
+	}
+
+	img {
+		width: 92%;
+		margin-bottom: 30px;
+	}
+
+	.small {
+		margin-bottom: 20px;
+		img {
+			width: calc(33.33% - 28px);
+			&:nth-child(2) {
+				margin: 0 15px 30px;
+			}
+		}
+	}
+}
+
+#use-cases {
+	.tab-container {
+		margin: 30px 0;
+		.tab-content {
+			padding: 0 30px;
+			.tab-text {
+				padding-bottom: 10px;
+				.title {
+					margin-top: 0;
+					font-size: 1.5rem;
+					font-family: $font-semi-bold;
+				}
+			}
+			.img-container {
+				img {
+					max-height: 100%;
+					margin: 0 auto;
+				}
+			}
+			@media screen and (max-width: 768px) {
+				padding: 0;
+				.img-container {
+					padding: 15px;
+				}
+			}
+		}
+		.nav-tabs {
+			padding-top: 20px;
+			border: 0;
+			li {
+				position: relative;
+				&:before {
+					content: '';
+					position: absolute;
+					top: 0;
+					left: 5px;
+					width: calc(100% - 10px);
+					height: 3px;
+					background: $yellow-color;
+					border-radius: 6px;
+				}
+				&.active, &:hover {
+					&:before {
+						height: 6px;
+						top: -2px;
+					}
+					a {
+						border: 0;
+						background: transparent;
+						&:hover {
+							border: 0;
+							background: transparent;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+#footer, footer {
+	background: $primary-color;
+	color: #fff;
+	h2 {
+		font-size: 2rem;
+		font-family: $font-semi-bold;
+	}
+}
+footer {
+	padding: 15px 0;
+	color: #fff;
+	.footer-link, .navbar-nav>li>a {
+		color: #fff;
+		padding: 10px 15px;
+		line-height: 20px;
+		&:hover {
+			background-color: transparent;
+		}
+	}
+}
+
+.theme-btn {
+	background: $yellow-color;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 1em;
+	padding: 0.72em 40px;
+	border-radius: 8px;
+	font-family: $font-semi-bold;
+	border: 0;
+	outline: none;
+	&:active, &:focus, &:hover {
+		color: $primary-color !important;
+	}
+	&.theme-btn-inverse {
+		background: $font-color;
+		color: $yellow-color;
+		&:hover {
+			color: #fff;
+			background: darken($yellow-color, 5%);
+		}
+	}
+	&:hover {
+		color: #fff;
+		background: darken($yellow-color, 5%);
+	}
+}
+@media screen and (max-width: 768px) {
+	#features {
+		.feature {
+			padding-bottom: 30px;
+		}
+	}
+	footer {
+		text-align: center;
+		.footer-link {
+			float: none;
+			width: 100%;
+			display: block;
+			padding: 10px 0;
+		}
+	}
+}
+.m-b-1 {
+	margin-bottom: 15px;
+}
+.m-b-2 {
+	margin-bottom: 30px;
+}
+.m-b-3 {
+	margin-bottom: 45px;
+}
+.m-b-4 {
+	margin-bottom: 60px;
+}
+.m-t-1 {
+	margin-top: 15px;
+}
+.m-t-2 {
+	margin-top: 30px;
+}
+.m-t-3 {
+	margin-top: 45px;
+}
+.m-t-4 {
+	margin-top: 60px;
+}
+.flex-box {
+	display: flex;
+	.flex-center {
+		margin: auto;
+	}
+	@media screen and (max-width: 768px) {
+		display: block;
+	}
+}
