@@ -39,9 +39,12 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-select": "^1.0.0-rc.3",
-    "react-stars": "^2.1.0"
+    "react-stars": "^2.1.0",
+    "sass-loader": "^6.0.3",
+    "shebang-loader": "0.0.1"
   },
   "devDependencies": {
+    "@appbaseio/reactivemaps": "^1.0.0-alpha3",
     "@appbaseio/reactivemaps-manual": "1.0.0-alpha",
     "@kadira/storybook": "^2.21.0",
     "@kadira/storybook-addon-knobs": "^1.7.1",

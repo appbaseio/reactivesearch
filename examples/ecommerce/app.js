@@ -23,7 +23,7 @@ class Main extends Component {
 		if(value) {
 			return {
 				"match": {
-					"name": value
+					"name": value.value
 				}
 			};
 		}
