@@ -23,11 +23,11 @@ export default class CategorySearch extends Component {
 			}
 		};
 		this.selectedCategory = null;
-		this.searchInputId = `internal-${this.props.componentId}`;
+		this.searchInputId = `internal-${props.componentId}`;
 		this.type = "match_phrase";
 		this.channelId = null;
 		this.channelListener = null;
-		this.fieldType = typeof this.props.appbaseField;
+		this.fieldType = typeof props.appbaseField;
 		this.handleSearch = this.handleSearch.bind(this);
 		this.optionRenderer = this.optionRenderer.bind(this);
 		this.setValue = this.setValue.bind(this);

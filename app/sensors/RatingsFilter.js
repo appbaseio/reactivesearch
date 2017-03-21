@@ -13,7 +13,7 @@ export default class RatingsFilter extends Component {
 			selected: null
 		};
 		this.type = "range";
-		this.defaultSelected = this.props.defaultSelected;
+		this.defaultSelected = props.defaultSelected;
 		this.handleChange = this.handleChange.bind(this);
 		this.customQuery = this.customQuery.bind(this);
 	}

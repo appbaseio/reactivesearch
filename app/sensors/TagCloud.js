@@ -30,7 +30,7 @@ export default class TagCloud extends Component {
 		this.previousSelectedSensor = {};
 		this.channelId = null;
 		this.channelListener = null;
-		this.defaultSelected = this.props.defaultSelected;
+		this.defaultSelected = props.defaultSelected;
 		this.type = this.props.multiSelect ? "Terms" : "Term";
 		this.customQuery = this.customQuery.bind(this);
 		this.defaultCustomQuery = this.defaultCustomQuery.bind(this);

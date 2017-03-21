@@ -34,7 +34,7 @@ export default class NestedList extends Component {
 		};
 		this.channelId = null;
 		this.channelListener = null;
-		this.defaultSelected = this.props.defaultSelected;
+		this.defaultSelected = props.defaultSelected;
 		this.filterBySearch = this.filterBySearch.bind(this);
 		this.onItemSelect = this.onItemSelect.bind(this);
 		this.customQuery = this.customQuery.bind(this);
