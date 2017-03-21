@@ -83,6 +83,7 @@ export default class ResultCardDefault extends Component {
 							react={{
 								and: "RatingsSensor"
 							}}
+							{...this.props}
 						/>
 					</div>
 					<div className="col s6 col-xs-6">
@@ -96,7 +97,6 @@ export default class ResultCardDefault extends Component {
 								{ start: 2, end: 5, label: "2 stars and up" },
 								{ start: 1, end: 5, label: "> 1 stars" }]
 							}
-							{...this.props}
 						/>
 					</div>
 				</div>

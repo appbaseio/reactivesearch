@@ -215,12 +215,18 @@ storiesOf("ResultCard", module)
 	.addDecorator(withKnobs)
 	.add("Basic", withReadme(removeFirstLine(ReactiveListReadme), () => (
 		<ResultCardDefault />
+	)))
+	.add("With Pagination", withReadme(removeFirstLine(ReactiveListReadme), () => (
+		<ResultCardDefault  showPagination />
 	)));
 
 storiesOf("ResultList", module)
 	.addDecorator(withKnobs)
 	.add("Basic", withReadme(removeFirstLine(ReactiveListReadme), () => (
 		<ResultListDefault />
+	)))
+	.add("With Pagination", withReadme(removeFirstLine(ReactiveListReadme), () => (
+		<ResultCardDefault showPagination />
 	)));
 
 storiesOf("ViewSwitcher", module)
