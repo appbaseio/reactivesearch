@@ -1,17 +1,17 @@
 /// Block Element
 /// @param {String} $element - Element's name
 @mixin element($element) {
-    &__#{$element} {
-        @content;
-    }
+	&__#{$element} {
+		@content;
+	}
 }
 
 /// Block Modifier
 /// @param {String} $modifier - Modifier's name
 @mixin modifier($modifier) {
-    &--#{$modifier} {
-        @content;
-    }
+	&--#{$modifier} {
+		@content;
+	}
 }
 
 .row {
