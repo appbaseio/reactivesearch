@@ -169,10 +169,51 @@ nav {
 
 .popover {
 	.listing {
-		width: 100%;
+		width: 300px;
 		margin: 0;
 		height: 200px;
 		margin-bottom: 20px;
+		position: relative;
+		cursor: pointer;
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		float: left;
+		color: #777;
+		-webkit-transition: all 0.3s ease;
+		transition: all 0.3s ease;
+			
+		&:hover, &:focus {
+			text-decoration: none;
+			color: #424242;
+		}
+
+		@include element('image') {
+			width: 100%;
+			-ms-flex-positive: 1;
+			flex-grow: 1;
+			background-color: #fefefe;
+			background-size: cover;
+			background-position: center center;
+		}
+
+		@include element('info') {
+			height: 45px;
+			padding: 10px 0 0;
+			font-size: 14px;
+			font-weight: bold;
+			color: #666;
+			text-align: left;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			position: relative;
+		}
+
+		p {
+			color: #aaa;
+			margin-top: 0;
+		}
 	}
 }
 
