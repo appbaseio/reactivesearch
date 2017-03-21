@@ -395,6 +395,10 @@
       background-color: #fff;
       border: 1px solid #eaeaea;
       border-left: 0;
-      cursor: pointer; }
+      cursor: pointer;
+      transition: all .3s ease;
+      -webkit-transition: all .3s ease; }
+      .rbc.rbc-viewswitcher .rbc-list-container .rbc-list-item.active {
+        background-color: #f2f2f2; }
       .rbc.rbc-viewswitcher .rbc-list-container .rbc-list-item:first-child {
         border-left: 1px solid #eaeaea; }
