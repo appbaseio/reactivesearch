@@ -9,9 +9,9 @@
     "webpack-server": "webpack-dev-server --hot --inline --progress --colors --port 8012",
     "web-server": "http-server -p 3000 .",
     "start": "concurrently \"npm run webpack-server\" \"gulp watch\" ",
-    "build": "cross-env NODE_ENV=production && webpack -p && gulp",
-    "build:lib": "gulp && cross-env NODE_ENV=production && babel app --out-dir lib",
-    "build:umd": "cross-env NODE_ENV=development && webpack --config webpack.config.umd.js app/app.js umd/reactivesearch.js",
+    "build": "cross-env NODE_ENV=production CHOOSE_CONFIG=EXAMPLES webpack -p --progress && gulp",
+    "build:lib": "gulp && cross-env NODE_ENV=production CHOOSE_CONFIG=LIB babel app --out-dir lib",
+    "build:umd": "cross-env NODE_ENV=production webpack --config webpack.config.umd.js app/app.js umd/reactivesearch.js",
     "build-bro": "browserify -t [ babelify --presets [ es2015 stage-0 react ] ] main.js -o dist/main.bundle.js",
     "storybook": "start-storybook -p 9009",
     "build-storybook": "build-storybook -o playground"
