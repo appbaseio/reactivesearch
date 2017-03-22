@@ -298,6 +298,9 @@ export default class NestedList extends Component {
 			key: this.props.componentId,
 			value
 		};
+		if(this.props.onValueChange) {
+			this.props.onValueChange(obj.value);
+		}
 		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
@@ -460,7 +463,8 @@ NestedList.propTypes = {
 		React.PropTypes.string,
 		React.PropTypes.element
 	]),
-	react: React.PropTypes.object
+	react: React.PropTypes.object,
+	onValueChange: React.PropTypes.func
 };
 
 // Default props value

@@ -40,6 +40,9 @@ export default class ToggleList extends Component {
 						this.setState({
 							selected: records
 						});
+						if(this.props.onValueChange) {
+							this.props.onValueChange(obj.value);
+						}
 						const obj = {
 							key: props.componentId,
 							value: records
@@ -59,6 +62,9 @@ export default class ToggleList extends Component {
 					this.setState({
 						selected: records
 					});
+					if(this.props.onValueChange) {
+						this.props.onValueChange(obj.value);
+					}
 					const obj = {
 						key: props.componentId,
 						value: records
@@ -137,6 +143,9 @@ export default class ToggleList extends Component {
 			key: this.props.componentId,
 			value: newSelection
 		};
+		if(this.props.onValueChange) {
+			this.props.onValueChange(obj.value);
+		}
 		// pass the selected sensor value with componentId as key,
 		const isExecuteQuery = true;
 		helper.selectedSensor.set(obj, isExecuteQuery);
@@ -202,7 +211,8 @@ ToggleList.propTypes = {
 		React.PropTypes.arrayOf(React.PropTypes.string)
 	]),
 	multiSelect: React.PropTypes.bool,
-	customQuery: React.PropTypes.func
+	customQuery: React.PropTypes.func,
+	onValueChange: React.PropTypes.func
 };
 
 // Default props value

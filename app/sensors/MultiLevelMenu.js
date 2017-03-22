@@ -321,6 +321,9 @@ export default class MultiLevelMenu extends Component {
 			key: this.props.componentId,
 			value: [this.state.selectedValue, list, item]
 		};
+		if(this.props.onValueChange) {
+			this.props.onValueChange(obj.value);
+		}
 		helper.selectedSensor.set(obj, true);
 	}
 
@@ -388,7 +391,8 @@ MultiLevelMenu.propTypes = {
 	maxItems: React.PropTypes.number,
 	blacklist: React.PropTypes.arrayOf(React.PropTypes.string),
 	customQuery: React.PropTypes.func,
-	react: React.PropTypes.object
+	react: React.PropTypes.object,
+	onValueChange: React.PropTypes.func
 };
 
 // Default props value

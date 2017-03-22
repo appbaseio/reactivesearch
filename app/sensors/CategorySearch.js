@@ -85,6 +85,7 @@ export default class CategorySearch extends Component {
 			value: { value }
 		};
 		helper.selectedSensor.set(obj, true);
+
 		if (value && value.trim() !== "") {
 			this.setState({
 				options: [{
@@ -271,6 +272,10 @@ export default class CategorySearch extends Component {
 			value: finalVal
 		};
 
+		if(this.props.onValueChange) {
+			this.props.onValueChange(obj.value);
+		}
+
 		helper.selectedSensor.set(obj, true);
 		this.setState({
 			currentValue: value
@@ -326,7 +331,8 @@ CategorySearch.propTypes = {
 	placeholder: React.PropTypes.string,
 	defaultSelected: React.PropTypes.string,
 	customQuery: React.PropTypes.func,
-	react: React.PropTypes.object
+	react: React.PropTypes.object,
+	onValueChange: React.PropTypes.func
 };
 
 // Default props value

@@ -56,12 +56,16 @@ export default class TagCloud extends Component {
 
 				this.setState({ items });
 
+				if(this.props.onValueChange) {
+					this.props.onValueChange(obj.value);
+				}
+
 				const obj = {
 					key: this.props.componentId,
 					value: this.selectedValue
 				};
 				helper.selectedSensor.set(obj, true);
-			}			else if (!this.props.multiSelect && this.defaultSelected !== this.props.defaultSelected) {
+			} else if (!this.props.multiSelect && this.defaultSelected !== this.props.defaultSelected) {
 				this.defaultSelected = this.props.defaultSelected;
 				const items = this.state.items.map((item) => {
 					if (this.defaultSelected && this.defaultSelected === item.key) {
@@ -75,6 +79,10 @@ export default class TagCloud extends Component {
 				this.selectedValue = this.selectedValue === this.defaultSelected ? "" : this.defaultSelected;
 
 				this.setState({ items });
+
+				if(this.props.onValueChange) {
+					this.props.onValueChange(obj.value);
+				}
 
 				const obj = {
 					key: this.props.componentId,
@@ -250,6 +258,10 @@ export default class TagCloud extends Component {
 
 		this.setState({ items });
 
+		if(this.props.onValueChange) {
+			this.props.onValueChange(obj.value);
+		}
+
 		const obj = {
 			key: this.props.componentId,
 			value: this.selectedValue
@@ -325,7 +337,8 @@ TagCloud.propTypes = {
 		React.PropTypes.number,
 		React.PropTypes.array
 	]),
-	react: React.PropTypes.object
+	react: React.PropTypes.object,
+	onValueChange: React.PropTypes.func
 };
 
 TagCloud.defaultProps = {

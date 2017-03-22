@@ -81,6 +81,9 @@ export default class RatingsFilter extends Component {
 			key: this.props.componentId,
 			value: record
 		};
+		if(this.props.onValueChange) {
+			this.props.onValueChange(obj.value);
+		}
 		// pass the selected sensor value with componentId as key,
 		const isExecuteQuery = true;
 		helper.selectedSensor.set(obj, isExecuteQuery);
@@ -148,7 +151,8 @@ RatingsFilter.propTypes = {
 	title: React.PropTypes.string,
 	data: React.PropTypes.any.isRequired,
 	defaultSelected: React.PropTypes.object,
-	customQuery: React.PropTypes.func
+	customQuery: React.PropTypes.func,
+	onValueChange: React.PropTypes.func
 };
 
 // Default props value

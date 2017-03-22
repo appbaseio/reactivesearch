@@ -232,6 +232,11 @@ export default class DynamicRangeSlider extends Component {
 	// Handle function when slider option change is completed
 	handleResults(textVal, value) {
 		let values;
+
+		if(this.props.onValueChange) {
+			this.props.onValueChange(obj.value);
+		}
+
 		if (textVal) {
 			values = {
 				min: textVal[0],
@@ -240,6 +245,7 @@ export default class DynamicRangeSlider extends Component {
 		} else {
 			values = value;
 		}
+
 		const realValues = {
 			from: values.min,
 			to: values.max
@@ -248,7 +254,13 @@ export default class DynamicRangeSlider extends Component {
 			key: this.props.componentId,
 			value: realValues
 		};
+
+		if(this.props.onValueChange) {
+			this.props.onValueChange(obj.value);
+		}
+
 		helper.selectedSensor.set(obj, true);
+
 		this.setState({
 			values
 		});
@@ -322,7 +334,8 @@ DynamicRangeSlider.propTypes = {
 		React.PropTypes.string,
 		React.PropTypes.element
 	]),
-	react: React.PropTypes.object
+	react: React.PropTypes.object,
+	onValueChange: React.PropTypes.func
 };
 
 DynamicRangeSlider.defaultProps = {
