@@ -13,12 +13,6 @@ import ReactStars from "react-stars";
 require("./ecommerce.scss");
 
 class Main extends Component {
-	constructor(props) {
-		super(props);
-		this.onData = this.onData.bind(this);
-		this.itemQuery = this.itemQuery.bind(this);
-	}
-
 	itemQuery(value) {
 		if(value) {
 			return {
