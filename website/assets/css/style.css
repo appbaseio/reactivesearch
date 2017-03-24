@@ -97,7 +97,7 @@ html, body {
 section {
   padding: 100px 0; }
   section .section-head .title {
-    color: #785EBB;
+    color: #5677FC;
     font-family: "Source Sans Pro Semi Bold";
     margin: 0;
     padding-bottom: 5px;
@@ -105,7 +105,7 @@ section {
 
 #top {
   padding-top: 120px;
-  background-color: #785EBB;
+  background-color: #5677FC;
   color: #fff; }
   #top .row {
     max-width: 1200px;
@@ -149,8 +149,12 @@ section {
     #features .feature .description .inner-description {
       font-size: 0.8rem; }
 
+@media screen and (max-width: 768px) {
+  .install-row a {
+    margin-bottom: 10px; } }
+
 #ui-components {
-  background: #9988CD;
+  background: #5677FC;
   color: #fff; }
   #ui-components .container {
     width: 95%;
@@ -197,7 +201,7 @@ section {
         left: 5px;
         width: calc(100% - 10px);
         height: 3px;
-        background: #FF847E;
+        background: #CDDC39;
         border-radius: 6px; }
       #use-cases .tab-container .nav-tabs li.active:before, #use-cases .tab-container .nav-tabs li:hover:before {
         height: 6px;
@@ -210,7 +214,7 @@ section {
           background: transparent; }
 
 #footer, footer {
-  background: #785EBB;
+  background: #5677FC;
   color: #fff; }
   #footer h2, footer h2 {
     font-size: 2rem;
@@ -227,7 +231,7 @@ footer {
       background-color: transparent; }
 
 .theme-btn {
-  background: #FF847E;
+  background: #CDDC39;
   color: #fff;
   text-transform: uppercase;
   font-size: 1em;
@@ -237,16 +241,16 @@ footer {
   border: 0;
   outline: none; }
   .theme-btn:active, .theme-btn:focus, .theme-btn:hover {
-    color: #785EBB !important; }
+    color: #5677FC !important; }
   .theme-btn.theme-btn-inverse {
     background: #808080;
-    color: #FF847E; }
+    color: #CDDC39; }
     .theme-btn.theme-btn-inverse:hover {
       color: #fff;
-      background: #ff6c65; }
+      background: #c6d626; }
   .theme-btn:hover {
     color: #fff;
-    background: #ff6c65; }
+    background: #c6d626; }
 
 @media screen and (max-width: 768px) {
   #features .feature {
@@ -313,7 +317,7 @@ footer {
   #home .navbar .navbar-nav li.active a {
     background: transparent; }
   #home .navbar .navbar-nav li {
-    background: #785EBB;
+    background: #5677FC;
     padding: 15px 20px 5px;
     z-index: 10; }
   #home .navbar .navbar-nav li a {
@@ -360,7 +364,7 @@ footer {
     height: auto; }
 
 .pricing-page #pricing-plan {
-  background: #785EBB;
+  background: #5677FC;
   color: #fff; }
   .pricing-page #pricing-plan h2 {
     font-size: 2rem;
@@ -368,7 +372,7 @@ footer {
     font-family: "Source Sans Pro Semi Bold"; }
 
 .pricing-page #faq-container .btitle {
-  color: #785EBB;
+  color: #5677FC;
   font-family: "Source Sans Pro Semi Bold";
   font-size: 2rem;
   margin-bottom: 2rem; }
@@ -404,7 +408,7 @@ footer {
       padding-right: 5px;
       display: inline-block;
       float: left;
-      color: #FF847E; }
+      color: #CDDC39; }
   .pricing-page #faq-container .faq ul li .answer {
     font-family: "Source Sans Pro Light";
     font-size: 1rem;
@@ -424,7 +428,7 @@ footer {
     display: block; }
 
 .pricing-page #cards-container {
-  background: #785EBB;
+  background: #5677FC;
   color: #fff;
   text-align: center;
   padding-bottom: 200px; }
@@ -495,9 +499,9 @@ footer {
             .pricing-page #cards .cards-container .single-card-container .price-card .description li .logo-link {
               padding-bottom: 3px;
               border-bottom: 1px solid;
-              color: #785EBB; }
+              color: #5677FC; }
               .pricing-page #cards .cards-container .single-card-container .price-card .description li .logo-link:hover {
-                color: #785EBB; }
+                color: #5677FC; }
             .pricing-page #cards .cards-container .single-card-container .price-card .description li.with-icon {
               padding-left: 100px; }
             .pricing-page #cards .cards-container .single-card-container .price-card .description li .img-center {
@@ -585,10 +589,10 @@ footer {
     border-bottom-left-radius: 0;
     margin-left: -4px; }
   .pricing-page .toggleButton .btn.active {
-    background: #FF847E;
+    background: #CDDC39;
     font-size: 1.4rem;
     box-shadow: none; }
 
 .pricing-page .plan-bottomline {
   margin-top: 15px;
-  color: #785EBB; }
+  color: #5677FC; }
