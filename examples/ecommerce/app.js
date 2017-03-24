@@ -31,7 +31,7 @@ class Main extends Component {
 
 	onData(res) {
 		const image = res.vehicleType == "other" || res.vehicleType == "unknown" ?
-			"/examples/ecommerce/images/car.jpg" :
+			"images/car.jpg" :
 			`images/${res.vehicleType.replace(/ /g,"-")}/${res.color}.jpg`
 
 		const result = {
