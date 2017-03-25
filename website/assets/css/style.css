@@ -97,7 +97,7 @@ html, body {
 section {
   padding: 100px 0; }
   section .section-head .title {
-    color: #5677FC;
+    color: #FECABA;
     font-family: "Source Sans Pro Semi Bold";
     margin: 0;
     padding-bottom: 5px;
@@ -105,7 +105,7 @@ section {
 
 #top {
   padding-top: 120px;
-  background-color: #5677FC;
+  background-color: #FECABA;
   color: #fff; }
   #top .row {
     max-width: 1200px;
@@ -154,7 +154,7 @@ section {
     margin-bottom: 10px; } }
 
 #ui-components {
-  background: #5677FC;
+  background: #FECABA;
   color: #fff; }
   #ui-components .container {
     width: 95%;
@@ -201,7 +201,7 @@ section {
         left: 5px;
         width: calc(100% - 10px);
         height: 3px;
-        background: #CDDC39;
+        background: #FFE94D;
         border-radius: 6px; }
       #use-cases .tab-container .nav-tabs li.active:before, #use-cases .tab-container .nav-tabs li:hover:before {
         height: 6px;
@@ -214,7 +214,7 @@ section {
           background: transparent; }
 
 #footer, footer {
-  background: #5677FC;
+  background: #FECABA;
   color: #fff; }
   #footer h2, footer h2 {
     font-size: 2rem;
@@ -231,7 +231,7 @@ footer {
       background-color: transparent; }
 
 .theme-btn {
-  background: #CDDC39;
+  background: #FFE94D;
   color: #fff;
   text-transform: uppercase;
   font-size: 1em;
@@ -241,16 +241,16 @@ footer {
   border: 0;
   outline: none; }
   .theme-btn:active, .theme-btn:focus, .theme-btn:hover {
-    color: #5677FC !important; }
+    color: #FECABA !important; }
   .theme-btn.theme-btn-inverse {
     background: #808080;
-    color: #CDDC39; }
+    color: #FFE94D; }
     .theme-btn.theme-btn-inverse:hover {
       color: #fff;
-      background: #c6d626; }
+      background: #ffe634; }
   .theme-btn:hover {
     color: #fff;
-    background: #c6d626; }
+    background: #ffe634; }
 
 @media screen and (max-width: 768px) {
   #features .feature {
@@ -317,7 +317,7 @@ footer {
   #home .navbar .navbar-nav li.active a {
     background: transparent; }
   #home .navbar .navbar-nav li {
-    background: #5677FC;
+    background: #FECABA;
     padding: 15px 20px 5px;
     z-index: 10; }
   #home .navbar .navbar-nav li a {
@@ -364,7 +364,7 @@ footer {
     height: auto; }
 
 .pricing-page #pricing-plan {
-  background: #5677FC;
+  background: #FECABA;
   color: #fff; }
   .pricing-page #pricing-plan h2 {
     font-size: 2rem;
@@ -372,7 +372,7 @@ footer {
     font-family: "Source Sans Pro Semi Bold"; }
 
 .pricing-page #faq-container .btitle {
-  color: #5677FC;
+  color: #FECABA;
   font-family: "Source Sans Pro Semi Bold";
   font-size: 2rem;
   margin-bottom: 2rem; }
@@ -408,7 +408,7 @@ footer {
       padding-right: 5px;
       display: inline-block;
       float: left;
-      color: #CDDC39; }
+      color: #FFE94D; }
   .pricing-page #faq-container .faq ul li .answer {
     font-family: "Source Sans Pro Light";
     font-size: 1rem;
@@ -428,7 +428,7 @@ footer {
     display: block; }
 
 .pricing-page #cards-container {
-  background: #5677FC;
+  background: #FECABA;
   color: #fff;
   text-align: center;
   padding-bottom: 200px; }
@@ -499,9 +499,9 @@ footer {
             .pricing-page #cards .cards-container .single-card-container .price-card .description li .logo-link {
               padding-bottom: 3px;
               border-bottom: 1px solid;
-              color: #5677FC; }
+              color: #FECABA; }
               .pricing-page #cards .cards-container .single-card-container .price-card .description li .logo-link:hover {
-                color: #5677FC; }
+                color: #FECABA; }
             .pricing-page #cards .cards-container .single-card-container .price-card .description li.with-icon {
               padding-left: 100px; }
             .pricing-page #cards .cards-container .single-card-container .price-card .description li .img-center {
@@ -589,10 +589,10 @@ footer {
     border-bottom-left-radius: 0;
     margin-left: -4px; }
   .pricing-page .toggleButton .btn.active {
-    background: #CDDC39;
+    background: #FFE94D;
     font-size: 1.4rem;
     box-shadow: none; }
 
 .pricing-page .plan-bottomline {
   margin-top: 15px;
-  color: #5677FC; }
+  color: #FECABA; }
