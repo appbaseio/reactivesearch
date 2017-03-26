@@ -5,6 +5,7 @@ const CHOOSE_CONFIG = process.env.CHOOSE_CONFIG;
 const default_config = {
 	entry: {
 		ecommerce_recipe: "./examples/ecommerce/app.js",
+		meetup_recipe: "./examples/meetup/app.js",
 		airbnb_recipe: "./examples/airbnb/app.js",
 		news_recipe: "./examples/news/app.js",
 		app: "./app/app.js"
@@ -38,6 +39,7 @@ const default_config = {
 const examples_config = {
 	entry: {
 		ecommerce_recipe: "./examples/ecommerce/app.js",
+		meetup_recipe: "./examples/meetup/app.js",
 		airbnb_recipe: "./examples/airbnb/app.js",
 		news_recipe: "./examples/news/app.js"
 	},

@@ -6,19 +6,13 @@ import {
 	NestedList,
 	MultiList,
 	RangeSlider,
-	ReactivePaginatedList
+	ResultCard
 } from "../../app/app.js";
 import ReactStars from "react-stars";
 
 require("./ecommerce.scss");
 
 class Main extends Component {
-	constructor(props) {
-		super(props);
-		this.onData = this.onData.bind(this);
-		this.itemQuery = this.itemQuery.bind(this);
-	}
-
 	itemQuery(value) {
 		if(value) {
 			return {
@@ -30,51 +24,41 @@ class Main extends Component {
 	}
 
 	onData(res) {
-		let result, combineData = res.currentData;
-		if(res.mode === "historic") {
-			combineData = res.currentData.concat(res.newData);
-		}
-		if (combineData) {
-			result = combineData.map((markerData, index) => {
-				let marker = markerData._source;
-				return this.itemMarkup(marker, markerData);
-			});
-		}
+		const image = res.vehicleType == "other" || res.vehicleType == "unknown" ?
+			"images/car.jpg" :
+			`images/${res.vehicleType.replace(/ /g,"-")}/${res.color}.jpg`
+
+		const result = {
+			image,
+			title: res.name,
+			desc: (
+				<div>
+					<div className="product-price">${res.price}</div>
+					<div className="product-info">
+						<div className="product-seller">
+							{res.seller}
+							<ReactStars
+								count={5}
+								value={res.rating}
+								size={20}
+								color1={"#bbb"}
+								edit={false}
+								color2={"#ffd700"}
+							/>
+						</div>
+					</div>
+					<div className="product-footer">
+						<span className="tag">{res.model}</span>
+						<span className="tag">{res.vehicleType}</span>
+						{ res.fuelType ? <span className="tag">{res.fuelType}</span> : null }
+
+						<span className="metadata">REGD. {res.yearOfRegistration}</span>
+					</div>
+				</div>
+			),
+			url: "#"
+		};
 		return result;
-	}
-
-	itemMarkup(marker, markerData) {
-		return (
-			<a className="product"
-				href="#"
-				key={markerData._id}>
-				<div className="product__price">${marker.price}</div>
-				{ marker.vehicleType == "other" || marker.vehicleType == "unknown" ?
-					<div className="product__image" style={{"backgroundImage": "url(/examples/ecommerce/images/car.jpg)"}}></div> :
-					<div className="product__image" style={{"backgroundImage": `url(/examples/ecommerce/images/${marker.vehicleType.replace(/ /g,"-")}/${marker.color}.jpg)`}}></div>
-				}
-				<div className="product__info">{marker.name}</div>
-				<div className="product__seller">
-					{marker.seller}
-
-					<ReactStars
-						count={5}
-						value={marker.rating}
-						size={20}
-						color1={"#bbb"}
-						edit={false}
-						color2={"#ffd700"}
-					/>
-				</div>
-				<div className="product__footer">
-					<span className="tag">{marker.model}</span>
-					<span className="tag">{marker.vehicleType}</span>
-					{ marker.fuelType ? <span className="tag">{marker.fuelType}</span> : null }
-
-					<span className="metadata">REGD. {marker.yearOfRegistration}</span>
-				</div>
-			</a>
-		);
 	}
 
 	render() {
@@ -167,10 +151,11 @@ class Main extends Component {
 
 					<div className="col s9">
 						<div className="row">
-							<ReactivePaginatedList
+							<ResultCard
 								onData={this.onData}
 								appbaseField={this.props.mapping.name}
 								size={30}
+								showPagination={true}
 								react={{
 									and: ["CategorySensor", "ItemSensor", "VehicleTypeSensor", "ModelSensor", "ColorSensor", "PriceSensor"]
 								}}

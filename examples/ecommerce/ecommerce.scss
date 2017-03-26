@@ -64,7 +64,7 @@ nav {
 	text-align: center;
 }
 
-.rbc.rbc-reactivelist {
+.rbc .rbc-resultcard-container {
 	background-color: #fafafa;
 	height: auto;
 	max-height: none;
@@ -73,26 +73,22 @@ nav {
 	box-shadow: none;
 }
 
-.rbc.rbc-reactivelist .rbc-list-item {
-	max-width: 400px;
-	margin: 20px;
-	width: calc(33.33% - 40px);
-	border: 0;
-}
-
-.rbc.rbc-reactivelist .rbc-reactivelist-scroll-container {
+.rbc .rbc-resultcard-scroll-container {
 	height: auto !important;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
 }
 
-.product {
-	width: 100%;
+.rbc .rbc-resultcard {
 	max-width: 400px;
+	margin: 20px 0;
+	width: calc(33.33% - 40px);
 	text-decoration: none;
 	overflow: hidden;
-	margin: 0;
 	float: left;
 	background-color: #fff;
-	min-height: 425px;
+	min-height: 415px;
 	border: 0;
 	box-shadow: 0px 3px 8px -4px rgba(0,0,0,0.15);
 	position: relative;
@@ -109,7 +105,12 @@ nav {
 		box-shadow: 0 8px 8px rgba(0,0,0,0.24),0 0 8px rgba(0,0,0,0.12);
 	}
 
-	@include element('price') {
+	@include element("image") {
+		background-size: cover;
+		height: 300px;
+	}
+
+	.product-price {
 		display: inline-block;
 		position: absolute;
 		right: 0;
@@ -123,18 +124,9 @@ nav {
 		transition: all 0.3s ease;
 	}
 
-	@include element('image') {
-		-ms-flex-positive: 1;
-		flex-grow: 1;
-		/*margin: 60px 20px 5px;*/
-		background-size: contain;
-		background-repeat: no-repeat;
-		background-position: center center;
-	}
-
-	@include element('info') {
+	.product-info {
 		height: 34px;
-		padding: 8px 15px 14px;
+		padding: 4px 0 14px;
 		font-size: 14px;
 		font-weight: bold;
 		color: #999;
@@ -144,11 +136,11 @@ nav {
 		text-overflow: ellipsis;
 	}
 
-	@include element('seller') {
+	.product-seller {
 		height: 28px;
 		font-size: 14px;
 		color: #888;
-		padding: 0 15px;
+		padding: 0;
 		text-align: left;
 
 		& > div {
@@ -158,12 +150,15 @@ nav {
 		}
 	}
 
-	@include element('footer') {
+	.product-footer {
 		height: 56px;
 		font-size: 14px;
 		border-top: 1px solid #fcfcfc;
-		padding: 12px 15px;
+		padding: 12px 8px;
 		text-align: left;
+		position: absolute;
+		width: 100%;
+		left: 0;
 
 		.tag {
 			display: inline-block;

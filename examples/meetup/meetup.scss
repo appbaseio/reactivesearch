@@ -1,0 +1,117 @@
+$primary-color: #ED1C40;
+$dark-color: #424242;
+
+header {
+	width: 100%;
+	height: 120px;
+	background-color: $primary-color;
+	padding: 25px 0 0;
+	margin: 0;
+	position: fixed;
+	z-index: 2;
+
+	h2 {
+		color: #fff;
+		text-align: center;
+		margin: 15px 0;
+		padding: 0;
+		font-size: 16px;
+		letter-spacing: 0.03em;
+		text-transform: uppercase;
+	}
+
+	.filter-container {
+		background-color: $dark-color;
+		height: 80px;
+		width: 100%;
+		max-width: 800px;
+		padding: 1px 0 0;
+		margin: 0 auto;
+		z-index: 4;
+		position: relative;
+
+		.rbc {
+			background-color: transparent;
+			padding: 0;
+			border: 0;
+			box-shadow: none;
+
+
+			.rbc-search-container {
+				width: 70%;
+			}
+
+			& .row > div.col.s12:last-child {
+				width: 30%;
+				display: inline-block;
+
+				.Select-control {
+					border-radius: 0;
+				}
+			}
+		}
+	}
+}
+
+.result-wrapper {
+	position: relative;
+	top: 120px;
+
+	.left-col, .right-col {
+		width: 50%;
+		margin: 0;
+		float: left;
+	}
+
+	.rbc-reactivemap {
+		position: fixed;
+		width: 50%;
+		right: 0;
+		top: 120px;
+		height: calc(100% - 120px);
+	}
+}
+
+.rbc.rbc-resultlist-wrapper {
+	background-color: transparent;
+	padding: 30px;
+}
+
+.rbc-resultlist-container {
+	max-height: none;
+	background-color: transparent;
+	box-shadow: none;
+	border: 0;
+}
+
+.rbc .rbc.rbc-resultstats {
+	text-align: right;
+	background-color: transparent;
+}
+
+.rbc-resultlist-scroll-container {
+	height: auto !important;
+}
+
+.rbc .rbc-resultlist {
+	.rbc-resultlist__image {
+		width: 60px;
+		height: 60px;
+		border-radius: 4px;
+		overflow: hidden;
+		background-size: cover;
+		background-position: top center;
+	}
+
+	.rbc-resultlist__title {
+		width: calc(100% - 60px);
+		white-space: normal;
+	}
+}
+
+.rbc.rbc-pagination {
+	background-color: transparent;
+	text-align: center;
+	border: 0;
+	box-shadow: none;
+}

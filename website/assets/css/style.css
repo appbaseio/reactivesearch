@@ -84,7 +84,7 @@
 
 html, body {
   font-size: 18px;
-  color: #808080;
+  color: #333;
   font-family: "Source Sans Pro Light";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -97,7 +97,7 @@ html, body {
 section {
   padding: 100px 0; }
   section .section-head .title {
-    color: #FECABA;
+    color: #333;
     font-family: "Source Sans Pro Semi Bold";
     margin: 0;
     padding-bottom: 5px;
@@ -106,7 +106,7 @@ section {
 #top {
   padding-top: 120px;
   background-color: #FECABA;
-  color: #fff; }
+  color: #333; }
   #top .row {
     max-width: 1200px;
     margin: 0 auto; }
@@ -155,12 +155,12 @@ section {
 
 #ui-components {
   background: #FECABA;
-  color: #fff; }
+  color: #333; }
   #ui-components .container {
     width: 95%;
     max-width: 1250px; }
   #ui-components .section-head .title {
-    color: #fff; }
+    color: #333; }
   #ui-components img {
     width: 92%;
     margin-bottom: 30px; }
@@ -215,16 +215,16 @@ section {
 
 #footer, footer {
   background: #FECABA;
-  color: #fff; }
+  color: #333; }
   #footer h2, footer h2 {
     font-size: 2rem;
     font-family: "Source Sans Pro Semi Bold"; }
 
 footer {
   padding: 15px 0;
-  color: #fff; }
+  color: #333; }
   footer .footer-link, footer .navbar-nav > li > a {
-    color: #fff;
+    color: #333;
     padding: 10px 15px;
     line-height: 20px; }
     footer .footer-link:hover, footer .navbar-nav > li > a:hover {
@@ -232,7 +232,7 @@ footer {
 
 .theme-btn {
   background: #FFE94D;
-  color: #fff;
+  color: #333;
   text-transform: uppercase;
   font-size: 1em;
   padding: 0.72em 40px;
@@ -241,9 +241,9 @@ footer {
   border: 0;
   outline: none; }
   .theme-btn:active, .theme-btn:focus, .theme-btn:hover {
-    color: #FECABA !important; }
+    color: #fff; }
   .theme-btn.theme-btn-inverse {
-    background: #808080;
+    background: #333;
     color: #FFE94D; }
     .theme-btn.theme-btn-inverse:hover {
       color: #fff;
@@ -321,7 +321,7 @@ footer {
     padding: 15px 20px 5px;
     z-index: 10; }
   #home .navbar .navbar-nav li a {
-    color: #fff;
+    color: #333;
     font-size: 17px;
     font-weight: bold; }
 
