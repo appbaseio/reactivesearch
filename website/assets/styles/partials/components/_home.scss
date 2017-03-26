@@ -15,7 +15,7 @@ section {
 	padding: 100px 0;
 	.section-head {
 		.title {
-			color: $primary-color;
+			color: $font-color;
 			font-family: $font-semi-bold;
 			margin: 0;
 			padding-bottom: 5px;
@@ -27,7 +27,7 @@ section {
 #top {
 	padding-top: 120px;
 	background-color: $primary-color;
-	color: #fff;
+	color: $font-color;
 
 	.row {
 		max-width: 1200px;
@@ -103,7 +103,7 @@ section {
 
 #ui-components {
 	background: $primary-color;
-	color: #fff;
+	color: $font-color;
 
 	.container {
 		width: 95%;
@@ -111,7 +111,7 @@ section {
 	}
 
 	.section-head .title {
-		color: #fff;
+		color: $font-color;
 	}
 
 	img {
@@ -191,7 +191,7 @@ section {
 }
 #footer, footer {
 	background: $primary-color;
-	color: #fff;
+	color: $font-color;
 	h2 {
 		font-size: 2rem;
 		font-family: $font-semi-bold;
@@ -199,9 +199,9 @@ section {
 }
 footer {
 	padding: 15px 0;
-	color: #fff;
+	color: $font-color;
 	.footer-link, .navbar-nav>li>a {
-		color: #fff;
+		color: $font-color;
 		padding: 10px 15px;
 		line-height: 20px;
 		&:hover {
@@ -212,7 +212,7 @@ footer {
 
 .theme-btn {
 	background: $yellow-color;
-	color: #fff;
+	color: $font-color;
 	text-transform: uppercase;
 	font-size: 1em;
 	padding: 0.72em 40px;
@@ -221,7 +221,7 @@ footer {
 	border: 0;
 	outline: none;
 	&:active, &:focus, &:hover {
-		color: $primary-color !important;
+		color: #fff;
 	}
 	&.theme-btn-inverse {
 		background: $font-color;
