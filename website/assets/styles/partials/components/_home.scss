@@ -62,6 +62,10 @@ section {
 	}
 
 	@media screen and (max-width: 768px) {
+		.s-breakline {
+			display: block;
+			margin-bottom: 10px;
+		}
 		.landing-content {
 			text-align: center;
 		}
