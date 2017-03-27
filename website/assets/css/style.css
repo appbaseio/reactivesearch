@@ -127,6 +127,9 @@ section {
     #top .star-frame .github-btn-large .gh-btn, #top .star-frame .github-btn-large .gh-count {
       font-size: 2rem; }
   @media screen and (max-width: 768px) {
+    #top .s-breakline {
+      display: block;
+      margin-bottom: 10px; }
     #top .landing-content {
       text-align: center; } }
 
