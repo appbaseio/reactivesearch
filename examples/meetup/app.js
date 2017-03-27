@@ -20,6 +20,21 @@ class Main extends Component {
 		return result;
 	}
 
+	onPopoverTrigger(marker) {
+		return (<div className="row" style={{ margin: "0", maxWidth: "300px", paddingTop: 10 }}>
+			<div className="col s12">
+				<div>
+					<strong>{marker._source.member.member_name}</strong>
+				</div>
+				<p style={{ margin: "5px 0", lineHeight: "18px" }}>is going to&nbsp;
+					<a href={marker._source.event.event_url} target="_blank">
+						{marker._source.event.event_name}
+					</a>
+				</p>
+			</div>
+		</div>);
+	}
+
 	render() {
 		return (
 			<ReactiveBase
@@ -71,6 +86,7 @@ class Main extends Component {
 							showMapStyles={false}
 							showSearchAsMove={false}
 							defaultMapStyle="Light Monochrome"
+							onPopoverTrigger={this.onPopoverTrigger}
 							autoCenter={true}
 							size={100}
 							react={{

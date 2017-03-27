@@ -53,26 +53,6 @@ class Main extends Component {
 		};
 	}
 
-	itemMarkup(marker, markerData) {
-		return (
-			<a className="listing"
-				href="#"
-				key={markerData._id}>
-				<div className="listing__image" style={{"backgroundImage": `url(${marker.image})`}}></div>
-				<div className="listing__price">${marker.price}</div>
-				<div className="listing__info clearfix">
-					<span className="col s9">
-						{marker.name}
-					</span>
-					<span className="host" style={{"backgroundImage": `url(${marker.host_image})`}}></span>
-					<p className="col s12">
-						{marker.room_type} · {marker.accommodates} guests
-					</p>
-				</div>
-			</a>
-		);
-	}
-
 	onPopoverTrigger(marker) {
 		return (<div className="popover row">
 			<div className="listing">
