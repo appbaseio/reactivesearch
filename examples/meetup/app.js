@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import {
 	ReactiveBase,
+	DataSearch,
 	GeoDistanceDropdown,
 	ResultList,
 	ReactiveMap
@@ -44,22 +45,33 @@ class Main extends Component {
 			>
 				<header>
 					<h2>Meetup Blast</h2>
-					<div className="filter-container">
-						<GeoDistanceDropdown
-							componentId="GeoDistanceDropdown"
-							appbaseField="location"
-							unit="mi"
-							data={[
-								{ start: 1, end: 100, label: "Less than 100 miles" },
-								{ start: 101, end: 200, label: "Between 100 and 200 miles" },
-								{ start: 201, end: 500, label: "Between 200 and 500 miles" },
-								{ start: 501, end: 1000, label: "Above 500 miles" }
-							]}
-							defaultSelected={{
-								label: "Less than 100 miles",
-								location: "London"
-							}}
-						/>
+					<div className="filter-container row">
+						<div className="col s4">
+							<DataSearch
+								componentId="TopicSensor"
+								placeholder="Search for topics..."
+								appbaseField="group.group_topics.topic_name_raw.raw"
+								searchInputId="TopicSearch"
+							/>
+						</div>
+						<div className="col s8">
+							<GeoDistanceDropdown
+								componentId="GeoSensor"
+								appbaseField="location"
+								placeholder="Search for location..."
+								unit="mi"
+								data={[
+									{ start: 1, end: 100, label: "Less than 100 miles" },
+									{ start: 101, end: 200, label: "Between 100 and 200 miles" },
+									{ start: 201, end: 500, label: "Between 200 and 500 miles" },
+									{ start: 501, end: 1000, label: "Above 500 miles" }
+								]}
+								defaultSelected={{
+									label: "Less than 100 miles",
+									location: "London"
+								}}
+							/>
+						</div>
 					</div>
 				</header>
 				<section className="result-wrapper clearfix">
@@ -72,7 +84,7 @@ class Main extends Component {
 							onData={this.onData}
 							showPagination={true}
 							react={{
-								and: "GeoDistanceDropdown"
+								and: "GeoSensor"
 							}}
 						/>
 					</div>
@@ -90,7 +102,7 @@ class Main extends Component {
 							autoCenter={true}
 							size={100}
 							react={{
-								and: "GeoDistanceDropdown"
+								and: ["GeoSensor", "TopicSensor"]
 							}}
 						/>
 					</div>
