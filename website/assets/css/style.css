@@ -157,7 +157,7 @@ section {
     margin-bottom: 10px; } }
 
 #ui-components {
-  background: #FECABA;
+  background: #DFDFDF;
   color: #333; }
   #ui-components .container {
     width: 95%;
@@ -172,6 +172,12 @@ section {
     #ui-components .small img {
       width: calc(33.33% - 28px); }
       #ui-components .small img:nth-child(2) {
+        margin: 0 15px 30px; }
+  #ui-components .medium {
+    margin-bottom: 20px; }
+    #ui-components .medium img {
+      width: calc(50% - 28px); }
+      #ui-components .medium img:nth-child(2) {
         margin: 0 15px 30px; }
 
 #use-cases .tab-container {
