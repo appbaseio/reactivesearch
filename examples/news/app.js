@@ -5,7 +5,7 @@ import {
 	TextField,
 	SingleDropdownList,
 	ReactivePaginatedList
-} from "@appbaseio/reactivemaps";
+} from "../../app/app.js";
 import moment from "moment";
 
 require("./news.scss");
