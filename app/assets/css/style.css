@@ -384,6 +384,14 @@
 .rbc-resultlist-wrapper {
   position: relative; }
 
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0; }
+
 .rbc.rbc-viewswitcher {
   background-color: transparent; }
   .rbc.rbc-viewswitcher .rbc-list-container {
