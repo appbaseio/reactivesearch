@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import {
 	ReactiveBase,
 	TextField,
@@ -142,4 +142,4 @@ Main.defaultProps = {
 	}
 };
 
-ReactDOM.render(<Main />, document.getElementById("app"));
+render(<Main />, document.getElementById("app"));

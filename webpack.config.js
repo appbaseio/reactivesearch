@@ -7,6 +7,7 @@ const default_config = {
 		ecommerce_recipe: "./examples/ecommerce/app.js",
 		meetup_recipe: "./examples/meetup/app.js",
 		yelp_recipe: "./examples/yelp/app.js",
+		producthunt_recipe: "./examples/producthunt/app.js",
 		airbnb_recipe: "./examples/airbnb/app.js",
 		news_recipe: "./examples/news/app.js",
 		app: "./app/app.js"
@@ -42,6 +43,7 @@ const examples_config = {
 		ecommerce_recipe: "./examples/ecommerce/app.js",
 		meetup_recipe: "./examples/meetup/app.js",
 		yelp_recipe: "./examples/yelp/app.js",
+		producthunt_recipe: "./examples/producthunt/app.js",
 		airbnb_recipe: "./examples/airbnb/app.js",
 		news_recipe: "./examples/news/app.js"
 	},
