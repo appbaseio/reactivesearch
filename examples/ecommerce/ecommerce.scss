@@ -42,11 +42,21 @@ nav {
 
 .rbc.rbc-multilist {
 	height: 400px !important;
+
+	.rbc-label {
+		text-transform: capitalize;
+	}
 }
 
 .color-sensor {
 	.rbc.rbc-multilist {
 		height: 260px !important;
+	}
+}
+
+.rbc.rbc-nestedlist {
+	.rbc-label {
+		text-transform: capitalize;
 	}
 }
 
