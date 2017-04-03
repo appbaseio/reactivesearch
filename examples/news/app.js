@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import {
 	ReactiveBase,
 	TextField,
 	SingleDropdownList,
 	ReactivePaginatedList
-} from "@appbaseio/reactivemaps";
+} from "../../app/app.js";
 import moment from "moment";
 
 require("./news.scss");
@@ -142,4 +142,4 @@ Main.defaultProps = {
 	}
 };
 
-ReactDOM.render(<Main />, document.getElementById("app"));
+render(<Main />, document.getElementById("app"));

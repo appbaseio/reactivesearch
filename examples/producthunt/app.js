@@ -1,0 +1,94 @@
+import React, { Component } from "react";
+import { render } from "react-dom";
+import {
+	ReactiveBase,
+	DataSearch,
+	MultiList,
+	DataController,
+	ResultList
+} from "../../app/app.js";
+
+require("./producthunt.scss");
+
+class Main extends Component {
+	onData(res) {
+		const topics = res.topics.map(topic => (
+			<span key={topic} className="tag">{topic}</span>
+		));
+		return {
+			image: "images/default.png",
+			title: res.name,
+			desc: (<div>
+				<p>{res.tagline}</p>
+				{topics}
+				<div className="stats">
+					<span><i className="fa fa-caret-up"></i> {res.upvotes}</span>
+					<span><i className="fa fa-comment"></i> {res.comments_count}</span>
+				</div>
+			</div>),
+			url: "#"
+		}
+	}
+
+	defaultQuery() {
+		return {
+			"match_all": {}
+		}
+	}
+
+	render() {
+		return (
+			<ReactiveBase
+				app="producthunt"
+				credentials="We5c0D8OP:b3f3b3ee-529c-41b2-b69a-84245c091105"
+				type="post"
+				theme="rbc-red"
+			>
+				<header>
+					<a className="brand">Product Hunt</a>
+					<DataSearch
+						componentId="NameSensor"
+						placeholder="Discover products..."
+						appbaseField="name"
+						searchInputId="NameSearch"
+					/>
+					<div className="links">
+						<a target="_blank" href="https://github.com/appbaseio/reactivesearch" className="link"><i className="fa fa-github" aria-hidden="true"></i> Github</a>
+						<a target="_blank" href="https://opensource.appbase.io/reactive-manual/" className="link"><i className="fa fa-book" aria-hidden="true"></i> Documentation</a>
+					</div>
+				</header>
+
+				<section className="result-wrapper clearfix">
+					<div className="left-col">
+						<MultiList
+							appbaseField="topics.raw"
+							title="Filter Topics"
+							componentId="TopicSensor"
+							sortBy="count"
+							size={15}
+						/>
+						<DataController
+							componentId="DefaultSensor"
+							visible={false}
+							customQuery={this.defaultQuery}
+						/>
+					</div>
+					<div className="right-col">
+						<ResultList
+							appbaseField="name"
+							from={0}
+							size={50}
+							showPagination={true}
+							onData={this.onData}
+							react={{
+								and: ["NameSensor", "TopicSensor", "DefaultSensor"]
+							}}
+						/>
+					</div>
+				</section>
+			</ReactiveBase>
+		);
+	}
+}
+
+render(<Main />, document.getElementById("app"));

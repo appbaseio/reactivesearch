@@ -6,6 +6,7 @@ import {
 	NestedList,
 	MultiList,
 	RangeSlider,
+	RatingsFilter,
 	ResultCard
 } from "../../app/app.js";
 import ReactStars from "react-stars";
@@ -96,6 +97,23 @@ class Main extends Component {
 								/>
 							</div>
 							<div className="col s12">
+								<RatingsFilter
+									componentId="RatingsSensor"
+									appbaseField="rating"
+									title="Rating"
+									data={
+									[{ start: 4, end: 5, label: "4 stars and up" },
+										{ start: 3, end: 5, label: "3 stars and up" },
+										{ start: 2, end: 5, label: "2 stars and up" },
+										{ start: 1, end: 5, label: "> 1 stars" }]
+									}
+									defaultSelected={{
+										start: 3,
+										end: 5
+									}}
+								/>
+							</div>
+							<div className="col s12">
 								<MultiList
 									componentId="VehicleTypeSensor"
 									appbaseField={this.props.mapping.vehicleType}
@@ -140,6 +158,10 @@ class Main extends Component {
 										start: 800,
 										end: 1200
 									}}
+									rangeLabels={{
+										start: "$800",
+										end: "$1200"
+									}}
 									defaultSelected={{
 										start: 800,
 										end: 900
@@ -157,7 +179,7 @@ class Main extends Component {
 								size={30}
 								showPagination={true}
 								react={{
-									and: ["CategorySensor", "ItemSensor", "VehicleTypeSensor", "ModelSensor", "ColorSensor", "PriceSensor"]
+									and: ["CategorySensor", "RatingsSensor", "ItemSensor", "VehicleTypeSensor", "ModelSensor", "ColorSensor", "PriceSensor"]
 								}}
 							/>
 						</div>

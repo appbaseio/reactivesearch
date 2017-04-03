@@ -35,6 +35,8 @@
     "classnames": "^2.2.5",
     "jquery": "^3.1.1",
     "lodash": "^4.15.0",
+    "moment": "^2.18.1",
+    "node-sass": "^4.5.1",
     "rc-slider": "^5.4.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",

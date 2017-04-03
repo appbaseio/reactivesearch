@@ -1,6 +1,16 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import { ReactiveBase, ToggleList, ReactiveMap, DataSearch, RangeSlider, ResultCard } from "../../app/app.js";
+import moment from "moment";
+import {
+	ReactiveBase,
+	DateRange,
+	ToggleList,
+	NumberBox,
+	ReactiveMap,
+	DataSearch,
+	RangeSlider,
+	ResultCard
+} from "../../app/app.js";
 
 require("./airbnb.scss");
 
@@ -10,6 +20,30 @@ class Main extends Component {
 		this.onData = this.onData.bind(this);
 		this.onPopoverTrigger = this.onPopoverTrigger.bind(this);
 		this.roomQuery = this.roomQuery.bind(this);
+		this.dateQuery = this.dateQuery.bind(this);
+	}
+
+	dateQuery(value) {
+		let query = null;
+		if (value) {
+			query = [
+				{
+					"range": {
+						"date_from": {
+							"lte": moment(value.startDate).format("YYYYMMDD")
+						}
+					}
+				},
+				{
+					"range": {
+						"date_to": {
+							"gte": moment(value.endDate).format("YYYYMMDD")
+						}
+					}
+				}
+			];
+		}
+		return query;
 	}
 
 	roomQuery(record) {
@@ -53,26 +87,6 @@ class Main extends Component {
 		};
 	}
 
-	itemMarkup(marker, markerData) {
-		return (
-			<a className="listing"
-				href="#"
-				key={markerData._id}>
-				<div className="listing__image" style={{"backgroundImage": `url(${marker.image})`}}></div>
-				<div className="listing__price">${marker.price}</div>
-				<div className="listing__info clearfix">
-					<span className="col s9">
-						{marker.name}
-					</span>
-					<span className="host" style={{"backgroundImage": `url(${marker.host_image})`}}></span>
-					<p className="col s12">
-						{marker.room_type} · {marker.accommodates} guests
-					</p>
-				</div>
-			</a>
-		);
-	}
-
 	onPopoverTrigger(marker) {
 		return (<div className="popover row">
 			<div className="listing">
@@ -93,9 +107,10 @@ class Main extends Component {
 		return (
 			<div className="row" style={{"margin": "0"}}>
 				<ReactiveBase
-					app="airbnb"
-					credentials="CvRG9OoFe:ac31bf6d-b5a8-4410-a916-81b47c609dbc"
+					app="housing"
+					credentials="0aL1X5Vts:1ee67be1-9195-4f4b-bd4f-a91cd1b5e4b5"
 					type="listing"
+					theme="rbc-red"
 				>
 					<nav>
 						<div className="col s3">
@@ -115,6 +130,26 @@ class Main extends Component {
 					<div className="row clearfix">
 						<div className="left">
 							<div className="col s12 sensor-wrapper">
+								<div className="col s6">
+									<DateRange
+										componentId="DateRangeSensor"
+										appbaseField="date_from"
+										title="When"
+										customQuery={this.dateQuery}
+									/>
+								</div>
+								<div className="col s6">
+									<NumberBox
+										componentId="GuestSensor"
+										appbaseField="accommodates"
+										title="Guests"
+										defaultSelected={2}
+										data={{
+											start: 1,
+											end: 16
+										}}
+									/>
+								</div>
 								<ToggleList
 									appbaseField="room_type"
 									componentId="RoomTypeSensor"
@@ -138,17 +173,17 @@ class Main extends Component {
 									appbaseField={this.props.mapping.price}
 									title="Price Range"
 									defaultSelected={{
-										"start": 30,
+										"start": 10,
 										"end": 50
 									}}
-									stepValue={20}
+									stepValue={10}
 									range={{
-										start: 30,
-										end: 150
+										start: 10,
+										end: 250
 									}}
 									rangeLabels={{
-										start: "$30",
-										end: "$150"
+										start: "$10",
+										end: "$250"
 									}} />
 							</div>
 
@@ -158,10 +193,11 @@ class Main extends Component {
 										componentId="SearchResult"
 										appbaseField={this.props.mapping.name}
 										from={0}
-										size={60}
+										size={40}
 										onData={this.onData}
+										showPagination={true}
 										react={{
-											and: ["PlaceSensor", "RoomTypeSensor", "PriceSensor"]
+											and: ["PlaceSensor", "DateRangeSensor", "GuestSensor", "RoomTypeSensor", "PriceSensor"]
 										}}
 									/>
 								</div>
@@ -179,7 +215,7 @@ class Main extends Component {
 								showPopoverOn="click"
 								onPopoverTrigger={this.onPopoverTrigger}
 								defaultZoom={15}
-								size={60}
+								size={40}
 								defaultCenter={{ lat: 47.6062, lng: -122.3321 }}
 								react={{
 									and: ["PlaceSensor", "PriceSensor"]

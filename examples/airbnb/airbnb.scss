@@ -69,13 +69,24 @@ nav {
 	padding: 20px;
 	margin-top: 65px;
 
+	.col.s6 {
+		padding: 0;
+	}
+
 	.rbc {
 		border: 0;
 		box-shadow: none;
 	}
 }
 
-.rbc-blue .rbc.rbc-resultstats {
+.rbc.rbc-pagination {
+	text-align: center;
+	border: 0;
+	box-shadow: none;
+	background-color: transparent;
+}
+
+.rbc-red .rbc.rbc-resultstats {
 	padding: 0 20px;
 	text-align: right;
 	background-color: transparent;
