@@ -4,7 +4,7 @@ import {
 	ReactiveBase,
 	TextField,
 	SingleDropdownList,
-	ReactivePaginatedList
+	ResultList
 } from "../../app/app.js";
 import moment from "moment";
 
@@ -31,55 +31,38 @@ class Main extends Component {
 	}
 
 	onData(res) {
-		let result, combineData = res.currentData;
-		if(res.mode === "historic") {
-			combineData = res.currentData.concat(res.newData);
-		}
-		if (combineData) {
-			result = combineData.map((markerData, index) => {
-				let marker = markerData._source;
-				return this.itemMarkup(marker, markerData);
-			});
-		}
-		return result;
-	}
-
-	itemMarkup(marker, markerData) {
-		return (
-			<div
-				className="news"
-				key={markerData._id}
-			>
-				{
-					marker.title && marker.title.length ?
-						marker.url ?
-						<a  className="title"
-							target="_blank"
-							href={marker.url}
-							dangerouslySetInnerHTML={{__html: marker.title}}
-						/> :
-						marker.p_type == "poll" ?
-						<a  className="title"
-							target="_blank"
-							href={`https://news.ycombinator.com/item?id=${marker.id}`}
-							dangerouslySetInnerHTML={{__html: marker.title}}
-						/> :
-						<div className="title" dangerouslySetInnerHTML={{__html: marker.title}} />
-					: null
-				}
-				{ marker.text ? <div className="text" dangerouslySetInnerHTML={{__html: marker.text}} /> : null }
+		const title = res.title && res.title.length ?
+			res.url ?
+				<a  className="title"
+					target="_blank"
+					href={res.url}
+					dangerouslySetInnerHTML={{__html: res.title}}
+				/> :
+				res.p_type == "poll" ?
+				<a  className="title"
+					target="_blank"
+					href={`https://news.ycombinator.com/item?id=${res.id}`}
+					dangerouslySetInnerHTML={{__html: res.title}}
+				/> :
+				<div className="title" dangerouslySetInnerHTML={{__html: res.title}} />
+			: null;
+		return {
+			image: null,
+			title: title,
+			desc: (<div>
+				{ res.text ? <div className="text" dangerouslySetInnerHTML={{__html: res.text}} /> : null }
 				<p className="info">
 					{
-						marker.p_type == "comment" ?
-						<span>parent <a target="_blank" href={`https://news.ycombinator.com/item?id=${marker.parent}`}>{marker.parent}</a><span className="separator">|</span></span>
+						res.p_type == "comment" ?
+						<span>parent <a target="_blank" href={`https://news.ycombinator.com/item?id=${res.parent}`}>{res.parent}</a><span className="separator">|</span></span>
 						: null
 					}
-					{marker.score} points<span className="separator">|</span>
-					<a target="_blank" href={`https://news.ycombinator.com/user?id=${marker.by}`}>{marker.by}</a><span className="separator">|</span>
-					{moment.unix(marker.time).fromNow()}
+					{res.score} points<span className="separator">|</span>
+					<a target="_blank" href={`https://news.ycombinator.com/user?id=${res.by}`}>{res.by}</a><span className="separator">|</span>
+					{moment.unix(res.time).fromNow()}
 				</p>
-			</div>
-		);
+			</div>)
+		}
 	}
 
 	render() {
@@ -116,16 +99,17 @@ class Main extends Component {
 
 					<div className="wrapper row">
 						<div className="col s12">
-							<ReactivePaginatedList
-								componentId="SearchResult"
-								appbaseField={this.props.mapping.title}
-								onData={this.onData}
+							<ResultList
+								appbaseField="title"
 								from={0}
-								size={30}
+								size={50}
+								showPagination={true}
+								onData={this.onData}
 								react={{
-									and: ["TypeSensor", "InputSensor"]
+									and: ["InputSensor", "TypeSensor"]
 								}}
 							/>
+
 						</div>
 					</div>
 				</ReactiveBase>

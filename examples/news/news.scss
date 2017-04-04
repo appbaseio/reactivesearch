@@ -74,31 +74,14 @@ nav {
 	}
 }
 
-.rbc.rbc-reactivelist {
-	margin: 0;
-	height: auto;
-	max-height: none;
-	box-shadow: none;
-	background-color: #FFF;
-
-	.rbc-list-item {
-		border: 0;
-		float: none;
-	}
-}
-
 .rbc-orange .rbc.rbc-resultstats {
 	text-align: right;
-	margin-top: 0;
-	padding: 4px 15px;
-	margin-bottom: -5px;
+	margin: 0;
+	background-color: #fefefe;
+	padding: 5px 15px;
 	font-size: 14px;
-	border-top: 1px solid #fafafa;
-	border-bottom: 1px solid #f3f3f3;
-}
-
-.rbc.rbc-reactivelist .rbc-reactivelist-scroll-container {
-	height: auto !important;
+	border-top: 1px solid #f3f3f3;
+	border-bottom: 1px solid #fcfcfc;
 }
 
 .rbc.rbc-pagination {
@@ -108,65 +91,97 @@ nav {
 	text-align: center;
 }
 
-.news {
-	border-bottom: 1px solid #eaeaea;
-	padding: 15px;
+.rbc.rbc-resultlist-wrapper {
+	background-color: transparent;
+	padding: 0;
+	margin: 0;
+}
 
-	.title {
-		margin: 0 0 10px 0;
-		display: inline-block;
-		padding: 0;
-		font-size: 16px;
-		line-height: 22px;
-		letter-spacing: 0.02em;
-		color: #222;
-	}
+.rbc-resultlist-container {
+	max-height: none;
+	background-color: #fff;
+	box-shadow: none;
+	border: 0;
+	margin: 0;
+}
 
-	a.title {
-		-webkit-transition: all .3s ease;
-		transition: all .3s ease;
-		border-bottom: 1px dotted transparent;
-		margin-bottom: 9px;
+.rbc-resultlist-scroll-container {
+	height: auto !important;
+	
+	.rbc-resultlist {
+		border-bottom: 1px solid #eaeaea;
+		padding: 15px;
+		cursor: auto;
 
-		&:hover {
-			color: #111;
-			border-color: #111;
+		.rbc-resultlist__image {
+			display: none;
 		}
-	}
 
-	.text {
-		font-size: 14px;
-		line-height: 20px;
-		letter-spacing: 0.02em;
-		color: #333;
-		margin-bottom: 10px;
-	}
+		.rbc-resultlist__title,
+		.rbc-resultlist__desc {
+			padding: 0;
+		}
 
-	.info {
-		padding: 0;
-		margin: 0;
-		font-size: 12px;
-		color: #888;
-		word-spacing: 0.1em;
 
-		a {
-			color: #888;
+		.rbc-resultlist__title .title {
+			margin: 0 0 10px 0;
+			display: inline-block;
+			padding: 0;
+			font-size: 16px;
+			line-height: 22px;
+			letter-spacing: 0.02em;
+			color: #222;
+			font-weight: normal;
+			font-family: "Lato Regular";
+		}
+
+		.rbc-resultlist__title a.title {
 			-webkit-transition: all .3s ease;
 			transition: all .3s ease;
+			border-bottom: 1px dotted transparent;
+			margin-bottom: 9px;
 
 			&:hover {
-				color: #777;
-				border-bottom: 1px dotted #999;
+				color: #111;
+				border-color: #111;
 			}
 		}
 
-		.separator {
-			display: inline-block;
-			margin: 0 5px;
+		.text {
+			font-size: 14px;
+			line-height: 20px;
+			letter-spacing: 0.02em;
+			color: #333;
+			margin-bottom: 10px;
 		}
-	}
 
-	p {
-		margin-bottom: 0;
+		.info {
+			padding: 0;
+			margin: 0;
+			font-size: 12px;
+			color: #888;
+			word-spacing: 0.1em;
+
+			a {
+				color: #888;
+				-webkit-transition: all .3s ease;
+				transition: all .3s ease;
+
+				&:hover {
+					color: #777;
+					border-bottom: 1px dotted #999;
+				}
+			}
+
+			.separator {
+				display: inline-block;
+				margin: 0 5px;
+			}
+		}
+
+		p {
+			margin: 0;
+			line-height: 24px;
+		}
 	}
 }

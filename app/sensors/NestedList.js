@@ -34,7 +34,7 @@ export default class NestedList extends Component {
 		};
 		this.channelId = null;
 		this.channelListener = null;
-		this.defaultSelected = props.defaultSelected;
+		this.defaultSelected = this.props.defaultSelected;
 		this.filterBySearch = this.filterBySearch.bind(this);
 		this.onItemSelect = this.onItemSelect.bind(this);
 		this.customQuery = this.customQuery.bind(this);
@@ -53,6 +53,14 @@ export default class NestedList extends Component {
 		if (this.props.defaultSelected) {
 			this.defaultSelected = this.props.defaultSelected;
 			setTimeout(this.handleSelect.bind(this), 100);
+		}
+	}
+
+	handleSelect() {
+		if (this.props.defaultSelected) {
+			this.props.defaultSelected.forEach((value, index) => {
+				this.onItemSelect(value, index);
+			});
 		}
 	}
 
@@ -304,14 +312,6 @@ export default class NestedList extends Component {
 		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
-	handleSelect() {
-		if (this.props.defaultSelected) {
-			this.props.defaultSelected.forEach((value, index) => {
-				this.onItemSelect(value, index);
-			});
-		}
-	}
-
 	// filter
 	filterBySearch(value) {
 		if (value) {
@@ -368,14 +368,14 @@ export default class NestedList extends Component {
 	}
 
 	renderItems(items, level) {
-		return items.map((item) => {
+		return items.map((item, index) => {
 			const cx = classNames({
 				"rbc-item-active": (item.key === this.state.selectedValues[level]),
 				"rbc-item-inactive": !(item.key === this.state.selectedValues[level])
 			});
 			return (
 				<li
-					key={item.key}
+					key={index}
 					className="rbc-list-container col s12 col-xs-12"
 				>
 					<button className={`rbc-list-item ${cx}`} onClick={() => this.onItemSelect(item.key, level)}>
@@ -451,7 +451,10 @@ export default class NestedList extends Component {
 NestedList.propTypes = {
 	componentId: React.PropTypes.string.isRequired,
 	appbaseField: React.PropTypes.array.isRequired,
-	title: React.PropTypes.string,
+	title: React.PropTypes.oneOfType([
+		React.PropTypes.string,
+		React.PropTypes.element
+	]),
 	showCount: React.PropTypes.bool,
 	showSearch: React.PropTypes.bool,
 	sortBy: React.PropTypes.oneOf(["count", "asc", "desc"]),
@@ -486,6 +489,7 @@ NestedList.contextTypes = {
 NestedList.types = {
 	componentId: TYPES.STRING,
 	appbaseField: TYPES.ARRAY,
+	appbaseFieldType: TYPES.STRING,
 	title: TYPES.STRING,
 	react: TYPES.OBJECT,
 	size: TYPES.NUMBER,
@@ -496,4 +500,3 @@ NestedList.types = {
 	customQuery: TYPES.FUNCTION,
 	initialLoader: TYPES.OBJECT
 };
-
