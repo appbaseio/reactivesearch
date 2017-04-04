@@ -345,7 +345,7 @@ export default class MultiLevelMenu extends Component {
 				if (this.notInBlackListed(list) && count <= this.props.maxCategories) {
 					markup.push(
 						(
-							<div key={list} className="rbc-list-container">
+							<div key={list} className="rbc-sublist-container">
 								<h3 className="rbc-list-title">{list}</h3>
 								<ul>
 									{this.filterBlackList(data[list]).slice(0, this.props.maxItems).map(item => (
@@ -358,7 +358,7 @@ export default class MultiLevelMenu extends Component {
 				}
 			}
 
-			return (<div className="rbc-sublist-container">{markup}</div>);
+			return (<div className="rbc-list-container">{markup}</div>);
 		}
 	}
 
