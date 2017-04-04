@@ -83,7 +83,7 @@
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@kadira/storybook-addon-options/-/storybook-addon-options-1.0.2.tgz#76f821f605099a4348f29833192bfa5952bd87c4"
 
-"@kadira/storybook-addons@^1.5.0":
+"@kadira/storybook-addons@^1.5.0", "@kadira/storybook-addons@^1.6.1":
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/@kadira/storybook-addons/-/storybook-addons-1.6.1.tgz#e84923d298b38c7c1231ddebc219dfb87b2858a6"
 
