@@ -106,7 +106,7 @@ section {
 }
 
 #ui-components {
-	background: $primary-color;
+	background: #DFDFDF;
 	color: $font-color;
 
 	.container {
@@ -127,6 +127,16 @@ section {
 		margin-bottom: 20px;
 		img {
 			width: calc(33.33% - 28px);
+			&:nth-child(2) {
+				margin: 0 15px 30px;
+			}
+		}
+	}
+
+	.medium {
+		margin-bottom: 20px;
+		img {
+			width: calc(50% - 28px);
 			&:nth-child(2) {
 				margin: 0 15px 30px;
 			}
