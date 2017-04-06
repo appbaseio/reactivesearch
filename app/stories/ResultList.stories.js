@@ -33,6 +33,7 @@ export default class ResultCardDefault extends Component {
 							title="Results"
 							from={0}
 							size={20}
+							onData={this.onData}
 							sortOptions={[
 								{
 									label: "Lowest Price First",
