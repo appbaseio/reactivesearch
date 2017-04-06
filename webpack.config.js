@@ -70,7 +70,21 @@ const examples_config = {
 		],
 		noParse: ['ws']
 	},
-	externals: ['ws']
+	externals: ['ws'],
+	plugins: [
+		new webpack.optimize.UglifyJsPlugin({
+			compressor: {
+				pure_getters: true,
+				unsafe: true,
+				unsafe_comps: true,
+				warnings: false,
+			},
+			output: {
+				comments: false,
+			},
+			sourceMap: false,
+		})
+	]
 };
 
 const lib_config = {
