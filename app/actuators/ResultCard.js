@@ -11,6 +11,7 @@ import {
 	AppbaseSensorHelper as helper
 } from "@appbaseio/reactivemaps";
 import Pagination from "../addons/Pagination";
+import JsonPrint from "../addons/JsonPrint";
 import ReactStars from "react-stars";
 
 const $ = require("jquery");
@@ -228,12 +229,7 @@ export default class ResultCard extends Component {
 				this.setState({
 					queryStart: false,
 					showPlaceholder: false
-				});
-				// if (this.props.onData) {
-				// 	const modifiedData = helper.prepareResultData(res);
-				// 	this.props.onData(modifiedData.res, modifiedData.err);
-				// }
-			}
+				});			}
 			if (res.appliedQuery) {
 				if (res.mode === "historic" && res.startTime > this.queryStartTime) {
 					const visibleNoResults = res.appliedQuery && res.data && !res.data.error ? (!(res.data.hits && res.data.hits.total)) : false;
@@ -329,11 +325,25 @@ export default class ResultCard extends Component {
 			modifiedData.currentData = this.state.currentData;
 			delete modifiedData.data;
 			modifiedData = helper.prepareResultData(modifiedData, data);
-			this.setState({
-				resultMarkup: this.cardMarkup(modifiedData.res),
-				currentData: this.combineCurrentData(newData)
-			});
+			if (this.props.onData) {
+				this.setState({
+					resultMarkup: this.cardMarkup(modifiedData.res),
+					currentData: this.combineCurrentData(newData)
+				});
+			} else {
+				this.setState({
+					resultMarkup: this.defaultOnData(modifiedData.res),
+					currentData: this.combineCurrentData(newData)
+				});
+			}
 		});
+	}
+
+	defaultOnData(res) {
+		let markup = null;
+		const data = res.currentData.concat(res.newData);
+		markup = data.map((item) => <JsonPrint key={item._id} data={item} />);
+		return markup;
 	}
 
 	cardMarkup(res) {
