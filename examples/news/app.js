@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import {
 	ReactiveBase,
-	TextField,
+	DataSearch,
 	SingleDropdownList,
 	ResultList
 } from "../../app/app.js";
@@ -13,21 +13,7 @@ require("./news.scss");
 class Main extends Component {
 	constructor(props) {
 		super(props);
-		this.newsQuery = this.newsQuery.bind(this);
 		this.onData = this.onData.bind(this);
-	}
-
-	newsQuery(value) {
-		if(value) {
-			return {
-				multi_match: {
-					query: value,
-					fields: ["title", "text", "by"]
-				}
-			};
-		} else {
-			return null;
-		}
 	}
 
 	onData(res) {
@@ -79,18 +65,18 @@ class Main extends Component {
 					</nav>
 					<div className="filters wrapper row">
 						<div className="col s9">
-							<TextField
+							<DataSearch
 								componentId="InputSensor"
-								appbaseField="title"
+								appbaseField={["title", "text", "by"]}
 								placeholder="Search posts by title, text or author..."
-								customQuery={this.newsQuery}
+								autocomplete={false}
 							/>
 						</div>
 
 						<div className="col s3">
 							<SingleDropdownList
 								componentId="TypeSensor"
-								appbaseField={this.props.mapping.type}
+								appbaseField="p_type.raw"
 								size={100}
 								selectAllLabel="All"
 								defaultSelected="All"
@@ -118,13 +104,5 @@ class Main extends Component {
 		);
 	}
 }
-
-Main.defaultProps = {
-	mapping: {
-		title: "title",
-		url: "url",
-		type: "p_type.raw"
-	}
-};
 
 render(<Main />, document.getElementById("app"));
