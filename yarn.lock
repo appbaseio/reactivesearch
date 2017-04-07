@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivebase@^1.0.0-alpha9":
+"@appbaseio/reactivebase@^1.0.0-alpha11":
   version "1.0.0-alpha9"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivebase/-/reactivebase-1.0.0-alpha9.tgz#8399def36b2d0d08d8d858c172e390d1b9297ade"
   dependencies:
@@ -29,11 +29,11 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivemaps@^1.0.0-alpha4":
-  version "1.0.0-alpha4"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-1.0.0-alpha4.tgz#a6f29ffdda63b83185dad457093410470ca8dd17"
+"@appbaseio/reactivemaps@^1.0.0-alpha7":
+  version "1.0.0-alpha7"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-1.0.0-alpha7.tgz#0965b2c4355ece93f7eac517c1ee2299289190ac"
   dependencies:
-    "@appbaseio/reactivebase" "^1.0.0-alpha9"
+    "@appbaseio/reactivebase" "^1.0.0-alpha11"
     "@appbaseio/reactivemaps-manual" "^1.0.0-alpha"
     appbase-js "^0.11.0"
     axios "^0.15.2"
@@ -43,6 +43,7 @@
     google-map-react "^0.14.5"
     google-maps "^3.2.1"
     lodash "^4.15.0"
+    node-sass "^4.5.1"
     rc-slider "^5.4.0"
     react "^15.4.2"
     react-addons-test-utils "^15.4.2"
