@@ -11,6 +11,7 @@ import {
 	AppbaseSensorHelper as helper
 } from "@appbaseio/reactivemaps";
 import Pagination from "../addons/Pagination";
+import JsonPrint from "../addons/JsonPrint";
 import ReactStars from "react-stars";
 
 const $ = require("jquery");
@@ -229,10 +230,6 @@ export default class ResultList extends Component {
 					queryStart: false,
 					showPlaceholder: false
 				});
-				// if (this.props.onData) {
-				// 	const modifiedData = helper.prepareResultData(res);
-				// 	this.props.onData(modifiedData.res, modifiedData.err);
-				// }
 			}
 			if (res.appliedQuery) {
 				if (res.mode === "historic" && res.startTime > this.queryStartTime) {
@@ -329,25 +326,35 @@ export default class ResultList extends Component {
 			modifiedData.currentData = this.state.currentData;
 			delete modifiedData.data;
 			modifiedData = helper.prepareResultData(modifiedData, data);
-			this.setState({
-				resultMarkup: this.cardMarkup(modifiedData.res),
-				currentData: this.combineCurrentData(newData)
-			});
+			if (this.props.onData) {
+				this.setState({
+					resultMarkup: this.cardMarkup(modifiedData.res),
+					currentData: this.combineCurrentData(newData)
+				});
+			} else {
+				this.setState({
+					resultMarkup: this.defaultOnData(modifiedData.res),
+					currentData: this.combineCurrentData(newData)
+				});
+			}
 		});
+	}
+
+	defaultOnData(res) {
+		let markup = null;
+		const data = res.currentData.concat(res.newData);
+		markup = data.map((item) => <JsonPrint key={item._id} data={item} />);
+		return markup;
 	}
 
 	cardMarkup(res) {
 		let markup = null;
 		const data = res.currentData.concat(res.newData);
+
 		markup = data.map((item) => {
 			const result = this.props.onData(item._source);
-			return (
-				<a
-					key={item._id}
-					className="rbc-resultlist clearfix"
-					href={result.url}
-					rel="noopener noreferrer"
-				>
+			const details = (
+				<div>
 					<div className="rbc-resultlist__image" style={{ backgroundImage: `url(${result.image})` }} />
 					<div className="rbc-resultlist__title">{result.title}</div>
 					<div className="rbc-resultlist__desc">{result.desc}</div>
@@ -364,9 +371,32 @@ export default class ResultList extends Component {
 							/>
 						</div>) : ""
 					}
-				</a>
+				</div>
 			);
+
+			if (result.url) {
+				return (
+					<a
+						key={item._id}
+						className="rbc-resultlist clearfix"
+						href={result.url}
+						rel="noopener noreferrer"
+					>
+						{details}
+					</a>
+				);
+			} else {
+				return (
+					<div
+						key={item._id}
+						className="rbc-resultlist clearfix"
+					>
+						{details}
+					</div>
+				);
+			}
 		});
+
 		return markup;
 	}
 

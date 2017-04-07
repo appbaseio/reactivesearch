@@ -81,6 +81,7 @@ class Main extends Component {
 						<div className="col s9">
 							<TextField
 								componentId="InputSensor"
+								appbaseField="title"
 								placeholder="Search posts by title, text or author..."
 								customQuery={this.newsQuery}
 							/>

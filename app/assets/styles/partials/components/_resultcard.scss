@@ -92,3 +92,47 @@
 	position: relative;
 }
 
+.rbc-resultcard-container,
+.rbc-resultlist-container {
+	.rbc-json-print {
+		width: 100%;
+		font-size: 14px;
+		margin: 20px 0;
+
+		span {
+			width: 60px;
+			display: inline-block;
+			cursor: pointer;
+			float: left;
+			
+			&.head:after {
+				content: '▾';
+				display: inline-block;
+				margin-left: 5px;
+			}
+
+			&.head.collapsed:after {
+				webkit-transform: rotate(-90deg);
+				-moz-transform: rotate(-90deg);
+				-ms-transform: rotate(-90deg);
+				transform: rotate(-90deg);
+			}
+		}
+
+		pre {
+			width: calc(100% - 60px);
+			display: inline-block;
+			background-color: #fdfdfd;
+			color: #666;
+			margin: 0;
+			padding: 0 12px;
+			float: left;
+		}
+	}
+}
+
+.rbc-resultlist-container {
+	.rbc-json-print {
+		margin: 20px 0 40px;
+	}
+}
