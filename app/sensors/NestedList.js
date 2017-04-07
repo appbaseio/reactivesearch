@@ -168,7 +168,7 @@ export default class NestedList extends Component {
 	// Create a channel which passes the react and receive results whenever react changes
 	createChannel() {
 		// Set the react - add self aggs query as well with react
-		const react = this.props.react ? this.props.react : {};
+		const react = this.props.react ? JSON.parse(JSON.stringify(this.props.react)) : {};
 		react.aggs = {
 			key: this.props.appbaseField[0],
 			sort: this.props.sortBy,
@@ -224,16 +224,19 @@ export default class NestedList extends Component {
 	// Create a channel for sub category
 	createSubChannel() {
 		this.setSubCategory();
-		const react = {
-			aggs: {
-				key: this.props.appbaseField[1],
-				sort: this.props.sortBy,
-				size: this.props.size,
-				sortRef: this.nested[1]
-			},
-			and: ["subCategory", this.nested[1]]
+		const react = this.props.react ? JSON.parse(JSON.stringify(this.props.react)) : {};
+		react.aggs = {
+			key: this.props.appbaseField[1],
+			sort: this.props.sortBy,
+			size: this.props.size,
+			sortRef: this.nested[1]
 		};
-		// create a channel and listen the changes
+		if (react && react.and && typeof react.and === "string") {
+			react.and = [react.and];
+		} else {
+			react.and = react.and ? react.and : [];
+		}
+		react.and = react.and.concat(["subCategory", this.nested[1]]);
 		const subChannelObj = manager.create(this.context.appbaseRef, this.context.type, react);
 		this.subChannelId = subChannelObj.channelId;
 		this.subChannelListener = subChannelObj.emitter.addListener(this.subChannelId, (res) => {
