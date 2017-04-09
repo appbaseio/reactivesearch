@@ -14,16 +14,6 @@ import ReactStars from "react-stars";
 require("./ecommerce.scss");
 
 class Main extends Component {
-	itemQuery(value) {
-		if(value) {
-			return {
-				"match": {
-					"name": value.value
-				}
-			};
-		}
-	}
-
 	onData(res) {
 		const image = res.vehicleType == "other" || res.vehicleType == "unknown" ?
 			"images/car.jpg" :
@@ -82,7 +72,6 @@ class Main extends Component {
 							react={{
 								and: ["CategorySensor", "VehicleTypeSensor", "ModelSensor", "ColorSensor", "PriceSensor"]
 							}}
-							customQuery={this.itemQuery}
 						/>
 					</div>
 				</nav>
