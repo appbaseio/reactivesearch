@@ -51,9 +51,6 @@ class Main extends Component {
 						placeholder="Discover products..."
 						appbaseField={["name", "tagline"]}
 						searchInputId="NameSearch"
-						react={{
-							and: "TopicSensor"
-						}}
 					/>
 					<div className="links">
 						<a target="_blank" href="https://github.com/appbaseio/reactivesearch" className="link"><i className="fa fa-github" aria-hidden="true"></i> Github</a>
@@ -68,10 +65,8 @@ class Main extends Component {
 							title="Filter Topics"
 							componentId="TopicSensor"
 							sortBy="count"
+							showCount={false}
 							size={15}
-							react={{
-								and: "NameSensor"
-							}}
 						/>
 						<DataController
 							componentId="DefaultSensor"

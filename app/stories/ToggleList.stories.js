@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ReactiveBase, ToggleList, ReactiveList, AppbaseSensorHelper as helper } from "../app";
+import { ReactiveBase, ToggleList, ResultList, AppbaseSensorHelper as helper } from "../app";
 
 require("./list.css");
 
@@ -17,8 +17,6 @@ export default class ToggleListDefault extends Component {
 			label: "Outdoors",
 			value: "Outdoors"
 		}];
-
-		this.onData = this.onData.bind(this);
 	}
 
 	componentDidMount() {
@@ -26,52 +24,18 @@ export default class ToggleListDefault extends Component {
 	}
 
 	onData(res) {
-		let result = null;
-		if (res) {
-			let combineData = res.currentData;
-			if (res.mode === "historic") {
-				combineData = res.currentData.concat(res.newData);
-			} else if (res.mode === "streaming") {
-				combineData = helper.combineStreamData(res.currentData, res.newData);
-			}
-			if (combineData) {
-				result = combineData.map((markerData) => {
-					const marker = markerData._source;
-					return this.itemMarkup(marker, markerData);
-				});
-			}
-		}
-		return result;
-	}
-
-	itemMarkup(marker, markerData) {
-		return (
-			<a
-				className="full_row single-record single_record_for_clone"
-				href={marker.event ? marker.event.event_url : ""}
-				target="_blank"
-				rel="noopener noreferrer"
-				key={markerData._id}
-			>
-				<div className="text-container full_row" style={{ paddingLeft: "10px" }}>
-					<div className="text-head text-overflow full_row">
-						<span className="text-head-info text-overflow">
-							{marker.member ? marker.member.member_name : ""} is going to {marker.event ? marker.event.event_name : ""}
-						</span>
-						<span className="text-head-city">{marker.group ? marker.group.group_city : ""}</span>
-					</div>
-					<div className="text-description text-overflow full_row">
-						<ul className="highlight_tags">
-							{
-								marker.group.group_topics.map(tag => (
-									<li key={tag.topic_name}>{tag.topic_name}</li>
-								))
-							}
-						</ul>
-					</div>
+		return {
+			image: res.member.photo,
+			image_size: "small",
+			title: res.member.member_name,
+			desc: (
+				<div>
+					<p>is going to {res.event.event_name} at {res.venue_name_ngrams}</p>
+					<p>{res.group_city_ngram}</p>
 				</div>
-			</a>
-		);
+			),
+			url: res.event.event_url
+		};
 	}
 
 	render() {
@@ -92,14 +56,13 @@ export default class ToggleListDefault extends Component {
 					</div>
 
 					<div className="col s6 col-xs-6">
-						<ReactiveList
+						<ResultList
 							componentId="SearchResult"
-							appbaseField="group.group_topics.topic_name_raw"
-							title="Results"
-							sortBy="asc"
+							appbaseField="name"
 							from={0}
-							size={20}
+							size={40}
 							onData={this.onData}
+							showPagination={true}
 							react={{
 								and: "MeetupTops"
 							}}

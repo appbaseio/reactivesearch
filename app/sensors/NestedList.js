@@ -119,7 +119,7 @@ export default class NestedList extends Component {
 				}
 			}));
 		}
-		if (record) {
+		if (record && record[0] !== null) {
 			query = {
 				bool: {
 					must: generateRangeQuery(this.props.appbaseField)
@@ -330,6 +330,11 @@ export default class NestedList extends Component {
 	}
 
 	onItemSelect(key, level) {
+		if (level === 0 && this.state.subItems.length) {
+			this.setState({
+				subItems: []
+			});
+		}
 		const selectedValues = this.state.selectedValues;
 		let stateItems = {};
 		if (selectedValues[level] === key) {
