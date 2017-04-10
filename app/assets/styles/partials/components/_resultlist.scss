@@ -8,7 +8,11 @@
 		width: 100%;
 		height: auto;
 		padding: 12px 0;
-		
+
+		p {
+			margin: 0;
+		}
+
 		@include element("image") {
 			width: 200px;
 			height: 200px;
@@ -19,18 +23,21 @@
 			background-repeat: no-repeat;
 		}
 
-		@include element("title") {
+		@include element("details") {
 			width: calc(100% - 200px);
-			padding: 8px 8px 0;
+			float: left;
+			padding: 0 8px;
+		}
+
+		@include element("title") {
+			width: 100%;
+			padding: 8px 0 0;
 			font-family: $font-bold;
 			float: left;
 			color: #777;
 			font-size: 14px;
-			line-height: 18px;
+			line-height: 22px;
 			letter-spacing: 0.02em;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
 			-webkit-transition: all .3s ease;
 			transition: all .3s ease;
 
@@ -41,22 +48,46 @@
 		}
 
 		@include element("desc") {
-			width: calc(100% - 200px);
-			float: left;
-			padding: 0 8px;
+			width: 100%;
+			padding: 4px 0;
 			float: left;
 			color: #777;
 			font-size: 14px;
 			letter-spacing: 0.02em;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
 		}
 
 		@include element("rating") {
-			width: calc(100% - 200px);
-			float: left;
-			padding: 0 8px;
+			width: 100%;
+			display: inline-block;
+			padding: 0;
+
+			& > div {
+				position: static !important;
+			}
+		}
+
+		.rbc-image-inactive {
+			.rbc-resultlist__image {
+				display: none;
+			}
+
+			.rbc-resultlist__details {
+				float: none;
+				width: 100%;
+				padding: 0;
+			}
+		}
+
+		.rbc-image-active.rbc-image-small {
+			.rbc-resultlist__image {
+				width: 100px;
+				height: 100px;
+			}
+
+			.rbc-resultlist__details {
+				width: calc(100% - 100px);
+				padding: 0 10px;
+			}
 		}
 	}
 }

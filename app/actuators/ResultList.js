@@ -353,24 +353,27 @@ export default class ResultList extends Component {
 
 		markup = data.map((item) => {
 			const result = this.props.onData(item._source);
+			const cx = result.image === null ? "rbc-image-inactive" : result.image_size === "small" ? "rbc-image-active rbc-image-small" : "rbc-image-active";
 			const details = (
-				<div>
+				<div className={`${cx} clearfix`}>
 					<div className="rbc-resultlist__image" style={{ backgroundImage: `url(${result.image})` }} />
-					<div className="rbc-resultlist__title">{result.title}</div>
-					<div className="rbc-resultlist__desc">{result.desc}</div>
-					{
-						result.rating ?
-						(<div className="rbc-resultlist__rating">
-							<ReactStars
-								count={5}
-								value={result.rating}
-								size={15}
-								color1={"#bbb"}
-								edit={false}
-								color2={"#ffd700"}
-							/>
-						</div>) : ""
-					}
+					<div className="rbc-resultlist__details">
+						<div className="rbc-resultlist__title">{result.title}</div>
+						<div className="rbc-resultlist__desc">{result.desc}</div>
+						{
+							result.rating ?
+							(<div className="rbc-resultlist__rating">
+								<ReactStars
+									count={5}
+									value={result.rating}
+									size={15}
+									color1={"#bbb"}
+									edit={false}
+									color2={"#ffd700"}
+								/>
+							</div>) : ""
+						}
+					</div>
 				</div>
 			);
 
@@ -378,7 +381,7 @@ export default class ResultList extends Component {
 				return (
 					<a
 						key={item._id}
-						className="rbc-resultlist clearfix"
+						className="rbc-resultlist"
 						href={result.url}
 						rel="noopener noreferrer"
 					>
@@ -389,7 +392,7 @@ export default class ResultList extends Component {
 				return (
 					<div
 						key={item._id}
-						className="rbc-resultlist clearfix"
+						className="rbc-resultlist"
 					>
 						{details}
 					</div>
