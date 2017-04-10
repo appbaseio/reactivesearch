@@ -30,8 +30,7 @@
     .rbc.rbc-nestedlist-container .rbc.rbc-nestedlist .rbc-list-container {
       padding: 5px 0;
       width: 100%;
-      overflow: auto;
-      max-height: 300px; }
+      overflow: auto; }
       .rbc.rbc-nestedlist-container .rbc.rbc-nestedlist .rbc-list-container.row {
         padding: 6px 10px;
         margin: 0; }
