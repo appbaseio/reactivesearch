@@ -114,7 +114,7 @@ class Main extends Component {
 				>
 					<nav>
 						<div className="col s3">
-							<a href="#" className="brand">Airbnb</a>
+							<a href="/examples/airbnb" className="brand">Airbnb</a>
 						</div>
 						<div className="col s9">
 							<DataSearch
@@ -122,7 +122,7 @@ class Main extends Component {
 								componentId="PlaceSensor"
 								placeholder="Search for houses..."
 								react={{
-									and: ["PriceSensor"]
+									and: ["PriceSensor", "DateRangeSensor", "GuestSensor", "RoomTypeSensor"]
 								}}
 							/>
 						</div>
@@ -136,6 +136,9 @@ class Main extends Component {
 										appbaseField="date_from"
 										title="When"
 										customQuery={this.dateQuery}
+										react={{
+											and: ["PlaceSensor", "GuestSensor", "RoomTypeSensor", "PriceSensor"]
+										}}
 									/>
 								</div>
 								<div className="col s6">
@@ -147,6 +150,9 @@ class Main extends Component {
 										data={{
 											start: 1,
 											end: 16
+										}}
+										react={{
+											and: ["PlaceSensor", "DateRangeSensor", "RoomTypeSensor", "PriceSensor"]
 										}}
 									/>
 								</div>
@@ -167,6 +173,9 @@ class Main extends Component {
 										}
 									]}
 									customQuery={this.roomQuery}
+									react={{
+										and: ["PlaceSensor", "DateRangeSensor", "GuestSensor", "PriceSensor"]
+									}}
 								/>
 								<RangeSlider
 									componentId="PriceSensor"
@@ -184,7 +193,11 @@ class Main extends Component {
 									rangeLabels={{
 										start: "$10",
 										end: "$250"
-									}} />
+									}}
+									react={{
+											and: ["PlaceSensor", "DateRangeSensor", "GuestSensor", "RoomTypeSensor"]
+										}}
+									/>
 							</div>
 
 							<div className="col s12">
