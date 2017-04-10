@@ -79,6 +79,9 @@ class Main extends Component {
 									appbaseField="place_type.raw"
 									title="Category"
 									componentId="CategorySensor"
+									react={{
+										and: ["NameSensor", "RatingsSensor", "CuisineSensor", "WifiSensor", "DogSensor", "MusicSensor", "BookingSensor"]
+									}}
 								/>
 								<RatingsFilter
 									componentId="RatingsSensor"
@@ -91,11 +94,17 @@ class Main extends Component {
 										{ start: 1, end: 5, label: "> 1 stars" }
 									]}
 									defaultSelected={{start: 3, end: 5}}
+									react={{
+										and: ["NameSensor", "CuisineSensor", "CategorySensor", "WifiSensor", "DogSensor", "MusicSensor", "BookingSensor"]
+									}}
 								/>
 								<MultiList
 									appbaseField="cuisine.raw"
 									title="cuisine"
 									componentId="CuisineSensor"
+									react={{
+										and: ["NameSensor", "RatingsSensor", "CategorySensor", "WifiSensor", "DogSensor", "MusicSensor", "BookingSensor"]
+									}}
 								/>
 								<ToggleList
 									appbaseField="wifi"
@@ -107,6 +116,9 @@ class Main extends Component {
 											value: true
 										}
 									]}
+									react={{
+										and: ["NameSensor", "RatingsSensor", "CuisineSensor", "CategorySensor", "DogSensor", "MusicSensor", "BookingSensor"]
+									}}
 								/>
 								<ToggleList
 									appbaseField="dog_friendly"
@@ -117,6 +129,9 @@ class Main extends Component {
 											value: true
 										}
 									]}
+									react={{
+										and: ["NameSensor", "RatingsSensor", "CuisineSensor", "CategorySensor", "WifiSensor", "MusicSensor", "BookingSensor"]
+									}}
 								/>
 								<ToggleList
 									appbaseField="live_music"
@@ -127,6 +142,9 @@ class Main extends Component {
 											value: true
 										}
 									]}
+									react={{
+										and: ["NameSensor", "RatingsSensor", "CuisineSensor", "CategorySensor", "WifiSensor", "DogSensor", "BookingSensor"]
+									}}
 								/>
 								<ToggleList
 									appbaseField="online_bookings"
@@ -137,6 +155,9 @@ class Main extends Component {
 											value: true
 										}
 									]}
+									react={{
+										and: ["NameSensor", "RatingsSensor", "CuisineSensor", "CategorySensor", "WifiSensor", "DogSensor", "MusicSensor"]
+									}}
 								/>
 							</div>
 						</aside>
