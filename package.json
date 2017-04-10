@@ -1,6 +1,6 @@
 {
   "name": "@appbaseio/reactivesearch",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A data aware UI components library for building search experiences",
   "main": "lib/app.js",
   "scripts": {
