@@ -11,7 +11,6 @@ export default class ResultCardDefault extends Component {
 	onData(res) {
 		const result = {
 			image: "https://www.enterprise.com/content/dam/global-vehicle-images/cars/FORD_FOCU_2012-1.png",
-			image_size: "small",
 			title: res.name,
 			rating: res.rating,
 			desc: res.brand,
