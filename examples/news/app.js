@@ -55,8 +55,8 @@ class Main extends Component {
 		return (
 			<div>
 				<ReactiveBase
-					app="hacker-news"
-					credentials="Nt7ZtBrAn:5656435e-0273-497e-a741-9a5a2085ae84"
+					app="hn"
+					credentials="YOzeIAmyn:f1955c6b-03e7-4eb8-90ca-bfcc28a0ba0c"
 					type="post"
 					theme="rbc-orange"
 				>
@@ -80,6 +80,9 @@ class Main extends Component {
 								size={100}
 								selectAllLabel="All"
 								defaultSelected="All"
+								react={{
+									and: ["InputSensor"]
+								}}
 							/>
 						</div>
 					</div>

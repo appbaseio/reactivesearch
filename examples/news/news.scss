@@ -140,6 +140,7 @@ nav {
 			transition: all .3s ease;
 			border-bottom: 1px dotted transparent;
 			margin-bottom: 9px;
+			white-space: normal;
 
 			&:hover {
 				color: #111;
@@ -153,6 +154,7 @@ nav {
 			letter-spacing: 0.02em;
 			color: #333;
 			margin-bottom: 10px;
+			white-space: normal;
 		}
 
 		.info {
