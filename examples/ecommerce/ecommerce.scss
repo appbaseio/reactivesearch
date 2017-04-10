@@ -41,16 +41,8 @@ nav {
 }
 
 .rbc.rbc-multilist {
-	height: 400px !important;
-
 	.rbc-label {
 		text-transform: capitalize;
-	}
-}
-
-.color-sensor {
-	.rbc.rbc-multilist {
-		height: 260px !important;
 	}
 }
 
@@ -96,7 +88,6 @@ nav {
 	width: calc(33.33% - 40px);
 	text-decoration: none;
 	overflow: hidden;
-	float: left;
 	background-color: #fff;
 	min-height: 415px;
 	border: 0;

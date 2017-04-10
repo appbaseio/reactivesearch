@@ -5,7 +5,6 @@ import {
 	CategorySearch,
 	NestedList,
 	MultiList,
-	RangeSlider,
 	RatingsFilter,
 	ResultCard
 } from "../../app/app.js";
@@ -61,7 +60,7 @@ class Main extends Component {
 			>
 				<nav className="row">
 					<div className="col s3">
-						<a href="#" className="brand">Car Store</a>
+						<a href="/examples/ecommerce" className="brand">Car Store</a>
 					</div>
 					<div className="col s9">
 						<CategorySearch
@@ -70,7 +69,7 @@ class Main extends Component {
 							componentId="ItemSensor"
 							placeholder="Search for cars..."
 							react={{
-								and: ["CategorySensor", "VehicleTypeSensor", "ModelSensor", "ColorSensor", "PriceSensor"]
+								and: ["CategorySensor", "VehicleTypeSensor"]
 							}}
 						/>
 					</div>
@@ -83,6 +82,9 @@ class Main extends Component {
 									componentId="CategorySensor"
 									appbaseField={[this.props.mapping.brand, this.props.mapping.model]}
 									title="Cars"
+									react={{
+										and: ["RatingsSensor", "ItemSensor", "VehicleTypeSensor"]
+									}}
 								/>
 							</div>
 							<div className="col s12">
@@ -100,6 +102,9 @@ class Main extends Component {
 										start: 3,
 										end: 5
 									}}
+									react={{
+										and: ["CategorySensor", "ItemSensor", "VehicleTypeSensor"]
+									}}
 								/>
 							</div>
 							<div className="col s12">
@@ -111,49 +116,8 @@ class Main extends Component {
 									showSearch={true}
 									title="Vehicle Type"
 									searchPlaceholder="Search Vehicle Type"
-								/>
-							</div>
-
-							<div className="col s12">
-								<MultiList
-									componentId="ModelSensor"
-									appbaseField={this.props.mapping.model}
-									showCount={true}
-									size={1000}
-									showSearch={true}
-									title="Car Model"
-									searchPlaceholder="Search Car Model"
-								/>
-							</div>
-
-							<div className="col s12 color-sensor">
-								<MultiList
-									componentId="ColorSensor"
-									appbaseField={this.props.mapping.color}
-									showCount={true}
-									size={1000}
-									showSearch={false}
-									title="Car Color"
-									searchPlaceholder="Search Car Color"
-								/>
-							</div>
-
-							<div className="col s12">
-								<RangeSlider
-									componentId="PriceSensor"
-									appbaseField={this.props.mapping.price}
-									title="Price Range"
-									range={{
-										start: 800,
-										end: 1200
-									}}
-									rangeLabels={{
-										start: "$800",
-										end: "$1200"
-									}}
-									defaultSelected={{
-										start: 800,
-										end: 900
+									react={{
+										and: ["CategorySensor", "RatingsSensor", "ItemSensor"]
 									}}
 								/>
 							</div>
@@ -168,7 +132,7 @@ class Main extends Component {
 								size={30}
 								showPagination={true}
 								react={{
-									and: ["CategorySensor", "RatingsSensor", "ItemSensor", "VehicleTypeSensor", "ModelSensor", "ColorSensor", "PriceSensor"]
+									and: ["CategorySensor", "RatingsSensor", "ItemSensor", "VehicleTypeSensor"]
 								}}
 							/>
 						</div>
