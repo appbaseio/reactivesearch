@@ -52,6 +52,9 @@ class Main extends Component {
 								placeholder="Search for topics..."
 								appbaseField="group.group_topics.topic_name_raw"
 								searchInputId="TopicSearch"
+								react={{
+									and: "GeoSensor"
+								}}
 							/>
 						</div>
 						<div className="col s8">
@@ -70,6 +73,9 @@ class Main extends Component {
 									label: "Less than 100 miles",
 									location: "London"
 								}}
+								react={{
+									and: "TopicSensor"
+								}}
 							/>
 						</div>
 					</div>
@@ -84,7 +90,7 @@ class Main extends Component {
 							onData={this.onData}
 							showPagination={true}
 							react={{
-								and: "GeoSensor"
+								and: ["GeoSensor", "TopicSensor"]
 							}}
 						/>
 					</div>
