@@ -229,7 +229,8 @@ export default class ResultCard extends Component {
 				this.setState({
 					queryStart: false,
 					showPlaceholder: false
-				});			}
+				});
+			}
 			if (res.appliedQuery) {
 				if (res.mode === "historic" && res.startTime > this.queryStartTime) {
 					const visibleNoResults = res.appliedQuery && res.data && !res.data.error ? (!(res.data.hits && res.data.hits.total)) : false;
