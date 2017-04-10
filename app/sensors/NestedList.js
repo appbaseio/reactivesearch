@@ -39,7 +39,7 @@ export default class NestedList extends Component {
 		this.onItemSelect = this.onItemSelect.bind(this);
 		this.customQuery = this.customQuery.bind(this);
 		this.handleSelect = this.handleSelect.bind(this);
-		this.type = "Term";
+		this.type = "term";
 	}
 
 	// Get the items from Appbase when component is mounted

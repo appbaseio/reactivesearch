@@ -11,11 +11,6 @@ import moment from "moment";
 require("./news.scss");
 
 class Main extends Component {
-	constructor(props) {
-		super(props);
-		this.onData = this.onData.bind(this);
-	}
-
 	onData(res) {
 		const title = res.title && res.title.length ?
 			res.url ?
@@ -99,7 +94,6 @@ class Main extends Component {
 									and: ["InputSensor", "TypeSensor"]
 								}}
 							/>
-
 						</div>
 					</div>
 				</ReactiveBase>
