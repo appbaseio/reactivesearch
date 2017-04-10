@@ -82,6 +82,8 @@ class Main extends Component {
 									componentId="CategorySensor"
 									appbaseField={[this.props.mapping.brand, this.props.mapping.model]}
 									title="Cars"
+									showSearch={true}
+									placeholder="Filter Cars"
 									react={{
 										and: ["RatingsSensor", "ItemSensor", "VehicleTypeSensor"]
 									}}
@@ -112,8 +114,8 @@ class Main extends Component {
 									componentId="VehicleTypeSensor"
 									appbaseField={this.props.mapping.vehicleType}
 									showCount={true}
-									size={1000}
-									showSearch={true}
+									size={100}
+									showSearch={false}
 									title="Vehicle Type"
 									searchPlaceholder="Search Vehicle Type"
 									react={{
@@ -129,7 +131,7 @@ class Main extends Component {
 							<ResultCard
 								onData={this.onData}
 								appbaseField={this.props.mapping.name}
-								size={30}
+								size={9}
 								showPagination={true}
 								react={{
 									and: ["CategorySensor", "RatingsSensor", "ItemSensor", "VehicleTypeSensor"]
