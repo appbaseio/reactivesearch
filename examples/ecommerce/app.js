@@ -66,11 +66,8 @@ class Main extends Component {
 						<CategorySearch
 							appbaseField="name"
 							categoryField="brand.raw"
-							componentId="ItemSensor"
+							componentId="CategorySensor"
 							placeholder="Search for cars..."
-							react={{
-								and: ["CategorySensor", "VehicleTypeSensor"]
-							}}
 						/>
 					</div>
 				</nav>
@@ -79,13 +76,13 @@ class Main extends Component {
 						<div className="row">
 							<div className="col s12">
 								<NestedList
-									componentId="CategorySensor"
+									componentId="CarSensor"
 									appbaseField={[this.props.mapping.brand, this.props.mapping.model]}
 									title="Cars"
 									showSearch={true}
 									placeholder="Filter Cars"
 									react={{
-										and: ["RatingsSensor", "ItemSensor", "VehicleTypeSensor"]
+										and: ["RatingsSensor", "VehicleTypeSensor"]
 									}}
 								/>
 							</div>
@@ -105,7 +102,7 @@ class Main extends Component {
 										end: 5
 									}}
 									react={{
-										and: ["CategorySensor", "ItemSensor", "VehicleTypeSensor"]
+										and: ["CarSensor", "VehicleTypeSensor"]
 									}}
 								/>
 							</div>
@@ -119,7 +116,7 @@ class Main extends Component {
 									title="Vehicle Type"
 									searchPlaceholder="Search Vehicle Type"
 									react={{
-										and: ["CategorySensor", "RatingsSensor", "ItemSensor"]
+										and: ["RatingsSensor", "CarSensor"]
 									}}
 								/>
 							</div>
@@ -134,7 +131,7 @@ class Main extends Component {
 								size={9}
 								showPagination={true}
 								react={{
-									and: ["CategorySensor", "RatingsSensor", "ItemSensor", "VehicleTypeSensor"]
+									and: ["CategorySensor", "RatingsSensor", "CarSensor", "VehicleTypeSensor"]
 								}}
 							/>
 						</div>
