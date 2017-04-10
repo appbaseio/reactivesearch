@@ -45,7 +45,7 @@ class Main extends Component {
 				theme="rbc-red"
 			>
 				<header>
-					<a href="/examples/producthunt" className="brand">Product Hunt</a>
+					<a href="/examples/producthunt" className="brand">Product Search</a>
 					<DataSearch
 						componentId="NameSensor"
 						placeholder="Discover products..."
@@ -78,8 +78,8 @@ class Main extends Component {
 						<ResultList
 							appbaseField="name"
 							from={0}
-							size={50}
-							showPagination={true}
+							size={10}
+							showPagination={false}
 							onData={this.onData}
 							react={{
 								and: ["NameSensor", "TopicSensor", "DefaultSensor"]
