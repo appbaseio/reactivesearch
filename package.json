@@ -31,21 +31,21 @@
   },
   "homepage": "https://github.com/appbaseio/reactivesearch#readme",
   "dependencies": {
-    "@appbaseio/reactivemaps": "^1.0.0-alpha7",
     "classnames": "^2.2.5",
     "jquery": "^3.1.1",
     "lodash": "^4.15.0",
     "moment": "^2.18.1",
     "node-sass": "^4.5.1",
     "rc-slider": "^5.4.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "react": "15.4.2",
+    "react-dom": "15.4.2",
     "react-select": "^1.0.0-rc.3",
     "react-stars": "^2.1.0",
     "sass-loader": "^6.0.3",
     "shebang-loader": "0.0.1"
   },
   "devDependencies": {
+    "@appbaseio/reactivemaps": "^1.0.0-alpha7",
     "@appbaseio/reactivemaps-manual": "1.0.0-alpha",
     "@kadira/storybook": "^2.21.0",
     "@kadira/storybook-addon-knobs": "^1.7.1",
@@ -81,6 +81,6 @@
     "shebang-loader": "0.0.1",
     "storybook-readme": "^1.2.0",
     "style-loader": "^0.14.1",
-    "webpack": "^1.13.1"
+    "webpack": "1.13.1"
   }
 }
