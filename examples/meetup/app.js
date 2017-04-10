@@ -50,7 +50,7 @@ class Main extends Component {
 							<DataSearch
 								componentId="TopicSensor"
 								placeholder="Search for topics..."
-								appbaseField="group.group_topics.topic_name_raw.raw"
+								appbaseField="group.group_topics.topic_name_raw"
 								searchInputId="TopicSearch"
 							/>
 						</div>

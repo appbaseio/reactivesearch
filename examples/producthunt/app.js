@@ -45,11 +45,11 @@ class Main extends Component {
 				theme="rbc-red"
 			>
 				<header>
-					<a className="brand">Product Hunt</a>
+					<a href="/examples/producthunt" className="brand">Product Hunt</a>
 					<DataSearch
 						componentId="NameSensor"
 						placeholder="Discover products..."
-						appbaseField="name"
+						appbaseField={["name", "tagline"]}
 						searchInputId="NameSearch"
 					/>
 					<div className="links">

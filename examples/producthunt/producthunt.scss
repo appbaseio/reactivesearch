@@ -71,7 +71,6 @@ header {
 		background-color: transparent;
 		box-shadow: none;
 		border: 0;
-		max-height: none;
 		padding-top: 40px;
 
 		.rbc-title {
@@ -80,6 +79,10 @@ header {
 
 		.rbc-label {
 			text-transform: capitalize;
+		}
+
+		.rbc-list-container {
+			max-height: none;
 		}
 	}
 }
