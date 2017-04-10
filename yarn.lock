@@ -29,7 +29,7 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivemaps@^1.0.0-alpha8":
+"@appbaseio/reactivemaps@1.0.0-alpha8":
   version "1.0.0-alpha8"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-1.0.0-alpha8.tgz#2fd7f0d3c137e2e2d29a4c1dca6533385038969f"
   dependencies:
