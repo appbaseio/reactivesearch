@@ -121,9 +121,6 @@ class Main extends Component {
 								appbaseField={this.props.mapping.name}
 								componentId="PlaceSensor"
 								placeholder="Search for houses..."
-								react={{
-									and: ["PriceSensor", "DateRangeSensor", "GuestSensor", "RoomTypeSensor"]
-								}}
 							/>
 						</div>
 					</nav>
@@ -136,9 +133,6 @@ class Main extends Component {
 										appbaseField="date_from"
 										title="When"
 										customQuery={this.dateQuery}
-										react={{
-											and: ["PlaceSensor", "GuestSensor", "RoomTypeSensor", "PriceSensor"]
-										}}
 									/>
 								</div>
 								<div className="col s6">
@@ -150,9 +144,6 @@ class Main extends Component {
 										data={{
 											start: 1,
 											end: 16
-										}}
-										react={{
-											and: ["PlaceSensor", "DateRangeSensor", "RoomTypeSensor", "PriceSensor"]
 										}}
 									/>
 								</div>
@@ -173,9 +164,6 @@ class Main extends Component {
 										}
 									]}
 									customQuery={this.roomQuery}
-									react={{
-										and: ["PlaceSensor", "DateRangeSensor", "GuestSensor", "PriceSensor"]
-									}}
 								/>
 								<RangeSlider
 									componentId="PriceSensor"
@@ -206,7 +194,7 @@ class Main extends Component {
 										componentId="SearchResult"
 										appbaseField={this.props.mapping.name}
 										from={0}
-										size={40}
+										size={10}
 										onData={this.onData}
 										showPagination={true}
 										react={{
@@ -228,10 +216,10 @@ class Main extends Component {
 								showPopoverOn="click"
 								onPopoverTrigger={this.onPopoverTrigger}
 								defaultZoom={15}
-								size={40}
+								size={50}
 								defaultCenter={{ lat: 47.6062, lng: -122.3321 }}
 								react={{
-									and: ["PlaceSensor", "PriceSensor"]
+									and: ["PlaceSensor", "DateRangeSensor", "GuestSensor", "RoomTypeSensor", "PriceSensor"]
 								}}
 							/>
 						</div>
