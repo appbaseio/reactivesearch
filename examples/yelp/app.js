@@ -80,7 +80,7 @@ class Main extends Component {
 									title="Category"
 									componentId="CategorySensor"
 									react={{
-										and: ["NameSensor", "RatingsSensor", "CuisineSensor", "WifiSensor", "DogSensor", "MusicSensor", "BookingSensor"]
+										and: ["RatingsSensor", "CuisineSensor", "WifiSensor", "DogSensor", "MusicSensor", "BookingSensor"]
 									}}
 								/>
 								<RatingsFilter
@@ -95,7 +95,7 @@ class Main extends Component {
 									]}
 									defaultSelected={{start: 3, end: 5}}
 									react={{
-										and: ["NameSensor", "CuisineSensor", "CategorySensor", "WifiSensor", "DogSensor", "MusicSensor", "BookingSensor"]
+										and: ["CuisineSensor", "CategorySensor", "WifiSensor", "DogSensor", "MusicSensor", "BookingSensor"]
 									}}
 								/>
 								<MultiList
@@ -103,7 +103,7 @@ class Main extends Component {
 									title="cuisine"
 									componentId="CuisineSensor"
 									react={{
-										and: ["NameSensor", "RatingsSensor", "CategorySensor", "WifiSensor", "DogSensor", "MusicSensor", "BookingSensor"]
+										and: ["RatingsSensor", "CategorySensor", "WifiSensor", "DogSensor", "MusicSensor", "BookingSensor"]
 									}}
 								/>
 								<ToggleList
@@ -116,9 +116,6 @@ class Main extends Component {
 											value: true
 										}
 									]}
-									react={{
-										and: ["NameSensor", "RatingsSensor", "CuisineSensor", "CategorySensor", "DogSensor", "MusicSensor", "BookingSensor"]
-									}}
 								/>
 								<ToggleList
 									appbaseField="dog_friendly"
@@ -129,9 +126,6 @@ class Main extends Component {
 											value: true
 										}
 									]}
-									react={{
-										and: ["NameSensor", "RatingsSensor", "CuisineSensor", "CategorySensor", "WifiSensor", "MusicSensor", "BookingSensor"]
-									}}
 								/>
 								<ToggleList
 									appbaseField="live_music"
@@ -142,9 +136,6 @@ class Main extends Component {
 											value: true
 										}
 									]}
-									react={{
-										and: ["NameSensor", "RatingsSensor", "CuisineSensor", "CategorySensor", "WifiSensor", "DogSensor", "BookingSensor"]
-									}}
 								/>
 								<ToggleList
 									appbaseField="online_bookings"
@@ -155,9 +146,6 @@ class Main extends Component {
 											value: true
 										}
 									]}
-									react={{
-										and: ["NameSensor", "RatingsSensor", "CuisineSensor", "CategorySensor", "WifiSensor", "DogSensor", "MusicSensor"]
-									}}
 								/>
 							</div>
 						</aside>
@@ -180,9 +168,9 @@ class Main extends Component {
 						<ReactiveMap
 							appbaseField="location"
 							defaultZoom={13}
-							defaultCenter={{ lat: 37.74, lon: -122.45 }}
+							defaultCenter={{ lat: 38.23, lon: -85.76 }}
 							historicalData={true}
-							setMarkerCluster={false}
+							setMarkerCluster={true}
 							showMapStyles={false}
 							showSearchAsMove={false}
 							defaultMapStyle="Light Monochrome"
