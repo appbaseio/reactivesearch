@@ -39,7 +39,7 @@ class Main extends Component {
 						: null
 					}
 					{res.score} points<span className="separator">|</span>
-					<a target="_blank" href={`https://news.ycombinator.com/user?id=${res.by}`}>{res.by}</a><span className="separator">|</span>
+					<a target="_blank" href={`https://news.ycombinator.com/user?id=${res.by}`} dangerouslySetInnerHTML={{__html: res.by}}></a><span className="separator">|</span>
 					{moment.unix(res.time).fromNow()}
 				</p>
 			</div>)
@@ -65,6 +65,7 @@ class Main extends Component {
 								appbaseField={["title", "text", "by"]}
 								placeholder="Search posts by title, text or author..."
 								autocomplete={false}
+								highlight={true}
 							/>
 						</div>
 
