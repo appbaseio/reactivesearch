@@ -57,7 +57,7 @@ class Main extends Component {
 			>
 				<header>
 					<nav>
-						<a className="brand">Yelp</a>
+						<a href="/examples/yelp" className="brand">Yelp</a>
 						<DataSearch
 							componentId="NameSensor"
 							placeholder="Search for restaurants, bars..."
