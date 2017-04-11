@@ -105,8 +105,8 @@ section {
 
 #top {
   padding-top: 120px;
-  background-color: #FECABA;
-  color: #333; }
+  background-color: #2251D1;
+  color: #fff; }
   #top .row {
     max-width: 1200px;
     margin: 0 auto; }
@@ -115,7 +115,7 @@ section {
   #top .last-section {
     padding-bottom: 0; }
   #top .website-title {
-    font-size: 5.4rem;
+    font-size: 3.2rem;
     line-height: 100%;
     margin: 0 0 24px;
     font-family: "Source Sans Pro Black"; }
@@ -134,30 +134,34 @@ section {
       text-align: center; } }
 
 #features {
-  margin: 80px 0px;
-  background: #fff; }
-  #features .feature .img-container {
-    height: 200px;
-    display: flex; }
-    #features .feature .img-container img {
-      margin: auto; }
-  #features .feature .title {
-    font-size: 1.5rem;
-    font-family: "Source Sans Pro Semi Bold"; }
-  #features .feature .description {
-    font-size: 1.2rem;
-    max-width: 300px;
-    padding: 5px 15px;
-    margin: 20px auto; }
-    #features .feature .description .inner-description {
-      font-size: 0.8rem; }
+  background: #FFF; }
+  #features .feature {
+    padding: 80px 0px; }
+    #features .feature .img-container {
+      height: 200px;
+      display: flex; }
+      #features .feature .img-container img {
+        margin: auto; }
+    #features .feature .title {
+      font-size: 1.5rem;
+      font-family: "Source Sans Pro Semi Bold"; }
+    #features .feature .description {
+      font-size: 1.2rem;
+      max-width: 300px;
+      padding: 5px 15px;
+      margin: 20px auto;
+      color: #333; }
+      #features .feature .description .inner-description {
+        font-size: 0.8rem; }
 
-@media screen and (max-width: 768px) {
-  .install-row a {
-    margin-bottom: 10px; } }
+.install-row a {
+  color: #333; }
+  @media screen and (max-width: 768px) {
+    .install-row a {
+      margin-bottom: 10px; } }
 
 #ui-components {
-  background: #DFDFDF;
+  background: #FFFDE7;
   color: #333; }
   #ui-components .container {
     width: 95%;
@@ -180,67 +184,71 @@ section {
       #ui-components .medium img:nth-child(2) {
         margin: 0 15px 30px; }
 
-#use-cases .tab-container {
-  margin: 30px 0; }
-  #use-cases .tab-container .tab-content {
-    padding: 0 30px; }
-    #use-cases .tab-container .tab-content .tab-text {
-      padding-bottom: 10px; }
-      #use-cases .tab-container .tab-content .tab-text .title {
-        margin-top: 0;
-        font-size: 1.5rem;
-        font-family: "Source Sans Pro Semi Bold"; }
-    #use-cases .tab-container .tab-content .img-container img {
-      max-height: 100%;
-      margin: 0 auto; }
-    @media screen and (max-width: 768px) {
-      #use-cases .tab-container .tab-content {
-        padding: 0; }
-        #use-cases .tab-container .tab-content .img-container {
-          padding: 15px; } }
-  #use-cases .tab-container .nav-tabs {
-    padding-top: 20px;
-    border: 0; }
-    #use-cases .tab-container .nav-tabs li {
-      position: relative; }
-      #use-cases .tab-container .nav-tabs li:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 5px;
-        width: calc(100% - 10px);
-        height: 3px;
-        background: #FFE94D;
-        border-radius: 6px; }
-      #use-cases .tab-container .nav-tabs li.active:before, #use-cases .tab-container .nav-tabs li:hover:before {
-        height: 6px;
-        top: -2px; }
-      #use-cases .tab-container .nav-tabs li.active a, #use-cases .tab-container .nav-tabs li:hover a {
-        border: 0;
-        background: transparent; }
-        #use-cases .tab-container .nav-tabs li.active a:hover, #use-cases .tab-container .nav-tabs li:hover a:hover {
+#use-cases {
+  background-color: #FFF; }
+  #use-cases .tab-container {
+    margin: 30px 0; }
+    #use-cases .tab-container .tab-content {
+      padding: 0 30px; }
+      #use-cases .tab-container .tab-content .tab-text {
+        padding-bottom: 10px; }
+        #use-cases .tab-container .tab-content .tab-text .title {
+          margin-top: 0;
+          font-size: 1.5rem;
+          font-family: "Source Sans Pro Semi Bold"; }
+      #use-cases .tab-container .tab-content .img-container img {
+        max-height: 100%;
+        margin: 0 auto; }
+      @media screen and (max-width: 768px) {
+        #use-cases .tab-container .tab-content {
+          padding: 0; }
+          #use-cases .tab-container .tab-content .img-container {
+            padding: 15px; } }
+    #use-cases .tab-container .nav-tabs {
+      padding-top: 20px;
+      border: 0; }
+      #use-cases .tab-container .nav-tabs li {
+        position: relative; }
+        #use-cases .tab-container .nav-tabs li:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 5px;
+          width: calc(100% - 10px);
+          height: 3px;
+          background: #FFD600;
+          border-radius: 6px; }
+        #use-cases .tab-container .nav-tabs li.active:before, #use-cases .tab-container .nav-tabs li:hover:before {
+          height: 6px;
+          top: -2px; }
+        #use-cases .tab-container .nav-tabs li.active a, #use-cases .tab-container .nav-tabs li:hover a {
           border: 0;
           background: transparent; }
+          #use-cases .tab-container .nav-tabs li.active a:hover, #use-cases .tab-container .nav-tabs li:hover a:hover {
+            border: 0;
+            background: transparent; }
 
 #footer, footer {
-  background: #FECABA;
-  color: #333; }
+  background: #2251D1;
+  color: #fff; }
   #footer h2, footer h2 {
     font-size: 2rem;
     font-family: "Source Sans Pro Semi Bold"; }
 
 footer {
   padding: 15px 0;
-  color: #333; }
+  color: #fff; }
+  footer .navbar-nav {
+    margin: 0px -15px; }
   footer .footer-link, footer .navbar-nav > li > a {
-    color: #333;
+    color: #fff;
     padding: 10px 15px;
     line-height: 20px; }
     footer .footer-link:hover, footer .navbar-nav > li > a:hover {
       background-color: transparent; }
 
 .theme-btn {
-  background: #FFE94D;
+  background: #FFD600;
   color: #333;
   text-transform: uppercase;
   font-size: 1em;
@@ -253,13 +261,13 @@ footer {
     color: #fff; }
   .theme-btn.theme-btn-inverse {
     background: #333;
-    color: #FFE94D; }
+    color: #FFD600; }
     .theme-btn.theme-btn-inverse:hover {
       color: #fff;
-      background: #ffe634; }
+      background: #e6c100; }
   .theme-btn:hover {
     color: #fff;
-    background: #ffe634; }
+    background: #e6c100; }
 
 @media screen and (max-width: 768px) {
   #features .feature {
@@ -321,287 +329,21 @@ footer {
       display: inline-block;
       margin-bottom: -5px;
       clear: both; }
+  @media (min-width: 768px) {
+    #home .navbar .navbar-brand {
+      margin-left: 0px;
+      padding: 20px 15px 15px 15px; } }
   #home .navbar .navbar-brand img {
     width: 30px; }
+  #home .navbar .icon-bar {
+    background-color: #fff; }
   #home .navbar .navbar-nav li.active a {
     background: transparent; }
   #home .navbar .navbar-nav li {
-    background: #FECABA;
+    background: #2251D1;
     padding: 15px 20px 5px;
     z-index: 10; }
   #home .navbar .navbar-nav li a {
-    color: #333;
+    color: #fff;
     font-size: 17px;
     font-weight: bold; }
-
-.pricing-page #top .website-title {
-  font-size: 4rem;
-  line-height: 4rem;
-  margin-bottom: 0; }
-
-.pricing-page #top .bottom-line {
-  font-size: 2rem;
-  line-height: 2rem; }
-
-.pricing-page #top .landing-section {
-  padding: 60px 15px; }
-  .pricing-page #top .landing-section.last-section {
-    padding-bottom: 0; }
-
-.pricing-page #top .star-frame {
-  display: inline-block;
-  width: auto;
-  padding-left: 0; }
-  .pricing-page #top .star-frame iframe {
-    float: left; }
-  .pricing-page #top .star-frame p {
-    display: inline-block;
-    font-size: 1rem;
-    float: left;
-    margin: 0;
-    line-height: 30px; }
-
-.pricing-page #top .poweredby-section {
-  font-size: 1.5rem; }
-  .pricing-page #top .poweredby-section img {
-    display: inline-block;
-    max-width: 110px; }
-
-.pricing-page #features {
-  background: #fff; }
-  .pricing-page #features .feature .img-container {
-    height: auto; }
-
-.pricing-page #pricing-plan {
-  background: #FECABA;
-  color: #fff; }
-  .pricing-page #pricing-plan h2 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    font-family: "Source Sans Pro Semi Bold"; }
-
-.pricing-page #faq-container .btitle {
-  color: #FECABA;
-  font-family: "Source Sans Pro Semi Bold";
-  font-size: 2rem;
-  margin-bottom: 2rem; }
-
-.pricing-page #faq-container #feature-body .faq h2 {
-  font-size: 1.5rem; }
-
-.pricing-page #faq-container .faq {
-  padding: 50px 40px;
-  font-size: 1.1rem; }
-  .pricing-page #faq-container .faq .row {
-    text-align: center; }
-  .pricing-page #faq-container .faq .btitle {
-    text-align: center;
-    margin: 0 0 30px; }
-  .pricing-page #faq-container .faq h2 {
-    font-family: "Source Sans Pro Bold";
-    font-size: 1.1rem;
-    margin-bottom: 15px; }
-  .pricing-page #faq-container .faq ul {
-    list-style: none;
-    font-family: "Source Sans Pro Light";
-    padding: 0; }
-  .pricing-page #faq-container .faq ul li .title {
-    font-family: "Source Sans Pro Regular";
-    font-size: 1.1rem;
-    line-height: 2rem;
-    margin-top: 10px;
-    cursor: pointer; }
-    .pricing-page #faq-container .faq ul li .title:before {
-      content: '+';
-      font-size: 1.5rem;
-      padding-right: 5px;
-      display: inline-block;
-      float: left;
-      color: #FFE94D; }
-  .pricing-page #faq-container .faq ul li .answer {
-    font-family: "Source Sans Pro Light";
-    font-size: 1rem;
-    line-height: 140%;
-    display: none;
-    text-align: left;
-    margin-bottom: 15px; }
-    .pricing-page #faq-container .faq ul li .answer a {
-      font-weight: bold; }
-    .pricing-page #faq-container .faq ul li .answer p {
-      font-family: "Source Sans Pro Light";
-      font-size: 1rem;
-      line-height: 130%; }
-  .pricing-page #faq-container .faq ul li.active .title:before {
-    content: '-'; }
-  .pricing-page #faq-container .faq ul li.active .answer {
-    display: block; }
-
-.pricing-page #cards-container {
-  background: #FECABA;
-  color: #fff;
-  text-align: center;
-  padding-bottom: 200px; }
-  .pricing-page #cards-container h2.title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    font-family: "Source Sans Pro Semi Bold"; }
-
-.pricing-page #cards {
-  margin-top: -160px;
-  margin-bottom: 40px;
-  padding: 0; }
-  .pricing-page #cards .cards-container {
-    display: flex;
-    margin: 0; }
-    .pricing-page #cards .cards-container #free-card .price-card, .pricing-page #cards .cards-container #bootstrap-card .price-card, .pricing-page #cards .cards-container #growth-card .price-card, .pricing-page #cards .cards-container #dedicated-card .price-card {
-      background: #A09DE5; }
-      .pricing-page #cards .cards-container #free-card .price-card .title, .pricing-page #cards .cards-container #bootstrap-card .price-card .title, .pricing-page #cards .cards-container #growth-card .price-card .title, .pricing-page #cards .cards-container #dedicated-card .price-card .title {
-        background: #5053AA; }
-    .pricing-page #cards .cards-container .single-card-container {
-      padding-left: 26px;
-      padding-right: 26px; }
-      .pricing-page #cards .cards-container .single-card-container .price-card {
-        border-radius: 10px;
-        height: 100%;
-        padding-bottom: 110px; }
-        .pricing-page #cards .cards-container .single-card-container .price-card .title {
-          background: #3BC7F6;
-          color: #fff;
-          font-size: 100px;
-          line-height: 100px;
-          font-family: "Source Sans Pro Extra Light";
-          padding: 46px 15px;
-          text-align: center;
-          height: 160px;
-          border-top-left-radius: 10px;
-          border-top-right-radius: 10px;
-          position: relative; }
-          .pricing-page #cards .cards-container .single-card-container .price-card .title .unit {
-            font-size: 60px; }
-          .pricing-page #cards .cards-container .single-card-container .price-card .title .superscript {
-            font-size: 20px;
-            text-transform: uppercase;
-            position: absolute;
-            width: 100%;
-            height: auto;
-            text-align: center;
-            top: -26px;
-            left: 0;
-            font-family: "Source Sans Pro Regular"; }
-          .pricing-page #cards .cards-container .single-card-container .price-card .title .subscript {
-            font-size: 14px;
-            text-transform: lowercase;
-            position: absolute;
-            bottom: -30px;
-            right: 80px;
-            height: auto;
-            text-align: center; }
-        .pricing-page #cards .cards-container .single-card-container .price-card .description {
-          color: #fff;
-          list-style: none;
-          padding-left: 0; }
-          .pricing-page #cards .cards-container .single-card-container .price-card .description li {
-            position: relative;
-            padding: 50px;
-            padding-top: 30px;
-            padding-bottom: 40px; }
-            .pricing-page #cards .cards-container .single-card-container .price-card .description li .logo-link {
-              padding-bottom: 3px;
-              border-bottom: 1px solid;
-              color: #FECABA; }
-              .pricing-page #cards .cards-container .single-card-container .price-card .description li .logo-link:hover {
-                color: #FECABA; }
-            .pricing-page #cards .cards-container .single-card-container .price-card .description li.with-icon {
-              padding-left: 100px; }
-            .pricing-page #cards .cards-container .single-card-container .price-card .description li .img-center {
-              margin: 0 auto;
-              padding: 0 30px; }
-            .pricing-page #cards .cards-container .single-card-container .price-card .description li .icon-container {
-              position: absolute;
-              left: 50px;
-              top: 18px;
-              width: 40px;
-              height: 70px;
-              padding: 15px 0; }
-            .pricing-page #cards .cards-container .single-card-container .price-card .description li .text-container {
-              font-family: "Source Sans Pro Light"; }
-              .pricing-page #cards .cards-container .single-card-container .price-card .description li .text-container .big-description {
-                font-size: 1.8em;
-                line-height: 1em;
-                font-family: "Source Sans Pro Regular"; }
-                .pricing-page #cards .cards-container .single-card-container .price-card .description li .text-container .big-description.list-bottom-gap {
-                  margin-bottom: 20px; }
-              .pricing-page #cards .cards-container .single-card-container .price-card .description li .text-container .figure {
-                font-size: 1.8em;
-                line-height: 1.4em;
-                font-family: "Source Sans Pro Regular"; }
-                .pricing-page #cards .cards-container .single-card-container .price-card .description li .text-container .figure.light {
-                  font-family: "Source Sans Pro Extra Light"; }
-              .pricing-page #cards .cards-container .single-card-container .price-card .description li .text-container .summary {
-                font-size: 1.5em;
-                line-height: 1em; }
-              .pricing-page #cards .cards-container .single-card-container .price-card .description li .text-container .small-fonts {
-                position: absolute;
-                font-size: 1em; }
-            .pricing-page #cards .cards-container .single-card-container .price-card .description li.subscribe-li {
-              position: absolute;
-              bottom: 15px;
-              left: 0;
-              width: 100%;
-              padding-left: 100px;
-              padding-right: 100px; }
-        .pricing-page #cards .cards-container .single-card-container .price-card .new-btn {
-          color: #fff;
-          font-family: "Source Sans Pro Regular";
-          width: 100%;
-          display: inline-block; }
-          .pricing-page #cards .cards-container .single-card-container .price-card .new-btn.subscribed {
-            color: #fff; }
-    @media screen and (max-width: 767px) {
-      .pricing-page #cards .cards-container {
-        display: block; }
-        .pricing-page #cards .cards-container .single-card-container {
-          margin-bottom: 30px;
-          padding: 0 80px; }
-          .pricing-page #cards .cards-container .single-card-container#free-card .price-card .title {
-            padding-top: 40px; }
-          .pricing-page #cards .cards-container .single-card-container .price-card .title {
-            line-height: 86px; }
-            .pricing-page #cards .cards-container .single-card-container .price-card .title .superscript {
-              top: -14px; }
-            .pricing-page #cards .cards-container .single-card-container .price-card .title .subscript {
-              right: 35%;
-              bottom: -20px; }
-          .pricing-page #cards .cards-container .single-card-container .price-card .description {
-            position: relative; }
-            .pricing-page #cards .cards-container .single-card-container .price-card .description li.subscribe-li {
-              bottom: -120px; }
-            .pricing-page #cards .cards-container .single-card-container .price-card .description li .img-center {
-              max-width: 250px; } }
-    @media screen and (max-width: 480px) {
-      .pricing-page #cards .cards-container .single-card-container {
-        padding: 0 15px; } }
-
-.pricing-page .toggleButton .btn {
-  border-radius: 20px;
-  background: #A09DE5;
-  color: #fff;
-  font-family: "Source Sans Pro Regular";
-  font-size: 1.2rem;
-  padding: 0.5em 1em;
-  outline: none; }
-  .pricing-page .toggleButton .btn.left {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0; }
-  .pricing-page .toggleButton .btn.right {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    margin-left: -4px; }
-  .pricing-page .toggleButton .btn.active {
-    background: #FFE94D;
-    font-size: 1.4rem;
-    box-shadow: none; }
-
-.pricing-page .plan-bottomline {
-  margin-top: 15px;
-  color: #FECABA; }

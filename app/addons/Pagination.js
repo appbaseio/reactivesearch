@@ -62,7 +62,7 @@ export default class Pagination extends Component {
 	// handle the input change and pass the value inside sensor info
 	handleChange(inputVal) {
 		this.setState({
-			"currentValue": inputVal
+			currentValue: inputVal
 		});
 		var obj = {
 			key: this.props.componentId,
@@ -149,7 +149,7 @@ export default class Pagination extends Component {
 		});
 
 		return (
-			<div className={`rbc rbc-pagination col s12 col-xs-12 card thumbnail ${cx} ${this.props.className}`}>
+			<div className={`rbc rbc-pagination col s12 col-xs-12 ${cx} ${this.props.className}`}>
 				{title}
 				<div className="col s12 col-xs-12">
 					{this.renderPageNumber()}
@@ -172,4 +172,4 @@ Pagination.defaultProps = {};
 Pagination.contextTypes = {
 	appbaseRef: React.PropTypes.any.isRequired,
 	type: React.PropTypes.any.isRequired
-};
+}

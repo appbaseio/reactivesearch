@@ -217,7 +217,7 @@ storiesOf("ResultCard", module)
 		<ResultCardDefault />
 	)))
 	.add("With Pagination", withReadme(removeFirstLine(ReactiveListReadme), () => (
-		<ResultCardDefault  showPagination />
+		<ResultCardDefault  pagination />
 	)));
 
 storiesOf("ResultList", module)
@@ -226,7 +226,7 @@ storiesOf("ResultList", module)
 		<ResultListDefault />
 	)))
 	.add("With Pagination", withReadme(removeFirstLine(ReactiveListReadme), () => (
-		<ResultListDefault showPagination />
+		<ResultListDefault pagination />
 	)));
 
 storiesOf("ViewSwitcher", module)
