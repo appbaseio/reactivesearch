@@ -115,7 +115,7 @@ nav {
 	}
 }
 
-.rbc.rbc-resultcard-wrapper .rbc-resultcard-container {
+.rbc.rbc-resultcard .rbc-resultcard-container {
 	background-color: #fafafa;
 	height: auto;
 	max-height: none;
@@ -127,7 +127,7 @@ nav {
 		margin-top: 20px;
 	}
 
-	.rbc-resultcard {
+	.rbc-resultcard-item {
 		width: calc(50% - 20px);
 		max-width: none;
 		margin: 0;
@@ -160,15 +160,15 @@ nav {
 			background-color: #424242;
 		}
 
-		.rbc-resultcard__image {
+		.rbc-resultcard-item__image {
 			background-size: cover;
 		}
 
-		.rbc-resultcard__title {
+		.rbc-resultcard-item__title {
 			padding-left: 0;
 		}
 
-		.rbc-resultcard__desc {
+		.rbc-resultcard-item__desc {
 			padding: 0;
 
 			p {

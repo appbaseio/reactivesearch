@@ -91,7 +91,7 @@ nav {
 	text-align: center;
 }
 
-.rbc.rbc-resultlist-wrapper {
+.rbc.rbc-resultlist {
 	background-color: transparent;
 	padding: 0;
 	margin: 0;
@@ -108,22 +108,22 @@ nav {
 .rbc-resultlist-scroll-container {
 	height: auto !important;
 	
-	.rbc-resultlist {
+	.rbc-resultlist-item {
 		border-bottom: 1px solid #eaeaea;
 		padding: 15px;
 		cursor: auto;
 
-		.rbc-resultlist__image {
+		.rbc-resultlist-item__image {
 			display: none;
 		}
 
-		.rbc-resultlist__title,
-		.rbc-resultlist__desc {
+		.rbc-resultlist-item__title,
+		.rbc-resultlist-item__desc {
 			padding: 0;
 		}
 
 
-		.rbc-resultlist__title .title {
+		.rbc-resultlist-item__title .title {
 			margin: 0 0 10px 0;
 			display: inline-block;
 			padding: 0;
@@ -135,7 +135,7 @@ nav {
 			font-family: "Lato Regular";
 		}
 
-		.rbc-resultlist__title a.title {
+		.rbc-resultlist-item__title a.title {
 			-webkit-transition: all .3s ease;
 			transition: all .3s ease;
 			border-bottom: 1px dotted transparent;

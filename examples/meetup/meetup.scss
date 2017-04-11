@@ -82,7 +82,7 @@ header {
 	}
 }
 
-.rbc.rbc-resultlist-wrapper {
+.rbc.rbc-resultlist {
 	background-color: transparent;
 	padding: 30px;
 }
@@ -104,8 +104,8 @@ header {
 	height: auto !important;
 }
 
-.rbc .rbc-resultlist {
-	.rbc-resultlist__image {
+.rbc .rbc-resultlist-item {
+	.rbc-resultlist-item__image {
 		width: 60px;
 		height: 60px;
 		border-radius: 4px;
@@ -114,7 +114,7 @@ header {
 		background-position: top center;
 	}
 
-	.rbc-resultlist__title {
+	.rbc-resultlist-item__details {
 		width: calc(100% - 60px);
 		white-space: normal;
 	}

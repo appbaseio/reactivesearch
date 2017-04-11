@@ -177,7 +177,7 @@ header {
 	}
 }
 
-.rbc.rbc-resultlist-wrapper {
+.rbc.rbc-resultlist {
 	background-color: transparent;
 	padding: 10px 30px;
 }
@@ -205,27 +205,27 @@ header {
 	box-shadow: none;
 }
 
-.rbc-resultlist-scroll-container .rbc-resultlist {
+.rbc-resultlist-scroll-container .rbc-resultlist-item {
 	border: 1px solid #eee;
 	background-color: #fff;
 	padding: 12px;
 	margin-bottom: 12px;
 	position: relative;
 
-	.rbc-resultlist__image {
+	.rbc-resultlist-item__image {
 		width: 160px;
 		height: 120px;
 		background-size: cover;
 	}
 
-	.rbc-resultlist__title {
+	.rbc-resultlist-item__title {
 		font-weight: 700;
 		color: $primary-color;
 		font-size: 18px;
 		line-height: 26px;
 	}
 
-	.rbc-resultlist__desc {
+	.rbc-resultlist-item__desc {
 		p {
 			margin: 0;
 		}
