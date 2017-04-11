@@ -44,12 +44,12 @@ class Main extends Component {
 				type="meetupdata1"
 			>
 				<header>
-					<h2>Meetup Blast</h2>
+					<h2>Who's in town</h2>
 					<div className="filter-container row">
 						<div className="col s4">
 							<DataSearch
 								componentId="TopicSensor"
-								placeholder="Search for topics..."
+								placeholder="Search for Topics"
 								appbaseField="group.group_topics.topic_name_raw"
 								searchInputId="TopicSearch"
 								react={{
@@ -61,7 +61,8 @@ class Main extends Component {
 							<GeoDistanceDropdown
 								componentId="GeoSensor"
 								appbaseField="location"
-								placeholder="Search for location..."
+								placeholder="In location"
+								autoLocation={false}
 								unit="mi"
 								data={[
 									{ start: 1, end: 100, label: "Less than 100 miles" },
@@ -70,8 +71,8 @@ class Main extends Component {
 									{ start: 501, end: 1000, label: "Above 500 miles" }
 								]}
 								defaultSelected={{
-									label: "Less than 100 miles",
-									location: "London"
+									"location": "London",
+									"label": "Less than 100 miles"
 								}}
 								react={{
 									and: "TopicSensor"
@@ -98,7 +99,6 @@ class Main extends Component {
 						<ReactiveMap
 							appbaseField="location"
 							defaultZoom={13}
-							defaultCenter={{ lat: 37.74, lon: -122.45 }}
 							historicalData={true}
 							setMarkerCluster={false}
 							showMapStyles={false}
