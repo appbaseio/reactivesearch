@@ -76,17 +76,18 @@ header {
 		.rbc-title {
 			font-size: 16px;
 		}
-
-		.rbc-label {
+		.rbc-tag-item,.rbc-label {
 			text-transform: capitalize;
 		}
-
 		.rbc-list-container {
 			max-height: none;
 		}
 	}
 }
 
+.rbc-resultlist-container.rbc-sort-active .rbc-sortoptions {
+	position: relative;
+}
 .rbc.rbc-resultlist {
 	background-color: transparent;
 	padding: 10px 30px;

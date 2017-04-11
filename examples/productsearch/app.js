@@ -80,13 +80,13 @@ class Main extends Component {
 							from={0}
 							size={10}
 							scrollOnWindow={true}
+							showResultStats={false}
 							onData={this.onData}
 							react={{
 								and: ["NameSensor", "TopicSensor", "DefaultSensor"]
 							}}
 							sortOptions={[
-								{"label": "Sort by Popularity", "field": "upvotes", "order": "desc"},
-								{"label": "Sort by Name", "field": "name", "order": "asc"}
+								{"label": "Sort by Popularity", "appbaseField": "upvotes", "sortBy": "desc"}
 							]}
 						/>
 					</div>
