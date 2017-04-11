@@ -2,29 +2,9 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivebase@1.0.0-alpha14":
-  version "1.0.0-alpha14"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivebase/-/reactivebase-1.0.0-alpha14.tgz#dd4949cbbdd380fcf9e671f1b2b86a69771c0fa5"
-  dependencies:
-    appbase-js "^0.11.0"
-    babel-preset-stage-0 "^6.5.0"
-    classnames "^2.2.5"
-    fbemitter "^2.0.2"
-    jquery "^3.1.1"
-    lodash "^4.15.0"
-    moment "^2.14.1"
-    rc-slider "^5.4.0"
-    react "^15.4.2"
-    react-addons-shallow-compare "^15.4.2"
-    react-addons-test-utils "^15.4.2"
-    react-dates "^4.3.0"
-    react-dom "^15.4.2"
-    react-moment-proptypes "^1.3.0"
-    react-select "^1.0.0-rc.3"
-
-"@appbaseio/reactivebase@^1.0.0-alpha14":
-  version "1.0.0-alpha9"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivebase/-/reactivebase-1.0.0-alpha9.tgz#8399def36b2d0d08d8d858c172e390d1b9297ade"
+"@appbaseio/reactivebase@1.0.0-alpha16":
+  version "1.0.0-alpha16"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivebase/-/reactivebase-1.0.0-alpha16.tgz#fc332e80c08b02743a338566efa3bdafc3835f9a"
   dependencies:
     appbase-js "^0.11.0"
     babel-preset-stage-0 "^6.5.0"
@@ -49,11 +29,11 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivemaps@^1.0.0-alpha9":
-  version "1.0.0-alpha9"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-1.0.0-alpha9.tgz#cd3342b5188b75c2b254366cc49c480a802c9357"
+"@appbaseio/reactivemaps@1.0.0-alpha12":
+  version "1.0.0-alpha12"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-1.0.0-alpha12.tgz#27aa5af5567d21bdac67624ca65dac97ee3f1fff"
   dependencies:
-    "@appbaseio/reactivebase" "1.0.0-alpha14"
+    "@appbaseio/reactivebase" "1.0.0-alpha16"
     "@appbaseio/reactivemaps-manual" "^1.0.0-alpha"
     appbase-js "^0.11.0"
     axios "^0.15.2"
