@@ -358,12 +358,12 @@ export default class ResultCard extends Component {
 			const result = this.props.onData(item._source);
 			const details = (
 				<div>
-					<div className="rbc-resultcard__image" style={{ backgroundImage: `url(${result.image})` }} />
-					<div className="rbc-resultcard__title">{result.title}</div>
-					<div className="rbc-resultcard__desc">{result.desc}</div>
+					<div className="rbc-resultcard-item__image" style={{ backgroundImage: `url(${result.image})` }} />
+					<div className="rbc-resultcard-item__title">{result.title}</div>
+					<div className="rbc-resultcard-item__desc">{result.desc}</div>
 					{
 						result.rating ?
-						(<div className="rbc-resultcard__rating">
+						(<div className="rbc-resultcard-item__rating">
 							<ReactStars
 								count={5}
 								value={result.rating}
@@ -381,7 +381,7 @@ export default class ResultCard extends Component {
 				return (
 					<a
 						key={item._id}
-						className="rbc-resultcard"
+						className="rbc-resultcard-item"
 						href={result.url}
 						rel="noopener noreferrer"
 					>
@@ -392,7 +392,7 @@ export default class ResultCard extends Component {
 				return (
 					<div
 						key={item._id}
-						className="rbc-resultcard"
+						className="rbc-resultcard-item"
 					>
 						{details}
 					</div>
@@ -636,7 +636,7 @@ export default class ResultCard extends Component {
 		}
 
 		return (
-			<div ref={(div) => { this.resultListContainer = div }} className="rbc rbc-resultcard-wrapper">
+			<div ref={(div) => { this.resultListContainer = div }} className="rbc rbc-resultcard">
 				<div ref={(div) => { this.listParentElement = div }} className={`rbc-resultcard-container card thumbnail ${cx}`} style={this.props.componentStyle}>
 					{title}
 					{sortOptions}

@@ -359,10 +359,10 @@ export default class ResultList extends Component {
 			const cx = result.image === null ? "rbc-image-inactive" : result.image_size === "small" ? "rbc-image-active rbc-image-small" : "rbc-image-active";
 			const details = (
 				<div className={`${cx} clearfix`}>
-					<div className="rbc-resultlist__image" style={{ backgroundImage: `url(${result.image})` }} />
-					<div className="rbc-resultlist__details">
-						<div className="rbc-resultlist__title">{result.title}</div>
-						<div className="rbc-resultlist__desc">{result.desc}</div>
+					<div className="rbc-resultlist-item__image" style={{ backgroundImage: `url(${result.image})` }} />
+					<div className="rbc-resultlist-item__details">
+						<div className="rbc-resultlist-item__title">{result.title}</div>
+						<div className="rbc-resultlist-item__desc">{result.desc}</div>
 						{
 							result.rating ?
 							(<div className="rbc-resultlist__rating">
@@ -384,7 +384,7 @@ export default class ResultList extends Component {
 				return (
 					<a
 						key={item._id}
-						className="rbc-resultlist"
+						className="rbc-resultlist-item"
 						href={result.url}
 						rel="noopener noreferrer"
 					>
@@ -395,7 +395,7 @@ export default class ResultList extends Component {
 				return (
 					<div
 						key={item._id}
-						className="rbc-resultlist"
+						className="rbc-resultlist-item"
 					>
 						{details}
 					</div>
@@ -639,7 +639,7 @@ export default class ResultList extends Component {
 		}
 
 		return (
-			<div ref={(div) => { this.resultListContainer = div }} className="rbc rbc-resultlist-wrapper">
+			<div ref={(div) => { this.resultListContainer = div }} className="rbc rbc-resultlist">
 				<div ref={(div) => { this.listParentElement = div }} className={`rbc-resultlist-container card thumbnail ${cx}`} style={this.props.componentStyle}>
 					{title}
 					{sortOptions}

@@ -11,7 +11,7 @@
 	-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
 
-	.rbc-resultcard {
+	.rbc-resultcard-item {
 		display: block;
 		width: 50%;
 		min-height: 300px;
@@ -88,7 +88,7 @@
 	}
 }
 
-.rbc-resultcard-wrapper {
+.rbc-resultcard {
 	position: relative;
 }
 

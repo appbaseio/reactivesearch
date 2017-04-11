@@ -3,7 +3,7 @@
 	overflow: auto;
 	padding: 0;
 
-	.rbc-resultlist {
+	.rbc-resultlist-item {
 		display: block;
 		width: 100%;
 		height: auto;
@@ -94,7 +94,7 @@
 
 @media all and (max-width: 767px) {
 	.rbc-resultlist-scroll-container {
-		.rbc-resultlist {
+		.rbc-resultlist-item {
 			@include element("image") {
 				width: 120px;
 				height: 120px;
@@ -140,7 +140,7 @@
 	}
 }
 
-.rbc-resultlist-wrapper {
+.rbc-resultlist {
 	position: relative;
 }
 
