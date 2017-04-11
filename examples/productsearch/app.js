@@ -45,7 +45,7 @@ class Main extends Component {
 				theme="rbc-red"
 			>
 				<header>
-					<a href="/examples/producthunt" className="brand">Product Search</a>
+					<a href="/examples/productsearch" className="brand">Product Search</a>
 					<DataSearch
 						componentId="NameSensor"
 						placeholder="Discover products..."
@@ -84,6 +84,10 @@ class Main extends Component {
 							react={{
 								and: ["NameSensor", "TopicSensor", "DefaultSensor"]
 							}}
+							sortOptions={[
+								{"label": "Sort by Popularity", "field": "upvotes", "order": "desc"},
+								{"label": "Sort by Name", "field": "name", "order": "asc"}
+							]}
 						/>
 					</div>
 				</section>
