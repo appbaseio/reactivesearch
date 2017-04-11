@@ -37,6 +37,7 @@ export default class DynamicRangeSlider extends Component {
 		this.handleValuesChange = this.handleValuesChange.bind(this);
 		this.handleResults = this.handleResults.bind(this);
 		this.customQuery = this.customQuery.bind(this);
+		this.histogramQuery = this.histogramQuery.bind(this);
 	}
 
 	// Get the items from Appbase when component is mounted
@@ -92,6 +93,17 @@ export default class DynamicRangeSlider extends Component {
 		helper.selectedSensor.set(objValue, true);
 	}
 
+	histogramQuery() {
+		return {
+			[this.props.appbaseField]: {
+				"histogram": {
+					"field": this.props.appbaseField,
+					"interval": this.props.interval
+				}
+			}
+		};
+	}
+
 	// Create a channel which passes the react and receive results whenever react changes
 	createChannel() {
 		// Set the react - add self aggs query as well with react
@@ -99,7 +111,8 @@ export default class DynamicRangeSlider extends Component {
 		react.aggs = {
 			key: this.props.appbaseField,
 			sort: "asc",
-			size: 1000
+			size: 1000,
+			customQuery: this.histogramQuery
 		};
 		if (react && react.and && typeof react.and === "string") {
 			react.and = [react.and];
@@ -170,21 +183,22 @@ export default class DynamicRangeSlider extends Component {
 
 	// Generating count for histogram
 	countCalc(min, max, newItems) {
-		const counts = [];
-		const storeItems = {};
-		newItems.forEach((item) => {
-			item.key = Math.floor(item.key);
-			if (!(item.key in storeItems)) {
-				storeItems[item.key] = item.doc_count;
-			} else {
-				storeItems[item.key] += item.doc_count;
-			}
-		});
-		for (let i = min; i <= max; i += 1) {
-			const val = storeItems[i] ? storeItems[i] : 0;
-			counts.push(val);
-		}
-		return counts;
+		// const counts = [];
+		// const storeItems = {};
+		// newItems.forEach((item) => {
+		// 	item.key = Math.floor(item.key);
+		// 	if (!(item.key in storeItems)) {
+		// 		storeItems[item.key] = item.doc_count;
+		// 	} else {
+		// 		storeItems[item.key] += item.doc_count;
+		// 	}
+		// });
+		// for (let i = min; i <= max; i += 1) {
+		// 	const val = storeItems[i] ? storeItems[i] : 0;
+		// 	counts.push(val);
+		// }
+		// return counts;
+		return newItems.map(item => item.doc_count);
 	}
 
 	// Handle function when value slider option is changing
@@ -335,13 +349,15 @@ DynamicRangeSlider.propTypes = {
 		React.PropTypes.element
 	]),
 	react: React.PropTypes.object,
-	onValueChange: React.PropTypes.func
+	onValueChange: React.PropTypes.func,
+	interval: React.PropTypes.number,
 };
 
 DynamicRangeSlider.defaultProps = {
 	title: null,
 	stepValue: 1,
-	showHistogram: true
+	showHistogram: true,
+	interval: 1
 };
 
 // context type
