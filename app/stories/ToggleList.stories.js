@@ -62,7 +62,7 @@ export default class ToggleListDefault extends Component {
 							from={0}
 							size={40}
 							onData={this.onData}
-							showPagination={true}
+							pagination={true}
 							react={{
 								and: "MeetupTops"
 							}}
