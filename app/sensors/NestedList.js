@@ -333,8 +333,13 @@ export default class NestedList extends Component {
 		if (level === 0 && this.state.subItems.length) {
 			this.setState({
 				subItems: []
-			});
+			}, this.onItemSelectcb.bind(this, key, level));
+		} else {
+			this.onItemSelectcb(key, level);
 		}
+	}
+
+	onItemSelectcb(key, level) {
 		const selectedValues = this.state.selectedValues;
 		let stateItems = {};
 		if (selectedValues[level] === key) {
