@@ -19,9 +19,16 @@
 			}
 		}
 		.navbar-brand {
+			@media (min-width: 768px) {
+				margin-left: 0px;
+				padding: 20px 15px 15px 15px;
+			}
 			img {
 				width: 30px;
 			}
+		}
+		.icon-bar {
+			background-color: #fff;
 		}
 		.navbar-nav {
 			li.active {
@@ -35,7 +42,7 @@
 				z-index: 10;
 			}
 			li a {
-				color: $font-color;
+				color: $secondary-font-color;
 				font-size: 17px;
 				font-weight: bold;
 			}
