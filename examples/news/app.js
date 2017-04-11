@@ -88,7 +88,7 @@ class Main extends Component {
 							<ResultList
 								appbaseField="title"
 								from={0}
-								size={50}
+								size={30}
 								pagination={true}
 								onData={this.onData}
 								react={{
