@@ -1,10 +1,10 @@
 ### Installation
 
 ```
-git clone git@github.com:appbaseio/reactivesearch.git
-yarn
+git clone git@github.com:appbaseio/reactivesearch.git && cd reactivesearch
+npm install (or yarn)
 cd website/
-yarn
+npm install (or yarn)
 bower install
 ```
 
