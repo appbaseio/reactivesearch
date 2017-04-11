@@ -57,7 +57,7 @@ class Main extends Component {
 			>
 				<header>
 					<nav>
-						<a href="/examples/yelp" className="brand">Yelp</a>
+						<a href="/examples/yelpsearch" className="brand">Yelp Search</a>
 						<DataSearch
 							componentId="NameSensor"
 							placeholder="Search for restaurants, bars..."
@@ -155,7 +155,7 @@ class Main extends Component {
 								componentId="SearchResult"
 								appbaseField="name"
 								from={0}
-								size={50}
+								size={20}
 								onData={this.onData}
 								pagination={true}
 								react={{
