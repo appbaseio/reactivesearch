@@ -2,6 +2,14 @@
 
 Use the `dev` branch for development.
 
+In the project root:
+
+```
+npm start (or yarn start)
+```
+
+In the website/ directory:
+
 ```
 gulp watch 
 ```
