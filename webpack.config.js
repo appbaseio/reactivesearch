@@ -5,10 +5,10 @@ const CHOOSE_CONFIG = process.env.CHOOSE_CONFIG;
 const default_config = {
 	entry: {
 		ecommerce_recipe: "./examples/ecommerce/app.js",
-		meetup_recipe: "./examples/meetup/app.js",
-		yelp_recipe: "./examples/yelp/app.js",
-		producthunt_recipe: "./examples/producthunt/app.js",
-		airbnb_recipe: "./examples/airbnb/app.js",
+		meetup_recipe: "./examples/whosintown/app.js",
+		yelp_recipe: "./examples/yelpsearch/app.js",
+		producthunt_recipe: "./examples/productsearch/app.js",
+		airbnb_recipe: "./examples/airbeds/app.js",
 		news_recipe: "./examples/news/app.js",
 		app: "./app/app.js"
 	},
@@ -41,10 +41,10 @@ const default_config = {
 const examples_config = {
 	entry: {
 		ecommerce_recipe: "./examples/ecommerce/app.js",
-		meetup_recipe: "./examples/meetup/app.js",
-		yelp_recipe: "./examples/yelp/app.js",
-		producthunt_recipe: "./examples/producthunt/app.js",
-		airbnb_recipe: "./examples/airbnb/app.js",
+		meetup_recipe: "./examples/whosintown/app.js",
+		yelp_recipe: "./examples/yelpsearch/app.js",
+		producthunt_recipe: "./examples/productsearch/app.js",
+		airbnb_recipe: "./examples/airbeds/app.js",
 		news_recipe: "./examples/news/app.js"
 	},
 	output: {
