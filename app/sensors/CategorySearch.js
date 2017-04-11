@@ -56,6 +56,25 @@ export default class CategorySearch extends Component {
 		}
 	}
 
+	highlightQuery() {
+		const fields = {};
+		const highlightFields = this.props.highlightFields ? this.props.highlightFields : this.props.appbaseField;
+		if (typeof highlightFields === "string") {
+			fields[highlightFields] = {};
+		} else if (_.isArray(highlightFields)) {
+			highlightFields.forEach((item) => {
+				fields[item] = {};
+			});
+		}
+		return {
+			highlight: {
+				pre_tags: ["<span class=\"rbc-highlight\">"],
+				post_tags: ["</span>"],
+				fields
+			}
+		};
+	}
+
 	// set the query type and input data
 	setQueryInfo() {
 		const obj = {
@@ -66,6 +85,9 @@ export default class CategorySearch extends Component {
 				customQuery: this.props.customQuery ? this.props.customQuery : this.defaultSearchQuery
 			}
 		};
+		if (this.props.highlight) {
+			obj.value.externalQuery = this.highlightQuery();
+		}
 		helper.selectedSensor.setSensorInfo(obj);
 		const searchObj = {
 			key: this.searchInputId,
@@ -332,12 +354,18 @@ CategorySearch.propTypes = {
 	defaultSelected: React.PropTypes.string,
 	customQuery: React.PropTypes.func,
 	react: React.PropTypes.object,
-	onValueChange: React.PropTypes.func
+	onValueChange: React.PropTypes.func,
+	highlight: React.PropTypes.bool,
+	highlightFields: React.PropTypes.oneOfType([
+		React.PropTypes.string,
+		React.PropTypes.arrayOf(React.PropTypes.string)
+	])
 };
 
 // Default props value
 CategorySearch.defaultProps = {
-	placeholder: "Search"
+	placeholder: "Search",
+	highlight: false
 };
 
 // context type
@@ -354,5 +382,6 @@ CategorySearch.types = {
 	categoryField: TYPES.STRING,
 	placeholder: TYPES.STRING,
 	defaultSelected: TYPES.STRING,
-	customQuery: TYPES.FUNCTION
+	customQuery: TYPES.FUNCTION,
+	highlight: TYPES.BOOLEAN
 };
