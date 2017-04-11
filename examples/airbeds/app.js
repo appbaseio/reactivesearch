@@ -114,13 +114,13 @@ class Main extends Component {
 				>
 					<nav>
 						<div className="col s3">
-							<a href="/examples/airbnb" className="brand">Airbnb</a>
+							<a href="/examples/airbeds" className="brand">Airbeds</a>
 						</div>
 						<div className="col s9">
 							<DataSearch
 								appbaseField={this.props.mapping.name}
 								componentId="PlaceSensor"
-								placeholder="Search for houses..."
+								placeholder="Search for houses with airbeds"
 							/>
 						</div>
 					</nav>
@@ -212,7 +212,7 @@ class Main extends Component {
 								showMapStyles={false}
 								autoCenter={true}
 								showSearchAsMove={false}
-								title="Properties in Seattle"
+								title="Airbeds in Seattle"
 								showPopoverOn="click"
 								onPopoverTrigger={this.onPopoverTrigger}
 								defaultZoom={15}
