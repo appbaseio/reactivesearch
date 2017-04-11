@@ -371,7 +371,7 @@ export default class MultiLevelMenu extends Component {
 
 		return (
 			<div className="rbc rbc-multilevelmenu-container card thumbnail col s12 col-xs-12" onMouseLeave={() => this.handleHover(null)}>
-				<div className="rbc rbc-multilevelmenu col s12 col-xs-12">
+				<div className="rbc-multilevelmenu col s12 col-xs-12">
 					{listComponent}
 				</div>
 				{this.renderList()}

@@ -196,7 +196,7 @@ class Main extends Component {
 										from={0}
 										size={10}
 										onData={this.onData}
-										showPagination={true}
+										pagination={true}
 										react={{
 											and: ["PlaceSensor", "DateRangeSensor", "GuestSensor", "RoomTypeSensor", "PriceSensor"]
 										}}

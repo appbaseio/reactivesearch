@@ -569,8 +569,16 @@ export default class ResultList extends Component {
 			}
 		}
 
-		setScroll.call(this, this.listParentElement);
-		setScroll.call(this, this.listChildElement);
+		if (this.props.scrollOnWindow) {
+			$(window).on("scroll", () => {
+				if (this.state.requestOnScroll && $(window).scrollTop() + $(window).innerHeight() >= $(window).height() && this.state.resultStats.total > this.state.currentData.length && !this.state.queryStart) {
+					this.nextPage();
+				}
+			});
+		} else {
+			setScroll.call(this, this.listParentElement);
+			setScroll.call(this, this.listChildElement);
+		}
 	}
 
 	handleSortSelect(event) {
@@ -631,7 +639,7 @@ export default class ResultList extends Component {
 		}
 
 		return (
-			<div className="rbc rbc-resultlist-wrapper">
+			<div ref={(div) => { this.resultListContainer = div }} className="rbc rbc-resultlist-wrapper">
 				<div ref={(div) => { this.listParentElement = div }} className={`rbc-resultlist-container card thumbnail ${cx}`} style={this.props.componentStyle}>
 					{title}
 					{sortOptions}
@@ -648,7 +656,7 @@ export default class ResultList extends Component {
 				</div>
 				{this.props.noResults && this.state.visibleNoResults ? (<NoResults defaultText={this.props.noResults} />) : null}
 				{this.props.initialLoader && this.state.queryStart && this.state.showInitialLoader ? (<InitialLoader defaultText={this.props.initialLoader} />) : null}
-				<PoweredBy />
+				<PoweredBy container={this.resultListContainer} />
 			</div>
 		);
 	}
@@ -687,7 +695,8 @@ ResultList.propTypes = {
 		React.PropTypes.string,
 		React.PropTypes.element
 	]),
-	react: React.PropTypes.object
+	react: React.PropTypes.object,
+	scrollOnWindow: React.PropTypes.bool
 };
 
 ResultList.defaultProps = {
@@ -723,5 +732,6 @@ ResultList.types = {
 	noResults: TYPES.FUNC,
 	showResultStats: TYPES.BOOLEAN,
 	onResultStats: TYPES.FUNCTION,
-	placeholder: TYPES.STRING
+	placeholder: TYPES.STRING,
+	scrollOnWindow: TYPES.BOOLEAN
 };

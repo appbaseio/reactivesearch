@@ -129,7 +129,7 @@ class Main extends Component {
 								onData={this.onData}
 								appbaseField={this.props.mapping.name}
 								size={9}
-								showPagination={true}
+								pagination={true}
 								react={{
 									and: ["CategorySensor", "RatingsSensor", "CarSensor", "VehicleTypeSensor"]
 								}}

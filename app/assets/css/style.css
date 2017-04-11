@@ -174,18 +174,18 @@
 .rbc.rbc-multilevelmenu-container {
   padding: 0;
   margin: 0; }
-  .rbc.rbc-multilevelmenu-container .rbc.rbc-multilevelmenu {
+  .rbc.rbc-multilevelmenu-container .rbc-multilevelmenu {
     overflow: auto;
     padding: 0;
     margin: 0;
     width: 100%;
     height: 60px; }
-    .rbc.rbc-multilevelmenu-container .rbc.rbc-multilevelmenu .rbc-list-container,
-    .rbc.rbc-multilevelmenu-container .rbc.rbc-multilevelmenu .rbc-sublist-container {
+    .rbc.rbc-multilevelmenu-container .rbc-multilevelmenu .rbc-list-container,
+    .rbc.rbc-multilevelmenu-container .rbc-multilevelmenu .rbc-sublist-container {
       padding: 5px 0;
       width: auto; }
-      .rbc.rbc-multilevelmenu-container .rbc.rbc-multilevelmenu .rbc-list-container.row,
-      .rbc.rbc-multilevelmenu-container .rbc.rbc-multilevelmenu .rbc-sublist-container.row {
+      .rbc.rbc-multilevelmenu-container .rbc-multilevelmenu .rbc-list-container.row,
+      .rbc.rbc-multilevelmenu-container .rbc-multilevelmenu .rbc-sublist-container.row {
         height: 90px;
         width: 100%;
         white-space: nowrap;
@@ -193,18 +193,18 @@
         -webkit-overflow-scrolling: touch;
         padding: 6px 10px;
         margin: 0; }
-        .rbc.rbc-multilevelmenu-container .rbc.rbc-multilevelmenu .rbc-list-container.row li,
-        .rbc.rbc-multilevelmenu-container .rbc.rbc-multilevelmenu .rbc-sublist-container.row li {
+        .rbc.rbc-multilevelmenu-container .rbc-multilevelmenu .rbc-list-container.row li,
+        .rbc.rbc-multilevelmenu-container .rbc-multilevelmenu .rbc-sublist-container.row li {
           display: inline-block;
           margin: 12px; }
-      .rbc.rbc-multilevelmenu-container .rbc.rbc-multilevelmenu .rbc-list-container .rbc-list-item,
-      .rbc.rbc-multilevelmenu-container .rbc.rbc-multilevelmenu .rbc-sublist-container .rbc-list-item {
+      .rbc.rbc-multilevelmenu-container .rbc-multilevelmenu .rbc-list-container .rbc-list-item,
+      .rbc.rbc-multilevelmenu-container .rbc-multilevelmenu .rbc-sublist-container .rbc-list-item {
         background: transparent;
         border: 0;
         box-shadow: none;
         padding: 0; }
-        .rbc.rbc-multilevelmenu-container .rbc.rbc-multilevelmenu .rbc-list-container .rbc-list-item.rbc-item-active,
-        .rbc.rbc-multilevelmenu-container .rbc.rbc-multilevelmenu .rbc-sublist-container .rbc-list-item.rbc-item-active {
+        .rbc.rbc-multilevelmenu-container .rbc-multilevelmenu .rbc-list-container .rbc-list-item.rbc-item-active,
+        .rbc.rbc-multilevelmenu-container .rbc-multilevelmenu .rbc-sublist-container .rbc-list-item.rbc-item-active {
           font-family: "Lato Bold"; }
   .rbc.rbc-multilevelmenu-container .rbc-list-container {
     display: -webkit-box;

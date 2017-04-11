@@ -79,7 +79,7 @@ class Main extends Component {
 							appbaseField="name"
 							from={0}
 							size={10}
-							showPagination={false}
+							scrollOnWindow={true}
 							onData={this.onData}
 							react={{
 								and: ["NameSensor", "TopicSensor", "DefaultSensor"]

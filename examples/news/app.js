@@ -89,7 +89,7 @@ class Main extends Component {
 								appbaseField="title"
 								from={0}
 								size={50}
-								showPagination={true}
+								pagination={true}
 								onData={this.onData}
 								react={{
 									and: ["InputSensor", "TypeSensor"]

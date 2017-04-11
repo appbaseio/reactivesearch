@@ -88,7 +88,7 @@ class Main extends Component {
 							from={0}
 							size={50}
 							onData={this.onData}
-							showPagination={true}
+							pagination={true}
 							react={{
 								and: ["GeoSensor", "TopicSensor"]
 							}}
