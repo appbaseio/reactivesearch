@@ -1,3 +1,13 @@
+### Installation
+
+```
+git clone git@github.com/appbaseio/reactivesearch.git
+yarn
+cd website/
+yarn
+bower install
+```
+
 ### How To Run
 
 Use the `dev` branch for development.
