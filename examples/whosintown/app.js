@@ -65,14 +65,14 @@ class Main extends Component {
 								autoLocation={false}
 								unit="mi"
 								data={[
-									{ start: 1, end: 100, label: "Less than 100 miles" },
-									{ start: 101, end: 200, label: "Between 100 and 200 miles" },
-									{ start: 201, end: 500, label: "Between 200 and 500 miles" },
-									{ start: 501, end: 1000, label: "Above 500 miles" }
+									{ start: 1, end: 10, label: "Within 10 miles" },
+									{ start: 1, end: 100, label: "Within 100 miles" },
+									{ start: 1, end: 250, label: "Within 250 miles" },
+									{ start: 1, end: 500, label: "Within 500 miles" }
 								]}
 								defaultSelected={{
 									"location": "London",
-									"label": "Less than 100 miles"
+									"label": "Within 10 miles"
 								}}
 								react={{
 									and: "TopicSensor"
@@ -87,7 +87,7 @@ class Main extends Component {
 							componentId="SearchResult"
 							appbaseField="event.event_name"
 							from={0}
-							size={50}
+							size={10}
 							onData={this.onData}
 							pagination={true}
 							react={{
