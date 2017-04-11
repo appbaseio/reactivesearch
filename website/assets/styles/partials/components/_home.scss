@@ -27,7 +27,7 @@ section {
 #top {
 	padding-top: 120px;
 	background-color: $primary-color;
-	color: $font-color;
+	color: $secondary-font-color;
 
 	.row {
 		max-width: 1200px;
@@ -43,7 +43,7 @@ section {
 	}
 
 	.website-title {
-		font-size: 5.4rem;
+		font-size: 3.2rem;
 		line-height: 100%;
 		margin: 0 0 24px;
 		font-family: $font-black;
@@ -73,9 +73,9 @@ section {
 }
 
 #features {
-	margin: 80px 0px;
-	background: #fff;
+	background: $secondary-color;
 	.feature {
+		padding: 80px 0px;
 		.img-container {
 			height: 200px;
 			display: flex;
@@ -92,6 +92,7 @@ section {
 			max-width: 300px;
 			padding: 5px 15px;
 			margin: 20px auto;
+			color: $font-color;
 			.inner-description {
 				font-size: 0.8rem;
 			}
@@ -100,13 +101,14 @@ section {
 }
 
 .install-row a {
+	color: $font-color;
 	@media screen and (max-width: 768px) {
 		margin-bottom: 10px;
 	}
 }
 
 #ui-components {
-	background: #DFDFDF;
+	background: $ternary-color;
 	color: $font-color;
 
 	.container {
@@ -145,6 +147,7 @@ section {
 }
 
 #use-cases {
+	background-color: $secondary-color;
 	.tab-container {
 		margin: 30px 0;
 		.tab-content {
@@ -205,7 +208,7 @@ section {
 }
 #footer, footer {
 	background: $primary-color;
-	color: $font-color;
+	color: $secondary-font-color;
 	h2 {
 		font-size: 2rem;
 		font-family: $font-semi-bold;
@@ -213,9 +216,12 @@ section {
 }
 footer {
 	padding: 15px 0;
-	color: $font-color;
+	color: $secondary-font-color;
+	.navbar-nav {
+		margin: 0px -15px;
+	}
 	.footer-link, .navbar-nav>li>a {
-		color: $font-color;
+		color: $secondary-font-color;
 		padding: 10px 15px;
 		line-height: 20px;
 		&:hover {
