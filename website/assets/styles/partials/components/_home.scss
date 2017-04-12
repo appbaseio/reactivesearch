@@ -230,6 +230,18 @@ footer {
 	}
 }
 
+.js-swapper {
+	display: inline-block;
+	margin: 0 3px;
+	width: 110px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #143394;
+	font-size: 1.4rem;
+	-webkit-transition: all .3s ease;
+	transition: all .3s ease;
+}
+
 .theme-btn {
 	background: $yellow-color;
 	color: $font-color;
@@ -240,8 +252,11 @@ footer {
 	font-family: $font-semi-bold;
 	border: 0;
 	outline: none;
+	-webkit-transition: all .3s ease;
+	transition: all .3s ease;
 	&:active, &:focus, &:hover {
 		color: #fff;
+		text-decoration: none;
 	}
 	&.theme-btn-inverse {
 		background: $font-color;

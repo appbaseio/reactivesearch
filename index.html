@@ -38,7 +38,7 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
 				<li class="active"><a href="https://opensource.appbase.io/reactive-manual">Manual <span class="sr-only">(current)</span></a></li>
-				<li><a href="playground/">Playground</a></li>
+				<!-- <li><a href="playground/">Playground</a></li> -->
 				<li><a href="examples/">Examples</a></li>
 				<li><a href="https://github.com/appbaseio/reactivesearch">Github</a></li>
 			</ul>
@@ -49,17 +49,17 @@
 		<!-- Navigation END -->
 		<div class="container">
 			<div class="row flex-box">
-				<div class="col-xs-12 col-sm-6 flex-center">
+				<div class="col-xs-12 col-sm-12 text-center flex-center">
 					<div class="landing-content landing-section">
 						<h1 class="website-title m-b-2">Reactive Search</h1>
 						<div class="description">
 							<p>
-							A data aware UI components library for building an <strong>Airbnb like</strong> search experience.
+							A React data components library for building <span class="js-swapper">Airbnb</span> like search experience.
 							</p>
+
+							<a style="margin: 40px 0 0 0; display: inline-block;" href="https://github.com/appbaseio/reactivesearch#reactive-search" class="theme-btn">Get Started</a>
 						</div>
 					</div>
-				</div>
-				<div class="col-xs-12 col-sm-6 flex-center landing-section">
 				</div>
 			</div>
 			<div class="row text-center landing-section last-section">
@@ -384,6 +384,13 @@
 	<!--  Scripts-->
 	<script src="website/dist/js/vendor.min.js"></script>
 	<script src="website/assets/js/app.js"></script>
+	<script>
+		setInterval(() => {
+			const searchTypes = ["Airbnb", "Yelp", "Groupon", "Amazon", "Quora", "Meetup"];
+			const index = searchTypes.indexOf($(".js-swapper").html());
+			$(".js-swapper").html(searchTypes[(index+1)%searchTypes.length]);
+		}, 3000)
+	</script>
 </body>
 
 </html>
