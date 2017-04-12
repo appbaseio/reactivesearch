@@ -4,7 +4,7 @@
 
 A React components library for building Airbnb / Yelp like search experiences.
 
-![](https://i.imgur.com/u5AUqCA.png)
+![](https://i.imgur.com/dIix6Jl.png)
 
 ## TOC
 

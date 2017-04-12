@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "imagemin": "imagemin-dir assets/images dist/images"
+  },
+  "devDependencies": {
+    "imagemin": "^5.2.2",
+    "imagemin-cli": "^3.0.0",
+    "imagemin-cli-preserve-dir-structure": "^0.0.2"
+  }
+}
