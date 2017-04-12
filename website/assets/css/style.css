@@ -113,6 +113,7 @@ section {
   #top .landing-section {
     padding: 40px 15px; }
   #top .last-section {
+    padding-top: 0;
     padding-bottom: 0; }
   #top .website-title {
     font-size: 3.2rem;
@@ -129,10 +130,6 @@ section {
   #top p {
     font-size: 1.5rem;
     font-family: "Source Sans Pro Light"; }
-  #top .star-frame {
-    padding-left: 30px; }
-    #top .star-frame .github-btn-large .gh-btn, #top .star-frame .github-btn-large .gh-count {
-      font-size: 2rem; }
   @media screen and (max-width: 768px) {
     #top .s-breakline {
       display: block;
@@ -385,6 +382,26 @@ ul > li {
   margin: 12px 0;
   letter-spacing: 0.05em;
   text-align: center; }
+
+.align-center {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.github-button {
+  background: #FFD600;
+  font-weight: bold;
+  font-family: source sans pro, sans-serif;
+  color: #665600;
+  padding: 20px 40px;
+  cursor: pointer;
+  transition: all 400ms ease;
+  border-radius: 5px; }
+  .github-button:hover {
+    transform: scale(1.05) rotate(1deg);
+    text-decoration: none;
+    background: #ffda1a;
+    color: #665600; }
 
 #home .navbar {
   position: absolute;
