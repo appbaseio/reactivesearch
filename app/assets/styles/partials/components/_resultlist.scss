@@ -67,11 +67,11 @@
 		}
 
 		.rbc-image-inactive {
-			.rbc-resultlist__image {
+			.rbc-resultlist-item__image {
 				display: none;
 			}
 
-			.rbc-resultlist__details {
+			.rbc-resultlist-item__details {
 				float: none;
 				width: 100%;
 				padding: 0;
@@ -79,12 +79,12 @@
 		}
 
 		.rbc-image-active.rbc-image-small {
-			.rbc-resultlist__image {
+			.rbc-resultlist-item__image {
 				width: 100px;
 				height: 100px;
 			}
 
-			.rbc-resultlist__details {
+			.rbc-resultlist-item__details {
 				width: calc(100% - 100px);
 				padding: 0 10px;
 			}
@@ -100,16 +100,20 @@
 				height: 120px;
 			}
 
-			@include element("title") {
+			@include element("details") {
 				width: calc(100% - 120px);
 			}
+			
+			.rbc-image-inactive {
+				.rbc-resultlist-item__image {
+					display: none;
+				}
 
-			@include element("rating") {
-				width: calc(100% - 120px);
-			}
-
-			@include element("desc") {
-				width: calc(100% - 120px);
+				.rbc-resultlist-item__details {
+					float: none;
+					width: 100%;
+					padding: 0;
+				}
 			}
 		}
 	}
