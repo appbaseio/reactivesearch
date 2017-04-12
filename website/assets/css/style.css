@@ -247,6 +247,17 @@ footer {
     footer .footer-link:hover, footer .navbar-nav > li > a:hover {
       background-color: transparent; }
 
+.js-swapper {
+  display: inline-block;
+  margin: 0 3px;
+  width: 110px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background-color: #143394;
+  font-size: 1.4rem;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease; }
+
 .theme-btn {
   background: #FFD600;
   color: #333;
@@ -256,9 +267,12 @@ footer {
   border-radius: 8px;
   font-family: "Source Sans Pro Semi Bold";
   border: 0;
-  outline: none; }
+  outline: none;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease; }
   .theme-btn:active, .theme-btn:focus, .theme-btn:hover {
-    color: #fff; }
+    color: #fff;
+    text-decoration: none; }
   .theme-btn.theme-btn-inverse {
     background: #333;
     color: #FFD600; }
