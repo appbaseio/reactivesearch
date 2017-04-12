@@ -64,8 +64,10 @@
 				</div>
 			</div>
 			<div class="row text-center landing-section last-section">
-				<div class="star-frame">
-					<iframe src="https://ghbtns.com/github-btn.html?user=appbaseio&repo=reactivesearch&type=star&count=true&size=large" frameBorder="0" scrolling="0" width="160px" height="30px"></iframe>
+				<div class="align-center">
+					<a href="https://github.com/appbaseio/reactivesearch" target="_blank" class="github-button">
+						GitHub
+					</a>
 				</div>
 			</div>
 		</div>
@@ -137,56 +139,48 @@
 					</p>
 				</div>
 			</div>
-			<div class="row text-center">
+			<div class="row text-center js-packery">
 				<div class="col-xs-6 col-sm-3">
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_1.svg" alt="ReactiveSearch UI Component">
-					</a>
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_2.svg" alt="ReactiveSearch UI Component">
-					</a>
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_3.svg" alt="ReactiveSearch UI Component">
-					</a>
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_4.svg" alt="ReactiveSearch UI Component">
-					</a>
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_5.svg" alt="ReactiveSearch UI Component">
-					</a>
+					<img src="website/dist/images/ui/UI_COMP_1.svg" alt="ReactiveSearch UI Component">
 				</div>
-				<div class="col-xs-6 col-sm-5">
-					<div class="large">
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_6.svg" alt="ReactiveSearch UI Component">
-					</a>
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_7.svg" alt="ReactiveSearch UI Component">
-					</a>
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_8.svg" alt="ReactiveSearch UI Component">
-					</a>
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_9.svg" alt="ReactiveSearch UI Component">
-					</a>
+				<div class="col-xs-6 col-sm-3">
+					<img src="website/dist/images/ui/UI_COMP_2.svg" alt="ReactiveSearch UI Component">
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					<img src="website/dist/images/ui/UI_COMP_3.svg" alt="ReactiveSearch UI Component">
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					<img src="website/dist/images/ui/UI_COMP_4.svg" alt="ReactiveSearch UI Component">
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					<img src="website/dist/images/ui/UI_COMP_5.svg" alt="ReactiveSearch UI Component">
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					<img src="website/dist/images/ui/UI_COMP_6.svg" alt="ReactiveSearch UI Component">
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					<img src="website/dist/images/ui/UI_COMP_7.svg" alt="ReactiveSearch UI Component">
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					<img src="website/dist/images/ui/UI_COMP_8.svg" alt="ReactiveSearch UI Component">
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					<img src="website/dist/images/ui/UI_COMP_9.svg" alt="ReactiveSearch UI Component">
 					</div>
+				<div class="col-xs-6 col-sm-3">
+					<img src="website/dist/images/ui/UI_COMP_10.svg" alt="ReactiveSearch UI Component">
 				</div>
-				<div class="col-xs-6 col-sm-4">
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_10.svg" alt="ReactiveSearch UI Component">
-					</a>
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_11.svg" alt="ReactiveSearch UI Component">
-					</a>
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_12.svg" alt="ReactiveSearch UI Component">
-					</a>
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_13.svg" alt="ReactiveSearch UI Component">
-					</a>
-					<a href="#" target="_blank">
-						<img src="website/dist/images/ui/UI_COMP_14.svg" alt="ReactiveSearch UI Component">
-					</a>
+				<div class="col-xs-6 col-sm-3">
+					<img src="website/dist/images/ui/UI_COMP_11.svg" alt="ReactiveSearch UI Component">
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					<img src="website/dist/images/ui/UI_COMP_12.svg" alt="ReactiveSearch UI Component">
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					<img src="website/dist/images/ui/UI_COMP_13.svg" alt="ReactiveSearch UI Component">
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					<img src="website/dist/images/ui/UI_COMP_14.svg" alt="ReactiveSearch UI Component">
 				</div>
 			</div>
 		</div>
@@ -269,15 +263,6 @@
 </footer>
 
 	<!--  Scripts-->
-	<script src="website/dist/js/vendor.min.js"></script>
-	<script src="website/assets/js/app.js"></script>
-	<script>
-		setInterval(() => {
-			const searchTypes = ["Airbnb", "Yelp", "Groupon", "Amazon", "Quora", "Meetup"];
-			const index = searchTypes.indexOf($(".js-swapper").html());
-			$(".js-swapper").html(searchTypes[(index+1)%searchTypes.length]);
-		}, 3000)
-	</script>
 	<!-- Hotjar Tracking Code for appbase.io -->
 	<script>
 		(function(h,o,t,j,a,r){
@@ -288,6 +273,16 @@
 			r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
 			a.appendChild(r);
 		})(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+	</script>
+	<script src="https://unpkg.com/packery@2/dist/packery.pkgd.min.js"></script>
+	<script src="website/dist/js/vendor.min.js"></script>
+	<script src="website/assets/js/app.js"></script>
+	<script>
+		setInterval(() => {
+			const searchTypes = ["Airbnb", "Yelp", "Groupon", "Amazon", "Quora", "Meetup"];
+			const index = searchTypes.indexOf($(".js-swapper").html());
+			$(".js-swapper").html(searchTypes[(index+1)%searchTypes.length]);
+		}, 3000)
 	</script>
 </body>
 
