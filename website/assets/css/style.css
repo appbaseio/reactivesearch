@@ -393,15 +393,13 @@ ul > li {
   font-weight: bold;
   font-family: source sans pro, sans-serif;
   color: #665600;
-  padding: 20px 40px;
+  padding: 10px 20px;
   cursor: pointer;
   transition: all 400ms ease;
   border-radius: 5px; }
   .github-button:hover {
-    transform: scale(1.05) rotate(1deg);
     text-decoration: none;
-    background: #ffda1a;
-    color: #665600; }
+    background: #f0c900; }
 
 #home .navbar {
   position: absolute;

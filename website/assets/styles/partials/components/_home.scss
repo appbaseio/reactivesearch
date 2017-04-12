@@ -397,15 +397,13 @@ ul > li {
 	font-weight: bold;
 	font-family: source sans pro, sans-serif;
 	color: darken(#FFD600, 30%);
-	padding: 20px 40px;
+	padding: 10px 20px;
 	cursor: pointer;
 	transition: all 400ms ease;
 	border-radius: 5px;
 
 	&:hover {
-		transform: scale(1.05) rotate(1deg);
 		text-decoration: none;
-		background: lighten(#FFD600, 5%);
-		color: darken(#FFD600, 30%);
+		background: darken(#FFD600, 3%);
 	}
 }
