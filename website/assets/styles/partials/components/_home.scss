@@ -119,6 +119,7 @@ section {
 #ui-components {
 	background: $ternary-color;
 	color: $font-color;
+	padding-bottom: 40px;
 
 	.container {
 		width: 95%;
@@ -129,28 +130,21 @@ section {
 		color: $font-color;
 	}
 
-	img {
-		width: 92%;
-		margin-bottom: 30px;
-	}
+	.js-packery {
+		> * {
+			margin-bottom: 30px;
 
-	.small {
-		margin-bottom: 20px;
-		img {
-			width: calc(33.33% - 28px);
-			&:nth-child(2) {
-				margin: 0 15px 30px;
+			@media (min-width: 768px) {
+				margin-bottom: 60px;
 			}
 		}
 	}
 
-	.medium {
-		margin-bottom: 20px;
-		img {
-			width: calc(50% - 28px);
-			&:nth-child(2) {
-				margin: 0 15px 30px;
-			}
+	img {
+		max-width: calc(100% - 15px);
+
+		@media (min-width: 768px) {
+			max-width: calc(100% - 30px);
 		}
 	}
 }
