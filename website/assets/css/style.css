@@ -115,6 +115,9 @@ section {
   #top .last-section {
     padding-top: 0;
     padding-bottom: 0; }
+  #top .star-frame {
+    margin-left: 20px;
+    padding-top: 5px; }
   #top .website-title {
     font-size: 3.2rem;
     line-height: 100%;
@@ -391,11 +394,17 @@ ul > li {
   align-items: center;
   justify-content: center; }
 
+@media screen and (max-width: 768px) {
+  .align-center--small {
+    flex-direction: column; }
+  .star-frame {
+    margin-top: 20px; } }
+
 .github-button {
   background: #FFD600;
   font-weight: bold;
   font-family: source sans pro, sans-serif;
-  color: #665600;
+  color: #4d4000;
   padding: 10px 20px;
   cursor: pointer;
   transition: all 400ms ease;
