@@ -1,3 +1,5 @@
+## Reactive Search
+
 [![Join the chat at https://gitter.im/appbaseio/reactivesearch](https://badges.gitter.im/appbaseio/reactivesearch.svg)](https://gitter.im/appbaseio/reactivesearch?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) ![Build Status Image](https://img.shields.io/badge/build-passing-brightgreen.svg) [![Code Climate](https://codeclimate.com/github/appbaseio/reactivesearch/badges/gpa.svg)](https://codeclimate.com/github/appbaseio/reactivesearch)
 
 A React components library for building great search experiences.
@@ -57,6 +59,7 @@ Besides these, the library also provides low level actuators (ReactiveElement, R
 * Works out of the box with Materialize CSS and comes with a polyfill CSS for Bootstrap. Compatibility for other frameworks can be added too,
 * **TODO** See the [reactivesearch starter app](https://github.com/appbaseio-apps/reactivesearch-starter-app).
 
+[⬆ Back to Top](#reactive-search)
 
 ## 3. Component Playground
 
@@ -77,6 +80,8 @@ A set of examples built with ReactiveSearch and inspired by real world apps.
 
 You can check all of them on the [examples page](https://opensource.appbase.io/reactivesearch/examples/).
 
+[⬆ Back to Top](#reactive-search)
+
 ## 5. Installation
 
 Follow the installation guide from the official docs [here](https://opensource.appbase.io/reactivesearch/manual/v1.0.0/getting-started/Installation.html).
@@ -86,7 +91,6 @@ You can try out the library live without any installation via the [interactive t
 ## 6. Getting Started
 
 Follow the getting started guide to build a Hello Maps! app from the official docs [here](https://opensource.appbase.io/reactivesearch/manual/v1.0.0/getting-started/Start.html).
-
 
 ## 7. Docs Manual
 
@@ -98,6 +102,7 @@ The components are divided into two sections:
 * Each component's styles API is mentioned in a separate **CSS Styles API** section. See here for [SingleList](https://opensource.appbase.io/reactivesearch/manual/v1.0.0/components/SingleList.html#-singlelist-css-styles-api).
 * You can read more about the Styles API here - https://opensource.appbase.io/reactivesearch/manual/v1.0.0/getting-started/StyleGuide.html.
 
+[⬆ Back to Top](#reactive-search)
 
 ## 8. Developing Locally
 
@@ -135,3 +140,5 @@ The docs manual can be accessed at [http://localhost:8000/manual](http://localho
 - [**dejavu**](https://github.com/appbaseio/dejavu) allows viewing raw data within an appbase.io (or Elasticsearch) app. **Soon to be released feature:** An ability to import custom data from CSV and JSON files, along with a guided walkthrough on applying data mappings.
 
 - [**mirage**](https://github.com/appbaseio/mirage) ReactiveSearch components can be extended using custom Elasticsearch queries. For those new to Elasticsearch, Mirage provides an intuitive GUI for composing queries.
+
+[⬆ Back to Top](#reactive-search)
