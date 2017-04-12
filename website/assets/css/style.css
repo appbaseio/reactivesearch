@@ -326,6 +326,27 @@ footer {
     .flex-box {
       display: block; } }
 
+.mini-btn {
+  background-color: #2251D1;
+  display: block;
+  width: 160px;
+  text-align: center;
+  margin: 20px 0;
+  font-weight: bold;
+  font-size: 15px;
+  text-transform: uppercase;
+  word-spacing: 0.08em;
+  letter-spacing: 0.04em;
+  padding: 12px;
+  color: #fff; }
+  .mini-btn:hover, .mini-btn:focus {
+    color: #fff;
+    text-decoration: none; }
+
+.row.demo-container-block .fa-external-link {
+  font-size: 14px;
+  margin-right: 4px; }
+
 #home .navbar {
   position: absolute;
   top: 0;

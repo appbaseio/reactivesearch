@@ -320,3 +320,28 @@ footer {
 		display: block;
 	}
 }
+
+.mini-btn {
+	background-color: $primary-color;
+	display: block;
+	width: 160px;
+	text-align: center;
+	margin: 20px 0;
+	font-weight: bold;
+	font-size: 15px;
+	text-transform: uppercase;
+	word-spacing: 0.08em;
+	letter-spacing: 0.04em;
+	padding: 12px;
+	color: #fff;
+
+	&:hover, &:focus {
+		color: #fff;
+		text-decoration: none;
+	}
+}
+
+.row.demo-container-block .fa-external-link {
+	font-size: 14px;
+	margin-right: 4px;
+}
