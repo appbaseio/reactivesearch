@@ -84,7 +84,20 @@ You can check all of them on the [examples page](https://opensource.appbase.io/r
 
 ## 5. Installation
 
-Follow the installation guide from the official docs [here](https://opensource.appbase.io/reactive-manual/v1.0.0/getting-started/RSInstallation.html).
+Installing ReactiveSearch is just one command.
+
+```javascript
+npm i @appbaseio/reactivesearch
+```
+
+and another to add the stylessheet in the html.
+
+```html
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/appbaseio/reactivesearch/master/dist/css/style.min.css">
+```
+
+You can also read about it [here](https://opensource.appbase.io/reactive-manual/v1.0.0/getting-started/RSInstallation.html).
 
 (In the works) You can try out the library live without any installation via the [interactive tutorial](https://opensource.appbase.io/reactivesearch/dashboard/tutorial/).
 
