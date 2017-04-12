@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/appbaseio/reactivesearch](https://badges.gitter.im/appbaseio/reactivesearch.svg)](https://gitter.im/appbaseio/reactivesearch?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) ![Build Status Image](https://img.shields.io/badge/build-passing-brightgreen.svg) [![Code Climate](https://codeclimate.com/github/appbaseio/reactivesearch/badges/gpa.svg)](https://codeclimate.com/github/appbaseio/reactivesearch)
 
-A React components library for building great search experiences.
+A React components library for building Airbnb / Yelp like search experiences.
 
 ![](https://i.imgur.com/u5AUqCA.png)
 
@@ -54,10 +54,10 @@ Besides these, the library also provides low level actuators (ReactiveElement, R
 
 ### Ease of Use
 
-* One step installation with [npm install @appbaseio/reactivesearch](https://opensource.appbase.io/reactivesearch/manual/v1.0.0/getting-started/Installation.html),
-* **TODO** A UMD build that works directly in the browser. See a demo [here](https://github.com/appbaseio-apps/reactivesearch-starter-app#try-in-browser-without-npm),
+* One step installation with [npm install @appbaseio/reactivesearch](https://opensource.appbase.io/reactive-manual/v1.0.0/getting-started/RSInstallation.html),
+* A UMD build that works directly in the browser. See a demo [here](https://github.com/appbaseio-apps/reactivesearch-starter-app#try-in-browser-without-npm),
 * Works out of the box with Materialize CSS and comes with a polyfill CSS for Bootstrap. Compatibility for other frameworks can be added too,
-* **TODO** See the [reactivesearch starter app](https://github.com/appbaseio-apps/reactivesearch-starter-app).
+* See the [reactivesearch starter app](https://github.com/appbaseio-apps/reactivesearch-starter-app).
 
 [⬆ Back to Top](#reactive-search)
 
@@ -84,23 +84,36 @@ You can check all of them on the [examples page](https://opensource.appbase.io/r
 
 ## 5. Installation
 
-Follow the installation guide from the official docs [here](https://opensource.appbase.io/reactivesearch/manual/v1.0.0/getting-started/Installation.html).
+Installing ReactiveSearch is just one command.
 
-You can try out the library live without any installation via the [interactive tutorial](https://opensource.appbase.io/reactivesearch/onboarding/).
+```javascript
+npm i @appbaseio/reactivesearch
+```
+
+and another to add the stylesheets in the html.
+
+```html
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/appbaseio/reactivesearch/master/dist/css/style.min.css">
+```
+
+You can also read about it [here](https://opensource.appbase.io/reactive-manual/v1.0.0/getting-started/RSInstallation.html).
+
+(In the works) You can try out the library live without any installation via the [interactive tutorial](https://opensource.appbase.io/reactivesearch/dashboard/tutorial/).
 
 ## 6. Getting Started
 
-Follow the getting started guide to build a Hello Maps! app from the official docs [here](https://opensource.appbase.io/reactivesearch/manual/v1.0.0/getting-started/Start.html).
+Follow the getting started guide to build a Hello Maps! app from the official docs [here](https://opensource.appbase.io/reactive-manual/v1.0.0/getting-started/RSStart.html).
 
 ## 7. Docs Manual
 
-The official docs for the library are at [https://opensource.appbase.io/reactivesearch/manual](https://opensource.appbase.io/reactivesearch/manual).
+The official docs for the library are at [https://opensource.appbase.io/reactive-manual](https://opensource.appbase.io/reactive-manual).
 
 The components are divided into two sections:
-* Generic UI components are at [https://opensource.appbase.io/reactivesearch/manual/v1.0.0/components](https://opensource.appbase.io/reactivesearch/manual/v1.0.0/components/).
-* Map based UI components are at [https://opensource.appbase.io/reactivesearch/manual/v1.0.0/map-components](https://opensource.appbase.io/reactivesearch/manual/v1.0.0/map-components/).
-* Each component's styles API is mentioned in a separate **CSS Styles API** section. See here for [SingleList](https://opensource.appbase.io/reactivesearch/manual/v1.0.0/components/SingleList.html#-singlelist-css-styles-api).
-* You can read more about the Styles API here - https://opensource.appbase.io/reactivesearch/manual/v1.0.0/getting-started/StyleGuide.html.
+* Generic UI components are at [https://opensource.appbase.io/reactive-manual/v1.0.0/components](https://opensource.appbase.io/reactive-manual/v1.0.0/components/).
+* Map based UI components are at [https://opensource.appbase.io/reactive-manual/v1.0.0/map-components](https://opensource.appbase.io/reactive-manual/v1.0.0/map-components/).
+* Each component's styles API is mentioned in a separate **CSS Styles API** section. See here for [SingleList](https://opensource.appbase.io/reactive-manual/v1.0.0/components/SingleList.html#-singlelist-css-styles-api).
+* You can read more about the Styles API here - https://opensource.appbase.io/reactive-manual/v1.0.0/advanced/StyleGuide.html.
 
 [⬆ Back to Top](#reactive-search)
 
@@ -118,17 +131,6 @@ npm start (or yarn start)
 ```
 
 Examples can be accessed at [https://localhost:8000/examples](https://localhost:8000/examples).  
-
-Using the `manual` submodule, you can access the docs locally.
-
-```
-git submodule init
-cd manual && git submodule update
-```
-
-`Note:` The submodule init command will also add the `onboarding` module, it's the interactive tutorial and works locally too.
-
-The docs manual can be accessed at [http://localhost:8000/manual](http://localhost:8000/manual).
 
 ## 9. Other Projects You Might Like
 
