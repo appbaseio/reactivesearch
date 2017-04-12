@@ -230,12 +230,16 @@ footer {
 	}
 }
 
+.fixed-width {
+	display: inline-block;
+	min-width: 118px;
+}
 .js-swapper {
 	display: inline-block;
 	margin: 0 3px;
-	width: 110px;
-	padding-top: 2px;
-	padding-bottom: 2px;
+	padding: 2px 8px;
+	min-width: 60px;
+	font-family: $font-semi-bold;
 	background-color: #143394;
 	font-size: 1.4rem;
 	-webkit-transition: all .3s ease;
