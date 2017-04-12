@@ -2,7 +2,7 @@
 
 A React components library for building great search experiences.
 
-![](https://i.imgur.com/mAN0Y2C.png)
+![](https://i.imgur.com/u5AUqCA.png)
 
 ## TOC
 
