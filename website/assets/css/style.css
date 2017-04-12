@@ -247,12 +247,16 @@ footer {
     footer .footer-link:hover, footer .navbar-nav > li > a:hover {
       background-color: transparent; }
 
+.fixed-width {
+  display: inline-block;
+  min-width: 118px; }
+
 .js-swapper {
   display: inline-block;
   margin: 0 3px;
-  width: 110px;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  padding: 2px 8px;
+  min-width: 60px;
+  font-family: "Source Sans Pro Semi Bold";
   background-color: #143394;
   font-size: 1.4rem;
   -webkit-transition: all .3s ease;
