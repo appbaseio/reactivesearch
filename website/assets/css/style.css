@@ -249,6 +249,9 @@ footer {
     footer .footer-link:hover, footer .navbar-nav > li > a:hover {
       background-color: transparent; }
 
+.semi-bold {
+  font-family: "Source Sans Pro Semi Bold"; }
+
 .fixed-width {
   display: inline-block;
   min-width: 118px; }
