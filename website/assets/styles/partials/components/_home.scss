@@ -43,6 +43,11 @@ section {
 		padding-bottom: 0;
 	}
 
+	.star-frame {
+		margin-left: 20px;
+		padding-top: 5px;
+	}
+
 	.website-title {
 		font-size: 3.2rem;
 		line-height: 100%;
@@ -395,11 +400,19 @@ ul > li {
 	justify-content: center;
 }
 
+@media screen and (max-width: 768px) {
+	.align-center--small {
+		flex-direction: column;
+	}
+	.star-frame {
+		margin-top: 20px;
+	}
+}
 .github-button {
 	background: #FFD600;
 	font-weight: bold;
 	font-family: source sans pro, sans-serif;
-	color: darken(#FFD600, 30%);
+	color: darken(#FFD600, 35%);
 	padding: 10px 20px;
 	cursor: pointer;
 	transition: all 400ms ease;
