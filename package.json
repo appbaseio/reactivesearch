@@ -1,6 +1,6 @@
 {
   "name": "@appbaseio/reactivesearch",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A React UI components library for building search experiences",
   "main": "lib/app.js",
   "scripts": {
@@ -14,7 +14,8 @@
     "build:umd": "cross-env NODE_ENV=production webpack --config webpack.config.umd.js app/app.js umd/ReactiveSearch.js",
     "build-bro": "browserify -t [ babelify --presets [ es2015 stage-0 react ] ] main.js -o dist/main.bundle.js",
     "storybook": "start-storybook -p 9009",
-    "build-storybook": "build-storybook -o playground"
+    "build-storybook": "build-storybook -o playground",
+    "build:all": "npm run build && npm run build:lib && npm run build:umd && npm run build-storybook"
   },
   "files": [
     "lib/",
