@@ -39,6 +39,7 @@ section {
 	}
 
 	.last-section {
+		padding-top: 0;
 		padding-bottom: 0;
 	}
 
@@ -61,13 +62,6 @@ section {
 	p {
 		font-size: 1.5rem;
 		font-family: $font-light;
-	}
-
-	.star-frame {
-		padding-left: 30px;
-		.github-btn-large .gh-btn, .github-btn-large .gh-count {
-			font-size: 2rem;
-		}
 	}
 
 	@media screen and (max-width: 768px) {
@@ -119,6 +113,7 @@ section {
 #ui-components {
 	background: $ternary-color;
 	color: $font-color;
+	padding-bottom: 40px;
 
 	.container {
 		width: 95%;
@@ -129,28 +124,21 @@ section {
 		color: $font-color;
 	}
 
-	img {
-		width: 92%;
-		margin-bottom: 30px;
-	}
+	.js-packery {
+		> * {
+			margin-bottom: 30px;
 
-	.small {
-		margin-bottom: 20px;
-		img {
-			width: calc(33.33% - 28px);
-			&:nth-child(2) {
-				margin: 0 15px 30px;
+			@media (min-width: 768px) {
+				margin-bottom: 60px;
 			}
 		}
 	}
 
-	.medium {
-		margin-bottom: 20px;
-		img {
-			width: calc(50% - 28px);
-			&:nth-child(2) {
-				margin: 0 15px 30px;
-			}
+	img {
+		max-width: calc(100% - 15px);
+
+		@media (min-width: 768px) {
+			max-width: calc(100% - 30px);
 		}
 	}
 }
@@ -396,4 +384,28 @@ ul > li {
 	margin: 12px 0;
 	letter-spacing: 0.05em;
 	text-align: center;
+}
+
+.align-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.github-button {
+	background: #FFD600;
+	font-weight: bold;
+	font-family: source sans pro, sans-serif;
+	color: darken(#FFD600, 30%);
+	padding: 20px 40px;
+	cursor: pointer;
+	transition: all 400ms ease;
+	border-radius: 5px;
+
+	&:hover {
+		transform: scale(1.05) rotate(1deg);
+		text-decoration: none;
+		background: lighten(#FFD600, 5%);
+		color: darken(#FFD600, 30%);
+	}
 }
