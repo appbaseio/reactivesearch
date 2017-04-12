@@ -214,6 +214,9 @@ section {
 			}
 		}
 	}
+	.last-actioncall {
+		margin-top: 50px;
+	}
 }
 #footer, footer {
 	background: $primary-color;
@@ -328,6 +331,7 @@ footer {
 	display: flex;
 	.flex-center {
 		margin: auto;
+		text-align: center;
 	}
 	@media screen and (max-width: 768px) {
 		display: block;

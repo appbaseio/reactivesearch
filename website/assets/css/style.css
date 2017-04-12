@@ -234,6 +234,8 @@ section {
           #use-cases .tab-container .nav-tabs li.active a:hover, #use-cases .tab-container .nav-tabs li:hover a:hover {
             border: 0;
             background: transparent; }
+  #use-cases .last-actioncall {
+    margin-top: 50px; }
 
 #footer, footer {
   background: #2251D1;
@@ -332,7 +334,8 @@ footer {
 .flex-box {
   display: flex; }
   .flex-box .flex-center {
-    margin: auto; }
+    margin: auto;
+    text-align: center; }
   @media screen and (max-width: 768px) {
     .flex-box {
       display: block; } }
