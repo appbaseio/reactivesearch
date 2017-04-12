@@ -36,14 +36,14 @@
 }
 
 .card {
-  width: 12.9em;
-  height: 8.8em;
-  margin: 1em auto;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.21), 0 16px 28px rgba(0, 0, 0, 0.22);
-  border: 1px solid #eee;
+	width: 12.9em;
+	height: 8.8em;
+	margin: 1em auto;
+	background: white;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 25px 55px rgba(0, 0, 0, 0.21), 0 16px 28px rgba(0, 0, 0, 0.22);
+	border: 1px solid #eee;
 }
 
 .card .image {
