@@ -47,6 +47,15 @@ section {
 		line-height: 100%;
 		margin: 0 0 24px;
 		font-family: $font-black;
+		position: relative;
+		display: inline-block;
+
+		img {
+		  position: absolute;
+		  top: -20px;
+		  right: -30px;
+		  width: 30px;
+		}
 	}
 
 	p {
