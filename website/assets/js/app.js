@@ -1,8 +1,10 @@
 $(document).ready(function() {
 	// Masonry effect
 	// http://packery.metafizzy.co/
-	$('.js-packery').packery();
-
+	setInterval(function() {
+		$('.js-packery').packery();
+	}, 3000);
+  
 	// Offer backlink to ProductHunt users
 	if (location.href.match(/\?ref=producthunt/)) {
 		setTimeout(function() {
