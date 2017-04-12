@@ -21,7 +21,7 @@ npm start (or yarn start)
 In the website/ directory:
 
 ```
-gulp watch 
+gulp watch
 ```
 
 will run the website in live mode.
@@ -38,3 +38,6 @@ All SCSS files are under assets/styles.
 gulp
 ```
 
+### Misc Tasks
+
+- `yarn run imagemin` minifies all images from `assets/images` to `dist/images`. Add raw images to `assets/images` and run this command.

@@ -118,7 +118,14 @@ section {
     font-size: 3.2rem;
     line-height: 100%;
     margin: 0 0 24px;
-    font-family: "Source Sans Pro Black"; }
+    font-family: "Source Sans Pro Black";
+    position: relative;
+    display: inline-block; }
+    #top .website-title img {
+      position: absolute;
+      top: -20px;
+      right: -30px;
+      width: 30px; }
   #top p {
     font-size: 1.5rem;
     font-family: "Source Sans Pro Light"; }
