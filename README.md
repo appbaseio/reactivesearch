@@ -6,14 +6,15 @@ A React components library for building great search experiences.
 
 ## TOC
 
-1. **[Reactive Search: Intro](#1-reactive-search-intro)**   
-2. **[Features](#2-features)**  
+1. **[Reactive Search: Intro](#1-reactive-search-intro)**
+2. **[Features](#2-features)**
 3. **[Component Playground](#3-component-playground)**
-4. **[Live Examples](#4-live-examples)**  
+4. **[Live Examples](#4-live-examples)**
 5. **[Installation](#5-installation)**
-6. **[Getting Started](#6-getting-started)**  
+6. **[Getting Started](#6-getting-started)**
 7. **[Docs Manual](#7-docs-manual)**
-8. **[Developing Locally](#8-developing-locally)**  
+8. **[Developing Locally](#8-developing-locally)**
+9. **[Other Projects You Might Like](#9-other-projects-you-might-like)**
 
 <br>
 
@@ -102,28 +103,35 @@ The components are divided into two sections:
 
 ```
 git clone https://github.com/appbasieo/reactivesearch
-npm install
+npm install (or yarn)
 ```
 
-Start the development server on port `8012`.
+Start the development server on port `8000`.
 
 ```
-npm start
+npm start (or yarn start)
 ```
 
-Examples can be accessed at [https://localhost:8012/examples](https://localhost:8012/examples).  
+Examples can be accessed at [https://localhost:8000/examples](https://localhost:8000/examples).  
 
-You can also start the component playground on port `9009` with
-
-```
-npm run storybook
-```
-
-By adding the `manual` submodule, you can access the docs locally.
+Using the `manual` submodule, you can access the docs locally.
 
 ```
 git submodule init
 cd manual && git submodule update
 ```
 
-Once added, the docs manual can be accessed at [http://localhost:8012/manual](http://localhost:8012/manual).
+`Note:` The submodule init command will also add the `onboarding` module, it's the interactive tutorial and works locally too.
+
+The docs manual can be accessed at [http://localhost:8000/manual](http://localhost:8000/manual).
+
+## 9. Other Projects You Might Like
+
+- [**ReactiveSearch Dashboard**](https://dashboard.appbase.io/reactivesearch/) All your Reactive Search related apps (created via interactive tutorial, shared by others, etc.) can be accessed from here.
+- [**ReactiveMaps**](https://github.com/appbaseio/reactivemaps) is a similar project to Reactive Search that allows building realtime maps easily.
+
+- [**appbase-js**](https://github.com/appbaseio/appbase-js) While building search UIs is dandy with Reactive Search, you might also need to add some input forms. **appbase-js** comes in handy there.
+
+- [**dejavu**](https://github.com/appbaseio/dejavu) allows viewing raw data within an appbase.io (or Elasticsearch) app. **Soon to be released feature:** An ability to import custom data from CSV and JSON files, along with a guided walkthrough on applying data mappings.
+
+- [**mirage**](https://github.com/appbaseio/mirage) ReactiveSearch components can be extended using custom Elasticsearch queries. For those new to Elasticsearch, Mirage provides an intuitive GUI for composing queries.
