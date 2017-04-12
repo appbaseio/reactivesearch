@@ -90,7 +90,7 @@ Installing ReactiveSearch is just one command.
 npm i @appbaseio/reactivesearch
 ```
 
-and another to add the stylessheet in the html.
+and another to add the stylesheets in the html.
 
 ```html
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
