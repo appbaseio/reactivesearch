@@ -407,3 +407,29 @@ ul > li {
 		background: darken(#FFD600, 3%);
 	}
 }
+
+.producthunt-backlink {
+	display: none;
+	position: relative;
+	top: -25px;
+	left: 50px;
+	background: #da552f;
+	color: white;
+	text-decoration: none;
+	border-radius: 2px;
+	text-align: center;
+	padding: 5px 7px;
+	font-size: 12px;
+	font-weight: bold;
+	transition: background 400ms ease;
+	font-weight: bold;
+	font-family: source sans pro, sans-serif;
+
+	&:hover,
+	&:active,
+	&:focus {
+		background: lighten(#da552f, 5%);
+		color: white;
+		text-decoration: none;
+	}
+}
