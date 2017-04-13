@@ -515,6 +515,30 @@ ul > li {
     border-left-color: transparent;
     border-top-color: transparent; }
 
+#home .navbar .navbar-brand img {
+  position: relative;
+  top: -5px;
+  left: -5px; }
+
+@media (max-width: 768px) {
+  .navbar-default .navbar-toggle {
+    border-color: white; }
+  .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+    background: #143394; }
+  .navbar .navbar-nav li {
+    background: none !important;
+    padding: 15px !important;
+    border-bottom: 1px solid #1a42c1; }
+  .navbar-nav {
+    margin: 0 !important; }
+  .navbar-collapse {
+    padding: 0; }
+  .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border-color: white;
+    background: #143394;
+    position: relative;
+    z-index: 9999; } }
+
 #home .navbar {
   position: absolute;
   top: 0;
