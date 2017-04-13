@@ -112,6 +112,11 @@ class Main extends Component {
 					type="listing"
 					theme="rbc-red"
 				>
+					<div className="mobile-banner">
+						<p>Sorry, this app isn't compatible with this resolution.</p>
+						<p>Please view it on desktop.</p>
+						<p><a href="https://opensource.appbase.io/reactivesearch">Click here to go back</a></p>
+					</div>
 					<nav>
 						<div className="col s3">
 							<a href="/examples/airbeds" className="brand">Airbeds</a>
