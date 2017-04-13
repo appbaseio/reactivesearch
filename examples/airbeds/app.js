@@ -132,6 +132,7 @@ class Main extends Component {
 										componentId="DateRangeSensor"
 										appbaseField="date_from"
 										title="When"
+										numberOfMonths={1}
 										customQuery={this.dateQuery}
 									/>
 								</div>

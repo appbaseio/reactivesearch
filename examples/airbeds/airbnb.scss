@@ -234,12 +234,16 @@ nav {
 }
 
 @media all and (max-width: 768px) {
-	.left, .right {
-		float: none;
+	.rbc-base > .row {
+		overflow: hidden;
+	}
+
+	.left {
+		float: none !important;
 		width: 100%;
 	}
 
-	.rbc-reactivemap {
+	.right, .rbc-reactivemap {
 		display: none;
 	}
 
