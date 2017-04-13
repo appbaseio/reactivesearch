@@ -412,7 +412,7 @@ ul > li {
   color: #4d4000;
   padding: 10px 20px;
   cursor: pointer;
-  border-radius: 5px; }
+  border-radius: 3px; }
   .cta-button:hover, .cta-button:active, .cta-button:focus {
     text-decoration: none;
     color: #4d4000;
