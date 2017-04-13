@@ -602,3 +602,53 @@ ul > li {
 		z-index: 9999;
 	}
 }
+
+@keyframes slideLeft {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
+
+.medium-post-link {
+	position: fixed;
+	bottom: 15px;
+	left: 0;
+	padding-left: 15px;
+	background: lighten(#143394, 5%);
+	font-family: source sans pro, sans-serif;
+	font-weight: bold;
+	font-size: 13px;
+	padding: 15px 30px;
+	border-radius: 0 5px 5px 0;
+	color: white;
+	z-index: 99999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all .4s cubic-bezier(1, 0.48, 0.89, 1.33);
+	transform: translateX(-100%);
+	animation: 800ms slideRight forwards;
+
+	&:not(.js-active) {
+		animation-delay: 1200ms;
+	}
+
+	&.js-active {
+		animation: 800ms slideLeft forwards;
+	}
+
+	span {
+		margin-left: 10px;
+	}
+
+	&:hover,
+	&:active,
+	&:focus {
+		color: white;
+		background: lighten(#143394, 10%);
+		text-decoration: none;
+	}
+}

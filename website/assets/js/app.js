@@ -22,4 +22,23 @@ $(document).ready(function() {
 			$('.js-stars').hide();
 		}
 	})
+
+	// Slide Out Blog post tab after some scrolling
+	// with throttle
+	var didScroll = false;
+	$(window).scroll(function() {
+		didScroll = true;
+	});
+	setInterval(function() {
+		if (didScroll) {
+			// If they scrolled 100vh
+			if ($('html').scrollTop() > $(window).height()) {
+				$('.medium-post-link').addClass('js-active');
+			} else {
+				$('.medium-post-link').removeClass('js-active');
+			}
+
+			didScroll = false;
+		}
+	}, 250);
 });
