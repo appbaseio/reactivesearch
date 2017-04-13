@@ -547,6 +547,42 @@ ul > li {
     position: relative;
     z-index: 9999; } }
 
+@keyframes slideLeft {
+  0% {
+    transform: translateX(0); }
+  100% {
+    transform: translateX(-100%); } }
+
+.medium-post-link {
+  position: fixed;
+  bottom: 15px;
+  left: 0;
+  padding-left: 15px;
+  background: #173baa;
+  font-family: source sans pro, sans-serif;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 15px 30px;
+  border-radius: 0 5px 5px 0;
+  color: white;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(1, 0.48, 0.89, 1.33);
+  transform: translateX(-100%);
+  animation: 800ms slideRight forwards; }
+  .medium-post-link:not(.js-active) {
+    animation-delay: 1200ms; }
+  .medium-post-link.js-active {
+    animation: 800ms slideLeft forwards; }
+  .medium-post-link span {
+    margin-left: 10px; }
+  .medium-post-link:hover, .medium-post-link:active, .medium-post-link:focus {
+    color: white;
+    background: #1a42c1;
+    text-decoration: none; }
+
 #home .navbar {
   position: absolute;
   top: 0;
