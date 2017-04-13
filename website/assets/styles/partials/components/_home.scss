@@ -408,19 +408,30 @@ ul > li {
 		margin-top: 20px;
 	}
 }
-.github-button {
+
+.cta-buttons {
+	margin-bottom: -5px;
+
+	> * {
+		margin: 0 5px 5px;
+	}
+}
+
+.cta-button {
 	background: #FFD600;
 	font-weight: bold;
 	font-family: source sans pro, sans-serif;
 	color: darken(#FFD600, 35%);
 	padding: 10px 20px;
 	cursor: pointer;
-	transition: all 400ms ease;
 	border-radius: 5px;
 
-	&:hover {
+	&:hover,
+	&:active,
+	&:focus {
 		text-decoration: none;
-		background: darken(#FFD600, 3%);
+		color: darken(#FFD600, 35%);
+		background: darken(#FFD600, 2%);
 	}
 }
 
@@ -447,5 +458,99 @@ ul > li {
 		background: lighten(#da552f, 5%);
 		color: white;
 		text-decoration: none;
+	}
+}
+
+.github-button {
+	font-family: source sans pro, sans-serif;
+	padding: 0 20px;
+	height: 45px;
+	line-height: 45px;
+	font-weight: bold;
+	background-color: #eee;
+	background-image: linear-gradient(to bottom,#fcfcfc,#eee);
+	display: inline-block;
+	color: #333;
+	vertical-align: middle;
+	cursor: pointer;
+	border-radius: 3px;
+	text-decoration: none;
+	outline: 0;
+	white-space: nowrap;
+	user-select: none;
+	position: relative;
+	z-index: 1;
+
+	img {
+		height: 26px;
+		display: inline-block;
+		position: relative;
+		top: -2px;
+		margin-right: 5px;
+	}
+
+	&:hover,
+	&:active,
+	&:focus {
+		text-decoration: none;
+		background-color: #ddd;
+		background-image: linear-gradient(to bottom,#eee,#ddd);
+		border-color: #ccc;
+		color: #333;
+	}
+}
+
+@keyframes slideRight {
+	100% {
+		transform: translateX(0);
+	}
+}
+
+.js-stars {
+	display: none;
+	transition: all .4s cubic-bezier(1, 0.48, 0.89, 1.33);
+	transform: translateX(-100px);
+	animation: 800ms slideRight forwards;
+	animation-delay: 200ms;
+	padding: 0 10px;
+	height: 35px;
+	line-height: 32px;
+	border: 2px solid #597CDC;
+	font-family: source sans pro, sans-serif;
+	font-weight: bold;
+	color: white;
+	border-radius: 3px;
+	font-size: 15px;
+	position: relative;
+	margin-left: 7px;
+
+	@media (min-width: 768px) {
+		display: block;
+	}
+
+	&::before,
+	&::after {
+		position: absolute;
+		content: '';
+		width: 0;
+		height: 0;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
+	&::before {
+		left: -16px;
+		border: 7px solid #597CDC;
+		border-bottom-color: transparent;
+		border-left-color: transparent;
+		border-top-color: transparent;
+	}
+
+	&::after {
+		left: -13px;
+		border: 7px solid #2251D1;
+		border-bottom-color: transparent;
+		border-left-color: transparent;
+		border-top-color: transparent;
 	}
 }
