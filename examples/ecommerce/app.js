@@ -58,6 +58,11 @@ class Main extends Component {
 				credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
 				type="cars"
 			>
+				<div className="mobile-banner">
+					<p>Sorry, this app isn't compatible with this resolution.</p>
+					<p>Please view it on desktop.</p>
+					<p><a href="https://opensource.appbase.io/reactivesearch">Click here to go back</a></p>
+				</div>
 				<nav className="row">
 					<div className="col s3">
 						<a href="/examples/ecommerce" className="brand">Car Store</a>

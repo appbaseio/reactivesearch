@@ -42,6 +42,12 @@ nav {
     .col.s12 { padding: 0; }
 }
 
+@media all and (max-width: 768px) {
+	.wrapper {
+		width: 100%;
+	}
+}
+
 .filters {
 	padding: 4px 0;
 	height: 56px;

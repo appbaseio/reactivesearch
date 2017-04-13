@@ -55,6 +55,11 @@ class Main extends Component {
 				type="place"
 				theme="rbc-red"
 			>
+				<div className="mobile-banner">
+					<p>Sorry, this app isn't compatible with this resolution.</p>
+					<p>Please view it on desktop.</p>
+					<p><a href="https://opensource.appbase.io/reactivesearch">Click here to go back</a></p>
+				</div>
 				<header>
 					<nav>
 						<a href="/examples/yelpsearch" className="brand">Yelp Search</a>

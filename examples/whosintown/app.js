@@ -43,6 +43,11 @@ class Main extends Component {
 				credentials="y4pVxY2Ok:c92481e2-c07f-4473-8326-082919282c18"
 				type="meetupdata1"
 			>
+				<div className="mobile-banner">
+					<p>Sorry, this app isn't compatible with this resolution.</p>
+					<p>Please view it on desktop.</p>
+					<p><a href="https://opensource.appbase.io/reactivesearch">Click here to go back</a></p>
+				</div>
 				<header>
 					<h2>Who's in town</h2>
 					<div className="filter-container row">
