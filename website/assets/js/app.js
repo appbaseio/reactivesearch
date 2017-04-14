@@ -17,7 +17,6 @@ $(document).ready(function() {
 		$.ajax({
 			url: 'https://api.github.com/repos/appbaseio/reactivesearch',
 		}).done(function(data) {
-			console.log(data)
 			if (data.stargazers_count > 1 && data.forks > 6) {
 				$('.js-stars').text(data.stargazers_count);
 			} else {
