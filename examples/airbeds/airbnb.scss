@@ -6,14 +6,6 @@
 	}
 }
 
-/// Block Modifier
-/// @param {String} $modifier - Modifier's name
-@mixin modifier($modifier) {
-	&--#{$modifier} {
-		@content;
-	}
-}
-
 .row {
 	margin-bottom: 0;
 }
