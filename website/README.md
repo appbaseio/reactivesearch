@@ -41,3 +41,4 @@ gulp
 ### Misc Tasks
 
 - `yarn run imagemin` minifies all images from `assets/images` to `dist/images`. Add raw images to `assets/images` and run this command.
+- `yarn run migrate-vendor-js` copies JS from `assets/js/vendor` to `dist/js/vendor`. Use this anytime you add a third party script to `assets/js/vendor`. Setting it up like this opens it up for other operations (e.g. minification, concat, browserify, etc.).

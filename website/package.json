@@ -1,8 +1,10 @@
 {
   "scripts": {
-    "imagemin": "imagemin-dir assets/images dist/images"
+    "imagemin": "imagemin-dir assets/images dist/images",
+    "migrate-vendor-js": "cpx assets/js/vendor/**/*.js dist/js/vendor --verbose"
   },
   "devDependencies": {
+    "cpx": "^1.5.0",
     "imagemin": "^5.2.2",
     "imagemin-cli": "^3.0.0",
     "imagemin-cli-preserve-dir-structure": "^0.0.2"
