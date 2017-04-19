@@ -74,7 +74,7 @@ class Main extends Component {
 
 						<RangeSlider
 							componentId="PriceSensor"
-							appbaseField={this.props.mapping.price}
+							appbaseField="price"
 							title="Price Range"
 							defaultSelected={{
 								start: 10,
@@ -111,7 +111,7 @@ class Main extends Component {
 							<div className="row">
 								<ResultCard
 									componentId="SearchResult"
-									appbaseField={this.props.mapping.name}
+									appbaseField="name"
 									from={0}
 									size={12}
 									onData={this.onData}
@@ -128,14 +128,5 @@ class Main extends Component {
 		);
 	}
 }
-
-Main.defaultProps = {
-	mapStyle: "Blue Water",
-	mapping: {
-		name: "name",
-		location: "location",
-		price: "price"
-	}
-};
 
 ReactDOM.render(<Main />, document.getElementById("app"));
