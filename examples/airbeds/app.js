@@ -15,14 +15,6 @@ import {
 require("./airbnb.scss");
 
 class Main extends Component {
-	constructor(props) {
-		super(props);
-		this.onData = this.onData.bind(this);
-		this.onPopoverTrigger = this.onPopoverTrigger.bind(this);
-		this.roomQuery = this.roomQuery.bind(this);
-		this.dateQuery = this.dateQuery.bind(this);
-	}
-
 	dateQuery(value) {
 		let query = null;
 		if (value) {
@@ -47,29 +39,27 @@ class Main extends Component {
 	}
 
 	roomQuery(record) {
-		if(record) {
-			let query = null;
+		let query = null;
 
-			function generateMatchQuery() {
-				return record.map(singleRecord => ({
-					match: {
-						room_type: singleRecord.value
-					}
-				}));
-			}
+		function generateMatchQuery() {
+			return record.map(singleRecord => ({
+				match: {
+					room_type: singleRecord.value
+				}
+			}));
+		}
 
-			if (record && record.length) {
-				query = {
-					bool: {
-						should: generateMatchQuery(),
-						minimum_should_match: 1,
-						boost: 1.0
-					}
-				};
-				return query;
-			}
+		if (record && record.length) {
+			query = {
+				bool: {
+					should: generateMatchQuery(),
+					minimum_should_match: 1,
+					boost: 1.0
+				}
+			};
 			return query;
 		}
+		return query;
 	}
 
 	onData(res) {
@@ -130,7 +120,7 @@ class Main extends Component {
 								<div className="col s6">
 									<DateRange
 										componentId="DateRangeSensor"
-										appbaseField="date_from"
+										appbaseField={["date_from", "date_to"]}
 										title="When"
 										numberOfMonths={1}
 										customQuery={this.dateQuery}
@@ -171,8 +161,8 @@ class Main extends Component {
 									appbaseField={this.props.mapping.price}
 									title="Price Range"
 									defaultSelected={{
-										"start": 10,
-										"end": 50
+										start: 10,
+										end: 50
 									}}
 									stepValue={10}
 									range={{

@@ -187,7 +187,7 @@ export default class ResultCard extends Component {
 
 		if (resultElement && resultElement.length && scrollElement && scrollElement.length) {
 			scrollElement.css({
-				"height": "auto", 
+				"height": "auto",
 				"padding-bottom": 0
 			});
 			setTimeout(checkHeight, 1000);
@@ -642,7 +642,7 @@ export default class ResultCard extends Component {
 		}
 
 		return (
-			<div ref={(div) => { this.resultListContainer = div }} className="rbc rbc-resultcard">
+			<div className="rbc rbc-resultcard">
 				<div ref={(div) => { this.listParentElement = div }} className={`rbc-resultcard-container card thumbnail ${cx}`} style={this.props.componentStyle}>
 					{title}
 					{sortOptions}
@@ -659,7 +659,7 @@ export default class ResultCard extends Component {
 				</div>
 				{this.props.noResults && this.state.visibleNoResults ? (<NoResults defaultText={this.props.noResults} />) : null}
 				{this.props.initialLoader && this.state.queryStart && this.state.showInitialLoader ? (<InitialLoader defaultText={this.props.initialLoader} />) : null}
-				<PoweredBy container={this.resultListContainer} />
+				<PoweredBy container="rbc-resultcard-container" />
 			</div>
 		);
 	}

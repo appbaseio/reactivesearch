@@ -9,6 +9,7 @@ const default_config = {
 		yelp_recipe: "./examples/yelpsearch/app.js",
 		producthunt_recipe: "./examples/productsearch/app.js",
 		airbnb_recipe: "./examples/airbeds/app.js",
+		simplebeds_recipe: "./examples/simplebeds/app.js",
 		news_recipe: "./examples/news/app.js",
 		app: "./app/app.js"
 	},
@@ -45,6 +46,7 @@ const examples_config = {
 		yelp_recipe: "./examples/yelpsearch/app.js",
 		producthunt_recipe: "./examples/productsearch/app.js",
 		airbnb_recipe: "./examples/airbeds/app.js",
+		simplebeds_recipe: "./examples/simplebeds/app.js",
 		news_recipe: "./examples/news/app.js"
 	},
 	output: {
