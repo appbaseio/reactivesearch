@@ -174,7 +174,7 @@ export default class ResultCard extends Component {
 		function checkHeight() {
 			const flag = resultElement.get(0).scrollHeight - padding > resultElement.height();
 			const scrollFlag = scrollElement.get(0).scrollHeight > scrollElement.height();
-			if (!flag && !scrollFlag && scrollElement.length) {
+			if (!flag && !scrollFlag && scrollElement.length && !this.props.pagination) {
 				const scrollHeight = resultElement.height() - 100;
 				if (scrollHeight > 0) {
 					scrollElement.css({
@@ -190,7 +190,7 @@ export default class ResultCard extends Component {
 				"height": "auto",
 				"padding-bottom": 0
 			});
-			setTimeout(checkHeight, 1000);
+			setTimeout(checkHeight.bind(this), 1000);
 		}
 	}
 

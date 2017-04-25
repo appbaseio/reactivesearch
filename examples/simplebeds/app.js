@@ -60,7 +60,7 @@ class Main extends Component {
 					theme="rbc-red"
 				>
 					<nav>
-						<a href="/examples/airbeds" className="brand">Airbeds</a>
+						<a href="/examples/airbeds" className="brand">Simplebeds</a>
 					</nav>
 
 					<div className="sensor-wrapper clearfix">
