@@ -565,19 +565,15 @@ export default class ResultCard extends Component {
 		function setScroll(node) {
 			if (node) {
 				node.addEventListener("scroll", () => {
-					if (this.state.requestOnScroll && $(node).scrollTop() + $(node).innerHeight() >= node.scrollHeight && this.state.resultStats.total > this.state.currentData.length && !this.state.queryStart) {
+					const scrollHeight = node.scrollHeight || node.scrollHeight === 0 ? node.scrollHeight : $(node).height();
+					if (this.state.requestOnScroll && $(node).scrollTop() + $(node).innerHeight() >= scrollHeight && this.state.resultStats.total > this.state.currentData.length && !this.state.queryStart) {
 						this.nextPage();
 					}
 				});
 			}
 		}
-
-		if (this.props.scrollOnWindow) {
-			$(window).on("scroll", () => {
-				if (this.state.requestOnScroll && $(window).scrollTop() + $(window).innerHeight() >= $(window).height() && this.state.resultStats.total > this.state.currentData.length && !this.state.queryStart) {
-					this.nextPage();
-				}
-			});
+		if (this.props.scrollOnTarget) {
+			setScroll.call(this, this.props.scrollOnTarget);
 		} else {
 			setScroll.call(this, this.listParentElement);
 			setScroll.call(this, this.listChildElement);
@@ -699,7 +695,7 @@ ResultCard.propTypes = {
 		React.PropTypes.element
 	]),
 	react: React.PropTypes.object,
-	scrollOnWindow: React.PropTypes.bool
+	scrollOnTarget: React.PropTypes.object
 };
 
 ResultCard.defaultProps = {
@@ -736,5 +732,5 @@ ResultCard.types = {
 	showResultStats: TYPES.BOOLEAN,
 	onResultStats: TYPES.FUNCTION,
 	placeholder: TYPES.STRING,
-	scrollOnWindow: TYPES.BOOLEAN
+	scrollOnTarget: TYPES.OBJECT
 };
