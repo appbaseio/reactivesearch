@@ -87,7 +87,6 @@ class Main extends Component {
 							from={0}
 							size={10}
 							scrollOnTarget={window}
-							showResultStats={false}
 							onData={this.onData}
 							react={{
 								and: ["NameSensor", "TopicSensor", "DefaultSensor"]
