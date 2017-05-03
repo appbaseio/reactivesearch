@@ -315,7 +315,7 @@ export default class DynamicRangeSlider extends Component {
 		});
 
 		return (
-			<div className={`rbc rbc-dynamicrangeslider card thumbnail col s12 col-xs-12 ${cx}`}>
+			<div className={`rbc rbc-dynamicrangeslider card thumbnail col s12 col-xs-12 ${cx}`} style={this.props.componentStyle}>
 				{title}
 				{histogram}
 				<div className="rbc-rangeslider-container col s12 col-xs-12">
@@ -338,7 +338,10 @@ export default class DynamicRangeSlider extends Component {
 DynamicRangeSlider.propTypes = {
 	componentId: React.PropTypes.string.isRequired,
 	appbaseField: React.PropTypes.string.isRequired,
-	title: React.PropTypes.string,
+	title: React.PropTypes.oneOfType([
+		React.PropTypes.string,
+		React.PropTypes.element
+	]),
 	stepValue: React.PropTypes.number,
 	showHistogram: React.PropTypes.bool,
 	rangeLabels: React.PropTypes.func,
@@ -351,13 +354,15 @@ DynamicRangeSlider.propTypes = {
 	react: React.PropTypes.object,
 	onValueChange: React.PropTypes.func,
 	interval: React.PropTypes.number,
+	componentStyle: React.PropTypes.object
 };
 
 DynamicRangeSlider.defaultProps = {
 	title: null,
 	stepValue: 1,
 	showHistogram: true,
-	interval: 1
+	interval: 1,
+	componentStyle: {}
 };
 
 // context type

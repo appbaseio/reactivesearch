@@ -8,6 +8,8 @@ import {
 	ResultList
 } from "../../app/app.js";
 
+const $ = require("jquery");
+
 require("./producthunt.scss");
 
 class Main extends Component {
@@ -84,8 +86,7 @@ class Main extends Component {
 							appbaseField="name"
 							from={0}
 							size={10}
-							scrollOnWindow={true}
-							showResultStats={false}
+							scrollOnTarget={window}
 							onData={this.onData}
 							react={{
 								and: ["NameSensor", "TopicSensor", "DefaultSensor"]

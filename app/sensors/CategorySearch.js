@@ -325,7 +325,7 @@ export default class CategorySearch extends Component {
 		});
 
 		return (
-			<div className={`rbc rbc-categorysearch col s12 col-xs-12 card thumbnail ${cx}`}>
+			<div className={`rbc rbc-categorysearch col s12 col-xs-12 card thumbnail ${cx}`} style={this.props.componentStyle}>
 				{title}
 				<Select
 					isLoading={this.state.isLoadingOptions}
@@ -348,7 +348,10 @@ CategorySearch.propTypes = {
 		React.PropTypes.string,
 		React.PropTypes.arrayOf(React.PropTypes.string)
 	]),
-	title: React.PropTypes.string,
+	title: React.PropTypes.oneOfType([
+		React.PropTypes.string,
+		React.PropTypes.element
+	]),
 	categoryField: React.PropTypes.string,
 	placeholder: React.PropTypes.string,
 	defaultSelected: React.PropTypes.string,
@@ -359,13 +362,15 @@ CategorySearch.propTypes = {
 	highlightFields: React.PropTypes.oneOfType([
 		React.PropTypes.string,
 		React.PropTypes.arrayOf(React.PropTypes.string)
-	])
+	]),
+	componentStyle: React.PropTypes.object
 };
 
 // Default props value
 CategorySearch.defaultProps = {
 	placeholder: "Search",
-	highlight: false
+	highlight: false,
+	componentStyle: {}
 };
 
 // context type

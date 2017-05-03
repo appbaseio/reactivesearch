@@ -449,7 +449,7 @@ export default class NestedList extends Component {
 		});
 
 		return (
-			<div className="rbc rbc-nestedlist-container card thumbnail col s12 col-xs-12">
+			<div className="rbc rbc-nestedlist-container card thumbnail col s12 col-xs-12" style={this.props.componentStyle}>
 				<div className={`rbc rbc-nestedlist col s12 col-xs-12 ${cx}`}>
 					{title}
 					{searchComponent}
@@ -480,7 +480,8 @@ NestedList.propTypes = {
 		React.PropTypes.element
 	]),
 	react: React.PropTypes.object,
-	onValueChange: React.PropTypes.func
+	onValueChange: React.PropTypes.func,
+	componentStyle: React.PropTypes.object
 };
 
 // Default props value
@@ -490,7 +491,8 @@ NestedList.defaultProps = {
 	size: 100,
 	showSearch: false,
 	title: null,
-	placeholder: "Search"
+	placeholder: "Search",
+	componentStyle: {}
 };
 
 // context type

@@ -186,7 +186,7 @@ export default class ToggleList extends Component {
 		});
 
 		return (
-			<div className={`rbc rbc-togglelist col s12 col-xs-12 card thumbnail ${cx}`}>
+			<div className={`rbc rbc-togglelist col s12 col-xs-12 card thumbnail ${cx}`} style={this.props.componentStyle}>
 				<div className="row">
 					{title}
 					<div className="col s12 col-xs-12">
@@ -201,7 +201,10 @@ export default class ToggleList extends Component {
 ToggleList.propTypes = {
 	componentId: React.PropTypes.string.isRequired,
 	appbaseField: React.PropTypes.string.isRequired,
-	title: React.PropTypes.string,
+	title: React.PropTypes.oneOfType([
+		React.PropTypes.string,
+		React.PropTypes.element
+	]),
 	data: React.PropTypes.arrayOf(React.PropTypes.shape({
 		label: React.PropTypes.string.isRequired,
 		value: React.PropTypes.string.isRequired
@@ -212,12 +215,14 @@ ToggleList.propTypes = {
 	]),
 	multiSelect: React.PropTypes.bool,
 	customQuery: React.PropTypes.func,
-	onValueChange: React.PropTypes.func
+	onValueChange: React.PropTypes.func,
+	componentStyle: React.PropTypes.object
 };
 
 // Default props value
 ToggleList.defaultProps = {
-	multiSelect: true
+	multiSelect: true,
+	componentStyle: {}
 };
 
 // context type
