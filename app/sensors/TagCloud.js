@@ -309,7 +309,7 @@ export default class TagCloud extends Component {
 		});
 
 		return (
-			<div className={`rbc rbc-tagcloud col s12 col-xs-12 card thumbnail ${cx}`}>
+			<div className={`rbc rbc-tagcloud col s12 col-xs-12 card thumbnail ${cx}`} style={this.props.componentStyle}>
 				{title}
 				<div className="rbc-list-container">
 					{this.renderTags()}
@@ -323,7 +323,10 @@ export default class TagCloud extends Component {
 TagCloud.propTypes = {
 	appbaseField: React.PropTypes.string.isRequired,
 	componentId: React.PropTypes.string.isRequired,
-	title: React.PropTypes.string,
+	title: React.PropTypes.oneOfType([
+		React.PropTypes.string,
+		React.PropTypes.element
+	]),
 	size: React.PropTypes.number,
 	showCount: React.PropTypes.bool,
 	multiSelect: React.PropTypes.bool,
@@ -338,14 +341,16 @@ TagCloud.propTypes = {
 		React.PropTypes.array
 	]),
 	react: React.PropTypes.object,
-	onValueChange: React.PropTypes.func
+	onValueChange: React.PropTypes.func,
+	componentStyle: React.PropTypes.object
 };
 
 TagCloud.defaultProps = {
 	showCount: true,
 	multiSelect: false,
 	size: 100,
-	title: null
+	title: null,
+	componentStyle: {}
 };
 
 TagCloud.contextTypes = {

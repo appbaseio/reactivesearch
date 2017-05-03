@@ -133,7 +133,7 @@ export default class RatingsFilter extends Component {
 		});
 
 		return (
-			<div className={`rbc rbc-ratingsfilter col s12 col-xs-12 card thumbnail ${cx}`}>
+			<div className={`rbc rbc-ratingsfilter col s12 col-xs-12 card thumbnail ${cx}`} style={this.props.componentStyle}>
 				<div className="row">
 					{title}
 					<div className="col s12 col-xs-12 rbc-list-container">
@@ -148,16 +148,21 @@ export default class RatingsFilter extends Component {
 RatingsFilter.propTypes = {
 	componentId: React.PropTypes.string.isRequired,
 	appbaseField: React.PropTypes.string.isRequired,
-	title: React.PropTypes.string,
+	title: React.PropTypes.oneOfType([
+		React.PropTypes.string,
+		React.PropTypes.element
+	]),
 	data: React.PropTypes.any.isRequired,
 	defaultSelected: React.PropTypes.object,
 	customQuery: React.PropTypes.func,
-	onValueChange: React.PropTypes.func
+	onValueChange: React.PropTypes.func,
+	componentStyle: React.PropTypes.object
 };
 
 // Default props value
 RatingsFilter.defaultProps = {
-	title: null
+	title: null,
+	componentStyle: {}
 };
 
 // context type

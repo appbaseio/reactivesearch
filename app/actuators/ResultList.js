@@ -667,7 +667,10 @@ export default class ResultList extends Component {
 ResultList.propTypes = {
 	componentId: React.PropTypes.string,
 	appbaseField: React.PropTypes.string,
-	title: React.PropTypes.string,
+	title: React.PropTypes.oneOfType([
+		React.PropTypes.string,
+		React.PropTypes.element
+	]),
 	sortBy: React.PropTypes.oneOf(["asc", "desc", "default"]),
 	sortOptions: React.PropTypes.arrayOf(
 		React.PropTypes.shape({

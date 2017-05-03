@@ -370,7 +370,7 @@ export default class MultiLevelMenu extends Component {
 		);
 
 		return (
-			<div className="rbc rbc-multilevelmenu-container card thumbnail col s12 col-xs-12" onMouseLeave={() => this.handleHover(null)}>
+			<div className="rbc rbc-multilevelmenu-container card thumbnail col s12 col-xs-12" style={this.props.componentStyle} onMouseLeave={() => this.handleHover(null)}>
 				<div className="rbc-multilevelmenu col s12 col-xs-12">
 					{listComponent}
 				</div>
@@ -392,14 +392,16 @@ MultiLevelMenu.propTypes = {
 	blacklist: React.PropTypes.arrayOf(React.PropTypes.string),
 	customQuery: React.PropTypes.func,
 	react: React.PropTypes.object,
-	onValueChange: React.PropTypes.func
+	onValueChange: React.PropTypes.func,
+	componentStyle: React.PropTypes.object
 };
 
 // Default props value
 MultiLevelMenu.defaultProps = {
 	blacklist: [],
 	maxCategories: 10,
-	maxItems: 4
+	maxItems: 4,
+	componentStyle: {}
 };
 
 // context type
