@@ -27,6 +27,7 @@ export default class CategorySearch extends Component {
 		this.type = "match_phrase";
 		this.channelId = null;
 		this.channelListener = null;
+		this.urlParams = helper.URLParams.get(this.props.componentId);
 		this.fieldType = typeof props.appbaseField;
 		this.handleSearch = this.handleSearch.bind(this);
 		this.optionRenderer = this.optionRenderer.bind(this);
@@ -268,8 +269,9 @@ export default class CategorySearch extends Component {
 	}
 
 	checkDefault() {
-		if (this.props.defaultSelected && this.defaultSelected !== this.props.defaultSelected) {
-			this.defaultSelected = this.props.defaultSelected;
+		const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
+		if (defaultValue && this.defaultSelected !== defaultValue) {
+			this.defaultSelected = defaultValue;
 			setTimeout(this.setValue.bind(this, this.defaultSelected), 100);
 			this.handleSearch({
 				value: this.defaultSelected
@@ -297,7 +299,7 @@ export default class CategorySearch extends Component {
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
-
+		helper.URLParams.update(this.props.componentId, finalVal.value, this.props.URLParam);
 		helper.selectedSensor.set(obj, true);
 		this.setState({
 			currentValue: value
@@ -363,14 +365,16 @@ CategorySearch.propTypes = {
 		React.PropTypes.string,
 		React.PropTypes.arrayOf(React.PropTypes.string)
 	]),
-	componentStyle: React.PropTypes.object
+	componentStyle: React.PropTypes.object,
+	URLParam: React.PropTypes.bool
 };
 
 // Default props value
 CategorySearch.defaultProps = {
 	placeholder: "Search",
 	highlight: false,
-	componentStyle: {}
+	componentStyle: {},
+	URLParam: false
 };
 
 // context type
@@ -388,5 +392,6 @@ CategorySearch.types = {
 	placeholder: TYPES.STRING,
 	defaultSelected: TYPES.STRING,
 	customQuery: TYPES.FUNCTION,
-	highlight: TYPES.BOOLEAN
+	highlight: TYPES.BOOLEAN,
+	URLParam: TYPES.BOOLEAN
 };

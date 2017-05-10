@@ -34,6 +34,7 @@ export default class DynamicRangeSlider extends Component {
 		this.type = "range";
 		this.channelId = null;
 		this.channelListener = null;
+		this.urlParams = helper.URLParams.get(this.props.componentId, false, true);
 		this.handleValuesChange = this.handleValuesChange.bind(this);
 		this.handleResults = this.handleResults.bind(this);
 		this.customQuery = this.customQuery.bind(this);
@@ -47,7 +48,8 @@ export default class DynamicRangeSlider extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.updateValues(nextProps.defaultSelected);
+		const defaultValue = this.urlParams !== null ? this.urlParams : nextProps.defaultSelected;
+		this.updateValues(defaultValue);
 	}
 
 	// stop streaming request and remove listener when component will unmount
@@ -247,21 +249,23 @@ export default class DynamicRangeSlider extends Component {
 				this.handleResults(null, { min, max });
 			});
 		}
-		this.updateValues(this.props.defaultSelected);
+		const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
+		this.updateValues(defaultValue);
 	}
 
 	updateValues(defaultSelected) {
 		if (defaultSelected) {
 			const { min, max } = this.state.range;
-			const { start, end } = defaultSelected(min, max);
+			const { start, end } = this.urlParams !== null ? this.urlParams : defaultSelected(min, max);
 
 			if (start >= min && end <= max) {
+				const values = {
+					min: start,
+					max: end
+				};
 				this.setState({
-					values: {
-						min: start,
-						max: end
-					}
-				});
+					values
+				}, this.handleResults.bind(this, null, values));
 			} else {
 				console.error(`defaultSelected values must lie between ${min} and ${max}`);
 			}
@@ -297,12 +301,22 @@ export default class DynamicRangeSlider extends Component {
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
-
+		helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParam);
 		helper.selectedSensor.set(obj, true);
 
 		this.setState({
 			values
 		});
+	}
+
+	setURLParam(value) {
+		if("from" in value && "to" in value) {
+			value = {
+				start: value.from,
+				end: value.to
+			};
+		}
+		return JSON.stringify(value);
 	}
 
 	render() {
@@ -379,14 +393,16 @@ DynamicRangeSlider.propTypes = {
 	react: React.PropTypes.object,
 	onValueChange: React.PropTypes.func,
 	interval: React.PropTypes.number,
-	componentStyle: React.PropTypes.object
+	componentStyle: React.PropTypes.object,
+	URLParam: React.PropTypes.bool
 };
 
 DynamicRangeSlider.defaultProps = {
 	title: null,
 	stepValue: 1,
 	showHistogram: true,
-	componentStyle: {}
+	componentStyle: {},
+	URLParam: false
 };
 
 // context type
@@ -405,5 +421,6 @@ DynamicRangeSlider.types = {
 	stepValue: TYPES.NUMBER,
 	showHistogram: TYPES.BOOLEAN,
 	customQuery: TYPES.FUNCTION,
-	initialLoader: TYPES.OBJECT
+	initialLoader: TYPES.OBJECT,
+	URLParam: TYPES.BOOLEAN
 };

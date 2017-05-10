@@ -14,6 +14,7 @@ export default class ToggleList extends Component {
 			selected: []
 		};
 		this.type = "term";
+		this.urlParams = helper.URLParams.get(this.props.componentId, true);
 		this.defaultSelected = null;
 		this.handleChange = this.handleChange.bind(this);
 		this.customQuery = this.customQuery.bind(this);
@@ -30,13 +31,38 @@ export default class ToggleList extends Component {
 	}
 
 	initialize(props) {
-		if (props.defaultSelected) {
-			if (!props.multiSelect) {
-				if (typeof props.defaultSelected === "string") {
-					if (this.defaultSelected !== props.defaultSelected) {
-						this.defaultSelected = props.defaultSelected;
-						const records = props.data.filter(record => this.defaultSelected.indexOf(record.label) > -1);
+		setTimeout(() => {
+			const defaultValue = this.urlParams !== null ? this.urlParams : props.defaultSelected;
+			if (defaultValue) {
+				if (!props.multiSelect) {
+					if (typeof defaultValue === "string") {
+						if (this.defaultSelected !== defaultValue) {
+							this.defaultSelected = defaultValue;
+							const records = props.data.filter(record => this.defaultSelected.indexOf(record.label) > -1);
 
+							this.setState({
+								selected: records
+							});
+							if(this.props.onValueChange) {
+								this.props.onValueChange(obj.value);
+							}
+							const obj = {
+								key: props.componentId,
+								value: records
+							};
+							helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParam);
+							helper.selectedSensor.set(obj, true);
+						}
+					} else {
+						console.error(`${props.componentId} - defaultSelected prop should be of type "string"`);
+					}
+				} else if (typeof defaultValue === "object") {
+					if (!_.isEqual(this.defaultSelected, defaultValue)) {
+						this.defaultSelected = defaultValue;
+						let records = [];
+						this.defaultSelected.forEach((item) => {
+							records = records.concat(props.data.filter(record => item.indexOf(record.label) > -1));
+						});
 						this.setState({
 							selected: records
 						});
@@ -47,34 +73,14 @@ export default class ToggleList extends Component {
 							key: props.componentId,
 							value: records
 						};
+						helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParam);
 						helper.selectedSensor.set(obj, true);
 					}
 				} else {
-					console.error(`${props.componentId} - defaultSelected prop should be of type "string"`);
+					console.error(`${props.componentId} - defaultSelected prop should be an "array"`);
 				}
-			} else if (typeof props.defaultSelected === "object") {
-				if (!_.isEqual(this.defaultSelected, props.defaultSelected)) {
-					this.defaultSelected = props.defaultSelected;
-					let records = [];
-					this.defaultSelected.forEach((item) => {
-						records = records.concat(props.data.filter(record => item.indexOf(record.label) > -1));
-					});
-					this.setState({
-						selected: records
-					});
-					if(this.props.onValueChange) {
-						this.props.onValueChange(obj.value);
-					}
-					const obj = {
-						key: props.componentId,
-						value: records
-					};
-					helper.selectedSensor.set(obj, true);
-				}
-			} else {
-				console.error(`${props.componentId} - defaultSelected prop should be an "array"`);
 			}
-		}
+		}, 100);
 	}
 
 	// set the query type and input data
@@ -148,7 +154,12 @@ export default class ToggleList extends Component {
 		}
 		// pass the selected sensor value with componentId as key,
 		const isExecuteQuery = true;
+		helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParam);
 		helper.selectedSensor.set(obj, isExecuteQuery);
+	}
+
+	setURLParam(value) {
+		return value.map(item => item.label);
 	}
 
 	renderList() {
@@ -216,13 +227,15 @@ ToggleList.propTypes = {
 	multiSelect: React.PropTypes.bool,
 	customQuery: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
-	componentStyle: React.PropTypes.object
+	componentStyle: React.PropTypes.object,
+	URLParam: React.PropTypes.bool
 };
 
 // Default props value
 ToggleList.defaultProps = {
 	multiSelect: true,
-	componentStyle: {}
+	componentStyle: {},
+	URLParam: false
 };
 
 // context type
@@ -238,5 +251,6 @@ ToggleList.types = {
 	data: TYPES.OBJECT,
 	defaultSelected: TYPES.ARRAY,
 	multiSelect: TYPES.BOOLEAN,
-	customQuery: TYPES.FUNCTION
+	customQuery: TYPES.FUNCTION,
+	URLParam: TYPES.BOOLEAN
 };

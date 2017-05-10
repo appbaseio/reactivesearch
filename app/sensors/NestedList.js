@@ -34,7 +34,8 @@ export default class NestedList extends Component {
 		};
 		this.channelId = null;
 		this.channelListener = null;
-		this.defaultSelected = this.props.defaultSelected;
+		this.urlParams = helper.URLParams.get(this.props.componentId, true);
+		this.defaultSelected = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
 		this.filterBySearch = this.filterBySearch.bind(this);
 		this.onItemSelect = this.onItemSelect.bind(this);
 		this.customQuery = this.customQuery.bind(this);
@@ -50,15 +51,14 @@ export default class NestedList extends Component {
 	}
 
 	componentDidMount() {
-		if (this.props.defaultSelected) {
-			this.defaultSelected = this.props.defaultSelected;
+		if (this.defaultSelected) {
 			setTimeout(this.handleSelect.bind(this), 100);
 		}
 	}
 
 	handleSelect() {
-		if (this.props.defaultSelected) {
-			this.props.defaultSelected.forEach((value, index) => {
+		if (this.defaultSelected) {
+			this.defaultSelected.forEach((value, index) => {
 				this.onItemSelect(value, index);
 			});
 		}
@@ -66,8 +66,9 @@ export default class NestedList extends Component {
 
 	componentWillUpdate() {
 		setTimeout(() => {
-			if (!_.isEqual(this.defaultSelected, this.props.defaultSelected)) {
-				this.defaultSelected = this.props.defaultSelected;
+			const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
+			if (!_.isEqual(this.defaultSelected, defaultValue)) {
+				this.defaultSelected = defaultValue;
 				let items = this.state.items;
 				items = items.map((item) => {
 					item.key = item.key.toString();
@@ -312,6 +313,7 @@ export default class NestedList extends Component {
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
+		helper.URLParams.update(this.props.componentId, value, this.props.URLParam);
 		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
@@ -481,7 +483,8 @@ NestedList.propTypes = {
 	]),
 	react: React.PropTypes.object,
 	onValueChange: React.PropTypes.func,
-	componentStyle: React.PropTypes.object
+	componentStyle: React.PropTypes.object,
+	URLParam: React.PropTypes.bool
 };
 
 // Default props value
@@ -492,7 +495,8 @@ NestedList.defaultProps = {
 	showSearch: false,
 	title: null,
 	placeholder: "Search",
-	componentStyle: {}
+	componentStyle: {},
+	URLParam: false
 };
 
 // context type
@@ -513,5 +517,6 @@ NestedList.types = {
 	showSearch: TYPES.BOOLEAN,
 	defaultSelected: TYPES.ARRAY,
 	customQuery: TYPES.FUNCTION,
-	initialLoader: TYPES.OBJECT
+	initialLoader: TYPES.OBJECT,
+	URLParam: TYPES.BOOLEAN
 };

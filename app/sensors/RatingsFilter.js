@@ -13,7 +13,8 @@ export default class RatingsFilter extends Component {
 			selected: null
 		};
 		this.type = "range";
-		this.defaultSelected = props.defaultSelected;
+		this.urlParams = helper.URLParams.get(this.props.componentId, false, true);
+		this.defaultSelected = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
 		this.handleChange = this.handleChange.bind(this);
 		this.customQuery = this.customQuery.bind(this);
 	}
@@ -32,8 +33,9 @@ export default class RatingsFilter extends Component {
 
 	componentWillUpdate() {
 		setTimeout(() => {
-			if (this.defaultSelected && this.defaultSelected.start !== this.props.defaultSelected.start) {
-				this.defaultSelected = this.props.defaultSelected;
+			const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
+			if (this.defaultSelected && this.defaultSelected.start !== defaultValue.start) {
+				this.defaultSelected = defaultValue;
 				const records = this.props.data.filter(record => (record.start === this.defaultSelected.start &&
 							record.end === this.defaultSelected.end));
 				if (records && records.length) {
@@ -86,6 +88,7 @@ export default class RatingsFilter extends Component {
 		}
 		// pass the selected sensor value with componentId as key,
 		const isExecuteQuery = true;
+		helper.URLParams.update(this.props.componentId, JSON.stringify(record), this.props.URLParam);
 		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
@@ -156,13 +159,15 @@ RatingsFilter.propTypes = {
 	defaultSelected: React.PropTypes.object,
 	customQuery: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
-	componentStyle: React.PropTypes.object
+	componentStyle: React.PropTypes.object,
+	URLParam: React.PropTypes.bool
 };
 
 // Default props value
 RatingsFilter.defaultProps = {
 	title: null,
-	componentStyle: {}
+	componentStyle: {},
+	URLParam: false
 };
 
 // context type
@@ -177,5 +182,6 @@ RatingsFilter.types = {
 	title: TYPES.STRING,
 	data: TYPES.OBJECT,
 	defaultSelected: TYPES.OBJECT,
-	customQuery: TYPES.FUNCTION
+	customQuery: TYPES.FUNCTION,
+	URLParam: TYPES.BOOLEAN
 };
