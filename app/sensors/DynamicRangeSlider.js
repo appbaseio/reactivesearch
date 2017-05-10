@@ -34,6 +34,7 @@ export default class DynamicRangeSlider extends Component {
 		this.type = "range";
 		this.channelId = null;
 		this.channelListener = null;
+		this.urlParams = helper.URLParams.get(this.props.componentId, false, true);
 		this.handleValuesChange = this.handleValuesChange.bind(this);
 		this.handleResults = this.handleResults.bind(this);
 		this.customQuery = this.customQuery.bind(this);
@@ -47,7 +48,8 @@ export default class DynamicRangeSlider extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.updateValues(nextProps.defaultSelected);
+		const defaultValue = this.urlParams !== null ? this.urlParams : nextProps.defaultSelected;
+		this.updateValues(defaultValue);
 	}
 
 	// stop streaming request and remove listener when component will unmount
@@ -85,23 +87,40 @@ export default class DynamicRangeSlider extends Component {
 		this.setRangeValue();
 	}
 
-	setRangeValue() {
+	setRangeValue(value="range") {
 		const objValue = {
 			key: `${this.props.componentId}-internal`,
-			value: this.state.range
+			value
 		};
 		helper.selectedSensor.set(objValue, true);
 	}
 
 	histogramQuery() {
-		return {
-			[this.props.appbaseField]: {
-				"histogram": {
-					"field": this.props.appbaseField,
-					"interval": this.props.interval
+		let query;
+		const isHistogramQuery = helper.selectedSensor.get(`${this.props.componentId}-internal`);
+		if(isHistogramQuery === "histogram") {
+			query = {
+				[this.props.appbaseField]: {
+					"histogram": {
+						"field": this.props.appbaseField,
+						"interval": this.props.interval ? this.props.interval : Math.ceil((this.state.range.max - this.state.range.min)/10)
+					}
 				}
-			}
-		};
+			};
+		} else {
+			query = {
+				"max": {
+					"max": {
+						"field": this.props.appbaseField,
+					}
+				}, "min": {
+					"min": {
+						"field": this.props.appbaseField,
+					}
+				}
+			};
+		}
+		return query;
 	}
 
 	// Create a channel which passes the react and receive results whenever react changes
@@ -131,18 +150,27 @@ export default class DynamicRangeSlider extends Component {
 			}
 			if (res.appliedQuery) {
 				const data = res.data;
-				let rawData;
-				if (res.mode === "streaming") {
-					rawData = this.state.rawData;
-					rawData.hits.hits.push(res.data);
-				} else if (res.mode === "historic") {
-					rawData = data;
+				if(data.aggregations.max && data.aggregations.min) {
+					this.setState({
+						range: {
+							min: data.aggregations.min.value,
+							max: data.aggregations.max.value
+						}
+					}, this.setRangeValue.bind(this, "histogram"));
+				} else {
+					let rawData;
+					if (res.mode === "streaming") {
+						rawData = this.state.rawData;
+						rawData.hits.hits.push(res.data);
+					} else if (res.mode === "historic") {
+						rawData = data;
+					}
+					this.setState({
+						queryStart: false,
+						rawData
+					});
+					this.setData(data);
 				}
-				this.setState({
-					queryStart: false,
-					rawData
-				});
-				this.setData(data);
 			}
 		});
 		this.listenLoadingChannel(channelObj);
@@ -216,27 +244,28 @@ export default class DynamicRangeSlider extends Component {
 		if (itemLength > 1) {
 			this.setState({
 				counts: this.countCalc(min, max, newItems),
-				range: { min, max },
 				values: { min, max }
 			}, () => {
 				this.handleResults(null, { min, max });
 			});
 		}
-		this.updateValues(this.props.defaultSelected);
+		const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
+		this.updateValues(defaultValue);
 	}
 
 	updateValues(defaultSelected) {
 		if (defaultSelected) {
 			const { min, max } = this.state.range;
-			const { start, end } = defaultSelected(min, max);
+			const { start, end } = this.urlParams !== null ? this.urlParams : defaultSelected(min, max);
 
 			if (start >= min && end <= max) {
+				const values = {
+					min: start,
+					max: end
+				};
 				this.setState({
-					values: {
-						min: start,
-						max: end
-					}
-				});
+					values
+				}, this.handleResults.bind(this, null, values));
 			} else {
 				console.error(`defaultSelected values must lie between ${min} and ${max}`);
 			}
@@ -272,12 +301,22 @@ export default class DynamicRangeSlider extends Component {
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
-
+		helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParam);
 		helper.selectedSensor.set(obj, true);
 
 		this.setState({
 			values
 		});
+	}
+
+	setURLParam(value) {
+		if("from" in value && "to" in value) {
+			value = {
+				start: value.from,
+				end: value.to
+			};
+		}
+		return JSON.stringify(value);
 	}
 
 	render() {
@@ -354,15 +393,16 @@ DynamicRangeSlider.propTypes = {
 	react: React.PropTypes.object,
 	onValueChange: React.PropTypes.func,
 	interval: React.PropTypes.number,
-	componentStyle: React.PropTypes.object
+	componentStyle: React.PropTypes.object,
+	URLParam: React.PropTypes.bool
 };
 
 DynamicRangeSlider.defaultProps = {
 	title: null,
 	stepValue: 1,
 	showHistogram: true,
-	interval: 1,
-	componentStyle: {}
+	componentStyle: {},
+	URLParam: false
 };
 
 // context type
@@ -381,5 +421,6 @@ DynamicRangeSlider.types = {
 	stepValue: TYPES.NUMBER,
 	showHistogram: TYPES.BOOLEAN,
 	customQuery: TYPES.FUNCTION,
-	initialLoader: TYPES.OBJECT
+	initialLoader: TYPES.OBJECT,
+	URLParam: TYPES.BOOLEAN
 };

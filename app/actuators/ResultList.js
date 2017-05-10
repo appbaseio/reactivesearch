@@ -102,7 +102,7 @@ export default class ResultList extends Component {
 
 	// check the height and set scroll if scroll not exists
 	componentDidUpdate() {
-		if (!this.state.showPlaceholder) {
+		if (!this.state.showPlaceholder && !this.props.scrollOnTarget) {
 			this.applyScroll();
 		}
 	}
@@ -597,6 +597,16 @@ export default class ResultList extends Component {
 		helper.selectedSensor.set(obj, true, "sortChange");
 	}
 
+	getComponentStyle() {
+		let componentStyle = {};
+		if(this.props.scrollOnTarget) {
+			componentStyle.maxHeight = "none";
+			componentStyle.height = "auto";
+		}
+		componentStyle = Object.assign(componentStyle, this.props.componentStyle);
+		return componentStyle;
+	}
+
 	render() {
 		let title = null,
 			placeholder = null,
@@ -642,7 +652,7 @@ export default class ResultList extends Component {
 
 		return (
 			<div ref={(div) => { this.resultListContainer = div }} className="rbc rbc-resultlist">
-				<div ref={(div) => { this.listParentElement = div }} className={`rbc-resultlist-container card thumbnail ${cx}`} style={this.props.componentStyle}>
+				<div ref={(div) => { this.listParentElement = div }} className={`rbc-resultlist-container card thumbnail ${cx}`} style={this.getComponentStyle()}>
 					{title}
 					{sortOptions}
 					{this.props.showResultStats && this.state.resultStats.resultFound ? (<ResultStats onResultStats={this.props.onResultStats} took={this.state.resultStats.took} total={this.state.resultStats.total} />) : null}
