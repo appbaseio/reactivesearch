@@ -306,7 +306,7 @@ export default class CategorySearch extends Component {
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
-		helper.URLParams.update(this.props.componentId, finalVal.value, this.props.URLParam);
+		helper.URLParams.update(this.props.componentId, finalVal.value, this.props.URLParams);
 		helper.selectedSensor.set(obj, true);
 		this.setState({
 			currentValue: value
@@ -373,7 +373,7 @@ CategorySearch.propTypes = {
 		React.PropTypes.arrayOf(React.PropTypes.string)
 	]),
 	componentStyle: React.PropTypes.object,
-	URLParam: React.PropTypes.bool
+	URLParams: React.PropTypes.bool
 };
 
 // Default props value
@@ -381,7 +381,7 @@ CategorySearch.defaultProps = {
 	placeholder: "Search",
 	highlight: false,
 	componentStyle: {},
-	URLParam: false
+	URLParams: false
 };
 
 // context type
@@ -400,5 +400,5 @@ CategorySearch.types = {
 	defaultSelected: TYPES.STRING,
 	customQuery: TYPES.FUNCTION,
 	highlight: TYPES.BOOLEAN,
-	URLParam: TYPES.BOOLEAN
+	URLParams: TYPES.BOOLEAN
 };

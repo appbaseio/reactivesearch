@@ -313,7 +313,7 @@ export default class NestedList extends Component {
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
-		helper.URLParams.update(this.props.componentId, value, this.props.URLParam);
+		helper.URLParams.update(this.props.componentId, value, this.props.URLParams);
 		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
@@ -484,7 +484,7 @@ NestedList.propTypes = {
 	react: React.PropTypes.object,
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
-	URLParam: React.PropTypes.bool
+	URLParams: React.PropTypes.bool
 };
 
 // Default props value
@@ -496,7 +496,7 @@ NestedList.defaultProps = {
 	title: null,
 	placeholder: "Search",
 	componentStyle: {},
-	URLParam: false
+	URLParams: false
 };
 
 // context type
@@ -518,5 +518,5 @@ NestedList.types = {
 	defaultSelected: TYPES.ARRAY,
 	customQuery: TYPES.FUNCTION,
 	initialLoader: TYPES.OBJECT,
-	URLParam: TYPES.BOOLEAN
+	URLParams: TYPES.BOOLEAN
 };

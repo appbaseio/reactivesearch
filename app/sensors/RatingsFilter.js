@@ -88,7 +88,7 @@ export default class RatingsFilter extends Component {
 		}
 		// pass the selected sensor value with componentId as key,
 		const isExecuteQuery = true;
-		helper.URLParams.update(this.props.componentId, JSON.stringify(record), this.props.URLParam);
+		helper.URLParams.update(this.props.componentId, JSON.stringify(record), this.props.URLParams);
 		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
@@ -160,14 +160,14 @@ RatingsFilter.propTypes = {
 	customQuery: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
-	URLParam: React.PropTypes.bool
+	URLParams: React.PropTypes.bool
 };
 
 // Default props value
 RatingsFilter.defaultProps = {
 	title: null,
 	componentStyle: {},
-	URLParam: false
+	URLParams: false
 };
 
 // context type
@@ -183,5 +183,5 @@ RatingsFilter.types = {
 	data: TYPES.OBJECT,
 	defaultSelected: TYPES.OBJECT,
 	customQuery: TYPES.FUNCTION,
-	URLParam: TYPES.BOOLEAN
+	URLParams: TYPES.BOOLEAN
 };

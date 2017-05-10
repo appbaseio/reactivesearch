@@ -301,7 +301,7 @@ export default class DynamicRangeSlider extends Component {
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
-		helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParam);
+		helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
 		helper.selectedSensor.set(obj, true);
 
 		this.setState({
@@ -394,7 +394,7 @@ DynamicRangeSlider.propTypes = {
 	onValueChange: React.PropTypes.func,
 	interval: React.PropTypes.number,
 	componentStyle: React.PropTypes.object,
-	URLParam: React.PropTypes.bool
+	URLParams: React.PropTypes.bool
 };
 
 DynamicRangeSlider.defaultProps = {
@@ -402,7 +402,7 @@ DynamicRangeSlider.defaultProps = {
 	stepValue: 1,
 	showHistogram: true,
 	componentStyle: {},
-	URLParam: false
+	URLParams: false
 };
 
 // context type
@@ -422,5 +422,5 @@ DynamicRangeSlider.types = {
 	showHistogram: TYPES.BOOLEAN,
 	customQuery: TYPES.FUNCTION,
 	initialLoader: TYPES.OBJECT,
-	URLParam: TYPES.BOOLEAN
+	URLParams: TYPES.BOOLEAN
 };
