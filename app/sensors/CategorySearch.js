@@ -134,7 +134,7 @@ export default class CategorySearch extends Component {
 	// default query
 	defaultSearchQuery(input) {
 		if (input && input.value) {
-			const query = [];
+			let query = [];
 			if (this.fieldType === "string") {
 				query.push({
 					match_phrase_prefix: {
@@ -149,6 +149,13 @@ export default class CategorySearch extends Component {
 						}
 					});
 				});
+
+				query = {
+					bool: {
+						should: query,
+						minimum_should_match: 1
+					}
+				}
 			}
 
 			if (input.category && input.category !== null) {
