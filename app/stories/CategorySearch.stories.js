@@ -64,7 +64,7 @@ export default class CategorySearchDefault extends Component {
 				<div className="row">
 					<div className="col s6 col-xs-6">
 						<CategorySearch
-							appbaseField="name"
+							appbaseField={["name", "color"]}
 							categoryField="brand.raw"
 							componentId="CarSensor"
 							title="CategorySearch"

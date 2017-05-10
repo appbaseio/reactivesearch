@@ -50,7 +50,7 @@ export default class ToggleList extends Component {
 								key: props.componentId,
 								value: records
 							};
-							helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParam);
+							helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
 							helper.selectedSensor.set(obj, true);
 						}
 					} else {
@@ -73,7 +73,7 @@ export default class ToggleList extends Component {
 							key: props.componentId,
 							value: records
 						};
-						helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParam);
+						helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
 						helper.selectedSensor.set(obj, true);
 					}
 				} else {
@@ -154,7 +154,7 @@ export default class ToggleList extends Component {
 		}
 		// pass the selected sensor value with componentId as key,
 		const isExecuteQuery = true;
-		helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParam);
+		helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
 		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
@@ -228,14 +228,14 @@ ToggleList.propTypes = {
 	customQuery: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
-	URLParam: React.PropTypes.bool
+	URLParams: React.PropTypes.bool
 };
 
 // Default props value
 ToggleList.defaultProps = {
 	multiSelect: true,
 	componentStyle: {},
-	URLParam: false
+	URLParams: false
 };
 
 // context type
@@ -252,5 +252,5 @@ ToggleList.types = {
 	defaultSelected: TYPES.ARRAY,
 	multiSelect: TYPES.BOOLEAN,
 	customQuery: TYPES.FUNCTION,
-	URLParam: TYPES.BOOLEAN
+	URLParams: TYPES.BOOLEAN
 };

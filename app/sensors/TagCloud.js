@@ -66,7 +66,7 @@ export default class TagCloud extends Component {
 					key: this.props.componentId,
 					value: this.selectedValue
 				};
-				helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParam);
+				helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
 				helper.selectedSensor.set(obj, true);
 			} else if (!this.props.multiSelect && this.defaultSelected !== defaultValue) {
 				this.defaultSelected = defaultValue;
@@ -91,7 +91,7 @@ export default class TagCloud extends Component {
 					key: this.props.componentId,
 					value: this.selectedValue
 				};
-				helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParam);
+				helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
 				helper.selectedSensor.set(obj, true);
 			}
 		}, 300);
@@ -270,7 +270,7 @@ export default class TagCloud extends Component {
 			key: this.props.componentId,
 			value: this.selectedValue
 		};
-		helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParam);
+		helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
 		helper.selectedSensor.set(obj, true);
 	}
 
@@ -348,7 +348,7 @@ TagCloud.propTypes = {
 	react: React.PropTypes.object,
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
-	URLParam: React.PropTypes.bool
+	URLParams: React.PropTypes.bool
 };
 
 TagCloud.defaultProps = {
@@ -357,7 +357,7 @@ TagCloud.defaultProps = {
 	size: 100,
 	title: null,
 	componentStyle: {},
-	URLParam: false
+	URLParams: false
 };
 
 TagCloud.contextTypes = {
@@ -376,5 +376,5 @@ TagCloud.types = {
 	initialLoader: TYPES.STRING,
 	defaultSelected: TYPES.STRING,
 	react: TYPES.OBJECT,
-	URLParam: TYPES.BOOLEAN
+	URLParams: TYPES.BOOLEAN
 };

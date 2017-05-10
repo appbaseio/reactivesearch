@@ -134,7 +134,7 @@ export default class CategorySearch extends Component {
 	// default query
 	defaultSearchQuery(input) {
 		if (input && input.value) {
-			const query = [];
+			let query = [];
 			if (this.fieldType === "string") {
 				query.push({
 					match_phrase_prefix: {
@@ -149,6 +149,13 @@ export default class CategorySearch extends Component {
 						}
 					});
 				});
+
+				query = {
+					bool: {
+						should: query,
+						minimum_should_match: 1
+					}
+				}
 			}
 
 			if (input.category && input.category !== null) {
@@ -299,7 +306,7 @@ export default class CategorySearch extends Component {
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
-		helper.URLParams.update(this.props.componentId, finalVal.value, this.props.URLParam);
+		helper.URLParams.update(this.props.componentId, finalVal.value, this.props.URLParams);
 		helper.selectedSensor.set(obj, true);
 		this.setState({
 			currentValue: value
@@ -366,7 +373,7 @@ CategorySearch.propTypes = {
 		React.PropTypes.arrayOf(React.PropTypes.string)
 	]),
 	componentStyle: React.PropTypes.object,
-	URLParam: React.PropTypes.bool
+	URLParams: React.PropTypes.bool
 };
 
 // Default props value
@@ -374,7 +381,7 @@ CategorySearch.defaultProps = {
 	placeholder: "Search",
 	highlight: false,
 	componentStyle: {},
-	URLParam: false
+	URLParams: false
 };
 
 // context type
@@ -393,5 +400,5 @@ CategorySearch.types = {
 	defaultSelected: TYPES.STRING,
 	customQuery: TYPES.FUNCTION,
 	highlight: TYPES.BOOLEAN,
-	URLParam: TYPES.BOOLEAN
+	URLParams: TYPES.BOOLEAN
 };
