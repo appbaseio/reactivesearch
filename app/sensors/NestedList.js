@@ -305,20 +305,22 @@ export default class NestedList extends Component {
 	}
 
 	// set value
-	setValue(value, isExecuteQuery = false) {
+	setValue(value, isExecuteQuery = false, changeNestedValue=true) {
 		const obj = {
 			key: this.props.componentId,
 			value
 		};
-		const nestedObj = {
-			key: "nestedSelectedValues",
-			value
-		};
+		if(changeNestedValue) {
+			const nestedObj = {
+				key: "nestedSelectedValues",
+				value
+			};
+			helper.selectedSensor.set(nestedObj, isExecuteQuery);
+		}
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
 		helper.URLParams.update(this.props.componentId, value, this.props.URLParams);
-		helper.selectedSensor.set(nestedObj, isExecuteQuery);
 		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
@@ -337,9 +339,20 @@ export default class NestedList extends Component {
 	}
 
 	onItemClick(event) {
-		const selectedValues = ($(event.currentTarget).data("value")).split(",");
+		let selectedValues = ($(event.currentTarget).data("value")).split(",");
+		const level = Number($(event.currentTarget).data("level"));
 		event.stopPropagation();
-		this.onItemSelect(selectedValues);
+		if(selectedValues[level] === this.state.selectedValues[level]) {
+			selectedValues = this.state.selectedValues.filter((item, index) => index < level);
+			const items = this.state.items;
+			items[level+1] = null;
+			this.setState({
+				items,
+				selectedValues: selectedValues
+			}, this.setValue(selectedValues, true, false));
+		} else {
+			this.onItemSelect(selectedValues);
+		}
 	}
 
 	onItemSelect(selectedValues) {
@@ -376,7 +389,7 @@ export default class NestedList extends Component {
 					key={index}
 					className="rbc-list-container col s12 col-xs-12"
 				>
-					<button className={`rbc-list-item ${cx}`} data-value={item.value} onClick={this.onItemClick}>
+					<button className={`rbc-list-item ${cx}`} data-value={item.value} data-level={level} onClick={this.onItemClick}>
 						<span className="rbc-label">{item.key} {this.countRender(item.doc_count)}</span>
 						{this.renderChevron(level)}
 					</button>
@@ -452,9 +465,26 @@ export default class NestedList extends Component {
 	}
 }
 
+const NestedingValidation = (props, propName) => {
+	var err = null;
+	if (!props[propName]) {
+		err = new Error("appbaseField is required prop!");
+	}
+	else if (!_.isArray(props[propName])) {
+		err = new Error("appbaseField should be an array!");
+	}
+	else if (props[propName].length === 0) {
+		err = new Error("appbaseField should not have an empty array.");
+	}
+	else if (props[propName].length > 9) {
+		err = new Error("appbaseField can have maximum 10 fields.");
+	}
+	return err;
+}
+
 NestedList.propTypes = {
 	componentId: React.PropTypes.string.isRequired,
-	appbaseField: React.PropTypes.array.isRequired,
+	appbaseField: NestedingValidation,
 	title: React.PropTypes.oneOfType([
 		React.PropTypes.string,
 		React.PropTypes.element
