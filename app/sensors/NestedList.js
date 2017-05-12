@@ -10,6 +10,7 @@ import {
 import StaticSearch from "../addons/StaticSearch";
 
 const _ = require("lodash");
+const $ = require("jquery");
 
 export default class NestedList extends Component {
 	constructor(props) {
@@ -26,8 +27,7 @@ export default class NestedList extends Component {
 			selectedValues: []
 		};
 		this.nested = [
-			"nestedParentaggs",
-			"nestedChildaggs"
+			"nestedParentaggs"
 		];
 		this.sortObj = {
 			aggSort: this.props.sortBy
@@ -38,8 +38,10 @@ export default class NestedList extends Component {
 		this.defaultSelected = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
 		this.filterBySearch = this.filterBySearch.bind(this);
 		this.onItemSelect = this.onItemSelect.bind(this);
+		this.onItemClick = this.onItemClick.bind(this);
 		this.customQuery = this.customQuery.bind(this);
 		this.handleSelect = this.handleSelect.bind(this);
+		this.nestedAggQuery = this.nestedAggQuery.bind(this);
 		this.type = "term";
 	}
 
@@ -47,7 +49,6 @@ export default class NestedList extends Component {
 	componentWillMount() {
 		this.setQueryInfo();
 		this.createChannel();
-		this.createSubChannel();
 	}
 
 	componentDidMount() {
@@ -59,7 +60,8 @@ export default class NestedList extends Component {
 	handleSelect() {
 		if (this.defaultSelected) {
 			this.defaultSelected.forEach((value, index) => {
-				this.onItemSelect(value, index);
+				const customValue = this.defaultSelected.filter((item, subindex) => subindex <= index );
+				this.onItemSelect(customValue);
 			});
 		}
 	}
@@ -93,14 +95,8 @@ export default class NestedList extends Component {
 		if (this.channelId) {
 			manager.stopStream(this.channelId);
 		}
-		if (this.subChannelId) {
-			manager.stopStream(this.subChannelId);
-		}
 		if (this.channelListener) {
 			this.channelListener.remove();
-		}
-		if (this.subChannelListener) {
-			this.subChannelListener.remove();
 		}
 		if (this.loadListenerParent) {
 			this.loadListenerParent.remove();
@@ -141,6 +137,15 @@ export default class NestedList extends Component {
 			}
 		};
 		helper.selectedSensor.setSensorInfo(obj);
+		const nestedObj = {
+			key: "nestedSelectedValues",
+			value: {
+				queryType: this.type,
+				inputData: this.props.appbaseField[0],
+				customQuery: () => { }
+			}
+		};
+		helper.selectedSensor.setSensorInfo(nestedObj);
 	}
 
 	includeAggQuery() {
@@ -166,6 +171,53 @@ export default class NestedList extends Component {
 		});
 	}
 
+	nestedAggQuery() {
+		let query = null;
+		const level = this.state.selectedValues.length;
+		const field = this.props.appbaseField[level];
+		const orderType = this.props.sortBy === "count" ? "_count" : "_term";
+		const sortBy = this.props.sortBy === "count" ? "desc" : this.props.sortBy;
+		const createTermQuery = (index) => ({
+			term: {
+				[this.props.appbaseField[index]]: this.state.selectedValues[index]
+			}
+		});
+		const createFilterQuery = (level) => {
+			const filterMust = [];
+			if(level > 0) {
+				for(let i = 0; i <= level-1; i++) {
+					filterMust.push(createTermQuery(i));
+				}
+			}
+			return {
+				bool: {
+					must: filterMust
+				}
+			};
+		};
+		const init = (field, level) => ({
+			[`${field}-${level}`]: {
+				filter: createFilterQuery(level),
+				aggs: {
+					[field]: {
+						terms: {
+							field: field
+							,
+							size: this.props.size,
+							order: {
+								[orderType]: sortBy
+							}
+						}
+					}
+				}
+			}
+		});
+		if(this.state.selectedValues.length < this.props.appbaseField.length) {
+			query = init(field, level);
+		}
+		return query;
+	}
+
 	// Create a channel which passes the react and receive results whenever react changes
 	createChannel() {
 		// Set the react - add self aggs query as well with react
@@ -174,14 +226,14 @@ export default class NestedList extends Component {
 			key: this.props.appbaseField[0],
 			sort: this.props.sortBy,
 			size: this.props.size,
-			sortRef: this.nested[0]
+			customQuery: this.nestedAggQuery
 		};
 		if (react && react.and && typeof react.and === "string") {
 			react.and = [react.and];
 		} else {
 			react.and = react.and ? react.and : [];
 		}
-		react.and.push(this.nested[0]);
+		react.and.push(this.nested[0], "nestedSelectedValues");
 		this.includeAggQuery();
 
 		// create a channel and listen the changes
@@ -193,23 +245,28 @@ export default class NestedList extends Component {
 					queryStart: false
 				});
 			}
-			if (res.appliedQuery) {
-				const data = res.data;
-				let rawData;
-				if (res.mode === "streaming") {
-					rawData = this.state.rawData;
-					rawData.hits.hits.push(res.data);
-				} else if (res.mode === "historic") {
-					rawData = data;
-				}
+			if (res.appliedQuery && Object.keys(res.appliedQuery).length) {
+				this.queryLevel = this.getQueryLevel(res.appliedQuery);
 				this.setState({
 					queryStart: false,
-					rawData
+					rawData: res.data
 				});
-				this.setData(rawData, 0);
+				this.setData(res.data, this.queryLevel);
 			}
 		});
 		this.listenLoadingChannel(channelObj, "loadListenerParent");
+	}
+
+	getQueryLevel(appliedQuery) {
+		let level = 0;
+		try {
+			const appliedField = ((Object.keys(appliedQuery.body.aggs)[0]).split("-"))[0];
+			level = this.props.appbaseField.indexOf(appliedField);
+			level = level > -1 ? level : 0;
+		} catch(e) {
+			console.log(e);
+		}
+		return level;
 	}
 
 	listenLoadingChannel(channelObj, listener) {
@@ -222,72 +279,10 @@ export default class NestedList extends Component {
 		});
 	}
 
-	// Create a channel for sub category
-	createSubChannel() {
-		this.setSubCategory();
-		const react = this.props.react ? JSON.parse(JSON.stringify(this.props.react)) : {};
-		react.aggs = {
-			key: this.props.appbaseField[1],
-			sort: this.props.sortBy,
-			size: this.props.size,
-			sortRef: this.nested[1]
-		};
-		if (react && react.and && typeof react.and === "string") {
-			react.and = [react.and];
-		} else {
-			react.and = react.and ? react.and : [];
-		}
-		react.and = react.and.concat(["subCategory", this.nested[1]]);
-		const subChannelObj = manager.create(this.context.appbaseRef, this.context.type, react);
-		this.subChannelId = subChannelObj.channelId;
-		this.subChannelListener = subChannelObj.emitter.addListener(this.subChannelId, (res) => {
-			if (res.error) {
-				this.setState({
-					queryStart: false
-				});
-			}
-			if (res.appliedQuery) {
-				const data = res.data;
-				let rawData;
-				if (res.mode === "streaming") {
-					rawData = this.state.subRawData;
-					rawData.hits.hits.push(res.data);
-				} else if (res.mode === "historic") {
-					rawData = data;
-				}
-				if (this.state.selectedValues.length) {
-					this.setState({
-						queryStart: false,
-						subRawData: rawData
-					});
-					this.setData(rawData, 1);
-				}
-			}
-		});
-		this.listenLoadingChannel(subChannelObj, "loadListenerChild");
-		const obj = {
-			key: "subCategory",
-			value: ""
-		};
-		helper.selectedSensor.set(obj, true);
-	}
-
-	// set the query type and input data
-	setSubCategory() {
-		const obj = {
-			key: "subCategory",
-			value: {
-				queryType: "term",
-				inputData: this.props.appbaseField[0]
-			}
-		};
-
-		helper.selectedSensor.setSensorInfo(obj);
-	}
-
 	setData(data, level) {
-		if (data && data.aggregations && data.aggregations[this.props.appbaseField[level]] && data.aggregations[this.props.appbaseField[level]].buckets) {
-			this.addItemsToList(data.aggregations[this.props.appbaseField[level]].buckets, level);
+		const fieldLevel = `${this.props.appbaseField[level]}-${level}`;
+		if (data && data.aggregations && data.aggregations[fieldLevel] && data.aggregations[fieldLevel][this.props.appbaseField[level]] && data.aggregations[fieldLevel][this.props.appbaseField[level]].buckets) {
+			this.addItemsToList(data.aggregations[fieldLevel][this.props.appbaseField[level]].buckets, level);
 		}
 	}
 
@@ -297,10 +292,15 @@ export default class NestedList extends Component {
 			item.status = !!(this.defaultSelected && this.defaultSelected.indexOf(item.key) > -1);
 			return item;
 		});
-		const itemVar = level === 0 ? "items" : "subItems";
+		// const itemVar = level === 0 ? "items" : "subItems";
+		// this.setState({
+		// 	[itemVar]: newItems,
+		// 	storedItems: newItems
+		// });
+		const items = this.state.items;
+		items[level] = newItems;
 		this.setState({
-			[itemVar]: newItems,
-			storedItems: newItems
+			items
 		});
 	}
 
@@ -310,10 +310,15 @@ export default class NestedList extends Component {
 			key: this.props.componentId,
 			value
 		};
+		const nestedObj = {
+			key: "nestedSelectedValues",
+			value
+		};
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
 		helper.URLParams.update(this.props.componentId, value, this.props.URLParams);
+		helper.selectedSensor.set(nestedObj, isExecuteQuery);
 		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
@@ -331,47 +336,23 @@ export default class NestedList extends Component {
 		}
 	}
 
-	onItemSelect(key, level) {
-		if (level === 0 && this.state.subItems.length) {
-			this.setState({
-				subItems: []
-			}, this.onItemSelectcb.bind(this, key, level));
-		} else {
-			this.onItemSelectcb(key, level);
-		}
+	onItemClick(event) {
+		const selectedValues = ($(event.currentTarget).data("value")).split(",");
+		event.stopPropagation();
+		this.onItemSelect(selectedValues);
 	}
 
-	onItemSelectcb(key, level) {
-		const selectedValues = this.state.selectedValues;
-		let stateItems = {};
-		if (selectedValues[level] === key) {
-			delete selectedValues[level];
-			stateItems = {
-				selectedValues
-			};
-		} else {
-			selectedValues[level] = key;
-			stateItems = {
-				selectedValues
-			};
-			if (level === 0) {
-				selectedValues.splice(1, 1);
-				if (key !== selectedValues[0]) {
-					stateItems.subItems = [];
-				}
-				const obj = {
-					key: "subCategory",
-					value: key
-				};
-				helper.selectedSensor.set(obj, true);
-			}
-		}
-		this.setValue(selectedValues, true);
-		this.setState(stateItems);
+	onItemSelect(selectedValues) {
+		const items = this.state.items;
+		items[selectedValues.length] = null;
+		this.setState({
+			selectedValues,
+			items: items
+		}, this.setValue.bind(this, selectedValues, true));
 	}
 
 	renderChevron(level) {
-		return level === 0 ? (<i className="fa fa-chevron-right" />) : "";
+		return level < this.props.appbaseField.length-1 ? (<i className="fa fa-chevron-right" />) : "";
 	}
 
 	countRender(docCount) {
@@ -382,8 +363,10 @@ export default class NestedList extends Component {
 		return count;
 	}
 
-	renderItems(items, level) {
+	renderItems(items, prefix =[]) {
+		const level = prefix.length;
 		return items.map((item, index) => {
+			item.value = prefix.concat([item.key]);
 			const cx = classNames({
 				"rbc-item-active": (item.key === this.state.selectedValues[level]),
 				"rbc-item-inactive": !(item.key === this.state.selectedValues[level])
@@ -393,11 +376,17 @@ export default class NestedList extends Component {
 					key={index}
 					className="rbc-list-container col s12 col-xs-12"
 				>
-					<button className={`rbc-list-item ${cx}`} onClick={() => this.onItemSelect(item.key, level)}>
+					<button className={`rbc-list-item ${cx}`} data-value={item.value} onClick={this.onItemClick}>
 						<span className="rbc-label">{item.key} {this.countRender(item.doc_count)}</span>
 						{this.renderChevron(level)}
 					</button>
-					{this.renderList(item.key, level)}
+					{
+						this.state.selectedValues[level] === item.key && this.state.items[level+1] ? (
+							<ul className="rbc-sublist-container rbc-indent col s12 col-xs-12">
+								{this.renderItems(this.state.items[level+1], item.value)}
+							</ul>
+						) : null
+					}
 				</li>
 			);
 		});
@@ -419,11 +408,11 @@ export default class NestedList extends Component {
 		let searchComponent = null,
 			title = null;
 
-		const listComponent = (
+		const listComponent = this.state.items[0] ? (
 			<ul className="row rbc-list-container">
-				{this.renderItems(this.state.items, 0)}
+				{this.renderItems(this.state.items[0], [])}
 			</ul>
-		);
+		) : null;
 
 		// set static search
 		if (this.props.showSearch) {
