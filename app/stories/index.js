@@ -43,14 +43,14 @@ storiesOf("NestedList", module)
 	)))
 	.add("Default selection", withReadme(removeFirstLine(NestedListReadme), () => (
 		<NestedListDefault
-			defaultSelected={array("defaultSelected", ["bmw", "x series"])}
+			defaultSelected={array("defaultSelected", ["bmw", "estate car", "1er"])}
 		/>
 	))).add("Playground", withReadme(removeFirstLine(NestedListReadme), () => (
 		<NestedListDefault
 			title={text("title", "NestedList: Car Filter")}
 			size={number("size", 100)}
 			sortBy={select("sortBy", { asc: "asc", desc: "desc", count: "count" }, "count")}
-			defaultSelected={array("defaultSelected", ["bmw", "x series"])}
+			defaultSelected={array("defaultSelected", ["bmw", "estate car", "1er"])}
 			showCount={boolean("showCount", true)}
 			showSearch={boolean("showSearch", true)}
 			placeholder={text("placeholder", "Search Cars")}
