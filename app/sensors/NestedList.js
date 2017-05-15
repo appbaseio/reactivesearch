@@ -310,13 +310,13 @@ export default class NestedList extends Component {
 			key: this.props.componentId,
 			value
 		};
-		if(changeNestedValue) {
+		// if(changeNestedValue) {
 			const nestedObj = {
 				key: "nestedSelectedValues",
 				value
 			};
-			helper.selectedSensor.set(nestedObj, isExecuteQuery);
-		}
+			helper.selectedSensor.set(nestedObj, changeNestedValue);
+		// }
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
