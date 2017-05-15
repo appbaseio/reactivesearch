@@ -257,14 +257,17 @@ export default class CategorySearch extends Component {
 						markup: `${this.state.currentValue} &nbsp;<span class="rbc-strong">in ${aggs[0].key}</span>`,
 						value: `${this.state.currentValue}--rbc1`,
 						category: aggs[0].key
-					},
-					{
+					}
+				];
+
+				if (aggs.length > 1) {
+					suggestions.push({
 						label: this.state.currentValue,
 						markup: `${this.state.currentValue} &nbsp;<span class="rbc-strong">in ${aggs[1].key}</span>`,
 						value: `${this.state.currentValue}--rbc2`,
 						category: aggs[1].key
-					}
-				];
+					});
+				}
 				options.unshift(...suggestions);
 			}
 			options = this.removeDuplicates(options, "value");
