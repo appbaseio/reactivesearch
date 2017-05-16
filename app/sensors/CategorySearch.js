@@ -282,7 +282,7 @@ export default class CategorySearch extends Component {
 		const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
 		if (defaultValue && this.defaultSelected !== defaultValue) {
 			this.defaultSelected = defaultValue;
-			setTimeout(this.setValue.bind(this, this.defaultSelected), 100);
+			this.setValue(this.defaultSelected);
 			this.handleSearch({
 				value: this.defaultSelected
 			});
