@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import moment from "moment";
 import {
 	ReactiveBase,
 	DateRange,
@@ -15,29 +14,6 @@ import {
 require("./airbnb.scss");
 
 class Main extends Component {
-	dateQuery(value) {
-		let query = null;
-		if (value) {
-			query = [
-				{
-					"range": {
-						"date_from": {
-							"lte": moment(value.startDate).format("YYYYMMDD")
-						}
-					}
-				},
-				{
-					"range": {
-						"date_to": {
-							"gte": moment(value.endDate).format("YYYYMMDD")
-						}
-					}
-				}
-			];
-		}
-		return query;
-	}
-
 	roomQuery(record) {
 		let query = null;
 
@@ -123,7 +99,7 @@ class Main extends Component {
 										appbaseField={["date_from", "date_to"]}
 										title="When"
 										numberOfMonths={1}
-										customQuery={this.dateQuery}
+										queryFormat="basic_date"
 									/>
 								</div>
 								<div className="col s6">

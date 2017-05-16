@@ -246,7 +246,9 @@ export default class DynamicRangeSlider extends Component {
 				counts: this.countCalc(min, max, newItems),
 				values: { min, max }
 			}, () => {
-				this.handleResults(null, { min, max });
+				if(!_.isEqual(this.state.values, this.state.currentValues)) {
+					this.handleResults(null, { min, max });
+				}
 			});
 		}
 		const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
