@@ -413,6 +413,7 @@ MultiLevelMenu.contextTypes = {
 MultiLevelMenu.types = {
 	componentId: TYPES.STRING,
 	appbaseField: TYPES.ARRAY,
+	appbaseFieldType: TYPES.STRING,
 	react: TYPES.OBJECT,
 	maxCategories: TYPES.NUMBER,
 	maxItems: TYPES.NUMBER,

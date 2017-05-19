@@ -396,6 +396,7 @@ CategorySearch.contextTypes = {
 CategorySearch.types = {
 	componentId: TYPES.STRING,
 	appbaseField: TYPES.STRING,
+	appbaseFieldType: TYPES.KEYWORD,
 	react: TYPES.OBJECT,
 	title: TYPES.STRING,
 	categoryField: TYPES.STRING,
