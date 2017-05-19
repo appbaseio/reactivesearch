@@ -416,6 +416,7 @@ DynamicRangeSlider.contextTypes = {
 DynamicRangeSlider.types = {
 	componentId: TYPES.STRING,
 	appbaseField: TYPES.STRING,
+	appbaseFieldType: TYPES.NUMBER,
 	title: TYPES.STRING,
 	rangeLabels: TYPES.FUNCTION,
 	defaultSelected: TYPES.FUNCTION,

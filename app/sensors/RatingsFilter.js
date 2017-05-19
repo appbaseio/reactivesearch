@@ -179,6 +179,7 @@ RatingsFilter.contextTypes = {
 RatingsFilter.types = {
 	componentId: TYPES.STRING,
 	appbaseField: TYPES.STRING,
+	appbaseFieldType: TYPES.NUMBER,
 	title: TYPES.STRING,
 	data: TYPES.OBJECT,
 	defaultSelected: TYPES.OBJECT,
