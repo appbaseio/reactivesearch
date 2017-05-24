@@ -1,6 +1,6 @@
 {
   "name": "@appbaseio/reactivesearch",
-  "version": "0.4.14",
+  "version": "0.5.0",
   "description": "A React UI components library for building search experiences",
   "main": "lib/app.js",
   "scripts": {
@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/appbaseio/reactivesearch#readme",
   "dependencies": {
-    "@appbaseio/reactivemaps": "^1.0.0-alpha25",
+    "@appbaseio/reactivemaps": "1.0.0-alpha25",
     "classnames": "^2.2.5",
     "jquery": "^3.1.1",
     "lodash": "^4.15.0",
