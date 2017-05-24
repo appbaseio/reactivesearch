@@ -391,8 +391,9 @@ TagCloud.contextTypes = {
 };
 
 TagCloud.types = {
-	appbaseField: TYPES.STRING,
 	componentId: TYPES.STRING,
+	appbaseField: TYPES.STRING,
+	appbaseFieldType: TYPES.KEYWORD,
 	title: TYPES.STRING,
 	size: TYPES.NUMBER,
 	showCount: TYPES.BOOLEAN,

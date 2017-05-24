@@ -13,7 +13,10 @@ export default class CategorySearch extends Component {
 		super(props);
 		this.state = {
 			items: [],
-			currentValue: null,
+			currentValue: {
+				label: null,
+				value: null
+			},
 			isLoading: false,
 			options: [],
 			rawData: {
@@ -129,13 +132,19 @@ export default class CategorySearch extends Component {
 					value
 				}],
 				isLoadingOptions: true,
-				currentValue: value
+				currentValue: {
+					label: value,
+					value
+				}
 			});
 		} else {
 			this.setState({
 				options: [],
 				isLoadingOptions: false,
-				currentValue: value
+				currentValue: {
+					label: value,
+					value
+				}
 			});
 		}
 	}
@@ -256,26 +265,29 @@ export default class CategorySearch extends Component {
 					});
 				}
 			});
-			if (this.state.currentValue && this.state.currentValue.trim() !== "" && aggs.length) {
+			if (this.state.currentValue.value && this.state.currentValue.value.trim() !== "" && aggs.length) {
 				const suggestions = [
 					{
-						label: this.state.currentValue,
-						markup: `${this.state.currentValue} &nbsp;<span class="rbc-strong">in All Categories</span>`,
-						value: this.state.currentValue
+						label: this.state.currentValue.label,
+						markup: `${this.state.currentValue.label} &nbsp;<span class="rbc-strong">in All Categories</span>`,
+						value: this.state.currentValue.value
 					},
 					{
-						label: this.state.currentValue,
-						markup: `${this.state.currentValue} &nbsp;<span class="rbc-strong">in ${aggs[0].key}</span>`,
-						value: `${this.state.currentValue}--rbc1`,
+						label: this.state.currentValue.label,
+						markup: `${this.state.currentValue.label} &nbsp;<span class="rbc-strong">in ${aggs[0].key}</span>`,
+						value: `${this.state.currentValue.value}--rbc1`,
 						category: aggs[0].key
-					},
-					{
-						label: this.state.currentValue,
-						markup: `${this.state.currentValue} &nbsp;<span class="rbc-strong">in ${aggs[1].key}</span>`,
-						value: `${this.state.currentValue}--rbc2`,
-						category: aggs[1].key
 					}
 				];
+
+				if (aggs.length > 1) {
+					suggestions.push({
+						label: this.state.currentValue.label,
+						markup: `${this.state.currentValue.label} &nbsp;<span class="rbc-strong">in ${aggs[1].key}</span>`,
+						value: `${this.state.currentValue.value}--rbc2`,
+						category: aggs[1].key
+					});
+				}
 				options.unshift(...suggestions);
 			}
 			options = this.removeDuplicates(options, "value");
@@ -294,7 +306,7 @@ export default class CategorySearch extends Component {
 	changeValue(defaultValue) {
 		if (this.defaultSelected !== defaultValue) {
 			this.defaultSelected = defaultValue;
-			setTimeout(this.setValue.bind(this, this.defaultSelected), 100);
+			this.setValue(this.defaultSelected);
 			this.handleSearch({
 				value: this.defaultSelected
 			});
@@ -326,7 +338,10 @@ export default class CategorySearch extends Component {
 		helper.URLParams.update(this.props.componentId, finalVal ? finalVal.value : null, this.props.URLParams);
 		helper.selectedSensor.set(obj, true);
 		this.setState({
-			currentValue: value
+			currentValue: {
+				label: finalVal.value,
+				value
+			}
 		});
 	}
 
@@ -355,7 +370,7 @@ export default class CategorySearch extends Component {
 				{title}
 				<Select
 					isLoading={this.state.isLoadingOptions}
-					value={this.state.currentValue}
+					value={this.state.currentValue.label ? this.state.currentValue : null}
 					options={this.state.options}
 					onInputChange={this.setValue}
 					optionRenderer={this.optionRenderer}
@@ -413,6 +428,7 @@ CategorySearch.contextTypes = {
 CategorySearch.types = {
 	componentId: TYPES.STRING,
 	appbaseField: TYPES.STRING,
+	appbaseFieldType: TYPES.KEYWORD,
 	react: TYPES.OBJECT,
 	title: TYPES.STRING,
 	categoryField: TYPES.STRING,
