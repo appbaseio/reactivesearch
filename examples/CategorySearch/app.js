@@ -1,16 +1,14 @@
 import React, { Component } from "react";
-import { ReactiveBase, CategorySearch, ReactiveList, SelectedFilters, AppbaseSensorHelper as helper } from "../app";
+import ReactDOM from "react-dom";
+import moment from "moment";
+import {
+	ReactiveBase, CategorySearch, ReactiveList, SelectedFilters
+} from "../../app/app.js";
 
-require("./list.css");
-
-export default class CategorySearchDefault extends Component {
+class Main extends Component {
 	constructor(props) {
 		super(props);
 		this.onData = this.onData.bind(this);
-	}
-
-	componentDidMount() {
-		helper.ResponsiveStory();
 	}
 
 	onData(res) {
@@ -70,7 +68,7 @@ export default class CategorySearchDefault extends Component {
 							componentId="CarSensor"
 							title="CategorySearch"
 							weights={[1,5]}
-							{...this.props}
+							URLParams={true}
 						/>
 					</div>
 
@@ -93,3 +91,5 @@ export default class CategorySearchDefault extends Component {
 		);
 	}
 }
+
+ReactDOM.render(<Main />, document.getElementById("app"));

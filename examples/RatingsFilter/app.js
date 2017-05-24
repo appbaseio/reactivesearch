@@ -1,34 +1,24 @@
 import React, { Component } from "react";
-import { ReactiveBase, CategorySearch, ReactiveList, SelectedFilters, AppbaseSensorHelper as helper } from "../app";
+import ReactDOM from "react-dom";
+import moment from "moment";
+import {
+	ReactiveBase, RatingsFilter, ReactiveList, SelectedFilters, ResultCard
+} from "../../app/app.js";
 
-require("./list.css");
-
-export default class CategorySearchDefault extends Component {
+class Main extends Component {
 	constructor(props) {
 		super(props);
 		this.onData = this.onData.bind(this);
 	}
 
-	componentDidMount() {
-		helper.ResponsiveStory();
-	}
-
 	onData(res) {
-		let result = null;
-		if (res) {
-			let combineData = res.currentData;
-			if (res.mode === "historic") {
-				combineData = res.currentData.concat(res.newData);
-			} else if (res.mode === "streaming") {
-				combineData = helper.combineStreamData(res.currentData, res.newData);
-			}
-			if (combineData) {
-				result = combineData.map((markerData) => {
-					const marker = markerData._source;
-					return this.itemMarkup(marker, markerData);
-				});
-			}
-		}
+		const result = {
+			image: "https://www.enterprise.com/content/dam/global-vehicle-images/cars/FORD_FOCU_2012-1.png",
+			title: res.name,
+			rating: res.rating,
+			desc: res.brand,
+			url: "#"
+		};
 		return result;
 	}
 
@@ -48,6 +38,7 @@ export default class CategorySearchDefault extends Component {
 					<div className="text-description text-overflow full_row">
 						<ul className="highlight_tags">
 							{marker.price ? `Priced at $${marker.price}` : "Free Test Drive"}
+							{`Rated ${marker.rating}`}
 						</ul>
 					</div>
 				</div>
@@ -64,27 +55,30 @@ export default class CategorySearchDefault extends Component {
 				<div className="row">
 					<SelectedFilters componentId="SelectedFilters" />
 					<div className="col s6 col-xs-6">
-						<CategorySearch
-							appbaseField={["name", "color"]}
-							categoryField="brand.raw"
-							componentId="CarSensor"
-							title="CategorySearch"
-							weights={[1,5]}
-							{...this.props}
+						<RatingsFilter
+							componentId="RatingsSensor"
+							appbaseField={this.props.mapping.rating}
+							title="RatingsFilter"
+							data={
+							[{ start: 4, end: 5, label: "4 stars and up" },
+								{ start: 3, end: 5, label: "3 stars and up" },
+								{ start: 2, end: 5, label: "2 stars and up" },
+								{ start: 1, end: 5, label: "> 1 stars" }]
+							}
+							URLParams={true}
 						/>
 					</div>
 
 					<div className="col s6 col-xs-6">
-						<ReactiveList
+						<ResultCard
 							componentId="SearchResult"
-							appbaseField="name"
+							appbaseField={this.props.mapping.name}
 							title="Results"
-							sortBy="asc"
 							from={0}
 							size={20}
 							onData={this.onData}
 							react={{
-								and: "CarSensor"
+								and: "RatingsSensor"
 							}}
 						/>
 					</div>
@@ -93,3 +87,12 @@ export default class CategorySearchDefault extends Component {
 		);
 	}
 }
+
+Main.defaultProps = {
+	mapping: {
+		rating: "rating",
+		name: "name"
+	}
+};
+
+ReactDOM.render(<Main />, document.getElementById("app"));

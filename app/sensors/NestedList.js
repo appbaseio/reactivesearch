@@ -35,7 +35,6 @@ export default class NestedList extends Component {
 		this.channelId = null;
 		this.channelListener = null;
 		this.urlParams = helper.URLParams.get(this.props.componentId, true);
-		this.defaultSelected = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
 		this.filterBySearch = this.filterBySearch.bind(this);
 		this.onItemSelect = this.onItemSelect.bind(this);
 		this.onItemClick = this.onItemClick.bind(this);
@@ -52,42 +51,12 @@ export default class NestedList extends Component {
 	}
 
 	componentDidMount() {
-		if (this.defaultSelected) {
-			setTimeout(this.handleSelect.bind(this), 100);
-		}
+		setTimeout(this.checkDefault.bind(this, this.props), 100);
+		this.listenFilter();
 	}
 
-	handleSelect() {
-		if (this.defaultSelected) {
-			this.defaultSelected.forEach((value, index) => {
-				const customValue = this.defaultSelected.filter((item, subindex) => subindex <= index );
-				this.onItemSelect(customValue);
-			});
-		}
-	}
-
-	componentWillUpdate() {
-		setTimeout(() => {
-			const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
-			if (!_.isEqual(this.defaultSelected, defaultValue)) {
-				this.defaultSelected = defaultValue;
-				let items = this.state.items;
-				items = items.map((item) => {
-					item.key = item.key.toString();
-					item.status = !!(this.defaultSelected.length && this.defaultSelected.indexOf(item.key) > -1);
-					return item;
-				});
-				this.setState({
-					items,
-					storedItems: items
-				});
-				this.handleSelect(this.defaultSelected);
-			}
-			if (this.sortBy !== this.props.sortBy) {
-				this.sortBy = this.props.sortBy;
-				this.handleSortSelect();
-			}
-		}, 300);
+	componentWillReceiveProps(nextProps) {
+		this.checkDefault(nextProps);
 	}
 
 	// stop streaming request and remove listener when component will unmount
@@ -103,6 +72,58 @@ export default class NestedList extends Component {
 		}
 		if (this.loadListenerChild) {
 			this.loadListenerChild.remove();
+		}
+		if(this.filterListener) {
+			this.filterListener.remove();
+		}
+	}
+
+	listenFilter() {
+		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
+			if(data === this.props.componentId) {
+				this.changeValue(null);
+			}
+		});
+	}
+
+	checkDefault(props) {
+		this.urlParams = helper.URLParams.get(props.componentId, true);
+		const defaultValue = this.urlParams !== null ? this.urlParams : props.defaultSelected;
+		this.changeValue(defaultValue);
+	}
+
+	changeValue(defaultValue) {
+		if (!_.isEqual(this.defaultSelected, defaultValue)) {
+			this.defaultSelected = defaultValue;
+			let items = this.state.items;
+			items = items.map((subitems) => {
+				subitems = _.isArray(subitems) ? subitems.map((item) => {
+					item.key = item && item.key ? item.key.toString() : null;
+					item.status = !!(this.defaultSelected && this.defaultSelected.length && this.defaultSelected.indexOf(item.key) > -1);
+					return item;
+				}) : null;
+				return subitems;
+			})
+			this.setState({
+				items,
+				storedItems: items
+			});
+			this.handleSelect(this.defaultSelected);
+		}
+		if (this.sortBy !== this.props.sortBy) {
+			this.sortBy = this.props.sortBy;
+			this.handleSortSelect();
+		}
+	}
+
+	handleSelect() {
+		if (this.defaultSelected) {
+			this.defaultSelected.forEach((value, index) => {
+				const customValue = this.defaultSelected.filter((item, subindex) => subindex <= index );
+				this.onItemSelect(customValue);
+			});
+		} else if(this.defaultSelected === null) {
+			this.onItemSelect(null);
 		}
 	}
 
@@ -173,7 +194,7 @@ export default class NestedList extends Component {
 
 	nestedAggQuery() {
 		let query = null;
-		const level = this.state.selectedValues.length;
+		const level = _.isArray(this.state.selectedValues) && this.state.selectedValues.length ? this.state.selectedValues.length : 0;
 		const field = this.props.appbaseField[level];
 		const orderType = this.props.sortBy === "count" ? "_count" : "_term";
 		const sortBy = this.props.sortBy === "count" ? "desc" : this.props.sortBy;
@@ -212,7 +233,7 @@ export default class NestedList extends Component {
 				}
 			}
 		});
-		if(this.state.selectedValues.length < this.props.appbaseField.length) {
+		if(_.isArray(this.state.selectedValues) && this.state.selectedValues.length < this.props.appbaseField.length) {
 			query = init(field, level);
 		}
 		return query;
@@ -306,6 +327,7 @@ export default class NestedList extends Component {
 
 	// set value
 	setValue(value, isExecuteQuery = false, changeNestedValue=true) {
+		value = value && value.length ? value : null;
 		const obj = {
 			key: this.props.componentId,
 			value
@@ -356,8 +378,12 @@ export default class NestedList extends Component {
 	}
 
 	onItemSelect(selectedValues) {
-		const items = this.state.items;
-		items[selectedValues.length] = null;
+		let items = this.state.items;
+		if(selectedValues === null) {
+			items = [items[0]];
+		} else {
+			items[selectedValues.length] = null;
+		}
 		this.setState({
 			selectedValues,
 			items: items
@@ -381,8 +407,8 @@ export default class NestedList extends Component {
 		return items.map((item, index) => {
 			item.value = prefix.concat([item.key]);
 			const cx = classNames({
-				"rbc-item-active": (item.key === this.state.selectedValues[level]),
-				"rbc-item-inactive": !(item.key === this.state.selectedValues[level])
+				"rbc-item-active": (_.isArray(this.state.selectedValues) && item.key === this.state.selectedValues[level]),
+				"rbc-item-inactive": !(_.isArray(this.state.selectedValues) && item.key === this.state.selectedValues[level])
 			});
 			return (
 				<li
@@ -394,7 +420,7 @@ export default class NestedList extends Component {
 						{this.renderChevron(level)}
 					</button>
 					{
-						this.state.selectedValues[level] === item.key && this.state.items[level+1] ? (
+						_.isArray(this.state.selectedValues) && this.state.selectedValues[level] === item.key && this.state.items[level+1] ? (
 							<ul className="rbc-sublist-container rbc-indent col s12 col-xs-12">
 								{this.renderItems(this.state.items[level+1], item.value)}
 							</ul>
@@ -503,7 +529,8 @@ NestedList.propTypes = {
 	react: React.PropTypes.object,
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
-	URLParams: React.PropTypes.bool
+	URLParams: React.PropTypes.bool,
+	allowFilter: React.PropTypes.bool
 };
 
 // Default props value
@@ -515,7 +542,8 @@ NestedList.defaultProps = {
 	title: null,
 	placeholder: "Search",
 	componentStyle: {},
-	URLParams: false
+	URLParams: false,
+	allowFilter: true
 };
 
 // context type
@@ -537,5 +565,6 @@ NestedList.types = {
 	defaultSelected: TYPES.ARRAY,
 	customQuery: TYPES.FUNCTION,
 	initialLoader: TYPES.OBJECT,
-	URLParams: TYPES.BOOLEAN
+	URLParams: TYPES.BOOLEAN,
+	allowFilter: TYPES.BOOLEAN
 };

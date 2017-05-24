@@ -1,38 +1,18 @@
 import React, { Component } from "react";
-import { ReactiveBase, CategorySearch, ReactiveList, SelectedFilters, AppbaseSensorHelper as helper } from "../app";
+import ReactDOM from "react-dom";
+import moment from "moment";
+import {
+	ReactiveBase, NestedList, ReactiveList, SelectedFilters
+} from "../../app/app.js";
 
-require("./list.css");
-
-export default class CategorySearchDefault extends Component {
+class Main extends Component {
 	constructor(props) {
 		super(props);
-		this.onData = this.onData.bind(this);
+		this.itemMarkup = this.itemMarkup.bind(this);
 	}
 
-	componentDidMount() {
-		helper.ResponsiveStory();
-	}
-
-	onData(res) {
-		let result = null;
-		if (res) {
-			let combineData = res.currentData;
-			if (res.mode === "historic") {
-				combineData = res.currentData.concat(res.newData);
-			} else if (res.mode === "streaming") {
-				combineData = helper.combineStreamData(res.currentData, res.newData);
-			}
-			if (combineData) {
-				result = combineData.map((markerData) => {
-					const marker = markerData._source;
-					return this.itemMarkup(marker, markerData);
-				});
-			}
-		}
-		return result;
-	}
-
-	itemMarkup(marker, markerData) {
+	itemMarkup(markerData) {
+		const marker = markerData._source;
 		return (
 			<a
 				className="full_row single-record single_record_for_clone"
@@ -64,27 +44,24 @@ export default class CategorySearchDefault extends Component {
 				<div className="row">
 					<SelectedFilters componentId="SelectedFilters" />
 					<div className="col s6 col-xs-6">
-						<CategorySearch
-							appbaseField={["name", "color"]}
-							categoryField="brand.raw"
-							componentId="CarSensor"
-							title="CategorySearch"
-							weights={[1,5]}
-							{...this.props}
+						<NestedList
+							componentId="CategorySensor"
+							appbaseField={["brand.raw", "vehicleType.raw", "model.raw"]}
+							title="NestedList"
+							URLParams={true}
 						/>
 					</div>
 
 					<div className="col s6 col-xs-6">
 						<ReactiveList
 							componentId="SearchResult"
-							appbaseField="name"
+							appbaseField={this.props.mapping.brand}
 							title="Results"
-							sortBy="asc"
 							from={0}
 							size={20}
-							onData={this.onData}
+							onData={this.itemMarkup}
 							react={{
-								and: "CarSensor"
+								and: "CategorySensor"
 							}}
 						/>
 					</div>
@@ -93,3 +70,12 @@ export default class CategorySearchDefault extends Component {
 		);
 	}
 }
+
+Main.defaultProps = {
+	mapping: {
+		brand: "brand.raw",
+		model: "model.raw"
+	}
+};
+
+ReactDOM.render(<Main />, document.getElementById("app"));

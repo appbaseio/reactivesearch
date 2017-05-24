@@ -13,7 +13,10 @@ export default class CategorySearch extends Component {
 		super(props);
 		this.state = {
 			items: [],
-			currentValue: null,
+			currentValue: {
+				label: null,
+				value: null
+			},
 			isLoading: false,
 			options: [],
 			rawData: {
@@ -41,6 +44,7 @@ export default class CategorySearch extends Component {
 		this.setQueryInfo();
 		this.createChannel();
 		this.checkDefault();
+		this.listenFilter();
 	}
 
 	componentWillUpdate() {
@@ -55,6 +59,18 @@ export default class CategorySearch extends Component {
 		if (this.channelListener) {
 			this.channelListener.remove();
 		}
+		if(this.filterListener) {
+			this.filterListener.remove();
+		}
+	}
+
+	listenFilter() {
+		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
+			if(data === this.props.componentId) {
+				this.defaultValue = "";
+				this.changeValue(this.defaultValue);
+			}
+		});
 	}
 
 	highlightQuery() {
@@ -105,7 +121,7 @@ export default class CategorySearch extends Component {
 	setValue(value) {
 		const obj = {
 			key: this.searchInputId,
-			value: { value }
+			value: value === null ? null : { value }
 		};
 		helper.selectedSensor.set(obj, true);
 
@@ -116,13 +132,19 @@ export default class CategorySearch extends Component {
 					value
 				}],
 				isLoadingOptions: true,
-				currentValue: value
+				currentValue: {
+					label: value,
+					value
+				}
 			});
 		} else {
 			this.setState({
 				options: [],
 				isLoadingOptions: false,
-				currentValue: value
+				currentValue: {
+					label: value,
+					value
+				}
 			});
 		}
 	}
@@ -135,30 +157,28 @@ export default class CategorySearch extends Component {
 	defaultSearchQuery(input) {
 		if (input && input.value) {
 			let query = [];
-			if (this.fieldType === "string") {
-				query.push({
+			const appbaseField = this.fieldType === "string" ? [this.props.appbaseField] : this.props.appbaseField;
+			appbaseField.forEach((field, index) => {
+				const queryObj = {
 					match_phrase_prefix: {
-						[this.props.appbaseField]: input.value
-					}
-				});
-			} else {
-				this.props.appbaseField.forEach((field) => {
-					query.push({
-						match_phrase_prefix: {
-							[field]: input.value
+						[field]: {
+							query: input.value
 						}
-					});
-				});
+					}
+				};
+				if(this.props.weights && this.props.weights[index]) {
+					queryObj.match_phrase_prefix[field].boost = this.props.weights[index];
+				}
+				query.push(queryObj);
+			});
 
+			if (input.category && input.category !== null) {
 				query = {
 					bool: {
 						should: query,
 						minimum_should_match: 1
 					}
-				}
-			}
-
-			if (input.category && input.category !== null) {
+				};
 				return {
 					bool: {
 						must: [query, {
@@ -245,26 +265,26 @@ export default class CategorySearch extends Component {
 					});
 				}
 			});
-			if (this.state.currentValue && this.state.currentValue.trim() !== "" && aggs.length) {
+			if (this.state.currentValue.value && this.state.currentValue.value.trim() !== "" && aggs.length) {
 				const suggestions = [
 					{
-						label: this.state.currentValue,
-						markup: `${this.state.currentValue} &nbsp;<span class="rbc-strong">in All Categories</span>`,
-						value: this.state.currentValue
+						label: this.state.currentValue.label,
+						markup: `${this.state.currentValue.label} &nbsp;<span class="rbc-strong">in All Categories</span>`,
+						value: this.state.currentValue.value
 					},
 					{
-						label: this.state.currentValue,
-						markup: `${this.state.currentValue} &nbsp;<span class="rbc-strong">in ${aggs[0].key}</span>`,
-						value: `${this.state.currentValue}--rbc1`,
+						label: this.state.currentValue.label,
+						markup: `${this.state.currentValue.label} &nbsp;<span class="rbc-strong">in ${aggs[0].key}</span>`,
+						value: `${this.state.currentValue.value}--rbc1`,
 						category: aggs[0].key
 					}
 				];
 
 				if (aggs.length > 1) {
 					suggestions.push({
-						label: this.state.currentValue,
-						markup: `${this.state.currentValue} &nbsp;<span class="rbc-strong">in ${aggs[1].key}</span>`,
-						value: `${this.state.currentValue}--rbc2`,
+						label: this.state.currentValue.label,
+						markup: `${this.state.currentValue.label} &nbsp;<span class="rbc-strong">in ${aggs[1].key}</span>`,
+						value: `${this.state.currentValue.value}--rbc2`,
 						category: aggs[1].key
 					});
 				}
@@ -280,7 +300,11 @@ export default class CategorySearch extends Component {
 
 	checkDefault() {
 		const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
-		if (defaultValue && this.defaultSelected !== defaultValue) {
+		this.changeValue(defaultValue);
+	}
+
+	changeValue(defaultValue) {
+		if (this.defaultSelected !== defaultValue) {
 			this.defaultSelected = defaultValue;
 			this.setValue(this.defaultSelected);
 			this.handleSearch({
@@ -292,13 +316,15 @@ export default class CategorySearch extends Component {
 	// When user has selected a search value
 	handleSearch(currentValue) {
 		const value = currentValue ? currentValue.value : null;
-		const finalVal = { value };
+		const finalVal = value ? { value } : null;
 
 		if (currentValue && currentValue.category) {
 			finalVal.category = currentValue.category;
 			finalVal.value = finalVal.value.slice(0, -6);
 		} else {
-			finalVal.category = null;
+			if(finalVal) {
+				finalVal.category = null;
+			}
 		}
 
 		const obj = {
@@ -309,10 +335,13 @@ export default class CategorySearch extends Component {
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
-		helper.URLParams.update(this.props.componentId, finalVal.value, this.props.URLParams);
+		helper.URLParams.update(this.props.componentId, finalVal ? finalVal.value : null, this.props.URLParams);
 		helper.selectedSensor.set(obj, true);
 		this.setState({
-			currentValue: value
+			currentValue: {
+				label: finalVal.value,
+				value
+			}
 		});
 	}
 
@@ -341,7 +370,7 @@ export default class CategorySearch extends Component {
 				{title}
 				<Select
 					isLoading={this.state.isLoadingOptions}
-					value={this.state.currentValue}
+					value={this.state.currentValue.label ? this.state.currentValue : null}
 					options={this.state.options}
 					onInputChange={this.setValue}
 					optionRenderer={this.optionRenderer}
@@ -360,6 +389,7 @@ CategorySearch.propTypes = {
 		React.PropTypes.string,
 		React.PropTypes.arrayOf(React.PropTypes.string)
 	]),
+	weights: React.PropTypes.arrayOf(React.PropTypes.number),
 	title: React.PropTypes.oneOfType([
 		React.PropTypes.string,
 		React.PropTypes.element
@@ -376,7 +406,8 @@ CategorySearch.propTypes = {
 		React.PropTypes.arrayOf(React.PropTypes.string)
 	]),
 	componentStyle: React.PropTypes.object,
-	URLParams: React.PropTypes.bool
+	URLParams: React.PropTypes.bool,
+	allowFilter: React.PropTypes.bool
 };
 
 // Default props value
@@ -384,7 +415,8 @@ CategorySearch.defaultProps = {
 	placeholder: "Search",
 	highlight: false,
 	componentStyle: {},
-	URLParams: false
+	URLParams: false,
+	allowFilter: true
 };
 
 // context type
@@ -404,5 +436,7 @@ CategorySearch.types = {
 	defaultSelected: TYPES.STRING,
 	customQuery: TYPES.FUNCTION,
 	highlight: TYPES.BOOLEAN,
-	URLParams: TYPES.BOOLEAN
+	URLParams: TYPES.BOOLEAN,
+	allowFilter: TYPES.BOOLEAN,
+	weights: TYPES.OBJECT
 };

@@ -73,6 +73,9 @@ class Main extends Component {
 							categoryField="brand.raw"
 							componentId="CategorySensor"
 							placeholder="Search for cars..."
+							react={{
+								and: "CarSensor"
+							}}
 						/>
 					</div>
 				</nav>
@@ -87,7 +90,7 @@ class Main extends Component {
 									showSearch={true}
 									placeholder="Filter Cars"
 									react={{
-										and: ["RatingsSensor", "VehicleTypeSensor"]
+										and: ["CategorySensor", "RatingsSensor", "VehicleTypeSensor"]
 									}}
 								/>
 							</div>
