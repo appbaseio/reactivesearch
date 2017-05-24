@@ -31,7 +31,6 @@ export default class TagCloud extends Component {
 		this.channelId = null;
 		this.channelListener = null;
 		this.urlParams = helper.URLParams.get(this.props.componentId, this.props.multiSelect);
-		this.defaultSelected = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
 		this.type = this.props.multiSelect ? "Terms" : "Term";
 		this.customQuery = this.customQuery.bind(this);
 		this.defaultCustomQuery = this.defaultCustomQuery.bind(this);
@@ -42,63 +41,82 @@ export default class TagCloud extends Component {
 		this.size = this.props.size;
 		this.setQueryInfo();
 		this.createChannel();
+		setTimeout(this.checkDefault.bind(this, this.props), 300);
+		this.listenFilter();
 	}
 
-	componentWillUpdate() {
-		setTimeout(() => {
-			const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
-			if (this.props.multiSelect && !_.isEqual(this.defaultSelected, defaultValue)) {
-				this.defaultSelected = defaultValue;
-				const items = this.state.items.map((item) => {
-					item.status = ((this.defaultSelected && this.defaultSelected.indexOf(item.key) > -1) || (this.selectedValue && this.selectedValue.indexOf(item.key) > -1));
-					return item;
-				});
-
-				this.selectedValue = items.filter(item => item.status).map(item => item.key);
-
-				this.setState({ items });
-
-				if(this.props.onValueChange) {
-					this.props.onValueChange(obj.value);
-				}
-
-				const obj = {
-					key: this.props.componentId,
-					value: this.selectedValue
-				};
-				helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
-				helper.selectedSensor.set(obj, true);
-			} else if (!this.props.multiSelect && this.defaultSelected !== defaultValue) {
-				this.defaultSelected = defaultValue;
-				const items = this.state.items.map((item) => {
-					if (this.defaultSelected && this.defaultSelected === item.key) {
-						item.status = !item.status;
-					} else {
-						item.status = false;
-					}
-					return item;
-				});
-
-				this.selectedValue = this.selectedValue === this.defaultSelected ? "" : this.defaultSelected;
-
-				this.setState({ items });
-
-				if(this.props.onValueChange) {
-					this.props.onValueChange(obj.value);
-				}
-
-				const obj = {
-					key: this.props.componentId,
-					value: this.selectedValue
-				};
-				helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
-				helper.selectedSensor.set(obj, true);
-			}
-		}, 300);
+	componentWillReceiveProps(nextProps) {
+		this.checkDefault(nextProps);
 	}
 
 	componentWillUnmount() {
 		this.removeChannel();
+	}
+
+	listenFilter() {
+		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
+			if(data === this.props.componentId) {
+				this.changeValue(null);
+			}
+		});
+	}
+
+	checkDefault(props) {
+		if(this.state.items.length) {
+			const defaultValue = this.urlParams !== null ? this.urlParams : props.defaultSelected;
+			this.changeValue(defaultValue);
+		}
+	}
+
+	changeValue(defaultValue) {
+		if (this.props.multiSelect && !_.isEqual(this.defaultSelected, defaultValue)) {
+			this.defaultSelected = defaultValue;
+			const items = this.state.items.map((item) => {
+				item.status = ((this.defaultSelected && this.defaultSelected.indexOf(item.key) > -1) || (this.selectedValue && this.selectedValue.indexOf(item.key) > -1));
+				item.status = this.defaultSelected === null ? false : item.status;
+				return item;
+			});
+
+			this.selectedValue = this.defaultSelected === null ? null : items.filter(item => item.status).map(item => item.key);
+
+			this.setState({ items });
+
+			if(this.props.onValueChange) {
+				this.props.onValueChange(obj.value);
+			}
+
+			const obj = {
+				key: this.props.componentId,
+				value: this.selectedValue
+			};
+			helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
+			helper.selectedSensor.set(obj, true);
+		} else if (!this.props.multiSelect && this.defaultSelected !== defaultValue) {
+			this.defaultSelected = defaultValue;
+			const items = this.state.items.map((item) => {
+				if (this.defaultSelected && this.defaultSelected === item.key) {
+					item.status = !item.status;
+				} else {
+					item.status = false;
+				}
+				return item;
+			});
+
+			this.selectedValue = this.selectedValue === this.defaultSelected ? "" : this.defaultSelected;
+
+			this.setState({ items });
+
+			if(this.props.onValueChange) {
+				this.props.onValueChange(obj.value);
+			}
+
+			const obj = {
+				key: this.props.componentId,
+				value: this.selectedValue
+			};
+			helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
+			helper.selectedSensor.set(obj, true);
+		}
 	}
 
 	customQuery(value) {
@@ -127,6 +145,9 @@ export default class TagCloud extends Component {
 		}
 		if (this.loadListener) {
 			this.loadListener.remove();
+		}
+		if(this.filterListener) {
+			this.filterListener.remove();
 		}
 	}
 
@@ -226,13 +247,14 @@ export default class TagCloud extends Component {
 			items: newItems,
 			storedItems: newItems
 		}, () => {
-			if (this.props.multiSelect && this.defaultSelected) {
-				this.defaultSelected.forEach((item) => {
-					this.setValue(item);
-				});
-			} else if (!this.props.multiSelect && this.defaultSelected) {
-				this.setValue(this.defaultSelected);
-			}
+			this.checkDefault(this.props);
+			// if (this.props.multiSelect && this.defaultSelected) {
+			// 	this.defaultSelected.forEach((item) => {
+			// 		this.setValue(item);
+			// 	});
+			// } else if (!this.props.multiSelect && this.defaultSelected) {
+			// 	this.setValue(this.defaultSelected);
+			// }
 		});
 	}
 
@@ -270,6 +292,7 @@ export default class TagCloud extends Component {
 			key: this.props.componentId,
 			value: this.selectedValue
 		};
+		this.defaultSelected = this.selectedValue;
 		helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
 		helper.selectedSensor.set(obj, true);
 	}
@@ -348,7 +371,8 @@ TagCloud.propTypes = {
 	react: React.PropTypes.object,
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
-	URLParams: React.PropTypes.bool
+	URLParams: React.PropTypes.bool,
+	allowFilter: React.PropTypes.bool
 };
 
 TagCloud.defaultProps = {
@@ -357,7 +381,8 @@ TagCloud.defaultProps = {
 	size: 100,
 	title: null,
 	componentStyle: {},
-	URLParams: false
+	URLParams: false,
+	allowFilter: true
 };
 
 TagCloud.contextTypes = {
@@ -376,5 +401,6 @@ TagCloud.types = {
 	initialLoader: TYPES.STRING,
 	defaultSelected: TYPES.STRING,
 	react: TYPES.OBJECT,
-	URLParams: TYPES.BOOLEAN
+	URLParams: TYPES.BOOLEAN,
+	allowFilter: TYPES.BOOLEAN
 };

@@ -41,6 +41,7 @@ export default class CategorySearch extends Component {
 		this.setQueryInfo();
 		this.createChannel();
 		this.checkDefault();
+		this.listenFilter();
 	}
 
 	componentWillUpdate() {
@@ -55,6 +56,18 @@ export default class CategorySearch extends Component {
 		if (this.channelListener) {
 			this.channelListener.remove();
 		}
+		if(this.filterListener) {
+			this.filterListener.remove();
+		}
+	}
+
+	listenFilter() {
+		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
+			if(data === this.props.componentId) {
+				this.defaultValue = "";
+				this.changeValue(this.defaultValue);
+			}
+		});
 	}
 
 	highlightQuery() {
@@ -105,7 +118,7 @@ export default class CategorySearch extends Component {
 	setValue(value) {
 		const obj = {
 			key: this.searchInputId,
-			value: { value }
+			value: value === null ? null : { value }
 		};
 		helper.selectedSensor.set(obj, true);
 
@@ -135,30 +148,28 @@ export default class CategorySearch extends Component {
 	defaultSearchQuery(input) {
 		if (input && input.value) {
 			let query = [];
-			if (this.fieldType === "string") {
-				query.push({
+			const appbaseField = this.fieldType === "string" ? [this.props.appbaseField] : this.props.appbaseField;
+			appbaseField.forEach((field, index) => {
+				const queryObj = {
 					match_phrase_prefix: {
-						[this.props.appbaseField]: input.value
-					}
-				});
-			} else {
-				this.props.appbaseField.forEach((field) => {
-					query.push({
-						match_phrase_prefix: {
-							[field]: input.value
+						[field]: {
+							query: input.value
 						}
-					});
-				});
+					}
+				};
+				if(this.props.weights && this.props.weights[index]) {
+					queryObj.match_phrase_prefix[field].boost = this.props.weights[index];
+				}
+				query.push(queryObj);
+			});
 
+			if (input.category && input.category !== null) {
 				query = {
 					bool: {
 						should: query,
 						minimum_should_match: 1
 					}
-				}
-			}
-
-			if (input.category && input.category !== null) {
+				};
 				return {
 					bool: {
 						must: [query, {
@@ -277,7 +288,11 @@ export default class CategorySearch extends Component {
 
 	checkDefault() {
 		const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
-		if (defaultValue && this.defaultSelected !== defaultValue) {
+		this.changeValue(defaultValue);
+	}
+
+	changeValue(defaultValue) {
+		if (this.defaultSelected !== defaultValue) {
 			this.defaultSelected = defaultValue;
 			setTimeout(this.setValue.bind(this, this.defaultSelected), 100);
 			this.handleSearch({
@@ -289,13 +304,15 @@ export default class CategorySearch extends Component {
 	// When user has selected a search value
 	handleSearch(currentValue) {
 		const value = currentValue ? currentValue.value : null;
-		const finalVal = { value };
+		const finalVal = value ? { value } : null;
 
 		if (currentValue && currentValue.category) {
 			finalVal.category = currentValue.category;
 			finalVal.value = finalVal.value.slice(0, -6);
 		} else {
-			finalVal.category = null;
+			if(finalVal) {
+				finalVal.category = null;
+			}
 		}
 
 		const obj = {
@@ -306,7 +323,7 @@ export default class CategorySearch extends Component {
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
-		helper.URLParams.update(this.props.componentId, finalVal.value, this.props.URLParams);
+		helper.URLParams.update(this.props.componentId, finalVal ? finalVal.value : null, this.props.URLParams);
 		helper.selectedSensor.set(obj, true);
 		this.setState({
 			currentValue: value
@@ -357,6 +374,7 @@ CategorySearch.propTypes = {
 		React.PropTypes.string,
 		React.PropTypes.arrayOf(React.PropTypes.string)
 	]),
+	weights: React.PropTypes.arrayOf(React.PropTypes.number),
 	title: React.PropTypes.oneOfType([
 		React.PropTypes.string,
 		React.PropTypes.element
@@ -373,7 +391,8 @@ CategorySearch.propTypes = {
 		React.PropTypes.arrayOf(React.PropTypes.string)
 	]),
 	componentStyle: React.PropTypes.object,
-	URLParams: React.PropTypes.bool
+	URLParams: React.PropTypes.bool,
+	allowFilter: React.PropTypes.bool
 };
 
 // Default props value
@@ -381,7 +400,8 @@ CategorySearch.defaultProps = {
 	placeholder: "Search",
 	highlight: false,
 	componentStyle: {},
-	URLParams: false
+	URLParams: false,
+	allowFilter: true
 };
 
 // context type
@@ -400,5 +420,7 @@ CategorySearch.types = {
 	defaultSelected: TYPES.STRING,
 	customQuery: TYPES.FUNCTION,
 	highlight: TYPES.BOOLEAN,
-	URLParams: TYPES.BOOLEAN
+	URLParams: TYPES.BOOLEAN,
+	allowFilter: TYPES.BOOLEAN,
+	weights: TYPES.OBJECT
 };

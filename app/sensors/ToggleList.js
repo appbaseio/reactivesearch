@@ -23,64 +23,75 @@ export default class ToggleList extends Component {
 	// Set query information
 	componentDidMount() {
 		this.setQueryInfo();
-		this.initialize(this.props);
+		// this.initialize(this.props);
+		setTimeout(this.initialize.bind(this, this.props), 300);
+		this.listenFilter();
 	}
 
 	componentWillReceiveProps(nextProps) {
 		this.initialize(nextProps);
 	}
 
-	initialize(props) {
-		setTimeout(() => {
-			const defaultValue = this.urlParams !== null ? this.urlParams : props.defaultSelected;
-			if (defaultValue) {
-				if (!props.multiSelect) {
-					if (typeof defaultValue === "string") {
-						if (this.defaultSelected !== defaultValue) {
-							this.defaultSelected = defaultValue;
-							const records = props.data.filter(record => this.defaultSelected.indexOf(record.label) > -1);
+	// stop streaming request and remove listener when component will unmount
+	componentWillUnmount() {
+		if(this.filterListener) {
+			this.filterListener.remove();
+		}
+	}
 
-							this.setState({
-								selected: records
-							});
-							if(this.props.onValueChange) {
-								this.props.onValueChange(obj.value);
-							}
-							const obj = {
-								key: props.componentId,
-								value: records
-							};
-							helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
-							helper.selectedSensor.set(obj, true);
-						}
-					} else {
-						console.error(`${props.componentId} - defaultSelected prop should be of type "string"`);
-					}
-				} else if (typeof defaultValue === "object") {
-					if (!_.isEqual(this.defaultSelected, defaultValue)) {
-						this.defaultSelected = defaultValue;
-						let records = [];
-						this.defaultSelected.forEach((item) => {
-							records = records.concat(props.data.filter(record => item.indexOf(record.label) > -1));
-						});
-						this.setState({
-							selected: records
-						});
-						if(this.props.onValueChange) {
-							this.props.onValueChange(obj.value);
-						}
-						const obj = {
-							key: props.componentId,
-							value: records
-						};
-						helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
-						helper.selectedSensor.set(obj, true);
-					}
-				} else {
-					console.error(`${props.componentId} - defaultSelected prop should be an "array"`);
-				}
+	listenFilter() {
+		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
+			if(data === this.props.componentId) {
+				this.changeValue(null);
 			}
-		}, 100);
+		});
+	}
+
+	initialize(props) {
+		const defaultValue = this.urlParams !== null ? this.urlParams : props.defaultSelected;
+		this.changeValue(defaultValue);
+	}
+
+	changeValue(defaultValue) {
+		if (!_.isEqual(this.defaultSelected, defaultValue)) {
+			this.defaultSelected = defaultValue;
+			if (!this.props.multiSelect) {
+				const records = this.defaultSelected === null ? null : this.props.data.filter(record => this.defaultSelected && this.defaultSelected.indexOf(record.label) > -1);
+				this.setState({
+					selected: records
+				});
+				if(this.props.onValueChange) {
+					this.props.onValueChange(obj.value);
+				}
+				const obj = {
+					key: this.props.componentId,
+					value: records
+				};
+				helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
+				helper.selectedSensor.set(obj, true);
+			} else {
+				let records = [];
+				if(this.defaultSelected) {
+					this.defaultSelected.forEach((item) => {
+						records = records.concat(this.props.data.filter(record => item.indexOf(record.label) > -1));
+					});
+				} else if(this.defaultSelected === null) {
+					records = null;
+				}
+				this.setState({
+					selected: records
+				});
+				if(this.props.onValueChange) {
+					this.props.onValueChange(obj.value);
+				}
+				const obj = {
+					key: this.props.componentId,
+					value: records
+				};
+				helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
+				helper.selectedSensor.set(obj, true);
+			}
+		}
 	}
 
 	// set the query type and input data
@@ -123,7 +134,7 @@ export default class ToggleList extends Component {
 
 	// handle the input change and pass the value inside sensor info
 	handleChange(record) {
-		const selected = this.state.selected;
+		const selected = this.state.selected ? this.state.selected : [];
 		let newSelection = [];
 		let selectedIndex = null;
 		selected.forEach((selectedRecord, index) => {
@@ -145,6 +156,7 @@ export default class ToggleList extends Component {
 		this.setState({
 			selected: newSelection
 		});
+		this.defaultSelected = newSelection;
 		const obj = {
 			key: this.props.componentId,
 			value: newSelection
@@ -159,12 +171,12 @@ export default class ToggleList extends Component {
 	}
 
 	setURLParam(value) {
-		return value.map(item => item.label);
+		return value === null ? value : value.map(item => item.label);
 	}
 
 	renderList() {
 		let list;
-		const selectedText = this.state.selected.map(record => record.label);
+		const selectedText = this.state.selected ? this.state.selected.map(record => record.label) : "";
 		if (this.props.data) {
 			list = this.props.data.map(record => (
 				<div key={record.label} className="rbc-list-item">

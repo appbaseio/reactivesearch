@@ -11,6 +11,11 @@ const default_config = {
 		airbnb_recipe: "./examples/airbeds/app.js",
 		simplebeds_recipe: "./examples/simplebeds/app.js",
 		news_recipe: "./examples/news/app.js",
+		CategorySearch: "./examples/CategorySearch/app.js",
+		NestedList: "./examples/NestedList/app.js",
+		RatingsFilter: "./examples/RatingsFilter/app.js",
+		TagCloud: "./examples/TagCloud/app.js",
+		ToggleList: "./examples/ToggleList/app.js",
 		app: "./app/app.js"
 	},
 	output: {

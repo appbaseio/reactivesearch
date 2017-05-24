@@ -5,6 +5,7 @@ import {
 	AppbaseSensorHelper as helper
 } from "@appbaseio/reactivemaps";
 import ReactStars from "react-stars";
+const _ = require("lodash");
 
 export default class RatingsFilter extends Component {
 	constructor(props) {
@@ -14,7 +15,6 @@ export default class RatingsFilter extends Component {
 		};
 		this.type = "range";
 		this.urlParams = helper.URLParams.get(this.props.componentId, false, true);
-		this.defaultSelected = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
 		this.handleChange = this.handleChange.bind(this);
 		this.customQuery = this.customQuery.bind(this);
 	}
@@ -22,27 +22,49 @@ export default class RatingsFilter extends Component {
 	// Set query information
 	componentDidMount() {
 		this.setQueryInfo();
-		if (this.defaultSelected && this.defaultSelected.start) {
-			const records = this.props.data.filter(record => (record.start === this.defaultSelected.start &&
-						record.end === this.defaultSelected.end));
-			if (records && records.length) {
-				setTimeout(this.handleChange.bind(this, records[0]), 300);
-			}
+		this.checkDefault(this.props);
+		this.listenFilter();
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.checkDefault(nextProps);
+	}
+
+	// stop streaming request and remove listener when component will unmount
+	componentWillUnmount() {
+		if(this.filterListener) {
+			this.filterListener.remove();
 		}
 	}
 
-	componentWillUpdate() {
-		setTimeout(() => {
-			const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
-			if (this.defaultSelected && this.defaultSelected.start !== defaultValue.start) {
+	listenFilter() {
+		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
+			if(data === this.props.componentId) {
+				this.changeValue(null);
+			}
+		});
+	}
+
+
+	checkDefault(props) {
+		const defaultValue = this.urlParams !== null ? this.urlParams : props.defaultSelected;
+		this.changeValue(defaultValue);
+	}
+
+	changeValue(defaultValue) {
+		if(!_.isEqual(this.defaultSelected, defaultValue)) {
+			this.defaultSelected = defaultValue;
+			if (this.defaultSelected) {
 				this.defaultSelected = defaultValue;
 				const records = this.props.data.filter(record => (record.start === this.defaultSelected.start &&
 							record.end === this.defaultSelected.end));
 				if (records && records.length) {
 					setTimeout(this.handleChange.bind(this, records[0]), 300);
 				}
+			} else if(this.defaultSelected === null) {
+				this.handleChange(null);
 			}
-		}, 300);
+		}
 	}
 
 	// set the query type and input data
@@ -88,7 +110,7 @@ export default class RatingsFilter extends Component {
 		}
 		// pass the selected sensor value with componentId as key,
 		const isExecuteQuery = true;
-		helper.URLParams.update(this.props.componentId, JSON.stringify(record), this.props.URLParams);
+		helper.URLParams.update(this.props.componentId, record ? JSON.stringify(record) : null, this.props.URLParams);
 		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
@@ -160,14 +182,16 @@ RatingsFilter.propTypes = {
 	customQuery: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
-	URLParams: React.PropTypes.bool
+	URLParams: React.PropTypes.bool,
+	allowFilter: React.PropTypes.bool
 };
 
 // Default props value
 RatingsFilter.defaultProps = {
 	title: null,
 	componentStyle: {},
-	URLParams: false
+	URLParams: false,
+	allowFilter: true
 };
 
 // context type
@@ -183,5 +207,6 @@ RatingsFilter.types = {
 	data: TYPES.OBJECT,
 	defaultSelected: TYPES.OBJECT,
 	customQuery: TYPES.FUNCTION,
-	URLParams: TYPES.BOOLEAN
+	URLParams: TYPES.BOOLEAN,
+	allowFilter: TYPES.BOOLEAN
 };
