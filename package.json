@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "esw app --color --watch",
     "test": "react-scripts test --env=jsdom",
-    "webpack-server": "webpack-dev-server --hot --inline --progress --colors --port 8001",
+    "webpack-server": "webpack-dev-server --hot --inline --progress --colors --port 8000",
     "web-server": "http-server -p 3000 .",
     "start": "concurrently \"npm run webpack-server\" \"gulp watch\" ",
     "build": "cross-env NODE_ENV=production CHOOSE_CONFIG=EXAMPLES webpack -p --progress && gulp",
