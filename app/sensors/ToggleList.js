@@ -240,14 +240,16 @@ ToggleList.propTypes = {
 	customQuery: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
-	URLParams: React.PropTypes.bool
+	URLParams: React.PropTypes.bool,
+	allowFilter: React.PropTypes.bool
 };
 
 // Default props value
 ToggleList.defaultProps = {
 	multiSelect: true,
 	componentStyle: {},
-	URLParams: false
+	URLParams: false,
+	allowFilter: true
 };
 
 // context type
@@ -265,5 +267,6 @@ ToggleList.types = {
 	defaultSelected: TYPES.ARRAY,
 	multiSelect: TYPES.BOOLEAN,
 	customQuery: TYPES.FUNCTION,
-	URLParams: TYPES.BOOLEAN
+	URLParams: TYPES.BOOLEAN,
+	allowFilter: TYPES.BOOLEAN
 };
