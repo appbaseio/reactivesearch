@@ -404,6 +404,7 @@ export default class NestedList extends Component {
 
 	renderItems(items, prefix =[]) {
 		const level = prefix.length;
+		items = items.filter(item => item.key);
 		return items.map((item, index) => {
 			item.value = prefix.concat([item.key]);
 			const cx = classNames({
