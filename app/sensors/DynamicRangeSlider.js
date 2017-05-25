@@ -93,20 +93,24 @@ export default class DynamicRangeSlider extends Component {
 			value
 		};
 		helper.selectedSensor.set(objValue, true);
+		const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
+		this.updateValues(defaultValue);
 	}
 
 	histogramQuery() {
 		let query;
 		const isHistogramQuery = helper.selectedSensor.get(`${this.props.componentId}-internal`);
 		if(isHistogramQuery === "histogram") {
-			query = {
-				[this.props.appbaseField]: {
-					"histogram": {
-						"field": this.props.appbaseField,
-						"interval": this.props.interval ? this.props.interval : Math.ceil((this.state.range.max - this.state.range.min)/10)
+			if(this.props.showHistogram) {
+				query = {
+					[this.props.appbaseField]: {
+						"histogram": {
+							"field": this.props.appbaseField,
+							"interval": this.props.interval ? this.props.interval : Math.ceil((this.state.range.max - this.state.range.min)/10)
+						}
 					}
-				}
-			};
+				};
+			}
 		} else {
 			query = {
 				"max": {
@@ -150,26 +154,28 @@ export default class DynamicRangeSlider extends Component {
 			}
 			if (res.appliedQuery) {
 				const data = res.data;
-				if(data.aggregations.max && data.aggregations.min) {
-					this.setState({
-						range: {
-							min: data.aggregations.min.value,
-							max: data.aggregations.max.value
+				if(data && data.aggregations) {
+					if(data.aggregations.max && data.aggregations.min) {
+						this.setState({
+							range: {
+								min: data.aggregations.min.value,
+								max: data.aggregations.max.value
+							}
+						}, this.setRangeValue.bind(this, "histogram"));
+					} else {
+						let rawData;
+						if (res.mode === "streaming") {
+							rawData = this.state.rawData;
+							rawData.hits.hits.push(res.data);
+						} else if (res.mode === "historic") {
+							rawData = data;
 						}
-					}, this.setRangeValue.bind(this, "histogram"));
-				} else {
-					let rawData;
-					if (res.mode === "streaming") {
-						rawData = this.state.rawData;
-						rawData.hits.hits.push(res.data);
-					} else if (res.mode === "historic") {
-						rawData = data;
+						this.setState({
+							queryStart: false,
+							rawData
+						});
+						this.setData(data);
 					}
-					this.setState({
-						queryStart: false,
-						rawData
-					});
-					this.setData(data);
 				}
 			}
 		});

@@ -5,7 +5,8 @@ import {
 	DataSearch,
 	MultiList,
 	DataController,
-	ResultList
+	ResultList,
+	SelectedFilters
 } from "../../app/app.js";
 
 const $ = require("jquery");
@@ -54,7 +55,7 @@ class Main extends Component {
 				<header>
 					<a href="/examples/productsearch" className="brand">Product Search</a>
 					<DataSearch
-						componentId="NameSensor"
+						componentId="Search"
 						placeholder="Discover products..."
 						appbaseField={["name", "tagline"]}
 						searchInputId="NameSearch"
@@ -70,18 +71,24 @@ class Main extends Component {
 						<MultiList
 							appbaseField="topics.raw"
 							title="Filter Topics"
-							componentId="TopicSensor"
+							componentId="Topics"
 							sortBy="count"
 							showCount={false}
 							size={15}
+							tags={false}
+							selectAllLabel="all"
 						/>
 						<DataController
 							componentId="DefaultSensor"
 							visible={false}
 							customQuery={this.defaultQuery}
+							allowFilter={false}
 						/>
 					</div>
 					<div className="right-col">
+						<div className="row">
+							<SelectedFilters componentId="SelectedFilters" />
+						</div>
 						<ResultList
 							appbaseField="name"
 							from={0}
@@ -89,7 +96,7 @@ class Main extends Component {
 							scrollOnTarget={window}
 							onData={this.onData}
 							react={{
-								and: ["NameSensor", "TopicSensor", "DefaultSensor"]
+								and: ["Search", "Topics", "DefaultSensor"]
 							}}
 							sortOptions={[
 								{"label": "Sort by Popularity", "appbaseField": "upvotes", "sortBy": "desc"}
