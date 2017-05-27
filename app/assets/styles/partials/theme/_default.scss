@@ -6,3 +6,22 @@ $themes: (
 	rbc-blue: (color: #1893e7, background: #fff, font-color: #777, input-bg: #f5f5f5),
 	rbc-dark: (color: #ccc, background: #555, font-color: #eee, input-bg: #aaa)
 );
+
+@each $theme,
+$map in $themes {
+	.#{$theme} {
+		.rbc.rbc-categorysearch {
+			.Select-control {
+				.Select-arrow-zone {
+					.Select-arrow {
+						color: map-get($map, color);
+					}
+				}
+			}
+
+			.rbc-strong {
+				color: map-get($map, color);
+			}
+		}
+	}
+}

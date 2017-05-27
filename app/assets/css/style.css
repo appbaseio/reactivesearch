@@ -11,6 +11,42 @@
   font-weight: 900;
   font-style: normal; }
 
+.rbc-red .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
+  color: red; }
+
+.rbc-red .rbc.rbc-categorysearch .rbc-strong {
+  color: red; }
+
+.rbc-orange .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
+  color: orange; }
+
+.rbc-orange .rbc.rbc-categorysearch .rbc-strong {
+  color: orange; }
+
+.rbc-yellow .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
+  color: yellow; }
+
+.rbc-yellow .rbc.rbc-categorysearch .rbc-strong {
+  color: yellow; }
+
+.rbc-green .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
+  color: green; }
+
+.rbc-green .rbc.rbc-categorysearch .rbc-strong {
+  color: green; }
+
+.rbc-blue .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
+  color: #1893e7; }
+
+.rbc-blue .rbc.rbc-categorysearch .rbc-strong {
+  color: #1893e7; }
+
+.rbc-dark .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
+  color: #ccc; }
+
+.rbc-dark .rbc.rbc-categorysearch .rbc-strong {
+  color: #ccc; }
+
 .rbc.rbc-nestedlist-container {
   padding: 0;
   margin: 0; }
@@ -102,8 +138,7 @@
     .rbc.rbc-categorysearch .Select-input:hover, .rbc.rbc-categorysearch .Select-input:focus {
       outline: none; }
   .rbc.rbc-categorysearch .rbc-strong {
-    font-family: "Lato Bold";
-    color: #1893e7; }
+    font-family: "Lato Bold"; }
 
 .rbc.rbc-togglelist {
   padding: 0; }
