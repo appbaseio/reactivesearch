@@ -376,6 +376,8 @@ export default class CategorySearch extends Component {
 					optionRenderer={this.optionRenderer}
 					onChange={this.handleSearch}
 					onBlurResetsInput={false}
+					backspaceRemoves={false}
+					deleteRemoves={false}
 					{...this.props}
 				/>
 			</div>
