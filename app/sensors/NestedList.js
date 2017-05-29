@@ -449,7 +449,7 @@ export default class NestedList extends Component {
 			title = null;
 
 		if (this.state.items.length === 0 ||
-			(this.state.items.length && this.state.items[0].length === 0)) {
+			(this.state.items.length && Array.isArray(this.state.items[0]) && this.state.items[0].length === 0)) {
 			return null;
 		}
 
