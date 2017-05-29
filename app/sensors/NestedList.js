@@ -448,6 +448,11 @@ export default class NestedList extends Component {
 		let searchComponent = null,
 			title = null;
 
+		if (this.state.items.length === 0 ||
+			(this.state.items.length && this.state.items[0].length === 0)) {
+			return null;
+		}
+
 		const listComponent = this.state.items[0] ? (
 			<ul className="row rbc-list-container">
 				{this.renderItems(this.state.items[0], [])}

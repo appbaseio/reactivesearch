@@ -321,6 +321,10 @@ export default class TagCloud extends Component {
 	render() {
 		let title = null;
 
+		if (this.state.items.length === 0) {
+			return null;
+		}
+
 		if (this.props.title) {
 			title = (<h4 className="rbc-title col s12 col-xs-12">{this.props.title}</h4>);
 		}
