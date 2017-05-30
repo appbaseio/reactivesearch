@@ -34,7 +34,8 @@ export default class NestedList extends Component {
 		};
 		this.channelId = null;
 		this.channelListener = null;
-		this.urlParams = helper.URLParams.get(this.props.componentId, true);
+		this.urlParams = helper.URLParams.get(this.props.componentId);
+		this.urlParams = this.urlParams ? this.urlParams.split("@rbc@") : null;
 		this.filterBySearch = this.filterBySearch.bind(this);
 		this.onItemSelect = this.onItemSelect.bind(this);
 		this.onItemClick = this.onItemClick.bind(this);
@@ -87,7 +88,8 @@ export default class NestedList extends Component {
 	}
 
 	checkDefault(props) {
-		this.urlParams = helper.URLParams.get(props.componentId, true);
+		this.urlParams = helper.URLParams.get(props.componentId);
+		this.urlParams = this.urlParams ? this.urlParams.split("@rbc@") : null;
 		const defaultValue = this.urlParams !== null ? this.urlParams : props.defaultSelected;
 		this.changeValue(defaultValue);
 	}
@@ -361,7 +363,7 @@ export default class NestedList extends Component {
 	}
 
 	onItemClick(event) {
-		let selectedValues = ($(event.currentTarget).data("value")).split(",");
+		let selectedValues = ($(event.currentTarget).data("value")).split("@rbc@");
 		const level = Number($(event.currentTarget).data("level"));
 		event.stopPropagation();
 		if(selectedValues[level] === this.state.selectedValues[level]) {
@@ -416,7 +418,7 @@ export default class NestedList extends Component {
 					key={index}
 					className="rbc-list-container col s12 col-xs-12"
 				>
-					<button className={`rbc-list-item ${cx}`} data-value={item.value} data-level={level} onClick={this.onItemClick}>
+					<button className={`rbc-list-item ${cx}`} data-value={item.value.join("@rbc@")} data-level={level} onClick={this.onItemClick}>
 						<span className="rbc-label">{item.key} {this.countRender(item.doc_count)}</span>
 						{this.renderChevron(level)}
 					</button>
