@@ -202,16 +202,12 @@ export default class CategorySearch extends Component {
 
 	// Create a channel which passes the react and receive results whenever react changes
 	createChannel() {
-		const react = this.props.react ? this.props.react : {};
+		let react = this.props.react ? this.props.react : {};
 		react.aggs = {
 			key: this.props.categoryField
 		};
-		if (react && react.and && typeof react.and === "string") {
-			react.and = [react.and];
-		} else {
-			react.and = react.and ? react.and : [];
-		}
-		react.and.push(this.searchInputId);
+		const reactAnd = [this.searchInputId];
+		react = helper.setupReact(react, reactAnd);
 		const channelObj = manager.create(this.context.appbaseRef, this.context.type, react);
 		this.channelId = channelObj.channelId;
 		this.channelListener = channelObj.emitter.addListener(channelObj.channelId, (res) => {
