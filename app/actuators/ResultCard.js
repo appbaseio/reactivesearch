@@ -130,15 +130,6 @@ export default class ResultCard extends Component {
 		helper.selectedSensor.setSensorInfo(obj);
 	}
 
-	setReact() {
-		this.react = this.props.react ? this.props.react : {};
-		this.react.pagination = {};
-		if (this.react && this.react.and && typeof this.react.and === "string") {
-			this.react.and = [this.react.and];
-		}
-		this.react.and.push("paginationChanges");
-	}
-
 	executePaginationUpdate() {
 		setTimeout(() => {
 			const obj = {
@@ -210,22 +201,16 @@ export default class ResultCard extends Component {
 	// Create a channel which passes the react and receive results whenever react changes
 	createChannel(executeChannel = false) {
 		// Set the react - add self aggs query as well with react
-		const react = this.props.react ? this.props.react : {};
-		if (react && react.and) {
-			if (typeof react.and === "string") {
-				react.and = [react.and];
-			}
-		} else {
-			react.and = [];
-		}
-		react.and.push("streamChanges");
-		if(this.props.pagination) {
-			react.and.push("paginationChanges");
+		let react = this.props.react ? this.props.react : {};
+		const reactAnd = ["streamChanges"];
+		if (this.props.pagination) {
+			reactAnd.push("paginationChanges");
 			react.pagination = null;
 		}
 		if (this.sortObj) {
-			this.enableSort(react);
+			this.enableSort(reactAnd);
 		}
+		react = helper.setupReact(react, reactAnd);
 		// create a channel and listen the changes
 		const channelObj = manager.create(this.context.appbaseRef, this.context.type, react, this.props.size, this.props.from, this.props.stream);
 		this.channelId = channelObj.channelId;
@@ -457,8 +442,8 @@ export default class ResultCard extends Component {
 	}
 
 	// enable sort
-	enableSort(react) {
-		react.and.push(this.resultSortKey);
+	enableSort(reactAnd) {
+		reactAnd.push(this.resultSortKey);
 		const sortObj = {
 			key: this.resultSortKey,
 			value: this.sortObj

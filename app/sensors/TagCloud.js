@@ -173,20 +173,15 @@ export default class TagCloud extends Component {
 
 	createChannel() {
 		// Set the react - add self aggs query as well with react
-		const react = this.props.react ? this.props.react : {};
+		let react = this.props.react ? this.props.react : {};
 		react.aggs = {
 			key: this.props.appbaseField,
 			sort: "asc",
 			size: this.props.size,
 			sortRef: `${this.props.componentId}-sort`
 		};
-		if (react && react.and && typeof react.and === "string") {
-			react.and = [react.and];
-		} else {
-			react.and = react.and ? react.and : [];
-		}
-		react.and.push(`${this.props.componentId}-sort`);
-		react.and.push("tagCloudChanges");
+		const reactAnd = [`${this.props.componentId}-sort`, "tagCloudChanges"];
+		react = helper.setupReact(react, reactAnd);
 		this.includeAggQuery();
 		// create a channel and listen the changes
 		const channelObj = manager.create(this.context.appbaseRef, this.context.type, react);
