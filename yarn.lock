@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivebase@1.0.0-alpha41":
-  version "1.0.0-alpha41"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivebase/-/reactivebase-1.0.0-alpha41.tgz#5535c45b66272826481193bdd52091ca69ef8879"
+"@appbaseio/reactivebase@1.0.0-alpha42":
+  version "1.0.0-alpha42"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivebase/-/reactivebase-1.0.0-alpha42.tgz#77a081f54168711955924e6788e8eb895326680a"
   dependencies:
     appbase-js "^0.11.0"
     babel-preset-stage-0 "^6.5.0"
@@ -31,11 +31,11 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivemaps@1.0.0-alpha32":
-  version "1.0.0-alpha32"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-1.0.0-alpha32.tgz#a79d81006e7c1dd6bf6af6c7a5f3ccb4d94485e3"
+"@appbaseio/reactivemaps@1.0.0-alpha33":
+  version "1.0.0-alpha33"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-1.0.0-alpha33.tgz#3b5ddfde002b54494ca7b002f9ff7c786134eb2c"
   dependencies:
-    "@appbaseio/reactivebase" "1.0.0-alpha41"
+    "@appbaseio/reactivebase" "1.0.0-alpha42"
     "@appbaseio/reactivemaps-manual" "1.0.0-alpha"
     appbase-js "^0.11.0"
     axios "^0.15.2"
