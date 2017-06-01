@@ -244,19 +244,15 @@ export default class NestedList extends Component {
 	// Create a channel which passes the react and receive results whenever react changes
 	createChannel() {
 		// Set the react - add self aggs query as well with react
-		const react = this.props.react ? JSON.parse(JSON.stringify(this.props.react)) : {};
+		let react = this.props.react ? JSON.parse(JSON.stringify(this.props.react)) : {};
 		react.aggs = {
 			key: this.props.appbaseField[0],
 			sort: this.props.sortBy,
 			size: this.props.size,
 			customQuery: this.nestedAggQuery
 		};
-		if (react && react.and && typeof react.and === "string") {
-			react.and = [react.and];
-		} else {
-			react.and = react.and ? react.and : [];
-		}
-		react.and.push(this.nested[0], "nestedSelectedValues");
+		const reactAnd = [this.nested[0], "nestedSelectedValues"];
+		react = helper.setupReact(react, reactAnd);
 		this.includeAggQuery();
 
 		// create a channel and listen the changes
