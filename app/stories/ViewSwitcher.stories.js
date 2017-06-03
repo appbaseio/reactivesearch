@@ -75,14 +75,14 @@ export default class ViewSwitcherDefault extends Component {
 							data={[
 								{
 									label: "Grid",
-									value: "rbc-resultcard-wrapper"
+									value: "rbc-resultcard"
 								},
 								{
 									label: "List",
-									value: "rbc-resultlist-wrapper"
+									value: "rbc-resultlist"
 								}
 							]}
-							defaultSelected="rbc-resultcard-wrapper"
+							defaultSelected="rbc-resultcard"
 						/>
 						<ResultCard
 							componentId="SearchResult"
