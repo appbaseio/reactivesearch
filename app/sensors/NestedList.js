@@ -35,7 +35,7 @@ export default class NestedList extends Component {
 		this.channelId = null;
 		this.channelListener = null;
 		this.urlParams = helper.URLParams.get(this.props.componentId);
-		this.urlParams = this.urlParams ? this.urlParams.split("@rbc@") : null;
+		this.urlParams = this.urlParams ? this.urlParams.split("/") : null;
 		this.filterBySearch = this.filterBySearch.bind(this);
 		this.onItemSelect = this.onItemSelect.bind(this);
 		this.onItemClick = this.onItemClick.bind(this);
@@ -89,7 +89,7 @@ export default class NestedList extends Component {
 
 	checkDefault(props) {
 		this.urlParams = helper.URLParams.get(props.componentId);
-		this.urlParams = this.urlParams ? this.urlParams.split("@rbc@") : null;
+		this.urlParams = this.urlParams ? this.urlParams.split("/") : null;
 		const defaultValue = this.urlParams !== null ? this.urlParams : props.defaultSelected;
 		this.changeValue(defaultValue);
 	}
@@ -118,12 +118,13 @@ export default class NestedList extends Component {
 		}
 	}
 
-	handleSelect() {
-		if (this.defaultSelected) {
+	handleSelect(defaultSelected) {
+		if (defaultSelected) {
 			this.defaultSelected.forEach((value, index) => {
-				const customValue = this.defaultSelected.filter((item, subindex) => subindex <= index );
+				const customValue = defaultSelected.filter((item, subindex) => subindex <= index );
 				this.onItemSelect(customValue);
 			});
+			// this.onItemSelect(this.defaultSelected);
 		} else if(this.defaultSelected === null) {
 			this.onItemSelect(null);
 		}
@@ -161,7 +162,7 @@ export default class NestedList extends Component {
 		};
 		helper.selectedSensor.setSensorInfo(obj);
 		const nestedObj = {
-			key: "nestedSelectedValues",
+			key: `nestedSelectedValues-${this.props.componentId}`,
 			value: {
 				queryType: this.type,
 				inputData: this.props.appbaseField[0],
@@ -251,7 +252,7 @@ export default class NestedList extends Component {
 			size: this.props.size,
 			customQuery: this.nestedAggQuery
 		};
-		const reactAnd = [this.nested[0], "nestedSelectedValues"];
+		const reactAnd = [this.nested[0], `nestedSelectedValues-${this.props.componentId}`];
 		react = helper.setupReact(react, reactAnd);
 		this.includeAggQuery();
 
@@ -330,9 +331,10 @@ export default class NestedList extends Component {
 			key: this.props.componentId,
 			value
 		};
+		console.log(this.state.selectedValues);
 		// if(changeNestedValue) {
 			const nestedObj = {
-				key: "nestedSelectedValues",
+				key: `nestedSelectedValues-${this.props.componentId}`,
 				value
 			};
 			helper.selectedSensor.set(nestedObj, changeNestedValue);
@@ -340,7 +342,8 @@ export default class NestedList extends Component {
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
-		helper.URLParams.update(this.props.componentId, value, this.props.URLParams);
+		const paramValue = value && value.length ? value.join("/") : null;
+		helper.URLParams.update(this.props.componentId, paramValue, this.props.URLParams);
 		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
@@ -369,7 +372,7 @@ export default class NestedList extends Component {
 			this.setState({
 				items,
 				selectedValues: selectedValues
-			}, this.setValue(selectedValues, true, false));
+			}, this.setValue.bind(this, selectedValues, true, false));
 		} else {
 			this.onItemSelect(selectedValues);
 		}
@@ -382,6 +385,7 @@ export default class NestedList extends Component {
 		} else {
 			items[selectedValues.length] = null;
 		}
+		this.defaultSelected = selectedValues;
 		this.setState({
 			selectedValues,
 			items: items
