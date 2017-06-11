@@ -74,7 +74,10 @@ export default class RatingsFilter extends Component {
 			value: {
 				queryType: this.type,
 				inputData: this.props.appbaseField,
-				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery
+				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery,
+				reactiveId: this.context.reactiveId,
+				allowFilter: this.props.allowFilter,
+				component: "RatingsFilter"
 			}
 		};
 		helper.selectedSensor.setSensorInfo(obj);
@@ -197,7 +200,8 @@ RatingsFilter.defaultProps = {
 // context type
 RatingsFilter.contextTypes = {
 	appbaseRef: React.PropTypes.any.isRequired,
-	type: React.PropTypes.any.isRequired
+	type: React.PropTypes.any.isRequired,
+	reactiveId: React.PropTypes.number
 };
 
 RatingsFilter.types = {

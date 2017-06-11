@@ -157,7 +157,10 @@ export default class NestedList extends Component {
 			value: {
 				queryType: this.type,
 				inputData: this.props.appbaseField[0],
-				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery
+				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery,
+				reactiveId: this.context.reactiveId,
+				allowFilter: this.props.allowFilter,
+				component: "NestedList"
 			}
 		};
 		helper.selectedSensor.setSensorInfo(obj);
@@ -557,7 +560,8 @@ NestedList.defaultProps = {
 // context type
 NestedList.contextTypes = {
 	appbaseRef: React.PropTypes.any.isRequired,
-	type: React.PropTypes.any.isRequired
+	type: React.PropTypes.any.isRequired,
+	reactiveId: React.PropTypes.number
 };
 
 NestedList.types = {

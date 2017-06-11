@@ -157,7 +157,10 @@ export default class TagCloud extends Component {
 			value: {
 				queryType: this.type,
 				inputData: this.props.appbaseField,
-				customQuery: this.customQuery
+				customQuery: this.customQuery,
+				reactiveId: this.context.reactiveId,
+				allowFilter: this.props.allowFilter,
+				component: "TagCloud"
 			}
 		};
 		helper.selectedSensor.setSensorInfo(obj);
@@ -386,7 +389,8 @@ TagCloud.defaultProps = {
 
 TagCloud.contextTypes = {
 	appbaseRef: React.PropTypes.any.isRequired,
-	type: React.PropTypes.any.isRequired
+	type: React.PropTypes.any.isRequired,
+	reactiveId: React.PropTypes.number
 };
 
 TagCloud.types = {

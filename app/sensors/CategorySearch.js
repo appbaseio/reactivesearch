@@ -99,7 +99,10 @@ export default class CategorySearch extends Component {
 			value: {
 				queryType: this.type,
 				inputData: this.props.appbaseField,
-				customQuery: this.props.customQuery ? this.props.customQuery : this.defaultSearchQuery
+				customQuery: this.props.customQuery ? this.props.customQuery : this.defaultSearchQuery,
+				reactiveId: this.context.reactiveId,
+				allowFilter: this.props.allowFilter,
+				component: "CategorySearch"
 			}
 		};
 		if (this.props.highlight) {
@@ -420,7 +423,8 @@ CategorySearch.defaultProps = {
 // context type
 CategorySearch.contextTypes = {
 	appbaseRef: React.PropTypes.any.isRequired,
-	type: React.PropTypes.any.isRequired
+	type: React.PropTypes.any.isRequired,
+	reactiveId: React.PropTypes.number
 };
 
 CategorySearch.types = {
