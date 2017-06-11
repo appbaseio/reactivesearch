@@ -101,7 +101,10 @@ export default class ToggleList extends Component {
 			value: {
 				queryType: this.type,
 				inputData: this.props.appbaseField,
-				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery
+				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery,
+				reactiveId: this.context.reactiveId,
+				allowFilter: this.props.allowFilter,
+				component: "ToggleList"
 			}
 		};
 		helper.selectedSensor.setSensorInfo(obj);
@@ -255,7 +258,8 @@ ToggleList.defaultProps = {
 // context type
 ToggleList.contextTypes = {
 	appbaseRef: React.PropTypes.any.isRequired,
-	type: React.PropTypes.any.isRequired
+	type: React.PropTypes.any.isRequired,
+	reactiveId: React.PropTypes.number
 };
 
 ToggleList.types = {
