@@ -260,7 +260,7 @@ export default class NestedList extends Component {
 		this.includeAggQuery();
 
 		// create a channel and listen the changes
-		const channelObj = manager.create(this.context.appbaseRef, this.context.type, react);
+		const channelObj = manager.create(this.context.appbaseRef, this.context.type, react, 100, 0, false, this.props.componentId);
 		this.channelId = channelObj.channelId;
 		this.channelListener = channelObj.emitter.addListener(this.channelId, (res) => {
 			if (res.error) {
