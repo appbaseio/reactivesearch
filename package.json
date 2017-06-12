@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/appbaseio/reactivesearch#readme",
   "dependencies": {
-    "@appbaseio/reactivemaps": "1.0.0-alpha40",
+    "@appbaseio/reactivemaps": "1.0.0-alpha41",
     "classnames": "^2.2.5",
     "jquery": "^3.1.1",
     "lodash": "^4.15.0",
