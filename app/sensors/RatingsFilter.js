@@ -76,7 +76,8 @@ export default class RatingsFilter extends Component {
 				inputData: this.props.appbaseField,
 				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery,
 				reactiveId: this.context.reactiveId,
-				allowFilter: this.props.allowFilter,
+				showFilter: this.props.showFilter,
+				filterLabel: this.props.filterLabel ? this.props.filterLabel : this.props.componentId,
 				component: "RatingsFilter"
 			}
 		};
@@ -186,7 +187,9 @@ RatingsFilter.propTypes = {
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
-	allowFilter: React.PropTypes.bool
+	showFilter: TYPES.BOOLEAN,
+	filterLabel: TYPES.STRING,
+	filterLabel: React.PropTypes.string
 };
 
 // Default props value
@@ -194,7 +197,7 @@ RatingsFilter.defaultProps = {
 	title: null,
 	componentStyle: {},
 	URLParams: false,
-	allowFilter: true
+	showFilter: true
 };
 
 // context type
@@ -213,5 +216,5 @@ RatingsFilter.types = {
 	defaultSelected: TYPES.OBJECT,
 	customQuery: TYPES.FUNCTION,
 	URLParams: TYPES.BOOLEAN,
-	allowFilter: TYPES.BOOLEAN
+	showFilter: TYPES.BOOLEAN
 };

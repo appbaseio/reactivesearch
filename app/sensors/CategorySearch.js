@@ -101,7 +101,8 @@ export default class CategorySearch extends Component {
 				inputData: this.props.appbaseField,
 				customQuery: this.props.customQuery ? this.props.customQuery : this.defaultSearchQuery,
 				reactiveId: this.context.reactiveId,
-				allowFilter: this.props.allowFilter,
+				showFilter: this.props.showFilter,
+				filterLabel: this.props.filterLabel ? this.props.filterLabel : this.props.componentId,
 				component: "CategorySearch"
 			}
 		};
@@ -408,7 +409,9 @@ CategorySearch.propTypes = {
 	]),
 	componentStyle: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
-	allowFilter: React.PropTypes.bool
+	showFilter: TYPES.BOOLEAN,
+	filterLabel: TYPES.STRING,
+	filterLabel: React.PropTypes.string
 };
 
 // Default props value
@@ -417,7 +420,7 @@ CategorySearch.defaultProps = {
 	highlight: false,
 	componentStyle: {},
 	URLParams: false,
-	allowFilter: true
+	showFilter: true
 };
 
 // context type
@@ -439,6 +442,6 @@ CategorySearch.types = {
 	customQuery: TYPES.FUNCTION,
 	highlight: TYPES.BOOLEAN,
 	URLParams: TYPES.BOOLEAN,
-	allowFilter: TYPES.BOOLEAN,
+	showFilter: TYPES.BOOLEAN,
 	weights: TYPES.OBJECT
 };

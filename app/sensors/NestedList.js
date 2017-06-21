@@ -159,7 +159,8 @@ export default class NestedList extends Component {
 				inputData: this.props.appbaseField[0],
 				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery,
 				reactiveId: this.context.reactiveId,
-				allowFilter: this.props.allowFilter,
+				showFilter: this.props.showFilter,
+				filterLabel: this.props.filterLabel ? this.props.filterLabel : this.props.componentId,
 				component: "NestedList"
 			}
 		};
@@ -541,7 +542,9 @@ NestedList.propTypes = {
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
-	allowFilter: React.PropTypes.bool
+	showFilter: TYPES.BOOLEAN,
+	filterLabel: TYPES.STRING,
+	filterLabel: React.PropTypes.string
 };
 
 // Default props value
@@ -554,7 +557,7 @@ NestedList.defaultProps = {
 	placeholder: "Search",
 	componentStyle: {},
 	URLParams: false,
-	allowFilter: true
+	showFilter: true
 };
 
 // context type
@@ -578,5 +581,5 @@ NestedList.types = {
 	customQuery: TYPES.FUNCTION,
 	initialLoader: TYPES.OBJECT,
 	URLParams: TYPES.BOOLEAN,
-	allowFilter: TYPES.BOOLEAN
+	showFilter: TYPES.BOOLEAN
 };
