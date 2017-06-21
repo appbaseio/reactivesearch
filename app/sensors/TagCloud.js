@@ -159,7 +159,8 @@ export default class TagCloud extends Component {
 				inputData: this.props.appbaseField,
 				customQuery: this.customQuery,
 				reactiveId: this.context.reactiveId,
-				allowFilter: this.props.allowFilter,
+				showFilter: this.props.showFilter,
+				filterLabel: this.props.filterLabel ? this.props.filterLabel : this.props.componentId,
 				component: "TagCloud"
 			}
 		};
@@ -374,7 +375,9 @@ TagCloud.propTypes = {
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
-	allowFilter: React.PropTypes.bool
+	showFilter: TYPES.BOOLEAN,
+	filterLabel: TYPES.STRING,
+	filterLabel: React.PropTypes.string
 };
 
 TagCloud.defaultProps = {
@@ -384,7 +387,7 @@ TagCloud.defaultProps = {
 	title: null,
 	componentStyle: {},
 	URLParams: false,
-	allowFilter: true
+	showFilter: true
 };
 
 TagCloud.contextTypes = {
@@ -406,5 +409,5 @@ TagCloud.types = {
 	defaultSelected: TYPES.STRING,
 	react: TYPES.OBJECT,
 	URLParams: TYPES.BOOLEAN,
-	allowFilter: TYPES.BOOLEAN
+	showFilter: TYPES.BOOLEAN
 };
