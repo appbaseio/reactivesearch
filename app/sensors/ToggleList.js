@@ -245,8 +245,7 @@ ToggleList.propTypes = {
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
-	showFilter: TYPES.BOOLEAN,
-	filterLabel: TYPES.STRING,
+	showFilter: React.PropTypes.bool,
 	filterLabel: React.PropTypes.string
 };
 
@@ -275,5 +274,6 @@ ToggleList.types = {
 	multiSelect: TYPES.BOOLEAN,
 	customQuery: TYPES.FUNCTION,
 	URLParams: TYPES.BOOLEAN,
-	showFilter: TYPES.BOOLEAN
+	showFilter: TYPES.BOOLEAN,
+	filterLabel: TYPES.STRING
 };
