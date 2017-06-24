@@ -5143,7 +5143,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.8:
+prop-types@^15.5.10, prop-types@^15.5.8:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -5291,9 +5291,25 @@ react-autosuggest@^9.0.1:
     react-autowhatever "^10.0.0"
     shallow-equal "^1.0.0"
 
+react-autosuggest@^9.3.0:
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/react-autosuggest/-/react-autosuggest-9.3.0.tgz#151da4fb41a84b07ef1d3211b7d6a92d44f7cddb"
+  dependencies:
+    prop-types "^15.5.10"
+    react-autowhatever "^10.1.0"
+    shallow-equal "^1.0.0"
+
 react-autowhatever@^10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/react-autowhatever/-/react-autowhatever-10.0.0.tgz#2d7fd54f0a330e33c06c53a83ef789da0ebb65bf"
+  dependencies:
+    prop-types "^15.5.8"
+    react-themeable "^1.1.0"
+    section-iterator "^2.0.0"
+
+react-autowhatever@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/react-autowhatever/-/react-autowhatever-10.1.0.tgz#41f6d69382437d3447a0a3c8913bb8ca2feaabc1"
   dependencies:
     prop-types "^15.5.8"
     react-themeable "^1.1.0"
