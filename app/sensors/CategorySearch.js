@@ -1,12 +1,13 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
 import classNames from "classnames";
-import Select from "react-select";
+import Autosuggest from "react-autosuggest";
 import {
 	TYPES,
 	AppbaseChannelManager as manager,
 	AppbaseSensorHelper as helper
 } from "@appbaseio/reactivemaps";
+import _ from "lodash";
 
 export default class CategorySearch extends Component {
 	constructor(props) {
@@ -37,6 +38,14 @@ export default class CategorySearch extends Component {
 		this.setValue = this.setValue.bind(this);
 		this.defaultSearchQuery = this.defaultSearchQuery.bind(this);
 		this.previousSelectedSensor = {};
+		this.clearSuggestions = this.clearSuggestions.bind(this);
+		this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+		this.getSuggestionValue = this.getSuggestionValue.bind(this);
+		this.onInputChange = this.onInputChange.bind(this);
+		this.handleBlur = this.handleBlur.bind(this);
+		this.handleKeyPress = this.handleKeyPress.bind(this);
+		this.handleInputChange = this.handleInputChange.bind(this);
+		this.renderSuggestion = this.renderSuggestion.bind(this);
 	}
 
 	// Get the items from Appbase when component is mounted
@@ -63,6 +72,7 @@ export default class CategorySearch extends Component {
 			this.filterListener.remove();
 		}
 	}
+
 
 	listenFilter() {
 		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
@@ -241,6 +251,12 @@ export default class CategorySearch extends Component {
 		});
 	}
 
+	onInputChange(event, { method, newValue }) {
+		if (method === "type") {
+			this.setValue(newValue);
+		}
+	}
+
 	setData(data, loadSuggestions) {
 		let aggs = [];
 		let options = [];
@@ -298,6 +314,20 @@ export default class CategorySearch extends Component {
 		}
 	}
 
+	clearSuggestions() {
+		this.setState({
+			options: []
+		});
+	}
+
+	onSuggestionSelected(event, { suggestion }) {
+		this.handleSearch(suggestion);
+	}
+
+	getSuggestionValue(suggestion) {
+		return suggestion.label;
+	}
+
 	checkDefault() {
 		const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
 		this.changeValue(defaultValue);
@@ -345,12 +375,47 @@ export default class CategorySearch extends Component {
 		});
 	}
 
+	handleBlur(event, { highlightedSuggestion }) {
+		if (!highlightedSuggestion || !highlightedSuggestion.label) {
+			if (this.state.currentValue.label) {
+				this.handleSearch({
+					value: this.state.currentValue.label
+				});
+			}
+		}
+	}
+
+	handleKeyPress(event) {
+		if (event.key === "Enter") {
+			event.target.blur();
+		}
+	}
+
+	handleInputChange(event) {
+		const inputVal = event.target.value;
+		this.setState({
+			currentValue: {
+				label: inputVal,
+				value: inputVal
+			}
+		});
+		if (inputVal) {
+			this.handleSearch({
+				value: inputVal
+			});
+		}
+	}
+
 	optionRenderer(option) {
 		if (option.markup) {
 			return (<div key={option.value} dangerouslySetInnerHTML={{ __html: option.markup }} />);
 		}
 
 		return (<div key={option.value}>{option.label}</div>);
+	}
+
+	renderSuggestion(suggestion) {
+		return this.optionRenderer(suggestion);
 	}
 
 	render() {
@@ -362,24 +427,43 @@ export default class CategorySearch extends Component {
 			"rbc-title-active": this.props.title,
 			"rbc-title-inactive": !this.props.title,
 			"rbc-placeholder-active": this.props.placeholder,
-			"rbc-placeholder-inactive": !this.props.placeholder
+			"rbc-placeholder-inactive": !this.props.placeholder,
+			"rbc-autoSuggest-active": this.props.autoSuggest,
+			"rbc-autoSuggest-inactive": !this.props.autoSuggest
 		});
 
 		return (
-			<div className={`rbc rbc-categorysearch col s12 col-xs-12 card thumbnail ${cx}`} style={this.props.componentStyle}>
+			<div className={`rbc rbc-categorysearch col s12 col-xs-12 card thumbnail ${cx} ${this.state.isLoadingOptions ? "is-loading" : ""}`} style={this.props.componentStyle}>
 				{title}
-				<Select
-					isLoading={this.state.isLoadingOptions}
-					value={this.state.currentValue.label ? this.state.currentValue : null}
-					options={this.state.options}
-					onInputChange={this.setValue}
-					optionRenderer={this.optionRenderer}
-					onChange={this.handleSearch}
-					onBlurResetsInput={false}
-					backspaceRemoves={false}
-					deleteRemoves={false}
-					{...this.props}
-				/>
+				{
+					this.props.autoSuggest ?
+						<Autosuggest
+							suggestions={this.state.options}
+							onSuggestionsFetchRequested={() => {}}
+							onSuggestionsClearRequested={this.clearSuggestions}
+							onSuggestionSelected={this.onSuggestionSelected}
+							getSuggestionValue={this.getSuggestionValue}
+							renderSuggestion={this.renderSuggestion}
+							focusInputOnSuggestionClick={false}
+							inputProps={{
+								placeholder: this.props.placeholder,
+								value: this.state.currentValue.label ? this.state.currentValue.label : "",
+								onChange: this.onInputChange,
+								onBlur: this.handleBlur,
+								onKeyPress: this.handleKeyPress
+							}}
+						/> :
+						<div className="rbc-search-container col s12 col-xs-12">
+							<input
+								type="text"
+								className="rbc-input"
+								placeholder={this.props.placeholder}
+								value={this.state.currentValue.label ? this.state.currentValue.label : ""}
+								onChange={this.handleInputChange}
+							/>
+							<span className="rbc-search-icon" />
+						</div>
+				}
 			</div>
 		);
 	}
@@ -398,6 +482,7 @@ CategorySearch.propTypes = {
 	]),
 	categoryField: React.PropTypes.string,
 	placeholder: React.PropTypes.string,
+	autoSuggest: React.PropTypes.bool,
 	defaultSelected: React.PropTypes.string,
 	customQuery: React.PropTypes.func,
 	react: React.PropTypes.object,
@@ -416,6 +501,7 @@ CategorySearch.propTypes = {
 // Default props value
 CategorySearch.defaultProps = {
 	placeholder: "Search",
+	autoSuggest: true,
 	highlight: false,
 	componentStyle: {},
 	URLParams: false,
@@ -437,6 +523,7 @@ CategorySearch.types = {
 	title: TYPES.STRING,
 	categoryField: TYPES.STRING,
 	placeholder: TYPES.STRING,
+	autoSuggest: TYPES.BOOLEAN,
 	defaultSelected: TYPES.STRING,
 	customQuery: TYPES.FUNCTION,
 	highlight: TYPES.BOOLEAN,

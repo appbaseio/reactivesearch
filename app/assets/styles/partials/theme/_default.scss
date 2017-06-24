@@ -11,11 +11,10 @@ $themes: (
 $map in $themes {
 	.#{$theme} {
 		.rbc.rbc-categorysearch {
-			.Select-control {
-				.Select-arrow-zone {
-					.Select-arrow {
-						color: map-get($map, color);
-					}
+			.rbc-search-container,
+			.react-autosuggest__container {
+				&:before {
+					color: map-get($map, color);
 				}
 			}
 
