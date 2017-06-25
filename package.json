@@ -40,6 +40,7 @@
     "node-sass": "^4.5.1",
     "rc-slider": "^5.4.0",
     "react": "15.4.2",
+    "react-autosuggest": "^9.3.0",
     "react-dom": "15.4.2",
     "react-select": "^1.0.0-rc.3",
     "react-stars": "^2.1.0",

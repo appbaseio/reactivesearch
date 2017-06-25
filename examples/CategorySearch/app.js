@@ -8,29 +8,11 @@ import {
 class Main extends Component {
 	constructor(props) {
 		super(props);
-		this.onData = this.onData.bind(this);
+		this.itemMarkup = this.itemMarkup.bind(this);
 	}
 
-	onData(res) {
-		let result = null;
-		if (res) {
-			let combineData = res.currentData;
-			if (res.mode === "historic") {
-				combineData = res.currentData.concat(res.newData);
-			} else if (res.mode === "streaming") {
-				combineData = helper.combineStreamData(res.currentData, res.newData);
-			}
-			if (combineData) {
-				result = combineData.map((markerData) => {
-					const marker = markerData._source;
-					return this.itemMarkup(marker, markerData);
-				});
-			}
-		}
-		return result;
-	}
-
-	itemMarkup(marker, markerData) {
+	itemMarkup(markerData) {
+		const marker = markerData._source;
 		return (
 			<a
 				className="full_row single-record single_record_for_clone"
@@ -67,7 +49,7 @@ class Main extends Component {
 							categoryField="brand.raw"
 							componentId="CarSensor"
 							title="CategorySearch"
-							weights={[1,5]}
+							weights={[1, 5]}
 							URLParams={true}
 						/>
 					</div>
@@ -77,10 +59,9 @@ class Main extends Component {
 							componentId="SearchResult"
 							appbaseField="name"
 							title="Results"
-							sortBy="asc"
 							from={0}
 							size={20}
-							onData={this.onData}
+							onData={this.itemMarkup}
 							react={{
 								and: "CarSensor"
 							}}
