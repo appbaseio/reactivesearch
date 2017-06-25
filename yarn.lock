@@ -5283,29 +5283,13 @@ react-addons-test-utils@^15.4.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-autosuggest@^9.0.1:
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/react-autosuggest/-/react-autosuggest-9.0.1.tgz#b56eaf8fc3dd46d36b92c5395b6b07174bc10912"
-  dependencies:
-    prop-types "^15.5.8"
-    react-autowhatever "^10.0.0"
-    shallow-equal "^1.0.0"
-
-react-autosuggest@^9.3.0:
+react-autosuggest@^9.0.1, react-autosuggest@^9.3.0:
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/react-autosuggest/-/react-autosuggest-9.3.0.tgz#151da4fb41a84b07ef1d3211b7d6a92d44f7cddb"
   dependencies:
     prop-types "^15.5.10"
     react-autowhatever "^10.1.0"
     shallow-equal "^1.0.0"
-
-react-autowhatever@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/react-autowhatever/-/react-autowhatever-10.0.0.tgz#2d7fd54f0a330e33c06c53a83ef789da0ebb65bf"
-  dependencies:
-    prop-types "^15.5.8"
-    react-themeable "^1.1.0"
-    section-iterator "^2.0.0"
 
 react-autowhatever@^10.1.0:
   version "10.1.0"
