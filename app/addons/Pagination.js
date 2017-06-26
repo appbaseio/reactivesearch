@@ -34,7 +34,7 @@ export default class Pagination extends Component {
 
 	// set the query type and input data
 	setQueryInfo() {
-		let obj = {
+		const obj = {
 			key: this.props.componentId,
 			value: this.state.currentValue
 		};
@@ -43,20 +43,20 @@ export default class Pagination extends Component {
 
 	// listen all results
 	listenGlobal() {
-		this.globalListener = manager.emitter.addListener("global", function(res) {
+		this.globalListener = manager.emitter.addListener("global", (res) => {
 			if (res.react && Object.keys(res.react).indexOf(this.props.componentId) > -1) {
-				let totalHits = res.channelResponse && res.channelResponse.data && res.channelResponse.data.hits ? res.channelResponse.data.hits.total : 0;
-				let maxPageNumber = Math.ceil(totalHits / res.queryOptions.size) < 1 ? 1 : Math.ceil(totalHits / res.queryOptions.size);
-				let size = res.queryOptions.size ? res.queryOptions.size : 20;
-				let currentPage = Math.round(res.queryOptions.from / size) + 1;
+				const totalHits = res.channelResponse && res.channelResponse.data && res.channelResponse.data.hits ? res.channelResponse.data.hits.total : 0;
+				const maxPageNumber = Math.ceil(totalHits / res.queryOptions.size) < 1 ? 1 : Math.ceil(totalHits / res.queryOptions.size);
+				const size = res.queryOptions.size ? res.queryOptions.size : 20;
+				const currentPage = Math.round(res.queryOptions.from / size) + 1;
 				this.setState({
-					totalHits: totalHits,
-					size: size,
-					maxPageNumber: maxPageNumber,
+					totalHits,
+					size,
+					maxPageNumber,
 					currentValue: currentPage
 				});
 			}
-		}.bind(this));
+		});
 	}
 
 	// handle the input change and pass the value inside sensor info
@@ -64,13 +64,13 @@ export default class Pagination extends Component {
 		this.setState({
 			currentValue: inputVal
 		});
-		var obj = {
+		const obj = {
 			key: this.props.componentId,
 			value: inputVal
 		};
 
 		// pass the selected sensor value with componentId as key,
-		let isExecuteQuery = true;
+		const isExecuteQuery = true;
 		helper.selectedSensor.set(obj, isExecuteQuery, "paginationChange");
 		if (this.props.onPageChange) {
 			this.props.onPageChange(inputVal);
@@ -93,7 +93,7 @@ export default class Pagination extends Component {
 
 	// pre page
 	prePage() {
-		let currentValue = this.state.currentValue > 1 ? this.state.currentValue - 1 : 1;
+		const currentValue = this.state.currentValue > 1 ? this.state.currentValue - 1 : 1;
 		if (this.state.currentValue !== currentValue) {
 			this.handleChange.call(this, currentValue);
 		}
@@ -101,23 +101,24 @@ export default class Pagination extends Component {
 
 	// next page
 	nextPage() {
-		let currentValue = this.state.currentValue < this.state.maxPageNumber ? this.state.currentValue + 1 : this.state.maxPageNumber;
+		const currentValue = this.state.currentValue < this.state.maxPageNumber ? this.state.currentValue + 1 : this.state.maxPageNumber;
 		if (this.state.currentValue !== currentValue) {
 			this.handleChange.call(this, currentValue);
 		}
 	}
 
+	getStart() {
+		const midValue = parseInt(this.props.pages/2, 10);
+		const start =  this.state.currentValue - midValue;
+		return start > 1 ? start : 1;
+	}
+
 	renderPageNumber() {
-		let start, numbers = [];
-		for (let i = this.state.currentValue; i > 0; i--) {
-			if (i % 5 === 0 || i === 1) {
-				start = i;
-				break;
-			}
-		}
-		for (let i = start; i <= start + 5; i++) {
-			let singleItem = (
-				<li key={i} className={"rbc-page-number " + (this.state.currentValue === i ? "active rbc-pagination-active": "waves-effect")}>
+		let start = this.getStart(),
+			numbers = [];
+		for (let i = start; i < start + this.props.pages; i++) {
+			const singleItem = (
+				<li key={i} className={`rbc-page-number ${this.state.currentValue === i ? "active rbc-pagination-active" : "waves-effect"}`}>
 					<a onClick={() => this.handleChange(i)}>{i}</a>
 				</li>);
 			if (i <= this.state.maxPageNumber) {
@@ -126,11 +127,14 @@ export default class Pagination extends Component {
 		}
 		return (
 			<ul className="pagination">
-				<li className={(this.state.currentValue === 1 ? "disabled" : "waves-effect")}><a className="rbc-page-previous" onClick={this.firstPage}><i className="fa fa-angle-double-left"></i></a></li>
-				<li className={(this.state.currentValue === 1 ? "disabled" : "waves-effect")}><a className="rbc-page-previous" onClick={this.prePage}><i className="fa fa-angle-left"></i></a></li>
+				<li className={(this.state.currentValue === 1 ? "disabled" : "waves-effect")}><a className="rbc-page-previous" onClick={this.prePage}><i className="fa fa-angle-left" /></a></li>
+				{
+					start !== 1 ? (
+						<li className={"rbc-page-one "+(this.state.currentValue === 1 ? "disabled" : "waves-effect")}><a className="rbc-page-previous" onClick={this.firstPage}>1</a></li>
+					) : null
+				}
 				{numbers}
-				<li className={(this.state.currentValue === this.state.maxPageNumber ? "disabled" : "waves-effect")}><a className="rbc-page-next" onClick={this.nextPage}><i className="fa fa-angle-right"></i></a></li>
-				<li className={(this.state.currentValue === this.state.maxPageNumber ? "disabled" : "waves-effect")}><a className="rbc-page-previous" onClick={this.lastPage}><i className="fa fa-angle-double-right"></i></a></li>
+				<li className={(this.state.currentValue === this.state.maxPageNumber ? "disabled" : "waves-effect")}><a className="rbc-page-next" onClick={this.nextPage}><i className="fa fa-angle-right" /></a></li>
 			</ul>
 		);
 	}
@@ -138,12 +142,12 @@ export default class Pagination extends Component {
 	// render
 	render() {
 		let title = null;
-		let titleExists = false;
+		const titleExists = false;
 		if (this.props.title) {
 			title = (<h4 className="rbc-title col s12 col-xs-12">{this.props.title}</h4>);
 		}
 
-		let cx = classNames({
+		const cx = classNames({
 			"rbc-title-active": this.props.title,
 			"rbc-title-inactive": !this.props.title
 		});
@@ -162,14 +166,18 @@ export default class Pagination extends Component {
 Pagination.propTypes = {
 	componentId: React.PropTypes.string.isRequired,
 	title: React.PropTypes.string,
-	onPageChange: React.PropTypes.func
+	onPageChange: React.PropTypes.func,
+	pages: helper.pagesValidation
 };
 
 // Default props value
-Pagination.defaultProps = {};
+Pagination.defaultProps = {
+	pages: 10
+};
 
 // context type
 Pagination.contextTypes = {
 	appbaseRef: React.PropTypes.any.isRequired,
 	type: React.PropTypes.any.isRequired
-}
+};
+

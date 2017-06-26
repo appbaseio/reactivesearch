@@ -11,37 +11,43 @@
   font-weight: 900;
   font-style: normal; }
 
-.rbc-red .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
+.rbc-red .rbc.rbc-categorysearch .rbc-search-container:before,
+.rbc-red .rbc.rbc-categorysearch .react-autosuggest__container:before {
   color: red; }
 
 .rbc-red .rbc.rbc-categorysearch .rbc-strong {
   color: red; }
 
-.rbc-orange .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
+.rbc-orange .rbc.rbc-categorysearch .rbc-search-container:before,
+.rbc-orange .rbc.rbc-categorysearch .react-autosuggest__container:before {
   color: orange; }
 
 .rbc-orange .rbc.rbc-categorysearch .rbc-strong {
   color: orange; }
 
-.rbc-yellow .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
+.rbc-yellow .rbc.rbc-categorysearch .rbc-search-container:before,
+.rbc-yellow .rbc.rbc-categorysearch .react-autosuggest__container:before {
   color: yellow; }
 
 .rbc-yellow .rbc.rbc-categorysearch .rbc-strong {
   color: yellow; }
 
-.rbc-green .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
+.rbc-green .rbc.rbc-categorysearch .rbc-search-container:before,
+.rbc-green .rbc.rbc-categorysearch .react-autosuggest__container:before {
   color: green; }
 
 .rbc-green .rbc.rbc-categorysearch .rbc-strong {
   color: green; }
 
-.rbc-blue .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
+.rbc-blue .rbc.rbc-categorysearch .rbc-search-container:before,
+.rbc-blue .rbc.rbc-categorysearch .react-autosuggest__container:before {
   color: #1893e7; }
 
 .rbc-blue .rbc.rbc-categorysearch .rbc-strong {
   color: #1893e7; }
 
-.rbc-dark .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
+.rbc-dark .rbc.rbc-categorysearch .rbc-search-container:before,
+.rbc-dark .rbc.rbc-categorysearch .react-autosuggest__container:before {
   color: #ccc; }
 
 .rbc-dark .rbc.rbc-categorysearch .rbc-strong {
@@ -90,53 +96,75 @@
 
 .rbc.rbc-categorysearch {
   margin-top: 10px;
-  padding: 0; }
-  .rbc.rbc-categorysearch .is-focused:not(.is-open) > .Select-control {
-    box-shadow: none;
-    border: 0; }
-  .rbc.rbc-categorysearch .Select-control {
-    border: 0;
-    height: 48px;
-    border-radius: 0;
-    font-family: "Lato Regular";
-    background: whitesmoke;
-    outline: none; }
-    .rbc.rbc-categorysearch .Select-control:hover, .rbc.rbc-categorysearch .Select-control:focus {
-      outline: none; }
-    .rbc.rbc-categorysearch .Select-control .Select-arrow-zone {
+  padding: 0;
+  display: flex;
+  flex-direction: column; }
+  .rbc.rbc-categorysearch .rbc-search-container {
+    padding: 0; }
+    .rbc.rbc-categorysearch .rbc-search-container input {
+      border-bottom: 2px solid whitesmoke; }
+  .rbc.rbc-categorysearch input {
+    width: 100%;
+    margin: 0;
+    padding: 0 35px 0 10px;
+    background-color: whitesmoke;
+    box-sizing: border-box; }
+  .rbc.rbc-categorysearch .react-autosuggest__container,
+  .rbc.rbc-categorysearch .rbc-search-container {
+    position: relative; }
+    .rbc.rbc-categorysearch .react-autosuggest__container:before,
+    .rbc.rbc-categorysearch .rbc-search-container:before {
+      content: "\f002";
       position: absolute;
-      right: 6px;
-      top: 12px; }
-      .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow {
-        border: 0;
-        width: 30px;
-        height: 30px;
-        display: inline-block;
-        font: normal normal normal 14px/1 FontAwesome;
-        font-size: inherit;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased; }
-        .rbc.rbc-categorysearch .Select-control .Select-arrow-zone .Select-arrow:before {
-          content: "\f002"; }
-  .rbc.rbc-categorysearch .Select--single > .Select-control .Select-value, .rbc.rbc-categorysearch .Select-placeholder {
-    line-height: 50px; }
-  .rbc.rbc-categorysearch .Select-placeholder,
-  .rbc.rbc-categorysearch .Select-control,
-  .rbc.rbc-categorysearch .Select--single > .Select-control .Select-value {
-    padding-right: 30px; }
-  .rbc.rbc-categorysearch .Select-input {
-    height: 48px; }
-    .rbc.rbc-categorysearch .Select-input input {
-      height: 48px;
-      line-height: 36px;
-      padding: 0;
-      -webkit-transition: none;
-      -moz-transition: none;
-      -ms-transition: none;
-      -o-transition: none;
-      transition: none; }
-    .rbc.rbc-categorysearch .Select-input:hover, .rbc.rbc-categorysearch .Select-input:focus {
-      outline: none; }
+      top: 15px;
+      right: -6px;
+      border: 0;
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased; }
+  .rbc.rbc-categorysearch .react-autosuggest__input--focused {
+    outline: none; }
+  .rbc.rbc-categorysearch .react-autosuggest__input--open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0; }
+  .rbc.rbc-categorysearch .react-autosuggest__suggestions-container {
+    display: none; }
+  .rbc.rbc-categorysearch .react-autosuggest__suggestions-container--open {
+    display: block;
+    position: absolute;
+    top: calc(3em - 2px);
+    width: 100%;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 16px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    z-index: 2; }
+  .rbc.rbc-categorysearch .react-autosuggest__suggestions-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    max-height: 210px;
+    overflow-y: scroll; }
+  .rbc.rbc-categorysearch .react-autosuggest__suggestion {
+    cursor: pointer;
+    padding: 10px;
+    word-wrap: break-word; }
+    .rbc.rbc-categorysearch .react-autosuggest__suggestion span {
+      display: inline-flex;
+      height: auto;
+      max-height: 44px;
+      line-height: 1.375em;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis; }
+  .rbc.rbc-categorysearch .react-autosuggest__suggestion--highlighted {
+    background-color: #ddd; }
   .rbc.rbc-categorysearch .rbc-strong {
     font-family: "Lato Bold"; }
 

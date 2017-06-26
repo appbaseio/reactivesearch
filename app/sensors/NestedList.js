@@ -161,7 +161,8 @@ export default class NestedList extends Component {
 				reactiveId: this.context.reactiveId,
 				showFilter: this.props.showFilter,
 				filterLabel: this.props.filterLabel ? this.props.filterLabel : this.props.componentId,
-				component: "NestedList"
+				component: "NestedList",
+				defaultSelected: this.urlParams !== null ? this.urlParams : this.props.defaultSelected
 			}
 		};
 		helper.selectedSensor.setSensorInfo(obj);

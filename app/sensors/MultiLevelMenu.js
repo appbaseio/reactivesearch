@@ -93,7 +93,8 @@ export default class MultiLevelMenu extends Component {
 			value: {
 				queryType: this.type,
 				inputData: this.props.appbaseField[0],
-				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery
+				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery,
+				defaultSelected: this.urlParams !== null ? this.urlParams : this.props.defaultSelected
 			}
 		};
 		helper.selectedSensor.setSensorInfo(ob);
