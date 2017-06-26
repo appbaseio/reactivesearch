@@ -49,7 +49,7 @@ export default class CategorySearch extends Component {
 	}
 
 	// Get the items from Appbase when component is mounted
-	componentDidMount() {
+	componentWillMount() {
 		this.setQueryInfo();
 		this.createChannel();
 		this.checkDefault();
@@ -113,7 +113,8 @@ export default class CategorySearch extends Component {
 				reactiveId: this.context.reactiveId,
 				showFilter: this.props.showFilter,
 				filterLabel: this.props.filterLabel ? this.props.filterLabel : this.props.componentId,
-				component: "CategorySearch"
+				component: "CategorySearch",
+				defaultSelected: this.urlParams !== null ? this.urlParams : this.props.defaultSelected
 			}
 		};
 		if (this.props.highlight) {
