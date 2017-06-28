@@ -285,9 +285,12 @@ export default class NestedList extends Component {
 	getQueryLevel(appliedQuery) {
 		let level = 0;
 		try {
-			const appliedField = ((Object.keys(appliedQuery.body.aggs)[0]).split("-"))[0];
-			level = this.props.appbaseField.indexOf(appliedField);
-			level = level > -1 ? level : 0;
+			const field = Object.keys(appliedQuery.body.aggs)[0];
+			if (field) {
+				const appliedField = (field.split("-"))[0];
+				level = this.props.appbaseField.indexOf(appliedField);
+				level = level > -1 ? level : 0;
+			}
 		} catch(e) {
 			console.log(e);
 		}
@@ -370,7 +373,7 @@ export default class NestedList extends Component {
 		let selectedValues = ($(event.currentTarget).data("value")).split("@rbc@");
 		const level = Number($(event.currentTarget).data("level"));
 		event.stopPropagation();
-		if(selectedValues[level] === this.state.selectedValues[level]) {
+		if(this.state.selectedValues && selectedValues[level] === this.state.selectedValues[level]) {
 			selectedValues = this.state.selectedValues.filter((item, index) => index < level);
 			const items = this.state.items;
 			items[level+1] = null;

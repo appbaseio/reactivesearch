@@ -58,7 +58,6 @@ class Main extends Component {
 						componentId="Search"
 						placeholder="Discover products..."
 						appbaseField={["name", "tagline"]}
-						searchInputId="NameSearch"
 					/>
 					<div className="links">
 						<a target="_blank" href="https://github.com/appbaseio/reactivesearch" className="link"><i className="fa fa-github" aria-hidden="true"></i> Github</a>
