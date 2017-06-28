@@ -57,7 +57,9 @@ export default class NestedList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.checkDefault(nextProps);
+		if(!_.isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
+			this.checkDefault(nextProps);
+		}
 	}
 
 	// stop streaming request and remove listener when component will unmount
