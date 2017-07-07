@@ -99,21 +99,16 @@
   padding: 0;
   display: flex;
   flex-direction: column; }
-  .rbc.rbc-categorysearch .rbc-search-container {
-    padding: 0; }
-    .rbc.rbc-categorysearch .rbc-search-container input {
-      border-bottom: 2px solid whitesmoke; }
   .rbc.rbc-categorysearch input {
     width: 100%;
     margin: 0;
     padding: 0 35px 0 10px;
     background-color: whitesmoke;
-    box-sizing: border-box; }
-  .rbc.rbc-categorysearch .react-autosuggest__container,
-  .rbc.rbc-categorysearch .rbc-search-container {
+    box-sizing: border-box;
+    color: #424242; }
+  .rbc.rbc-categorysearch .react-autosuggest__container {
     position: relative; }
-    .rbc.rbc-categorysearch .react-autosuggest__container:before,
-    .rbc.rbc-categorysearch .rbc-search-container:before {
+    .rbc.rbc-categorysearch .react-autosuggest__container:before {
       content: "\f002";
       position: absolute;
       top: 15px;
@@ -148,14 +143,16 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
+    display: flex;
+    flex-direction: column;
     max-height: 210px;
     overflow-y: scroll; }
   .rbc.rbc-categorysearch .react-autosuggest__suggestion {
     cursor: pointer;
     padding: 10px;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    color: #424242; }
     .rbc.rbc-categorysearch .react-autosuggest__suggestion span {
-      display: inline-flex;
       height: auto;
       max-height: 44px;
       line-height: 1.375em;
