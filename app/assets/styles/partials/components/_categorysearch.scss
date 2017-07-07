@@ -1,29 +1,17 @@
-$input-bg: darken($light-grey, 2%);
-
 .rbc.rbc-categorysearch {
 	margin-top: 10px;
 	padding: 0;
 	display: flex;
 	flex-direction: column;
 
-	.rbc-search-container {
-		padding: 0;
-
-		input {
-			border-bottom: 2px solid $input-bg;
-		}
-	}
-
 	input {
 		width: 100%;
 		margin: 0;
 		padding: 0 35px 0 10px;
-		background-color: $input-bg;
 		box-sizing: border-box;
 	}
 
-	.react-autosuggest__container,
-	.rbc-search-container {
+	.react-autosuggest__container {
 		position: relative;
 
 		&:before {
@@ -72,6 +60,8 @@ $input-bg: darken($light-grey, 2%);
 		margin: 0;
 		padding: 0;
 		list-style-type: none;
+		display: flex;
+		flex-direction: column;
 		max-height: 210px;
 		overflow-y: scroll;
 	}
@@ -82,7 +72,6 @@ $input-bg: darken($light-grey, 2%);
 		word-wrap: break-word;
 
 		span {
-			display: inline-flex;
 			height: auto;
 			max-height: 16px * 1.375 * 2;
 			line-height: 1.375em;
@@ -91,10 +80,6 @@ $input-bg: darken($light-grey, 2%);
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
-	}
-
-	.react-autosuggest__suggestion--highlighted {
-		background-color: #ddd;
 	}
 
 	.rbc-strong {

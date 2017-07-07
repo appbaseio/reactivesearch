@@ -11,11 +11,24 @@ $themes: (
 $map in $themes {
 	.#{$theme} {
 		.rbc.rbc-categorysearch {
-			.rbc-search-container,
+			input {
+				color: map-get($map, font-color);
+				background-color: map-get($map, input-bg);
+			}
+
 			.react-autosuggest__container {
 				&:before {
 					color: map-get($map, color);
 				}
+			}
+
+			.react-autosuggest__suggestion {
+				color: map-get($map, font-color);
+				background-color: map-get($map, input-bg);
+			}
+
+			.react-autosuggest__suggestion--highlighted {
+				background-color: #ddd;	// TODO: for both light and dark themes
 			}
 
 			.rbc-strong {
