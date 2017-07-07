@@ -1,5 +1,4 @@
 $input-bg: darken($light-grey, 2%);
-$text-primary: #424242;
 
 .rbc.rbc-categorysearch {
 	margin-top: 10px;
@@ -13,7 +12,6 @@ $text-primary: #424242;
 		padding: 0 35px 0 10px;
 		background-color: $input-bg;
 		box-sizing: border-box;
-		color: $text-primary;
 	}
 
 	.react-autosuggest__container {
@@ -75,7 +73,6 @@ $text-primary: #424242;
 		cursor: pointer;
 		padding: 10px;
 		word-wrap: break-word;
-		color: $text-primary;
 
 		span {
 			height: auto;
@@ -86,10 +83,6 @@ $text-primary: #424242;
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
-	}
-
-	.react-autosuggest__suggestion--highlighted {
-		background-color: #ddd;
 	}
 
 	.rbc-strong {
