@@ -577,6 +577,7 @@ NestedList.types = {
 	appbaseField: TYPES.ARRAY,
 	appbaseFieldType: TYPES.STRING,
 	title: TYPES.STRING,
+	placeholder: TYPES.STRING,
 	react: TYPES.OBJECT,
 	size: TYPES.NUMBER,
 	sortBy: TYPES.STRING,
