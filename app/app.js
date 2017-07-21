@@ -1,4 +1,3 @@
-import reactivemaps from "@appbaseio/reactivemaps";
 import NestedList from "./sensors/NestedList";
 import ToggleList from "./sensors/ToggleList";
 import DynamicRangeSlider from "./sensors/DynamicRangeSlider";
@@ -11,7 +10,7 @@ import ResultCard from "./actuators/ResultCard";
 import ResultList from "./actuators/ResultList";
 import ViewSwitcher from "./actuators/ViewSwitcher";
 
-const combineObj = {
+export {
 	NestedList,
 	ToggleList,
 	DynamicRangeSlider,
@@ -24,8 +23,4 @@ const combineObj = {
 	ViewSwitcher
 };
 
-Object.keys(reactivemaps).forEach((component) => {
-	combineObj[component] = reactivemaps[component];
-});
-
-module.exports = combineObj;
+export * from "@appbaseio/reactivemaps";

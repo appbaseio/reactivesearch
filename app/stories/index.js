@@ -1,6 +1,6 @@
 import React from "react";
-import { storiesOf } from "@kadira/storybook";
-import { withKnobs, text, boolean, number, array, select, object } from "@kadira/storybook-addon-knobs";
+import { storiesOf } from "@storybook/react";
+import { withKnobs, text, boolean, number, array, select, object } from "@storybook/addon-knobs";
 import withReadme from "storybook-readme/with-readme";
 
 import NestedListReadme from "@appbaseio/reactivemaps-manual/docs/v1.0.0/components/NestedList.md";

@@ -1,104 +1,101 @@
-var path = require('path');
-var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-var webpack = require('webpack');
-var env = process.env.NODE_ENV;
+const path = require("path");
+const webpack = require("webpack");
+const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
+const BabiliPlugin = require("babili-webpack-plugin");
+const BrotliPlugin = require("brotli-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 
-var umd_config = {
-	entry: './app/app.js',
-
+module.exports = {
+	cache: true,
+	entry: "./app/app.js",
 	output: {
-		library: 'ReactiveSearch',
-		libraryTarget: 'umd',
+		path: __dirname + "/umd",
+		filename: "reactivesearch.js",
+		library: "ReactiveSearch",
+		libraryTarget: "umd",
+		umdNamedDefine: true
 	},
-
 	module: {
-		preLoaders: [
-				{ test: /\.json$/, exclude: /node_modules/, loader: 'json'},
-		],
-		loaders: [
+		rules: [
+			{
+				enforce: "pre",
+				test: /\.json$/,
+				use: "json-loader",
+				exclude: /node_modules/
+			},
 			{
 				test: /.jsx?$/,
-				loader: 'babel-loader',
-				exclude: /node_modules/,
-				query: {
-					presets: ['es2015','stage-0', 'react']
-				}
+				use: "babel-loader",
+				exclude: /node_modules/
 			},
 			{
 				test: /node_modules\/JSONStream\/index\.js$/,
-				loaders: ['shebang', 'babel']
+				use: ["shebang-loader", "babel-loader"]
 			}
-		],
-		noParse: ['ws']
+		]
 	},
-
-	externals: ['ws'],
-
-	resolve: {
-		alias: {
-			react: path.resolve(__dirname, './node_modules/react'),
-			'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
-			'react-addons-transition-group':
-					path.resolve(__dirname, './node_modules/react-addons-transition-group'),
-		},
-	},
-
 	externals: [
 		{
 			react: {
-				root: 'React',
-				commonjs2: 'react',
-				commonjs: 'react',
-				amd: 'react',
+				root: "React",
+				commonjs2: "react",
+				commonjs: "react",
+				amd: "react",
 			},
-			'react-dom': {
-				root: 'ReactDOM',
-				commonjs2: 'react-dom',
-				commonjs: 'react-dom',
-				amd: 'react-dom',
+			"react-dom": {
+				root: "ReactDOM",
+				commonjs2: "react-dom",
+				commonjs: "react-dom",
+				amd: "react-dom",
 			},
-			'react-dom/server': {
-				root: 'ReactDOMServer',
-				commonjs2: 'react-dom-server',
-				commonjs: 'react-dom-server',
-				amd: 'react-dom-server',
-			},
-			'react-addons-transition-group': {
-				root: ['React', 'addons', 'TransitionGroup'],
-				commonjs2: 'react-addons-transition-group',
-				commonjs: 'react-addons-transition-group',
-				amd: 'react-addons-transition-group',
+			"react-dom/server": {
+				root: "ReactDOMServer",
+				commonjs2: "react-dom-server",
+				commonjs: "react-dom-server",
+				amd: "react-dom-server",
 			}
 		},
-		'ws'
+		"ws"
 	],
-
 	plugins: [
+		new webpack.DefinePlugin({
+			"process.env.NODE_ENV": JSON.stringify("production"),
+		}),
+		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 		new LodashModuleReplacementPlugin({
 			collections: true,
-			shorthands: true
+			shorthands: true,
+			paths: true
 		}),
-		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify(env),
-		}),
-	],
-};
-
-if (env === 'production') {
-	umd_config.plugins.push(
+		new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.optimize.UglifyJsPlugin({
-			compressor: {
-				pure_getters: true,
-				unsafe: true,
-				unsafe_comps: true,
+			compress: {
 				warnings: false,
+				screw_ie8: true,
+				conditionals: true,
+				unused: true,
+				comparisons: true,
+				sequences: true,
+				dead_code: true,
+				evaluate: true,
+				join_vars: true,
+				if_return: true
 			},
 			output: {
-				comments: false,
-			},
-			sourceMap: false,
+				comments: false
+			}
+		}),
+		new BabiliPlugin(),
+		new BrotliPlugin({
+			asset: "[path].br[query]",
+			test: /\.(js|css)$/,
+			mode: 0,
+			quality: 11
+		}),
+		new CompressionPlugin({
+			asset: "[path].gzip[query]",
+			algorithm: "zopfli",
+			test: /\.(js|css)$/
 		})
-	);
-}
-
-module.exports = umd_config;
+	]
+};
