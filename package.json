@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/appbaseio/reactivesearch#readme",
   "dependencies": {
-    "@appbaseio/reactivemaps": "1.0.0-beta",
+    "@appbaseio/reactivemaps": "1.0.0-beta01",
     "react-stars": "^2.1.0"
   },
   "peerDependencies": {
@@ -74,11 +74,11 @@
     "lodash-webpack-plugin": "^0.10.6",
     "materialize-css": "^0.98.0",
     "raw-loader": "^0.5.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
     "sass-loader": "^6.0.3",
     "shebang-loader": "0.0.1",
     "storybook-readme": "^3.0.5",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
     "style-loader": "^0.14.1",
     "webpack": "^3.2.0",
     "webpack-dev-server": "^2.5.1"
