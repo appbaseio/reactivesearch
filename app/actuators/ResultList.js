@@ -539,6 +539,7 @@ export default class ResultList extends Component {
 						componentId="pagination"
 						onPageChange={this.props.onPageChange}
 						title={this.props.paginationTitle}
+						pages={this.props.pages}
 					/>
 				</div>
 			);
@@ -707,7 +708,8 @@ ResultList.propTypes = {
 		React.PropTypes.element
 	]),
 	react: React.PropTypes.object,
-	scrollOnTarget: React.PropTypes.object
+	scrollOnTarget: React.PropTypes.object,
+	pages: React.PropTypes.number
 };
 
 ResultList.defaultProps = {
@@ -717,7 +719,8 @@ ResultList.defaultProps = {
 	paginationAt: "bottom",
 	stream: false,
 	componentStyle: {},
-	showResultStats: true
+	showResultStats: true,
+	pages: 5
 };
 
 ResultList.contextTypes = {
@@ -745,5 +748,6 @@ ResultList.types = {
 	showResultStats: TYPES.BOOLEAN,
 	onResultStats: TYPES.FUNCTION,
 	placeholder: TYPES.STRING,
-	scrollOnTarget: TYPES.OBJECT
+	scrollOnTarget: TYPES.OBJECT,
+	pages: TYPES.NUMBER
 };

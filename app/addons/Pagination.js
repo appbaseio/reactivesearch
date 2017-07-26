@@ -48,13 +48,17 @@ export default class Pagination extends Component {
 				const totalHits = res.channelResponse && res.channelResponse.data && res.channelResponse.data.hits ? res.channelResponse.data.hits.total : 0;
 				const maxPageNumber = Math.ceil(totalHits / res.queryOptions.size) < 1 ? 1 : Math.ceil(totalHits / res.queryOptions.size);
 				const size = res.queryOptions.size ? res.queryOptions.size : 20;
-				const currentPage = Math.round(res.queryOptions.from / size) + 1;
-				this.setState({
-					totalHits,
-					size,
-					maxPageNumber,
-					currentValue: currentPage
-				});
+				const currentPage = Math.floor(res.queryOptions.from / size) + 1;
+				if (currentPage > maxPageNumber) {
+					this.handleChange(1);
+				} else {
+					this.setState({
+						totalHits,
+						size,
+						maxPageNumber,
+						currentValue: currentPage
+					});
+				}
 			}
 		});
 	}
@@ -180,4 +184,5 @@ Pagination.contextTypes = {
 	appbaseRef: React.PropTypes.any.isRequired,
 	type: React.PropTypes.any.isRequired
 };
+
 

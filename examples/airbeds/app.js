@@ -161,6 +161,7 @@ class Main extends Component {
 										componentId="SearchResult"
 										appbaseField={this.props.mapping.name}
 										from={0}
+										pages={10}
 										size={10}
 										onData={this.onData}
 										pagination={true}
