@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivebase@1.0.0-beta04":
-  version "1.0.0-beta04"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivebase/-/reactivebase-1.0.0-beta04.tgz#9b86e3c865178b697428471fdc3d022cb2490f73"
+"@appbaseio/reactivebase@1.0.0-beta05":
+  version "1.0.0-beta05"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivebase/-/reactivebase-1.0.0-beta05.tgz#6aa3e418711503ae68d69b40e8ba7eb15a6b5d3c"
   dependencies:
     appbase-js "^0.11.0"
     classnames "^2.2.5"
@@ -28,11 +28,11 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivemaps@1.0.0-beta01":
-  version "1.0.0-beta01"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-1.0.0-beta01.tgz#1660c48667bbe46fb2947757fffe664962aaa520"
+"@appbaseio/reactivemaps@1.0.0-beta02":
+  version "1.0.0-beta02"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-1.0.0-beta02.tgz#7680e2d5e2e0956ee841c3f4094f9024569432c1"
   dependencies:
-    "@appbaseio/reactivebase" "1.0.0-beta04"
+    "@appbaseio/reactivebase" "1.0.0-beta05"
     axios "^0.15.2"
     google-map-react "^0.14.5"
     google-maps "^3.2.1"

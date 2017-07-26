@@ -291,6 +291,11 @@ export default class ResultList extends Component {
 			newData = [],
 			currentData = [];
 		this.streamFlag = false;
+
+		if (this.props.onQueryChange) {
+			this.props.onQueryChange(null, Object.keys(res.appliedQuery).length ? res.appliedQuery : null);
+		}
+
 		if (res.mode === "streaming") {
 			this.channelMethod = "streaming";
 			newData = data;
@@ -306,6 +311,7 @@ export default class ResultList extends Component {
 			newData = normalizeCurrentData.newData;
 			currentData = normalizeCurrentData.currentData;
 		}
+
 		this.setState({
 			rawData,
 			newData,
@@ -676,6 +682,7 @@ ResultList.propTypes = {
 	),
 	from: helper.validation.resultListFrom,
 	onData: React.PropTypes.func,
+	onQueryChange: React.PropTypes.func,
 	size: helper.sizeValidation,
 	pagination: React.PropTypes.bool,
 	paginationAt: React.PropTypes.oneOf(["top", "bottom", "both"]),
@@ -723,6 +730,7 @@ ResultList.types = {
 	sortOptions: TYPES.OBJECT,
 	from: TYPES.NUMBER,
 	onData: TYPES.FUNCTION,
+	onQueryChange: TYPES.FUNCTION,
 	size: TYPES.NUMBER,
 	pagination: TYPES.BOOLEAN,
 	paginationAt: TYPES.STRING,
