@@ -353,9 +353,14 @@ export default class ResultCard extends Component {
 
 		markup = data.map((item) => {
 			const result = this.props.onData(item._source);
+			const cx = result.image ? "rbc-image-active" : "rbc-image-inactive";
 			const details = (
 				<div>
-					<div className="rbc-resultcard-item__image" style={{ backgroundImage: `url(${result.image})` }} />
+					{
+						result.image
+							? <div className="rbc-resultcard-item__image" style={{ backgroundImage: `url(${result.image})` }} />
+							: null
+					}
 					<div className="rbc-resultcard-item__title">{result.title}</div>
 					<div className="rbc-resultcard-item__desc">{result.desc}</div>
 					{
@@ -378,7 +383,7 @@ export default class ResultCard extends Component {
 				return (
 					<a
 						key={item._id}
-						className="rbc-resultcard-item"
+						className={`rbc-resultcard-item ${cx}`}
 						href={result.url}
 						rel="noopener noreferrer"
 					>
@@ -389,7 +394,7 @@ export default class ResultCard extends Component {
 				return (
 					<div
 						key={item._id}
-						className="rbc-resultcard-item"
+						className={`rbc-resultcard-item ${cx}`}
 					>
 						{details}
 					</div>

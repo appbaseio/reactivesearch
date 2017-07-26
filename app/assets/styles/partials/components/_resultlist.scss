@@ -66,7 +66,7 @@
 			}
 		}
 
-		.rbc-image-inactive {
+		&.rbc-image-inactive {
 			.rbc-resultlist-item__image {
 				display: none;
 			}
@@ -78,7 +78,7 @@
 			}
 		}
 
-		.rbc-image-active.rbc-image-small {
+		&.rbc-image-active.rbc-image-small {
 			.rbc-resultlist-item__image {
 				width: 100px;
 				height: 100px;
@@ -104,7 +104,7 @@
 				width: calc(100% - 120px);
 			}
 			
-			.rbc-image-inactive {
+			&.rbc-image-inactive {
 				.rbc-resultlist-item__image {
 					display: none;
 				}
