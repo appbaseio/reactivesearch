@@ -432,7 +432,7 @@ export default class CategorySearch extends Component {
 		});
 
 		const options = this.state.currentValue.label === "" || this.state.currentValue.label === null
-							? this.props.initialSuggestions
+							? this.props.initialSuggestions && this.props.initialSuggestions.length
 							? this.props.initialSuggestions
 							: []
 							: this.state.options;
