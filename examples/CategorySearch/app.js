@@ -51,6 +51,12 @@ class Main extends Component {
 							title="CategorySearch"
 							weights={[1, 5]}
 							URLParams={true}
+							initialSuggestions={[
+								{
+									label: "BMW",
+									value: "BMW"
+								}
+							]}
 						/>
 					</div>
 

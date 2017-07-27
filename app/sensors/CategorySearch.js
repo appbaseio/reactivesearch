@@ -378,11 +378,9 @@ export default class CategorySearch extends Component {
 
 	handleBlur(event, { highlightedSuggestion }) {
 		if (!highlightedSuggestion || !highlightedSuggestion.label) {
-			if (this.state.currentValue.label) {
-				this.handleSearch({
-					value: this.state.currentValue.label
-				});
-			}
+			this.handleSearch({
+				value: this.state.currentValue.label
+			});
 		}
 	}
 
@@ -433,18 +431,25 @@ export default class CategorySearch extends Component {
 			"rbc-autoSuggest-inactive": !this.props.autoSuggest
 		});
 
+		const options = this.state.currentValue.label === "" || this.state.currentValue.label === null
+							? this.props.initialSuggestions
+							? this.props.initialSuggestions
+							: []
+							: this.state.options;
+
 		return (
 			<div className={`rbc rbc-categorysearch col s12 col-xs-12 card thumbnail ${cx} ${this.state.isLoadingOptions ? "is-loading" : ""}`} style={this.props.componentStyle}>
 				{title}
 				{
 					this.props.autoSuggest ?
 						<Autosuggest
-							suggestions={this.state.options}
+							suggestions={options}
 							onSuggestionsFetchRequested={() => {}}
-							onSuggestionsClearRequested={this.clearSuggestions}
+							onSuggestionsClearRequested={() => {}}
 							onSuggestionSelected={this.onSuggestionSelected}
 							getSuggestionValue={this.getSuggestionValue}
 							renderSuggestion={this.renderSuggestion}
+							shouldRenderSuggestions={() => true}
 							focusInputOnSuggestionClick={false}
 							inputProps={{
 								placeholder: this.props.placeholder,
@@ -489,6 +494,15 @@ CategorySearch.propTypes = {
 	react: React.PropTypes.object,
 	onValueChange: React.PropTypes.func,
 	highlight: React.PropTypes.bool,
+	initialSuggestions: React.PropTypes.arrayOf(
+		React.PropTypes.shape({
+			label: React.PropTypes.oneOfType([
+				React.PropTypes.string,
+				React.PropTypes.element
+			]),
+			value: React.PropTypes.string
+		})
+	),
 	highlightFields: React.PropTypes.oneOfType([
 		React.PropTypes.string,
 		React.PropTypes.arrayOf(React.PropTypes.string)
