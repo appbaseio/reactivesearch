@@ -50,10 +50,18 @@ export default class CategorySearch extends Component {
 
 	// Get the items from Appbase when component is mounted
 	componentWillMount() {
+		this.setReact(this.props);
 		this.setQueryInfo();
 		this.createChannel();
 		this.checkDefault();
 		this.listenFilter();
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (!_.isEqual(this.props.react, nextProps.react)) {
+			this.setReact(nextProps);
+			manager.update(this.channelId, this.react, nextProps.size, 0, false);
+		}
 	}
 
 	componentWillUpdate() {
@@ -72,7 +80,6 @@ export default class CategorySearch extends Component {
 			this.filterListener.remove();
 		}
 	}
-
 
 	listenFilter() {
 		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
@@ -249,15 +256,18 @@ export default class CategorySearch extends Component {
 		return null;
 	}
 
-	// Create a channel which passes the react and receive results whenever react changes
-	createChannel() {
-		let react = this.props.react ? this.props.react : {};
+	setReact(props) {
+		const react = Object.assign({}, props.react);
 		react.aggs = {
 			key: this.props.categoryField
 		};
 		const reactAnd = [this.searchInputId];
-		react = helper.setupReact(react, reactAnd);
-		const channelObj = manager.create(this.context.appbaseRef, this.context.type, react, 100, 0, false, this.props.componentId);
+		this.react = helper.setupReact(react, reactAnd);
+	}
+
+	// Create a channel which passes the react and receive results whenever react changes
+	createChannel() {
+		const channelObj = manager.create(this.context.appbaseRef, this.context.type, this.react, 100, 0, false, this.props.componentId);
 		this.channelId = channelObj.channelId;
 		this.channelListener = channelObj.emitter.addListener(channelObj.channelId, (res) => {
 			const data = res.data;

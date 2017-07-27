@@ -152,7 +152,6 @@ export default class DynamicRangeSlider extends Component {
 		this.react = helper.setupReact(react, reactAnd);
 	}
 
-
 	// Create a channel which passes the react and receive results whenever react changes
 	createChannel() {
 		// create a channel and listen the changes
