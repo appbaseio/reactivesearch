@@ -259,7 +259,7 @@ export default class CategorySearch extends Component {
 	setReact(props) {
 		const react = Object.assign({}, props.react);
 		react.aggs = {
-			key: this.props.categoryField
+			key: props.categoryField
 		};
 		const reactAnd = [this.searchInputId];
 		this.react = helper.setupReact(react, reactAnd);

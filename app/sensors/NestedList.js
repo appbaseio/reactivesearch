@@ -47,6 +47,7 @@ export default class NestedList extends Component {
 
 	// Get the items from Appbase when component is mounted
 	componentWillMount() {
+		this.setReact(this.props);
 		this.setQueryInfo();
 		this.createChannel();
 	}
@@ -59,6 +60,10 @@ export default class NestedList extends Component {
 	componentWillReceiveProps(nextProps) {
 		if(!_.isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.checkDefault(nextProps);
+		}
+		if (!_.isEqual(this.props.react, nextProps.react)) {
+			this.setReact(nextProps);
+			manager.update(this.channelId, this.react, nextProps.size, 0, false);
 		}
 	}
 
@@ -249,22 +254,23 @@ export default class NestedList extends Component {
 		return query;
 	}
 
-	// Create a channel which passes the react and receive results whenever react changes
-	createChannel() {
-		// Set the react - add self aggs query as well with react
-		let react = this.props.react ? JSON.parse(JSON.stringify(this.props.react)) : {};
+	setReact(props) {
+		const react = Object.assign({}, props.react);
 		react.aggs = {
-			key: this.props.appbaseField[0],
-			sort: this.props.sortBy,
-			size: this.props.size,
+			key: props.appbaseField[0],
+			sort: props.sortBy,
+			size: props.size,
 			customQuery: this.nestedAggQuery
 		};
-		const reactAnd = [this.nested[0], `nestedSelectedValues-${this.props.componentId}`];
-		react = helper.setupReact(react, reactAnd);
-		this.includeAggQuery();
+		const reactAnd = [this.nested[0], `nestedSelectedValues-${props.componentId}`];
+		this.react = helper.setupReact(react, reactAnd);
+	}
 
+	// Create a channel which passes the react and receive results whenever react changes
+	createChannel() {
+		this.includeAggQuery();
 		// create a channel and listen the changes
-		const channelObj = manager.create(this.context.appbaseRef, this.context.type, react, 100, 0, false, this.props.componentId);
+		const channelObj = manager.create(this.context.appbaseRef, this.context.type, this.react, 100, 0, false, this.props.componentId);
 		this.channelId = channelObj.channelId;
 		this.channelListener = channelObj.emitter.addListener(this.channelId, (res) => {
 			if (res.error) {
