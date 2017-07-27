@@ -5,6 +5,7 @@ import {
 	AppbaseSensorHelper as helper
 } from "@appbaseio/reactivemaps";
 import ReactStars from "react-stars";
+
 const _ = require("lodash");
 
 export default class RatingsFilter extends Component {
@@ -44,7 +45,6 @@ export default class RatingsFilter extends Component {
 			}
 		});
 	}
-
 
 	checkDefault(props) {
 		const defaultValue = this.urlParams !== null ? this.urlParams : props.defaultSelected;

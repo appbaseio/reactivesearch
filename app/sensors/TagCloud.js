@@ -39,6 +39,7 @@ export default class TagCloud extends Component {
 	// Get the items from Appbase when component is mounted
 	componentWillMount() {
 		this.size = this.props.size;
+		this.setReact(this.props);
 		this.setQueryInfo();
 		this.createChannel();
 		setTimeout(this.checkDefault.bind(this, this.props), 300);
@@ -46,6 +47,10 @@ export default class TagCloud extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		if (!_.isEqual(this.props.react, nextProps.react)) {
+			this.setReact(nextProps);
+			manager.update(this.channelId, this.react, nextProps.size, 0, false);
+		}
 		this.checkDefault(nextProps);
 	}
 
@@ -176,20 +181,22 @@ export default class TagCloud extends Component {
 		helper.selectedSensor.setSortInfo(obj);
 	}
 
-	createChannel() {
-		// Set the react - add self aggs query as well with react
-		let react = this.props.react ? this.props.react : {};
+	setReact(props) {
+		const react = Object.assign({}, props.react);
 		react.aggs = {
-			key: this.props.appbaseField,
+			key: props.appbaseField,
 			sort: "asc",
-			size: this.props.size,
-			sortRef: `${this.props.componentId}-sort`
+			size: props.size,
+			sortRef: `${props.componentId}-sort`
 		};
-		const reactAnd = [`${this.props.componentId}-sort`, "tagCloudChanges"];
-		react = helper.setupReact(react, reactAnd);
+		const reactAnd = [`${props.componentId}-sort`, "tagCloudChanges"];
+		this.react = helper.setupReact(react, reactAnd);
+	}
+
+	createChannel() {
 		this.includeAggQuery();
 		// create a channel and listen the changes
-		const channelObj = manager.create(this.context.appbaseRef, this.context.type, react);
+		const channelObj = manager.create(this.context.appbaseRef, this.context.type, this.react);
 		this.channelId = channelObj.channelId;
 		this.channelListener = channelObj.emitter.addListener(this.channelId, (res) => {
 			if (res.error) {
