@@ -370,7 +370,7 @@ export default class CategorySearch extends Component {
 		helper.selectedSensor.set(obj, true);
 		this.setState({
 			currentValue: {
-				label: finalVal.value,
+				label: finalVal ? finalVal.value : null,
 				value
 			}
 		});
