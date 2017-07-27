@@ -444,7 +444,7 @@ export default class ResultList extends Component {
 	}
 
 	combineCurrentData(newData) {
-		if (_.isArray(newData)) {
+		if (Array.isArray(newData)) {
 			newData = newData.map((item) => {
 				item.stream = false;
 				return item;

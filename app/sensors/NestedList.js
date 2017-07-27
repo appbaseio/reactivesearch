@@ -101,7 +101,7 @@ export default class NestedList extends Component {
 			this.defaultSelected = defaultValue;
 			let items = this.state.items;
 			items = items.map((subitems) => {
-				subitems = _.isArray(subitems) ? subitems.map((item) => {
+				subitems = Array.isArray(subitems) ? subitems.map((item) => {
 					item.key = item && item.key ? item.key.toString() : null;
 					item.status = !!(this.defaultSelected && this.defaultSelected.length && this.defaultSelected.indexOf(item.key) > -1);
 					return item;
@@ -204,7 +204,7 @@ export default class NestedList extends Component {
 
 	nestedAggQuery() {
 		let query = null;
-		const level = _.isArray(this.state.selectedValues) && this.state.selectedValues.length ? this.state.selectedValues.length : 0;
+		const level = Array.isArray(this.state.selectedValues) && this.state.selectedValues.length ? this.state.selectedValues.length : 0;
 		const field = this.props.appbaseField[level];
 		const orderType = this.props.sortBy === "count" ? "_count" : "_term";
 		const sortBy = this.props.sortBy === "count" ? "desc" : this.props.sortBy;
@@ -243,7 +243,7 @@ export default class NestedList extends Component {
 				}
 			}
 		});
-		if(_.isArray(this.state.selectedValues) && this.state.selectedValues.length < this.props.appbaseField.length) {
+		if(Array.isArray(this.state.selectedValues) && this.state.selectedValues.length < this.props.appbaseField.length) {
 			query = init(field, level);
 		}
 		return query;
@@ -413,8 +413,8 @@ export default class NestedList extends Component {
 		return items.map((item, index) => {
 			item.value = prefix.concat([item.key]);
 			const cx = classNames({
-				"rbc-item-active": (_.isArray(this.state.selectedValues) && item.key === this.state.selectedValues[level]),
-				"rbc-item-inactive": !(_.isArray(this.state.selectedValues) && item.key === this.state.selectedValues[level])
+				"rbc-item-active": (Array.isArray(this.state.selectedValues) && item.key === this.state.selectedValues[level]),
+				"rbc-item-inactive": !(Array.isArray(this.state.selectedValues) && item.key === this.state.selectedValues[level])
 			});
 			return (
 				<li
@@ -507,7 +507,7 @@ const NestedingValidation = (props, propName) => {
 	if (!props[propName]) {
 		err = new Error("appbaseField is required prop!");
 	}
-	else if (!_.isArray(props[propName])) {
+	else if (!Array.isArray(props[propName])) {
 		err = new Error("appbaseField should be an array!");
 	}
 	else if (props[propName].length === 0) {

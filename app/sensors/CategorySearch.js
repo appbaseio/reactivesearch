@@ -88,7 +88,7 @@ export default class CategorySearch extends Component {
 		const highlightFields = this.props.highlightFields ? this.props.highlightFields : this.props.appbaseField;
 		if (typeof highlightFields === "string") {
 			fields[highlightFields] = {};
-		} else if (_.isArray(highlightFields)) {
+		} else if (Array.isArray(highlightFields)) {
 			highlightFields.forEach((item) => {
 				fields[item] = {};
 			});
