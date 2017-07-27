@@ -56,7 +56,12 @@ const build_config = {
 		producthunt_recipe: "./examples/productsearch/app.js",
 		airbnb_recipe: "./examples/airbeds/app.js",
 		simplebeds_recipe: "./examples/simplebeds/app.js",
-		news_recipe: "./examples/news/app.js"
+		news_recipe: "./examples/news/app.js",
+		CategorySearch: "./examples/CategorySearch/app.js",
+		NestedList: "./examples/NestedList/app.js",
+		RatingsFilter: "./examples/RatingsFilter/app.js",
+		TagCloud: "./examples/TagCloud/app.js",
+		ToggleList: "./examples/ToggleList/app.js"
 	},
 	output: {
 		path: path.join(__dirname, "dist"),
