@@ -322,15 +322,11 @@ export default class NestedList extends Component {
 			item.status = !!(this.defaultSelected && this.defaultSelected.indexOf(item.key) > -1);
 			return item;
 		});
-		// const itemVar = level === 0 ? "items" : "subItems";
-		// this.setState({
-		// 	[itemVar]: newItems,
-		// 	storedItems: newItems
-		// });
-		const items = this.state.items;
+		const { items } = this.state;
 		items[level] = newItems;
 		this.setState({
-			items
+			items,
+			storedItems: items
 		});
 	}
 
@@ -341,14 +337,11 @@ export default class NestedList extends Component {
 			key: this.props.componentId,
 			value
 		};
-		console.log(this.state.selectedValues);
-		// if(changeNestedValue) {
-			const nestedObj = {
-				key: `nestedSelectedValues-${this.props.componentId}`,
-				value
-			};
-			helper.selectedSensor.set(nestedObj, changeNestedValue);
-		// }
+		const nestedObj = {
+			key: `nestedSelectedValues-${this.props.componentId}`,
+			value
+		};
+		helper.selectedSensor.set(nestedObj, changeNestedValue);
 		if(this.props.onValueChange) {
 			this.props.onValueChange(obj.value);
 		}
@@ -360,9 +353,9 @@ export default class NestedList extends Component {
 	// filter
 	filterBySearch(value) {
 		if (value) {
-			const items = this.state.storedItems.filter(item => item.key && item.key.toLowerCase().indexOf(value.toLowerCase()) > -1);
+			const items = this.state.storedItems[0].filter(item => item.key && item.key.toLowerCase().indexOf(value.toLowerCase()) > -1);
 			this.setState({
-				items
+				items: [items]
 			});
 		} else {
 			this.setState({
@@ -433,7 +426,7 @@ export default class NestedList extends Component {
 						{this.renderChevron(level)}
 					</button>
 					{
-						_.isArray(this.state.selectedValues) && this.state.selectedValues[level] === item.key && this.state.items[level+1] ? (
+						Array.isArray(this.state.selectedValues) && this.state.selectedValues[level] === item.key && this.state.items[level+1] ? (
 							<ul className="rbc-sublist-container rbc-indent col s12 col-xs-12">
 								{this.renderItems(this.state.items[level+1], item.value)}
 							</ul>
@@ -460,8 +453,8 @@ export default class NestedList extends Component {
 		let searchComponent = null,
 			title = null;
 
-		if (this.state.items.length === 0 ||
-			(this.state.items.length && Array.isArray(this.state.items[0]) && this.state.items[0].length === 0)) {
+		if (this.state.storedItems.length === 0 ||
+			(this.state.storedItems.length && Array.isArray(this.state.storedItems[0]) && this.state.storedItems[0].length === 0)) {
 			return null;
 		}
 
@@ -557,7 +550,7 @@ NestedList.defaultProps = {
 	showCount: true,
 	sortBy: "count",
 	size: 100,
-	showSearch: false,
+	showSearch: true,
 	title: null,
 	placeholder: "Search",
 	componentStyle: {},
