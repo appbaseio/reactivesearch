@@ -172,20 +172,54 @@ export default class CategorySearch extends Component {
 	defaultSearchQuery(input) {
 		if (input && input.value) {
 			let query = [];
-			const appbaseField = this.fieldType === "string" ? [this.props.appbaseField] : this.props.appbaseField;
-			appbaseField.forEach((field, index) => {
-				const queryObj = {
-					match_phrase_prefix: {
-						[field]: {
-							query: input.value
+			const appbaseFields = this.fieldType === "string"
+				? [this.props.appbaseField]
+				: this.props.appbaseField;
+			const fields = appbaseFields.map(
+				(field, index) => `${field}${(Array.isArray(this.props.weights) && this.props.weights[index]) ? ("^" + this.props.weights[index]) : ""}`
+			);
+
+			if (this.props.queryFormat === "and") {
+				query = [
+					{
+						multi_match: {
+							query: input.value,
+							fields,
+							type: "cross_fields",
+							operator: "and",
+							fuzziness: this.props.fuzziness ? this.props.fuzziness : 0
+						}
+					},
+					{
+						multi_match: {
+							query: input.value,
+							fields,
+							type: "phrase_prefix",
+							operator: "and"
 						}
 					}
-				};
-				if(this.props.weights && this.props.weights[index]) {
-					queryObj.match_phrase_prefix[field].boost = this.props.weights[index];
-				}
-				query.push(queryObj);
-			});
+				];
+			} else {
+				query = [
+					{
+						multi_match: {
+							query: input.value,
+							fields,
+							type: "best_fields",
+							operator: "or",
+							fuzziness: this.props.fuzziness ? this.props.fuzziness : 0
+						}
+					},
+					{
+						multi_match: {
+							query: input.value,
+							fields,
+							type: "phrase_prefix",
+							operator: "or"
+						}
+					}
+				];
+			}
 
 			if (input.category && input.category !== null) {
 				query = {
@@ -510,7 +544,12 @@ CategorySearch.propTypes = {
 	componentStyle: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
 	showFilter: React.PropTypes.bool,
-	filterLabel: React.PropTypes.string
+	filterLabel: React.PropTypes.string,
+	queryFormat: React.PropTypes.oneOf(["and", "or"]),
+	fuzziness: React.PropTypes.oneOfType([
+		React.PropTypes.string,
+		React.PropTypes.number,
+	])
 };
 
 // Default props value
@@ -520,7 +559,8 @@ CategorySearch.defaultProps = {
 	highlight: false,
 	componentStyle: {},
 	URLParams: false,
-	showFilter: true
+	showFilter: true,
+	queryFormat: "or"
 };
 
 // context type
@@ -545,5 +585,7 @@ CategorySearch.types = {
 	URLParams: TYPES.BOOLEAN,
 	showFilter: TYPES.BOOLEAN,
 	filterLabel: TYPES.STRING,
-	weights: TYPES.OBJECT
+	weights: TYPES.ARRAY,
+	queryFormat: TYPES.STRING,
+	fuzziness: TYPES.NUMBER
 };
