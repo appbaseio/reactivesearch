@@ -1,7 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
 const env = process.env.NODE_ENV;
-const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 const main_config = {
 	entry: {
@@ -89,36 +88,7 @@ const build_config = {
 			}
 		]
 	},
-	externals: ["ws"],
-	plugins: [
-		new webpack.DefinePlugin({
-			"process.env.NODE_ENV": JSON.stringify("production"),
-		}),
-		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-		new LodashModuleReplacementPlugin({
-			collections: true,
-			shorthands: true,
-			paths: true
-		}),
-		new webpack.optimize.OccurrenceOrderPlugin(),
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false,
-				screw_ie8: true,
-				conditionals: true,
-				unused: true,
-				comparisons: true,
-				sequences: true,
-				dead_code: true,
-				evaluate: true,
-				join_vars: true,
-				if_return: true
-			},
-			output: {
-				comments: false
-			}
-		})
-	]
+	externals: ["ws"]
 };
 
 let config = main_config;
