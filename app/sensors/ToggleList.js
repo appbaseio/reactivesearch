@@ -23,7 +23,6 @@ export default class ToggleList extends Component {
 	// Set query information
 	componentWillMount() {
 		this.setQueryInfo();
-		// this.initialize(this.props);
 		setTimeout(this.initialize.bind(this, this.props), 300);
 		this.listenFilter();
 	}

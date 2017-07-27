@@ -88,15 +88,21 @@ export default class ResultCard extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		if (!_.isEqual(this.props, nextProps)) {
+			this.setReact(nextProps);
+			let size = null,
+				from = null;
+			if (this.props.size !== nextProps.size || this.props.from != nextProps.from) {
+				size = nextProps.size;
+				from = nextProps.from;
+			}
+			manager.update(this.channelId, this.react, size, from, nextProps.stream);
+		}
 		if (nextProps.pagination !== this.pagination) {
 			this.pagination = nextProps.pagination;
 			this.setState({
 				requestOnScroll: !nextProps.pagination
-			}, () => {
-				this.removeChannel();
-				this.initialize(true);
 			});
-
 		}
 	}
 
@@ -198,21 +204,23 @@ export default class ResultCard extends Component {
 		}
 	}
 
-	// Create a channel which passes the react and receive results whenever react changes
-	createChannel(executeChannel = false) {
-		// Set the react - add self aggs query as well with react
-		let react = this.props.react ? this.props.react : {};
+	setReact(props) {
+		const react = Object.assign({}, props.react);
 		const reactAnd = ["streamChanges"];
-		if (this.props.pagination) {
+		if (props.pagination) {
 			reactAnd.push("paginationChanges");
 			react.pagination = null;
 		}
 		if (this.sortObj) {
 			this.enableSort(reactAnd);
 		}
-		react = helper.setupReact(react, reactAnd);
+		this.react = helper.setupReact(react, reactAnd);
+	}
+
+	// Create a channel which passes the react and receive results whenever react changes
+	createChannel(executeChannel = false) {
 		// create a channel and listen the changes
-		const channelObj = manager.create(this.context.appbaseRef, this.context.type, react, this.props.size, this.props.from, this.props.stream);
+		const channelObj = manager.create(this.context.appbaseRef, this.context.type, this.react, this.props.size, this.props.from, this.props.stream);
 		this.channelId = channelObj.channelId;
 
 		this.channelListener = channelObj.emitter.addListener(channelObj.channelId, (res) => {
@@ -496,6 +504,7 @@ export default class ResultCard extends Component {
 	}
 
 	initialize(executeChannel = false) {
+		this.setReact(this.props);
 		this.createChannel(executeChannel);
 		if (this.state.requestOnScroll) {
 			this.listComponent();
