@@ -303,61 +303,59 @@ export default class CategorySearch extends Component {
 	}
 
 	setData(data, loadSuggestions) {
-		if (data) {
-			let aggs = [];
-			let options = [];
-			let searchField = null;
-			if (data.aggregations && data.aggregations[this.props.categoryField] && data.aggregations[this.props.categoryField].buckets) {
-				aggs = (data.aggregations[this.props.categoryField].buckets).slice(0, 2);
-			}
+		let aggs = [];
+		let options = [];
+		let searchField = null;
+		if (data && data.aggregations && data.aggregations[this.props.categoryField] && data.aggregations[this.props.categoryField].buckets) {
+			aggs = (data.aggregations[this.props.categoryField].buckets).slice(0, 2);
+		}
 
-			if (loadSuggestions) {
-				if (this.fieldType === "string") {
-					searchField = `hit._source.${this.props.appbaseField}.trim()`;
-				}
-				data.hits.hits.forEach((hit) => {
-					if (searchField) {
-						options.push({ value: eval(searchField), label: eval(searchField) });
-					} else if (this.fieldType === "object") {
-						this.props.appbaseField.forEach((field) => {
-							const tempField = `hit._source.${field}`;
-							if (eval(tempField)) {
-								options.push({ value: eval(tempField), label: eval(tempField) });
-							}
-						});
-					}
-				});
-				if (this.state.currentValue.value && this.state.currentValue.value.trim() !== "" && aggs.length) {
-					const suggestions = [
-						{
-							label: this.state.currentValue.label,
-							markup: `${this.state.currentValue.label} &nbsp;<span class="rbc-strong">in All Categories</span>`,
-							value: this.state.currentValue.value
-						},
-						{
-							label: this.state.currentValue.label,
-							markup: `${this.state.currentValue.label} &nbsp;<span class="rbc-strong">in ${aggs[0].key}</span>`,
-							value: `${this.state.currentValue.value}--rbc1`,
-							category: aggs[0].key
+		if (loadSuggestions) {
+			if (this.fieldType === "string") {
+				searchField = `hit._source.${this.props.appbaseField}.trim()`;
+			}
+			data.hits.hits.forEach((hit) => {
+				if (searchField) {
+					options.push({ value: eval(searchField), label: eval(searchField) });
+				} else if (this.fieldType === "object") {
+					this.props.appbaseField.forEach((field) => {
+						const tempField = `hit._source.${field}`;
+						if (eval(tempField)) {
+							options.push({ value: eval(tempField), label: eval(tempField) });
 						}
-					];
-
-					if (aggs.length > 1) {
-						suggestions.push({
-							label: this.state.currentValue.label,
-							markup: `${this.state.currentValue.label} &nbsp;<span class="rbc-strong">in ${aggs[1].key}</span>`,
-							value: `${this.state.currentValue.value}--rbc2`,
-							category: aggs[1].key
-						});
-					}
-					options.unshift(...suggestions);
+					});
 				}
-				options = this.removeDuplicates(options, "value");
-				this.setState({
-					options,
-					isLoadingOptions: false
-				});
+			});
+			if (this.state.currentValue.value && this.state.currentValue.value.trim() !== "" && aggs.length) {
+				const suggestions = [
+					{
+						label: this.state.currentValue.label,
+						markup: `${this.state.currentValue.label} &nbsp;<span class="rbc-strong">in All Categories</span>`,
+						value: this.state.currentValue.value
+					},
+					{
+						label: this.state.currentValue.label,
+						markup: `${this.state.currentValue.label} &nbsp;<span class="rbc-strong">in ${aggs[0].key}</span>`,
+						value: `${this.state.currentValue.value}--rbc1`,
+						category: aggs[0].key
+					}
+				];
+
+				if (aggs.length > 1) {
+					suggestions.push({
+						label: this.state.currentValue.label,
+						markup: `${this.state.currentValue.label} &nbsp;<span class="rbc-strong">in ${aggs[1].key}</span>`,
+						value: `${this.state.currentValue.value}--rbc2`,
+						category: aggs[1].key
+					});
+				}
+				options.unshift(...suggestions);
 			}
+			options = this.removeDuplicates(options, "value");
+			this.setState({
+				options,
+				isLoadingOptions: false
+			});
 		}
 	}
 
