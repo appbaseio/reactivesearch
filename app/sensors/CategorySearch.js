@@ -311,17 +311,15 @@ export default class CategorySearch extends Component {
 		}
 
 		if (loadSuggestions) {
-			if (this.fieldType === "string") {
-				searchField = `hit._source.${this.props.appbaseField}.trim()`;
-			}
 			data.hits.hits.forEach((hit) => {
-				if (searchField) {
-					options.push({ value: eval(searchField), label: eval(searchField) });
+				if (this.fieldType === "string") {
+					const searchField = hit._source[this.props.appbaseField].trim();
+					options.push({ value: searchField, label: searchField });
 				} else if (this.fieldType === "object") {
 					this.props.appbaseField.forEach((field) => {
-						const tempField = `hit._source.${field}`;
-						if (eval(tempField)) {
-							options.push({ value: eval(tempField), label: eval(tempField) });
+						const tempField = hit._source[field];
+						if (tempField) {
+							options.push({ value: tempField, label: tempField });
 						}
 					});
 				}
