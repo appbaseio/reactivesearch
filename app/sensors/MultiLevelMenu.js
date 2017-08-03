@@ -322,10 +322,25 @@ export default class MultiLevelMenu extends Component {
 			key: this.props.componentId,
 			value: [this.state.selectedValue, list, item]
 		};
-		if(this.props.onValueChange) {
-			this.props.onValueChange(obj.value);
+
+		const execQuery = () => {
+			if(this.props.onValueChange) {
+				this.props.onValueChange(obj.value);
+			}
+			helper.selectedSensor.set(obj, true);
+		};
+
+		if (this.props.beforeValueChange) {
+			this.props.beforeValueChange(obj.value)
+			.then(() => {
+				execQuery();
+			})
+			.catch((e) => {
+				console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with`, e);
+			});
+		} else {
+			execQuery();
 		}
-		helper.selectedSensor.set(obj, true);
 	}
 
 	filterBlackList(list) {
@@ -393,6 +408,7 @@ MultiLevelMenu.propTypes = {
 	blacklist: React.PropTypes.arrayOf(React.PropTypes.string),
 	customQuery: React.PropTypes.func,
 	react: React.PropTypes.object,
+	beforeValueChange: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object
 };
