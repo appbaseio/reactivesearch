@@ -405,11 +405,26 @@ export default class CategorySearch extends Component {
 			value: finalVal
 		};
 
-		if(this.props.onValueChange) {
-			this.props.onValueChange(obj.value);
+		const execQuery = () => {
+			if(this.props.onValueChange) {
+				this.props.onValueChange(obj.value);
+			}
+			helper.URLParams.update(this.props.componentId, finalVal ? finalVal.value : null, this.props.URLParams);
+			helper.selectedSensor.set(obj, true);
+		};
+
+		if (this.props.beforeValueChange) {
+			this.props.beforeValueChange(obj.value)
+			.then(() => {
+				execQuery();
+			})
+			.catch((e) => {
+				console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with`, e);
+			});
+		} else {
+			execQuery();
 		}
-		helper.URLParams.update(this.props.componentId, finalVal ? finalVal.value : null, this.props.URLParams);
-		helper.selectedSensor.set(obj, true);
+
 		this.setState({
 			currentValue: {
 				label: finalVal ? finalVal.value : null,
@@ -534,6 +549,7 @@ CategorySearch.propTypes = {
 	defaultSelected: React.PropTypes.string,
 	customQuery: React.PropTypes.func,
 	react: React.PropTypes.object,
+	beforeValueChange: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
 	highlight: React.PropTypes.bool,
 	initialSuggestions: React.PropTypes.arrayOf(
