@@ -348,12 +348,27 @@ export default class NestedList extends Component {
 			value
 		};
 		helper.selectedSensor.set(nestedObj, changeNestedValue);
-		if(this.props.onValueChange) {
-			this.props.onValueChange(obj.value);
+
+		const execQuery = () => {
+			if(this.props.onValueChange) {
+				this.props.onValueChange(obj.value);
+			}
+			const paramValue = value && value.length ? value.join("/") : null;
+			helper.URLParams.update(this.props.componentId, paramValue, this.props.URLParams);
+			helper.selectedSensor.set(obj, isExecuteQuery);
+		};
+
+		if (this.props.beforeValueChange) {
+			this.props.beforeValueChange(obj.value)
+			.then(() => {
+				execQuery();
+			})
+			.catch((e) => {
+				console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with`, e);
+			});
+		} else {
+			execQuery();
 		}
-		const paramValue = value && value.length ? value.join("/") : null;
-		helper.URLParams.update(this.props.componentId, paramValue, this.props.URLParams);
-		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
 	// filter
@@ -544,6 +559,7 @@ NestedList.propTypes = {
 		React.PropTypes.element
 	]),
 	react: React.PropTypes.object,
+	beforeValueChange: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,

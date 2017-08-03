@@ -49,6 +49,7 @@ class Main extends Component {
 							appbaseField={["brand.raw", "vehicleType.raw", "model.raw"]}
 							title="NestedList"
 							URLParams={true}
+							beforeValueChange={() => new Promise((resolve, reject) => resolve())}
 						/>
 					</div>
 
