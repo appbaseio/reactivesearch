@@ -59,15 +59,30 @@ export default class ToggleList extends Component {
 				this.setState({
 					selected: records
 				});
-				if(this.props.onValueChange) {
-					this.props.onValueChange(obj.value);
-				}
 				const obj = {
 					key: this.props.componentId,
 					value: records
 				};
-				helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
-				helper.selectedSensor.set(obj, true);
+
+				const execQuery = () => {
+					if(this.props.onValueChange) {
+						this.props.onValueChange(obj.value);
+					}
+					helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
+					helper.selectedSensor.set(obj, true);
+				};
+
+				if (this.props.beforeValueChange) {
+					this.props.beforeValueChange(obj.value)
+					.then(() => {
+						execQuery();
+					})
+					.catch((e) => {
+						console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with`, e);
+					});
+				} else {
+					execQuery();
+				}
 			} else {
 				let records = [];
 				if(this.defaultSelected) {
@@ -80,15 +95,29 @@ export default class ToggleList extends Component {
 				this.setState({
 					selected: records
 				});
-				if(this.props.onValueChange) {
-					this.props.onValueChange(obj.value);
-				}
 				const obj = {
 					key: this.props.componentId,
 					value: records
 				};
-				helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
-				helper.selectedSensor.set(obj, true);
+				const execQuery = () => {
+					if(this.props.onValueChange) {
+						this.props.onValueChange(obj.value);
+					}
+					helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
+					helper.selectedSensor.set(obj, true);
+				};
+
+				if (this.props.beforeValueChange) {
+					this.props.beforeValueChange(obj.value)
+					.then(() => {
+						execQuery();
+					})
+					.catch((e) => {
+						console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with`, e);
+					});
+				} else {
+					execQuery();
+				}
 			}
 		}
 	}
@@ -157,21 +186,37 @@ export default class ToggleList extends Component {
 		} else {
 			newSelection = selected;
 		}
+
 		this.setState({
 			selected: newSelection
 		});
+
 		this.defaultSelected = newSelection;
 		const obj = {
 			key: this.props.componentId,
 			value: newSelection
 		};
-		if(this.props.onValueChange) {
-			this.props.onValueChange(obj.value);
+
+		const execQuery = () => {
+			if(this.props.onValueChange) {
+				this.props.onValueChange(obj.value);
+			}
+			const isExecuteQuery = true;
+			helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
+			helper.selectedSensor.set(obj, isExecuteQuery);
+		};
+
+		if (this.props.beforeValueChange) {
+			this.props.beforeValueChange(obj.value)
+			.then(() => {
+				execQuery();
+			})
+			.catch((e) => {
+				console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with`, e);
+			});
+		} else {
+			execQuery();
 		}
-		// pass the selected sensor value with componentId as key,
-		const isExecuteQuery = true;
-		helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
-		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
 	setURLParam(value) {
@@ -242,6 +287,7 @@ ToggleList.propTypes = {
 	]),
 	multiSelect: React.PropTypes.bool,
 	customQuery: React.PropTypes.func,
+	beforeValueChange: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,

@@ -51,6 +51,7 @@ class Main extends Component {
 							title="ToggleList"
 							data={this.toggleData}
 							URLParams={true}
+							beforeValueChange={() => new Promise((resolve, reject) => resolve())}
 						/>
 					</div>
 
