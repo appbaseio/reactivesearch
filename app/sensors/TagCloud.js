@@ -85,17 +85,30 @@ export default class TagCloud extends Component {
 			this.selectedValue = this.defaultSelected === null ? null : items.filter(item => item.status).map(item => item.key);
 
 			this.setState({ items });
-
-			if(this.props.onValueChange) {
-				this.props.onValueChange(obj.value);
-			}
-
 			const obj = {
 				key: this.props.componentId,
 				value: this.selectedValue
 			};
-			helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
-			helper.selectedSensor.set(obj, true);
+
+			const execQuery = () => {
+				if(this.props.onValueChange) {
+					this.props.onValueChange(obj.value);
+				}
+				helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
+				helper.selectedSensor.set(obj, true);
+			};
+
+			if (this.props.beforeValueChange) {
+				this.props.beforeValueChange(obj.value)
+				.then(() => {
+					execQuery();
+				})
+				.catch((e) => {
+					console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with`, e);
+				});
+			} else {
+				execQuery();
+			}
 		} else if (!this.props.multiSelect && this.defaultSelected !== defaultValue) {
 			this.defaultSelected = defaultValue;
 			const items = this.state.items.map((item) => {
@@ -110,17 +123,30 @@ export default class TagCloud extends Component {
 			this.selectedValue = this.selectedValue === this.defaultSelected ? "" : this.defaultSelected;
 
 			this.setState({ items });
-
-			if(this.props.onValueChange) {
-				this.props.onValueChange(obj.value);
-			}
-
 			const obj = {
 				key: this.props.componentId,
 				value: this.selectedValue
 			};
-			helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
-			helper.selectedSensor.set(obj, true);
+
+			const execQuery = () => {
+				if(this.props.onValueChange) {
+					this.props.onValueChange(obj.value);
+				}
+				helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
+				helper.selectedSensor.set(obj, true);
+			};
+
+			if (this.props.beforeValueChange) {
+				this.props.beforeValueChange(obj.value)
+				.then(() => {
+					execQuery();
+				})
+				.catch((e) => {
+					console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with`, e);
+				});
+			} else {
+				execQuery();
+			}
 		}
 	}
 
@@ -290,18 +316,31 @@ export default class TagCloud extends Component {
 		}
 
 		this.setState({ items });
-
-		if(this.props.onValueChange) {
-			this.props.onValueChange(obj.value);
-		}
-
 		const obj = {
 			key: this.props.componentId,
 			value: this.selectedValue
 		};
-		this.defaultSelected = this.selectedValue;
-		helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
-		helper.selectedSensor.set(obj, true);
+
+		const execQuery = () => {
+			if(this.props.onValueChange) {
+				this.props.onValueChange(obj.value);
+			}
+			this.defaultSelected = this.selectedValue;
+			helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
+			helper.selectedSensor.set(obj, true);
+		};
+
+		if (this.props.beforeValueChange) {
+			this.props.beforeValueChange(obj.value)
+			.then(() => {
+				execQuery();
+			})
+			.catch((e) => {
+				console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with`, e);
+			});
+		} else {
+			execQuery();
+		}
 	}
 
 	renderTags() {
@@ -380,6 +419,7 @@ TagCloud.propTypes = {
 		React.PropTypes.array
 	]),
 	react: React.PropTypes.object,
+	beforeValueChange: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,

@@ -76,6 +76,7 @@ class Main extends Component {
 							customQuery={this.customQuery}
 							URLParams={true}
 							multiSelect={true}
+							beforeValueChange={() => new Promise((resolve, reject) => resolve())}
 						/>
 					</div>
 					<div className="col s6 col-xs-6">
