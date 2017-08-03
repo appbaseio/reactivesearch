@@ -110,13 +110,27 @@ export default class RatingsFilter extends Component {
 			key: this.props.componentId,
 			value: record
 		};
-		if(this.props.onValueChange) {
-			this.props.onValueChange(obj.value);
+
+		const execQuery = () => {
+			if(this.props.onValueChange) {
+				this.props.onValueChange(obj.value);
+			}
+			const isExecuteQuery = true;
+			helper.URLParams.update(this.props.componentId, record ? JSON.stringify(record) : null, this.props.URLParams);
+			helper.selectedSensor.set(obj, isExecuteQuery);
+		};
+
+		if (this.props.beforeValueChange) {
+			this.props.beforeValueChange(obj.value)
+			.then(() => {
+				execQuery();
+			})
+			.catch((e) => {
+				console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with`, e);
+			});
+		} else {
+			execQuery();
 		}
-		// pass the selected sensor value with componentId as key,
-		const isExecuteQuery = true;
-		helper.URLParams.update(this.props.componentId, record ? JSON.stringify(record) : null, this.props.URLParams);
-		helper.selectedSensor.set(obj, isExecuteQuery);
 	}
 
 	renderButtons() {
@@ -185,6 +199,7 @@ RatingsFilter.propTypes = {
 	data: React.PropTypes.any.isRequired,
 	defaultSelected: React.PropTypes.object,
 	customQuery: React.PropTypes.func,
+	beforeValueChange: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
 	componentStyle: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
