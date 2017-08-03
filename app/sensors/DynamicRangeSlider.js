@@ -294,11 +294,6 @@ export default class DynamicRangeSlider extends Component {
 	// Handle function when slider option change is completed
 	handleResults(textVal, value) {
 		let values;
-
-		if(this.props.onValueChange) {
-			this.props.onValueChange(obj.value);
-		}
-
 		if (textVal) {
 			values = {
 				min: textVal[0],
@@ -317,11 +312,25 @@ export default class DynamicRangeSlider extends Component {
 			value: realValues
 		};
 
-		if(this.props.onValueChange) {
-			this.props.onValueChange(obj.value);
+		const execQuery = () => {
+			if(this.props.onValueChange) {
+				this.props.onValueChange(obj.value);
+			}
+			helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
+			helper.selectedSensor.set(obj, true);
+		};
+
+		if (this.props.beforeValueChange) {
+			this.props.beforeValueChange(obj.value)
+			.then(() => {
+				execQuery();
+			})
+			.catch((e) => {
+				console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with`, e);
+			});
+		} else {
+			execQuery();
 		}
-		helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
-		helper.selectedSensor.set(obj, true);
 
 		this.setState({
 			values
@@ -379,10 +388,10 @@ export default class DynamicRangeSlider extends Component {
 				<div className="rbc-rangeslider-container col s12 col-xs-12">
 					<Slider
 						range
-						value={[this.state.values.min, this.state.values.max]}
+						defaultValue={[this.state.values.min, this.state.values.max]}
 						min={min}
 						max={max}
-						onChange={this.handleResults}
+						onAfterChange={this.handleResults}
 						step={this.props.stepValue}
 						marks={marks}
 					/>
@@ -410,6 +419,7 @@ DynamicRangeSlider.propTypes = {
 		React.PropTypes.element
 	]),
 	react: React.PropTypes.object,
+	beforeValueChange: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
 	interval: React.PropTypes.number,
 	componentStyle: React.PropTypes.object,
