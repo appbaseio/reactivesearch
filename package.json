@@ -1,0 +1,39 @@
+{
+	"name": "reactivebase-native",
+	"version": "1.0.0",
+	"description": "Native data components for building reactive UIs",
+	"main": "src/index.js",
+	"files": [
+		"lib/"
+	],
+	"scripts": {
+		"flow": "flow",
+		"lint": "eslint .",
+		"build": "babel src --out-dir lib"
+	},
+	"author": "Deepak Grover <deepakgrover333@gmail.com> (https://github.com/metagrover)",
+	"license": "Apache-2.0",
+	"peerDependencies": {
+		"react": "*",
+		"react-native": "*"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.24.1",
+		"babel-eslint": "^7.2.3",
+		"babel-preset-flow": "^6.23.0",
+		"babel-preset-react-native": "^2.1.0",
+		"eslint": "^4.4.0",
+		"eslint-config-airbnb": "^15.1.0",
+		"eslint-config-prettier": "^2.3.0",
+		"eslint-plugin-babel": "^4.1.2",
+		"eslint-plugin-flowtype": "^2.35.0",
+		"eslint-plugin-import": "^2.7.0",
+		"eslint-plugin-prettier": "^2.1.2",
+		"eslint-plugin-react": "^7.1.0",
+		"eslint-plugin-react-native": "^3.0.1",
+		"flow-bin": "^0.52.0",
+		"prettier": "^1.5.3",
+		"react": "16.0.0-alpha.12",
+		"react-native": "^0.47.1"
+	}
+}
