@@ -10,7 +10,6 @@ import {
 import StaticSearch from "../addons/StaticSearch";
 
 const _ = require("lodash");
-const $ = require("jquery");
 
 export default class NestedList extends Component {
 	constructor(props) {
@@ -385,10 +384,8 @@ export default class NestedList extends Component {
 		}
 	}
 
-	onItemClick(event) {
-		let selectedValues = ($(event.currentTarget).data("value")).split("@rbc@");
-		const level = Number($(event.currentTarget).data("level"));
-		event.stopPropagation();
+	onItemClick(selectedValues, level) {
+		selectedValues = selectedValues.split("@rbc@");
 		if(this.state.selectedValues && selectedValues[level] === this.state.selectedValues[level]) {
 			selectedValues = this.state.selectedValues.filter((item, index) => index < level);
 			const items = this.state.items;
@@ -442,7 +439,7 @@ export default class NestedList extends Component {
 					key={index}
 					className="rbc-list-container col s12 col-xs-12"
 				>
-					<button className={`rbc-list-item ${cx}`} data-value={item.value.join("@rbc@")} data-level={level} onClick={this.onItemClick}>
+					<button className={`rbc-list-item ${cx}`} onClick={() => this.onItemClick(item.value.join("@rbc@"), level)}>
 						<span className="rbc-label">{item.key} {this.countRender(item.doc_count)}</span>
 						{this.renderChevron(level)}
 					</button>
