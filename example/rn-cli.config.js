@@ -7,7 +7,7 @@ module.exports = {
 		return [__dirname, path.resolve(__dirname, "..")];
 	},
 	getProvidesModuleNodeModules() {
-		return ["react-native", "react"];
+		return ["react-native", "react", "redux", "react-redux"];
 	},
 	getBlacklistRE() {
 		return blacklist([
