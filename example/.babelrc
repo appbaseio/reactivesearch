@@ -1,8 +1,12 @@
 {
-	"presets": ["babel-preset-expo"],
-	"env": {
-		"development": {
-			"plugins": ["transform-react-jsx-source"]
-		}
-	}
+	"presets": [
+		"expo"
+	],
+	"plugins": [
+		["module-resolver", {
+			"alias": {
+				"reactivebase-native": "../src"
+			}
+		}]
+	]
 }

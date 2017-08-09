@@ -20,6 +20,10 @@
 		"prettier/react"
 	],
 
+	"settings": {
+		"import/core-modules": [ "expo", "reactivebase-native" ]
+	},
+
 	"plugins": [
 		"babel",
 		"flowtype",

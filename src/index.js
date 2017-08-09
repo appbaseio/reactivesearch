@@ -1,7 +1,5 @@
-import React, { Component } from "react";
+import TextField from "./components/TextField";
 
-export default class App extends Component {
-	render() {
-		return "Hello";
-	}
-}
+export {
+	TextField
+};

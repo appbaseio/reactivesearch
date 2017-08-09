@@ -1,15 +1,14 @@
 {
 	"name": "reactivebase-native",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"description": "Native data components for building reactive UIs",
-	"main": "src/index.js",
+	"main": "lib/index.js",
 	"files": [
-		"lib/"
+		"src/"
 	],
 	"scripts": {
 		"flow": "flow",
-		"lint": "eslint .",
-		"build": "babel src --out-dir lib"
+		"lint": "eslint ."
 	},
 	"author": "Deepak Grover <deepakgrover333@gmail.com> (https://github.com/metagrover)",
 	"license": "Apache-2.0",
@@ -35,5 +34,9 @@
 		"prettier": "^1.5.3",
 		"react": "16.0.0-alpha.12",
 		"react-native": "^0.47.1"
+	},
+	"dependencies": {
+		"react-redux": "^5.0.5",
+		"redux": "^3.7.2"
 	}
 }
