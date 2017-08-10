@@ -14,7 +14,9 @@ export default class Main extends Component {
 			<View style={styles.container}>
 				<Text>Reactivebase Native Demo</Text>
 				<ReactiveBase>
-					<TextField />
+					<TextField
+						componentId="TextComponent"
+					/>
 				</ReactiveBase>
 			</View>
 		);

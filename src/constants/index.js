@@ -1,2 +1,4 @@
 export const ADD_COMPONENT = "ADD_COMPONENT";
 export const REMOVE_COMPONENT = "REMOVE_COMPONENT";
+export const SET_QUERY = "SET_QUERY";
+export const EXECUTE_QUERY = "EXECUTE_QUERY";
