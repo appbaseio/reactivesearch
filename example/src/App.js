@@ -11,14 +11,18 @@ import { ReactiveBase, TextField } from "reactivebase-native";
 export default class Main extends Component {
 	render() {
 		return (
-			<View style={styles.container}>
+			<ReactiveBase style={styles.container}>
 				<Text>Reactivebase Native Demo</Text>
-				<ReactiveBase>
-					<TextField
-						componentId="TextComponent"
-					/>
-				</ReactiveBase>
-			</View>
+				<TextField
+					componentId="TextComponent"
+				/>
+				<TextField
+					componentId="TextComponent2"
+					react={{
+						and: "TextComponent"
+					}}
+				/>
+			</ReactiveBase>
 		);
 	}
 }

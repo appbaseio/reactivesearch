@@ -19,6 +19,10 @@ class TextField extends Component {
 		this.props.addComponent(this.props.componentId);
 	}
 
+	componentWillReceiveProps(nextProps) {
+
+	}
+
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
 	}
@@ -45,6 +49,9 @@ class TextField extends Component {
 				placeholder={this.props.placeholder}
 				onChangeText={(currentValue) => this.setState({ currentValue })}
 				value={this.state.currentValue}
+				style={{
+					borderWidth: 1
+				}}
 			/>
 		);
 	}

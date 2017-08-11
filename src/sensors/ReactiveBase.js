@@ -14,7 +14,9 @@ export default class ReactiveBase extends Component {
 	render() {
 		return (
 			<Provider store={this.store}>
-				{this.props.children}
+				<View style={this.props.style}>
+					{this.props.children}
+				</View>
 			</Provider>
 		);
 	}
