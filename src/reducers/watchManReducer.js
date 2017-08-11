@@ -1,8 +1,11 @@
-import { WATCH_COMPONENT } from "../constants";
+import { WATCH_COMPONENT, REMOVE_COMPONENT } from "../constants";
 
-export default function componentsReducer(state = {}, action) {
+export default function watchManReducer(state = {}, action) {
 	if (action.type === WATCH_COMPONENT) {
-		state[action.component] = getWatchList(action.react);
+		return { ...state, [action.component]: getWatchList(action.react) };
+	} else if (action.type === REMOVE_COMPONENT) {
+		const { [action.component]: del, ...obj } = state;
+		return obj;
 	}
 	return state;
 }

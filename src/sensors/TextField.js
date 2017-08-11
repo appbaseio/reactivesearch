@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { TextInput } from "react-native";
 import { connect } from "react-redux";
 
-import { addComponent, removeComponent } from "../actions";
+import { addComponent, removeComponent, watchComponent } from "../actions";
 import { updateQuery } from "../utils/helper.js";
+import { isEqual } from "../utils/methods.js";
 
 class TextField extends Component {
 	constructor(props) {
@@ -17,14 +18,23 @@ class TextField extends Component {
 
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
+		this.setReact(this.props);
 	}
 
 	componentWillReceiveProps(nextProps) {
-
+		if (!isEqual(nextProps.react, this.props.react)) {
+			this.setReact(nextProps);
+		}
 	}
 
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
+	}
+
+	setReact(props) {
+		if (props.react) {
+			props.watchComponent(props.componentId, props.react);
+		}
 	}
 
 	defaultQuery(value) {
@@ -58,12 +68,15 @@ class TextField extends Component {
 }
 
 const mapStateToProps = state => ({
-	components: state.components
+	components: state.components,
+	watchMan: state.watchMan,
+	queryList: state.queryList
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component))
+	removeComponent: component => dispatch(removeComponent(component)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(TextField);

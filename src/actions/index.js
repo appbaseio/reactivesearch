@@ -1,6 +1,7 @@
 import {
 	ADD_COMPONENT,
 	REMOVE_COMPONENT,
+	WATCH_COMPONENT,
 	SET_QUERY,
 	EXECUTE_QUERY
 } from "../constants";
@@ -16,6 +17,14 @@ export function removeComponent(component) {
 	return {
 		type: REMOVE_COMPONENT,
 		component
+	};
+}
+
+export function watchComponent(component, react) {
+	return {
+		type: WATCH_COMPONENT,
+		component,
+		react
 	};
 }
 
