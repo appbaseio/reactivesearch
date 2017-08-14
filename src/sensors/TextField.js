@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import { TextInput } from "react-native";
 import { connect } from "react-redux";
 
-import { addComponent, removeComponent, watchComponent } from "../actions";
-import { updateQuery } from "../utils/helper.js";
-import { isEqual } from "../utils/methods.js";
+import { addComponent, removeComponent, watchComponent, updateQuery } from "../actions";
+import { isEqual } from "../utils/helper.js";
 
 class TextField extends Component {
 	constructor(props) {
@@ -49,7 +48,7 @@ class TextField extends Component {
 		this.setState({
 			currentValue: value
 		}, () => {
-			updateQuery(this.props.componentId, query)
+			this.props.updateQuery(this.props.componentId, this.defaultQuery(value))
 		})
 	}
 
@@ -57,7 +56,7 @@ class TextField extends Component {
 		return (
 			<TextInput
 				placeholder={this.props.placeholder}
-				onChangeText={(currentValue) => this.setState({ currentValue })}
+				onChangeText={(currentValue) => this.setValue(currentValue)}
 				value={this.state.currentValue}
 				style={{
 					borderWidth: 1
@@ -76,7 +75,8 @@ const mapStateToProps = state => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react))
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	updateQuery: (component, query) => dispatch(updateQuery(component, query))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(TextField);

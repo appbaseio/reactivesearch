@@ -11,13 +11,19 @@ import { ReactiveBase, TextField } from "reactivebase-native";
 export default class Main extends Component {
 	render() {
 		return (
-			<ReactiveBase style={styles.container}>
+			<ReactiveBase
+				app="car-store"
+				credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
+				style={styles.container}
+			>
 				<Text>Reactivebase Native Demo</Text>
 				<TextField
 					componentId="TextComponent"
+					appbaseField="name"
 				/>
 				<TextField
 					componentId="TextComponent2"
+					appbaseField="color"
 					react={{
 						and: "TextComponent"
 					}}

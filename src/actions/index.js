@@ -43,3 +43,24 @@ export function executeQuery(component, query) {
 		query
 	};
 }
+
+export function updateQuery(componentId, query) {
+	return (dispatch, getState) => {
+		dispatch(setQuery(componentId, query));
+
+		const store = getState();
+		const watchList = store.watchMan[componentId];
+
+		if (Array.isArray(watchList)) {
+			watchList.forEach(component => {
+				const queryObj = buildQuery(component, watchList, store.queryList);
+				dispatch(executeQuery(component, queryObj));
+			});
+		}
+	}
+}
+
+function buildQuery(component, watchList, queryList) {
+	// read dependency tree and build query
+	return null;
+}

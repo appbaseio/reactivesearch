@@ -1,16 +1,18 @@
-export function updateQuery(componentId, query) {
-	return (dispatch, getState) => {
-		dispatch(setQuery(componentId, query));
+export function isEqual(x, y) {
+	if ( x === y ) return true;
+	if ( ! ( x instanceof Object ) || ! ( y instanceof Object ) ) return false;
+	if ( x.constructor !== y.constructor ) return false;
 
-		const store = getState();
-		store.watchMan[componentId].forEach(component => {
-			const queryObj = buildQuery(component, store.watchMan[component], store.queryList);
-			dispatch(executeQuery(component, queryObj));
-		});
+	for ( var p in x ) {
+		if ( ! x.hasOwnProperty( p ) ) continue;
+		if ( ! y.hasOwnProperty( p ) ) return false;
+		if ( x[ p ] === y[ p ] ) continue;
+		if ( typeof( x[ p ] ) !== "object" ) return false;
+		if ( ! isEqual( x[ p ],  y[ p ] ) ) return false;
 	}
-}
 
-function buildQuery(component, watchList, queryList) {
-	// read dependency tree and build query
-	return null;
+	for ( p in y ) {
+		if ( y.hasOwnProperty( p ) && ! x.hasOwnProperty( p ) ) return false;
+	}
+	return true;
 }
