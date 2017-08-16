@@ -14,7 +14,6 @@ import Pagination from "../addons/Pagination";
 import JsonPrint from "../addons/JsonPrint";
 import ReactStars from "react-stars";
 
-const $ = require("jquery");
 const _ = require("lodash");
 
 export default class ResultCard extends Component {
@@ -111,6 +110,12 @@ export default class ResultCard extends Component {
 		if (!this.state.showPlaceholder && !this.props.scrollOnTarget) {
 			this.applyScroll();
 		}
+		// only display PoweredBy if the parent container's height is above 300
+		if (this.listContainer.clientHeight > 300) {
+			this.poweredByContainer.style.display = "block";
+		} else {
+			this.poweredByContainer.style.display = "none";
+		}
 	}
 
 	// stop streaming request and remove listener when component will unmount
@@ -164,29 +169,25 @@ export default class ResultCard extends Component {
 	}
 
 	applyScroll() {
-		const resultElement = $(this.listParentElement);
-		const scrollElement = $(this.listChildElement);
+		const resultElement = this.listParentElement;
+		const scrollElement = this.listChildElement;
 		const padding = 45;
 
 		function checkHeight() {
-			const flag = resultElement.get(0).scrollHeight - padding > resultElement.height();
-			const scrollFlag = scrollElement.get(0).scrollHeight > scrollElement.height();
-			if (!flag && !scrollFlag && scrollElement.length && !this.props.pagination) {
-				const scrollHeight = resultElement.height() - 100;
+			const flag = resultElement.scrollHeight - padding > resultElement.clientHeight;
+			const scrollFlag = scrollElement.scrollHeight > resultElement.clientHeight;
+			if (!flag && !scrollFlag && scrollElement && !this.props.pagination) {
+				const scrollHeight = resultElement.clientHeight - 100;
 				if (scrollHeight > 0) {
-					scrollElement.css({
-						height: scrollElement.height() + 30,
-						"padding-bottom": 40
-					});
+					scrollElement.style.height = `${scrollElement.clientHeight + 30}px`;
+					scrollElement.style.paddingBottom = "40px";
 				}
 			}
 		}
 
-		if (resultElement && resultElement.length && scrollElement && scrollElement.length) {
-			scrollElement.css({
-				"height": "auto",
-				"padding-bottom": 0
-			});
+		if (resultElement && scrollElement) {
+			scrollElement.style.height = "auto";
+			scrollElement.style.paddingBottom = 0;
 			setTimeout(checkHeight.bind(this), 1000);
 		}
 	}
@@ -438,9 +439,7 @@ export default class ResultCard extends Component {
 		}
 
 		if (!isSameQuery) {
-			$(".rbc-resultcard-container").animate({
-				scrollTop: 0
-			}, 100);
+			this.listParentElement.scrollTop = 0;
 		}
 
 		return {
@@ -515,12 +514,12 @@ export default class ResultCard extends Component {
 
 	setQueryForPagination() {
 		const valObj = {
-			queryType: 'match',
+			queryType: "match",
 			inputData: this.props.appbaseField,
 			customQuery: () => null
 		};
 		const obj = {
-			key: 'paginationChanges',
+			key: "paginationChanges",
 			value: valObj
 		};
 		helper.selectedSensor.setSensorInfo(obj);
@@ -538,7 +537,7 @@ export default class ResultCard extends Component {
 
 	paginationAt(method) {
 		let pageinationComp;
-		if (this.props.pagination && (this.props.paginationAt === method || this.props.paginationAt === 'both')) {
+		if (this.props.pagination && (this.props.paginationAt === method || this.props.paginationAt === "both")) {
 			pageinationComp = (
 				<div className="rbc-pagination-container col s12 col-xs-12">
 					<Pagination
@@ -571,8 +570,11 @@ export default class ResultCard extends Component {
 		function setScroll(node) {
 			if (node) {
 				node.addEventListener("scroll", () => {
-					const scrollHeight = node.scrollHeight || node.scrollHeight === 0 ? node.scrollHeight : $(node).height();
-					if (this.state.requestOnScroll && $(node).scrollTop() + $(node).innerHeight() >= scrollHeight && this.state.resultStats.total > this.state.currentData.length && !this.state.queryStart) {
+					// since a window object has different properties, referencing document.body to get the complete page
+					if (node === window) {
+						node = node.document.body;
+					}
+					if (this.state.requestOnScroll && node.scrollTop + node.clientHeight >= node.scrollHeight && this.state.resultStats.total > this.state.currentData.length && !this.state.queryStart) {
 						this.nextPage();
 					}
 				});
@@ -652,12 +654,12 @@ export default class ResultCard extends Component {
 		}
 
 		return (
-			<div className="rbc rbc-resultcard">
-				<div ref={(div) => { this.listParentElement = div }} className={`rbc-resultcard-container card thumbnail ${cx}`} style={this.props.componentStyle} style={this.getComponentStyle()}>
+			<div className="rbc rbc-resultcard" ref={(node) => { this.listContainer = node; }}>
+				<div ref={(div) => { this.listParentElement = div; }} className={`rbc-resultcard-container card thumbnail ${cx}`} style={this.props.componentStyle} style={this.getComponentStyle()}>
 					{title}
 					{sortOptions}
 					{this.props.showResultStats && this.state.resultStats.resultFound ? (<ResultStats onResultStats={this.props.onResultStats} took={this.state.resultStats.took} total={this.state.resultStats.total} />) : null}
-					{this.paginationAt('top')}
+					{this.paginationAt("top")}
 
 					<div ref={(div) => { this.listChildElement = div; }} className="rbc-resultcard-scroll-container col s12 col-xs-12">
 						{this.state.resultMarkup}
@@ -665,11 +667,13 @@ export default class ResultCard extends Component {
 
 					{this.state.isLoading ? <div className="rbc-loader" /> : null}
 					{this.state.showPlaceholder ? placeholder : null}
-					{this.paginationAt('bottom')}
+					{this.paginationAt("bottom")}
 				</div>
 				{this.props.noResults && this.state.visibleNoResults ? (<NoResults defaultText={this.props.noResults} />) : null}
 				{this.props.initialLoader && this.state.queryStart && this.state.showInitialLoader ? (<InitialLoader defaultText={this.props.initialLoader} />) : null}
-				<PoweredBy container="rbc-resultcard-container" />
+				<div ref={(node) => { this.poweredByContainer = node; }} style={{ display: "none" }}>
+					<PoweredBy />
+				</div>
 			</div>
 		);
 	}

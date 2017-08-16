@@ -124,17 +124,22 @@ storiesOf("TagCloud", module)
 			defaultSelected={text("defaultSelected", "Auckland")}
 		/>
 	)))
-	.add("With multiSelect and defaultSelected", withReadme(removeFirstLine(SingleListReadme), () => (
+	.add("With multiSelect on and defaultSelected", withReadme(removeFirstLine(SingleListReadme), () => (
 		<TagCloudDefault
-			multiSelect={boolean("multiSelect", true)}
+			multiSelect
 			defaultSelected={array("defaultSelected", ["Auckland", "Amsterdam"])}
+		/>
+	)))
+	.add("With multiSelect off and defaultSelected", withReadme(removeFirstLine(SingleListReadme), () => (
+		<TagCloudDefault
+			defaultSelected={text("defaultSelected", "Auckland")}
 		/>
 	)))
 	.add("Playground", withReadme(removeFirstLine(SingleListReadme), () => (
 		<TagCloudDefault
 			title={text("title", "TagCloud: City Filter")}
 			size={number("size", 100)}
-			multiSelect={boolean("multiSelect", "true")}
+			multiSelect
 			defaultSelected={array("defaultSelected", ["Auckland"])}
 			showCount={boolean("showCount", true)}
 		/>

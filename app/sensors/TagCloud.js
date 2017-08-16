@@ -51,6 +51,9 @@ export default class TagCloud extends Component {
 			this.setReact(nextProps);
 			manager.update(this.channelId, this.react, nextProps.size, 0, false);
 		}
+		if (this.props.multiSelect !== nextProps.multiSelect) {
+			this.type = nextProps.multiSelect ? "Terms" : "Term";
+		}
 		this.checkDefault(nextProps);
 	}
 
@@ -77,7 +80,7 @@ export default class TagCloud extends Component {
 		if (this.props.multiSelect && !_.isEqual(this.defaultSelected, defaultValue)) {
 			this.defaultSelected = defaultValue;
 			const items = this.state.items.map((item) => {
-				item.status = ((this.defaultSelected && this.defaultSelected.indexOf(item.key) > -1) || (this.selectedValue && this.selectedValue.indexOf(item.key) > -1));
+				item.status = (this.defaultSelected && this.defaultSelected.indexOf(item.key) > -1);
 				item.status = this.defaultSelected === null ? false : item.status;
 				return item;
 			});
