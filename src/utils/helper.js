@@ -31,7 +31,13 @@ function getQuery(react, queryList) {
 	for (conjunction in react) {
 		if (Array.isArray(react[conjunction])) {
 			const operation = getOperation(conjunction);
-			const queryArr = react[conjunction].map(comp => queryList(comp));
+			const queryArr = react[conjunction].map(comp => {
+				if (comp in queryList) {
+					return queryList[comp];
+				}
+				return null;
+			}).filter(item => item !== null);
+
 			query = createBoolQuery(operation, queryArr);
 		} else if (typeof react[conjunction] === "string") {
 			const operation = getOperation(conjunction);

@@ -8,7 +8,14 @@ export default class ReactiveBase extends Component {
 	constructor(props) {
 		super(props);
 
-		this.store = configureStore();
+		this.type = props.type ? props.type : "*";
+		const config = {
+			url: "scalr.api.appbase.io",
+			app: props.app,
+			credentials: props.credentials,
+			type: this.type
+		};
+		this.store = configureStore({config});
 	}
 
 	render() {

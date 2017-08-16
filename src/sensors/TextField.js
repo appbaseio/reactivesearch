@@ -3,7 +3,7 @@ import { TextInput } from "react-native";
 import { connect } from "react-redux";
 
 import { addComponent, removeComponent, watchComponent, updateQuery } from "../actions";
-import { isEqual } from "../utils/helper.js";
+import { isEqual } from "../utils/helper";
 
 class TextField extends Component {
 	constructor(props) {

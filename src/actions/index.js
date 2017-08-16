@@ -3,7 +3,8 @@ import {
 	REMOVE_COMPONENT,
 	WATCH_COMPONENT,
 	SET_QUERY,
-	EXECUTE_QUERY
+	EXECUTE_QUERY,
+	UPDATE_HITS
 } from "../constants";
 
 import { buildQuery } from "../utils/helper";
@@ -39,11 +40,35 @@ export function setQuery(component, query) {
 }
 
 export function executeQuery(component, query) {
+	return (dispatch, getState) => {
+		const { config } = getState();
+		console.log(query);
+		fetch(`https://${config.credentials}@${config.url}/${config.app}/${config.type}/_search`, {
+			method: "POST",
+			headers: {
+				"Accept": "application/json",
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				query: query
+			})
+		})
+		.then(response => response.json())
+		.then(response => {
+			dispatch(updateHits(component, response.hits.hits))
+		})
+		.catch(err => {
+			console.log(err);
+		});
+	}
+}
+
+export function updateHits(component, hits) {
 	return {
-		type: EXECUTE_QUERY,
+		type: UPDATE_HITS,
 		component,
-		query
-	};
+		hits
+	}
 }
 
 export function updateQuery(componentId, query) {
