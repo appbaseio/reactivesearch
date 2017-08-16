@@ -43,7 +43,7 @@ export function executeQuery(component, query) {
 	return (dispatch, getState) => {
 		const { config } = getState();
 		console.log(query);
-		fetch(`https://${config.credentials}@${config.url}/${config.app}/${config.type}/_search`, {
+		fetch(`https://${config.credentials}@${config.url}/${config.app}/${config.type === null ? "" : `${config.type}/`}_search`, {
 			method: "POST",
 			headers: {
 				"Accept": "application/json",

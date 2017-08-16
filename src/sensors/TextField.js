@@ -37,11 +37,14 @@ class TextField extends Component {
 	}
 
 	defaultQuery(value) {
-		return {
-			[this.type]: {
-				[this.props.appbaseField]: value
-			}
-		};
+		if (value && value.trim() !== "") {
+			return {
+				[this.type]: {
+					[this.props.appbaseField]: value
+				}
+			};
+		}
+		return null;
 	}
 
 	setValue(value) {
