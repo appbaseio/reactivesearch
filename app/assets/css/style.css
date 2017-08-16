@@ -473,20 +473,17 @@
     .rbc-resultlist-scroll-container .rbc-resultlist-item__image {
       width: 200px;
       height: 200px;
-      float: left;
       background-color: #fcfcfc;
       background-size: contain;
       background-position: center center;
       background-repeat: no-repeat; }
     .rbc-resultlist-scroll-container .rbc-resultlist-item__details {
       width: calc(100% - 200px);
-      float: left;
       padding: 0 8px; }
     .rbc-resultlist-scroll-container .rbc-resultlist-item__title {
       width: 100%;
       padding: 8px 0 0;
       font-family: "Lato Bold";
-      float: left;
       color: #777;
       font-size: 14px;
       line-height: 22px;
@@ -499,7 +496,6 @@
     .rbc-resultlist-scroll-container .rbc-resultlist-item__desc {
       width: 100%;
       padding: 4px 0;
-      float: left;
       color: #777;
       font-size: 14px;
       letter-spacing: 0.02em; }
@@ -512,7 +508,6 @@
     .rbc-resultlist-scroll-container .rbc-resultlist-item.rbc-image-inactive .rbc-resultlist-item__image {
       display: none; }
     .rbc-resultlist-scroll-container .rbc-resultlist-item.rbc-image-inactive .rbc-resultlist-item__details {
-      float: none;
       width: 100%;
       padding: 0; }
     .rbc-resultlist-scroll-container .rbc-resultlist-item.rbc-image-active.rbc-image-small .rbc-resultlist-item__image {
@@ -531,7 +526,6 @@
   .rbc-resultlist-scroll-container .rbc-resultlist-item.rbc-image-inactive .rbc-resultlist-item__image {
     display: none; }
   .rbc-resultlist-scroll-container .rbc-resultlist-item.rbc-image-inactive .rbc-resultlist-item__details {
-    float: none;
     width: 100%;
     padding: 0; } }
 

@@ -364,7 +364,7 @@ export default class ResultList extends Component {
 			const result = this.props.onData(item._source);
 			const cx = result.image ? result.image_size === "small" ? "rbc-image-active rbc-image-small" : "rbc-image-active" : "rbc-image-inactive";
 			const details = (
-				<div className="clearfix">
+				<div style={{display: "flex", flexDirection: "row"}}>
 					{
 						result.image
 							? <div className="rbc-resultlist-item__image" style={{ backgroundImage: `url(${result.image})` }} />
@@ -516,12 +516,12 @@ export default class ResultList extends Component {
 
 	setQueryForPagination() {
 		const valObj = {
-			queryType: 'match',
+			queryType: "match",
 			inputData: this.props.appbaseField,
 			customQuery: () => null
 		};
 		const obj = {
-			key: 'paginationChanges',
+			key: "paginationChanges",
 			value: valObj
 		};
 		helper.selectedSensor.setSensorInfo(obj);
@@ -539,7 +539,7 @@ export default class ResultList extends Component {
 
 	paginationAt(method) {
 		let pageinationComp;
-		if (this.props.pagination && (this.props.paginationAt === method || this.props.paginationAt === 'both')) {
+		if (this.props.pagination && (this.props.paginationAt === method || this.props.paginationAt === "both")) {
 			pageinationComp = (
 				<div className="rbc-pagination-container col s12 col-xs-12">
 					<Pagination
@@ -663,7 +663,7 @@ export default class ResultList extends Component {
 					{title}
 					{sortOptions}
 					{this.props.showResultStats && this.state.resultStats.resultFound ? (<ResultStats onResultStats={this.props.onResultStats} took={this.state.resultStats.took} total={this.state.resultStats.total} />) : null}
-					{this.paginationAt('top')}
+					{this.paginationAt("top")}
 
 					<div ref={(div) => { this.listChildElement = div; }} className="rbc-resultlist-scroll-container col s12 col-xs-12">
 						{this.state.resultMarkup}
@@ -671,7 +671,7 @@ export default class ResultList extends Component {
 
 					{this.state.isLoading ? <div className="rbc-loader" /> : null}
 					{this.state.showPlaceholder ? placeholder : null}
-					{this.paginationAt('bottom')}
+					{this.paginationAt("bottom")}
 				</div>
 				{this.props.noResults && this.state.visibleNoResults ? (<NoResults defaultText={this.props.noResults} />) : null}
 				{this.props.initialLoader && this.state.queryStart && this.state.showInitialLoader ? (<InitialLoader defaultText={this.props.initialLoader} />) : null}

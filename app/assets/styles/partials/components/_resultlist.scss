@@ -16,7 +16,6 @@
 		@include element("image") {
 			width: 200px;
 			height: 200px;
-			float: left;
 			background-color: #fcfcfc;
 			background-size: contain;
 			background-position: center center;
@@ -25,7 +24,6 @@
 
 		@include element("details") {
 			width: calc(100% - 200px);
-			float: left;
 			padding: 0 8px;
 		}
 
@@ -33,7 +31,6 @@
 			width: 100%;
 			padding: 8px 0 0;
 			font-family: $font-bold;
-			float: left;
 			color: #777;
 			font-size: 14px;
 			line-height: 22px;
@@ -50,7 +47,6 @@
 		@include element("desc") {
 			width: 100%;
 			padding: 4px 0;
-			float: left;
 			color: #777;
 			font-size: 14px;
 			letter-spacing: 0.02em;
@@ -72,7 +68,6 @@
 			}
 
 			.rbc-resultlist-item__details {
-				float: none;
 				width: 100%;
 				padding: 0;
 			}
@@ -110,7 +105,6 @@
 				}
 
 				.rbc-resultlist-item__details {
-					float: none;
 					width: 100%;
 					padding: 0;
 				}

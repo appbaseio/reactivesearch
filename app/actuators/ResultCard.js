@@ -514,12 +514,12 @@ export default class ResultCard extends Component {
 
 	setQueryForPagination() {
 		const valObj = {
-			queryType: 'match',
+			queryType: "match",
 			inputData: this.props.appbaseField,
 			customQuery: () => null
 		};
 		const obj = {
-			key: 'paginationChanges',
+			key: "paginationChanges",
 			value: valObj
 		};
 		helper.selectedSensor.setSensorInfo(obj);
@@ -537,7 +537,7 @@ export default class ResultCard extends Component {
 
 	paginationAt(method) {
 		let pageinationComp;
-		if (this.props.pagination && (this.props.paginationAt === method || this.props.paginationAt === 'both')) {
+		if (this.props.pagination && (this.props.paginationAt === method || this.props.paginationAt === "both")) {
 			pageinationComp = (
 				<div className="rbc-pagination-container col s12 col-xs-12">
 					<Pagination
@@ -659,7 +659,7 @@ export default class ResultCard extends Component {
 					{title}
 					{sortOptions}
 					{this.props.showResultStats && this.state.resultStats.resultFound ? (<ResultStats onResultStats={this.props.onResultStats} took={this.state.resultStats.took} total={this.state.resultStats.total} />) : null}
-					{this.paginationAt('top')}
+					{this.paginationAt("top")}
 
 					<div ref={(div) => { this.listChildElement = div; }} className="rbc-resultcard-scroll-container col s12 col-xs-12">
 						{this.state.resultMarkup}
@@ -667,7 +667,7 @@ export default class ResultCard extends Component {
 
 					{this.state.isLoading ? <div className="rbc-loader" /> : null}
 					{this.state.showPlaceholder ? placeholder : null}
-					{this.paginationAt('bottom')}
+					{this.paginationAt("bottom")}
 				</div>
 				{this.props.noResults && this.state.visibleNoResults ? (<NoResults defaultText={this.props.noResults} />) : null}
 				{this.props.initialLoader && this.state.queryStart && this.state.showInitialLoader ? (<InitialLoader defaultText={this.props.initialLoader} />) : null}
