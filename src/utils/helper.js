@@ -17,6 +17,17 @@ export function isEqual(x, y) {
 	return true;
 }
 
+export function getQueryOptions(props) {
+	const options = {};
+	if (props.size !== undefined) {
+		options.size = props.size;
+	}
+	if (props.from !== undefined) {
+		options.from = props.from;
+	}
+	return options;
+}
+
 export function buildQuery(component, dependencyTree, queryList) {
 	let query = null;
 

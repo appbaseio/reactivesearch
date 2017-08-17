@@ -31,6 +31,8 @@ export default class Main extends Component {
 				/>
 				<ReactiveList
 					componentId="ReactiveList"
+					size={20}
+					from={0}
 					react={{
 						and: ["TextComponent", "TextComponent2"]
 					}}

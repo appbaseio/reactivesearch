@@ -2,6 +2,7 @@ export const ADD_COMPONENT = "ADD_COMPONENT";
 export const REMOVE_COMPONENT = "REMOVE_COMPONENT";
 export const WATCH_COMPONENT = "WATCH_COMPONENT";
 export const SET_QUERY = "SET_QUERY";
+export const SET_QUERY_OPTIONS = "SET_QUERY_OPTIONS";
 export const EXECUTE_QUERY = "EXECUTE_QUERY";
 export const UPDATE_HITS = "UPDATE_HITS";
 export const ADD_CONFIG = "ADD_CONFIG";
