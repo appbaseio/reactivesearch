@@ -62,9 +62,15 @@ storiesOf("ToggleList", module)
 	.add("Basic", withReadme(removeFirstLine(ToggleButtonReadme), () => (
 		<ToggleListDefault />
 	)))
-	.add("With Default Selected", withReadme(removeFirstLine(ToggleButtonReadme), () => (
+	.add("With Default Selected and multiSelect on", withReadme(removeFirstLine(ToggleButtonReadme), () => (
 		<ToggleListDefault
 			defaultSelected={array("defaultSelected", ["Social"])}
+		/>
+	)))
+	.add("With Default Selected and multiSelect off", withReadme(removeFirstLine(ToggleButtonReadme), () => (
+		<ToggleListDefault
+			defaultSelected={text("defaultSelected", "Social")}
+			multiSelect={false}
 		/>
 	)))
 	.add("Playground", withReadme(removeFirstLine(ToggleButtonReadme), () => (
