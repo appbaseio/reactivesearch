@@ -55,7 +55,7 @@ export default class ToggleList extends Component {
 		if (!_.isEqual(this.defaultSelected, defaultValue)) {
 			this.defaultSelected = defaultValue;
 			if (!this.props.multiSelect) {
-				const records = this.defaultSelected === null ? null : this.props.data.filter(record => this.defaultSelected && this.defaultSelected.indexOf(record.label) > -1);
+				const records = this.defaultSelected === null ? null : this.props.data.filter(record => this.defaultSelected && this.defaultSelected === record.label);
 				this.setState({
 					selected: records
 				});
@@ -87,7 +87,7 @@ export default class ToggleList extends Component {
 				let records = [];
 				if(this.defaultSelected) {
 					this.defaultSelected.forEach((item) => {
-						records = records.concat(this.props.data.filter(record => item.indexOf(record.label) > -1));
+						records = records.concat(this.props.data.filter(record => item === record.label));
 					});
 				} else if(this.defaultSelected === null) {
 					records = null;
