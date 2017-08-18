@@ -10,7 +10,7 @@ class ReactiveList extends Component {
 		super(props);
 
 		this.state = {
-			from: props.from
+			from: 0
 		};
 	}
 
@@ -25,6 +25,12 @@ class ReactiveList extends Component {
 		if (!isEqual(nextProps.react, this.props.react)) {
 			this.setReact(nextProps);
 		}
+		if (nextProps.hits && this.props.hits && nextProps.hits.length < this.props.hits.length) {
+			this.refs.listRef.scrollToOffset({x: 0, y: 0, animated: false});
+			this.setState({
+				from: 0
+			});
+		}
 	}
 
 	componentWillUnmount() {
@@ -38,23 +44,25 @@ class ReactiveList extends Component {
 	}
 
 	loadMore = () => {
-		const value = this.state.from + this.props.size;
-		const options = getQueryOptions(this.props);
-		this.setState({
-			from: value
-		});
-		this.props.loadMore(this.props.componentId, {
-			...options,
-			from: value
-		});
-	}
+		if (this.props.hits) {
+			const value = this.state.from + this.props.size;
+			const options = getQueryOptions(this.props);
+			this.setState({
+				from: value
+			});
+			this.props.loadMore(this.props.componentId, {
+				...options,
+				from: value
+			});
+		}
+	};
 
 	render() {
 		return (
 			<FlatList
 				ref="listRef"
 				style={{width: "100%"}}
-				data={this.props.hits[this.props.componentId] ? this.props.hits[this.props.componentId] : []}
+				data={this.props.hits ? this.props.hits : []}
 				keyExtractor={(item) => item._id}
 				renderItem={({item}) => this.props.onData(item)}
 				onEndReachedThreshold={0.5}
@@ -64,9 +72,8 @@ class ReactiveList extends Component {
 	}
 }
 
-const mapStateToProps = state => ({
-	components: state.components,
-	hits: state.hits
+const mapStateToProps = (state, props) => ({
+	hits: state.hits[props.componentId]
 });
 
 const mapDispatchtoProps = dispatch => ({
