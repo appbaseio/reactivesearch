@@ -48,7 +48,7 @@ export function setQueryOptions(component, options) {
 	};
 }
 
-export function executeQuery(component, query) {
+export function executeQuery(component, query, options = {}, appendToHits = false) {
 	return (dispatch, getState) => {
 		const { config, queryOptions } = getState();
 		fetch(`https://${config.url}/${config.app}/${config.type === null ? "" : `${config.type}/`}_search`, {
@@ -60,12 +60,13 @@ export function executeQuery(component, query) {
 			},
 			body: JSON.stringify({
 				query: query,
-				...queryOptions[component]
+				...queryOptions[component],
+				...options
 			})
 		})
 		.then(response => response.json())
 		.then(response => {
-			dispatch(updateHits(component, response.hits.hits))
+			dispatch(updateHits(component, response.hits.hits, appendToHits))
 		})
 		.catch(err => {
 			console.log(err);
@@ -73,11 +74,12 @@ export function executeQuery(component, query) {
 	}
 }
 
-export function updateHits(component, hits) {
+export function updateHits(component, hits, append = false) {
 	return {
 		type: UPDATE_HITS,
 		component,
-		hits
+		hits,
+		append
 	}
 }
 
@@ -93,5 +95,13 @@ export function updateQuery(componentId, query) {
 				dispatch(executeQuery(component, queryObj));
 			});
 		}
+	}
+}
+
+export function loadMore(component, options) {
+	return (dispatch, getState) => {
+		const store = getState();
+		const queryObj = buildQuery(component, store.dependencyTree, store.queryList);
+		dispatch(executeQuery(component, queryObj, options, true));
 	}
 }
