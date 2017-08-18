@@ -3,7 +3,7 @@ import { TextInput } from "react-native";
 import { connect } from "react-redux";
 
 import { addComponent, removeComponent, watchComponent, updateQuery } from "../actions";
-import { isEqual } from "../utils/helper";
+import { isEqual, debounce } from "../utils/helper";
 
 class TextField extends Component {
 	constructor(props) {
@@ -18,6 +18,9 @@ class TextField extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
+		this.updateQuery = debounce((value) => {
+			this.props.updateQuery(this.props.componentId, this.defaultQuery(value));
+		}, 300);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -50,9 +53,8 @@ class TextField extends Component {
 	setValue(value) {
 		this.setState({
 			currentValue: value
-		}, () => {
-			this.props.updateQuery(this.props.componentId, this.defaultQuery(value))
-		})
+		});
+		this.updateQuery(value);
 	}
 
 	render() {
