@@ -38,7 +38,6 @@ class ReactiveList extends Component {
 	}
 
 	loadMore = () => {
-		console.log("called");
 		const value = this.state.from + this.props.size;
 		const options = getQueryOptions(this.props);
 		this.setState({
