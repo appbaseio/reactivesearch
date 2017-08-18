@@ -17,7 +17,6 @@ class ReactiveList extends Component {
 		if (!isEqual(nextProps.react, this.props.react)) {
 			this.setReact(nextProps);
 		}
-		console.log(nextProps.hits[nextProps.componentId]);
 	}
 
 	componentWillUnmount() {
@@ -33,9 +32,10 @@ class ReactiveList extends Component {
 	render() {
 		return (
 			<FlatList
+				style={{flex: 1, width: "100%"}}
 				data={this.props.hits[this.props.componentId] ? this.props.hits[this.props.componentId] : []}
 				keyExtractor={(item) => item._id}
-				renderItem={({item}) => <Text>{item._source.name}</Text>}
+				renderItem={({item}) => this.props.onData(item)}
 			/>
 		);
 	}

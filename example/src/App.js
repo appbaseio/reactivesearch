@@ -9,6 +9,16 @@ import {
 import { ReactiveBase, TextField, ReactiveList } from "reactivebase-native";
 
 export default class Main extends Component {
+	onData(item) {
+		const { _source: data } = item;
+		return (
+			<View style={{margin: 5}}>
+				<Text style={{flex: 1, fontWeight: "bold"}}>{data.name}</Text>
+				<Text>{data.brand} - {data.model}</Text>
+			</View>
+		);
+	}
+
 	render() {
 		return (
 			<ReactiveBase
@@ -33,6 +43,7 @@ export default class Main extends Component {
 					componentId="ReactiveList"
 					size={20}
 					from={0}
+					onData={this.onData}
 					react={{
 						and: ["TextComponent", "TextComponent2"]
 					}}
@@ -47,7 +58,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "#f5f5f5",
 		justifyContent: "center",
-		alignItems: "center"
+		alignItems: "center",
+		paddingTop: Expo.Constants.statusBarHeight
 	}
 });
 

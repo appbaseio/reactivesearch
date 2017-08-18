@@ -64,7 +64,8 @@ class TextField extends Component {
 				onChangeText={(currentValue) => this.setValue(currentValue)}
 				value={this.state.currentValue}
 				style={{
-					borderWidth: 1
+					borderWidth: 1,
+					width: "100%"
 				}}
 			/>
 		);
