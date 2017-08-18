@@ -51,9 +51,10 @@ export function setQueryOptions(component, options) {
 export function executeQuery(component, query) {
 	return (dispatch, getState) => {
 		const { config, queryOptions } = getState();
-		fetch(`https://${config.credentials}@${config.url}/${config.app}/${config.type === null ? "" : `${config.type}/`}_search`, {
+		fetch(`https://${config.url}/${config.app}/${config.type === null ? "" : `${config.type}/`}_search`, {
 			method: "POST",
 			headers: {
+				"Authorization": `Basic ${btoa(config.credentials)}`,
 				"Accept": "application/json",
 				"Content-Type": "application/json"
 			},
