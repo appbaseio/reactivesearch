@@ -8,7 +8,7 @@ import {
 	SET_QUERY_OPTIONS
 } from "../constants";
 
-import { buildQuery } from "../utils/helper";
+import { buildQuery, btoa } from "../utils/helper";
 
 export function addComponent(component) {
 	return {
