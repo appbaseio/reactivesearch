@@ -54,6 +54,7 @@ storiesOf("NestedList", module)
 			showCount={boolean("showCount", true)}
 			showSearch={boolean("showSearch", true)}
 			placeholder={text("placeholder", "Search Cars")}
+			URLParams={boolean("URLParams", false)}
 		/>
 	)));
 
