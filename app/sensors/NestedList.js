@@ -57,7 +57,7 @@ export default class NestedList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+		if (!_.isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.changeValue(nextProps.defaultSelected);
 		}
 		if (!_.isEqual(this.props.react, nextProps.react)) {
