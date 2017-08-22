@@ -50,18 +50,18 @@ class TextField extends Component {
 		return null;
 	}
 
-	setValue(value) {
+	setValue = (value) => {
 		this.setState({
 			currentValue: value
 		});
 		this.updateQuery(value);
-	}
+	};
 
 	render() {
 		return (
 			<TextInput
 				placeholder={this.props.placeholder}
-				onChangeText={(currentValue) => this.setValue(currentValue)}
+				onChangeText={this.setValue}
 				value={this.state.currentValue}
 				style={{
 					borderWidth: 1,
@@ -72,12 +72,6 @@ class TextField extends Component {
 	}
 }
 
-const mapStateToProps = state => ({
-	components: state.components,
-	watchMan: state.watchMan,
-	queryList: state.queryList
-});
-
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
@@ -85,4 +79,4 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: (component, query) => dispatch(updateQuery(component, query))
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(TextField);
+export default connect(null, mapDispatchtoProps)(TextField);
