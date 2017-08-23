@@ -7,6 +7,7 @@ import queryReducer from "./queryReducer";
 import queryOptionsReducer from "./queryOptionsReducer";
 import configReducer from "./configReducer";
 import hitsReducer from "./hitsReducer";
+import aggsReducer from "./aggsReducer";
 
 export default combineReducers({
 	components: componentsReducer,
@@ -15,5 +16,6 @@ export default combineReducers({
 	queryOptions: queryOptionsReducer,
 	dependencyTree: dependencyTreeReducer,
 	config: configReducer,
-	hits: hitsReducer
+	hits: hitsReducer,
+	aggregations: aggsReducer
 });

@@ -5,4 +5,5 @@ export const SET_QUERY = "SET_QUERY";
 export const SET_QUERY_OPTIONS = "SET_QUERY_OPTIONS";
 export const EXECUTE_QUERY = "EXECUTE_QUERY";
 export const UPDATE_HITS = "UPDATE_HITS";
+export const UPDATE_AGGS = "UPDATE_AGGS";
 export const ADD_CONFIG = "ADD_CONFIG";

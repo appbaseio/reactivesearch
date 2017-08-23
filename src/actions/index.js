@@ -5,6 +5,7 @@ import {
 	SET_QUERY,
 	EXECUTE_QUERY,
 	UPDATE_HITS,
+	UPDATE_AGGS,
 	SET_QUERY_OPTIONS
 } from "../constants";
 
@@ -51,11 +52,19 @@ export function setQueryOptions(component, options) {
 export function executeQuery(component, query, options = {}, appendToHits = false) {
 	return (dispatch, getState) => {
 		const { config, queryOptions } = getState();
+		let mainQuery = null;
+		if (query) {
+			mainQuery = {
+				query
+			}
+		}
+
 		console.log("Executing for", component, {
-			query: query,
+			...mainQuery,
 			...queryOptions[component],
 			...options
 		});
+
 		fetch(`https://${config.url}/${config.app}/${config.type === null ? "" : `${config.type}/`}_search`, {
 			method: "POST",
 			headers: {
@@ -64,7 +73,7 @@ export function executeQuery(component, query, options = {}, appendToHits = fals
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({
-				query: query,
+				...mainQuery,
 				...queryOptions[component],
 				...options
 			})
@@ -72,6 +81,9 @@ export function executeQuery(component, query, options = {}, appendToHits = fals
 		.then(response => response.json())
 		.then(response => {
 			dispatch(updateHits(component, response.hits.hits, appendToHits))
+			if ("aggregations" in response) {
+				dispatch(updateAggs(component, response.aggregations));
+			}
 		})
 		.catch(err => {
 			console.log(err);
@@ -88,18 +100,25 @@ export function updateHits(component, hits, append = false) {
 	}
 }
 
+export function updateAggs(component, aggregations) {
+	return {
+		type: UPDATE_AGGS,
+		component,
+		aggregations
+	}
+}
+
 export function updateQuery(componentId, query) {
 	return (dispatch, getState) => {
 		dispatch(setQuery(componentId, query));
 
 		const store = getState();
 		const watchList = store.watchMan[componentId];
+		const options = store.queryOptions[componentId];
 		if (Array.isArray(watchList)) {
 			watchList.forEach(component => {
-				if (!component.includes("__internal")) {
-					const queryObj = buildQuery(component, store.dependencyTree, store.queryList);
-					dispatch(executeQuery(component, queryObj));
-				}
+				const queryObj = buildQuery(component, store.dependencyTree, store.queryList);
+				dispatch(executeQuery(component, queryObj, options));
 			});
 		}
 	}

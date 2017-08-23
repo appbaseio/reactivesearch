@@ -6,7 +6,7 @@ import {
 	Text
 } from "react-native";
 
-import { ReactiveBase, DataSearch, TextField, ReactiveList } from "reactivebase-native";
+import { ReactiveBase, DataSearch, TextField, DropdownList, ReactiveList } from "reactivebase-native";
 
 export default class Main extends Component {
 	onData(item) {
@@ -28,6 +28,10 @@ export default class Main extends Component {
 				style={styles.container}
 			>
 				<Text>ReactiveBase Native Demo</Text>
+				<DropdownList
+					componentId="DropdownListComponent"
+					appbaseField="brand.raw"
+				/>
 				<DataSearch
 					componentId="DataSeachComponent"
 					appbaseField="name"

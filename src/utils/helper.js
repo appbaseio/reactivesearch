@@ -86,11 +86,14 @@ function getOperation(conjunction) {
 }
 
 function createBoolQuery(operation, query) {
-	return {
-		bool: {
-			[operation]: query
-		}
-	};
+	if (query) {
+		return {
+			bool: {
+				[operation]: query
+			}
+		};
+	}
+	return null;
 }
 
 export function btoa(input = "") {

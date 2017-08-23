@@ -9,7 +9,6 @@ class DataSearch extends Component {
 	constructor(props) {
 		super(props);
 
-		this.type = "match";
 		this.state = {
 			currentValue: "",
 			suggestions: []
@@ -41,6 +40,7 @@ class DataSearch extends Component {
 
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
+		this.props.removeComponent(this.internalComponent);
 	}
 
 	setReact(props) {
@@ -189,10 +189,7 @@ class DataSearch extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
-	suggestions: state.hits[props.componentId],
-	watchMan: state.watchMan,
-	hits: state.hits,
-	queryList: state.queryList
+	suggestions: state.hits[props.componentId]
 });
 
 const mapDispatchtoProps = dispatch => ({
