@@ -49,7 +49,7 @@ export default class Main extends Component {
 					from={0}
 					onData={this.onData}
 					react={{
-						and: ["DataSeachComponent", "TextFieldComponent"]
+						and: ["DropdownListComponent", "DataSeachComponent", "TextFieldComponent"]
 					}}
 				/>
 			</ReactiveBase>

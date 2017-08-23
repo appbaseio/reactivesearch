@@ -13,6 +13,7 @@ class DropdownList extends Component {
 			currentValue: "",
 			options: []
 		};
+		this.type = this.props.multipleSelect && this.props.queryFormat === "or" ? "Terms" : "Term";
 		this.internalComponent = this.props.componentId + "__internal";
 	}
 
@@ -98,6 +99,7 @@ class DropdownList extends Component {
 		this.setState({
 			currentValue: value
 		});
+		this.props.updateQuery(this.props.componentId, this.defaultQuery(value))
 	};
 
 	render() {
@@ -119,7 +121,8 @@ class DropdownList extends Component {
 
 DropdownList.defaultProps = {
 	size: 100,
-	multipleSelect: false
+	multipleSelect: false,
+	queryFormat: "or"
 }
 
 const mapStateToProps = (state, props) => ({
