@@ -29,15 +29,15 @@ export default class Main extends Component {
 			>
 				<Text>ReactiveBase Native Demo</Text>
 				<DataSearch
-					componentId="TextComponent"
+					componentId="DataSeachComponent"
 					appbaseField="name"
+					react={{
+						and: "TextFieldComponent"
+					}}
 				/>
 				<TextField
-					componentId="TextComponent2"
+					componentId="TextFieldComponent"
 					appbaseField="color"
-					react={{
-						and: "TextComponent"
-					}}
 				/>
 				<ReactiveList
 					componentId="ReactiveList"
@@ -45,7 +45,7 @@ export default class Main extends Component {
 					from={0}
 					onData={this.onData}
 					react={{
-						and: ["TextComponent", "TextComponent2"]
+						and: ["DataSeachComponent", "TextFieldComponent"]
 					}}
 				/>
 			</ReactiveBase>

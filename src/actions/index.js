@@ -51,6 +51,11 @@ export function setQueryOptions(component, options) {
 export function executeQuery(component, query, options = {}, appendToHits = false) {
 	return (dispatch, getState) => {
 		const { config, queryOptions } = getState();
+		console.log("Executing for", component, {
+			query: query,
+			...queryOptions[component],
+			...options
+		});
 		fetch(`https://${config.url}/${config.app}/${config.type === null ? "" : `${config.type}/`}_search`, {
 			method: "POST",
 			headers: {
@@ -91,8 +96,10 @@ export function updateQuery(componentId, query) {
 		const watchList = store.watchMan[componentId];
 		if (Array.isArray(watchList)) {
 			watchList.forEach(component => {
-				const queryObj = buildQuery(component, store.dependencyTree, store.queryList);
-				dispatch(executeQuery(component, queryObj));
+				if (!component.includes("__internal")) {
+					const queryObj = buildQuery(component, store.dependencyTree, store.queryList);
+					dispatch(executeQuery(component, queryObj));
+				}
 			});
 		}
 	}

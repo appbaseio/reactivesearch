@@ -3,7 +3,7 @@ import { TextInput, View, Text, FlatList, TouchableHighlight } from "react-nativ
 import { connect } from "react-redux";
 
 import { addComponent, removeComponent, watchComponent, updateQuery } from "../actions";
-import { isEqual, debounce } from "../utils/helper";
+import { isEqual, debounce, pushToAndClause } from "../utils/helper";
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -30,7 +30,9 @@ class DataSearch extends Component {
 		if (!isEqual(nextProps.react, this.props.react)) {
 			this.setReact(nextProps);
 		}
-		if (Array.isArray(nextProps.suggestions)) {
+		if (Array.isArray(nextProps.suggestions)
+			&& !isEqual(this.props.suggestions, nextProps.suggestions)
+			&& this.state.currentValue.trim() !== "") {
 			this.setState({
 				suggestions: nextProps.suggestions
 			});
@@ -42,7 +44,15 @@ class DataSearch extends Component {
 	}
 
 	setReact(props) {
-		props.watchComponent(props.componentId, {...props.react, and: this.internalComponent});
+		const { react } = props;
+		if (props.react) {
+			props.watchComponent(this.internalComponent, react);
+
+			newReact = pushToAndClause(react, this.internalComponent)
+			props.watchComponent(props.componentId, newReact);
+		} else {
+			props.watchComponent(props.componentId, {and: this.internalComponent});
+		}
 	}
 
 	defaultQuery(value) {
@@ -128,11 +138,23 @@ class DataSearch extends Component {
 	};
 
 	selectSuggestion = (value) => {
+		console.log("selected", value);
 		this.setState({
 			currentValue: value,
 			suggestions: []
 		});
 		this.updateQuery(this.props.componentId, value);
+	};
+
+	setSuggestions = () => {
+		let suggestions = [];
+		if (this.state.currentValue.trim() !== "") {
+			suggestions = this.props.suggestions;
+		}
+
+		this.setState({
+			suggestions
+		});
 	}
 
 	render() {
@@ -142,13 +164,14 @@ class DataSearch extends Component {
 					placeholder={this.props.placeholder}
 					onChangeText={this.setValue}
 					value={this.state.currentValue}
+					onFocus={this.setSuggestions}
 					style={{
 						borderWidth: 1,
 						width: "100%"
 					}}
 				/>
 				{
-					Array.isArray(this.state.suggestions) && this.state.suggestions.length
+					Array.isArray(this.state.suggestions)
 					? (<FlatList
 						data={this.state.suggestions}
 						keyExtractor={(item) => item._id}
@@ -168,7 +191,10 @@ class DataSearch extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
-	suggestions: state.hits[props.componentId]
+	suggestions: state.hits[props.componentId],
+	watchMan: state.watchMan,
+	hits: state.hits,
+	queryList: state.queryList
 });
 
 const mapDispatchtoProps = dispatch => ({

@@ -113,3 +113,20 @@ export function btoa(input = "") {
 
 	return output;
 }
+
+export function pushToAndClause(react, component) {
+	if (react.and) {
+		if (Array.isArray(react.and)) {
+			react.and.push(component);
+			return react;
+		} else if (typeof react.and === "string") {
+			react.and = [react.and, component]
+			return react;
+		} else {
+			react.and = this.pushToAndClause(react.and, component);
+			return react;
+		}
+	} else {
+		return {...react, and: component}
+	}
+}
