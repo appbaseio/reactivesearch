@@ -132,11 +132,14 @@ class DataSearch extends Component {
 			currentValue: value,
 			suggestions: []
 		});
-		this.updateQuery(this.internalComponent, value);
+		if (this.props.autoSuggest) {
+			this.updateQuery(this.internalComponent, value);
+		} else {
+			this.updateQuery(this.props.componentId, value);
+		}
 	};
 
 	selectSuggestion = (value) => {
-		console.log("selected", value);
 		this.setState({
 			currentValue: value,
 			suggestions: []
@@ -153,7 +156,7 @@ class DataSearch extends Component {
 		this.setState({
 			suggestions
 		});
-	}
+	};
 
 	render() {
 		return (
@@ -169,7 +172,7 @@ class DataSearch extends Component {
 					}}
 				/>
 				{
-					Array.isArray(this.state.suggestions)
+					this.props.autoSuggest && Array.isArray(this.state.suggestions)
 					? (<FlatList
 						data={this.state.suggestions}
 						keyExtractor={(item) => item._id}
@@ -186,6 +189,12 @@ class DataSearch extends Component {
 			</View>
 		);
 	}
+}
+
+DataSearch.defaultProps = {
+	placeholder: "Search",
+	autoSuggest: true,
+	queryFormat: "or"
 }
 
 const mapStateToProps = (state, props) => ({
