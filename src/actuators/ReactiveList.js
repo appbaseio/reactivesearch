@@ -26,7 +26,7 @@ class ReactiveList extends Component {
 			this.setReact(nextProps);
 		}
 		if (nextProps.hits && this.props.hits && nextProps.hits.length < this.props.hits.length) {
-			this.refs.listRef.scrollToOffset({x: 0, y: 0, animated: false});
+			this.refs.listRef.scrollToOffset({ x: 0, y: 0, animated: false });
 			this.setState({
 				from: 0
 			});
@@ -61,10 +61,10 @@ class ReactiveList extends Component {
 		return (
 			<FlatList
 				ref="listRef"
-				style={{width: "100%"}}
+				style={{ width: "100%" }}
 				data={this.props.hits ? this.props.hits : []}
 				keyExtractor={(item) => item._id}
-				renderItem={({item}) => this.props.onData(item)}
+				renderItem={({ item }) => this.props.onData(item)}
 				onEndReachedThreshold={0.5}
 				onEndReached={this.loadMore}
 			/>

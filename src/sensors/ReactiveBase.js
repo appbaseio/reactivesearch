@@ -15,7 +15,7 @@ export default class ReactiveBase extends Component {
 			credentials: props.credentials,
 			type: this.type
 		};
-		this.store = configureStore({config});
+		this.store = configureStore({ config });
 	}
 
 	render() {

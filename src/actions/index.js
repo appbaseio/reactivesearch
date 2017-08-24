@@ -78,16 +78,16 @@ export function executeQuery(component, query, options = {}, appendToHits = fals
 				...options
 			})
 		})
-		.then(response => response.json())
-		.then(response => {
-			dispatch(updateHits(component, response.hits.hits, appendToHits))
-			if ("aggregations" in response) {
-				dispatch(updateAggs(component, response.aggregations));
-			}
-		})
-		.catch(err => {
-			console.log(err);
-		});
+			.then(response => response.json())
+			.then(response => {
+				dispatch(updateHits(component, response.hits.hits, appendToHits))
+				if ("aggregations" in response) {
+					dispatch(updateAggs(component, response.aggregations));
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
 	}
 }
 

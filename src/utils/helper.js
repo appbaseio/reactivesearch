@@ -108,7 +108,7 @@ export function btoa(input = "") {
 		charCode = str.charCodeAt(i += 3/4);
 
 		if (charCode > 0xFF) {
-			throw new Error(`"btoa" failed: The string to be encoded contains characters outside of the Latin1 range.`);
+			throw new Error("\"btoa\" failed: The string to be encoded contains characters outside of the Latin1 range.");
 		}
 
 		block = block << 8 | charCode;
@@ -130,6 +130,6 @@ export function pushToAndClause(react, component) {
 			return react;
 		}
 	} else {
-		return {...react, and: component}
+		return { ...react, and: component }
 	}
 }

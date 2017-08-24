@@ -60,7 +60,7 @@ class DropdownList extends Component {
 			newReact = pushToAndClause(react, this.internalComponent)
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, {and: this.internalComponent});
+			props.watchComponent(props.componentId, { and: this.internalComponent });
 		}
 	}
 
@@ -107,7 +107,7 @@ class DropdownList extends Component {
 			<Picker
 				selectedValue={this.state.currentValue}
 				onValueChange={this.setValue}
-				style={{width: "100%"}}
+				style={{ width: "100%" }}
 			>
 				{
 					this.state.options.map(item => (

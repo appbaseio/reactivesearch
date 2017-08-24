@@ -3,7 +3,7 @@ import { WATCH_COMPONENT, REMOVE_COMPONENT } from "../constants";
 export default function watchManReducer(state = {}, action) {
 	if (action.type === WATCH_COMPONENT) {
 		const watchList = getWatchList(action.react);
-		const newState = {...state};
+		const newState = { ...state };
 		watchList.forEach(item => {
 			if (Array.isArray(newState[item])) {
 				newState[item].push(action.component);
@@ -13,7 +13,7 @@ export default function watchManReducer(state = {}, action) {
 		});
 		return newState;
 	} else if (action.type === REMOVE_COMPONENT) {
-		const newState = {...state};
+		const newState = { ...state };
 		for (let component in newState) {
 			if (component === action.component) {
 				delete newState[component];

@@ -50,7 +50,7 @@ class DataSearch extends Component {
 			newReact = pushToAndClause(react, this.internalComponent)
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, {and: this.internalComponent});
+			props.watchComponent(props.componentId, { and: this.internalComponent });
 		}
 	}
 
@@ -171,7 +171,7 @@ class DataSearch extends Component {
 			return (<FlatList
 				data={this.state.suggestions}
 				keyExtractor={(item) => item._id}
-				renderItem={({item}) => (
+				renderItem={({ item }) => (
 					<TouchableHighlight
 						onPress={() => this.selectSuggestion(item._source.name)}
 					>
@@ -187,12 +187,12 @@ class DataSearch extends Component {
 	renderDataSearch = () => {
 		if (this.state.showOverlay) {
 			return (<View>
-				<View style={{flexDirection: "row", justifyContent: "space-between"}}>
+				<View style={{ flexDirection: "row", justifyContent: "space-between" }}>
 					<TouchableHighlight onPress={this.toggleOverlay}><Text>Back</Text></TouchableHighlight>
 					{
 						this.state.currentValue
-						? <TouchableHighlight onPress={() => this.selectSuggestion("")}><Text>Reset</Text></TouchableHighlight>
-						: null
+							? <TouchableHighlight onPress={() => this.selectSuggestion("")}><Text>Reset</Text></TouchableHighlight>
+							: null
 					}
 				</View>
 				<TextInput
@@ -237,19 +237,19 @@ class DataSearch extends Component {
 		}
 
 		return (
-			<View style={{width: "100%", ...styles}}>
+			<View style={{ width: "100%", ...styles }}>
 				{
 					this.props.autoSuggest
-					? this.renderDataSearch()
-					: <TextInput
-						placeholder={this.props.placeholder}
-						onChangeText={this.setValue}
-						value={this.state.currentValue}
-						style={{
-							borderWidth: 1,
-							width: "100%"
-						}}
-					/>
+						? this.renderDataSearch()
+						: <TextInput
+							placeholder={this.props.placeholder}
+							onChangeText={this.setValue}
+							value={this.state.currentValue}
+							style={{
+								borderWidth: 1,
+								width: "100%"
+							}}
+						/>
 				}
 			</View>
 		);

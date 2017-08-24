@@ -12,8 +12,8 @@ export default class Main extends Component {
 	onData(item) {
 		const { _source: data } = item;
 		return (
-			<View style={{margin: 5}}>
-				<Text style={{flex: 1, fontWeight: "bold"}}>{data.name}</Text>
+			<View style={{ margin: 5 }}>
+				<Text style={{ flex: 1, fontWeight: "bold" }}>{data.name}</Text>
 				<Text>{data.brand} - {data.model}</Text>
 			</View>
 		);
