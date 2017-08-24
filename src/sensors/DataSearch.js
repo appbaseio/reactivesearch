@@ -11,7 +11,8 @@ class DataSearch extends Component {
 
 		this.state = {
 			currentValue: "",
-			suggestions: []
+			suggestions: [],
+			showOverlay: false
 		};
 		this.internalComponent = this.props.componentId + "__internal";
 	}
@@ -145,6 +146,7 @@ class DataSearch extends Component {
 			suggestions: []
 		});
 		this.updateQuery(this.props.componentId, value);
+		this.toggleOverlay();
 	};
 
 	setSuggestions = () => {
@@ -158,33 +160,79 @@ class DataSearch extends Component {
 		});
 	};
 
+	toggleOverlay = () => {
+		this.setState({
+			showOverlay: !this.state.showOverlay
+		})
+	}
+
+	renderSuggestions() {
+		if (this.props.autoSuggest && Array.isArray(this.state.suggestions)) {
+			return (<FlatList
+				data={this.state.suggestions}
+				keyExtractor={(item) => item._id}
+				renderItem={({item}) => (
+					<TouchableHighlight
+						onPress={() => this.selectSuggestion(item._source.name)}
+					>
+						<Text>{item._source.name}</Text>
+					</TouchableHighlight>
+				)}
+			/>);
+		}
+
+		return null;
+	}
+
 	render() {
+		let styles = {};
+		if (this.state.showOverlay) {
+			styles = {
+				height: "100%",
+				position: "absolute",
+				top: 0,
+				right: 0,
+				bottom: 0,
+				left: 0,
+				backgroundColor: "white",
+				zIndex: 10
+			}
+		}
+
 		return (
-			<View style={{width: "100%"}}>
-				<TextInput
-					placeholder={this.props.placeholder}
-					onChangeText={this.setValue}
-					value={this.state.currentValue}
-					onFocus={this.setSuggestions}
-					style={{
-						borderWidth: 1,
-						width: "100%"
-					}}
-				/>
+			<View style={{width: "100%", ...styles}}>
 				{
-					this.props.autoSuggest && Array.isArray(this.state.suggestions)
-					? (<FlatList
-						data={this.state.suggestions}
-						keyExtractor={(item) => item._id}
-						renderItem={({item}) => (
-							<TouchableHighlight
-								onPress={() => this.selectSuggestion(item._source.name)}
-							>
-								<Text>{item._source.name}</Text>
-							</TouchableHighlight>
-						)}
+					this.state.showOverlay
+					? (<View>
+						<View style={{flexDirection: "row", justifyContent: "space-between"}}>
+							<TouchableHighlight onPress={this.toggleOverlay}><Text>Back</Text></TouchableHighlight>
+							{
+								this.state.currentValue
+								? <TouchableHighlight onPress={() => this.selectSuggestion("")}><Text>Reset</Text></TouchableHighlight>
+								: null
+							}
+						</View>
+						<TextInput
+							placeholder={this.props.placeholder}
+							onChangeText={this.setValue}
+							value={this.state.currentValue}
+							onFocus={this.setSuggestions}
+							style={{
+								borderWidth: 1,
+								width: "100%"
+							}}
+						/>
+						{this.renderSuggestions()}
+					</View>)
+					: (<TextInput
+						onFocus={this.toggleOverlay}
+						placeholder={this.props.placeholder}
+						value={this.state.currentValue}
+						style={{
+							borderWidth: 1,
+							width: "100%"
+						}}
 					/>)
-					: null
 				}
 			</View>
 		);
