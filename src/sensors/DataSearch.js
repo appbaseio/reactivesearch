@@ -184,6 +184,43 @@ class DataSearch extends Component {
 		return null;
 	}
 
+	renderDataSearch = () => {
+		if (this.state.showOverlay) {
+			return (<View>
+				<View style={{flexDirection: "row", justifyContent: "space-between"}}>
+					<TouchableHighlight onPress={this.toggleOverlay}><Text>Back</Text></TouchableHighlight>
+					{
+						this.state.currentValue
+						? <TouchableHighlight onPress={() => this.selectSuggestion("")}><Text>Reset</Text></TouchableHighlight>
+						: null
+					}
+				</View>
+				<TextInput
+					placeholder={this.props.placeholder}
+					onChangeText={this.setValue}
+					value={this.state.currentValue}
+					onFocus={this.setSuggestions}
+					autoFocus
+					style={{
+						borderWidth: 1,
+						width: "100%"
+					}}
+				/>
+				{this.renderSuggestions()}
+			</View>);
+		}
+
+		return (<TextInput
+			onFocus={this.toggleOverlay}
+			placeholder={this.props.placeholder}
+			value={this.state.currentValue}
+			style={{
+				borderWidth: 1,
+				width: "100%"
+			}}
+		/>);
+	}
+
 	render() {
 		let styles = {};
 		if (this.state.showOverlay) {
@@ -202,37 +239,17 @@ class DataSearch extends Component {
 		return (
 			<View style={{width: "100%", ...styles}}>
 				{
-					this.state.showOverlay
-					? (<View>
-						<View style={{flexDirection: "row", justifyContent: "space-between"}}>
-							<TouchableHighlight onPress={this.toggleOverlay}><Text>Back</Text></TouchableHighlight>
-							{
-								this.state.currentValue
-								? <TouchableHighlight onPress={() => this.selectSuggestion("")}><Text>Reset</Text></TouchableHighlight>
-								: null
-							}
-						</View>
-						<TextInput
-							placeholder={this.props.placeholder}
-							onChangeText={this.setValue}
-							value={this.state.currentValue}
-							onFocus={this.setSuggestions}
-							style={{
-								borderWidth: 1,
-								width: "100%"
-							}}
-						/>
-						{this.renderSuggestions()}
-					</View>)
-					: (<TextInput
-						onFocus={this.toggleOverlay}
+					this.props.autoSuggest
+					? this.renderDataSearch()
+					: <TextInput
 						placeholder={this.props.placeholder}
+						onChangeText={this.setValue}
 						value={this.state.currentValue}
 						style={{
 							borderWidth: 1,
 							width: "100%"
 						}}
-					/>)
+					/>
 				}
 			</View>
 		);
