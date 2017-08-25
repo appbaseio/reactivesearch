@@ -7,6 +7,7 @@ import {
 	RangeSlider,
 	ResultCard
 } from "../../app/app.js";
+import moment from "moment";
 
 require("./airbnb.scss");
 
@@ -46,6 +47,9 @@ class Main extends Component {
 							title="When"
 							numberOfMonths={1}
 							queryFormat="basic_date"
+							extra={{
+								initialVisibleMonth: () => moment("2017-04-01")
+							}}
 						/>
 
 						<RangeSlider

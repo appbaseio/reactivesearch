@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import moment from "moment";
 import {
 	ReactiveBase,
 	DateRange,
@@ -100,6 +101,9 @@ class Main extends Component {
 										title="When"
 										numberOfMonths={1}
 										queryFormat="basic_date"
+										extra={{
+											initialVisibleMonth: () => moment("2017-04-01")
+										}}
 									/>
 								</div>
 								<div className="col s6">
