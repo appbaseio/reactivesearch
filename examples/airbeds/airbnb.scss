@@ -86,16 +86,13 @@ nav {
 	margin-bottom: -10px;
 }
 
-.rbc.rbc-togglelist .col.s12.col-xs-12{
-	display: -webkit-box;
-	display: -ms-flexbox;
+.rbc.rbc-multidatalist .rbc-list-container {
+	padding: 0 10px 10px;
 	display: flex;
-	-webkit-box-pack: justify;
-	-ms-flex-pack: justify;
 	justify-content: space-between;
 }
 
-.rbc.rbc-togglelist .rbc-list-item {
+.rbc.rbc-multidatalist .rbc-list-container .rbc-list-item {
 	width: calc(33.33% - 15px);
 	display: inline-block;
 	padding: 12px;
@@ -276,7 +273,7 @@ nav {
 			text-transform: uppercase;
 		}
 		
-		&.rbc-togglelist {
+		&.rbc-multidatalist {
 			display: none;
 		}
 	}

@@ -4,7 +4,7 @@ import moment from "moment";
 import {
 	ReactiveBase,
 	DateRange,
-	ToggleList,
+	MultiDataList,
 	NumberBox,
 	ReactiveMap,
 	DataSearch,
@@ -118,7 +118,7 @@ class Main extends Component {
 										}}
 									/>
 								</div>
-								<ToggleList
+								<MultiDataList
 									appbaseField="room_type"
 									componentId="RoomTypeSensor"
 									title="Room Type"

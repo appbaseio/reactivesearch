@@ -15,7 +15,6 @@ const main_config = {
 		NestedList: "./examples/NestedList/app.js",
 		RatingsFilter: "./examples/RatingsFilter/app.js",
 		TagCloud: "./examples/TagCloud/app.js",
-		ToggleList: "./examples/ToggleList/app.js",
 		app: "./app/app.js"
 	},
 	output: {
@@ -59,8 +58,7 @@ const build_config = {
 		CategorySearch: "./examples/CategorySearch/app.js",
 		NestedList: "./examples/NestedList/app.js",
 		RatingsFilter: "./examples/RatingsFilter/app.js",
-		TagCloud: "./examples/TagCloud/app.js",
-		ToggleList: "./examples/ToggleList/app.js"
+		TagCloud: "./examples/TagCloud/app.js"
 	},
 	output: {
 		path: path.join(__dirname, "dist"),

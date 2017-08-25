@@ -1,5 +1,4 @@
 import NestedList from "./sensors/NestedList";
-import ToggleList from "./sensors/ToggleList";
 import DynamicRangeSlider from "./sensors/DynamicRangeSlider";
 import TagCloud from "./sensors/TagCloud";
 import RatingsFilter from "./sensors/RatingsFilter";
@@ -12,7 +11,6 @@ import ViewSwitcher from "./actuators/ViewSwitcher";
 
 export {
 	NestedList,
-	ToggleList,
 	DynamicRangeSlider,
 	TagCloud,
 	RatingsFilter,
