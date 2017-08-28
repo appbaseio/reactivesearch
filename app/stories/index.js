@@ -188,6 +188,7 @@ storiesOf("CategorySearch", module)
 			categoryField={text("categoryField", "brand.raw")}
 			defaultSelected={text("defaultSelected", "")}
 			placeholder={text("placeholder", "Search Car")}
+			highlight={boolean("highlight", true)}
 		/>
 	)));
 
