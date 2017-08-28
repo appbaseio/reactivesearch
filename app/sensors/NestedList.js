@@ -434,24 +434,46 @@ export default class NestedList extends Component {
 				"rbc-item-active": (Array.isArray(this.state.selectedValues) && item.key === this.state.selectedValues[level]),
 				"rbc-item-inactive": !(Array.isArray(this.state.selectedValues) && item.key === this.state.selectedValues[level])
 			});
-			return (
-				<li
-					key={index}
-					className="rbc-list-container col s12 col-xs-12"
-				>
-					<button className={`rbc-list-item ${cx}`} onClick={() => this.onItemClick(item.value.join("@rbc@"), level)}>
-						<span className="rbc-label">{item.key} {this.countRender(item.doc_count)}</span>
-						{this.renderChevron(level)}
-					</button>
-					{
-						Array.isArray(this.state.selectedValues) && this.state.selectedValues[level] === item.key && this.state.items[level+1] ? (
-							<ul className="rbc-sublist-container rbc-indent col s12 col-xs-12">
-								{this.renderItems(this.state.items[level+1], item.value)}
-							</ul>
-						) : null
-					}
-				</li>
-			);
+			if (Array.isArray(this.state.selectedValues) && this.state.selectedValues.length) {
+				if (item.key === this.state.selectedValues[level] || this.state.selectedValues.length === level) {
+					return (<li
+						key={index}
+						className="rbc-list-container col s12 col-xs-12"
+					>
+						<button className={`rbc-list-item ${cx}`} onClick={() => this.onItemClick(item.value.join("@rbc@"), level)}>
+							<span className="rbc-label">{item.key} {this.countRender(item.doc_count)}</span>
+							{this.renderChevron(level)}
+						</button>
+						{
+							Array.isArray(this.state.selectedValues) && this.state.selectedValues[level] === item.key && this.state.items[level+1] ? (
+								<ul className="rbc-list-container col s12 col-xs-12">
+									{this.renderItems(this.state.items[level+1], item.value)}
+								</ul>
+							) : null
+						}
+					</li>)
+				}
+				return null;
+			} else {
+				return (
+					<li
+						key={index}
+						className="rbc-list-container col s12 col-xs-12"
+					>
+						<button className={`rbc-list-item ${cx}`} onClick={() => this.onItemClick(item.value.join("@rbc@"), level)}>
+							<span className="rbc-label">{item.key} {this.countRender(item.doc_count)}</span>
+							{this.renderChevron(level)}
+						</button>
+						{
+							Array.isArray(this.state.selectedValues) && this.state.selectedValues[level] === item.key && this.state.items[level+1] ? (
+								<ul className="rbc-list-container col s12 col-xs-12">
+									{this.renderItems(this.state.items[level+1], item.value)}
+								</ul>
+							) : null
+						}
+					</li>
+				);
+			}
 		});
 	}
 
