@@ -23,7 +23,7 @@ export default class CategorySearchDefault extends Component {
 				<div className="text-container full_row" style={{ paddingLeft: "10px" }}>
 					<div className="text-head text-overflow full_row">
 						<span className="text-head-info text-overflow">
-							{marker.name ? marker.name : ""} - {marker.brand ? marker.brand : ""}
+							<span dangerouslySetInnerHTML={{ __html: marker.name ? marker.name : "" }} /> - {marker.brand ? marker.brand : ""}
 						</span>
 						<span className="text-head-city">{marker.brand ? marker.brand : ""}</span>
 					</div>
