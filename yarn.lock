@@ -2,14 +2,13 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivebase@1.0.0-beta08":
-  version "1.0.0-beta08"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivebase/-/reactivebase-1.0.0-beta08.tgz#afcdd27fd8e8cc1b707879772703b9c8754cc005"
+"@appbaseio/reactivebase@1.0.0-beta10":
+  version "1.0.0-beta10"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivebase/-/reactivebase-1.0.0-beta10.tgz#8e195214c71763c06b284409c74469b5fa4ca35d"
   dependencies:
     appbase-js "^0.11.0"
     classnames "^2.2.5"
     fbemitter "^2.1.1"
-    jquery "^3.1.1"
     lodash "^4.17.4"
     moment "^2.14.1"
     rc-slider "^5.4.0"
@@ -28,11 +27,11 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivemaps@1.0.0-beta05":
-  version "1.0.0-beta05"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-1.0.0-beta05.tgz#8b9925be126be64db8a9d21a0cb09027c33f0b39"
+"@appbaseio/reactivemaps@1.0.0-beta06":
+  version "1.0.0-beta06"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-1.0.0-beta06.tgz#1726f3118de11c677687d603b41899ad27cfeea4"
   dependencies:
-    "@appbaseio/reactivebase" "1.0.0-beta08"
+    "@appbaseio/reactivebase" "1.0.0-beta10"
     axios "^0.15.2"
     google-map-react "^0.14.5"
     google-maps "^3.2.1"
@@ -4304,10 +4303,6 @@ isstream@~0.1.2:
 jquery@^2.1.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
-
-jquery@^3.1.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.1.9"
