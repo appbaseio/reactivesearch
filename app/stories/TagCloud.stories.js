@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { ReactiveBase, TagCloud, ReactiveList, AppbaseSensorHelper as helper } from "../app";
+import { ReactiveBase, TagCloud, ReactiveList } from "../app";
+import ResponsiveStory from "./ResponsiveStory";
 
 require("./list.css");
 
@@ -10,7 +11,7 @@ export default class TagCloudDefault extends Component {
 	}
 
 	componentDidMount() {
-		helper.ResponsiveStory();
+		ResponsiveStory();
 	}
 
 	onData(markerData) {

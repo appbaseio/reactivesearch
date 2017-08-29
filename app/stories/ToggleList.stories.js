@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { ReactiveBase, ToggleList, ResultList, AppbaseSensorHelper as helper } from "../app";
+import { ReactiveBase, ToggleList, ResultList } from "../app";
+import ResponsiveStory from "./ResponsiveStory";
 
 require("./list.css");
 
@@ -20,7 +21,7 @@ export default class ToggleListDefault extends Component {
 	}
 
 	componentDidMount() {
-		helper.ResponsiveStory();
+		ResponsiveStory();
 	}
 
 	onData(res) {

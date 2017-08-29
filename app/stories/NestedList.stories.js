@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { ReactiveBase, NestedList, ReactiveList, AppbaseSensorHelper as helper } from "../app";
+import { ReactiveBase, NestedList, ReactiveList } from "../app";
+import ResponsiveStory from "./ResponsiveStory";
 
 require("./list.css");
 
@@ -10,7 +11,7 @@ export default class NestedListDefault extends Component {
 	}
 
 	componentDidMount() {
-		helper.ResponsiveStory();
+		ResponsiveStory();
 	}
 
 	itemMarkup(markerData) {

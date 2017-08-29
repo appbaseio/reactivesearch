@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { ReactiveBase, RatingsFilter, ResultList, AppbaseSensorHelper as helper } from "../app";
+import { ReactiveBase, RatingsFilter, ResultList } from "../app";
+import ResponsiveStory from "./ResponsiveStory";
 
 require("./list.css");
 
 export default class ResultCardDefault extends Component {
 	componentDidMount() {
-		helper.ResponsiveStory();
+		ResponsiveStory();
 	}
 
 	onData(res) {
