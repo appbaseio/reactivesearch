@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { TextInput, View, Text, FlatList, TouchableHighlight } from "react-native";
+import { View, Dimensions } from "react-native";
+import { Container, Content, Input, Item, List, ListItem, Text, Button } from "native-base";
 import { connect } from "react-redux";
 
 import { addComponent, removeComponent, watchComponent, updateQuery } from "../actions";
@@ -168,17 +169,15 @@ class DataSearch extends Component {
 
 	renderSuggestions() {
 		if (this.props.autoSuggest && Array.isArray(this.state.suggestions)) {
-			return (<FlatList
-				data={this.state.suggestions}
-				keyExtractor={(item) => item._id}
-				renderItem={({ item }) => (
-					<TouchableHighlight
+			return (<List dataArray={this.state.suggestions}
+				renderRow={(item) =>
+					<ListItem
 						onPress={() => this.selectSuggestion(item._source.name)}
 					>
 						<Text>{item._source.name}</Text>
-					</TouchableHighlight>
-				)}
-			/>);
+					</ListItem>
+				}>
+			</List>)
 		}
 
 		return null;
@@ -188,45 +187,44 @@ class DataSearch extends Component {
 		if (this.state.showOverlay) {
 			return (<View>
 				<View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-					<TouchableHighlight onPress={this.toggleOverlay}><Text>Back</Text></TouchableHighlight>
+					<Button style={{paddingLeft: 0, paddingRight: 0}} transparent dark onPress={this.toggleOverlay}><Text>Back</Text></Button>
 					{
 						this.state.currentValue
-							? <TouchableHighlight onPress={() => this.selectSuggestion("")}><Text>Reset</Text></TouchableHighlight>
+							? <Button style={{paddingLeft: 0, paddingRight: 0}} transparent onPress={() => this.selectSuggestion("")}><Text>Reset</Text></Button>
 							: null
 					}
 				</View>
-				<TextInput
-					placeholder={this.props.placeholder}
-					onChangeText={this.setValue}
-					value={this.state.currentValue}
-					onFocus={this.setSuggestions}
-					autoFocus
-					style={{
-						borderWidth: 1,
-						width: "100%"
-					}}
-				/>
+				<Item regular style={{marginLeft: 0}}>
+					<Input
+						placeholder={this.props.placeholder}
+						onChangeText={this.setValue}
+						value={this.state.currentValue}
+						onFocus={this.setSuggestions}
+						autoFocus
+					/>
+				</Item>
 				{this.renderSuggestions()}
 			</View>);
 		}
 
-		return (<TextInput
-			onFocus={this.toggleOverlay}
-			placeholder={this.props.placeholder}
-			value={this.state.currentValue}
-			style={{
-				borderWidth: 1,
-				width: "100%"
-			}}
-		/>);
+		return (<Item regular style={{marginLeft: 0}}>
+			<Input
+				onFocus={this.toggleOverlay}
+				placeholder={this.props.placeholder}
+				value={this.state.currentValue}
+			/>
+		</Item>);
 	}
 
 	render() {
 		let styles = {};
 		if (this.state.showOverlay) {
 			styles = {
-				height: "100%",
+				width: Dimensions.get("window").width,
+				height: Dimensions.get("window").height,
 				position: "absolute",
+				paddingLeft: 10,
+				paddingRight: 10,
 				top: 0,
 				right: 0,
 				bottom: 0,
@@ -241,15 +239,13 @@ class DataSearch extends Component {
 				{
 					this.props.autoSuggest
 						? this.renderDataSearch()
-						: <TextInput
-							placeholder={this.props.placeholder}
-							onChangeText={this.setValue}
-							value={this.state.currentValue}
-							style={{
-								borderWidth: 1,
-								width: "100%"
-							}}
-						/>
+						: <Item regular style={{marginLeft: 0}}>
+							<Input
+								placeholder={this.props.placeholder}
+								onChangeText={this.setValue}
+								value={this.state.currentValue}
+							/>
+						</Item>
 				}
 			</View>
 		);

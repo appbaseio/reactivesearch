@@ -10,8 +10,9 @@
 	"dependencies": {
 		"escape-string-regexp": "^1.0.5",
 		"expo": "~18.0.0",
+		"native-base": "2.2.0",
 		"react": "16.0.0-alpha.12",
-		"react-native": "~0.45.0",
+		"react-native": "0.45.0",
 		"react-redux": "^5.0.6",
 		"redux": "^3.7.2",
 		"redux-thunk": "^2.2.0"

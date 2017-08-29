@@ -1,10 +1,9 @@
 import Expo from "expo";
 import React, { Component } from "react";
 import {
-	StyleSheet,
-	View,
-	Text
+	View
 } from "react-native";
+import { Text, H3 } from "native-base";
 
 import { ReactiveBase, DataSearch, TextField, DropdownList, ReactiveList } from "reactivebase-native";
 
@@ -25,9 +24,13 @@ export default class Main extends Component {
 				app="car-store"
 				credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
 				type="cars"
-				style={styles.container}
+				style={{
+					backgroundColor: "#fafafa",
+					marginTop: Expo.Constants.statusBarHeight,
+					padding: 10
+				}}
 			>
-				<Text>ReactiveBase Native Demo</Text>
+				<H3 style={{textAlign: "center"}}>ReactiveBase Native Demo</H3>
 				<DropdownList
 					componentId="DropdownListComponent"
 					appbaseField="brand.raw"
@@ -56,15 +59,5 @@ export default class Main extends Component {
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#f5f5f5",
-		justifyContent: "center",
-		alignItems: "center",
-		marginTop: Expo.Constants.statusBarHeight
-	}
-});
 
 Expo.registerRootComponent(Main);

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { View } from "react-native";
+import { Container } from "native-base";
 
 import configureStore from "../store/configureStore";
 
@@ -21,9 +22,11 @@ export default class ReactiveBase extends Component {
 	render() {
 		return (
 			<Provider store={this.store}>
-				<View style={this.props.style}>
-					{this.props.children}
-				</View>
+				<Container>
+					<View style={{...this.props.style, flex: 1}}>
+						{this.props.children}
+					</View>
+				</Container>
 			</Provider>
 		);
 	}
