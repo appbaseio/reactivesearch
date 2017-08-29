@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { ReactiveBase, DynamicRangeSlider, ReactiveList, AppbaseSensorHelper as helper } from "../app";
+import { ReactiveBase, DynamicRangeSlider, ReactiveList } from "../app";
+import ResponsiveStory from "./ResponsiveStory";
 
 require("./list.css");
 
@@ -10,7 +11,7 @@ export default class DynamicRangeSliderDefault extends Component {
 	}
 
 	componentDidMount() {
-		helper.ResponsiveStory();
+		ResponsiveStory();
 	}
 
 	onData(markerData) {

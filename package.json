@@ -70,6 +70,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.1",
     "gulp-uglify": "^1.5.3",
+    "jquery": "^3.2.1",
     "json-loader": "^0.5.4",
     "lodash-webpack-plugin": "^0.10.6",
     "materialize-css": "^0.98.0",

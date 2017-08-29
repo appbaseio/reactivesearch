@@ -12,7 +12,6 @@ import DataSearchReadme from "@appbaseio/reactivemaps-manual/docs/v1.0.0/compone
 import ReactiveListReadme from "@appbaseio/reactivemaps-manual/docs/v1.0.0/components/ReactiveList.md";
 
 import NestedListDefault from "./NestedList.stories";
-import ToggleListDefault from "./ToggleList.stories";
 import DynamicRangeSliderDefault from "./DynamicRangeSlider.stories";
 import TagCloudDefault from "./TagCloud.stories";
 import RatingsFilterDefault from "./RatingsFilter.stories";
@@ -55,35 +54,6 @@ storiesOf("NestedList", module)
 			showSearch={boolean("showSearch", true)}
 			placeholder={text("placeholder", "Search Cars")}
 			URLParams={boolean("URLParams", false)}
-		/>
-	)));
-
-storiesOf("ToggleList", module)
-	.addDecorator(withKnobs)
-	.add("Basic", withReadme(removeFirstLine(ToggleButtonReadme), () => (
-		<ToggleListDefault />
-	)))
-	.add("With Default Selected and multiSelect on", withReadme(removeFirstLine(ToggleButtonReadme), () => (
-		<ToggleListDefault
-			defaultSelected={array("defaultSelected", ["Social"])}
-		/>
-	)))
-	.add("With Default Selected and multiSelect off", withReadme(removeFirstLine(ToggleButtonReadme), () => (
-		<ToggleListDefault
-			defaultSelected={text("defaultSelected", "Social")}
-			multiSelect={false}
-		/>
-	)))
-	.add("Playground", withReadme(removeFirstLine(ToggleButtonReadme), () => (
-		<ToggleListDefault
-			title={text("title", "ToggleList: Meetup Categories")}
-			multiSelect={boolean("multiSelect", true)}
-			data={object("data", [
-					{ label: "Social", value: "Social" },
-					{ label: "Travel", value: "Travel" },
-					{ label: "Outdoors", value: "Outdoors" }
-			])}
-			defaultSelected={array("defaultSelected", ["Social", "Travel"])}
 		/>
 	)));
 
