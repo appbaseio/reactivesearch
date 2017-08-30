@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TextInput } from "react-native";
+import { Input, Item } from "native-base";
 import { connect } from "react-redux";
 
 import { addComponent, removeComponent, watchComponent, updateQuery } from "../actions";
@@ -59,17 +59,20 @@ class TextField extends Component {
 
 	render() {
 		return (
-			<TextInput
-				placeholder={this.props.placeholder}
-				onChangeText={this.setValue}
-				value={this.state.currentValue}
-				style={{
-					borderWidth: 1,
-					width: "100%"
-				}}
-			/>
+			<Item regular style={{marginLeft: 0}}>
+				<Input
+					placeholder={this.props.placeholder}
+					onChangeText={this.setValue}
+					value={this.state.currentValue}
+					autoFocus
+				/>
+			</Item>
 		);
 	}
+}
+
+TextField.defaultProps = {
+	placeholder: "Search"
 }
 
 const mapDispatchtoProps = dispatch => ({

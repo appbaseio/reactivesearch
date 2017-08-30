@@ -63,6 +63,7 @@ export default class Main extends Component {
 				<TextField
 					componentId="TextFieldComponent"
 					appbaseField="color"
+					placeholder="Search color"
 				/>
 				<ReactiveList
 					componentId="ReactiveList"

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Dimensions } from "react-native";
-import { Container, Content, Input, Item, List, ListItem, Text, Button } from "native-base";
+import { Input, Item, List, ListItem, Text, Button } from "native-base";
 import { connect } from "react-redux";
 
 import { addComponent, removeComponent, watchComponent, updateQuery } from "../actions";
