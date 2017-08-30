@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ReactiveBase, TagCloud, ReactiveList } from "../app";
+import { ReactiveBase, TagCloud, ReactiveList, SelectedFilters } from "../app";
 import ResponsiveStory from "./ResponsiveStory";
 
 require("./list.css");
@@ -51,6 +51,7 @@ export default class TagCloudDefault extends Component {
 			>
 				<div className="row">
 					<div className="col s6 col-xs-6">
+						<SelectedFilters componentId="TagSensor" />
 						<TagCloud
 							componentId="CitySensor"
 							appbaseField={this.props.mapping.city}

@@ -119,6 +119,8 @@ storiesOf("TagCloud", module)
 			multiSelect
 			defaultSelected={array("defaultSelected", ["Auckland"])}
 			showCount={boolean("showCount", true)}
+			showFilter={boolean("showFilter", true)}
+			filterLabel={text("filterLabel", "Cities")}
 		/>
 	)));
 
