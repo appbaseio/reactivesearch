@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { Picker } from "react-native";
+import { Picker } from "native-base";
 import { connect } from "react-redux";
 
 import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
 import { isEqual, getQueryOptions, pushToAndClause } from "../utils/helper";
+
+const Item = Picker.Item;
 
 class DropdownList extends Component {
 	constructor(props) {
@@ -105,9 +107,11 @@ class DropdownList extends Component {
 	render() {
 		return (
 			<Picker
+				iosHeader="Select one"
+				mode="dropdown"
+				placeholder={this.props.placeholder}
 				selectedValue={this.state.currentValue}
 				onValueChange={this.setValue}
-				style={{ width: "100%" }}
 			>
 				{
 					this.state.options.map(item => (
@@ -122,7 +126,8 @@ class DropdownList extends Component {
 DropdownList.defaultProps = {
 	size: 100,
 	multipleSelect: false,
-	queryFormat: "or"
+	queryFormat: "or",
+	placeholder: "Select a value"
 }
 
 const mapStateToProps = (state, props) => ({

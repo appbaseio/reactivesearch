@@ -8,6 +8,20 @@ import { Text, H3 } from "native-base";
 import { ReactiveBase, DataSearch, TextField, DropdownList, ReactiveList } from "reactivebase-native";
 
 export default class Main extends Component {
+	state = {
+		isReady: false,
+	}
+
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			"Roboto": require("native-base/Fonts/Roboto.ttf"),
+			"Roboto_medium": require("native-base/Fonts/Roboto_medium.ttf"),
+			"Ionicons": require("native-base/Fonts/Ionicons.ttf"),
+		});
+
+		this.setState({isReady: true});
+	}
+
 	onData(item) {
 		const { _source: data } = item;
 		return (
@@ -19,6 +33,10 @@ export default class Main extends Component {
 	}
 
 	render() {
+		if (!this.state.isReady) {
+			return <Text>Loading...</Text>;
+		}
+
 		return (
 			<ReactiveBase
 				app="car-store"

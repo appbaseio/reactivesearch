@@ -1598,8 +1598,8 @@ eslint-plugin-prettier@^2.1.2:
     jest-docblock "^20.0.1"
 
 eslint-plugin-react-native@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-native/-/eslint-plugin-react-native-3.0.1.tgz#9058efdf8970d2b1f68e328f7f1c2b71831298f4"
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-native/-/eslint-plugin-react-native-3.1.0.tgz#03f95f959bff7a8267b5472cb87d010e346f7224"
 
 eslint-plugin-react@^7.1.0:
   version "7.3.0"
@@ -2928,8 +2928,8 @@ mute-stream@0.0.7:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
 nan@^2.3.0:
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.6.2.tgz#e4ff34e6c95fdfb5aecc08de6596f43605a7db45"
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.7.0.tgz#d95bf721ec877e08db276ed3fc6eb78f9083ad46"
 
 native-base-shoutem-theme@0.1.7:
   version "0.1.7"
@@ -2939,9 +2939,9 @@ native-base-shoutem-theme@0.1.7:
     lodash "^4.10.1"
     prop-types "^15.5.10"
 
-native-base@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/native-base/-/native-base-2.2.0.tgz#63d1aadd72c3ef737076f0be9d9c2ff64608c609"
+native-base@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/native-base/-/native-base-2.2.1.tgz#af2e3388411c04a92c13101d7757496b7252850b"
   dependencies:
     "@shoutem/animation" "^0.8.9"
     blueimp-md5 "^2.5.0"
@@ -2952,7 +2952,7 @@ native-base@2.2.0:
     native-base-shoutem-theme "0.1.7"
     print-message "^2.1.0"
     react-native-drawer "^2.3.0"
-    react-native-easy-grid "0.1.7"
+    react-native-easy-grid "0.1.9"
     react-native-keyboard-aware-scroll-view "0.2.9"
     react-native-vector-icons "~4.1.1"
     react-tween-state "^0.1.5"
@@ -3271,8 +3271,8 @@ preserve@^0.2.0:
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
 prettier@^1.5.3:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.6.0.tgz#23e9c68251f440feb847f558821bead21765919a"
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.6.1.tgz#850f411a3116226193e32ea5acfc21c0f9a76d7d"
 
 pretty-format@^4.2.1:
   version "4.3.1"
@@ -3393,9 +3393,9 @@ react-native-drawer@^2.3.0:
     prop-types "^15.5.8"
     tween-functions "^1.0.1"
 
-react-native-easy-grid@0.1.7:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.1.7.tgz#44205cc39adff32a8a20efa8451d76a4499f0a3f"
+react-native-easy-grid@0.1.9:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.1.9.tgz#41b00b2fa02c3fab125cb80ef90429bfb3d698cc"
   dependencies:
     lodash "^4.11.1"
 

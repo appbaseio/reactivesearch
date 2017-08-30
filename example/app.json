@@ -9,6 +9,7 @@
 		"primaryColor": "#2196f3",
 		"packagerOpts": {
 			"config": "./rn-cli.config.js",
+			"assetExts": ["ttf", "otf"],
 			"projectRoots": ""
 		}
 	}
