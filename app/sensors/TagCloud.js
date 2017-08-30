@@ -40,7 +40,7 @@ export default class TagCloud extends Component {
 	componentWillMount() {
 		this.size = this.props.size;
 		this.setReact(this.props);
-		this.setQueryInfo();
+		this.setQueryInfo(this.props);
 		this.createChannel();
 		setTimeout(this.checkDefault.bind(this, this.props), 300);
 		this.listenFilter();
@@ -54,7 +54,13 @@ export default class TagCloud extends Component {
 		if (this.props.multiSelect !== nextProps.multiSelect) {
 			this.type = nextProps.multiSelect ? "Terms" : "Term";
 		}
-		this.checkDefault(nextProps);
+		if (this.props.showFilter !== nextProps.showFilter || this.props.filterLabel !== nextProps.filterLabel) {
+			this.setQueryInfo(nextProps);
+			this.changeValue(this.defaultSelected, true);
+		}
+		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+			this.checkDefault(nextProps);
+		}
 	}
 
 	componentWillUnmount() {
@@ -76,8 +82,8 @@ export default class TagCloud extends Component {
 		}
 	}
 
-	changeValue(defaultValue) {
-		if (this.props.multiSelect && !_.isEqual(this.defaultSelected, defaultValue)) {
+	changeValue(defaultValue, executeQuery = false) {
+		if (this.props.multiSelect && (!_.isEqual(this.defaultSelected, defaultValue) || executeQuery)) {
 			this.defaultSelected = defaultValue;
 			const items = this.state.items.map((item) => {
 				item.status = (this.defaultSelected && this.defaultSelected.indexOf(item.key) > -1);
@@ -112,7 +118,7 @@ export default class TagCloud extends Component {
 			} else {
 				execQuery();
 			}
-		} else if (!this.props.multiSelect && this.defaultSelected !== defaultValue) {
+		} else if (!this.props.multiSelect && (this.defaultSelected !== defaultValue || executeQuery)) {
 			this.defaultSelected = defaultValue;
 			const items = this.state.items.map((item) => {
 				if (this.defaultSelected && this.defaultSelected === item.key) {
@@ -185,18 +191,18 @@ export default class TagCloud extends Component {
 		}
 	}
 
-	setQueryInfo() {
+	setQueryInfo(props) {
 		const obj = {
-			key: this.props.componentId,
+			key: props.componentId,
 			value: {
 				queryType: this.type,
-				inputData: this.props.appbaseField,
+				inputData: props.appbaseField,
 				customQuery: this.customQuery,
 				reactiveId: this.context.reactiveId,
-				showFilter: this.props.showFilter,
-				filterLabel: this.props.filterLabel ? this.props.filterLabel : this.props.componentId,
+				showFilter: props.showFilter,
+				filterLabel: props.filterLabel ? props.filterLabel : props.componentId,
 				component: "TagCloud",
-				defaultSelected: this.urlParams !== null ? this.urlParams : this.props.defaultSelected
+				defaultSelected: this.urlParams !== null ? this.urlParams : props.defaultSelected
 			}
 		};
 		helper.selectedSensor.setSensorInfo(obj);
