@@ -47,7 +47,7 @@ export default class TagCloud extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (!_.isEqual(this.props.react, nextProps.react)) {
+		if (!_.isEqual(this.props.react, nextProps.react) || this.props.size !== nextProps.size) {
 			this.setReact(nextProps);
 			manager.update(this.channelId, this.react, nextProps.size, 0, false);
 		}
