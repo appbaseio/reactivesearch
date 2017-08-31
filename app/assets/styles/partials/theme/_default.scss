@@ -35,5 +35,18 @@ $map in $themes {
 				color: map-get($map, color);
 			}
 		}
+
+		.rbc.rbc-nestedmultilist {
+			.rbc-list-container {
+				.rbc-list-item {
+					.rbc-label {
+						color: map-get($map, font-color);
+					}
+					&.rbc-item-active .rbc-label {
+						color: map-get($map, color);
+					}
+				}
+			}
+		}
 	}
 }

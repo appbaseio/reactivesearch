@@ -11,7 +11,7 @@ import StaticSearch from "../addons/StaticSearch";
 
 const _ = require("lodash");
 
-export default class NestedList extends Component {
+export default class NestedMultiList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -23,7 +23,7 @@ export default class NestedList extends Component {
 				}
 			},
 			subItems: [],
-			selectedValues: []
+			selectedValues: {}
 		};
 		this.nested = [
 			"nestedParentaggs"
@@ -127,29 +127,29 @@ export default class NestedList extends Component {
 	handleSelect(defaultSelected) {
 		if (defaultSelected) {
 			this.defaultSelected.forEach((value, index) => {
-				const customValue = defaultSelected.filter((item, subindex) => subindex <= index );
-				this.onItemSelect(customValue);
+				const customValue = defaultSelected.find((item, subindex) => subindex == index);
+				this.onItemClick(customValue, index);
 			});
 			// this.onItemSelect(this.defaultSelected);
 		} else if(this.defaultSelected === null) {
-			this.onItemSelect(null);
+			this.onItemClick(null, 0);
 		}
 	}
 
 	// build query for this sensor only
 	customQuery(record) {
 		let query = null;
-		function generateRangeQuery(appbaseField) {
-			return record.map((singleRecord, index) => ({
-				term: {
-					[appbaseField[index]]: singleRecord
+		function generateTermsQuery(appbaseField) {
+			return Object.keys(record).map((key, index) => ({
+				terms: {
+					[appbaseField[index]]: record[key]
 				}
 			}));
 		}
 		if (record && record[0] !== null) {
 			query = {
 				bool: {
-					must: generateRangeQuery(this.props.appbaseField)
+					must: generateTermsQuery(this.props.appbaseField)
 				}
 			};
 		}
@@ -167,7 +167,7 @@ export default class NestedList extends Component {
 				reactiveId: this.context.reactiveId,
 				showFilter: this.props.showFilter,
 				filterLabel: this.props.filterLabel ? this.props.filterLabel : this.props.componentId,
-				component: "NestedList",
+				component: "NestedMultiList",
 				defaultSelected: this.urlParams !== null ? this.urlParams : this.props.defaultSelected
 			}
 		};
@@ -208,12 +208,12 @@ export default class NestedList extends Component {
 
 	nestedAggQuery() {
 		let query = null;
-		const level = Array.isArray(this.state.selectedValues) && this.state.selectedValues.length ? this.state.selectedValues.length : 0;
+		const level = Object.keys(this.state.selectedValues).length || 0;
 		const field = this.props.appbaseField[level];
 		const orderType = this.props.sortBy === "count" ? "_count" : "_term";
 		const sortBy = this.props.sortBy === "count" ? "desc" : this.props.sortBy;
 		const createTermQuery = (index) => ({
-			term: {
+			terms: {
 				[this.props.appbaseField[index]]: this.state.selectedValues[index]
 			}
 		});
@@ -246,7 +246,7 @@ export default class NestedList extends Component {
 				}
 			}
 		});
-		if(Array.isArray(this.state.selectedValues) && this.state.selectedValues.length < this.props.appbaseField.length) {
+		if(level >= 0 && level < this.props.appbaseField.length) {
 			query = init(field, level);
 		}
 		return query;
@@ -336,7 +336,7 @@ export default class NestedList extends Component {
 
 	// set value
 	setValue(value, isExecuteQuery = false, changeNestedValue=true) {
-		value = value && value.length ? value : null;
+		value = Object.keys(value).length ? value : null;
 		const obj = {
 			key: this.props.componentId,
 			value
@@ -383,19 +383,26 @@ export default class NestedList extends Component {
 		}
 	}
 
-	onItemClick(selectedValues, level) {
-		selectedValues = selectedValues.split("@rbc@");
-		if(this.state.selectedValues && selectedValues[level] === this.state.selectedValues[level]) {
-			selectedValues = this.state.selectedValues.filter((item, index) => index < level);
-			const items = this.state.items;
-			items[level+1] = null;
-			this.setState({
-				items,
-				selectedValues: selectedValues
-			}, this.setValue.bind(this, selectedValues, true, false));
+	onItemClick(selected, level) {
+		const { selectedValues }  = this.state;
+		if (selectedValues[level] && selectedValues[level].includes(selected)) {
+			selectedValues[level] = selectedValues[level].filter(item => item !== selected);
 		} else {
-			this.onItemSelect(selectedValues);
+			const temp = selectedValues[level] || [];
+			selectedValues[level] = [...temp, selected];
 		}
+		if (!selectedValues[level].length) {
+			for (let row in selectedValues) {
+				if (row >= level) {
+					delete selectedValues[row];
+				}
+			}
+		}
+		this.setState({
+			selectedValues
+		}, () => {
+			this.setValue(selectedValues, true, false);
+		});
 	}
 
 	onItemSelect(selectedValues) {
@@ -429,56 +436,36 @@ export default class NestedList extends Component {
 		items = items.filter(item => item.key);
 		return items.map((item, index) => {
 			item.value = prefix.concat([item.key]);
+			const active = (this.state.selectedValues[level] && this.state.selectedValues[level].includes(item.key));
 			const cx = classNames({
-				"rbc-item-active": (Array.isArray(this.state.selectedValues) && item.key === this.state.selectedValues[level]),
-				"rbc-item-inactive": !(Array.isArray(this.state.selectedValues) && item.key === this.state.selectedValues[level])
+				"rbc-item-active": active,
+				"rbc-item-inactive": !active
 			});
-			if (Array.isArray(this.state.selectedValues) && this.state.selectedValues.length) {
-				if (item.key === this.state.selectedValues[level] || this.state.selectedValues.length === level) {
-					return (<li
-						key={index}
-						className="rbc-list-container col s12 col-xs-12"
-					>
-						<button className={`rbc-list-item ${cx}`} onClick={() => this.onItemClick(item.value.join("@rbc@"), level)}>
-							<span className="rbc-label">{item.key} {this.countRender(item.doc_count)}</span>
-							{this.renderChevron(level)}
-						</button>
-						{
-							Array.isArray(this.state.selectedValues) && this.state.selectedValues[level] === item.key && this.state.items[level+1] ? (
-								<ul className="rbc-list-container col s12 col-xs-12">
-									{this.renderItems(this.state.items[level+1], item.value)}
-								</ul>
-							) : null
-						}
-					</li>)
-				}
-				return null;
-			} else {
-				return (
-					<li
-						key={index}
-						className="rbc-list-container col s12 col-xs-12"
-					>
-						<button className={`rbc-list-item ${cx}`} onClick={() => this.onItemClick(item.value.join("@rbc@"), level)}>
-							<span className="rbc-label">{item.key} {this.countRender(item.doc_count)}</span>
-							{this.renderChevron(level)}
-						</button>
-						{
-							Array.isArray(this.state.selectedValues) && this.state.selectedValues[level] === item.key && this.state.items[level+1] ? (
-								<ul className="rbc-list-container col s12 col-xs-12">
-									{this.renderItems(this.state.items[level+1], item.value)}
-								</ul>
-							) : null
-						}
-					</li>
-				);
-			}
+			return (
+				<li
+					key={index}
+					className="rbc-list-container col s12 col-xs-12"
+				>
+					<div className={`rbc-list-item ${cx}`} onClick={() => this.onItemClick(item.key, level)}>
+						<input type="checkbox" className="rbc-checkbox-item" checked={active} />
+						<label className="rbc-label">{item.key} {this.countRender(item.doc_count)}</label>
+						{this.renderChevron(level)}
+					</div>
+					{
+						active && this.state.items[level+1] ? (
+							<ul className="rbc-sublist-container rbc-indent col s12 col-xs-12">
+								{this.renderItems(this.state.items[level+1], item.value)}
+							</ul>
+						) : null
+					}
+				</li>
+			);
 		});
 	}
 
 	renderList(key, level) {
 		let list;
-		if (key === this.state.selectedValues[level] && level === 0) {
+		if (this.state.selectedValues[level].includes(key) && level === 0) {
 			list = (
 				<ul className="rbc-sublist-container rbc-indent col s12 col-xs-12">
 					{this.renderItems(this.state.subItems, 1)}
@@ -529,8 +516,8 @@ export default class NestedList extends Component {
 		});
 
 		return (
-			<div className="rbc rbc-nestedlist-container card thumbnail col s12 col-xs-12" style={this.props.componentStyle}>
-				<div className={`rbc rbc-nestedlist col s12 col-xs-12 ${cx}`}>
+			<div className="rbc rbc-nestedmultilist-container card thumbnail col s12 col-xs-12" style={this.props.componentStyle}>
+				<div className={`rbc rbc-nestedmultilist col s12 col-xs-12 ${cx}`}>
 					{title}
 					{searchComponent}
 					{listComponent}
@@ -558,7 +545,7 @@ const NestedingValidation = (props, propName) => {
 	return err;
 }
 
-NestedList.propTypes = {
+NestedMultiList.propTypes = {
 	componentId: React.PropTypes.string.isRequired,
 	appbaseField: NestedingValidation,
 	title: React.PropTypes.oneOfType([
@@ -586,7 +573,7 @@ NestedList.propTypes = {
 };
 
 // Default props value
-NestedList.defaultProps = {
+NestedMultiList.defaultProps = {
 	showCount: true,
 	sortBy: "count",
 	size: 100,
@@ -599,13 +586,13 @@ NestedList.defaultProps = {
 };
 
 // context type
-NestedList.contextTypes = {
+NestedMultiList.contextTypes = {
 	appbaseRef: React.PropTypes.any.isRequired,
 	type: React.PropTypes.any.isRequired,
 	reactiveId: React.PropTypes.number
 };
 
-NestedList.types = {
+NestedMultiList.types = {
 	componentId: TYPES.STRING,
 	appbaseField: TYPES.ARRAY,
 	appbaseFieldType: TYPES.STRING,

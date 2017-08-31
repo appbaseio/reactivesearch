@@ -13,6 +13,7 @@ const main_config = {
 		news_recipe: "./examples/news/app.js",
 		CategorySearch: "./examples/CategorySearch/app.js",
 		NestedList: "./examples/NestedList/app.js",
+		NestedMultiList: "./examples/NestedMultiList/app.js",
 		RatingsFilter: "./examples/RatingsFilter/app.js",
 		TagCloud: "./examples/TagCloud/app.js",
 		app: "./app/app.js"
@@ -57,6 +58,7 @@ const build_config = {
 		news_recipe: "./examples/news/app.js",
 		CategorySearch: "./examples/CategorySearch/app.js",
 		NestedList: "./examples/NestedList/app.js",
+		NestedMultiList: "./examples/NestedMultiList/app.js",
 		RatingsFilter: "./examples/RatingsFilter/app.js",
 		TagCloud: "./examples/TagCloud/app.js"
 	},
