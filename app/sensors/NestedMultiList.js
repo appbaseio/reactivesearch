@@ -384,21 +384,34 @@ export default class NestedMultiList extends Component {
 	}
 
 	onItemClick(selected, level) {
-		const { selectedValues }  = this.state;
+		const { selectedValues, items }  = this.state;
 		if (selectedValues[level] && selectedValues[level].includes(selected)) {
 			selectedValues[level] = selectedValues[level].filter(item => item !== selected);
 		} else {
 			const temp = selectedValues[level] || [];
 			selectedValues[level] = [...temp, selected];
 		}
-		if (!selectedValues[level].length) {
+
+		if (selectedValues[level] && !selectedValues[level].length) {
 			for (let row in selectedValues) {
 				if (row >= level) {
 					delete selectedValues[row];
 				}
 			}
 		}
+
+		if (selectedValues[level] && selectedValues[level].length > 1) {
+			for (let row in selectedValues) {
+				if (row > level) {
+					delete selectedValues[row];
+				}
+			}
+		}
+
+		items[level+1] = null;
+
 		this.setState({
+			items,
 			selectedValues
 		}, () => {
 			this.setValue(selectedValues, true, false);
@@ -452,7 +465,7 @@ export default class NestedMultiList extends Component {
 						{this.renderChevron(level)}
 					</div>
 					{
-						active && this.state.items[level+1] ? (
+						active && this.state.selectedValues[level].length === 1 && this.state.items[level+1] ? (
 							<ul className="rbc-sublist-container rbc-indent col s12 col-xs-12">
 								{this.renderItems(this.state.items[level+1], item.value)}
 							</ul>
