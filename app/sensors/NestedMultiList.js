@@ -36,7 +36,6 @@ export default class NestedMultiList extends Component {
 		this.urlParams = helper.URLParams.get(this.props.componentId);
 		this.urlParams = this.urlParams ? this.urlParams.split("/") : null;
 		this.filterBySearch = this.filterBySearch.bind(this);
-		this.onItemSelect = this.onItemSelect.bind(this);
 		this.onItemClick = this.onItemClick.bind(this);
 		this.customQuery = this.customQuery.bind(this);
 		this.handleSelect = this.handleSelect.bind(this);
@@ -103,19 +102,6 @@ export default class NestedMultiList extends Component {
 	changeValue(defaultValue) {
 		if (!_.isEqual(this.defaultSelected, defaultValue)) {
 			this.defaultSelected = defaultValue;
-			let items = this.state.items;
-			items = items.map((subitems) => {
-				subitems = Array.isArray(subitems) ? subitems.map((item) => {
-					item.key = item && item.key ? item.key.toString() : null;
-					item.status = !!(this.defaultSelected && this.defaultSelected.length && this.defaultSelected.indexOf(item.key) > -1);
-					return item;
-				}) : null;
-				return subitems;
-			})
-			this.setState({
-				items,
-				storedItems: items
-			});
 			this.handleSelect(this.defaultSelected);
 		}
 		if (this.sortBy !== this.props.sortBy) {
@@ -127,10 +113,18 @@ export default class NestedMultiList extends Component {
 	handleSelect(defaultSelected) {
 		if (defaultSelected) {
 			this.defaultSelected.forEach((value, index) => {
-				const customValue = defaultSelected.find((item, subindex) => subindex == index);
-				this.onItemClick(customValue, index);
+				if (Array.isArray(value)) {
+					value.map(item => {
+						setTimeout(() => {
+							this.onItemClick(item, index);
+						}, 500);
+					});
+				} else {
+					setTimeout(() => {
+						this.onItemClick(value, index);
+					}, 500);
+				}
 			});
-			// this.onItemSelect(this.defaultSelected);
 		} else if(this.defaultSelected === null) {
 			this.onItemClick(null, 0);
 		}
@@ -142,7 +136,7 @@ export default class NestedMultiList extends Component {
 		function generateTermsQuery(appbaseField) {
 			return Object.keys(record).map((key, index) => ({
 				terms: {
-					[appbaseField[index]]: record[key]
+					[appbaseField[index]]: Array.isArray(record[key]) ? record[key] : [record[key]]
 				}
 			}));
 		}
@@ -212,11 +206,19 @@ export default class NestedMultiList extends Component {
 		const field = this.props.appbaseField[level];
 		const orderType = this.props.sortBy === "count" ? "_count" : "_term";
 		const sortBy = this.props.sortBy === "count" ? "desc" : this.props.sortBy;
-		const createTermQuery = (index) => ({
-			terms: {
-				[this.props.appbaseField[index]]: this.state.selectedValues[index]
+
+		const createTermQuery = (index) => {
+			const value = this.state.selectedValues[index];
+			if (value.length === 1) {
+				return {
+					term: {
+						[this.props.appbaseField[index]]: value[0]
+					}
+				}
 			}
-		});
+			return null;
+		};
+
 		const createFilterQuery = (level) => {
 			const filterMust = [];
 			if(level > 0) {
@@ -224,15 +226,19 @@ export default class NestedMultiList extends Component {
 					filterMust.push(createTermQuery(i));
 				}
 			}
-			return {
-				bool: {
-					must: filterMust
-				}
-			};
+			if (Array.isArray(filterMust) && filterMust.length) {
+				return {
+					bool: {
+						must: filterMust
+					}
+				};
+			}
+			return null;
 		};
+
 		const init = (field, level) => ({
 			[`${field}-${level}`]: {
-				filter: createFilterQuery(level),
+				filter: createFilterQuery(level) || {},
 				aggs: {
 					[field]: {
 						terms: {
@@ -246,9 +252,11 @@ export default class NestedMultiList extends Component {
 				}
 			}
 		});
+
 		if(level >= 0 && level < this.props.appbaseField.length) {
 			query = init(field, level);
 		}
+
 		return query;
 	}
 
@@ -323,11 +331,14 @@ export default class NestedMultiList extends Component {
 	addItemsToList(newItems, level) {
 		newItems = newItems.map((item) => {
 			item.key = item.key.toString();
-			item.status = !!(this.defaultSelected && this.defaultSelected.indexOf(item.key) > -1);
 			return item;
 		});
 		const { items } = this.state;
-		items[level] = newItems;
+		if (newItems) {
+			items[level] = newItems;
+		} else {
+			delete items[level];
+		}
 		this.setState({
 			items,
 			storedItems: items
@@ -408,7 +419,7 @@ export default class NestedMultiList extends Component {
 			}
 		}
 
-		items[level+1] = null;
+		delete items[level+1];
 
 		this.setState({
 			items,
@@ -416,20 +427,6 @@ export default class NestedMultiList extends Component {
 		}, () => {
 			this.setValue(selectedValues, true, false);
 		});
-	}
-
-	onItemSelect(selectedValues) {
-		let items = this.state.items;
-		if(selectedValues === null) {
-			items = [items[0]];
-		} else {
-			items[selectedValues.length] = null;
-		}
-		this.defaultSelected = selectedValues;
-		this.setState({
-			selectedValues,
-			items: items
-		}, this.setValue.bind(this, selectedValues, true));
 	}
 
 	renderChevron(level) {
@@ -449,7 +446,7 @@ export default class NestedMultiList extends Component {
 		items = items.filter(item => item.key);
 		return items.map((item, index) => {
 			item.value = prefix.concat([item.key]);
-			const active = (this.state.selectedValues[level] && this.state.selectedValues[level].includes(item.key));
+			const active = (Array.isArray(this.state.selectedValues[level]) && this.state.selectedValues[level].includes(item.key));
 			const cx = classNames({
 				"rbc-item-active": active,
 				"rbc-item-inactive": !active
@@ -460,7 +457,7 @@ export default class NestedMultiList extends Component {
 					className="rbc-list-container col s12 col-xs-12"
 				>
 					<div className={`rbc-list-item ${cx}`} onClick={() => this.onItemClick(item.key, level)}>
-						<input type="checkbox" className="rbc-checkbox-item" checked={active} />
+						<input type="checkbox" className="rbc-checkbox-item" checked={active} onChange={() => {}} />
 						<label className="rbc-label">{item.key} {this.countRender(item.doc_count)}</label>
 						{this.renderChevron(level)}
 					</div>
