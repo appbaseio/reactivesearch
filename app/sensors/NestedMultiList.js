@@ -87,7 +87,7 @@ export default class NestedMultiList extends Component {
 	listenFilter() {
 		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
 			if(data === this.props.componentId) {
-				this.changeValue(null);
+				this.onItemClick(null, 0);
 			}
 		});
 	}
@@ -95,6 +95,15 @@ export default class NestedMultiList extends Component {
 	checkDefault(props) {
 		this.urlParams = helper.URLParams.get(props.componentId);
 		this.urlParams = this.urlParams ? this.urlParams.split("/") : null;
+		if (this.urlParams) {
+			this.urlParams = this.urlParams.map(item => {
+				const value = item.split("\\");
+				if (value.length > 1) {
+					return value;
+				}
+				return value[0];
+			});
+		}
 		const defaultValue = this.urlParams !== null ? this.urlParams : props.defaultSelected;
 		this.changeValue(defaultValue);
 	}
@@ -351,6 +360,9 @@ export default class NestedMultiList extends Component {
 	// set value
 	setValue(value, isExecuteQuery = false, changeNestedValue=true) {
 		value = Object.keys(value).length ? value : null;
+		if (value) {
+			value = this.flattenObj(value);
+		}
 		const obj = {
 			key: this.props.componentId,
 			value
@@ -365,7 +377,16 @@ export default class NestedMultiList extends Component {
 			if(this.props.onValueChange) {
 				this.props.onValueChange(obj.value);
 			}
-			const paramValue = value && value.length ? value.join("/") : null;
+			let paramValue = [];
+			if (value && value.length) {
+				paramValue = value.map(item => {
+					if (Array.isArray(item)) {
+						return item.join("\\");
+					}
+					return item;
+				});
+			}
+			paramValue = paramValue.length ? paramValue.join("/") : null;
 			helper.URLParams.update(this.props.componentId, paramValue, this.props.URLParams);
 			helper.selectedSensor.set(obj, isExecuteQuery);
 		};
@@ -383,6 +404,12 @@ export default class NestedMultiList extends Component {
 		}
 	}
 
+	flattenObj(obj) {
+		return Object.keys(obj).map(key => {
+			return Array.isArray(obj[key]) && obj[key].length === 1 ? obj[key][0] : obj[key];
+		})
+	}
+
 	// filter
 	filterBySearch(value) {
 		if (value) {
@@ -398,8 +425,11 @@ export default class NestedMultiList extends Component {
 	}
 
 	onItemClick(selected, level) {
-		const { selectedValues, items }  = this.state;
-		if (selectedValues[level] && selectedValues[level].includes(selected)) {
+		let { selectedValues, items }  = this.state;
+
+		if (selected === null) {
+			selectedValues = {};
+		} else if (selectedValues[level] && selectedValues[level].includes(selected)) {
 			selectedValues[level] = selectedValues[level].filter(item => item !== selected);
 		} else {
 			const temp = selectedValues[level] || [];
