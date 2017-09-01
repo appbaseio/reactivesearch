@@ -223,7 +223,10 @@ export default class NestedMultiList extends Component {
 			const filterMust = [];
 			if(level > 0) {
 				for(let i = 0; i <= level-1; i++) {
-					filterMust.push(createTermQuery(i));
+					const termQuery = createTermQuery(i);
+					if (termQuery) {
+						filterMust.push(termQuery);
+					}
 				}
 			}
 			if (Array.isArray(filterMust) && filterMust.length) {
