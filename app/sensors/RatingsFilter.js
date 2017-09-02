@@ -73,7 +73,7 @@ export default class RatingsFilter extends Component {
 			key: this.props.componentId,
 			value: {
 				queryType: this.type,
-				inputData: this.props.appbaseField,
+				inputData: this.props.dataField,
 				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery,
 				reactiveId: this.context.reactiveId,
 				showFilter: this.props.showFilter,
@@ -90,7 +90,7 @@ export default class RatingsFilter extends Component {
 		if (record) {
 			return {
 				range: {
-					[this.props.appbaseField]: {
+					[this.props.dataField]: {
 						gte: record.start,
 						lte: record.end,
 						boost: 2.0
@@ -191,7 +191,7 @@ export default class RatingsFilter extends Component {
 
 RatingsFilter.propTypes = {
 	componentId: React.PropTypes.string.isRequired,
-	appbaseField: React.PropTypes.string.isRequired,
+	dataField: React.PropTypes.string.isRequired,
 	title: React.PropTypes.oneOfType([
 		React.PropTypes.string,
 		React.PropTypes.element
@@ -224,8 +224,8 @@ RatingsFilter.contextTypes = {
 
 RatingsFilter.types = {
 	componentId: TYPES.STRING,
-	appbaseField: TYPES.STRING,
-	appbaseFieldType: TYPES.NUMBER,
+	dataField: TYPES.STRING,
+	dataFieldType: TYPES.NUMBER,
 	title: TYPES.STRING,
 	data: TYPES.OBJECT,
 	defaultSelected: TYPES.OBJECT,

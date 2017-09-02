@@ -55,7 +55,7 @@ class Main extends Component {
 							<DataSearch
 								componentId="TopicSensor"
 								placeholder="Search for Topics"
-								appbaseField="group.group_topics.topic_name_raw"
+								dataField="group.group_topics.topic_name_raw"
 								searchInputId="TopicSearch"
 								react={{
 									and: "GeoSensor"
@@ -65,7 +65,7 @@ class Main extends Component {
 						<div className="col s8">
 							<GeoDistanceDropdown
 								componentId="GeoSensor"
-								appbaseField="location"
+								dataField="location"
 								placeholder="In location"
 								autoLocation={false}
 								unit="mi"
@@ -90,7 +90,7 @@ class Main extends Component {
 					<div className="left-col">
 						<ResultList
 							componentId="SearchResult"
-							appbaseField="event.event_name"
+							dataField="event.event_name"
 							from={0}
 							size={10}
 							onData={this.onData}
@@ -102,7 +102,7 @@ class Main extends Component {
 					</div>
 					<div className="right-col">
 						<ReactiveMap
-							appbaseField="location"
+							dataField="location"
 							defaultZoom={13}
 							historicalData={true}
 							setMarkerCluster={false}

@@ -156,7 +156,7 @@ storiesOf("CategorySearch", module)
 	.add("Playground", withReadme(removeFirstLine(DataSearchReadme), () => (
 		<CategorySearchDefault
 			title={text("title", "CategorySearch")}
-			appbaseField={array("appbaseField", ["name"])}
+			dataField={array("dataField", ["name"])}
 			categoryField={text("categoryField", "brand.raw")}
 			defaultSelected={text("defaultSelected", "")}
 			placeholder={text("placeholder", "Search Car")}

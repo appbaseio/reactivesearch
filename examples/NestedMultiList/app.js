@@ -46,7 +46,7 @@ class Main extends Component {
 					<div className="col s6 col-xs-6">
 						<NestedMultiList
 							componentId="CategorySensor"
-							appbaseField={["brand.raw", "vehicleType.raw", "model.raw"]}
+							dataField={["brand.raw", "vehicleType.raw", "model.raw"]}
 							title="NestedMultiList"
 							URLParams={true}
 							defaultSelected={["bmw", "sports", ["1er", "miscs"]]}
@@ -56,7 +56,7 @@ class Main extends Component {
 					<div className="col s6 col-xs-6">
 						<ReactiveList
 							componentId="SearchResult"
-							appbaseField={this.props.mapping.brand}
+							dataField={this.props.mapping.brand}
 							title="Results"
 							from={0}
 							size={20}

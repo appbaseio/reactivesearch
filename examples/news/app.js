@@ -62,7 +62,7 @@ class Main extends Component {
 						<div className="col s9">
 							<DataSearch
 								componentId="InputSensor"
-								appbaseField={["title", "text", "by"]}
+								dataField={["title", "text", "by"]}
 								placeholder="Search posts by title, text or author..."
 								autocomplete={false}
 								highlight={true}
@@ -72,7 +72,7 @@ class Main extends Component {
 						<div className="col s3">
 							<SingleDropdownList
 								componentId="TypeSensor"
-								appbaseField="p_type.raw"
+								dataField="p_type.raw"
 								size={100}
 								selectAllLabel="All"
 								defaultSelected="All"
@@ -86,7 +86,7 @@ class Main extends Component {
 					<div className="wrapper row">
 						<div className="col s12">
 							<ResultList
-								appbaseField="title"
+								dataField="title"
 								from={0}
 								size={30}
 								pagination={true}

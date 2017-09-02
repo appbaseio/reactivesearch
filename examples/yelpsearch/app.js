@@ -66,7 +66,7 @@ class Main extends Component {
 						<DataSearch
 							componentId="NameSensor"
 							placeholder="Search for restaurants, bars..."
-							appbaseField="name"
+							dataField="name"
 							searchInputId="NameSearch"
 						/>
 						<div className="links">
@@ -81,7 +81,7 @@ class Main extends Component {
 						<aside className="filters-wrapper">
 							<div className="scroll-wrapper">
 								<MultiList
-									appbaseField="place_type.raw"
+									dataField="place_type.raw"
 									title="Category"
 									componentId="CategorySensor"
 									react={{
@@ -90,7 +90,7 @@ class Main extends Component {
 								/>
 								<RatingsFilter
 									componentId="RatingsSensor"
-									appbaseField="rating"
+									dataField="rating"
 									title="Ratings"
 									data={[
 										{ start: 4, end: 5, label: "4 stars and up" },
@@ -104,7 +104,7 @@ class Main extends Component {
 									}}
 								/>
 								<MultiList
-									appbaseField="cuisine.raw"
+									dataField="cuisine.raw"
 									title="cuisine"
 									componentId="CuisineSensor"
 									react={{
@@ -112,7 +112,7 @@ class Main extends Component {
 									}}
 								/>
 								<ToggleList
-									appbaseField="wifi"
+									dataField="wifi"
 									componentId="WifiSensor"
 									title="More Filters"
 									data={[
@@ -123,7 +123,7 @@ class Main extends Component {
 									]}
 								/>
 								<ToggleList
-									appbaseField="dog_friendly"
+									dataField="dog_friendly"
 									componentId="DogSensor"
 									data={[
 										{
@@ -133,7 +133,7 @@ class Main extends Component {
 									]}
 								/>
 								<ToggleList
-									appbaseField="live_music"
+									dataField="live_music"
 									componentId="MusicSensor"
 									data={[
 										{
@@ -143,7 +143,7 @@ class Main extends Component {
 									]}
 								/>
 								<ToggleList
-									appbaseField="online_bookings"
+									dataField="online_bookings"
 									componentId="BookingSensor"
 									data={[
 										{
@@ -158,7 +158,7 @@ class Main extends Component {
 						<div className="list">
 							<ResultList
 								componentId="SearchResult"
-								appbaseField="name"
+								dataField="name"
 								from={0}
 								size={20}
 								onData={this.onData}
@@ -171,7 +171,7 @@ class Main extends Component {
 					</div>
 					<div className="right-col">
 						<ReactiveMap
-							appbaseField="location"
+							dataField="location"
 							defaultZoom={13}
 							defaultCenter={{ lat: 38.23, lon: -85.76 }}
 							historicalData={true}

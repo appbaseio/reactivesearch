@@ -85,7 +85,7 @@ class Main extends Component {
 						</div>
 						<div className="col s9">
 							<DataSearch
-								appbaseField={this.props.mapping.name}
+								dataField={this.props.mapping.name}
 								componentId="PlaceSensor"
 								placeholder="Search for houses with airbeds"
 							/>
@@ -97,7 +97,7 @@ class Main extends Component {
 								<div className="col s6">
 									<DateRange
 										componentId="DateRangeSensor"
-										appbaseField={["date_from", "date_to"]}
+										dataField={["date_from", "date_to"]}
 										title="When"
 										numberOfMonths={1}
 										queryFormat="basic_date"
@@ -109,7 +109,7 @@ class Main extends Component {
 								<div className="col s6">
 									<NumberBox
 										componentId="GuestSensor"
-										appbaseField="accommodates"
+										dataField="accommodates"
 										title="Guests"
 										defaultSelected={2}
 										data={{
@@ -119,7 +119,7 @@ class Main extends Component {
 									/>
 								</div>
 								<MultiDataList
-									appbaseField="room_type"
+									dataField="room_type"
 									componentId="RoomTypeSensor"
 									title="Room Type"
 									data={[
@@ -138,7 +138,7 @@ class Main extends Component {
 								/>
 								<RangeSlider
 									componentId="PriceSensor"
-									appbaseField={this.props.mapping.price}
+									dataField={this.props.mapping.price}
 									title="Price Range"
 									defaultSelected={{
 										start: 10,
@@ -163,7 +163,7 @@ class Main extends Component {
 								<div className="row">
 									<ResultCard
 										componentId="SearchResult"
-										appbaseField={this.props.mapping.name}
+										dataField={this.props.mapping.name}
 										from={0}
 										pages={10}
 										size={10}
@@ -178,7 +178,7 @@ class Main extends Component {
 						</div>
 						<div className="right">
 							<ReactiveMap
-								appbaseField={this.props.mapping.location}
+								dataField={this.props.mapping.location}
 								setMarkerCluster={false}
 								defaultMapStyle={this.props.mapStyle}
 								showMapStyles={false}

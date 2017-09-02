@@ -43,7 +43,7 @@ class Main extends Component {
 					<div className="sensor-wrapper clearfix">
 						<DateRange
 							componentId="DateRangeSensor"
-							appbaseField={["date_from", "date_to"]}
+							dataField={["date_from", "date_to"]}
 							title="When"
 							numberOfMonths={1}
 							queryFormat="basic_date"
@@ -54,7 +54,7 @@ class Main extends Component {
 
 						<RangeSlider
 							componentId="PriceSensor"
-							appbaseField="price"
+							dataField="price"
 							title="Price Range"
 							defaultSelected={{
 								start: 10,
@@ -76,7 +76,7 @@ class Main extends Component {
 
 						<NumberBox
 							componentId="GuestSensor"
-							appbaseField="accommodates"
+							dataField="accommodates"
 							title="Guests"
 							defaultSelected={2}
 							data={{
@@ -91,7 +91,7 @@ class Main extends Component {
 							<div className="row">
 								<ResultCard
 									componentId="SearchResult"
-									appbaseField="name"
+									dataField="name"
 									from={0}
 									size={12}
 									onData={this.onData}

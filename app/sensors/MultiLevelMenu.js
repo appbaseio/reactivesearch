@@ -69,17 +69,17 @@ export default class MultiLevelMenu extends Component {
 	// build query for this sensor only
 	customQuery(record) {
 		let query = null;
-		function generateRangeQuery(appbaseField) {
+		function generateRangeQuery(dataField) {
 			return record.map((singleRecord, index) => ({
 				term: {
-					[appbaseField[index]]: singleRecord
+					[dataField[index]]: singleRecord
 				}
 			}));
 		}
 		if (record) {
 			query = {
 				bool: {
-					must: generateRangeQuery(this.props.appbaseField)
+					must: generateRangeQuery(this.props.dataField)
 				}
 			};
 		}
@@ -92,7 +92,7 @@ export default class MultiLevelMenu extends Component {
 			key: this.props.componentId,
 			value: {
 				queryType: this.type,
-				inputData: this.props.appbaseField[0],
+				inputData: this.props.dataField[0],
 				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery,
 				defaultSelected: this.urlParams !== null ? this.urlParams : this.props.defaultSelected
 			}
@@ -103,7 +103,7 @@ export default class MultiLevelMenu extends Component {
 				key,
 				value: {
 					queryType: "term",
-					inputData: this.props.appbaseField[level],
+					inputData: this.props.dataField[level],
 					customQuery() {
 						return null;
 					}
@@ -123,7 +123,7 @@ export default class MultiLevelMenu extends Component {
 	getReact(level) {
 		const react = {
 			aggs: {
-				key: this.props.appbaseField[level],
+				key: this.props.dataField[level],
 				size: 10
 			},
 			and: []
@@ -140,7 +140,7 @@ export default class MultiLevelMenu extends Component {
 
 	// Create a channel which passes the react and receive results whenever react changes
 	createChannel() {
-		for (let level = 1; level < this.props.appbaseField.length; level += 1) {
+		for (let level = 1; level < this.props.dataField.length; level += 1) {
 			const react = this.getReact(level);
 			// create a channel and listen the changes
 			this.channelObj[level] = manager.create(this.context.appbaseRef, this.context.type, react);
@@ -213,7 +213,7 @@ export default class MultiLevelMenu extends Component {
 		if (this.secondLevelMenu) {
 			query = {};
 			Object.keys(this.secondLevelMenu).forEach((item) => {
-				this.secondLevelMenu[item][this.props.appbaseField[1]].buckets.forEach((nestedItem) => {
+				this.secondLevelMenu[item][this.props.dataField[1]].buckets.forEach((nestedItem) => {
 					const aggQuery = this.createAggquery(`${item}@rbc-level-rbc@${nestedItem.key}`, 1, [item, nestedItem.key]);
 					query[aggQuery.key] = aggQuery.value;
 				});
@@ -229,9 +229,9 @@ export default class MultiLevelMenu extends Component {
 		obj.value = {
 			filter: this.getAggFilterQuery(items),
 			aggs: {
-				[this.props.appbaseField[level + 1]]: {
+				[this.props.dataField[level + 1]]: {
 					terms: {
-						field: this.props.appbaseField[level + 1]
+						field: this.props.dataField[level + 1]
 					}
 				}
 			}
@@ -248,7 +248,7 @@ export default class MultiLevelMenu extends Component {
 		items.forEach((item, index) => {
 			const obj = {
 				term: {
-					[this.props.appbaseField[index]]: item
+					[this.props.dataField[index]]: item
 				}
 			};
 			query.bool.must.push(obj);
@@ -260,7 +260,7 @@ export default class MultiLevelMenu extends Component {
 		const finalData = {};
 		Object.keys(data.aggregations).forEach((level1) => {
 			const menu = level1.split("@rbc-level-rbc@");
-			const finalMenu = data.aggregations[level1][this.props.appbaseField[2]].buckets.map(item => item.key);
+			const finalMenu = data.aggregations[level1][this.props.dataField[2]].buckets.map(item => item.key);
 			if (Object.keys(finalData).indexOf(menu[0]) < 0) {
 				finalData[menu[0]] = {
 					[menu[1]]: finalMenu
@@ -398,7 +398,7 @@ export default class MultiLevelMenu extends Component {
 
 MultiLevelMenu.propTypes = {
 	componentId: React.PropTypes.string.isRequired,
-	appbaseField: React.PropTypes.array.isRequired,
+	dataField: React.PropTypes.array.isRequired,
 	data: React.PropTypes.arrayOf(React.PropTypes.shape({
 		label: React.PropTypes.string.isRequired,
 		value: React.PropTypes.string.isRequired
@@ -429,8 +429,8 @@ MultiLevelMenu.contextTypes = {
 
 MultiLevelMenu.types = {
 	componentId: TYPES.STRING,
-	appbaseField: TYPES.ARRAY,
-	appbaseFieldType: TYPES.STRING,
+	dataField: TYPES.ARRAY,
+	dataFieldType: TYPES.STRING,
 	react: TYPES.OBJECT,
 	maxCategories: TYPES.NUMBER,
 	maxItems: TYPES.NUMBER,

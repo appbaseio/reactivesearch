@@ -139,17 +139,17 @@ export default class NestedList extends Component {
 	// build query for this sensor only
 	customQuery(record) {
 		let query = null;
-		function generateRangeQuery(appbaseField) {
+		function generateRangeQuery(dataField) {
 			return record.map((singleRecord, index) => ({
 				term: {
-					[appbaseField[index]]: singleRecord
+					[dataField[index]]: singleRecord
 				}
 			}));
 		}
 		if (record && record[0] !== null) {
 			query = {
 				bool: {
-					must: generateRangeQuery(this.props.appbaseField)
+					must: generateRangeQuery(this.props.dataField)
 				}
 			};
 		}
@@ -162,7 +162,7 @@ export default class NestedList extends Component {
 			key: this.props.componentId,
 			value: {
 				queryType: this.type,
-				inputData: this.props.appbaseField[0],
+				inputData: this.props.dataField[0],
 				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery,
 				reactiveId: this.context.reactiveId,
 				showFilter: this.props.showFilter,
@@ -176,7 +176,7 @@ export default class NestedList extends Component {
 			key: `nestedSelectedValues-${this.props.componentId}`,
 			value: {
 				queryType: this.type,
-				inputData: this.props.appbaseField[0],
+				inputData: this.props.dataField[0],
 				customQuery: () => { }
 			}
 		};
@@ -209,12 +209,12 @@ export default class NestedList extends Component {
 	nestedAggQuery() {
 		let query = null;
 		const level = Array.isArray(this.state.selectedValues) && this.state.selectedValues.length ? this.state.selectedValues.length : 0;
-		const field = this.props.appbaseField[level];
+		const field = this.props.dataField[level];
 		const orderType = this.props.sortBy === "count" ? "_count" : "_term";
 		const sortBy = this.props.sortBy === "count" ? "desc" : this.props.sortBy;
 		const createTermQuery = (index) => ({
 			term: {
-				[this.props.appbaseField[index]]: this.state.selectedValues[index]
+				[this.props.dataField[index]]: this.state.selectedValues[index]
 			}
 		});
 		const createFilterQuery = (level) => {
@@ -246,7 +246,7 @@ export default class NestedList extends Component {
 				}
 			}
 		});
-		if(Array.isArray(this.state.selectedValues) && this.state.selectedValues.length < this.props.appbaseField.length) {
+		if(Array.isArray(this.state.selectedValues) && this.state.selectedValues.length < this.props.dataField.length) {
 			query = init(field, level);
 		}
 		return query;
@@ -255,7 +255,7 @@ export default class NestedList extends Component {
 	setReact(props) {
 		const react = Object.assign({}, props.react);
 		react.aggs = {
-			key: props.appbaseField[0],
+			key: props.dataField[0],
 			sort: props.sortBy,
 			size: props.size,
 			customQuery: this.nestedAggQuery
@@ -294,7 +294,7 @@ export default class NestedList extends Component {
 			const field = Object.keys(appliedQuery.body.aggs)[0];
 			if (field) {
 				const appliedField = (field.split("-"))[0];
-				level = this.props.appbaseField.indexOf(appliedField);
+				level = this.props.dataField.indexOf(appliedField);
 				level = level > -1 ? level : 0;
 			}
 		} catch(e) {
@@ -314,9 +314,9 @@ export default class NestedList extends Component {
 	}
 
 	setData(data, level) {
-		const fieldLevel = `${this.props.appbaseField[level]}-${level}`;
-		if (data && data.aggregations && data.aggregations[fieldLevel] && data.aggregations[fieldLevel][this.props.appbaseField[level]] && data.aggregations[fieldLevel][this.props.appbaseField[level]].buckets) {
-			this.addItemsToList(data.aggregations[fieldLevel][this.props.appbaseField[level]].buckets, level);
+		const fieldLevel = `${this.props.dataField[level]}-${level}`;
+		if (data && data.aggregations && data.aggregations[fieldLevel] && data.aggregations[fieldLevel][this.props.dataField[level]] && data.aggregations[fieldLevel][this.props.dataField[level]].buckets) {
+			this.addItemsToList(data.aggregations[fieldLevel][this.props.dataField[level]].buckets, level);
 		}
 	}
 
@@ -413,7 +413,7 @@ export default class NestedList extends Component {
 	}
 
 	renderChevron(level) {
-		return level < this.props.appbaseField.length-1 ? (<i className="fa fa-chevron-right" />) : "";
+		return level < this.props.dataField.length-1 ? (<i className="fa fa-chevron-right" />) : "";
 	}
 
 	countRender(docCount) {
@@ -544,23 +544,23 @@ export default class NestedList extends Component {
 const NestedingValidation = (props, propName) => {
 	var err = null;
 	if (!props[propName]) {
-		err = new Error("appbaseField is required prop!");
+		err = new Error("dataField is required prop!");
 	}
 	else if (!Array.isArray(props[propName])) {
-		err = new Error("appbaseField should be an array!");
+		err = new Error("dataField should be an array!");
 	}
 	else if (props[propName].length === 0) {
-		err = new Error("appbaseField should not have an empty array.");
+		err = new Error("dataField should not have an empty array.");
 	}
 	else if (props[propName].length > 9) {
-		err = new Error("appbaseField can have maximum 10 fields.");
+		err = new Error("dataField can have maximum 10 fields.");
 	}
 	return err;
 }
 
 NestedList.propTypes = {
 	componentId: React.PropTypes.string.isRequired,
-	appbaseField: NestedingValidation,
+	dataField: NestedingValidation,
 	title: React.PropTypes.oneOfType([
 		React.PropTypes.string,
 		React.PropTypes.element
@@ -607,8 +607,8 @@ NestedList.contextTypes = {
 
 NestedList.types = {
 	componentId: TYPES.STRING,
-	appbaseField: TYPES.ARRAY,
-	appbaseFieldType: TYPES.STRING,
+	dataField: TYPES.ARRAY,
+	dataFieldType: TYPES.STRING,
 	title: TYPES.STRING,
 	placeholder: TYPES.STRING,
 	react: TYPES.OBJECT,

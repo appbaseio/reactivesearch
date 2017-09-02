@@ -76,14 +76,14 @@ export default class DynamicRangeSlider extends Component {
 			key: this.props.componentId,
 			value: {
 				queryType: this.type,
-				inputData: this.props.appbaseField
+				inputData: this.props.dataField
 			}
 		};
 		const obj1 = {
 			key: `${this.props.componentId}-internal`,
 			value: {
 				queryType: "range",
-				inputData: this.props.appbaseField,
+				inputData: this.props.dataField,
 				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery,
 				defaultSelected: this.urlParams !== null ? this.urlParams : this.props.defaultSelected
 			}
@@ -109,9 +109,9 @@ export default class DynamicRangeSlider extends Component {
 		if(isHistogramQuery === "histogram") {
 			if(this.props.showHistogram) {
 				query = {
-					[this.props.appbaseField]: {
+					[this.props.dataField]: {
 						"histogram": {
-							"field": this.props.appbaseField,
+							"field": this.props.dataField,
 							"interval": this.props.interval ? this.props.interval : Math.ceil((this.state.range.max - this.state.range.min)/10)
 						}
 					}
@@ -123,11 +123,11 @@ export default class DynamicRangeSlider extends Component {
 			query = {
 				"max": {
 					"max": {
-						"field": this.props.appbaseField,
+						"field": this.props.dataField,
 					}
 				}, "min": {
 					"min": {
-						"field": this.props.appbaseField,
+						"field": this.props.dataField,
 					}
 				}
 			};
@@ -141,7 +141,7 @@ export default class DynamicRangeSlider extends Component {
 
 		if (this.histogram !== null) {
 			react.aggs = {
-				key: props.appbaseField,
+				key: props.dataField,
 				sort: "asc",
 				size: 1000,
 				customQuery: this.histogramQuery
@@ -205,7 +205,7 @@ export default class DynamicRangeSlider extends Component {
 
 	setData(data) {
 		try {
-			this.addItemsToList(data.aggregations[this.props.appbaseField].buckets);
+			this.addItemsToList(data.aggregations[this.props.dataField].buckets);
 		} catch (e) {
 			console.log(e);
 		}
@@ -215,7 +215,7 @@ export default class DynamicRangeSlider extends Component {
 		if (record) {
 			return {
 				range: {
-					[this.props.appbaseField]: {
+					[this.props.dataField]: {
 						gte: record.start,
 						lte: record.end,
 						boost: 2.0
@@ -404,7 +404,7 @@ export default class DynamicRangeSlider extends Component {
 
 DynamicRangeSlider.propTypes = {
 	componentId: React.PropTypes.string.isRequired,
-	appbaseField: React.PropTypes.string.isRequired,
+	dataField: React.PropTypes.string.isRequired,
 	title: React.PropTypes.oneOfType([
 		React.PropTypes.string,
 		React.PropTypes.element
@@ -442,8 +442,8 @@ DynamicRangeSlider.contextTypes = {
 
 DynamicRangeSlider.types = {
 	componentId: TYPES.STRING,
-	appbaseField: TYPES.STRING,
-	appbaseFieldType: TYPES.NUMBER,
+	dataField: TYPES.STRING,
+	dataFieldType: TYPES.NUMBER,
 	title: TYPES.STRING,
 	rangeLabels: TYPES.FUNCTION,
 	defaultSelected: TYPES.FUNCTION,

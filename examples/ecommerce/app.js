@@ -69,7 +69,7 @@ class Main extends Component {
 					</div>
 					<div className="col s9">
 						<CategorySearch
-							appbaseField="name"
+							dataField="name"
 							categoryField="brand.raw"
 							componentId="CategorySensor"
 							placeholder="Search for cars..."
@@ -85,7 +85,7 @@ class Main extends Component {
 							<div className="col s12">
 								<NestedList
 									componentId="CarSensor"
-									appbaseField={[this.props.mapping.brand, this.props.mapping.model]}
+									dataField={[this.props.mapping.brand, this.props.mapping.model]}
 									title="Cars"
 									showSearch={true}
 									placeholder="Filter Cars"
@@ -97,7 +97,7 @@ class Main extends Component {
 							<div className="col s12">
 								<RatingsFilter
 									componentId="RatingsSensor"
-									appbaseField="rating"
+									dataField="rating"
 									title="Rating"
 									data={
 									[{ start: 4, end: 5, label: "4 stars and up" },
@@ -117,7 +117,7 @@ class Main extends Component {
 							<div className="col s12">
 								<MultiList
 									componentId="VehicleTypeSensor"
-									appbaseField={this.props.mapping.vehicleType}
+									dataField={this.props.mapping.vehicleType}
 									showCount={true}
 									size={100}
 									showSearch={false}
@@ -135,7 +135,7 @@ class Main extends Component {
 						<div className="row">
 							<ResultCard
 								onData={this.onData}
-								appbaseField={this.props.mapping.name}
+								dataField={this.props.mapping.name}
 								size={9}
 								pagination={true}
 								react={{

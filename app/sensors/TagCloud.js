@@ -169,7 +169,7 @@ export default class TagCloud extends Component {
 		if (value) {
 			query = {
 				[this.type]: {
-					[this.props.appbaseField]: value
+					[this.props.dataField]: value
 				}
 			};
 		}
@@ -196,7 +196,7 @@ export default class TagCloud extends Component {
 			key: props.componentId,
 			value: {
 				queryType: this.type,
-				inputData: props.appbaseField,
+				inputData: props.dataField,
 				customQuery: this.customQuery,
 				reactiveId: this.context.reactiveId,
 				showFilter: props.showFilter,
@@ -219,7 +219,7 @@ export default class TagCloud extends Component {
 	setReact(props) {
 		const react = Object.assign({}, props.react);
 		react.aggs = {
-			key: props.appbaseField,
+			key: props.dataField,
 			sort: "asc",
 			size: props.size,
 			sortRef: `${props.componentId}-sort`
@@ -269,8 +269,8 @@ export default class TagCloud extends Component {
 	}
 
 	setData(data) {
-		if (data.aggregations && data.aggregations[this.props.appbaseField] && data.aggregations[this.props.appbaseField].buckets) {
-			this.addItemsToList(data.aggregations[this.props.appbaseField].buckets);
+		if (data.aggregations && data.aggregations[this.props.dataField] && data.aggregations[this.props.dataField].buckets) {
+			this.addItemsToList(data.aggregations[this.props.dataField].buckets);
 		}
 	}
 
@@ -408,7 +408,7 @@ export default class TagCloud extends Component {
 }
 
 TagCloud.propTypes = {
-	appbaseField: React.PropTypes.string.isRequired,
+	dataField: React.PropTypes.string.isRequired,
 	componentId: React.PropTypes.string.isRequired,
 	title: React.PropTypes.oneOfType([
 		React.PropTypes.string,
@@ -454,8 +454,8 @@ TagCloud.contextTypes = {
 
 TagCloud.types = {
 	componentId: TYPES.STRING,
-	appbaseField: TYPES.STRING,
-	appbaseFieldType: TYPES.KEYWORD,
+	dataField: TYPES.STRING,
+	dataFieldType: TYPES.KEYWORD,
 	title: TYPES.STRING,
 	size: TYPES.NUMBER,
 	showCount: TYPES.BOOLEAN,

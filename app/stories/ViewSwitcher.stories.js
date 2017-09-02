@@ -59,7 +59,7 @@ export default class ViewSwitcherDefault extends Component {
 					<div className="col s6 col-xs-6">
 						<RatingsFilter
 							componentId="RatingsSensor"
-							appbaseField={this.props.mapping.rating}
+							dataField={this.props.mapping.rating}
 							title="RatingsFilter"
 							data={
 							[{ start: 4, end: 5, label: "4 stars and up" },
@@ -87,7 +87,7 @@ export default class ViewSwitcherDefault extends Component {
 						/>
 						<ResultCard
 							componentId="SearchResult"
-							appbaseField={this.props.mapping.name}
+							dataField={this.props.mapping.name}
 							title="Results"
 							from={0}
 							size={20}
@@ -98,7 +98,7 @@ export default class ViewSwitcherDefault extends Component {
 						/>
 						<ResultList
 							componentId="SearchResult"
-							appbaseField={this.props.mapping.name}
+							dataField={this.props.mapping.name}
 							title="Results"
 							from={0}
 							size={20}
@@ -106,17 +106,17 @@ export default class ViewSwitcherDefault extends Component {
 							sortOptions={[
 								{
 									label: "Lowest Price First",
-									appbaseField: "price",
+									dataField: "price",
 									sortBy: "asc"
 								},
 								{
 									label: "Highest Price First",
-									appbaseField: "price",
+									dataField: "price",
 									sortBy: "desc"
 								},
 								{
 									label: "Most rated",
-									appbaseField: "rating",
+									dataField: "rating",
 									sortBy: "desc"
 								}
 							]}

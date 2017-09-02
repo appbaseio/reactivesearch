@@ -45,7 +45,7 @@ class Main extends Component {
 					<SelectedFilters componentId="SelectedFilters" />
 					<div className="col s6 col-xs-6">
 						<CategorySearch
-							appbaseField={["name", "color"]}
+							dataField={["name", "color"]}
 							categoryField="brand.raw"
 							componentId="CarSensor"
 							title="CategorySearch"
@@ -63,7 +63,7 @@ class Main extends Component {
 					<div className="col s6 col-xs-6">
 						<ReactiveList
 							componentId="SearchResult"
-							appbaseField="name"
+							dataField="name"
 							title="Results"
 							from={0}
 							size={20}

@@ -54,7 +54,7 @@ export default class TagCloudDefault extends Component {
 						<SelectedFilters componentId="TagSensor" />
 						<TagCloud
 							componentId="CitySensor"
-							appbaseField={this.props.mapping.city}
+							dataField={this.props.mapping.city}
 							title="TagCloud"
 							size={100}
 							customQuery={this.customQuery}
@@ -64,7 +64,7 @@ export default class TagCloudDefault extends Component {
 					<div className="col s6 col-xs-6">
 						<ReactiveList
 							componentId="SearchResult"
-							appbaseField={this.props.mapping.topic}
+							dataField={this.props.mapping.topic}
 							title="Results"
 							sortBy="asc"
 							from={0}

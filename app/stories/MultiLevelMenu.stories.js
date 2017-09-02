@@ -48,7 +48,7 @@ export default class MultiLevelMenuDefault extends Component {
 					<div className="col s6 col-xs-6">
 						<MultiLevelMenu
 							componentId="CategorySensor"
-							appbaseField={["brand.raw", "vehicleType.raw", "model.raw"]}
+							dataField={["brand.raw", "vehicleType.raw", "model.raw"]}
 							title="MultiLevelMenu"
 							data={[
 								{ label: "Volkswagen", value: "volkswagen" },
@@ -64,7 +64,7 @@ export default class MultiLevelMenuDefault extends Component {
 					<div className="col s6 col-xs-6">
 						<ReactiveList
 							componentId="SearchResult"
-							appbaseField="brand"
+							dataField="brand"
 							title="Results"
 							from={0}
 							size={20}

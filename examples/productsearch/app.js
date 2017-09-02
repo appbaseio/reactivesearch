@@ -57,7 +57,7 @@ class Main extends Component {
 					<DataSearch
 						componentId="Search"
 						placeholder="Discover products..."
-						appbaseField={["name", "tagline"]}
+						dataField={["name", "tagline"]}
 					/>
 					<div className="links">
 						<a target="_blank" href="https://github.com/appbaseio/reactivesearch" className="link"><i className="fa fa-github" aria-hidden="true"></i> Github</a>
@@ -68,7 +68,7 @@ class Main extends Component {
 				<section className="result-wrapper clearfix">
 					<div className="left-col">
 						<MultiList
-							appbaseField="topics.raw"
+							dataField="topics.raw"
 							title="Filter Topics"
 							componentId="Topics"
 							sortBy="count"
@@ -89,7 +89,7 @@ class Main extends Component {
 							<SelectedFilters componentId="SelectedFilters" />
 						</div>
 						<ResultList
-							appbaseField="name"
+							dataField="name"
 							from={0}
 							size={10}
 							scrollOnTarget={window}
@@ -98,7 +98,7 @@ class Main extends Component {
 								and: ["Search", "Topics", "DefaultSensor"]
 							}}
 							sortOptions={[
-								{"label": "Sort by Popularity", "appbaseField": "upvotes", "sortBy": "desc"}
+								{"label": "Sort by Popularity", "dataField": "upvotes", "sortBy": "desc"}
 							]}
 						/>
 					</div>

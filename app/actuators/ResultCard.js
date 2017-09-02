@@ -38,13 +38,13 @@ export default class ResultCard extends Component {
 		if (props.sortOptions) {
 			const obj = props.sortOptions[0];
 			this.sortObj = {
-				[obj.appbaseField]: {
+				[obj.dataField]: {
 					order: obj.sortBy
 				}
 			};
 		} else if (props.sortBy) {
 			this.sortObj = {
-				[props.appbaseField]: {
+				[props.dataField]: {
 					order: this.props.sortBy
 				}
 			};
@@ -131,7 +131,7 @@ export default class ResultCard extends Component {
 	setQueryInfo() {
 		const valObj = {
 			queryType: "match",
-			inputData: this.props.appbaseField,
+			inputData: this.props.dataField,
 			customQuery: this.customQuery
 		};
 		const obj = {
@@ -515,7 +515,7 @@ export default class ResultCard extends Component {
 	setQueryForPagination() {
 		const valObj = {
 			queryType: "match",
-			inputData: this.props.appbaseField,
+			inputData: this.props.dataField,
 			customQuery: () => null
 		};
 		const obj = {
@@ -591,7 +591,7 @@ export default class ResultCard extends Component {
 	handleSortSelect(event) {
 		const index = event.target.value;
 		this.sortObj = {
-			[this.props.sortOptions[index].appbaseField]: {
+			[this.props.sortOptions[index].dataField]: {
 				order: this.props.sortOptions[index].sortBy
 			}
 		};
@@ -681,7 +681,7 @@ export default class ResultCard extends Component {
 
 ResultCard.propTypes = {
 	componentId: React.PropTypes.string,
-	appbaseField: React.PropTypes.string,
+	dataField: React.PropTypes.string,
 	title: React.PropTypes.oneOfType([
 		React.PropTypes.string,
 		React.PropTypes.element
@@ -690,7 +690,7 @@ ResultCard.propTypes = {
 	sortOptions: React.PropTypes.arrayOf(
 		React.PropTypes.shape({
 			label: React.PropTypes.string,
-			appbaseField: React.PropTypes.string,
+			dataField: React.PropTypes.string,
 			sortBy: React.PropTypes.string
 		})
 	),
@@ -739,7 +739,7 @@ ResultCard.contextTypes = {
 
 ResultCard.types = {
 	componentId: TYPES.STRING,
-	appbaseField: TYPES.STRING,
+	dataField: TYPES.STRING,
 	title: TYPES.STRING,
 	react: TYPES.OBJECT,
 	sortBy: TYPES.STRING,

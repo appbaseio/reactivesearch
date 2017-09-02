@@ -32,7 +32,7 @@ export default class CategorySearch extends Component {
 		this.channelId = null;
 		this.channelListener = null;
 		this.urlParams = helper.URLParams.get(this.props.componentId);
-		this.fieldType = typeof props.appbaseField;
+		this.fieldType = typeof props.dataField;
 		this.handleSearch = this.handleSearch.bind(this);
 		this.optionRenderer = this.optionRenderer.bind(this);
 		this.setValue = this.setValue.bind(this);
@@ -99,7 +99,7 @@ export default class CategorySearch extends Component {
 
 	highlightQuery(props) {
 		const fields = {};
-		const highlightFields = props.highlightFields ? props.highlightFields : props.appbaseField;
+		const highlightFields = props.highlightFields ? props.highlightFields : props.dataField;
 		if (typeof highlightFields === "string") {
 			fields[highlightFields] = {};
 		} else if (Array.isArray(highlightFields)) {
@@ -122,7 +122,7 @@ export default class CategorySearch extends Component {
 			key: props.componentId,
 			value: {
 				queryType: this.type,
-				inputData: props.appbaseField,
+				inputData: props.dataField,
 				customQuery: props.customQuery ? props.customQuery : this.defaultSearchQuery,
 				reactiveId: this.context.reactiveId,
 				showFilter: props.showFilter,
@@ -139,7 +139,7 @@ export default class CategorySearch extends Component {
 			key: this.searchInputId,
 			value: {
 				queryType: "multi_match",
-				inputData: props.appbaseField,
+				inputData: props.dataField,
 				customQuery: this.defaultSearchQuery
 			}
 		};
@@ -186,10 +186,10 @@ export default class CategorySearch extends Component {
 	defaultSearchQuery(input) {
 		if (input && input.value) {
 			let query = [];
-			const appbaseFields = this.fieldType === "string"
-				? [this.props.appbaseField]
-				: this.props.appbaseField;
-			const fields = appbaseFields.map(
+			const dataFields = this.fieldType === "string"
+				? [this.props.dataField]
+				: this.props.dataField;
+			const fields = dataFields.map(
 				(field, index) => `${field}${(Array.isArray(this.props.weights) && this.props.weights[index]) ? ("^" + this.props.weights[index]) : ""}`
 			);
 
@@ -320,10 +320,10 @@ export default class CategorySearch extends Component {
 		if (loadSuggestions) {
 			data.hits.hits.forEach((hit) => {
 				if (this.fieldType === "string") {
-					const searchField = hit._source[this.props.appbaseField].trim();
+					const searchField = hit._source[this.props.dataField].trim();
 					options.push({ value: searchField, label: searchField });
 				} else if (this.fieldType === "object") {
-					this.props.appbaseField.forEach((field) => {
+					this.props.dataField.forEach((field) => {
 						const tempField = hit._source[field];
 						if (tempField) {
 							options.push({ value: tempField, label: tempField });
@@ -541,7 +541,7 @@ export default class CategorySearch extends Component {
 
 CategorySearch.propTypes = {
 	componentId: React.PropTypes.string.isRequired,
-	appbaseField: React.PropTypes.oneOfType([
+	dataField: React.PropTypes.oneOfType([
 		React.PropTypes.string,
 		React.PropTypes.arrayOf(React.PropTypes.string)
 	]),
@@ -603,8 +603,8 @@ CategorySearch.contextTypes = {
 
 CategorySearch.types = {
 	componentId: TYPES.STRING,
-	appbaseField: TYPES.STRING,
-	appbaseFieldType: TYPES.KEYWORD,
+	dataField: TYPES.STRING,
+	dataFieldType: TYPES.KEYWORD,
 	react: TYPES.OBJECT,
 	title: TYPES.STRING,
 	categoryField: TYPES.STRING,
