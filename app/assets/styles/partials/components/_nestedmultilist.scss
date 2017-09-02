@@ -10,6 +10,18 @@
 			[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after {
 				margin-top: 4px;
 			}
+
+			&.rbc-checkbox-inactive {
+				.rbc-checkbox-item,
+				[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after {
+					visibility: hidden;
+					width: 0;
+				}
+
+				.rbc-label {
+					padding-left: 0;
+				}
+			}
 		}
 
 		.rbc-sublist-container {

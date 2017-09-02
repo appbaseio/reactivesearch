@@ -198,6 +198,12 @@
     padding: 0; }
     .rbc.rbc-nestedmultilist-container .rbc.rbc-nestedmultilist .rbc-list-item [type="checkbox"] + label:before, .rbc.rbc-nestedmultilist-container .rbc.rbc-nestedmultilist .rbc-list-item [type="checkbox"]:not(.filled-in) + label:after {
       margin-top: 4px; }
+    .rbc.rbc-nestedmultilist-container .rbc.rbc-nestedmultilist .rbc-list-item.rbc-checkbox-inactive .rbc-checkbox-item,
+    .rbc.rbc-nestedmultilist-container .rbc.rbc-nestedmultilist .rbc-list-item.rbc-checkbox-inactive [type="checkbox"] + label:before, .rbc.rbc-nestedmultilist-container .rbc.rbc-nestedmultilist .rbc-list-item.rbc-checkbox-inactive [type="checkbox"]:not(.filled-in) + label:after {
+      visibility: hidden;
+      width: 0; }
+    .rbc.rbc-nestedmultilist-container .rbc.rbc-nestedmultilist .rbc-list-item.rbc-checkbox-inactive .rbc-label {
+      padding-left: 0; }
     .rbc.rbc-nestedmultilist-container .rbc.rbc-nestedmultilist .rbc-sublist-container {
       margin-top: 4px; }
     .rbc.rbc-nestedmultilist-container .rbc.rbc-nestedmultilist .rbc-indent {

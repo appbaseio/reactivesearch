@@ -49,7 +49,7 @@ class Main extends Component {
 							appbaseField={["brand.raw", "vehicleType.raw", "model.raw"]}
 							title="NestedMultiList"
 							URLParams={true}
-							defaultSelected={["bmw", "sports", ["1er", "misc"]]}
+							defaultSelected={["bmw", ["convertible", "sports"], ["1er", "misc"]]}
 							beforeValueChange={() => new Promise((resolve, reject) => resolve())}
 						/>
 					</div>

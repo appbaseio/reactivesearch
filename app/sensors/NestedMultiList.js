@@ -482,7 +482,9 @@ export default class NestedMultiList extends Component {
 			const active = (Array.isArray(this.state.selectedValues[level]) && this.state.selectedValues[level].includes(item.key));
 			const cx = classNames({
 				"rbc-item-active": active,
-				"rbc-item-inactive": !active
+				"rbc-item-inactive": !active,
+				"rbc-checkbox-active": this.props.showCheckbox,
+				"rbc-checkbox-inactive": !this.props.showCheckbox
 			});
 			return (
 				<li
@@ -612,7 +614,8 @@ NestedMultiList.propTypes = {
 	componentStyle: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
 	showFilter: React.PropTypes.bool,
-	filterLabel: React.PropTypes.string
+	filterLabel: React.PropTypes.string,
+	showCheckbox: React.PropTypes.bool
 };
 
 // Default props value
@@ -625,7 +628,8 @@ NestedMultiList.defaultProps = {
 	placeholder: "Search",
 	componentStyle: {},
 	URLParams: false,
-	showFilter: true
+	showFilter: true,
+	showCheckbox: true
 };
 
 // context type
@@ -651,5 +655,6 @@ NestedMultiList.types = {
 	initialLoader: TYPES.OBJECT,
 	URLParams: TYPES.BOOLEAN,
 	showFilter: TYPES.BOOLEAN,
-	filterLabel: TYPES.STRING
+	filterLabel: TYPES.STRING,
+	showCheckbox: TYPES.BOOLEAN
 };
