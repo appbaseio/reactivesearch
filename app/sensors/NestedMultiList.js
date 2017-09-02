@@ -123,15 +123,18 @@ export default class NestedMultiList extends Component {
 		if (defaultSelected) {
 			this.defaultSelected.forEach((value, index) => {
 				if (Array.isArray(value)) {
+					if (index !== defaultSelected.length - 1) {
+						console.error(`${this.props.componentId} - Please check the defaultSelected prop format. Only the last element in the defaultSelected array can be an array`);
+					}
 					value.map(item => {
 						setTimeout(() => {
 							this.onItemClick(item, index);
-						}, 500);
+						}, 100);
 					});
 				} else {
 					setTimeout(() => {
 						this.onItemClick(value, index);
-					}, 500);
+					}, 100);
 				}
 			});
 		} else if(this.defaultSelected === null) {
@@ -341,6 +344,8 @@ export default class NestedMultiList extends Component {
 	}
 
 	addItemsToList(newItems, level) {
+		const { selectedValues } = this.state;
+
 		newItems = newItems.map((item) => {
 			item.key = item.key.toString();
 			return item;
@@ -351,10 +356,30 @@ export default class NestedMultiList extends Component {
 		} else {
 			delete items[level];
 		}
+
+		if (selectedValues[level]) {
+			const values = [...selectedValues[level]];
+			values.forEach(val => {
+				if (items[level].filter(item => item.key === val).length !== 1) {
+					selectedValues[level] = selectedValues[level].filter(i => i !== val);
+				}
+			});
+
+			if (selectedValues[level] && !selectedValues[level].length) {
+				for (let row in selectedValues) {
+					if (row >= level) {
+						delete selectedValues[row];
+					}
+				}
+			}
+		}
+
 		this.setState({
+			selectedValues,
 			items,
 			storedItems: items
 		});
+		this.setValue(selectedValues, true, false);
 	}
 
 	// set value
