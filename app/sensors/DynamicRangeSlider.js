@@ -34,7 +34,6 @@ export default class DynamicRangeSlider extends Component {
 		this.type = "range";
 		this.channelId = null;
 		this.channelListener = null;
-		this.urlParams = helper.URLParams.get(this.props.componentId, false, true);
 		this.handleValuesChange = this.handleValuesChange.bind(this);
 		this.handleResults = this.handleResults.bind(this);
 		this.customQuery = this.customQuery.bind(this);
@@ -53,8 +52,7 @@ export default class DynamicRangeSlider extends Component {
 			this.setReact(nextProps);
 			manager.update(this.channelId, this.react, nextProps.size, 0, false);
 		}
-		const defaultValue = this.urlParams !== null ? this.urlParams : nextProps.defaultSelected;
-		this.updateValues(defaultValue);
+		this.updateValues(nextProps.defaultSelected);
 	}
 
 	// stop streaming request and remove listener when component will unmount
@@ -84,8 +82,7 @@ export default class DynamicRangeSlider extends Component {
 			value: {
 				queryType: "range",
 				inputData: this.props.dataField,
-				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery,
-				defaultSelected: this.urlParams !== null ? this.urlParams : this.props.defaultSelected
+				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery
 			}
 		};
 		helper.selectedSensor.setSensorInfo(obj);
@@ -99,8 +96,7 @@ export default class DynamicRangeSlider extends Component {
 			value
 		};
 		helper.selectedSensor.set(objValue, true);
-		const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
-		this.updateValues(defaultValue);
+		this.updateValues(this.props.defaultSelected);
 	}
 
 	histogramQuery() {
@@ -263,20 +259,15 @@ export default class DynamicRangeSlider extends Component {
 				counts: this.countCalc(min, max, newItems),
 				values: { min, max }
 			}, () => {
-				if(!_.isEqual(this.state.values, this.state.currentValues)) {
-					this.handleResults(null, { min, max });
-				}
+				this.updateValues(this.props.defaultSelected);
 			});
 		}
-		const defaultValue = this.urlParams !== null ? this.urlParams : this.props.defaultSelected;
-		this.updateValues(defaultValue);
 	}
 
 	updateValues(defaultSelected) {
-		if (defaultSelected) {
-			const { min, max } = this.state.range;
-			const { start, end } = this.urlParams !== null ? this.urlParams : defaultSelected(min, max);
-
+		const { min, max } = this.state.range;
+		if (defaultSelected && min !== null && max !== null) {
+			const { start, end } = defaultSelected(min, max);
 			if (start >= min && end <= max) {
 				const values = {
 					min: start,
@@ -316,7 +307,6 @@ export default class DynamicRangeSlider extends Component {
 			if(this.props.onValueChange) {
 				this.props.onValueChange(obj.value);
 			}
-			helper.URLParams.update(this.props.componentId, this.setURLParam(obj.value), this.props.URLParams);
 			helper.selectedSensor.set(obj, true);
 		};
 
@@ -335,16 +325,6 @@ export default class DynamicRangeSlider extends Component {
 		this.setState({
 			values
 		});
-	}
-
-	setURLParam(value) {
-		if("from" in value && "to" in value) {
-			value = {
-				start: value.from,
-				end: value.to
-			};
-		}
-		return JSON.stringify(value);
 	}
 
 	render() {
@@ -388,7 +368,7 @@ export default class DynamicRangeSlider extends Component {
 				<div className="rbc-rangeslider-container col s12 col-xs-12">
 					<Slider
 						range
-						defaultValue={[this.state.values.min, this.state.values.max]}
+						value={[this.state.values.min, this.state.values.max]}
 						min={min}
 						max={max}
 						onAfterChange={this.handleResults}
@@ -422,16 +402,14 @@ DynamicRangeSlider.propTypes = {
 	beforeValueChange: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
 	interval: React.PropTypes.number,
-	componentStyle: React.PropTypes.object,
-	URLParams: React.PropTypes.bool
+	componentStyle: React.PropTypes.object
 };
 
 DynamicRangeSlider.defaultProps = {
 	title: null,
 	stepValue: 1,
 	showHistogram: true,
-	componentStyle: {},
-	URLParams: false
+	componentStyle: {}
 };
 
 // context type
@@ -451,6 +429,5 @@ DynamicRangeSlider.types = {
 	stepValue: TYPES.NUMBER,
 	showHistogram: TYPES.BOOLEAN,
 	customQuery: TYPES.FUNCTION,
-	initialLoader: TYPES.OBJECT,
-	URLParams: TYPES.BOOLEAN
+	initialLoader: TYPES.OBJECT
 };
