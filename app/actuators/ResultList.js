@@ -7,10 +7,10 @@ import {
 	ResultStats,
 	PoweredBy,
 	TYPES,
+	Pagination,
 	AppbaseChannelManager as manager,
 	AppbaseSensorHelper as helper
 } from "@appbaseio/reactivemaps";
-import Pagination from "../addons/Pagination";
 import JsonPrint from "../addons/JsonPrint";
 import ReactStars from "react-stars";
 
@@ -139,33 +139,6 @@ export default class ResultList extends Component {
 			value: valObj
 		};
 		helper.selectedSensor.setSensorInfo(obj);
-	}
-
-	executePaginationUpdate() {
-		setTimeout(() => {
-			const obj = {
-				key: "paginationChanges",
-				value: Math.random()
-			};
-			helper.selectedSensor.set(obj, true);
-		}, 100);
-	}
-
-	paginationAt(method) {
-		let pageinationComp = null;
-
-		if (this.props.paginationAt === method || this.props.paginationAt === "both") {
-			pageinationComp = (
-				<div className="rbc-pagination-container col s12 col-xs-12">
-					<Pagination
-						className={`rbc-pagination-${method}`}
-						componentId="pagination"
-						onPageChange={this.props.onPageChange}
-						title={this.props.paginationTitle} />
-				</div>
-			);
-		}
-		return pageinationComp;
 	}
 
 	applyScroll() {
@@ -537,24 +510,6 @@ export default class ResultList extends Component {
 		}, 100);
 	}
 
-	paginationAt(method) {
-		let pageinationComp;
-		if (this.props.pagination && (this.props.paginationAt === method || this.props.paginationAt === "both")) {
-			pageinationComp = (
-				<div className="rbc-pagination-container col s12 col-xs-12">
-					<Pagination
-						className={`rbc-pagination-${method}`}
-						componentId="pagination"
-						onPageChange={this.props.onPageChange}
-						title={this.props.paginationTitle}
-						pages={this.props.pages}
-					/>
-				</div>
-			);
-		}
-		return pageinationComp;
-	}
-
 	nextPage() {
 		function start() {
 			this.setState({
@@ -566,6 +521,22 @@ export default class ResultList extends Component {
 		if (this.state.resultStats.total > this.state.currentData.length && !this.state.queryStart) {
 			start.call(this);
 		}
+	}
+
+	paginationAt(method) {
+		return (
+			<div className="rbc-pagination-container col s12 col-xs-12">
+				<Pagination
+					show={this.props.pagination && (this.props.paginationAt === method || this.props.paginationAt === "both")}
+					className={`rbc-pagination-${method}`}
+					componentId="pagination"
+					onPageChange={this.props.onPageChange}
+					title={this.props.paginationTitle}
+					pages={this.props.pages}
+					pageURLParams={this.props.pageURLParams}
+				/>
+			</div>
+		);
 	}
 
 	listComponent() {
@@ -722,7 +693,8 @@ ResultList.propTypes = {
 	]),
 	react: React.PropTypes.object,
 	scrollOnTarget: React.PropTypes.object,
-	pages: React.PropTypes.number
+	pages: React.PropTypes.number,
+	pageURLParams: React.PropTypes.bool
 };
 
 ResultList.defaultProps = {
@@ -733,7 +705,8 @@ ResultList.defaultProps = {
 	stream: false,
 	componentStyle: {},
 	showResultStats: true,
-	pages: 5
+	pages: 5,
+	pageURLParams: false
 };
 
 ResultList.contextTypes = {
@@ -762,5 +735,6 @@ ResultList.types = {
 	onResultStats: TYPES.FUNCTION,
 	placeholder: TYPES.STRING,
 	scrollOnTarget: TYPES.OBJECT,
-	pages: TYPES.NUMBER
+	pages: TYPES.NUMBER,
+	pageURLParams: TYPES.BOOLEAN
 };
