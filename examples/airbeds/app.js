@@ -21,7 +21,7 @@ class Main extends Component {
 		function generateMatchQuery() {
 			return record.map(singleRecord => ({
 				match: {
-					room_type: singleRecord.value
+					room_type: singleRecord
 				}
 			}));
 		}
