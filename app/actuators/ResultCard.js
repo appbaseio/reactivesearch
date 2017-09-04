@@ -698,7 +698,7 @@ ResultCard.propTypes = {
 ResultCard.defaultProps = {
 	from: 0,
 	size: 20,
-	pagination: false,
+	pagination: true,
 	paginationAt: "bottom",
 	stream: false,
 	componentStyle: {},
