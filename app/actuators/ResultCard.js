@@ -479,7 +479,9 @@ export default class ResultCard extends Component {
 		this.setReact(this.props);
 		this.createChannel(executeChannel);
 		if (this.state.requestOnScroll) {
-			this.listComponent();
+			setTimeout(() => {
+				this.listComponent();
+			}, 100);
 		} else {
 			this.setQueryForPagination();
 		}
