@@ -179,7 +179,9 @@ class DataSearch extends Component {
 
 	renderSuggestions() {
 		if (this.props.autoSuggest && Array.isArray(this.state.suggestions)) {
-			return (<List dataArray={this.state.suggestions}
+			return (<List
+				dataArray={this.state.suggestions}
+				keyboardShouldPersistTaps="always"
 				renderRow={(item) =>
 					<ListItem
 						onPress={() => this.selectSuggestion(item._source.name)}
