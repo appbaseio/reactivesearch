@@ -213,13 +213,13 @@ class DataSearch extends Component {
 					</Left>
 					{
 						this.state.currentValue
-						? (<Right>
-							<Button transparent onPress={() => this.selectSuggestion("")}><Text>Reset</Text></Button>
-						</Right>)
-						: null
+							? (<Right>
+								<Button transparent onPress={() => this.selectSuggestion("")}><Text>Reset</Text></Button>
+							</Right>)
+							: null
 					}
 				</Header>
-				<Item regular style={{marginLeft: 10, margin: 10}}>
+				<Item regular style={{ marginLeft: 10, margin: 10 }}>
 					<Input
 						placeholder={this.props.placeholder}
 						onChangeText={this.setValue}
@@ -232,7 +232,7 @@ class DataSearch extends Component {
 			</Modal>);
 		}
 
-		return (<Item regular style={{marginLeft: 0}}>
+		return (<Item regular style={{ marginLeft: 0 }}>
 			<TouchableWithoutFeedback
 				onPress={this.toggleModal}
 			>
@@ -252,8 +252,8 @@ class DataSearch extends Component {
 				>
 					{
 						this.state.currentValue && this.state.currentValue !== ""
-						? this.state.currentValue
-						: this.props.placeholder
+							? this.state.currentValue
+							: this.props.placeholder
 					}
 				</Text>
 			</TouchableWithoutFeedback>
@@ -266,7 +266,7 @@ class DataSearch extends Component {
 				{
 					this.props.autoSuggest
 						? this.renderDataSearch()
-						: <Item regular style={{marginLeft: 0}}>
+						: <Item regular style={{ marginLeft: 0 }}>
 							<Input
 								placeholder={this.props.placeholder}
 								onChangeText={this.setValue}

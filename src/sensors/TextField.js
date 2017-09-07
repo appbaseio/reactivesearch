@@ -59,7 +59,7 @@ class TextField extends Component {
 
 	render() {
 		return (
-			<Item regular style={{marginLeft: 0}}>
+			<Item regular style={{ marginLeft: 0 }}>
 				<Input
 					placeholder={this.props.placeholder}
 					onChangeText={this.setValue}

@@ -14,17 +14,17 @@ import {
 
 export default class Main extends Component {
 	state = {
-		isReady: false,
+		isReady: false
 	}
 
 	async componentWillMount() {
 		await Expo.Font.loadAsync({
 			"Roboto": require("native-base/Fonts/Roboto.ttf"),
 			"Roboto_medium": require("native-base/Fonts/Roboto_medium.ttf"),
-			"Ionicons": require("native-base/Fonts/Ionicons.ttf"),
+			"Ionicons": require("native-base/Fonts/Ionicons.ttf")
 		});
 
-		this.setState({isReady: true});
+		this.setState({ isReady: true });
 	}
 
 	onData(item) {

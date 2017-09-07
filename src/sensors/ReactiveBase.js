@@ -23,7 +23,7 @@ export default class ReactiveBase extends Component {
 		return (
 			<Provider store={this.store}>
 				<Container>
-					<View style={{...this.props.style, flex: 1}}>
+					<View style={{ ...this.props.style, flex: 1 }}>
 						{this.props.children}
 					</View>
 				</Container>

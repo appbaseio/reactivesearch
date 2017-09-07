@@ -140,72 +140,72 @@ class MultiDropdownList extends Component {
 			<View>
 				{
 					this.state.showModal
-					? (<Modal
-						supportedOrientations={this.props.supportedOrientations || null}
-						transparent={false}
-						visible={this.state.showModal}
-						onRequestClose={() => {
-							this.toggleModal();
-						}}
-					>
-						<Header>
-							<Left>
-								<Button transparent onPress={this.toggleModal}>
-									<Icon name="arrow-back" />
-								</Button>
-							</Left>
-							<Body>
-								<Title>{this.props.placeholder}</Title>
-							</Body>
-							<Right />
-						</Header>
-						<ListView
-							dataSource={this.ds.cloneWithRows(this.state.options)}
-							enableEmptySections={true}
-							renderRow={(item) => (
-								<TouchableWithoutFeedback onPress={() => this.selectItem(item.key)}>
-									<View style={{
-										flex: 1,
-										flexDirection: "row",
-										padding: 15,
-										borderBottomColor: "#c9c9c9",
-										borderBottomWidth: 0.5
-									}}>
-										<CheckBox
-											checked={this.state.currentValue.includes(item.key)}
-										/>
-										<Text style={{marginLeft: 20}}>{item.key}</Text>
-									</View>
-								</TouchableWithoutFeedback>
-							)}
-						/>
-					</Modal>)
-					: (<Item regular style={{marginLeft: 0}}>
-						<TouchableWithoutFeedback
-							onPress={this.toggleModal}
+						? (<Modal
+							supportedOrientations={this.props.supportedOrientations || null}
+							transparent={false}
+							visible={this.state.showModal}
+							onRequestClose={() => {
+								this.toggleModal();
+							}}
 						>
-							<Text
-								style={{
-									flex: 1,
-									alignItems: "center",
-									color: this.state.currentValue.length ? "#000" : "#555",
-									flex: 1,
-									fontSize: 17,
-									height: 50,
-									lineHeight: 24,
-									paddingLeft: 8,
-									paddingRight: 5,
-									paddingTop: 12
-								}}
+							<Header>
+								<Left>
+									<Button transparent onPress={this.toggleModal}>
+										<Icon name="arrow-back" />
+									</Button>
+								</Left>
+								<Body>
+									<Title>{this.props.placeholder}</Title>
+								</Body>
+								<Right />
+							</Header>
+							<ListView
+								dataSource={this.ds.cloneWithRows(this.state.options)}
+								enableEmptySections={true}
+								renderRow={(item) => (
+									<TouchableWithoutFeedback onPress={() => this.selectItem(item.key)}>
+										<View style={{
+											flex: 1,
+											flexDirection: "row",
+											padding: 15,
+											borderBottomColor: "#c9c9c9",
+											borderBottomWidth: 0.5
+										}}>
+											<CheckBox
+												checked={this.state.currentValue.includes(item.key)}
+											/>
+											<Text style={{ marginLeft: 20 }}>{item.key}</Text>
+										</View>
+									</TouchableWithoutFeedback>
+								)}
+							/>
+						</Modal>)
+						: (<Item regular style={{ marginLeft: 0 }}>
+							<TouchableWithoutFeedback
+								onPress={this.toggleModal}
 							>
-								{
-									this.state.currentValue.length
-									? this.state.currentValue.join(", ")
-									: this.props.placeholder
-								}
-							</Text>
-						</TouchableWithoutFeedback>
-					</Item>)
+								<Text
+									style={{
+										flex: 1,
+										alignItems: "center",
+										color: this.state.currentValue.length ? "#000" : "#555",
+										flex: 1,
+										fontSize: 17,
+										height: 50,
+										lineHeight: 24,
+										paddingLeft: 8,
+										paddingRight: 5,
+										paddingTop: 12
+									}}
+								>
+									{
+										this.state.currentValue.length
+											? this.state.currentValue.join(", ")
+											: this.props.placeholder
+									}
+								</Text>
+							</TouchableWithoutFeedback>
+						</Item>)
 
 				}
 			</View>
