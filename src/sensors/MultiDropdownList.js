@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, Modal, ScrollView } from "react-native";
+import { View, Modal, ListView, TouchableWithoutFeedback } from "react-native";
 import {
 	ListItem,
 	CheckBox,
@@ -29,6 +29,9 @@ class MultiDropdownList extends Component {
 			showModal: false
 		};
 
+		this.ds = new ListView.DataSource({
+			rowHasChanged: (r1, r2) => r1.key !== r2.key || r1.count !== r2.count
+		});
 		this.type = this.props.queryFormat === "or" ? "Terms" : "Term";
 		this.internalComponent = this.props.componentId + "__internal";
 	}
@@ -113,22 +116,20 @@ class MultiDropdownList extends Component {
 	}
 
 	selectItem = (item) => {
-		console.log("called");
 		let { currentValue } = this.state;
+
 		if (currentValue.includes(item)) {
 			currentValue = currentValue.filter(value => value !== item);
 		} else {
 			currentValue.push(item);
 		}
-		this.setValue(currentValue);
-	}
 
-	setValue = (value) => {
 		this.setState({
-			currentValue: value
+			currentValue
 		});
-		this.props.updateQuery(this.props.componentId, this.defaultQuery(value))
-	};
+
+		this.props.updateQuery(this.props.componentId, this.defaultQuery(currentValue))
+	}
 
 	toggleModal = () => {
 		this.setState({
@@ -160,24 +161,26 @@ class MultiDropdownList extends Component {
 							</Body>
 							<Right />
 						</Header>
-						<ScrollView>
-							{
-								this.state.options.map(item => (
-									<ListItem
-										key={item.key}
-										onPress={() => this.selectItem(item.key)}
-									>
+						<ListView
+							dataSource={this.ds.cloneWithRows(this.state.options)}
+							enableEmptySections={true}
+							renderRow={(item) => (
+								<TouchableWithoutFeedback onPress={() => this.selectItem(item.key)}>
+									<View style={{
+										flex: 1,
+										flexDirection: "row",
+										padding: 15,
+										borderBottomColor: "#c9c9c9",
+										borderBottomWidth: 0.5
+									}}>
 										<CheckBox
-											onPress={() => this.selectItem(item.key)}
 											checked={this.state.currentValue.includes(item.key)}
 										/>
-										<Body>
-											<Text>{item.key}</Text>
-										</Body>
-									</ListItem>
-								))
-							}
-						</ScrollView>
+										<Text style={{marginLeft: 20}}>{item.key}</Text>
+									</View>
+								</TouchableWithoutFeedback>
+							)}
+						/>
 					</Modal>)
 					: (<Item regular style={{marginLeft: 0}}>
 						<Input
