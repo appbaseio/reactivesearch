@@ -1,11 +1,16 @@
 import Expo from "expo";
 import React, { Component } from "react";
-import {
-	View
-} from "react-native";
-import { Text, H3 } from "native-base";
+import { View } from "react-native";
+import { Text, Header, Body, Title } from "native-base";
 
-import { ReactiveBase, DataSearch, TextField, DropdownList, ReactiveList } from "reactivebase-native";
+import {
+	ReactiveBase,
+	DataSearch,
+	TextField,
+	SingleDropdownList,
+	MultiDropdownList,
+	ReactiveList
+} from "reactivebase-native";
 
 export default class Main extends Component {
 	state = {
@@ -42,38 +47,43 @@ export default class Main extends Component {
 				app="car-store"
 				credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
 				type="cars"
-				style={{
-					backgroundColor: "#fafafa",
-					marginTop: Expo.Constants.statusBarHeight,
-					padding: 10
-				}}
 			>
-				<H3 style={{textAlign: "center"}}>ReactiveBase Native Demo</H3>
-				<DropdownList
-					componentId="DropdownListComponent"
-					appbaseField="brand.raw"
-				/>
-				<DataSearch
-					componentId="DataSeachComponent"
-					appbaseField="name"
-					react={{
-						and: "TextFieldComponent"
-					}}
-				/>
-				<TextField
-					componentId="TextFieldComponent"
-					appbaseField="color"
-					placeholder="Search color"
-				/>
-				<ReactiveList
-					componentId="ReactiveList"
-					size={20}
-					from={0}
-					onData={this.onData}
-					react={{
-						and: ["DropdownListComponent", "DataSeachComponent", "TextFieldComponent"]
-					}}
-				/>
+				<Header>
+					<Body>
+						<Title>ReactiveBase Native Demo</Title>
+					</Body>
+				</Header>
+				<View style={{ padding: 10 }}>
+					<SingleDropdownList
+						componentId="SingleDropdownListComponent"
+						appbaseField="brand.raw"
+					/>
+					<MultiDropdownList
+						componentId="MultiDropdownListComponent"
+						appbaseField="brand.raw"
+					/>
+					<DataSearch
+						componentId="DataSeachComponent"
+						appbaseField="name"
+						react={{
+							and: "TextFieldComponent"
+						}}
+					/>
+					<TextField
+						componentId="TextFieldComponent"
+						appbaseField="color"
+						placeholder="Search color"
+					/>
+					<ReactiveList
+						componentId="ReactiveList"
+						size={20}
+						from={0}
+						onData={this.onData}
+						react={{
+							and: ["SingleDropdownListComponent", "MultiDropdownListComponent", "DataSeachComponent", "TextFieldComponent"]
+						}}
+					/>
+				</View>
 			</ReactiveBase>
 		);
 	}

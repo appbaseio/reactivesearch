@@ -7,7 +7,7 @@ import { isEqual, getQueryOptions, pushToAndClause } from "../utils/helper";
 
 const Item = Picker.Item;
 
-class DropdownList extends Component {
+class SingleDropdownList extends Component {
 	constructor(props) {
 		super(props);
 
@@ -15,7 +15,7 @@ class DropdownList extends Component {
 			currentValue: "",
 			options: []
 		};
-		this.type = this.props.multipleSelect && this.props.queryFormat === "or" ? "Terms" : "Term";
+		this.type = "Term";
 		this.internalComponent = this.props.componentId + "__internal";
 	}
 
@@ -74,21 +74,6 @@ class DropdownList extends Component {
 				}
 			};
 		} else if (value) {
-			if (this.props.queryFormat === "and" && this.props.multipleSelect) {
-				const queryArray = value.map(item => (
-					{
-						[this.type]: {
-							[this.props.appbaseField]: item
-						}
-					}
-				));
-				return {
-					bool: {
-						must: queryArray
-					}
-				};
-			}
-
 			return {
 				[this.type]: {
 					[this.props.appbaseField]: value
@@ -123,10 +108,8 @@ class DropdownList extends Component {
 	}
 }
 
-DropdownList.defaultProps = {
+SingleDropdownList.defaultProps = {
 	size: 100,
-	multipleSelect: false,
-	queryFormat: "or",
 	placeholder: "Select a value"
 }
 
@@ -142,4 +125,4 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(DropdownList);
+export default connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList);

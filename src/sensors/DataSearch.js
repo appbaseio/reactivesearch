@@ -1,6 +1,16 @@
 import React, { Component } from "react";
-import { View, Dimensions } from "react-native";
-import { Input, Item, List, ListItem, Text, Button } from "native-base";
+import { View, Modal } from "react-native";
+import {
+	Input,
+	Item,
+	List,
+	ListItem,
+	Text,
+	Button,
+	Header,
+	Left,
+	Right,
+	Icon } from "native-base";
 import { connect } from "react-redux";
 
 import { addComponent, removeComponent, watchComponent, updateQuery } from "../actions";
@@ -13,7 +23,7 @@ class DataSearch extends Component {
 		this.state = {
 			currentValue: "",
 			suggestions: [],
-			showOverlay: false
+			showModal: false
 		};
 		this.internalComponent = this.props.componentId + "__internal";
 	}
@@ -147,7 +157,7 @@ class DataSearch extends Component {
 			suggestions: []
 		});
 		this.updateQuery(this.props.componentId, value);
-		this.toggleOverlay();
+		this.toggleModal();
 	};
 
 	setSuggestions = () => {
@@ -161,11 +171,11 @@ class DataSearch extends Component {
 		});
 	};
 
-	toggleOverlay = () => {
+	toggleModal = () => {
 		this.setState({
-			showOverlay: !this.state.showOverlay
+			showModal: !this.state.showModal
 		})
-	}
+	};
 
 	renderSuggestions() {
 		if (this.props.autoSuggest && Array.isArray(this.state.suggestions)) {
@@ -184,17 +194,26 @@ class DataSearch extends Component {
 	}
 
 	renderDataSearch = () => {
-		if (this.state.showOverlay) {
-			return (<View>
-				<View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-					<Button style={{paddingLeft: 0, paddingRight: 0}} transparent dark onPress={this.toggleOverlay}><Text>Back</Text></Button>
+		if (this.state.showModal) {
+			return (<Modal
+				transparent={false}
+				visible={this.state.showModal}
+			>
+				<Header>
+					<Left>
+						<Button transparent onPress={this.toggleModal}>
+							<Icon name="arrow-back" />
+						</Button>
+					</Left>
 					{
 						this.state.currentValue
-							? <Button style={{paddingLeft: 0, paddingRight: 0}} transparent onPress={() => this.selectSuggestion("")}><Text>Reset</Text></Button>
-							: null
+						? (<Right>
+							<Button transparent onPress={() => this.selectSuggestion("")}><Text>Reset</Text></Button>
+						</Right>)
+						: null
 					}
-				</View>
-				<Item regular style={{marginLeft: 0}}>
+				</Header>
+				<Item regular style={{marginLeft: 10, margin: 10}}>
 					<Input
 						placeholder={this.props.placeholder}
 						onChangeText={this.setValue}
@@ -204,12 +223,12 @@ class DataSearch extends Component {
 					/>
 				</Item>
 				{this.renderSuggestions()}
-			</View>);
+			</Modal>);
 		}
 
 		return (<Item regular style={{marginLeft: 0}}>
 			<Input
-				onFocus={this.toggleOverlay}
+				onFocus={this.toggleModal}
 				placeholder={this.props.placeholder}
 				value={this.state.currentValue}
 			/>
@@ -217,25 +236,8 @@ class DataSearch extends Component {
 	}
 
 	render() {
-		let styles = {};
-		if (this.state.showOverlay) {
-			styles = {
-				width: Dimensions.get("window").width,
-				height: Dimensions.get("window").height,
-				position: "absolute",
-				paddingLeft: 10,
-				paddingRight: 10,
-				top: 0,
-				right: 0,
-				bottom: 0,
-				left: 0,
-				backgroundColor: "white",
-				zIndex: 10
-			}
-		}
-
 		return (
-			<View style={{ width: "100%", ...styles }}>
+			<View>
 				{
 					this.props.autoSuggest
 						? this.renderDataSearch()
