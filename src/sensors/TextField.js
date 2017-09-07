@@ -64,7 +64,6 @@ class TextField extends Component {
 					placeholder={this.props.placeholder}
 					onChangeText={this.setValue}
 					value={this.state.currentValue}
-					autoFocus
 				/>
 			</Item>
 		);

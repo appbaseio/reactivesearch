@@ -87,7 +87,7 @@ class MultiDropdownList extends Component {
 					field: [this.props.appbaseField]
 				}
 			};
-		} else if (value) {
+		} else if (value && value.length) {
 			if (this.props.queryFormat === "and") {
 				const queryArray = value.map(item => (
 					{
@@ -109,6 +109,7 @@ class MultiDropdownList extends Component {
 				}
 			};
 		}
+		return null;
 	}
 
 	selectItem = (item) => {
