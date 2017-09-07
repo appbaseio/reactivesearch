@@ -113,6 +113,7 @@ class MultiDropdownList extends Component {
 	}
 
 	selectItem = (item) => {
+		console.log("called");
 		let { currentValue } = this.state;
 		if (currentValue.includes(item)) {
 			currentValue = currentValue.filter(value => value !== item);
@@ -167,6 +168,7 @@ class MultiDropdownList extends Component {
 										onPress={() => this.selectItem(item.key)}
 									>
 										<CheckBox
+											onPress={() => this.selectItem(item.key)}
 											checked={this.state.currentValue.includes(item.key)}
 										/>
 										<Body>
