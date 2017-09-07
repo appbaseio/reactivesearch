@@ -189,7 +189,7 @@ class MultiDropdownList extends Component {
 
 MultiDropdownList.defaultProps = {
 	size: 100,
-	queryFormat: "and",
+	queryFormat: "or",
 	placeholder: "Select a value"
 }
 
