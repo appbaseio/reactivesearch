@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, Modal, ListView, TouchableWithoutFeedback } from "react-native";
 import {
-	ListItem,
 	CheckBox,
 	Text,
 	Body,
 	Item,
-	Input,
 	Header,
 	Left,
 	Button,
@@ -183,11 +181,30 @@ class MultiDropdownList extends Component {
 						/>
 					</Modal>)
 					: (<Item regular style={{marginLeft: 0}}>
-						<Input
-							onFocus={this.toggleModal}
-							placeholder={this.props.placeholder}
-							value={this.state.currentValue.join(", ")}
-						/>
+						<TouchableWithoutFeedback
+							onPress={this.toggleModal}
+						>
+							<Text
+								style={{
+									flex: 1,
+									alignItems: "center",
+									color: this.state.currentValue.length ? "#000" : "#555",
+									flex: 1,
+									fontSize: 17,
+									height: 50,
+									lineHeight: 24,
+									paddingLeft: 8,
+									paddingRight: 5,
+									paddingTop: 12
+								}}
+							>
+								{
+									this.state.currentValue.length
+									? this.state.currentValue.join(", ")
+									: this.props.placeholder
+								}
+							</Text>
+						</TouchableWithoutFeedback>
 					</Item>)
 
 				}

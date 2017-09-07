@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Modal } from "react-native";
+import { View, Modal, TouchableWithoutFeedback } from "react-native";
 import {
 	Input,
 	Item,
@@ -233,12 +233,31 @@ class DataSearch extends Component {
 		}
 
 		return (<Item regular style={{marginLeft: 0}}>
-			<Input
-				onFocus={this.toggleModal}
-				placeholder={this.props.placeholder}
-				value={this.state.currentValue}
-			/>
-		</Item>);
+			<TouchableWithoutFeedback
+				onPress={this.toggleModal}
+			>
+				<Text
+					style={{
+						flex: 1,
+						alignItems: "center",
+						color: this.state.currentValue && this.state.currentValue !== "" ? "#000" : "#555",
+						flex: 1,
+						fontSize: 17,
+						height: 50,
+						lineHeight: 24,
+						paddingLeft: 8,
+						paddingRight: 5,
+						paddingTop: 12
+					}}
+				>
+					{
+						this.state.currentValue && this.state.currentValue !== ""
+						? this.state.currentValue
+						: this.props.placeholder
+					}
+				</Text>
+			</TouchableWithoutFeedback>
+		</Item>)
 	}
 
 	render() {
