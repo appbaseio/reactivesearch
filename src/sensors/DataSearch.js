@@ -196,8 +196,12 @@ class DataSearch extends Component {
 	renderDataSearch = () => {
 		if (this.state.showModal) {
 			return (<Modal
+				supportedOrientations={this.props.supportedOrientations || null}
 				transparent={false}
 				visible={this.state.showModal}
+				onRequestClose={() => {
+					this.toggleModal();
+				}}
 			>
 				<Header>
 					<Left>

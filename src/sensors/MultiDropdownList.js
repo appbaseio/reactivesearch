@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, Modal } from "react-native";
+import { View, Modal, ScrollView } from "react-native";
 import {
-	List,
 	ListItem,
 	CheckBox,
 	Text,
@@ -141,8 +140,12 @@ class MultiDropdownList extends Component {
 				{
 					this.state.showModal
 					? (<Modal
+						supportedOrientations={this.props.supportedOrientations || null}
 						transparent={false}
 						visible={this.state.showModal}
+						onRequestClose={() => {
+							this.toggleModal();
+						}}
 					>
 						<Header>
 							<Left>
@@ -155,7 +158,7 @@ class MultiDropdownList extends Component {
 							</Body>
 							<Right />
 						</Header>
-						<List>
+						<ScrollView>
 							{
 								this.state.options.map(item => (
 									<ListItem
@@ -171,7 +174,7 @@ class MultiDropdownList extends Component {
 									</ListItem>
 								))
 							}
-						</List>
+						</ScrollView>
 					</Modal>)
 					: (<Item regular style={{marginLeft: 0}}>
 						<Input
