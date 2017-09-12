@@ -174,7 +174,7 @@ export default class RatingsFilter extends Component {
 		const cx = classNames({
 			"rbc-title-active": this.props.title,
 			"rbc-title-inactive": !this.props.title
-		});
+		}, this.props.className);
 
 		return (
 			<div className={`rbc rbc-ratingsfilter col s12 col-xs-12 card thumbnail ${cx}`} style={this.props.componentStyle}>
@@ -204,7 +204,8 @@ RatingsFilter.propTypes = {
 	componentStyle: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
 	showFilter: React.PropTypes.bool,
-	filterLabel: React.PropTypes.string
+	filterLabel: React.PropTypes.string,
+	className: React.PropTypes.string
 };
 
 // Default props value
@@ -232,5 +233,6 @@ RatingsFilter.types = {
 	customQuery: TYPES.FUNCTION,
 	URLParams: TYPES.BOOLEAN,
 	showFilter: TYPES.BOOLEAN,
-	filterLabel: TYPES.STRING
+	filterLabel: TYPES.STRING,
+	className: TYPES.STRING
 };

@@ -586,7 +586,7 @@ export default class NestedMultiList extends Component {
 		});
 
 		return (
-			<div className="rbc rbc-nestedmultilist-container card thumbnail col s12 col-xs-12" style={this.props.componentStyle}>
+			<div className={`rbc rbc-nestedmultilist-container card thumbnail col s12 col-xs-12 ${this.props.className ? this.props.className : ""}`} style={this.props.componentStyle}>
 				<div className={`rbc rbc-nestedmultilist col s12 col-xs-12 ${cx}`}>
 					{title}
 					{searchComponent}
@@ -640,7 +640,8 @@ NestedMultiList.propTypes = {
 	URLParams: React.PropTypes.bool,
 	showFilter: React.PropTypes.bool,
 	filterLabel: React.PropTypes.string,
-	showCheckbox: React.PropTypes.bool
+	showCheckbox: React.PropTypes.bool,
+	className: React.PropTypes.string
 };
 
 // Default props value
@@ -681,5 +682,6 @@ NestedMultiList.types = {
 	URLParams: TYPES.BOOLEAN,
 	showFilter: TYPES.BOOLEAN,
 	filterLabel: TYPES.STRING,
-	showCheckbox: TYPES.BOOLEAN
+	showCheckbox: TYPES.BOOLEAN,
+	className: TYPES.STRING
 };

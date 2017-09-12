@@ -497,7 +497,7 @@ export default class CategorySearch extends Component {
 			"rbc-placeholder-inactive": !this.props.placeholder,
 			"rbc-autoSuggest-active": this.props.autoSuggest,
 			"rbc-autoSuggest-inactive": !this.props.autoSuggest
-		});
+		}, this.props.className);
 
 		const options = this.state.currentValue.label === "" || this.state.currentValue.label === null
 							? this.props.initialSuggestions && this.props.initialSuggestions.length
@@ -593,6 +593,7 @@ CategorySearch.propTypes = {
 		React.PropTypes.string,
 		React.PropTypes.number,
 	]),
+  className: React.PropTypes.string,
 	onBlur: React.PropTypes.func,
 	onFocus: React.PropTypes.func,
 	onKeyPress: React.PropTypes.func,
@@ -636,6 +637,7 @@ CategorySearch.types = {
 	weights: TYPES.ARRAY,
 	queryFormat: TYPES.STRING,
 	fuzziness: TYPES.NUMBER,
+  className: TYPES.STRING,
 	onBlur: TYPES.FUNCTION,
 	onFocus: TYPES.FUNCTION,
 	onKeyPress: TYPES.FUNCTION,
