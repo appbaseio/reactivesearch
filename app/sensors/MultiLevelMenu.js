@@ -439,6 +439,5 @@ MultiLevelMenu.types = {
 	blacklist: TYPES.ARRAY,
 	data: TYPES.OBJECT,
 	customQuery: TYPES.FUNCTION,
-	className: TYPES.STRING,
-	className: React.PropTypes.string
+	className: TYPES.STRING
 };
