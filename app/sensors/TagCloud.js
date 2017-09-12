@@ -393,7 +393,7 @@ export default class TagCloud extends Component {
 			"rbc-multiSelect-inactive": !this.props.multiSelect,
 			"rbc-initialloader-active": this.props.initialLoader,
 			"rbc-initialloader-inactive": !this.props.initialLoader
-		});
+		}, this.props.className);
 
 		return (
 			<div className={`rbc rbc-tagcloud col s12 col-xs-12 card thumbnail ${cx}`} style={this.props.style}>
@@ -433,7 +433,8 @@ TagCloud.propTypes = {
 	style: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
 	showFilter: React.PropTypes.bool,
-	filterLabel: React.PropTypes.string
+	filterLabel: React.PropTypes.string,
+	className: React.PropTypes.string
 };
 
 TagCloud.defaultProps = {
@@ -466,5 +467,6 @@ TagCloud.types = {
 	react: TYPES.OBJECT,
 	URLParams: TYPES.BOOLEAN,
 	showFilter: TYPES.BOOLEAN,
-	filterLabel: TYPES.STRING
+	filterLabel: TYPES.STRING,
+	className: TYPES.STRING
 };

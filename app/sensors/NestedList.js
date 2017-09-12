@@ -529,7 +529,7 @@ export default class NestedList extends Component {
 		});
 
 		return (
-			<div className="rbc rbc-nestedlist-container card thumbnail col s12 col-xs-12" style={this.props.style}>
+			<div className={`rbc rbc-nestedlist-container card thumbnail col s12 col-xs-12 ${this.props.className ? this.props.className : ""}`} style={this.props.style}>
 				<div className={`rbc rbc-nestedlist col s12 col-xs-12 ${cx}`}>
 					{title}
 					{searchComponent}
@@ -582,7 +582,8 @@ NestedList.propTypes = {
 	style: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
 	showFilter: React.PropTypes.bool,
-	filterLabel: React.PropTypes.string
+	filterLabel: React.PropTypes.string,
+	className: React.PropTypes.string
 };
 
 // Default props value
@@ -621,5 +622,6 @@ NestedList.types = {
 	initialLoader: TYPES.OBJECT,
 	URLParams: TYPES.BOOLEAN,
 	showFilter: TYPES.BOOLEAN,
-	filterLabel: TYPES.STRING
+	filterLabel: TYPES.STRING,
+	className: TYPES.STRING
 };

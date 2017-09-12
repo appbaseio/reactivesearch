@@ -691,7 +691,8 @@ ResultCard.propTypes = {
 	react: React.PropTypes.object,
 	scrollOnTarget: React.PropTypes.object,
 	pages: React.PropTypes.number,
-	pageURLParams: React.PropTypes.bool
+	pageURLParams: React.PropTypes.bool,
+	className: React.PropTypes.string
 };
 
 ResultCard.defaultProps = {
@@ -733,5 +734,6 @@ ResultCard.types = {
 	placeholder: TYPES.STRING,
 	scrollOnTarget: TYPES.OBJECT,
 	pages: TYPES.NUMBER,
-	pageURLParams: TYPES.BOOLEAN
+	pageURLParams: TYPES.BOOLEAN,
+	className: TYPES.STRING
 };
