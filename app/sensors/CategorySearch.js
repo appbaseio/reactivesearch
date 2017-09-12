@@ -446,11 +446,15 @@ export default class CategorySearch extends Component {
 				value: this.state.currentValue.label
 			});
 		}
+		if (this.props.onBlur) this.props.onBlur(event);
 	}
 
 	handleKeyPress(event) {
 		if (event.key === "Enter") {
 			event.target.blur();
+		}
+		if (this.props.onKeyPress) {
+			this.props.onKeyPress(event);
 		}
 	}
 
@@ -520,7 +524,10 @@ export default class CategorySearch extends Component {
 								value: this.state.currentValue.label ? this.state.currentValue.label : "",
 								onChange: this.onInputChange,
 								onBlur: this.handleBlur,
-								onKeyPress: this.handleKeyPress
+								onKeyPress: this.handleKeyPress,
+								onFocus: this.props.onFocus,
+								onKeyDown: this.props.onKeyDown,
+								onKeyUp: this.props.onKeyUp
 							}}
 						/> :
 						<div className="rbc-search-container col s12 col-xs-12">
@@ -530,6 +537,11 @@ export default class CategorySearch extends Component {
 								placeholder={this.props.placeholder}
 								value={this.state.currentValue.label ? this.state.currentValue.label : ""}
 								onChange={this.handleInputChange}
+								onBlur={this.props.onBlur}
+								onFocus={this.props.onFocus}
+								onKeyPress={this.props.onKeyPress}
+								onKeyDown={this.props.onKeyDown}
+								onKeyUp={this.props.onKeyUp}
 							/>
 							<span className="rbc-search-icon" />
 						</div>
@@ -581,7 +593,12 @@ CategorySearch.propTypes = {
 		React.PropTypes.string,
 		React.PropTypes.number,
 	]),
-	className: React.PropTypes.string
+	className: React.PropTypes.string,
+	onBlur: React.PropTypes.func,
+	onFocus: React.PropTypes.func,
+	onKeyPress: React.PropTypes.func,
+	onKeyDown: React.PropTypes.func,
+	onKeyUp: React.PropTypes.func
 };
 
 // Default props value
@@ -620,5 +637,10 @@ CategorySearch.types = {
 	weights: TYPES.ARRAY,
 	queryFormat: TYPES.STRING,
 	fuzziness: TYPES.NUMBER,
-	className: TYPES.STRING
+	className: TYPES.STRING,
+	onBlur: TYPES.FUNCTION,
+	onFocus: TYPES.FUNCTION,
+	onKeyPress: TYPES.FUNCTION,
+	onKeyDown: TYPES.FUNCTION,
+	onKeyUp: TYPES.FUNCTION
 };
