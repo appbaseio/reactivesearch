@@ -575,13 +575,13 @@ export default class ResultCard extends Component {
 		helper.selectedSensor.set(obj, true, "sortChange");
 	}
 	getComponentStyle() {
-		let componentStyle = {};
+		let style = {};
 		if(this.props.scrollOnTarget) {
-			componentStyle.maxHeight = "none";
-			componentStyle.height = "auto";
+			style.maxHeight = "none";
+			style.height = "auto";
 		}
-		componentStyle = Object.assign(componentStyle, this.props.componentStyle);
-		return componentStyle;
+		style = Object.assign(style, this.props.style);
+		return style;
 	}
 	render() {
 		let title = null,
@@ -628,7 +628,7 @@ export default class ResultCard extends Component {
 
 		return (
 			<div className="rbc rbc-resultcard" ref={(node) => { this.listContainer = node; }}>
-				<div ref={(div) => { this.listParentElement = div; }} className={`rbc-resultcard-container card thumbnail ${cx}`} style={this.props.componentStyle} style={this.getComponentStyle()}>
+				<div ref={(div) => { this.listParentElement = div; }} className={`rbc-resultcard-container card thumbnail ${cx}`} style={this.props.style} style={this.getComponentStyle()}>
 					{title}
 					{sortOptions}
 					{this.props.showResultStats && this.state.resultStats.resultFound ? (<ResultStats onResultStats={this.props.onResultStats} took={this.state.resultStats.took} total={this.state.resultStats.total} />) : null}
@@ -674,7 +674,7 @@ ResultCard.propTypes = {
 	pagination: React.PropTypes.bool,
 	paginationAt: React.PropTypes.oneOf(["top", "bottom", "both"]),
 	stream: React.PropTypes.bool,
-	componentStyle: React.PropTypes.object,
+	style: React.PropTypes.object,
 	initialLoader: React.PropTypes.oneOfType([
 		React.PropTypes.string,
 		React.PropTypes.element
@@ -701,7 +701,7 @@ ResultCard.defaultProps = {
 	pagination: true,
 	paginationAt: "bottom",
 	stream: false,
-	componentStyle: {},
+	style: {},
 	showResultStats: true,
 	pages: 5,
 	pageURLParams: false
@@ -726,7 +726,7 @@ ResultCard.types = {
 	pagination: TYPES.BOOLEAN,
 	paginationAt: TYPES.STRING,
 	stream: TYPES.BOOLEAN,
-	componentStyle: TYPES.OBJECT,
+	style: TYPES.OBJECT,
 	initialLoader: TYPES.STRING,
 	noResults: TYPES.FUNC,
 	showResultStats: TYPES.BOOLEAN,

@@ -578,13 +578,13 @@ export default class ResultList extends Component {
 	}
 
 	getComponentStyle() {
-		let componentStyle = {};
+		let style = {};
 		if(this.props.scrollOnTarget) {
-			componentStyle.maxHeight = "none";
-			componentStyle.height = "auto";
+			style.maxHeight = "none";
+			style.height = "auto";
 		}
-		componentStyle = Object.assign(componentStyle, this.props.componentStyle);
-		return componentStyle;
+		style = Object.assign(style, this.props.style);
+		return style;
 	}
 
 	render() {
@@ -678,7 +678,7 @@ ResultList.propTypes = {
 	pagination: React.PropTypes.bool,
 	paginationAt: React.PropTypes.oneOf(["top", "bottom", "both"]),
 	stream: React.PropTypes.bool,
-	componentStyle: React.PropTypes.object,
+	style: React.PropTypes.object,
 	initialLoader: React.PropTypes.oneOfType([
 		React.PropTypes.string,
 		React.PropTypes.element
@@ -705,7 +705,7 @@ ResultList.defaultProps = {
 	pagination: true,
 	paginationAt: "bottom",
 	stream: false,
-	componentStyle: {},
+	style: {},
 	showResultStats: true,
 	pages: 5,
 	pageURLParams: false
@@ -730,7 +730,7 @@ ResultList.types = {
 	pagination: TYPES.BOOLEAN,
 	paginationAt: TYPES.STRING,
 	stream: TYPES.BOOLEAN,
-	componentStyle: TYPES.OBJECT,
+	style: TYPES.OBJECT,
 	initialLoader: TYPES.STRING,
 	noResults: TYPES.FUNC,
 	showResultStats: TYPES.BOOLEAN,
