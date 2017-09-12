@@ -631,7 +631,7 @@ export default class ResultList extends Component {
 		}
 
 		return (
-			<div ref={(div) => { this.resultListContainer = div; }} className=`rbc rbc-resultlist ${this.props.className ? this.props.className : ""}`>
+			<div ref={(div) => { this.resultListContainer = div; }} className={`rbc rbc-resultlist ${this.props.className ? this.props.className : ""}`}>
 				<div ref={(div) => { this.listParentElement = div; }} className={`rbc-resultlist-container card thumbnail ${cx}`} style={this.getComponentStyle()}>
 					{title}
 					{sortOptions}

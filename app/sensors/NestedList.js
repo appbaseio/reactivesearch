@@ -529,7 +529,7 @@ export default class NestedList extends Component {
 		});
 
 		return (
-			<div className=`rbc rbc-nestedlist-container card thumbnail col s12 col-xs-12 ${this.props.className ? this.props.className : ""}` style={this.props.componentStyle}>
+			<div className={`rbc rbc-nestedlist-container card thumbnail col s12 col-xs-12 ${this.props.className ? this.props.className : ""}`} style={this.props.componentStyle}>
 				<div className={`rbc rbc-nestedlist col s12 col-xs-12 ${cx}`}>
 					{title}
 					{searchComponent}

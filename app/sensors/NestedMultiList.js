@@ -586,7 +586,7 @@ export default class NestedMultiList extends Component {
 		});
 
 		return (
-			<div className=`rbc rbc-nestedmultilist-container card thumbnail col s12 col-xs-12 ${this.props.className ? this.props.className : ""}` style={this.props.componentStyle}>
+			<div className={`rbc rbc-nestedmultilist-container card thumbnail col s12 col-xs-12 ${this.props.className ? this.props.className : ""}`} style={this.props.componentStyle}>
 				<div className={`rbc rbc-nestedmultilist col s12 col-xs-12 ${cx}`}>
 					{title}
 					{searchComponent}

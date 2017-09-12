@@ -627,7 +627,7 @@ export default class ResultCard extends Component {
 		}
 
 		return (
-			<div className=`rbc rbc-resultcard ${this.props.className ? this.props.className : ""}` ref={(node) => { this.listContainer = node; }}>
+			<div className={`rbc rbc-resultcard ${this.props.className ? this.props.className : ""}`} ref={(node) => { this.listContainer = node; }}>
 				<div ref={(div) => { this.listParentElement = div; }} className={`rbc-resultcard-container card thumbnail ${cx}`} style={this.props.componentStyle} style={this.getComponentStyle()}>
 					{title}
 					{sortOptions}
