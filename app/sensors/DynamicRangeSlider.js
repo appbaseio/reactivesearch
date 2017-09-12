@@ -359,7 +359,7 @@ export default class DynamicRangeSlider extends Component {
 			"rbc-histogram-inactive": !this.props.showHistogram,
 			"rbc-initialloader-active": this.props.initialLoader,
 			"rbc-initialloader-inactive": !this.props.initialLoader
-		});
+		}, this.props.className);
 
 		return (
 			<div className={`rbc rbc-dynamicrangeslider card thumbnail col s12 col-xs-12 ${cx}`} style={this.props.componentStyle}>
@@ -402,7 +402,8 @@ DynamicRangeSlider.propTypes = {
 	beforeValueChange: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
 	interval: React.PropTypes.number,
-	componentStyle: React.PropTypes.object
+	componentStyle: React.PropTypes.object,
+	className: React.PropTypes.string
 };
 
 DynamicRangeSlider.defaultProps = {
@@ -429,5 +430,7 @@ DynamicRangeSlider.types = {
 	stepValue: TYPES.NUMBER,
 	showHistogram: TYPES.BOOLEAN,
 	customQuery: TYPES.FUNCTION,
-	initialLoader: TYPES.OBJECT
+	initialLoader: TYPES.OBJECT,
+	className: TYPES.STRING,
+	className: React.PropTypes.string
 };

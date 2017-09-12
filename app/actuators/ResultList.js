@@ -631,7 +631,7 @@ export default class ResultList extends Component {
 		}
 
 		return (
-			<div ref={(div) => { this.resultListContainer = div; }} className="rbc rbc-resultlist">
+			<div ref={(div) => { this.resultListContainer = div; }} className={`rbc rbc-resultlist ${this.props.className ? this.props.className : ""}`}>
 				<div ref={(div) => { this.listParentElement = div; }} className={`rbc-resultlist-container card thumbnail ${cx}`} style={this.getComponentStyle()}>
 					{title}
 					{sortOptions}
@@ -696,7 +696,8 @@ ResultList.propTypes = {
 	react: React.PropTypes.object,
 	scrollOnTarget: React.PropTypes.object,
 	pages: React.PropTypes.number,
-	pageURLParams: React.PropTypes.bool
+	pageURLParams: React.PropTypes.bool,
+	className: React.PropTypes.string
 };
 
 ResultList.defaultProps = {
@@ -738,5 +739,6 @@ ResultList.types = {
 	placeholder: TYPES.STRING,
 	scrollOnTarget: TYPES.OBJECT,
 	pages: TYPES.NUMBER,
-	pageURLParams: TYPES.BOOLEAN
+	pageURLParams: TYPES.BOOLEAN,
+	className: TYPES.STRING
 };
