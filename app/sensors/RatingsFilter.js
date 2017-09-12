@@ -177,7 +177,7 @@ export default class RatingsFilter extends Component {
 		}, this.props.className);
 
 		return (
-			<div className={`rbc rbc-ratingsfilter col s12 col-xs-12 card thumbnail ${cx}`} style={this.props.componentStyle}>
+			<div className={`rbc rbc-ratingsfilter col s12 col-xs-12 card thumbnail ${cx}`} style={this.props.style}>
 				<div className="row">
 					{title}
 					<div className="col s12 col-xs-12 rbc-list-container">
@@ -201,7 +201,7 @@ RatingsFilter.propTypes = {
 	customQuery: React.PropTypes.func,
 	beforeValueChange: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
-	componentStyle: React.PropTypes.object,
+	style: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
 	showFilter: React.PropTypes.bool,
 	filterLabel: React.PropTypes.string,
@@ -211,7 +211,7 @@ RatingsFilter.propTypes = {
 // Default props value
 RatingsFilter.defaultProps = {
 	title: null,
-	componentStyle: {},
+	style: {},
 	URLParams: false,
 	showFilter: true
 };

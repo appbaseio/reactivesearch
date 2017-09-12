@@ -586,7 +586,7 @@ export default class NestedMultiList extends Component {
 		});
 
 		return (
-			<div className={`rbc rbc-nestedmultilist-container card thumbnail col s12 col-xs-12 ${this.props.className ? this.props.className : ""}`} style={this.props.componentStyle}>
+			<div className={`rbc rbc-nestedmultilist-container card thumbnail col s12 col-xs-12 ${this.props.className ? this.props.className : ""}`} style={this.props.style}>
 				<div className={`rbc rbc-nestedmultilist col s12 col-xs-12 ${cx}`}>
 					{title}
 					{searchComponent}
@@ -636,7 +636,7 @@ NestedMultiList.propTypes = {
 	react: React.PropTypes.object,
 	beforeValueChange: React.PropTypes.func,
 	onValueChange: React.PropTypes.func,
-	componentStyle: React.PropTypes.object,
+	style: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
 	showFilter: React.PropTypes.bool,
 	filterLabel: React.PropTypes.string,
@@ -652,7 +652,7 @@ NestedMultiList.defaultProps = {
 	showSearch: true,
 	title: null,
 	placeholder: "Search",
-	componentStyle: {},
+	style: {},
 	URLParams: false,
 	showFilter: true,
 	showCheckbox: true

@@ -362,7 +362,7 @@ export default class DynamicRangeSlider extends Component {
 		}, this.props.className);
 
 		return (
-			<div className={`rbc rbc-dynamicrangeslider card thumbnail col s12 col-xs-12 ${cx}`} style={this.props.componentStyle}>
+			<div className={`rbc rbc-dynamicrangeslider card thumbnail col s12 col-xs-12 ${cx}`} style={this.props.style}>
 				{title}
 				{histogram}
 				<div className="rbc-rangeslider-container col s12 col-xs-12">
@@ -403,14 +403,15 @@ DynamicRangeSlider.propTypes = {
 	onValueChange: React.PropTypes.func,
 	interval: React.PropTypes.number,
 	componentStyle: React.PropTypes.object,
-	className: React.PropTypes.string
+	className: React.PropTypes.string,
+	style: React.PropTypes.object
 };
 
 DynamicRangeSlider.defaultProps = {
 	title: null,
 	stepValue: 1,
 	showHistogram: true,
-	componentStyle: {}
+	style: {}
 };
 
 // context type
@@ -431,6 +432,5 @@ DynamicRangeSlider.types = {
 	showHistogram: TYPES.BOOLEAN,
 	customQuery: TYPES.FUNCTION,
 	initialLoader: TYPES.OBJECT,
-	className: TYPES.STRING,
-	className: React.PropTypes.string
+	className: TYPES.STRING
 };

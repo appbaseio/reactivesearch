@@ -49,7 +49,7 @@ export default class ViewSwitcher extends Component {
 
 	render() {
 		return (
-			<div className="rbc rbc-viewswitcher" className={`${this.props.className ? this.props.className : ""}`} style={this.props.componentStyle}>
+			<div className="rbc rbc-viewswitcher" className={`${this.props.className ? this.props.className : ""}`} style={this.props.style}>
 				<div className="rbc-list-container">
 					{this.renderItems()}
 				</div>
@@ -59,10 +59,10 @@ export default class ViewSwitcher extends Component {
 }
 
 ViewSwitcher.propTypes = {
-	componentStyle: React.PropTypes.object,
+	style: React.PropTypes.object,
 	className: React.PropTypes.string
 };
 
 ViewSwitcher.defaultProps = {
-	componentStyle: {}
+	style: {}
 };

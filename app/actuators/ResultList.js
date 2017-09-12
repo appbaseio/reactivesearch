@@ -578,13 +578,12 @@ export default class ResultList extends Component {
 	}
 
 	getComponentStyle() {
-		let componentStyle = {};
-		if(this.props.scrollOnTarget) {
-			componentStyle.maxHeight = "none";
-			componentStyle.height = "auto";
+		let style = {};
+		if (this.props.scrollOnTarget) {
+			style.maxHeight = "none";
+			style.height = "auto";
 		}
-		componentStyle = Object.assign(componentStyle, this.props.componentStyle);
-		return componentStyle;
+		return style;
 	}
 
 	render() {
@@ -631,7 +630,7 @@ export default class ResultList extends Component {
 		}
 
 		return (
-			<div ref={(div) => { this.resultListContainer = div; }} className={`rbc rbc-resultlist ${this.props.className ? this.props.className : ""}`}>
+			<div ref={(div) => { this.resultListContainer = div; }} className={`rbc rbc-resultlist ${this.props.className ? this.props.className : ""}`} style={this.props.style}>
 				<div ref={(div) => { this.listParentElement = div; }} className={`rbc-resultlist-container card thumbnail ${cx}`} style={this.getComponentStyle()}>
 					{title}
 					{sortOptions}
@@ -678,7 +677,7 @@ ResultList.propTypes = {
 	pagination: React.PropTypes.bool,
 	paginationAt: React.PropTypes.oneOf(["top", "bottom", "both"]),
 	stream: React.PropTypes.bool,
-	componentStyle: React.PropTypes.object,
+	style: React.PropTypes.object,
 	initialLoader: React.PropTypes.oneOfType([
 		React.PropTypes.string,
 		React.PropTypes.element
@@ -706,7 +705,7 @@ ResultList.defaultProps = {
 	pagination: true,
 	paginationAt: "bottom",
 	stream: false,
-	componentStyle: {},
+	style: {},
 	showResultStats: true,
 	pages: 5,
 	pageURLParams: false
@@ -731,7 +730,7 @@ ResultList.types = {
 	pagination: TYPES.BOOLEAN,
 	paginationAt: TYPES.STRING,
 	stream: TYPES.BOOLEAN,
-	componentStyle: TYPES.OBJECT,
+	style: TYPES.OBJECT,
 	initialLoader: TYPES.STRING,
 	noResults: TYPES.FUNC,
 	showResultStats: TYPES.BOOLEAN,

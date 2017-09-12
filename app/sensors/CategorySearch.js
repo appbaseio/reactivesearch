@@ -506,7 +506,7 @@ export default class CategorySearch extends Component {
 							: this.state.options;
 
 		return (
-			<div className={`rbc rbc-categorysearch col s12 col-xs-12 card thumbnail ${cx} ${this.state.isLoadingOptions ? "is-loading" : ""}`} style={this.props.componentStyle}>
+			<div className={`rbc rbc-categorysearch col s12 col-xs-12 card thumbnail ${cx} ${this.state.isLoadingOptions ? "is-loading" : ""}`} style={this.props.style}>
 				{title}
 				{
 					this.props.autoSuggest ?
@@ -584,7 +584,7 @@ CategorySearch.propTypes = {
 		React.PropTypes.string,
 		React.PropTypes.arrayOf(React.PropTypes.string)
 	]),
-	componentStyle: React.PropTypes.object,
+	style: React.PropTypes.object,
 	URLParams: React.PropTypes.bool,
 	showFilter: React.PropTypes.bool,
 	filterLabel: React.PropTypes.string,
@@ -606,7 +606,7 @@ CategorySearch.defaultProps = {
 	placeholder: "Search",
 	autoSuggest: true,
 	highlight: false,
-	componentStyle: {},
+	style: {},
 	URLParams: false,
 	showFilter: true,
 	queryFormat: "or"
