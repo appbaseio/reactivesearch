@@ -579,11 +579,10 @@ export default class ResultList extends Component {
 
 	getComponentStyle() {
 		let style = {};
-		if(this.props.scrollOnTarget) {
+		if (this.props.scrollOnTarget) {
 			style.maxHeight = "none";
 			style.height = "auto";
 		}
-		style = Object.assign(style, this.props.style);
 		return style;
 	}
 
@@ -631,7 +630,7 @@ export default class ResultList extends Component {
 		}
 
 		return (
-			<div ref={(div) => { this.resultListContainer = div; }} className="rbc rbc-resultlist">
+			<div ref={(div) => { this.resultListContainer = div; }} className="rbc rbc-resultlist" style={this.props.style}>
 				<div ref={(div) => { this.listParentElement = div; }} className={`rbc-resultlist-container card thumbnail ${cx}`} style={this.getComponentStyle()}>
 					{title}
 					{sortOptions}

@@ -576,11 +576,10 @@ export default class ResultCard extends Component {
 	}
 	getComponentStyle() {
 		let style = {};
-		if(this.props.scrollOnTarget) {
+		if (this.props.scrollOnTarget) {
 			style.maxHeight = "none";
 			style.height = "auto";
 		}
-		style = Object.assign(style, this.props.style);
 		return style;
 	}
 	render() {
@@ -627,8 +626,8 @@ export default class ResultCard extends Component {
 		}
 
 		return (
-			<div className="rbc rbc-resultcard" ref={(node) => { this.listContainer = node; }}>
-				<div ref={(div) => { this.listParentElement = div; }} className={`rbc-resultcard-container card thumbnail ${cx}`} style={this.props.style} style={this.getComponentStyle()}>
+			<div className="rbc rbc-resultcard" ref={(node) => { this.listContainer = node; }} style={this.props.style}>
+				<div ref={(div) => { this.listParentElement = div; }} className={`rbc-resultcard-container card thumbnail ${cx}`} style={this.getComponentStyle()}>
 					{title}
 					{sortOptions}
 					{this.props.showResultStats && this.state.resultStats.resultFound ? (<ResultStats onResultStats={this.props.onResultStats} took={this.state.resultStats.took} total={this.state.resultStats.total} />) : null}
