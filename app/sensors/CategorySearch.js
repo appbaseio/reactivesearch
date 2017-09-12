@@ -452,8 +452,9 @@ export default class CategorySearch extends Component {
 	handleKeyPress(event) {
 		if (event.key === "Enter") {
 			event.target.blur();
-		} else {
-			if (this.props.onKeyPress) this.props.onKeyPress(event);
+		}
+		if (this.props.onKeyPress) {
+			this.props.onKeyPress(event);
 		}
 	}
 
