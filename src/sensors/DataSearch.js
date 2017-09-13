@@ -141,8 +141,7 @@ class DataSearch extends Component {
 
 	setValue = (value) => {
 		this.setState({
-			currentValue: value,
-			suggestions: []
+			currentValue: value
 		});
 		if (this.props.autoSuggest) {
 			this.updateQuery(this.internalComponent, value);
