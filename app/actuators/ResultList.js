@@ -336,7 +336,7 @@ export default class ResultList extends Component {
 		markup = data.map((item) => {
 			const result = this.props.onData(item._source);
 			let cx = result.image ? result.image_size === "small" ? "rbc-image-active rbc-image-small" : "rbc-image-active" : "rbc-image-inactive";
-			cx = result.className ? cx + " " + result.className : cx;
+			cx = `${cx} ${result.className ? result.className : ""}`;
 			const details = (
 				<div style={{display: "flex", flexDirection: "row"}}>
 					{
