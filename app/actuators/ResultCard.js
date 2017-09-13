@@ -335,7 +335,8 @@ export default class ResultCard extends Component {
 
 		markup = data.map((item) => {
 			const result = this.props.onData(item._source);
-			const cx = result.image ? "rbc-image-active" : "rbc-image-inactive";
+			let cx = result.image ? "rbc-image-active" : "rbc-image-inactive";
+			cx = `${cx} ${result.className ? result.className : ""}`;
 			const details = (
 				<div>
 					{
