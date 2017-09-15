@@ -361,14 +361,29 @@ export default class DynamicRangeSlider extends Component {
 			"rbc-initialloader-inactive": !this.props.initialLoader
 		}, this.props.className);
 
+		const keyAttributes = {
+			start: "start",
+			end: "end"
+		};
+
+		// this will cause Slider to re-render when defaultSelected is used
+		if (this.props.defaultSelected) {
+			keyAttributes.start = this.state.values.min;
+			keyAttributes.end = this.state.values.max;
+		}
+
 		return (
-			<div className={`rbc rbc-dynamicrangeslider card thumbnail col s12 col-xs-12 ${cx}`} style={this.props.style}>
+			<div
+				className={`rbc rbc-dynamicrangeslider card thumbnail col s12 col-xs-12 ${cx}`}
+				style={this.props.style}
+				key={`rbc-dynamicrangeslider-${keyAttributes.start}-${keyAttributes.end}`}
+			>
 				{title}
 				{histogram}
 				<div className="rbc-rangeslider-container col s12 col-xs-12">
 					<Slider
 						range
-						value={[this.state.values.min, this.state.values.max]}
+						defaultValue={[this.state.values.min, this.state.values.max]}
 						min={min}
 						max={max}
 						onAfterChange={this.handleResults}
