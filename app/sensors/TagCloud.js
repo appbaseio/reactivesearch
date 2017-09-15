@@ -38,6 +38,7 @@ export default class TagCloud extends Component {
 
 	// Get the items from Appbase when component is mounted
 	componentWillMount() {
+		this.previousQuery = null;	// initial value for onQueryChange
 		this.size = this.props.size;
 		this.setReact(this.props);
 		this.setQueryInfo(this.props);
@@ -192,12 +193,20 @@ export default class TagCloud extends Component {
 	}
 
 	setQueryInfo(props) {
+		const getQuery = (value) => {
+			const currentQuery = this.props.customQuery ? this.props.customQuery(value) : this.customQuery(value);
+			if (this.props.onQueryChange && JSON.stringify(this.previousQuery) !== JSON.stringify(currentQuery)) {
+				this.props.onQueryChange(this.previousQuery, currentQuery);
+			}
+			this.previousQuery = currentQuery;
+			return currentQuery;
+		};
 		const obj = {
 			key: props.componentId,
 			value: {
 				queryType: this.type,
 				inputData: props.dataField,
-				customQuery: this.customQuery,
+				customQuery: getQuery,
 				reactiveId: this.context.reactiveId,
 				showFilter: props.showFilter,
 				filterLabel: props.filterLabel ? props.filterLabel : props.componentId,
@@ -434,7 +443,8 @@ TagCloud.propTypes = {
 	URLParams: React.PropTypes.bool,
 	showFilter: React.PropTypes.bool,
 	filterLabel: React.PropTypes.string,
-	className: React.PropTypes.string
+	className: React.PropTypes.string,
+	onQueryChange: React.PropTypes.func
 };
 
 TagCloud.defaultProps = {
@@ -468,5 +478,6 @@ TagCloud.types = {
 	URLParams: TYPES.BOOLEAN,
 	showFilter: TYPES.BOOLEAN,
 	filterLabel: TYPES.STRING,
-	className: TYPES.STRING
+	className: TYPES.STRING,
+	onQueryChange: TYPES.FUNCTION
 };
