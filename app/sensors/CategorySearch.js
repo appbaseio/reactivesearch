@@ -50,6 +50,7 @@ export default class CategorySearch extends Component {
 
 	// Get the items from Appbase when component is mounted
 	componentWillMount() {
+		this.previousQuery = null;	// initial value for onQueryChange
 		this.setReact(this.props);
 		this.setQueryInfo(this.props);
 		this.createChannel();
@@ -118,12 +119,20 @@ export default class CategorySearch extends Component {
 
 	// set the query type and input data
 	setQueryInfo(props) {
+		const getQuery = (value) => {
+			const currentQuery = props.customQuery ? props.customQuery(value) : this.defaultSearchQuery(value);
+			if (this.props.onQueryChange && JSON.stringify(this.previousQuery) !== JSON.stringify(currentQuery)) {
+				this.props.onQueryChange(this.previousQuery, currentQuery);
+			}
+			this.previousQuery = currentQuery;
+			return currentQuery;
+		};
 		const obj = {
 			key: props.componentId,
 			value: {
 				queryType: this.type,
 				inputData: props.dataField,
-				customQuery: props.customQuery ? props.customQuery : this.defaultSearchQuery,
+				customQuery: getQuery,
 				reactiveId: this.context.reactiveId,
 				showFilter: props.showFilter,
 				filterLabel: props.filterLabel ? props.filterLabel : props.componentId,
@@ -598,7 +607,8 @@ CategorySearch.propTypes = {
 	onFocus: React.PropTypes.func,
 	onKeyPress: React.PropTypes.func,
 	onKeyDown: React.PropTypes.func,
-	onKeyUp: React.PropTypes.func
+	onKeyUp: React.PropTypes.func,
+	onQueryChange: React.PropTypes.func
 };
 
 // Default props value
@@ -642,5 +652,6 @@ CategorySearch.types = {
 	onFocus: TYPES.FUNCTION,
 	onKeyPress: TYPES.FUNCTION,
 	onKeyDown: TYPES.FUNCTION,
-	onKeyUp: TYPES.FUNCTION
+	onKeyUp: TYPES.FUNCTION,
+	onQueryChange: TYPES.FUNCTION
 };
