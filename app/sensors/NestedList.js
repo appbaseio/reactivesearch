@@ -46,6 +46,7 @@ export default class NestedList extends Component {
 
 	// Get the items from Appbase when component is mounted
 	componentWillMount() {
+		this.previousQuery = null;	// initial value for onQueryChange
 		this.setReact(this.props);
 		this.setQueryInfo();
 		this.createChannel();
@@ -158,12 +159,20 @@ export default class NestedList extends Component {
 
 	// set the query type and input data
 	setQueryInfo() {
+		const getQuery = (value) => {
+			const currentQuery = this.props.customQuery ? this.props.customQuery(value) : this.customQuery(value);
+			if (this.props.onQueryChange && JSON.stringify(this.previousQuery) !== JSON.stringify(currentQuery)) {
+				this.props.onQueryChange(this.previousQuery, currentQuery);
+			}
+			this.previousQuery = currentQuery;
+			return currentQuery;
+		};
 		const obj = {
 			key: this.props.componentId,
 			value: {
 				queryType: this.type,
 				inputData: this.props.dataField[0],
-				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery,
+				customQuery: getQuery,
 				reactiveId: this.context.reactiveId,
 				showFilter: this.props.showFilter,
 				filterLabel: this.props.filterLabel ? this.props.filterLabel : this.props.componentId,
@@ -583,7 +592,8 @@ NestedList.propTypes = {
 	URLParams: React.PropTypes.bool,
 	showFilter: React.PropTypes.bool,
 	filterLabel: React.PropTypes.string,
-	className: React.PropTypes.string
+	className: React.PropTypes.string,
+	onQueryChange: React.PropTypes.func
 };
 
 // Default props value
@@ -623,5 +633,6 @@ NestedList.types = {
 	URLParams: TYPES.BOOLEAN,
 	showFilter: TYPES.BOOLEAN,
 	filterLabel: TYPES.STRING,
-	className: TYPES.STRING
+	className: TYPES.STRING,
+	onQueryChange: TYPES.FUNCTION
 };
