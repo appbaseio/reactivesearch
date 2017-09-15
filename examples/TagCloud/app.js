@@ -77,6 +77,10 @@ class Main extends Component {
 							URLParams={true}
 							multiSelect={true}
 							beforeValueChange={() => new Promise((resolve, reject) => resolve())}
+							onQueryChange={(prevQuery, nextQuery) => {
+								console.log("prevQuery", prevQuery);
+								console.log("nextQuery", nextQuery);
+							}}
 						/>
 					</div>
 					<div className="col s6 col-xs-6">
