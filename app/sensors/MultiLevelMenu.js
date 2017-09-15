@@ -34,6 +34,7 @@ export default class MultiLevelMenu extends Component {
 
 	// Get the items from Appbase when component is mounted
 	componentWillMount() {
+		this.previousQuery = null;	// initial value for onQueryChange
 		this.initialize();
 	}
 
@@ -88,12 +89,20 @@ export default class MultiLevelMenu extends Component {
 
 	// set the query type and input data
 	setQueryInfo() {
+		const getQuery = (value) => {
+			const currentQuery = this.props.customQuery ? this.props.customQuery(value) : this.customQuery(value);
+			if (this.props.onQueryChange && JSON.stringify(this.previousQuery) !== JSON.stringify(currentQuery)) {
+				this.props.onQueryChange(this.previousQuery, currentQuery);
+			}
+			this.previousQuery = currentQuery;
+			return currentQuery;
+		};
 		const ob = {
 			key: this.props.componentId,
 			value: {
 				queryType: this.type,
 				inputData: this.props.dataField[0],
-				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery,
+				customQuery: getQuery,
 				defaultSelected: this.urlParams !== null ? this.urlParams : this.props.defaultSelected
 			}
 		};
@@ -412,7 +421,8 @@ MultiLevelMenu.propTypes = {
 	onValueChange: React.PropTypes.func,
 	style: React.PropTypes.object,
 	componentStyle: React.PropTypes.object,
-	className: React.PropTypes.string
+	className: React.PropTypes.string,
+	onQueryChange: React.PropTypes.func
 };
 
 // Default props value
@@ -439,5 +449,6 @@ MultiLevelMenu.types = {
 	blacklist: TYPES.ARRAY,
 	data: TYPES.OBJECT,
 	customQuery: TYPES.FUNCTION,
-	className: TYPES.STRING
+	className: TYPES.STRING,
+	onQueryChange: TYPES.FUNCTION
 };
