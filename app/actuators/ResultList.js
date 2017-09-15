@@ -153,7 +153,6 @@ export default class ResultList extends Component {
 				const scrollHeight = resultElement.clientHeight - 100;
 				if (this.props.scrollOnTarget) {
 					scrollElement.style.height = "auto";
-					scrollElement.style.paddingBottom = 0;
 				} else if (scrollHeight > 0) {
 					scrollElement.style.height = `${scrollElement.clientHeight + 30}px`;
 					scrollElement.style.paddingBottom = "40px";
