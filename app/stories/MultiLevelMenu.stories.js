@@ -57,6 +57,10 @@ export default class MultiLevelMenuDefault extends Component {
 								{ label: "Nissan", value: "nissan" },
 								{ label: "Fiat", value: "fiat" }
 							]}
+							onQueryChange={(prevQuery, nextQuery) => {
+								console.log("prevQuery", prevQuery);
+								console.log("nextQuery", nextQuery);
+							}}
 							{...this.props}
 						/>
 					</div>

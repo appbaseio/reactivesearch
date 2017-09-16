@@ -55,6 +55,10 @@ export default class DynamicRangeSliderDefault extends Component {
 							dataField={this.props.mapping.guests}
 							stepValue={2}
 							title="DynamicRangeSlider"
+							onQueryChange={(prevQuery, nextQuery) => {
+								console.log("prevQuery", prevQuery);
+								console.log("nextQuery", nextQuery);
+							}}
 							{...this.props}
 						/>
 					</div>
@@ -64,7 +68,6 @@ export default class DynamicRangeSliderDefault extends Component {
 							componentId="SearchResult"
 							dataField={this.props.mapping.topic}
 							title="Results"
-							sortBy="asc"
 							from={0}
 							size={20}
 							onData={this.onData}

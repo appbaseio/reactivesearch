@@ -50,6 +50,10 @@ class Main extends Component {
 							title="NestedMultiList"
 							URLParams={true}
 							defaultSelected={["bmw", "sports", ["1er", "miscs"]]}
+							onQueryChange={(prevQuery, nextQuery) => {
+								console.log("prevQuery", prevQuery);
+								console.log("nextQuery", nextQuery);
+							}}
 						/>
 					</div>
 

@@ -50,6 +50,10 @@ class Main extends Component {
 							title="NestedList"
 							URLParams={true}
 							beforeValueChange={() => new Promise((resolve, reject) => resolve())}
+							onQueryChange={(prevQuery, nextQuery) => {
+								console.log("prevQuery", prevQuery);
+								console.log("nextQuery", nextQuery);
+							}}
 						/>
 					</div>
 

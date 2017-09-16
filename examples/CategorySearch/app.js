@@ -57,6 +57,10 @@ class Main extends Component {
 									value: "BMW"
 								}
 							]}
+							onQueryChange={(prevQuery, nextQuery) => {
+								console.log("prevQuery", prevQuery);
+								console.log("nextQuery", nextQuery);
+							}}
 						/>
 					</div>
 

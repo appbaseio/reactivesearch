@@ -42,6 +42,7 @@ export default class DynamicRangeSlider extends Component {
 
 	// Get the items from Appbase when component is mounted
 	componentWillMount() {
+		this.previousQuery = null;	// initial value for onQueryChange
 		this.setReact(this.props);
 		this.setQueryInfo();
 		this.createChannel();
@@ -77,12 +78,20 @@ export default class DynamicRangeSlider extends Component {
 				inputData: this.props.dataField
 			}
 		};
+		const getQuery = (value) => {
+			const currentQuery = this.props.customQuery ? this.props.customQuery(value) : this.customQuery(value);
+			if (this.props.onQueryChange && JSON.stringify(this.previousQuery) !== JSON.stringify(currentQuery)) {
+				this.props.onQueryChange(this.previousQuery, currentQuery);
+			}
+			this.previousQuery = currentQuery;
+			return currentQuery;
+		};
 		const obj1 = {
 			key: `${this.props.componentId}-internal`,
 			value: {
 				queryType: "range",
 				inputData: this.props.dataField,
-				customQuery: this.props.customQuery ? this.props.customQuery : this.customQuery
+				customQuery: getQuery
 			}
 		};
 		helper.selectedSensor.setSensorInfo(obj);
@@ -361,14 +370,29 @@ export default class DynamicRangeSlider extends Component {
 			"rbc-initialloader-inactive": !this.props.initialLoader
 		}, this.props.className);
 
+		const keyAttributes = {
+			start: "start",
+			end: "end"
+		};
+
+		// this will cause Slider to re-render when defaultSelected is used
+		if (this.props.defaultSelected) {
+			keyAttributes.start = this.state.values.min;
+			keyAttributes.end = this.state.values.max;
+		}
+
 		return (
-			<div className={`rbc rbc-dynamicrangeslider card thumbnail col s12 col-xs-12 ${cx}`} style={this.props.style}>
+			<div
+				className={`rbc rbc-dynamicrangeslider card thumbnail col s12 col-xs-12 ${cx}`}
+				style={this.props.style}
+				key={`rbc-dynamicrangeslider-${keyAttributes.start}-${keyAttributes.end}`}
+			>
 				{title}
 				{histogram}
 				<div className="rbc-rangeslider-container col s12 col-xs-12">
 					<Slider
 						range
-						value={[this.state.values.min, this.state.values.max]}
+						defaultValue={[this.state.values.min, this.state.values.max]}
 						min={min}
 						max={max}
 						onAfterChange={this.handleResults}
@@ -404,7 +428,8 @@ DynamicRangeSlider.propTypes = {
 	interval: React.PropTypes.number,
 	componentStyle: React.PropTypes.object,
 	className: React.PropTypes.string,
-	style: React.PropTypes.object
+	style: React.PropTypes.object,
+	onQueryChange: React.PropTypes.func
 };
 
 DynamicRangeSlider.defaultProps = {
@@ -432,5 +457,6 @@ DynamicRangeSlider.types = {
 	showHistogram: TYPES.BOOLEAN,
 	customQuery: TYPES.FUNCTION,
 	initialLoader: TYPES.OBJECT,
-	className: TYPES.STRING
+	className: TYPES.STRING,
+	onQueryChange: TYPES.FUNCTION
 };
