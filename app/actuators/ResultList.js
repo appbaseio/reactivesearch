@@ -151,7 +151,9 @@ export default class ResultList extends Component {
 			const scrollFlag = scrollElement.scrollHeight > resultElement.clientHeight;
 			if (!flag && !scrollFlag && scrollElement && !this.props.pagination) {
 				const scrollHeight = resultElement.clientHeight - 100;
-				if (scrollHeight > 0) {
+				if (this.props.scrollOnTarget) {
+					scrollElement.style.height = "auto";
+				} else if (scrollHeight > 0) {
 					scrollElement.style.height = `${scrollElement.clientHeight + 30}px`;
 					scrollElement.style.paddingBottom = "40px";
 				}
