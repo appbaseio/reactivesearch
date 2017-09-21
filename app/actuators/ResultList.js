@@ -333,7 +333,15 @@ export default class ResultList extends Component {
 
 	cardMarkup(res) {
 		let markup = null;
-		const data = res.currentData.concat(res.newData);
+		let data = [];
+		if (res.mode === "historic") {
+			data = res.currentData.concat(res.newData);
+		}	else {
+			// filter out the historic data
+			const currentData = res.currentData.filter(item => item._id !== res.newData._id);
+			// append new streaming data
+			data = [res.newData, ...currentData];
+		}
 
 		markup = data.map((item) => {
 			const result = this.props.onData(item._source);
