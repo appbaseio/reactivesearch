@@ -339,8 +339,12 @@ export default class ResultList extends Component {
 		}	else {
 			// filter out the historic data
 			const currentData = res.currentData.filter(item => item._id !== res.newData._id);
-			// append new streaming data
-			data = [res.newData, ...currentData];
+			// append new streaming data if updated or remove if deleted
+			if (res.newData._deleted) {
+				data = currentData;
+			} else {
+				data = [res.newData, ...currentData];
+			}
 		}
 
 		markup = data.map((item) => {
