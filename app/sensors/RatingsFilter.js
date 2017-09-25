@@ -15,7 +15,7 @@ export default class RatingsFilter extends Component {
 			selected: null
 		};
 		this.type = "range";
-		this.urlParams = helper.URLParams.get(this.props.componentId, false, true);
+		this.urlParams = props.URLParams ? helper.URLParams.get(props.componentId, false, true) : null;
 		this.handleChange = this.handleChange.bind(this);
 		this.customQuery = this.customQuery.bind(this);
 	}

@@ -31,7 +31,7 @@ export default class CategorySearch extends Component {
 		this.type = "match_phrase";
 		this.channelId = null;
 		this.channelListener = null;
-		this.urlParams = helper.URLParams.get(this.props.componentId);
+		this.urlParams = props.URLParams ? helper.URLParams.get(props.componentId) : null;
 		this.fieldType = typeof props.dataField;
 		this.handleSearch = this.handleSearch.bind(this);
 		this.optionRenderer = this.optionRenderer.bind(this);

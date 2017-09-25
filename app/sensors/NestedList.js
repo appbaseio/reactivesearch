@@ -33,7 +33,7 @@ export default class NestedList extends Component {
 		};
 		this.channelId = null;
 		this.channelListener = null;
-		this.urlParams = helper.URLParams.get(this.props.componentId);
+		this.urlParams = props.URLParams ? helper.URLParams.get(props.componentId) : null;
 		this.urlParams = this.urlParams ? this.urlParams.split("/") : null;
 		this.filterBySearch = this.filterBySearch.bind(this);
 		this.onItemSelect = this.onItemSelect.bind(this);
