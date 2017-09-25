@@ -125,7 +125,9 @@ export default class RatingsFilter extends Component {
 				this.props.onValueChange(obj.value);
 			}
 			const isExecuteQuery = true;
-			helper.URLParams.update(this.props.componentId, record ? JSON.stringify(record) : null, this.props.URLParams);
+			if(this.props.URLParams) {
+				helper.URLParams.update(this.props.componentId, record ? JSON.stringify(record) : null, this.props.URLParams);
+			}
 			helper.selectedSensor.set(obj, isExecuteQuery);
 		};
 

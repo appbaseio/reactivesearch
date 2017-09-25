@@ -425,7 +425,9 @@ export default class CategorySearch extends Component {
 			if(this.props.onValueChange) {
 				this.props.onValueChange(obj.value);
 			}
-			helper.URLParams.update(this.props.componentId, finalVal ? finalVal.value : null, this.props.URLParams);
+			if(this.props.URLParams) {
+				helper.URLParams.update(this.props.componentId, finalVal ? finalVal.value : null, this.props.URLParams);
+			}
 			helper.selectedSensor.set(obj, true);
 		};
 
