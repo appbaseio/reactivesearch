@@ -94,7 +94,7 @@ export default class NestedMultiList extends Component {
 	}
 
 	checkDefault(props) {
-		this.urlParams = props.URLParams ? helper.URLParams.get(props.componentId, true) : null;
+		this.urlParams = props.URLParams ? helper.URLParams.get(props.componentId) : null;
 		this.urlParams = this.urlParams ? this.urlParams.split("/") : null;
 		if (this.urlParams) {
 			this.urlParams = this.urlParams.map(item => {
