@@ -31,7 +31,7 @@ export default class CategorySearch extends Component {
 		this.type = "match_phrase";
 		this.channelId = null;
 		this.channelListener = null;
-		this.urlParams = helper.URLParams.get(this.props.componentId);
+		this.urlParams = props.URLParams ? helper.URLParams.get(props.componentId) : null;
 		this.fieldType = typeof props.dataField;
 		this.handleSearch = this.handleSearch.bind(this);
 		this.optionRenderer = this.optionRenderer.bind(this);
@@ -425,7 +425,9 @@ export default class CategorySearch extends Component {
 			if(this.props.onValueChange) {
 				this.props.onValueChange(obj.value);
 			}
-			helper.URLParams.update(this.props.componentId, finalVal ? finalVal.value : null, this.props.URLParams);
+			if(this.props.URLParams) {
+				helper.URLParams.update(this.props.componentId, finalVal ? finalVal.value : null, this.props.URLParams);
+			}
 			helper.selectedSensor.set(obj, true);
 		};
 

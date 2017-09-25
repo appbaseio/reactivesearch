@@ -33,7 +33,7 @@ export default class NestedMultiList extends Component {
 		};
 		this.channelId = null;
 		this.channelListener = null;
-		this.urlParams = helper.URLParams.get(this.props.componentId);
+		this.urlParams = props.URLParams ? helper.URLParams.get(props.componentId) : null;
 		this.urlParams = this.urlParams ? this.urlParams.split("/") : null;
 		this.filterBySearch = this.filterBySearch.bind(this);
 		this.onItemClick = this.onItemClick.bind(this);
@@ -94,7 +94,7 @@ export default class NestedMultiList extends Component {
 	}
 
 	checkDefault(props) {
-		this.urlParams = helper.URLParams.get(props.componentId);
+		this.urlParams = props.URLParams ? helper.URLParams.get(props.componentId) : null;
 		this.urlParams = this.urlParams ? this.urlParams.split("/") : null;
 		if (this.urlParams) {
 			this.urlParams = this.urlParams.map(item => {
@@ -421,7 +421,9 @@ export default class NestedMultiList extends Component {
 				});
 			}
 			paramValue = paramValue.length ? paramValue.join("/") : null;
-			helper.URLParams.update(this.props.componentId, paramValue, this.props.URLParams);
+			if(this.props.URLParams) {
+				helper.URLParams.update(this.props.componentId, paramValue, this.props.URLParams);
+			}
 			helper.selectedSensor.set(obj, isExecuteQuery);
 		};
 

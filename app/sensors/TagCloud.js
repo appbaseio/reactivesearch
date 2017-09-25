@@ -30,7 +30,7 @@ export default class TagCloud extends Component {
 		this.previousSelectedSensor = {};
 		this.channelId = null;
 		this.channelListener = null;
-		this.urlParams = helper.URLParams.get(this.props.componentId, this.props.multiSelect);
+		this.urlParams = props.URLParams ? helper.URLParams.get(props.componentId, props.multiSelect) : null;
 		this.type = this.props.multiSelect ? "Terms" : "Term";
 		this.customQuery = this.customQuery.bind(this);
 		this.defaultCustomQuery = this.defaultCustomQuery.bind(this);
@@ -104,7 +104,9 @@ export default class TagCloud extends Component {
 				if(this.props.onValueChange) {
 					this.props.onValueChange(obj.value);
 				}
-				helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
+				if(this.props.URLParams) {
+					helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
+				}
 				helper.selectedSensor.set(obj, true);
 			};
 
@@ -142,7 +144,9 @@ export default class TagCloud extends Component {
 				if(this.props.onValueChange) {
 					this.props.onValueChange(obj.value);
 				}
-				helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
+				if(this.props.URLParams) {
+					helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
+				}
 				helper.selectedSensor.set(obj, true);
 			};
 
@@ -344,7 +348,9 @@ export default class TagCloud extends Component {
 				this.props.onValueChange(obj.value);
 			}
 			this.defaultSelected = this.selectedValue;
-			helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
+			if(this.props.URLParams) {
+				helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
+			}
 			helper.selectedSensor.set(obj, true);
 		};
 
