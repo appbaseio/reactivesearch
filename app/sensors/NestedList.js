@@ -95,7 +95,7 @@ export default class NestedList extends Component {
 	}
 
 	checkDefault(props) {
-		this.urlParams = helper.URLParams.get(props.componentId);
+		this.urlParams = props.URLParams ? helper.URLParams.get(props.componentId, true) : null;
 		this.urlParams = this.urlParams ? this.urlParams.split("/") : null;
 		const defaultValue = this.urlParams !== null ? this.urlParams : props.defaultSelected;
 		this.changeValue(defaultValue);
