@@ -553,6 +553,7 @@ export default class CategorySearch extends Component {
 								onKeyPress={this.props.onKeyPress}
 								onKeyDown={this.props.onKeyDown}
 								onKeyUp={this.props.onKeyUp}
+								autoFocus={this.props.autoFocus}
 							/>
 							<span className="rbc-search-icon" />
 						</div>
@@ -610,7 +611,8 @@ CategorySearch.propTypes = {
 	onKeyPress: React.PropTypes.func,
 	onKeyDown: React.PropTypes.func,
 	onKeyUp: React.PropTypes.func,
-	onQueryChange: React.PropTypes.func
+	onQueryChange: React.PropTypes.func,
+	autoFocus: React.PropTypes.bool
 };
 
 // Default props value
@@ -621,7 +623,8 @@ CategorySearch.defaultProps = {
 	style: {},
 	URLParams: false,
 	showFilter: true,
-	queryFormat: "or"
+	queryFormat: "or",
+	autoFocus: false
 };
 
 // context type
@@ -655,5 +658,6 @@ CategorySearch.types = {
 	onKeyPress: TYPES.FUNCTION,
 	onKeyDown: TYPES.FUNCTION,
 	onKeyUp: TYPES.FUNCTION,
-	onQueryChange: TYPES.FUNCTION
+	onQueryChange: TYPES.FUNCTION,
+	autoFocus: TYPES.BOOLEAN
 };
