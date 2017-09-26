@@ -553,7 +553,7 @@ export default class CategorySearch extends Component {
 								onKeyPress={this.props.onKeyPress}
 								onKeyDown={this.props.onKeyDown}
 								onKeyUp={this.props.onKeyUp}
-								autoFocus={this.props.autoFocus ? this.props.autoFocus : false}
+								autoFocus={this.props.autoFocus}
 							/>
 							<span className="rbc-search-icon" />
 						</div>
@@ -623,7 +623,8 @@ CategorySearch.defaultProps = {
 	style: {},
 	URLParams: false,
 	showFilter: true,
-	queryFormat: "or"
+	queryFormat: "or",
+	autoFocus: false
 };
 
 // context type
