@@ -1,6 +1,6 @@
 {
   "name": "@appbaseio/reactivesearch",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "A React UI components library for building search experiences",
   "main": "lib/app.js",
   "scripts": {
