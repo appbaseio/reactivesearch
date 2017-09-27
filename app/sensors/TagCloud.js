@@ -31,7 +31,7 @@ export default class TagCloud extends Component {
 		this.channelId = null;
 		this.channelListener = null;
 		this.urlParams = props.URLParams ? helper.URLParams.get(props.componentId, props.multiSelect) : null;
-		this.type = this.props.multiSelect ? "Terms" : "Term";
+		this.type = this.props.multiSelect ? "terms" : "term";
 		this.customQuery = this.customQuery.bind(this);
 		this.defaultCustomQuery = this.defaultCustomQuery.bind(this);
 	}
@@ -53,7 +53,7 @@ export default class TagCloud extends Component {
 			manager.update(this.channelId, this.react, nextProps.size, 0, false);
 		}
 		if (this.props.multiSelect !== nextProps.multiSelect) {
-			this.type = nextProps.multiSelect ? "Terms" : "Term";
+			this.type = nextProps.multiSelect ? "terms" : "term";
 		}
 		if (this.props.showFilter !== nextProps.showFilter || this.props.filterLabel !== nextProps.filterLabel) {
 			this.setQueryInfo(nextProps);

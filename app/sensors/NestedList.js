@@ -221,7 +221,7 @@ export default class NestedList extends Component {
 		const field = this.props.dataField[level];
 		const orderType = this.props.sortBy === "count" ? "_count" : "_term";
 		const sortBy = this.props.sortBy === "count" ? "desc" : this.props.sortBy;
-		const createTermQuery = (index) => ({
+		const createtermQuery = (index) => ({
 			term: {
 				[this.props.dataField[index]]: this.state.selectedValues[index]
 			}
@@ -230,7 +230,7 @@ export default class NestedList extends Component {
 			const filterMust = [];
 			if(level > 0) {
 				for(let i = 0; i <= level-1; i++) {
-					filterMust.push(createTermQuery(i));
+					filterMust.push(createtermQuery(i));
 				}
 			}
 			return {

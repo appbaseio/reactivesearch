@@ -29,7 +29,7 @@ export default class MultiLevelMenu extends Component {
 		this.customQuery = this.customQuery.bind(this);
 		this.firstLevelAggCustomQuery = this.firstLevelAggCustomQuery.bind(this);
 		this.secondLevelAggCustomQuery = this.secondLevelAggCustomQuery.bind(this);
-		this.type = "Term";
+		this.type = "term";
 	}
 
 	// Get the items from Appbase when component is mounted

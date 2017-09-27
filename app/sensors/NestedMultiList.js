@@ -146,7 +146,7 @@ export default class NestedMultiList extends Component {
 	// build query for this sensor only
 	customQuery(record) {
 		let query = null;
-		function generateTermsQuery(dataField) {
+		function generatetermsQuery(dataField) {
 			return Object.keys(record).map((key, index) => ({
 				terms: {
 					[dataField[index]]: Array.isArray(record[key]) ? record[key] : [record[key]]
@@ -156,7 +156,7 @@ export default class NestedMultiList extends Component {
 		if (record && record[0] !== null) {
 			query = {
 				bool: {
-					must: generateTermsQuery(this.props.dataField)
+					must: generatetermsQuery(this.props.dataField)
 				}
 			};
 		}
@@ -228,7 +228,7 @@ export default class NestedMultiList extends Component {
 		const orderType = this.props.sortBy === "count" ? "_count" : "_term";
 		const sortBy = this.props.sortBy === "count" ? "desc" : this.props.sortBy;
 
-		const createTermQuery = (index) => {
+		const createtermQuery = (index) => {
 			const value = this.state.selectedValues[index];
 			if (value.length === 1) {
 				return {
@@ -244,7 +244,7 @@ export default class NestedMultiList extends Component {
 			const filterMust = [];
 			if(level > 0) {
 				for(let i = 0; i <= level-1; i++) {
-					const termQuery = createTermQuery(i);
+					const termQuery = createtermQuery(i);
 					if (termQuery) {
 						filterMust.push(termQuery);
 					}
