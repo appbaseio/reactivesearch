@@ -73,15 +73,15 @@ export function executeQuery(component, query, options = {}, appendToHits = fals
 				...options
 			}
 		})
-		.on("data", response => {
-			dispatch(updateHits(component, response.hits.hits, appendToHits))
-			if ("aggregations" in response) {
-				dispatch(updateAggs(component, response.aggregations));
-			}
-		})
-		.on("error", e => {
-			console.log(e);
-		});
+			.on("data", response => {
+				dispatch(updateHits(component, response.hits.hits, appendToHits))
+				if ("aggregations" in response) {
+					dispatch(updateAggs(component, response.aggregations));
+				}
+			})
+			.on("error", e => {
+				console.log(e);
+			});
 	}
 }
 
