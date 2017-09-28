@@ -7,3 +7,4 @@ export const EXECUTE_QUERY = "EXECUTE_QUERY";
 export const UPDATE_HITS = "UPDATE_HITS";
 export const UPDATE_AGGS = "UPDATE_AGGS";
 export const ADD_CONFIG = "ADD_CONFIG";
+export const ADD_APPBASE_REF = "ADD_APPBASE_REF";

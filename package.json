@@ -37,6 +37,7 @@
 		"react-native": "^0.47.1"
 	},
 	"dependencies": {
+		"appbase-js": "2.0.0",
 		"native-base": "2.2.1",
 		"react-redux": "^5.0.6",
 		"redux": "^3.7.2",

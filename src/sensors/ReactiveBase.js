@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { View } from "react-native";
 import { Container } from "native-base";
+import Appbase from "appbase-js";
 
 import configureStore from "../store/configureStore";
 
@@ -9,14 +10,21 @@ export default class ReactiveBase extends Component {
 	constructor(props) {
 		super(props);
 
-		this.type = props.type ? props.type : null;
+		this.type = props.type ? props.type : "*";
+
+		const credentials = props.url && props.url.trim() !== "" && !props.credentials
+			? "user:pass"
+			: props.credentials;
+
 		const config = {
-			url: "scalr.api.appbase.io",
+			url: props.url && props.url.trim() !== "" ? props.url : "https://scalr.api.appbase.io",
 			app: props.app,
 			credentials: props.credentials,
 			type: this.type
 		};
-		this.store = configureStore({ config });
+
+		const appbaseRef = new Appbase(config);
+		this.store = configureStore({ config, appbaseRef });
 	}
 
 	render() {

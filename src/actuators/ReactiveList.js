@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Text, FlatList } from "react-native";
+import { FlatList, View } from "react-native";
+import { Text, Spinner } from "native-base";
 
 import { addComponent, removeComponent, watchComponent, setQueryOptions, loadMore } from "../actions";
 import { isEqual, getQueryOptions } from "../utils/helper";
@@ -10,7 +11,8 @@ class ReactiveList extends Component {
 		super(props);
 
 		this.state = {
-			from: 0
+			from: 0,
+			isLoading: false
 		};
 	}
 
@@ -28,7 +30,8 @@ class ReactiveList extends Component {
 		if (nextProps.hits && this.props.hits && nextProps.hits.length < this.props.hits.length) {
 			this.refs.listRef.scrollToOffset({ x: 0, y: 0, animated: false });
 			this.setState({
-				from: 0
+				from: 0,
+				isLoading: false
 			});
 		}
 	}
@@ -48,7 +51,8 @@ class ReactiveList extends Component {
 			const value = this.state.from + this.props.size;
 			const options = getQueryOptions(this.props);
 			this.setState({
-				from: value
+				from: value,
+				isLoading: true
 			});
 			this.props.loadMore(this.props.componentId, {
 				...options,
@@ -59,15 +63,24 @@ class ReactiveList extends Component {
 
 	render() {
 		return (
-			<FlatList
-				ref="listRef"
-				style={{ width: "100%" }}
-				data={this.props.hits ? this.props.hits : []}
-				keyExtractor={(item) => item._id}
-				renderItem={({ item }) => this.props.onData(item)}
-				onEndReachedThreshold={0.5}
-				onEndReached={this.loadMore}
-			/>
+			<View>
+				<FlatList
+					ref="listRef"
+					style={{ width: "100%" }}
+					data={this.props.hits ? this.props.hits : []}
+					keyExtractor={(item) => item._id}
+					renderItem={({ item }) => this.props.onData(item)}
+					onEndReachedThreshold={0.5}
+					onEndReached={this.loadMore}
+				/>
+				{
+					this.state.isLoading
+						? (<View>
+							<Spinner />
+						</View>)
+						: null
+				}
+			</View>
 		);
 	}
 }

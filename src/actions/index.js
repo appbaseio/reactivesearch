@@ -9,7 +9,7 @@ import {
 	SET_QUERY_OPTIONS
 } from "../constants";
 
-import { buildQuery, btoa } from "../utils/helper";
+import { buildQuery } from "../utils/helper";
 
 export function addComponent(component) {
 	return {
@@ -51,7 +51,7 @@ export function setQueryOptions(component, options) {
 
 export function executeQuery(component, query, options = {}, appendToHits = false) {
 	return (dispatch, getState) => {
-		const { config, queryOptions } = getState();
+		const { appbaseRef, config, queryOptions } = getState();
 		let mainQuery = null;
 		if (query) {
 			mainQuery = {
@@ -65,29 +65,23 @@ export function executeQuery(component, query, options = {}, appendToHits = fals
 			...options
 		});
 
-		fetch(`https://${config.url}/${config.app}/${config.type === null ? "" : `${config.type}/`}_search`, {
-			method: "POST",
-			headers: {
-				"Authorization": `Basic ${btoa(config.credentials)}`,
-				"Accept": "application/json",
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
+		appbaseRef.search({
+			type: config.type === "*" ? null : config.type,
+			body: {
 				...mainQuery,
 				...queryOptions[component],
 				...options
-			})
+			}
 		})
-			.then(response => response.json())
-			.then(response => {
-				dispatch(updateHits(component, response.hits.hits, appendToHits))
-				if ("aggregations" in response) {
-					dispatch(updateAggs(component, response.aggregations));
-				}
-			})
-			.catch(err => {
-				console.log(err);
-			});
+		.on("data", response => {
+			dispatch(updateHits(component, response.hits.hits, appendToHits))
+			if ("aggregations" in response) {
+				dispatch(updateAggs(component, response.aggregations));
+			}
+		})
+		.on("error", e => {
+			console.log(e);
+		});
 	}
 }
 
