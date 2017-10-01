@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { ReactiveBase, NestedList, ReactiveList } from "../app";
 import ResponsiveStory from "./ResponsiveStory";
 
@@ -81,8 +82,8 @@ NestedListDefault.defaultProps = {
 };
 
 NestedListDefault.propTypes = {
-	mapping: React.PropTypes.shape({
-		brand: React.PropTypes.string,
-		model: React.PropTypes.string
+	mapping: PropTypes.shape({
+		brand: PropTypes.string,
+		model: PropTypes.string
 	})
 };

@@ -1,5 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import classNames from "classnames";
 import {
 	InitialLoader,
@@ -671,47 +672,47 @@ export default class ResultList extends Component {
 }
 
 ResultList.propTypes = {
-	componentId: React.PropTypes.string,
-	dataField: React.PropTypes.string,
-	title: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.element
+	componentId: PropTypes.string,
+	dataField: PropTypes.string,
+	title: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.element
 	]),
-	sortBy: React.PropTypes.oneOf(["asc", "desc", "default"]),
-	sortOptions: React.PropTypes.arrayOf(
-		React.PropTypes.shape({
-			label: React.PropTypes.string,
-			dataField: React.PropTypes.string,
-			sortBy: React.PropTypes.string
+	sortBy: PropTypes.oneOf(["asc", "desc", "default"]),
+	sortOptions: PropTypes.arrayOf(
+		PropTypes.shape({
+			label: PropTypes.string,
+			dataField: PropTypes.string,
+			sortBy: PropTypes.string
 		})
 	),
 	from: helper.validation.resultListFrom,
-	onData: React.PropTypes.func,
-	onQueryChange: React.PropTypes.func,
+	onData: PropTypes.func,
+	onQueryChange: PropTypes.func,
 	size: helper.sizeValidation,
-	pagination: React.PropTypes.bool,
-	paginationAt: React.PropTypes.oneOf(["top", "bottom", "both"]),
-	stream: React.PropTypes.bool,
-	style: React.PropTypes.object,
-	initialLoader: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.element
+	pagination: PropTypes.bool,
+	paginationAt: PropTypes.oneOf(["top", "bottom", "both"]),
+	stream: PropTypes.bool,
+	style: PropTypes.object,
+	initialLoader: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.element
 	]),
-	noResults: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.element
+	noResults: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.element
 	]),
-	showResultStats: React.PropTypes.bool,
-	onResultStats: React.PropTypes.func,
-	placeholder: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.element
+	showResultStats: PropTypes.bool,
+	onResultStats: PropTypes.func,
+	placeholder: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.element
 	]),
-	react: React.PropTypes.object,
-	scrollOnTarget: React.PropTypes.object,
-	pages: React.PropTypes.number,
-	pageURLParams: React.PropTypes.bool,
-	className: React.PropTypes.string
+	react: PropTypes.object,
+	scrollOnTarget: PropTypes.object,
+	pages: PropTypes.number,
+	pageURLParams: PropTypes.bool,
+	className: PropTypes.string
 };
 
 ResultList.defaultProps = {
@@ -727,8 +728,8 @@ ResultList.defaultProps = {
 };
 
 ResultList.contextTypes = {
-	appbaseRef: React.PropTypes.any.isRequired,
-	type: React.PropTypes.any.isRequired
+	appbaseRef: PropTypes.any.isRequired,
+	type: PropTypes.any.isRequired
 };
 
 ResultList.types = {

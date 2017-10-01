@@ -1,5 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import classNames from "classnames";
 import Slider from "rc-slider";
 import {
@@ -407,29 +408,29 @@ export default class DynamicRangeSlider extends Component {
 }
 
 DynamicRangeSlider.propTypes = {
-	componentId: React.PropTypes.string.isRequired,
-	dataField: React.PropTypes.string.isRequired,
-	title: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.element
+	componentId: PropTypes.string.isRequired,
+	dataField: PropTypes.string.isRequired,
+	title: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.element
 	]),
-	stepValue: React.PropTypes.number,
-	showHistogram: React.PropTypes.bool,
-	rangeLabels: React.PropTypes.func,
-	defaultSelected: React.PropTypes.func,
-	customQuery: React.PropTypes.func,
-	initialLoader: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.element
+	stepValue: PropTypes.number,
+	showHistogram: PropTypes.bool,
+	rangeLabels: PropTypes.func,
+	defaultSelected: PropTypes.func,
+	customQuery: PropTypes.func,
+	initialLoader: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.element
 	]),
-	react: React.PropTypes.object,
-	beforeValueChange: React.PropTypes.func,
-	onValueChange: React.PropTypes.func,
-	interval: React.PropTypes.number,
-	componentStyle: React.PropTypes.object,
-	className: React.PropTypes.string,
-	style: React.PropTypes.object,
-	onQueryChange: React.PropTypes.func
+	react: PropTypes.object,
+	beforeValueChange: PropTypes.func,
+	onValueChange: PropTypes.func,
+	interval: PropTypes.number,
+	componentStyle: PropTypes.object,
+	className: PropTypes.string,
+	style: PropTypes.object,
+	onQueryChange: PropTypes.func
 };
 
 DynamicRangeSlider.defaultProps = {
@@ -441,8 +442,8 @@ DynamicRangeSlider.defaultProps = {
 
 // context type
 DynamicRangeSlider.contextTypes = {
-	appbaseRef: React.PropTypes.any.isRequired,
-	type: React.PropTypes.any.isRequired
+	appbaseRef: PropTypes.any.isRequired,
+	type: PropTypes.any.isRequired
 };
 
 DynamicRangeSlider.types = {

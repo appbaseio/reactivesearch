@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { ReactiveBase, RatingsFilter, ResultList } from "../app";
 import ResponsiveStory from "./ResponsiveStory";
 
@@ -85,8 +86,8 @@ ResultCardDefault.defaultProps = {
 };
 
 ResultCardDefault.propTypes = {
-	mapping: React.PropTypes.shape({
-		rating: React.PropTypes.string,
-		name: React.PropTypes.string
+	mapping: PropTypes.shape({
+		rating: PropTypes.string,
+		name: PropTypes.string
 	})
 };

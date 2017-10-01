@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import Bar from "./Bar";
 
 const _ = require("lodash");
@@ -51,5 +52,5 @@ export default class HistoGramComponent extends Component {
 }
 
 HistoGramComponent.propTypes = {
-	data: React.PropTypes.array
+	data: PropTypes.array
 };

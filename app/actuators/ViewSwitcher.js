@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 
 export default class ViewSwitcher extends Component {
 	constructor(props) {
@@ -59,8 +60,8 @@ export default class ViewSwitcher extends Component {
 }
 
 ViewSwitcher.propTypes = {
-	style: React.PropTypes.object,
-	className: React.PropTypes.string
+	style: PropTypes.object,
+	className: PropTypes.string
 };
 
 ViewSwitcher.defaultProps = {

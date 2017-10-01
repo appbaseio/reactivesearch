@@ -1,5 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import classNames from "classnames";
 import {
 	InitialLoader,
@@ -423,34 +424,34 @@ export default class TagCloud extends Component {
 }
 
 TagCloud.propTypes = {
-	dataField: React.PropTypes.string.isRequired,
-	componentId: React.PropTypes.string.isRequired,
-	title: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.element
+	dataField: PropTypes.string.isRequired,
+	componentId: PropTypes.string.isRequired,
+	title: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.element
 	]),
-	size: React.PropTypes.number,
-	showCount: React.PropTypes.bool,
-	multiSelect: React.PropTypes.bool,
-	customQuery: React.PropTypes.func,
-	initialLoader: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.element
+	size: PropTypes.number,
+	showCount: PropTypes.bool,
+	multiSelect: PropTypes.bool,
+	customQuery: PropTypes.func,
+	initialLoader: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.element
 	]),
-	defaultSelected: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.number,
-		React.PropTypes.array
+	defaultSelected: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number,
+		PropTypes.array
 	]),
-	react: React.PropTypes.object,
-	beforeValueChange: React.PropTypes.func,
-	onValueChange: React.PropTypes.func,
-	style: React.PropTypes.object,
-	URLParams: React.PropTypes.bool,
-	showFilter: React.PropTypes.bool,
-	filterLabel: React.PropTypes.string,
-	className: React.PropTypes.string,
-	onQueryChange: React.PropTypes.func
+	react: PropTypes.object,
+	beforeValueChange: PropTypes.func,
+	onValueChange: PropTypes.func,
+	style: PropTypes.object,
+	URLParams: PropTypes.bool,
+	showFilter: PropTypes.bool,
+	filterLabel: PropTypes.string,
+	className: PropTypes.string,
+	onQueryChange: PropTypes.func
 };
 
 TagCloud.defaultProps = {
@@ -464,9 +465,9 @@ TagCloud.defaultProps = {
 };
 
 TagCloud.contextTypes = {
-	appbaseRef: React.PropTypes.any.isRequired,
-	type: React.PropTypes.any.isRequired,
-	reactiveId: React.PropTypes.number
+	appbaseRef: PropTypes.any.isRequired,
+	type: PropTypes.any.isRequired,
+	reactiveId: PropTypes.number
 };
 
 TagCloud.types = {

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import classNames from "classnames";
 import {
 	TYPES,
@@ -201,23 +202,23 @@ export default class RatingsFilter extends Component {
 }
 
 RatingsFilter.propTypes = {
-	componentId: React.PropTypes.string.isRequired,
-	dataField: React.PropTypes.string.isRequired,
-	title: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.element
+	componentId: PropTypes.string.isRequired,
+	dataField: PropTypes.string.isRequired,
+	title: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.element
 	]),
-	data: React.PropTypes.any.isRequired,
-	defaultSelected: React.PropTypes.object,
-	customQuery: React.PropTypes.func,
-	beforeValueChange: React.PropTypes.func,
-	onValueChange: React.PropTypes.func,
-	style: React.PropTypes.object,
-	URLParams: React.PropTypes.bool,
-	showFilter: React.PropTypes.bool,
-	filterLabel: React.PropTypes.string,
-	className: React.PropTypes.string,
-	onQueryChange: React.PropTypes.func
+	data: PropTypes.any.isRequired,
+	defaultSelected: PropTypes.object,
+	customQuery: PropTypes.func,
+	beforeValueChange: PropTypes.func,
+	onValueChange: PropTypes.func,
+	style: PropTypes.object,
+	URLParams: PropTypes.bool,
+	showFilter: PropTypes.bool,
+	filterLabel: PropTypes.string,
+	className: PropTypes.string,
+	onQueryChange: PropTypes.func
 };
 
 // Default props value
@@ -230,9 +231,9 @@ RatingsFilter.defaultProps = {
 
 // context type
 RatingsFilter.contextTypes = {
-	appbaseRef: React.PropTypes.any.isRequired,
-	type: React.PropTypes.any.isRequired,
-	reactiveId: React.PropTypes.number
+	appbaseRef: PropTypes.any.isRequired,
+	type: PropTypes.any.isRequired,
+	reactiveId: PropTypes.number
 };
 
 RatingsFilter.types = {

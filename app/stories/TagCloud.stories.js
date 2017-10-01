@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { ReactiveBase, TagCloud, ReactiveList, SelectedFilters } from "../app";
 import ResponsiveStory from "./ResponsiveStory";
 
@@ -90,8 +91,8 @@ TagCloudDefault.defaultProps = {
 };
 
 TagCloudDefault.propTypes = {
-	mapping: React.PropTypes.shape({
-		city: React.PropTypes.string,
-		topic: React.PropTypes.string
+	mapping: PropTypes.shape({
+		city: PropTypes.string,
+		topic: PropTypes.string
 	})
 };
