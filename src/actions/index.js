@@ -74,7 +74,7 @@ export function executeQuery(component, query, options = {}, appendToHits = fals
 			}
 		})
 			.on("data", response => {
-				dispatch(updateHits(component, response.hits.hits, appendToHits))
+				dispatch(updateHits(component, response.hits, appendToHits))
 				if ("aggregations" in response) {
 					dispatch(updateAggs(component, response.aggregations));
 				}
@@ -89,7 +89,8 @@ export function updateHits(component, hits, append = false) {
 	return {
 		type: UPDATE_HITS,
 		component,
-		hits,
+		hits: hits.hits,
+		total: hits.total,
 		append
 	}
 }
@@ -118,10 +119,10 @@ export function updateQuery(componentId, query) {
 	}
 }
 
-export function loadMore(component, options) {
+export function loadMore(component, options, append = true) {
 	return (dispatch, getState) => {
 		const store = getState();
 		const queryObj = buildQuery(component, store.dependencyTree, store.queryList);
-		dispatch(executeQuery(component, queryObj, options, true));
+		dispatch(executeQuery(component, queryObj, options, append));
 	}
 }

@@ -79,6 +79,7 @@ export default class Main extends Component {
 						size={20}
 						from={0}
 						onData={this.onData}
+						pagination
 						react={{
 							and: ["SingleDropdownListComponent", "MultiDropdownListComponent", "DataSeachComponent", "TextFieldComponent"]
 						}}

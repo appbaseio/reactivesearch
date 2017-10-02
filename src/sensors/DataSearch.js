@@ -285,7 +285,7 @@ DataSearch.defaultProps = {
 }
 
 const mapStateToProps = (state, props) => ({
-	suggestions: state.hits[props.componentId]
+	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits
 });
 
 const mapDispatchtoProps = dispatch => ({
