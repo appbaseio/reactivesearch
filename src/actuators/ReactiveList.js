@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FlatList, View } from "react-native";
-import { Text, Spinner, Button } from "native-base";
+import { Text, Spinner, Button, Icon } from "native-base";
 
 import { addComponent, removeComponent, watchComponent, setQueryOptions, loadMore } from "../actions";
 import { isEqual, getQueryOptions } from "../utils/helper";
@@ -38,7 +38,7 @@ class ReactiveList extends Component {
 		}
 		if (nextProps.pagination && nextProps.total !== this.props.total) {
 			this.setState({
-				totalPages: nextProps.total / nextProps.pages,
+				totalPages: nextProps.total / nextProps.size,
 				currentPage: 0
 			});
 		}
@@ -69,46 +69,72 @@ class ReactiveList extends Component {
 		}
 	};
 
+	setPage = (page) => {
+		const value = this.props.size * page;
+		const options = getQueryOptions(this.props);
+		this.setState({
+			from: value,
+			isLoading: true,
+			currentPage: page
+		});
+		this.props.loadMore(this.props.componentId, {
+			...options,
+			from: value
+		}, false);
+	}
+
 	prevPage = () => {
 		if (this.state.currentPage) {
-			const value = this.state.from - this.props.size;
-			const options = getQueryOptions(this.props);
-			this.setState({
-				from: value,
-				isLoading: true,
-				currentPage: this.state.currentPage - 1
-			});
-			this.props.loadMore(this.props.componentId, {
-				...options,
-				from: value
-			}, false);
+			this.setPage(this.state.currentPage-1);
 		}
-	}
+	};
 
 	nextPage = () => {
 		if (this.state.currentPage < this.state.totalPages) {
-			const value = this.state.from + this.props.size;
-			const options = getQueryOptions(this.props);
-			this.setState({
-				from: value,
-				isLoading: true,
-				currentPage: this.state.currentPage + 1
-			});
-			this.props.loadMore(this.props.componentId, {
-				...options,
-				from: value
-			}, false);
+			this.setPage(this.state.currentPage+1);
 		}
-	}
+	};
+
+	getStart = () => {
+		const midValue = parseInt(this.props.pages/2, 10);
+		const start =  this.state.currentPage - midValue;
+		return start > 1 ? start : 2;
+	};
 
 	renderPagination = () => {
+		let start = this.getStart(),
+			pages = [];
+
+		for (let i = start; i < start + this.props.pages - 1; i++) {
+			const pageBtn = (
+				<Button key={i-1} light primary={this.state.currentPage === i-1} onPress={() => this.setPage(i-1)}>
+					<Text>{i}</Text>
+				</Button>
+			);
+			if (i <= this.state.totalPages) {
+				pages.push(pageBtn);
+			}
+		}
+
+		if (!this.state.totalPages) {
+			return null;
+		}
+
 		return (
 			<View style={{flexDirection: "row", justifyContent: "space-between", marginTop: 20, marginBottom: 20}}>
 				<Button light disabled={this.state.currentPage === 0} onPress={this.prevPage}>
-					<Text>Prev</Text>
+					<Icon name="ios-arrow-back" />
 				</Button>
+				{
+					<Button light primary={this.state.currentPage === 0} onPress={() => this.setPage(0)}>
+						<Text>1</Text>
+					</Button>
+				}
+				{
+					pages
+				}
 				<Button light disabled={this.state.currentPage >= this.state.totalPages} onPress={this.nextPage}>
-					<Text>Next</Text>
+					<Icon name="ios-arrow-forward" />
 				</Button>
 			</View>
 		)
@@ -145,7 +171,7 @@ class ReactiveList extends Component {
 
 ReactiveList.defaultProps = {
 	pagination: false,
-	pages: 10
+	pages: 5
 }
 
 const mapStateToProps = (state, props) => ({
