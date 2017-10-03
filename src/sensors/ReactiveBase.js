@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import { View } from "react-native";
 import { Container } from "native-base";
 import Appbase from "appbase-js";
 
@@ -31,9 +30,7 @@ export default class ReactiveBase extends Component {
 		return (
 			<Provider store={this.store}>
 				<Container>
-					<View style={{ ...this.props.style, flex: 1 }}>
-						{this.props.children}
-					</View>
+					{this.props.children}
 				</Container>
 			</Provider>
 		);

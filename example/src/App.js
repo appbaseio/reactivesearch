@@ -1,6 +1,6 @@
 import Expo from "expo";
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 import { Text, Header, Body, Title } from "native-base";
 
 import {
@@ -53,38 +53,40 @@ export default class Main extends Component {
 						<Title>ReactiveBase Native Demo</Title>
 					</Body>
 				</Header>
-				<View style={{ padding: 10 }}>
-					<SingleDropdownList
-						componentId="SingleDropdownListComponent"
-						appbaseField="brand.raw"
-					/>
-					<MultiDropdownList
-						componentId="MultiDropdownListComponent"
-						appbaseField="brand.raw"
-					/>
-					<DataSearch
-						componentId="DataSeachComponent"
-						appbaseField="name"
-						react={{
-							and: "TextFieldComponent"
-						}}
-					/>
-					<TextField
-						componentId="TextFieldComponent"
-						appbaseField="color"
-						placeholder="Search color"
-					/>
-					<ReactiveList
-						componentId="ReactiveList"
-						size={20}
-						from={0}
-						onData={this.onData}
-						pagination
-						react={{
-							and: ["SingleDropdownListComponent", "MultiDropdownListComponent", "DataSeachComponent", "TextFieldComponent"]
-						}}
-					/>
-				</View>
+				<ScrollView>
+					<View style={{ padding: 10 }}>
+						<SingleDropdownList
+							componentId="SingleDropdownListComponent"
+							appbaseField="brand.raw"
+						/>
+						<MultiDropdownList
+							componentId="MultiDropdownListComponent"
+							appbaseField="brand.raw"
+						/>
+						<DataSearch
+							componentId="DataSeachComponent"
+							appbaseField="name"
+							react={{
+								and: "TextFieldComponent"
+							}}
+						/>
+						<TextField
+							componentId="TextFieldComponent"
+							appbaseField="color"
+							placeholder="Search color"
+						/>
+						<ReactiveList
+							componentId="ReactiveList"
+							size={20}
+							from={0}
+							onData={this.onData}
+							pagination
+							react={{
+								and: ["SingleDropdownListComponent", "MultiDropdownListComponent", "DataSeachComponent", "TextFieldComponent"]
+							}}
+						/>
+					</View>
+				</ScrollView>
 			</ReactiveBase>
 		);
 	}
