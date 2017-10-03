@@ -121,7 +121,7 @@ class ReactiveList extends Component {
 		}
 
 		return (
-			<View style={{flexDirection: "row", justifyContent: "space-between", marginTop: 20, marginBottom: 20}}>
+			<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 20, marginBottom: 20 }}>
 				<Button light disabled={this.state.currentPage === 0} onPress={this.prevPage}>
 					<Icon name="ios-arrow-back" />
 				</Button>
