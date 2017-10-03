@@ -54,7 +54,7 @@ Besides these, the library also provides low level actuators (ReactiveElement, R
 
 ### Ease of Use
 
-* One step installation with [npm install @appbaseio/reactivesearch](https://opensource.appbase.io/reactive-manual/v1.0.0/getting-started/RSInstallation.html),
+* One step installation with [npm install @appbaseio/reactivesearch](https://opensource.appbase.io/reactive-manual/v1/getting-started/RSInstallation.html),
 * A UMD build that works directly in the browser. See a demo [here](https://github.com/appbaseio-apps/reactivesearch-starter-app#try-in-browser-without-npm),
 * Works out of the box with Materialize CSS and comes with a polyfill CSS for Bootstrap. Compatibility for other frameworks can be added too,
 * See the [reactivesearch starter app](https://github.com/appbaseio-apps/reactivesearch-starter-app).
@@ -110,10 +110,10 @@ Follow the getting started guide to build a Hello Maps! app from the official do
 The official docs for the library are at [https://opensource.appbase.io/reactive-manual](https://opensource.appbase.io/reactive-manual).
 
 The components are divided into two sections:
-* Generic UI components are at [https://opensource.appbase.io/reactive-manual/v1.0.0/components](https://opensource.appbase.io/reactive-manual/v1.0.0/components/).
-* Map based UI components are at [https://opensource.appbase.io/reactive-manual/v1.0.0/map-components](https://opensource.appbase.io/reactive-manual/v1.0.0/map-components/).
-* Each component's styles API is mentioned in a separate **CSS Styles API** section. See here for [SingleList](https://opensource.appbase.io/reactive-manual/v1.0.0/components/SingleList.html#-singlelist-css-styles-api).
-* You can read more about the Styles API here - https://opensource.appbase.io/reactive-manual/v1.0.0/advanced/StyleGuide.html.
+* Generic UI components are at [https://opensource.appbase.io/reactive-manual/v1/components](https://opensource.appbase.io/reactive-manual/v1/components/).
+* Map based UI components are at [https://opensource.appbase.io/reactive-manual/v1/map-components](https://opensource.appbase.io/reactive-manual/v1.0.0/map-components/).
+* Each component's styles API is mentioned in a separate **CSS Styles API** section. See here for [SingleList](https://opensource.appbase.io/reactive-manual/v1/components/SingleList.html#-singlelist-css-styles-api).
+* You can read more about the Styles API here - https://opensource.appbase.io/reactive-manual/v1/advanced/StyleGuide.html.
 
 [⬆ Back to Top](#reactive-search)
 
