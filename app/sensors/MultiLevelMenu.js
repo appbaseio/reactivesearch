@@ -1,5 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import classNames from "classnames";
 import {
 	TYPES,
@@ -406,23 +407,23 @@ export default class MultiLevelMenu extends Component {
 }
 
 MultiLevelMenu.propTypes = {
-	componentId: React.PropTypes.string.isRequired,
-	dataField: React.PropTypes.array.isRequired,
-	data: React.PropTypes.arrayOf(React.PropTypes.shape({
-		label: React.PropTypes.string.isRequired,
-		value: React.PropTypes.string.isRequired
+	componentId: PropTypes.string.isRequired,
+	dataField: PropTypes.array.isRequired,
+	data: PropTypes.arrayOf(PropTypes.shape({
+		label: PropTypes.string.isRequired,
+		value: PropTypes.string.isRequired
 	})),
-	maxCategories: React.PropTypes.number,
-	maxItems: React.PropTypes.number,
-	blacklist: React.PropTypes.arrayOf(React.PropTypes.string),
-	customQuery: React.PropTypes.func,
-	react: React.PropTypes.object,
-	beforeValueChange: React.PropTypes.func,
-	onValueChange: React.PropTypes.func,
-	style: React.PropTypes.object,
-	componentStyle: React.PropTypes.object,
-	className: React.PropTypes.string,
-	onQueryChange: React.PropTypes.func
+	maxCategories: PropTypes.number,
+	maxItems: PropTypes.number,
+	blacklist: PropTypes.arrayOf(PropTypes.string),
+	customQuery: PropTypes.func,
+	react: PropTypes.object,
+	beforeValueChange: PropTypes.func,
+	onValueChange: PropTypes.func,
+	style: PropTypes.object,
+	componentStyle: PropTypes.object,
+	className: PropTypes.string,
+	onQueryChange: PropTypes.func
 };
 
 // Default props value
@@ -435,8 +436,8 @@ MultiLevelMenu.defaultProps = {
 
 // context type
 MultiLevelMenu.contextTypes = {
-	appbaseRef: React.PropTypes.any.isRequired,
-	type: React.PropTypes.any.isRequired
+	appbaseRef: PropTypes.any.isRequired,
+	type: PropTypes.any.isRequired
 };
 
 MultiLevelMenu.types = {

@@ -1,5 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import classNames from "classnames";
 import Autosuggest from "react-autosuggest";
 import {
@@ -564,55 +565,55 @@ export default class CategorySearch extends Component {
 }
 
 CategorySearch.propTypes = {
-	componentId: React.PropTypes.string.isRequired,
-	dataField: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.arrayOf(React.PropTypes.string)
+	componentId: PropTypes.string.isRequired,
+	dataField: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.arrayOf(PropTypes.string)
 	]),
-	weights: React.PropTypes.arrayOf(React.PropTypes.number),
-	title: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.element
+	weights: PropTypes.arrayOf(PropTypes.number),
+	title: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.element
 	]),
-	categoryField: React.PropTypes.string,
-	placeholder: React.PropTypes.string,
-	autoSuggest: React.PropTypes.bool,
-	defaultSelected: React.PropTypes.string,
-	customQuery: React.PropTypes.func,
-	react: React.PropTypes.object,
-	beforeValueChange: React.PropTypes.func,
-	onValueChange: React.PropTypes.func,
-	highlight: React.PropTypes.bool,
-	initialSuggestions: React.PropTypes.arrayOf(
-		React.PropTypes.shape({
-			label: React.PropTypes.oneOfType([
-				React.PropTypes.string,
-				React.PropTypes.element
+	categoryField: PropTypes.string,
+	placeholder: PropTypes.string,
+	autoSuggest: PropTypes.bool,
+	defaultSelected: PropTypes.string,
+	customQuery: PropTypes.func,
+	react: PropTypes.object,
+	beforeValueChange: PropTypes.func,
+	onValueChange: PropTypes.func,
+	highlight: PropTypes.bool,
+	initialSuggestions: PropTypes.arrayOf(
+		PropTypes.shape({
+			label: PropTypes.oneOfType([
+				PropTypes.string,
+				PropTypes.element
 			]),
-			value: React.PropTypes.string
+			value: PropTypes.string
 		})
 	),
-	highlightFields: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.arrayOf(React.PropTypes.string)
+	highlightFields: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.arrayOf(PropTypes.string)
 	]),
-	style: React.PropTypes.object,
-	URLParams: React.PropTypes.bool,
-	showFilter: React.PropTypes.bool,
-	filterLabel: React.PropTypes.string,
-	queryFormat: React.PropTypes.oneOf(["and", "or"]),
-	fuzziness: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.number,
+	style: PropTypes.object,
+	URLParams: PropTypes.bool,
+	showFilter: PropTypes.bool,
+	filterLabel: PropTypes.string,
+	queryFormat: PropTypes.oneOf(["and", "or"]),
+	fuzziness: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number,
 	]),
-	className: React.PropTypes.string,
-	onBlur: React.PropTypes.func,
-	onFocus: React.PropTypes.func,
-	onKeyPress: React.PropTypes.func,
-	onKeyDown: React.PropTypes.func,
-	onKeyUp: React.PropTypes.func,
-	onQueryChange: React.PropTypes.func,
-	autoFocus: React.PropTypes.bool
+	className: PropTypes.string,
+	onBlur: PropTypes.func,
+	onFocus: PropTypes.func,
+	onKeyPress: PropTypes.func,
+	onKeyDown: PropTypes.func,
+	onKeyUp: PropTypes.func,
+	onQueryChange: PropTypes.func,
+	autoFocus: PropTypes.bool
 };
 
 // Default props value
@@ -629,9 +630,9 @@ CategorySearch.defaultProps = {
 
 // context type
 CategorySearch.contextTypes = {
-	appbaseRef: React.PropTypes.any.isRequired,
-	type: React.PropTypes.any.isRequired,
-	reactiveId: React.PropTypes.number
+	appbaseRef: PropTypes.any.isRequired,
+	type: PropTypes.any.isRequired,
+	reactiveId: PropTypes.number
 };
 
 CategorySearch.types = {

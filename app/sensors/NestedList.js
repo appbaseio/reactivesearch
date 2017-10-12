@@ -1,5 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import classNames from "classnames";
 import {
 	InitialLoader,
@@ -570,32 +571,32 @@ const NestedingValidation = (props, propName) => {
 }
 
 NestedList.propTypes = {
-	componentId: React.PropTypes.string.isRequired,
+	componentId: PropTypes.string.isRequired,
 	dataField: NestedingValidation,
-	title: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.element
+	title: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.element
 	]),
-	showCount: React.PropTypes.bool,
-	showSearch: React.PropTypes.bool,
-	sortBy: React.PropTypes.oneOf(["count", "asc", "desc"]),
+	showCount: PropTypes.bool,
+	showSearch: PropTypes.bool,
+	sortBy: PropTypes.oneOf(["count", "asc", "desc"]),
 	size: helper.sizeValidation,
-	defaultSelected: React.PropTypes.array,
-	customQuery: React.PropTypes.func,
-	placeholder: React.PropTypes.string,
-	initialLoader: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.element
+	defaultSelected: PropTypes.array,
+	customQuery: PropTypes.func,
+	placeholder: PropTypes.string,
+	initialLoader: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.element
 	]),
-	react: React.PropTypes.object,
-	beforeValueChange: React.PropTypes.func,
-	onValueChange: React.PropTypes.func,
-	style: React.PropTypes.object,
-	URLParams: React.PropTypes.bool,
-	showFilter: React.PropTypes.bool,
-	filterLabel: React.PropTypes.string,
-	className: React.PropTypes.string,
-	onQueryChange: React.PropTypes.func
+	react: PropTypes.object,
+	beforeValueChange: PropTypes.func,
+	onValueChange: PropTypes.func,
+	style: PropTypes.object,
+	URLParams: PropTypes.bool,
+	showFilter: PropTypes.bool,
+	filterLabel: PropTypes.string,
+	className: PropTypes.string,
+	onQueryChange: PropTypes.func
 };
 
 // Default props value
@@ -613,9 +614,9 @@ NestedList.defaultProps = {
 
 // context type
 NestedList.contextTypes = {
-	appbaseRef: React.PropTypes.any.isRequired,
-	type: React.PropTypes.any.isRequired,
-	reactiveId: React.PropTypes.number
+	appbaseRef: PropTypes.any.isRequired,
+	type: PropTypes.any.isRequired,
+	reactiveId: PropTypes.number
 };
 
 NestedList.types = {

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 export default function Bar(props) {
 	const style = {
@@ -26,9 +27,9 @@ export default function Bar(props) {
 }
 
 Bar.propTypes = {
-	element: React.PropTypes.shape({
-		width: React.PropTypes.number,
-		height: React.PropTypes.number,
-		count: React.PropTypes.number
+	element: PropTypes.shape({
+		width: PropTypes.number,
+		height: PropTypes.number,
+		count: PropTypes.number
 	})
 };

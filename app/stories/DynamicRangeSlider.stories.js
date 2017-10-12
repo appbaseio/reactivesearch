@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { ReactiveBase, DynamicRangeSlider, ReactiveList } from "../app";
 import ResponsiveStory from "./ResponsiveStory";
 
@@ -90,8 +91,8 @@ DynamicRangeSliderDefault.defaultProps = {
 };
 
 DynamicRangeSliderDefault.propTypes = {
-	mapping: React.PropTypes.shape({
-		guests: React.PropTypes.string,
-		topic: React.PropTypes.string
+	mapping: PropTypes.shape({
+		guests: PropTypes.string,
+		topic: PropTypes.string
 	})
 };

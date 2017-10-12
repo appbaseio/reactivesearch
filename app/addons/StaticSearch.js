@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 
 export default class StaticSearch extends Component {
 	constructor(props) {
@@ -35,6 +36,6 @@ export default class StaticSearch extends Component {
 }
 
 StaticSearch.propTypes = {
-	changeCallback: React.PropTypes.func.isRequired,
-	placeholder: React.PropTypes.string
+	changeCallback: PropTypes.func.isRequired,
+	placeholder: PropTypes.string
 };
