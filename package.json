@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/appbaseio/reactivesearch#readme",
   "dependencies": {
-    "@appbaseio/reactivemaps": "1.4.0",
+    "@appbaseio/reactivemaps": "1.4.1",
     "prop-types": "^15.6.0",
     "react-stars": "^2.2.3"
   },

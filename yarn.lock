@@ -2,15 +2,15 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivebase@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivebase/-/reactivebase-1.4.0.tgz#042aa193df6e3ff8287160cf0831722c62764960"
+"@appbaseio/reactivebase@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivebase/-/reactivebase-1.4.1.tgz#46d6b2213a0f9a384356eb8d893f48c1ed4239e6"
   dependencies:
     appbase-js "^2.1.0"
     classnames "^2.2.5"
     fbemitter "^2.1.1"
     lodash "^4.17.4"
-    moment "^2.18.1"
+    moment "2.18.1"
     prop-types "^15.6.0"
     rc-slider "^8.3.1"
     react-addons-shallow-compare "^15.4.2"
@@ -27,11 +27,11 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivemaps@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-1.4.0.tgz#d801e79d79dfa159d778c22b07b06db36e5455c4"
+"@appbaseio/reactivemaps@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-1.4.1.tgz#715a9ae80e501cc9ee70794612520f33b968fbe4"
   dependencies:
-    "@appbaseio/reactivebase" "1.4.0"
+    "@appbaseio/reactivebase" "1.4.1"
     axios "^0.15.2"
     classnames "^2.2.5"
     google-map-react "^0.14.5"
