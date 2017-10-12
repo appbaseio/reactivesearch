@@ -202,7 +202,7 @@ storiesOf("ResultCard", module)
 		<ResultCardDefault />
 	)))
 	.add("With Pagination", withReadme(removeFirstLine(ReactiveListReadme), () => (
-		<ResultCardDefault  pagination />
+		<ResultCardDefault pagination />
 	)));
 
 storiesOf("ResultList", module)

@@ -1,6 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import classNames from "classnames";
 import {
 	TYPES,
@@ -334,7 +334,7 @@ export default class MultiLevelMenu extends Component {
 		};
 
 		const execQuery = () => {
-			if(this.props.onValueChange) {
+			if (this.props.onValueChange) {
 				this.props.onValueChange(obj.value);
 			}
 			helper.selectedSensor.set(obj, true);

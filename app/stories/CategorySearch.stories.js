@@ -52,7 +52,7 @@ export default class CategorySearchDefault extends Component {
 							categoryField="brand.raw"
 							componentId="CarSensor"
 							title="CategorySearch"
-							weights={[1,5]}
+							weights={[1, 5]}
 							{...this.props}
 						/>
 					</div>

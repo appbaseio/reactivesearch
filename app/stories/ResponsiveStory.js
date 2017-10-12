@@ -1,24 +1,24 @@
-var $ = require("jquery");
+const $ = require("jquery");
 
-var ResponsiveStory = function ResponsiveStory() {
-	var paginationHeight = function paginationHeight() {
+const ResponsiveStory = function ResponsiveStory() {
+	const paginationHeight = function paginationHeight() {
 		return $(".rbc-pagination").length * 85;
 	};
 
-	var getHeight = function getHeight(item) {
+	const getHeight = function getHeight(item) {
 		return item.height() ? item.height() : 0;
 	};
 
-	var handleResponsive = function handleResponsive() {
-		var height = $(window).height();
-		var resultHeight = height - 15;
+	const handleResponsive = function handleResponsive() {
+		const height = $(window).height();
+		const resultHeight = height - 15;
 		$(".rbc.rbc-reactivelist, .rbc.rbc-reactiveelement").css({
 			maxHeight: resultHeight
 		});
-		var $component = [$(".rbc.rbc-singlelist"), $(".rbc.rbc-multilist"), $(".rbc.rbc-nestedlist"), $(".rbc.rbc-tagcloud")];
-		$component.forEach(function (item) {
+		const $component = [$(".rbc.rbc-singlelist"), $(".rbc.rbc-multilist"), $(".rbc.rbc-nestedlist"), $(".rbc.rbc-tagcloud")];
+		$component.forEach((item) => {
 			if (item.length) {
-				var itemHeader = getHeight(item.find(".rbc-title")) + getHeight(item.find(".rbc-search-container"));
+				const itemHeader = getHeight(item.find(".rbc-title")) + getHeight(item.find(".rbc-search-container"));
 				item.find(".rbc-list-container").css({ maxHeight: height - itemHeader - 35 });
 			}
 		});
@@ -32,7 +32,7 @@ var ResponsiveStory = function ResponsiveStory() {
 
 	handleResponsive();
 
-	$(window).resize(function () {
+	$(window).resize(() => {
 		handleResponsive();
 	});
 };

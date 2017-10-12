@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { ReactiveBase, TagCloud, ReactiveList, SelectedFilters } from "../app";
 import ResponsiveStory from "./ResponsiveStory";
 
@@ -24,7 +24,7 @@ export default class TagCloudDefault extends Component {
 				target="_blank"
 				key={markerData._id}
 			>
-				<div className="text-container full_row" style={{paddingLeft: "15px"}}>
+				<div className="text-container full_row" style={{ paddingLeft: "15px" }}>
 					<div className="text-head text-overflow full_row">
 						<span className="text-head-info text-overflow">
 							{marker.member ? marker.member.member_name : ""} is going to {marker.event ? marker.event.event_name : ""}

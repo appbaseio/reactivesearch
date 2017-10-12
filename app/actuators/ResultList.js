@@ -1,6 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import classNames from "classnames";
 import {
 	InitialLoader,
@@ -328,7 +328,7 @@ export default class ResultList extends Component {
 	defaultOnData(res) {
 		let markup = null;
 		const data = res.currentData.concat(res.newData);
-		markup = data.map((item) => <JsonPrint key={item._id} data={item} />);
+		markup = data.map(item => <JsonPrint key={item._id} data={item} />);
 		return markup;
 	}
 
@@ -353,7 +353,7 @@ export default class ResultList extends Component {
 			let cx = result.image ? result.image_size === "small" ? "rbc-image-active rbc-image-small" : "rbc-image-active" : "rbc-image-inactive";
 			cx = `${cx} ${result.className ? result.className : ""}`;
 			const details = (
-				<div style={{display: "flex", flexDirection: "row"}}>
+				<div style={{ display: "flex", flexDirection: "row" }}>
 					{
 						result.image
 							? <div className="rbc-resultlist-item__image" style={{ backgroundImage: `url(${result.image})` }} />
@@ -390,16 +390,15 @@ export default class ResultList extends Component {
 						{details}
 					</a>
 				);
-			} else {
-				return (
-					<div
-						key={item._id}
-						className={`rbc-resultlist-item ${cx}`}
-					>
-						{details}
-					</div>
-				);
 			}
+			return (
+				<div
+					key={item._id}
+					className={`rbc-resultlist-item ${cx}`}
+				>
+					{details}
+				</div>
+			);
 		});
 
 		return markup;
@@ -594,7 +593,7 @@ export default class ResultList extends Component {
 	}
 
 	getComponentStyle() {
-		let style = {};
+		const style = {};
 		if (this.props.scrollOnTarget) {
 			style.maxHeight = "none";
 			style.height = "auto";

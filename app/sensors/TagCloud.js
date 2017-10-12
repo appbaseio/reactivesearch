@@ -1,6 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import classNames from "classnames";
 import {
 	InitialLoader,
@@ -71,14 +71,14 @@ export default class TagCloud extends Component {
 
 	listenFilter() {
 		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
-			if(data === this.props.componentId) {
+			if (data === this.props.componentId) {
 				this.changeValue(null);
 			}
 		});
 	}
 
 	checkDefault(props) {
-		if(this.state.items.length) {
+		if (this.state.items.length) {
 			const defaultValue = this.urlParams !== null ? this.urlParams : props.defaultSelected;
 			this.changeValue(defaultValue);
 		}
@@ -102,10 +102,10 @@ export default class TagCloud extends Component {
 			};
 
 			const execQuery = () => {
-				if(this.props.onValueChange) {
+				if (this.props.onValueChange) {
 					this.props.onValueChange(obj.value);
 				}
-				if(this.props.URLParams) {
+				if (this.props.URLParams) {
 					helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
 				}
 				helper.selectedSensor.set(obj, true);
@@ -142,10 +142,10 @@ export default class TagCloud extends Component {
 			};
 
 			const execQuery = () => {
-				if(this.props.onValueChange) {
+				if (this.props.onValueChange) {
 					this.props.onValueChange(obj.value);
 				}
-				if(this.props.URLParams) {
+				if (this.props.URLParams) {
 					helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
 				}
 				helper.selectedSensor.set(obj, true);
@@ -192,7 +192,7 @@ export default class TagCloud extends Component {
 		if (this.loadListener) {
 			this.loadListener.remove();
 		}
-		if(this.filterListener) {
+		if (this.filterListener) {
 			this.filterListener.remove();
 		}
 	}
@@ -345,11 +345,11 @@ export default class TagCloud extends Component {
 		};
 
 		const execQuery = () => {
-			if(this.props.onValueChange) {
+			if (this.props.onValueChange) {
 				this.props.onValueChange(obj.value);
 			}
 			this.defaultSelected = this.selectedValue;
-			if(this.props.URLParams) {
+			if (this.props.URLParams) {
 				helper.URLParams.update(this.props.componentId, obj.value, this.props.URLParams);
 			}
 			helper.selectedSensor.set(obj, true);

@@ -1,6 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import classNames from "classnames";
 import Slider from "rc-slider";
 import {
@@ -100,7 +100,7 @@ export default class DynamicRangeSlider extends Component {
 		this.setRangeValue();
 	}
 
-	setRangeValue(value="range") {
+	setRangeValue(value = "range") {
 		const objValue = {
 			key: `${this.props.componentId}-internal`,
 			value
@@ -112,13 +112,13 @@ export default class DynamicRangeSlider extends Component {
 	histogramQuery() {
 		let query;
 		const isHistogramQuery = helper.selectedSensor.get(`${this.props.componentId}-internal`);
-		if(isHistogramQuery === "histogram") {
-			if(this.props.showHistogram) {
+		if (isHistogramQuery === "histogram") {
+			if (this.props.showHistogram) {
 				query = {
 					[this.props.dataField]: {
-						"histogram": {
-							"field": this.props.dataField,
-							"interval": this.props.interval ? this.props.interval : Math.ceil((this.state.range.max - this.state.range.min)/10)
+						histogram: {
+							field: this.props.dataField,
+							interval: this.props.interval ? this.props.interval : Math.ceil((this.state.range.max - this.state.range.min) / 10)
 						}
 					}
 				};
@@ -127,13 +127,14 @@ export default class DynamicRangeSlider extends Component {
 			}
 		} else {
 			query = {
-				"max": {
-					"max": {
-						"field": this.props.dataField,
+				max: {
+					max: {
+						field: this.props.dataField
 					}
-				}, "min": {
-					"min": {
-						"field": this.props.dataField,
+				},
+				min: {
+					min: {
+						field: this.props.dataField
 					}
 				}
 			};
@@ -154,7 +155,7 @@ export default class DynamicRangeSlider extends Component {
 			};
 		}
 
-		const reactAnd = [`${props.componentId}-internal`]
+		const reactAnd = [`${props.componentId}-internal`];
 		this.react = helper.setupReact(react, reactAnd);
 	}
 
@@ -171,8 +172,8 @@ export default class DynamicRangeSlider extends Component {
 			}
 			if (res.appliedQuery) {
 				const data = res.data;
-				if(data && data.aggregations) {
-					if(data.aggregations.max && data.aggregations.min) {
+				if (data && data.aggregations) {
+					if (data.aggregations.max && data.aggregations.min) {
 						this.setState({
 							range: {
 								min: data.aggregations.min.value,
@@ -314,7 +315,7 @@ export default class DynamicRangeSlider extends Component {
 		};
 
 		const execQuery = () => {
-			if(this.props.onValueChange) {
+			if (this.props.onValueChange) {
 				this.props.onValueChange(obj.value);
 			}
 			helper.selectedSensor.set(obj, true);

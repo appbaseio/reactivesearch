@@ -1,6 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import classNames from "classnames";
 import {
 	InitialLoader,
@@ -81,14 +81,14 @@ export default class NestedMultiList extends Component {
 		if (this.loadListenerChild) {
 			this.loadListenerChild.remove();
 		}
-		if(this.filterListener) {
+		if (this.filterListener) {
 			this.filterListener.remove();
 		}
 	}
 
 	listenFilter() {
 		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
-			if(data === this.props.componentId) {
+			if (data === this.props.componentId) {
 				this.onItemClick(null, 0);
 			}
 		});
@@ -98,7 +98,7 @@ export default class NestedMultiList extends Component {
 		this.urlParams = props.URLParams ? helper.URLParams.get(props.componentId) : null;
 		this.urlParams = this.urlParams ? this.urlParams.split("/") : null;
 		if (this.urlParams) {
-			this.urlParams = this.urlParams.map(item => {
+			this.urlParams = this.urlParams.map((item) => {
 				const value = item.split("\\");
 				if (value.length > 1) {
 					return value;
@@ -128,7 +128,7 @@ export default class NestedMultiList extends Component {
 					if (index !== defaultSelected.length - 1) {
 						console.error(`${this.props.componentId} - Please check the defaultSelected prop format. Only the last element in the defaultSelected array can be an array`);
 					}
-					value.map(item => {
+					value.map((item) => {
 						setTimeout(() => {
 							this.onItemClick(item, index);
 						}, 100);
@@ -139,7 +139,7 @@ export default class NestedMultiList extends Component {
 					}, 100);
 				}
 			});
-		} else if(this.defaultSelected === null) {
+		} else if (this.defaultSelected === null) {
 			this.onItemClick(null, 0);
 		}
 	}
@@ -236,15 +236,15 @@ export default class NestedMultiList extends Component {
 					term: {
 						[this.props.dataField[index]]: value[0]
 					}
-				}
+				};
 			}
 			return null;
 		};
 
 		const createFilterQuery = (level) => {
 			const filterMust = [];
-			if(level > 0) {
-				for(let i = 0; i <= level-1; i++) {
+			if (level > 0) {
+				for (let i = 0; i <= level - 1; i++) {
 					const termQuery = createtermQuery(i);
 					if (termQuery) {
 						filterMust.push(termQuery);
@@ -267,7 +267,7 @@ export default class NestedMultiList extends Component {
 				aggs: {
 					[field]: {
 						terms: {
-							field: field,
+							field,
 							size: this.props.size,
 							order: {
 								[orderType]: sortBy
@@ -278,7 +278,7 @@ export default class NestedMultiList extends Component {
 			}
 		});
 
-		if(level >= 0 && level < this.props.dataField.length) {
+		if (level >= 0 && level < this.props.dataField.length) {
 			query = init(field, level);
 		}
 
@@ -330,7 +330,7 @@ export default class NestedMultiList extends Component {
 				level = this.props.dataField.indexOf(appliedField);
 				level = level > -1 ? level : 0;
 			}
-		} catch(e) {
+		} catch (e) {
 			console.log(e);
 		}
 		return level;
@@ -369,14 +369,14 @@ export default class NestedMultiList extends Component {
 
 		if (selectedValues[level]) {
 			const values = [...selectedValues[level]];
-			values.forEach(val => {
+			values.forEach((val) => {
 				if (items[level].filter(item => item.key === val).length !== 1) {
 					selectedValues[level] = selectedValues[level].filter(i => i !== val);
 				}
 			});
 
 			if (selectedValues[level] && !selectedValues[level].length) {
-				for (let row in selectedValues) {
+				for (const row in selectedValues) {
 					if (row >= level) {
 						delete selectedValues[row];
 					}
@@ -393,7 +393,7 @@ export default class NestedMultiList extends Component {
 	}
 
 	// set value
-	setValue(value, isExecuteQuery = false, changeNestedValue=true) {
+	setValue(value, isExecuteQuery = false, changeNestedValue = true) {
 		value = Object.keys(value).length ? value : null;
 		if (value) {
 			value = this.flattenObj(value);
@@ -409,12 +409,12 @@ export default class NestedMultiList extends Component {
 		helper.selectedSensor.set(nestedObj, changeNestedValue);
 
 		const execQuery = () => {
-			if(this.props.onValueChange) {
+			if (this.props.onValueChange) {
 				this.props.onValueChange(obj.value);
 			}
 			let paramValue = [];
 			if (value && value.length) {
-				paramValue = value.map(item => {
+				paramValue = value.map((item) => {
 					if (Array.isArray(item)) {
 						return item.join("\\");
 					}
@@ -422,7 +422,7 @@ export default class NestedMultiList extends Component {
 				});
 			}
 			paramValue = paramValue.length ? paramValue.join("/") : null;
-			if(this.props.URLParams) {
+			if (this.props.URLParams) {
 				helper.URLParams.update(this.props.componentId, paramValue, this.props.URLParams);
 			}
 			helper.selectedSensor.set(obj, isExecuteQuery);
@@ -442,9 +442,7 @@ export default class NestedMultiList extends Component {
 	}
 
 	flattenObj(obj) {
-		return Object.keys(obj).map(key => {
-			return Array.isArray(obj[key]) && obj[key].length === 1 ? obj[key][0] : obj[key];
-		})
+		return Object.keys(obj).map(key => Array.isArray(obj[key]) && obj[key].length === 1 ? obj[key][0] : obj[key]);
 	}
 
 	// filter
@@ -462,7 +460,7 @@ export default class NestedMultiList extends Component {
 	}
 
 	onItemClick(selected, level) {
-		let { selectedValues, items }  = this.state;
+		let { selectedValues, items } = this.state;
 
 		if (selected === null) {
 			selectedValues = {};
@@ -474,7 +472,7 @@ export default class NestedMultiList extends Component {
 		}
 
 		if (selectedValues[level] && !selectedValues[level].length) {
-			for (let row in selectedValues) {
+			for (const row in selectedValues) {
 				if (row >= level) {
 					delete selectedValues[row];
 				}
@@ -482,14 +480,14 @@ export default class NestedMultiList extends Component {
 		}
 
 		if (selectedValues[level] && selectedValues[level].length > 1) {
-			for (let row in selectedValues) {
+			for (const row in selectedValues) {
 				if (row > level) {
 					delete selectedValues[row];
 				}
 			}
 		}
 
-		delete items[level+1];
+		delete items[level + 1];
 
 		this.setState({
 			items,
@@ -500,7 +498,7 @@ export default class NestedMultiList extends Component {
 	}
 
 	renderChevron(level) {
-		return level < this.props.dataField.length-1 ? (<i className="fa fa-chevron-right" />) : "";
+		return level < this.props.dataField.length - 1 ? (<i className="fa fa-chevron-right" />) : "";
 	}
 
 	countRender(docCount) {
@@ -511,7 +509,7 @@ export default class NestedMultiList extends Component {
 		return count;
 	}
 
-	renderItems(items, prefix =[]) {
+	renderItems(items, prefix = []) {
 		const level = prefix.length;
 		items = items.filter(item => item.key);
 		return items.map((item, index) => {
@@ -534,9 +532,9 @@ export default class NestedMultiList extends Component {
 						{this.renderChevron(level)}
 					</div>
 					{
-						active && this.state.selectedValues[level].length === 1 && this.state.items[level+1] ? (
+						active && this.state.selectedValues[level].length === 1 && this.state.items[level + 1] ? (
 							<ul className="rbc-sublist-container rbc-indent col s12 col-xs-12">
-								{this.renderItems(this.state.items[level+1], item.value)}
+								{this.renderItems(this.state.items[level + 1], item.value)}
 							</ul>
 						) : null
 					}
@@ -611,21 +609,18 @@ export default class NestedMultiList extends Component {
 }
 
 const NestedingValidation = (props, propName) => {
-	var err = null;
+	let err = null;
 	if (!props[propName]) {
 		err = new Error("dataField is required prop!");
-	}
-	else if (!Array.isArray(props[propName])) {
+	}	else if (!Array.isArray(props[propName])) {
 		err = new Error("dataField should be an array!");
-	}
-	else if (props[propName].length === 0) {
+	}	else if (props[propName].length === 0) {
 		err = new Error("dataField should not have an empty array.");
-	}
-	else if (props[propName].length > 9) {
+	}	else if (props[propName].length > 9) {
 		err = new Error("dataField can have maximum 10 fields.");
 	}
 	return err;
-}
+};
 
 NestedMultiList.propTypes = {
 	componentId: PropTypes.string.isRequired,

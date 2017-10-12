@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 export default class ViewSwitcher extends Component {
 	constructor(props) {
@@ -20,15 +20,15 @@ export default class ViewSwitcher extends Component {
 
 	switchView(element) {
 		this.props.data.forEach((item) => {
-			const el = document.querySelector("." + item.value);
+			const el = document.querySelector(`.${item.value}`);
 			if (el) {
 				if (element === item.value) {
 					this.setState({
 						active: item.value
 					});
-					document.querySelector("." + item.value).style.display = "block";
+					document.querySelector(`.${item.value}`).style.display = "block";
 				} else {
-					document.querySelector("." + item.value).style.display = "none";
+					document.querySelector(`.${item.value}`).style.display = "none";
 				}
 			}
 		});

@@ -1,6 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import classNames from "classnames";
 import {
 	InitialLoader,
@@ -328,7 +328,7 @@ export default class ResultCard extends Component {
 	defaultOnData(res) {
 		let markup = null;
 		const data = res.currentData.concat(res.newData);
-		markup = data.map((item) => <JsonPrint key={item._id} data={item} />);
+		markup = data.map(item => <JsonPrint key={item._id} data={item} />);
 		return markup;
 	}
 
@@ -388,16 +388,15 @@ export default class ResultCard extends Component {
 						{details}
 					</a>
 				);
-			} else {
-				return (
-					<div
-						key={item._id}
-						className={`rbc-resultcard-item ${cx}`}
-					>
-						{details}
-					</div>
-				);
 			}
+			return (
+				<div
+					key={item._id}
+					className={`rbc-resultcard-item ${cx}`}
+				>
+					{details}
+				</div>
+			);
 		});
 
 		return markup;
@@ -591,7 +590,7 @@ export default class ResultCard extends Component {
 		helper.selectedSensor.set(obj, true, "sortChange");
 	}
 	getComponentStyle() {
-		let style = {};
+		const style = {};
 		if (this.props.scrollOnTarget) {
 			style.maxHeight = "none";
 			style.height = "auto";

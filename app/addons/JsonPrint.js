@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 export default class JsonPrint extends Component {
 	constructor(props) {
@@ -18,11 +18,11 @@ export default class JsonPrint extends Component {
 		return (
 			<div className="row rbc-json-print">
 				<span
-					className={'head ' + (this.state.open ? null : 'collapsed')}
-					onClick={() => this.setState({open: !this.state.open})}
-					>Object</span>
+					className={`head ${this.state.open ? null : "collapsed"}`}
+					onClick={() => this.setState({ open: !this.state.open })}
+				>Object</span>
 				<pre>{tree}</pre>
 			</div>
-		)
+		);
 	}
 }

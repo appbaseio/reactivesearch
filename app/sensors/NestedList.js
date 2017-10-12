@@ -1,6 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import classNames from "classnames";
 import {
 	InitialLoader,
@@ -82,14 +82,14 @@ export default class NestedList extends Component {
 		if (this.loadListenerChild) {
 			this.loadListenerChild.remove();
 		}
-		if(this.filterListener) {
+		if (this.filterListener) {
 			this.filterListener.remove();
 		}
 	}
 
 	listenFilter() {
 		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
-			if(data === this.props.componentId) {
+			if (data === this.props.componentId) {
 				this.changeValue(null);
 			}
 		});
@@ -113,7 +113,7 @@ export default class NestedList extends Component {
 					return item;
 				}) : null;
 				return subitems;
-			})
+			});
 			this.setState({
 				items,
 				storedItems: items
@@ -129,11 +129,11 @@ export default class NestedList extends Component {
 	handleSelect(defaultSelected) {
 		if (defaultSelected) {
 			this.defaultSelected.forEach((value, index) => {
-				const customValue = defaultSelected.filter((item, subindex) => subindex <= index );
+				const customValue = defaultSelected.filter((item, subindex) => subindex <= index);
 				this.onItemSelect(customValue);
 			});
 			// this.onItemSelect(this.defaultSelected);
-		} else if(this.defaultSelected === null) {
+		} else if (this.defaultSelected === null) {
 			this.onItemSelect(null);
 		}
 	}
@@ -222,15 +222,15 @@ export default class NestedList extends Component {
 		const field = this.props.dataField[level];
 		const orderType = this.props.sortBy === "count" ? "_count" : "_term";
 		const sortBy = this.props.sortBy === "count" ? "desc" : this.props.sortBy;
-		const createtermQuery = (index) => ({
+		const createtermQuery = index => ({
 			term: {
 				[this.props.dataField[index]]: this.state.selectedValues[index]
 			}
 		});
 		const createFilterQuery = (level) => {
 			const filterMust = [];
-			if(level > 0) {
-				for(let i = 0; i <= level-1; i++) {
+			if (level > 0) {
+				for (let i = 0; i <= level - 1; i++) {
 					filterMust.push(createtermQuery(i));
 				}
 			}
@@ -246,7 +246,7 @@ export default class NestedList extends Component {
 				aggs: {
 					[field]: {
 						terms: {
-							field: field,
+							field,
 							size: this.props.size,
 							order: {
 								[orderType]: sortBy
@@ -256,7 +256,7 @@ export default class NestedList extends Component {
 				}
 			}
 		});
-		if(Array.isArray(this.state.selectedValues) && this.state.selectedValues.length < this.props.dataField.length) {
+		if (Array.isArray(this.state.selectedValues) && this.state.selectedValues.length < this.props.dataField.length) {
 			query = init(field, level);
 		}
 		return query;
@@ -307,7 +307,7 @@ export default class NestedList extends Component {
 				level = this.props.dataField.indexOf(appliedField);
 				level = level > -1 ? level : 0;
 			}
-		} catch(e) {
+		} catch (e) {
 			console.log(e);
 		}
 		return level;
@@ -345,7 +345,7 @@ export default class NestedList extends Component {
 	}
 
 	// set value
-	setValue(value, isExecuteQuery = false, changeNestedValue=true) {
+	setValue(value, isExecuteQuery = false, changeNestedValue = true) {
 		value = value && value.length ? value : null;
 		const obj = {
 			key: this.props.componentId,
@@ -358,11 +358,11 @@ export default class NestedList extends Component {
 		helper.selectedSensor.set(nestedObj, changeNestedValue);
 
 		const execQuery = () => {
-			if(this.props.onValueChange) {
+			if (this.props.onValueChange) {
 				this.props.onValueChange(obj.value);
 			}
 			const paramValue = value && value.length ? value.join("/") : null;
-			if(this.props.URLParams) {
+			if (this.props.URLParams) {
 				helper.URLParams.update(this.props.componentId, paramValue, this.props.URLParams);
 			}
 			helper.selectedSensor.set(obj, isExecuteQuery);
@@ -397,13 +397,13 @@ export default class NestedList extends Component {
 
 	onItemClick(selectedValues, level) {
 		selectedValues = selectedValues.split("@rbc@");
-		if(this.state.selectedValues && selectedValues[level] === this.state.selectedValues[level]) {
+		if (this.state.selectedValues && selectedValues[level] === this.state.selectedValues[level]) {
 			selectedValues = this.state.selectedValues.filter((item, index) => index < level);
 			const items = this.state.items;
-			items[level+1] = null;
+			items[level + 1] = null;
 			this.setState({
 				items,
-				selectedValues: selectedValues
+				selectedValues
 			}, this.setValue.bind(this, selectedValues, true, false));
 		} else {
 			this.onItemSelect(selectedValues);
@@ -412,7 +412,7 @@ export default class NestedList extends Component {
 
 	onItemSelect(selectedValues) {
 		let items = this.state.items;
-		if(selectedValues === null) {
+		if (selectedValues === null) {
 			items = [items[0]];
 		} else {
 			items[selectedValues.length] = null;
@@ -420,12 +420,12 @@ export default class NestedList extends Component {
 		this.defaultSelected = selectedValues;
 		this.setState({
 			selectedValues,
-			items: items
+			items
 		}, this.setValue.bind(this, selectedValues, true));
 	}
 
 	renderChevron(level) {
-		return level < this.props.dataField.length-1 ? (<i className="fa fa-chevron-right" />) : "";
+		return level < this.props.dataField.length - 1 ? (<i className="fa fa-chevron-right" />) : "";
 	}
 
 	countRender(docCount) {
@@ -436,7 +436,7 @@ export default class NestedList extends Component {
 		return count;
 	}
 
-	renderItems(items, prefix =[]) {
+	renderItems(items, prefix = []) {
 		const level = prefix.length;
 		items = items.filter(item => item.key);
 		return items.map((item, index) => {
@@ -456,35 +456,34 @@ export default class NestedList extends Component {
 							{this.renderChevron(level)}
 						</button>
 						{
-							Array.isArray(this.state.selectedValues) && this.state.selectedValues[level] === item.key && this.state.items[level+1] ? (
+							Array.isArray(this.state.selectedValues) && this.state.selectedValues[level] === item.key && this.state.items[level + 1] ? (
 								<ul className="rbc-list-container col s12 col-xs-12">
-									{this.renderItems(this.state.items[level+1], item.value)}
+									{this.renderItems(this.state.items[level + 1], item.value)}
 								</ul>
 							) : null
 						}
-					</li>)
+					</li>);
 				}
 				return null;
-			} else {
-				return (
-					<li
-						key={index}
-						className="rbc-list-container col s12 col-xs-12"
-					>
-						<button className={`rbc-list-item ${cx}`} onClick={() => this.onItemClick(item.value.join("@rbc@"), level)}>
-							<span className="rbc-label">{item.key} {this.countRender(item.doc_count)}</span>
-							{this.renderChevron(level)}
-						</button>
-						{
-							Array.isArray(this.state.selectedValues) && this.state.selectedValues[level] === item.key && this.state.items[level+1] ? (
+			}
+			return (
+				<li
+					key={index}
+					className="rbc-list-container col s12 col-xs-12"
+				>
+					<button className={`rbc-list-item ${cx}`} onClick={() => this.onItemClick(item.value.join("@rbc@"), level)}>
+						<span className="rbc-label">{item.key} {this.countRender(item.doc_count)}</span>
+						{this.renderChevron(level)}
+					</button>
+					{
+							Array.isArray(this.state.selectedValues) && this.state.selectedValues[level] === item.key && this.state.items[level + 1] ? (
 								<ul className="rbc-list-container col s12 col-xs-12">
-									{this.renderItems(this.state.items[level+1], item.value)}
+									{this.renderItems(this.state.items[level + 1], item.value)}
 								</ul>
 							) : null
 						}
-					</li>
-				);
-			}
+				</li>
+			);
 		});
 	}
 
@@ -554,21 +553,18 @@ export default class NestedList extends Component {
 }
 
 const NestedingValidation = (props, propName) => {
-	var err = null;
+	let err = null;
 	if (!props[propName]) {
 		err = new Error("dataField is required prop!");
-	}
-	else if (!Array.isArray(props[propName])) {
+	}	else if (!Array.isArray(props[propName])) {
 		err = new Error("dataField should be an array!");
-	}
-	else if (props[propName].length === 0) {
+	}	else if (props[propName].length === 0) {
 		err = new Error("dataField should not have an empty array.");
-	}
-	else if (props[propName].length > 9) {
+	}	else if (props[propName].length > 9) {
 		err = new Error("dataField can have maximum 10 fields.");
 	}
 	return err;
-}
+};
 
 NestedList.propTypes = {
 	componentId: PropTypes.string.isRequired,

@@ -1,6 +1,6 @@
 /* eslint max-lines: 0 */
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import classNames from "classnames";
 import Autosuggest from "react-autosuggest";
 import {
@@ -85,14 +85,14 @@ export default class CategorySearch extends Component {
 		if (this.channelListener) {
 			this.channelListener.remove();
 		}
-		if(this.filterListener) {
+		if (this.filterListener) {
 			this.filterListener.remove();
 		}
 	}
 
 	listenFilter() {
 		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
-			if(data === this.props.componentId) {
+			if (data === this.props.componentId) {
 				this.defaultValue = "";
 				this.changeValue(this.defaultValue);
 			}
@@ -200,7 +200,7 @@ export default class CategorySearch extends Component {
 				? [this.props.dataField]
 				: this.props.dataField;
 			const fields = dataFields.map(
-				(field, index) => `${field}${(Array.isArray(this.props.weights) && this.props.weights[index]) ? ("^" + this.props.weights[index]) : ""}`
+				(field, index) => `${field}${(Array.isArray(this.props.weights) && this.props.weights[index]) ? (`^${this.props.weights[index]}`) : ""}`
 			);
 
 			if (this.props.queryFormat === "and") {
@@ -322,7 +322,7 @@ export default class CategorySearch extends Component {
 	setData(data, loadSuggestions) {
 		let aggs = [];
 		let options = [];
-		let searchField = null;
+		const searchField = null;
 		if (data && data.aggregations && data.aggregations[this.props.categoryField] && data.aggregations[this.props.categoryField].buckets) {
 			aggs = (data.aggregations[this.props.categoryField].buckets).slice(0, 2);
 		}
@@ -411,10 +411,8 @@ export default class CategorySearch extends Component {
 		if (currentValue && currentValue.category) {
 			finalVal.category = currentValue.category;
 			finalVal.value = finalVal.value.slice(0, -6);
-		} else {
-			if(finalVal) {
-				finalVal.category = null;
-			}
+		} else if (finalVal) {
+			finalVal.category = null;
 		}
 
 		const obj = {
@@ -423,10 +421,10 @@ export default class CategorySearch extends Component {
 		};
 
 		const execQuery = () => {
-			if(this.props.onValueChange) {
+			if (this.props.onValueChange) {
 				this.props.onValueChange(obj.value);
 			}
-			if(this.props.URLParams) {
+			if (this.props.URLParams) {
 				helper.URLParams.update(this.props.componentId, finalVal ? finalVal.value : null, this.props.URLParams);
 			}
 			helper.selectedSensor.set(obj, true);
@@ -604,7 +602,7 @@ CategorySearch.propTypes = {
 	queryFormat: PropTypes.oneOf(["and", "or"]),
 	fuzziness: PropTypes.oneOfType([
 		PropTypes.string,
-		PropTypes.number,
+		PropTypes.number
 	]),
 	className: PropTypes.string,
 	onBlur: PropTypes.func,

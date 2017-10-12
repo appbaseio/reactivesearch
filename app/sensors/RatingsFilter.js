@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import classNames from "classnames";
 import {
 	TYPES,
@@ -35,14 +35,14 @@ export default class RatingsFilter extends Component {
 
 	// stop streaming request and remove listener when component will unmount
 	componentWillUnmount() {
-		if(this.filterListener) {
+		if (this.filterListener) {
 			this.filterListener.remove();
 		}
 	}
 
 	listenFilter() {
 		this.filterListener = helper.sensorEmitter.addListener("clearFilter", (data) => {
-			if(data === this.props.componentId) {
+			if (data === this.props.componentId) {
 				this.changeValue(null);
 			}
 		});
@@ -54,7 +54,7 @@ export default class RatingsFilter extends Component {
 	}
 
 	changeValue(defaultValue) {
-		if(!_.isEqual(this.defaultSelected, defaultValue)) {
+		if (!_.isEqual(this.defaultSelected, defaultValue)) {
 			this.defaultSelected = defaultValue;
 			if (this.defaultSelected) {
 				this.defaultSelected = defaultValue;
@@ -63,7 +63,7 @@ export default class RatingsFilter extends Component {
 				if (records && records.length) {
 					setTimeout(this.handleChange.bind(this, records[0]), 300);
 				}
-			} else if(this.defaultSelected === null) {
+			} else if (this.defaultSelected === null) {
 				this.handleChange(null);
 			}
 		}
@@ -122,11 +122,11 @@ export default class RatingsFilter extends Component {
 		};
 
 		const execQuery = () => {
-			if(this.props.onValueChange) {
+			if (this.props.onValueChange) {
 				this.props.onValueChange(obj.value);
 			}
 			const isExecuteQuery = true;
-			if(this.props.URLParams) {
+			if (this.props.URLParams) {
 				helper.URLParams.update(this.props.componentId, record ? JSON.stringify(record) : null, this.props.URLParams);
 			}
 			helper.selectedSensor.set(obj, isExecuteQuery);
