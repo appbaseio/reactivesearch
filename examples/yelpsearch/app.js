@@ -5,7 +5,7 @@ import {
 	DataSearch,
 	RatingsFilter,
 	MultiList,
-	ToggleList,
+	MultiDataList,
 	ResultList,
 	ReactiveMap
 } from "../../app/app.js";
@@ -28,8 +28,7 @@ class Main extends Component {
 				<span className="tag">{res.place_type}</span>
 				<span className="tag">{res.cuisine}</span>
 				<a className="call-btn" href={`tel:${res.phone_number}`}><i className="fa fa-phone"></i> Call</a>
-			</div>),
-			url: "#"
+			</div>)
 		};
 		return result;
 	}
@@ -111,7 +110,7 @@ class Main extends Component {
 										and: ["RatingsSensor", "CategorySensor", "WifiSensor", "DogSensor", "MusicSensor", "BookingSensor"]
 									}}
 								/>
-								<ToggleList
+								<MultiDataList
 									dataField="wifi"
 									componentId="WifiSensor"
 									title="More Filters"
@@ -122,7 +121,7 @@ class Main extends Component {
 										}
 									]}
 								/>
-								<ToggleList
+								<MultiDataList
 									dataField="dog_friendly"
 									componentId="DogSensor"
 									data={[
@@ -132,7 +131,7 @@ class Main extends Component {
 										}
 									]}
 								/>
-								<ToggleList
+								<MultiDataList
 									dataField="live_music"
 									componentId="MusicSensor"
 									data={[
@@ -142,7 +141,7 @@ class Main extends Component {
 										}
 									]}
 								/>
-								<ToggleList
+								<MultiDataList
 									dataField="online_bookings"
 									componentId="BookingSensor"
 									data={[
