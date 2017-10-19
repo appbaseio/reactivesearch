@@ -459,13 +459,8 @@ ul > li {
 	}
 }
 
-.gh-container {
-	display: flex;
-	flex-direction: row;
-
-	@media all and (max-width: 767px) {
-		margin: 20px 0 0;
-	}
+.btn-container {
+	margin: 0 20px;
 }
 
 .github-button {
