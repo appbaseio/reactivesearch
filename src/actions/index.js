@@ -6,10 +6,11 @@ import {
 	EXECUTE_QUERY,
 	UPDATE_HITS,
 	UPDATE_AGGS,
-	SET_QUERY_OPTIONS
+	SET_QUERY_OPTIONS,
+	LOG_QUERY
 } from "../constants";
 
-import { buildQuery } from "../utils/helper";
+import { buildQuery, isEqual } from "../utils/helper";
 
 export function addComponent(component) {
 	return {
@@ -61,39 +62,49 @@ export function setQueryOptions(component, options) {
 	};
 }
 
+export function logQuery(component, query) {
+	return {
+		type: LOG_QUERY,
+		component,
+		query
+	};
+}
+
 export function executeQuery(component, query, options = {}, appendToHits = false) {
 	return (dispatch, getState) => {
-		const { appbaseRef, config, queryOptions } = getState();
+		const { appbaseRef, config, queryOptions, queryLog } = getState();
 		let mainQuery = null;
+
 		if (query) {
 			mainQuery = {
 				query
 			}
 		}
 
-		console.log("Executing for", component, {
+		const finalQuery = {
 			...mainQuery,
 			...queryOptions[component],
 			...options
-		});
+		};
 
-		appbaseRef.search({
-			type: config.type === "*" ? null : config.type,
-			body: {
-				...mainQuery,
-				...queryOptions[component],
-				...options
-			}
-		})
-			.on("data", response => {
-				dispatch(updateHits(component, response.hits, appendToHits))
-				if ("aggregations" in response) {
-					dispatch(updateAggs(component, response.aggregations));
-				}
+		if (!isEqual(finalQuery, queryLog[component])) {
+			console.log("Executing for", component, finalQuery);
+			dispatch(logQuery(component, finalQuery));
+
+			appbaseRef.search({
+				type: config.type === "*" ? null : config.type,
+				body: finalQuery
 			})
-			.on("error", e => {
-				console.log(e);
-			});
+				.on("data", response => {
+					dispatch(updateHits(component, response.hits, appendToHits))
+					if ("aggregations" in response) {
+						dispatch(updateAggs(component, response.aggregations));
+					}
+				})
+				.on("error", e => {
+					console.log(e);
+				});
+		}
 	}
 }
 
