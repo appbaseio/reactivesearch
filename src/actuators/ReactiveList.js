@@ -20,9 +20,9 @@ class ReactiveList extends Component {
 
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
 		const options = getQueryOptions(this.props);
 		this.props.setQueryOptions(this.props.componentId, options);
+		this.setReact(this.props);
 	}
 
 	componentWillReceiveProps(nextProps) {
