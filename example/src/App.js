@@ -6,6 +6,7 @@ import { Text, Header, Body, Title } from "native-base";
 import {
 	ReactiveBase,
 	DataSearch,
+	DataController,
 	TextField,
 	SingleDropdownList,
 	MultiDropdownList,
@@ -75,6 +76,9 @@ export default class Main extends Component {
 							appbaseField="color"
 							placeholder="Search color"
 						/>
+						<DataController
+							componentId="DataController"
+						/>
 						<ReactiveList
 							componentId="ReactiveList"
 							size={20}
@@ -82,7 +86,7 @@ export default class Main extends Component {
 							onData={this.onData}
 							pagination
 							react={{
-								and: ["SingleDropdownListComponent", "MultiDropdownListComponent", "DataSeachComponent", "TextFieldComponent"]
+								and: ["DataController", "SingleDropdownListComponent", "MultiDropdownListComponent", "DataSeachComponent", "TextFieldComponent"]
 							}}
 						/>
 					</View>

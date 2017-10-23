@@ -25,12 +25,24 @@ export function removeComponent(component) {
 	};
 }
 
-export function watchComponent(component, react) {
+function updateWatchman(component, react) {
 	return {
 		type: WATCH_COMPONENT,
 		component,
 		react
 	};
+}
+
+export function watchComponent(component, react) {
+	return (dispatch, getState) => {
+		dispatch(updateWatchman(component, react));
+		const store = getState();
+		const options = store.queryOptions[component];
+		const queryObj = buildQuery(component, store.dependencyTree, store.queryList);
+		if (queryObj) {
+			dispatch(executeQuery(component, queryObj, options));
+		}
+	}
 }
 
 export function setQuery(component, query) {

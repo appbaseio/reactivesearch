@@ -86,7 +86,7 @@ function getOperation(conjunction) {
 }
 
 function createBoolQuery(operation, query) {
-	if (query) {
+	if ((Array.isArray(query) && query.length) || (!Array.isArray(query) && query)) {
 		return {
 			bool: {
 				[operation]: query

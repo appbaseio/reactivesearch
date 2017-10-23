@@ -176,7 +176,12 @@ ReactiveList.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
-	total: state.hits[props.componentId] && state.hits[props.componentId].total
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	components: state.components,
+	watchMan: state.watchMan,
+	queryList: state.queryList,
+	queryOptions: state.queryOptions,
+	dependencyTree: state.dependencyTree
 });
 
 const mapDispatchtoProps = dispatch => ({
