@@ -26,9 +26,9 @@ class SingleDropdownList extends Component {
 
 		const queryOptions = getQueryOptions(this.props);
 		queryOptions.aggs = {
-			[this.props.appbaseField]: {
+			[this.props.dataField]: {
 				terms: {
-					field: this.props.appbaseField,
+					field: this.props.dataField,
 					size: 100,
 					order: {
 						_count: "desc"
@@ -46,7 +46,7 @@ class SingleDropdownList extends Component {
 		}
 		if (!isEqual(nextProps.options, this.props.options)) {
 			this.setState({
-				options: nextProps.options[nextProps.appbaseField].buckets || []
+				options: nextProps.options[nextProps.dataField].buckets || []
 			});
 		}
 	}
@@ -70,13 +70,13 @@ class SingleDropdownList extends Component {
 		if (this.selectAll) {
 			return {
 				exists: {
-					field: [this.props.appbaseField]
+					field: [this.props.dataField]
 				}
 			};
 		} else if (value) {
 			return {
 				[this.type]: {
-					[this.props.appbaseField]: value
+					[this.props.dataField]: value
 				}
 			};
 		}

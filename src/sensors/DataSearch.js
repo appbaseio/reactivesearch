@@ -69,10 +69,10 @@ class DataSearch extends Component {
 		let finalQuery = null,
 			fields;
 		if (value) {
-			if (Array.isArray(this.props.appbaseField)) {
-				fields = this.props.appbaseField;
+			if (Array.isArray(this.props.dataField)) {
+				fields = this.props.dataField;
 			} else {
-				fields = [this.props.appbaseField];
+				fields = [this.props.dataField];
 			}
 			finalQuery = {
 				bool: {
@@ -91,8 +91,8 @@ class DataSearch extends Component {
 		return finalQuery;
 	}
 
-	shouldQuery(value, appbaseFields) {
-		const fields = appbaseFields.map(
+	shouldQuery(value, dataFields) {
+		const fields = dataFields.map(
 			(field, index) => `${field}${(Array.isArray(this.props.weights) && this.props.weights[index]) ? ("^" + this.props.weights[index]) : ""}`
 		);
 

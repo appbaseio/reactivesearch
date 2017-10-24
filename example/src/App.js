@@ -58,22 +58,22 @@ export default class Main extends Component {
 					<View style={{ padding: 10 }}>
 						<SingleDropdownList
 							componentId="SingleDropdownListComponent"
-							appbaseField="brand.raw"
+							dataField="brand.raw"
 						/>
 						<MultiDropdownList
 							componentId="MultiDropdownListComponent"
-							appbaseField="brand.raw"
+							dataField="brand.raw"
 						/>
 						<DataSearch
 							componentId="DataSeachComponent"
-							appbaseField="name"
+							dataField="name"
 							react={{
 								and: "TextFieldComponent"
 							}}
 						/>
 						<TextField
 							componentId="TextFieldComponent"
-							appbaseField="color"
+							dataField="color"
 							placeholder="Search color"
 						/>
 						<DataController

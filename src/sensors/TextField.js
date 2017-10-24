@@ -43,7 +43,7 @@ class TextField extends Component {
 		if (value && value.trim() !== "") {
 			return {
 				[this.type]: {
-					[this.props.appbaseField]: value
+					[this.props.dataField]: value
 				}
 			};
 		}
