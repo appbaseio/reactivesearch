@@ -9,7 +9,17 @@ class DataController extends Component {
 		this.props.addComponent(this.props.componentId);
 
 		const query = this.props.customQuery ? this.props.customQuery : this.defaultQuery;
-		this.props.updateQuery(this.props.componentId, query());
+		if (this.props.defaultSelected) {
+			this.props.updateQuery(this.props.componentId, query(this.props.defaultSelected));
+		} else {
+			this.props.updateQuery(this.props.componentId, query());
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+			this.props.updateQuery(this.props.componentId, query(nextProps.defaultSelected));
+		}
 	}
 
 	componentWillUnmount() {
