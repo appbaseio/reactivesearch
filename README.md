@@ -115,6 +115,8 @@ The components are divided into two sections:
 * Each component's styles API is mentioned in a separate **CSS Styles API** section. See here for [SingleList](https://opensource.appbase.io/reactive-manual/v1/components/SingleList.html#-singlelist-css-styles-api).
 * You can read more about the Styles API here - https://opensource.appbase.io/reactive-manual/v1/advanced/StyleGuide.html.
 
+If you're using **reactivesearch** with your own cluster, you might need to [configure CORS](https://opensource.appbase.io/reactive-manual/v1/getting-started/ReactiveBase.html#-reactivebase-props).
+
 [⬆ Back to Top](#reactive-search)
 
 ## 8. Developing Locally
