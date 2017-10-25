@@ -32,12 +32,14 @@ class DataSearch extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.props.addComponent(this.internalComponent);
 		this.setReact(this.props);
+
 		this.updateQuery = debounce((component, value) => {
+			const query = this.props.customQuery || this.defaultQuery;
 			let callback = null;
 			if (component === this.props.componentId && this.props.onQueryChange) {
 				callback = this.props.onQueryChange;
 			}
-			this.props.updateQuery(component, this.defaultQuery(value), callback);
+			this.props.updateQuery(component, query(value), callback);
 		}, 300);
 	}
 

@@ -10,6 +10,7 @@ import {
 	TextField,
 	SingleDropdownList,
 	MultiDropdownList,
+	RangeSlider,
 	ReactiveList
 } from "reactivebase-native";
 
@@ -74,6 +75,14 @@ export default class Main extends Component {
 								and: "TextFieldComponent"
 							}}
 						/>
+						<RangeSlider
+							componentId="RangeSlider"
+							dataField="rating"
+							range={{
+								start: 0,
+								end: 5
+							}}
+						/>
 						<TextField
 							componentId="TextFieldComponent"
 							dataField="color"
@@ -89,7 +98,7 @@ export default class Main extends Component {
 							onData={this.onData}
 							pagination
 							react={{
-								and: ["DataController", "SingleDropdownListComponent", "MultiDropdownListComponent", "DataSeachComponent", "TextFieldComponent"]
+								and: ["DataController", "SingleDropdownListComponent", "MultiDropdownListComponent", "DataSeachComponent", "TextFieldComponent", "RangeSlider"]
 							}}
 						/>
 					</View>

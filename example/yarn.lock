@@ -46,6 +46,10 @@
     lodash "^4.17.4"
     react-native-vector-icons "4.1.1"
 
+"@ptomasroos/react-native-multi-slider@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@ptomasroos/react-native-multi-slider/-/react-native-multi-slider-0.0.11.tgz#9ddc5ed07c1dff14e10b40d0e97e436bbc851393"
+
 "@segment/loosely-validate-event@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@segment/loosely-validate-event/-/loosely-validate-event-1.1.2.tgz#d77840999e3f7e43e74b3b0d43391c1526f793b8"
