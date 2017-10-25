@@ -67,6 +67,9 @@ export default class Main extends Component {
 						<DataSearch
 							componentId="DataSeachComponent"
 							dataField="name"
+							onQueryChange={(prev, next) => {
+								console.log(prev, next);
+							}}
 							react={{
 								and: "TextFieldComponent"
 							}}

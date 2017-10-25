@@ -70,7 +70,7 @@ export function logQuery(component, query) {
 	};
 }
 
-export function executeQuery(component, query, options = {}, appendToHits = false) {
+export function executeQuery(component, query, options = {}, appendToHits = false, onQueryChange) {
 	return (dispatch, getState) => {
 		const { appbaseRef, config, queryOptions, queryLog } = getState();
 		let mainQuery = null;
@@ -89,6 +89,9 @@ export function executeQuery(component, query, options = {}, appendToHits = fals
 
 		if (!isEqual(finalQuery, queryLog[component])) {
 			console.log("Executing for", component, finalQuery);
+			if (onQueryChange) {
+				onQueryChange(queryLog[component], finalQuery);
+			}
 			dispatch(logQuery(component, finalQuery));
 
 			appbaseRef.search({
@@ -126,7 +129,7 @@ export function updateAggs(component, aggregations) {
 	}
 }
 
-export function updateQuery(componentId, query) {
+export function updateQuery(componentId, query, onQueryChange) {
 	return (dispatch, getState) => {
 		dispatch(setQuery(componentId, query));
 
@@ -136,7 +139,7 @@ export function updateQuery(componentId, query) {
 		if (Array.isArray(watchList)) {
 			watchList.forEach(component => {
 				const queryObj = buildQuery(component, store.dependencyTree, store.queryList);
-				dispatch(executeQuery(component, queryObj, options));
+				dispatch(executeQuery(component, queryObj, options, false, onQueryChange));
 			});
 		}
 	}

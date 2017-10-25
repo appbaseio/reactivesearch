@@ -33,7 +33,11 @@ class DataSearch extends Component {
 		this.props.addComponent(this.internalComponent);
 		this.setReact(this.props);
 		this.updateQuery = debounce((component, value) => {
-			this.props.updateQuery(component, this.defaultQuery(value));
+			let callback = null;
+			if (component === this.props.componentId && this.props.onQueryChange) {
+				callback = this.props.onQueryChange;
+			}
+			this.props.updateQuery(component, this.defaultQuery(value), callback);
 		}, 300);
 	}
 
@@ -292,7 +296,7 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query) => dispatch(updateQuery(component, query))
+	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DataSearch);
