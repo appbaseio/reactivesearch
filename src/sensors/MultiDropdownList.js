@@ -172,6 +172,7 @@ class MultiDropdownList extends Component {
 											borderBottomWidth: 0.5
 										}}>
 											<CheckBox
+												onPress={() => this.selectItem(item.key)}
 												checked={this.state.currentValue.includes(item.key)}
 											/>
 											<Text style={{ marginLeft: 20 }}>{item.key}</Text>
