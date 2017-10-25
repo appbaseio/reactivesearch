@@ -8,17 +8,16 @@ class DataController extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
 
-		const query = this.props.customQuery ? this.props.customQuery : this.defaultQuery;
 		if (this.props.defaultSelected) {
-			this.props.updateQuery(this.props.componentId, query(this.props.defaultSelected));
+			this.updateQuery(this.props.defaultSelected);
 		} else {
-			this.props.updateQuery(this.props.componentId, query());
+			this.updateQuery();
 		}
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.props.updateQuery(this.props.componentId, query(nextProps.defaultSelected));
+			this.updateQuery(nextProps.defaultSelected);
 		}
 	}
 
@@ -29,6 +28,29 @@ class DataController extends Component {
 	defaultQuery() {
 		return {
 			"match_all": {}
+		}
+	}
+
+	updateQuery = (defaultSelected = null) => {
+		const query = this.props.customQuery ? this.props.customQuery : this.defaultQuery;
+		const callback = this.props.onQueryChange || null;
+		const performUpdate = () => {
+			if (this.props.onValueChange) {
+				this.props.onValueChange(defaultSelected);
+			}
+			this.props.updateQuery(this.props.componentId, query(defaultSelected), callback);
+		}
+
+		if (this.props.beforeValueChange) {
+			this.props.beforeValueChange(defaultSelected)
+				.then(() => {
+					performUpdate();
+				})
+				.catch((e) => {
+					console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with `, e);
+				});
+		} else {
+			performUpdate();
 		}
 	}
 
@@ -44,7 +66,7 @@ class DataController extends Component {
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	updateQuery: (component, query) => dispatch(updateQuery(component, query))
+	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange))
 });
 
 export default connect(null, mapDispatchtoProps)(DataController);
