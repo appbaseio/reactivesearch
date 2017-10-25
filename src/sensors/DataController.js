@@ -9,16 +9,18 @@ class DataController extends Component {
 		this.props.addComponent(this.props.componentId);
 
 		const query = this.props.customQuery ? this.props.customQuery : this.defaultQuery;
+		const callback = this.props.onQueryChange || null;
 		if (this.props.defaultSelected) {
-			this.props.updateQuery(this.props.componentId, query(this.props.defaultSelected));
+			this.props.updateQuery(this.props.componentId, query(this.props.defaultSelected), callback);
 		} else {
-			this.props.updateQuery(this.props.componentId, query());
+			this.props.updateQuery(this.props.componentId, query(), callback);
 		}
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.props.updateQuery(this.props.componentId, query(nextProps.defaultSelected));
+			const callback = this.props.onQueryChange || null;
+			this.props.updateQuery(this.props.componentId, query(nextProps.defaultSelected), callback);
 		}
 	}
 
@@ -44,7 +46,7 @@ class DataController extends Component {
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	updateQuery: (component, query) => dispatch(updateQuery(component, query))
+	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange))
 });
 
 export default connect(null, mapDispatchtoProps)(DataController);
