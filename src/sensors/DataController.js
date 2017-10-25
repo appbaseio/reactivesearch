@@ -8,19 +8,16 @@ class DataController extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
 
-		const query = this.props.customQuery ? this.props.customQuery : this.defaultQuery;
-		const callback = this.props.onQueryChange || null;
 		if (this.props.defaultSelected) {
-			this.props.updateQuery(this.props.componentId, query(this.props.defaultSelected), callback);
+			this.updateQuery(this.props.defaultSelected);
 		} else {
-			this.props.updateQuery(this.props.componentId, query(), callback);
+			this.updateQuery();
 		}
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			const callback = this.props.onQueryChange || null;
-			this.props.updateQuery(this.props.componentId, query(nextProps.defaultSelected), callback);
+			this.updateQuery(nextProps.defaultSelected);
 		}
 	}
 
@@ -31,6 +28,29 @@ class DataController extends Component {
 	defaultQuery() {
 		return {
 			"match_all": {}
+		}
+	}
+
+	updateQuery = (defaultSelected = null) => {
+		const query = this.props.customQuery ? this.props.customQuery : this.defaultQuery;
+		const callback = this.props.onQueryChange || null;
+		const performUpdate = () => {
+			if (this.props.onValueChange) {
+				this.props.onValueChange(defaultSelected);
+			}
+			this.props.updateQuery(this.props.componentId, query(defaultSelected), callback);
+		}
+
+		if (this.props.beforeValueChange) {
+			this.props.beforeValueChange(defaultSelected)
+				.then(() => {
+					performUpdate();
+				})
+				.catch((e) => {
+					console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with `, e);
+				});
+		} else {
+			performUpdate();
 		}
 	}
 
