@@ -81,6 +81,9 @@ export default class Main extends Component {
 						/>
 						<DataController
 							componentId="DataController"
+							onQueryChange={(prev, next) => {
+								console.log(prev, next);
+							}}
 						/>
 						<ReactiveList
 							componentId="ReactiveList"
