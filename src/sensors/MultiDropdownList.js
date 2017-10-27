@@ -73,7 +73,7 @@ class MultiDropdownList extends Component {
 
 	setReact(props) {
 		const { react } = props;
-		if (props.react) {
+		if (react) {
 			newReact = pushToAndClause(react, this.internalComponent)
 			props.watchComponent(props.componentId, newReact);
 		} else {
