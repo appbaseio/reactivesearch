@@ -41,6 +41,9 @@ class DataSearch extends Component {
 			}
 			this.props.updateQuery(component, query(value), callback);
 		}, 300);
+		if (this.props.defaultSelected) {
+			this.setValue(this.props.defaultSelected);
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -53,6 +56,9 @@ class DataSearch extends Component {
 			this.setState({
 				suggestions: nextProps.suggestions
 			});
+		}
+		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+			this.setValue(nextProps.defaultSelected);
 		}
 	}
 
@@ -71,7 +77,7 @@ class DataSearch extends Component {
 		}
 	}
 
-	defaultQuery(value) {
+	defaultQuery = (value) => {
 		let finalQuery = null,
 			fields;
 		if (value) {
