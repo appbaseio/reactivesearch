@@ -3,7 +3,7 @@ import { Picker } from "native-base";
 import { connect } from "react-redux";
 
 import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
-import { isEqual, getQueryOptions, pushToAndClause } from "../utils/helper";
+import { isEqual, getQueryOptions, pushToAndClause, checkValueChange } from "../utils/helper";
 
 const Item = Picker.Item;
 
@@ -38,6 +38,10 @@ class SingleDropdownList extends Component {
 		}
 		this.props.setQueryOptions(this.internalComponent, queryOptions);
 		this.props.updateQuery(this.internalComponent, null);
+
+		if (this.props.defaultSelected) {
+			this.setValue(this.props.defaultSelected);
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -48,6 +52,9 @@ class SingleDropdownList extends Component {
 			this.setState({
 				options: nextProps.options[nextProps.dataField].buckets || []
 			});
+		}
+		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+			this.setValue(nextProps.defaultSelected);
 		}
 	}
 
@@ -66,7 +73,7 @@ class SingleDropdownList extends Component {
 		}
 	}
 
-	defaultQuery(value) {
+	defaultQuery = (value) => {
 		if (this.selectAll) {
 			return {
 				exists: {
@@ -83,11 +90,29 @@ class SingleDropdownList extends Component {
 	}
 
 	setValue = (value) => {
-		this.setState({
-			currentValue: value
-		});
-		this.props.updateQuery(this.props.componentId, this.defaultQuery(value));
+		const performUpdate = () => {
+			this.setState({
+				currentValue: value
+			});
+			this.updateQuery(value);
+		}
+		checkValueChange(
+			this.props.componentId,
+			value,
+			this.props.beforeValueChange,
+			this.props.onValueChange,
+			performUpdate
+		);
 	};
+
+	updateQuery = (value) => {
+		const query = this.props.customQuery || this.defaultQuery;
+		let callback = null;
+		if (this.props.onQueryChange) {
+			callback = this.props.onQueryChange;
+		}
+		this.props.updateQuery(this.props.componentId, query(value), callback);
+	}
 
 	render() {
 		return (
@@ -121,7 +146,7 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query) => dispatch(updateQuery(component, query)),
+	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 
