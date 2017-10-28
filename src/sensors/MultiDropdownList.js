@@ -55,7 +55,7 @@ class MultiDropdownList extends Component {
 		this.props.updateQuery(this.internalComponent, null);
 
 		if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+			this.selectItem(this.props.defaultSelected, true);
 		}
 	}
 
@@ -69,7 +69,7 @@ class MultiDropdownList extends Component {
 			});
 		}
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected);
+			this.selectItem(nextProps.defaultSelected, true);
 		}
 	}
 
@@ -120,13 +120,17 @@ class MultiDropdownList extends Component {
 		return null;
 	}
 
-	selectItem = (item) => {
+	selectItem = (item, isDefaultValue = false) => {
 		let { currentValue } = this.state;
 
-		if (currentValue.includes(item)) {
-			currentValue = currentValue.filter(value => value !== item);
+		if (isDefaultValue) {
+			currentValue = item;
 		} else {
-			currentValue = [...currentValue, item];
+			if (currentValue.includes(item)) {
+				currentValue = currentValue.filter(value => value !== item);
+			} else {
+				currentValue = [ ...currentValue, item ];
+			}
 		}
 		const performUpdate = () => {
 			this.setState({
@@ -134,6 +138,7 @@ class MultiDropdownList extends Component {
 			});
 			this.updateQuery(currentValue);
 		}
+
 		checkValueChange(
 			this.props.componentId,
 			currentValue,
@@ -142,22 +147,6 @@ class MultiDropdownList extends Component {
 			performUpdate
 		);
 	}
-
-	setValue = (value) => {
-		const performUpdate = () => {
-			this.setState({
-				currentValue: value
-			});
-			this.updateQuery(value);
-		}
-		checkValueChange(
-			this.props.componentId,
-			value,
-			this.props.beforeValueChange,
-			this.props.onValueChange,
-			performUpdate
-		);
-	};
 
 	toggleModal = () => {
 		this.setState({
