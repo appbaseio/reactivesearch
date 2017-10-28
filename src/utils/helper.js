@@ -112,3 +112,17 @@ export function pushToAndClause(react, component) {
 		return { ...react, and: component }
 	}
 }
+
+export function checkBeforeValueChange(beforeValueChange, componentId, performUpdate, value) {
+	if (beforeValueChange) {
+		beforeValueChange(value)
+			.then(() => {
+				performUpdate();
+			})
+			.catch((e) => {
+				console.warn(`${componentId} - beforeValueChange rejected the promise with `, e);
+			});
+	} else {
+		performUpdate();
+	}
+}
