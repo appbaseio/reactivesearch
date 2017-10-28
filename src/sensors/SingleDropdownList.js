@@ -86,7 +86,7 @@ class SingleDropdownList extends Component {
 		this.setState({
 			currentValue: value
 		});
-		this.props.updateQuery(this.props.componentId, this.defaultQuery(value))
+		this.props.updateQuery(this.props.componentId, this.defaultQuery(value));
 	};
 
 	render() {
