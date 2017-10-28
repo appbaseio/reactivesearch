@@ -14,7 +14,7 @@ import {
 import { connect } from "react-redux";
 
 import { addComponent, removeComponent, watchComponent, updateQuery } from "../actions";
-import { isEqual, debounce, pushToAndClause, checkBeforeValueChange } from "../utils/helper";
+import { isEqual, debounce, pushToAndClause, checkValueChange } from "../utils/helper";
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -143,28 +143,31 @@ class DataSearch extends Component {
 		];
 	}
 
-	setValue = (value, setDefaultValue = false) => {
+	setValue = (value, isDefaultValue = false) => {
 		const performUpdate = () => {
-			if (this.props.onValueChange) {
-				this.props.onValueChange(value);
-			}
 			this.setState({
 				currentValue: value
 			});
-			if (setDefaultValue) {
+			if (isDefaultValue) {
 				if (this.props.autoSuggest) {
 					this.updateQuery(this.internalComponent, value);
 				}
 				this.updateQuery(this.props.componentId, value);
 			} else {
 				// debounce for handling text while typing
-				this.setDefaultValue(value);
+				this.handleTextChange(value);
 			}
 		}
-		checkBeforeValueChange(this.props.beforeValueChange, this.props.componentId, performUpdate, value);
+		checkValueChange(
+			this.props.beforeValueChange,
+			this.props.onValueChange,
+			this.props.componentId,
+			performUpdate,
+			value
+		);
 	};
 
-	setDefaultValue = debounce((value) => {
+	handleTextChange = debounce((value) => {
 		if (this.props.autoSuggest) {
 			this.updateQuery(this.internalComponent, value);
 		} else {
