@@ -114,7 +114,7 @@ export function pushToAndClause(react, component) {
 }
 
 // checks and executes before/onValueChange for sensors
-export function checkValueChange(beforeValueChange, onValueChange, componentId, performUpdate, value) {
+export function checkValueChange(componentId, value, beforeValueChange, onValueChange, performUpdate) {
 	const executeUpdate = () => {
 		performUpdate();
 		if (onValueChange) {

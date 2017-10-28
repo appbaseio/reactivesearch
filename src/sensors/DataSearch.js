@@ -159,11 +159,11 @@ class DataSearch extends Component {
 			}
 		}
 		checkValueChange(
+			this.props.componentId,
+			value,
 			this.props.beforeValueChange,
 			this.props.onValueChange,
-			this.props.componentId,
-			performUpdate,
-			value
+			performUpdate
 		);
 	};
 
