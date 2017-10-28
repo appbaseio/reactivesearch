@@ -98,7 +98,7 @@ class MultiDropdownRange extends Component {
 				if (currentValue.includes(item)) {
 					currentValue = currentValue.filter(value => value !== item);
 				} else {
-					currentValue.push(item);
+					currentValue = [...currentValue, item];
 				}
 			}
 
