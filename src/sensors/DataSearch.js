@@ -33,14 +33,9 @@ class DataSearch extends Component {
 		this.props.addComponent(this.internalComponent);
 		this.setReact(this.props);
 
-		this.updateQuery = debounce((component, value) => {
-			const query = this.props.customQuery || this.defaultQuery;
-			let callback = null;
-			if (component === this.props.componentId && this.props.onQueryChange) {
-				callback = this.props.onQueryChange;
-			}
-			this.props.updateQuery(component, query(value), callback);
-		}, 300);
+		if (this.props.defaultSelected) {
+			this.setDefaultValue(this.props.defaultSelected);
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -53,6 +48,9 @@ class DataSearch extends Component {
 			this.setState({
 				suggestions: nextProps.suggestions
 			});
+		}
+		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+			this.setDefaultValue(nextProps.defaultSelected);
 		}
 	}
 
@@ -71,7 +69,7 @@ class DataSearch extends Component {
 		}
 	}
 
-	defaultQuery(value) {
+	defaultQuery = (value) => {
 		let finalQuery = null,
 			fields;
 		if (value) {
@@ -146,22 +144,66 @@ class DataSearch extends Component {
 	}
 
 	setValue = (value) => {
-		this.setState({
-			currentValue: value
-		});
-		if (this.props.autoSuggest) {
-			this.updateQuery(this.internalComponent, value);
+		const performUpdate = () => {
+			if (this.props.onValueChange) {
+				this.props.onValueChange(value);
+			}
+			this.setState({
+				currentValue: value
+			});
+			// debounce for handling text while typing
+			debounce(() => {
+				if (this.props.autoSuggest) {
+					this.updateQuery(this.internalComponent, value);
+				} else {
+					this.updateQuery(this.props.componentId, value);
+				}
+			}, 300)();
+		}
+		if (this.props.beforeValueChange) {
+			this.props.beforeValueChange(value)
+				.then(() => {
+					performUpdate();
+				})
+				.catch((e) => {
+					console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with `, e);
+				});
 		} else {
+			performUpdate();
+		}
+	};
+
+	setDefaultValue = (value) => {
+		const performUpdate = () => {
+			if (this.props.onValueChange) {
+				this.props.onValueChange(value);
+			}
+			this.setState({
+				currentValue: value
+			});
+			if (this.props.autoSuggest) {
+				this.updateQuery(this.internalComponent, value);
+			}
 			this.updateQuery(this.props.componentId, value);
+		}
+		if (this.props.beforeValueChange) {
+			this.props.beforeValueChange(value)
+				.then(() => {
+					performUpdate();
+				})
+				.catch((e) => {
+					console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with `, e);
+				});
+		} else {
+			performUpdate();
 		}
 	};
 
 	selectSuggestion = (value) => {
 		this.setState({
-			currentValue: value,
 			suggestions: []
 		});
-		this.updateQuery(this.props.componentId, value);
+		this.setDefaultValue(value);
 		this.toggleModal();
 	};
 
@@ -180,6 +222,15 @@ class DataSearch extends Component {
 		this.setState({
 			showModal: !this.state.showModal
 		})
+	};
+
+	updateQuery = (component, value) => {
+		const query = this.props.customQuery || this.defaultQuery;
+		let callback = null;
+		if (component === this.props.componentId && this.props.onQueryChange) {
+			callback = this.props.onQueryChange;
+		}
+		this.props.updateQuery(component, query(value), callback);
 	};
 
 	renderSuggestions() {
