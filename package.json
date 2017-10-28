@@ -8,7 +8,8 @@
 	],
 	"scripts": {
 		"flow": "flow",
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"precommit": "eslint . --fix"
 	},
 	"author": "Deepak Grover <deepakgrover333@gmail.com> (https://github.com/metagrover)",
 	"license": "Apache-2.0",
@@ -32,6 +33,7 @@
 		"eslint-plugin-react": "^7.1.0",
 		"eslint-plugin-react-native": "^3.0.1",
 		"flow-bin": "^0.52.0",
+		"husky": "^0.14.3",
 		"prettier": "^1.5.3",
 		"react": "16.0.0-alpha.12",
 		"react-native": "^0.47.1"
