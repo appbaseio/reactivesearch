@@ -113,16 +113,21 @@ export function pushToAndClause(react, component) {
 	}
 }
 
-export function checkBeforeValueChange(beforeValueChange, componentId, performUpdate, value) {
+// checks and executes before/onValueChange for sensors
+export function checkValueChange(beforeValueChange, onValueChange, componentId, performUpdate, value) {
+	const executeUpdate = () => {
+		performUpdate();
+		if (onValueChange) {
+			onValueChange(value);
+		}
+	}
 	if (beforeValueChange) {
 		beforeValueChange(value)
-			.then(() => {
-				performUpdate();
-			})
+			.then(executeUpdate)
 			.catch((e) => {
 				console.warn(`${componentId} - beforeValueChange rejected the promise with `, e);
 			});
 	} else {
-		performUpdate();
+		executeUpdate();
 	}
 }
