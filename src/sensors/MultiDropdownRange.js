@@ -15,100 +15,79 @@ import {
 } from "native-base";
 
 import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
-import { isEqual, getQueryOptions, pushToAndClause } from "../utils/helper";
+import { isEqual } from "../utils/helper";
 
-class MultiDropdownList extends Component {
+class MultiDropdownRange extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			currentValue: [],
-			options: [],
 			showModal: false
 		};
 
 		this.ds = new ListView.DataSource({
-			rowHasChanged: (r1, r2) => r1.key !== r2.key || r1.count !== r2.count
+			rowHasChanged: (r1, r2) => r1.start !== r2.start || r1.end !== r2.end || r1.label !== r2.label
 		});
-		this.type = this.props.queryFormat === "or" ? "Terms" : "Term";
-		this.internalComponent = this.props.componentId + "__internal";
+		this.type = "range";
 	}
 
 	componentDidMount() {
-		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
-
-		const queryOptions = getQueryOptions(this.props);
-		queryOptions.aggs = {
-			[this.props.dataField]: {
-				terms: {
-					field: this.props.dataField,
-					size: 100,
-					order: {
-						_count: "desc"
-					}
-				}
-			}
+		if (this.props.defaultSelected) {
+			this.props.defaultSelected.forEach(this.selectItem);
 		}
-		this.props.setQueryOptions(this.internalComponent, queryOptions);
-		this.props.updateQuery(this.internalComponent, null);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (!isEqual(nextProps.react, this.props.react)) {
 			this.setReact(nextProps);
 		}
-		if (!isEqual(nextProps.options, this.props.options)) {
+		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.setState({
-				options: nextProps.options[nextProps.dataField].buckets || []
-			});
+				currentValue: null
+			}, () => {
+				nextProps.defaultSelected.forEach(this.selectItem);
+			})
 		}
 	}
 
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
-		this.props.removeComponent(this.internalComponent);
 	}
 
 	setReact(props) {
-		const { react } = props;
-		if (react) {
-			newReact = pushToAndClause(react, this.internalComponent)
-			props.watchComponent(props.componentId, newReact);
-		} else {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+		if (props.react) {
+			props.watchComponent(props.componentId, props.react);
 		}
 	}
 
-	defaultQuery(value) {
-		if (this.selectAll) {
-			return {
-				exists: {
-					field: [this.props.dataField]
-				}
-			};
-		} else if (value && value.length) {
-			if (this.props.queryFormat === "and") {
-				const queryArray = value.map(item => (
-					{
-						[this.type]: {
-							[this.props.dataField]: item
+	defaultQuery = (values) => {
+		const generateRangeQuery = (dataField, items) => {
+			if (items.length > 0) {
+				return items.map(value => ({
+					range: {
+						[dataField]: {
+							gte: value.start,
+							lte: value.end,
+							boost: 2.0
 						}
 					}
-				));
-				return {
-					bool: {
-						must: queryArray
-					}
-				};
+				}));
 			}
+		};
 
-			return {
-				[this.type]: {
-					[this.props.dataField]: value
+		if (values) {
+			const selectedItems = this.props.data.filter(item => values.includes(item.label));
+			const query = {
+				bool: {
+					should: generateRangeQuery(this.props.dataField, selectedItems),
+					minimum_should_match: 1,
+					boost: 1.0
 				}
 			};
+			return query;
 		}
 		return null;
 	}
@@ -126,7 +105,8 @@ class MultiDropdownList extends Component {
 			currentValue
 		});
 
-		this.props.updateQuery(this.props.componentId, this.defaultQuery(currentValue));
+		const query = this.props.customQuery || this.defaultQuery;
+		this.props.updateQuery(this.props.componentId, query(currentValue));
 	}
 
 	toggleModal = () => {
@@ -160,10 +140,10 @@ class MultiDropdownList extends Component {
 								<Right />
 							</Header>
 							<ListView
-								dataSource={this.ds.cloneWithRows(this.state.options)}
+								dataSource={this.ds.cloneWithRows(this.props.data)}
 								enableEmptySections={true}
 								renderRow={(item) => (
-									<TouchableWithoutFeedback onPress={() => this.selectItem(item.key)}>
+									<TouchableWithoutFeedback onPress={() => this.selectItem(item.label)}>
 										<View style={{
 											flex: 1,
 											flexDirection: "row",
@@ -172,10 +152,10 @@ class MultiDropdownList extends Component {
 											borderBottomWidth: 0.5
 										}}>
 											<CheckBox
-												onPress={() => this.selectItem(item.key)}
-												checked={this.state.currentValue.includes(item.key)}
+												onPress={() => this.selectItem(item.label)}
+												checked={this.state.currentValue.includes(item.label)}
 											/>
-											<Text style={{ marginLeft: 20 }}>{item.key}</Text>
+											<Text style={{ marginLeft: 20 }}>{item.label}</Text>
 										</View>
 									</TouchableWithoutFeedback>
 								)}
@@ -214,22 +194,15 @@ class MultiDropdownList extends Component {
 	}
 }
 
-MultiDropdownList.defaultProps = {
-	size: 100,
-	queryFormat: "or",
+MultiDropdownRange.defaultProps = {
 	placeholder: "Select a value"
 }
-
-const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId]
-});
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query) => dispatch(updateQuery(component, query)),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
+	updateQuery: (component, query) => dispatch(updateQuery(component, query))
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList);
+export default connect(null, mapDispatchtoProps)(MultiDropdownRange);
