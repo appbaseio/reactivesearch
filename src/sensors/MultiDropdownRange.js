@@ -15,7 +15,7 @@ import {
 } from "native-base";
 
 import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
-import { isEqual } from "../utils/helper";
+import { isEqual, checkValueChange } from "../utils/helper";
 
 class MultiDropdownRange extends Component {
 	constructor(props) {
@@ -35,9 +35,7 @@ class MultiDropdownRange extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
-		if (this.props.defaultSelected) {
-			this.props.defaultSelected.forEach(this.selectItem);
-		}
+		this.setValue(this.props.defaultSelected, true);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -45,11 +43,7 @@ class MultiDropdownRange extends Component {
 			this.setReact(nextProps);
 		}
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.setState({
-				currentValue: null
-			}, () => {
-				nextProps.defaultSelected.forEach(this.selectItem);
-			})
+			this.setValue(nextProps.defaultSelected, true);
 		}
 	}
 
@@ -92,21 +86,35 @@ class MultiDropdownRange extends Component {
 		return null;
 	}
 
-	selectItem = (item) => {
-		let { currentValue } = this.state;
+	selectItem = (item, isDefaultValue = false) => {
+		const performUpdate = () => {
+			let { currentValue } = this.state;
 
-		if (currentValue.includes(item)) {
-			currentValue = currentValue.filter(value => value !== item);
-		} else {
-			currentValue.push(item);
+			if (isDefaultValue) {
+				currentValue = item;
+			} else {
+				if (currentValue.includes(item)) {
+					currentValue = currentValue.filter(value => value !== item);
+				} else {
+					currentValue.push(item);
+				}
+			}
+
+			this.setState({
+				currentValue
+			});
+
+			const query = this.props.customQuery || this.defaultQuery;
+			this.props.updateQuery(this.props.componentId, query(currentValue));
 		}
 
-		this.setState({
-			currentValue
-		});
-
-		const query = this.props.customQuery || this.defaultQuery;
-		this.props.updateQuery(this.props.componentId, query(currentValue));
+		checkValueChange(
+			this.props.componentId,
+			item,
+			this.props.beforeValueChange,
+			this.props.onValueChange,
+			performUpdate
+		);
 	}
 
 	toggleModal = () => {
