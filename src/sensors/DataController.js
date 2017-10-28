@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { View } from "react-native";
 
 import { addComponent, removeComponent, updateQuery } from "../actions";
+import { checkValueChange } from "../utils/helper";
 
 class DataController extends Component {
 	componentDidMount() {
@@ -35,23 +36,15 @@ class DataController extends Component {
 		const query = this.props.customQuery ? this.props.customQuery : this.defaultQuery;
 		const callback = this.props.onQueryChange || null;
 		const performUpdate = () => {
-			if (this.props.onValueChange) {
-				this.props.onValueChange(defaultSelected);
-			}
 			this.props.updateQuery(this.props.componentId, query(defaultSelected), callback);
 		}
-
-		if (this.props.beforeValueChange) {
-			this.props.beforeValueChange(defaultSelected)
-				.then(() => {
-					performUpdate();
-				})
-				.catch((e) => {
-					console.warn(`${this.props.componentId} - beforeValueChange rejected the promise with `, e);
-				});
-		} else {
-			performUpdate();
-		}
+		checkValueChange(
+			this.props.componentId,
+			defaultSelected,
+			this.props.beforeValueChange,
+			this.props.onValueChange,
+			performUpdate
+		);
 	}
 
 	render() {
