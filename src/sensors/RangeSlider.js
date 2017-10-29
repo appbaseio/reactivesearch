@@ -5,7 +5,7 @@ import MultiSlider from "@ptomasroos/react-native-multi-slider";
 
 import Histogram from "./addons/Histogram";
 import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
-import { isEqual } from "../utils/helper";
+import { isEqual, checkValueChange } from "../utils/helper";
 
 class RangeSlider extends Component {
 	constructor(props) {
@@ -28,6 +28,9 @@ class RangeSlider extends Component {
 		};
 		this.props.setQueryOptions(this.internalComponent, queryOptions);
 		this.props.updateQuery(this.internalComponent, null);
+		if (this.props.defaultSelected) {
+			this.handleChange([ this.props.defaultSelected.start, this.props.defaultSelected.end ]);
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -44,6 +47,9 @@ class RangeSlider extends Component {
 			this.setState({
 				stats: options
 			});
+		}
+		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+			this.handleChange([ nextProps.defaultSelected.start, nextProps.defaultSelected.end ]);
 		}
 	}
 
@@ -95,14 +101,32 @@ class RangeSlider extends Component {
 	};
 
 	handleChange = (currentValue) => {
-		this.setState({
-			currentValue
-		});
-
-		const query = this.props.customQuery || this.defaultQuery;
-		const callback = this.props.onQueryChange || null;
-		this.props.updateQuery(this.props.componentId, query(currentValue), callback);
+		const performUpdate = () => {
+			this.setState({
+				currentValue
+			});
+			this.updateQuery(currentValue);
+		}
+		checkValueChange(
+			this.props.componentId,
+			{
+				start: currentValue[0],
+				end: currentValue[1]
+			},
+			this.props.beforeValueChange,
+			this.props.onValueChange,
+			performUpdate
+		);
 	};
+
+	updateQuery = (value) => {
+		const query = this.props.customQuery || this.defaultQuery;
+		let callback = null;
+		if (this.props.onQueryChange) {
+			callback = this.props.onQueryChange;
+		}
+		this.props.updateQuery(this.props.componentId, query(value), callback);
+	}
 
 	render() {
 		const styles = {
@@ -163,7 +187,7 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange)),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
+	setQueryOptions: (component, props, onQueryChange) => dispatch(setQueryOptions(component, props, onQueryChange))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(RangeSlider);
