@@ -21,7 +21,7 @@
 	],
 
 	"settings": {
-		"import/core-modules": [ "expo", "reactivebase-native" ]
+		"import/core-modules": [ "expo", "@appbaseio/reactivebase-native" ]
 	},
 
 	"plugins": [
