@@ -16,7 +16,7 @@ export default props => {
 	}
 
 	return (
-		<View style={{flex: 1, flexDirection: "row", height: 50, alignItems: "flex-end", paddingHorizontal: props.paddingHorizontal}}>
+		<View style={{ flex: 1, flexDirection: "row", height: 50, alignItems: "flex-end", paddingHorizontal: props.paddingHorizontal }}>
 			{
 				range.map(item => {
 					const value = props.stats.find(stat => stat.key === item) || 0;

@@ -10,6 +10,8 @@ import {
 	TextField,
 	SingleDropdownList,
 	MultiDropdownList,
+	SingleDropdownRange,
+	MultiDropdownRange,
 	RangeSlider,
 	ReactiveList
 } from "@appbaseio/reactivebase-native";
@@ -68,13 +70,36 @@ export default class Main extends Component {
 						<DataSearch
 							componentId="DataSeachComponent"
 							dataField="name"
-							onQueryChange={(prev, next) => {
-								console.log(prev, next);
-							}}
+							defaultSelected="Nissan"
+							onValueChange={(val) => console.log("DataSearch onValueChange", val)}
 							react={{
 								and: "TextFieldComponent"
 							}}
 						/>
+						<SingleDropdownRange
+							componentId="SingleDropdownRange"
+							dataField="price"
+							data={
+								[{ "start": 0, "end": 100, "label": "Cheap" },
+									{ "start": 101, "end": 200, "label": "Moderate" },
+									{ "start": 201, "end": 500, "label": "Pricey" },
+									{ "start": 501, "end": 1000, "label": "First Date" }]
+							}
+							defaultSelected={"Pricey"}
+						/>
+
+						<MultiDropdownRange
+							componentId="MultiDropdownRange"
+							dataField="price"
+							data={
+								[{ "start": 0, "end": 100, "label": "Cheap" },
+									{ "start": 101, "end": 200, "label": "Moderate" },
+									{ "start": 201, "end": 500, "label": "Pricey" },
+									{ "start": 501, "end": 1000, "label": "First Date" }]
+							}
+							defaultSelected={["Pricey", "First Date"]}
+						/>
+
 						<RangeSlider
 							componentId="RangeSlider"
 							dataField="rating"
@@ -101,7 +126,7 @@ export default class Main extends Component {
 							onData={this.onData}
 							pagination
 							react={{
-								and: ["DataController", "SingleDropdownListComponent", "MultiDropdownListComponent", "DataSeachComponent", "TextFieldComponent", "RangeSlider"]
+								and: ["DataController", "SingleDropdownListComponent", "MultiDropdownListComponent", "DataSeachComponent", "TextFieldComponent", "RangeSlider", "SingleDropdownRange", "MultiDropdownRange"]
 							}}
 						/>
 					</View>

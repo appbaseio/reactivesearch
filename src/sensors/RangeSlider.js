@@ -109,15 +109,15 @@ class RangeSlider extends Component {
 			height: 30,
 			...Platform.select({
 				ios: {
-					paddingHorizontal: 15,
+					paddingHorizontal: 15
 				},
 				android: {
-					paddingHorizontal: 6,
-				},
+					paddingHorizontal: 6
+				}
 			})
 		};
 		return (
-			<View style={{paddingTop: 25}}>
+			<View style={{ paddingTop: 25 }}>
 				<View onLayout={(e) => this.setWidth(e.nativeEvent.layout.width)}>
 					{
 						this.state.stats && this.props.showHistogram
@@ -126,18 +126,18 @@ class RangeSlider extends Component {
 					}
 					{
 						this.state.width
-						? (<MultiSlider
-							values={this.state.currentValue}
-							min={this.props.range.start}
-							max={this.props.range.end}
-							step={this.props.stepValue}
-							allowOverlap={false}
-							snapped
-							containerStyle={styles}
-							sliderLength={this.state.width}
-							onValuesChangeFinish={this.handleChange}
-						/>)
-						: null
+							? (<MultiSlider
+								values={this.state.currentValue}
+								min={this.props.range.start}
+								max={this.props.range.end}
+								step={this.props.stepValue}
+								allowOverlap={false}
+								snapped
+								containerStyle={styles}
+								sliderLength={this.state.width}
+								onValuesChangeFinish={this.handleChange}
+							/>)
+							: null
 					}
 				</View>
 			</View>

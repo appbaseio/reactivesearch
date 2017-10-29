@@ -4,6 +4,8 @@ import TextField from "./sensors/TextField";
 import DataSearch from "./sensors/DataSearch";
 import SingleDropdownList from "./sensors/SingleDropdownList";
 import MultiDropdownList from "./sensors/MultiDropdownList";
+import SingleDropdownRange from "./sensors/SingleDropdownRange";
+import MultiDropdownRange from "./sensors/MultiDropdownRange";
 import RangeSlider from "./sensors/RangeSlider";
 
 import ReactiveList from "./actuators/ReactiveList";
@@ -15,6 +17,8 @@ export {
 	DataSearch,
 	SingleDropdownList,
 	MultiDropdownList,
+	SingleDropdownRange,
+	MultiDropdownRange,
 	RangeSlider,
 	ReactiveList
 };
