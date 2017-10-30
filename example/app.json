@@ -3,7 +3,7 @@
 		"name": "Reactivebase Native Demo",
 		"description": "Demo for Reactivebase Native components",
 		"slug": "reactivebase-native-demos",
-		"sdkVersion": "19.0.0",
+		"sdkVersion": "22.0.0",
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"primaryColor": "#2196f3",

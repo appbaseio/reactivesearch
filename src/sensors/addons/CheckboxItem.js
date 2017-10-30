@@ -26,7 +26,6 @@ export default class CheckboxItem extends Component {
 	render() {
 		return (
 			<TouchableItem
-				borderless
 				pressOpacity={0.5}
 				delayPressIn={0}
 				onPress={this.handlePress}

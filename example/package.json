@@ -9,12 +9,12 @@
 	},
 	"dependencies": {
 		"@ptomasroos/react-native-multi-slider": "^0.0.11",
-		"appbase-js": "2.0.0",
+		"appbase-js": "^2.1.0",
 		"escape-string-regexp": "^1.0.5",
-		"expo": "19.0.0",
-		"native-base": "2.2.1",
+		"expo": "22.0.0",
+		"native-base": "2.3.3",
 		"react": "16.0.0-alpha.12",
-		"react-native": "0.46.0",
+		"react-native": "^0.49.0",
 		"react-redux": "^5.0.6",
 		"redux": "^3.7.2",
 		"redux-thunk": "^2.2.0"

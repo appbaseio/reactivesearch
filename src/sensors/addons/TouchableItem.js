@@ -19,9 +19,8 @@ export default class TouchableItem extends Component {
 		if (Platform.OS === "android" && Platform.Version >= LOLLIPOP) {
 			return (
 				<TouchableNativeFeedback
-					{...rest}
 					onPress={this.handlePress}
-					background={TouchableNativeFeedback.Ripple(pressColor, borderless)}
+					background={TouchableNativeFeedback.Ripple(pressColor, false)}
 				>
 					<View style={style}>{React.Children.only(this.props.children)}</View>
 				</TouchableNativeFeedback>
@@ -42,5 +41,6 @@ export default class TouchableItem extends Component {
 }
 
 TouchableItem.defaultProps = {
-	pressColor: "rgba(255, 255, 255, .4)"
+	pressColor: "rgba(0, 0, 0, .2)",
+	borderless: false
 };
