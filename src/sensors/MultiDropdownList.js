@@ -159,7 +159,7 @@ class MultiDropdownList extends Component {
 							</Header>
 							<FlatList
 								data={this.state.options}
-								renderItem={({item}) => (
+								renderItem={({ item }) => (
 									<CheckboxItem
 										label={item.key}
 										onPress={this.selectItem}

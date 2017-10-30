@@ -3,7 +3,7 @@ import {
 	TouchableNativeFeedback,
 	TouchableOpacity,
 	Platform,
-	View,
+	View
 } from "react-native";
 
 const LOLLIPOP = 21;
