@@ -111,7 +111,7 @@ class ReactiveList extends Component {
 					<Text>{i}</Text>
 				</Button>
 			);
-			if (i <= this.state.totalPages) {
+			if (i <= this.state.totalPages+1) {
 				pages.push(pageBtn);
 			}
 		}
@@ -133,7 +133,7 @@ class ReactiveList extends Component {
 				{
 					pages
 				}
-				<Button light disabled={this.state.currentPage >= this.state.totalPages} onPress={this.nextPage}>
+				<Button light disabled={this.state.currentPage >= this.state.totalPages-1} onPress={this.nextPage}>
 					<Icon name="ios-arrow-forward" />
 				</Button>
 			</View>
