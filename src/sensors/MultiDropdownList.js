@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, Modal, ListView, TouchableWithoutFeedback } from "react-native";
+import { View, Modal, FlatList, TouchableWithoutFeedback } from "react-native";
 import {
 	CheckBox,
 	Text,
@@ -14,6 +14,7 @@ import {
 	Right
 } from "native-base";
 
+import CheckboxItem from "./addons/CheckboxItem";
 import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
 import { isEqual, getQueryOptions, pushToAndClause } from "../utils/helper";
 
@@ -27,9 +28,6 @@ class MultiDropdownList extends Component {
 			showModal: false
 		};
 
-		this.ds = new ListView.DataSource({
-			rowHasChanged: (r1, r2) => r1.key !== r2.key || r1.count !== r2.count
-		});
 		this.type = this.props.queryFormat === "or" ? "Terms" : "Term";
 		this.internalComponent = this.props.componentId + "__internal";
 	}
@@ -159,25 +157,14 @@ class MultiDropdownList extends Component {
 								</Body>
 								<Right />
 							</Header>
-							<ListView
-								dataSource={this.ds.cloneWithRows(this.state.options)}
-								enableEmptySections={true}
-								renderRow={(item) => (
-									<TouchableWithoutFeedback onPress={() => this.selectItem(item.key)}>
-										<View style={{
-											flex: 1,
-											flexDirection: "row",
-											padding: 15,
-											borderBottomColor: "#c9c9c9",
-											borderBottomWidth: 0.5
-										}}>
-											<CheckBox
-												onPress={() => this.selectItem(item.key)}
-												checked={this.state.currentValue.includes(item.key)}
-											/>
-											<Text style={{ marginLeft: 20 }}>{item.key}</Text>
-										</View>
-									</TouchableWithoutFeedback>
+							<FlatList
+								data={this.state.options}
+								renderItem={({item}) => (
+									<CheckboxItem
+										label={item.key}
+										onPress={this.selectItem}
+										checked={this.state.currentValue.includes(item.key)}
+									/>
 								)}
 							/>
 						</Modal>)
