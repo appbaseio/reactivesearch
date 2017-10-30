@@ -3,7 +3,7 @@ import { Picker } from "native-base";
 import { connect } from "react-redux";
 
 import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
-import { isEqual } from "../utils/helper";
+import { isEqual, checkValueChange } from "../utils/helper";
 
 const Item = Picker.Item;
 
@@ -20,7 +20,9 @@ class SingleDropdownRange extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
-		this.setDefaultValue(this.props.defaultSelected);
+		if (this.props.defaultSelected) {
+			this.setValue(this.props.defaultSelected, true);
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -29,7 +31,7 @@ class SingleDropdownRange extends Component {
 		}
 
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setDefaultValue(nextProps.defaultSelected);
+			this.setValue(nextProps.defaultSelected, true);
 		}
 	}
 
@@ -58,20 +60,33 @@ class SingleDropdownRange extends Component {
 		return null;
 	}
 
-	setDefaultValue = (value) => {
-		const currentValue = this.props.data.find(item => item.label === value);
-		if (currentValue) {
-			this.setValue(currentValue);
+	setValue = (value, isDefaultValue = false) => {
+		const currentValue = isDefaultValue ?
+			this.props.data.find(item => item.label === value) :
+			value;
+		const performUpdate = () => {
+			this.setState({
+				currentValue
+			});
+			this.updateQuery(currentValue);
 		}
+		checkValueChange(
+			this.props.componentId,
+			currentValue,
+			this.props.beforeValueChange,
+			this.props.onValueChange,
+			performUpdate
+		);
 	}
 
-	setValue = (value) => {
-		this.setState({
-			currentValue: value
-		});
+	updateQuery = (value) => {
 		const query = this.props.customQuery || this.defaultQuery;
-		this.props.updateQuery(this.props.componentId, query(value));
-	};
+		let callback = null;
+		if (this.props.onQueryChange) {
+			callback = this.props.onQueryChange;
+		}
+		this.props.updateQuery(this.props.componentId, query(value), callback);
+	}
 
 	render() {
 		return (
@@ -80,7 +95,7 @@ class SingleDropdownRange extends Component {
 				mode="dropdown"
 				placeholder={this.props.placeholder}
 				selectedValue={this.state.currentValue}
-				onValueChange={this.setValue}
+				onValueChange={(item) => this.setValue(item)}
 			>
 				{
 					this.props.data.map(item => (
@@ -100,7 +115,7 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query) => dispatch(updateQuery(component, query))
+	updateQuery: (component, query, customQuery) => dispatch(updateQuery(component, query, customQuery))
 });
 
 export default connect(null, mapDispatchtoProps)(SingleDropdownRange);

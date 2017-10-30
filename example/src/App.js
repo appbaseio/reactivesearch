@@ -14,7 +14,7 @@ import {
 	MultiDropdownRange,
 	RangeSlider,
 	ReactiveList
-} from "reactivebase-native";
+} from "@appbaseio/reactivebase-native";
 
 export default class Main extends Component {
 	state = {

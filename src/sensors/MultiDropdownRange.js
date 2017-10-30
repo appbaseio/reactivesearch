@@ -35,7 +35,7 @@ class MultiDropdownRange extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
-		if (this.props.defaultSelected.length) {
+		if (this.props.defaultSelected) {
 			this.selectItem(this.props.defaultSelected, true);
 		}
 	}
@@ -44,7 +44,7 @@ class MultiDropdownRange extends Component {
 		if (!isEqual(nextProps.react, this.props.react)) {
 			this.setReact(nextProps);
 		}
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
+		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.selectItem(nextProps.defaultSelected, true);
 		}
 	}
@@ -89,30 +89,28 @@ class MultiDropdownRange extends Component {
 	}
 
 	selectItem = (item, isDefaultValue = false) => {
-		const performUpdate = () => {
-			let { currentValue } = this.state;
-
-			if (isDefaultValue) {
-				currentValue = item;
+		let { currentValue } = this.state;
+		if (isDefaultValue) {
+			// checking if the items in defaultSeleted exist in the data prop
+			currentValue = item.filter(currentItem => this.props.data.find(dataItem => dataItem.label === currentItem));
+		} else {
+			if (currentValue.includes(item)) {
+				currentValue = currentValue.filter(value => value !== item);
 			} else {
-				if (currentValue.includes(item)) {
-					currentValue = currentValue.filter(value => value !== item);
-				} else {
-					currentValue = [...currentValue, item];
-				}
+				currentValue = [...currentValue, item];
 			}
-
+		}
+		const performUpdate = () => {
 			this.setState({
 				currentValue
 			});
-
 			const query = this.props.customQuery || this.defaultQuery;
-			this.props.updateQuery(this.props.componentId, query(currentValue));
+			this.updateQuery(currentValue);
 		}
 
 		checkValueChange(
 			this.props.componentId,
-			item,
+			currentValue,
 			this.props.beforeValueChange,
 			this.props.onValueChange,
 			performUpdate
@@ -124,6 +122,15 @@ class MultiDropdownRange extends Component {
 			showModal: !this.state.showModal
 		})
 	};
+
+	updateQuery = (value) => {
+		const query = this.props.customQuery || this.defaultQuery;
+		let callback = null;
+		if (this.props.onQueryChange) {
+			callback = this.props.onQueryChange;
+		}
+		this.props.updateQuery(this.props.componentId, query(value), callback);
+	}
 
 	render() {
 		return (
@@ -212,7 +219,7 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query) => dispatch(updateQuery(component, query))
+	updateQuery: (component, query, customQuery) => dispatch(updateQuery(component, query, customQuery))
 });
 
 export default connect(null, mapDispatchtoProps)(MultiDropdownRange);
