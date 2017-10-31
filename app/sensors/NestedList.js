@@ -148,7 +148,7 @@ export default class NestedList extends Component {
 				}
 			}));
 		}
-		if (record && record[0] !== null) {
+		if (Array.isArray(record) && record.length) {
 			query = {
 				bool: {
 					must: generateRangeQuery(this.props.dataField)
