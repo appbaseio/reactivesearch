@@ -562,7 +562,8 @@ export default class ResultCard extends Component {
 					if (node === window) {
 						node = node.document.body;
 					}
-					if (this.state.requestOnScroll && node.scrollTop + node.clientHeight >= node.scrollHeight && this.state.resultStats.total > this.state.currentData.length && !this.state.queryStart) {
+					// use window.pageYOffset if the node is window due to an issue with window.document.body.scrollTop
+					if (this.state.requestOnScroll && (node === window.document.body ? window.pageYOffset : node.scrollTop) + node.clientHeight >= node.scrollHeight && this.state.resultStats.total > this.state.currentData.length && !this.state.queryStart) {
 						this.nextPage();
 					}
 				});
