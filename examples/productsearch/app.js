@@ -93,6 +93,7 @@ class Main extends Component {
 							from={0}
 							size={10}
 							scrollOnTarget={window}
+							pagination={false}
 							onData={this.onData}
 							react={{
 								and: ["Search", "Topics", "DefaultSensor"]
