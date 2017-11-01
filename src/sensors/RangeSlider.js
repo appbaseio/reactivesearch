@@ -145,7 +145,12 @@ class RangeSlider extends Component {
 				<View onLayout={(e) => this.setWidth(e.nativeEvent.layout.width)}>
 					{
 						this.state.stats && this.props.showHistogram
-							? <Histogram stats={this.state.stats} range={this.props.range} paddingHorizontal={Platform.OS === "ios" ? 15 : 6} />
+							? (<Histogram
+								stats={this.state.stats}
+								range={this.props.range}
+								interval={this.props.interval || Math.ceil((this.props.range.end - this.props.range.start) / 10)}
+								paddingHorizontal={Platform.OS === "ios" ? 15 : 6}
+							/>)
 							: null
 					}
 					{

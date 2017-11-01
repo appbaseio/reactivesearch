@@ -6,6 +6,7 @@ import SingleDropdownList from "./sensors/SingleDropdownList";
 import MultiDropdownList from "./sensors/MultiDropdownList";
 import SingleDropdownRange from "./sensors/SingleDropdownRange";
 import MultiDropdownRange from "./sensors/MultiDropdownRange";
+import DatePicker from "./sensors/DatePicker";
 import RangeSlider from "./sensors/RangeSlider";
 
 import ReactiveList from "./actuators/ReactiveList";
@@ -20,5 +21,6 @@ export {
 	SingleDropdownRange,
 	MultiDropdownRange,
 	RangeSlider,
+	DatePicker,
 	ReactiveList
 };

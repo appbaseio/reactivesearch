@@ -11,7 +11,7 @@ export default props => {
 	});
 
 	const range = [];
-	for (let i = props.range.start; i <= props.range.end; i++) {
+	for (let i = props.range.start; i <= props.range.end; i += props.interval) {
 		range.push(i);
 	}
 
@@ -27,7 +27,7 @@ export default props => {
 							style={{
 								backgroundColor: "#efefef",
 								width: `${100 / range.length}%`,
-								height: `${(100 * value.doc_count) / max}%`
+								height: `${(100 * value.doc_count) / max || 0}%`
 							}}
 						></View>
 					);
