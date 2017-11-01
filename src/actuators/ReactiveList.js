@@ -44,6 +44,16 @@ class ReactiveList extends Component {
 		}
 	}
 
+	shouldComponentUpdate(nextProps, nextState) {
+		if (!this.props.pagination) {
+			return true;
+		}
+		if (!isEqual(this.props.hits, nextProps.hits)) {
+			return true;
+		}
+		return false;
+	}
+
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
 	}
@@ -55,7 +65,7 @@ class ReactiveList extends Component {
 	}
 
 	loadMore = () => {
-		if (this.props.hits && !this.props.pagination) {
+		if (this.props.hits && !this.props.pagination && this.props.total !== this.props.hits.length) {
 			const value = this.state.from + this.props.size;
 			const options = getQueryOptions(this.props);
 			this.setState({
@@ -66,6 +76,10 @@ class ReactiveList extends Component {
 				...options,
 				from: value
 			}, true);
+		} else if (this.state.isLoading) {
+			this.setState({
+				isLoading: false
+			});
 		}
 	};
 
@@ -151,7 +165,7 @@ class ReactiveList extends Component {
 				<FlatList
 					ref="listRef"
 					style={{ width: "100%" }}
-					data={this.props.hits ? this.props.hits : []}
+					data={this.props.hits || []}
 					keyExtractor={(item) => item._id}
 					renderItem={({ item }) => this.props.onData(item)}
 					onEndReachedThreshold={0.5}
