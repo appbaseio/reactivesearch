@@ -16,17 +16,9 @@ import {
 
 import { addComponent, removeComponent, watchComponent, updateQuery } from "../actions";
 import { isEqual, checkValueChange } from "../utils/helper";
+import { dateFormat } from "../constants";
 
 const XDate = require("xdate");
-
-const dateFormat = {
-	date: "yyyy-MM-dd",
-	basic_date: "yyyyMMdd",
-	basic_date_time: "yyyyMMdd'T'HHmmss.fffzzz",
-	basic_date_time_no_millis: "yyyyMMdd'T'HHmmsszzz",
-	basic_time: "HHmmss.fffzzz",
-	basic_time_no_millis: "HHmmsszzz"
-};
 
 class DatePicker extends Component {
 	constructor(props) {
@@ -44,7 +36,25 @@ class DatePicker extends Component {
 		this.setReact(this.props);
 
 		if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected, true);
+			const currentDate = {
+				dateString: new XDate(this.props.defaultSelected).toString("yyyy-MM-dd"),
+				timestamp: new XDate(this.props.defaultSelected).getTime()
+			}
+			this.handleDateChange(currentDate);
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (!isEqual(nextProps.react, this.props.react)) {
+			this.setReact(nextProps);
+		}
+
+		if (nextProps.defaultSelected !== this.props.defaultSelected) {
+			const currentDate = {
+				dateString: new XDate(nextProps.defaultSelected).toString("yyyy-MM-dd"),
+				timestamp: new XDate(nextProps.defaultSelected).getTime()
+			}
+			this.handleDateChange(currentDate);
 		}
 	}
 
@@ -126,6 +136,9 @@ class DatePicker extends Component {
 
 	render() {
 		let markedDates = {};
+		const current = this.state.currentDate
+			? this.state.currentDate.dateString
+			: this.props.startDate || Date();
 
 		if (this.state.currentDate) {
 			markedDates = {
@@ -195,6 +208,7 @@ class DatePicker extends Component {
 					</Right>
 				</Header>
 				<Calendar
+					current={current}
 					onDayPress={this.handleDateChange}
 					markedDates={markedDates}
 					markingType={"interactive"}
