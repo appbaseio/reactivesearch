@@ -122,6 +122,10 @@ export default class Main extends Component {
 						<DateRange
 							dataField="someField"
 							componentId="DateRange"
+							defaultSelected={{
+								start: "2017-04-04",
+								end: "2017-04-10"
+							}}
 						/>
 						<DataController
 							componentId="DataController"

@@ -34,6 +34,44 @@ class DateRange extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
+
+		if (this.props.defaultSelected) {
+			const startDate = {
+				dateString: new XDate(this.props.defaultSelected.start).toString("yyyy-MM-dd"),
+				timestamp: new XDate(this.props.defaultSelected.start).getTime()
+			}
+			this.handleDateChange(startDate, () => {
+				if (this.props.defaultSelected.end) {
+					const endDate = {
+						dateString: new XDate(this.props.defaultSelected.end).toString("yyyy-MM-dd"),
+						timestamp: new XDate(this.props.defaultSelected.end).getTime()
+					}
+					this.handleDateChange(endDate);
+				}
+			});
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (!isEqual(nextProps.react, this.props.react)) {
+			this.setReact(nextProps);
+		}
+
+		if (!isEqual(nextProps.defaultSelected !== this.props.defaultSelected)) {
+			const startDate = {
+				dateString: new XDate(nextProps.defaultSelected.start).toString("yyyy-MM-dd"),
+				timestamp: new XDate(nextProps.defaultSelected.start).getTime()
+			}
+			this.handleDateChange(startDate, () => {
+				if (nextProps.defaultSelected.end) {
+					const endDate = {
+						dateString: new XDate(nextProps.defaultSelected.end).toString("yyyy-MM-dd"),
+						timestamp: new XDate(nextProps.defaultSelected.end).getTime()
+					}
+					this.handleDateChange(endDate);
+				}
+			});
+		}
 	}
 
 	componentWillUnmount() {
@@ -61,7 +99,7 @@ class DateRange extends Component {
 
 	defaultQuery = (value) => {
 		let query = null;
-		if (value && value.startDate && value.endDate) {
+		if (value && value.start && value.end) {
 			query = this.generateQuery(value);
 		}
 		return query;
@@ -75,13 +113,13 @@ class DateRange extends Component {
 					must: [{
 						range: {
 							[this.props.dataField[0]]: {
-								lte: this.formatDate(new XDate(value.startDate))
+								lte: this.formatDate(new XDate(value.start))
 							}
 						}
 					}, {
 						range: {
 							[this.props.dataField[1]]: {
-								gte: this.formatDate(new XDate(value.endDate))
+								gte: this.formatDate(new XDate(value.end))
 							}
 						}
 					}]
@@ -91,8 +129,8 @@ class DateRange extends Component {
 			query = {
 				range: {
 					[this.props.dataField[0]]: {
-						gte: this.formatDate(new XDate(value.startDate)),
-						lte: this.formatDate(new XDate(value.endDate))
+						gte: this.formatDate(new XDate(value.start)),
+						lte: this.formatDate(new XDate(value.end))
 					}
 				}
 			};
@@ -100,8 +138,8 @@ class DateRange extends Component {
 			query = {
 				range: {
 					[this.props.dataField]: {
-						gte: this.formatDate(new XDate(value.startDate)),
-						lte: this.formatDate(new XDate(value.endDate))
+						gte: this.formatDate(new XDate(value.start)),
+						lte: this.formatDate(new XDate(value.end))
 					}
 				}
 			};
@@ -109,7 +147,7 @@ class DateRange extends Component {
 		return query;
 	}
 
-	handleDateChange = (selectedDate) => {
+	handleDateChange = (selectedDate, cb) => {
 		let value = null,
 			date = null;
 		let { currentDate } = this.state;
@@ -117,28 +155,25 @@ class DateRange extends Component {
 		const performUpdate = () => {
 			this.setState({
 				currentDate
+			}, () => {
+				if (cb) cb();
 			});
 			this.updateQuery(value);
 		}
 
 		if (selectedDate) {
-			if (!currentDate) {
-				currentDate = {
-					startDate: selectedDate
-				}
-				this.setState({ currentDate });
-			} else if (currentDate.startDate && !currentDate.endDate &&
-				currentDate.startDate.timestamp < selectedDate.timestamp) {
-				currentDate.endDate = selectedDate;
+			if (currentDate && currentDate.start && !currentDate.end &&
+				currentDate.start.timestamp < selectedDate.timestamp) {
+				currentDate.end = selectedDate;
 
 				value = {
-					startDate: currentDate.startDate.timestamp,
-					endDate: currentDate.endDate.timestamp
+					start: currentDate.start.timestamp,
+					end: currentDate.end.timestamp
 				};
 
 				date = {
-					startDate: this.formatDate(new XDate(value.startDate)),
-					endDate: this.formatDate(new XDate(value.endDate))
+					start: this.formatDate(new XDate(value.start)),
+					end: this.formatDate(new XDate(value.end))
 				};
 
 				checkValueChange(
@@ -150,9 +185,11 @@ class DateRange extends Component {
 				);
 			} else {
 				currentDate = {
-					startDate: selectedDate
+					start: selectedDate
 				};
-				this.setState({ currentDate });
+				this.setState({ currentDate }, () => {
+					if (cb) cb();
+				});
 			}
 		} else {
 			currentDate = null;
@@ -193,24 +230,27 @@ class DateRange extends Component {
 	};
 
 	getDateString = (date) => {
-		return `${date.startDate.dateString} to ${date.endDate ? date.endDate.dateString : ""}`;
+		return `${date.start.dateString} to ${date.end ? date.end.dateString : ""}`;
 	}
 
 	render() {
 		let markedDates = {};
+		const current = this.state.currentDate
+			? this.state.currentDate.start.dateString
+			: this.props.startDate || Date();
 
 		if (this.state.currentDate) {
 			markedDates = {
-				[this.state.currentDate.startDate.dateString]: [{
+				[this.state.currentDate.start.dateString]: [{
 					startingDay: true,
 					textColor: "#fff",
 					color: "#0B6AFF"
 				}]
 			};
-			if (this.state.currentDate.endDate) {
+			if (this.state.currentDate.end) {
 				const range = this.getDateRange(
-					new XDate(this.state.currentDate.startDate.timestamp),
-					new XDate(this.state.currentDate.endDate.timestamp)
+					new XDate(this.state.currentDate.start.timestamp),
+					new XDate(this.state.currentDate.end.timestamp)
 				);
 				range.forEach(date => {
 					markedDates[date] = [{
@@ -218,7 +258,7 @@ class DateRange extends Component {
 						color: "#0B6AFF"
 					}];
 				});
-				markedDates[this.state.currentDate.endDate.dateString] = [{
+				markedDates[this.state.currentDate.end.dateString] = [{
 					endingDay: true,
 					textColor: "#fff",
 					color: "#0B6AFF"
@@ -283,6 +323,7 @@ class DateRange extends Component {
 					</Right>
 				</Header>
 				<Calendar
+					current={current}
 					onDayPress={this.handleDateChange}
 					markedDates={markedDates}
 					markingType={"interactive"}
@@ -297,7 +338,7 @@ class DateRange extends Component {
 
 DateRange.defaultProps = {
 	queryFormat: "epoch_millis",
-	placeholder: "Select a date"
+	placeholder: "Select a range of dates"
 }
 
 const mapDispatchtoProps = dispatch => ({
