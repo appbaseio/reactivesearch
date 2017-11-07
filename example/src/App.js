@@ -14,6 +14,7 @@ import {
 	MultiDropdownRange,
 	RangeSlider,
 	DatePicker,
+	DateRange,
 	ReactiveList
 } from "@appbaseio/reactivebase-native";
 
@@ -117,6 +118,10 @@ export default class Main extends Component {
 						<DatePicker
 							dataField="someField"
 							componentId="DatePicker"
+						/>
+						<DateRange
+							dataField="someField"
+							componentId="DateRange"
 						/>
 						<DataController
 							componentId="DataController"
