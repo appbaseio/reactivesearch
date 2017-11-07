@@ -233,9 +233,7 @@ class DataSearch extends Component {
 				supportedOrientations={this.props.supportedOrientations || null}
 				transparent={false}
 				visible={this.state.showModal}
-				onRequestClose={() => {
-					this.toggleModal();
-				}}
+				onRequestClose={this.toggleModal}
 			>
 				<Header>
 					<Left>
@@ -246,7 +244,13 @@ class DataSearch extends Component {
 					{
 						this.state.currentValue
 							? (<Right>
-								<Button transparent onPress={() => this.selectSuggestion("")}><Text>Reset</Text></Button>
+								<Button
+									style={{ paddingRight: 0 }}
+									transparent
+									onPress={() => this.selectSuggestion("")}
+								>
+									<Text>Reset</Text>
+								</Button>
 							</Right>)
 							: null
 					}

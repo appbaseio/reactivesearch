@@ -58,7 +58,6 @@ class ReactiveList extends Component {
 	}
 
 	loadMore = () => {
-		console.log("called", this.props.componentId);
 		if (this.props.hits && !this.props.pagination && this.props.total !== this.props.hits.length) {
 			const value = this.state.from + this.props.size;
 			const options = getQueryOptions(this.props);
