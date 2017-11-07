@@ -155,10 +155,7 @@ class DateRange extends Component {
 				this.setState({ currentDate });
 			}
 		} else {
-			this.setState({
-				currentDate: null
-			});
-
+			currentDate = null;
 			value = null;
 
 			checkValueChange(
