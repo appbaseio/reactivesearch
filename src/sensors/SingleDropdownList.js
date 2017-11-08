@@ -3,7 +3,7 @@ import { Picker } from "native-base";
 import { connect } from "react-redux";
 
 import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
-import { isEqual, getQueryOptions, pushToAndClause, checkValueChange } from "../utils/helper";
+import { isEqual, getQueryOptions, pushToAndClause, checkValueChange, getAggsOrder } from "../utils/helper";
 
 const Item = Picker.Item;
 
@@ -30,13 +30,16 @@ class SingleDropdownList extends Component {
 				terms: {
 					field: this.props.dataField,
 					size: 100,
-					order: {
-						_count: "desc"
-					}
+					order: getAggsOrder(this.props.sortBy)
 				}
 			}
 		}
 		this.props.setQueryOptions(this.internalComponent, queryOptions);
+		// Since the queryOptions are attached to the internal component,
+		// we need to notify the subscriber (parent component)
+		// that the query has changed because no new query will be
+		// auto-generated for the internal component as its
+		// dependency tree is empty
 		this.props.updateQuery(this.internalComponent, null);
 
 		if (this.props.defaultSelected) {
@@ -135,7 +138,8 @@ class SingleDropdownList extends Component {
 
 SingleDropdownList.defaultProps = {
 	size: 100,
-	placeholder: "Select a value"
+	placeholder: "Select a value",
+	sortBy: "count"
 }
 
 const mapStateToProps = (state, props) => ({

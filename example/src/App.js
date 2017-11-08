@@ -83,6 +83,9 @@ export default class Main extends Component {
 						<SingleDropdownList
 							componentId="SingleDropdownListComponent"
 							dataField="brand.raw"
+							react={{
+								and: "DataSearchComponent"
+							}}
 						/>
 						<MultiDropdownList
 							componentId="MultiDropdownListComponent"
@@ -154,6 +157,7 @@ export default class Main extends Component {
 							}}
 						/>
 						<ReactiveList
+							dataField="name"
 							componentId="ReactiveList"
 							size={20}
 							from={0}

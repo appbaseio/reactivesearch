@@ -22,14 +22,34 @@ class ReactiveList extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
 		const options = getQueryOptions(this.props);
+		if (this.props.sortBy) {
+			options.sort = [{
+				[this.props.dataField]: {
+					order: this.props.sortBy
+				}
+			}];
+		}
 		this.props.setQueryOptions(this.props.componentId, options);
 		this.setReact(this.props);
 	}
 
 	componentWillReceiveProps(nextProps) {
+		if (this.props.sortBy !== nextProps.sortBy || this.props.size !== nextProps.size) {
+			const options = getQueryOptions(nextProps);
+			if (this.props.sortBy) {
+				options.sort = [{
+					[this.props.dataField]: {
+						order: this.props.sortBy
+					}
+				}];
+			}
+			this.props.setQueryOptions(this.props.componentId, options);
+		}
+
 		if (!isEqual(nextProps.react, this.props.react)) {
 			this.setReact(nextProps);
 		}
+
 		if (!nextProps.pagination && nextProps.hits && this.props.hits && nextProps.hits.length < this.props.hits.length) {
 			if (this.listRef) {
 				this.listRef.scrollToOffset({ x: 0, y: 0, animated: false });
@@ -39,6 +59,7 @@ class ReactiveList extends Component {
 				isLoading: false
 			});
 		}
+
 		if (nextProps.pagination && nextProps.total !== this.props.total) {
 			this.setState({
 				totalPages: nextProps.total / nextProps.size,
@@ -198,7 +219,9 @@ class ReactiveList extends Component {
 
 ReactiveList.defaultProps = {
 	pagination: false,
-	pages: 5
+	pages: 5,
+	size: 10,
+	from: 0
 }
 
 const mapStateToProps = (state, props) => ({

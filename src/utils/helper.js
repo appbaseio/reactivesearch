@@ -134,6 +134,17 @@ export function checkValueChange(componentId, value, beforeValueChange, onValueC
 	}
 }
 
+export function getAggsOrder(sortBy) {
+	if (sortBy === "count") {
+		return {
+			_count: "desc"
+		};
+	}
+	return {
+		_term: sortBy
+	};
+}
+
 function getExternalQueryOptions(react, options, component) {
 	let queryOptions = {};
 

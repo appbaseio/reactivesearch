@@ -26,8 +26,15 @@ class RangeSlider extends Component {
 		const queryOptions = {
 			aggs: this.histogramQuery()
 		};
+
 		this.props.setQueryOptions(this.internalComponent, queryOptions);
+		// Since the queryOptions are attached to the internal component,
+		// we need to notify the subscriber (parent component)
+		// that the query has changed because no new query will be
+		// auto-generated for the internal component as its
+		// dependency tree is empty
 		this.props.updateQuery(this.internalComponent, null);
+
 		if (this.props.defaultSelected) {
 			this.handleChange([ this.props.defaultSelected.start, this.props.defaultSelected.end ]);
 		}

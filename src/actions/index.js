@@ -37,8 +37,10 @@ function updateWatchman(component, react) {
 export function watchComponent(component, react) {
 	return (dispatch, getState) => {
 		dispatch(updateWatchman(component, react));
+
 		const store = getState();
 		const { queryObj, options } = buildQuery(component, store.dependencyTree, store.queryList, store.queryOptions);
+
 		if ((queryObj && Object.keys(queryObj).length) ||
 			(options && "aggs" in options)) {
 			dispatch(executeQuery(component, queryObj, options));
@@ -54,7 +56,21 @@ export function setQuery(component, query) {
 	};
 }
 
-export function setQueryOptions(component, options) {
+export function setQueryOptions(component, queryOptions) {
+	return (dispatch, getState) => {
+		dispatch(updateQueryOptions(component, queryOptions));
+
+		const store = getState();
+		const { queryObj, options } = buildQuery(component, store.dependencyTree, store.queryList, store.queryOptions);
+
+		if ((queryObj && Object.keys(queryObj).length) ||
+			(options && "aggs" in options)) {
+			dispatch(executeQuery(component, queryObj, options));
+		}
+	}
+}
+
+function updateQueryOptions(component, options) {
 	return {
 		type: SET_QUERY_OPTIONS,
 		component,
@@ -135,6 +151,7 @@ export function updateQuery(componentId, query, onQueryChange) {
 
 		const store = getState();
 		const watchList = store.watchMan[componentId];
+
 		if (Array.isArray(watchList)) {
 			watchList.forEach(component => {
 				const { queryObj, options } = buildQuery(component, store.dependencyTree, store.queryList, store.queryOptions);
@@ -144,10 +161,16 @@ export function updateQuery(componentId, query, onQueryChange) {
 	}
 }
 
-export function loadMore(component, options, append = true) {
+export function loadMore(component, newOptions, append = true) {
 	return (dispatch, getState) => {
 		const store = getState();
-		const { queryObj, options } = buildQuery(component, store.dependencyTree, store.queryList, store.queryOptions);
+		let { queryObj, options } = buildQuery(component, store.dependencyTree, store.queryList, store.queryOptions);
+
+		if (!options) {
+			options = {};
+		}
+
+		options = { ...options, ...newOptions };
 		dispatch(executeQuery(component, queryObj, options, append));
 	}
 }
