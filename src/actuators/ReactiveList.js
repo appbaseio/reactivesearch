@@ -151,6 +151,26 @@ class ReactiveList extends Component {
 		this.listRef = node;
 	}
 
+	highlightResults = (result) => {
+		const data = { ...result };
+		if (data.highlight) {
+			Object.keys(data.highlight).forEach((highlightItem) => {
+				const highlightValue = data.highlight[highlightItem][0];
+				data._source = Object.assign({}, data._source, { [highlightItem]: highlightValue });
+			});
+		}
+		return data;
+	}
+
+	parseHits = (hits) => {
+		let results = null;
+		if (hits) {
+			results = [...hits].map(this.highlightResults);
+
+		}
+		return results;
+	}
+
 	render() {
 		return (
 			<View>
@@ -161,7 +181,7 @@ class ReactiveList extends Component {
 				}
 				<List
 					setRef={this.setRef}
-					data={this.props.hits}
+					data={this.parseHits(this.props.hits)}
 					onData={this.props.onData}
 					onEndReached={this.loadMore}
 				/>

@@ -33,14 +33,33 @@ export default class Main extends Component {
 		this.setState({ isReady: true });
 	}
 
-	onData(item) {
+	onData = (item) => {
 		const { _source: data } = item;
 		return (
 			<View style={{ margin: 5 }}>
-				<Text style={{ flex: 1, fontWeight: "bold" }}>{data.name}</Text>
+				<Text style={{ flex: 1, fontWeight: "bold" }}>{this.parseToElement(data.name)}</Text>
 				<Text>{data.brand} - {data.model}</Text>
 			</View>
 		);
+	}
+
+	parseToElement = (str) => {
+		const start = str.indexOf("<em>");
+		const end = str.indexOf("</em>");
+
+		if (start > -1) {
+			const pre = str.substring(0, start);
+			const highlight = str.substring(start+4, end);
+			const post = str.substring(end+5, str.length);
+
+			return (<Text style={{ flex: 1, fontWeight: "bold" }}>
+				{pre}
+				<Text style={{ backgroundColor: "yellow" }}>{highlight}</Text>
+				{post}
+			</Text>);
+		}
+
+		return str;
 	}
 
 	render() {
@@ -70,13 +89,14 @@ export default class Main extends Component {
 							dataField="brand.raw"
 						/>
 						<DataSearch
-							componentId="DataSeachComponent"
+							componentId="DataSearchComponent"
 							dataField="name"
 							defaultSelected="Nissan"
 							onValueChange={(val) => console.log("DataSearch onValueChange", val)}
 							react={{
 								and: "TextFieldComponent"
 							}}
+							highlight
 						/>
 						<SingleDropdownRange
 							componentId="SingleDropdownRange"
@@ -140,7 +160,7 @@ export default class Main extends Component {
 							onData={this.onData}
 							pagination
 							react={{
-								and: ["DataController", "SingleDropdownListComponent", "MultiDropdownListComponent", "DataSeachComponent", "TextFieldComponent", "RangeSlider", "SingleDropdownRange", "MultiDropdownRange"]
+								and: ["DataController", "SingleDropdownListComponent", "MultiDropdownListComponent", "DataSearchComponent", "TextFieldComponent", "RangeSlider", "SingleDropdownRange", "MultiDropdownRange"]
 							}}
 						/>
 					</View>

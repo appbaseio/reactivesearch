@@ -41,13 +41,15 @@ export function getQueryOptions(props) {
 	return options;
 }
 
-export function buildQuery(component, dependencyTree, queryList) {
-	let query = null;
+export function buildQuery(component, dependencyTree, queryList, queryOptions) {
+	let queryObj = null,
+		options = null;
 
 	if (component in dependencyTree) {
-		query = getQuery(dependencyTree[component], queryList);
+		queryObj = getQuery(dependencyTree[component], queryList);
+		options = getExternalQueryOptions(dependencyTree[component], queryOptions, component);
 	}
-	return query;
+	return { queryObj, options };
 }
 
 function getQuery(react, queryList) {
@@ -130,4 +132,30 @@ export function checkValueChange(componentId, value, beforeValueChange, onValueC
 	} else {
 		executeUpdate();
 	}
+}
+
+function getExternalQueryOptions(react, options, component) {
+	let queryOptions = {};
+
+	for (conjunction in react) {
+		if (Array.isArray(react[conjunction])) {
+			react[conjunction].forEach(comp => {
+				if (options[comp]) {
+					queryOptions = { ...queryOptions, ...options[comp] };
+				}
+			});
+		} else if (typeof react[conjunction] === "string") {
+			if (options[react[conjunction]]) {
+				queryOptions = { ...queryOptions, ...options[react[conjunction]] };
+			}
+		} else if (typeof react[conjunction] === "object" &&
+			react[conjunction] !== null &&
+			!Array.isArray(react[conjunction])) {
+			queryOptions = { ...queryOptions , ...getExternalQueryOptions(react[conjunction], options) };
+		}
+	}
+	if (options[component]) {
+		queryOptions = { ...queryOptions, ...options[component] };
+	}
+	return queryOptions;
 }

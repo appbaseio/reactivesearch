@@ -13,7 +13,7 @@ import {
 	Icon } from "native-base";
 import { connect } from "react-redux";
 
-import { addComponent, removeComponent, watchComponent, updateQuery } from "../actions";
+import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
 import { isEqual, debounce, pushToAndClause, checkValueChange } from "../utils/helper";
 
 class DataSearch extends Component {
@@ -31,6 +31,11 @@ class DataSearch extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
 		this.props.addComponent(this.internalComponent);
+
+		if (this.props.highlight) {
+			const queryOptions = this.highlightQuery(this.props);
+			this.props.setQueryOptions(this.props.componentId, queryOptions);
+		}
 		this.setReact(this.props);
 
 		if (this.props.defaultSelected) {
@@ -39,9 +44,17 @@ class DataSearch extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		if (nextProps.highlight &&
+			!isEqual(this.props.dataField, nextProps.dataField) ||
+			!isEqual(this.props.highlightField, nextProps.highlightField)) {
+			const queryOptions = this.highlightQuery(nextProps);
+			this.props.setQueryOptions(this.props.componentId, queryOptions);
+		}
+
 		if (!isEqual(nextProps.react, this.props.react)) {
 			this.setReact(nextProps);
 		}
+
 		if (Array.isArray(nextProps.suggestions)
 			&& !isEqual(this.props.suggestions, nextProps.suggestions)
 			&& this.state.currentValue.trim() !== "") {
@@ -49,6 +62,7 @@ class DataSearch extends Component {
 				suggestions: nextProps.suggestions
 			});
 		}
+
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected, true);
 		}
@@ -67,6 +81,27 @@ class DataSearch extends Component {
 		} else {
 			props.watchComponent(props.componentId, { and: this.internalComponent });
 		}
+	}
+
+	highlightQuery = (props) => {
+		const fields = {};
+		const highlightField = props.highlightField ? props.highlightField : props.dataField;
+
+		if (typeof highlightField === "string") {
+			fields[highlightField] = {};
+		} else if (Array.isArray(highlightField)) {
+			highlightField.forEach((item) => {
+				fields[item] = {};
+			});
+		}
+
+		return {
+			highlight: {
+				pre_tags: ["<em>"],
+				post_tags: ["</em>"],
+				fields
+			}
+		};
 	}
 
 	defaultQuery = (value) => {
@@ -329,7 +364,8 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange))
+	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange)),
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DataSearch);

@@ -38,9 +38,9 @@ export function watchComponent(component, react) {
 	return (dispatch, getState) => {
 		dispatch(updateWatchman(component, react));
 		const store = getState();
-		const options = store.queryOptions[component];
-		const queryObj = buildQuery(component, store.dependencyTree, store.queryList);
-		if (queryObj) {
+		const { queryObj, options } = buildQuery(component, store.dependencyTree, store.queryList, store.queryOptions);
+		if ((queryObj && Object.keys(queryObj).length) ||
+			(options && "aggs" in options)) {
 			dispatch(executeQuery(component, queryObj, options));
 		}
 	}
@@ -72,7 +72,7 @@ export function logQuery(component, query) {
 
 export function executeQuery(component, query, options = {}, appendToHits = false, onQueryChange) {
 	return (dispatch, getState) => {
-		const { appbaseRef, config, queryOptions, queryLog } = getState();
+		const { appbaseRef, config, queryLog } = getState();
 		let mainQuery = null;
 
 		if (query) {
@@ -83,7 +83,6 @@ export function executeQuery(component, query, options = {}, appendToHits = fals
 
 		const finalQuery = {
 			...mainQuery,
-			...queryOptions[component],
 			...options
 		};
 
@@ -100,6 +99,7 @@ export function executeQuery(component, query, options = {}, appendToHits = fals
 			})
 				.on("data", response => {
 					dispatch(updateHits(component, response.hits, appendToHits))
+
 					if ("aggregations" in response) {
 						dispatch(updateAggs(component, response.aggregations));
 					}
@@ -135,10 +135,9 @@ export function updateQuery(componentId, query, onQueryChange) {
 
 		const store = getState();
 		const watchList = store.watchMan[componentId];
-		const options = store.queryOptions[componentId];
 		if (Array.isArray(watchList)) {
 			watchList.forEach(component => {
-				const queryObj = buildQuery(component, store.dependencyTree, store.queryList);
+				const { queryObj, options } = buildQuery(component, store.dependencyTree, store.queryList, store.queryOptions);
 				dispatch(executeQuery(component, queryObj, options, false, onQueryChange));
 			});
 		}
@@ -148,7 +147,7 @@ export function updateQuery(componentId, query, onQueryChange) {
 export function loadMore(component, options, append = true) {
 	return (dispatch, getState) => {
 		const store = getState();
-		const queryObj = buildQuery(component, store.dependencyTree, store.queryList);
+		const { queryObj, options } = buildQuery(component, store.dependencyTree, store.queryList, store.queryOptions);
 		dispatch(executeQuery(component, queryObj, options, append));
 	}
 }
