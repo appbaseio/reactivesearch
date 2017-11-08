@@ -166,7 +166,6 @@ class ReactiveList extends Component {
 		let results = null;
 		if (hits) {
 			results = [...hits].map(this.highlightResults);
-
 		}
 		return results;
 	}
