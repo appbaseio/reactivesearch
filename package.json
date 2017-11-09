@@ -7,6 +7,9 @@
 	},
 	"author": "metagrover",
 	"license": "Apache-2.0",
+	"workspaces": [
+		"packages/*"
+	],
 	"devDependencies": {
 		"babel-eslint": "^8.0.2",
 		"eslint": "^4.10.0",
@@ -17,7 +20,6 @@
 		"eslint-plugin-prettier": "^2.3.1",
 		"eslint-plugin-react": "^7.4.0",
 		"husky": "^0.14.3",
-		"lerna": "^2.5.1",
 		"prettier": "^1.8.2"
 	}
 }
