@@ -1,0 +1,3 @@
+[submodule "packages/reactivecore"]
+	path = packages/reactivecore
+	url = git@github.com:appbaseio/reactivecore.git
