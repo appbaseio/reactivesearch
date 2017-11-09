@@ -1,10 +1,3 @@
-<!--
-IF YOU DON'T FILL OUT THE FOLLOWING INFORMATION WE MIGHT CLOSE YOUR ISSUE WITHOUT INVESTIGATION
--->
-
-<!--
-- Before submitting, please **SEARCH GITHUB** for a similar issue or PR. -->
-
 **I'm submitting a ...**
 <!-- (check one with "x") -->
 - [ ] bug report
@@ -13,6 +6,9 @@ IF YOU DON'T FILL OUT THE FOLLOWING INFORMATION WE MIGHT CLOSE YOUR ISSUE WITHOU
 
 **Current behavior:**
 <!-- Describe how the bug manifests / how the current features are insufficient. Attach Screenshots if it helps -->
+
+**Screenshots:**
+<!-- Attach Screenshots if it helps -->
 
 **Expected / new behavior:**
 <!-- Describe what the behavior would be without the bug / how the feature would improve reactivesearch -->
