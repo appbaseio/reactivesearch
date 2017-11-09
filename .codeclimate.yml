@@ -1,0 +1,14 @@
+engines:
+  eslint:
+    enabled: true
+    channel: "eslint-3"
+ratings:
+  paths:
+    - "app/**"
+exclude_paths:
+  - "lib/**"
+  - "dist/**"
+  - "umd/**"
+  - "playground/**"
+  - "node_modules/**"
+  - "bower_components/**"
