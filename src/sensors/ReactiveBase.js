@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { Container } from "native-base";
 import Appbase from "appbase-js";
 
-import configureStore from "../store/configureStore";
+import configureStore from "@appbaseio/reactivecore";
 
 export default class ReactiveBase extends Component {
 	constructor(props) {

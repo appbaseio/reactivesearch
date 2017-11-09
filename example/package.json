@@ -8,6 +8,7 @@
 		"ios": "react-native-scripts ios"
 	},
 	"dependencies": {
+		"@appbaseio/reactivecore": "^0.1.1",
 		"@ptomasroos/react-native-multi-slider": "^0.0.11",
 		"appbase-js": "^2.1.0",
 		"escape-string-regexp": "^1.0.5",

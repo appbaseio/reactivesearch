@@ -2,8 +2,20 @@ import React, { Component } from "react";
 import { Picker } from "native-base";
 import { connect } from "react-redux";
 
-import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
-import { isEqual, getQueryOptions, pushToAndClause, checkValueChange, getAggsOrder } from "../utils/helper";
+import {
+	addComponent,
+	removeComponent,
+	watchComponent,
+	updateQuery,
+	setQueryOptions
+} from "@appbaseio/reactivecore/lib/actions";
+import {
+	isEqual,
+	getQueryOptions,
+	pushToAndClause,
+	checkValueChange,
+	getAggsOrder
+} from "@appbaseio/reactivecore/lib/utils/helper";
 
 const Item = Picker.Item;
 

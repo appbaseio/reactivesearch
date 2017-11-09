@@ -10,11 +10,23 @@ import {
 	Header,
 	Left,
 	Right,
-	Icon } from "native-base";
+	Icon
+} from "native-base";
 import { connect } from "react-redux";
 
-import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
-import { isEqual, debounce, pushToAndClause, checkValueChange } from "../utils/helper";
+import {
+	addComponent,
+	removeComponent,
+	watchComponent,
+	updateQuery,
+	setQueryOptions
+} from "@appbaseio/reactivecore/lib/actions";
+import {
+	isEqual,
+	debounce,
+	pushToAndClause,
+	checkValueChange
+} from "@appbaseio/reactivecore/lib/utils/helper";
 
 class DataSearch extends Component {
 	constructor(props) {

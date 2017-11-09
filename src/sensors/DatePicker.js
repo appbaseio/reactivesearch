@@ -14,8 +14,13 @@ import {
 	Right
 } from "native-base";
 
-import { addComponent, removeComponent, watchComponent, updateQuery } from "../actions";
-import { isEqual, checkValueChange } from "../utils/helper";
+import {
+	addComponent,
+	removeComponent,
+	watchComponent,
+	updateQuery
+} from "@appbaseio/reactivecore/lib/actions";
+import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 import { dateFormat } from "../constants";
 
 const XDate = require("xdate");

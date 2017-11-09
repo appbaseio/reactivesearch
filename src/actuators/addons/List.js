@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FlatList } from "react-native";
 
-import { isEqual } from "../../utils/helper";
+import { isEqual } from "@appbaseio/reactivecore/lib/utils/helper";
 
 export default class List extends Component {
 	shouldComponentUpdate(nextProps) {

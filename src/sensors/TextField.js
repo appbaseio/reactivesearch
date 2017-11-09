@@ -2,8 +2,13 @@ import React, { Component } from "react";
 import { Input, Item } from "native-base";
 import { connect } from "react-redux";
 
-import { addComponent, removeComponent, watchComponent, updateQuery } from "../actions";
-import { isEqual, debounce, checkValueChange } from "../utils/helper";
+import {
+	addComponent,
+	removeComponent,
+	watchComponent,
+	updateQuery
+} from "@appbaseio/reactivecore/lib/actions";
+import { isEqual, debounce, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
 class TextField extends Component {
 	constructor(props) {

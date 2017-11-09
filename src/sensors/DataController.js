@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View } from "react-native";
 
-import { addComponent, removeComponent, updateQuery } from "../actions";
-import { checkValueChange } from "../utils/helper";
+import {
+	addComponent,
+	removeComponent,
+	updateQuery
+} from "@appbaseio/reactivecore/lib/actions";
+import { checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
 class DataController extends Component {
 	componentDidMount() {

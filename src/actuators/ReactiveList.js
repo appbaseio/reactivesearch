@@ -4,8 +4,14 @@ import { View } from "react-native";
 import { Text, Spinner, Button, Icon } from "native-base";
 
 import List from "./addons/List";
-import { addComponent, removeComponent, watchComponent, setQueryOptions, loadMore } from "../actions";
-import { isEqual, getQueryOptions } from "../utils/helper";
+import {
+	addComponent,
+	removeComponent,
+	watchComponent,
+	setQueryOptions,
+	loadMore
+} from "@appbaseio/reactivecore/lib/actions";
+import { isEqual, getQueryOptions } from "@appbaseio/reactivecore/lib/utils/helper";
 
 class ReactiveList extends Component {
 	constructor(props) {

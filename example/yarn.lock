@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@appbaseio/reactivecore@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-0.1.1.tgz#5e180e3bed850c234c7feb15f83e71c6eb1b3794"
+  dependencies:
+    redux "^3.7.2"
+    redux-thunk "^2.2.0"
+
 "@ccheever/crayon@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@ccheever/crayon/-/crayon-5.0.0.tgz#a7192753c1c25d7588ed01d6058c64c457a71c63"
@@ -176,14 +183,13 @@ anymatch@^1.3.0:
     normalize-path "^2.0.0"
 
 appbase-js@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-2.1.0.tgz#6d3c065bef10da50b012cff9aae0bb85df602f88"
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-2.2.1.tgz#4492a7fa04d47bdbcf94393a7719875244076e30"
   dependencies:
     babel-polyfill "^6.26.0"
     es6-promise "^4.1.1"
     eventemitter2 "^4.1.2"
     fetch-everywhere "^1.0.5"
-    guid "0.0.12"
     json-stable-stringify "^1.0.1"
     stream "^0.0.2"
     url "^0.11.0"
@@ -267,8 +273,8 @@ ast-types@0.x.x:
   resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.9.14.tgz#d34ba5dffb9d15a44351fd2a9d82e4ab2838b5ba"
 
 async@^2.4.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/async/-/async-2.5.0.tgz#843190fd6b7357a0b9e1c956edddd5ec8462b54d"
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/async/-/async-2.6.0.tgz#61a29abb6fcc026fea77e56d1c6ec53a795951f4"
   dependencies:
     lodash "^4.14.0"
 
@@ -1378,8 +1384,8 @@ clone-stats@^0.0.1:
   resolved "https://registry.yarnpkg.com/clone-stats/-/clone-stats-0.0.1.tgz#b88f94a82cf38b8791d58046ea4029ad88ca99d1"
 
 clone@^1.0.0, clone@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.2.tgz#260b7a99ebb1edfe247538175f783243cb19d149"
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.3.tgz#298d7e2231660f40c003c2ed3140decf3f53085f"
 
 clone@^2.1.1:
   version "2.1.1"
@@ -1394,8 +1400,8 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
 color-convert@^1.3.0, color-convert@^1.8.2, color-convert@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.0.tgz#1accf97dd739b983bf994d56fec8f95853641b7a"
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.1.tgz#c1261107aeb2f294ebffec9ed9ecad529a6097ed"
   dependencies:
     color-name "^1.1.1"
 
@@ -1569,6 +1575,14 @@ cookiejar@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.1.tgz#41ad57b1b555951ec171412a81942b1e8200d34a"
 
+copy-paste@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/copy-paste/-/copy-paste-1.3.0.tgz#a7e6c4a1c28fdedf2b081e72b97df2ef95f471ed"
+  dependencies:
+    iconv-lite "^0.4.8"
+  optionalDependencies:
+    sync-exec "~0.6.x"
+
 core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
@@ -1667,8 +1681,8 @@ debug@~2.2.0:
     ms "0.7.1"
 
 decache@^4.1.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/decache/-/decache-4.2.0.tgz#3a7543a58a7d422a14f0c5bfbd55b52bf19d7e87"
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/decache/-/decache-4.3.0.tgz#a395e407095698ac8a6def01f2a6a4cb7638f635"
   dependencies:
     callsite "^1.0.0"
 
@@ -1745,6 +1759,10 @@ detect-indent@^4.0.0:
   dependencies:
     repeating "^2.0.0"
 
+detect-libc@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.2.tgz#71ad5d204bf17a6a6ca8f450c61454066ef461e1"
+
 dom-walk@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
@@ -1793,9 +1811,11 @@ encoding@^0.1.11:
     iconv-lite "~0.4.13"
 
 envinfo@^3.0.0:
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-3.4.2.tgz#f06648836155b81e1d7b4a1c3fca3f6b5f38789b"
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-3.8.0.tgz#f877f21ca6f0ed59adc1d0f90fdd6a66cb310172"
   dependencies:
+    copy-paste "^1.3.0"
+    glob "^7.1.2"
     minimist "^1.2.0"
     os-name "^2.0.1"
     which "^1.2.14"
@@ -2355,7 +2375,7 @@ glob@^6.0.1:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.0.3, glob@^7.0.5, glob@^7.1.1:
+glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   dependencies:
@@ -2386,10 +2406,6 @@ glogg@^1.0.0:
 graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
-
-guid@0.0.12:
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/guid/-/guid-0.0.12.tgz#9137c52b185f7de12490b9bebcc1660b9025fe0c"
 
 gulp-util@^3.0.4:
   version "3.0.8"
@@ -2577,7 +2593,7 @@ iconv-lite@0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.13.tgz#1f88aba4ab0b1508e8312acc39345f36e992e2f2"
 
-iconv-lite@0.4.19, iconv-lite@^0.4.17, iconv-lite@~0.4.13:
+iconv-lite@0.4.19, iconv-lite@^0.4.17, iconv-lite@^0.4.8, iconv-lite@~0.4.13:
   version "0.4.19"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.19.tgz#f7468f60135f5e5dad3399c0a81be9a1603a082b"
 
@@ -3324,8 +3340,8 @@ metro-bundler@^0.13.0:
     xpipe "^1.0.5"
 
 metro-bundler@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/metro-bundler/-/metro-bundler-0.20.0.tgz#a2faef20ba7f566484a6c5bd585f590f8640c183"
+  version "0.20.2"
+  resolved "https://registry.yarnpkg.com/metro-bundler/-/metro-bundler-0.20.2.tgz#6c4dc9ea24314d876c466103eff5d78d15646bb5"
   dependencies:
     absolute-path "^0.0.0"
     async "^2.4.0"
@@ -3359,7 +3375,8 @@ metro-bundler@^0.20.0:
     source-map "^0.5.6"
     temp "0.8.3"
     throat "^4.1.0"
-    uglify-es "^3.1.0"
+    uglify-es "^3.1.8"
+    wordwrap "^1.0.0"
     write-file-atomic "^1.2.0"
     xpipe "^1.0.5"
 
@@ -3575,9 +3592,10 @@ node-int64@^0.4.0:
   resolved "https://registry.yarnpkg.com/node-int64/-/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
 
 node-pre-gyp@^0.6.36:
-  version "0.6.38"
-  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.38.tgz#e92a20f83416415bb4086f6d1fb78b3da73d113d"
+  version "0.6.39"
+  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.39.tgz#c00e96860b23c0e1420ac7befc5044e1d78d8649"
   dependencies:
+    detect-libc "^1.0.2"
     hawk "3.1.3"
     mkdirp "^0.5.1"
     nopt "^4.0.1"
@@ -4126,15 +4144,15 @@ react-native-branch@2.0.0-beta.3:
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.0.0-beta.3.tgz#2167af86bbc9f964bd45bd5f37684e5b54965e32"
 
 react-native-calendars@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.9.0.tgz#ee34373459de67b89bc4dbc462981b105bce6de3"
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.9.2.tgz#283c2fdcda5c9c37e31f02f621f3b659bb574337"
   dependencies:
     prop-types "^15.5.10"
     xdate "^0.8.0"
 
-"react-native-drawer@https://github.com/GeekyAnts/react-native-drawer":
+"react-native-drawer@git+https://github.com/GeekyAnts/react-native-drawer.git":
   version "2.3.0"
-  resolved "https://github.com/GeekyAnts/react-native-drawer#8d9078516d177c9cb02d2579a6860706d2370d25"
+  resolved "git+https://github.com/GeekyAnts/react-native-drawer.git#8d9078516d177c9cb02d2579a6860706d2370d25"
   dependencies:
     prop-types "^15.5.8"
     tween-functions "^1.0.1"
@@ -4151,9 +4169,9 @@ react-native-gesture-handler@1.0.0-alpha.28:
   dependencies:
     prop-types "^15.5.10"
 
-"react-native-keyboard-aware-scroll-view@https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view":
+"react-native-keyboard-aware-scroll-view@git+https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view.git":
   version "0.2.9"
-  resolved "https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view#f4805f254d6cc8e3329f5fb224944401f66655db"
+  resolved "git+https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view.git#f4805f254d6cc8e3329f5fb224944401f66655db"
   dependencies:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
@@ -4549,13 +4567,13 @@ response-time@~2.3.1:
     on-headers "~1.0.1"
 
 rest-facade@^1.5.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/rest-facade/-/rest-facade-1.10.0.tgz#527847f2900257813ccc99e5dec3c225c6fb9f34"
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/rest-facade/-/rest-facade-1.10.1.tgz#a9b030ff50df28c9ea1a2719f94e369c47167d20"
   dependencies:
     bluebird "^2.10.2"
     change-case "^2.3.0"
     deepmerge "^1.5.1"
-    superagent "^3.5.2"
+    superagent "^3.8.0"
     superagent-proxy "^1.0.2"
 
 restore-cursor@^2.0.0:
@@ -4792,8 +4810,8 @@ slugid@^1.1.0:
     uuid "^2.0.1"
 
 slugify@^1.0.2:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.2.1.tgz#2118f4b0fbcfd79d7b2c451c22b724e5c1991330"
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.2.2.tgz#1e00de11c744b7c1d89e6bd89e8d862831836453"
 
 smart-buffer@^1.0.13:
   version "1.1.15"
@@ -4993,9 +5011,9 @@ superagent-retry@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/superagent-retry/-/superagent-retry-0.6.0.tgz#e49b35ca96c0e3b1d0e3f49605136df0e0a028b7"
 
-superagent@^3.5.0, superagent@^3.5.2:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.8.0.tgz#87e3ed536c8860c08c7c7d1225da9a80cab064c6"
+superagent@^3.5.0, superagent@^3.8.0:
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.8.1.tgz#2571fd921f3fcdba43ac68c3b35c91951532701f"
   dependencies:
     component-emitter "^1.2.0"
     cookiejar "^2.1.0"
@@ -5028,6 +5046,10 @@ swap-case@^1.1.0:
 symbol-observable@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.4.tgz#29bf615d4aa7121bdd898b22d4b3f9bc4e2aa03d"
+
+sync-exec@~0.6.x:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/sync-exec/-/sync-exec-0.6.2.tgz#717d22cc53f0ce1def5594362f3a89a2ebb91105"
 
 tar-pack@^3.4.0:
   version "3.4.1"
@@ -5200,9 +5222,9 @@ ua-parser-js@^0.7.9:
   version "0.7.17"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.17.tgz#e9ec5f9498b9ec910e7ae3ac626a805c4d09ecac"
 
-uglify-es@^3.1.0:
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/uglify-es/-/uglify-es-3.1.6.tgz#b0f818c055a7e9538abc2286e70c743f2938311f"
+uglify-es@^3.1.8:
+  version "3.1.8"
+  resolved "https://registry.yarnpkg.com/uglify-es/-/uglify-es-3.1.8.tgz#2f21a56871d6354dcc21469cc034c3967f14c5b1"
   dependencies:
     commander "~2.11.0"
     source-map "~0.6.1"
@@ -5405,17 +5427,17 @@ wordwrap@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.2.tgz#b79669bb42ecb409f83d583cad52ca17eaa1643f"
 
+wordwrap@^1.0.0, wordwrap@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
+
 wordwrap@~0.0.2:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.3.tgz#a3d5da6cd5c0bc0008d37234bbaf1bed63059107"
 
-wordwrap@~1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
-
 worker-farm@^1.3.1:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/worker-farm/-/worker-farm-1.5.0.tgz#adfdf0cd40581465ed0a1f648f9735722afd5c8d"
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/worker-farm/-/worker-farm-1.5.1.tgz#8e9f4a7da4f3c595aa600903051b969390423fa1"
   dependencies:
     errno "^0.1.4"
     xtend "^4.0.1"
@@ -5440,8 +5462,8 @@ write-file-atomic@^1.2.0:
     slide "^1.1.5"
 
 ws@^1.1.0:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-1.1.4.tgz#57f40d036832e5f5055662a397c4de76ed66bf61"
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-1.1.5.tgz#cbd9e6e75e09fc5d2c90015f21f0c40875e0dd51"
   dependencies:
     options ">=0.0.5"
     ultron "1.0.x"

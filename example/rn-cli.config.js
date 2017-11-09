@@ -15,6 +15,7 @@ module.exports = {
 			"redux-thunk",
 			"native-base",
 			"appbase-js",
+			"@appbaseio/reactivecore",
 			"@ptomasroos/react-native-multi-slider",
 			"react-native-calendars",
 			"xdate"

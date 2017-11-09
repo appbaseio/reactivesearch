@@ -15,8 +15,20 @@ import {
 } from "native-base";
 
 import CheckboxItem from "./addons/CheckboxItem";
-import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
-import { isEqual, getQueryOptions, pushToAndClause, checkValueChange, getAggsOrder } from "../utils/helper";
+import {
+	addComponent,
+	removeComponent,
+	watchComponent,
+	updateQuery,
+	setQueryOptions
+} from "@appbaseio/reactivecore/lib/actions";
+import {
+	isEqual,
+	getQueryOptions,
+	pushToAndClause,
+	checkValueChange,
+	getAggsOrder
+} from "@appbaseio/reactivecore/lib/utils/helper";
 
 class MultiDropdownList extends Component {
 	constructor(props) {

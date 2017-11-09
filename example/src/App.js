@@ -55,7 +55,7 @@ export default class Main extends Component {
 			return (<Text style={{ flex: 1, fontWeight: "bold" }}>
 				{pre}
 				<Text style={{ backgroundColor: "yellow" }}>{highlight}</Text>
-				{post}
+				{this.parseToElement(post)}
 			</Text>);
 		}
 

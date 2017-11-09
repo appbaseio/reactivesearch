@@ -4,8 +4,14 @@ import { connect } from "react-redux";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 
 import Histogram from "./addons/Histogram";
-import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
-import { isEqual, checkValueChange } from "../utils/helper";
+import {
+	addComponent,
+	removeComponent,
+	watchComponent,
+	updateQuery,
+	setQueryOptions
+} from "@appbaseio/reactivecore/lib/actions";
+import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
 class RangeSlider extends Component {
 	constructor(props) {

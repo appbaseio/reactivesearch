@@ -14,8 +14,14 @@ import {
 	Right
 } from "native-base";
 
-import { addComponent, removeComponent, watchComponent, updateQuery, setQueryOptions } from "../actions";
-import { isEqual, checkValueChange } from "../utils/helper";
+import {
+	addComponent,
+	removeComponent,
+	watchComponent,
+	updateQuery,
+	setQueryOptions
+} from "@appbaseio/reactivecore/lib/actions";
+import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
 class MultiDropdownRange extends Component {
 	constructor(props) {

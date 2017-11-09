@@ -16,7 +16,6 @@
 
 	"extends": [
 		"prettier",
-		"prettier/flowtype",
 		"prettier/react"
 	],
 
@@ -26,7 +25,6 @@
 
 	"plugins": [
 		"babel",
-		"flowtype",
 		"import",
 		"react",
 		"react-native",
