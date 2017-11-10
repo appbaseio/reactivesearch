@@ -8,7 +8,11 @@ import {
 	watchComponent,
 	updateQuery
 } from "@appbaseio/reactivecore/lib/actions";
-import { isEqual, debounce, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
+import {
+	isEqual,
+	debounce,
+	checkValueChange
+} from "@appbaseio/reactivecore/lib/utils/helper";
 
 class TextField extends Component {
 	constructor(props) {
