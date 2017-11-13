@@ -85,7 +85,7 @@ class DataSearch extends Component {
 		this.props.removeComponent(this.internalComponent);
 	}
 
-	setReact(props) {
+	setReact = (props) => {
 		const { react } = props;
 		if (react) {
 			newReact = pushToAndClause(react, this.internalComponent)

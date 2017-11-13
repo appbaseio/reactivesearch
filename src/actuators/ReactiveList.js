@@ -9,9 +9,14 @@ import {
 	removeComponent,
 	watchComponent,
 	setQueryOptions,
+	updateQuery,
 	loadMore
 } from "@appbaseio/reactivecore/lib/actions";
-import { isEqual, getQueryOptions } from "@appbaseio/reactivecore/lib/utils/helper";
+import {
+	isEqual,
+	getQueryOptions,
+	pushToAndClause
+} from "@appbaseio/reactivecore/lib/utils/helper";
 
 class ReactiveList extends Component {
 	constructor(props) {
@@ -23,10 +28,13 @@ class ReactiveList extends Component {
 			totalPages: 0,
 			currentPage: 0
 		};
+		this.internalComponent = this.props.componentId + "__internal";
 	}
 
 	componentDidMount() {
+		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
+
 		const options = getQueryOptions(this.props);
 		if (this.props.sortBy) {
 			options.sort = [{
@@ -35,8 +43,25 @@ class ReactiveList extends Component {
 				}
 			}];
 		}
+
+		// Override sort query with defaultQuery's sort if defined
+		let defaultQuery = null;
+		if (this.props.defaultQuery) {
+			defaultQuery = this.props.defaultQuery();
+			if (defaultQuery.sort) {
+				options.sort = defaultQuery.sort;
+			}
+		}
+
 		this.props.setQueryOptions(this.props.componentId, options);
 		this.setReact(this.props);
+
+		if (defaultQuery) {
+			let { sort, ...query } = defaultQuery;
+			this.props.updateQuery(this.internalComponent, query);
+		} else {
+			this.props.updateQuery(this.internalComponent, null);
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -78,11 +103,15 @@ class ReactiveList extends Component {
 		this.props.removeComponent(this.props.componentId);
 	}
 
-	setReact(props) {
-		if (props.react) {
-			props.watchComponent(props.componentId, props.react);
+	setReact = (props) => {
+		const { react } = props;
+		if (react) {
+			newReact = pushToAndClause(react, this.internalComponent)
+			props.watchComponent(props.componentId, newReact);
+		} else {
+			props.watchComponent(props.componentId, { and: this.internalComponent });
 		}
-	}
+	};
 
 	loadMore = () => {
 		if (this.props.hits && !this.props.pagination && this.props.total !== this.props.hits.length) {
@@ -115,7 +144,7 @@ class ReactiveList extends Component {
 			...options,
 			from: value
 		}, false);
-	}
+	};
 
 	prevPage = () => {
 		if (this.state.currentPage) {
@@ -240,6 +269,7 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	updateQuery: (component, query) => dispatch(updateQuery(component, query)),
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append))
 });
 

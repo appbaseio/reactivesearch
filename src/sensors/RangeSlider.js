@@ -70,7 +70,7 @@ class RangeSlider extends Component {
 		this.props.removeComponent(this.props.componentId);
 	}
 
-	setReact(props) {
+	setReact = (props) => {
 		const { react } = props;
 		if (react) {
 			newReact = pushToAndClause(react, this.internalComponent)
@@ -78,7 +78,7 @@ class RangeSlider extends Component {
 		} else {
 			props.watchComponent(props.componentId, { and: this.internalComponent });
 		}
-	}
+	};
 
 	defaultQuery = (value) => {
 		if (Array.isArray(value) && value.length) {

@@ -78,7 +78,7 @@ class SingleDropdownList extends Component {
 		this.props.removeComponent(this.internalComponent);
 	}
 
-	setReact(props) {
+	setReact = (props) => {
 		const { react } = props;
 		if (react) {
 			newReact = pushToAndClause(react, this.internalComponent);
@@ -86,7 +86,7 @@ class SingleDropdownList extends Component {
 		} else {
 			props.watchComponent(props.componentId, { and: this.internalComponent });
 		}
-	}
+	};
 
 	defaultQuery = (value) => {
 		if (this.selectAll) {

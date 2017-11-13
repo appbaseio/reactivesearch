@@ -108,7 +108,7 @@ class DateRange extends Component {
 			query = this.generateQuery(value);
 		}
 		return query;
-	}
+	};
 
 	generateQuery = (value) => {
 		let query = null;
@@ -150,7 +150,7 @@ class DateRange extends Component {
 			};
 		}
 		return query;
-	}
+	};
 
 	handleDateChange = (selectedDate, cb) => {
 		let value = null,
@@ -236,7 +236,7 @@ class DateRange extends Component {
 
 	getDateString = (date) => {
 		return `${date.start.dateString} to ${date.end ? date.end.dateString : ""}`;
-	}
+	};
 
 	render() {
 		let markedDates = {};

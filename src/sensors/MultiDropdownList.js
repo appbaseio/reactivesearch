@@ -91,7 +91,7 @@ class MultiDropdownList extends Component {
 		this.props.removeComponent(this.internalComponent);
 	}
 
-	setReact(props) {
+	setReact = (props) => {
 		const { react } = props;
 		if (react) {
 			newReact = pushToAndClause(react, this.internalComponent)
@@ -99,7 +99,7 @@ class MultiDropdownList extends Component {
 		} else {
 			props.watchComponent(props.componentId, { and: this.internalComponent });
 		}
-	}
+	};
 
 	defaultQuery = (value) => {
 		if (this.selectAll) {
@@ -131,7 +131,7 @@ class MultiDropdownList extends Component {
 			};
 		}
 		return null;
-	}
+	};
 
 	selectItem = (item, isDefaultValue = false) => {
 		let { currentValue } = this.state;
@@ -159,7 +159,7 @@ class MultiDropdownList extends Component {
 			this.props.onValueChange,
 			performUpdate
 		);
-	}
+	};
 
 	toggleModal = () => {
 		this.setState({
@@ -174,7 +174,7 @@ class MultiDropdownList extends Component {
 			callback = this.props.onQueryChange;
 		}
 		this.props.updateQuery(this.props.componentId, query(value), callback);
-	}
+	};
 
 	render() {
 		return (

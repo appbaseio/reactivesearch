@@ -163,6 +163,14 @@ export default class Main extends Component {
 							from={0}
 							onData={this.onData}
 							pagination
+							defaultQuery={() => ({
+								query: {
+									match_all: {}
+								},
+								sort: {
+									price: { order: "asc" }
+								}
+							})}
 							react={{
 								and: ["DataController", "SingleDropdownListComponent", "MultiDropdownListComponent", "DataSearchComponent", "TextFieldComponent", "RangeSlider", "SingleDropdownRange", "MultiDropdownRange"]
 							}}
