@@ -1,6 +1,6 @@
 import Expo from "expo";
 import React, { Component } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, FlatList } from "react-native";
 import { Text, Header, Body, Title } from "native-base";
 
 import {
@@ -33,14 +33,18 @@ export default class Main extends Component {
 		this.setState({ isReady: true });
 	}
 
-	onData = (item) => {
-		const { _source: data } = item;
-		return (
-			<View style={{ margin: 5 }}>
-				<Text style={{ flex: 1, fontWeight: "bold" }}>{this.parseToElement(data.name)}</Text>
-				<Text>{data.brand} - {data.model}</Text>
-			</View>
-		);
+	onAllData = (items, loadMore) => {
+		return (<FlatList
+			style={{ width: "100%" }}
+			data={items || []}
+			keyExtractor={(item) => item._id}
+			renderItem={({ item }) => (<View style={{ margin: 5 }}>
+				<Text style={{ flex: 1, fontWeight: "bold" }}>{this.parseToElement(item._source.name)}</Text>
+				<Text>{item._source.brand} - {item._source.model}</Text>
+			</View>)}
+			onEndReachedThreshold={0.5}
+			onEndReached={loadMore}
+		/>)
 	}
 
 	parseToElement = (str) => {
@@ -161,7 +165,7 @@ export default class Main extends Component {
 							componentId="ReactiveList"
 							size={20}
 							from={0}
-							onData={this.onData}
+							onAllData={this.onAllData}
 							pagination
 							defaultQuery={() => ({
 								query: {

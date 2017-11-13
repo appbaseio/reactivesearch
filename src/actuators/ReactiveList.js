@@ -28,6 +28,7 @@ class ReactiveList extends Component {
 			totalPages: 0,
 			currentPage: 0
 		};
+		this.listRef = null;
 		this.internalComponent = this.props.componentId + "__internal";
 	}
 
@@ -234,12 +235,16 @@ class ReactiveList extends Component {
 						? this.renderPagination()
 						: null
 				}
-				<List
-					setRef={this.setRef}
-					data={this.parseHits(this.props.hits)}
-					onData={this.props.onData}
-					onEndReached={this.loadMore}
-				/>
+				{
+					this.props.onAllData
+						? (this.props.onAllData(this.parseHits(this.props.hits), this.loadMore))
+						: (<List
+							setRef={this.setRef}
+							data={this.parseHits(this.props.hits)}
+							onData={this.props.onData}
+							onEndReached={this.loadMore}
+						/>)
+				}
 				{
 					this.state.isLoading && !this.props.pagination
 						? (<View>
