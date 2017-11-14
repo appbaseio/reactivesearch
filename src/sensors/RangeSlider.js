@@ -13,6 +13,8 @@ import {
 } from "@appbaseio/reactivecore/lib/actions";
 import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
+import types from "../utils/propTypesHelper";
+
 class RangeSlider extends Component {
 	constructor(props) {
 		super(props);
@@ -185,6 +187,26 @@ class RangeSlider extends Component {
 			</View>
 		);
 	}
+}
+
+RangeSlider.propTypes = {
+	range: types.range,
+	componentId: types.componentId,
+	addComponent: types.addComponent,
+	setQueryOptions: types.setQueryOptions,
+	updateQuery: types.updateQuery,
+	defaultSelected: types.range,
+	react: types.react,
+	options: types.options,
+	removeComponent: types.removeComponent,
+	dataField: types.dataField,
+	interval: types.interval,
+	beforeValueChange: types.beforeValueChange,
+	onValueChange: types.onValueChange,
+	customQuery: types.customQuery,
+	onQueryChange: types.onQueryChange,
+	showHistogram: types.showHistogram,
+	stepValue: types.stepValue
 }
 
 RangeSlider.defaultProps = {
