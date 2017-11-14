@@ -6,15 +6,17 @@ import {
 	View
 } from "react-native";
 
+import types from "../../utils/propTypesHelper";
+
 const LOLLIPOP = 21;
 
-export default class TouchableItem extends Component {
+class TouchableItem extends Component {
 	handlePress = () => {
 		global.requestAnimationFrame(this.props.onPress);
 	};
 
 	render() {
-		const { style, pressOpacity, pressColor, borderless, ...rest } = this.props;
+		const { style, pressOpacity, pressColor, ...rest } = this.props;
 
 		if (Platform.OS === "android" && Platform.Version >= LOLLIPOP) {
 			return (
@@ -40,7 +42,16 @@ export default class TouchableItem extends Component {
 	}
 }
 
+TouchableItem.propTypes = {
+	onPress: types.onPress,
+	style: types.style,
+	pressOpacity: types.pressOpacity,
+	pressColor: types.pressColor,
+	children: types.children
+}
+
 TouchableItem.defaultProps = {
-	pressColor: "rgba(0, 0, 0, .2)",
-	borderless: false
+	pressColor: "rgba(0, 0, 0, .2)"
 };
+
+export default TouchableItem;
