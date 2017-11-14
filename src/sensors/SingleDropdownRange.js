@@ -11,6 +11,8 @@ import {
 } from "@appbaseio/reactivecore/lib/actions";
 import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
+import types from "../utils/propTypesHelper";
+
 const Item = Picker.Item;
 
 class SingleDropdownRange extends Component {
@@ -111,6 +113,22 @@ class SingleDropdownRange extends Component {
 			</Picker>
 		);
 	}
+}
+
+SingleDropdownRange.propTypes = {
+	addComponent: types.addComponent,
+	componentId: types.componentId,
+	defaultSelected: types.string,
+	react: types.react,
+	removeComponent: types.removeComponent,
+	dataField: types.dataField,
+	data: types.data,
+	beforeValueChange: types.beforeValueChange,
+	onValueChange: types.onValueChange,
+	customQuery: types.customQuery,
+	onQueryChange: types.onQueryChange,
+	updateQuery: types.updateQuery,
+	placeholder: types.placeholder
 }
 
 SingleDropdownRange.defaultProps = {
