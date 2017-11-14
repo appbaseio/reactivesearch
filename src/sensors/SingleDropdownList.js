@@ -17,6 +17,8 @@ import {
 	getAggsOrder
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
+import types from "../utils/propTypesHelper";
+
 const Item = Picker.Item;
 
 class SingleDropdownList extends Component {
@@ -146,6 +148,24 @@ class SingleDropdownList extends Component {
 			</Picker>
 		);
 	}
+}
+
+SingleDropdownList.propTypes = {
+	componentId: types.componentId,
+	addComponent: types.addComponent,
+	dataField: types.dataField,
+	sortBy: types.sortByWithCount,
+	setQueryOptions: types.setQueryOptions,
+	updateQuery: types.updateQuery,
+	defaultSelected: types.string,
+	react: types.react,
+	options: types.options,
+	removeComponent: types.removeComponent,
+	beforeValueChange: types.beforeValueChange,
+	onValueChange: types.onValueChange,
+	customQuery: types.customQuery,
+	onQueryChange: types.onQueryChange,
+	placeholder: types.placeholder
 }
 
 SingleDropdownList.defaultProps = {
