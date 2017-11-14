@@ -9,6 +9,8 @@ import {
 } from "@appbaseio/reactivecore/lib/actions";
 import { checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
+import types from "../utils/propTypesHelper";
+
 class DataController extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
@@ -58,6 +60,20 @@ class DataController extends Component {
 			</View>
 		);
 	}
+}
+
+DataController.propTypes = {
+	addComponent: types.addComponent,
+	componentId: types.componentId,
+	// DataController can accept any defaultSelected depending on the query used
+	defaultSelected: types.any,	// eslint-disable-line
+	removeComponent: types.removeComponent,
+	customQuery: types.customQuery,
+	onQueryChange: types.onQueryChange,
+	updateQuery: types.updateQuery,
+	beforeValueChange: types.beforeValueChange,
+	onValueChange: types.onValueChange,
+	children: types.children
 }
 
 const mapDispatchtoProps = dispatch => ({
