@@ -28,6 +28,8 @@ import {
 	checkValueChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
+import types from "../utils/propTypesHelper";
+
 class DataSearch extends Component {
 	constructor(props) {
 		super(props);
@@ -144,7 +146,7 @@ class DataSearch extends Component {
 
 	shouldQuery(value, dataFields) {
 		const fields = dataFields.map(
-			(field, index) => `${field}${(Array.isArray(this.props.weights) && this.props.weights[index]) ? ("^" + this.props.weights[index]) : ""}`
+			(field, index) => `${field}${(Array.isArray(this.props.fieldWeights) && this.props.fieldWeights[index]) ? ("^" + this.props.fieldWeights[index]) : ""}`
 		);
 
 		if (this.props.queryFormat === "and") {
@@ -360,6 +362,30 @@ class DataSearch extends Component {
 			</View>
 		);
 	}
+}
+
+DataSearch.propTypes = {
+	componentId: types.componentId,
+	addComponent: types.addComponent,
+	highlight: types.highlight,
+	setQueryOptions: types.setQueryOptions,
+	defaultSelected: types.string,
+	dataField: types.dataFieldArray,
+	highlightField: types.highlightField,
+	react: types.react,
+	suggestions: types.suggestions,
+	removeComponent: types.removeComponent,
+	fieldWeights: types.fieldWeights,
+	queryFormat: types.queryFormatSearch,
+	fuzziness: types.fuzziness,
+	autoSuggest: types.autoSuggest,
+	beforeValueChange: types.beforeValueChange,
+	onValueChange: types.beforeValueChange,
+	customQuery: types.customQuery,
+	onQueryChange: types.onQueryChange,
+	updateQuery: types.updateQuery,
+	supportedOrientations: types.supportedOrientations,
+	placeholder: types.placeholder
 }
 
 DataSearch.defaultProps = {
