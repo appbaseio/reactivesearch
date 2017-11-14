@@ -5,7 +5,9 @@ import Appbase from "appbase-js";
 
 import configureStore from "@appbaseio/reactivecore";
 
-export default class ReactiveBase extends Component {
+import types from "../utils/propTypesHelper";
+
+class ReactiveBase extends Component {
 	constructor(props) {
 		super(props);
 
@@ -36,3 +38,13 @@ export default class ReactiveBase extends Component {
 		);
 	}
 }
+
+ReactiveBase.propTypes = {
+	type: types.type,
+	url: types.url,
+	credentials: types.credentials,
+	app: types.app,
+	children: types.children
+}
+
+export default ReactiveBase;
