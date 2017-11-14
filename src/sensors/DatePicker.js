@@ -23,6 +23,8 @@ import {
 import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 import { dateFormat } from "../constants";
 
+import types from "../utils/propTypesHelper";
+
 const XDate = require("xdate");
 
 class DatePicker extends Component {
@@ -224,6 +226,24 @@ class DatePicker extends Component {
 			</Modal>
 		</View>)
 	}
+}
+
+DatePicker.propTypes = {
+	addComponent: types.addComponent,
+	componentId: types.componentId,
+	defaultSelected: types.date,
+	react: types.react,
+	removeComponent: types.removeComponent,
+	queryFormat: types.queryFormatDate,
+	dataField: types.dataField,
+	beforeValueChange: types.beforeValueChange,
+	onValueChange: types.onValueChange,
+	customQuery: types.customQuery,
+	onQueryChange: types.onQueryChange,
+	updateQuery: types.updateQuery,
+	startDate: types.date,
+	placeholder: types.placeholder,
+	supportedOrientations: types.supportedOrientations
 }
 
 DatePicker.defaultProps = {
