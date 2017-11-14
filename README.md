@@ -54,7 +54,7 @@ Besides these, the library also provides low level actuators (ReactiveElement, R
 
 ### Ease of Use
 
-* One step installation with [npm install @appbaseio/reactivesearch](https://opensource.appbase.io/reactive-manual/getting-started/rsinstallation.html),
+* One step installation with [npm install @appbaseio/reactivesearch](https://opensource.appbase.io/reactive-manual/getting-started/install.html),
 * A UMD build that works directly in the browser. See a demo [here](https://github.com/appbaseio-apps/reactivesearch-starter-app#try-in-browser-without-npm),
 * Works out of the box with Materialize CSS and comes with a polyfill CSS for Bootstrap. Compatibility for other frameworks can be added too,
 * See the [reactivesearch starter app](https://github.com/appbaseio-apps/reactivesearch-starter-app).
