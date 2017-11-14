@@ -23,6 +23,8 @@ import {
 } from "@appbaseio/reactivecore/lib/actions";
 import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
+import types from "../utils/propTypesHelper";
+
 class MultiDropdownRange extends Component {
 	constructor(props) {
 		super(props);
@@ -215,6 +217,23 @@ class MultiDropdownRange extends Component {
 			</View>
 		);
 	}
+}
+
+MultiDropdownRange.propTypes = {
+	addComponent: types.addComponent,
+	componentId: types.componentId,
+	defaultSelected: types.stringArray,
+	react: types.react,
+	removeComponent: types.removeComponent,
+	data: types.data,
+	dataField: types.dataField,
+	customQuery: types.customQuery,
+	beforeValueChange: types.beforeValueChange,
+	onValueChange: types.onValueChange,
+	onQueryChange: types.onQueryChange,
+	updateQuery: types.updateQuery,
+	supportedOrientations: types.supportedOrientations,
+	placeholder: types.placeholder
 }
 
 MultiDropdownRange.defaultProps = {
