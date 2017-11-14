@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { FlatList } from "react-native";
+import PropTypes from "prop-types";
 
 import { isEqual } from "@appbaseio/reactivecore/lib/utils/helper";
 
-export default class List extends Component {
+import types from "../../utils/propTypesHelper";
+
+class List extends Component {
 	shouldComponentUpdate(nextProps) {
 		if (!isEqual(this.props.data, nextProps.data)) {
 			return true;
@@ -23,3 +26,12 @@ export default class List extends Component {
 		/>)
 	}
 }
+
+List.propTypes = {
+	data: types.data,
+	setRef: types.setRef,
+	onData: types.onData,
+	onEndReached: types.onEndReached
+}
+
+export default List;

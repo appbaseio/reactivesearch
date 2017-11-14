@@ -18,6 +18,8 @@ import {
 	pushToAndClause
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
+import types from "../utils/propTypesHelper";
+
 class ReactiveList extends Component {
 	constructor(props) {
 		super(props);
@@ -255,6 +257,26 @@ class ReactiveList extends Component {
 			</View>
 		);
 	}
+}
+
+ReactiveList.propTypes = {
+	addComponent: types.addComponent,
+	componentId: types.componentId,
+	sortBy: types.sortBy,
+	dataField: types.dataField,
+	setQueryOptions: types.setQueryOptions,
+	defaultQuery: types.defaultQuery,
+	updateQuery: types.updateQuery,
+	size: types.size,
+	react: types.react,
+	pagination: types.pagination,
+	hits: types.hits,
+	total: types.total,
+	removeComponent: types.removeComponent,
+	loadMore: types.loadMore,
+	pages: types.pages,
+	onAllData: types.onAllData,
+	onData: types.onData
 }
 
 ReactiveList.defaultProps = {
