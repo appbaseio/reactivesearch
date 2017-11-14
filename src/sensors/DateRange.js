@@ -23,6 +23,8 @@ import {
 import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 import { dateFormat } from "../constants";
 
+import types from "../utils/propTypesHelper";
+
 const XDate = require("xdate");
 
 class DateRange extends Component {
@@ -339,6 +341,24 @@ class DateRange extends Component {
 			</Modal>
 		</View>)
 	}
+}
+
+DateRange.propTypes = {
+	addComponent: types.addComponent,
+	componentId: types.componentId,
+	defaultSelected: types.dateRange,
+	react: types.react,
+	removeComponent: types.removeComponent,
+	queryFormat: types.queryFormatDate,
+	dataField: types.dataField,
+	beforeValueChange: types.beforeValueChange,
+	onValueChange: types.onValueChange,
+	customQuery: types.customQuery,
+	onQueryChange: types.onQueryChange,
+	updateQuery: types.updateQuery,
+	startDate: types.date,
+	placeholder: types.placeholder,
+	supportedOrientations: types.supportedOrientations
 }
 
 DateRange.defaultProps = {
