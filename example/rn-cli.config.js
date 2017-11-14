@@ -18,7 +18,8 @@ module.exports = {
 			"@appbaseio/reactivecore",
 			"@ptomasroos/react-native-multi-slider",
 			"react-native-calendars",
-			"xdate"
+			"xdate",
+			"prop-types"
 		];
 	},
 	getBlacklistRE() {
