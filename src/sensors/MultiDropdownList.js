@@ -30,6 +30,8 @@ import {
 	getAggsOrder
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
+import types from "../utils/propTypesHelper";
+
 class MultiDropdownList extends Component {
 	constructor(props) {
 		super(props);
@@ -242,6 +244,26 @@ class MultiDropdownList extends Component {
 			</View>
 		);
 	}
+}
+
+MultiDropdownList.propTypes = {
+	queryFormat: types.queryFormatSearch,
+	componentId: types.componentId,
+	addComponent: types.addComponent,
+	dataField: types.dataField,
+	sortBy: types.sortByWithCount,
+	setQueryOptions: types.setQueryOptions,
+	updateQuery: types.updateQuery,
+	defaultSelected: types.stringArray,
+	react: types.react,
+	options: types.options,
+	removeComponent: types.removeComponent,
+	beforeValueChange: types.beforeValueChange,
+	onValueChange: types.onValueChange,
+	customQuery: types.customQuery,
+	onQueryChange: types.onQueryChange,
+	supportedOrientations: types.supportedOrientations,
+	placeholder: types.placeholder
 }
 
 MultiDropdownList.defaultProps = {
