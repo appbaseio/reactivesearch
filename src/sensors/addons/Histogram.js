@@ -1,7 +1,9 @@
 import React from "react";
 import { View } from "react-native";
 
-export default props => {
+import types from "../../utils/propTypesHelper";
+
+const Histogram = (props) => {
 
 	let max = props.stats[0].doc_count;
 	props.stats.forEach(item => {
@@ -36,3 +38,12 @@ export default props => {
 		</View>
 	);
 }
+
+Histogram.propTypes = {
+	stats: types.stats,
+	range: types.range,
+	interval: types.interval,
+	paddingHorizontal: types.paddingHorizontal
+}
+
+export default Histogram;
