@@ -5,8 +5,9 @@ import {
 	Text
 } from "native-base";
 import TouchableItem from "./TouchableItem";
+import types from "../../utils/propTypesHelper";
 
-export default class CheckboxItem extends Component {
+class CheckboxItem extends Component {
 	constructor(props) {
 		super(props);
 
@@ -47,3 +48,11 @@ export default class CheckboxItem extends Component {
 		);
 	}
 }
+
+CheckboxItem.propTypes = {
+	checked: types.checked,
+	onPress: types.onPress,
+	label: types.label
+}
+
+export default CheckboxItem;
