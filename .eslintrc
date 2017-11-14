@@ -55,6 +55,7 @@
 		"react/jsx-uses-vars": 2,
 		"react/jsx-boolean-value": 0,
 		"react/forbid-prop-types": 1,
+		"react/prop-types": 2,
 		"react/react-in-jsx-scope": 2,
 		"react/jsx-indent": [2, "tab"],
 		"react/jsx-indent-props": [2, "tab"],
