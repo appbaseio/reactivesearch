@@ -14,6 +14,8 @@ import {
 	checkValueChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
+import types from "../utils/propTypesHelper";
+
 class TextField extends Component {
 	constructor(props) {
 		super(props);
@@ -109,6 +111,21 @@ class TextField extends Component {
 		);
 	}
 }
+
+TextField.propTypes = {
+	addComponent: types.addComponent,
+	componentId: types.componentId,
+	defaultSelected: types.string,
+	react: types.react,
+	removeComponent: types.removeComponent,
+	dataField: types.dataField,
+	beforeValueChange: types.beforeValueChange,
+	onValueChange: types.onValueChange,
+	customQuery: types.customQuery,
+	onQueryChange: types.onQueryChange,
+	updateQuery: types.updateQuery,
+	placeholder: types.placeholder
+};
 
 TextField.defaultProps = {
 	placeholder: "Search"
