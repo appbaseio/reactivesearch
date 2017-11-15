@@ -21,7 +21,7 @@ import {
 	updateQuery
 } from "@appbaseio/reactivecore/lib/actions";
 import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
-import { dateFormat } from "../constants";
+import dateFormats from "@appbaseio/reactivecore/lib/utils/dateFormats";
 
 import types from "../utils/propTypesHelper";
 
@@ -96,8 +96,8 @@ class DateRange extends Component {
 			case "epoch_millis": return date.getTime();
 			case "epoch_seconds": return Math.floor(date.getTime() / 1000);
 			default: {
-				if (dateFormat[this.props.queryFormat]) {
-					return date.toString(dateFormat[this.props.queryFormat]);
+				if (dateFormats[this.props.queryFormat]) {
+					return date.toString(dateFormats[this.props.queryFormat]);
 				}
 				return date;
 			}
