@@ -18,7 +18,7 @@ import {
 	pushToAndClause
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
-import types from "../utils/propTypesHelper";
+import types from "@appbaseio/reactivecore/lib/utils/types";
 
 class ReactiveList extends Component {
 	constructor(props) {

@@ -5,7 +5,7 @@ import {
 	Text
 } from "native-base";
 import TouchableItem from "./TouchableItem";
-import types from "../../utils/propTypesHelper";
+import types from "@appbaseio/reactivecore/lib/utils/types";
 
 class CheckboxItem extends Component {
 	constructor(props) {

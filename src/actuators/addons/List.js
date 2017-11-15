@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { isEqual } from "@appbaseio/reactivecore/lib/utils/helper";
 
-import types from "../../utils/propTypesHelper";
+import types from "@appbaseio/reactivecore/lib/utils/types";
 
 class List extends Component {
 	shouldComponentUpdate(nextProps) {

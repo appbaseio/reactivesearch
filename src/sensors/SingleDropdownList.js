@@ -17,7 +17,7 @@ import {
 	getAggsOrder
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
-import types from "../utils/propTypesHelper";
+import types from "@appbaseio/reactivecore/lib/utils/types";
 
 const Item = Picker.Item;
 

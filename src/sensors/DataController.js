@@ -9,7 +9,7 @@ import {
 } from "@appbaseio/reactivecore/lib/actions";
 import { checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
-import types from "../utils/propTypesHelper";
+import types from "@appbaseio/reactivecore/lib/utils/types";
 
 class DataController extends Component {
 	componentDidMount() {

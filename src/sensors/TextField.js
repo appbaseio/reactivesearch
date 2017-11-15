@@ -14,7 +14,7 @@ import {
 	checkValueChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
-import types from "../utils/propTypesHelper";
+import types from "@appbaseio/reactivecore/lib/utils/types";
 
 class TextField extends Component {
 	constructor(props) {

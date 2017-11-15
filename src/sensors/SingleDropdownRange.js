@@ -11,7 +11,7 @@ import {
 } from "@appbaseio/reactivecore/lib/actions";
 import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
-import types from "../utils/propTypesHelper";
+import types from "@appbaseio/reactivecore/lib/utils/types";
 
 const Item = Picker.Item;
 

@@ -23,7 +23,7 @@ import {
 import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 import dateFormats from "@appbaseio/reactivecore/lib/utils/dateFormats";
 
-import types from "../utils/propTypesHelper";
+import types from "@appbaseio/reactivecore/lib/utils/types";
 
 const XDate = require("xdate");
 

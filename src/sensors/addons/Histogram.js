@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 
-import types from "../../utils/propTypesHelper";
+import types from "@appbaseio/reactivecore/lib/utils/types";
 
 const Histogram = (props) => {
 
