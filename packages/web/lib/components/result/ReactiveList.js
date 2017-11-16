@@ -135,7 +135,7 @@ var ReactiveList = function (_Component) {
 		return React.createElement(
 			"div",
 			null,
-			this.props.pagination ? this.renderPagination() : null,
+			this.props.pagination && this.props.paginationAt !== "bottom" ? this.renderPagination() : null,
 			this.props.onAllData ? this.props.onAllData(this.parseHits(this.props.hits), this.loadMore) : React.createElement(
 				"div",
 				null,
@@ -147,7 +147,8 @@ var ReactiveList = function (_Component) {
 				"div",
 				null,
 				"Loading..."
-			) : null
+			) : null,
+			this.props.pagination && this.props.paginationAt !== "top" ? this.renderPagination() : null
 		);
 	};
 
@@ -305,6 +306,7 @@ ReactiveList.propTypes = {
 	size: types.size,
 	react: types.react,
 	pagination: types.pagination,
+	paginationAt: types.paginationAt,
 	hits: types.hits,
 	total: types.total,
 	removeComponent: types.removeComponent,
@@ -316,6 +318,7 @@ ReactiveList.propTypes = {
 
 ReactiveList.defaultProps = {
 	pagination: false,
+	paginationAt: "bottom",
 	pages: 5,
 	size: 10,
 	from: 0

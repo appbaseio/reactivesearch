@@ -249,7 +249,7 @@ class ReactiveList extends Component {
 		return (
 			<div>
 				{
-					this.props.pagination
+					this.props.pagination && this.props.paginationAt !== "bottom"
 						? this.renderPagination()
 						: null
 				}
@@ -269,6 +269,11 @@ class ReactiveList extends Component {
 						</div>)
 						: null
 				}
+				{
+					this.props.pagination && this.props.paginationAt !== "top"
+						? this.renderPagination()
+						: null
+				}
 			</div>
 		);
 	}
@@ -285,6 +290,7 @@ ReactiveList.propTypes = {
 	size: types.size,
 	react: types.react,
 	pagination: types.pagination,
+	paginationAt: types.paginationAt,
 	hits: types.hits,
 	total: types.total,
 	removeComponent: types.removeComponent,
@@ -296,6 +302,7 @@ ReactiveList.propTypes = {
 
 ReactiveList.defaultProps = {
 	pagination: false,
+	paginationAt: "bottom",
 	pages: 5,
 	size: 10,
 	from: 0
