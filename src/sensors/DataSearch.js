@@ -90,7 +90,7 @@ class DataSearch extends Component {
 	setReact = (props) => {
 		const { react } = props;
 		if (react) {
-			newReact = pushToAndClause(react, this.internalComponent)
+			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
 			props.watchComponent(props.componentId, { and: this.internalComponent });
