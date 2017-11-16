@@ -6,7 +6,7 @@ import theme from "./theme";
 
 var pagination = /*#__PURE__*/css("margin:10px -3px;text-align:center;");
 
-var primary = /*#__PURE__*/css("5\n\tbackground-color:", theme.primaryColor, ";color:", theme.primaryTextColor, ";&:hover,&:focus{background-color:", darken(0.1, theme.primaryColor), ";}");
+var primary = /*#__PURE__*/css("background-color:", theme.primaryColor, ";color:", theme.primaryTextColor, ";&:hover,&:focus{background-color:", darken(0.1, theme.primaryColor), ";}");
 
 var disabled = /*#__PURE__*/css("background-color:#fafafa;color:#ccc\n\tcursor:not-allowed;&:hover,&:focus{background-color:#fafafa;}");
 

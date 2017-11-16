@@ -9,7 +9,7 @@ const pagination = css`
 	text-align: center;
 `;
 
-const primary = css`5
+const primary = css`
 	background-color: ${theme.primaryColor};
 	color: ${theme.primaryTextColor};
 
