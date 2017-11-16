@@ -14,6 +14,9 @@ import {
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
+import Input from "../../styles/Input";
+import Title from "../../styles/Title";
+
 class TextField extends Component {
 	constructor(props) {
 		super(props);
@@ -100,7 +103,12 @@ class TextField extends Component {
 	render() {
 		return (
 			<div>
-				<input
+				{
+					this.props.title
+						? (<Title>{this.props.title}</Title>)
+						: null
+				}
+				<Input
 					type="text"
 					placeholder={this.props.placeholder}
 					onChange={(e) => this.setValue(e.target.value)}
@@ -118,6 +126,7 @@ TextField.propTypes = {
 	react: types.react,
 	removeComponent: types.removeComponent,
 	dataField: types.dataField,
+	title: types.title,
 	beforeValueChange: types.beforeValueChange,
 	onValueChange: types.onValueChange,
 	customQuery: types.customQuery,

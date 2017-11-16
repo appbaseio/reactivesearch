@@ -15,7 +15,7 @@ import { addComponent as _addComponent, removeComponent as _removeComponent, wat
 import { isEqual, getQueryOptions, pushToAndClause } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
-import { pagination, Button } from "../../styles";
+import Button, { pagination } from "../../styles/Button";
 
 var ReactiveList = function (_Component) {
 	_inherits(ReactiveList, _Component);

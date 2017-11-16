@@ -11,6 +11,9 @@ import { addComponent as _addComponent, removeComponent as _removeComponent, wat
 import { isEqual, debounce, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
+import Input from "../../styles/Input";
+import Title from "../../styles/Title";
+
 var TextField = function (_Component) {
 	_inherits(TextField, _Component);
 
@@ -99,7 +102,12 @@ var TextField = function (_Component) {
 		return React.createElement(
 			"div",
 			null,
-			React.createElement("input", {
+			this.props.title ? React.createElement(
+				Title,
+				null,
+				this.props.title
+			) : null,
+			React.createElement(Input, {
 				type: "text",
 				placeholder: this.props.placeholder,
 				onChange: function onChange(e) {
@@ -120,6 +128,7 @@ TextField.propTypes = {
 	react: types.react,
 	removeComponent: types.removeComponent,
 	dataField: types.dataField,
+	title: types.title,
 	beforeValueChange: types.beforeValueChange,
 	onValueChange: types.onValueChange,
 	customQuery: types.customQuery,

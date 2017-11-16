@@ -53,7 +53,5 @@ const Button = styled("a")`
 	}
 `;
 
-export {
-	pagination,
-	Button
-}
+export { pagination };
+export default Button;

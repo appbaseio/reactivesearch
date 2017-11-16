@@ -5,7 +5,7 @@ import Appbase from "appbase-js";
 import configureStore from "@appbaseio/reactivecore";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
-import { base } from "../../styles";
+import { base } from "../../styles/base";
 
 class ReactiveBase extends Component {
 	constructor(props) {

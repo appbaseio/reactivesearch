@@ -16,4 +16,5 @@ var Button = /*#__PURE__*/styled("a")("display:inline-flex;justify-content:cente
 	return props.disabled ? disabled : null;
 }, "\n\n\t", pagination, " &{margin:0 3px;}");
 
-export { pagination, Button };
+export { pagination };
+export default Button;

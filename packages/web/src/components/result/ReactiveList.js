@@ -16,7 +16,7 @@ import {
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
-import { pagination, Button } from "../../styles";
+import Button, { pagination } from "../../styles/Button";
 
 class ReactiveList extends Component {
 	constructor(props) {

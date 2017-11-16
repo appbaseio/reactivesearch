@@ -5,3 +5,4 @@ var base = /*#__PURE__*/css("font-family:", theme.fontFamily, ";font-size:", the
 
 export { base };
 export * from "./Button";
+export * from "./Input";
