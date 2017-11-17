@@ -156,7 +156,7 @@ class ReactiveList extends Component {
 	};
 
 	nextPage = () => {
-		if (this.state.currentPage < this.state.totalPages) {
+		if (this.state.currentPage < this.state.totalPages-1) {
 			this.setPage(this.state.currentPage+1);
 		}
 	};
