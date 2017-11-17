@@ -94,6 +94,14 @@ var ReactiveList = function (_Component) {
 			this.setReact(nextProps);
 		}
 
+		// called when page is changed
+		if (this.props.pagination && this.state.isLoading) {
+			window.scrollTo(0, 0);
+			this.setState({
+				isLoading: false
+			});
+		}
+
 		if (!nextProps.pagination && this.props.hits && nextProps.hits && (this.props.hits.length < nextProps.hits.length || nextProps.hits.length === nextProps.total)) {
 			this.setState({
 				isLoading: false
@@ -213,7 +221,7 @@ var _initialiseProps = function _initialiseProps() {
 	};
 
 	this.nextPage = function () {
-		if (_this3.state.currentPage < _this3.state.totalPages) {
+		if (_this3.state.currentPage < _this3.state.totalPages - 1) {
 			_this3.setPage(_this3.state.currentPage + 1);
 		}
 	};

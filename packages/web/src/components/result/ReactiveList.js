@@ -85,6 +85,14 @@ class ReactiveList extends Component {
 			this.setReact(nextProps);
 		}
 
+		// called when page is changed
+		if (this.props.pagination && this.state.isLoading) {
+			window.scrollTo(0,0);
+			this.setState({
+				isLoading: false
+			});
+		}
+
 		if (!nextProps.pagination && this.props.hits && nextProps.hits && (this.props.hits.length < nextProps.hits.length || nextProps.hits.length === nextProps.total)) {
 			this.setState({
 				isLoading: false
@@ -92,7 +100,7 @@ class ReactiveList extends Component {
 		}
 
 		if (!nextProps.pagination && nextProps.hits && this.props.hits && nextProps.hits.length < this.props.hits.length) {
-			window.scrollTo(0, 0);
+			window.scrollTo(0,0);
 			this.setState({
 				from: 0,
 				isLoading: false
@@ -175,7 +183,7 @@ class ReactiveList extends Component {
 	};
 
 	nextPage = () => {
-		if (this.state.currentPage < this.state.totalPages) {
+		if (this.state.currentPage < this.state.totalPages-1) {
 			this.setPage(this.state.currentPage+1);
 		}
 	};
