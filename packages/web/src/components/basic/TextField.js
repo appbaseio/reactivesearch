@@ -5,7 +5,8 @@ import {
 	addComponent,
 	removeComponent,
 	watchComponent,
-	updateQuery
+	updateQuery,
+	setValue
 } from "@appbaseio/reactivecore/lib/actions";
 import {
 	isEqual,
@@ -31,7 +32,9 @@ class TextField extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
-		if (this.props.defaultSelected) {
+		if (this.props.selectedValue) {
+			this.setValue(this.props.selectedValue, true);
+		} else if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected, true);
 		}
 	}
@@ -42,6 +45,8 @@ class TextField extends Component {
 		}
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected, true);
+		} else if (this.state.currentValue !== nextProps.selectedValue) {
+			this.setValue(nextProps.selectedValue || "", true);
 		}
 	}
 
@@ -98,6 +103,7 @@ class TextField extends Component {
 			callback = this.props.onQueryChange;
 		}
 		this.props.updateQuery(this.props.componentId, query(value), callback);
+		this.props.setValue(this.props.componentId, value);
 	}
 
 	render() {
@@ -132,18 +138,25 @@ TextField.propTypes = {
 	customQuery: types.customQuery,
 	onQueryChange: types.onQueryChange,
 	updateQuery: types.updateQuery,
-	placeholder: types.placeholder
+	placeholder: types.placeholder,
+	selectedValue: types.selectedValue,
+	setValue: types.setValue
 };
 
 TextField.defaultProps = {
 	placeholder: "Search"
 }
 
-const mapDispatchtoProps = dispatch => ({
+const mapStateToProps = (state, props) => ({
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+});
+
+const mapDispatchtoProps = (dispatch, props) => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange))
+	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange)),
+	setValue: (component, value) => dispatch(setValue(component, value, props.filterLabel))
 });
 
-export default connect(null, mapDispatchtoProps)(TextField);
+export default connect(mapStateToProps, mapDispatchtoProps)(TextField);

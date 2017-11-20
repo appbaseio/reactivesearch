@@ -7,7 +7,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { addComponent as _addComponent, removeComponent as _removeComponent, watchComponent as _watchComponent, updateQuery as _updateQuery } from "@appbaseio/reactivecore/lib/actions";
+import { addComponent as _addComponent, removeComponent as _removeComponent, watchComponent as _watchComponent, updateQuery as _updateQuery, setValue as _setValue } from "@appbaseio/reactivecore/lib/actions";
 import { isEqual, debounce, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
@@ -59,6 +59,7 @@ var TextField = function (_Component) {
 				callback = _this.props.onQueryChange;
 			}
 			_this.props.updateQuery(_this.props.componentId, query(value), callback);
+			_this.props.setValue(_this.props.componentId, value);
 		};
 
 		_this.type = "match";
@@ -72,7 +73,9 @@ var TextField = function (_Component) {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
-		if (this.props.defaultSelected) {
+		if (this.props.selectedValue) {
+			this.setValue(this.props.selectedValue, true);
+		} else if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected, true);
 		}
 	};
@@ -83,6 +86,8 @@ var TextField = function (_Component) {
 		}
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected, true);
+		} else if (this.state.currentValue !== nextProps.selectedValue) {
+			this.setValue(nextProps.selectedValue || "", true);
 		}
 	};
 
@@ -134,14 +139,22 @@ TextField.propTypes = {
 	customQuery: types.customQuery,
 	onQueryChange: types.onQueryChange,
 	updateQuery: types.updateQuery,
-	placeholder: types.placeholder
+	placeholder: types.placeholder,
+	selectedValue: types.selectedValue,
+	setValue: types.setValue
 };
 
 TextField.defaultProps = {
 	placeholder: "Search"
 };
 
-var mapDispatchtoProps = function mapDispatchtoProps(dispatch) {
+var mapStateToProps = function mapStateToProps(state, props) {
+	return {
+		selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	};
+};
+
+var mapDispatchtoProps = function mapDispatchtoProps(dispatch, props) {
 	return {
 		addComponent: function addComponent(component) {
 			return dispatch(_addComponent(component));
@@ -154,8 +167,11 @@ var mapDispatchtoProps = function mapDispatchtoProps(dispatch) {
 		},
 		updateQuery: function updateQuery(component, query, onQueryChange) {
 			return dispatch(_updateQuery(component, query, onQueryChange));
+		},
+		setValue: function setValue(component, value) {
+			return dispatch(_setValue(component, value, props.filterLabel));
 		}
 	};
 };
 
-export default connect(null, mapDispatchtoProps)(TextField);
+export default connect(mapStateToProps, mapDispatchtoProps)(TextField);

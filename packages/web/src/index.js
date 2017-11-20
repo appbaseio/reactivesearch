@@ -1,5 +1,6 @@
 import ReactiveBase from "./components/basic/ReactiveBase";
 import TextField from "./components/basic/TextField";
+import SelectedFilters from "./components/basic/SelectedFilters";
 
 import DataSearch from "./components/search/DataSearch";
 
@@ -9,6 +10,7 @@ export {
 	// basic
 	ReactiveBase,
 	TextField,
+	SelectedFilters,
 
 	//search
 	DataSearch,
