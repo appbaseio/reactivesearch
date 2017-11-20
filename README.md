@@ -121,7 +121,7 @@ The components are divided into three sections:
 ## 8. Developing Locally
 
 ```
-git clone https://github.com/appbasieo/reactivesearch
+git clone https://github.com/appbasieo/reactivesearch.git
 npm install (or yarn)
 ```
 
