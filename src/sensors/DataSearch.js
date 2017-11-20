@@ -306,6 +306,8 @@ class DataSearch extends Component {
 				</Header>
 				<Item regular style={{ marginLeft: 10, margin: 10 }}>
 					<Input
+						returnKeyType="search"
+						onSubmitEditing={(e) => this.selectSuggestion(e.nativeEvent.text)}
 						placeholder={this.props.placeholder}
 						onChangeText={this.setValue}
 						value={this.state.currentValue}
