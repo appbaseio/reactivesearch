@@ -58,7 +58,7 @@ class DataSearch extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.highlight &&
+		if (this.props.highlight !== nextProps.highlight ||
 			!isEqual(this.props.dataField, nextProps.dataField) ||
 			!isEqual(this.props.highlightField, nextProps.highlightField)) {
 			const queryOptions = this.highlightQuery(nextProps);
@@ -98,6 +98,9 @@ class DataSearch extends Component {
 	}
 
 	highlightQuery = (props) => {
+		if (!props.highlight) {
+			return null;
+		}
 		const fields = {};
 		const highlightField = props.highlightField ? props.highlightField : props.dataField;
 
