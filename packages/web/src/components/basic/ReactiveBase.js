@@ -4,8 +4,9 @@ import Appbase from "appbase-js";
 
 import configureStore from "@appbaseio/reactivecore";
 import types from "@appbaseio/reactivecore/lib/utils/types";
+import URLParamsProvider from "./URLParamsProvider";
 
-import { base } from "../../styles/base";
+const URLSearchParams = require("url-search-params");
 
 class ReactiveBase extends Component {
 	constructor(props) {
@@ -24,16 +25,22 @@ class ReactiveBase extends Component {
 			type: this.type
 		};
 
+		this.params = new URLSearchParams(window.location.search);
+		let selectedValues = {};
+		for(let key of this.params.keys()) {
+			selectedValues = { ...selectedValues, [key]: { value: JSON.parse(this.params.get(key)) } };
+		}
+
 		const appbaseRef = new Appbase(config);
-		this.store = configureStore({ config, appbaseRef });
+		this.store = configureStore({ config, appbaseRef, selectedValues });
 	}
 
 	render() {
 		return (
 			<Provider store={this.store}>
-				<div className={base}>
+				<URLParamsProvider params={this.params}>
 					{this.props.children}
-				</div>
+				</URLParamsProvider>
 			</Provider>
 		);
 	}
@@ -46,4 +53,5 @@ ReactiveBase.propTypes = {
 	app: types.app,
 	children: types.children
 }
+
 export default ReactiveBase;

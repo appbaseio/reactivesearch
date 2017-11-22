@@ -15,15 +15,17 @@ class SelectedFilters extends Component {
 
 		return (<div className={filters}>
 			{
-				Object.keys(selectedValues).map((component, index) => {
-					if (selectedValues[component].value) {
-						return (<Button key={`${component}-${index}`} onClick={() => this.remove(component)}>
-							<span>{selectedValues[component].label}: {selectedValues[component].value}</span>
-							<span>&#x2715;</span>
-						</Button>);
-					}
-					return null;
-				})
+				Object.keys(selectedValues)
+					.filter(id => this.props.components.includes(id))
+					.map((component, index) => {
+						if (selectedValues[component].value) {
+							return (<Button key={`${component}-${index}`} onClick={() => this.remove(component)}>
+								<span>{selectedValues[component].label}: {selectedValues[component].value}</span>
+								<span>&#x2715;</span>
+							</Button>);
+						}
+						return null;
+					})
 			}
 			<Button onClick={this.props.clearValues}>Clear all filters</Button>
 		</div>)
@@ -33,11 +35,13 @@ class SelectedFilters extends Component {
 SelectedFilters.propTypes = {
 	selectedValues: types.selectedValues,
 	setValue: types.setValue,
-	clearValues: types.clearValues
+	clearValues: types.clearValues,
+	components: types.components
 };
 
 const mapStateToProps = state => ({
-	selectedValues: state.selectedValues
+	selectedValues: state.selectedValues,
+	components: state.components
 });
 
 const mapDispatchtoProps = dispatch => ({

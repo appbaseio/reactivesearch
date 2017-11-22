@@ -13,6 +13,8 @@ import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import { base } from "../../styles/base";
 
+var URLSearchParams = require("url-search-params");
+
 var ReactiveBase = function (_Component) {
 	_inherits(ReactiveBase, _Component);
 
@@ -31,6 +33,10 @@ var ReactiveBase = function (_Component) {
 			credentials: props.credentials,
 			type: _this.type
 		};
+
+		_this.params = new URLSearchParams(window.location.search);
+		var selectedValues = _this.params.values();
+		console.log(selectedValues);
 
 		var appbaseRef = new Appbase(config);
 		_this.store = configureStore({ config: config, appbaseRef: appbaseRef });

@@ -4,9 +4,10 @@
   "description": "A React UI components library for building search experiences",
   "main": "lib/index.js",
   "scripts": {
-    "start": "yarn run build -w",
+    "watch": "yarn run build -w",
+    "start": "webpack-dev-server --hot --inline --progress --colors --port 8012",
     "build": "babel src --out-dir lib",
-    "build:umd": "webpack -p"
+    "build:umd": "webpack -p --config webpack.config.umd.js"
   },
   "author": "metagrover",
   "license": "Apache-2.0",
@@ -17,7 +18,8 @@
     "polished": "^1.9.0",
     "react-autosuggest": "^9.3.2",
     "react-emotion": "^8.0.10",
-    "react-redux": "^5.0.6"
+    "react-redux": "^5.0.6",
+    "url-search-params": "^0.10.0"
   },
   "peerDependencies": {
     "react": "^16.0.0",
