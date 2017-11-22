@@ -27,9 +27,14 @@ class ReactiveBase extends Component {
 
 		this.params = new URLSearchParams(window.location.search);
 		let selectedValues = {};
-		for(let key of this.params.keys()) {
-			selectedValues = { ...selectedValues, [key]: { value: JSON.parse(this.params.get(key)) } };
-		}
+
+		try {
+			for(let key of this.params.keys()) {
+				selectedValues = { ...selectedValues, [key]: { value: JSON.parse(this.params.get(key)) } };
+			}
+		} catch(e) {
+			selectedValues = {};
+		};
 
 		const appbaseRef = new Appbase(config);
 		this.store = configureStore({ config, appbaseRef, selectedValues });

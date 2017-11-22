@@ -37,7 +37,9 @@ var SelectedFilters = function (_Component) {
 		return React.createElement(
 			"div",
 			{ className: filters },
-			Object.keys(selectedValues).map(function (component, index) {
+			Object.keys(selectedValues).filter(function (id) {
+				return _this2.props.components.includes(id);
+			}).map(function (component, index) {
 				if (selectedValues[component].value) {
 					return React.createElement(
 						Button,
@@ -74,12 +76,14 @@ var SelectedFilters = function (_Component) {
 SelectedFilters.propTypes = {
 	selectedValues: types.selectedValues,
 	setValue: types.setValue,
-	clearValues: types.clearValues
+	clearValues: types.clearValues,
+	components: types.components
 };
 
 var mapStateToProps = function mapStateToProps(state) {
 	return {
-		selectedValues: state.selectedValues
+		selectedValues: state.selectedValues,
+		components: state.components
 	};
 };
 
