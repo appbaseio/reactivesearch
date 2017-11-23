@@ -11,6 +11,7 @@ import DataSearchStory from "./DataSearchStory";
 import TextFieldStory from "./TextFieldStory";
 import SingleDropdownListStory from "./SingleDropdownListStory";
 import MultiDropdownListStory from "./MultiDropdownListStory";
+import SingleDropdownRangeStory from "./SingleDropdownRangeStory";
 
 storiesOf("DataController", module)
 	.add("Basic", () => (
@@ -102,4 +103,15 @@ storiesOf("MultiDropdownList", module)
 	))
 	.add("with sortBy", () => (
 		<MultiDropdownListStory sortBy={select("sortBy", ["count", "asc", "desc"], "desc")} />
+	))
+
+storiesOf("SingleDropdownRange", module)
+	.add("Basic", () => (
+		<SingleDropdownRangeStory />
+	))
+	.add("with placeholder", () => (
+		<SingleDropdownRangeStory placeholder={text("placeholder", "Pick Category")} />
+	))
+	.add("with defaultSelected", () => (
+		<SingleDropdownRangeStory defaultSelected={text("defaultSelected", "First Date")} />
 	))
