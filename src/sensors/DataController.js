@@ -16,7 +16,7 @@ class DataController extends Component {
 		this.props.addComponent(this.props.componentId);
 
 		if (this.props.defaultSelected) {
-			this.updateQuery(this.props.defaultSelected);
+			this.updateQuery(this.props.defaultSelected, this.props);
 		} else {
 			this.updateQuery();
 		}
@@ -26,7 +26,7 @@ class DataController extends Component {
 		checkPropChange(
 			this.props.defaultSelected,
 			nextProps.defaultSelected,
-			() => this.updateQuery(nextProps.defaultSelected)
+			() => this.updateQuery(nextProps.defaultSelected, nextProps)
 		);
 	}
 
@@ -40,11 +40,11 @@ class DataController extends Component {
 		}
 	}
 
-	updateQuery = (defaultSelected = null) => {
+	updateQuery = (defaultSelected = null, props) => {
 		const query = this.props.customQuery ? this.props.customQuery : this.defaultQuery;
 		const callback = this.props.onQueryChange || null;
 		const performUpdate = () => {
-			this.props.updateQuery(this.props.componentId, query(defaultSelected), callback);
+			this.props.updateQuery(this.props.componentId, query(defaultSelected, props), callback);
 		}
 		checkValueChange(
 			this.props.componentId,
