@@ -3,14 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=storybook react-native-scripts start",
+    "start": "react-native-scripts start",
     "start-storybook": "RUN=storybook react-native-scripts start",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
     "storybook": "storybook start -p 7007"
   },
   "dependencies": {
-    "@appbaseio/reactivecore": "^0.1.3",
+    "@appbaseio/reactivecore": "^0.1.4",
     "@ptomasroos/react-native-multi-slider": "^0.0.11",
     "appbase-js": "^2.2.1",
     "escape-string-regexp": "^1.0.5",
