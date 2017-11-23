@@ -40,17 +40,23 @@ class DataController extends Component {
 		}
 	}
 
-	updateQuery = (defaultSelected = null, props) => {
-		const query = this.props.customQuery ? this.props.customQuery : this.defaultQuery;
-		const callback = this.props.onQueryChange || null;
+	updateQuery = (defaultSelected = null, props = this.props) => {
+		const query = props.customQuery ? props.customQuery : this.defaultQuery;
+		const callback = props.onQueryChange || null;
 		const performUpdate = () => {
-			this.props.updateQuery(this.props.componentId, query(defaultSelected, props), callback);
+			props.updateQuery(
+				props.componentId,
+				query(defaultSelected, props),
+				defaultSelected,
+				props.filterLabel,
+				callback
+			);
 		}
 		checkValueChange(
-			this.props.componentId,
+			props.componentId,
 			defaultSelected,
-			this.props.beforeValueChange,
-			this.props.onValueChange,
+			props.beforeValueChange,
+			props.onValueChange,
 			performUpdate
 		);
 	}
@@ -75,13 +81,16 @@ DataController.propTypes = {
 	updateQuery: types.updateQuery,
 	beforeValueChange: types.beforeValueChange,
 	onValueChange: types.onValueChange,
-	children: types.children
+	children: types.children,
+	filterLabel: types.filterLabel
 }
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange))
+	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
+		updateQuery(component, query, value, filterLabel, onQueryChange)
+	)
 });
 
 export default connect(null, mapDispatchtoProps)(DataController);
