@@ -4,7 +4,7 @@ import { Text } from "react-native";
 import { storiesOf } from "@storybook/react-native";
 import { action } from "@storybook/addon-actions";
 import { linkTo } from "@storybook/addon-links";
-import { text, boolean, number, select, array } from "@storybook/addon-knobs";
+import { text, boolean, number, select, array, object } from "@storybook/addon-knobs";
 
 import DataControllerStory from "./DataControllerStory";
 import DataSearchStory from "./DataSearchStory";
@@ -13,6 +13,7 @@ import SingleDropdownListStory from "./SingleDropdownListStory";
 import MultiDropdownListStory from "./MultiDropdownListStory";
 import SingleDropdownRangeStory from "./SingleDropdownRangeStory";
 import MultiDropdownRangeStory from "./MultiDropdownRangeStory";
+import RangeSliderStory from "./RangeSliderStory";
 
 storiesOf("DataController", module)
 	.add("Basic", () => (
@@ -90,7 +91,7 @@ storiesOf("SingleDropdownList", module)
 	))
 	.add("with sortBy", () => (
 		<SingleDropdownListStory sortBy={select("sortBy", ["count", "asc", "desc"], "desc")} />
-	))
+	));
 
 storiesOf("MultiDropdownList", module)
 	.add("Basic", () => (
@@ -104,7 +105,7 @@ storiesOf("MultiDropdownList", module)
 	))
 	.add("with sortBy", () => (
 		<MultiDropdownListStory sortBy={select("sortBy", ["count", "asc", "desc"], "desc")} />
-	))
+	));
 
 storiesOf("SingleDropdownRange", module)
 	.add("Basic", () => (
@@ -115,7 +116,7 @@ storiesOf("SingleDropdownRange", module)
 	))
 	.add("with defaultSelected", () => (
 		<SingleDropdownRangeStory defaultSelected={text("defaultSelected", "First Date")} />
-	))
+	));
 
 storiesOf("MultiDropdownRange", module)
 	.add("Basic", () => (
@@ -126,4 +127,61 @@ storiesOf("MultiDropdownRange", module)
 	))
 	.add("with defaultSelected", () => (
 		<MultiDropdownRangeStory defaultSelected={array("defaultSelected", ["First Date", "Pricey"])} />
+	));
+
+storiesOf("RangeSlider", module)
+	.add("Basic", () => (
+		<RangeSliderStory
+			range={{
+				start: 0,
+				end: 5
+			}}
+		/>
 	))
+	.add("with range", () => (
+		<RangeSliderStory
+			range={object("range", {
+				start: 0,
+				end: 5
+			})}
+		/>
+	))
+	.add("with defaultSelected", () => (
+		<RangeSliderStory
+			range={{
+				start: 0,
+				end: 5
+			}}
+			defaultSelected={object("defaultSelected", {
+				start: 1,
+				end: 3
+			})}
+		/>
+	))
+	.add("without histogram", () => (
+		<RangeSliderStory
+			range={{
+				start: 0,
+				end: 5
+			}}
+			showHistogram={boolean("showHistogram", false)}
+		/>
+	))
+	.add("with interval", () => (
+		<RangeSliderStory
+			range={{
+				start: 0,
+				end: 5
+			}}
+			interval={number("interval", 1)}
+		/>
+	))
+	.add("with stepValue", () => (
+		<RangeSliderStory
+			range={{
+				start: 0,
+				end: 5
+			}}
+			stepValue={number("stepValue", 1)}
+		/>
+	));
