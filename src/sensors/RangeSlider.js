@@ -11,7 +11,7 @@ import {
 	updateQuery,
 	setQueryOptions
 } from "@appbaseio/reactivecore/lib/actions";
-import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
+import { isEqual, checkValueChange, checkPropChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
@@ -21,7 +21,8 @@ class RangeSlider extends Component {
 
 		this.state = {
 			width: 0,
-			currentValue: [props.range.start, props.range.end]
+			currentValue: [props.range.start, props.range.end],
+			stats: []
 		};
 		this.internalComponent = this.props.componentId + "__internal";
 	}
@@ -49,23 +50,31 @@ class RangeSlider extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
-		}
-		if (!isEqual(this.props.options, nextProps.options)) {
-			const { options } = nextProps;
-			options.sort(function(a, b){
-				if(a.key < b.key) return -1;
-				if(a.key > b.key) return 1;
-				return 0;
-			});
-			this.setState({
-				stats: options
-			});
-		}
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.handleChange([ nextProps.defaultSelected.start, nextProps.defaultSelected.end ]);
-		}
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
+		checkPropChange(
+			this.props.options,
+			nextProps.options,
+			() => {
+				const { options } = nextProps;
+				options.sort(function(a, b){
+					if(a.key < b.key) return -1;
+					if(a.key > b.key) return 1;
+					return 0;
+				});
+				this.setState({
+					stats: options
+				});
+			}
+		);
+		checkPropChange(
+			this.props.defaultSelected,
+			nextProps.defaultSelected,
+			() => this.handleChange([ nextProps.defaultSelected.start, nextProps.defaultSelected.end ], nextProps)
+		);
 	}
 
 	componentWillUnmount() {
@@ -82,11 +91,11 @@ class RangeSlider extends Component {
 		}
 	};
 
-	defaultQuery = (value) => {
+	defaultQuery = (value, props) => {
 		if (Array.isArray(value) && value.length) {
 			return {
 				range: {
-					[this.props.dataField]: {
+					[props.dataField]: {
 						gte: value[0],
 						lte: value[1],
 						boost: 2.0
@@ -115,32 +124,32 @@ class RangeSlider extends Component {
 		})
 	};
 
-	handleChange = (currentValue) => {
+	handleChange = (currentValue, props = this.props) => {
 		const performUpdate = () => {
 			this.setState({
 				currentValue
 			});
-			this.updateQuery(currentValue);
+			this.updateQuery(currentValue, props);
 		}
 		checkValueChange(
-			this.props.componentId,
+			props.componentId,
 			{
 				start: currentValue[0],
 				end: currentValue[1]
 			},
-			this.props.beforeValueChange,
-			this.props.onValueChange,
+			props.beforeValueChange,
+			props.onValueChange,
 			performUpdate
 		);
 	};
 
-	updateQuery = (value) => {
-		const query = this.props.customQuery || this.defaultQuery;
+	updateQuery = (value, props) => {
+		const query = props.customQuery || this.defaultQuery;
 		let callback = null;
-		if (this.props.onQueryChange) {
-			callback = this.props.onQueryChange;
+		if (props.onQueryChange) {
+			callback = props.onQueryChange;
 		}
-		this.props.updateQuery(this.props.componentId, query(value), callback);
+		props.updateQuery(props.componentId, query(value, props), value, props.filterLabel, callback);
 	}
 
 	render() {
@@ -159,7 +168,7 @@ class RangeSlider extends Component {
 			<View style={{ paddingTop: 25 }}>
 				<View onLayout={(e) => this.setWidth(e.nativeEvent.layout.width)}>
 					{
-						this.state.stats && this.props.showHistogram
+						this.state.stats.length && this.props.showHistogram
 							? (<Histogram
 								stats={this.state.stats}
 								range={this.props.range}
@@ -226,7 +235,9 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange)),
+	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
+		updateQuery(component, query, value, filterLabel, onQueryChange)
+	),
 	setQueryOptions: (component, props, onQueryChange) => dispatch(setQueryOptions(component, props, onQueryChange))
 });
 

@@ -4,7 +4,6 @@ import { View } from "react-native";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 const Histogram = (props) => {
-
 	let max = props.stats[0].doc_count;
 	props.stats.forEach(item => {
 		if (max < item.doc_count) {
