@@ -66,7 +66,7 @@ class DataSearch extends Component {
 			["highlight", "dataField", "highlightField"],
 			() => {
 				const queryOptions = this.highlightQuery(nextProps);
-				this.props.setQueryOptions(this.props.componentId, queryOptions);
+				this.props.setQueryOptions(nextProps.componentId, queryOptions);
 			}
 		);
 
@@ -91,7 +91,7 @@ class DataSearch extends Component {
 		checkPropChange(
 			this.props.defaultSelected,
 			nextProps.defaultSelected,
-			() => this.setValue(nextProps.defaultSelected, true)
+			() => this.setValue(nextProps.defaultSelected, true, nextProps)
 		);
 
 		checkSomePropChange(
@@ -99,7 +99,7 @@ class DataSearch extends Component {
 			nextProps,
 			["fieldWeights", "fuzziness", "queryFormat"],
 			() => {
-				this.updateQuery(this.props.componentId, this.state.currentValue, nextProps)
+				this.updateQuery(nextProps.componentId, this.state.currentValue, nextProps)
 			}
 		);
 	}
@@ -217,26 +217,26 @@ class DataSearch extends Component {
 		];
 	}
 
-	setValue = (value, isDefaultValue = false) => {
+	setValue = (value, isDefaultValue = false, props = this.props) => {
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value
 			});
 			if (isDefaultValue) {
-				if (this.props.autoSuggest) {
-					this.updateQuery(this.internalComponent, value, this.props);
+				if (props.autoSuggest) {
+					this.updateQuery(this.internalComponent, value, props);
 				}
-				this.updateQuery(this.props.componentId, value, this.props);
+				this.updateQuery(props.componentId, value, props);
 			} else {
 				// debounce for handling text while typing
 				this.handleTextChange(value);
 			}
 		}
 		checkValueChange(
-			this.props.componentId,
+			props.componentId,
 			value,
-			this.props.beforeValueChange,
-			this.props.onValueChange,
+			props.beforeValueChange,
+			props.onValueChange,
 			performUpdate
 		);
 	};
