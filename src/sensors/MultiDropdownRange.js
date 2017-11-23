@@ -21,7 +21,7 @@ import {
 	updateQuery,
 	setQueryOptions
 } from "@appbaseio/reactivecore/lib/actions";
-import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
+import { isEqual, checkValueChange, checkPropChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
@@ -49,12 +49,16 @@ class MultiDropdownRange extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
-		}
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.selectItem(nextProps.defaultSelected, true);
-		}
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
+		checkPropChange(
+			this.props.defaultSelected,
+			nextProps.defaultSelected,
+			() => this.selectItem(nextProps.defaultSelected, true, nextProps)
+		);
 	}
 
 	componentWillUnmount() {
@@ -67,7 +71,7 @@ class MultiDropdownRange extends Component {
 		}
 	}
 
-	defaultQuery = (values) => {
+	defaultQuery = (values, props) => {
 		const generateRangeQuery = (dataField, items) => {
 			if (items.length > 0) {
 				return items.map(value => ({
@@ -83,10 +87,10 @@ class MultiDropdownRange extends Component {
 		};
 
 		if (values) {
-			const selectedItems = this.props.data.filter(item => values.includes(item.label));
+			const selectedItems =props.data.filter(item => values.includes(item.label));
 			const query = {
 				bool: {
-					should: generateRangeQuery(this.props.dataField, selectedItems),
+					should: generateRangeQuery(props.dataField, selectedItems),
 					minimum_should_match: 1,
 					boost: 1.0
 				}
@@ -96,11 +100,11 @@ class MultiDropdownRange extends Component {
 		return null;
 	}
 
-	selectItem = (item, isDefaultValue = false) => {
+	selectItem = (item, isDefaultValue = false, props = this.props) => {
 		let { currentValue } = this.state;
 		if (isDefaultValue) {
 			// checking if the items in defaultSeleted exist in the data prop
-			currentValue = item.filter(currentItem => this.props.data.find(dataItem => dataItem.label === currentItem));
+			currentValue = item.filter(currentItem => props.data.find(dataItem => dataItem.label === currentItem));
 		} else {
 			if (currentValue.includes(item)) {
 				currentValue = currentValue.filter(value => value !== item);
@@ -112,15 +116,15 @@ class MultiDropdownRange extends Component {
 			this.setState({
 				currentValue
 			});
-			const query = this.props.customQuery || this.defaultQuery;
-			this.updateQuery(currentValue);
+			const query = props.customQuery || this.defaultQuery;
+			this.updateQuery(currentValue, props);
 		}
 
 		checkValueChange(
-			this.props.componentId,
+			props.componentId,
 			currentValue,
-			this.props.beforeValueChange,
-			this.props.onValueChange,
+			props.beforeValueChange,
+			props.onValueChange,
 			performUpdate
 		);
 	}
@@ -131,13 +135,13 @@ class MultiDropdownRange extends Component {
 		})
 	};
 
-	updateQuery = (value) => {
-		const query = this.props.customQuery || this.defaultQuery;
+	updateQuery = (value, props) => {
+		const query = props.customQuery || this.defaultQuery;
 		let callback = null;
-		if (this.props.onQueryChange) {
-			callback = this.props.onQueryChange;
+		if (props.onQueryChange) {
+			callback = props.onQueryChange;
 		}
-		this.props.updateQuery(this.props.componentId, query(value), callback);
+		props.updateQuery(props.componentId, query(value, props), callback);
 	}
 
 	render() {
@@ -244,7 +248,9 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, customQuery) => dispatch(updateQuery(component, query, customQuery))
+	updateQuery: (component, query, value, filterLabel, customQuery) => dispatch(
+		updateQuery(component, query, value, filterLabel, customQuery)
+	)
 });
 
 export default connect(null, mapDispatchtoProps)(MultiDropdownRange);
