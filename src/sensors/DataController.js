@@ -7,7 +7,7 @@ import {
 	removeComponent,
 	updateQuery
 } from "@appbaseio/reactivecore/lib/actions";
-import { checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
+import { checkValueChange, checkPropChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
@@ -23,9 +23,11 @@ class DataController extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.updateQuery(nextProps.defaultSelected);
-		}
+		checkPropChange(
+			this.props.defaultSelected,
+			nextProps.defaultSelected,
+			() => this.updateQuery(nextProps.defaultSelected)
+		);
 	}
 
 	componentWillUnmount() {
