@@ -2,21 +2,7 @@ import React from "react";
 import { View, ScrollView, FlatList } from "react-native";
 import { Text } from "native-base";
 
-export const onAllData = (items, loadMore) => {
-	return (<FlatList
-		style={{ width: "100%" }}
-		data={items || []}
-		keyExtractor={(item) => item._id}
-		renderItem={({ item }) => (<View style={{ margin: 5 }}>
-			<Text style={{ flex: 1, fontWeight: "bold" }}>{parseToElement(item._source.name)}</Text>
-			<Text>{item._source.brand} - {item._source.model}</Text>
-		</View>)}
-		onEndReachedThreshold={0.5}
-		onEndReached={loadMore}
-	/>)
-}
-
-export const parseToElement = (str) => {
+const parseToElement = (str) => {
 	const start = str.indexOf("<em>");
 	const end = str.indexOf("</em>");
 
@@ -33,4 +19,18 @@ export const parseToElement = (str) => {
 	}
 
 	return str;
+}
+
+export const onAllData = (items, loadMore) => {
+	return (<FlatList
+		style={{ width: "100%" }}
+		data={items || []}
+		keyExtractor={(item) => item._id}
+		renderItem={({ item }) => (<View style={{ margin: 5 }}>
+			<Text style={{ flex: 1, fontWeight: "bold" }}>{parseToElement(item._source.name)}</Text>
+			<Text>{parseToElement(item._source.brand)} - {parseToElement(item._source.model)}</Text>
+		</View>)}
+		onEndReachedThreshold={0.5}
+		onEndReached={loadMore}
+	/>)
 }
