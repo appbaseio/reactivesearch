@@ -12,6 +12,7 @@ import TextFieldStory from "./TextFieldStory";
 import SingleDropdownListStory from "./SingleDropdownListStory";
 import MultiDropdownListStory from "./MultiDropdownListStory";
 import SingleDropdownRangeStory from "./SingleDropdownRangeStory";
+import MultiDropdownRangeStory from "./MultiDropdownRangeStory";
 
 storiesOf("DataController", module)
 	.add("Basic", () => (
@@ -114,4 +115,15 @@ storiesOf("SingleDropdownRange", module)
 	))
 	.add("with defaultSelected", () => (
 		<SingleDropdownRangeStory defaultSelected={text("defaultSelected", "First Date")} />
+	))
+
+storiesOf("MultiDropdownRange", module)
+	.add("Basic", () => (
+		<MultiDropdownRangeStory />
+	))
+	.add("with placeholder", () => (
+		<MultiDropdownRangeStory placeholder={text("placeholder", "Pick Category")} />
+	))
+	.add("with defaultSelected", () => (
+		<MultiDropdownRangeStory defaultSelected={array("defaultSelected", ["First Date", "Pricey"])} />
 	))
