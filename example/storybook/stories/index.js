@@ -9,6 +9,7 @@ import { text, boolean, number, select, array } from "@storybook/addon-knobs";
 import DataControllerStory from "./DataControllerStory";
 import DataSearchStory from "./DataSearchStory";
 import TextFieldStory from "./TextFieldStory";
+import SingleDropdownListStory from "./SingleDropdownListStory";
 
 storiesOf("DataController", module)
 	.add("Basic", () => (
@@ -73,3 +74,17 @@ storiesOf("TextField", module)
 	.add("With defaultSelected", () => (
 		<TextFieldStory defaultSelected={text("defaultSelected", "BMW")} />
 	));
+
+storiesOf("SingleDropdownList", module)
+	.add("Basic", () => (
+		<SingleDropdownListStory />
+	))
+	.add("with placeholder", () => (
+		<SingleDropdownListStory placeholder={text("placeholder", "Pick Car Brand")} />
+	))
+	.add("with defaultSelected", () => (
+		<SingleDropdownListStory defaultSelected={text("defaultSelected", "porsche")} />
+	))
+	.add("with sortBy", () => (
+		<SingleDropdownListStory sortBy={select("sortBy", ["count", "asc", "desc"], "desc")} />
+	))
