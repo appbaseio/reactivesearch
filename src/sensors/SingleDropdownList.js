@@ -14,7 +14,8 @@ import {
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
-	getAggsOrder
+	getAggsOrder,
+	checkPropChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -38,23 +39,7 @@ class SingleDropdownList extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
-		const queryOptions = getQueryOptions(this.props);
-		queryOptions.aggs = {
-			[this.props.dataField]: {
-				terms: {
-					field: this.props.dataField,
-					size: 100,
-					order: getAggsOrder(this.props.sortBy)
-				}
-			}
-		}
-		this.props.setQueryOptions(this.internalComponent, queryOptions);
-		// Since the queryOptions are attached to the internal component,
-		// we need to notify the subscriber (parent component)
-		// that the query has changed because no new query will be
-		// auto-generated for the internal component as its
-		// dependency tree is empty
-		this.props.updateQuery(this.internalComponent, null);
+		this.updateQueryOptions(this.props);
 
 		if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected);
@@ -62,17 +47,30 @@ class SingleDropdownList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
-		}
-		if (!isEqual(nextProps.options, this.props.options)) {
-			this.setState({
-				options: nextProps.options[nextProps.dataField].buckets || []
-			});
-		}
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected);
-		}
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
+		checkPropChange(
+			this.props.options,
+			nextProps.options,
+			() => {
+				this.setState({
+					options: nextProps.options[nextProps.dataField].buckets || []
+				});
+			}
+		);
+		checkPropChange(
+			this.props.defaultSelected,
+			nextProps.defaultSelected,
+			() => this.setValue(nextProps.defaultSelected, nextProps)
+		);
+		checkPropChange(
+			this.props.sortBy,
+			nextProps.sortBy,
+			() => this.updateQueryOptions(nextProps)
+		);
 	}
 
 	componentWillUnmount() {
@@ -90,45 +88,69 @@ class SingleDropdownList extends Component {
 		}
 	};
 
-	defaultQuery = (value) => {
+	defaultQuery = (value, props) => {
 		if (this.selectAll) {
 			return {
 				exists: {
-					field: [this.props.dataField]
+					field: [props.dataField]
 				}
 			};
 		} else if (value) {
 			return {
 				[this.type]: {
-					[this.props.dataField]: value
+					[props.dataField]: value
 				}
 			};
 		}
 	}
 
-	setValue = (value) => {
+	setValue = (value, props = this.props) => {
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value
 			});
-			this.updateQuery(value);
+			this.updateQuery(value, props);
 		}
 		checkValueChange(
-			this.props.componentId,
+			props.componentId,
 			value,
-			this.props.beforeValueChange,
-			this.props.onValueChange,
+			props.beforeValueChange,
+			props.onValueChange,
 			performUpdate
 		);
 	};
 
-	updateQuery = (value) => {
-		const query = this.props.customQuery || this.defaultQuery;
+	handleValueChange = (value) => {
+		this.setValue(value, this.props);
+	}
+
+	updateQuery = (value, props) => {
+		const query = props.customQuery || this.defaultQuery;
 		let callback = null;
-		if (this.props.onQueryChange) {
-			callback = this.props.onQueryChange;
+		if (props.onQueryChange) {
+			callback = props.onQueryChange;
 		}
-		this.props.updateQuery(this.props.componentId, query(value), callback);
+		props.updateQuery(props.componentId, query(value, props), value, props.filterLabel, callback);
+	}
+
+	updateQueryOptions = (props) => {
+		const queryOptions = getQueryOptions(props);
+		queryOptions.aggs = {
+			[props.dataField]: {
+				terms: {
+					field: props.dataField,
+					size: 100,
+					order: getAggsOrder(props.sortBy)
+				}
+			}
+		}
+		props.setQueryOptions(this.internalComponent, queryOptions);
+		// Since the queryOptions are attached to the internal component,
+		// we need to notify the subscriber (parent component)
+		// that the query has changed because no new query will be
+		// auto-generated for the internal component as its
+		// dependency tree is empty
+		props.updateQuery(this.internalComponent, null);
 	}
 
 	render() {
@@ -138,7 +160,7 @@ class SingleDropdownList extends Component {
 				mode="dropdown"
 				placeholder={this.props.placeholder}
 				selectedValue={this.state.currentValue}
-				onValueChange={this.setValue}
+				onValueChange={this.handleValueChange}
 			>
 				{
 					this.state.options.map(item => (
@@ -182,7 +204,9 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange)),
+	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
+		updateQuery(component, query, value, filterLabel, onQueryChange)
+	),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 
