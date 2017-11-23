@@ -34,3 +34,30 @@ export const onAllData = (items, loadMore) => {
 		onEndReached={loadMore}
 	/>)
 }
+
+export const onAllDataGitXplore = (items, loadMore) => {
+	return (<FlatList
+		style={{ width: "100%" }}
+		data={items || []}
+		keyExtractor={(item) => item._id}
+		renderItem={({ item }) => (
+			<View
+				style={{
+					flexDirection: "row",
+					justifyContent: "space-between",
+					padding: 10,
+					borderWidth: 1,
+					borderColor: "mediumseagreen",
+					borderStyle: "dashed",
+					borderRadius: 5,
+					marginBottom: 5
+				}}
+			>
+				<Text style={{ fontWeight: "bold" }}>{parseToElement(item._source.name)}</Text>
+				<Text>{item._source.stars} 🌟</Text>
+			</View>
+		)}
+		onEndReachedThreshold={0.5}
+		onEndReached={loadMore}
+	/>)
+}

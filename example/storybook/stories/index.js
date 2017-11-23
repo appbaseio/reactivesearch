@@ -14,6 +14,7 @@ import MultiDropdownListStory from "./MultiDropdownListStory";
 import SingleDropdownRangeStory from "./SingleDropdownRangeStory";
 import MultiDropdownRangeStory from "./MultiDropdownRangeStory";
 import RangeSliderStory from "./RangeSliderStory";
+import DatePickerStory from "./DatePickerStory";
 
 storiesOf("DataController", module)
 	.add("Basic", () => (
@@ -185,3 +186,8 @@ storiesOf("RangeSlider", module)
 			stepValue={number("stepValue", 1)}
 		/>
 	));
+
+storiesOf("DatePicker", module)
+	.add("Basic", () => (
+		<DatePickerStory startDate="2017-01-01" />
+	))
