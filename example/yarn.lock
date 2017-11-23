@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivecore@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-0.2.0.tgz#5562e08660dc3096920a69e1475c870e8a159a38"
+"@appbaseio/reactivecore@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-0.2.1.tgz#a970b1799998f4bab25082527b973f8e252d8359"
   dependencies:
     prop-types "^15.6.0"
     redux "^3.7.2"

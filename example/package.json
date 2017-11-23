@@ -10,7 +10,7 @@
     "storybook": "storybook start -p 7007"
   },
   "dependencies": {
-    "@appbaseio/reactivecore": "^0.2.0",
+    "@appbaseio/reactivecore": "^0.2.1",
     "@ptomasroos/react-native-multi-slider": "^0.0.11",
     "appbase-js": "^2.2.1",
     "escape-string-regexp": "^1.0.5",
