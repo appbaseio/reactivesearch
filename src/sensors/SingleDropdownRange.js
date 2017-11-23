@@ -9,7 +9,7 @@ import {
 	updateQuery,
 	setQueryOptions
 } from "@appbaseio/reactivecore/lib/actions";
-import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
+import { isEqual, checkValueChange, checkPropChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
@@ -34,13 +34,16 @@ class SingleDropdownRange extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
-		}
-
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected, true);
-		}
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
+		checkPropChange(
+			this.props.defaultSelected,
+			nextProps.defaultSelected,
+			() => this.setValue(nextProps.defaultSelected, true, nextProps)
+		);
 	}
 
 	componentWillUnmount() {
@@ -53,11 +56,11 @@ class SingleDropdownRange extends Component {
 		}
 	}
 
-	defaultQuery = (value) => {
+	defaultQuery = (value, props) => {
 		if (value) {
 			return {
 				range: {
-					[this.props.dataField]: {
+					[props.dataField]: {
 						gte: value.start,
 						lte: value.end,
 						boost: 2.0
@@ -68,32 +71,32 @@ class SingleDropdownRange extends Component {
 		return null;
 	}
 
-	setValue = (value, isDefaultValue = false) => {
+	setValue = (value, isDefaultValue = false, props = this.props) => {
 		const currentValue = isDefaultValue ?
-			this.props.data.find(item => item.label === value) :
+			props.data.find(item => item.label === value) :
 			value;
 		const performUpdate = () => {
 			this.setState({
 				currentValue
 			});
-			this.updateQuery(currentValue);
+			this.updateQuery(currentValue, props);
 		}
 		checkValueChange(
-			this.props.componentId,
+			props.componentId,
 			currentValue,
-			this.props.beforeValueChange,
-			this.props.onValueChange,
+			props.beforeValueChange,
+			props.onValueChange,
 			performUpdate
 		);
 	}
 
-	updateQuery = (value) => {
-		const query = this.props.customQuery || this.defaultQuery;
+	updateQuery = (value, props) => {
+		const query = props.customQuery || this.defaultQuery;
 		let callback = null;
-		if (this.props.onQueryChange) {
-			callback = this.props.onQueryChange;
+		if (props.onQueryChange) {
+			callback = props.onQueryChange;
 		}
-		this.props.updateQuery(this.props.componentId, query(value), callback);
+		props.updateQuery(props.componentId, query(value, props), value, props.filterLabel, callback);
 	}
 
 	render() {
@@ -139,7 +142,9 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, customQuery) => dispatch(updateQuery(component, query, customQuery))
+	updateQuery: (component, query, value, filterLabel, customQuery) => dispatch(
+		updateQuery(component, query, value, filterLabel, customQuery)
+	)
 });
 
 export default connect(null, mapDispatchtoProps)(SingleDropdownRange);
