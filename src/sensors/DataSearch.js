@@ -280,7 +280,7 @@ class DataSearch extends Component {
 		if (component === props.componentId && props.onQueryChange) {
 			callback = props.onQueryChange;
 		}
-		props.updateQuery(component, query(value, props), callback);
+		props.updateQuery(component, query(value, props), value, props.filterLabel, callback);
 	};
 
 	renderSuggestions() {
@@ -412,7 +412,8 @@ DataSearch.propTypes = {
 	onQueryChange: types.onQueryChange,
 	updateQuery: types.updateQuery,
 	supportedOrientations: types.supportedOrientations,
-	placeholder: types.placeholder
+	placeholder: types.placeholder,
+	filterLabel: types.filterLabel
 }
 
 DataSearch.defaultProps = {
@@ -429,7 +430,9 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange)),
+	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
+		updateQuery(component, query, value, filterLabel, onQueryChange)
+	),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 
