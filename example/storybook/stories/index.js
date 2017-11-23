@@ -10,6 +10,7 @@ import DataControllerStory from "./DataControllerStory";
 import DataSearchStory from "./DataSearchStory";
 import TextFieldStory from "./TextFieldStory";
 import SingleDropdownListStory from "./SingleDropdownListStory";
+import MultiDropdownListStory from "./MultiDropdownListStory";
 
 storiesOf("DataController", module)
 	.add("Basic", () => (
@@ -87,4 +88,18 @@ storiesOf("SingleDropdownList", module)
 	))
 	.add("with sortBy", () => (
 		<SingleDropdownListStory sortBy={select("sortBy", ["count", "asc", "desc"], "desc")} />
+	))
+
+storiesOf("MultiDropdownList", module)
+	.add("Basic", () => (
+		<MultiDropdownListStory />
+	))
+	.add("with placeholder", () => (
+		<MultiDropdownListStory placeholder={text("placeholder", "Pick Car Brand")} />
+	))
+	.add("with defaultSelected", () => (
+		<MultiDropdownListStory defaultSelected={array("defaultSelected", ["porsche", "bmw"])} />
+	))
+	.add("with sortBy", () => (
+		<MultiDropdownListStory sortBy={select("sortBy", ["count", "asc", "desc"], "desc")} />
 	))

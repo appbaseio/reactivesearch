@@ -9,7 +9,7 @@ import {
 
 import { onAllData } from "../../helpers";
 
-const TextFieldStory = (props) => (
+const DataSearchStory = (props) => (
 	<ReactiveBase
 		app="car-store"
 		credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
@@ -44,4 +44,4 @@ const TextFieldStory = (props) => (
 	</ReactiveBase>
 );
 
-export default TextFieldStory;
+export default DataSearchStory;

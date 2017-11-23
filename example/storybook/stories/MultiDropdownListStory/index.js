@@ -3,21 +3,21 @@ import { ScrollView } from "react-native";
 
 import {
 	ReactiveBase,
-	SingleDropdownList,
+	MultiDropdownList,
 	ReactiveList
 } from "@appbaseio/reactivebase-native";
 
 import { onAllData } from "../../helpers";
 
-const SingleDropdownListStory = (props) => (
+const MultiDropdownListStory = (props) => (
 	<ReactiveBase
 		app="car-store"
 		credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
 		type="cars"
 	>
 		<ScrollView>
-			<SingleDropdownList
-				componentId="SingleDropdownListComponent"
+			<MultiDropdownList
+				componentId="MultiDropdownListComponent"
 				dataField="brand.raw"
 				{...props}
 			/>
@@ -37,11 +37,11 @@ const SingleDropdownListStory = (props) => (
 					}
 				})}
 				react={{
-					and: ["SingleDropdownListComponent"]
+					and: ["MultiDropdownListComponent"]
 				}}
 			/>
 		</ScrollView>
 	</ReactiveBase>
 );
 
-export default SingleDropdownListStory;
+export default MultiDropdownListStory;
