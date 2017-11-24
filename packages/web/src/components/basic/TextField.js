@@ -140,7 +140,8 @@ TextField.propTypes = {
 	updateQuery: types.updateQuery,
 	placeholder: types.placeholder,
 	selectedValue: types.selectedValue,
-	setValue: types.setValue
+	setValue: types.setValue,
+	filterLabel: types.string
 };
 
 TextField.defaultProps = {
