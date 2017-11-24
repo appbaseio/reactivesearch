@@ -20,7 +20,7 @@ import {
 	watchComponent,
 	updateQuery
 } from "@appbaseio/reactivecore/lib/actions";
-import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
+import { isEqual, checkValueChange, checkPropChange } from "@appbaseio/reactivecore/lib/utils/helper";
 import dateFormats from "@appbaseio/reactivecore/lib/utils/dateFormats";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -52,17 +52,22 @@ class DatePicker extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
-		}
-
-		if (nextProps.defaultSelected !== this.props.defaultSelected) {
-			const currentDate = {
-				dateString: new XDate(nextProps.defaultSelected).toString("yyyy-MM-dd"),
-				timestamp: new XDate(nextProps.defaultSelected).getTime()
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
+		checkPropChange(
+			this.props.defaultSelected,
+			nextProps.defaultSelected,
+			() => {
+				const currentDate = {
+					dateString: new XDate(nextProps.defaultSelected).toString("yyyy-MM-dd"),
+					timestamp: new XDate(nextProps.defaultSelected).getTime()
+				}
+				this.handleDateChange(currentDate, nextProps);
 			}
-			this.handleDateChange(currentDate);
-		}
+		);
 	}
 
 	componentWillUnmount() {
@@ -88,12 +93,12 @@ class DatePicker extends Component {
 		}
 	};
 
-	defaultQuery = (value) => {
+	defaultQuery = (value, props) => {
 		let query = null;
-		if (value && this.props.queryFormat) {
+		if (value && props.queryFormat) {
 			query = {
 				range: {
-					[this.props.dataField]: {
+					[props.dataField]: {
 						gte: this.formatDate(new XDate(value).addHours(-24)),
 						lte: this.formatDate(new XDate(value))
 					}
@@ -103,7 +108,7 @@ class DatePicker extends Component {
 		return query;
 	};
 
-	handleDateChange = (currentDate) => {
+	handleDateChange = (currentDate, props = this.props) => {
 		let value = null,
 			date = null;
 		if (currentDate) {
@@ -115,24 +120,24 @@ class DatePicker extends Component {
 			this.setState({
 				currentDate
 			});
-			this.updateQuery(value);
+			this.updateQuery(value, props);
 		}
 		checkValueChange(
-			this.props.componentId,
+			props.componentId,
 			date,
-			this.props.beforeValueChange,
-			this.props.onValueChange,
+			props.beforeValueChange,
+			props.onValueChange,
 			performUpdate
 		);
 	};
 
-	updateQuery = (value) => {
-		const query = this.props.customQuery || this.defaultQuery;
+	updateQuery = (value, props) => {
+		const query = props.customQuery || this.defaultQuery;
 		let callback = null;
-		if (this.props.onQueryChange) {
-			callback = this.props.onQueryChange;
+		if (props.onQueryChange) {
+			callback = props.onQueryChange;
 		}
-		this.props.updateQuery(this.props.componentId, query(value), callback);
+		props.updateQuery(props.componentId, query(value, props), value, props.filterLabel, callback);
 	};
 
 	toggleModal = () => {
@@ -255,7 +260,9 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange))
+	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
+		updateQuery(component, query, value, filterLabel, onQueryChange)
+	)
 });
 
 export default connect(null, mapDispatchtoProps)(DatePicker);
