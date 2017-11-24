@@ -15,7 +15,9 @@ import {
 import {
 	isEqual,
 	getQueryOptions,
-	pushToAndClause
+	pushToAndClause,
+	checkPropChange,
+	checkSomePropChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -68,21 +70,28 @@ class ReactiveList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.props.sortBy !== nextProps.sortBy || this.props.size !== nextProps.size) {
-			const options = getQueryOptions(nextProps);
-			if (this.props.sortBy) {
-				options.sort = [{
-					[this.props.dataField]: {
-						order: this.props.sortBy
-					}
-				}];
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			["sortBy", "size"],
+			() => {
+				const options = getQueryOptions(nextProps);
+				if (nextProps.sortBy) {
+					options.sort = [{
+						[nextProps.dataField]: {
+							order: nextProps.sortBy
+						}
+					}];
+				}
+				nextProps.setQueryOptions(nextProps.componentId, options);
 			}
-			this.props.setQueryOptions(this.props.componentId, options);
-		}
+		);
 
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
-		}
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
 
 		if (!nextProps.pagination && nextProps.hits && this.props.hits && nextProps.hits.length < this.props.hits.length) {
 			if (this.listRef) {
@@ -94,11 +103,18 @@ class ReactiveList extends Component {
 			});
 		}
 
-		if (nextProps.pagination && nextProps.total !== this.props.total) {
-			this.setState({
-				totalPages: nextProps.total / nextProps.size,
-				currentPage: 0
-			});
+		if (nextProps.pagination) {
+			checkSomePropChange(
+				this.props,
+				nextProps,
+				["total", "pagination"],
+				() => {
+					this.setState({
+						totalPages: nextProps.total / nextProps.size,
+						currentPage: 0
+					});
+				}
+			);
 		}
 	}
 
