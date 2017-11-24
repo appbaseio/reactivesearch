@@ -15,6 +15,7 @@ import SingleDropdownRangeStory from "./SingleDropdownRangeStory";
 import MultiDropdownRangeStory from "./MultiDropdownRangeStory";
 import RangeSliderStory from "./RangeSliderStory";
 import DatePickerStory from "./DatePickerStory";
+import DateRangeStory from "./DateRangeStory";
 import ReactiveListStory from "./ReactiveListStory";
 
 storiesOf("DataController", module)
@@ -191,6 +192,32 @@ storiesOf("RangeSlider", module)
 storiesOf("DatePicker", module)
 	.add("Basic", () => (
 		<DatePickerStory startDate="2017-01-01" />
+	))
+	.add("with placeholder", () => (
+		<DatePickerStory startDate="2017-01-01" placeholder={text("placeholder", "Pick date")} />
+	))
+	.add("with startDate", () => (
+		<DatePickerStory startDate={text("startDate", "2017-01-01")} />
+	))
+	.add("with defaultSelected", () => (
+		<DatePickerStory startDate="2017-01-01" defaultSelected={text("defaultSelected", "2017-04-07")} />
+	));
+
+storiesOf("DateRange", module)
+	.add("Basic", () => (
+		<DateRangeStory startDate="2017-01-01" />
+	))
+	.add("with placeholder", () => (
+		<DateRangeStory startDate="2017-01-01" placeholder={text("placeholder", "Pick date")} />
+	))
+	.add("with startDate", () => (
+		<DateRangeStory startDate={text("startDate", "2017-01-01")} />
+	))
+	.add("with defaultSelected", () => (
+		<DateRangeStory
+			startDate="2017-01-01"
+			defaultSelected={object("defaultSelected", { start: "2017-04-07", end: "2017-04-13" })}
+		/>
 	));
 
 storiesOf("ReactiveList", module)

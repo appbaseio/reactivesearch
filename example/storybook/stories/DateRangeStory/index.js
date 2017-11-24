@@ -3,21 +3,21 @@ import { ScrollView } from "react-native";
 
 import {
 	ReactiveBase,
-	DatePicker,
+	DateRange,
 	ReactiveList
 } from "@appbaseio/reactivebase-native";
 
 import { onAllDataGitXplore } from "../../helpers";
 
-const DatePickerStory = (props) => (
+const DateRangeStory = (props) => (
 	<ReactiveBase
 		app="gitxplore-live"
 		credentials="bYTSo47tj:d001826a-f4ef-42c5-b0aa-a94f29967ba0"
 		type="gitxplore-live"
 	>
 		<ScrollView>
-			<DatePicker
-				componentId="DatePickerComponent"
+			<DateRange
+				componentId="DateRangeComponent"
 				dataField="pushed"
 				queryFormat="date_time_no_millis"
 				{...props}
@@ -38,11 +38,11 @@ const DatePickerStory = (props) => (
 					}
 				})}
 				react={{
-					and: ["DatePickerComponent"]
+					and: ["DateRangeComponent"]
 				}}
 			/>
 		</ScrollView>
 	</ReactiveBase>
 );
 
-export default DatePickerStory;
+export default DateRangeStory;
