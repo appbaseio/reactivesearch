@@ -20,7 +20,7 @@ import {
 	watchComponent,
 	updateQuery
 } from "@appbaseio/reactivecore/lib/actions";
-import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
+import { isEqual, checkValueChange, checkPropChange } from "@appbaseio/reactivecore/lib/utils/helper";
 import dateFormats from "@appbaseio/reactivecore/lib/utils/dateFormats";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -60,25 +60,30 @@ class DateRange extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
-		}
-
-		if (!isEqual(nextProps.defaultSelected !== this.props.defaultSelected)) {
-			const startDate = {
-				dateString: new XDate(nextProps.defaultSelected.start).toString("yyyy-MM-dd"),
-				timestamp: new XDate(nextProps.defaultSelected.start).getTime()
-			}
-			this.handleDateChange(startDate, () => {
-				if (nextProps.defaultSelected.end) {
-					const endDate = {
-						dateString: new XDate(nextProps.defaultSelected.end).toString("yyyy-MM-dd"),
-						timestamp: new XDate(nextProps.defaultSelected.end).getTime()
-					}
-					this.handleDateChange(endDate);
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
+		checkPropChange(
+			this.props.defaultSelected,
+			nextProps.defaultSelected,
+			() => {
+				const startDate = {
+					dateString: new XDate(nextProps.defaultSelected.start).toString("yyyy-MM-dd"),
+					timestamp: new XDate(nextProps.defaultSelected.start).getTime()
 				}
-			});
-		}
+				this.handleDateChange(startDate, () => {
+					if (nextProps.defaultSelected.end) {
+						const endDate = {
+							dateString: new XDate(nextProps.defaultSelected.end).toString("yyyy-MM-dd"),
+							timestamp: new XDate(nextProps.defaultSelected.end).getTime()
+						}
+						this.handleDateChange(endDate, null, nextProps);
+					}
+				}, nextProps);
+			}
+		);
 	}
 
 	componentWillUnmount() {
@@ -104,38 +109,38 @@ class DateRange extends Component {
 		}
 	};
 
-	defaultQuery = (value) => {
+	defaultQuery = (value, props) => {
 		let query = null;
 		if (value && value.start && value.end) {
-			query = this.generateQuery(value);
+			query = this.generateQuery(value, props);
 		}
 		return query;
 	};
 
-	generateQuery = (value) => {
+	generateQuery = (value, props) => {
 		let query = null;
-		if (Array.isArray(this.props.dataField) && this.props.dataField.length === 2) {
+		if (Array.isArray(props.dataField) && props.dataField.length === 2) {
 			query = {
 				bool: {
 					must: [{
 						range: {
-							[this.props.dataField[0]]: {
+							[props.dataField[0]]: {
 								lte: this.formatDate(new XDate(value.start))
 							}
 						}
 					}, {
 						range: {
-							[this.props.dataField[1]]: {
+							[props.dataField[1]]: {
 								gte: this.formatDate(new XDate(value.end))
 							}
 						}
 					}]
 				}
 			};
-		} else if (Array.isArray(this.props.dataField)) {
+		} else if (Array.isArray(props.dataField)) {
 			query = {
 				range: {
-					[this.props.dataField[0]]: {
+					[props.dataField[0]]: {
 						gte: this.formatDate(new XDate(value.start)),
 						lte: this.formatDate(new XDate(value.end))
 					}
@@ -144,7 +149,7 @@ class DateRange extends Component {
 		} else {
 			query = {
 				range: {
-					[this.props.dataField]: {
+					[props.dataField]: {
 						gte: this.formatDate(new XDate(value.start)),
 						lte: this.formatDate(new XDate(value.end))
 					}
@@ -154,7 +159,7 @@ class DateRange extends Component {
 		return query;
 	};
 
-	handleDateChange = (selectedDate, cb) => {
+	handleDateChange = (selectedDate, cb, props = this.props) => {
 		let value = null,
 			date = null;
 		let { currentDate } = this.state;
@@ -165,7 +170,7 @@ class DateRange extends Component {
 			}, () => {
 				if (cb) cb();
 			});
-			this.updateQuery(value);
+			this.updateQuery(value, props);
 		}
 
 		if (selectedDate) {
@@ -184,10 +189,10 @@ class DateRange extends Component {
 				};
 
 				checkValueChange(
-					this.props.componentId,
+					props.componentId,
 					date,
-					this.props.beforeValueChange,
-					this.props.onValueChange,
+					props.beforeValueChange,
+					props.onValueChange,
 					performUpdate
 				);
 			} else {
@@ -203,22 +208,22 @@ class DateRange extends Component {
 			value = null;
 
 			checkValueChange(
-				this.props.componentId,
+				props.componentId,
 				null,
-				this.props.beforeValueChange,
-				this.props.onValueChange,
+				props.beforeValueChange,
+				props.onValueChange,
 				performUpdate
 			);
 		}
 	};
 
-	updateQuery = (value) => {
-		const query = this.props.customQuery || this.defaultQuery;
+	updateQuery = (value, props) => {
+		const query = props.customQuery || this.defaultQuery;
 		let callback = null;
-		if (this.props.onQueryChange) {
-			callback = this.props.onQueryChange;
+		if (props.onQueryChange) {
+			callback = props.onQueryChange;
 		}
-		this.props.updateQuery(this.props.componentId, query(value), callback);
+		props.updateQuery(props.componentId, query(value, props), value, props.filterLabel, callback);
 	};
 
 	toggleModal = () => {
@@ -370,7 +375,9 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange))
+	updateQuery: (component, query, value,filterLabel, onQueryChange) => dispatch(
+		updateQuery(component, query, value, filterLabel, onQueryChange)
+	)
 });
 
 export default connect(null, mapDispatchtoProps)(DateRange);
