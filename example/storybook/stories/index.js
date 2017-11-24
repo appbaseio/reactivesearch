@@ -15,6 +15,7 @@ import SingleDropdownRangeStory from "./SingleDropdownRangeStory";
 import MultiDropdownRangeStory from "./MultiDropdownRangeStory";
 import RangeSliderStory from "./RangeSliderStory";
 import DatePickerStory from "./DatePickerStory";
+import ReactiveListStory from "./ReactiveListStory";
 
 storiesOf("DataController", module)
 	.add("Basic", () => (
@@ -190,4 +191,21 @@ storiesOf("RangeSlider", module)
 storiesOf("DatePicker", module)
 	.add("Basic", () => (
 		<DatePickerStory startDate="2017-01-01" />
+	));
+
+storiesOf("ReactiveList", module)
+	.add("Basic", () => (
+		<ReactiveListStory />
 	))
+	.add("with sortBy", () => (
+		<ReactiveListStory sortBy={select("sortBy", ["asc", "desc"], "desc")} />
+	))
+	.add("with size", () => (
+		<ReactiveListStory size={number("size", 5)} />
+	))
+	.add("without pagination", () => (
+		<ReactiveListStory pagination={boolean("pagination", false)} size={20} />
+	))
+	.add("with pages", () => (
+		<ReactiveListStory pages={number("pages", 3)} />
+	));
