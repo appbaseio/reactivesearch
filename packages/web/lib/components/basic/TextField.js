@@ -170,7 +170,7 @@ var mapDispatchtoProps = function mapDispatchtoProps(dispatch, props) {
 			return dispatch(_updateQuery(component, query, onQueryChange));
 		},
 		setValue: function setValue(component, value) {
-			return dispatch(_setValue(component, value, props.filterLabel));
+			return dispatch(_setValue(component, value, props.filterLabel, true));
 		}
 	};
 };

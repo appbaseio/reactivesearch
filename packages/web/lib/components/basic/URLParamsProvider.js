@@ -25,7 +25,11 @@ var URLParamsProvider = function (_Component) {
 
 		if (!isEqual(this.props.selectedValues, nextProps.selectedValues)) {
 			Object.keys(nextProps.selectedValues).forEach(function (component) {
-				_this2.setURL(component, nextProps.selectedValues[component].value);
+				if (nextProps.selectedValues[component].URLParams) {
+					_this2.setURL(component, nextProps.selectedValues[component].value);
+				} else {
+					_this2.props.params.delete(component);
+				}
 			});
 			this.pushToHistory();
 		}

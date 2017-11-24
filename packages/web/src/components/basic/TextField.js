@@ -157,7 +157,7 @@ const mapDispatchtoProps = (dispatch, props) => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange)),
-	setValue: (component, value) => dispatch(setValue(component, value, props.filterLabel))
+	setValue: (component, value) => dispatch(setValue(component, value, props.filterLabel, true))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(TextField);

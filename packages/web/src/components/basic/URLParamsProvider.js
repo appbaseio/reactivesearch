@@ -10,7 +10,11 @@ class URLParamsProvider extends Component {
 		if (!isEqual(this.props.selectedValues, nextProps.selectedValues)) {
 			Object.keys(nextProps.selectedValues)
 				.forEach(component => {
-					this.setURL(component, nextProps.selectedValues[component].value);
+					if (nextProps.selectedValues[component].URLParams) {
+						this.setURL(component, nextProps.selectedValues[component].value);
+					} else {
+						this.props.params.delete(component);
+					}
 				});
 			this.pushToHistory();
 		}
