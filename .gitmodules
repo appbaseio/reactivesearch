@@ -1,6 +1,8 @@
 [submodule "packages/reactivecore"]
 	path = packages/reactivecore
 	url = git@github.com:appbaseio/reactivecore.git
+	branch = master
 [submodule "packages/playground"]
 	path = packages/playground
 	url = git@github.com:appbaseio/playground.git
+	branch = dev
