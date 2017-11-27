@@ -49,24 +49,28 @@ var DataSearch = function (_Component) {
 	};
 
 	DataSearch.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-		if (nextProps.highlight && !isEqual(this.props.dataField, nextProps.dataField) || !isEqual(this.props.highlightField, nextProps.highlightField)) {
-			var queryOptions = this.highlightQuery(nextProps);
-			this.props.setQueryOptions(this.props.componentId, queryOptions);
-		}
+		var _this2 = this;
 
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
-		}
+		checkSomePropChange(this.props, nextProps, ["highlight", "dataField", "highlightField"], function () {
+			var queryOptions = _this2.highlightQuery(nextProps);
+			_this2.props.setQueryOptions(nextProps.componentId, queryOptions);
+		});
 
-		if (Array.isArray(nextProps.suggestions) && !isEqual(this.props.suggestions, nextProps.suggestions) && this.state.currentValue.trim() !== "") {
-			this.setState({
-				suggestions: this.onSuggestions(nextProps.suggestions)
+		checkPropChange(this.props.react, nextProps.react, function () {
+			return _this2.setReact(nextProps);
+		});
+
+		if (Array.isArray(nextProps.suggestions) && this.state.currentValue.trim().length) {
+			checkPropChange(this.props.suggestions, nextProps.suggestions, function () {
+				_this2.setState({
+					suggestions: _this2.onSuggestions(nextProps.suggestions)
+				});
 			});
 		}
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected, true);
-		}
+		checkPropChange(this.props.defaultSelected, nextProps.defaultSelected, function () {
+			return _this2.setValue(nextProps.defaultSelected, true, nextProps);
+		});
 	};
 
 	DataSearch.prototype.componentWillUnmount = function componentWillUnmount() {
@@ -87,7 +91,7 @@ var DataSearch = function (_Component) {
 	};
 
 	DataSearch.prototype.render = function render() {
-		var _this2 = this;
+		var _this3 = this;
 
 		var suggestionsList = this.state.currentValue === "" || this.state.currentValue === null ? this.props.defaultSuggestions && this.props.defaultSuggestions.length ? this.props.defaultSuggestions : [] : this.state.suggestions;
 
@@ -128,7 +132,7 @@ var DataSearch = function (_Component) {
 				placeholder: this.props.placeholder,
 				value: this.state.currentValue ? this.state.currentValue : "",
 				onChange: function onChange(e) {
-					return _this2.setValue(e.target.value);
+					return _this3.setValue(e.target.value);
 				},
 				onBlur: this.props.onBlur,
 				onFocus: this.props.onFocus,
@@ -144,20 +148,23 @@ var DataSearch = function (_Component) {
 }(Component);
 
 var _initialiseProps = function _initialiseProps() {
-	var _this3 = this;
+	var _this4 = this;
 
 	this.setReact = function (props) {
 		var react = props.react;
 
 		if (react) {
-			var newReact = pushToAndClause(react, _this3.internalComponent);
+			var newReact = pushToAndClause(react, _this4.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: _this3.internalComponent });
+			props.watchComponent(props.componentId, { and: _this4.internalComponent });
 		}
 	};
 
 	this.highlightQuery = function (props) {
+		if (!props.highlight) {
+			return null;
+		}
 		var fields = {};
 		var highlightField = props.highlightField ? props.highlightField : props.dataField;
 
@@ -178,18 +185,18 @@ var _initialiseProps = function _initialiseProps() {
 		};
 	};
 
-	this.defaultQuery = function (value) {
+	this.defaultQuery = function (value, props) {
 		var finalQuery = null,
 		    fields = void 0;
 		if (value) {
-			if (Array.isArray(_this3.props.dataField)) {
-				fields = _this3.props.dataField;
+			if (Array.isArray(props.dataField)) {
+				fields = props.dataField;
 			} else {
-				fields = [_this3.props.dataField];
+				fields = [props.dataField];
 			}
 			finalQuery = {
 				bool: {
-					should: _this3.shouldQuery(value, fields),
+					should: _this4.shouldQuery(value, fields, props),
 					minimum_should_match: "1"
 				}
 			};
@@ -204,19 +211,19 @@ var _initialiseProps = function _initialiseProps() {
 		return finalQuery;
 	};
 
-	this.shouldQuery = function (value, dataFields) {
+	this.shouldQuery = function (value, dataFields, props) {
 		var fields = dataFields.map(function (field, index) {
-			return "" + field + (Array.isArray(_this3.props.fieldWeights) && _this3.props.fieldWeights[index] ? "^" + _this3.props.fieldWeights[index] : "");
+			return "" + field + (Array.isArray(props.fieldWeights) && props.fieldWeights[index] ? "^" + props.fieldWeights[index] : "");
 		});
 
-		if (_this3.props.queryFormat === "and") {
+		if (props.queryFormat === "and") {
 			return [{
 				multi_match: {
 					query: value,
 					fields: fields,
 					type: "cross_fields",
 					operator: "and",
-					fuzziness: _this3.props.fuzziness ? _this3.props.fuzziness : 0
+					fuzziness: props.fuzziness ? props.fuzziness : 0
 				}
 			}, {
 				multi_match: {
@@ -234,7 +241,7 @@ var _initialiseProps = function _initialiseProps() {
 				fields: fields,
 				type: "best_fields",
 				operator: "or",
-				fuzziness: _this3.props.fuzziness ? _this3.props.fuzziness : 0
+				fuzziness: props.fuzziness ? props.fuzziness : 0
 			}
 		}, {
 			multi_match: {
@@ -247,14 +254,14 @@ var _initialiseProps = function _initialiseProps() {
 	};
 
 	this.onSuggestions = function (suggestions) {
-		if (_this3.props.onSuggestions) {
-			return _this3.props.onSuggestions(suggestions);
+		if (_this4.props.onSuggestions) {
+			return _this4.props.onSuggestions(suggestions);
 		}
 
-		var fields = Array.isArray(_this3.props.dataField) ? _this3.props.dataField : [_this3.props.dataField];
+		var fields = Array.isArray(_this4.props.dataField) ? _this4.props.dataField : [_this4.props.dataField];
 		var suggestionsList = [];
 		var labelsList = [];
-		var currentValue = _this3.state.currentValue.toLowerCase();
+		var currentValue = _this4.state.currentValue.toLowerCase();
 
 		suggestions.forEach(function (item) {
 			fields.forEach(function (field) {
@@ -277,49 +284,50 @@ var _initialiseProps = function _initialiseProps() {
 
 	this.setValue = function (value) {
 		var isDefaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+		var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _this4.props;
 
 		var performUpdate = function performUpdate() {
-			_this3.setState({
+			_this4.setState({
 				currentValue: value
 			});
 			if (isDefaultValue) {
-				if (_this3.props.autoSuggest) {
-					_this3.updateQuery(_this3.internalComponent, value);
+				if (props.autoSuggest) {
+					_this4.updateQuery(_this4.internalComponent, value, props);
 				}
-				_this3.updateQuery(_this3.props.componentId, value);
+				_this4.updateQuery(props.componentId, value, props);
 			} else {
 				// debounce for handling text while typing
-				_this3.handleTextChange(value);
+				_this4.handleTextChange(value);
 			}
 		};
-		checkValueChange(_this3.props.componentId, value, _this3.props.beforeValueChange, _this3.props.onValueChange, performUpdate);
+		checkValueChange(props.componentId, value, props.beforeValueChange, props.onValueChange, performUpdate);
 	};
 
 	this.handleTextChange = debounce(function (value) {
-		if (_this3.props.autoSuggest) {
-			_this3.updateQuery(_this3.internalComponent, value);
+		if (_this4.props.autoSuggest) {
+			_this4.updateQuery(_this4.internalComponent, value, _this4.props);
 		} else {
-			_this3.updateQuery(_this3.props.componentId, value);
+			_this4.updateQuery(_this4.props.componentId, value, _this4.props);
 		}
 	}, 300);
 
-	this.updateQuery = function (component, value) {
-		var query = _this3.props.customQuery || _this3.defaultQuery;
+	this.updateQuery = function (component, value, props) {
+		var query = props.customQuery || _this4.defaultQuery;
 		var callback = null;
-		if (component === _this3.props.componentId && _this3.props.onQueryChange) {
-			callback = _this3.props.onQueryChange;
+		if (component === props.componentId && props.onQueryChange) {
+			callback = props.onQueryChange;
 		}
-		_this3.props.updateQuery(component, query(value), callback);
+		props.updateQuery(component, query(value, props), value, props.filterLabel, callback);
 	};
 
 	this.handleBlur = function (event, _ref) {
 		var highlightedSuggestion = _ref.highlightedSuggestion;
 
 		if (!highlightedSuggestion || !highlightedSuggestion.label) {
-			_this3.setValue(_this3.state.currentValue, true);
+			_this4.setValue(_this4.state.currentValue, true);
 		}
-		if (_this3.props.onBlur) {
-			_this3.props.onBlur(event);
+		if (_this4.props.onBlur) {
+			_this4.props.onBlur(event);
 		}
 	};
 
@@ -327,8 +335,8 @@ var _initialiseProps = function _initialiseProps() {
 		if (event.key === "Enter") {
 			event.target.blur();
 		}
-		if (_this3.props.onKeyPress) {
-			_this3.props.onKeyPress(event);
+		if (_this4.props.onKeyPress) {
+			_this4.props.onKeyPress(event);
 		}
 	};
 
@@ -337,14 +345,14 @@ var _initialiseProps = function _initialiseProps() {
 		    newValue = _ref2.newValue;
 
 		if (method === "type") {
-			_this3.setValue(newValue);
+			_this4.setValue(newValue);
 		}
 	};
 
 	this.onSuggestionSelected = function (event, _ref3) {
 		var suggestion = _ref3.suggestion;
 
-		_this3.setValue(suggestion.value, true);
+		_this4.setValue(suggestion.value, true);
 	};
 };
 
@@ -403,8 +411,8 @@ var mapDispatchtoProps = function mapDispatchtoProps(dispatch) {
 		watchComponent: function watchComponent(component, react) {
 			return dispatch(_watchComponent(component, react));
 		},
-		updateQuery: function updateQuery(component, query, onQueryChange) {
-			return dispatch(_updateQuery(component, query, onQueryChange));
+		updateQuery: function updateQuery(component, query, value, filterLabel, onQueryChange) {
+			return dispatch(_updateQuery(component, query, value, filterLabel, onQueryChange));
 		},
 		setQueryOptions: function setQueryOptions(component, props) {
 			return dispatch(_setQueryOptions(component, props));

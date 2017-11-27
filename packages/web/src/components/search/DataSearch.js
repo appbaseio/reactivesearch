@@ -49,28 +49,39 @@ class DataSearch extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.highlight &&
-			!isEqual(this.props.dataField, nextProps.dataField) ||
-			!isEqual(this.props.highlightField, nextProps.highlightField)) {
-			const queryOptions = this.highlightQuery(nextProps);
-			this.props.setQueryOptions(this.props.componentId, queryOptions);
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			["highlight", "dataField", "highlightField"],
+			() => {
+				const queryOptions = this.highlightQuery(nextProps);
+				this.props.setQueryOptions(nextProps.componentId, queryOptions);
+			}
+		);
+
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
+
+		if (Array.isArray(nextProps.suggestions) && this.state.currentValue.trim().length) {
+			checkPropChange(
+				this.props.suggestions,
+				nextProps.suggestions,
+				() => {
+					this.setState({
+						suggestions: this.onSuggestions(nextProps.suggestions)
+					});
+				}
+			);
 		}
 
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
-		}
-
-		if (Array.isArray(nextProps.suggestions)
-			&& !isEqual(this.props.suggestions, nextProps.suggestions)
-			&& this.state.currentValue.trim() !== "") {
-			this.setState({
-				suggestions: this.onSuggestions(nextProps.suggestions)
-			});
-		}
-
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected, true);
-		}
+		checkPropChange(
+			this.props.defaultSelected,
+			nextProps.defaultSelected,
+			() => this.setValue(nextProps.defaultSelected, true, nextProps)
+		);
 	}
 
 	componentWillUnmount() {
@@ -89,6 +100,9 @@ class DataSearch extends Component {
 	}
 
 	highlightQuery = (props) => {
+		if (!props.highlight) {
+			return null;
+		}
 		const fields = {};
 		const highlightField = props.highlightField ? props.highlightField : props.dataField;
 
@@ -109,18 +123,18 @@ class DataSearch extends Component {
 		};
 	}
 
-	defaultQuery = (value) => {
+	defaultQuery = (value, props) => {
 		let finalQuery = null,
 			fields;
 		if (value) {
-			if (Array.isArray(this.props.dataField)) {
-				fields = this.props.dataField;
+			if (Array.isArray(props.dataField)) {
+				fields = props.dataField;
 			} else {
-				fields = [this.props.dataField];
+				fields = [props.dataField];
 			}
 			finalQuery = {
 				bool: {
-					should: this.shouldQuery(value, fields),
+					should: this.shouldQuery(value, fields, props),
 					minimum_should_match: "1"
 				}
 			};
@@ -135,12 +149,12 @@ class DataSearch extends Component {
 		return finalQuery;
 	};
 
-	shouldQuery = (value, dataFields) => {
+	shouldQuery = (value, dataFields, props) => {
 		const fields = dataFields.map(
-			(field, index) => `${field}${(Array.isArray(this.props.fieldWeights) && this.props.fieldWeights[index]) ? ("^" + this.props.fieldWeights[index]) : ""}`
+			(field, index) => `${field}${(Array.isArray(props.fieldWeights) && props.fieldWeights[index]) ? ("^" + props.fieldWeights[index]) : ""}`
 		);
 
-		if (this.props.queryFormat === "and") {
+		if (props.queryFormat === "and") {
 			return [
 				{
 					multi_match: {
@@ -148,7 +162,7 @@ class DataSearch extends Component {
 						fields,
 						type: "cross_fields",
 						operator: "and",
-						fuzziness: this.props.fuzziness ? this.props.fuzziness : 0
+						fuzziness: props.fuzziness ? props.fuzziness : 0
 					}
 				},
 				{
@@ -169,7 +183,7 @@ class DataSearch extends Component {
 					fields,
 					type: "best_fields",
 					operator: "or",
-					fuzziness: this.props.fuzziness ? this.props.fuzziness : 0
+					fuzziness: props.fuzziness ? props.fuzziness : 0
 				}
 			},
 			{
@@ -212,45 +226,45 @@ class DataSearch extends Component {
 		return suggestionsList;
 	};
 
-	setValue = (value, isDefaultValue = false) => {
+	setValue = (value, isDefaultValue = false, props = this.props) => {
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value
 			});
 			if (isDefaultValue) {
-				if (this.props.autoSuggest) {
-					this.updateQuery(this.internalComponent, value);
+				if (props.autoSuggest) {
+					this.updateQuery(this.internalComponent, value, props);
 				}
-				this.updateQuery(this.props.componentId, value);
+				this.updateQuery(props.componentId, value, props);
 			} else {
 				// debounce for handling text while typing
 				this.handleTextChange(value);
 			}
 		}
 		checkValueChange(
-			this.props.componentId,
+			props.componentId,
 			value,
-			this.props.beforeValueChange,
-			this.props.onValueChange,
+			props.beforeValueChange,
+			props.onValueChange,
 			performUpdate
 		);
 	};
 
 	handleTextChange = debounce((value) => {
 		if (this.props.autoSuggest) {
-			this.updateQuery(this.internalComponent, value);
+			this.updateQuery(this.internalComponent, value, this.props);
 		} else {
-			this.updateQuery(this.props.componentId, value);
+			this.updateQuery(this.props.componentId, value, this.props);
 		}
 	}, 300);
 
-	updateQuery = (component, value) => {
-		const query = this.props.customQuery || this.defaultQuery;
+	updateQuery = (component, value, props) => {
+		const query = props.customQuery || this.defaultQuery;
 		let callback = null;
-		if (component === this.props.componentId && this.props.onQueryChange) {
-			callback = this.props.onQueryChange;
+		if (component === props.componentId && props.onQueryChange) {
+			callback = props.onQueryChange;
 		}
-		this.props.updateQuery(component, query(value), callback);
+		props.updateQuery(component, query(value, props), value, props.filterLabel, callback);
 	};
 
 	handleBlur = (event, { highlightedSuggestion }) => {
@@ -392,7 +406,9 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange)),
+	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
+		updateQuery(component, query, value, filterLabel, onQueryChange)
+	),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 
