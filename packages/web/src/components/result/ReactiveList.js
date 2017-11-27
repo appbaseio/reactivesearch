@@ -28,7 +28,7 @@ class ReactiveList extends Component {
 			totalPages: 0,
 			currentPage: 0
 		};
-		this.internalComponent = this.props.componentId + "__internal";
+		this.internalComponent = props.componentId + "__internal";
 	}
 
 	componentDidMount() {

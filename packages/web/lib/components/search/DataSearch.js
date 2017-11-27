@@ -29,7 +29,7 @@ var DataSearch = function (_Component) {
 			currentValue: "",
 			suggestions: []
 		};
-		_this.internalComponent = _this.props.componentId + "__internal";
+		_this.internalComponent = props.componentId + "__internal";
 		return _this;
 	}
 

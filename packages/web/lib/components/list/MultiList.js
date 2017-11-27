@@ -13,28 +13,28 @@ import { isEqual, getQueryOptions, pushToAndClause, checkValueChange, getAggsOrd
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
-import { FormControlList, Radio } from "../../styles/FormControlList";
+import { FormControlList, Checkbox } from "../../styles/FormControlList";
 
-var SingleList = function (_Component) {
-	_inherits(SingleList, _Component);
+var MultiList = function (_Component) {
+	_inherits(MultiList, _Component);
 
-	function SingleList(props) {
-		_classCallCheck(this, SingleList);
+	function MultiList(props) {
+		_classCallCheck(this, MultiList);
 
 		var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
 		_initialiseProps.call(_this);
 
 		_this.state = {
-			currentValue: "",
+			currentValue: {},
 			options: []
 		};
-		_this.type = "term";
+		_this.type = props.queryFormat === "or" ? "terms" : "term";
 		_this.internalComponent = props.componentId + "__internal";
 		return _this;
 	}
 
-	SingleList.prototype.componentDidMount = function componentDidMount() {
+	MultiList.prototype.componentDidMount = function componentDidMount() {
 		var _queryOptions$aggs;
 
 		this.props.addComponent(this.internalComponent);
@@ -62,7 +62,9 @@ var SingleList = function (_Component) {
 		}
 	};
 
-	SingleList.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	MultiList.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+		var _this2 = this;
+
 		if (!isEqual(nextProps.react, this.props.react)) {
 			this.setReact(nextProps);
 		}
@@ -71,20 +73,25 @@ var SingleList = function (_Component) {
 				options: nextProps.options[nextProps.dataField].buckets || []
 			});
 		}
+
+		var selectedValue = Object.keys(this.state.currentValue).filter(function (item) {
+			return _this2.state.currentValue[item];
+		});
+
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected);
-		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || "");
+			this.setValue(nextProps.defaultSelected, true);
+		} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
+			this.setValue(nextProps.selectedValue, true);
 		}
 	};
 
-	SingleList.prototype.componentWillUnmount = function componentWillUnmount() {
+	MultiList.prototype.componentWillUnmount = function componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
 		this.props.removeComponent(this.internalComponent);
 	};
 
-	SingleList.prototype.render = function render() {
-		var _this2 = this;
+	MultiList.prototype.render = function render() {
+		var _this3 = this;
 
 		return React.createElement(
 			"div",
@@ -101,15 +108,16 @@ var SingleList = function (_Component) {
 					return React.createElement(
 						"li",
 						{ key: item.key },
-						React.createElement(Radio, {
+						React.createElement(Checkbox, {
 							id: item.key,
-							name: _this2.props.componentId,
+							name: _this3.props.componentId,
 							value: item.key,
 							onClick: function onClick(e) {
-								return _this2.setValue(e.target.value);
+								return _this3.setValue(e.target.value);
 							},
-							checked: _this2.state.currentValue === item.key,
-							show: _this2.props.showRadio
+							checked: !!_this3.state.currentValue[item.key],
+							onChange: function onChange() {},
+							show: _this3.props.showCheckbox
 						}),
 						React.createElement(
 							"label",
@@ -122,64 +130,96 @@ var SingleList = function (_Component) {
 		);
 	};
 
-	return SingleList;
+	return MultiList;
 }(Component);
 
 var _initialiseProps = function _initialiseProps() {
-	var _this3 = this;
+	var _this4 = this;
 
 	this.setReact = function (props) {
 		var react = props.react;
 
 		if (react) {
-			var newReact = pushToAndClause(react, _this3.internalComponent);
+			var newReact = pushToAndClause(react, _this4.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: _this3.internalComponent });
+			props.watchComponent(props.componentId, { and: _this4.internalComponent });
 		}
 	};
 
 	this.defaultQuery = function (value) {
-		if (_this3.selectAll) {
-			return {
+		var query = null;
+		if (_this4.selectAll) {
+			query = {
 				exists: {
-					field: [_this3.props.dataField]
+					field: [_this4.props.dataField]
 				}
 			};
 		} else if (value) {
-			var _this3$type, _ref;
+			var listQuery = void 0;
+			if (_this4.props.queryFormat === "or") {
+				var _this4$type, _listQuery;
 
-			return _ref = {}, _ref[_this3.type] = (_this3$type = {}, _this3$type[_this3.props.dataField] = value, _this3$type), _ref;
+				listQuery = (_listQuery = {}, _listQuery[_this4.type] = (_this4$type = {}, _this4$type[_this4.props.dataField] = value, _this4$type), _listQuery);
+			} else {
+				// adds a sub-query with must as an array of objects for each term/value
+				var queryArray = value.map(function (item) {
+					var _this4$type2, _ref;
+
+					return _ref = {}, _ref[_this4.type] = (_this4$type2 = {}, _this4$type2[_this4.props.dataField] = item, _this4$type2), _ref;
+				});
+				listQuery = {
+					bool: {
+						must: queryArray
+					}
+				};
+			}
+
+			query = value.length ? listQuery : null;
 		}
-		return null;
+		return query;
 	};
 
 	this.setValue = function (value) {
-		if (value == _this3.state.currentValue) {
-			value = "";
+		var isDefaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+		var currentValue = _this4.state.currentValue;
+
+		var finalValues = null;
+
+		if (isDefaultValue) {
+			finalValues = value;
+			currentValue = {};
+			value && value.forEach(function (item) {
+				currentValue[item] = true;
+			});
+		} else {
+			currentValue[value] = currentValue[value] ? false : true;
+			finalValues = Object.keys(currentValue).filter(function (item) {
+				return currentValue[item];
+			});
 		}
 
 		var performUpdate = function performUpdate() {
-			_this3.setState({
-				currentValue: value
+			_this4.setState({
+				currentValue: currentValue
 			});
-			_this3.updateQuery(value);
+			_this4.updateQuery(finalValues);
 		};
 
-		checkValueChange(_this3.props.componentId, value, _this3.props.beforeValueChange, _this3.props.onValueChange, performUpdate);
+		checkValueChange(_this4.props.componentId, finalValues, _this4.props.beforeValueChange, _this4.props.onValueChange, performUpdate);
 	};
 
 	this.updateQuery = function (value) {
-		var query = _this3.props.customQuery || _this3.defaultQuery;
+		var query = _this4.props.customQuery || _this4.defaultQuery;
 		var callback = null;
-		if (_this3.props.onQueryChange) {
-			callback = _this3.props.onQueryChange;
+		if (_this4.props.onQueryChange) {
+			callback = _this4.props.onQueryChange;
 		}
-		_this3.props.updateQuery(_this3.props.componentId, query(value), value, _this3.props.filterLabel, callback, _this3.props.URLParams);
+		_this4.props.updateQuery(_this4.props.componentId, query(value), value, _this4.props.filterLabel, callback, _this4.props.URLParams);
 	};
 };
 
-SingleList.propTypes = {
+MultiList.propTypes = {
 	componentId: types.componentId,
 	addComponent: types.addComponent,
 	dataField: types.dataField,
@@ -196,22 +236,24 @@ SingleList.propTypes = {
 	onQueryChange: types.onQueryChange,
 	placeholder: types.placeholder,
 	title: types.title,
-	showRadio: types.showInputControl,
+	showCheckbox: types.showInputControl,
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
+	queryFormat: types.queryFormatSearch,
 	URLParams: types.URLParams
 };
 
-SingleList.defaultProps = {
+MultiList.defaultProps = {
 	size: 100,
 	sortBy: "count",
-	showRadio: true
+	showCheckbox: true,
+	queryFormat: "or"
 };
 
 var mapStateToProps = function mapStateToProps(state, props) {
 	return {
 		options: state.aggregations[props.componentId],
-		selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+		selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || []
 	};
 };
 
@@ -235,4 +277,4 @@ var mapDispatchtoProps = function mapDispatchtoProps(dispatch) {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SingleList);
+export default connect(mapStateToProps, mapDispatchtoProps)(MultiList);

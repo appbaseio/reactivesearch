@@ -28,7 +28,7 @@ class DataSearch extends Component {
 			currentValue: "",
 			suggestions: []
 		};
-		this.internalComponent = this.props.componentId + "__internal";
+		this.internalComponent = props.componentId + "__internal";
 	}
 
 	componentDidMount() {

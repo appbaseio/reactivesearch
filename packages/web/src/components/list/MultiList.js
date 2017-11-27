@@ -19,17 +19,17 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
-import { FormControlList, Radio } from "../../styles/FormControlList";
+import { FormControlList, Checkbox } from "../../styles/FormControlList";
 
-class SingleList extends Component {
+class MultiList extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			currentValue: "",
+			currentValue: {},
 			options: []
 		};
-		this.type = "term";
+		this.type = props.queryFormat === "or" ? "terms" : "term";
 		this.internalComponent = props.componentId + "__internal";
 	}
 
@@ -70,10 +70,14 @@ class SingleList extends Component {
 				options: nextProps.options[nextProps.dataField].buckets || []
 			});
 		}
+
+		const selectedValue = Object.keys(this.state.currentValue)
+			.filter(item => this.state.currentValue[item]);
+
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected);
-		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || "");
+			this.setValue(nextProps.defaultSelected, true);
+		} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
+			this.setValue(nextProps.selectedValue, true);
 		}
 	}
 
@@ -93,37 +97,67 @@ class SingleList extends Component {
 	};
 
 	defaultQuery = (value) => {
+		let query = null;
 		if (this.selectAll) {
-			return {
+			query = {
 				exists: {
 					field: [this.props.dataField]
 				}
 			};
 		} else if (value) {
-			return {
-				[this.type]: {
-					[this.props.dataField]: value
-				}
-			};
+			let listQuery;
+			if (this.props.queryFormat === "or") {
+				listQuery = {
+					[this.type]: {
+						[this.props.dataField]: value
+					}
+				};
+			} else {
+				// adds a sub-query with must as an array of objects for each term/value
+				const queryArray = value.map(item => (
+					{
+						[this.type]: {
+							[this.props.dataField]: item
+						}
+					}
+				));
+				listQuery = {
+					bool: {
+						must: queryArray
+					}
+				};
+			}
+
+			query = value.length ? listQuery : null;
 		}
-		return null;
+		return query;
 	}
 
-	setValue = (value) => {
-		if (value == this.state.currentValue) {
-			value = "";
+	setValue = (value, isDefaultValue = false) => {
+		let { currentValue } = this.state;
+		let finalValues = null;
+
+		if (isDefaultValue) {
+			finalValues = value;
+			currentValue = {};
+			value && value.forEach(item => {
+				currentValue[item] = true;
+			});
+		} else {
+			currentValue[value] = currentValue[value] ? false : true;
+			finalValues = Object.keys(currentValue).filter(item => currentValue[item]);
 		}
 
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value
+				currentValue
 			});
-			this.updateQuery(value);
+			this.updateQuery(finalValues);
 		}
 
 		checkValueChange(
 			this.props.componentId,
-			value,
+			finalValues,
 			this.props.beforeValueChange,
 			this.props.onValueChange,
 			performUpdate
@@ -151,13 +185,14 @@ class SingleList extends Component {
 					{
 						this.state.options.map(item => (
 							<li key={item.key}>
-								<Radio
+								<Checkbox
 									id={item.key}
 									name={this.props.componentId}
 									value={item.key}
 									onClick={e => this.setValue(e.target.value)}
-									checked={this.state.currentValue === item.key}
-									show={this.props.showRadio}
+									checked={!!this.state.currentValue[item.key]}
+									onChange={() => {}}
+									show={this.props.showCheckbox}
 								/>
 								<label htmlFor={item.key}>{item.key}</label>
 							</li>
@@ -169,7 +204,7 @@ class SingleList extends Component {
 	}
 }
 
-SingleList.propTypes = {
+MultiList.propTypes = {
 	componentId: types.componentId,
 	addComponent: types.addComponent,
 	dataField: types.dataField,
@@ -186,21 +221,23 @@ SingleList.propTypes = {
 	onQueryChange: types.onQueryChange,
 	placeholder: types.placeholder,
 	title: types.title,
-	showRadio: types.showInputControl,
+	showCheckbox: types.showInputControl,
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
+	queryFormat: types.queryFormatSearch,
 	URLParams: types.URLParams
 }
 
-SingleList.defaultProps = {
+MultiList.defaultProps = {
 	size: 100,
 	sortBy: "count",
-	showRadio: true
+	showCheckbox: true,
+	queryFormat: "or"
 }
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || []
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -211,4 +248,4 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SingleList);
+export default connect(mapStateToProps, mapDispatchtoProps)(MultiList);

@@ -10,24 +10,40 @@ class SelectedFilters extends Component {
 		this.props.setValue(component, null);
 	};
 
+	renderValue = (value, isArray) => {
+		if (isArray) {
+			return value.join(", ");
+		}
+		return value;
+	}
+
 	render() {
 		const { selectedValues } = this.props;
+		let hasValues = false;
 
 		return (<div className={filters}>
 			{
 				Object.keys(selectedValues)
 					.filter(id => this.props.components.includes(id))
 					.map((component, index) => {
-						if (selectedValues[component].value) {
+						const { label, value } = selectedValues[component];
+						const isArray = Array.isArray(value);
+
+						if (label && (isArray && value.length) || (!isArray && value)) {
+							hasValues = true;
 							return (<Button key={`${component}-${index}`} onClick={() => this.remove(component)}>
-								<span>{selectedValues[component].label}: {selectedValues[component].value}</span>
+								<span>{selectedValues[component].label}: {this.renderValue(value, isArray)}</span>
 								<span>&#x2715;</span>
 							</Button>);
 						}
 						return null;
 					})
 			}
-			<Button onClick={this.props.clearValues}>Clear all filters</Button>
+			{
+				hasValues
+					? <Button onClick={this.props.clearValues}>Clear all filters</Button>
+					: null
+			}
 		</div>)
 	}
 }

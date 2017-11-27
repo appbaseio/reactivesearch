@@ -33,7 +33,7 @@ var ReactiveList = function (_Component) {
 			totalPages: 0,
 			currentPage: 0
 		};
-		_this.internalComponent = _this.props.componentId + "__internal";
+		_this.internalComponent = props.componentId + "__internal";
 		return _this;
 	}
 

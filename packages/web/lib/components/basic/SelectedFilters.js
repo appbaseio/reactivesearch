@@ -25,6 +25,11 @@ var SelectedFilters = function (_Component) {
 
 		return _ret = (_temp = (_this = _possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.remove = function (component) {
 			_this.props.setValue(component, null);
+		}, _this.renderValue = function (value, isArray) {
+			if (isArray) {
+				return value.join(", ");
+			}
+			return value;
 		}, _temp), _possibleConstructorReturn(_this, _ret);
 	}
 
@@ -33,6 +38,7 @@ var SelectedFilters = function (_Component) {
 
 		var selectedValues = this.props.selectedValues;
 
+		var hasValues = false;
 
 		return React.createElement(
 			"div",
@@ -40,7 +46,14 @@ var SelectedFilters = function (_Component) {
 			Object.keys(selectedValues).filter(function (id) {
 				return _this2.props.components.includes(id);
 			}).map(function (component, index) {
-				if (selectedValues[component].value) {
+				var _selectedValues$compo = selectedValues[component],
+				    label = _selectedValues$compo.label,
+				    value = _selectedValues$compo.value;
+
+				var isArray = Array.isArray(value);
+
+				if (label && isArray && value.length || !isArray && value) {
+					hasValues = true;
 					return React.createElement(
 						Button,
 						{ key: component + "-" + index, onClick: function onClick() {
@@ -51,7 +64,7 @@ var SelectedFilters = function (_Component) {
 							null,
 							selectedValues[component].label,
 							": ",
-							selectedValues[component].value
+							_this2.renderValue(value, isArray)
 						),
 						React.createElement(
 							"span",
@@ -62,11 +75,11 @@ var SelectedFilters = function (_Component) {
 				}
 				return null;
 			}),
-			React.createElement(
+			hasValues ? React.createElement(
 				Button,
 				{ onClick: this.props.clearValues },
 				"Clear all filters"
-			)
+			) : null
 		);
 	};
 

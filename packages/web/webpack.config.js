@@ -3,7 +3,9 @@ const webpack = require("webpack");
 
 module.exports = {
 	entry: {
-		TextField: "./examples/TextField/index.js"
+		TextField: "./examples/TextField/index.js",
+		MultiList: "./examples/MultiList/index.js",
+		SingleList: "./examples/SingleList/index.js"
 	},
 	output: {
 		path: path.join(__dirname, "examples"),

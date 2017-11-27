@@ -3,6 +3,7 @@ import TextField from "./components/basic/TextField";
 import SelectedFilters from "./components/basic/SelectedFilters";
 
 import SingleList from "./components/list/SingleList";
+import MultiList from "./components/list/MultiList";
 
 import DataSearch from "./components/search/DataSearch";
 
@@ -13,7 +14,7 @@ export {
 ReactiveBase, TextField, SelectedFilters,
 
 // list
-SingleList,
+SingleList, MultiList,
 
 // search
 DataSearch,
