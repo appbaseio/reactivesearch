@@ -16,7 +16,9 @@ git clone https://github.com/appbaseio/reactivesearch.git
 4. fetch the submodules. In case you've not set ssh for github, change the URLs in `.gitmodules` to use `https` instead
 
 ```bash
-git submodule update --init
+git submodule init
+git submodule sync
+git submodule update --remote
 ```
 
 5. The submodules will be fetched into `/packages`. Checkout branch `dev` in `/packages/playground` and `master` in `/packages/reactivecore`
