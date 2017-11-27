@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Autosuggest from "react-autosuggest";
+import Downshift from "downshift";
 
 import {
 	addComponent,
@@ -28,7 +28,8 @@ class DataSearch extends Component {
 
 		this.state = {
 			currentValue: "",
-			suggestions: []
+			suggestions: [],
+			isOpen: false
 		};
 		this.internalComponent = props.componentId + "__internal";
 	}
@@ -232,7 +233,10 @@ class DataSearch extends Component {
 				currentValue: value
 			});
 			if (isDefaultValue) {
-				if (props.autoSuggest) {
+				if (this.props.autoSuggest) {
+					this.setState({
+						isOpen: false
+					});
 					this.updateQuery(this.internalComponent, value, props);
 				}
 				this.updateQuery(props.componentId, value, props);
@@ -267,41 +271,53 @@ class DataSearch extends Component {
 		props.updateQuery(component, query(value, props), value, props.filterLabel, callback);
 	};
 
-	handleBlur = (event, { highlightedSuggestion }) => {
-		if (!highlightedSuggestion || !highlightedSuggestion.label) {
-			this.setValue(this.state.currentValue, true);
+	handleFocus = (event) => {
+		this.setState({
+			isOpen: true
+		});
+		if (this.props.onFocus) {
+			this.props.onFocus(event);
 		}
+	};
+
+	// only works if there's a change in downshift's value
+	handleOuterClick = () => {
+		this.setValue(this.state.currentValue, true)
+	};
+
+	// delays the hiding of suggestions on click to allow suggestion selection
+	handleBlur = (event) => {
+		setTimeout(() => {
+			this.setState({
+				isOpen: false
+			});
+		}, 200);
 		if (this.props.onBlur) {
 			this.props.onBlur(event);
 		}
 	};
 
-	handleKeyPress = (event) => {
+	handleKeyDown = (event) => {
 		if (event.key === "Enter") {
 			event.target.blur();
+			this.handleBlur();
+			this.setValue(event.target.value, true);
 		}
-		if (this.props.onKeyPress) {
-			this.props.onKeyPress(event);
-		}
-	};
-
-	onInputChange = (event, { method, newValue }) => {
-		if (method === "type") {
-			this.setValue(newValue);
+		if (this.props.onKeyDown) {
+			this.props.onKeyDown(event);
 		}
 	};
 
-	onSuggestionSelected = (event, { suggestion }) => {
+	onInputChange = (e, v) => {
+		this.setValue(e.target.value);
+	};
+
+	onSuggestionSelected = (suggestion, event) => {
 		this.setValue(suggestion.value, true);
+		if (this.props.onBlur) {
+			this.props.onBlur(event);
+		}
 	};
-
-	getSuggestionValue(suggestion) {
-		return suggestion.label.innerText || suggestion.label;
-	}
-
-	renderSuggestion(suggestion) {
-		return <span>{suggestion.label}</span>;
-	}
 
 	render() {
 		const suggestionsList = this.state.currentValue === "" || this.state.currentValue === null
@@ -319,29 +335,45 @@ class DataSearch extends Component {
 				}
 				{
 					this.props.autoSuggest
-						? (<Autosuggest
-							theme={{
-								input,
-								suggestionsContainerOpen : suggestions
-							}}
-							suggestions={suggestionsList}
-							onSuggestionsFetchRequested={() => {}}
-							onSuggestionsClearRequested={() => {}}
-							onSuggestionSelected={this.onSuggestionSelected}
-							getSuggestionValue={this.getSuggestionValue}
-							renderSuggestion={this.renderSuggestion}
-							shouldRenderSuggestions={() => true}
-							focusInputOnSuggestionClick={false}
-							inputProps={{
-								placeholder: this.props.placeholder,
-								value: this.state.currentValue === null ? "" : this.state.currentValue,
-								onChange: this.onInputChange,
-								onBlur: this.handleBlur,
-								onKeyPress: this.handleKeyPress,
-								onFocus: this.props.onFocus,
-								onKeyDown: this.props.onKeyDown,
-								onKeyUp: this.props.onKeyUp
-							}}
+						? (<Downshift
+							onChange={this.onSuggestionSelected}
+							onOuterClick={this.handleOuterClick}
+							render={({
+								getInputProps,
+								getItemProps
+							}) => (
+								<div>
+									<Input {...getInputProps({
+										placeholder: this.props.placeholder,
+										value: this.state.currentValue === null ? "" : this.state.currentValue,
+										onChange: this.onInputChange,
+										onBlur: this.handleBlur,
+										onFocus: this.handleFocus,
+										onKeyPress: this.props.onKeyPress,
+										onKeyDown: this.handleKeyDown,
+										onKeyUp: this.props.onKeyUp
+									})} />
+									{
+										this.state.isOpen && suggestionsList.length
+											? (<div className={suggestions}>
+												<ul>
+													{
+														suggestionsList
+															.map((item, index) => (
+																<li
+																	{...getItemProps({ item })}
+																	key={item.label}
+																>
+																	{item.label}
+																</li>
+															))
+													}
+												</ul>
+											</div>)
+											: null
+									}
+								</div>
+							)}
 						/>)
 						: (<Input
 							placeholder={this.props.placeholder}

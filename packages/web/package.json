@@ -14,9 +14,9 @@
   "dependencies": {
     "@appbaseio/reactivecore": "^0.2.3",
     "appbase-js": "^2.2.1",
+    "downshift": "^1.20.0",
     "emotion": "^8.0.10",
     "polished": "^1.9.0",
-    "react-autosuggest": "^9.3.2",
     "react-emotion": "^8.0.10",
     "react-redux": "^5.0.6",
     "url-search-params": "^0.10.0"

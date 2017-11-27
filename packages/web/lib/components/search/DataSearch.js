@@ -1,3 +1,5 @@
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -6,7 +8,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Autosuggest from "react-autosuggest";
+import Downshift from "downshift";
 
 import { addComponent as _addComponent, removeComponent as _removeComponent, watchComponent as _watchComponent, updateQuery as _updateQuery, setQueryOptions as _setQueryOptions } from "@appbaseio/reactivecore/lib/actions";
 import { isEqual, debounce, pushToAndClause, checkValueChange, checkPropChange, checkSomePropChange } from "@appbaseio/reactivecore/lib/utils/helper";
@@ -27,7 +29,8 @@ var DataSearch = function (_Component) {
 
 		_this.state = {
 			currentValue: "",
-			suggestions: []
+			suggestions: [],
+			isOpen: false
 		};
 		_this.internalComponent = props.componentId + "__internal";
 		return _this;
@@ -78,17 +81,11 @@ var DataSearch = function (_Component) {
 		this.props.removeComponent(this.internalComponent);
 	};
 
-	DataSearch.prototype.getSuggestionValue = function getSuggestionValue(suggestion) {
-		return suggestion.label.innerText || suggestion.label;
-	};
+	// only works if there's a change in downshift's value
 
-	DataSearch.prototype.renderSuggestion = function renderSuggestion(suggestion) {
-		return React.createElement(
-			"span",
-			null,
-			suggestion.label
-		);
-	};
+
+	// delays the hiding of suggestions on click to allow suggestion selection
+
 
 	DataSearch.prototype.render = function render() {
 		var _this3 = this;
@@ -103,30 +100,43 @@ var DataSearch = function (_Component) {
 				null,
 				this.props.title
 			) : null,
-			this.props.autoSuggest ? React.createElement(Autosuggest, {
-				theme: {
-					input: input,
-					suggestionsContainerOpen: suggestions
-				},
-				suggestions: suggestionsList,
-				onSuggestionsFetchRequested: function onSuggestionsFetchRequested() {},
-				onSuggestionsClearRequested: function onSuggestionsClearRequested() {},
-				onSuggestionSelected: this.onSuggestionSelected,
-				getSuggestionValue: this.getSuggestionValue,
-				renderSuggestion: this.renderSuggestion,
-				shouldRenderSuggestions: function shouldRenderSuggestions() {
-					return true;
-				},
-				focusInputOnSuggestionClick: false,
-				inputProps: {
-					placeholder: this.props.placeholder,
-					value: this.state.currentValue === null ? "" : this.state.currentValue,
-					onChange: this.onInputChange,
-					onBlur: this.handleBlur,
-					onKeyPress: this.handleKeyPress,
-					onFocus: this.props.onFocus,
-					onKeyDown: this.props.onKeyDown,
-					onKeyUp: this.props.onKeyUp
+			this.props.autoSuggest ? React.createElement(Downshift, {
+				onChange: this.onSuggestionSelected,
+				onOuterClick: this.handleOuterClick,
+				render: function render(_ref) {
+					var getInputProps = _ref.getInputProps,
+					    getItemProps = _ref.getItemProps;
+					return React.createElement(
+						"div",
+						null,
+						React.createElement(Input, getInputProps({
+							placeholder: _this3.props.placeholder,
+							value: _this3.state.currentValue === null ? "" : _this3.state.currentValue,
+							onChange: _this3.onInputChange,
+							onBlur: _this3.handleBlur,
+							onFocus: _this3.handleFocus,
+							onKeyPress: _this3.props.onKeyPress,
+							onKeyDown: _this3.handleKeyDown,
+							onKeyUp: _this3.props.onKeyUp
+						})),
+						_this3.state.isOpen && suggestionsList.length ? React.createElement(
+							"div",
+							{ className: suggestions },
+							React.createElement(
+								"ul",
+								null,
+								suggestionsList.map(function (item, index) {
+									return React.createElement(
+										"li",
+										_extends({}, getItemProps({ item: item }), {
+											key: item.label
+										}),
+										item.label
+									);
+								})
+							)
+						) : null
+					);
 				}
 			}) : React.createElement(Input, {
 				placeholder: this.props.placeholder,
@@ -291,7 +301,10 @@ var _initialiseProps = function _initialiseProps() {
 				currentValue: value
 			});
 			if (isDefaultValue) {
-				if (props.autoSuggest) {
+				if (_this4.props.autoSuggest) {
+					_this4.setState({
+						isOpen: false
+					});
 					_this4.updateQuery(_this4.internalComponent, value, props);
 				}
 				_this4.updateQuery(props.componentId, value, props);
@@ -320,39 +333,50 @@ var _initialiseProps = function _initialiseProps() {
 		props.updateQuery(component, query(value, props), value, props.filterLabel, callback);
 	};
 
-	this.handleBlur = function (event, _ref) {
-		var highlightedSuggestion = _ref.highlightedSuggestion;
-
-		if (!highlightedSuggestion || !highlightedSuggestion.label) {
-			_this4.setValue(_this4.state.currentValue, true);
+	this.handleFocus = function (event) {
+		_this4.setState({
+			isOpen: true
+		});
+		if (_this4.props.onFocus) {
+			_this4.props.onFocus(event);
 		}
+	};
+
+	this.handleOuterClick = function () {
+		_this4.setValue(_this4.state.currentValue, true);
+	};
+
+	this.handleBlur = function (event) {
+		setTimeout(function () {
+			_this4.setState({
+				isOpen: false
+			});
+		}, 200);
 		if (_this4.props.onBlur) {
 			_this4.props.onBlur(event);
 		}
 	};
 
-	this.handleKeyPress = function (event) {
+	this.handleKeyDown = function (event) {
 		if (event.key === "Enter") {
 			event.target.blur();
+			_this4.handleBlur();
+			_this4.setValue(event.target.value, true);
 		}
-		if (_this4.props.onKeyPress) {
-			_this4.props.onKeyPress(event);
-		}
-	};
-
-	this.onInputChange = function (event, _ref2) {
-		var method = _ref2.method,
-		    newValue = _ref2.newValue;
-
-		if (method === "type") {
-			_this4.setValue(newValue);
+		if (_this4.props.onKeyDown) {
+			_this4.props.onKeyDown(event);
 		}
 	};
 
-	this.onSuggestionSelected = function (event, _ref3) {
-		var suggestion = _ref3.suggestion;
+	this.onInputChange = function (e, v) {
+		_this4.setValue(e.target.value);
+	};
 
+	this.onSuggestionSelected = function (suggestion, event) {
 		_this4.setValue(suggestion.value, true);
+		if (_this4.props.onBlur) {
+			_this4.props.onBlur(event);
+		}
 	};
 };
 
