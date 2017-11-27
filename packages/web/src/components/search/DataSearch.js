@@ -275,7 +275,7 @@ class DataSearch extends Component {
 			this.setState({
 				isOpen: false
 			});
-		}, 10);
+		}, 200);
 		if (this.props.onBlur) {
 			this.props.onBlur(event);
 		}

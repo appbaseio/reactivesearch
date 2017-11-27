@@ -337,7 +337,7 @@ var _initialiseProps = function _initialiseProps() {
 			_this3.setState({
 				isOpen: false
 			});
-		}, 10);
+		}, 200);
 		if (_this3.props.onBlur) {
 			_this3.props.onBlur(event);
 		}
