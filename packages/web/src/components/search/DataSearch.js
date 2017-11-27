@@ -13,7 +13,9 @@ import {
 	isEqual,
 	debounce,
 	pushToAndClause,
-	checkValueChange
+	checkValueChange,
+	checkPropChange,
+	checkSomePropChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -100,8 +102,8 @@ class DataSearch extends Component {
 
 		return {
 			highlight: {
-				pre_tags: ["<em>"],
-				post_tags: ["</em>"],
+				pre_tags: ["<mark>"],
+				post_tags: ["</mark>"],
 				fields
 			}
 		};

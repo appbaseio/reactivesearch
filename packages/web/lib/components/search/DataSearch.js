@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import Autosuggest from "react-autosuggest";
 
 import { addComponent as _addComponent, removeComponent as _removeComponent, watchComponent as _watchComponent, updateQuery as _updateQuery, setQueryOptions as _setQueryOptions } from "@appbaseio/reactivecore/lib/actions";
-import { isEqual, debounce, pushToAndClause, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
+import { isEqual, debounce, pushToAndClause, checkValueChange, checkPropChange, checkSomePropChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import Title from "../../styles/Title";
@@ -171,8 +171,8 @@ var _initialiseProps = function _initialiseProps() {
 
 		return {
 			highlight: {
-				pre_tags: ["<em>"],
-				post_tags: ["</em>"],
+				pre_tags: ["<mark>"],
+				post_tags: ["</mark>"],
 				fields: fields
 			}
 		};
