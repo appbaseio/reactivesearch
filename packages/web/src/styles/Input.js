@@ -1,7 +1,7 @@
 import { css } from "emotion";
 import styled from "react-emotion";
 
-const input = css`
+const Input = styled("input")`
 	width: 100%;
 	height: 42px;
 	padding: 8px;
@@ -9,10 +9,6 @@ const input = css`
 	background-color: #fff;
 	font-size: 0.9rem;
 	outline: none;
-`;
-
-const Input = styled("input")`
-	${input}
 `;
 
 const suggestions = css`
@@ -44,4 +40,4 @@ const suggestions = css`
 `;
 
 export default Input;
-export { input, suggestions };
+export { suggestions };
