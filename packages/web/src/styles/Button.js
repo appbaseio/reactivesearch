@@ -2,8 +2,6 @@ import { css } from "emotion";
 import styled from "react-emotion";
 import { darken, transitions } from "polished";
 
-import theme from "./theme";
-
 const filters = css`
 	margin: 8px -3px;
 
@@ -49,12 +47,12 @@ const pagination = css`
 	}
 `;
 
-const primary = css`
-	background-color: ${theme.primaryColor};
-	color: ${theme.primaryTextColor};
+const primary = props => css`
+	background-color: ${props.theme.primaryColor};
+	color: ${props.theme.primaryTextColor};
 
 	&:hover, &:focus {
-		background-color: ${darken(0.1, theme.primaryColor)};
+		background-color: ${darken(0.1, props.theme.primaryColor)};
 	}
 `;
 

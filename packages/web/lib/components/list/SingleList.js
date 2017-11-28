@@ -13,7 +13,7 @@ import { isEqual, getQueryOptions, pushToAndClause, checkValueChange, getAggsOrd
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
-import { FormControlList, Radio } from "../../styles/FormControlList";
+import { UL, Radio } from "../../styles/FormControlList";
 
 var SingleList = function (_Component) {
 	_inherits(SingleList, _Component);
@@ -95,8 +95,8 @@ var SingleList = function (_Component) {
 				this.props.title
 			) : null,
 			React.createElement(
-				"ul",
-				{ className: FormControlList },
+				UL,
+				null,
 				this.state.options.map(function (item) {
 					return React.createElement(
 						"li",

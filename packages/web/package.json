@@ -15,9 +15,10 @@
     "@appbaseio/reactivecore": "^0.2.3",
     "appbase-js": "^2.2.1",
     "downshift": "^1.20.0",
-    "emotion": "^8.0.10",
+    "emotion": "^8.0.11",
+    "emotion-theming": "^8.0.11",
     "polished": "^1.9.0",
-    "react-emotion": "^8.0.10",
+    "react-emotion": "^8.0.11",
     "react-redux": "^5.0.6",
     "url-search-params": "^0.10.0"
   },

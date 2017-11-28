@@ -2,8 +2,6 @@ import { css } from "emotion";
 import styled from "react-emotion";
 import { lighten } from "polished";
 
-import theme from "./theme";
-
 const item = {
 	width: "16px",
 	height: "16px",
@@ -43,13 +41,13 @@ const hideInputControl = css`
 	}
 `;
 
-const formItem = css`
+const formItem = props => css`
 	${vh};
 
 	&:focus {
 		+ label {
 			&::before {
-				box-shadow: 0 0 0 2px ${lighten(0.4, theme.primaryColor)};
+				box-shadow: 0 0 0 2px ${lighten(0.4, props.theme.primaryColor)};
 			}
 		}
 	}
@@ -57,7 +55,7 @@ const formItem = css`
 	&:hover {
 		+ label {
 			&::before {
-				border-color: ${theme.primaryColor};
+				border-color: ${props.theme.primaryColor};
 			}
 		}
 	}
@@ -81,10 +79,10 @@ const formItem = css`
 
 		&::before {
 			background-color: #fff;
-			border: 2px solid ${lighten(0.2, theme.textColor)};
+			border: 2px solid ${lighten(0.2, props.theme.textColor)};
 			box-sizing: content-box;
 			content: "";
-			color: ${theme.primaryColor};
+			color: ${props.theme.primaryColor};
 			margin-right: calc(${item.width} * 0.5);
 			top: 50%;
 			left: 0;
@@ -97,7 +95,7 @@ const formItem = css`
 		&::after {
 			box-sizing: content-box;
 			content: "";
-			background-color: ${theme.primaryColor};
+			background-color: ${props.theme.primaryColor};
 			position: absolute;
 			top: 50%;
 			left: calc(2px + ${item.scale}/2);
@@ -126,7 +124,7 @@ const Radio = styled("input")`
 		&:active,
 		&:focus {
 			+ label {
-				color: ${theme.primaryColor};
+				color: ${props => props.theme.primaryColor};
 
 				&::before {
 					animation: none;
@@ -140,7 +138,7 @@ const Radio = styled("input")`
 			&::before {
 				animation: none;
 				background-color: #fff;
-				border-color: ${theme.primaryColor};
+				border-color: ${props => props.theme.primaryColor};
 		}
 
 		&::after {
@@ -171,7 +169,7 @@ const Checkbox = styled("input")`
 			height: calc(${item.width} / 5);
 			margin-top: calc(${item.height} / -2 / 2 * 0.8);
 			border-style: solid;
-			border-color: ${theme.primaryColor};
+			border-color: ${props => props.theme.primaryColor};
 			border-width: 0 0 2px 2px;
 			border-radius: 0;
 			border-image: none;
@@ -183,7 +181,7 @@ const Checkbox = styled("input")`
 	&:checked {
 	    + label {
 			&::before {
-				border-color: ${theme.primaryColor};
+				border-color: ${props => props.theme.primaryColor};
 			}
 
 			&::after {
@@ -199,11 +197,11 @@ Checkbox.defaultProps = {
 	type: "checkbox"
 };
 
-const FormControlList = css`
+const UL = styled("ul")`
 	list-style: none;
 	padding: 0;
 	margin: 0;
-	max-height: ${theme.componentMaxHeight};
+	max-height: ${props => props.theme.componentMaxHeight};
 	position: relative;
 	overflow-y: scroll;
 	padding-bottom: 12px;
@@ -217,4 +215,4 @@ const FormControlList = css`
 	}
 `;
 
-export { FormControlList, Radio, Checkbox };
+export { UL, Radio, Checkbox };

@@ -19,7 +19,7 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
-import { FormControlList, Radio } from "../../styles/FormControlList";
+import { UL, Radio } from "../../styles/FormControlList";
 
 class SingleList extends Component {
 	constructor(props) {
@@ -147,7 +147,7 @@ class SingleList extends Component {
 						? (<Title>{this.props.title}</Title>)
 						: null
 				}
-				<ul className={FormControlList}>
+				<UL>
 					{
 						this.state.options.map(item => (
 							<li key={item.key}>
@@ -163,7 +163,7 @@ class SingleList extends Component {
 							</li>
 						))
 					}
-				</ul>
+				</UL>
 			</div>
 		);
 	}

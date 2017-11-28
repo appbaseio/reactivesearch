@@ -13,7 +13,7 @@ import { isEqual, getQueryOptions, pushToAndClause, checkValueChange, getAggsOrd
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
-import { FormControlList, Checkbox } from "../../styles/FormControlList";
+import { UL, Checkbox } from "../../styles/FormControlList";
 
 var MultiList = function (_Component) {
 	_inherits(MultiList, _Component);
@@ -102,8 +102,8 @@ var MultiList = function (_Component) {
 				this.props.title
 			) : null,
 			React.createElement(
-				"ul",
-				{ className: FormControlList },
+				UL,
+				null,
 				this.state.options.map(function (item) {
 					return React.createElement(
 						"li",

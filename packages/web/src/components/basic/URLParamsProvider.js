@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { base } from "../../styles/base";
+import Base from "../../styles/Base";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import { isEqual } from "@appbaseio/reactivecore/lib/utils/helper";
 
@@ -39,9 +39,9 @@ class URLParamsProvider extends Component {
 	}
 
 	render() {
-		return (<div className={base}>
+		return (<Base>
 			{this.props.children}
-		</div>)
+		</Base>)
 	}
 }
 

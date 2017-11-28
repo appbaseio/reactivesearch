@@ -1,6 +1,9 @@
-import { css } from "emotion";
-import theme from "./theme";
+import styled from "react-emotion";
 
-var base = /*#__PURE__*/css("font-family:", theme.fontFamily, ";font-size:", theme.fontSize, ";*,*:before,*:after{box-sizing:border-box;}");
+var Base = /*#__PURE__*/styled("div")("font-family:", function (props) {
+	return props.theme.fontFamily;
+}, ";font-size:", function (props) {
+	return props.theme.fontSize;
+}, ";*,*:before,*:after{box-sizing:border-box;}");
 
-export { base };
+export default Base;

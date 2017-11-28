@@ -19,7 +19,7 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
-import { FormControlList, Checkbox } from "../../styles/FormControlList";
+import { UL, Checkbox } from "../../styles/FormControlList";
 
 class MultiList extends Component {
 	constructor(props) {
@@ -181,7 +181,7 @@ class MultiList extends Component {
 						? (<Title>{this.props.title}</Title>)
 						: null
 				}
-				<ul className={FormControlList}>
+				<UL>
 					{
 						this.state.options.map(item => (
 							<li key={item.key}>
@@ -198,7 +198,7 @@ class MultiList extends Component {
 							</li>
 						))
 					}
-				</ul>
+				</UL>
 			</div>
 		);
 	}

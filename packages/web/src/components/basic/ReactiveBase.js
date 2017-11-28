@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import Appbase from "appbase-js";
+import { ThemeProvider } from "emotion-theming";
 
 import configureStore from "@appbaseio/reactivecore";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import URLParamsProvider from "./URLParamsProvider";
+
+import theme from "../../styles/theme";
 
 const URLSearchParams = require("url-search-params");
 
@@ -42,11 +45,13 @@ class ReactiveBase extends Component {
 
 	render() {
 		return (
-			<Provider store={this.store}>
-				<URLParamsProvider params={this.params}>
-					{this.props.children}
-				</URLParamsProvider>
-			</Provider>
+			<ThemeProvider theme={theme}>
+				<Provider store={this.store}>
+					<URLParamsProvider params={this.params}>
+						{this.props.children}
+					</URLParamsProvider>
+				</Provider>
+			</ThemeProvider>
 		);
 	}
 }

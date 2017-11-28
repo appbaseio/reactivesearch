@@ -9,10 +9,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import Appbase from "appbase-js";
+import { ThemeProvider } from "emotion-theming";
 
 import configureStore from "@appbaseio/reactivecore";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import URLParamsProvider from "./URLParamsProvider";
+
+import theme from "../../styles/theme";
 
 var URLSearchParams = require("url-search-params");
 
@@ -68,12 +71,16 @@ var ReactiveBase = function (_Component) {
 
 	ReactiveBase.prototype.render = function render() {
 		return React.createElement(
-			Provider,
-			{ store: this.store },
+			ThemeProvider,
+			{ theme: theme },
 			React.createElement(
-				URLParamsProvider,
-				{ params: this.params },
-				this.props.children
+				Provider,
+				{ store: this.store },
+				React.createElement(
+					URLParamsProvider,
+					{ params: this.params },
+					this.props.children
+				)
 			)
 		);
 	};

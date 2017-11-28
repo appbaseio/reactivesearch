@@ -2789,11 +2789,17 @@ emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
 
+emotion-theming@^8.0.11:
+  version "8.0.11"
+  resolved "https://registry.yarnpkg.com/emotion-theming/-/emotion-theming-8.0.11.tgz#8bae15976273a5aed6a0655c48d59f329cb02602"
+  dependencies:
+    hoist-non-react-statics "^2.3.1"
+
 emotion-utils@^8.0.11:
   version "8.0.11"
   resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-8.0.11.tgz#867693fd48d8b3059fff39439120f59041bfeddf"
 
-emotion@^8.0.10:
+emotion@^8.0.11:
   version "8.0.11"
   resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.11.tgz#7ed9ddc79ebf1921c3d95c18dace91918d617b12"
   dependencies:
@@ -3805,7 +3811,7 @@ hoist-non-react-statics@1.x.x, hoist-non-react-statics@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
-hoist-non-react-statics@^2.2.1:
+hoist-non-react-statics@^2.2.1, hoist-non-react-statics@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.3.1.tgz#343db84c6018c650778898240135a1420ee22ce0"
 
@@ -5857,7 +5863,7 @@ react-dom@^16.0.0, react-dom@^16.1.1:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-emotion@^8.0.10:
+react-emotion@^8.0.11:
   version "8.0.11"
   resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-8.0.11.tgz#3bc6b2d3340560ccad9f94fc4447b15a046ede05"
   dependencies:

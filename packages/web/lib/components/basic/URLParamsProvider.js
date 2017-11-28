@@ -7,7 +7,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { base } from "../../styles/base";
+import Base from "../../styles/Base";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import { isEqual } from "@appbaseio/reactivecore/lib/utils/helper";
 
@@ -54,8 +54,8 @@ var URLParamsProvider = function (_Component) {
 
 	URLParamsProvider.prototype.render = function render() {
 		return React.createElement(
-			"div",
-			{ className: base },
+			Base,
+			null,
 			this.props.children
 		);
 	};
