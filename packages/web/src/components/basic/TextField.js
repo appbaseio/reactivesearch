@@ -8,7 +8,6 @@ import {
 	updateQuery
 } from "@appbaseio/reactivecore/lib/actions";
 import {
-	isEqual,
 	debounce,
 	checkValueChange,
 	checkPropChange

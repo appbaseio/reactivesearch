@@ -10,7 +10,6 @@ import {
 	setQueryOptions
 } from "@appbaseio/reactivecore/lib/actions";
 import {
-	isEqual,
 	debounce,
 	pushToAndClause,
 	checkValueChange,
