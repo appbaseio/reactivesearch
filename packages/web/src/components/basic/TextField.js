@@ -5,8 +5,7 @@ import {
 	addComponent,
 	removeComponent,
 	watchComponent,
-	updateQuery,
-	setValue
+	updateQuery
 } from "@appbaseio/reactivecore/lib/actions";
 import {
 	isEqual,
@@ -113,7 +112,6 @@ class TextField extends Component {
 			showFilter: props.showFilter,
 			onQueryChange
 		});
-		// props.setValue(props.componentId, value);
 	}
 
 	render() {
@@ -150,7 +148,6 @@ TextField.propTypes = {
 	updateQuery: types.updateQuery,
 	placeholder: types.placeholder,
 	selectedValue: types.selectedValue,
-	setValue: types.setValue,
 	filterLabel: types.string
 };
 
@@ -168,8 +165,7 @@ const mapDispatchtoProps = (dispatch, props) => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: (updateQueryObject) => dispatch(
 		updateQuery(updateQueryObject)
-	),
-	setValue: (component, value) => dispatch(setValue(component, value, props.filterLabel, true))
+	)
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(TextField);
