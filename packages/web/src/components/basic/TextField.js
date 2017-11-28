@@ -11,7 +11,8 @@ import {
 import {
 	isEqual,
 	debounce,
-	checkValueChange
+	checkValueChange,
+	checkPropChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
@@ -40,13 +41,15 @@ class TextField extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
-		}
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected, true);
+			this.setValue(nextProps.defaultSelected, true, nextProps);
 		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || "", true);
+			this.setValue(nextProps.selectedValue || "", true, nextProps);
 		}
 	}
 
@@ -72,38 +75,38 @@ class TextField extends Component {
 	}
 
 	handleTextChange = debounce((value) => {
-		this.updateQuery(value);
+		this.updateQuery(value, this.props);
 	}, 300);
 
-	setValue = (value, isDefaultValue = false) => {
+	setValue = (value, isDefaultValue = false, props = this.props) => {
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value
 			});
 			if (isDefaultValue) {
-				this.updateQuery(value);
+				this.updateQuery(value, props);
 			} else {
 				// debounce for handling text while typing
 				this.handleTextChange(value);
 			}
 		}
 		checkValueChange(
-			this.props.componentId,
+			props.componentId,
 			value,
-			this.props.beforeValueChange,
-			this.props.onValueChange,
+			props.beforeValueChange,
+			props.onValueChange,
 			performUpdate
 		);
 	};
 
-	updateQuery = (value) => {
-		const query = this.props.customQuery || this.defaultQuery;
+	updateQuery = (value, props) => {
+		const query = props.customQuery || this.defaultQuery;
 		let callback = null;
-		if (this.props.onQueryChange) {
-			callback = this.props.onQueryChange;
+		if (props.onQueryChange) {
+			callback = props.onQueryChange;
 		}
-		this.props.updateQuery(this.props.componentId, query(value), callback);
-		this.props.setValue(this.props.componentId, value);
+		props.updateQuery(props.componentId, query(value, props), value, props.filterLabel, callback);
+		// props.setValue(props.componentId, value);
 	}
 
 	render() {
@@ -156,7 +159,9 @@ const mapDispatchtoProps = (dispatch, props) => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, onQueryChange) => dispatch(updateQuery(component, query, onQueryChange)),
+	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
+		updateQuery(component, query, value, filterLabel, onQueryChange)
+	),
 	setValue: (component, value) => dispatch(setValue(component, value, props.filterLabel, true))
 });
 
