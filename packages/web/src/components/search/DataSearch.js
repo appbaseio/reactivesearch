@@ -340,7 +340,11 @@ class DataSearch extends Component {
 							onOuterClick={this.handleOuterClick}
 							render={({
 								getInputProps,
-								getItemProps
+								getItemProps,
+								isOpen,
+								inputValue,
+								selectedItem,
+								highlightedIndex,
 							}) => (
 								<div>
 									<Input {...getInputProps({
@@ -363,6 +367,9 @@ class DataSearch extends Component {
 																<li
 																	{...getItemProps({ item })}
 																	key={item.label}
+																	style={{
+																		backgroundColor: highlightedIndex === index ? "#eee" : "#fff",
+																	}}
 																>
 																	{item.label}
 																</li>
