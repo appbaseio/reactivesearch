@@ -24,7 +24,7 @@ class SelectedFilters extends Component {
 		return (<div className={filters}>
 			{
 				Object.keys(selectedValues)
-					.filter(id => this.props.components.includes(id))
+					.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
 					.map((component, index) => {
 						const { label, value } = selectedValues[component];
 						const isArray = Array.isArray(value);
