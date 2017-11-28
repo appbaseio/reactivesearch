@@ -101,11 +101,18 @@ class TextField extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
-		let callback = null;
+		let onQueryChange = null;
 		if (props.onQueryChange) {
-			callback = props.onQueryChange;
+			onQueryChange = props.onQueryChange;
 		}
-		props.updateQuery(props.componentId, query(value, props), value, props.filterLabel, callback);
+		props.updateQuery({
+			componentId: props.componentId,
+			query: query(value, props),
+			value,
+			label: props.filterLabel,
+			showFilter: props.showFilter,
+			onQueryChange
+		});
 		// props.setValue(props.componentId, value);
 	}
 
@@ -159,8 +166,8 @@ const mapDispatchtoProps = (dispatch, props) => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
-		updateQuery(component, query, value, filterLabel, onQueryChange)
+	updateQuery: (updateQueryObject) => dispatch(
+		updateQuery(updateQueryObject)
 	),
 	setValue: (component, value) => dispatch(setValue(component, value, props.filterLabel, true))
 });
