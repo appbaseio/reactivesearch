@@ -344,7 +344,7 @@ class DataSearch extends Component {
 								isOpen,
 								inputValue,
 								selectedItem,
-								highlightedIndex,
+								highlightedIndex
 							}) => (
 								<div>
 									<Input {...getInputProps({
@@ -368,7 +368,7 @@ class DataSearch extends Component {
 																	{...getItemProps({ item })}
 																	key={item.label}
 																	style={{
-																		backgroundColor: highlightedIndex === index ? "#eee" : "#fff",
+																		backgroundColor: highlightedIndex === index ? "#eee" : "#fff"
 																	}}
 																>
 																	{item.label}
