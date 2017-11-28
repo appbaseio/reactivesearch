@@ -44,7 +44,9 @@ class DataSearch extends Component {
 		}
 		this.setReact(this.props);
 
-		if (this.props.defaultSelected) {
+		if (this.props.selectedValue) {
+			this.setValue(this.props.selectedValue, true);
+		} else if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected, true);
 		}
 	}
@@ -78,11 +80,24 @@ class DataSearch extends Component {
 			);
 		}
 
-		checkPropChange(
-			this.props.defaultSelected,
-			nextProps.defaultSelected,
-			() => this.setValue(nextProps.defaultSelected, true, nextProps)
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			["fieldWeights", "fuzziness", "queryFormat"],
+			() => {
+				this.updateQuery(nextProps.componentId, this.state.currentValue, nextProps)
+			}
 		);
+
+		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+			this.setValue(nextProps.defaultSelected, true, nextProps);
+		} else if (
+			this.props.selectedValue !== nextProps.selectedValue &&
+			this.state.currentValue !== nextProps.selectedValue
+		) {
+			// check for selected value prop change or selectedValue will never match currentValue
+			this.setValue(nextProps.selectedValue || "", true, nextProps);
+		}
 	}
 
 	componentWillUnmount() {
@@ -428,7 +443,8 @@ DataSearch.propTypes = {
 	onKeyPress: types.onKeyPress,
 	onKeyDown: types.onKeyDown,
 	onKeyUp: types.onKeyUp,
-	autoFocus: types.autoFocus
+	autoFocus: types.autoFocus,
+	selectedValue: types.selectedValue
 }
 
 DataSearch.defaultProps = {
@@ -438,7 +454,8 @@ DataSearch.defaultProps = {
 }
 
 const mapStateToProps = (state, props) => ({
-	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits
+	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
 });
 
 const mapDispatchtoProps = dispatch => ({
