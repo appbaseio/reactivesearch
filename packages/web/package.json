@@ -7,7 +7,8 @@
     "watch": "yarn run build -w",
     "start": "webpack-dev-server --hot --inline --progress --colors --port 8012",
     "build": "babel src --out-dir lib",
-    "build:umd": "webpack -p --config webpack.config.umd.js"
+    "build:umd": "webpack -p --config webpack.config.umd.js",
+    "prepublish": "yarn run build"
   },
   "author": "metagrover",
   "license": "Apache-2.0",
