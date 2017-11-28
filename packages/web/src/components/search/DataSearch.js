@@ -277,13 +277,21 @@ class DataSearch extends Component {
 		}
 	}, 300);
 
-	updateQuery = (component, value, props) => {
+	updateQuery = (componentId, value, props) => {
 		const query = props.customQuery || this.defaultQuery;
-		let callback = null;
-		if (component === props.componentId && props.onQueryChange) {
-			callback = props.onQueryChange;
+		let onQueryChange = null;
+		if (componentId === props.componentId && props.onQueryChange) {
+			onQueryChange = props.onQueryChange;
 		}
-		props.updateQuery(component, query(value, props), value, props.filterLabel, callback);
+		props.updateQuery({
+			componentId,
+			query: query(value, props),
+			value,
+			label: props.filterLabel,
+			showFilter: props.showFilter,
+			onQueryChange,
+			URLParams: props.URLParams
+		});
 	};
 
 	handleFocus = (event) => {
@@ -462,8 +470,8 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
-		updateQuery(component, query, value, filterLabel, onQueryChange)
+	updateQuery: (updateQueryObject) => dispatch(
+		updateQuery(updateQueryObject)
 	),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
