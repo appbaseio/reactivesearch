@@ -4,6 +4,7 @@ import SelectedFilters from "./components/basic/SelectedFilters";
 
 import SingleList from "./components/list/SingleList";
 import MultiList from "./components/list/MultiList";
+import SingleDropdownList from "./components/list/SingleDropdownList";
 
 import DataSearch from "./components/search/DataSearch";
 
@@ -14,6 +15,7 @@ export {
 	ReactiveBase,
 	TextField,
 	SelectedFilters,
+	SingleDropdownList,
 
 	// list
 	SingleList,

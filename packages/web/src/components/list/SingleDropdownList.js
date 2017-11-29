@@ -21,9 +21,9 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
-import { UL, Radio } from "../../styles/FormControlList";
+import Dropdown from "../shared/Dropdown";
 
-class SingleList extends Component {
+class SingleDropdownList extends Component {
 	constructor(props) {
 		super(props);
 
@@ -64,6 +64,16 @@ class SingleList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			["highlight", "dataField", "highlightField"],
+			() => {
+				const queryOptions = this.highlightQuery(nextProps);
+				this.props.setQueryOptions(nextProps.componentId, queryOptions);
+			}
+		);
+
 		if (!isEqual(nextProps.react, this.props.react)) {
 			this.setReact(nextProps);
 		}
@@ -112,10 +122,6 @@ class SingleList extends Component {
 	}
 
 	setValue = (value) => {
-		if (value == this.state.currentValue) {
-			value = "";
-		}
-
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value
@@ -149,29 +155,18 @@ class SingleList extends Component {
 						? (<Title>{this.props.title}</Title>)
 						: null
 				}
-				<UL>
-					{
-						this.state.options.map(item => (
-							<li key={item.key}>
-								<Radio
-									id={item.key}
-									name={this.props.componentId}
-									value={item.key}
-									onClick={e => this.setValue(e.target.value)}
-									checked={this.state.currentValue === item.key}
-									show={this.props.showRadio}
-								/>
-								<label htmlFor={item.key}>{item.key}</label>
-							</li>
-						))
-					}
-				</UL>
+				<Dropdown
+					items={this.state.options}
+					onChange={this.setValue}
+					selectedItem={this.state.currentValue}
+					placeholder={this.props.placeholder}
+				/>
 			</div>
 		);
 	}
 }
 
-SingleList.propTypes = {
+SingleDropdownList.propTypes = {
 	componentId: types.componentId,
 	addComponent: types.addComponent,
 	dataField: types.dataField,
@@ -194,10 +189,11 @@ SingleList.propTypes = {
 	URLParams: types.URLParams
 }
 
-SingleList.defaultProps = {
+SingleDropdownList.defaultProps = {
 	size: 100,
 	sortBy: "count",
-	showRadio: true
+	showRadio: true,
+	placeholder: "Select a value"
 }
 
 const mapStateToProps = (state, props) => ({
@@ -213,4 +209,4 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SingleList);
+export default connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList);

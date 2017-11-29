@@ -20,7 +20,7 @@ import {
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import Title from "../../styles/Title";
-import Input, { input, suggestions } from "../../styles/Input";
+import Input, { suggestions } from "../../styles/Input";
 
 class DataSearch extends Component {
 	constructor(props) {
