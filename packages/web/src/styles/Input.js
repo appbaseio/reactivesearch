@@ -33,6 +33,7 @@ const suggestions = css`
 			justify-content: space-between;
 			cursor: pointer;
 			padding: 10px;
+			user-select: none;
 
 			&:hover, &:focus {
 				background-color: #eee;
