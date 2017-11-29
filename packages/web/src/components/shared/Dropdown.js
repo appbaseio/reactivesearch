@@ -47,14 +47,14 @@ class Dropdown extends Component {
 		}
 	};
 
-	getBackgroundColor(selected, highlighted) {
+	getBackgroundColor = (item, selectedItem, highlighted) => {
 		if (highlighted) {
 			return "#eee";
-		} else if (selected) {
+		} else if (this.props.multi && !!selectedItem[item]) {
 			return "#fafafa";
 		}
 		return "#fff";
-	}
+	};
 
 	render() {
 		const { items, selectedItem, placeholder } = this.props;
@@ -97,7 +97,7 @@ class Dropdown extends Component {
 													{...getItemProps({ item })}
 													key={item.key}
 													style={{
-														backgroundColor: this.getBackgroundColor(!!selectedItem[item.key], highlightedIndex === index)
+														backgroundColor: this.getBackgroundColor(item.key, selectedItem, highlightedIndex === index)
 													}}
 												>
 													{item.key}
