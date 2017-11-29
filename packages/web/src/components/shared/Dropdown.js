@@ -57,7 +57,6 @@ class Dropdown extends Component {
 			onStateChange={this.handleStateChange}
 			isOpen={this.state.isOpen}
 			render={({
-				getRootProps,
 				getButtonProps,
 				getItemProps,
 				isOpen,
@@ -71,7 +70,7 @@ class Dropdown extends Component {
 						.join(", ");
 				}
 
-				return (<div {...getRootProps()} className={suggestionsContainer}>
+				return (<div className={suggestionsContainer}>
 					<Select
 						{...getButtonProps()}
 						onClick={this.toggle}
