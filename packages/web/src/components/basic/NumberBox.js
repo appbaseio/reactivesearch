@@ -14,7 +14,8 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
-import Button from "../../styles/Button";
+import Button, { numberBoxButtons } from "../../styles/Button";
+import Flex from "../../styles/Flex";
 
 class NumberBox extends Component {
 	constructor(props) {
@@ -131,6 +132,7 @@ class NumberBox extends Component {
 			query: query(value, props),
 			value,
 			onQueryChange,
+			showFilter: false,	// we don't need filters for NumberBox
 			URLParams: props.URLParams
 		});
 	};
@@ -139,20 +141,24 @@ class NumberBox extends Component {
 		return (
 			<div>
 				{this.props.title && <Title>{this.props.title}</Title>}
-				{this.props.data.label}
-				<Button
-					onClick={this.decrementValue}
-					disabled={this.state.currentValue === this.props.data.start}
-				>
-					<b>-</b>
-				</Button>
-				{this.state.currentValue}
-				<Button
-					onClick={this.incrementValue}
-					disabled={this.state.currentValue === this.props.data.end}
-				>
-					<b>+</b>
-				</Button>
+				<Flex labelPosition={this.props.labelPosition} inline>
+					{this.props.data.label}
+					<div className={numberBoxButtons}>
+						<Button
+							onClick={this.decrementValue}
+							disabled={this.state.currentValue === this.props.data.start}
+						>
+							<b>-</b>
+						</Button>
+						{this.state.currentValue}
+						<Button
+							onClick={this.incrementValue}
+							disabled={this.state.currentValue === this.props.data.end}
+						>
+							<b>+</b>
+						</Button>
+					</div>
+				</Flex>
 			</div>
 		);
 	}

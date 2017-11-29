@@ -53,6 +53,12 @@ const toggleButtons = css`
 	}
 `;
 
+const numberBoxButtons = css`
+	a {
+		margin: 5px;
+	}
+`;
+
 const primary = props => css`
 	background-color: ${props.theme.primaryColor};
 	color: ${props.theme.primaryTextColor};
@@ -100,5 +106,5 @@ const Button = styled("a")`
 	${props => props.large && large}
 `;
 
-export { pagination, filters, toggleButtons };
+export { pagination, filters, toggleButtons, numberBoxButtons };
 export default Button;
