@@ -1,6 +1,7 @@
 import ReactiveBase from "./components/basic/ReactiveBase";
 import TextField from "./components/basic/TextField";
 import SelectedFilters from "./components/basic/SelectedFilters";
+import ToggleButton from "./components/basic/ToggleButton";
 
 import SingleList from "./components/list/SingleList";
 import MultiList from "./components/list/MultiList";
@@ -14,6 +15,7 @@ export {
 	ReactiveBase,
 	TextField,
 	SelectedFilters,
+	ToggleButton,
 
 	// list
 	SingleList,
