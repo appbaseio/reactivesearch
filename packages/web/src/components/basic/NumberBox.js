@@ -1,0 +1,186 @@
+import React, { Component } from "react";
+import { connect } from "react-redux";
+
+import {
+	addComponent,
+	removeComponent,
+	watchComponent,
+	updateQuery
+} from "@appbaseio/reactivecore/lib/actions";
+import {
+	checkValueChange,
+	checkPropChange
+} from "@appbaseio/reactivecore/lib/utils/helper";
+import types from "@appbaseio/reactivecore/lib/utils/types";
+
+import Title from "../../styles/Title";
+import Button from "../../styles/Button";
+
+class NumberBox extends Component {
+	constructor(props) {
+		super(props);
+
+		this.type = "term";
+		this.state = {
+			currentValue: this.props.data.start
+		};
+	}
+
+	componentDidMount() {
+		this.props.addComponent(this.props.componentId);
+		this.setReact(this.props);
+
+		if (this.props.defaultSelected) {
+			this.setValue(this.props.defaultSelected);
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		checkPropChange(this.props.react, nextProps.react, () =>
+			this.setReact(nextProps)
+		);
+		checkPropChange(this.props.defaultSelected, nextProps.defaultSelected, () =>
+			this.setValue(nextProps.defaultSelected, nextProps)
+		);
+		checkPropChange(this.props.queryFormat, nextProps.queryFormat, () =>
+			this.updateQuery(this.state.currentValue, nextProps)
+		);
+	}
+
+	componentWillUnmount() {
+		this.props.removeComponent(this.props.componentId);
+	}
+
+	defaultQuery = (value, props) => {
+		switch (props.queryFormat) {
+			case "exact":
+				return {
+					term: {
+						[props.dataField]: value
+					}
+				};
+			case "lte":
+				return {
+					range: {
+						[props.dataField]: {
+							lte: value,
+							boost: 2.0
+						}
+					}
+				};
+			case "gte":
+				return {
+					range: {
+						[props.dataField]: {
+							gte: value,
+							boost: 2.0
+						}
+					}
+				};
+			default:
+				return null;
+		}
+	};
+
+	setReact(props) {
+		if (props.react) {
+			props.watchComponent(props.componentId, props.react);
+		}
+	}
+
+	incrementValue = () => {
+		if (this.state.currentValue === this.props.data.end) {
+			return;
+		}
+		const { currentValue } = this.state;
+		this.setValue(currentValue + 1);
+	};
+
+	decrementValue = () => {
+		if (this.state.currentValue === this.props.data.start) {
+			return;
+		}
+		const { currentValue } = this.state;
+		this.setValue(currentValue - 1);
+	};
+
+	setValue = (value, props = this.props) => {
+		const performUpdate = () => {
+			this.setState({
+				currentValue: value
+			});
+			this.updateQuery(value, props);
+		};
+		checkValueChange(
+			props.componentId,
+			value,
+			props.beforeValueChange,
+			props.onValueChange,
+			performUpdate
+		);
+	};
+
+	updateQuery = (value, props) => {
+		const query = props.customQuery || this.defaultQuery;
+		let onQueryChange = null;
+		if (props.onQueryChange) {
+			onQueryChange = props.onQueryChange;
+		}
+		props.updateQuery({
+			componentId: props.componentId,
+			query: query(value, props),
+			value,
+			onQueryChange,
+			URLParams: props.URLParams
+		});
+	};
+
+	render() {
+		return (
+			<div>
+				{this.props.title && <Title>{this.props.title}</Title>}
+				{this.props.data.label}
+				<Button
+					onClick={this.decrementValue}
+					disabled={this.state.currentValue === this.props.data.start}
+				>
+					<b>-</b>
+				</Button>
+				{this.state.currentValue}
+				<Button
+					onClick={this.incrementValue}
+					disabled={this.state.currentValue === this.props.data.end}
+				>
+					<b>+</b>
+				</Button>
+			</div>
+		);
+	}
+}
+
+NumberBox.propTypes = {
+	addComponent: types.addComponent,
+	componentId: types.componentId,
+	defaultSelected: types.number,
+	data: types.dataNumberBox,
+	react: types.react,
+	removeComponent: types.removeComponent,
+	title: types.title,
+	queryFormat: types.queryFormatNumberBox,
+	labelPosition: types.labelPosition
+};
+
+NumberBox.defaultProps = {
+	queryFormat: "gte",
+	labelPosition: "left"
+};
+
+const mapDispatchtoProps = (dispatch, props) => ({
+	addComponent: component => dispatch(addComponent(component)),
+	removeComponent: component => dispatch(removeComponent(component)),
+	watchComponent: (component, react) =>
+		dispatch(watchComponent(component, react)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
+});
+
+export default connect(null, mapDispatchtoProps)(NumberBox);
