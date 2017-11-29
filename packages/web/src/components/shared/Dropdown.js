@@ -1,6 +1,8 @@
 import React from "react";
 import Downshift from "downshift";
 
+import types from "@appbaseio/reactivecore/lib/utils/types";
+
 import { suggestions } from "../../styles/Input";
 import Select from "../../styles/Select";
 import Chevron from "../../styles/Chevron";

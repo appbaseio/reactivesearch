@@ -10,7 +10,6 @@ import {
 	setQueryOptions
 } from "@appbaseio/reactivecore/lib/actions";
 import {
-	isEqual,
 	debounce,
 	pushToAndClause,
 	checkValueChange,
@@ -44,7 +43,9 @@ class DataSearch extends Component {
 		}
 		this.setReact(this.props);
 
-		if (this.props.defaultSelected) {
+		if (this.props.selectedValue) {
+			this.setValue(this.props.selectedValue, true);
+		} else if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected, true);
 		}
 	}
@@ -78,11 +79,24 @@ class DataSearch extends Component {
 			);
 		}
 
-		checkPropChange(
-			this.props.defaultSelected,
-			nextProps.defaultSelected,
-			() => this.setValue(nextProps.defaultSelected, true, nextProps)
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			["fieldWeights", "fuzziness", "queryFormat"],
+			() => {
+				this.updateQuery(nextProps.componentId, this.state.currentValue, nextProps)
+			}
 		);
+
+		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+			this.setValue(nextProps.defaultSelected, true, nextProps);
+		} else if (
+			this.props.selectedValue !== nextProps.selectedValue &&
+			this.state.currentValue !== nextProps.selectedValue
+		) {
+			// check for selected value prop change or selectedValue will never match currentValue
+			this.setValue(nextProps.selectedValue || "", true, nextProps);
+		}
 	}
 
 	componentWillUnmount() {
@@ -262,13 +276,21 @@ class DataSearch extends Component {
 		}
 	}, 300);
 
-	updateQuery = (component, value, props) => {
+	updateQuery = (componentId, value, props) => {
 		const query = props.customQuery || this.defaultQuery;
-		let callback = null;
-		if (component === props.componentId && props.onQueryChange) {
-			callback = props.onQueryChange;
+		let onQueryChange = null;
+		if (componentId === props.componentId && props.onQueryChange) {
+			onQueryChange = props.onQueryChange;
 		}
-		props.updateQuery(component, query(value, props), value, props.filterLabel, callback);
+		props.updateQuery({
+			componentId,
+			query: query(value, props),
+			value,
+			label: props.filterLabel,
+			showFilter: props.showFilter,
+			onQueryChange,
+			URLParams: props.URLParams
+		});
 	};
 
 	handleFocus = (event) => {
@@ -428,25 +450,29 @@ DataSearch.propTypes = {
 	onKeyPress: types.onKeyPress,
 	onKeyDown: types.onKeyDown,
 	onKeyUp: types.onKeyUp,
-	autoFocus: types.autoFocus
+	autoFocus: types.autoFocus,
+	selectedValue: types.selectedValue,
+	URLParams: types.URLParams
 }
 
 DataSearch.defaultProps = {
 	placeholder: "Search",
 	autoSuggest: true,
-	queryFormat: "or"
+	queryFormat: "or",
+	URLParams: false
 }
 
 const mapStateToProps = (state, props) => ({
-	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits
+	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
-		updateQuery(component, query, value, filterLabel, onQueryChange)
+	updateQuery: (updateQueryObject) => dispatch(
+		updateQuery(updateQueryObject)
 	),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });

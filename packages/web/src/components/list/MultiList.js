@@ -13,7 +13,9 @@ import {
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
-	getAggsOrder
+	getAggsOrder,
+	checkPropChange,
+	checkSomePropChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -29,7 +31,6 @@ class MultiList extends Component {
 			currentValue: {},
 			options: []
 		};
-		this.type = props.queryFormat === "or" ? "terms" : "term";
 		this.internalComponent = props.componentId + "__internal";
 	}
 
@@ -38,23 +39,7 @@ class MultiList extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
-		const queryOptions = getQueryOptions(this.props);
-		queryOptions.aggs = {
-			[this.props.dataField]: {
-				terms: {
-					field: this.props.dataField,
-					size: 100,
-					order: getAggsOrder(this.props.sortBy)
-				}
-			}
-		}
-		this.props.setQueryOptions(this.internalComponent, queryOptions);
-		// Since the queryOptions are attached to the internal component,
-		// we need to notify the subscriber (parent component)
-		// that the query has changed because no new query will be
-		// auto-generated for the internal component as its
-		// dependency tree is empty
-		this.props.updateQuery(this.internalComponent, null);
+		this.updateQueryOptions(this.props);
 
 		if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected);
@@ -62,14 +47,26 @@ class MultiList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
-		}
-		if (!isEqual(nextProps.options, this.props.options)) {
-			this.setState({
-				options: nextProps.options[nextProps.dataField].buckets || []
-			});
-		}
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
+		checkPropChange(
+			this.props.options,
+			nextProps.options,
+			() => {
+				this.setState({
+					options: nextProps.options[nextProps.dataField].buckets || []
+				});
+			}
+		);
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			["size", "sortBy"],
+			() => this.updateQueryOptions(nextProps)
+		);
 
 		const selectedValue = Object.keys(this.state.currentValue)
 			.filter(item => this.state.currentValue[item]);
@@ -96,28 +93,29 @@ class MultiList extends Component {
 		}
 	};
 
-	defaultQuery = (value) => {
+	defaultQuery = (value, props) => {
 		let query = null;
+		const type = props.queryFormat === "or" ? "terms" : "term";
 		if (this.selectAll) {
 			query = {
 				exists: {
-					field: [this.props.dataField]
+					field: [props.dataField]
 				}
 			};
 		} else if (value) {
 			let listQuery;
-			if (this.props.queryFormat === "or") {
+			if (props.queryFormat === "or") {
 				listQuery = {
-					[this.type]: {
-						[this.props.dataField]: value
+					[type]: {
+						[props.dataField]: value
 					}
 				};
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
 				const queryArray = value.map(item => (
 					{
-						[this.type]: {
-							[this.props.dataField]: item
+						[type]: {
+							[props.dataField]: item
 						}
 					}
 				));
@@ -133,7 +131,7 @@ class MultiList extends Component {
 		return query;
 	}
 
-	setValue = (value, isDefaultValue = false) => {
+	setValue = (value, isDefaultValue = false, props = this.props) => {
 		let { currentValue } = this.state;
 		let finalValues = null;
 
@@ -152,25 +150,56 @@ class MultiList extends Component {
 			this.setState({
 				currentValue
 			});
-			this.updateQuery(finalValues);
+			this.updateQuery(finalValues, props);
 		}
 
 		checkValueChange(
-			this.props.componentId,
+			props.componentId,
 			finalValues,
-			this.props.beforeValueChange,
-			this.props.onValueChange,
+			props.beforeValueChange,
+			props.onValueChange,
 			performUpdate
 		);
 	};
 
-	updateQuery = (value) => {
-		const query = this.props.customQuery || this.defaultQuery;
-		let callback = null;
-		if (this.props.onQueryChange) {
-			callback = this.props.onQueryChange;
+	updateQuery = (value, props) => {
+		const query = props.customQuery || this.defaultQuery;
+		let onQueryChange = null;
+		if (props.onQueryChange) {
+			onQueryChange = props.onQueryChange;
 		}
-		this.props.updateQuery(this.props.componentId, query(value), value, this.props.filterLabel, callback, this.props.URLParams);
+		props.updateQuery({
+			componentId: props.componentId,
+			query: query(value, props),
+			value,
+			label: props.filterLabel,
+			showFilter: props.showFilter,
+			onQueryChange,
+			URLParams: props.URLParams
+		});
+	}
+
+	updateQueryOptions = (props) => {
+		const queryOptions = getQueryOptions(props);
+		queryOptions.aggs = {
+			[props.dataField]: {
+				terms: {
+					field: props.dataField,
+					size: props.size,
+					order: getAggsOrder(props.sortBy)
+				}
+			}
+		}
+		props.setQueryOptions(this.internalComponent, queryOptions);
+		// Since the queryOptions are attached to the internal component,
+		// we need to notify the subscriber (parent component)
+		// that the query has changed because no new query will be
+		// auto-generated for the internal component as its
+		// dependency tree is empty
+		props.updateQuery({
+			componentId: this.internalComponent,
+			query: null
+		});
 	}
 
 	render() {
@@ -194,7 +223,13 @@ class MultiList extends Component {
 									onChange={() => {}}
 									show={this.props.showCheckbox}
 								/>
-								<label htmlFor={item.key}>{item.key}</label>
+								<label htmlFor={item.key}>
+									{item.key}
+									{
+										this.props.showCount &&
+										` (${item.doc_count})`
+									}
+								</label>
 							</li>
 						))
 					}
@@ -211,7 +246,7 @@ MultiList.propTypes = {
 	sortBy: types.sortByWithCount,
 	setQueryOptions: types.setQueryOptions,
 	updateQuery: types.updateQuery,
-	defaultSelected: types.string,
+	defaultSelected: types.stringArray,
 	react: types.react,
 	options: types.options,
 	removeComponent: types.removeComponent,
@@ -225,14 +260,18 @@ MultiList.propTypes = {
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
 	queryFormat: types.queryFormatSearch,
-	URLParams: types.URLParams
+	URLParams: types.URLParams,
+	showCount: types.showCount,
+	size: types.size
 }
 
 MultiList.defaultProps = {
 	size: 100,
 	sortBy: "count",
 	showCheckbox: true,
-	queryFormat: "or"
+	queryFormat: "or",
+	URLParams: false,
+	showCount: true
 }
 
 const mapStateToProps = (state, props) => ({
@@ -244,7 +283,7 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, label, onQueryChange, URLParams) => dispatch(updateQuery(component, query, value, label, onQueryChange, URLParams)),
+	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 

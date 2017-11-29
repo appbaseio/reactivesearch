@@ -1,6 +1,5 @@
 import { css } from "emotion";
 import styled from "react-emotion";
-import { transitions } from "polished";
 
 const open = css`
 	top: 0.45em;

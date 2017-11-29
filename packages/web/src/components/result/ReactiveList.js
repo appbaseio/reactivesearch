@@ -58,9 +58,15 @@ class ReactiveList extends Component {
 
 		if (defaultQuery) {
 			let { sort, ...query } = defaultQuery;
-			this.props.updateQuery(this.internalComponent, query);
+			this.props.updateQuery({
+				componentId: this.internalComponent,
+				query
+			});
 		} else {
-			this.props.updateQuery(this.internalComponent, null);
+			this.props.updateQuery({
+				componentId: this.internalComponent,
+				query: null
+			});
 		}
 
 		if (!this.props.pagination) {
@@ -326,7 +332,7 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
-	updateQuery: (component, query) => dispatch(updateQuery(component, query)),
+	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject)),
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append))
 });
 
