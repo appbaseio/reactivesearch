@@ -13,7 +13,8 @@ import {
 	pushToAndClause,
 	checkValueChange,
 	getAggsOrder,
-	checkPropChange
+	checkPropChange,
+	checkSomePropChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -38,26 +39,7 @@ class SingleList extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
-		const queryOptions = getQueryOptions(this.props);
-		queryOptions.aggs = {
-			[this.props.dataField]: {
-				terms: {
-					field: this.props.dataField,
-					size: 100,
-					order: getAggsOrder(this.props.sortBy)
-				}
-			}
-		}
-		this.props.setQueryOptions(this.internalComponent, queryOptions);
-		// Since the queryOptions are attached to the internal component,
-		// we need to notify the subscriber (parent component)
-		// that the query has changed because no new query will be
-		// auto-generated for the internal component as its
-		// dependency tree is empty
-		this.props.updateQuery({
-			componentId: this.internalComponent,
-			query: null
-		});
+		this.updateQueryOptions(this.props);
 
 		if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected);
@@ -78,6 +60,12 @@ class SingleList extends Component {
 					options: nextProps.options[nextProps.dataField].buckets || []
 				});
 			}
+		);
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			["size", "sortBy"],
+			() => this.updateQueryOptions(nextProps)
 		);
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected);
@@ -156,6 +144,29 @@ class SingleList extends Component {
 		});
 	}
 
+	updateQueryOptions = (props) => {
+		const queryOptions = getQueryOptions(props);
+		queryOptions.aggs = {
+			[props.dataField]: {
+				terms: {
+					field: props.dataField,
+					size: props.size,
+					order: getAggsOrder(props.sortBy)
+				}
+			}
+		}
+		props.setQueryOptions(this.internalComponent, queryOptions);
+		// Since the queryOptions are attached to the internal component,
+		// we need to notify the subscriber (parent component)
+		// that the query has changed because no new query will be
+		// auto-generated for the internal component as its
+		// dependency tree is empty
+		props.updateQuery({
+			componentId: this.internalComponent,
+			query: null
+		});
+	}
+
 	render() {
 		return (
 			<div>
@@ -176,7 +187,13 @@ class SingleList extends Component {
 									checked={this.state.currentValue === item.key}
 									show={this.props.showRadio}
 								/>
-								<label htmlFor={item.key}>{item.key}</label>
+								<label htmlFor={item.key}>
+									{item.key}
+									{
+										this.props.showCount &&
+										` (${item.doc_count})`
+									}
+								</label>
 							</li>
 						))
 					}
@@ -207,14 +224,17 @@ SingleList.propTypes = {
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
 	URLParams: types.URLParams,
-	showFilter: types.showFilter
+	showFilter: types.showFilter,
+	size: types.size,
+	showCount: types.showCount
 }
 
 SingleList.defaultProps = {
 	size: 100,
 	sortBy: "count",
 	showRadio: true,
-	URLParams: false
+	URLParams: false,
+	showCount: true
 }
 
 const mapStateToProps = (state, props) => ({
