@@ -9,11 +9,11 @@ import {
 	setQueryOptions
 } from "@appbaseio/reactivecore/lib/actions";
 import {
-	isEqual,
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
-	getAggsOrder
+	getAggsOrder,
+	checkPropChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -54,7 +54,10 @@ class SingleList extends Component {
 		// that the query has changed because no new query will be
 		// auto-generated for the internal component as its
 		// dependency tree is empty
-		this.props.updateQuery(this.internalComponent, null);
+		this.props.updateQuery({
+			componentId: this.internalComponent,
+			query: null
+		});
 
 		if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected);
@@ -62,14 +65,20 @@ class SingleList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
-		}
-		if (!isEqual(nextProps.options, this.props.options)) {
-			this.setState({
-				options: nextProps.options[nextProps.dataField].buckets || []
-			});
-		}
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
+		checkPropChange(
+			this.props.options,
+			nextProps.options,
+			() => {
+				this.setState({
+					options: nextProps.options[nextProps.dataField].buckets || []
+				});
+			}
+		);
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected);
 		} else if (this.state.currentValue !== nextProps.selectedValue) {
@@ -92,24 +101,24 @@ class SingleList extends Component {
 		}
 	};
 
-	defaultQuery = (value) => {
+	defaultQuery = (value, props) => {
 		if (this.selectAll) {
 			return {
 				exists: {
-					field: [this.props.dataField]
+					field: [props.dataField]
 				}
 			};
 		} else if (value) {
 			return {
 				[this.type]: {
-					[this.props.dataField]: value
+					[props.dataField]: value
 				}
 			};
 		}
 		return null;
 	}
 
-	setValue = (value) => {
+	setValue = (value, props = this.props) => {
 		if (value == this.state.currentValue) {
 			value = "";
 		}
@@ -118,25 +127,33 @@ class SingleList extends Component {
 			this.setState({
 				currentValue: value
 			});
-			this.updateQuery(value);
+			this.updateQuery(value, props);
 		}
 
 		checkValueChange(
-			this.props.componentId,
+			props.componentId,
 			value,
-			this.props.beforeValueChange,
-			this.props.onValueChange,
+			props.beforeValueChange,
+			props.onValueChange,
 			performUpdate
 		);
 	};
 
-	updateQuery = (value) => {
-		const query = this.props.customQuery || this.defaultQuery;
-		let callback = null;
-		if (this.props.onQueryChange) {
-			callback = this.props.onQueryChange;
+	updateQuery = (value, props) => {
+		const query = props.customQuery || this.defaultQuery;
+		let onQueryChange = null;
+		if (props.onQueryChange) {
+			onQueryChange = props.onQueryChange;
 		}
-		this.props.updateQuery(this.props.componentId, query(value), value, this.props.filterLabel, callback, this.props.URLParams);
+		props.updateQuery({
+			componentId: props.componentId,
+			query: query(value, props),
+			value,
+			filterLabel: props.filterLabel,
+			showFilter: props.showFilter,
+			onQueryChange,
+			URLParams: props.URLParams
+		});
 	}
 
 	render() {
@@ -189,13 +206,15 @@ SingleList.propTypes = {
 	showRadio: types.showInputControl,
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
-	URLParams: types.URLParams
+	URLParams: types.URLParams,
+	showFilter: types.showFilter
 }
 
 SingleList.defaultProps = {
 	size: 100,
 	sortBy: "count",
-	showRadio: true
+	showRadio: true,
+	URLParams: false
 }
 
 const mapStateToProps = (state, props) => ({
@@ -207,7 +226,7 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, label, onQueryChange, URLParams) => dispatch(updateQuery(component, query, value, label, onQueryChange, URLParams)),
+	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 
