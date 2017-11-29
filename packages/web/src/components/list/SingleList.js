@@ -137,7 +137,7 @@ class SingleList extends Component {
 			componentId: props.componentId,
 			query: query(value, props),
 			value,
-			filterLabel: props.filterLabel,
+			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
 			URLParams: props.URLParams
