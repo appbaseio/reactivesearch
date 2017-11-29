@@ -47,6 +47,12 @@ const pagination = css`
 	}
 `;
 
+const toggleButtons = css`
+	a {
+		margin: 0 3px;
+	}
+`;
+
 const primary = props => css`
 	background-color: ${props.theme.primaryColor};
 	color: ${props.theme.primaryTextColor};
@@ -54,6 +60,10 @@ const primary = props => css`
 	&:hover, &:focus {
 		background-color: ${darken(0.1, props.theme.primaryColor)};
 	}
+`;
+
+const large = () => css`
+	padding: 12px 24px;
 `;
 
 const disabled = css`
@@ -87,7 +97,8 @@ const Button = styled("a")`
 
 	${props => props.primary ? primary : null}
 	${props => props.disabled ? disabled : null}
+	${props => props.large && large}
 `;
 
-export { pagination, filters };
+export { pagination, filters, toggleButtons };
 export default Button;

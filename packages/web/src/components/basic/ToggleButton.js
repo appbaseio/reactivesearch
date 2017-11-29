@@ -14,7 +14,7 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
-import Button from "../../styles/Button";
+import Button, { toggleButtons } from "../../styles/Button";
 
 class ToggleButton extends Component {
 	constructor(props) {
@@ -124,7 +124,7 @@ class ToggleButton extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className={toggleButtons}>
 				{
 					this.props.title &&
 					<Title>{this.props.title}</Title>
@@ -134,6 +134,7 @@ class ToggleButton extends Component {
 						onClick={() => this.handleToggle(item.value)}
 						key={item.label}
 						primary={this.state.currentValue.includes(item.value)}
+						large
 					>
 						{item.label}
 					</Button>
