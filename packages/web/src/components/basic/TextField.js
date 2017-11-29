@@ -109,7 +109,8 @@ class TextField extends Component {
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
-			onQueryChange
+			onQueryChange,
+			URLParams: props.URLParams
 		});
 	}
 
@@ -147,11 +148,13 @@ TextField.propTypes = {
 	updateQuery: types.updateQuery,
 	placeholder: types.placeholder,
 	selectedValue: types.selectedValue,
-	filterLabel: types.string
+	filterLabel: types.string,
+	URLParams: types.URLParams
 };
 
 TextField.defaultProps = {
-	placeholder: "Search"
+	placeholder: "Search",
+	URLParams: false
 }
 
 const mapStateToProps = (state, props) => ({
