@@ -20,7 +20,6 @@ class ToggleButton extends Component {
 	constructor(props) {
 		super(props);
 
-		this.type = "term";
 		this.state = {
 			currentValue: []
 		};
