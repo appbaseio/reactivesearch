@@ -307,22 +307,9 @@ class DataSearch extends Component {
 		this.setValue(this.state.currentValue, true)
 	};
 
-	// delays the hiding of suggestions on click to allow suggestion selection
-	handleBlur = (event) => {
-		setTimeout(() => {
-			this.setState({
-				isOpen: false
-			});
-		}, 200);
-		if (this.props.onBlur) {
-			this.props.onBlur(event);
-		}
-	};
-
 	handleKeyDown = (event) => {
 		if (event.key === "Enter") {
 			event.target.blur();
-			this.handleBlur();
 			this.setValue(event.target.value, true);
 		}
 		if (this.props.onKeyDown) {
@@ -338,6 +325,15 @@ class DataSearch extends Component {
 		this.setValue(suggestion.value, true);
 		if (this.props.onBlur) {
 			this.props.onBlur(event);
+		}
+	};
+
+	handleStateChange = (changes) => {
+		const { isOpen, type } = changes;
+		if (type === Downshift.stateChangeTypes.mouseUp) {
+			this.setState({
+				isOpen
+			});
 		}
 	};
 
@@ -360,6 +356,8 @@ class DataSearch extends Component {
 						? (<Downshift
 							onChange={this.onSuggestionSelected}
 							onOuterClick={this.handleOuterClick}
+							onStateChange={this.handleStateChange}
+							isOpen={this.state.isOpen}
 							render={({
 								getInputProps,
 								getItemProps,
@@ -373,14 +371,14 @@ class DataSearch extends Component {
 										placeholder: this.props.placeholder,
 										value: this.state.currentValue === null ? "" : this.state.currentValue,
 										onChange: this.onInputChange,
-										onBlur: this.handleBlur,
+										onBlur: this.props.onBlur,
 										onFocus: this.handleFocus,
 										onKeyPress: this.props.onKeyPress,
 										onKeyDown: this.handleKeyDown,
 										onKeyUp: this.props.onKeyUp
 									})} />
 									{
-										this.state.isOpen && suggestionsList.length
+										isOpen && suggestionsList.length
 											? (<div className={suggestions}>
 												<ul>
 													{

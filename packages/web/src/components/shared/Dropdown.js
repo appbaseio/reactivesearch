@@ -12,19 +12,19 @@ class Dropdown extends Component {
 		super(props);
 
 		this.state = {
-			open: false
+			isOpen: false
 		};
 	}
 
 	toggle = () => {
 		this.setState({
-			open: !this.state.open
+			isOpen: !this.state.isOpen
 		});
 	};
 
 	close = () => {
 		this.setState({
-			open: false
+			isOpen: false
 		});
 	};
 
@@ -32,9 +32,20 @@ class Dropdown extends Component {
 		this.props.onChange(item.key);
 
 		if (!this.props.multi) {
-			this.close();
+			this.setState({
+				isOpen: false
+			});
 		}
-	}
+	};
+
+	handleStateChange = (changes) => {
+		const { isOpen, type } = changes;
+		if (type === Downshift.stateChangeTypes.mouseUp) {
+			this.setState({
+				isOpen
+			});
+		}
+	};
 
 	render() {
 		const { items, selectedItem, placeholder } = this.props;
@@ -43,24 +54,33 @@ class Dropdown extends Component {
 			selectedItem={selectedItem}
 			onChange={this.onChange}
 			onOuterClick={this.close}
+			onStateChange={this.handleStateChange}
+			isOpen={this.state.isOpen}
 			render={({
-				isOpen,
+				getRootProps,
 				getButtonProps,
 				getItemProps,
+				isOpen,
 				highlightedIndex
 			}) => {
-				const { open } = this.state;
-				return (<div className={suggestionsContainer}>
+				let selected = selectedItem;
+
+				if (this.props.multi) {
+					selected = Object.keys(selectedItem)
+						.filter(item => !!selectedItem[item])
+						.join(", ");
+				}
+
+				return (<div {...getRootProps()} className={suggestionsContainer}>
 					<Select
 						{...getButtonProps()}
 						onClick={this.toggle}
-						onBlur={() => setTimeout(this.close, 200)}
 					>
-						{selectedItem ? selectedItem : placeholder}
-						<Chevron open={open} />
+						{selected ? selected : placeholder}
+						<Chevron open={isOpen} />
 					</Select>
 					{
-						open && items.length
+						isOpen && items.length
 							? (<div className={suggestions}>
 								<ul>
 									{
@@ -89,7 +109,7 @@ class Dropdown extends Component {
 
 Dropdown.propTypes = {
 	items: types.data,
-	selectedItem: types.string,
+	selectedItem: types.any,
 	onChange: types.func,
 	placeholder: types.placeholder,
 	multi: types.multiSelect
