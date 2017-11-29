@@ -209,7 +209,8 @@ SingleDropdownList.defaultProps = {
 	size: 100,
 	sortBy: "count",
 	showRadio: true,
-	placeholder: "Select a value"
+	placeholder: "Select a value",
+	URLParams: false
 }
 
 const mapStateToProps = (state, props) => ({
