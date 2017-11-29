@@ -3,7 +3,7 @@ import Downshift from "downshift";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
-import { suggestions } from "../../styles/Input";
+import { suggestionsContainer, suggestions } from "../../styles/Input";
 import Select from "../../styles/Select";
 import Chevron from "../../styles/Chevron";
 
@@ -17,7 +17,7 @@ const Dropdown = ({ items, selectedItem, onChange, placeholder }) => (
 			getItemProps,
 			highlightedIndex,
 			selectedItem: dsSelectedItem
-		}) => (<div>
+		}) => (<div className={suggestionsContainer}>
 			<Select {...getButtonProps()}>
 				{selectedItem ? selectedItem : placeholder}
 				<Chevron open={isOpen} />

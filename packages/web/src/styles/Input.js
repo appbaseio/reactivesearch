@@ -18,8 +18,8 @@ const suggestions = css`
 	background-color: #fff;
 	font-size: 0.9rem;
 	z-index: 2;
-	position: relative;
-	top: -1px;
+	position: absolute;
+	top: 41px;
 
 	ul {
 		margin: 0;
@@ -39,5 +39,9 @@ const suggestions = css`
 	}
 `;
 
+const suggestionsContainer = css`
+	position: relative;
+`;
+
 export default Input;
-export { suggestions };
+export { suggestionsContainer, suggestions };

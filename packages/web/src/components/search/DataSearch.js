@@ -19,7 +19,7 @@ import {
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import Title from "../../styles/Title";
-import Input, { suggestions } from "../../styles/Input";
+import Input, { suggestionsContainer, suggestions } from "../../styles/Input";
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -368,7 +368,7 @@ class DataSearch extends Component {
 								selectedItem,
 								highlightedIndex
 							}) => (
-								<div>
+								<div className={suggestionsContainer}>
 									<Input {...getInputProps({
 										placeholder: this.props.placeholder,
 										value: this.state.currentValue === null ? "" : this.state.currentValue,
