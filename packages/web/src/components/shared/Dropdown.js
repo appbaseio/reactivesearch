@@ -109,7 +109,7 @@ class Dropdown extends Component {
 
 Dropdown.propTypes = {
 	items: types.data,
-	selectedItem: types.any,
+	selectedItem: types.selectedValue,
 	onChange: types.func,
 	placeholder: types.placeholder,
 	multi: types.multiSelect
