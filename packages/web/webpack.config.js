@@ -5,7 +5,8 @@ module.exports = {
 	entry: {
 		TextField: "./examples/TextField/index.js",
 		MultiList: "./examples/MultiList/index.js",
-		SingleList: "./examples/SingleList/index.js"
+		SingleList: "./examples/SingleList/index.js",
+		DataSearch: "./examples/DataSearch/index.js"
 	},
 	output: {
 		path: path.join(__dirname, "examples"),
