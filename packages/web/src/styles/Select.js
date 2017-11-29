@@ -25,4 +25,39 @@ const Select = styled("button")`
 	}
 `;
 
+const item = {
+	width: "16px",
+	height: "16px",
+	scale: "4px"
+};
+
+const Tick = styled("span")`
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	position: relative;
+	user-select: none;
+	align-items: center;
+
+	&::after {
+		box-sizing: content-box;
+		content: "";
+		position: absolute;
+		background-color: transparent;
+		top: 50%;
+		left: 0;
+		width: 8px;
+		height: 4px;
+		margin-top: -4px;
+		border-style: solid;
+		border-color: ${props => props.theme.primaryColor};
+		border-width: 0 0 2px 2px;
+		border-radius: 0;
+		border-image: none;
+		transform: rotate(-45deg) scale(1);
+		transition: all 200ms ease-out;
+	}
+`;
+
 export default Select;
+export { Tick };

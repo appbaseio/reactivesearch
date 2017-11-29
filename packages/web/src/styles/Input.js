@@ -29,6 +29,8 @@ const suggestions = css`
 		overflow-y: auto;
 
 		li {
+			display: flex;
+			justify-content: space-between;
 			cursor: pointer;
 			padding: 10px;
 

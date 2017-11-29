@@ -4,7 +4,7 @@ import Downshift from "downshift";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import { suggestionsContainer, suggestions } from "../../styles/Input";
-import Select from "../../styles/Select";
+import Select, { Tick } from "../../styles/Select";
 import Chevron from "../../styles/Chevron";
 
 class Dropdown extends Component {
@@ -47,6 +47,15 @@ class Dropdown extends Component {
 		}
 	};
 
+	getBackgroundColor(selected, highlighted) {
+		if (highlighted) {
+			return "#eee";
+		} else if (selected) {
+			return "#fafafa";
+		}
+		return "#fff";
+	}
+
 	render() {
 		const { items, selectedItem, placeholder } = this.props;
 
@@ -65,9 +74,7 @@ class Dropdown extends Component {
 				let selected = selectedItem;
 
 				if (this.props.multi) {
-					selected = Object.keys(selectedItem)
-						.filter(item => !!selectedItem[item])
-						.join(", ");
+					selected = Object.keys(selectedItem).join(", ");
 				}
 
 				return (<div className={suggestionsContainer}>
@@ -89,10 +96,15 @@ class Dropdown extends Component {
 													{...getItemProps({ item })}
 													key={item.key}
 													style={{
-														backgroundColor: highlightedIndex === index ? "#eee" : "#fff"
+														backgroundColor: this.getBackgroundColor(!!selectedItem[item.key], highlightedIndex === index),
 													}}
 												>
 													{item.key}
+													{
+														!!selectedItem[item.key]
+															? (<Tick />)
+															: null
+													}
 												</li>
 											))
 									}

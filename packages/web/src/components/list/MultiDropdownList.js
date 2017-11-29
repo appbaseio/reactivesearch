@@ -68,8 +68,7 @@ class MultiDropdownList extends Component {
 			() => this.updateQueryOptions(nextProps)
 		);
 
-		const selectedValue = Object.keys(this.state.currentValue)
-			.filter(item => this.state.currentValue[item]);
+		const selectedValue = Object.keys(this.state.currentValue);
 
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected, true);
@@ -142,8 +141,13 @@ class MultiDropdownList extends Component {
 				currentValue[item] = true;
 			});
 		} else {
-			currentValue[value] = currentValue[value] ? false : true;
-			finalValues = Object.keys(currentValue).filter(item => currentValue[item]);
+			if (currentValue[value]) {
+				const { [value]: del, ...rest } = currentValue;
+				currentValue = { ...rest };
+			} else {
+				currentValue[value] = true;
+			}
+			finalValues = Object.keys(currentValue);
 		}
 
 		const performUpdate = () => {
