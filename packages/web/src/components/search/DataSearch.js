@@ -451,13 +451,15 @@ DataSearch.propTypes = {
 	onKeyDown: types.onKeyDown,
 	onKeyUp: types.onKeyUp,
 	autoFocus: types.autoFocus,
-	selectedValue: types.selectedValue
+	selectedValue: types.selectedValue,
+	URLParams: types.URLParams
 }
 
 DataSearch.defaultProps = {
 	placeholder: "Search",
 	autoSuggest: true,
-	queryFormat: "or"
+	queryFormat: "or",
+	URLParams: false
 }
 
 const mapStateToProps = (state, props) => ({
