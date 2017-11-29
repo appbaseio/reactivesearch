@@ -7,7 +7,6 @@ const Select = styled("button")`
 	align-items: center;
 	justify-content: space-between;
 	min-height: 42px;
-	word-wrap: break-word;
 	border-radius: 0;
 	outline: none;
 	padding: 5px 12px;
@@ -20,16 +19,18 @@ const Select = styled("button")`
 	user-select: none;
 	${transitions("all 0.3s ease")};
 
+	& > div {
+		width: calc(100% - 24px);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-align: left;
+	}
+
 	&:hover, &:focus {
 		background-color: #fcfcfc;
 	}
 `;
-
-const item = {
-	width: "16px",
-	height: "16px",
-	scale: "4px"
-};
 
 const Tick = styled("span")`
 	width: 16px;

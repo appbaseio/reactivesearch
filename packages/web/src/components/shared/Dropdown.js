@@ -81,8 +81,9 @@ class Dropdown extends Component {
 					<Select
 						{...getButtonProps()}
 						onClick={this.toggle}
+						title={selected ? selected : placeholder}
 					>
-						{selected ? selected : placeholder}
+						<div>{selected ? selected : placeholder}</div>
 						<Chevron open={isOpen} />
 					</Select>
 					{
