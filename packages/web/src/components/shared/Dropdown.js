@@ -96,7 +96,7 @@ class Dropdown extends Component {
 													{...getItemProps({ item })}
 													key={item.key}
 													style={{
-														backgroundColor: this.getBackgroundColor(!!selectedItem[item.key], highlightedIndex === index),
+														backgroundColor: this.getBackgroundColor(!!selectedItem[item.key], highlightedIndex === index)
 													}}
 												>
 													{item.key}
