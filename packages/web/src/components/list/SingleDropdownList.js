@@ -172,6 +172,7 @@ class SingleDropdownList extends Component {
 					onChange={this.setValue}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
+					labelField="key"
 				/>
 			</div>
 		);
