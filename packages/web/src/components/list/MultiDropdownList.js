@@ -209,11 +209,7 @@ class MultiDropdownList extends Component {
 	render() {
 		return (
 			<div>
-				{
-					this.props.title
-						? (<Title>{this.props.title}</Title>)
-						: null
-				}
+				{this.props.title && <Title>{this.props.title}</Title>}
 				<Dropdown
 					items={this.state.options}
 					onChange={this.setValue}

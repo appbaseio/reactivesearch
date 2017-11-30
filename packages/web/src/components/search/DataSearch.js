@@ -346,11 +346,7 @@ class DataSearch extends Component {
 
 		return (
 			<div>
-				{
-					this.props.title
-						? (<Title>{this.props.title}</Title>)
-						: null
-				}
+				{this.props.title && <Title>{this.props.title}</Title>}
 				{
 					this.props.autoSuggest
 						? (<Downshift

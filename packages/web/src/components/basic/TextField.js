@@ -117,11 +117,7 @@ class TextField extends Component {
 	render() {
 		return (
 			<div>
-				{
-					this.props.title
-						? (<Title>{this.props.title}</Title>)
-						: null
-				}
+				{this.props.title && <Title>{this.props.title}</Title>}
 				<Input
 					type="text"
 					placeholder={this.props.placeholder}

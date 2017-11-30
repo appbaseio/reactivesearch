@@ -170,11 +170,7 @@ class SingleList extends Component {
 	render() {
 		return (
 			<div>
-				{
-					this.props.title
-						? (<Title>{this.props.title}</Title>)
-						: null
-				}
+				{this.props.title && <Title>{this.props.title}</Title>}
 				<UL>
 					{
 						this.state.options.map(item => (
