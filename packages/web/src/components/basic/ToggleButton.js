@@ -153,12 +153,14 @@ ToggleButton.propTypes = {
 	react: types.react,
 	removeComponent: types.removeComponent,
 	title: types.title,
-	updateQuery: types.updateQuery
+	updateQuery: types.updateQuery,
+	showFilter: types.showFilter
 };
 
 ToggleButton.defaultProps = {
 	multiSelect: false,
-	URLParams: false
+	URLParams: false,
+	showFilter: true
 };
 
 const mapStateToProps = (state, props) => ({

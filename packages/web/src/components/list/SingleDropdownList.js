@@ -195,18 +195,18 @@ SingleDropdownList.propTypes = {
 	onQueryChange: types.onQueryChange,
 	placeholder: types.placeholder,
 	title: types.title,
-	showRadio: types.showInputControl,
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
-	URLParams: types.URLParams
+	URLParams: types.URLParams,
+	showFilter: types.showFilter
 }
 
 SingleDropdownList.defaultProps = {
 	size: 100,
 	sortBy: "count",
-	showRadio: true,
 	placeholder: "Select a value",
-	URLParams: false
+	URLParams: false,
+	showFilter: true
 }
 
 const mapStateToProps = (state, props) => ({

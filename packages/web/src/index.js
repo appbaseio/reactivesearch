@@ -9,6 +9,8 @@ import MultiList from "./components/list/MultiList";
 import SingleDropdownList from "./components/list/SingleDropdownList";
 import MultiDropdownList from "./components/list/MultiDropdownList";
 
+import SingleDropdownRange from "./components/range/SingleDropdownRange";
+
 import DataSearch from "./components/search/DataSearch";
 
 import ReactiveList from "./components/result/ReactiveList";
@@ -26,6 +28,9 @@ export {
 	MultiList,
 	SingleDropdownList,
 	MultiDropdownList,
+
+	// range
+	SingleDropdownRange,
 
 	// search
 	DataSearch,

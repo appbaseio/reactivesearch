@@ -29,7 +29,7 @@ class Dropdown extends Component {
 	};
 
 	onChange = (item) => {
-		this.props.onChange(item.key);
+		this.props.onChange(item[this.props.keyField]);
 
 		if (!this.props.multi) {
 			this.setState({
@@ -57,7 +57,7 @@ class Dropdown extends Component {
 	};
 
 	render() {
-		const { items, selectedItem, placeholder } = this.props;
+		const { items, selectedItem, placeholder, labelField, keyField } = this.props;
 
 		return (<Downshift
 			selectedItem={selectedItem}
@@ -95,14 +95,14 @@ class Dropdown extends Component {
 											.map((item, index) => (
 												<li
 													{...getItemProps({ item })}
-													key={item.key}
+													key={item[keyField]}
 													style={{
-														backgroundColor: this.getBackgroundColor(item.key, selectedItem, highlightedIndex === index)
+														backgroundColor: this.getBackgroundColor(item[keyField], selectedItem, highlightedIndex === index)
 													}}
 												>
-													{item.key}
+													{item[labelField]}
 													{
-														!!selectedItem[item.key]
+														this.props.multi && !!selectedItem[item[keyField]]
 															? (<Tick />)
 															: null
 													}
@@ -119,12 +119,19 @@ class Dropdown extends Component {
 	}
 }
 
+Dropdown.defaultProps = {
+	labelField: "label",
+	keyField: "key"
+}
+
 Dropdown.propTypes = {
 	items: types.data,
 	selectedItem: types.selectedValue,
 	onChange: types.func,
 	placeholder: types.placeholder,
-	multi: types.multiSelect
+	multi: types.multiSelect,
+	labelField: types.string,
+	keyField: types.string
 }
 
 export default Dropdown;

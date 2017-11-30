@@ -239,23 +239,23 @@ MultiDropdownList.propTypes = {
 	onQueryChange: types.onQueryChange,
 	placeholder: types.placeholder,
 	title: types.title,
-	showCheckbox: types.showInputControl,
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
 	queryFormat: types.queryFormatSearch,
 	URLParams: types.URLParams,
 	showCount: types.showCount,
-	size: types.size
+	size: types.size,
+	showFilter: types.showFilter
 }
 
 MultiDropdownList.defaultProps = {
 	size: 100,
 	sortBy: "count",
-	showCheckbox: true,
 	queryFormat: "or",
 	URLParams: false,
 	showCount: true,
-	placeholder: "Select values"
+	placeholder: "Select values",
+	showFilter: true
 }
 
 const mapStateToProps = (state, props) => ({

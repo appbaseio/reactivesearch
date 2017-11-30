@@ -8,33 +8,35 @@ import {
 	updateQuery
 } from "@appbaseio/reactivecore/lib/actions";
 import {
-	debounce,
+	getQueryOptions,
+	pushToAndClause,
 	checkValueChange,
-	checkPropChange
+	getAggsOrder,
+	checkPropChange,
+	checkSomePropChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
+
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
-import Input from "../../styles/Input";
 import Title from "../../styles/Title";
+import Dropdown from "../shared/Dropdown";
 
-class TextField extends Component {
+class SingleDropdownRange extends Component {
 	constructor(props) {
 		super(props);
 
-		this.type = "match";
 		this.state = {
-			currentValue: ""
+			currentValue: null
 		};
+		this.type = "range";
 	}
 
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected, true);
+		if (this.props.defaultSelected) {
+			this.setValue(this.props.defaultSelected);
 		}
 	}
 
@@ -44,10 +46,11 @@ class TextField extends Component {
 			nextProps.react,
 			() => this.setReact(nextProps)
 		);
+
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected, true, nextProps);
+			this.setValue(nextProps.defaultSelected, true);
 		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || "", true, nextProps);
+			this.setValue(nextProps.selectedValue, true);
 		}
 	}
 
@@ -61,33 +64,30 @@ class TextField extends Component {
 		}
 	}
 
-	defaultQuery = (value) => {
-		if (value && value.trim() !== "") {
+	defaultQuery = (value, props) => {
+		if (value) {
+			let selectedValue = props.data.find(item => item.label === value);
 			return {
-				[this.type]: {
-					[this.props.dataField]: value
+				range: {
+					[props.dataField]: {
+						gte: selectedValue.start,
+						lte: selectedValue.end,
+						boost: 2.0
+					}
 				}
 			};
 		}
 		return null;
 	}
 
-	handleTextChange = debounce((value) => {
-		this.updateQuery(value, this.props);
-	}, 300);
-
 	setValue = (value, isDefaultValue = false, props = this.props) => {
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value
 			});
-			if (isDefaultValue) {
-				this.updateQuery(value, props);
-			} else {
-				// debounce for handling text while typing
-				this.handleTextChange(value);
-			}
+			this.updateQuery(value, props);
 		}
+
 		checkValueChange(
 			props.componentId,
 			value,
@@ -95,14 +95,17 @@ class TextField extends Component {
 			props.onValueChange,
 			performUpdate
 		);
-	};
+	}
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
+		let callback = null;
+
 		let onQueryChange = null;
 		if (props.onQueryChange) {
 			onQueryChange = props.onQueryChange;
 		}
+
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
@@ -118,39 +121,41 @@ class TextField extends Component {
 		return (
 			<div>
 				{this.props.title && <Title>{this.props.title}</Title>}
-				<Input
-					type="text"
+				<Dropdown
+					items={this.props.data}
+					onChange={this.setValue}
+					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
-					onChange={(e) => this.setValue(e.target.value)}
-					value={this.state.currentValue}
+					keyField="label"
 				/>
 			</div>
 		);
 	}
 }
 
-TextField.propTypes = {
+SingleDropdownRange.propTypes = {
 	addComponent: types.addComponent,
 	componentId: types.componentId,
 	defaultSelected: types.string,
 	react: types.react,
 	removeComponent: types.removeComponent,
 	dataField: types.dataField,
-	title: types.title,
+	data: types.data,
 	beforeValueChange: types.beforeValueChange,
 	onValueChange: types.onValueChange,
 	customQuery: types.customQuery,
 	onQueryChange: types.onQueryChange,
 	updateQuery: types.updateQuery,
 	placeholder: types.placeholder,
-	selectedValue: types.selectedValue,
 	filterLabel: types.string,
+	selectedValue: types.selectedValue,
+	title: types.title,
 	URLParams: types.URLParams,
 	showFilter: types.showFilter
-};
+}
 
-TextField.defaultProps = {
-	placeholder: "Search",
+SingleDropdownRange.defaultProps = {
+	placeholder: "Select a value",
 	URLParams: false,
 	showFilter: true
 }
@@ -159,13 +164,11 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
 });
 
-const mapDispatchtoProps = (dispatch, props) => ({
+const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (updateQueryObject) => dispatch(
-		updateQuery(updateQueryObject)
-	)
+	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject))
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(TextField);
+export default connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownRange);

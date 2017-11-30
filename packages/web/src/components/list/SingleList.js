@@ -230,7 +230,8 @@ SingleList.defaultProps = {
 	sortBy: "count",
 	showRadio: true,
 	URLParams: false,
-	showCount: true
+	showCount: true,
+	showFilter: true
 }
 
 const mapStateToProps = (state, props) => ({
