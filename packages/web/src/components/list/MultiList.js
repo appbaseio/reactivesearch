@@ -42,7 +42,7 @@ class MultiList extends Component {
 		this.updateQueryOptions(this.props);
 
 		if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+			this.setValue(this.props.defaultSelected, true);
 		}
 	}
 
