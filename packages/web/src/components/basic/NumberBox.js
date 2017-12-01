@@ -31,7 +31,9 @@ class NumberBox extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
-		if (this.props.defaultSelected) {
+		if (this.props.selectedValue) {
+			this.setValue(this.props.selectedValue);
+		} else if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected);
 		}
 	}
@@ -174,13 +176,20 @@ NumberBox.propTypes = {
 	removeComponent: types.removeComponent,
 	title: types.title,
 	queryFormat: types.queryFormatNumberBox,
-	labelPosition: types.labelPosition
+	labelPosition: types.labelPosition,
+	URLParams: types.URLParams,
+	selectedValue: types.selectedValue
 };
 
 NumberBox.defaultProps = {
 	queryFormat: "gte",
-	labelPosition: "left"
+	labelPosition: "left",
+	URLParams: false
 };
+
+const mapStateToProps = (state, props) => ({
+	selectedValue: state.selectedValues[props.componentId] ? state.selectedValues[props.componentId].value : null
+});
 
 const mapDispatchtoProps = (dispatch, props) => ({
 	addComponent: component => dispatch(addComponent(component)),
@@ -190,4 +199,4 @@ const mapDispatchtoProps = (dispatch, props) => ({
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
 });
 
-export default connect(null, mapDispatchtoProps)(NumberBox);
+export default connect(mapStateToProps, mapDispatchtoProps)(NumberBox);

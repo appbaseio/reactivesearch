@@ -34,6 +34,7 @@ class Main extends Component {
 								start: 2,
 								end: 5
 							}}
+							URLParams
 						/>
 					</div>
 
