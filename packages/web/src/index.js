@@ -10,6 +10,7 @@ import SingleDropdownList from "./components/list/SingleDropdownList";
 import MultiDropdownList from "./components/list/MultiDropdownList";
 
 import SingleDropdownRange from "./components/range/SingleDropdownRange";
+import MultiDropdownRange from "./components/range/MultiDropdownRange";
 
 import DataSearch from "./components/search/DataSearch";
 
@@ -31,6 +32,7 @@ export {
 
 	// range
 	SingleDropdownRange,
+	MultiDropdownRange,
 
 	// search
 	DataSearch,
