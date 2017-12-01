@@ -8,7 +8,8 @@ module.exports = {
 		SingleList: "./examples/SingleList/index.js",
 		DataSearch: "./examples/DataSearch/index.js",
 		ToggleButton: "./examples/ToggleButton/index.js",
-		NumberBox: "./examples/NumberBox/index.js"
+		NumberBox: "./examples/NumberBox/index.js",
+		SingleDropdownList: "./examples/SingleDropdownList/index.js"
 	},
 	output: {
 		path: path.join(__dirname, "examples"),

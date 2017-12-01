@@ -35,7 +35,7 @@ class MultiDropdownRange extends Component {
 		this.type = "range";
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
@@ -123,7 +123,6 @@ class MultiDropdownRange extends Component {
 			this.setState({
 				currentValue
 			}, () => {
-				const query = props.customQuery || this.defaultQuery;
 				this.updateQuery(currentValue, props);
 			});
 		}

@@ -110,7 +110,6 @@ class NumberBox extends Component {
 			this.setState({
 				currentValue: value
 			}, () => {
-				const query = props.customQuery || this.defaultQuery;
 				this.updateQuery(value, props);
 			});
 		};

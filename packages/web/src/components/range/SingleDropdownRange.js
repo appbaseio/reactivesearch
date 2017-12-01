@@ -89,7 +89,6 @@ class SingleDropdownRange extends Component {
 			this.setState({
 				currentValue
 			}, () => {
-				const query = props.customQuery || this.defaultQuery;
 				this.updateQuery(currentValue, props);
 			});
 		}

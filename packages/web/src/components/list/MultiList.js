@@ -153,8 +153,9 @@ class MultiList extends Component {
 		const performUpdate = () => {
 			this.setState({
 				currentValue
+			}, () => {
+				this.updateQuery(finalValues, props);
 			});
-			this.updateQuery(finalValues, props);
 		}
 
 		checkValueChange(
