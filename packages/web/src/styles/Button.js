@@ -48,6 +48,8 @@ const pagination = css`
 `;
 
 const toggleButtons = css`
+	margin: 0 -3px;
+
 	a {
 		margin: 0 3px;
 	}
@@ -69,7 +71,8 @@ const primary = props => css`
 `;
 
 const large = () => css`
-	padding: 12px 24px;
+	min-height: 40px;
+	padding: 10px 20px;
 `;
 
 const disabled = css`

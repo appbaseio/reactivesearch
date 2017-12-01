@@ -93,7 +93,7 @@ class ToggleButton extends Component {
 			this.setState({
 				currentValue: value
 			}, () => {
-				this.updateQuery(currentValue, props);
+				this.updateQuery(value, props);
 			});
 		};
 		checkValueChange(
