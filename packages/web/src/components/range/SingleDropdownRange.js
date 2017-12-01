@@ -31,12 +31,12 @@ class SingleDropdownRange extends Component {
 		this.type = "range";
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
 		if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+			this.setValue(this.props.defaultSelected, true);
 		}
 	}
 
@@ -66,12 +66,11 @@ class SingleDropdownRange extends Component {
 
 	defaultQuery = (value, props) => {
 		if (value) {
-			let selectedValue = props.data.find(item => item.label === value);
 			return {
 				range: {
 					[props.dataField]: {
-						gte: selectedValue.start,
-						lte: selectedValue.end,
+						gte: value.start,
+						lte: value.end,
 						boost: 2.0
 					}
 				}
@@ -81,16 +80,23 @@ class SingleDropdownRange extends Component {
 	}
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
+		let currentValue = value;
+		if (isDefaultValue) {
+			currentValue = props.data.find(item => item.label === value) || null;
+		}
+
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value
+				currentValue
+			}, () => {
+				const query = props.customQuery || this.defaultQuery;
+				this.updateQuery(currentValue, props);
 			});
-			this.updateQuery(value, props);
 		}
 
 		checkValueChange(
 			props.componentId,
-			value,
+			currentValue,
 			props.beforeValueChange,
 			props.onValueChange,
 			performUpdate
@@ -127,6 +133,7 @@ class SingleDropdownRange extends Component {
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
 					keyField="label"
+					returnsObject
 				/>
 			</div>
 		);
