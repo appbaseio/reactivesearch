@@ -19,19 +19,18 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
-import Dropdown from "../shared/Dropdown";
+import { UL, Checkbox } from "../../styles/FormControlList";
 
-class MultiDropdownRange extends Component {
+class MultiRange extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			currentValue: [],
-			showModal: false
+			showModal: false,
+			selectedValues: {} // selectedValues hold the selected items as keys for O(1) complexity
 		};
 
-		// selectedValues hold the selected items as keys for O(1) complexity
-		this.selectedValues = {};
 		this.type = "range";
 	}
 
@@ -100,30 +99,32 @@ class MultiDropdownRange extends Component {
 	}
 
 	selectItem = (item, isDefaultValue = false, props = this.props) => {
-		let { currentValue } = this.state;
+		let { currentValue, selectedValues } = this.state;
 
 		if (!item) {
 			currentValue = [];
-			this.selectedValues = {};
+			selectedValues = {};
 		} else if (isDefaultValue) {
 			// checking if the items in defaultSeleted exist in the data prop
 			currentValue = props.data.filter(value => item.includes(value.label));
 			currentValue.forEach(value => {
-				this.selectedValues = { ...this.selectedValues, [value.label]: true };
+				selectedValues = { ...selectedValues, [value.label]: true };
 			});
 		} else {
-			if (this.selectedValues[item.label]) {
-				currentValue = currentValue.filter(value => value.label !== item.label);
-				const { [item.label]: del, ...selectedValues } = this.selectedValues;
-				this.selectedValues = selectedValues;
+			if (selectedValues[item]) {
+				currentValue = currentValue.filter(value => value.label !== item);
+				const { [item]: del, ...selected } = selectedValues;
+				selectedValues = selected;
 			} else {
-				currentValue = [...currentValue, item];
-				this.selectedValues = { ...this.selectedValues, [item.label]: true };
+				const currentItem = props.data.find(value => item === value.label);
+				currentValue = [...currentValue, currentItem];
+				selectedValues = { ...selectedValues, [item]: true };
 			}
 		}
 		const performUpdate = () => {
 			this.setState({
-				currentValue
+				currentValue,
+				selectedValues
 			}, () => {
 				this.updateQuery(currentValue, props);
 			});
@@ -168,21 +169,32 @@ class MultiDropdownRange extends Component {
 		return (
 			<div>
 				{this.props.title && <Title>{this.props.title}</Title>}
-				<Dropdown
-					items={this.props.data}
-					onChange={this.selectItem}
-					selectedItem={this.state.currentValue}
-					placeholder={this.props.placeholder}
-					keyField="label"
-					multi
-					returnsObject
-				/>
+				<UL>
+					{
+						this.props.data.map(item => (
+							<li key={item.label}>
+								<Checkbox
+									id={item.label}
+									name={this.props.componentId}
+									value={item.label}
+									onClick={e => this.selectItem(e.target.value)}
+									checked={!!this.state.selectedValues[item.label]}
+									onChange={() => {}}
+									show={this.props.showCheckbox}
+								/>
+								<label htmlFor={item.label}>
+									{item.label}
+								</label>
+							</li>
+						))
+					}
+				</UL>
 			</div>
 		);
 	}
 }
 
-MultiDropdownRange.propTypes = {
+MultiRange.propTypes = {
 	addComponent: types.addComponent,
 	componentId: types.componentId,
 	defaultSelected: types.stringArray,
@@ -200,13 +212,14 @@ MultiDropdownRange.propTypes = {
 	selectedValue: types.selectedValue,
 	title: types.title,
 	URLParams: types.URLParams,
-	showFilter: types.showFilter
+	showFilter: types.showFilter,
+	showCheckbox: types.showInputControl
 }
 
-MultiDropdownRange.defaultProps = {
-	placeholder: "Select a value",
+MultiRange.defaultProps = {
 	URLParams: false,
-	showFilter: true
+	showFilter: true,
+	showCheckbox: true
 }
 
 const mapStateToProps = (state, props) => ({
@@ -220,4 +233,4 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject))
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownRange);
+export default connect(mapStateToProps, mapDispatchtoProps)(MultiRange);
