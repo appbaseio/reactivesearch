@@ -33,7 +33,7 @@ class DataSearch extends Component {
 		this.internalComponent = props.componentId + "__internal";
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.props.addComponent(this.props.componentId);
 		this.props.addComponent(this.internalComponent);
 
