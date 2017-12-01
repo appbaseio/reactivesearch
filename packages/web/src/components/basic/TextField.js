@@ -27,7 +27,7 @@ class TextField extends Component {
 		};
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
