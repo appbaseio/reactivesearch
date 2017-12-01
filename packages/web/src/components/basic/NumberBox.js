@@ -27,7 +27,7 @@ class NumberBox extends Component {
 		};
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
@@ -109,8 +109,10 @@ class NumberBox extends Component {
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value
+			}, () => {
+				const query = props.customQuery || this.defaultQuery;
+				this.updateQuery(value, props);
 			});
-			this.updateQuery(value, props);
 		};
 		checkValueChange(
 			props.componentId,
