@@ -34,7 +34,7 @@ class MultiDropdownList extends Component {
 		this.internalComponent = props.componentId + "__internal";
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
@@ -42,7 +42,7 @@ class MultiDropdownList extends Component {
 		this.updateQueryOptions(this.props);
 
 		if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+			this.setValue(this.props.defaultSelected, true);
 		}
 	}
 
