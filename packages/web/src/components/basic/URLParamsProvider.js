@@ -11,7 +11,7 @@ class URLParamsProvider extends Component {
 			Object.keys(nextProps.selectedValues)
 				.forEach(component => {
 					if (nextProps.selectedValues[component].URLParams) {
-						this.setURL(component, nextProps.selectedValues[component].value);
+						this.setURL(component, this.getValue(nextProps.selectedValues[component].value));
 					} else {
 						this.props.params.delete(component);
 					}
@@ -20,12 +20,25 @@ class URLParamsProvider extends Component {
 		}
 	}
 
+	getValue(value) {
+		if (Array.isArray(value) && value.length) {
+			return value.map(item => this.renderValue(item));
+		} else if (typeof value === "object") {
+			// TODO: support for NestedList
+			if (value.label || value.key) {
+				return value.label || value.key;
+			}
+			return null;
+		}
+		return value;
+	}
+
 	setURL(component, value) {
 		if (!value || (typeof value === "string" && value.trim() === "") ||
 			(Array.isArray(value) && value.length === 0)) {
 			this.props.params.delete(component);
 		} else {
-			this.props.params.set(component, JSON.stringify(value));
+			this.props.params.set(component, JSON.stringify(this.getValue(value)));
 			this.pushToHistory();
 		}
 	}

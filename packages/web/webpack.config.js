@@ -9,7 +9,9 @@ module.exports = {
 		DataSearch: "./examples/DataSearch/index.js",
 		ToggleButton: "./examples/ToggleButton/index.js",
 		NumberBox: "./examples/NumberBox/index.js",
-		SingleDropdownList: "./examples/SingleDropdownList/index.js"
+		SingleDropdownList: "./examples/SingleDropdownList/index.js",
+		MultiDropdownList: "./examples/MultiDropdownList/index.js",
+		SingleDropdownRange: "./examples/SingleDropdownRange/index.js"
 	},
 	output: {
 		path: path.join(__dirname, "examples"),
