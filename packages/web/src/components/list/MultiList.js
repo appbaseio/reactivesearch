@@ -34,7 +34,7 @@ class MultiList extends Component {
 		this.internalComponent = props.componentId + "__internal";
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
