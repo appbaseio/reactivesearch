@@ -41,7 +41,9 @@ class SingleList extends Component {
 
 		this.updateQueryOptions(this.props);
 
-		if (this.props.defaultSelected) {
+		if (this.props.selectedValue) {
+			this.setValue(this.props.selectedValue);
+		} else if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected);
 		}
 	}

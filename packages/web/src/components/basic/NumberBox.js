@@ -37,15 +37,15 @@ class NumberBox extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () =>
-			this.setReact(nextProps)
-		);
-		checkPropChange(this.props.defaultSelected, nextProps.defaultSelected, () =>
-			this.setValue(nextProps.defaultSelected, nextProps)
-		);
-		checkPropChange(this.props.queryFormat, nextProps.queryFormat, () =>
-			this.updateQuery(this.state.currentValue, nextProps)
-		);
+		checkPropChange(this.props.react, nextProps.react, () => {
+			this.setReact(nextProps);
+		});
+		checkPropChange(this.props.defaultSelected, nextProps.defaultSelected, () => {
+			this.setValue(nextProps.defaultSelected, nextProps);
+		});
+		checkPropChange(this.props.queryFormat, nextProps.queryFormat, () => {
+			this.updateQuery(this.state.currentValue, nextProps);
+		});
 	}
 
 	componentWillUnmount() {

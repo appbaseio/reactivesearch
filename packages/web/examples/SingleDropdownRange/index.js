@@ -50,7 +50,7 @@ class Main extends Component {
 							onData={this.onData}
 							pagination
 							react={{
-								and: "CarSensor"
+								and: "PriceSensor"
 							}}
 						/>
 					</div>

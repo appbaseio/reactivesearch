@@ -14,7 +14,7 @@ class SelectedFilters extends Component {
 		if (isArray && value.length) {
 			const arrayToRender = value.map(item => this.renderValue(item));
 			return arrayToRender.join(", ");
-		} else if (typeof value === "object") {
+		} else if (value && typeof value === "object") {
 			// TODO: support for NestedList
 			if (value.label || value.key) {
 				return value.label || value.key;

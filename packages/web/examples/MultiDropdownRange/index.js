@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import {
 	ReactiveBase,
-	DataSearch,
+	MultiDropdownRange,
 	ReactiveList,
 	SelectedFilters
 } from "../../src";
@@ -25,10 +25,16 @@ class Main extends Component {
 			>
 				<div className="row">
 					<div className="col">
-						<DataSearch
-							dataField="name"
-							componentId="CarSensor"
-							placeholder="Search Cars"
+						<MultiDropdownRange
+							componentId="PriceSensor"
+							dataField="price"
+							title="MultiDropdownRange"
+							data={
+								[{ "start": 0, "end": 100, "label": "Cheap" },
+									{ "start": 101, "end": 200, "label": "Moderate" },
+									{ "start": 201, "end": 500, "label": "Pricey" },
+									{ "start": 501, "end": 1000, "label": "First Date" }]
+							}
 							URLParams
 						/>
 					</div>
@@ -44,7 +50,7 @@ class Main extends Component {
 							onData={this.onData}
 							pagination
 							react={{
-								and: "CarSensor"
+								and: "PriceSensor"
 							}}
 						/>
 					</div>

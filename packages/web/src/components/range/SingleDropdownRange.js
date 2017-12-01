@@ -35,7 +35,9 @@ class SingleDropdownRange extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
-		if (this.props.defaultSelected) {
+		if (this.props.selectedValue) {
+			this.setValue(this.props.selectedValue, true);
+		} else if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected, true);
 		}
 	}

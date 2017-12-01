@@ -39,7 +39,9 @@ class MultiDropdownRange extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
-		if (this.props.defaultSelected) {
+		if (this.props.selectedValue) {
+			this.selectItem(this.props.selectedValue, true);
+		} else if (this.props.defaultSelected) {
 			this.selectItem(this.props.defaultSelected, true);
 		}
 	}

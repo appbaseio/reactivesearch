@@ -22,8 +22,8 @@ class URLParamsProvider extends Component {
 
 	getValue(value) {
 		if (Array.isArray(value) && value.length) {
-			return value.map(item => this.renderValue(item));
-		} else if (typeof value === "object") {
+			return value.map(item => this.getValue(item));
+		} else if (value && typeof value === "object") {
 			// TODO: support for NestedList
 			if (value.label || value.key) {
 				return value.label || value.key;
