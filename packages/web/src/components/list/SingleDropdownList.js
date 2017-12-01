@@ -34,7 +34,7 @@ class SingleDropdownList extends Component {
 		this.internalComponent = props.componentId + "__internal";
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
@@ -110,8 +110,10 @@ class SingleDropdownList extends Component {
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value
+			}, () => {
+				const query = props.customQuery || this.defaultQuery;
+				this.updateQuery(value, props);
 			});
-			this.updateQuery(value, props);
 		}
 
 		checkValueChange(
