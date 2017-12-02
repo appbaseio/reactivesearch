@@ -98,15 +98,15 @@ const Button = styled("a")`
 	color: #424242;
 	cursor: pointer;
 	user-select: none;
-	${transitions("all 0.3s ease")}
+	${transitions("all 0.3s ease")};
 
 	&:hover, &:focus {
 		background-color: #ccc;
 	}
 
-	${props => props.primary ? primary : null}
-	${props => props.disabled ? disabled : null}
-	${props => props.large && large}
+	${props => props.primary ? primary : null};
+	${props => props.disabled ? disabled : null};
+	${props => props.large && large};
 `;
 
 export { pagination, filters, toggleButtons, numberBoxButtons };

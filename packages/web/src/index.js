@@ -17,6 +17,7 @@ import MultiDropdownRange from "./components/range/MultiDropdownRange";
 import DataSearch from "./components/search/DataSearch";
 
 import ReactiveList from "./components/result/ReactiveList";
+import ResultCard from "./components/result/ResultCard";
 
 export {
 	// basic
@@ -42,5 +43,6 @@ export {
 	DataSearch,
 
 	// result
-	ReactiveList
+	ReactiveList,
+	ResultCard
 }
