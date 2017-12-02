@@ -159,7 +159,7 @@ ToggleButton.propTypes = {
 };
 
 ToggleButton.defaultProps = {
-	multiSelect: false,
+	multiSelect: true,
 	URLParams: false,
 	showFilter: true
 };
