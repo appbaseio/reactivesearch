@@ -284,7 +284,7 @@ class ReactiveList extends Component {
 				</div>
 				{
 					this.state.isLoading && !this.props.pagination
-						? (<div style={{textAlign: "center", margin: "20px 0", color: "#666"}}>
+						? (<div style={{ textAlign: "center", margin: "20px 0", color: "#666" }}>
 							Loading...
 						</div>)
 						: null
