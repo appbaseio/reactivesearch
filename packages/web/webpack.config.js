@@ -12,7 +12,8 @@ module.exports = {
 		SingleDropdownList: "./examples/SingleDropdownList/index.js",
 		MultiDropdownList: "./examples/MultiDropdownList/index.js",
 		SingleDropdownRange: "./examples/SingleDropdownRange/index.js",
-		MultiDropdownRange: "./examples/MultiDropdownRange/index.js"
+		MultiDropdownRange: "./examples/MultiDropdownRange/index.js",
+		RangeSlider: "./examples/RangeSlider/index.js"
 	},
 	output: {
 		path: path.join(__dirname, "examples"),
