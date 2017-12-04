@@ -142,24 +142,24 @@ class SingleDropdownRange extends Component {
 }
 
 SingleDropdownRange.propTypes = {
-	addComponent: types.addComponent,
-	componentId: types.componentId,
+	addComponent: types.funcRequired,
+	componentId: types.stringRequired,
 	defaultSelected: types.string,
 	react: types.react,
-	removeComponent: types.removeComponent,
-	dataField: types.dataField,
+	removeComponent: types.funcRequired,
+	dataField: types.stringRequired,
 	data: types.data,
-	beforeValueChange: types.beforeValueChange,
-	onValueChange: types.onValueChange,
-	customQuery: types.customQuery,
-	onQueryChange: types.onQueryChange,
-	updateQuery: types.updateQuery,
-	placeholder: types.placeholder,
+	beforeValueChange: types.func,
+	onValueChange: types.func,
+	customQuery: types.func,
+	onQueryChange: types.func,
+	updateQuery: types.funcRequired,
+	placeholder: types.string,
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
 	title: types.title,
-	URLParams: types.URLParams,
-	showFilter: types.showFilter
+	URLParams: types.boolRequired,
+	showFilter: types.bool
 }
 
 SingleDropdownRange.defaultProps = {
