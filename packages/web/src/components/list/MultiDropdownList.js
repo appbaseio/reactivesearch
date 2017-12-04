@@ -70,7 +70,15 @@ class MultiDropdownList extends Component {
 			() => this.updateQueryOptions(nextProps)
 		);
 
-		const selectedValue = Object.keys(this.state.currentValue);
+		let selectedValue = Object.keys(this.state.currentValue);
+
+		if (this.props.selectAllLabel) {
+			selectedValue = selectedValue.filter(val => val !== this.props.selectAllLabel);
+
+			if (!!this.state.currentValue[this.props.selectAllLabel]) {
+				selectedValue = [this.props.selectAllLabel];
+			}
+		}
 
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected, true);
@@ -97,10 +105,10 @@ class MultiDropdownList extends Component {
 	defaultQuery = (value, props) => {
 		let query = null;
 		const type = props.queryFormat === "or" ? "terms" : "term";
-		if (this.selectAll) {
+		if (this.props.selectAllLabel && value.includes(this.props.selectAllLabel)) {
 			query = {
 				exists: {
-					field: [props.dataField]
+					field: props.dataField
 				}
 			};
 		} else if (value) {
@@ -130,24 +138,46 @@ class MultiDropdownList extends Component {
 			query = value.length ? listQuery : null;
 		}
 		return query;
-	}
+	};
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
+		const { selectAllLabel } = this.props;
 		let { currentValue } = this.state;
 		let finalValues = null;
 
-		if (isDefaultValue) {
+		if (selectAllLabel && value.includes(selectAllLabel)) {
+			if (!!currentValue[selectAllLabel]) {
+				currentValue = {};
+				finalValues = [];
+			} else {
+				this.state.options.forEach(item => {
+					currentValue[item.key] = true;
+				});
+				currentValue[selectAllLabel] = true;
+				finalValues = [selectAllLabel];
+			}
+		} else if (isDefaultValue) {
 			finalValues = value;
 			currentValue = {};
 			value && value.forEach(item => {
 				currentValue[item] = true;
 			});
+
+			if (selectAllLabel && selectAllLabel in currentValue) {
+				const { [selectAllLabel]: del, ...obj } = currentValue;
+				currentValue = { ...obj };
+			}
 		} else {
 			if (currentValue[value]) {
 				const { [value]: del, ...rest } = currentValue;
 				currentValue = { ...rest };
 			} else {
 				currentValue[value] = true;
+			}
+
+			if (selectAllLabel && selectAllLabel in currentValue) {
+				const { [selectAllLabel]: del, ...obj } = currentValue;
+				currentValue = { ...obj };
 			}
 			finalValues = Object.keys(currentValue);
 		}
@@ -184,7 +214,7 @@ class MultiDropdownList extends Component {
 			onQueryChange,
 			URLParams: props.URLParams
 		});
-	}
+	};
 
 	updateQueryOptions = (props) => {
 		const queryOptions = getQueryOptions(props);
@@ -207,14 +237,26 @@ class MultiDropdownList extends Component {
 			componentId: this.internalComponent,
 			query: null
 		});
-	}
+	};
 
 	render() {
+		let selectAll = [];
+
+		if (this.state.options.length === 0) {
+			return null;
+		}
+
+		if (this.props.selectAllLabel) {
+			selectAll = [{
+				key: this.props.selectAllLabel
+			}]
+		}
+
 		return (
 			<div>
 				{this.props.title && <Title>{this.props.title}</Title>}
 				<Dropdown
-					items={this.state.options}
+					items={[...selectAll , ...this.state.options]}
 					onChange={this.setValue}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
@@ -249,7 +291,8 @@ MultiDropdownList.propTypes = {
 	URLParams: types.URLParams,
 	showCount: types.showCount,
 	size: types.size,
-	showFilter: types.showFilter
+	showFilter: types.showFilter,
+	selectAllLabel: types.string
 }
 
 MultiDropdownList.defaultProps = {
