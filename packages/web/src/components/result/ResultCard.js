@@ -277,6 +277,11 @@ class ResultCard extends Component {
 						? this.renderPagination()
 						: null
 				}
+				{
+					this.props.total
+						? <p>{this.props.total} results found in {this.props.time}ms</p>
+						: null
+				}
 				<div className={container}>
 					{
 						results.map(item => this.renderAsCard(item))
@@ -317,7 +322,8 @@ ResultCard.propTypes = {
 	loadMore: types.loadMore,
 	pages: types.pages,
 	onAllData: types.onAllData,
-	onData: types.onData
+	onData: types.onData,
+	time: types.number
 }
 
 ResultCard.defaultProps = {
@@ -330,7 +336,8 @@ ResultCard.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
-	total: state.hits[props.componentId] && state.hits[props.componentId].total
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	time: state.hits[props.componentId] && state.hits[props.componentId].time || 0
 });
 
 const mapDispatchtoProps = dispatch => ({
