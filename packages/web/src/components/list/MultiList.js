@@ -142,50 +142,24 @@ class MultiList extends Component {
 		return query;
 	};
 
-	handleSelectAll = () => {
-		const { selectAllLabel } = this.props;
-		let { currentValue } = this.state;
-		let finalValues = null;
-
-		if (!!currentValue[selectAllLabel]) {
-			currentValue = {};
-			finalValues = [];
-		} else {
-			this.state.options.forEach(item => {
-				currentValue[item.key] = true;
-			});
-			currentValue[selectAllLabel] = true;
-			finalValues = [selectAllLabel];
-		}
-
-		const performUpdate = () => {
-			this.setState({
-				currentValue
-			}, () => {
-				this.updateQuery(finalValues, this.props);
-			});
-		}
-
-		checkValueChange(
-			this.props.componentId,
-			finalValues,
-			this.props.beforeValueChange,
-			this.props.onValueChange,
-			performUpdate
-		);
-	};
-
 	setValue = (value, isDefaultValue = false, props = this.props) => {
 		const { selectAllLabel } = this.props;
 		let { currentValue } = this.state;
 		let finalValues = null;
 
-		if (selectAllLabel && value.includes(selectAllLabel)) {
-			this.state.options.forEach(item => {
-				currentValue[item.key] = true;
-			});
-			currentValue[selectAllLabel] = true;
-			finalValues = Object.keys(currentValue);
+		if (selectAllLabel &&
+			((Array.isArray(value) && value.includes(selectAllLabel)) ||
+			(typeof value === "string" && value === selectAllLabel))) {
+			if (!!currentValue[selectAllLabel]) {
+				currentValue = {};
+				finalValues = [];
+			} else {
+				this.state.options.forEach(item => {
+					currentValue[item.key] = true;
+				});
+				currentValue[selectAllLabel] = true;
+				finalValues = [selectAllLabel];
+			}
 		} else if (isDefaultValue) {
 			finalValues = value;
 			currentValue = {};
@@ -309,7 +283,7 @@ class MultiList extends Component {
 									id={selectAllLabel}
 									name={selectAllLabel}
 									value={selectAllLabel}
-									onClick={this.handleSelectAll}
+									onClick={e => this.setValue(e.target.value)}
 									checked={!!this.state.currentValue[selectAllLabel]}
 									show={this.props.showCheckbox}
 								/>
