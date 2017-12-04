@@ -11,12 +11,6 @@ const Slider = styled("div")`
 		margin: 24px 12px;
 	}
 
-	.rheostat-background {
-		background-color: #fcfcfc;
-		border: 1px solid #eee;
-		position: relative;
-	}
-
 	.rheostat-progress {
 		background-color: #d8d8d8;
 		position: absolute;
@@ -40,11 +34,12 @@ const Slider = styled("div")`
 		height: 24px;
 	}
 
-	.rheostat-horizontal .rheostat-background {
+	.rheostat-background {
 		height: 4px;
-		background-color: #eee;
+		background-color: #c7c7c7;
 		top: 0px;
 		width: 100%;
+		position: relative;
 	}
 
 	.rheostat-horizontal .rheostat-progress {
