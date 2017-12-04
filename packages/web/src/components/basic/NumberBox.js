@@ -142,7 +142,7 @@ class NumberBox extends Component {
 
 	render() {
 		return (
-			<div>
+			<div style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title>{this.props.title}</Title>}
 				<Flex labelPosition={this.props.labelPosition} inline>
 					{this.props.data.label}
@@ -178,13 +178,17 @@ NumberBox.propTypes = {
 	queryFormat: types.queryFormatNumberBox,
 	labelPosition: types.labelPosition,
 	URLParams: types.boolRequired,
-	selectedValue: types.selectedValue
+	selectedValue: types.selectedValue,
+	style: types.style,
+	className: types.string
 };
 
 NumberBox.defaultProps = {
 	queryFormat: "gte",
 	labelPosition: "left",
-	URLParams: false
+	URLParams: false,
+	style: {},
+	className: null
 };
 
 const mapStateToProps = (state, props) => ({
