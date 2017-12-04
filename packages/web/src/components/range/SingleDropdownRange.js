@@ -126,7 +126,7 @@ class SingleDropdownRange extends Component {
 
 	render() {
 		return (
-			<div>
+			<div style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title>{this.props.title}</Title>}
 				<Dropdown
 					items={this.props.data}
@@ -159,13 +159,17 @@ SingleDropdownRange.propTypes = {
 	selectedValue: types.selectedValue,
 	title: types.title,
 	URLParams: types.boolRequired,
-	showFilter: types.bool
+	showFilter: types.bool,
+	style: types.style,
+	className: types.string
 }
 
 SingleDropdownRange.defaultProps = {
 	placeholder: "Select a value",
 	URLParams: false,
-	showFilter: true
+	showFilter: true,
+	style: {},
+	className: null
 }
 
 const mapStateToProps = (state, props) => ({
