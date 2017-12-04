@@ -94,7 +94,7 @@ class SingleList extends Component {
 	};
 
 	defaultQuery = (value, props) => {
-		if (this.selectAll) {
+		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
 			return {
 				exists: {
 					field: [props.dataField]
@@ -194,11 +194,30 @@ class SingleList extends Component {
 	}
 
 	render() {
+		const { selectAllLabel } = this.props;
+
 		return (
 			<div>
 				{this.props.title && <Title>{this.props.title}</Title>}
 				{this.renderSearch()}
 				<UL>
+					{
+						selectAllLabel
+							? (<li key={selectAllLabel}>
+								<Radio
+									id={selectAllLabel}
+									name={this.props.componentId}
+									value={selectAllLabel}
+									onClick={e => this.setValue(e.target.value)}
+									checked={this.state.currentValue === selectAllLabel}
+									show={this.props.showRadio}
+								/>
+								<label htmlFor={selectAllLabel}>
+									{selectAllLabel}
+								</label>
+							</li>)
+							: null
+					}
 					{
 						this.state.options
 							.filter(item => {
@@ -258,7 +277,8 @@ SingleList.propTypes = {
 	size: types.size,
 	showCount: types.showCount,
 	showSearch: types.bool,
-	placeholder: types.placeholder
+	placeholder: types.placeholder,
+	selectAllLabel: types.string
 }
 
 SingleList.defaultProps = {
