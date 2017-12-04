@@ -195,25 +195,26 @@ class MultiRange extends Component {
 }
 
 MultiRange.propTypes = {
-	addComponent: types.addComponent,
-	componentId: types.componentId,
+	addComponent: types.funcRequired,
+	componentId: types.stringRequired,
 	defaultSelected: types.stringArray,
 	react: types.react,
-	removeComponent: types.removeComponent,
+	removeComponent: types.funcRequired,
 	data: types.data,
-	dataField: types.dataField,
-	customQuery: types.customQuery,
-	beforeValueChange: types.beforeValueChange,
-	onValueChange: types.onValueChange,
-	onQueryChange: types.onQueryChange,
-	updateQuery: types.updateQuery,
+	dataField: types.stringRequired,
+	customQuery: types.func,
+	beforeValueChange: types.func,
+	onValueChange: types.func,
+	onQueryChange: types.func,
+	updateQuery: types.funcRequired,
 	supportedOrientations: types.supportedOrientations,
-	placeholder: types.placeholder,
+	placeholder: types.string,
 	selectedValue: types.selectedValue,
 	title: types.title,
-	URLParams: types.URLParams,
-	showFilter: types.showFilter,
-	showCheckbox: types.showInputControl
+	URLParams: types.boolRequired,
+	showFilter: types.bool,
+	showCheckbox: types.boolRequired,
+	filterLabel: types.filterLabel
 }
 
 MultiRange.defaultProps = {
