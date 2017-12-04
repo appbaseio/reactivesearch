@@ -9,7 +9,7 @@ const primary = props => css`
 const Slider = styled("div")`
 	.rheostat {
 		overflow: visible;
-		margin: 12px;
+		margin: 24px 12px;
 	}
 
 	.rheostat-background {
