@@ -20,6 +20,7 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
+import Input from "../../styles/Input";
 import { UL, Radio } from "../../styles/FormControlList";
 
 class SingleList extends Component {
@@ -28,7 +29,8 @@ class SingleList extends Component {
 
 		this.state = {
 			currentValue: "",
-			options: []
+			options: [],
+			searchTerm: ""
 		};
 		this.type = "term";
 		this.internalComponent = props.componentId + "__internal";
@@ -92,10 +94,10 @@ class SingleList extends Component {
 	};
 
 	defaultQuery = (value, props) => {
-		if (this.selectAll) {
+		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
 			return {
 				exists: {
-					field: [props.dataField]
+					field: props.dataField
 				}
 			};
 		} else if (value) {
@@ -106,7 +108,7 @@ class SingleList extends Component {
 			};
 		}
 		return null;
-	}
+	};
 
 	setValue = (value, props = this.props) => {
 		if (value == this.state.currentValue) {
@@ -145,7 +147,7 @@ class SingleList extends Component {
 			onQueryChange,
 			URLParams: props.URLParams
 		});
-	}
+	};
 
 	updateQueryOptions = (props) => {
 		const queryOptions = getQueryOptions(props);
@@ -168,33 +170,85 @@ class SingleList extends Component {
 			componentId: this.internalComponent,
 			query: null
 		});
-	}
+	};
+
+	handleInputChange = (e) => {
+		const { value } = e.target;
+		this.setState({
+			searchTerm: value
+		});
+	};
+
+	renderSearch = () => {
+		if (this.props.showSearch) {
+			return <Input
+				onChange={this.handleInputChange}
+				value={this.state.searchTerm}
+				placeholder={this.props.placeholder}
+				style={{
+					margin: "0 0 8px"
+				}}
+			/>
+		}
+		return null;
+	};
 
 	render() {
+		const { selectAllLabel } = this.props;
+
+		if (this.state.options.length === 0) {
+			return null;
+		}
+
 		return (
 			<div>
 				{this.props.title && <Title>{this.props.title}</Title>}
+				{this.renderSearch()}
 				<UL>
 					{
-						this.state.options.map(item => (
-							<li key={item.key}>
+						selectAllLabel
+							? (<li key={selectAllLabel}>
 								<Radio
-									id={item.key}
+									id={selectAllLabel}
 									name={this.props.componentId}
-									value={item.key}
+									value={selectAllLabel}
 									onClick={e => this.setValue(e.target.value)}
-									checked={this.state.currentValue === item.key}
+									checked={this.state.currentValue === selectAllLabel}
 									show={this.props.showRadio}
 								/>
-								<label htmlFor={item.key}>
-									{item.key}
-									{
-										this.props.showCount &&
-										` (${item.doc_count})`
-									}
+								<label htmlFor={selectAllLabel}>
+									{selectAllLabel}
 								</label>
-							</li>
-						))
+							</li>)
+							: null
+					}
+					{
+						this.state.options
+							.filter(item => {
+								if (this.props.showSearch && this.state.searchTerm) {
+									return item.key.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+								}
+								return true;
+							})
+							.map(item => (
+								<li key={item.key}>
+									<Radio
+										id={item.key}
+										name={this.props.componentId}
+										value={item.key}
+										onClick={e => this.setValue(e.target.value)}
+										checked={this.state.currentValue === item.key}
+										show={this.props.showRadio}
+									/>
+									<label htmlFor={item.key}>
+										{item.key}
+										{
+											this.props.showCount &&
+											` (${item.doc_count})`
+										}
+									</label>
+								</li>
+							))
 					}
 				</UL>
 			</div>
@@ -225,7 +279,9 @@ SingleList.propTypes = {
 	URLParams: types.boolRequired,
 	showFilter: types.bool,
 	size: types.number,
-	showCount: types.bool
+	showCount: types.bool,
+	showSearch: types.bool,
+	selectAllLabel: types.string
 }
 
 SingleList.defaultProps = {
@@ -234,7 +290,9 @@ SingleList.defaultProps = {
 	showRadio: true,
 	URLParams: false,
 	showCount: true,
-	showFilter: true
+	showFilter: true,
+	placeholder: "Search",
+	showSearch: true
 }
 
 const mapStateToProps = (state, props) => ({

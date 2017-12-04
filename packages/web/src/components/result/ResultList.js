@@ -17,8 +17,9 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Button, { pagination } from "../../styles/Button";
+import ListItem, { container, Title, Image } from "../../styles/ListItem";
 
-class ReactiveList extends Component {
+class ResultList extends Component {
 	constructor(props) {
 		super(props);
 
@@ -258,6 +259,21 @@ class ReactiveList extends Component {
 		return results;
 	};
 
+	renderAsCard = (item) => {
+		const result = this.props.onData(item);
+		return (<ListItem key={item._id} href={result.url} image={!!result.image} small={result.image_size === "small"}>
+			{
+				result.image
+					? <Image src={result.image} small={result.image_size === "small"}></Image>
+					: null
+			}
+			<article>
+				<Title>{result.title}</Title>
+				{result.desc}
+			</article>
+		</ListItem>);
+	};
+
 	renderResultStats = () => {
 		if (this.props.onResultStats) {
 			return this.props.onResultStats(this.props.total, this.props.time);
@@ -283,17 +299,18 @@ class ReactiveList extends Component {
 						: null
 				}
 				{
-					this.props.onAllData
-						? (this.props.onAllData(this.parseHits(this.props.hits), this.loadMore))
-						: (<div>
-							{
-								results.map(item => this.props.onData(item))
-							}
-						</div>)
+					this.props.pagination && this.props.paginationAt !== "bottom"
+						? this.renderPagination()
+						: null
 				}
+				<div className={container}>
+					{
+						results.map(item => this.renderAsCard(item))
+					}
+				</div>
 				{
 					this.state.isLoading && !this.props.pagination
-						? (<div>
+						? (<div style={{ textAlign: "center", margin: "20px 0", color: "#666" }}>
 							Loading...
 						</div>)
 						: null
@@ -308,25 +325,25 @@ class ReactiveList extends Component {
 	}
 }
 
-ReactiveList.propTypes = {
-	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
+ResultList.propTypes = {
+	addComponent: types.addComponent,
+	componentId: types.componentId,
 	sortBy: types.sortBy,
-	dataField: types.stringRequired,
-	setQueryOptions: types.funcRequired,
-	defaultQuery: types.func,
-	updateQuery: types.funcRequired,
-	size: types.number,
+	dataField: types.dataField,
+	setQueryOptions: types.setQueryOptions,
+	defaultQuery: types.defaultQuery,
+	updateQuery: types.updateQuery,
+	size: types.size,
 	react: types.react,
-	pagination: types.bool,
+	pagination: types.pagination,
 	paginationAt: types.paginationAt,
 	hits: types.hits,
-	total: types.number,
-	removeComponent: types.funcRequired,
-	loadMore: types.funcRequired,
-	pages: types.number,
-	onAllData: types.func,
-	onData: types.func,
+	total: types.total,
+	removeComponent: types.removeComponent,
+	loadMore: types.loadMore,
+	pages: types.pages,
+	onAllData: types.onAllData,
+	onData: types.onData,
 	time: types.number,
 	showResultStats: types.bool,
 	onResultStats: types.func,
@@ -334,7 +351,7 @@ ReactiveList.propTypes = {
 	isLoading: types.bool
 }
 
-ReactiveList.defaultProps = {
+ResultList.defaultProps = {
 	pagination: false,
 	paginationAt: "bottom",
 	pages: 5,
@@ -359,4 +376,4 @@ const mapDispatchtoProps = dispatch => ({
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append))
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveList);
+export default connect(mapStateToProps, mapDispatchtoProps)(ResultList);

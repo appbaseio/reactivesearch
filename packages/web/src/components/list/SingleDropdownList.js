@@ -92,10 +92,10 @@ class SingleDropdownList extends Component {
 	};
 
 	defaultQuery = (value, props) => {
-		if (this.selectAll) {
+		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
 			return {
 				exists: {
-					field: [props.dataField]
+					field: props.dataField
 				}
 			};
 		} else if (value) {
@@ -167,11 +167,23 @@ class SingleDropdownList extends Component {
 	}
 
 	render() {
+		let selectAll = [];
+
+		if (this.state.options.length === 0) {
+			return null;
+		}
+
+		if (this.props.selectAllLabel) {
+			selectAll = [{
+				key: this.props.selectAllLabel
+			}]
+		}
+
 		return (
 			<div>
 				{this.props.title && <Title>{this.props.title}</Title>}
 				<Dropdown
-					items={this.state.options}
+					items={[...selectAll , ...this.state.options]}
 					onChange={this.setValue}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
@@ -202,7 +214,8 @@ SingleDropdownList.propTypes = {
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
 	URLParams: types.boolRequired,
-	showFilter: types.bool
+	showFilter: types.bool,
+	selectAllLabel: types.string
 }
 
 SingleDropdownList.defaultProps = {

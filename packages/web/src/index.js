@@ -18,6 +18,8 @@ import RangeSlider from "./components/range/RangeSlider";
 import DataSearch from "./components/search/DataSearch";
 
 import ReactiveList from "./components/result/ReactiveList";
+import ResultCard from "./components/result/ResultCard";
+import ResultList from "./components/result/ResultList";
 
 export {
 	// basic
@@ -44,5 +46,7 @@ export {
 	DataSearch,
 
 	// result
-	ReactiveList
+	ReactiveList,
+	ResultCard,
+	ResultList
 }
