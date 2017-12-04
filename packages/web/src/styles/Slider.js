@@ -3,7 +3,6 @@ import styled from "react-emotion";
 
 const primary = props => css`
 	background-color: ${props.theme.primaryColor};
-	border-color: ${props.theme.primaryColor};
 `;
 
 const Slider = styled("div")`
@@ -26,7 +25,7 @@ const Slider = styled("div")`
 	}
 
 	.rheostat-handle {
-		border: 1px solid #d8d8d8;
+		border: 1px solid #9a9a9a;
 		${props => props.primary && primary}
 		background-color: #fff;
 		border-radius: 50%;
