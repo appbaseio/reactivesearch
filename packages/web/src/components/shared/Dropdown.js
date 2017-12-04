@@ -149,8 +149,8 @@ Dropdown.propTypes = {
 	items: types.data,
 	selectedItem: types.selectedValue,
 	onChange: types.func,
-	placeholder: types.placeholder,
-	multi: types.multiSelect,
+	placeholder: types.string,
+	multi: types.bool,
 	labelField: types.string,
 	keyField: types.string,
 	returnsObject: types.bool
