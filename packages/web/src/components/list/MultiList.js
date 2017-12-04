@@ -272,7 +272,7 @@ class MultiList extends Component {
 		}
 
 		return (
-			<div>
+			<div style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title>{this.props.title}</Title>}
 				{this.renderSearch()}
 				<UL>
@@ -353,7 +353,9 @@ MultiList.propTypes = {
 	showCount: types.bool,
 	size: types.number,
 	showSearch: types.bool,
-	selectAllLabel: types.string
+	selectAllLabel: types.string,
+	style: types.style,
+	className: types.string
 }
 
 MultiList.defaultProps = {
@@ -364,7 +366,9 @@ MultiList.defaultProps = {
 	URLParams: false,
 	showCount: true,
 	placeholder: "Search",
-	showSearch: true
+	showSearch: true,
+	style: {},
+	className: null
 }
 
 const mapStateToProps = (state, props) => ({
