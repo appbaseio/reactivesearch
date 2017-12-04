@@ -183,26 +183,26 @@ class SingleDropdownList extends Component {
 }
 
 SingleDropdownList.propTypes = {
-	componentId: types.componentId,
-	addComponent: types.addComponent,
-	dataField: types.dataField,
+	componentId: types.stringRequired,
+	addComponent: types.funcRequired,
+	dataField: types.stringRequired,
 	sortBy: types.sortByWithCount,
-	setQueryOptions: types.setQueryOptions,
-	updateQuery: types.updateQuery,
+	setQueryOptions: types.funcRequired,
+	updateQuery: types.funcRequired,
 	defaultSelected: types.string,
 	react: types.react,
 	options: types.options,
-	removeComponent: types.removeComponent,
-	beforeValueChange: types.beforeValueChange,
-	onValueChange: types.onValueChange,
-	customQuery: types.customQuery,
-	onQueryChange: types.onQueryChange,
-	placeholder: types.placeholder,
+	removeComponent: types.funcRequired,
+	beforeValueChange: types.func,
+	onValueChange: types.func,
+	customQuery: types.func,
+	onQueryChange: types.func,
+	placeholder: types.string,
 	title: types.title,
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
-	URLParams: types.URLParams,
-	showFilter: types.showFilter
+	URLParams: types.boolRequired,
+	showFilter: types.bool
 }
 
 SingleDropdownList.defaultProps = {
