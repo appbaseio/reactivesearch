@@ -270,7 +270,7 @@ class ReactiveList extends Component {
 	render() {
 		const results = this.parseHits(this.props.hits) || [];
 		return (
-			<div>
+			<div style={this.props.style} className={this.props.className}>
 				{this.props.isLoading && this.props.pagination && this.props.loader && this.props.loader}
 				{
 					this.props.showResultStats
@@ -331,7 +331,9 @@ ReactiveList.propTypes = {
 	showResultStats: types.bool,
 	onResultStats: types.func,
 	loader: types.title,
-	isLoading: types.bool
+	isLoading: types.bool,
+	style: types.style,
+	className: types.string
 }
 
 ReactiveList.defaultProps = {
@@ -340,7 +342,9 @@ ReactiveList.defaultProps = {
 	pages: 5,
 	size: 10,
 	from: 0,
-	showResultStats: true
+	showResultStats: true,
+	style: {},
+	className: null
 }
 
 const mapStateToProps = (state, props) => ({
