@@ -57,8 +57,8 @@ class SelectedFilters extends Component {
 
 SelectedFilters.propTypes = {
 	selectedValues: types.selectedValues,
-	setValue: types.setValue,
-	clearValues: types.clearValues,
+	setValue: types.func,
+	clearValues: types.func,
 	components: types.components
 };
 
