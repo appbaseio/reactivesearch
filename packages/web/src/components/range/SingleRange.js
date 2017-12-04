@@ -150,24 +150,24 @@ class SingleRange extends Component {
 }
 
 SingleRange.propTypes = {
-	addComponent: types.addComponent,
-	componentId: types.componentId,
+	addComponent: types.funcRequired,
+	componentId: types.stringRequired,
 	defaultSelected: types.string,
 	react: types.react,
-	removeComponent: types.removeComponent,
-	dataField: types.dataField,
+	removeComponent: types.funcRequired,
+	dataField: types.stringRequired,
 	data: types.data,
-	beforeValueChange: types.beforeValueChange,
-	onValueChange: types.onValueChange,
-	customQuery: types.customQuery,
-	onQueryChange: types.onQueryChange,
-	updateQuery: types.updateQuery,
+	beforeValueChange: types.func,
+	onValueChange: types.func,
+	customQuery: types.func,
+	onQueryChange: types.func,
+	updateQuery: types.funcRequired,
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
 	title: types.title,
-	URLParams: types.URLParams,
-	showFilter: types.showFilter,
-	showRadio: types.showInputControl
+	URLParams: types.boolRequired,
+	showFilter: types.bool,
+	showRadio: types.boolRequired
 }
 
 SingleRange.defaultProps = {
