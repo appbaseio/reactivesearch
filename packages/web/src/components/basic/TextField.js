@@ -116,7 +116,7 @@ class TextField extends Component {
 
 	render() {
 		return (
-			<div>
+			<div style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title>{this.props.title}</Title>}
 				<Input
 					type="text"
@@ -146,13 +146,17 @@ TextField.propTypes = {
 	selectedValue: types.selectedValue,
 	filterLabel: types.string,
 	URLParams: types.boolRequired,
-	showFilter: types.bool
+	showFilter: types.bool,
+	style: types.style,
+	className: types.string
 };
 
 TextField.defaultProps = {
 	placeholder: "Search",
 	URLParams: false,
-	showFilter: true
+	showFilter: true,
+	style: {},
+	className: null
 }
 
 const mapStateToProps = (state, props) => ({
