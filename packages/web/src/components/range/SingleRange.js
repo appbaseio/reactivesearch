@@ -123,7 +123,7 @@ class SingleRange extends Component {
 
 	render() {
 		return (
-			<div>
+			<div style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title>{this.props.title}</Title>}
 				<UL>
 					{
@@ -167,13 +167,17 @@ SingleRange.propTypes = {
 	title: types.title,
 	URLParams: types.boolRequired,
 	showFilter: types.bool,
-	showRadio: types.boolRequired
+	showRadio: types.boolRequired,
+	style: types.style,
+	className: types.string
 }
 
 SingleRange.defaultProps = {
 	URLParams: false,
 	showFilter: true,
-	showRadio: true
+	showRadio: true,
+	style: {},
+	className: null
 }
 
 const mapStateToProps = (state, props) => ({
