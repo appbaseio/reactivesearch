@@ -20,6 +20,7 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
+import Input from "../../styles/Input";
 import { UL, Radio } from "../../styles/FormControlList";
 
 class SingleList extends Component {
@@ -28,7 +29,8 @@ class SingleList extends Component {
 
 		this.state = {
 			currentValue: "",
-			options: []
+			options: [],
+			searchTerm: ""
 		};
 		this.type = "term";
 		this.internalComponent = props.componentId + "__internal";
@@ -170,31 +172,60 @@ class SingleList extends Component {
 		});
 	}
 
+	handleInputChange = (e) => {
+		const { value } = e.target;
+		this.setState({
+			searchTerm: value
+		});
+	}
+
+	renderSearch = () => {
+		if (this.props.showSearch) {
+			return <Input
+				onChange={this.handleInputChange}
+				value={this.state.searchTerm}
+				placeholder={this.props.placeholder}
+				style={{
+					margin: "0 0 8px"
+				}}
+			/>
+		}
+		return null;
+	}
+
 	render() {
 		return (
 			<div>
 				{this.props.title && <Title>{this.props.title}</Title>}
+				{this.renderSearch()}
 				<UL>
 					{
-						this.state.options.map(item => (
-							<li key={item.key}>
-								<Radio
-									id={item.key}
-									name={this.props.componentId}
-									value={item.key}
-									onClick={e => this.setValue(e.target.value)}
-									checked={this.state.currentValue === item.key}
-									show={this.props.showRadio}
-								/>
-								<label htmlFor={item.key}>
-									{item.key}
-									{
-										this.props.showCount &&
-										` (${item.doc_count})`
-									}
-								</label>
-							</li>
-						))
+						this.state.options
+							.filter(item => {
+								if (this.props.showSearch && this.state.searchTerm) {
+									return item.key.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+								}
+								return true;
+							})
+							.map(item => (
+								<li key={item.key}>
+									<Radio
+										id={item.key}
+										name={this.props.componentId}
+										value={item.key}
+										onClick={e => this.setValue(e.target.value)}
+										checked={this.state.currentValue === item.key}
+										show={this.props.showRadio}
+									/>
+									<label htmlFor={item.key}>
+										{item.key}
+										{
+											this.props.showCount &&
+											` (${item.doc_count})`
+										}
+									</label>
+								</li>
+							))
 					}
 				</UL>
 			</div>
@@ -225,7 +256,9 @@ SingleList.propTypes = {
 	URLParams: types.URLParams,
 	showFilter: types.showFilter,
 	size: types.size,
-	showCount: types.showCount
+	showCount: types.showCount,
+	showSearch: types.bool,
+	placeholder: types.placeholder
 }
 
 SingleList.defaultProps = {
@@ -234,7 +267,9 @@ SingleList.defaultProps = {
 	showRadio: true,
 	URLParams: false,
 	showCount: true,
-	showFilter: true
+	showFilter: true,
+	placeholder: "Search",
+	showSearch: true
 }
 
 const mapStateToProps = (state, props) => ({
