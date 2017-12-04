@@ -192,7 +192,7 @@ class RangeSlider extends Component {
 
 	render() {
 		return (
-			<Slider primary>
+			<Slider primary style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title>{this.props.title}</Title>}
 				{this.state.stats.length && this.props.showHistogram ? (
 					<HistogramContainer
@@ -246,7 +246,9 @@ RangeSlider.propTypes = {
 	title: types.title,
 	filterLabel: types.string,
 	rangeLabels: types.rangeLabels,
-	selectedValue: types.selectedValue
+	selectedValue: types.selectedValue,
+	style: types.style,
+	className: types.string
 };
 
 RangeSlider.defaultProps = {
@@ -256,7 +258,9 @@ RangeSlider.defaultProps = {
 	},
 	stepValue: 1,
 	showHistogram: true,
-	URLParams: false
+	URLParams: false,
+	style: {},
+	className: null
 };
 
 const mapStateToProps = (state, props) => ({
