@@ -284,8 +284,8 @@ class ResultList extends Component {
 						: null
 				}
 				{
-					this.props.total
-						? <p>{this.props.total} results found in {this.props.time}ms</p>
+					this.props.pagination && this.props.paginationAt !== "bottom"
+						? this.renderPagination()
 						: null
 				}
 				<div className={container}>
@@ -329,7 +329,9 @@ ResultList.propTypes = {
 	pages: types.pages,
 	onAllData: types.onAllData,
 	onData: types.onData,
-	time: types.number
+	time: types.number,
+	showResultStats: types.bool,
+	onResultStats: types.func
 }
 
 ResultList.defaultProps = {
@@ -337,7 +339,8 @@ ResultList.defaultProps = {
 	paginationAt: "bottom",
 	pages: 5,
 	size: 10,
-	from: 0
+	from: 0,
+	showResultStats: true
 }
 
 const mapStateToProps = (state, props) => ({

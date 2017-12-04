@@ -238,7 +238,7 @@ class ResultCard extends Component {
 				</Button>
 			</div>
 		)
-	}
+	};
 
 	highlightResults = (result) => {
 		const data = { ...result };
@@ -249,7 +249,7 @@ class ResultCard extends Component {
 			});
 		}
 		return data;
-	}
+	};
 
 	parseHits = (hits) => {
 		let results = null;
@@ -257,7 +257,7 @@ class ResultCard extends Component {
 			results = [...hits].map(this.highlightResults);
 		}
 		return results;
-	}
+	};
 
 	renderAsCard = (item) => {
 		const result = this.props.onData(item);
@@ -266,7 +266,16 @@ class ResultCard extends Component {
 			<Title>{result.title}</Title>
 			<article>{result.desc}</article>
 		</Card>);
-	}
+	};
+
+	renderResultStats = () => {
+		if (this.props.onResultStats) {
+			return this.props.onResultStats(this.props.total, this.props.time);
+		} else if (this.props.total) {
+			return <p>{this.props.total} results found in {this.props.time}ms</p>;
+		}
+		return null;
+	};
 
 	render() {
 		const results = this.parseHits(this.props.hits) || [];
@@ -278,8 +287,8 @@ class ResultCard extends Component {
 						: null
 				}
 				{
-					this.props.total
-						? <p>{this.props.total} results found in {this.props.time}ms</p>
+					this.props.pagination && this.props.paginationAt !== "bottom"
+						? this.renderPagination()
 						: null
 				}
 				<div className={container}>
@@ -323,7 +332,9 @@ ResultCard.propTypes = {
 	pages: types.pages,
 	onAllData: types.onAllData,
 	onData: types.onData,
-	time: types.number
+	time: types.number,
+	showResultStats: types.bool,
+	onResultStats: types.func
 }
 
 ResultCard.defaultProps = {
@@ -331,7 +342,8 @@ ResultCard.defaultProps = {
 	paginationAt: "bottom",
 	pages: 5,
 	size: 10,
-	from: 0
+	from: 0,
+	showResultStats: true
 }
 
 const mapStateToProps = (state, props) => ({

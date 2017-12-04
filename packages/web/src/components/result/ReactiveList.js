@@ -237,7 +237,7 @@ class ReactiveList extends Component {
 				</Button>
 			</div>
 		)
-	}
+	};
 
 	highlightResults = (result) => {
 		const data = { ...result };
@@ -248,7 +248,7 @@ class ReactiveList extends Component {
 			});
 		}
 		return data;
-	}
+	};
 
 	parseHits = (hits) => {
 		let results = null;
@@ -256,15 +256,24 @@ class ReactiveList extends Component {
 			results = [...hits].map(this.highlightResults);
 		}
 		return results;
-	}
+	};
+
+	renderResultStats = () => {
+		if (this.props.onResultStats) {
+			return this.props.onResultStats(this.props.total, this.props.time);
+		} else if (this.props.total) {
+			return <p>{this.props.total} results found in {this.props.time}ms</p>;
+		}
+		return null;
+	};
 
 	render() {
 		const results = this.parseHits(this.props.hits) || [];
 		return (
 			<div>
 				{
-					this.props.total
-						? <p>{this.props.total} results found in {this.props.time}ms</p>
+					this.props.showResultStats
+						? this.renderResultStats()
 						: null
 				}
 				{
@@ -317,7 +326,9 @@ ReactiveList.propTypes = {
 	pages: types.pages,
 	onAllData: types.onAllData,
 	onData: types.onData,
-	time: types.number
+	time: types.number,
+	showResultStats: types.bool,
+	onResultStats: types.func
 }
 
 ReactiveList.defaultProps = {
@@ -325,7 +336,8 @@ ReactiveList.defaultProps = {
 	paginationAt: "bottom",
 	pages: 5,
 	size: 10,
-	from: 0
+	from: 0,
+	showResultStats: true
 }
 
 const mapStateToProps = (state, props) => ({
