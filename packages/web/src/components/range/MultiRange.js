@@ -167,7 +167,7 @@ class MultiRange extends Component {
 
 	render() {
 		return (
-			<div>
+			<div style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title>{this.props.title}</Title>}
 				<UL>
 					{
@@ -214,13 +214,17 @@ MultiRange.propTypes = {
 	URLParams: types.boolRequired,
 	showFilter: types.bool,
 	showCheckbox: types.boolRequired,
-	filterLabel: types.filterLabel
+	filterLabel: types.filterLabel,
+	style: types.style,
+	className: types.string
 }
 
 MultiRange.defaultProps = {
 	URLParams: false,
 	showFilter: true,
-	showCheckbox: true
+	showCheckbox: true,
+	style: {},
+	className: null
 }
 
 const mapStateToProps = (state, props) => ({
