@@ -95,7 +95,7 @@ class SingleDropdownList extends Component {
 		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
 			return {
 				exists: {
-					field: [props.dataField]
+					field: props.dataField
 				}
 			};
 		} else if (value) {

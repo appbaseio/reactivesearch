@@ -97,7 +97,7 @@ class SingleList extends Component {
 		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
 			return {
 				exists: {
-					field: [props.dataField]
+					field: props.dataField
 				}
 			};
 		} else if (value) {
@@ -108,7 +108,7 @@ class SingleList extends Component {
 			};
 		}
 		return null;
-	}
+	};
 
 	setValue = (value, props = this.props) => {
 		if (value == this.state.currentValue) {
@@ -147,7 +147,7 @@ class SingleList extends Component {
 			onQueryChange,
 			URLParams: props.URLParams
 		});
-	}
+	};
 
 	updateQueryOptions = (props) => {
 		const queryOptions = getQueryOptions(props);
@@ -170,14 +170,14 @@ class SingleList extends Component {
 			componentId: this.internalComponent,
 			query: null
 		});
-	}
+	};
 
 	handleInputChange = (e) => {
 		const { value } = e.target;
 		this.setState({
 			searchTerm: value
 		});
-	}
+	};
 
 	renderSearch = () => {
 		if (this.props.showSearch) {
@@ -191,7 +191,7 @@ class SingleList extends Component {
 			/>
 		}
 		return null;
-	}
+	};
 
 	render() {
 		const { selectAllLabel } = this.props;
