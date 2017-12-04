@@ -28,9 +28,14 @@ class Main extends Component {
 						<RangeSlider
 							dataField="rating"
 							componentId="RangeSlider"
+							title="Range Slider"
 							range={{
-								start: 0,
+								start: 1,
 								end: 5
+							}}
+							rangeLabels={{
+								start: "Start",
+								end: "End"
 							}}
 						/>
 					</div>
