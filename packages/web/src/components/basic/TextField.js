@@ -130,23 +130,23 @@ class TextField extends Component {
 }
 
 TextField.propTypes = {
-	addComponent: types.addComponent,
-	componentId: types.componentId,
+	addComponent: types.funcRequired,
+	componentId: types.stringRequired,
 	defaultSelected: types.string,
 	react: types.react,
-	removeComponent: types.removeComponent,
-	dataField: types.dataField,
+	removeComponent: types.funcRequired,
+	dataField: types.stringRequired,
 	title: types.title,
-	beforeValueChange: types.beforeValueChange,
-	onValueChange: types.onValueChange,
-	customQuery: types.customQuery,
-	onQueryChange: types.onQueryChange,
-	updateQuery: types.updateQuery,
-	placeholder: types.placeholder,
+	beforeValueChange: types.func,
+	onValueChange: types.func,
+	customQuery: types.func,
+	onQueryChange: types.func,
+	updateQuery: types.funcRequired,
+	placeholder: types.string,
 	selectedValue: types.selectedValue,
 	filterLabel: types.string,
-	URLParams: types.URLParams,
-	showFilter: types.showFilter
+	URLParams: types.boolRequired,
+	showFilter: types.bool
 };
 
 TextField.defaultProps = {
