@@ -180,7 +180,7 @@ class SingleDropdownList extends Component {
 		}
 
 		return (
-			<div>
+			<div style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title>{this.props.title}</Title>}
 				<Dropdown
 					items={[...selectAll , ...this.state.options]}
@@ -215,7 +215,9 @@ SingleDropdownList.propTypes = {
 	selectedValue: types.selectedValue,
 	URLParams: types.boolRequired,
 	showFilter: types.bool,
-	selectAllLabel: types.string
+	selectAllLabel: types.string,
+	style: types.style,
+	className: types.string
 }
 
 SingleDropdownList.defaultProps = {
@@ -223,7 +225,9 @@ SingleDropdownList.defaultProps = {
 	sortBy: "count",
 	placeholder: "Select a value",
 	URLParams: false,
-	showFilter: true
+	showFilter: true,
+	style: {},
+	className: null
 }
 
 const mapStateToProps = (state, props) => ({
