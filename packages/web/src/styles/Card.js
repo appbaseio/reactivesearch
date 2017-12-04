@@ -1,6 +1,5 @@
 import { css } from "emotion";
 import styled from "react-emotion";
-import { transitions } from "polished";
 
 import Title from "./Title";
 
@@ -45,7 +44,7 @@ const Card = styled("a")`
 	box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
 	color: ${props => props.theme.textColor};
 	${props => props.href ? "cursor: pointer" : null};
-	${transitions("all 0.3s ease")};
+	transition: all 0.3s ease;
 
 	h2 {
 		width: 100%;

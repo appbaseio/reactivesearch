@@ -1,6 +1,6 @@
 import { css } from "emotion";
 import styled from "react-emotion";
-import { darken, transitions } from "polished";
+import darken from "polished/lib/color/darken";
 
 const filters = css`
 	margin: 8px -3px;
@@ -98,7 +98,7 @@ const Button = styled("a")`
 	color: #424242;
 	cursor: pointer;
 	user-select: none;
-	${transitions("all 0.3s ease")};
+	transition: all 0.3s ease;
 
 	&:hover, &:focus {
 		background-color: #ccc;

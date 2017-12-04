@@ -1,6 +1,6 @@
 import { css } from "emotion";
 import styled from "react-emotion";
-import { lighten } from "polished";
+import lighten from "polished/lib/color/lighten";
 
 const item = {
 	width: "16px",

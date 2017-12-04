@@ -1,6 +1,6 @@
 import { css } from "emotion";
 import styled from "react-emotion";
-import { lighten, transitions } from "polished";
+import lighten from "polished/lib/color/lighten";
 
 import Title from "./Title";
 
@@ -42,8 +42,7 @@ const ListItem = styled("a")`
 	padding: 10px;
 	border-bottom: 1px solid ${props => lighten(0.68, props.theme.textColor)};
 	color: ${props => props.theme.textColor};
-	${props => props.href ? "cursor: pointer" : null};
-	${transitions("all 0.3s ease")};
+	${props => props.href ? "cursor: pointer" : null}; all 0.3s ease;
 
 	&:hover, &:focus {
 		background-color: #fdfefd;

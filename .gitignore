@@ -4,3 +4,4 @@ logs
 *.log
 npm-debug.log*
 lib
+stats.json

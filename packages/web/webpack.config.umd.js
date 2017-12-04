@@ -70,7 +70,7 @@ module.exports = {
 		}),
 		new CompressionPlugin({
 			asset: "[path].gzip[query]",
-			algorithm: "zopfli",
+			algorithm: "gzip",
 			test: /\.(js|css)$/
 		})
 	]

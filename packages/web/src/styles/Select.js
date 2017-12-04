@@ -1,5 +1,4 @@
 import styled from "react-emotion";
-import { transitions } from "polished";
 
 const Select = styled("button")`
 	width: 100%;
@@ -17,7 +16,7 @@ const Select = styled("button")`
 	color: #424242;
 	cursor: pointer;
 	user-select: none;
-	${transitions("all 0.3s ease")};
+	transition: all 0.3s ease;
 
 	& > div {
 		width: calc(100% - 24px);
