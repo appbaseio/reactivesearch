@@ -124,7 +124,7 @@ class ToggleButton extends Component {
 
 	render() {
 		return (
-			<div className={toggleButtons}>
+			<div style={this.props.style} className={`${toggleButtons} ${this.props.className}`}>
 				{
 					this.props.title &&
 					<Title>{this.props.title}</Title>
@@ -156,13 +156,17 @@ ToggleButton.propTypes = {
 	title: types.title,
 	updateQuery: types.funcRequired,
 	showFilter: types.bool,
-	filterLabel: types.string
+	filterLabel: types.string,
+	style: types.style,
+	className: types.string
 };
 
 ToggleButton.defaultProps = {
 	multiSelect: true,
 	URLParams: false,
-	showFilter: true
+	showFilter: true,
+	style: {},
+	className: null
 };
 
 const mapStateToProps = (state, props) => ({
