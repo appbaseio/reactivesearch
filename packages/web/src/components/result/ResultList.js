@@ -17,9 +17,9 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Button, { pagination } from "../../styles/Button";
-import Card, { container, Title, Image } from "../../styles/Card";
+import ListItem, { container, Title, Image } from "../../styles/ListItem";
 
-class ResultCard extends Component {
+class ResultList extends Component {
 	constructor(props) {
 		super(props);
 
@@ -261,11 +261,17 @@ class ResultCard extends Component {
 
 	renderAsCard = (item) => {
 		const result = this.props.onData(item);
-		return (<Card key={item._id} href={result.url}>
-			<Image src={result.image}></Image>
-			<Title>{result.title}</Title>
-			<article>{result.desc}</article>
-		</Card>);
+		return (<ListItem key={item._id} href={result.url} image={!!result.image} small={result.image_size === "small"}>
+			{
+				result.image
+					? <Image src={result.image} small={result.image_size === "small"}></Image>
+					: null
+			}
+			<article>
+				<Title>{result.title}</Title>
+				{result.desc}
+			</article>
+		</ListItem>);
 	}
 
 	render() {
@@ -299,7 +305,7 @@ class ResultCard extends Component {
 	}
 }
 
-ResultCard.propTypes = {
+ResultList.propTypes = {
 	addComponent: types.addComponent,
 	componentId: types.componentId,
 	sortBy: types.sortBy,
@@ -320,7 +326,7 @@ ResultCard.propTypes = {
 	onData: types.onData
 }
 
-ResultCard.defaultProps = {
+ResultList.defaultProps = {
 	pagination: false,
 	paginationAt: "bottom",
 	pages: 5,
@@ -342,4 +348,4 @@ const mapDispatchtoProps = dispatch => ({
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append))
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(ResultCard);
+export default connect(mapStateToProps, mapDispatchtoProps)(ResultList);
