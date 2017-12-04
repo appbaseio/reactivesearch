@@ -196,6 +196,10 @@ class SingleList extends Component {
 	render() {
 		const { selectAllLabel } = this.props;
 
+		if (this.state.options.length === 0) {
+			return null;
+		}
+
 		return (
 			<div>
 				{this.props.title && <Title>{this.props.title}</Title>}
