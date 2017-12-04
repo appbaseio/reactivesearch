@@ -145,17 +145,18 @@ class ToggleButton extends Component {
 }
 
 ToggleButton.propTypes = {
-	addComponent: types.addComponent,
-	componentId: types.componentId,
+	addComponent: types.funcRequired,
+	componentId: types.stringRequired,
 	data: types.data,
 	selectedValue: types.selectedValue,
 	defaultSelected: types.stringArray,
-	multiSelect: types.multiSelect,
+	multiSelect: types.bool,
 	react: types.react,
-	removeComponent: types.removeComponent,
+	removeComponent: types.funcRequired,
 	title: types.title,
-	updateQuery: types.updateQuery,
-	showFilter: types.showFilter
+	updateQuery: types.funcRequired,
+	showFilter: types.bool,
+	filterLabel: types.string
 };
 
 ToggleButton.defaultProps = {
