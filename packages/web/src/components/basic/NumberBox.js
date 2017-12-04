@@ -168,16 +168,16 @@ class NumberBox extends Component {
 }
 
 NumberBox.propTypes = {
-	addComponent: types.addComponent,
-	componentId: types.componentId,
+	addComponent: types.funcRequired,
+	componentId: types.stringRequired,
 	defaultSelected: types.number,
 	data: types.dataNumberBox,
 	react: types.react,
-	removeComponent: types.removeComponent,
+	removeComponent: types.funcRequired,
 	title: types.title,
 	queryFormat: types.queryFormatNumberBox,
 	labelPosition: types.labelPosition,
-	URLParams: types.URLParams,
+	URLParams: types.boolRequired,
 	selectedValue: types.selectedValue
 };
 
