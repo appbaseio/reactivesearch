@@ -238,7 +238,7 @@ class ResultList extends Component {
 				</Button>
 			</div>
 		)
-	}
+	};
 
 	highlightResults = (result) => {
 		const data = { ...result };
@@ -249,7 +249,7 @@ class ResultList extends Component {
 			});
 		}
 		return data;
-	}
+	};
 
 	parseHits = (hits) => {
 		let results = null;
@@ -257,7 +257,7 @@ class ResultList extends Component {
 			results = [...hits].map(this.highlightResults);
 		}
 		return results;
-	}
+	};
 
 	renderAsCard = (item) => {
 		const result = this.props.onData(item);
@@ -272,12 +272,27 @@ class ResultList extends Component {
 				{result.desc}
 			</article>
 		</ListItem>);
-	}
+	};
+
+	renderResultStats = () => {
+		if (this.props.onResultStats) {
+			return this.props.onResultStats(this.props.total, this.props.time);
+		} else if (this.props.total) {
+			return <p>{this.props.total} results found in {this.props.time}ms</p>;
+		}
+		return null;
+	};
 
 	render() {
 		const results = this.parseHits(this.props.hits) || [];
 		return (
 			<div>
+				{this.props.isLoading && this.props.pagination && this.props.loader && this.props.loader}
+				{
+					this.props.showResultStats
+						? this.renderResultStats()
+						: null
+				}
 				{
 					this.props.pagination && this.props.paginationAt !== "bottom"
 						? this.renderPagination()
@@ -331,7 +346,9 @@ ResultList.propTypes = {
 	onData: types.onData,
 	time: types.number,
 	showResultStats: types.bool,
-	onResultStats: types.func
+	onResultStats: types.func,
+	loader: types.title,
+	isLoading: types.bool
 }
 
 ResultList.defaultProps = {
@@ -346,7 +363,8 @@ ResultList.defaultProps = {
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
-	time: state.hits[props.componentId] && state.hits[props.componentId].time || 0
+	time: state.hits[props.componentId] && state.hits[props.componentId].time || 0,
+	isLoading: state.isLoading[props.componentId] || false
 });
 
 const mapDispatchtoProps = dispatch => ({

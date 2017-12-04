@@ -271,6 +271,7 @@ class ReactiveList extends Component {
 		const results = this.parseHits(this.props.hits) || [];
 		return (
 			<div>
+				{this.props.isLoading && this.props.pagination && this.props.loader && this.props.loader}
 				{
 					this.props.showResultStats
 						? this.renderResultStats()
@@ -328,7 +329,9 @@ ReactiveList.propTypes = {
 	onData: types.onData,
 	time: types.number,
 	showResultStats: types.bool,
-	onResultStats: types.func
+	onResultStats: types.func,
+	loader: types.title,
+	isLoading: types.bool
 }
 
 ReactiveList.defaultProps = {
@@ -343,7 +346,8 @@ ReactiveList.defaultProps = {
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
-	time: state.hits[props.componentId] && state.hits[props.componentId].time || 0
+	time: state.hits[props.componentId] && state.hits[props.componentId].time || 0,
+	isLoading: state.isLoading[props.componentId] || false
 });
 
 const mapDispatchtoProps = dispatch => ({
