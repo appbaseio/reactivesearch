@@ -57,10 +57,10 @@ class ReactiveBase extends Component {
 }
 
 ReactiveBase.propTypes = {
-	type: types.type,
-	url: types.url,
-	credentials: types.credentials,
-	app: types.app,
+	type: types.string,
+	url: types.string,
+	credentials: types.string,
+	app: types.stringRequired,
 	children: types.children
 }
 
