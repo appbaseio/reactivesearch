@@ -345,7 +345,7 @@ class DataSearch extends Component {
 			: this.state.suggestions;
 
 		return (
-			<div>
+			<div style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title>{this.props.title}</Title>}
 				{
 					this.props.autoSuggest
@@ -448,7 +448,9 @@ DataSearch.propTypes = {
 	selectedValue: types.selectedValue,
 	URLParams: types.boolRequired,
 	showFilter: types.bool,
-	filterLabel: types.string
+	filterLabel: types.string,
+	style: types.style,
+	className: types.string
 }
 
 DataSearch.defaultProps = {
@@ -456,7 +458,9 @@ DataSearch.defaultProps = {
 	autoSuggest: true,
 	queryFormat: "or",
 	URLParams: false,
-	showFilter: true
+	showFilter: true,
+	style: {},
+	className: null
 }
 
 const mapStateToProps = (state, props) => ({
