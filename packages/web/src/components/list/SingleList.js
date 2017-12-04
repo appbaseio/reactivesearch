@@ -201,7 +201,7 @@ class SingleList extends Component {
 		}
 
 		return (
-			<div>
+			<div style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title>{this.props.title}</Title>}
 				{this.renderSearch()}
 				<UL>
@@ -281,7 +281,9 @@ SingleList.propTypes = {
 	size: types.number,
 	showCount: types.bool,
 	showSearch: types.bool,
-	selectAllLabel: types.string
+	selectAllLabel: types.string,
+	style: types.style,
+	className: types.string
 }
 
 SingleList.defaultProps = {
@@ -292,7 +294,9 @@ SingleList.defaultProps = {
 	showCount: true,
 	showFilter: true,
 	placeholder: "Search",
-	showSearch: true
+	showSearch: true,
+	style: {},
+	className: null
 }
 
 const mapStateToProps = (state, props) => ({
