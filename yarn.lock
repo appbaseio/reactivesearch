@@ -9,6 +9,20 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
+"@appbaseio/reactivesearch@^2.0.0":
+  version "2.0.0-alpha"
+  dependencies:
+    "@appbaseio/reactivecore" "^1.0.0"
+    appbase-js "^2.2.1"
+    downshift "^1.20.0"
+    emotion "^8.0.11"
+    emotion-theming "^8.0.11"
+    polished "^1.9.0"
+    react-emotion "^8.0.11"
+    react-redux "^5.0.6"
+    rheostat "^2.1.1"
+    url-search-params "^0.10.0"
+
 "@babel/code-frame@7.0.0-beta.31":
   version "7.0.0-beta.31"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.31.tgz#473d021ecc573a2cce1c07d5b509d5215f46ba35"
