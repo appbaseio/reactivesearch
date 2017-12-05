@@ -92,6 +92,10 @@ class ReactiveList extends Component {
 			this.props.setQueryOptions(this.props.componentId, options);
 		}
 
+		if (this.props.stream !== nextProps.stream) {
+			this.props.setStreaming(nextProps.componentId, nextProps.stream);
+		}
+
 		if (!isEqual(nextProps.react, this.props.react)) {
 			this.setReact(nextProps);
 		}
