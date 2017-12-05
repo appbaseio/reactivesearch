@@ -354,12 +354,11 @@ class DataSearch extends Component {
 							onOuterClick={this.handleOuterClick}
 							onStateChange={this.handleStateChange}
 							isOpen={this.state.isOpen}
+							itemToString={i => i.label}
 							render={({
 								getInputProps,
 								getItemProps,
 								isOpen,
-								inputValue,
-								selectedItem,
 								highlightedIndex
 							}) => (
 								<div className={suggestionsContainer}>
