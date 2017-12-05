@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {
 	addComponent,
 	removeComponent,
+	setStreaming,
 	watchComponent,
 	setQueryOptions,
 	updateQuery,
@@ -34,6 +35,10 @@ class ReactiveList extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
+
+		if (this.props.stream) {
+			this.props.setStreaming(this.props.componentId, true);
+		}
 
 		const options = getQueryOptions(this.props);
 		if (this.props.sortBy) {
@@ -333,7 +338,9 @@ ReactiveList.propTypes = {
 	loader: types.title,
 	isLoading: types.bool,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	stream: types.bool,
+	setStreaming: types.func
 }
 
 ReactiveList.defaultProps = {
@@ -357,6 +364,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
+	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject)),
