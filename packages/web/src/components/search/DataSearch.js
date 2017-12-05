@@ -354,7 +354,7 @@ class DataSearch extends Component {
 							onOuterClick={this.handleOuterClick}
 							onStateChange={this.handleStateChange}
 							isOpen={this.state.isOpen}
-							itemToString={i => i.label}
+							itemToString={i => i}
 							render={({
 								getInputProps,
 								getItemProps,
