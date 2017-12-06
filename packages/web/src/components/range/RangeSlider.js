@@ -8,6 +8,7 @@ import {
 	setQueryOptions
 } from "@appbaseio/reactivecore/lib/actions";
 import {
+	isEqual,
 	checkValueChange,
 	checkPropChange,
 	checkSomePropChange
@@ -71,13 +72,12 @@ class RangeSlider extends Component {
 				stats: options
 			});
 		});
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleChange(
 				[nextProps.defaultSelected.start, nextProps.defaultSelected.end],
 				nextProps
 			);
-		} else if (this.state.currentValue !== nextProps.selectedValue
-			&& (nextProps.selectedValue || nextProps.selectedValue === null)) {
+		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
 			this.handleChange(nextProps.selectedValue);
 		}
 	}

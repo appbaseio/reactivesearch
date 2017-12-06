@@ -8,6 +8,7 @@ import {
 	updateQuery
 } from "@appbaseio/reactivecore/lib/actions";
 import {
+	isEqual,
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
@@ -53,9 +54,9 @@ class MultiDropdownRange extends Component {
 			() => this.setReact(nextProps)
 		);
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.selectItem(nextProps.defaultSelected, true);
-		} else if (this.state.currentValue !== nextProps.selectedValue
+		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)
 			&& (nextProps.selectedValue || nextProps.selectedValue === null)) {
 			this.selectItem(nextProps.selectedValue, true);
 		}
