@@ -86,6 +86,10 @@ class RangeSlider extends Component {
 			console.warn(`stepValue for RangeSlider ${nextProps.componentId} should be greater than 0 and less than or equal to ${upperLimit}`);
 			return false;
 		}
+		if (!this.isIntervalValid(nextProps)) {
+			console.error(`interval for RangeSlider ${nextProps.componentId} should be greater than or equal to ${Math.ceil((nextProps.range.end - nextProps.range.start) / 100)}`)
+			return false;
+		}
 		return true;
 	}
 
@@ -130,6 +134,9 @@ class RangeSlider extends Component {
 	};
 
 	histogramQuery = (props) => {
+		if (!this.isIntervalValid(props)) {
+			return null;
+		}
 		return {
 			[props.dataField]: {
 				histogram: {
@@ -164,6 +171,10 @@ class RangeSlider extends Component {
 	handleSlider = ({ values }) => {
 		this.handleChange(values);
 	};
+
+	isIntervalValid = (props) => (
+		props.interval >= Math.ceil((props.range.end - props.range.start) / 100)
+	);
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
