@@ -40,6 +40,7 @@
 		"quotes": ["error", "double"],
 		"comma-dangle": ["error", "never"],
 		"object-curly-spacing": [2, "always"],
+		"no-dupe-keys": "error",
 
 		"import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false}],
 		"import/no-unresolved": 0,

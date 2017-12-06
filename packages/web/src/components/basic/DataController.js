@@ -88,7 +88,6 @@ DataController.propTypes = {
 	onValueChange: types.func,
 	customQuery: types.func,
 	onQueryChange: types.func,
-	beforeValueChange: types.func,
 	updateQuery: types.funcRequired,
 	filterLabel: types.string,
 	URLParams: types.boolRequired,
