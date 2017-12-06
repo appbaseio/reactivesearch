@@ -9,6 +9,14 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
+"@appbaseio/reactivecore@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-1.0.1.tgz#a492d80e4af95b0e4d8a696ae36b9de1682cf5c3"
+  dependencies:
+    prop-types "^15.6.0"
+    redux "^3.7.2"
+    redux-thunk "^2.2.0"
+
 "@babel/code-frame@7.0.0-beta.31":
   version "7.0.0-beta.31"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.31.tgz#473d021ecc573a2cce1c07d5b509d5215f46ba35"
