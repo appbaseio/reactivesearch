@@ -8,6 +8,7 @@ import {
 	updateQuery
 } from "@appbaseio/reactivecore/lib/actions";
 import {
+	isEqual,
 	checkValueChange,
 	checkPropChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
@@ -16,14 +17,14 @@ import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
 import Input from "../../styles/Input";
-import { UL, Radio } from "../../styles/FormControlList";
+import { UL, Checkbox } from "../../styles/FormControlList";
 
-class SingleDataList extends Component {
+class MultiDataList extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			currentValue: null,
+			currentValue: {},
 			searchTerm: ""
 		};
 		this.type = "term";
@@ -48,10 +49,20 @@ class SingleDataList extends Component {
 			() => this.setReact(nextProps)
 		);
 
+		let selectedValue = Object.keys(this.state.currentValue);
+
+		if (this.props.selectAllLabel) {
+			selectedValue = selectedValue.filter(val => val !== this.props.selectAllLabel);
+
+			if (!!this.state.currentValue[this.props.selectAllLabel]) {
+				selectedValue = [this.props.selectAllLabel];
+			}
+		}
+
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected);
-		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || "");
+			this.setValue(nextProps.defaultSelected, true);
+		} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
+			this.setValue(nextProps.selectedValue, true);
 		}
 	}
 
@@ -66,38 +77,98 @@ class SingleDataList extends Component {
 	}
 
 	defaultQuery = (value, props) => {
-		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
-			return {
+		let query = null;
+		const type = props.queryFormat === "or" ? "terms" : "term";
+		if (this.props.selectAllLabel && Array.isArray(value) && value.includes(this.props.selectAllLabel)) {
+			query = {
 				exists: {
 					field: props.dataField
 				}
 			};
 		} else if (value) {
-			return {
-				[this.type]: {
-					[props.dataField]: value
-				}
-			};
+			let listQuery;
+			if (props.queryFormat === "or") {
+				listQuery = {
+					[type]: {
+						[props.dataField]: value
+					}
+				};
+			} else {
+				// adds a sub-query with must as an array of objects for each term/value
+				const queryArray = value.map(item => (
+					{
+						[type]: {
+							[props.dataField]: item
+						}
+					}
+				));
+				listQuery = {
+					bool: {
+						must: queryArray
+					}
+				};
+			}
+
+			query = value.length ? listQuery : null;
 		}
-		return null;
+		return query;
 	};
 
-	setValue = (value, props = this.props) => {
-		if (value == this.state.currentValue) {
-			value = "";
+	setValue = (value, isDefaultValue = false, props = this.props) => {
+		const { selectAllLabel } = this.props;
+		let { currentValue } = this.state;
+		let finalValues = null;
+
+		if (selectAllLabel &&
+			((Array.isArray(value) && value.includes(selectAllLabel)) ||
+			(typeof value === "string" && value === selectAllLabel))) {
+			if (!!currentValue[selectAllLabel]) {
+				currentValue = {};
+				finalValues = [];
+			} else {
+				props.data.forEach(item => {
+					currentValue[item.label] = true;
+				});
+				currentValue[selectAllLabel] = true;
+				finalValues = [selectAllLabel];
+			}
+		} else if (isDefaultValue) {
+			finalValues = value;
+			currentValue = {};
+			value && value.forEach(item => {
+				currentValue[item] = true;
+			});
+
+			if (selectAllLabel && selectAllLabel in currentValue) {
+				const { [selectAllLabel]: del, ...obj } = currentValue;
+				currentValue = { ...obj };
+			}
+		} else {
+			if (currentValue[value]) {
+				const { [value]: del, ...rest } = currentValue;
+				currentValue = { ...rest };
+			} else {
+				currentValue[value] = true;
+			}
+
+			if (selectAllLabel && selectAllLabel in currentValue) {
+				const { [selectAllLabel]: del, ...obj } = currentValue;
+				currentValue = { ...obj };
+			}
+			finalValues = Object.keys(currentValue);
 		}
 
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value
+				currentValue
 			}, () => {
-				this.updateQuery(value, props);
+				this.updateQuery(finalValues, props);
 			});
 		}
 
 		checkValueChange(
 			props.componentId,
-			value,
+			finalValues,
 			props.beforeValueChange,
 			props.onValueChange,
 			performUpdate
@@ -110,17 +181,10 @@ class SingleDataList extends Component {
 		if (props.onQueryChange) {
 			onQueryChange = props.onQueryChange;
 		}
-
-		let currentValue = value;
-		if (value !== props.selectAllLabel) {
-			currentValue = props.data.find(item => item.label === value);
-			currentValue = currentValue ? currentValue.value : null;
-		}
-
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(currentValue, props),
-			value: currentValue ? value : null,
+			query: query(value, props),
+			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
@@ -164,13 +228,13 @@ class SingleDataList extends Component {
 					{
 						selectAllLabel
 							? (<li key={selectAllLabel}>
-								<Radio
+								<Checkbox
 									id={selectAllLabel}
-									name={this.props.componentId}
+									name={selectAllLabel}
 									value={selectAllLabel}
 									onClick={e => this.setValue(e.target.value)}
-									checked={this.state.currentValue === selectAllLabel}
-									show={this.props.showRadio}
+									checked={!!this.state.currentValue[selectAllLabel]}
+									show={this.props.showCheckbox}
 								/>
 								<label htmlFor={selectAllLabel}>
 									{selectAllLabel}
@@ -188,13 +252,14 @@ class SingleDataList extends Component {
 							})
 							.map(item => (
 								<li key={item.label}>
-									<Radio
+									<Checkbox
 										id={item.label}
 										name={this.props.componentId}
 										value={item.label}
 										onClick={e => this.setValue(e.target.value)}
-										checked={this.state.currentValue === item.label}
-										show={this.props.showRadio}
+										checked={!!this.state.currentValue[item.label]}
+										onChange={() => {}}
+										show={this.props.showCheckbox}
 									/>
 									<label htmlFor={item.label}>
 										{item.label}
@@ -208,13 +273,13 @@ class SingleDataList extends Component {
 	}
 }
 
-SingleDataList.propTypes = {
+MultiDataList.propTypes = {
 	componentId: types.stringRequired,
 	addComponent: types.funcRequired,
 	dataField: types.stringRequired,
 	updateQuery: types.funcRequired,
 	data: types.data,
-	defaultSelected: types.string,
+	defaultSelected: types.stringArray,
 	react: types.react,
 	removeComponent: types.funcRequired,
 	beforeValueChange: types.func,
@@ -223,7 +288,7 @@ SingleDataList.propTypes = {
 	onQueryChange: types.func,
 	placeholder: types.string,
 	title: types.title,
-	showRadio: types.boolRequired,
+	showCheckbox: types.boolRequired,
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
 	URLParams: types.boolRequired,
@@ -234,9 +299,9 @@ SingleDataList.propTypes = {
 	className: types.string
 }
 
-SingleDataList.defaultProps = {
+MultiDataList.defaultProps = {
 	size: 100,
-	showRadio: true,
+	showCheckbox: true,
 	URLParams: false,
 	showFilter: true,
 	placeholder: "Search",
@@ -256,4 +321,4 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject))
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SingleDataList);
+export default connect(mapStateToProps, mapDispatchtoProps)(MultiDataList);
