@@ -82,6 +82,7 @@ class ProductHuntApp extends Component {
 						{/* right sidebar */}
 						<ResultList
 							componentId="results"
+							dataField="name"
 							react={{
 								and: ["categories", "searchbox"]
 							}}
