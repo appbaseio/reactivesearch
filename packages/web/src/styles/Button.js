@@ -4,6 +4,7 @@ import darken from "polished/lib/color/darken";
 
 const filters = css`
 	margin: 0 -3px;
+	max-width: 100%;
 
 	a {
 		margin: 2px 3px;
@@ -40,6 +41,7 @@ const filters = css`
 
 const pagination = css`
 	margin: 10px -3px;
+	max-width: 100%;
 	text-align: center;
 
 	a {
@@ -49,6 +51,7 @@ const pagination = css`
 
 const toggleButtons = css`
 	margin: 0 -3px;
+	max-width: 100%;
 
 	a {
 		margin: 0 3px;

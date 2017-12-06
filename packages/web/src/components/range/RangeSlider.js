@@ -9,7 +9,8 @@ import {
 } from "@appbaseio/reactivecore/lib/actions";
 import {
 	checkValueChange,
-	checkPropChange
+	checkPropChange,
+	checkSomePropChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import Rheostat from "rheostat";
@@ -36,20 +37,7 @@ class RangeSlider extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.props.addComponent(this.internalComponent);
 
-		const queryOptions = {
-			aggs: this.histogramQuery()
-		};
-
-		this.props.setQueryOptions(this.internalComponent, queryOptions);
-		// Since the queryOptions are attached to the internal component,
-		// we need to notify the subscriber (parent component)
-		// that the query has changed because no new query will be
-		// auto-generated for the internal component as its
-		// dependency tree is empty
-		this.props.updateQuery({
-			componentId: this.internalComponent,
-			value: null
-		});
+		this.updateQueryOptions(this.props);
 		this.setReact(this.props);
 
 		if (this.props.selectedValue) {
@@ -65,6 +53,12 @@ class RangeSlider extends Component {
 	componentWillReceiveProps(nextProps) {
 		checkPropChange(this.props.react, nextProps.react, () =>
 			this.setReact(nextProps)
+		);
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			["showHistogram", "interval"],
+			() => this.updateQueryOptions(nextProps)
 		);
 		checkPropChange(this.props.options, nextProps.options, () => {
 			const { options } = nextProps;
@@ -137,14 +131,24 @@ class RangeSlider extends Component {
 		return snapPoints;
 	};
 
-	histogramQuery = () => {
+	getValidInterval = (props) => {
+		const min = Math.ceil((props.range.end - props.range.start) / 100) || 1;
+		if (!props.interval) {
+			return min;
+		} else if (props.interval < min) {
+			console.error(`${props.componentId}: interval prop's value should be greater than or equal to ${min}`);
+			return min;
+		} else {
+			return props.interval;
+		}
+	};
+
+	histogramQuery = (props) => {
 		return {
-			[this.props.dataField]: {
+			[props.dataField]: {
 				histogram: {
-					field: this.props.dataField,
-					interval:
-						this.props.interval ||
-						Math.ceil((this.props.range.end - this.props.range.start) / 10)
+					field: props.dataField,
+					interval: this.getValidInterval(props)
 				}
 			}
 		};
@@ -190,6 +194,25 @@ class RangeSlider extends Component {
 		});
 	};
 
+	updateQueryOptions = (props) => {
+		if (props.showHistogram) {
+			const queryOptions = {
+				aggs: this.histogramQuery(props)
+			};
+
+			props.setQueryOptions(this.internalComponent, queryOptions);
+			// Since the queryOptions are attached to the internal component,
+			// we need to notify the subscriber (parent component)
+			// that the query has changed because no new query will be
+			// auto-generated for the internal component as its
+			// dependency tree is empty
+			props.updateQuery({
+				componentId: this.internalComponent,
+				value: null
+			});
+		}
+	};
+
 	render() {
 		return (
 			<Slider primary style={this.props.style} className={this.props.className}>
@@ -198,10 +221,7 @@ class RangeSlider extends Component {
 					<HistogramContainer
 						stats={this.state.stats}
 						range={this.props.range}
-						interval={
-							this.props.interval ||
-							Math.ceil((this.props.range.end - this.props.range.start) / 10)
-						}
+						interval={this.getValidInterval(this.props)}
 					/>
 				) : null}
 				<Rheostat

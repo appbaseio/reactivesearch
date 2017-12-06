@@ -55,6 +55,7 @@
 		"react/react-in-jsx-scope": 2,
 		"react/jsx-indent": [2, "tab"],
 		"react/jsx-indent-props": [2, "tab"],
-		"react/jsx-filename-extension": [1, { "extensions": [".js"] }]
+		"react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+		"react/jsx-no-target-blank": 2
 	}
 }
