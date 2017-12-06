@@ -20,6 +20,10 @@ export const FlexChild = styled.div`
 const Flex = styled.div`
 	display: flex;
 
+	${props => props.justifyContent && css`
+		justify-content: ${props.justifyContent}
+	`};
+
 	${queries.small`
 		flex-direction: column;
 	`};

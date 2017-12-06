@@ -2,25 +2,31 @@ import React from "react";
 import { ReactiveList } from "@appbaseio/reactivesearch";
 import PropTypes from "prop-types";
 
-import ResultItem from "../styles/ResultItem";
+import ResultItem, { resultItemDetails } from "../styles/ResultItem";
 import Flex, { FlexChild } from "../styles/Flex";
+
+const onResultStats = (results, time) => (
+	<Flex justifyContent="flex-end" style={{ padding: "0 1rem" }}>
+		{results} results found in {time}ms
+	</Flex>
+)
 
 const onData = ({ _source: data }) => (
 	<ResultItem key={data.id}>
 		<div dangerouslySetInnerHTML={{ __html: data.title }} />
 		<div dangerouslySetInnerHTML={{ __html: data.text }} />
-		<Flex>
+		<Flex className={resultItemDetails}>
 			<FlexChild>
-				<b>Parent:</b> {data.parent}
+				{data.parent}
 			</FlexChild>
 			<FlexChild>
-				<b>Score:</b> {data.score}
+				{data.score}
 			</FlexChild>
 			<FlexChild>
-				<b>By:</b> {data.by}
+				{data.by}
 			</FlexChild>
 			<FlexChild>
-				<b>Time:</b> {data.time}
+				{data.time}
 			</FlexChild>
 		</Flex>
 	</ResultItem>
@@ -31,6 +37,7 @@ const Results = () => (
 		componentId="results"
 		dataField="title"
 		onData={onData}
+		onResultStats={onResultStats}
 		react={{
 			and: ["title", "category"]
 		}}
