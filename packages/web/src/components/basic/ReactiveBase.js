@@ -45,7 +45,7 @@ class ReactiveBase extends Component {
 
 	render() {
 		return (
-			<ThemeProvider theme={theme}>
+			<ThemeProvider theme={{ ...theme, ...this.props.theme }}>
 				<Provider store={this.store}>
 					<URLParamsProvider params={this.params}>
 						{this.props.children}
@@ -56,12 +56,17 @@ class ReactiveBase extends Component {
 	}
 }
 
+ReactiveBase.defaultProps = {
+	theme: {}
+};
+
 ReactiveBase.propTypes = {
 	type: types.string,
 	url: types.string,
 	credentials: types.string,
 	app: types.stringRequired,
-	children: types.children
-}
+	children: types.children,
+	theme: types.style
+};
 
 export default ReactiveBase;
