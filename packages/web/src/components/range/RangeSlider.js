@@ -36,20 +36,7 @@ class RangeSlider extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.props.addComponent(this.internalComponent);
 
-		const queryOptions = {
-			aggs: this.histogramQuery()
-		};
-
-		this.props.setQueryOptions(this.internalComponent, queryOptions);
-		// Since the queryOptions are attached to the internal component,
-		// we need to notify the subscriber (parent component)
-		// that the query has changed because no new query will be
-		// auto-generated for the internal component as its
-		// dependency tree is empty
-		this.props.updateQuery({
-			componentId: this.internalComponent,
-			value: null
-		});
+		this.updateQueryOptions(this.props);
 		this.setReact(this.props);
 
 		if (this.props.selectedValue) {
@@ -65,6 +52,11 @@ class RangeSlider extends Component {
 	componentWillReceiveProps(nextProps) {
 		checkPropChange(this.props.react, nextProps.react, () =>
 			this.setReact(nextProps)
+		);
+		checkPropChange(
+			this.props.showHistogram,
+			nextProps.showHistogram,
+			() => this.updateQueryOptions(nextProps)
 		);
 		checkPropChange(this.props.options, nextProps.options, () => {
 			const { options } = nextProps;
@@ -137,14 +129,14 @@ class RangeSlider extends Component {
 		return snapPoints;
 	};
 
-	histogramQuery = () => {
+	histogramQuery = (props) => {
 		return {
-			[this.props.dataField]: {
+			[props.dataField]: {
 				histogram: {
-					field: this.props.dataField,
+					field: props.dataField,
 					interval:
-						this.props.interval ||
-						Math.ceil((this.props.range.end - this.props.range.start) / 10)
+						props.interval ||
+						Math.ceil((props.range.end - props.range.start) / 10)
 				}
 			}
 		};
@@ -187,6 +179,26 @@ class RangeSlider extends Component {
 			showFilter: false,	// disable filters for RangeSlider
 			URLParams: props.URLParams,
 			onQueryChange
+		});
+	};
+
+	updateQueryOptions = (props) => {
+		if (!props.showHistogram) {
+			return;
+		}
+		const queryOptions = {
+			aggs: this.histogramQuery(props)
+		};
+
+		props.setQueryOptions(this.internalComponent, queryOptions);
+		// Since the queryOptions are attached to the internal component,
+		// we need to notify the subscriber (parent component)
+		// that the query has changed because no new query will be
+		// auto-generated for the internal component as its
+		// dependency tree is empty
+		props.updateQuery({
+			componentId: this.internalComponent,
+			value: null
 		});
 	};
 
