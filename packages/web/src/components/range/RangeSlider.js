@@ -9,7 +9,8 @@ import {
 } from "@appbaseio/reactivecore/lib/actions";
 import {
 	checkValueChange,
-	checkPropChange
+	checkPropChange,
+	checkSomePropChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import Rheostat from "rheostat";
@@ -53,9 +54,10 @@ class RangeSlider extends Component {
 		checkPropChange(this.props.react, nextProps.react, () =>
 			this.setReact(nextProps)
 		);
-		checkPropChange(
-			this.props.showHistogram,
-			nextProps.showHistogram,
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			["showHistogram", "interval"],
 			() => this.updateQueryOptions(nextProps)
 		);
 		checkPropChange(this.props.options, nextProps.options, () => {
@@ -84,10 +86,6 @@ class RangeSlider extends Component {
 		const upperLimit = Math.floor((nextProps.range.end - nextProps.range.start) / 2);
 		if (nextProps.stepValue < 1 || nextProps.stepValue > upperLimit) {
 			console.warn(`stepValue for RangeSlider ${nextProps.componentId} should be greater than 0 and less than or equal to ${upperLimit}`);
-			return false;
-		}
-		if (!this.isIntervalValid(nextProps)) {
-			console.error(`interval for RangeSlider ${nextProps.componentId} should be greater than or equal to ${Math.ceil((nextProps.range.end - nextProps.range.start) / 100)}`)
 			return false;
 		}
 		return true;
@@ -133,17 +131,24 @@ class RangeSlider extends Component {
 		return snapPoints;
 	};
 
-	histogramQuery = (props) => {
-		if (!this.isIntervalValid(props)) {
-			return null;
+	getValidInterval = (props) => {
+		const min = Math.ceil((props.range.end - props.range.start) / 100) || 1;
+		if (!props.interval) {
+			return min;
+		} else if (props.interval < min) {
+			console.error(`${props.componentId}: interval prop's value should be greater than or equal to ${min}`);
+			return min;
+		} else {
+			return props.interval;
 		}
+	};
+
+	histogramQuery = (props) => {
 		return {
 			[props.dataField]: {
 				histogram: {
 					field: props.dataField,
-					interval:
-						props.interval ||
-						Math.ceil((props.range.end - props.range.start) / 10)
+					interval: this.getValidInterval(props)
 				}
 			}
 		};
@@ -172,10 +177,6 @@ class RangeSlider extends Component {
 		this.handleChange(values);
 	};
 
-	isIntervalValid = (props) => (
-		props.interval >= Math.ceil((props.range.end - props.range.start) / 100)
-	);
-
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
 		let onQueryChange = null;
@@ -194,23 +195,22 @@ class RangeSlider extends Component {
 	};
 
 	updateQueryOptions = (props) => {
-		if (!props.showHistogram) {
-			return;
-		}
-		const queryOptions = {
-			aggs: this.histogramQuery(props)
-		};
+		if (props.showHistogram) {
+			const queryOptions = {
+				aggs: this.histogramQuery(props)
+			};
 
-		props.setQueryOptions(this.internalComponent, queryOptions);
-		// Since the queryOptions are attached to the internal component,
-		// we need to notify the subscriber (parent component)
-		// that the query has changed because no new query will be
-		// auto-generated for the internal component as its
-		// dependency tree is empty
-		props.updateQuery({
-			componentId: this.internalComponent,
-			value: null
-		});
+			props.setQueryOptions(this.internalComponent, queryOptions);
+			// Since the queryOptions are attached to the internal component,
+			// we need to notify the subscriber (parent component)
+			// that the query has changed because no new query will be
+			// auto-generated for the internal component as its
+			// dependency tree is empty
+			props.updateQuery({
+				componentId: this.internalComponent,
+				value: null
+			});
+		}
 	};
 
 	render() {
@@ -221,10 +221,7 @@ class RangeSlider extends Component {
 					<HistogramContainer
 						stats={this.state.stats}
 						range={this.props.range}
-						interval={
-							this.props.interval ||
-							Math.ceil((this.props.range.end - this.props.range.start) / 10)
-						}
+						interval={this.getValidInterval(this.props)}
 					/>
 				) : null}
 				<Rheostat
