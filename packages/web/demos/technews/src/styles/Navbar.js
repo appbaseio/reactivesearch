@@ -3,7 +3,7 @@ import styled from "react-emotion";
 import { flex, alignCenter } from "./Flex";
 
 const Navbar = styled.nav`
-	background: #f60;
+	background: coral;
 	color: #fff;
 	padding: 1rem;
 	font-weight: bold;

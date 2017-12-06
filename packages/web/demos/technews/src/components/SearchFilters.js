@@ -7,7 +7,7 @@ import {
 import Flex, { FlexChild } from "../styles/Flex";
 
 const SearchFilters = () => (
-	<Flex>
+	<Flex style={{ padding: "1rem" }}>
 		<FlexChild flex={2}>
 			<DataSearch
 				componentId="title"
