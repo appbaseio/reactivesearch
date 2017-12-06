@@ -14,9 +14,16 @@ class URLParamsProvider extends Component {
 						this.setURL(component, this.getValue(nextProps.selectedValues[component].value));
 					} else {
 						this.props.params.delete(component);
+						this.pushToHistory();
 					}
 				});
-			this.pushToHistory();
+
+			if (!Object.keys(nextProps.selectedValues).length) {
+				Array.from(this.props.params.keys()).forEach(item => {
+					this.props.params.delete(item);
+				});
+				this.pushToHistory();
+			}
 		}
 	}
 
@@ -38,8 +45,11 @@ class URLParamsProvider extends Component {
 			(Array.isArray(value) && value.length === 0)) {
 			this.props.params.delete(component);
 		} else {
-			this.props.params.set(component, JSON.stringify(this.getValue(value)));
-			this.pushToHistory();
+			const data = JSON.stringify(this.getValue(value));
+			if (data !== this.props.params.get(component)) {
+				this.props.params.set(component, data);
+				this.pushToHistory();
+			}
 		}
 	}
 
