@@ -1,7 +1,9 @@
 import React from "react";
 
+import Navbar from "../styles/Navbar";
+
 const Header = () => (
-	<nav>Tech News</nav>
+	<Navbar>Tech News</Navbar>
 );
 
 export default Header;
