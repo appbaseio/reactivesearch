@@ -123,6 +123,10 @@ class Dropdown extends Component {
 												>
 													{item[labelField]}
 													{
+														this.props.showCount &&
+														` (${item.doc_count})`
+													}
+													{
 														selected
 															? (<Tick />)
 															: null
@@ -154,7 +158,8 @@ Dropdown.propTypes = {
 	multi: types.bool,
 	labelField: types.string,
 	keyField: types.string,
-	returnsObject: types.bool
+	returnsObject: types.bool,
+	showCount: types.bool
 }
 
 export default Dropdown;
