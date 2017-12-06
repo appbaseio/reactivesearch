@@ -1,12 +1,33 @@
 import React from "react";
-import { ResultList } from "@appbaseio/reactivesearch";
+import { ReactiveList } from "@appbaseio/reactivesearch";
+import PropTypes from "prop-types";
 
-const onData = ({ _source: data }) => ({
-	title: data.title
-});
+import ResultItem from "../styles/ResultItem";
+import Flex, { FlexChild } from "../styles/Flex";
+
+const onData = ({ _source: data }) => (
+	<ResultItem key={data.id}>
+		<div dangerouslySetInnerHTML={{ __html: data.title }} />
+		<div dangerouslySetInnerHTML={{ __html: data.text }} />
+		<Flex>
+			<FlexChild>
+				<b>Parent:</b> {data.parent}
+			</FlexChild>
+			<FlexChild>
+				<b>Score:</b> {data.score}
+			</FlexChild>
+			<FlexChild>
+				<b>By:</b> {data.by}
+			</FlexChild>
+			<FlexChild>
+				<b>Time:</b> {data.time}
+			</FlexChild>
+		</Flex>
+	</ResultItem>
+);
 
 const Results = () => (
-	<ResultList
+	<ReactiveList
 		componentId="results"
 		dataField="title"
 		onData={onData}
@@ -16,5 +37,9 @@ const Results = () => (
 		pagination
 	/>
 );
+
+onData.propTypes = {
+	_source: PropTypes.object	// eslint-disable-line
+};
 
 export default Results;

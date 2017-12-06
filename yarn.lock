@@ -2832,7 +2832,7 @@ emotion-utils@^8.0.12:
   version "8.0.12"
   resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-8.0.12.tgz#5e0fd72db3008f26ce4f80b1972df08841df2168"
 
-emotion@^8.0.11:
+emotion@*, emotion@^8.0.11:
   version "8.0.12"
   resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.12.tgz#03de11ce26b1b2401c334b94d438652124c514c6"
   dependencies:
@@ -5912,7 +5912,7 @@ react-dom@^16.0.0, react-dom@^16.1.1, react-dom@^16.2.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-emotion@^8.0.11:
+react-emotion@*, react-emotion@^8.0.11:
   version "8.0.12"
   resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-8.0.12.tgz#3dd94c151197e2e3399e34e3e118df141b5ebb7b"
   dependencies:
