@@ -28,7 +28,7 @@ class SelectedFilters extends Component {
 		const { selectedValues } = this.props;
 		let hasValues = false;
 
-		return (<div style={this.props.style} className={`${filters} ${this.props.className}`}>
+		return (<div style={this.props.style} className={`${filters} ${this.props.className || ""}`}>
 			{
 				Object.keys(selectedValues)
 					.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)

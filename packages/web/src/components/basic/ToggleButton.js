@@ -124,7 +124,7 @@ class ToggleButton extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={`${toggleButtons} ${this.props.className}`}>
+			<div style={this.props.style} className={`${toggleButtons} ${this.props.className || ""}`}>
 				{
 					this.props.title &&
 					<Title>{this.props.title}</Title>

@@ -35,7 +35,6 @@ class RangeSlider extends Component {
 	componentWillMount() {
 		this.props.addComponent(this.props.componentId);
 		this.props.addComponent(this.internalComponent);
-		this.setReact(this.props);
 
 		const queryOptions = {
 			aggs: this.histogramQuery()
@@ -51,6 +50,7 @@ class RangeSlider extends Component {
 			componentId: this.internalComponent,
 			value: null
 		});
+		this.setReact(this.props);
 
 		if (this.props.selectedValue) {
 			this.handleChange(this.props.selectedValue);

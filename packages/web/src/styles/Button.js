@@ -3,7 +3,7 @@ import styled from "react-emotion";
 import darken from "polished/lib/color/darken";
 
 const filters = css`
-	margin: 8px -3px;
+	margin: 0 -3px;
 
 	a {
 		margin: 2px 3px;

@@ -39,9 +39,9 @@ class SingleList extends Component {
 	componentWillMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
-
 		this.updateQueryOptions(this.props);
+
+		this.setReact(this.props);
 
 		if (this.props.selectedValue) {
 			this.setValue(this.props.selectedValue);
