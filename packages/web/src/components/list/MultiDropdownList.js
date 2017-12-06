@@ -262,6 +262,7 @@ class MultiDropdownList extends Component {
 					placeholder={this.props.placeholder}
 					labelField="key"
 					multi
+					showCount={this.props.showCount}
 				/>
 			</div>
 		);

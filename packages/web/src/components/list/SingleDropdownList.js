@@ -188,6 +188,7 @@ class SingleDropdownList extends Component {
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
 					labelField="key"
+					showCount={this.props.showCount}
 				/>
 			</div>
 		);
@@ -217,7 +218,8 @@ SingleDropdownList.propTypes = {
 	showFilter: types.bool,
 	selectAllLabel: types.string,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	showCount: types.bool
 }
 
 SingleDropdownList.defaultProps = {
@@ -227,7 +229,8 @@ SingleDropdownList.defaultProps = {
 	URLParams: false,
 	showFilter: true,
 	style: {},
-	className: null
+	className: null,
+	showCount: true
 }
 
 const mapStateToProps = (state, props) => ({
