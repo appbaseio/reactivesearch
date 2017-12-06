@@ -6,6 +6,10 @@ const Base = styled("div")`
 	font-size: ${props => props.theme.fontSize};
 	color: ${props => props.theme.textColor};
 
+	input {
+		font-family: ${props => props.theme.fontFamily};
+	}
+
 	*, *:before, *:after {
 		box-sizing: border-box;
 	}
