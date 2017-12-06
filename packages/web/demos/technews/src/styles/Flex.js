@@ -24,7 +24,7 @@ const Flex = styled.div`
 		justify-content: ${props.justifyContent}
 	`};
 
-	${queries.small`
+	${props => props.responsive && queries.small`
 		flex-direction: column;
 	`};
 `;

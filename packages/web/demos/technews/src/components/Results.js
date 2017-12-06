@@ -4,30 +4,69 @@ import PropTypes from "prop-types";
 
 import ResultItem, { resultItemDetails } from "../styles/ResultItem";
 import Flex, { FlexChild } from "../styles/Flex";
+import Link from "../styles/Link";
+
+function timeSince(date) {
+	var seconds = Math.floor((new Date() - date) / 1000);
+
+	var interval = Math.floor(seconds / 31536000);
+
+	if (interval > 1) {
+		return interval + " years";
+	}
+	interval = Math.floor(seconds / 2592000);
+	if (interval > 1) {
+		return interval + " months";
+	}
+	interval = Math.floor(seconds / 86400);
+	if (interval > 1) {
+		return interval + " days";
+	}
+	interval = Math.floor(seconds / 3600);
+	if (interval > 1) {
+		return interval + " hours";
+	}
+	interval = Math.floor(seconds / 60);
+	if (interval > 1) {
+		return interval + " minutes";
+	}
+	return Math.floor(seconds) + " seconds";
+}
 
 const onResultStats = (results, time) => (
 	<Flex justifyContent="flex-end" style={{ padding: "0 1rem" }}>
 		{results} results found in {time}ms
 	</Flex>
-)
+);
 
 const onData = ({ _source: data }) => (
 	<ResultItem key={data.id}>
 		<div dangerouslySetInnerHTML={{ __html: data.title }} />
 		<div dangerouslySetInnerHTML={{ __html: data.text }} />
-		<Flex className={resultItemDetails}>
+		<Flex className={resultItemDetails} style={{ paddingTop: 5 }}>
+			{!!data.parent && (
+				<FlexChild>
+					parent{" "}
+					<Link
+						href={`https://news.ycombinator.com/item?id=${data.parent}`}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{data.parent}
+					</Link>
+				</FlexChild>
+			)}
+			<FlexChild>{data.score} points</FlexChild>
 			<FlexChild>
-				{data.parent}
+				<Link
+					href={`https://news.ycombinator.com/user?id=${data.by}`}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					{data.by}
+				</Link>
 			</FlexChild>
-			<FlexChild>
-				{data.score}
-			</FlexChild>
-			<FlexChild>
-				{data.by}
-			</FlexChild>
-			<FlexChild>
-				{data.time}
-			</FlexChild>
+			<FlexChild>{timeSince(new Date(data.time * 1000))} ago</FlexChild>
 		</Flex>
 	</ResultItem>
 );
@@ -46,7 +85,7 @@ const Results = () => (
 );
 
 onData.propTypes = {
-	_source: PropTypes.object	// eslint-disable-line
+	_source: PropTypes.object // eslint-disable-line
 };
 
 export default Results;
