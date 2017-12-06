@@ -8,6 +8,7 @@ import SingleList from "./components/list/SingleList";
 import MultiList from "./components/list/MultiList";
 import SingleDropdownList from "./components/list/SingleDropdownList";
 import MultiDropdownList from "./components/list/MultiDropdownList";
+import SingleDataList from "./components/list/SingleDataList";
 
 import SingleRange from "./components/range/SingleRange";
 import MultiRange from "./components/range/MultiRange";
@@ -34,6 +35,7 @@ export {
 	MultiList,
 	SingleDropdownList,
 	MultiDropdownList,
+	SingleDataList,
 
 	// range
 	SingleRange,
