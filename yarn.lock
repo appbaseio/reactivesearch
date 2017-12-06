@@ -558,6 +558,10 @@ assert@^1.1.1:
   dependencies:
     util "0.10.3"
 
+assign-styles@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/assign-styles/-/assign-styles-1.0.2.tgz#3a5438937eca2902ef3f217c85b52e6a36919258"
+
 ast-types-flow@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/ast-types-flow/-/ast-types-flow-0.0.7.tgz#f70b735c6bca1a5c9c22d982c3e39e7feba3bdad"
@@ -4051,7 +4055,7 @@ inline-style-prefixer@^2.0.5:
     bowser "^1.0.0"
     hyphenate-style-name "^1.0.1"
 
-inline-style-prefixer@^3.0.6:
+inline-style-prefixer@^3.0.0, inline-style-prefixer@^3.0.6:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-3.0.8.tgz#8551b8e5b4d573244e66a34b04f7d32076a2b534"
   dependencies:
@@ -5899,7 +5903,7 @@ react-docgen@^2.15.0:
     node-dir "^0.1.10"
     recast "^0.12.6"
 
-react-dom@^16.0.0, react-dom@^16.1.1:
+react-dom@^16.0.0, react-dom@^16.1.1, react-dom@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.2.0.tgz#69003178601c0ca19b709b33a83369fe6124c044"
   dependencies:
@@ -5937,6 +5941,14 @@ react-inspector@^2.2.1:
   dependencies:
     babel-runtime "^6.26.0"
     is-dom "^1.0.9"
+
+react-layout-components@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/react-layout-components/-/react-layout-components-3.0.6.tgz#96a39ecbb939765b44c830c973b94982c2d3d422"
+  dependencies:
+    assign-styles "^1.0.2"
+    inline-style-prefixer "^3.0.0"
+    prop-types "^15.5.10"
 
 react-modal@^3.1.4:
   version "3.1.7"
@@ -6024,7 +6036,7 @@ react-treebeard@^2.0.3:
     shallowequal "^0.2.2"
     velocity-react "^1.3.1"
 
-react@^16.0.0, react@^16.1.1:
+react@^16.0.0, react@^16.1.1, react@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.2.0.tgz#a31bd2dab89bff65d42134fa187f24d054c273ba"
   dependencies:
@@ -7207,7 +7219,7 @@ webpack-dev-middleware@^1.11.0, webpack-dev-middleware@^1.12.2:
     range-parser "^1.0.3"
     time-stamp "^2.0.0"
 
-webpack-dev-server@^2.5.1:
+webpack-dev-server@^2.5.1, webpack-dev-server@^2.9.5:
   version "2.9.5"
   resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-2.9.5.tgz#79336fba0087a66ae491f4869f6545775b18daa8"
   dependencies:
@@ -7255,7 +7267,7 @@ webpack-sources@^1.0.1, webpack-sources@^1.0.2:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^3.2.0, webpack@^3.8.1:
+webpack@^3.10.0, webpack@^3.2.0, webpack@^3.8.1:
   version "3.10.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.10.0.tgz#5291b875078cf2abf42bdd23afe3f8f96c17d725"
   dependencies:
