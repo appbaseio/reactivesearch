@@ -123,7 +123,7 @@ class Dropdown extends Component {
 												>
 													{item[labelField]}
 													{
-														this.props.showCount &&
+														this.props.showCount && item.doc_count &&
 														` (${item.doc_count})`
 													}
 													{

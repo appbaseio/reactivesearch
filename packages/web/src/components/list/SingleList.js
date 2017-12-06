@@ -71,6 +71,7 @@ class SingleList extends Component {
 			["size", "sortBy"],
 			() => this.updateQueryOptions(nextProps)
 		);
+
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected);
 		} else if (this.state.currentValue !== nextProps.selectedValue) {

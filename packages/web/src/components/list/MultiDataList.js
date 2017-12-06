@@ -36,9 +36,9 @@ class MultiDataList extends Component {
 		this.setReact(this.props);
 
 		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue);
+			this.setValue(this.props.selectedValue, true);
 		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+			this.setValue(this.props.defaultSelected, true);
 		}
 	}
 
@@ -59,7 +59,7 @@ class MultiDataList extends Component {
 			}
 		}
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.setValue(nextProps.defaultSelected, true);
 		} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
 			this.setValue(nextProps.selectedValue, true);

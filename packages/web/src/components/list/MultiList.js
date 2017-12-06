@@ -82,10 +82,10 @@ class MultiList extends Component {
 			}
 		}
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.setValue(nextProps.defaultSelected, true);
 		} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
-			this.setValue(nextProps.selectedValue, true);
+			this.setValue(nextProps.selectedValue || [], true);
 		}
 	}
 
@@ -373,7 +373,7 @@ MultiList.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || []
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
 });
 
 const mapDispatchtoProps = dispatch => ({
