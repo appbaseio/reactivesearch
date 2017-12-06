@@ -8,7 +8,8 @@
 	"author": "metagrover",
 	"license": "Apache-2.0",
 	"workspaces": [
-		"packages/*"
+		"packages/*",
+		"packages/web/demos/*"
 	],
 	"devDependencies": {
 		"babel-eslint": "^8.0.2",
