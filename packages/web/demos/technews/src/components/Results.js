@@ -11,8 +11,9 @@ function timeSince(date) {
 
 	var interval = Math.floor(seconds / 31536000);
 
-	if (interval > 1) {
-		return interval + " years";
+	if (interval >= 1) {
+		const postfix = interval === 1 ? " year" : " years";
+		return interval + postfix;
 	}
 	interval = Math.floor(seconds / 2592000);
 	if (interval > 1) {
@@ -43,7 +44,7 @@ const onData = ({ _source: data }) => (
 	<ResultItem key={data.id}>
 		<div dangerouslySetInnerHTML={{ __html: data.title }} />
 		<div dangerouslySetInnerHTML={{ __html: data.text }} />
-		<Flex className={resultItemDetails} style={{ paddingTop: 5 }}>
+		<Flex className={resultItemDetails} style={{ paddingTop: 5, marginTop: 5 }}>
 			{!!data.parent && (
 				<FlexChild>
 					parent{" "}
