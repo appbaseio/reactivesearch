@@ -122,7 +122,13 @@ class RangeSlider extends Component {
 
 	getSnapPoints = () => {
 		let snapPoints = [];
-		for (let i = this.props.range.start; i <= this.props.range.end; i += this.props.stepValue) {
+		let stepValue = this.props.stepValue;
+
+		if ((this.props.range.end - this.props.range.start) / stepValue > 100) {
+			stepValue = (this.props.range.end - this.props.range.start) / 100;
+		}
+
+		for (let i = this.props.range.start; i <= this.props.range.end; i += stepValue) {
 			snapPoints = snapPoints.concat(i);
 		}
 		if (snapPoints[snapPoints.length - 1] !== this.props.range.end) {
@@ -158,8 +164,9 @@ class RangeSlider extends Component {
 		const performUpdate = () => {
 			this.setState({
 				currentValue
+			}, () => {
+				this.updateQuery([currentValue[0], currentValue[1]], props);
 			});
-			this.updateQuery(currentValue, props);
 		};
 		checkValueChange(
 			props.componentId,
@@ -199,8 +206,9 @@ class RangeSlider extends Component {
 			const queryOptions = {
 				aggs: this.histogramQuery(props)
 			};
+			props.setQueryOptions(this.internalComponent, queryOptions, false);
 
-			props.setQueryOptions(this.internalComponent, queryOptions);
+			const query = props.customQuery || this.defaultQuery;
 			// Since the queryOptions are attached to the internal component,
 			// we need to notify the subscriber (parent component)
 			// that the query has changed because no new query will be
@@ -208,7 +216,7 @@ class RangeSlider extends Component {
 			// dependency tree is empty
 			props.updateQuery({
 				componentId: this.internalComponent,
-				value: null
+				query: query(this.state.currentValue, props)
 			});
 		}
 	};
