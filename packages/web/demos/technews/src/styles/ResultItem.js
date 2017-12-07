@@ -2,6 +2,11 @@ import styled, { css } from "react-emotion";
 
 export const resultItemDetails = css`
 	color: #a2a2a2;
+	position: relative;
+
+	div:not(:first-child) {
+		border-left: 1px solid #eee;
+	}
 `;
 
 const ResultItem = styled.div`
