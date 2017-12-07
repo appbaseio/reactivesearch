@@ -8,6 +8,7 @@ import {
 	updateQuery
 } from "@appbaseio/reactivecore/lib/actions";
 import {
+	isEqual,
 	checkValueChange,
 	checkPropChange
 } from "@appbaseio/reactivecore/lib/utils/helper";
@@ -40,9 +41,9 @@ class ToggleButton extends Component {
 		checkPropChange(this.props.react, nextProps.react, () =>
 			this.setReact(nextProps)
 		);
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.setValue(nextProps.defaultSelected, nextProps);
-		} else if (this.state.currentValue !== nextProps.selectedValue) {
+		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
 			this.setValue(nextProps.selectedValue || [], nextProps);
 		}
 	}

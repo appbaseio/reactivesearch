@@ -6,7 +6,7 @@ import {
 	removeComponent,
 	updateQuery
 } from "@appbaseio/reactivecore/lib/actions";
-import { checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
+import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
@@ -22,9 +22,9 @@ class DataController extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.updateQuery(nextProps.defaultSelected, nextProps);
-		} else if (this.props.selectedValue !== nextProps.selectedValue) {
+		} else if (!isEqual(this.props.selectedValue, nextProps.selectedValue)) {
 			this.updateQuery(nextProps.selectedValue, nextProps);
 		}
 	}
