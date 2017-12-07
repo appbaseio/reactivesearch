@@ -44,7 +44,6 @@ const onData = ({ _source: data }) => (
 	<ResultItem key={data.id}>
 		<div dangerouslySetInnerHTML={{ __html: data.title }} />
 		<div dangerouslySetInnerHTML={{ __html: data.text }} />
-		<div>{JSON.stringify(data)}</div>
 		<Flex className={resultItemDetails} style={{ paddingTop: 5, marginTop: 5 }}>
 			{!!data.parent && (
 				<FlexChild>
