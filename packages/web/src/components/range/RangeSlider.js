@@ -122,7 +122,7 @@ class RangeSlider extends Component {
 
 	getSnapPoints = () => {
 		let snapPoints = [];
-		let stepValue = this.props.stepValue;
+		let { stepValue } = this.props;
 
 		if ((this.props.range.end - this.props.range.start) / stepValue > 100) {
 			stepValue = (this.props.range.end - this.props.range.start) / 100;
@@ -206,7 +206,7 @@ class RangeSlider extends Component {
 			const queryOptions = {
 				aggs: this.histogramQuery(props)
 			};
-			props.setQueryOptions(this.internalComponent, queryOptions, false);
+			props.setQueryOptions(this.internalComponent, queryOptions);
 
 			const query = props.customQuery || this.defaultQuery;
 			// Since the queryOptions are attached to the internal component,
@@ -304,8 +304,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) =>
-		dispatch(watchComponent(component, react)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props, onQueryChange) =>
 		dispatch(setQueryOptions(component, props, onQueryChange))
