@@ -30,8 +30,8 @@ class Main extends Component {
 							componentId="RangeSlider"
 							title="Range Slider"
 							range={{
-								start: 1,
-								end: 5
+								start: 0,
+								end: 6
 							}}
 							rangeLabels={{
 								start: "Start",
