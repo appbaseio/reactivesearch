@@ -229,7 +229,7 @@ class ReactiveList extends Component {
 		}
 
 		return (
-			<div className={pagination}>
+			<div className={`${pagination} ${this.props.innerClass ? this.props.innerClass.pagination : ""}`}>
 				<Button disabled={this.state.currentPage === 0} onClick={this.prevPage}>
 					Prev
 				</Button>
@@ -271,7 +271,8 @@ class ReactiveList extends Component {
 		if (this.props.onResultStats) {
 			return this.props.onResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
-			return <p>{this.props.total} results found in {this.props.time}ms</p>;
+			const cx = this.props.innerClass ? this.props.innerClass.resultStats : "";
+			return <p className={cx}>{this.props.total} results found in {this.props.time}ms</p>;
 		}
 		return null;
 	};
@@ -294,7 +295,7 @@ class ReactiveList extends Component {
 				{
 					this.props.onAllData
 						? (this.props.onAllData(this.parseHits(this.props.hits), this.loadMore))
-						: (<div>
+						: (<div className={this.props.innerClass ? this.props.innerClass.list: ""}>
 							{
 								results.map(item => this.props.onData(item))
 							}
@@ -344,7 +345,8 @@ ReactiveList.propTypes = {
 	style: types.style,
 	className: types.string,
 	stream: types.bool,
-	setStreaming: types.func
+	setStreaming: types.func,
+	innerClass: types.style
 }
 
 ReactiveList.defaultProps = {

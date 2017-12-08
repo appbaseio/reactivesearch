@@ -221,7 +221,7 @@ class ResultCard extends Component {
 		}
 
 		return (
-			<div className={pagination}>
+			<div className={`${pagination} ${this.props.innerClass ? this.props.innerClass.pagination : ""}`}>
 				<Button disabled={this.state.currentPage === 0} onClick={this.prevPage}>
 					Prev
 				</Button>
@@ -272,7 +272,8 @@ class ResultCard extends Component {
 		if (this.props.onResultStats) {
 			return this.props.onResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
-			return <p>{this.props.total} results found in {this.props.time}ms</p>;
+			const cx = this.props.innerClass ? this.props.innerClass.resultStats : "";
+			return <p className={cx}>{this.props.total} results found in {this.props.time}ms</p>;
 		}
 		return null;
 	};
@@ -297,7 +298,7 @@ class ResultCard extends Component {
 						? this.renderPagination()
 						: null
 				}
-				<div className={container}>
+				<div className={`${container} ${this.props.innerClass ? this.props.innerClass.list : ""}`}>
 					{
 						results.map(item => this.renderAsCard(item))
 					}
@@ -344,7 +345,8 @@ ResultCard.propTypes = {
 	loader: types.title,
 	isLoading: types.bool,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	innerClass: types.style
 }
 
 ResultCard.defaultProps = {
