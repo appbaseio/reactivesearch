@@ -14,7 +14,8 @@ import {
 	checkValueChange,
 	getAggsOrder,
 	checkPropChange,
-	checkSomePropChange
+	checkSomePropChange,
+	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -125,12 +126,13 @@ class SingleRange extends Component {
 	render() {
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title>{this.props.title}</Title>}
-				<UL>
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				<UL className={getClassName(this.props.innerClass, "list") || null}>
 					{
 						this.props.data.map(item => (
 							<li key={item.label}>
 								<Radio
+									className={getClassName(this.props.innerClass, "input")}
 									id={item.label}
 									name={this.props.componentId}
 									value={item.label}
@@ -138,7 +140,7 @@ class SingleRange extends Component {
 									checked={!!this.state.currentValue && this.state.currentValue.label === item.label}
 									show={this.props.showRadio}
 								/>
-								<label htmlFor={item.label}>
+								<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={item.label}>
 									{item.label}
 								</label>
 							</li>
@@ -170,7 +172,8 @@ SingleRange.propTypes = {
 	showFilter: types.bool,
 	showRadio: types.boolRequired,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	innerClass: types.style
 }
 
 SingleRange.defaultProps = {

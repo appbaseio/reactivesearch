@@ -14,7 +14,8 @@ import {
 	checkValueChange,
 	getAggsOrder,
 	checkPropChange,
-	checkSomePropChange
+	checkSomePropChange,
+	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -181,8 +182,9 @@ class SingleDropdownList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
 				<Dropdown
+					innerClass={this.props.innerClass}
 					items={[...selectAll , ...this.state.options]}
 					onChange={this.setValue}
 					selectedItem={this.state.currentValue}
@@ -219,7 +221,8 @@ SingleDropdownList.propTypes = {
 	selectAllLabel: types.string,
 	style: types.style,
 	className: types.string,
-	showCount: types.bool
+	showCount: types.bool,
+	innerClass: types.style
 }
 
 SingleDropdownList.defaultProps = {

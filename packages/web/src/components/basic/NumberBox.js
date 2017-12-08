@@ -9,7 +9,8 @@ import {
 } from "@appbaseio/reactivecore/lib/actions";
 import {
 	checkValueChange,
-	checkPropChange
+	checkPropChange,
+	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
@@ -143,11 +144,12 @@ class NumberBox extends Component {
 	render() {
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
 				<Flex labelPosition={this.props.labelPosition} inline>
-					{this.props.data.label}
+					<span className={getClassName(this.props.innerClass, "label") || null}>{this.props.data.label}</span>
 					<div className={numberBoxButtons}>
 						<Button
+							className={getClassName(this.props.innerClass, "button") || null}
 							onClick={this.decrementValue}
 							disabled={this.state.currentValue === this.props.data.start}
 						>
@@ -155,6 +157,7 @@ class NumberBox extends Component {
 						</Button>
 						{this.state.currentValue}
 						<Button
+							className={getClassName(this.props.innerClass, "button") || null}
 							onClick={this.incrementValue}
 							disabled={this.state.currentValue === this.props.data.end}
 						>
@@ -180,7 +183,8 @@ NumberBox.propTypes = {
 	URLParams: types.boolRequired,
 	selectedValue: types.selectedValue,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	innerClass: types.style
 };
 
 NumberBox.defaultProps = {

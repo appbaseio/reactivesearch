@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import { setValue, clearValues } from "@appbaseio/reactivecore/lib/actions";
 import types from "@appbaseio/reactivecore/lib/utils/types";
+import { getClassName } from "@appbaseio/reactivecore/lib/utils/helper";
 import Button, { filters } from "../../styles/Button";
 
 class SelectedFilters extends Component {
@@ -38,7 +39,11 @@ class SelectedFilters extends Component {
 
 						if (label && (isArray && value.length) || (!isArray && value)) {
 							hasValues = true;
-							return (<Button key={`${component}-${index}`} onClick={() => this.remove(component)}>
+							return (<Button
+								className={getClassName(this.props.innerClass, "button") || null}
+								key={`${component}-${index}`}
+								onClick={() => this.remove(component)}
+							>
 								<span>{selectedValues[component].label}: {this.renderValue(value, isArray)}</span>
 								<span>&#x2715;</span>
 							</Button>);
@@ -48,7 +53,7 @@ class SelectedFilters extends Component {
 			}
 			{
 				hasValues
-					? <Button onClick={this.props.clearValues}>Clear all filters</Button>
+					? <Button className={getClassName(this.props.innerClass, "button") || null} onClick={this.props.clearValues}>Clear all filters</Button>
 					: null
 			}
 		</div>)
@@ -61,7 +66,8 @@ SelectedFilters.propTypes = {
 	clearValues: types.func,
 	components: types.components,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	innerClass: types.style
 };
 
 SelectedFilters.defaultProps = {

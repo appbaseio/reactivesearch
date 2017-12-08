@@ -11,7 +11,8 @@ import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
-	checkSomePropChange
+	checkSomePropChange,
+	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import Rheostat from "rheostat";
@@ -225,7 +226,7 @@ class RangeSlider extends Component {
 	render() {
 		return (
 			<Slider primary style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
 				{this.state.stats.length && this.props.showHistogram ? (
 					<HistogramContainer
 						stats={this.state.stats}
@@ -240,6 +241,7 @@ class RangeSlider extends Component {
 					onChange={this.handleSlider}
 					snap={this.props.snap}
 					snapPoints={this.props.snap ? this.getSnapPoints() : null}
+					className={getClassName(this.props.innerClass, "slider")}
 				/>
 				{
 					this.props.rangeLabels &&
@@ -278,7 +280,8 @@ RangeSlider.propTypes = {
 	selectedValue: types.selectedValue,
 	style: types.style,
 	className: types.string,
-	snap: types.bool
+	snap: types.bool,
+	innerClass: types.style
 };
 
 RangeSlider.defaultProps = {

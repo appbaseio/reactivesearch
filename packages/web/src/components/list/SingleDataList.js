@@ -9,7 +9,8 @@ import {
 } from "@appbaseio/reactivecore/lib/actions";
 import {
 	checkValueChange,
-	checkPropChange
+	checkPropChange,
+	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -138,6 +139,7 @@ class SingleDataList extends Component {
 	renderSearch = () => {
 		if (this.props.showSearch) {
 			return <Input
+				className={getClassName(this.props.innerClass, "input") || null}
 				onChange={this.handleInputChange}
 				value={this.state.searchTerm}
 				placeholder={this.props.placeholder}
@@ -158,13 +160,14 @@ class SingleDataList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
 				{this.renderSearch()}
-				<UL>
+				<UL className={getClassName(this.props.innerClass, "list") || null}>
 					{
 						selectAllLabel
 							? (<li key={selectAllLabel}>
 								<Radio
+									className={getClassName(this.props.innerClass, "input")}
 									id={selectAllLabel}
 									name={this.props.componentId}
 									value={selectAllLabel}
@@ -172,7 +175,7 @@ class SingleDataList extends Component {
 									checked={this.state.currentValue === selectAllLabel}
 									show={this.props.showRadio}
 								/>
-								<label htmlFor={selectAllLabel}>
+								<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={selectAllLabel}>
 									{selectAllLabel}
 								</label>
 							</li>)
@@ -189,6 +192,7 @@ class SingleDataList extends Component {
 							.map(item => (
 								<li key={item.label}>
 									<Radio
+										className={getClassName(this.props.innerClass, "input")}
 										id={item.label}
 										name={this.props.componentId}
 										value={item.label}
@@ -196,7 +200,7 @@ class SingleDataList extends Component {
 										checked={this.state.currentValue === item.label}
 										show={this.props.showRadio}
 									/>
-									<label htmlFor={item.label}>
+									<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={item.label}>
 										{item.label}
 									</label>
 								</li>
@@ -231,7 +235,8 @@ SingleDataList.propTypes = {
 	showSearch: types.bool,
 	selectAllLabel: types.string,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	innerClass: types.style
 }
 
 SingleDataList.defaultProps = {

@@ -68,13 +68,15 @@ class DataController extends Component {
 	}
 
 	render() {
-		return (<div>{this.props.children}</div>);
+		return (<div style={this.props.style} className={this.props.className}>{this.props.children}</div>);
 	}
 }
 
 DataController.defaultProps = {
 	URLParams: false,
-	showFilter: true
+	showFilter: true,
+	style: {},
+	className: null
 }
 
 DataController.propTypes = {
@@ -92,7 +94,9 @@ DataController.propTypes = {
 	filterLabel: types.string,
 	URLParams: types.boolRequired,
 	showFilter: types.bool,
-	children: types.children
+	children: types.children,
+	style: types.style,
+	className: types.string
 }
 
 const mapStateToProps = (state, props) => ({

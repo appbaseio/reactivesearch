@@ -10,7 +10,8 @@ import {
 import {
 	isEqual,
 	checkValueChange,
-	checkPropChange
+	checkPropChange,
+	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
@@ -128,10 +129,11 @@ class ToggleButton extends Component {
 			<div style={this.props.style} className={`${toggleButtons} ${this.props.className || ""}`}>
 				{
 					this.props.title &&
-					<Title>{this.props.title}</Title>
+					<Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>
 				}
 				{this.props.data.map(item => (
 					<Button
+						className={getClassName(this.props.innerClass, "button") || null}
 						onClick={() => this.handleToggle(item.value)}
 						key={item.label}
 						primary={this.state.currentValue.includes(item.value)}
@@ -159,7 +161,8 @@ ToggleButton.propTypes = {
 	showFilter: types.bool,
 	filterLabel: types.string,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	innerClass: types.style
 };
 
 ToggleButton.defaultProps = {

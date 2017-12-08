@@ -14,7 +14,8 @@ import {
 	pushToAndClause,
 	checkValueChange,
 	checkPropChange,
-	checkSomePropChange
+	checkSomePropChange,
+	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -346,7 +347,7 @@ class DataSearch extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
 				{
 					this.props.autoSuggest
 						? (<Downshift
@@ -363,6 +364,7 @@ class DataSearch extends Component {
 							}) => (
 								<div className={suggestionsContainer}>
 									<Input {...getInputProps({
+										className: getClassName(this.props.innerClass, "input"),
 										placeholder: this.props.placeholder,
 										value: this.state.currentValue === null ? "" : this.state.currentValue,
 										onChange: this.onInputChange,
@@ -375,7 +377,7 @@ class DataSearch extends Component {
 									{
 										isOpen && suggestionsList.length
 											? (<div className={suggestions}>
-												<ul>
+												<ul className={getClassName(this.props.innerClass, "list") || null}>
 													{
 														suggestionsList
 															.map((item, index) => (
@@ -398,6 +400,7 @@ class DataSearch extends Component {
 							)}
 						/>)
 						: (<Input
+							className={getClassName(this.props.innerClass, "input") || null}
 							placeholder={this.props.placeholder}
 							value={this.state.currentValue ? this.state.currentValue : ""}
 							onChange={(e) => this.setValue(e.target.value)}
@@ -449,7 +452,8 @@ DataSearch.propTypes = {
 	showFilter: types.bool,
 	filterLabel: types.string,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	innerClass: types.style
 }
 
 DataSearch.defaultProps = {

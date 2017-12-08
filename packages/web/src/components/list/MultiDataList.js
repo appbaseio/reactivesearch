@@ -10,7 +10,8 @@ import {
 import {
 	isEqual,
 	checkValueChange,
-	checkPropChange
+	checkPropChange,
+	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -202,6 +203,7 @@ class MultiDataList extends Component {
 	renderSearch = () => {
 		if (this.props.showSearch) {
 			return <Input
+				className={getClassName(this.props.innerClass, "input") || null}
 				onChange={this.handleInputChange}
 				value={this.state.searchTerm}
 				placeholder={this.props.placeholder}
@@ -222,13 +224,14 @@ class MultiDataList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
 				{this.renderSearch()}
-				<UL>
+				<UL className={getClassName(this.props.innerClass, "list") || null}>
 					{
 						selectAllLabel
 							? (<li key={selectAllLabel}>
 								<Checkbox
+									className={getClassName(this.props.innerClass, "input") || null}
 									id={selectAllLabel}
 									name={selectAllLabel}
 									value={selectAllLabel}
@@ -236,7 +239,7 @@ class MultiDataList extends Component {
 									checked={!!this.state.currentValue[selectAllLabel]}
 									show={this.props.showCheckbox}
 								/>
-								<label htmlFor={selectAllLabel}>
+								<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={selectAllLabel}>
 									{selectAllLabel}
 								</label>
 							</li>)
@@ -253,6 +256,7 @@ class MultiDataList extends Component {
 							.map(item => (
 								<li key={item.label}>
 									<Checkbox
+										className={getClassName(this.props.innerClass, "input") || null}
 										id={item.label}
 										name={this.props.componentId}
 										value={item.label}
@@ -261,7 +265,7 @@ class MultiDataList extends Component {
 										onChange={() => {}}
 										show={this.props.showCheckbox}
 									/>
-									<label htmlFor={item.label}>
+									<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={item.label}>
 										{item.label}
 									</label>
 								</li>
@@ -296,7 +300,8 @@ MultiDataList.propTypes = {
 	showSearch: types.bool,
 	selectAllLabel: types.string,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	innerClass: types.style
 }
 
 MultiDataList.defaultProps = {

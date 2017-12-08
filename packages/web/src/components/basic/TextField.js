@@ -10,7 +10,8 @@ import {
 import {
 	debounce,
 	checkValueChange,
-	checkPropChange
+	checkPropChange,
+	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
@@ -117,9 +118,10 @@ class TextField extends Component {
 	render() {
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
 				<Input
 					type="text"
+					className={getClassName(this.props.innerClass, "input") || null}
 					placeholder={this.props.placeholder}
 					onChange={(e) => this.setValue(e.target.value)}
 					value={this.state.currentValue}
@@ -148,7 +150,8 @@ TextField.propTypes = {
 	URLParams: types.boolRequired,
 	showFilter: types.bool,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	innerClass: types.style
 };
 
 TextField.defaultProps = {

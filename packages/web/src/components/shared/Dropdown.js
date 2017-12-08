@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Downshift from "downshift";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
+import { getClassName } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import { suggestionsContainer, suggestions } from "../../styles/Input";
 import Select, { Tick } from "../../styles/Select";
@@ -94,6 +95,7 @@ class Dropdown extends Component {
 				return (<div className={suggestionsContainer}>
 					<Select
 						{...getButtonProps()}
+						className={getClassName(this.props.innerClass, "select") || null}
 						onClick={this.toggle}
 						title={selectedItem ? this.renderToString(selectedItem) : placeholder}
 					>
@@ -103,7 +105,7 @@ class Dropdown extends Component {
 					{
 						isOpen && items.length
 							? (<div className={suggestions}>
-								<ul>
+								<ul className={getClassName(this.props.innerClass, "list") || null}>
 									{
 										items
 											.map((item, index) => {
@@ -128,7 +130,7 @@ class Dropdown extends Component {
 													}
 													{
 														selected
-															? (<Tick />)
+															? (<Tick className={getClassName(this.props.innerClass, "icon") || null} />)
 															: null
 													}
 												</li>
@@ -159,7 +161,8 @@ Dropdown.propTypes = {
 	labelField: types.string,
 	keyField: types.string,
 	returnsObject: types.bool,
-	showCount: types.bool
+	showCount: types.bool,
+	innerClass: types.style
 }
 
 export default Dropdown;

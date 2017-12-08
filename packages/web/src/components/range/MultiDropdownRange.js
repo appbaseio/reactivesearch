@@ -14,7 +14,8 @@ import {
 	checkValueChange,
 	getAggsOrder,
 	checkPropChange,
-	checkSomePropChange
+	checkSomePropChange,
+	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -168,8 +169,9 @@ class MultiDropdownRange extends Component {
 	render() {
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
 				<Dropdown
+					innerClass={this.props.innerClass}
 					items={this.props.data}
 					onChange={this.selectItem}
 					selectedItem={this.state.currentValue}
@@ -204,7 +206,8 @@ MultiDropdownRange.propTypes = {
 	showFilter: types.bool,
 	filterLabel: types.filterLabel,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	innerClass: types.style
 }
 
 MultiDropdownRange.defaultProps = {

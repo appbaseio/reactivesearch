@@ -13,7 +13,8 @@ import {
 import {
 	isEqual,
 	getQueryOptions,
-	pushToAndClause
+	pushToAndClause,
+	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
@@ -215,7 +216,7 @@ class ReactiveList extends Component {
 
 		for (let i = start; i < start + this.props.pages - 1; i++) {
 			const pageBtn = (
-				<Button primary={this.state.currentPage === i-1} key={i-1} onClick={() => this.setPage(i-1)}>
+				<Button className={getClassName(this.props.innerClass, "button") || null} primary={this.state.currentPage === i-1} key={i-1} onClick={() => this.setPage(i-1)}>
 					{i}
 				</Button>
 			);
@@ -229,19 +230,19 @@ class ReactiveList extends Component {
 		}
 
 		return (
-			<div className={`${pagination} ${this.props.innerClass ? this.props.innerClass.pagination : ""}`}>
-				<Button disabled={this.state.currentPage === 0} onClick={this.prevPage}>
+			<div className={`${pagination} ${getClassName(this.props.innerClass, "pagination")}`}>
+				<Button className={getClassName(this.props.innerClass, "button") || null} disabled={this.state.currentPage === 0} onClick={this.prevPage}>
 					Prev
 				</Button>
 				{
-					<Button primary={this.state.currentPage === 0} onClick={() => this.setPage(0)}>
+					<Button className={getClassName(this.props.innerClass, "button") || null} primary={this.state.currentPage === 0} onClick={() => this.setPage(0)}>
 						1
 					</Button>
 				}
 				{
 					pages
 				}
-				<Button disabled={this.state.currentPage >= this.state.totalPages-1} onClick={this.nextPage}>
+				<Button className={getClassName(this.props.innerClass, "button") || null} disabled={this.state.currentPage >= this.state.totalPages-1} onClick={this.nextPage}>
 					Next
 				</Button>
 			</div>
@@ -271,8 +272,9 @@ class ReactiveList extends Component {
 		if (this.props.onResultStats) {
 			return this.props.onResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
-			const cx = this.props.innerClass ? this.props.innerClass.resultStats : "";
-			return <p className={cx}>{this.props.total} results found in {this.props.time}ms</p>;
+			return (<p className={getClassName(this.props.innerClass, "resultstats") || null}>
+				{this.props.total} results found in {this.props.time}ms
+			</p>);
 		}
 		return null;
 	};
@@ -295,7 +297,7 @@ class ReactiveList extends Component {
 				{
 					this.props.onAllData
 						? (this.props.onAllData(this.parseHits(this.props.hits), this.loadMore))
-						: (<div className={this.props.innerClass ? this.props.innerClass.list: ""}>
+						: (<div className={getClassName(this.props.innerClass, "list")}>
 							{
 								results.map(item => this.props.onData(item))
 							}
