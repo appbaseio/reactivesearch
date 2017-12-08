@@ -3,6 +3,17 @@ import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Histogram, { histogramContainer } from "../../../styles/Histogram";
 
+const getWidth = (index, range, item, props) => {
+	let diff;
+	if (index < range.length - 1) {
+		diff = range[index + 1].key - item.key;
+	} else {
+		diff = props.range.end - item.key;
+	}
+	const fullRange = props.range.end - props.range.start;
+	return `${(diff / fullRange) * 100}%`;
+};
+
 const HistogramContainer = (props) => {
 	let max = props.stats[0].doc_count;
 	props.stats.forEach(item => {
@@ -11,30 +22,28 @@ const HistogramContainer = (props) => {
 		}
 	});
 
-	const range = [];
-	for (let i = props.range.start; i <= props.range.end; i += props.interval) {
-		range.push(i);
+	let range = [...props.stats];
+	if (props.stats.length) {
+		if (range[0].key > props.range.start) {
+			range = [{ key: props.range.start, doc_count: 0 }, ...range];
+		}
+		const lastElement = range[range.length - 1];
+		if (lastElement.key + props.interval < props.range.end) {
+			range = [...range, { key: props.interval + lastElement.key, doc_count: 0 }];
+		}
 	}
 
 	return (
 		<div className={histogramContainer}>
 			{
-				range.map((item, index) => {
-					const value = props.stats.find(stat => stat.key === item) || 0;
-
-					return (
-						<Histogram
-							key={item}
-							width={
-								index === 0 || (index === range.length - 1) ?
-									`${100 / (2 * (range.length - 1))}%` :
-									`${100 / (range.length - 1)}%`
-							}
-							height={`${(100 * value.doc_count) / max || 0}%`}
-							title={value.doc_count}
-						/>
-					);
-				})
+				range.map((item, index) => (
+					<Histogram
+						key={item.key}
+						width={getWidth(index, range, item, props)}
+						height={`${(100 * item.doc_count) / max || 0}%`}
+						title={item.doc_count}
+					/>
+				))
 			}
 		</div>
 	);
