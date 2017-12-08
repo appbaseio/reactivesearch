@@ -124,6 +124,7 @@ class RangeSlider extends Component {
 		let snapPoints = [];
 		let { stepValue } = this.props;
 
+		// limit the number of steps to prevent generating a large number of snapPoints
 		if ((this.props.range.end - this.props.range.start) / stepValue > 100) {
 			stepValue = (this.props.range.end - this.props.range.start) / 100;
 		}
@@ -237,8 +238,8 @@ class RangeSlider extends Component {
 					max={this.props.range.end}
 					values={this.state.currentValue}
 					onChange={this.handleSlider}
-					snap
-					snapPoints={this.getSnapPoints()}
+					snap={this.props.snap}
+					snapPoints={this.props.snap ? this.getSnapPoints() : null}
 				/>
 				{
 					this.props.rangeLabels &&
@@ -276,7 +277,8 @@ RangeSlider.propTypes = {
 	rangeLabels: types.rangeLabels,
 	selectedValue: types.selectedValue,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	snap: types.bool
 };
 
 RangeSlider.defaultProps = {
@@ -288,7 +290,8 @@ RangeSlider.defaultProps = {
 	showHistogram: true,
 	URLParams: false,
 	style: {},
-	className: null
+	className: null,
+	snap: true
 };
 
 const mapStateToProps = (state, props) => ({
