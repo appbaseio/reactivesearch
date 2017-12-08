@@ -156,7 +156,8 @@ class RangeSlider extends Component {
 			[props.dataField]: {
 				histogram: {
 					field: props.dataField,
-					interval: this.getValidInterval(props)
+					interval: this.getValidInterval(props),
+					offset: props.range.start
 				}
 			}
 		};
@@ -218,7 +219,7 @@ class RangeSlider extends Component {
 			// dependency tree is empty
 			props.updateQuery({
 				componentId: this.internalComponent,
-				query: query(this.state.currentValue, props)
+				query: query([props.range.start, props.range.end], props)
 			});
 		}
 	};
