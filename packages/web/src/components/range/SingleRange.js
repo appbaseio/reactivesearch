@@ -121,7 +121,11 @@ class SingleRange extends Component {
 			onQueryChange,
 			URLParams: props.URLParams
 		});
-	}
+	};
+
+	handleClick = (e) => {
+		this.setValue(e.target.value);
+	};
 
 	render() {
 		return (
@@ -136,7 +140,7 @@ class SingleRange extends Component {
 									id={item.label}
 									name={this.props.componentId}
 									value={item.label}
-									onClick={e => this.setValue(e.target.value)}
+									onClick={this.handleClick}
 									checked={!!this.state.currentValue && this.state.currentValue.label === item.label}
 									show={this.props.showRadio}
 								/>

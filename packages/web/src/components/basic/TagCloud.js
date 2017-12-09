@@ -5,33 +5,40 @@ import {
 	addComponent,
 	removeComponent,
 	watchComponent,
-	updateQuery
+	updateQuery,
+	setQueryOptions
 } from "@appbaseio/reactivecore/lib/actions";
 import {
+	getQueryOptions,
+	pushToAndClause,
 	checkValueChange,
+	getAggsOrder,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 import Title from "../../styles/Title";
-import Input from "../../styles/Input";
-import { UL, Radio } from "../../styles/FormControlList";
+import TagList from "../../styles/TagList";
 
-class SingleDataList extends Component {
+class TagCloud extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			currentValue: null,
-			searchTerm: ""
+			currentValue: "",
+			options: []
 		};
 		this.type = "term";
+		this.internalComponent = props.componentId + "__internal";
 	}
 
 	componentWillMount() {
+		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
+		this.updateQueryOptions(this.props);
 
 		this.setReact(this.props);
 
@@ -48,6 +55,21 @@ class SingleDataList extends Component {
 			nextProps.react,
 			() => this.setReact(nextProps)
 		);
+		checkPropChange(
+			this.props.options,
+			nextProps.options,
+			() => {
+				this.setState({
+					options: nextProps.options[nextProps.dataField].buckets || []
+				});
+			}
+		);
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			["size", "sortBy"],
+			() => this.updateQueryOptions(nextProps)
+		);
 
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected);
@@ -58,22 +80,21 @@ class SingleDataList extends Component {
 
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
+		this.props.removeComponent(this.internalComponent);
 	}
 
-	setReact(props) {
-		if (props.react) {
-			props.watchComponent(props.componentId, props.react);
+	setReact = (props) => {
+		const { react } = props;
+		if (react) {
+			const newReact = pushToAndClause(react, this.internalComponent);
+			props.watchComponent(props.componentId, newReact);
+		} else {
+			props.watchComponent(props.componentId, { and: this.internalComponent });
 		}
-	}
+	};
 
 	defaultQuery = (value, props) => {
-		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
-			return {
-				exists: {
-					field: props.dataField
-				}
-			};
-		} else if (value) {
+		if (value) {
 			return {
 				[this.type]: {
 					[props.dataField]: value
@@ -111,21 +132,37 @@ class SingleDataList extends Component {
 		if (props.onQueryChange) {
 			onQueryChange = props.onQueryChange;
 		}
-
-		let currentValue = value;
-		if (value !== props.selectAllLabel) {
-			currentValue = props.data.find(item => item.label === value);
-			currentValue = currentValue ? currentValue.value : null;
-		}
-
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(currentValue, props),
-			value: currentValue ? value : null,
+			query: query(value, props),
+			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
 			URLParams: props.URLParams
+		});
+	};
+
+	updateQueryOptions = (props) => {
+		const queryOptions = getQueryOptions(props);
+		queryOptions.aggs = {
+			[props.dataField]: {
+				terms: {
+					field: props.dataField,
+					size: props.size,
+					order: getAggsOrder(props.sortBy)
+				}
+			}
+		}
+		props.setQueryOptions(this.internalComponent, queryOptions);
+		// Since the queryOptions are attached to the internal component,
+		// we need to notify the subscriber (parent component)
+		// that the query has changed because no new query will be
+		// auto-generated for the internal component as its
+		// dependency tree is empty
+		props.updateQuery({
+			componentId: this.internalComponent,
+			query: null
 		});
 	};
 
@@ -136,94 +173,58 @@ class SingleDataList extends Component {
 		});
 	};
 
-	renderSearch = () => {
-		if (this.props.showSearch) {
-			return <Input
-				className={getClassName(this.props.innerClass, "input") || null}
-				onChange={this.handleInputChange}
-				value={this.state.searchTerm}
-				placeholder={this.props.placeholder}
-				style={{
-					margin: "0 0 8px"
-				}}
-			/>
-		}
-		return null;
-	};
-
-	handleClick = (e) => {
-		this.setValue(e.target.value);
-	};
-
 	render() {
-		const { selectAllLabel } = this.props;
+		const min = 0.8, max = 3;
 
-		if (this.props.data.length === 0) {
+		if (this.state.options.length === 0) {
 			return null;
 		}
+
+		let highestCount = 0;
+		this.state.options.forEach(item => {
+			highestCount = item.doc_count > highestCount ? item.doc_count : highestCount;
+		});
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
-				{this.renderSearch()}
-				<UL className={getClassName(this.props.innerClass, "list") || null}>
+				<TagList className={getClassName(this.props.innerClass, "list") || null}>
 					{
-						selectAllLabel
-							? (<li key={selectAllLabel}>
-								<Radio
+						this.state.options
+							.map(item => {
+								const size = ((item.doc_count / highestCount) * (max - min)) + min;
+
+								return (<span
+									key={item.key}
 									className={getClassName(this.props.innerClass, "input")}
-									id={selectAllLabel}
-									name={this.props.componentId}
-									value={selectAllLabel}
-									onClick={this.handleClick}
-									checked={this.state.currentValue === selectAllLabel}
-									show={this.props.showRadio}
-								/>
-								<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={selectAllLabel}>
-									{selectAllLabel}
-								</label>
-							</li>)
-							: null
-					}
-					{
-						this.props.data
-							.filter(item => {
-								if (this.props.showSearch && this.state.searchTerm) {
-									return item.label.toLowerCase().includes(this.state.searchTerm.toLowerCase());
-								}
-								return true;
+									onClick={() => this.setValue(item.key)}
+									style={{ fontSize: `${size}em` }}
+									className={this.state.currentValue === item.key ? "active" : null}
+								>
+									{item.key}
+									{
+										this.props.showCount &&
+										` (${item.doc_count})`
+									}
+								</span>);
 							})
-							.map(item => (
-								<li key={item.label}>
-									<Radio
-										className={getClassName(this.props.innerClass, "input")}
-										id={item.label}
-										name={this.props.componentId}
-										value={item.label}
-										onClick={this.handleClick}
-										checked={this.state.currentValue === item.label}
-										show={this.props.showRadio}
-									/>
-									<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={item.label}>
-										{item.label}
-									</label>
-								</li>
-							))
 					}
-				</UL>
+				</TagList>
 			</div>
 		);
 	}
 }
 
-SingleDataList.propTypes = {
+TagCloud.propTypes = {
 	componentId: types.stringRequired,
 	addComponent: types.funcRequired,
 	dataField: types.stringRequired,
+	sortBy: types.sortByWithCount,
+	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	data: types.data,
 	defaultSelected: types.string,
 	react: types.react,
+	options: types.options,
 	removeComponent: types.funcRequired,
 	beforeValueChange: types.func,
 	onValueChange: types.func,
@@ -231,38 +232,38 @@ SingleDataList.propTypes = {
 	onQueryChange: types.func,
 	placeholder: types.string,
 	title: types.title,
-	showRadio: types.boolRequired,
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
 	URLParams: types.boolRequired,
 	showFilter: types.bool,
-	showSearch: types.bool,
-	selectAllLabel: types.string,
+	size: types.number,
 	style: types.style,
 	className: types.string,
-	innerClass: types.style
+	innerClass: types.style,
+	showCount: types.bool
 }
 
-SingleDataList.defaultProps = {
+TagCloud.defaultProps = {
 	size: 100,
-	showRadio: true,
+	sortBy: "asc",
 	URLParams: false,
 	showFilter: true,
 	placeholder: "Search",
-	showSearch: true,
 	style: {},
 	className: null
 }
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	options: state.aggregations[props.componentId],
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || ""
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject))
+	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject)),
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SingleDataList);
+export default connect(mapStateToProps, mapDispatchtoProps)(TagCloud);

@@ -113,7 +113,11 @@ class TextField extends Component {
 			onQueryChange,
 			URLParams: props.URLParams
 		});
-	}
+	};
+
+	handleChange = (e) => {
+		this.setValue(e.target.value);
+	};
 
 	render() {
 		return (
@@ -123,7 +127,7 @@ class TextField extends Component {
 					type="text"
 					className={getClassName(this.props.innerClass, "input") || null}
 					placeholder={this.props.placeholder}
-					onChange={(e) => this.setValue(e.target.value)}
+					onChange={this.handleChange}
 					value={this.state.currentValue}
 				/>
 			</div>

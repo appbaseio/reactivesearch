@@ -165,7 +165,11 @@ class MultiRange extends Component {
 			onQueryChange,
 			URLParams: props.URLParams
 		});
-	}
+	};
+
+	handleClick = (e) => {
+		this.selectItem(e.target.value);
+	};
 
 	render() {
 		return (
@@ -180,9 +184,8 @@ class MultiRange extends Component {
 									id={item.label}
 									name={this.props.componentId}
 									value={item.label}
-									onClick={e => this.selectItem(e.target.value)}
+									onClick={this.handleClick}
 									checked={!!this.state.selectedValues[item.label]}
-									onChange={() => {}}
 									show={this.props.showCheckbox}
 								/>
 								<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={item.label}>

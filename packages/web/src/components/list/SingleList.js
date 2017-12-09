@@ -196,6 +196,10 @@ class SingleList extends Component {
 		return null;
 	};
 
+	handleClick = (e) => {
+		this.setValue(e.target.value);
+	};
+
 	render() {
 		const { selectAllLabel } = this.props;
 
@@ -216,7 +220,7 @@ class SingleList extends Component {
 									id={selectAllLabel}
 									name={this.props.componentId}
 									value={selectAllLabel}
-									onClick={e => this.setValue(e.target.value)}
+									onClick={thia.handleClick}
 									checked={this.state.currentValue === selectAllLabel}
 									show={this.props.showRadio}
 								/>
@@ -241,7 +245,7 @@ class SingleList extends Component {
 										id={item.key}
 										name={this.props.componentId}
 										value={item.key}
-										onClick={e => this.setValue(e.target.value)}
+										onClick={thia.handleClick}
 										checked={this.state.currentValue === item.key}
 										show={this.props.showRadio}
 									/>

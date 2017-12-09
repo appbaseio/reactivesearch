@@ -318,7 +318,7 @@ class DataSearch extends Component {
 		}
 	};
 
-	onInputChange = (e, v) => {
+	onInputChange = (e) => {
 		this.setValue(e.target.value);
 	};
 
@@ -403,7 +403,7 @@ class DataSearch extends Component {
 							className={getClassName(this.props.innerClass, "input") || null}
 							placeholder={this.props.placeholder}
 							value={this.state.currentValue ? this.state.currentValue : ""}
-							onChange={(e) => this.setValue(e.target.value)}
+							onChange={this.onInputChange}
 							onBlur={this.props.onBlur}
 							onFocus={this.props.onFocus}
 							onKeyPress={this.props.onKeyPress}

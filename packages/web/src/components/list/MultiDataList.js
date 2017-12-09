@@ -215,6 +215,10 @@ class MultiDataList extends Component {
 		return null;
 	};
 
+	handleClick = (e) => {
+		this.setValue(e.target.value);
+	};
+
 	render() {
 		const { selectAllLabel } = this.props;
 
@@ -235,7 +239,7 @@ class MultiDataList extends Component {
 									id={selectAllLabel}
 									name={selectAllLabel}
 									value={selectAllLabel}
-									onClick={e => this.setValue(e.target.value)}
+									onClick={this.handleClick}
 									checked={!!this.state.currentValue[selectAllLabel]}
 									show={this.props.showCheckbox}
 								/>
@@ -260,9 +264,8 @@ class MultiDataList extends Component {
 										id={item.label}
 										name={this.props.componentId}
 										value={item.label}
-										onClick={e => this.setValue(e.target.value)}
+										onClick={this.handleClick}
 										checked={!!this.state.currentValue[item.label]}
-										onChange={() => {}}
 										show={this.props.showCheckbox}
 									/>
 									<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={item.label}>
