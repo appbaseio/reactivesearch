@@ -17,7 +17,7 @@ const suggestions = css`
 	border: 1px solid #ccc;
 	background-color: #fff;
 	font-size: 0.9rem;
-	z-index: 2;
+	z-index: 3;
 	position: absolute;
 	top: 41px;
 
