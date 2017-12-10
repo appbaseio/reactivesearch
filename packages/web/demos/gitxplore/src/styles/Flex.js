@@ -20,11 +20,15 @@ const Flex = styled.div`
 	display: flex;
 
 	${props => props.justifyContent && css`
-		justify-content: ${props.justifyContent}
+		justify-content: ${props.justifyContent};
 	`};
 
 	${props => props.responsive && queries.small`
 		flex-direction: column;
+	`};
+
+	${props => props.direction && css`
+		flex-direction: ${props.direction};
 	`};
 `;
 
