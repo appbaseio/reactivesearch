@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Downshift from "downshift";
+import { withTheme } from "emotion-theming";
 
 import {
 	addComponent,
@@ -21,6 +22,14 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import Title from "../../styles/Title";
 import Input, { suggestionsContainer, suggestions } from "../../styles/Input";
+
+const Label = withTheme((props) => (
+	<span style={{
+		color: props.primary ? props.theme.primaryColor : props.theme.textColor
+	}}>
+		{props.children}
+	</span>
+));
 
 class CategorySearch extends Component {
 	constructor(props) {
@@ -170,7 +179,7 @@ class CategorySearch extends Component {
 				}
 			};
 
-			if (category) {
+			if (category && category !== "*") {
 				finalQuery = [
 					finalQuery,
 					{
@@ -271,8 +280,7 @@ class CategorySearch extends Component {
 	setValue = (value, isDefaultValue = false, props = this.props, category) => {
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value,
-				suggestions: []
+				currentValue: value
 			});
 			if (isDefaultValue) {
 				if (this.props.autoSuggest) {
@@ -346,6 +354,9 @@ class CategorySearch extends Component {
 	};
 
 	onInputChange = (e) => {
+		this.setState({
+			suggestions: []
+		});
 		this.setValue(e.target.value);
 	};
 
@@ -376,7 +387,8 @@ class CategorySearch extends Component {
 			let categorySuggestions = [
 				{
 					label: `${this.state.currentValue} in all categories`,
-					value: this.state.currentValue
+					value: this.state.currentValue,
+					category: "*"
 				},
 				{
 					label: `${this.state.currentValue} in ${this.props.categories[0].key}`,
@@ -441,7 +453,7 @@ class CategorySearch extends Component {
 																		backgroundColor: highlightedIndex === index ? "#eee" : "#fff"
 																	}}
 																>
-																	{item.label}
+																	<Label primary={!!item.category}>{item.label}</Label>
 																</li>
 															))
 													}
@@ -509,7 +521,7 @@ CategorySearch.propTypes = {
 	innerClass: types.style,
 	categoryField: types.string,
 	categories: types.data
-}
+};
 
 CategorySearch.defaultProps = {
 	placeholder: "Search",
@@ -519,7 +531,7 @@ CategorySearch.defaultProps = {
 	showFilter: true,
 	style: {},
 	className: null
-}
+};
 
 const mapStateToProps = (state, props) => ({
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits || [],
