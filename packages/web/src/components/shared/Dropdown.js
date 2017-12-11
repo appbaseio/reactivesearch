@@ -85,7 +85,7 @@ class Dropdown extends Component {
 			onOuterClick={this.close}
 			onStateChange={this.handleStateChange}
 			isOpen={this.state.isOpen}
-			itemToString={i => i[this.props.labelField]}
+			itemToString={i => i && i[this.props.labelField]}
 			render={({
 				getButtonProps,
 				getItemProps,
