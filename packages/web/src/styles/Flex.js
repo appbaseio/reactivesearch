@@ -21,12 +21,22 @@ const bottomLabel = css`
 	align-items: center;
 `;
 
+const border = css`
+	border: 1px solid #ccc;
+`;
+
 const Flex = styled("div")`
 	display: ${props => props.inline ? "inline-flex" : "flex"};
-	${props => (props.labelPosition === "left") && leftLabel}
-	${props => (props.labelPosition === "right") && rightLabel}
-	${props => (props.labelPosition === "top") && topLabel}
-	${props => (props.labelPosition === "bottom") && bottomLabel}
+	${props => (props.labelPosition === "left" || props.iconPosition === "right") && leftLabel};
+	${props => (props.labelPosition === "right" || props.iconPosition === "left") && rightLabel};
+	${props => (props.labelPosition === "top") && topLabel};
+	${props => (props.labelPosition === "bottom") && bottomLabel};
+	${props => props.showBorder && border};
+
+	svg.search-icon {
+		fill: ${props => props.theme.primaryColor};
+		flex-basis: 30px;
+	}
 `;
 
 export default Flex;
