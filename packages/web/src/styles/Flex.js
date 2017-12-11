@@ -33,7 +33,7 @@ const Flex = styled("div")`
 	${props => (props.labelPosition === "bottom") && bottomLabel};
 	${props => props.showBorder && border};
 
-	svg {
+	svg.search-icon {
 		fill: ${props => props.theme.primaryColor};
 		flex-basis: 30px;
 	}
