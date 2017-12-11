@@ -22,11 +22,15 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import Title from "../../styles/Title";
 import Input, { suggestionsContainer, suggestions } from "../../styles/Input";
+import SearchSvg from "../shared/SearchSvg";
+import Flex from "../../styles/Flex";
 
-const Label = withTheme((props) => (
-	<span style={{
-		color: props.primary ? props.theme.primaryColor : props.theme.textColor
-	}}>
+const Label = withTheme(props => (
+	<span
+		style={{
+			color: props.primary ? props.theme.primaryColor : props.theme.textColor
+		}}
+	>
 		{props.children}
 	</span>
 ));
@@ -46,7 +50,6 @@ class CategorySearch extends Component {
 	componentWillMount() {
 		this.props.addComponent(this.props.componentId);
 		this.props.addComponent(this.internalComponent);
-
 
 		if (this.props.highlight) {
 			const queryOptions = this.highlightQuery(this.props);
@@ -75,22 +78,19 @@ class CategorySearch extends Component {
 			}
 		);
 
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps)
+		checkPropChange(this.props.react, nextProps.react, () =>
+			this.setReact(nextProps)
 		);
 
-		if (Array.isArray(nextProps.suggestions) && this.state.currentValue.trim().length) {
-			checkPropChange(
-				this.props.suggestions,
-				nextProps.suggestions,
-				() => {
-					this.setState({
-						suggestions: this.onSuggestions(nextProps.suggestions)
-					});
-				}
-			);
+		if (
+			Array.isArray(nextProps.suggestions) &&
+			this.state.currentValue.trim().length
+		) {
+			checkPropChange(this.props.suggestions, nextProps.suggestions, () => {
+				this.setState({
+					suggestions: this.onSuggestions(nextProps.suggestions)
+				});
+			});
 		}
 
 		checkSomePropChange(
@@ -98,7 +98,11 @@ class CategorySearch extends Component {
 			nextProps,
 			["fieldWeights", "fuzziness", "queryFormat"],
 			() => {
-				this.updateQuery(nextProps.componentId, this.state.currentValue, nextProps)
+				this.updateQuery(
+					nextProps.componentId,
+					this.state.currentValue,
+					nextProps
+				);
 			}
 		);
 
@@ -118,7 +122,7 @@ class CategorySearch extends Component {
 		this.props.removeComponent(this.internalComponent);
 	}
 
-	getAggsQuery = (field) => ({
+	getAggsQuery = field => ({
 		aggs: {
 			[field]: {
 				terms: {
@@ -128,7 +132,7 @@ class CategorySearch extends Component {
 		}
 	});
 
-	setReact = (props) => {
+	setReact = props => {
 		const { react } = props;
 		if (react) {
 			const newReact = pushToAndClause(react, this.internalComponent);
@@ -138,17 +142,19 @@ class CategorySearch extends Component {
 		}
 	};
 
-	highlightQuery = (props) => {
+	highlightQuery = props => {
 		if (!props.highlight) {
 			return null;
 		}
 		const fields = {};
-		const highlightField = props.highlightField ? props.highlightField : props.dataField;
+		const highlightField = props.highlightField
+			? props.highlightField
+			: props.dataField;
 
 		if (typeof highlightField === "string") {
 			fields[highlightField] = {};
 		} else if (Array.isArray(highlightField)) {
-			highlightField.forEach((item) => {
+			highlightField.forEach(item => {
 				fields[item] = {};
 			});
 		}
@@ -193,8 +199,8 @@ class CategorySearch extends Component {
 
 		if (value === "") {
 			finalQuery = {
-				"match_all": {}
-			}
+				match_all: {}
+			};
 		}
 
 		return finalQuery;
@@ -202,7 +208,12 @@ class CategorySearch extends Component {
 
 	shouldQuery = (value, dataFields, props) => {
 		const fields = dataFields.map(
-			(field, index) => `${field}${(Array.isArray(props.fieldWeights) && props.fieldWeights[index]) ? ("^" + props.fieldWeights[index]) : ""}`
+			(field, index) =>
+				`${field}${
+					Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+						? "^" + props.fieldWeights[index]
+						: ""
+				}`
 		);
 
 		if (props.queryFormat === "and") {
@@ -248,12 +259,14 @@ class CategorySearch extends Component {
 		];
 	};
 
-	onSuggestions = (suggestions) => {
+	onSuggestions = suggestions => {
 		if (this.props.onSuggestions) {
 			return this.props.onSuggestions(suggestions);
 		}
 
-		const fields = Array.isArray(this.props.dataField) ? this.props.dataField : [this.props.dataField];
+		const fields = Array.isArray(this.props.dataField)
+			? this.props.dataField
+			: [this.props.dataField];
 		let suggestionsList = [];
 		let labelsList = [];
 		const currentValue = this.state.currentValue.toLowerCase();
@@ -294,7 +307,7 @@ class CategorySearch extends Component {
 				// debounce for handling text while typing
 				this.handleTextChange(value);
 			}
-		}
+		};
 		checkValueChange(
 			props.componentId,
 			value,
@@ -304,7 +317,7 @@ class CategorySearch extends Component {
 		);
 	};
 
-	handleTextChange = debounce((value) => {
+	handleTextChange = debounce(value => {
 		if (this.props.autoSuggest) {
 			this.updateQuery(this.internalComponent, value, this.props);
 		} else {
@@ -329,7 +342,7 @@ class CategorySearch extends Component {
 		});
 	};
 
-	handleFocus = (event) => {
+	handleFocus = event => {
 		this.setState({
 			isOpen: true
 		});
@@ -340,10 +353,10 @@ class CategorySearch extends Component {
 
 	// only works if there's a change in downshift's value
 	handleOuterClick = () => {
-		this.setValue(this.state.currentValue, true)
+		this.setValue(this.state.currentValue, true);
 	};
 
-	handleKeyDown = (event) => {
+	handleKeyDown = event => {
 		if (event.key === "Enter") {
 			event.target.blur();
 			this.setValue(event.target.value, true);
@@ -353,7 +366,7 @@ class CategorySearch extends Component {
 		}
 	};
 
-	onInputChange = (e) => {
+	onInputChange = e => {
 		this.setState({
 			suggestions: []
 		});
@@ -367,7 +380,7 @@ class CategorySearch extends Component {
 		}
 	};
 
-	handleStateChange = (changes) => {
+	handleStateChange = changes => {
 		const { isOpen, type } = changes;
 		if (type === Downshift.stateChangeTypes.mouseUp) {
 			this.setState({
@@ -376,14 +389,26 @@ class CategorySearch extends Component {
 		}
 	};
 
-	render() {
-		let suggestionsList = this.state.currentValue === "" || this.state.currentValue === null
-			? this.props.defaultSuggestions && this.props.defaultSuggestions.length
-				? this.props.defaultSuggestions
-				: []
-			: this.state.suggestions;
+	renderIcon = () => {
+		if (this.props.showIcon) {
+			return this.props.icon || <SearchSvg />;
+		}
+		return null;
+	};
 
-		if (this.state.suggestions.length && this.props.categories && this.props.categories.length) {
+	render() {
+		let suggestionsList =
+			this.state.currentValue === "" || this.state.currentValue === null
+				? this.props.defaultSuggestions && this.props.defaultSuggestions.length
+					? this.props.defaultSuggestions
+					: []
+				: this.state.suggestions;
+
+		if (
+			this.state.suggestions.length &&
+			this.props.categories &&
+			this.props.categories.length
+		) {
 			let categorySuggestions = [
 				{
 					label: `${this.state.currentValue} in all categories`,
@@ -391,17 +416,21 @@ class CategorySearch extends Component {
 					category: "*"
 				},
 				{
-					label: `${this.state.currentValue} in ${this.props.categories[0].key}`,
+					label: `${this.state.currentValue} in ${
+						this.props.categories[0].key
+					}`,
 					value: this.state.currentValue,
 					category: this.props.categories[0].key
 				}
-			]
+			];
 
 			if (this.props.categories.length > 1) {
 				categorySuggestions = [
 					...categorySuggestions,
 					{
-						label: `${this.state.currentValue} in ${this.props.categories[1].key}`,
+						label: `${this.state.currentValue} in ${
+							this.props.categories[1].key
+						}`,
 						value: this.state.currentValue,
 						category: this.props.categories[1].key
 					}
@@ -412,59 +441,81 @@ class CategorySearch extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
-				{
-					this.props.autoSuggest
-						? (<Downshift
-							onChange={this.onSuggestionSelected}
-							onOuterClick={this.handleOuterClick}
-							onStateChange={this.handleStateChange}
-							isOpen={this.state.isOpen}
-							itemToString={i => i}
-							render={({
-								getInputProps,
-								getItemProps,
-								isOpen,
-								highlightedIndex
-							}) => (
-								<div className={suggestionsContainer}>
-									<Input {...getInputProps({
-										className: getClassName(this.props.innerClass, "input"),
-										placeholder: this.props.placeholder,
-										value: this.state.currentValue === null ? "" : this.state.currentValue,
-										onChange: this.onInputChange,
-										onBlur: this.props.onBlur,
-										onFocus: this.handleFocus,
-										onKeyPress: this.props.onKeyPress,
-										onKeyDown: this.handleKeyDown,
-										onKeyUp: this.props.onKeyUp
-									})} />
-									{
-										isOpen && suggestionsList.length
-											? (<div className={suggestions}>
-												<ul className={getClassName(this.props.innerClass, "list") || null}>
-													{
-														suggestionsList
-															.map((item, index) => (
-																<li
-																	{...getItemProps({ item })}
-																	key={item.label}
-																	style={{
-																		backgroundColor: highlightedIndex === index ? "#eee" : "#fff"
-																	}}
-																>
-																	<Label primary={!!item.category}>{item.label}</Label>
-																</li>
-															))
-													}
-												</ul>
-											</div>)
-											: null
-									}
-								</div>
-							)}
-						/>)
-						: (<Input
+				{this.props.title && (
+					<Title
+						className={getClassName(this.props.innerClass, "title") || null}
+					>
+						{this.props.title}
+					</Title>
+				)}
+				{this.props.autoSuggest ? (
+					<Downshift
+						onChange={this.onSuggestionSelected}
+						onOuterClick={this.handleOuterClick}
+						onStateChange={this.handleStateChange}
+						isOpen={this.state.isOpen}
+						itemToString={i => i}
+						render={({
+							getInputProps,
+							getItemProps,
+							isOpen,
+							highlightedIndex
+						}) => (
+							<div className={suggestionsContainer}>
+								<Flex
+									showBorder={this.props.showIcon}
+									iconPosition={this.props.iconPosition}
+								>
+									<Input
+										showIcon={this.props.showIcon}
+										{...getInputProps({
+											className: getClassName(this.props.innerClass, "input"),
+											placeholder: this.props.placeholder,
+											value:
+												this.state.currentValue === null
+													? ""
+													: this.state.currentValue,
+											onChange: this.onInputChange,
+											onBlur: this.props.onBlur,
+											onFocus: this.handleFocus,
+											onKeyPress: this.props.onKeyPress,
+											onKeyDown: this.handleKeyDown,
+											onKeyUp: this.props.onKeyUp
+										})}
+									/>
+									{this.renderIcon()}
+								</Flex>
+								{isOpen && suggestionsList.length ? (
+									<div className={suggestions}>
+										<ul
+											className={
+												getClassName(this.props.innerClass, "list") || null
+											}
+										>
+											{suggestionsList.map((item, index) => (
+												<li
+													{...getItemProps({ item })}
+													key={item.label}
+													style={{
+														backgroundColor:
+															highlightedIndex === index ? "#eee" : "#fff"
+													}}
+												>
+													<Label primary={!!item.category}>{item.label}</Label>
+												</li>
+											))}
+										</ul>
+									</div>
+								) : null}
+							</div>
+						)}
+					/>
+				) : (
+					<Flex
+						showBorder={this.props.showIcon}
+						iconPosition={this.props.iconPosition}
+					>
+						<Input
 							className={getClassName(this.props.innerClass, "input") || null}
 							placeholder={this.props.placeholder}
 							value={this.state.currentValue ? this.state.currentValue : ""}
@@ -475,8 +526,11 @@ class CategorySearch extends Component {
 							onKeyDown={this.props.onKeyDown}
 							onKeyUp={this.props.onKeyUp}
 							autoFocus={this.props.autoFocus}
-						/>)
-				}
+							showIcon={this.props.showIcon}
+						/>
+						{this.renderIcon()}
+					</Flex>
+				)}
 			</div>
 		);
 	}
@@ -520,7 +574,10 @@ CategorySearch.propTypes = {
 	className: types.string,
 	innerClass: types.style,
 	categoryField: types.string,
-	categories: types.data
+	categories: types.data,
+	showIcon: types.bool,
+	iconPosition: types.iconPosition,
+	icon: types.children
 };
 
 CategorySearch.defaultProps = {
@@ -530,23 +587,32 @@ CategorySearch.defaultProps = {
 	URLParams: false,
 	showFilter: true,
 	style: {},
-	className: null
+	className: null,
+	showIcon: true,
+	iconPosition: "right"
 };
 
 const mapStateToProps = (state, props) => ({
-	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits || [],
-	categories: state.aggregations[props.componentId] && state.aggregations[props.componentId][props.categoryField].buckets || [],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	suggestions:
+		(state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	categories:
+		(state.aggregations[props.componentId] &&
+			state.aggregations[props.componentId][props.categoryField].buckets) ||
+		[],
+	selectedValue:
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (updateQueryObject) => dispatch(
-		updateQuery(updateQueryObject)
-	),
-	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(component, props, execute))
+	watchComponent: (component, react) =>
+		dispatch(watchComponent(component, react)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	setQueryOptions: (component, props, execute) =>
+		dispatch(setQueryOptions(component, props, execute))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(CategorySearch);
