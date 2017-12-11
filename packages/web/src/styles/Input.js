@@ -9,6 +9,11 @@ const Input = styled("input")`
 	background-color: #fff;
 	font-size: 0.9rem;
 	outline: none;
+
+	${props => props.showIcon && css`
+		border: none;
+		flex: 1;
+	`};
 `;
 
 const suggestions = css`
