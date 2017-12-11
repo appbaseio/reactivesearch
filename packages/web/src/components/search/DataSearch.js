@@ -319,6 +319,9 @@ class DataSearch extends Component {
 	};
 
 	onInputChange = (e) => {
+		this.setState({
+			suggestions: []
+		});
 		this.setValue(e.target.value);
 	};
 
