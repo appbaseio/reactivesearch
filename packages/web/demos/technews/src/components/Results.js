@@ -79,7 +79,7 @@ const Results = () => (
 		onData={onData}
 		onResultStats={onResultStats}
 		react={{
-			and: ["title", "category"]
+			and: ["title", "category", "time"]
 		}}
 		pagination
 	/>
