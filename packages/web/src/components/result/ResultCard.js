@@ -264,8 +264,8 @@ class ResultCard extends Component {
 		const result = this.props.onData(item);
 		return (<Card key={item._id} href={result.url}>
 			<Image src={result.image}></Image>
-			<Title>{result.title}</Title>
-			<article>{result.desc}</article>
+			<Title dangerouslySetInnerHTML={{ __html: result.title }} />
+			<article dangerouslySetInnerHTML={{ __html: result.desc }} />
 		</Card>);
 	};
 

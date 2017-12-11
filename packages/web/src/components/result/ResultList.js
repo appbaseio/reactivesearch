@@ -260,7 +260,7 @@ class ResultList extends Component {
 		return results;
 	};
 
-	renderAsCard = (item) => {
+	renderAsListItem = (item) => {
 		const result = this.props.onData(item);
 		return (<ListItem key={item._id} href={result.url} image={!!result.image} small={result.image_size === "small"}>
 			{
@@ -269,8 +269,8 @@ class ResultList extends Component {
 					: null
 			}
 			<article>
-				<Title>{result.title}</Title>
-				{result.desc}
+				<Title dangerouslySetInnerHTML={{ __html: result.title }} />
+				<div dangerouslySetInnerHTML={{ __html: result.desc }}/>
 			</article>
 		</ListItem>);
 	};
@@ -308,7 +308,7 @@ class ResultList extends Component {
 				}
 				<div className={`${container} ${getClassName(this.props.innerClass, "list")}`}>
 					{
-						results.map(item => this.renderAsCard(item))
+						results.map(item => this.renderAsListItem(item))
 					}
 				</div>
 				{
