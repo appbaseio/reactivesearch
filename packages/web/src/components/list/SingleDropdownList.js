@@ -156,15 +156,6 @@ class SingleDropdownList extends Component {
 			}
 		}
 		props.setQueryOptions(this.internalComponent, queryOptions);
-		// Since the queryOptions are attached to the internal component,
-		// we need to notify the subscriber (parent component)
-		// that the query has changed because no new query will be
-		// auto-generated for the internal component as its
-		// dependency tree is empty
-		props.updateQuery({
-			componentId: this.internalComponent,
-			query: null
-		});
 	}
 
 	render() {

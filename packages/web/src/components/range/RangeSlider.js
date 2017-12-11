@@ -209,14 +209,11 @@ class RangeSlider extends Component {
 			const queryOptions = {
 				aggs: this.histogramQuery(props)
 			};
-			props.setQueryOptions(this.internalComponent, queryOptions);
+
+			props.setQueryOptions(this.internalComponent, queryOptions, false);
 
 			const query = props.customQuery || this.defaultQuery;
-			// Since the queryOptions are attached to the internal component,
-			// we need to notify the subscriber (parent component)
-			// that the query has changed because no new query will be
-			// auto-generated for the internal component as its
-			// dependency tree is empty
+
 			props.updateQuery({
 				componentId: this.internalComponent,
 				query: query([props.range.start, props.range.end], props)
@@ -313,8 +310,7 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props, onQueryChange) =>
-		dispatch(setQueryOptions(component, props, onQueryChange))
+	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(component, props, execute))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(RangeSlider);

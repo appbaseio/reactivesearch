@@ -163,15 +163,6 @@ class SingleList extends Component {
 			}
 		}
 		props.setQueryOptions(this.internalComponent, queryOptions);
-		// Since the queryOptions are attached to the internal component,
-		// we need to notify the subscriber (parent component)
-		// that the query has changed because no new query will be
-		// auto-generated for the internal component as its
-		// dependency tree is empty
-		props.updateQuery({
-			componentId: this.internalComponent,
-			query: null
-		});
 	};
 
 	handleInputChange = (e) => {
@@ -220,7 +211,7 @@ class SingleList extends Component {
 									id={selectAllLabel}
 									name={this.props.componentId}
 									value={selectAllLabel}
-									onClick={thia.handleClick}
+									onClick={this.handleClick}
 									checked={this.state.currentValue === selectAllLabel}
 									show={this.props.showRadio}
 								/>
@@ -245,7 +236,7 @@ class SingleList extends Component {
 										id={item.key}
 										name={this.props.componentId}
 										value={item.key}
-										onClick={thia.handleClick}
+										onClick={this.handleClick}
 										checked={this.state.currentValue === item.key}
 										show={this.props.showRadio}
 									/>
