@@ -14,6 +14,7 @@ export const FlexChild = styled.div`
 	${props => props.flex && css`
 		flex: ${props.flex};
 	`};
+	margin: ${props => props.margin || 0};
 `;
 
 const Flex = styled.div`

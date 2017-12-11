@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ReactiveBase } from "@appbaseio/reactivesearch";
+import { ReactiveBase, DataSearch, CategorySearch } from "@appbaseio/reactivesearch";
 
 import theme from "./styles/theme";
 
@@ -21,6 +21,14 @@ const App = () => (
 					<Header />
 				</FlexChild>
 				<FlexChild flex={3}>
+					<CategorySearch
+						componentId="repo"
+						dataField={["name", "description", "name.raw", "fullname", "owner", "topics"]}
+						categoryField="language.raw"
+						queryFormat="and"
+						placeholder="Search Repos"
+						URLParams={true}
+					/>
 					<Results />
 				</FlexChild>
 			</Flex>

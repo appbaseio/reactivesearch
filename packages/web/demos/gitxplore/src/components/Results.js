@@ -40,9 +40,12 @@ const Results = () => (
 		onData={onData}
 		// onResultStats={onResultStats}
 		react={{
-			and: ["name", "language"]
+			and: ["name", "language", "topics", "pushed", "created", "stars", "forks", "repo"]
 		}}
 		pagination
+		innerClass={{
+			list: "result-list-container"
+		}}
 	/>
 );
 
