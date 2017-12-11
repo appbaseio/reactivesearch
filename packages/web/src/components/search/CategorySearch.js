@@ -22,7 +22,7 @@ import types from "@appbaseio/reactivecore/lib/utils/types";
 import Title from "../../styles/Title";
 import Input, { suggestionsContainer, suggestions } from "../../styles/Input";
 
-class DataSearch extends Component {
+class CategorySearch extends Component {
 	constructor(props) {
 		super(props);
 
@@ -38,11 +38,15 @@ class DataSearch extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.props.addComponent(this.internalComponent);
 
+
 		if (this.props.highlight) {
 			const queryOptions = this.highlightQuery(this.props);
 			this.props.setQueryOptions(this.props.componentId, queryOptions);
 		}
 		this.setReact(this.props);
+
+		const aggsQuery = this.getAggsQuery(this.props.categoryField);
+		this.props.setQueryOptions(this.internalComponent, aggsQuery, false);
 
 		if (this.props.selectedValue) {
 			this.setValue(this.props.selectedValue, true);
@@ -105,6 +109,16 @@ class DataSearch extends Component {
 		this.props.removeComponent(this.internalComponent);
 	}
 
+	getAggsQuery = (field) => ({
+		aggs: {
+			[field]: {
+				terms: {
+					field
+				}
+			}
+		}
+	});
+
 	setReact = (props) => {
 		const { react } = props;
 		if (react) {
@@ -139,9 +153,10 @@ class DataSearch extends Component {
 		};
 	};
 
-	defaultQuery = (value, props) => {
+	defaultQuery = (value, category, props) => {
 		let finalQuery = null,
 			fields;
+
 		if (value) {
 			if (Array.isArray(props.dataField)) {
 				fields = props.dataField;
@@ -154,6 +169,17 @@ class DataSearch extends Component {
 					minimum_should_match: "1"
 				}
 			};
+
+			if (category) {
+				finalQuery = [
+					finalQuery,
+					{
+						term: {
+							[props.categoryField]: category
+						}
+					}
+				];
+			}
 		}
 
 		if (value === "") {
@@ -242,10 +268,11 @@ class DataSearch extends Component {
 		return suggestionsList;
 	};
 
-	setValue = (value, isDefaultValue = false, props = this.props) => {
+	setValue = (value, isDefaultValue = false, props = this.props, category) => {
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value
+				currentValue: value,
+				suggestions: []
 			});
 			if (isDefaultValue) {
 				if (this.props.autoSuggest) {
@@ -254,7 +281,7 @@ class DataSearch extends Component {
 					});
 					this.updateQuery(this.internalComponent, value, props);
 				}
-				this.updateQuery(props.componentId, value, props);
+				this.updateQuery(props.componentId, value, props, category);
 			} else {
 				// debounce for handling text while typing
 				this.handleTextChange(value);
@@ -277,7 +304,7 @@ class DataSearch extends Component {
 		}
 	}, 300);
 
-	updateQuery = (componentId, value, props) => {
+	updateQuery = (componentId, value, props, category) => {
 		const query = props.customQuery || this.defaultQuery;
 		let onQueryChange = null;
 		if (componentId === props.componentId && props.onQueryChange) {
@@ -285,7 +312,7 @@ class DataSearch extends Component {
 		}
 		props.updateQuery({
 			componentId,
-			query: query(value, props),
+			query: query(value, category, props),
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
@@ -323,7 +350,7 @@ class DataSearch extends Component {
 	};
 
 	onSuggestionSelected = (suggestion, event) => {
-		this.setValue(suggestion.value, true);
+		this.setValue(suggestion.value, true, this.props, suggestion.category);
 		if (this.props.onBlur) {
 			this.props.onBlur(event);
 		}
@@ -339,11 +366,37 @@ class DataSearch extends Component {
 	};
 
 	render() {
-		const suggestionsList = this.state.currentValue === "" || this.state.currentValue === null
+		let suggestionsList = this.state.currentValue === "" || this.state.currentValue === null
 			? this.props.defaultSuggestions && this.props.defaultSuggestions.length
 				? this.props.defaultSuggestions
 				: []
 			: this.state.suggestions;
+
+		if (this.state.suggestions.length && this.props.categories && this.props.categories.length) {
+			let categorySuggestions = [
+				{
+					label: `${this.state.currentValue} in all categories`,
+					value: this.state.currentValue
+				},
+				{
+					label: `${this.state.currentValue} in ${this.props.categories[0].key}`,
+					value: this.state.currentValue,
+					category: this.props.categories[0].key
+				}
+			]
+
+			if (this.props.categories.length > 1) {
+				categorySuggestions = [
+					...categorySuggestions,
+					{
+						label: `${this.state.currentValue} in ${this.props.categories[1].key}`,
+						value: this.state.currentValue,
+						category: this.props.categories[1].key
+					}
+				];
+			}
+			suggestionsList = [...categorySuggestions, ...suggestionsList];
+		}
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
@@ -417,7 +470,7 @@ class DataSearch extends Component {
 	}
 }
 
-DataSearch.propTypes = {
+CategorySearch.propTypes = {
 	componentId: types.stringRequired,
 	title: types.title,
 	addComponent: types.funcRequired,
@@ -453,10 +506,12 @@ DataSearch.propTypes = {
 	filterLabel: types.string,
 	style: types.style,
 	className: types.string,
-	innerClass: types.style
+	innerClass: types.style,
+	categoryField: types.string,
+	categories: types.data
 }
 
-DataSearch.defaultProps = {
+CategorySearch.defaultProps = {
 	placeholder: "Search",
 	autoSuggest: true,
 	queryFormat: "or",
@@ -467,7 +522,8 @@ DataSearch.defaultProps = {
 }
 
 const mapStateToProps = (state, props) => ({
-	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits || [],
+	categories: state.aggregations[props.componentId] && state.aggregations[props.componentId][props.categoryField].buckets || [],
 	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
 });
 
@@ -478,7 +534,7 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: (updateQueryObject) => dispatch(
 		updateQuery(updateQueryObject)
 	),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
+	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(component, props, execute))
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(DataSearch);
+export default connect(mapStateToProps, mapDispatchtoProps)(CategorySearch);
