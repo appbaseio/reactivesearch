@@ -21,6 +21,8 @@ import {
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import Title from "../../styles/Title";
 import Input, { suggestionsContainer, suggestions } from "../../styles/Input";
+import SearchSvg from "../shared/SearchSvg";
+import SearchContainer from "../../styles/SearchContainer";
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -341,6 +343,15 @@ class DataSearch extends Component {
 		}
 	};
 
+	renderIcon = () => {
+		if (this.props.showIcon) {
+			return this.props.icon ?
+				<span style={{ order: this.props.iconPosition === "right" ? 1 : -1 }}>{this.props.icon}</span> :
+				<SearchSvg iconPosition={this.props.iconPosition} />
+		}
+		return null;
+	}
+
 	render() {
 		const suggestionsList = this.state.currentValue === "" || this.state.currentValue === null
 			? this.props.defaultSuggestions && this.props.defaultSuggestions.length
@@ -366,17 +377,20 @@ class DataSearch extends Component {
 								highlightedIndex
 							}) => (
 								<div className={suggestionsContainer}>
-									<Input {...getInputProps({
-										className: getClassName(this.props.innerClass, "input"),
-										placeholder: this.props.placeholder,
-										value: this.state.currentValue === null ? "" : this.state.currentValue,
-										onChange: this.onInputChange,
-										onBlur: this.props.onBlur,
-										onFocus: this.handleFocus,
-										onKeyPress: this.props.onKeyPress,
-										onKeyDown: this.handleKeyDown,
-										onKeyUp: this.props.onKeyUp
-									})} />
+									<SearchContainer showIcon={this.props.showIcon}>
+										<Input showIcon={this.props.showIcon} {...getInputProps({
+											className: getClassName(this.props.innerClass, "input"),
+											placeholder: this.props.placeholder,
+											value: this.state.currentValue === null ? "" : this.state.currentValue,
+											onChange: this.onInputChange,
+											onBlur: this.props.onBlur,
+											onFocus: this.handleFocus,
+											onKeyPress: this.props.onKeyPress,
+											onKeyDown: this.handleKeyDown,
+											onKeyUp: this.props.onKeyUp
+										})} />
+										{this.renderIcon()}
+									</SearchContainer>
 									{
 										isOpen && suggestionsList.length
 											? (<div className={suggestions}>
@@ -402,18 +416,24 @@ class DataSearch extends Component {
 								</div>
 							)}
 						/>)
-						: (<Input
-							className={getClassName(this.props.innerClass, "input") || null}
-							placeholder={this.props.placeholder}
-							value={this.state.currentValue ? this.state.currentValue : ""}
-							onChange={this.onInputChange}
-							onBlur={this.props.onBlur}
-							onFocus={this.props.onFocus}
-							onKeyPress={this.props.onKeyPress}
-							onKeyDown={this.props.onKeyDown}
-							onKeyUp={this.props.onKeyUp}
-							autoFocus={this.props.autoFocus}
-						/>)
+						: (
+							<SearchContainer showIcon={this.props.showIcon}>
+								<Input
+									className={getClassName(this.props.innerClass, "input") || null}
+									placeholder={this.props.placeholder}
+									value={this.state.currentValue ? this.state.currentValue : ""}
+									onChange={this.onInputChange}
+									onBlur={this.props.onBlur}
+									onFocus={this.props.onFocus}
+									onKeyPress={this.props.onKeyPress}
+									onKeyDown={this.props.onKeyDown}
+									onKeyUp={this.props.onKeyUp}
+									autoFocus={this.props.autoFocus}
+									showIcon={this.props.showIcon}
+								/>
+								{this.renderIcon()}
+							</SearchContainer>
+						)
 				}
 			</div>
 		);
@@ -456,7 +476,10 @@ DataSearch.propTypes = {
 	filterLabel: types.string,
 	style: types.style,
 	className: types.string,
-	innerClass: types.style
+	innerClass: types.style,
+	showIcon: types.bool,
+	iconPosition: types.iconPosition,
+	icon: types.children
 }
 
 DataSearch.defaultProps = {
@@ -466,7 +489,9 @@ DataSearch.defaultProps = {
 	URLParams: false,
 	showFilter: true,
 	style: {},
-	className: null
+	className: null,
+	showIcon: true,
+	iconPosition: "right"
 }
 
 const mapStateToProps = (state, props) => ({

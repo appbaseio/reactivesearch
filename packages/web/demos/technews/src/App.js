@@ -8,19 +8,22 @@ import SearchFilters from "./components/SearchFilters";
 import Results from "./components/Results";
 
 import Container from "./styles/Container";
+import Main from "./styles/Main";
 
 const App = () => (
-	<Container>
-		<ReactiveBase
-			app="hackernews-live"
-			credentials="kxBY7RnNe:4d69db99-6049-409d-89bd-e1202a2ad48e"
-			theme={theme}
-		>
-			<Header />
-			<SearchFilters />
-			<Results />
-		</ReactiveBase>
-	</Container>
+	<Main>
+		<Container>
+			<ReactiveBase
+				app="hackernews-live"
+				credentials="kxBY7RnNe:4d69db99-6049-409d-89bd-e1202a2ad48e"
+				theme={theme}
+			>
+				<Header />
+				<SearchFilters />
+				<Results />
+			</ReactiveBase>
+		</Container>
+	</Main>
 );
 
 export default App;
