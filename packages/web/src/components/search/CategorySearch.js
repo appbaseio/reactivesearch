@@ -25,6 +25,8 @@ import Input, { suggestionsContainer, suggestions } from "../../styles/Input";
 import SearchSvg from "../shared/SearchSvg";
 import Flex from "../../styles/Flex";
 
+import { getSuggestions } from "../../utils";
+
 const Label = withTheme(props => (
 	<span
 		style={{
@@ -267,27 +269,12 @@ class CategorySearch extends Component {
 		const fields = Array.isArray(this.props.dataField)
 			? this.props.dataField
 			: [this.props.dataField];
-		let suggestionsList = [];
-		let labelsList = [];
-		const currentValue = this.state.currentValue.toLowerCase();
 
-		suggestions.forEach(item => {
-			fields.forEach(field => {
-				const label = item._source[field];
-				const val = label.toLowerCase();
-
-				if (val.includes(currentValue) && !labelsList.includes(val)) {
-					const option = {
-						label,
-						value: label
-					};
-					labelsList = [...labelsList, val];
-					suggestionsList = [...suggestionsList, option];
-				}
-			});
-		});
-
-		return suggestionsList;
+		return getSuggestions(
+			fields,
+			suggestions,
+			this.state.currentValue.toLowerCase()
+		);
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, category) => {
