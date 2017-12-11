@@ -1,16 +1,11 @@
 import React from "react";
-import { withTheme } from "emotion-theming";
-import types from "@appbaseio/reactivecore/lib/utils/types";
 
-import SearchIcon from "../../styles/SearchIcon";
-
-const SearchSvg = ({ theme, iconPosition }) => (
-	<SearchIcon
+const SearchSvg = () => (
+	<svg
 		alt="Search"
 		height="16"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 16 16"
-		iconPosition={iconPosition}
 	>
 		<title>Search</title>
 		<path
@@ -20,14 +15,8 @@ const SearchSvg = ({ theme, iconPosition }) => (
         0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338,
         4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z
       `}
-			fill={theme.primaryColor}
 		/>
-	</SearchIcon>
+	</svg>
 );
 
-SearchSvg.propTypes = {
-	theme: types.style,
-	iconPosition: types.iconPosition
-};
-
-export default withTheme(SearchSvg);
+export default SearchSvg;

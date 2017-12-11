@@ -22,7 +22,7 @@ import types from "@appbaseio/reactivecore/lib/utils/types";
 import Title from "../../styles/Title";
 import Input, { suggestionsContainer, suggestions } from "../../styles/Input";
 import SearchSvg from "../shared/SearchSvg";
-import SearchContainer from "../../styles/SearchContainer";
+import Flex from "../../styles/Flex";
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -345,9 +345,7 @@ class DataSearch extends Component {
 
 	renderIcon = () => {
 		if (this.props.showIcon) {
-			return this.props.icon ?
-				<span style={{ order: this.props.iconPosition === "right" ? 1 : -1 }}>{this.props.icon}</span> :
-				<SearchSvg iconPosition={this.props.iconPosition} />
+			return this.props.icon || <SearchSvg />;
 		}
 		return null;
 	}
@@ -377,7 +375,7 @@ class DataSearch extends Component {
 								highlightedIndex
 							}) => (
 								<div className={suggestionsContainer}>
-									<SearchContainer showIcon={this.props.showIcon}>
+									<Flex showBorder={this.props.showIcon} iconPosition={this.props.iconPosition}>
 										<Input showIcon={this.props.showIcon} {...getInputProps({
 											className: getClassName(this.props.innerClass, "input"),
 											placeholder: this.props.placeholder,
@@ -390,7 +388,7 @@ class DataSearch extends Component {
 											onKeyUp: this.props.onKeyUp
 										})} />
 										{this.renderIcon()}
-									</SearchContainer>
+									</Flex>
 									{
 										isOpen && suggestionsList.length
 											? (<div className={suggestions}>
@@ -417,7 +415,7 @@ class DataSearch extends Component {
 							)}
 						/>)
 						: (
-							<SearchContainer showIcon={this.props.showIcon}>
+							<Flex showBorder={this.props.showIcon} iconPosition={this.props.iconPosition}>
 								<Input
 									className={getClassName(this.props.innerClass, "input") || null}
 									placeholder={this.props.placeholder}
@@ -432,7 +430,7 @@ class DataSearch extends Component {
 									showIcon={this.props.showIcon}
 								/>
 								{this.renderIcon()}
-							</SearchContainer>
+							</Flex>
 						)
 				}
 			</div>
