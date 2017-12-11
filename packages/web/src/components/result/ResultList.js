@@ -270,7 +270,7 @@ class ResultList extends Component {
 			}
 			<article>
 				<Title dangerouslySetInnerHTML={{ __html: result.title }} />
-				<div dangerouslySetInnerHTML={{ __html: result.desc }}/>
+				<div dangerouslySetInnerHTML={{ __html: result.desc }} />
 			</article>
 		</ListItem>);
 	};

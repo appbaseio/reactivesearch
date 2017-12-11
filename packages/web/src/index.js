@@ -5,6 +5,7 @@ import ToggleButton from "./components/basic/ToggleButton";
 import NumberBox from "./components/basic/NumberBox";
 import DataController from "./components/basic/DataController";
 import TagCloud from "./components/basic/TagCloud";
+import ReactiveComponent from "./components/basic/ReactiveComponent";
 
 import SingleList from "./components/list/SingleList";
 import MultiList from "./components/list/MultiList";
@@ -35,6 +36,7 @@ export {
 	NumberBox,
 	DataController,
 	TagCloud,
+	ReactiveComponent,
 
 	// list
 	SingleList,

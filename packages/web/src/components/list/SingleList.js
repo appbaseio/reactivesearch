@@ -220,7 +220,7 @@ class SingleList extends Component {
 									id={selectAllLabel}
 									name={this.props.componentId}
 									value={selectAllLabel}
-									onClick={thia.handleClick}
+									onClick={this.handleClick}
 									checked={this.state.currentValue === selectAllLabel}
 									show={this.props.showRadio}
 								/>
@@ -245,7 +245,7 @@ class SingleList extends Component {
 										id={item.key}
 										name={this.props.componentId}
 										value={item.key}
-										onClick={thia.handleClick}
+										onClick={this.handleClick}
 										checked={this.state.currentValue === item.key}
 										show={this.props.showRadio}
 									/>
