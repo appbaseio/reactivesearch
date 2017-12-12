@@ -2,11 +2,11 @@ import React from "react";
 
 import SearchFilters from "./SearchFilters";
 
-import Navbar from "../styles/Navbar";
+import Navbar, { title } from "../styles/Navbar";
 
 const Header = () => (
 	<Navbar>
-		GitXplore
+		<div className={title}>GitXplore</div>
 		<SearchFilters />
 	</Navbar>
 );
