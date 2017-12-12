@@ -15,6 +15,10 @@ export const FlexChild = styled.div`
 		flex: ${props.flex};
 	`};
 	margin: ${props => props.margin || 0};
+
+	.range-label {
+		color: white;
+	}
 `;
 
 const Flex = styled.div`
@@ -30,6 +34,11 @@ const Flex = styled.div`
 
 	${props => props.direction && css`
 		flex-direction: ${props.direction};
+	`};
+
+	${props => props.alignCenter && alignCenter};
+	${props => props.flexWrap && css`
+		flex-wrap: wrap;
 	`};
 `;
 

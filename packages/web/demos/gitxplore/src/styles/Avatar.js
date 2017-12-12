@@ -1,7 +1,7 @@
 import styled from "react-emotion";
 
 const Avatar = styled.img`
-	height: 100px;
+	height: 50px;
 	border-radius: 50%;
 `;
 

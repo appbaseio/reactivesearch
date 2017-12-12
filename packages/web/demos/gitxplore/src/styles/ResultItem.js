@@ -15,6 +15,10 @@ export const resultListContainer = css`
 		flex-wrap: wrap;
 		justify-content: center;
 	}
+
+	.result-list-pagination {
+		margin: 40px 0 50px;
+	}
 `;
 
 const ResultItem = styled.div`
@@ -27,6 +31,11 @@ const ResultItem = styled.div`
 	min-height: 300px;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+	font-size: 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
 
 	&:hover {
 		box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);

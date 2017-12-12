@@ -11,6 +11,7 @@ export const title = css`
 
 const Navbar = styled.nav`
 	background: ${color.secondaryColor};
+	min-width: 300px;
 	padding: 1rem;
 	height: 100vh;
 `;
