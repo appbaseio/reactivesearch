@@ -1,6 +1,6 @@
 ## Reactive Search
 
-[![Join the chat at https://gitter.im/appbaseio/reactivesearch](https://badges.gitter.im/appbaseio/reactivesearch.svg)](https://gitter.im/appbaseio/reactivesearch?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) ![Build Status Image](https://img.shields.io/badge/build-passing-brightgreen.svg) [![Code Climate](https://codeclimate.com/github/appbaseio/reactivesearch/badges/gpa.svg)](https://codeclimate.com/github/appbaseio/reactivesearch)
+[![Join the chat at https://gitter.im/appbaseio/reactivesearch](https://badges.gitter.im/appbaseio/reactivesearch.svg)](https://gitter.im/appbaseio/reactivesearch?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) ![Build Status Image](https://img.shields.io/badge/build-passing-brightgreen.svg)
 
 A React components library for building Airbnb / Yelp like search experiences.
 
