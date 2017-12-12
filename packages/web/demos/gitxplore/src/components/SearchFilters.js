@@ -25,7 +25,7 @@ const SearchFilters = ({ currentTopics }) => (
 				dataField="topics"
 				title="Repo Topics"
 				defaultSelected={currentTopics}
-				onValueChange={(v) => console.log(v)}
+				onValueChange={v => console.log(v)}
 			/>
 		</FlexChild>
 		<FlexChild margin="10px">

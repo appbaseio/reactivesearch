@@ -106,7 +106,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject))
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DataController);

@@ -223,7 +223,7 @@ class SingleList extends Component {
 					}
 					{
 						this.state.options
-							.filter(item => {
+							.filter((item) => {
 								if (this.props.showSearch && this.state.searchTerm) {
 									return item.key.toLowerCase().includes(this.state.searchTerm.toLowerCase());
 								}
@@ -309,7 +309,7 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 

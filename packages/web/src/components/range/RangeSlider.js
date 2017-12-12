@@ -98,7 +98,7 @@ class RangeSlider extends Component {
 		this.props.removeComponent(this.props.componentId);
 	}
 
-	setReact = props => {
+	setReact = (props) => {
 		const { react } = props;
 		if (react) {
 			const newReact = pushToAndClause(react, this.internalComponent);

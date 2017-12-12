@@ -187,7 +187,7 @@ class SingleDataList extends Component {
 					}
 					{
 						this.props.data
-							.filter(item => {
+							.filter((item) => {
 								if (this.props.showSearch && this.state.searchTerm) {
 									return item.label.toLowerCase().includes(this.state.searchTerm.toLowerCase());
 								}
@@ -262,7 +262,7 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject))
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(SingleDataList);

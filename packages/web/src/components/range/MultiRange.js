@@ -109,7 +109,7 @@ class MultiRange extends Component {
 		} else if (isDefaultValue) {
 			// checking if the items in defaultSeleted exist in the data prop
 			currentValue = props.data.filter(value => item.includes(value.label));
-			currentValue.forEach(value => {
+			currentValue.forEach((value) => {
 				selectedValues = { ...selectedValues, [value.label]: true };
 			});
 		} else {
@@ -242,7 +242,7 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject))
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(MultiRange);

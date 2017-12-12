@@ -141,7 +141,7 @@ class TagCloud extends Component {
 			if (isDefaultValue) {
 				finalValues = value;
 				currentValue = {};
-				value && value.forEach(item => {
+				value && value.forEach((item) => {
 					currentValue[item] = true;
 				});
 			} else {
@@ -216,7 +216,7 @@ class TagCloud extends Component {
 		}
 
 		let highestCount = 0;
-		this.state.options.forEach(item => {
+		this.state.options.forEach((item) => {
 			highestCount = item.doc_count > highestCount ? item.doc_count : highestCount;
 		});
 
@@ -226,7 +226,7 @@ class TagCloud extends Component {
 				<TagList className={getClassName(this.props.innerClass, "list") || null}>
 					{
 						this.state.options
-							.map(item => {
+							.map((item) => {
 								const size = ((item.doc_count / highestCount) * (max - min)) + min;
 
 								return (<span
@@ -301,7 +301,7 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 

@@ -127,7 +127,7 @@ class MultiDataList extends Component {
 				currentValue = {};
 				finalValues = [];
 			} else {
-				props.data.forEach(item => {
+				props.data.forEach((item) => {
 					currentValue[item.label] = true;
 				});
 				currentValue[selectAllLabel] = true;
@@ -136,7 +136,7 @@ class MultiDataList extends Component {
 		} else if (isDefaultValue) {
 			finalValues = value;
 			currentValue = {};
-			value && value.forEach(item => {
+			value && value.forEach((item) => {
 				currentValue[item] = true;
 			});
 
@@ -251,7 +251,7 @@ class MultiDataList extends Component {
 					}
 					{
 						this.props.data
-							.filter(item => {
+							.filter((item) => {
 								if (this.props.showSearch && this.state.searchTerm) {
 									return item.label.toLowerCase().includes(this.state.searchTerm.toLowerCase());
 								}
@@ -326,7 +326,7 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject))
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(MultiDataList);

@@ -9,7 +9,7 @@ class URLParamsProvider extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (!isEqual(this.props.selectedValues, nextProps.selectedValues)) {
 			Object.keys(nextProps.selectedValues)
-				.forEach(component => {
+				.forEach((component) => {
 					if (nextProps.selectedValues[component].URLParams) {
 						this.setURL(component, this.getValue(nextProps.selectedValues[component].value));
 					} else {
@@ -19,7 +19,7 @@ class URLParamsProvider extends Component {
 				});
 
 			if (!Object.keys(nextProps.selectedValues).length) {
-				Array.from(this.props.params.keys()).forEach(item => {
+				Array.from(this.props.params.keys()).forEach((item) => {
 					this.props.params.delete(item);
 				});
 				this.pushToHistory();
