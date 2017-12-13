@@ -15,7 +15,8 @@ module.exports = {
 		MultiDropdownRange: "./examples/MultiDropdownRange/index.js",
 		RangeSlider: "./examples/RangeSlider/index.js",
 		RangeInput: "./examples/RangeInput/index.js",
-		ReactiveComponent: "./examples/ReactiveComponent/index.js"
+		ReactiveComponent: "./examples/ReactiveComponent/index.js",
+		DatePicker: "./examples/DatePicker/index.js"
 	},
 	output: {
 		path: path.join(__dirname, "examples"),
