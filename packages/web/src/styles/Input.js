@@ -1,6 +1,10 @@
 import { css } from "emotion";
 import styled from "react-emotion";
 
+const alertBorder = ({ theme }) => css`
+	border: 1px solid ${theme.alertColor};
+`;
+
 const Input = styled("input")`
 	width: 100%;
 	height: 42px;
@@ -14,6 +18,8 @@ const Input = styled("input")`
 		border: none;
 		flex: 1;
 	`};
+
+	${props => props.alert && alertBorder};
 `;
 
 const suggestions = css`

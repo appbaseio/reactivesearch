@@ -8,6 +8,7 @@ export default {
 	primaryColor: "#0B6AFF",
 	primaryTextColor: "#fff",
 	titleColor: "#424242",
+	alertColor: "#d9534f",
 
 	// settings
 	componentMaxHeight: "240px"
