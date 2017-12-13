@@ -7,6 +7,8 @@ import DataController from "./components/basic/DataController";
 import TagCloud from "./components/basic/TagCloud";
 import ReactiveComponent from "./components/basic/ReactiveComponent";
 
+import DatePicker from "./components/date/DatePicker";
+
 import SingleList from "./components/list/SingleList";
 import MultiList from "./components/list/MultiList";
 import SingleDropdownList from "./components/list/SingleDropdownList";
@@ -38,6 +40,9 @@ export {
 	DataController,
 	TagCloud,
 	ReactiveComponent,
+
+	// date
+	DatePicker,
 
 	// list
 	SingleList,
