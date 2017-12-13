@@ -5885,6 +5885,13 @@ react-datetime@^2.11.0:
     prop-types "^15.5.7"
     react-onclickoutside "^6.5.0"
 
+react-day-picker@^7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-7.0.5.tgz#595e709525322c1bc29e09ed3894c9279f718b46"
+  dependencies:
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
 react-deep-force-update@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.1.1.tgz#bcd31478027b64b3339f108921ab520b4313dc2c"
@@ -7374,6 +7381,10 @@ ws@^2.2.0:
   dependencies:
     safe-buffer "~5.0.1"
     ultron "~1.1.0"
+
+xdate@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/xdate/-/xdate-0.8.2.tgz#d7b033c00485d02695baf0044f4eacda3fc961a3"
 
 xdg-basedir@^3.0.0:
   version "3.0.0"
