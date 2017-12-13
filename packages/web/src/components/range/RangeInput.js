@@ -71,17 +71,19 @@ class RangeInput extends Component {
 	}
 
 	render() {
+		const { className, style, ...rest } = this.props;
 		return (
-			<div>
+			<div style={style} className={className}>
 				<RangeSlider
-					{...this.props}
+					{...rest}
 					defaultSelected={{
 						start: this.state.isStartValid ? Number(this.state.start) : this.props.range.start,
 						end: this.state.isEndValid ? Number(this.state.end) : this.props.range.end
 					}}
 					onValueChange={this.handleSlider}
+					className={getClassName(this.props.innerClass, "slider-container") || null}
 				/>
-				<Flex>
+				<Flex className={getClassName(this.props.innerClass, "input-container") || null}>
 					<Flex direction="column" flex={2}>
 						<Input
 							name="start"
@@ -121,7 +123,10 @@ RangeInput.propTypes = {
 	range: types.range,
 	stepValue: types.number,
 	defaultSelected: types.range,
-	onValueChange: types.func
+	onValueChange: types.func,
+	className: types.className,
+	style: types.style,
+	innerClass: types.style
 };
 
 RangeInput.defaultProps = {
