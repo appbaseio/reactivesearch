@@ -2,10 +2,13 @@ import React from "react";
 import { ReactiveList } from "@appbaseio/reactivesearch";
 import PropTypes from "prop-types";
 
+import Topic from "./Topic";
+
 import ResultItem, { resultItemDetails, resultListContainer } from "../styles/ResultItem";
 import Flex, { FlexChild } from "../styles/Flex";
 import Link from "../styles/Link";
 import Avatar from "../styles/Avatar";
+import Button from "../styles/Button";
 
 const onResultStats = (results, time) => (
 	<Flex justifyContent="flex-end" style={{ margin: "1rem" }}>
@@ -15,20 +18,25 @@ const onResultStats = (results, time) => (
 
 const onData = ({ _source: data }) => (
 	<ResultItem key={data.fullname}>
-		<Flex>
+		<Flex alignCenter justifyContent="center">
 			<Avatar src={data.avatar} alt="User avatar" />
-			<Link href={data.url} target="_blank" rel="noopener noreferrer">{data.owner}/{data.name}</Link>
+			<Link href={data.url} target="_blank" rel="noopener noreferrer">
+				<Flex flexWrap>
+					<FlexChild>{data.owner}/</FlexChild>
+					<FlexChild>{data.name}</FlexChild>
+				</Flex>
+			</Link>
 		</Flex>
-		<div>{data.description}</div>
-		<div>
+		<div style={{ margin: "10px 0" }}>{data.description}</div>
+		<Flex flexWrap justifyContent="center">
 			{
-				data.topics.map(item => <div key={item}>{item}</div>)
+				data.topics.slice(0, 7).map(item => <Topic key={item}>{item}</Topic>)
 			}
-		</div>
+		</Flex>
 		<Flex>
-			<FlexChild>{data.stars} | </FlexChild>
-			<FlexChild>{data.forks} | </FlexChild>
-			<FlexChild>{data.watchers} </FlexChild>
+			<FlexChild><Button><i className="fas fa-star" />{data.stars}</Button></FlexChild>
+			<FlexChild><Button><i className="fas fa-code-branch" />{data.forks}</Button></FlexChild>
+			<FlexChild><Button><i className="fas fa-eye" />{data.watchers}</Button></FlexChild>
 		</Flex>
 	</ResultItem>
 );
@@ -44,7 +52,8 @@ const Results = () => (
 		}}
 		pagination
 		innerClass={{
-			list: "result-list-container"
+			list: "result-list-container",
+			pagination: "result-list-pagination"
 		}}
 		className={resultListContainer}
 	/>

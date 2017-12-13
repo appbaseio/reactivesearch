@@ -1,8 +1,9 @@
 const theme = {
 	fontFamily: "Raleway, Helvetica, sans-serif",
-	primaryColor: "green",
+	primaryColor: "#008000",
 	secondaryColor: "mediumseagreen",
-	titleColor: "white"
+	titleColor: "white",
+	lightGray: "#eff3f6"
 };
 
 export default theme;

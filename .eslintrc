@@ -41,6 +41,7 @@
 		"comma-dangle": ["error", "never"],
 		"object-curly-spacing": [2, "always"],
 		"no-dupe-keys": "error",
+		"arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
 
 		"import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false}],
 		"import/no-unresolved": 0,

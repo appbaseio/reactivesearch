@@ -16,7 +16,7 @@ const getWidth = (index, range, item, props) => {
 
 const HistogramContainer = (props) => {
 	let max = props.stats[0].doc_count;
-	props.stats.forEach(item => {
+	props.stats.forEach((item) => {
 		if (max < item.doc_count) {
 			max = item.doc_count;
 		}

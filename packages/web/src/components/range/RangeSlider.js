@@ -84,7 +84,9 @@ class RangeSlider extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		const upperLimit = Math.floor((nextProps.range.end - nextProps.range.start) / 2);
+		const upperLimit = Math.floor(
+			(nextProps.range.end - nextProps.range.start) / 2
+		);
 		if (nextProps.stepValue < 1 || nextProps.stepValue > upperLimit) {
 			console.warn(`stepValue for RangeSlider ${nextProps.componentId} should be greater than 0 and less than or equal to ${upperLimit}`);
 			return false;
@@ -96,7 +98,7 @@ class RangeSlider extends Component {
 		this.props.removeComponent(this.props.componentId);
 	}
 
-	setReact = props => {
+	setReact = (props) => {
 		const { react } = props;
 		if (react) {
 			const newReact = pushToAndClause(react, this.internalComponent);
@@ -198,7 +200,7 @@ class RangeSlider extends Component {
 			query: query(value, props),
 			value,
 			label: props.filterLabel,
-			showFilter: false,	// disable filters for RangeSlider
+			showFilter: false, // disable filters for RangeSlider
 			URLParams: props.URLParams,
 			onQueryChange
 		});
@@ -224,7 +226,13 @@ class RangeSlider extends Component {
 	render() {
 		return (
 			<Slider primary style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title
+						className={getClassName(this.props.innerClass, "title") || null}
+					>
+						{this.props.title}
+					</Title>
+				)}
 				{this.state.stats.length && this.props.showHistogram ? (
 					<HistogramContainer
 						stats={this.state.stats}
@@ -241,13 +249,22 @@ class RangeSlider extends Component {
 					snapPoints={this.props.snap ? this.getSnapPoints() : null}
 					className={getClassName(this.props.innerClass, "slider")}
 				/>
-				{
-					this.props.rangeLabels &&
+				{this.props.rangeLabels && (
 					<div className={rangeLabelsContainer}>
-						<RangeLabel align="left">{this.props.rangeLabels.start}</RangeLabel>
-						<RangeLabel align="right">{this.props.rangeLabels.end}</RangeLabel>
+						<RangeLabel
+							align="left"
+							className={getClassName(this.props.innerClass, "label") || null}
+						>
+							{this.props.rangeLabels.start}
+						</RangeLabel>
+						<RangeLabel
+							align="right"
+							className={getClassName(this.props.innerClass, "label") || null}
+						>
+							{this.props.rangeLabels.end}
+						</RangeLabel>
 					</div>
-				}
+				)}
 			</Slider>
 		);
 	}
@@ -299,18 +316,19 @@ const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId]
 		? state.aggregations[props.componentId][props.dataField].buckets
 		: [],
-	selectedValue: state.selectedValues[props.componentId] ? state.selectedValues[props.componentId].value : [
-		props.range.start,
-		props.range.end
-	]
+	selectedValue: state.selectedValues[props.componentId]
+		? state.selectedValues[props.componentId].value
+		: [props.range.start, props.range.end]
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	watchComponent: (component, react) =>
+		dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(component, props, execute))
+	setQueryOptions: (component, props, execute) =>
+		dispatch(setQueryOptions(component, props, execute))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(RangeSlider);

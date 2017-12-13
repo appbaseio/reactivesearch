@@ -1,5 +1,5 @@
 // flattens a nested array
-const flatten = (arr) => (
+const flatten = arr => (
 	arr.reduce((flat, toFlatten) =>
 	  flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten), []
 	)
@@ -36,8 +36,8 @@ export const getSuggestions = (fields, suggestions, currentValue) => {
 		}
 	}
 
-	suggestions.forEach(item => {
-		fields.forEach(field => {
+	suggestions.forEach((item) => {
+		fields.forEach((field) => {
 			const label = item._source[field];
 			if (label) {
 				const val = extractSuggestion(label);

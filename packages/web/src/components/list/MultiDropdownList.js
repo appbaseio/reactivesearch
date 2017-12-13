@@ -151,7 +151,7 @@ class MultiDropdownList extends Component {
 				currentValue = {};
 				finalValues = [];
 			} else {
-				this.state.options.forEach(item => {
+				this.state.options.forEach((item) => {
 					currentValue[item.key] = true;
 				});
 				currentValue[selectAllLabel] = true;
@@ -160,7 +160,7 @@ class MultiDropdownList extends Component {
 		} else if (isDefaultValue) {
 			finalValues = value;
 			currentValue = {};
-			value && value.forEach(item => {
+			value && value.forEach((item) => {
 				currentValue[item] = true;
 			});
 
@@ -313,7 +313,7 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
 });
 

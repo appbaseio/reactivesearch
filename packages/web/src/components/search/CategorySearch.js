@@ -134,7 +134,7 @@ class CategorySearch extends Component {
 		}
 	});
 
-	setReact = props => {
+	setReact = (props) => {
 		const { react } = props;
 		if (react) {
 			const newReact = pushToAndClause(react, this.internalComponent);
@@ -144,7 +144,7 @@ class CategorySearch extends Component {
 		}
 	};
 
-	highlightQuery = props => {
+	highlightQuery = (props) => {
 		if (!props.highlight) {
 			return null;
 		}
@@ -156,7 +156,7 @@ class CategorySearch extends Component {
 		if (typeof highlightField === "string") {
 			fields[highlightField] = {};
 		} else if (Array.isArray(highlightField)) {
-			highlightField.forEach(item => {
+			highlightField.forEach((item) => {
 				fields[item] = {};
 			});
 		}
@@ -261,7 +261,7 @@ class CategorySearch extends Component {
 		];
 	};
 
-	onSuggestions = suggestions => {
+	onSuggestions = (suggestions) => {
 		if (this.props.onSuggestions) {
 			return this.props.onSuggestions(suggestions);
 		}
@@ -304,7 +304,7 @@ class CategorySearch extends Component {
 		);
 	};
 
-	handleTextChange = debounce(value => {
+	handleTextChange = debounce((value) => {
 		if (this.props.autoSuggest) {
 			this.updateQuery(this.internalComponent, value, this.props);
 		} else {
@@ -329,7 +329,7 @@ class CategorySearch extends Component {
 		});
 	};
 
-	handleFocus = event => {
+	handleFocus = (event) => {
 		this.setState({
 			isOpen: true
 		});
@@ -343,7 +343,7 @@ class CategorySearch extends Component {
 		this.setValue(this.state.currentValue, true);
 	};
 
-	handleKeyDown = event => {
+	handleKeyDown = (event) => {
 		if (event.key === "Enter") {
 			event.target.blur();
 			this.setValue(event.target.value, true);
@@ -353,7 +353,7 @@ class CategorySearch extends Component {
 		}
 	};
 
-	onInputChange = e => {
+	onInputChange = (e) => {
 		this.setState({
 			suggestions: []
 		});
@@ -367,7 +367,7 @@ class CategorySearch extends Component {
 		}
 	};
 
-	handleStateChange = changes => {
+	handleStateChange = (changes) => {
 		const { isOpen, type } = changes;
 		if (type === Downshift.stateChangeTypes.mouseUp) {
 			this.setState({
