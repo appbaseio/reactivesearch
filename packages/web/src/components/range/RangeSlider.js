@@ -28,7 +28,6 @@ class RangeSlider extends Component {
 		super(props);
 
 		this.state = {
-			width: 0,
 			currentValue: [props.range.start, props.range.end],
 			stats: []
 		};
@@ -79,7 +78,7 @@ class RangeSlider extends Component {
 				nextProps
 			);
 		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.handleChange(nextProps.selectedValue);
+			this.handleChange(nextProps.selectedValue || [nextProps.range.start, nextProps.range.end]);
 		}
 	}
 
@@ -233,23 +232,26 @@ class RangeSlider extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				{this.state.stats.length && this.props.showHistogram ? (
+				{this.state.stats.length && this.props.showHistogram && this.props.showSlider ? (
 					<HistogramContainer
 						stats={this.state.stats}
 						range={this.props.range}
 						interval={this.getValidInterval(this.props)}
 					/>
 				) : null}
-				<Rheostat
-					min={this.props.range.start}
-					max={this.props.range.end}
-					values={this.state.currentValue}
-					onChange={this.handleSlider}
-					snap={this.props.snap}
-					snapPoints={this.props.snap ? this.getSnapPoints() : null}
-					className={getClassName(this.props.innerClass, "slider")}
-				/>
-				{this.props.rangeLabels && (
+				{
+					this.props.showSlider &&
+					<Rheostat
+						min={this.props.range.start}
+						max={this.props.range.end}
+						values={this.state.currentValue}
+						onChange={this.handleSlider}
+						snap={this.props.snap}
+						snapPoints={this.props.snap ? this.getSnapPoints() : null}
+						className={getClassName(this.props.innerClass, "slider")}
+					/>
+				}
+				{this.props.rangeLabels && this.props.showSlider && (
 					<div className={rangeLabelsContainer}>
 						<RangeLabel
 							align="left"
@@ -296,7 +298,8 @@ RangeSlider.propTypes = {
 	style: types.style,
 	className: types.string,
 	snap: types.bool,
-	innerClass: types.style
+	innerClass: types.style,
+	showSlider: types.bool
 };
 
 RangeSlider.defaultProps = {
@@ -309,7 +312,8 @@ RangeSlider.defaultProps = {
 	URLParams: false,
 	style: {},
 	className: null,
-	snap: true
+	snap: true,
+	showSlider: true
 };
 
 const mapStateToProps = (state, props) => ({
@@ -318,7 +322,7 @@ const mapStateToProps = (state, props) => ({
 		: [],
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
-		: [props.range.start, props.range.end]
+		: null
 });
 
 const mapDispatchtoProps = dispatch => ({
