@@ -30,7 +30,6 @@ class Main extends Component {
 							dataField="pushed"
 							queryFormat="date_time_no_millis"
 							title="Date Picker"
-							focus
 						/>
 					</div>
 
