@@ -264,8 +264,16 @@ class ResultCard extends Component {
 		const result = this.props.onData(item);
 		return (<Card key={item._id} href={result.url}>
 			<Image src={result.image}></Image>
-			<Title dangerouslySetInnerHTML={{ __html: result.title }} />
-			<article dangerouslySetInnerHTML={{ __html: result.desc }} />
+			{
+				typeof result.title === "string" ?
+					<Title dangerouslySetInnerHTML={{ __html: result.title }} /> :
+					<Title>{result.title}</Title>
+			}
+			{
+				typeof result.desc === "string" ?
+					<article dangerouslySetInnerHTML={{ __html: result.desc }} /> :
+					<article>{result.desc}</article>
+			}
 		</Card>);
 	};
 
