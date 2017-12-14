@@ -134,7 +134,8 @@ class DatePicker extends Component {
 			componentId: props.componentId,
 			query: query(value, props),
 			value,
-			filterLabel: props.filterLabel,
+			showFilter: props.showFilter,
+			label: props.filterLabel,
 			onQueryChange,
 			URLParams: props.URLParams
 		});
@@ -152,7 +153,7 @@ class DatePicker extends Component {
 				)}
 				<DayPickerInput
 					showOverlay={this.props.focused}
-					formatDate={this.props.onData || this.formatInputDate}
+					formatDate={this.formatInputDate}
 					value={this.state.currentDate}
 					placeholder={this.props.placeholder}
 					dayPickerProps={{
@@ -193,19 +194,21 @@ DatePicker.propTypes = {
 	selectedValue: types.selectedValue,
 	placeholder: types.string,
 	focused: types.bool,
-	onData: types.func,
 	innerClass: types.style,
 	title: types.string,
 	style: types.style,
 	className: types.string,
 	numberOfMonths: types.number,
 	initialMonth: types.dateObject,
-	dayPickerInputProps: types.props
+	dayPickerInputProps: types.props,
+	showFilter: types.bool,
+	filterLabel: types.string
 };
 
 DatePicker.defaultProps = {
 	placeholder: "Select Date",
-	numberOfMonths: 1
+	numberOfMonths: 1,
+	showFilter: true
 };
 
 const mapStateToProps = (state, props) => ({
