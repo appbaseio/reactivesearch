@@ -17,6 +17,12 @@ class App extends Component {
 		};
 	}
 
+	setTopics = (currentTopics) => {
+		this.setState({
+			currentTopics
+		});
+	}
+
 	render() {
 		return (
 			<Container>

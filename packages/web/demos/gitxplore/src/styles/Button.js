@@ -9,6 +9,7 @@ const Button = styled.div`
 	margin: 5px;
 	min-width: 70px;
 	text-align: center;
+	border-radius: 4px;
 
 	svg {
 		margin-right: 4px;

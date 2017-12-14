@@ -9,6 +9,10 @@ const Link = styled.a`
 	font-weight: bold;
 	margin-left: 20px;
 	font-size: 1.2rem;
+
+	&:hover {
+		color: ${color.primaryColor};
+	}
 `;
 
 export default Link;

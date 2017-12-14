@@ -6,7 +6,7 @@ import StyledTopic from "../styles/Topic";
 class Topic extends Component {
 	render() {
 		return (
-			<StyledTopic>{this.props.children}</StyledTopic>
+			<StyledTopic>#{this.props.children}</StyledTopic>
 		);
 	}
 }
