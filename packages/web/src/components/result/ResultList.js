@@ -17,8 +17,10 @@ import {
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
+import ResultHighlight from "./addons/ResultHighlight";
+
 import Button, { pagination } from "../../styles/Button";
-import ListItem, { container, Title, Image } from "../../styles/ListItem";
+import ListItem, { container, Image } from "../../styles/ListItem";
 
 class ResultList extends Component {
 	constructor(props) {
@@ -269,8 +271,7 @@ class ResultList extends Component {
 					: null
 			}
 			<article>
-				<Title dangerouslySetInnerHTML={{ __html: result.title }} />
-				<div dangerouslySetInnerHTML={{ __html: result.desc }} />
+				<ResultHighlight result={result} />
 			</article>
 		</ListItem>);
 	};
