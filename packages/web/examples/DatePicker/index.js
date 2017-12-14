@@ -29,6 +29,8 @@ class Main extends Component {
 							componentId="DatePickerComponent"
 							dataField="pushed"
 							queryFormat="date_time_no_millis"
+							title="Date Picker"
+							focus
 						/>
 					</div>
 
