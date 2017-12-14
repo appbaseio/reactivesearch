@@ -30,6 +30,7 @@ class Main extends Component {
 							dataField="pushed"
 							queryFormat="date_time_no_millis"
 							title="Date Picker"
+							initialMonth={new Date("2017-04-07")}
 						/>
 					</div>
 
