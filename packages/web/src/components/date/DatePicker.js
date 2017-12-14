@@ -151,10 +151,14 @@ class DatePicker extends Component {
 					</Title>
 				)}
 				<DayPickerInput
-					showOverlay={this.props.focus}
+					showOverlay={this.props.focused}
 					formatDate={this.props.onData || this.formatInputDate}
 					value={this.state.currentDate}
 					placeholder={this.props.placeholder}
+					dayPickerProps={{
+						numberOfMonths: this.props.numberOfMonths,
+						initialMonth: this.props.initialMonth
+					}}
 					onDayChange={d => this.handleDateChange(d)}
 					inputProps={{
 						readOnly: true
@@ -172,6 +176,7 @@ class DatePicker extends Component {
 							getClassName(this.props.innerClass, "daypicker-overlay") ||
 							"DayPickerInput-Overlay"
 					}}
+					{...this.props.dayPickerInputProps}
 				/>
 			</DateContainer>
 		);
@@ -187,16 +192,20 @@ DatePicker.propTypes = {
 	queryFormat: types.queryFormatDate,
 	selectedValue: types.selectedValue,
 	placeholder: types.string,
-	focus: types.bool,
+	focused: types.bool,
 	onData: types.func,
 	innerClass: types.style,
 	title: types.string,
 	style: types.style,
-	className: types.string
+	className: types.string,
+	numberOfMonths: types.number,
+	initialMonth: types.dateObject,
+	dayPickerInputProps: types.props
 };
 
 DatePicker.defaultProps = {
-	placeholder: "Select Date"
+	placeholder: "Select Date",
+	numberOfMonths: 1
 };
 
 const mapStateToProps = (state, props) => ({
