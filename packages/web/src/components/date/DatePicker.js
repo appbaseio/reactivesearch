@@ -97,6 +97,10 @@ class DatePicker extends Component {
 		return query;
 	};
 
+	handleDayPicker = (date) => {
+		this.handleDateChange(date);
+	}
+
 	handleDateChange = (
 		currentDate,
 		isDefaultValue = false,
@@ -160,7 +164,7 @@ class DatePicker extends Component {
 						numberOfMonths: this.props.numberOfMonths,
 						initialMonth: this.props.initialMonth
 					}}
-					onDayChange={d => this.handleDateChange(d)}
+					onDayChange={this.handleDayPicker}
 					inputProps={{
 						readOnly: true
 					}}
