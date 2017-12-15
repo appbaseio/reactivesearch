@@ -17,8 +17,6 @@ import {
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
-import ResultHighlight from "./addons/ResultHighlight";
-
 import Button, { pagination } from "../../styles/Button";
 import Card, { container, Image } from "../../styles/Card";
 
@@ -266,7 +264,16 @@ class ResultCard extends Component {
 		const result = this.props.onData(item);
 		return (<Card key={item._id} href={result.url}>
 			<Image src={result.image}></Image>
-			<ResultHighlight result={result} />
+			{
+				typeof result.title === "string"
+					? <Title dangerouslySetInnerHTML={{ __html: result.title }} />
+					: <Title>{result.title}</Title>
+			}
+			{
+				typeof result.desc === "string"
+					? <article dangerouslySetInnerHTML={{ __html: result.desc }} />
+					: <article>{result.desc}</article>
+			}
 		</Card>);
 	};
 
