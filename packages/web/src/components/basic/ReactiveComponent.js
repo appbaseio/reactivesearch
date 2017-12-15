@@ -10,14 +10,9 @@ import {
 } from "@appbaseio/reactivecore/lib/actions";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
-
 class ReactiveComponent extends Component {
 	constructor(props) {
 		super(props);
-
-		this.state = {
-			hasError: false
-		};
 
 		this.internalComponent = null;
 
@@ -65,10 +60,6 @@ class ReactiveComponent extends Component {
 		}
 	}
 
-	componentDidCatch(error, info) {
-		this.setState({ hasError: true });
-	}
-
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
 
@@ -103,15 +94,14 @@ class ReactiveComponent extends Component {
 			...rest
 		} = this.props;
 
-		if (this.state.hasError) {
+		try {
+			const childrenWithProps = React.Children.map(children, child =>
+				React.cloneElement(child, { ...rest, setQuery: this.setQuery })
+			);
+			return <div>{childrenWithProps}</div>;
+		} catch(e) {
 			return null;
 		}
-
-		const childrenWithProps = React.Children.map(children, child =>
-			React.cloneElement(child, { ...rest, setQuery: this.setQuery })
-		);
-
-		return childrenWithProps;
 	}
 }
 
