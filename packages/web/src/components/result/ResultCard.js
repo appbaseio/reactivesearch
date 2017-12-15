@@ -17,6 +17,7 @@ import {
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
+import Title from "../../styles/Title";
 import Button, { pagination } from "../../styles/Button";
 import Card, { container, Image } from "../../styles/Card";
 
