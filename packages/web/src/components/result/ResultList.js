@@ -17,8 +17,7 @@ import {
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
-import ResultHighlight from "./addons/ResultHighlight";
-
+import Title from "../../styles/Title";
 import Button, { pagination } from "../../styles/Button";
 import ListItem, { container, Image } from "../../styles/ListItem";
 
@@ -271,7 +270,16 @@ class ResultList extends Component {
 					: null
 			}
 			<article>
-				<ResultHighlight result={result} />
+				{
+					typeof result.title === "string"
+						? <Title dangerouslySetInnerHTML={{ __html: result.title }} />
+						: <Title>{result.title}</Title>
+				}
+				{
+					typeof result.desc === "string"
+						? <div dangerouslySetInnerHTML={{ __html: result.desc }} />
+						: <div>{result.desc}</div>
+				}
 			</article>
 		</ListItem>);
 	};
