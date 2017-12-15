@@ -46,8 +46,8 @@ class DatePicker extends Component {
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleDateChange(nextProps.defaultSelected, true, nextProps);
 		} else if (
-			this.state.currentValue !== nextProps.selectedValue &&
-			this.props.selectedValue !== nextProps.selectedValue
+			!isEqual(this.formatInputDate(this.state.currentDate), nextProps.selectedValue) &&
+			!isEqual(this.props.selectedValue, nextProps.selectedValue)
 		) {
 			this.handleDateChange(nextProps.selectedValue || "", true, nextProps);
 		}
@@ -63,15 +63,15 @@ class DatePicker extends Component {
 		}
 	}
 
-	formatDate = (date) => {
-		switch (this.props.queryFormat) {
+	formatDate = (date, props = this.props) => {
+		switch (props.queryFormat) {
 			case "epoch_millis":
 				return date.getTime();
 			case "epoch_seconds":
 				return Math.floor(date.getTime() / 1000);
 			default: {
-				if (dateFormats[this.props.queryFormat]) {
-					return date.toString(dateFormats[this.props.queryFormat]);
+				if (dateFormats[props.queryFormat]) {
+					return date.toString(dateFormats[props.queryFormat]);
 				}
 				return date;
 			}
@@ -88,8 +88,8 @@ class DatePicker extends Component {
 			query = {
 				range: {
 					[props.dataField]: {
-						gte: this.formatDate(new XDate(value).addHours(-24)),
-						lte: this.formatDate(new XDate(value))
+						gte: this.formatDate(new XDate(value).addHours(-24), props),
+						lte: this.formatDate(new XDate(value), props)
 					}
 				}
 			};
@@ -109,19 +109,20 @@ class DatePicker extends Component {
 		let value = null,
 			date = null;
 		if (currentDate) {
-			value = isDefaultValue ? this.formatInputDate(currentDate) : currentDate;
-			date = this.formatDate(new XDate(value));
+			value = isDefaultValue ? currentDate : this.formatInputDate(currentDate);
+			date = this.formatDate(new XDate(value), props);
 		}
 
 		const performUpdate = () => {
 			this.setState({
 				currentDate
+			}, () => {
+				this.updateQuery(value, props);
 			});
-			this.updateQuery(value, props);
 		};
 		checkValueChange(
 			props.componentId,
-			date,
+			value,
 			props.beforeValueChange,
 			props.onValueChange,
 			performUpdate
