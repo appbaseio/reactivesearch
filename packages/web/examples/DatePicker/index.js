@@ -22,6 +22,9 @@ class Main extends Component {
 			<ReactiveBase
 				app="gitxplore-live"
 				credentials="bYTSo47tj:d001826a-f4ef-42c5-b0aa-a94f29967ba0"
+				theme={{
+					primaryColor: "mediumseagreen"
+				}}
 			>
 				<div className="row">
 					<div className="col">
@@ -31,6 +34,7 @@ class Main extends Component {
 							queryFormat="date_time_no_millis"
 							title="Date Picker"
 							initialMonth={new Date("2017-04-07")}
+							URLParams
 						/>
 					</div>
 
