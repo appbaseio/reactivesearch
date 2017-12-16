@@ -46,6 +46,9 @@ const Flex = styled("div")`
 	${props => props.direction && css`
 		flex-direction: ${props.direction};
 	`};
+	${props => props.basis && css`
+		flex-basis: ${props.basis};
+	`};
 
 	svg.search-icon {
 		fill: ${props => props.theme.primaryColor};
