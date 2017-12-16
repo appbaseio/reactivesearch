@@ -16,7 +16,8 @@ module.exports = {
 		RangeSlider: "./examples/RangeSlider/index.js",
 		RangeInput: "./examples/RangeInput/index.js",
 		ReactiveComponent: "./examples/ReactiveComponent/index.js",
-		DatePicker: "./examples/DatePicker/index.js"
+		DatePicker: "./examples/DatePicker/index.js",
+		DateRange: "./examples/DateRange/index.js"
 	},
 	output: {
 		path: path.join(__dirname, "examples"),
