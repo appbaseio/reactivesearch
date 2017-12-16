@@ -28,7 +28,7 @@ class DatePicker extends Component {
 		};
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
@@ -98,7 +98,7 @@ class DatePicker extends Component {
 	};
 
 	handleDayPicker = (date) => {
-		this.handleDateChange(date);
+		this.handleDateChange(date || "");
 	}
 
 	handleDateChange = (
@@ -106,27 +106,30 @@ class DatePicker extends Component {
 		isDefaultValue = false,
 		props = this.props
 	) => {
-		let value = null,
-			date = null;
-		if (currentDate) {
-			value = isDefaultValue ? currentDate : this.formatInputDate(currentDate);
-			date = this.formatDate(new XDate(value), props);
-		}
+		// currentDate should be valid or empty string for resetting the query
+		if (isDefaultValue && !new XDate(currentDate).valid() && currentDate.length) {
+			console.error(`DatePicker: ${props.componentId} invalid value passed for date`);
+		} else {
+			let value = null;
+			if (currentDate) {
+				value = isDefaultValue ? currentDate : this.formatInputDate(currentDate);
+			}
 
-		const performUpdate = () => {
-			this.setState({
-				currentDate
-			}, () => {
-				this.updateQuery(value, props);
-			});
-		};
-		checkValueChange(
-			props.componentId,
-			value,
-			props.beforeValueChange,
-			props.onValueChange,
-			performUpdate
-		);
+			const performUpdate = () => {
+				this.setState({
+					currentDate
+				}, () => {
+					this.updateQuery(value, props);
+				});
+			};
+			checkValueChange(
+				props.componentId,
+				value,
+				props.beforeValueChange,
+				props.onValueChange,
+				performUpdate
+			);
+		}
 	};
 
 	updateQuery = (value, props) => {
