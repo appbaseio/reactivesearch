@@ -3,3 +3,5 @@ dist
 lib
 umd
 playground
+packages/web/webpack.config.js
+packages/web/webpack.config.umd.js

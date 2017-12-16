@@ -1,4 +1,3 @@
-import { css } from "emotion";
 import styled from "react-emotion";
 
 const Base = styled("div")`

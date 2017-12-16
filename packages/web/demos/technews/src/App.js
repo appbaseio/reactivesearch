@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { ReactiveBase } from "@appbaseio/reactivesearch";
 
 import theme from "./styles/theme";

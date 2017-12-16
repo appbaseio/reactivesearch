@@ -24,7 +24,7 @@ class ReactiveBase extends Component {
 		const config = {
 			url: props.url && props.url.trim() !== "" ? props.url : "https://scalr.api.appbase.io",
 			app: props.app,
-			credentials: props.credentials,
+			credentials,
 			type: this.type
 		};
 

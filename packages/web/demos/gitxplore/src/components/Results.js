@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import Topic from "./Topic";
 
-import ResultItem, { resultItemDetails, resultListContainer } from "../styles/ResultItem";
+import ResultItem, { resultListContainer } from "../styles/ResultItem";
 import Flex, { FlexChild } from "../styles/Flex";
 import Link from "../styles/Link";
 import Avatar from "../styles/Avatar";

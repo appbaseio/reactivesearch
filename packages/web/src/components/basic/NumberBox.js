@@ -199,7 +199,7 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId] ? state.selectedValues[props.componentId].value : null
 });
 
-const mapDispatchtoProps = (dispatch, props) => ({
+const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) =>

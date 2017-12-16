@@ -180,7 +180,7 @@ const mapStateToProps = (state, props) => ({
 		null
 });
 
-const mapDispatchtoProps = (dispatch, props) => ({
+const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) =>

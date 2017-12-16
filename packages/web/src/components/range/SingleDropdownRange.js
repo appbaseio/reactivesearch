@@ -9,12 +9,8 @@ import {
 } from "@appbaseio/reactivecore/lib/actions";
 import {
 	isEqual,
-	getQueryOptions,
-	pushToAndClause,
 	checkValueChange,
-	getAggsOrder,
 	checkPropChange,
-	checkSomePropChange,
 	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
@@ -108,7 +104,6 @@ class SingleDropdownRange extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
-		let callback = null;
 
 		let onQueryChange = null;
 		if (props.onQueryChange) {
