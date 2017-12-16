@@ -8,6 +8,7 @@ import TagCloud from "./components/basic/TagCloud";
 import ReactiveComponent from "./components/basic/ReactiveComponent";
 
 import DatePicker from "./components/date/DatePicker";
+import DateRange from "./components/date/DateRange";
 
 import SingleList from "./components/list/SingleList";
 import MultiList from "./components/list/MultiList";
@@ -43,6 +44,7 @@ export {
 
 	// date
 	DatePicker,
+	DateRange,
 
 	// list
 	SingleList,
