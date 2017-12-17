@@ -22,6 +22,7 @@ import MultiRange from "./components/range/MultiRange";
 import SingleDropdownRange from "./components/range/SingleDropdownRange";
 import MultiDropdownRange from "./components/range/MultiDropdownRange";
 import RangeSlider from "./components/range/RangeSlider";
+import DynamicRangeSlider from "./components/range/DynamicRangeSlider";
 import RangeInput from "./components/range/RangeInput";
 
 import DataSearch from "./components/search/DataSearch";
@@ -60,6 +61,7 @@ export {
 	SingleDropdownRange,
 	MultiDropdownRange,
 	RangeSlider,
+	DynamicRangeSlider,
 	RangeInput,
 
 	// search
