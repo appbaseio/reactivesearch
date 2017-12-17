@@ -35,6 +35,7 @@ class DynamicRangeSlider extends Component {
 		};
 		this.internalHistogramComponent = this.props.componentId + "__histogram__internal";
 		this.internalRangeComponent = this.props.componentId + "__range__internal";
+		this.internalMatchAllComponent = this.props.componentId + "__match_all__internal";
 	}
 
 	componentWillMount() {
@@ -120,21 +121,25 @@ class DynamicRangeSlider extends Component {
 		this.props.removeComponent(this.props.componentId);
 		this.props.removeComponent(this.internalHistogramComponent);
 		this.props.removeComponent(this.internalRangeComponent);
+		this.props.removeComponent(this.internalMatchAllComponent);
 	}
 
 	setReact = (props) => {
 		const { react } = props;
 		if (react) {
+			props.watchComponent(this.internalRangeComponent, props.react);
 			const newReact = pushToAndClause(
-				pushToAndClause(
-					react,
-					this.internalRangeComponent
-				),
+				react,
 				this.internalHistogramComponent
 			);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: [this.internalRangeComponent, this.internalHistogramComponent] });
+			// internalRangeComponent watches internalMatchAll component allowing execution of query
+			// in case of no react prop
+			this.props.addComponent(this.internalMatchAllComponent);
+			props.setQueryOptions(this.internalMatchAllComponent, { aggs: { match_all: {} } }, false);
+			props.watchComponent(this.internalRangeComponent, { and: this.internalMatchAllComponent });
+			props.watchComponent(props.componentId, { and: this.internalHistogramComponent });
 		}
 	};
 
@@ -367,10 +372,11 @@ const mapStateToProps = (state, props) => ({
 		state.aggregations[props.componentId][props.dataField].buckets)
 			? state.aggregations[props.componentId][props.dataField].buckets
 			: [],
-	range: state.aggregations[props.componentId] && state.aggregations[props.componentId].min
+	range: state.aggregations[`${props.componentId}__range__internal`] &&
+		state.aggregations[`${props.componentId}__range__internal`].min
 		? {
-			start: state.aggregations[props.componentId].min.value,
-			end: state.aggregations[props.componentId].max.value
+			start: state.aggregations[`${props.componentId}__range__internal`].min.value,
+			end: state.aggregations[`${props.componentId}__range__internal`].max.value
 		}
 		: null,
 	selectedValue: state.selectedValues[props.componentId]
