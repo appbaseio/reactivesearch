@@ -223,7 +223,7 @@ class ResultCard extends Component {
 		}
 
 		return (
-			<div className={`${pagination} ${getClassName(this.props.innerClass, "pagination")}`}>
+			<div className={`${pagination} ${getClassName(this.props.innerClass, "pagination") || ""}`}>
 				<Button className={getClassName(this.props.innerClass, "button") || null} disabled={this.state.currentPage === 0} onClick={this.prevPage}>
 					Prev
 				</Button>
@@ -309,7 +309,7 @@ class ResultCard extends Component {
 						? this.renderPagination()
 						: null
 				}
-				<div className={`${container} ${getClassName(this.props.innerClass, "list")}`}>
+				<div className={`${container} ${getClassName(this.props.innerClass, "list") || ""}`}>
 					{
 						results.map(item => this.renderAsCard(item))
 					}
