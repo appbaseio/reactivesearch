@@ -124,7 +124,7 @@ RangeInput.propTypes = {
 	stepValue: types.number,
 	defaultSelected: types.range,
 	onValueChange: types.func,
-	className: types.className,
+	className: types.string,
 	style: types.style,
 	innerClass: types.style
 };
