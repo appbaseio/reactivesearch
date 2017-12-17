@@ -14,6 +14,7 @@ module.exports = {
 		SingleDropdownRange: "./examples/SingleDropdownRange/index.js",
 		MultiDropdownRange: "./examples/MultiDropdownRange/index.js",
 		RangeSlider: "./examples/RangeSlider/index.js",
+		DynamicRangeSlider: "./examples/DynamicRangeSlider/index.js",
 		RangeInput: "./examples/RangeInput/index.js",
 		ReactiveComponent: "./examples/ReactiveComponent/index.js",
 		DatePicker: "./examples/DatePicker/index.js",
