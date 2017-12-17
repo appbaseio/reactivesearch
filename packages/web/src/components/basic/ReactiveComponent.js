@@ -8,6 +8,7 @@ import {
 	updateQuery,
 	setQueryOptions
 } from "@appbaseio/reactivecore/lib/actions";
+import { pushToAndClause } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 
 class ReactiveComponent extends Component {
