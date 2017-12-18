@@ -218,8 +218,8 @@ class DataSearch extends Component {
 	};
 
 	onSuggestions = (suggestions) => {
-		if (this.props.onSuggestions) {
-			return this.props.onSuggestions(suggestions);
+		if (this.props.onSuggestion) {
+			return suggestions.map(suggestion => this.props.onSuggestion);
 		}
 
 		const fields = Array.isArray(this.props.dataField) ? this.props.dataField : [this.props.dataField];
@@ -446,7 +446,7 @@ DataSearch.propTypes = {
 	onValueChange: types.func,
 	customQuery: types.func,
 	onQueryChange: types.func,
-	onSuggestions: types.func,
+	onSuggestion: types.func,
 	updateQuery: types.funcRequired,
 	placeholder: types.string,
 	onBlur: types.func,
