@@ -25,6 +25,20 @@ const Input = styled("input")`
 			flex: 1;
 		`};
 
+	${props =>
+		props.showIcon &&
+		props.iconPosition === "left" &&
+		css`
+			padding-left: 0;
+		`};
+
+	${props =>
+		props.showIcon &&
+		props.iconPosition === "right" &&
+		css`
+			padding-right: 0;
+		`};
+
 	${props => props.alert && alertBorder};
 `;
 

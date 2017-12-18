@@ -363,17 +363,18 @@ class DataSearch extends Component {
 							}) => (
 								<div className={suggestionsContainer}>
 									<Flex showBorder={this.props.showIcon} iconPosition={this.props.iconPosition}>
-										<Input showIcon={this.props.showIcon} {...getInputProps({
-											className: getClassName(this.props.innerClass, "input"),
-											placeholder: this.props.placeholder,
-											value: this.state.currentValue === null ? "" : this.state.currentValue,
-											onChange: this.onInputChange,
-											onBlur: this.props.onBlur,
-											onFocus: this.handleFocus,
-											onKeyPress: this.props.onKeyPress,
-											onKeyDown: this.handleKeyDown,
-											onKeyUp: this.props.onKeyUp
-										})} />
+										<Input showIcon={this.props.showIcon} iconPosition={this.props.iconPosition}
+											{...getInputProps({
+												className: getClassName(this.props.innerClass, "input"),
+												placeholder: this.props.placeholder,
+												value: this.state.currentValue === null ? "" : this.state.currentValue,
+												onChange: this.onInputChange,
+												onBlur: this.props.onBlur,
+												onFocus: this.handleFocus,
+												onKeyPress: this.props.onKeyPress,
+												onKeyDown: this.handleKeyDown,
+												onKeyUp: this.props.onKeyUp
+											})} />
 										{this.renderIcon()}
 									</Flex>
 									{
