@@ -219,7 +219,7 @@ class DataSearch extends Component {
 
 	onSuggestions = (suggestions) => {
 		if (this.props.onSuggestion) {
-			return suggestions.map(suggestion => this.props.onSuggestion);
+			return suggestions.map(suggestion => this.props.onSuggestion(suggestion));
 		}
 
 		const fields = Array.isArray(this.props.dataField) ? this.props.dataField : [this.props.dataField];
