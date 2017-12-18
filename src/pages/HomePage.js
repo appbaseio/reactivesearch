@@ -43,6 +43,10 @@ export default class HomePage extends Component {
 					origin: (scroll * direction),
 					Ti
 				});
+			} else if (Tc > Ti){
+				this.setState({
+					Ti
+				})
 			} else {
 				this.setState({
 					Ti,
