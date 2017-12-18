@@ -455,6 +455,7 @@ class CategorySearch extends Component {
 								>
 									<Input
 										showIcon={this.props.showIcon}
+										iconPosition={this.props.iconPosition}
 										{...getInputProps({
 											className: getClassName(this.props.innerClass, "input"),
 											placeholder: this.props.placeholder,
