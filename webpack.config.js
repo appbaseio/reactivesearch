@@ -29,8 +29,6 @@ if (process.env.NODE_ENV === "production") {
 				NODE_ENV: JSON.stringify("production")
 			}
 		}),
-		new webpack.optimize.DedupePlugin(),
-		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.optimize.UglifyJsPlugin({
 			compress: { warnings: false },
 			mangle: true,
