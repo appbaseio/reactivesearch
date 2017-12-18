@@ -1,8 +1,8 @@
 ## Reactive Search
 
-A React components library for building Airbnb / Yelp like search experiences.
+React UI components for Elasticsearch.
 
-**[ALPHA RELEASE]: This is the version-2 (re-write) of `reactivesearch` actively in development. Not recommended for production-use.**
+**[ALPHA RELEASE Note]: This is the version-2 (re-write) of `reactivesearch` actively in development. Not recommended for production-use.** We're in active documentation transition, so some links may not work.
 
 ![](https://i.imgur.com/dIix6Jl.png)
 
