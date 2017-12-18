@@ -9,7 +9,8 @@
 	"license": "Apache-2.0",
 	"workspaces": [
 		"packages/*",
-		"packages/web/demos/*"
+		"packages/web/demos/*",
+		"site"
 	],
 	"devDependencies": {
 		"babel-eslint": "^8.0.2",
