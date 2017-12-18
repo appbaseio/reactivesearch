@@ -26,7 +26,7 @@ export default class HomePage extends Component {
 
 		setTimeout(() => {
 			window.scrollTo(0, 0);
-		}, 100);
+		}, 50);
 
 		window.addEventListener("scroll", () => {
 			const { isVisible, Ti } = isScrolledIntoView(el);
@@ -247,7 +247,7 @@ export default class HomePage extends Component {
 						<div id="code" style={{ width: "30%", height: "500px", margin: "0", overflowY: "hidden" }}>
 							<div
 								style={{
-									transform: `translateY(${this.state.origin > 5 ? 5 : this.state.origin}px)`,
+									transform: `translateY(${this.state.origin}px)`,
 									transition: "all .3s ease-out", willChange: "transform"
 								}}
 								dangerouslySetInnerHTML={{ __html: mockDataSearchFull }}
