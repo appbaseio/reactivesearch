@@ -11,6 +11,7 @@ pre {
     font-family: "flowcircular";
     font-size: 13px;
     line-height: 10px;
+    margin: 0;
 }
 
 .reset {
@@ -56,13 +57,13 @@ pre {
 }
 
 .text:nth-child(5n + 1) {
-	stroke: #F2385A;
+	stroke: #5438f2;
 	-webkit-animation-delay: -1.2s;
 	animation-delay: -1.2s;
 }
 
 .text:nth-child(5n + 2) {
-	stroke: #F5A503;
+	stroke: #03b2f5;
 	-webkit-animation-delay: -2.4s;
 	animation-delay: -2.4s;
 }
@@ -74,7 +75,7 @@ pre {
 }
 
 .text:nth-child(5n + 4) {
-	stroke: #56D9CD;
+	stroke: #34a99e;
 	-webkit-animation-delay: -4.8s;
 	animation-delay: -4.8s;
 }

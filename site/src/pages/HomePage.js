@@ -5,11 +5,11 @@ import { mockDataSearch, mockDataSearchFull } from "../components/mock";
 
 function isScrolledIntoView(el) {
 	const rect = el.getBoundingClientRect();
-	const elemTop = rect.top;
+	const Ti = rect.top;
 	const elemBottom = rect.bottom;
 
-	const isVisible = elemTop < window.innerHeight && elemBottom >= 0;
-	return ({ isVisible, elemTop });
+	const isVisible = Ti <= (window.innerHeight/2) && elemBottom >= 0;
+	return ({ isVisible, Ti });
 }
 
 export default class HomePage extends Component {
@@ -26,20 +26,27 @@ export default class HomePage extends Component {
 
 		setTimeout(() => {
 			window.scrollTo(0, 0);
-		}, 1);
+		}, 100);
 
 		window.addEventListener("scroll", () => {
-			const { isVisible, elemTop } = isScrolledIntoView(el);
+			const { isVisible, Ti } = isScrolledIntoView(el);
+
+			const L = 1880, K = 500;
+			const Tc = window.innerHeight/2;
+			const delta = Tc - Ti;
+			const scroll = Math.min((delta * L) / K, L-K);
+			console.log("scroll ", scroll)
+
 			if (isVisible) {
-				const direction = elemTop > this.state.elemTop ? 2.5 : -5;
+				const direction = Ti > this.state.Ti ? -1 : -1;
 				this.setState({
-					origin: (this.state.origin + (2 * direction)),
-					elemTop
+					origin: (scroll * direction),
+					Ti
 				});
 			} else {
 				this.setState({
-					origin: 0,
-					elemTop
+					Ti,
+					origin: 0
 				})
 			}
 		});
@@ -222,7 +229,6 @@ export default class HomePage extends Component {
 					backgroundColor="#fafafa"
 					padding="3rem"
 					className="zz-border"
-					id="code"
 				>
 					<H2 style={{ color: "#6772e5" }}>Less code. Fewer edge cases.</H2>
 
@@ -238,8 +244,14 @@ export default class HomePage extends Component {
 						</div>
 					</Flex>
 					<Flex padding="0 30px" justifyContent="center" style={{ width: "100%", textAlign: "left" }}>
-						<div style={{ width: "30%", height: "400px", margin: "0", overflowY: "hidden" }}>
-							<div style={{ transform: `translateY(${this.state.origin > 5 ? 5 : this.state.origin}px)` }} dangerouslySetInnerHTML={{ __html: mockDataSearchFull }} />
+						<div id="code" style={{ width: "30%", height: "500px", margin: "0", overflowY: "hidden" }}>
+							<div
+								style={{
+									transform: `translateY(${this.state.origin > 5 ? 5 : this.state.origin}px)`,
+									transition: "all .3s ease-out", willChange: "transform"
+								}}
+								dangerouslySetInnerHTML={{ __html: mockDataSearchFull }}
+							/>
 						</div>
 						<div style={{ width: "30%", height: "400px", margin: "0" }}>
 							<div dangerouslySetInnerHTML={{ __html: mockDataSearch }} />
