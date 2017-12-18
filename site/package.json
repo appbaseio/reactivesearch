@@ -6,7 +6,7 @@
   "author": "metagrover",
   "license": "Apache-2.0",
   "scripts": {
-    "start": "webpack-dev-server --content-base . --history-api-fallback --hot --inline --progress --colors --port 8000",
+    "start": "webpack-dev-server --content-base . --history-api-fallback --hot --inline --progress --colors --port 0",
     "build": "NODE_ENV=production webpack -p"
   },
   "dependencies": {
