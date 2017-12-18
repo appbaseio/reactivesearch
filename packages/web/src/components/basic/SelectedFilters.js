@@ -52,8 +52,13 @@ class SelectedFilters extends Component {
 					})
 			}
 			{
-				hasValues
-					? <Button className={getClassName(this.props.innerClass, "button") || null} onClick={this.props.clearValues}>Clear all filters</Button>
+				this.props.showClearAll && hasValues
+					? <Button
+						className={getClassName(this.props.innerClass, "button") || null}
+						onClick={this.props.clearValues}
+					>
+						{this.props.clearAllLabel}
+					</Button>
 					: null
 			}
 		</div>)
@@ -67,12 +72,16 @@ SelectedFilters.propTypes = {
 	components: types.components,
 	style: types.style,
 	className: types.string,
-	innerClass: types.style
+	innerClass: types.style,
+	showClearAll: types.bool,
+	clearAllLabel: types.title
 };
 
 SelectedFilters.defaultProps = {
 	style: {},
-	className: null
+	className: null,
+	showClearAll: true,
+	clearAllLabel: "Clear All"
 }
 
 const mapStateToProps = state => ({

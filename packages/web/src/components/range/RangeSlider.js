@@ -12,7 +12,8 @@ import {
 	checkValueChange,
 	checkPropChange,
 	checkSomePropChange,
-	getClassName
+	getClassName,
+	pushToAndClause
 } from "@appbaseio/reactivecore/lib/utils/helper";
 import types from "@appbaseio/reactivecore/lib/utils/types";
 import Rheostat from "rheostat";
@@ -95,6 +96,7 @@ class RangeSlider extends Component {
 
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
+		this.props.removeComponent(this.internalComponent);
 	}
 
 	setReact = (props) => {

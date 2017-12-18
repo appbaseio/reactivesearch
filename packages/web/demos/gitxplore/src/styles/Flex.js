@@ -14,7 +14,12 @@ export const FlexChild = styled.div`
 	${props => props.flex && css`
 		flex: ${props.flex};
 	`};
-	margin: ${props => props.margin || 0};
+	${props => props.marginLeft && css`
+		margin-left: ${props.marginLeft};
+	`};
+	${props => props.margin && css`
+		margin: ${props.margin};
+	`};
 
 	.range-label {
 		color: white;
@@ -39,6 +44,11 @@ const Flex = styled.div`
 	${props => props.alignCenter && alignCenter};
 	${props => props.flexWrap && css`
 		flex-wrap: wrap;
+	`};
+	${props => props.hidden && css`
+		${queries.xLarge`
+			display: none;
+		`};
 	`};
 `;
 

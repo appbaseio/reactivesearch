@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import {
 	ReactiveBase,
-	DatePicker,
+	DateRange,
 	ReactiveList,
 	SelectedFilters
 } from "../../src";
@@ -23,16 +23,16 @@ class Main extends Component {
 				app="gitxplore-live"
 				credentials="bYTSo47tj:d001826a-f4ef-42c5-b0aa-a94f29967ba0"
 				theme={{
-					primaryColor: "mediumseagreen"
+					primaryColor: "salmon"
 				}}
 			>
 				<div className="row">
 					<div className="col">
-						<DatePicker
-							componentId="DatePickerComponent"
+						<DateRange
+							componentId="DateRangeComponent"
 							dataField="pushed"
 							queryFormat="date_time_no_millis"
-							title="Date Picker"
+							title="Date Range"
 							initialMonth={new Date("2017-04-07")}
 							URLParams
 						/>
@@ -56,7 +56,7 @@ class Main extends Component {
 								}
 							})}
 							react={{
-								and: ["DatePickerComponent"]
+								and: ["DateRangeComponent"]
 							}}
 						/>
 					</div>

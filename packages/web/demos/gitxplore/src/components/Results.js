@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import Topic from "./Topic";
 
-import ResultItem, { resultItemDetails, resultListContainer } from "../styles/ResultItem";
+import ResultItem, { resultListContainer, resultCardHeader } from "../styles/ResultItem";
 import Flex, { FlexChild } from "../styles/Flex";
 import Link from "../styles/Link";
 import Avatar from "../styles/Avatar";
@@ -16,9 +16,9 @@ const onResultStats = (results, time) => (
 	</Flex>
 );
 
-const onData = ({ _source: data }) => (
+const onData = ({ _source: data }, currentTopics, toggleTopic) => (
 	<ResultItem key={data.fullname}>
-		<Flex alignCenter justifyContent="center">
+		<Flex alignCenter justifyContent="center" className={resultCardHeader}>
 			<Avatar src={data.avatar} alt="User avatar" />
 			<Link href={data.url} target="_blank" rel="noopener noreferrer">
 				<Flex flexWrap>
@@ -30,7 +30,16 @@ const onData = ({ _source: data }) => (
 		<div style={{ margin: "10px 0" }}>{data.description}</div>
 		<Flex flexWrap justifyContent="center">
 			{
-				data.topics.slice(0, 7).map(item => <Topic key={item}>{item}</Topic>)
+				data.topics.slice(0, 7)
+					.map(item =>
+						<Topic
+							key={item}
+							active={currentTopics.includes(item)}
+							toggleTopic={toggleTopic}
+						>
+							{item}
+						</Topic>
+					)
 			}
 		</Flex>
 		<Flex>
@@ -41,11 +50,11 @@ const onData = ({ _source: data }) => (
 	</ResultItem>
 );
 
-const Results = () => (
+const Results = ({ toggleTopic, currentTopics }) => (
 	<ReactiveList
 		componentId="results"
 		dataField="name"
-		onData={onData}
+		onData={data => onData(data, currentTopics, toggleTopic)}
 		onResultStats={onResultStats}
 		react={{
 			and: ["name", "language", "topics", "pushed", "created", "stars", "forks", "repo"]
@@ -56,11 +65,17 @@ const Results = () => (
 			pagination: "result-list-pagination"
 		}}
 		className={resultListContainer}
+		size={6}
 	/>
 );
 
 onData.propTypes = {
 	_source: PropTypes.object // eslint-disable-line
 };
+
+Results.propTypes = {
+	toggleTopic: PropTypes.func,
+	currentTopics: PropTypes.arrayOf(PropTypes.string)
+}
 
 export default Results;

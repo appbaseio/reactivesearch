@@ -5,6 +5,7 @@ const breakpoints = {
 	medium: 768,
 	large: 992,
 	xLarge: 1200,
+	xxLarge: 1280,
 	tallPhone: "(max-width: 360px) and (min-height: 740px)"
 };
 

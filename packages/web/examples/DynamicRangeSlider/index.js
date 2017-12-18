@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import {
 	ReactiveBase,
-	DatePicker,
+	DynamicRangeSlider,
 	ReactiveList,
 	SelectedFilters
 } from "../../src";
@@ -12,51 +12,38 @@ class Main extends Component {
 	onData = (res) => {
 		const data = res._source;
 		return (<div key={res._id}>
-			<h2>{data.owner}/{data.name}</h2>
-			<h4>{data.stars} 🌟</h4>
+			<h2>{data.name}</h2>
+			<p>{data.price} - {data.rating} stars rated</p>
 		</div>);
 	}
 
 	render() {
 		return (
 			<ReactiveBase
-				app="gitxplore-live"
-				credentials="bYTSo47tj:d001826a-f4ef-42c5-b0aa-a94f29967ba0"
-				theme={{
-					primaryColor: "mediumseagreen"
-				}}
+				app="car-store"
+				credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
 			>
 				<div className="row">
 					<div className="col">
-						<DatePicker
-							componentId="DatePickerComponent"
-							dataField="pushed"
-							queryFormat="date_time_no_millis"
-							title="Date Picker"
-							initialMonth={new Date("2017-04-07")}
-							URLParams
+						<DynamicRangeSlider
+							dataField="rating"
+							componentId="DynamicRangeSlider"
+							title="Dynamic Range Slider"
 						/>
 					</div>
 
 					<div className="col">
 						<SelectedFilters />
 						<ReactiveList
+							componentId="SearchResult"
 							dataField="name"
-							componentId="ReactiveList"
-							size={20}
+							title="ReactiveList"
 							from={0}
+							size={20}
 							onData={this.onData}
 							pagination
-							defaultQuery={() => ({
-								query: {
-									match_all: {}
-								},
-								sort: {
-									stars: { order: "desc" }
-								}
-							})}
 							react={{
-								and: ["DatePickerComponent"]
+								and: "DynamicRangeSlider"
 							}}
 						/>
 					</div>

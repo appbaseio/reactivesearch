@@ -1,19 +1,34 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from "react";
 
 import SearchFilters from "./SearchFilters";
 
 import Navbar, { title } from "../styles/Navbar";
+import { ToggleButton } from "../styles/Button";
 
-const Header = ({ currentTopics }) => (
-	<Navbar>
-		<div className={title}>GitXplore</div>
-		<SearchFilters currentTopics={currentTopics} />
-	</Navbar>
-);
+class Header extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			visible: false
+		}
+	}
 
-Header.propTypes = {
-	currentTopics: PropTypes.arrayOf(PropTypes.string)
-};
+	toggleVisibility = () => {
+		const visible = !this.state.visible;
+		this.setState({
+			visible
+		});
+	}
+
+	render() {
+		return (
+			<Navbar full={this.state.visible}>
+				<div className={title}>GitXplore</div>
+				<ToggleButton onClick={this.toggleVisibility}>Toggle Filters</ToggleButton>
+				<SearchFilters {...this.props} visible={this.state.visible} />
+			</Navbar>
+		);
+	}
+}
 
 export default Header;

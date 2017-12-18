@@ -1,9 +1,11 @@
 import styled from "react-emotion";
 import { withTheme } from "emotion-theming";
+import lighten from "polished/lib/color/lighten";
 
 import { input } from "./Input";
 
 const DateContainer = styled.div`
+	position: relative;
 	.DayPicker {
 		display: inline-block;
 	}
@@ -175,17 +177,31 @@ const DateContainer = styled.div`
 		color: #f0f8ff;
 		color: #f0f8ff;
 		background-color: ${({ theme }) => theme.primaryColor};
-		border-radius: 100%;
+		border-radius: ${({ range }) => range ? 0 : "100%"};
 	}
 
 	.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover {
-		background-color: #51a0fa;
+		background-color: ${({ theme }) => lighten(0.1, theme.primaryColor)};
 	}
 
 	.DayPicker:not(.DayPicker--interactionDisabled)
 		.DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
-		background-color: #f0f8ff;
+		background-color: ${({ theme }) => lighten(0.1, theme.primaryColor)};
 		border-radius: 50%;
+	}
+
+	.DayPicker-Day--selected.DayPicker-Day--start:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+		border-top-left-radius: 50%;
+		border-bottom-left-radius: 50%;
+	}
+
+	.DayPicker-Day--selected.DayPicker-Day--end:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+		border-top-right-radius: 50%;
+		border-bottom-right-radius: 50%;
+	}
+
+	.DayPickerInput {
+		flex: 1;
 	}
 
 	.DayPickerInput input {
@@ -193,7 +209,9 @@ const DateContainer = styled.div`
 	}
 
 	.DayPickerInput-OverlayWrapper {
-		position: relative;
+		position: absolute;
+		width: 100%;
+		left: 0;
 	}
 
 	.DayPickerInput-Overlay {

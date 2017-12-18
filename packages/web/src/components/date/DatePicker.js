@@ -28,7 +28,7 @@ class DatePicker extends Component {
 		};
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
@@ -46,8 +46,8 @@ class DatePicker extends Component {
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleDateChange(nextProps.defaultSelected, true, nextProps);
 		} else if (
-			this.state.currentValue !== nextProps.selectedValue &&
-			this.props.selectedValue !== nextProps.selectedValue
+			!isEqual(this.formatInputDate(this.state.currentDate), nextProps.selectedValue) &&
+			!isEqual(this.props.selectedValue, nextProps.selectedValue)
 		) {
 			this.handleDateChange(nextProps.selectedValue || "", true, nextProps);
 		}
@@ -63,15 +63,15 @@ class DatePicker extends Component {
 		}
 	}
 
-	formatDate = (date) => {
-		switch (this.props.queryFormat) {
+	formatDate = (date, props = this.props) => {
+		switch (props.queryFormat) {
 			case "epoch_millis":
 				return date.getTime();
 			case "epoch_seconds":
 				return Math.floor(date.getTime() / 1000);
 			default: {
-				if (dateFormats[this.props.queryFormat]) {
-					return date.toString(dateFormats[this.props.queryFormat]);
+				if (dateFormats[props.queryFormat]) {
+					return date.toString(dateFormats[props.queryFormat]);
 				}
 				return date;
 			}
@@ -88,8 +88,8 @@ class DatePicker extends Component {
 			query = {
 				range: {
 					[props.dataField]: {
-						gte: this.formatDate(new XDate(value).addHours(-24)),
-						lte: this.formatDate(new XDate(value))
+						gte: this.formatDate(new XDate(value).addHours(-24), props),
+						lte: this.formatDate(new XDate(value), props)
 					}
 				}
 			};
@@ -98,7 +98,7 @@ class DatePicker extends Component {
 	};
 
 	handleDayPicker = (date) => {
-		this.handleDateChange(date);
+		this.handleDateChange(date || "");
 	}
 
 	handleDateChange = (
@@ -106,26 +106,30 @@ class DatePicker extends Component {
 		isDefaultValue = false,
 		props = this.props
 	) => {
-		let value = null,
-			date = null;
-		if (currentDate) {
-			value = isDefaultValue ? this.formatInputDate(currentDate) : currentDate;
-			date = this.formatDate(new XDate(value));
-		}
+		// currentDate should be valid or empty string for resetting the query
+		if (isDefaultValue && !new XDate(currentDate).valid() && currentDate.length) {
+			console.error(`DatePicker: ${props.componentId} invalid value passed for date`);
+		} else {
+			let value = null;
+			if (currentDate) {
+				value = isDefaultValue ? currentDate : this.formatInputDate(currentDate);
+			}
 
-		const performUpdate = () => {
-			this.setState({
-				currentDate
-			});
-			this.updateQuery(value, props);
-		};
-		checkValueChange(
-			props.componentId,
-			date,
-			props.beforeValueChange,
-			props.onValueChange,
-			performUpdate
-		);
+			const performUpdate = () => {
+				this.setState({
+					currentDate
+				}, () => {
+					this.updateQuery(value, props);
+				});
+			};
+			checkValueChange(
+				props.componentId,
+				value,
+				props.beforeValueChange,
+				props.onValueChange,
+				performUpdate
+			);
+		}
 	};
 
 	updateQuery = (value, props) => {

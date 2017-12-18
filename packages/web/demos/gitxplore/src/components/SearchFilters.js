@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-	DataSearch,
-	SingleDropdownList,
 	MultiDropdownList,
 	SingleDropdownRange,
 	RangeSlider
@@ -10,8 +8,8 @@ import {
 
 import Flex, { FlexChild } from "../styles/Flex";
 
-const SearchFilters = ({ currentTopics }) => (
-	<Flex direction="column">
+const SearchFilters = ({ currentTopics, setTopics, visible }) => (
+	<Flex direction="column" hidden={!visible}>
 		<FlexChild margin="10px">
 			<MultiDropdownList
 				componentId="language"
@@ -22,10 +20,12 @@ const SearchFilters = ({ currentTopics }) => (
 		<FlexChild margin="10px">
 			<MultiDropdownList
 				componentId="topics"
-				dataField="topics"
+				dataField="topics.raw"
 				title="Repo Topics"
+				size={1000}
+				queryFormat="and"
 				defaultSelected={currentTopics}
-				onValueChange={v => console.log(v)}
+				onValueChange={setTopics}
 			/>
 		</FlexChild>
 		<FlexChild margin="10px">
@@ -140,7 +140,9 @@ const SearchFilters = ({ currentTopics }) => (
 );
 
 SearchFilters.propTypes = {
-	currentTopics: PropTypes.arrayOf(PropTypes.string)
+	currentTopics: PropTypes.arrayOf(PropTypes.string),
+	setTopics: PropTypes.func,
+	visible: PropTypes.bool
 };
 
 export default SearchFilters;

@@ -9,12 +9,8 @@ import {
 } from "@appbaseio/reactivecore/lib/actions";
 import {
 	isEqual,
-	getQueryOptions,
-	pushToAndClause,
 	checkValueChange,
-	getAggsOrder,
 	checkPropChange,
-	checkSomePropChange,
 	getClassName
 } from "@appbaseio/reactivecore/lib/utils/helper";
 
@@ -83,7 +79,7 @@ class SingleRange extends Component {
 		return null;
 	}
 
-	setValue = (value, isDefaultValue = false, props = this.props) => {
+	setValue = (value, isDefaultValue = false, props = this.props) => { // eslint-disable-line
 		const currentValue = props.data.find(item => item.label === value) || null;
 
 		const performUpdate = () => {
@@ -105,7 +101,6 @@ class SingleRange extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
-		let callback = null;
 
 		let onQueryChange = null;
 		if (props.onQueryChange) {
