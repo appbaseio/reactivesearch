@@ -3,7 +3,8 @@
 	"name": "reactivesearch-packages",
 	"scripts": {
 		"lint": "eslint .",
-		"precommit": "eslint ."
+		"precommit": "eslint .",
+		"deploy-site": "scripts/deploy-site.sh"
 	},
 	"author": "metagrover",
 	"license": "Apache-2.0",
