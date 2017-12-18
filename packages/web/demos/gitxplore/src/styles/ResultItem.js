@@ -1,5 +1,7 @@
 import styled, { css } from "react-emotion";
 
+import { queries } from "./mediaQueries";
+
 export const resultItemDetails = css`
 	color: #a2a2a2;
 	position: relative;
@@ -10,6 +12,15 @@ export const resultItemDetails = css`
 `;
 
 export const resultListContainer = css`
+	margin-top: 60px;
+
+	${queries.xLarge`
+		margin-top: 170px;
+	`};
+	${queries.medium`
+		margin-top: 220px;
+	`};
+
 	.result-list-container {
 		display: flex;
 		flex-wrap: wrap;
@@ -19,6 +30,18 @@ export const resultListContainer = css`
 	.result-list-pagination {
 		margin: 40px 0 50px;
 	}
+
+`;
+
+export const resultCardHeader = css`
+	${queries.xxLarge`
+		flex-direction: column;
+
+		div {
+			justify-content: center;
+			margin-top: 5px;
+		}
+	`};
 `;
 
 const ResultItem = styled.div`
@@ -36,6 +59,11 @@ const ResultItem = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
+
+	${queries.xxLarge`
+		flex-basis: 350px;
+		max-width: 350px;
+	`};
 
 	&:hover {
 		box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
