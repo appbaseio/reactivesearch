@@ -1,0 +1,23 @@
+{
+  "name": "site",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.js",
+  "author": "metagrover",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "webpack-dev-server --content-base . --history-api-fallback --hot --inline --progress --colors --port 8000",
+    "build": "NODE_ENV=production webpack -p",
+    "deploy": "../scripts/deploy.sh"
+  },
+  "dependencies": {
+    "@appbaseio/designkit": "^0.1.2",
+    "emotion-theming": "^8.0.12",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "devDependencies": {
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
+  }
+}
