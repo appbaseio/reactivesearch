@@ -62,6 +62,7 @@ const suggestions = css`
 
 const suggestionsContainer = css`
 	position: relative;
+	background: white;
 `;
 
 export default Input;
