@@ -6,6 +6,10 @@
 	font-style: normal;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 pre {
 	white-space: pre-wrap;
     font-family: "flowcircular";
@@ -19,9 +23,9 @@ pre {
 	text-rendering: optimizeLegibility;
 	-moz-osx-font-smoothing: grayscale;
 	-moz-font-feature-settings: "liga" on;
+	font-family: "Rubik", sans-serif;
 	margin: 0;
 	padding: 0;
-	text-align: center;
 }
 
 .zz-border {
@@ -102,31 +106,6 @@ pre {
 	height: 150px;
 }
 
-.github-btn {
-	position: absolute;
-	top: 20px;
-	right: 15px;
-	text-decoration: none;
-}
-
-.github-btn svg {
-	top: -1px;
-	position: relative;
-	display: inline-block;
-	margin-right: 5px;
-}
-
-.title {
-	display: inline-flex;
-	background: #6772e5;
-	border-radius: 999em;
-	padding: 0 15px;
-	height: 32px;
-	color: #fff;
-	justify-content: center;
-	align-items: center;
-}
-
-.title.title--green {
-	background-color: #22C91A;
+#code {
+	-webkit-mask-image: linear-gradient(180deg,#000 30px,#000 calc(100% - 200px),transparent calc(100% - 50px));
 }
