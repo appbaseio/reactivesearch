@@ -23,7 +23,6 @@ const Image = styled("div")`
 	background-size: contain;
 	background-position: center center;
 	background-repeat: no-repeat;
-	background-image: ${props => `url(${props.src})`};
 `;
 
 const Card = styled("a")`
