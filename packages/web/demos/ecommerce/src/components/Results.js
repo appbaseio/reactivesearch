@@ -13,10 +13,9 @@ const onResultStats = (results, time) => (
 );
 
 const onData = ({ _source: data }) => ({
-	// image: data.vehicleType === "other" || data.vehicleType === "unknown" ?
-	// 	"../images/car.jpg" :
-	// 	`../images/${data.vehicleType.replace(/ /g, "-")}/${data.color}.jpg`,
-	image: "../images/car.jpg",
+	image: data.vehicleType === "other" || data.vehicleType === "unknown" ?
+		"src/images/car.jpg" :
+		`src/images/${data.vehicleType.replace(/ /g, "-")}/${data.color}.jpg`,
 	title: data.name,
 	desc: data.model
 });
@@ -29,6 +28,10 @@ const Results = () => (
 		onResultStats={onResultStats}
 		react={{
 			and: ["category", "brand", "rating", "vehicle", "price"]
+		}}
+		innerClass={{
+			image: "card-image",
+			pagination: "pagination"
 		}}
 		pagination
 		size={9}

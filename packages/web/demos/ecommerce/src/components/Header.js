@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { CategorySearch } from "@appbaseio/reactivesearch";
 
-import SearchFilters from "./SearchFilters";
-
 import Navbar, { title } from "../styles/Navbar";
 import Flex, { FlexChild } from "../styles/Flex";
 import { categorySearchContainer } from "../styles/Container";

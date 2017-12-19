@@ -4,15 +4,19 @@ import { queries } from "./mediaQueries";
 
 const Container = styled.section`
 	width: 100%;
-	height: 100vh;
+	height: 100%;
+	min-height: 100vh;
+	background-color: #fafafa;
 `;
 
 export const resultsContainer = css`
-	width: calc(100% - 400px);
+	.pagination {
+		padding: 20px 0;
+	}
 
-	${queries.xLarge`
-		width: 100%;
-	`};
+	.card-image {
+		background-size: cover;
+	}
 `;
 
 export const categorySearchContainer = css`
@@ -24,9 +28,10 @@ export const categorySearchContainer = css`
 `;
 
 export const appContainer = css`
-	margin: 100px 1rem 0;
+	margin: 0 1rem;
+	padding-top: 100px;
 	${queries.small`
-		margin-top: 140px;
+		padding-top: 140px;
 	`};
 `;
 

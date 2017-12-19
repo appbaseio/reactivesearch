@@ -16,6 +16,14 @@ module.exports = {
 				test: /.jsx?$/,
 				loader: "babel-loader",
 				exclude: /node_modules/
+			},
+			{
+				test: /.jpg$/,
+				loader: "url-loader",
+				options: {
+					limit: 8000
+				},
+				exclude: /node_modules/
 			}
 		]
 	}

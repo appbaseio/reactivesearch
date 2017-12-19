@@ -7,10 +7,17 @@ import Header from "./components/Header";
 import SearchFilters from "./components/SearchFilters";
 import Results from "./components/Results";
 
-import Container, { appContainer } from "./styles/Container";
+import Container, { appContainer, resultsContainer } from "./styles/Container";
+import FilterContainer from "./styles/FilterContainer";
 import Flex, { FlexChild } from "./styles/Flex";
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			visible: true
+		};
+	}
 	render() {
 		return (
 			<Container>
@@ -21,10 +28,10 @@ class App extends Component {
 				>
 					<Header />
 					<Flex className={appContainer}>
-						<FlexChild flex={1}>
+						<FilterContainer visible={this.state.visible}>
 							<SearchFilters />
-						</FlexChild>
-						<FlexChild flex={3}>
+						</FilterContainer>
+						<FlexChild flex={3} className={resultsContainer}>
 							<Results />
 						</FlexChild>
 					</Flex>
