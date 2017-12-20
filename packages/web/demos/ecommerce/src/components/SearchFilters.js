@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-	SingleDropdownList,
-	SingleDropdownRange,
+	SingleList,
+	SingleRange,
 	MultiList,
-	DynamicRangeSlider
+	RangeSlider
 } from "@appbaseio/reactivesearch";
 
 import Flex, { FlexChild } from "../styles/Flex";
@@ -12,14 +12,14 @@ import Flex, { FlexChild } from "../styles/Flex";
 const SearchFilters = () => (
 	<Flex direction="column">
 		<FlexChild margin="10px">
-			<SingleDropdownList
+			<SingleList
 				componentId="brand"
 				dataField="brand.raw"
-				title="Brand"
+				title="Cars"
 			/>
 		</FlexChild>
 		<FlexChild margin="10px">
-			<SingleDropdownRange
+			<SingleRange
 				componentId="rating"
 				dataField="rating"
 				title="Rating"
@@ -35,13 +35,23 @@ const SearchFilters = () => (
 				componentId="vehicle"
 				dataField="vehicleType.raw"
 				title="Vehicle Type"
+				showSearch={false}
 			/>
 		</FlexChild>
 		<FlexChild margin="10px">
-			<DynamicRangeSlider
+			<RangeSlider
 				componentId="price"
 				dataField="price"
 				title="Price Range"
+				range={{
+					start: 0,
+					end: 10000
+				}}
+				rangeLabels={{
+					start: "$0",
+					end: "$10,000"
+				}}
+				interval={1000}
 			/>
 		</FlexChild>
 	</Flex>

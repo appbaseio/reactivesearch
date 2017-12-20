@@ -2,9 +2,7 @@ import React from "react";
 import { ResultCard } from "@appbaseio/reactivesearch";
 import PropTypes from "prop-types";
 
-import ResultItem, { resultListContainer, resultCardHeader } from "../styles/ResultItem";
 import Flex from "../styles/Flex";
-import Button from "../styles/Button";
 
 const onResultStats = (results, time) => (
 	<Flex justifyContent="flex-end" style={{ marginTop: "0.6rem" }}>
@@ -34,7 +32,7 @@ const Results = () => (
 			pagination: "pagination"
 		}}
 		pagination
-		size={9}
+		size={15}
 	/>
 );
 
