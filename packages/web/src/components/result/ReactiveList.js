@@ -299,7 +299,7 @@ class ReactiveList extends Component {
 						? (this.props.onAllData(this.parseHits(this.props.hits), this.loadMore))
 						: (<div className={getClassName(this.props.innerClass, "list")}>
 							{
-								results.map(item => this.props.onData({ _id: item.id, ...item._source }))
+								results.map(item => this.props.onData({ _id: item._id, ...item._source }))
 							}
 						</div>)
 				}
