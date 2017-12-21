@@ -12,6 +12,7 @@ import types from "@appbaseio/reactivecore/lib/utils/types";
 
 class DataController extends Component {
 	componentDidMount() {
+		this.locked = false;
 		this.props.addComponent(this.props.componentId);
 
 		if (this.props.defaultSelected) {
@@ -22,10 +23,12 @@ class DataController extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.updateQuery(nextProps.defaultSelected, nextProps);
-		} else if (!isEqual(this.props.selectedValue, nextProps.selectedValue)) {
-			this.updateQuery(nextProps.selectedValue, nextProps);
+		if (!this.locked) {
+			if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
+				this.updateQuery(nextProps.defaultSelected, nextProps);
+			} else if (!isEqual(this.props.selectedValue, nextProps.selectedValue)) {
+				this.updateQuery(nextProps.selectedValue, nextProps);
+			}
 		}
 	}
 
@@ -40,6 +43,7 @@ class DataController extends Component {
 	}
 
 	updateQuery = (defaultSelected = null, props) => {
+		this.locked = true;
 		const query = props.customQuery ? props.customQuery : this.defaultQuery;
 		let onQueryChange = null;
 		if (props.onQueryChange) {
@@ -56,6 +60,7 @@ class DataController extends Component {
 				onQueryChange,
 				URLParams: props.URLParams
 			});
+			this.locked = false;
 		};
 
 		checkValueChange(

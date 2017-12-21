@@ -32,6 +32,7 @@ class TagCloud extends Component {
 			currentValue: {},
 			options: []
 		};
+		this.locked = false;
 		this.type = "term";
 		this.internalComponent = props.componentId + "__internal";
 	}
@@ -78,10 +79,12 @@ class TagCloud extends Component {
 			selectedValue = selectedValue.length && selectedValue[0] || "";
 		}
 
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.setValue(nextProps.defaultSelected, true, nextProps);
-		} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
-			this.setValue(nextProps.selectedValue, true, nextProps);
+		if (!this.locked) {
+			if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
+				this.setValue(nextProps.defaultSelected, true, nextProps);
+			} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
+				this.setValue(nextProps.selectedValue, true, nextProps);
+			}
 		}
 	}
 
@@ -136,6 +139,7 @@ class TagCloud extends Component {
 	setValue = (value, isDefaultValue = false, props = this.props) => {
 		let { currentValue } = this.state;
 		let finalValues = null;
+		this.locked = true;
 
 		if (props.multiSelect) {
 			if (isDefaultValue) {
@@ -165,6 +169,7 @@ class TagCloud extends Component {
 				currentValue
 			}, () => {
 				this.updateQuery(finalValues, props);
+				this.locked = false;
 			});
 		}
 
