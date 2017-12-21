@@ -36,12 +36,9 @@
 		"no-param-reassign": 0,
 		"newline-per-chained-call": 0,
 		"class-methods-use-this": 0,
-		"indent": [2, "tab", { "SwitchCase": 1 }],
-		"quotes": ["error", "double"],
 		"comma-dangle": ["error", "never"],
 		"object-curly-spacing": [2, "always"],
 		"no-dupe-keys": "error",
-		"arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
 		"no-unused-vars": ["error", { "ignoreRestSiblings": true }],
 		"no-undef": "error",
 
@@ -59,6 +56,8 @@
 		"react/jsx-indent": [2, "tab"],
 		"react/jsx-indent-props": [2, "tab"],
 		"react/jsx-filename-extension": [1, { "extensions": [".js"] }],
-		"react/jsx-no-target-blank": 2
+		"react/jsx-no-target-blank": 2,
+
+		"prettier/prettier": "error"
 	}
 }
