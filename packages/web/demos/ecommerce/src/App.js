@@ -10,14 +10,23 @@ import Results from "./components/Results";
 import Container, { appContainer, resultsContainer } from "./styles/Container";
 import FilterContainer from "./styles/FilterContainer";
 import Flex, { FlexChild } from "./styles/Flex";
+import { ToggleButton } from "./styles/Button";
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			visible: true
+			visible: false
 		};
 	}
+
+	toggleFilters = () => {
+		const { visible } = this.state;
+		this.setState({
+			visible: !visible
+		});
+	}
+
 	render() {
 		return (
 			<Container>
@@ -27,14 +36,21 @@ class App extends Component {
 					theme={theme}
 				>
 					<Header />
-					<Flex className={appContainer}>
+					<Flex className={appContainer} direction="row-reverse">
 						<FilterContainer visible={this.state.visible}>
 							<SearchFilters />
 						</FilterContainer>
-						<FlexChild flex={3} className={resultsContainer}>
+						<FlexChild className={resultsContainer}>
 							<Results />
 						</FlexChild>
 					</Flex>
+					<ToggleButton onClick={this.toggleFilters}>
+						{
+							this.state.visible ?
+								"🚗 SHOW CARS" :
+								"📂 SHOW FILTERS"
+						}
+					</ToggleButton>
 				</ReactiveBase>
 			</Container>
 		);

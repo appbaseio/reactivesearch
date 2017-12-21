@@ -11,14 +11,14 @@ import Flex, { FlexChild } from "../styles/Flex";
 
 const SearchFilters = () => (
 	<Flex direction="column">
-		<FlexChild margin="10px">
+		<FlexChild card margin="10px">
 			<SingleList
 				componentId="brand"
 				dataField="brand.raw"
 				title="Cars"
 			/>
 		</FlexChild>
-		<FlexChild margin="10px">
+		<FlexChild card margin="10px">
 			<SingleRange
 				componentId="rating"
 				dataField="rating"
@@ -30,7 +30,7 @@ const SearchFilters = () => (
 				]}
 			/>
 		</FlexChild>
-		<FlexChild margin="10px">
+		<FlexChild card margin="10px">
 			<MultiList
 				componentId="vehicle"
 				dataField="vehicleType.raw"
@@ -38,7 +38,7 @@ const SearchFilters = () => (
 				showSearch={false}
 			/>
 		</FlexChild>
-		<FlexChild margin="10px">
+		<FlexChild card margin="10px">
 			<RangeSlider
 				componentId="price"
 				dataField="price"

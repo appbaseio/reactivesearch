@@ -32,9 +32,9 @@ class ToggleButton extends Component {
 		this.setReact(this.props);
 
 		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue);
+			this.handleToggle(this.props.selectedValue, true);
 		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+			this.handleToggle(this.props.defaultSelected, true);
 		}
 	}
 
@@ -43,9 +43,9 @@ class ToggleButton extends Component {
 			this.setReact(nextProps)
 		);
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.setValue(nextProps.defaultSelected, nextProps);
+			this.handleToggle(nextProps.defaultSelected, true, nextProps);
 		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.setValue(nextProps.selectedValue || [], nextProps);
+			this.handleToggle(nextProps.selectedValue || [], true, nextProps);
 		}
 	}
 
@@ -62,7 +62,7 @@ class ToggleButton extends Component {
 					minimum_should_match: 1,
 					should: value.map(item => ({
 						term: {
-							[props.dataField]: item
+							[props.dataField]: item.value
 						}
 					}))
 				}
@@ -71,15 +71,24 @@ class ToggleButton extends Component {
 		return query;
 	};
 
-	handleToggle = (value) => {
+	handleToggle = (toggleValue, isDefaultValue = false, props = this.props) => {
 		const { currentValue } = this.state;
 		let finalValue = [];
-		if (this.props.multiSelect) {
-			finalValue = currentValue.includes(value) ?
-				currentValue.filter(item => item !== value) :
-				currentValue.concat(value);
+		if (isDefaultValue) {
+			if (!Array.isArray(toggleValue)) {
+				toggleValue = [toggleValue];
+			}
+			finalValue = toggleValue.reduce((fin, next) => {
+				const match = props.data.find(item => item.label === next)
+				return match ? fin.concat(match) : fin;
+			}, []);
+		} else if (this.props.multiSelect) {
+			finalValue = currentValue.some(item => item.label === toggleValue.label) ?
+				currentValue.filter(item => item.label !== toggleValue.label) :
+				currentValue.concat(toggleValue);
 		} else {
-			finalValue = currentValue.includes(value) ? [] : [value];
+			finalValue = currentValue.some(item => item.label === toggleValue.label) ?
+				[] : [toggleValue];
 		}
 		this.setValue(finalValue);
 	}
@@ -100,7 +109,7 @@ class ToggleButton extends Component {
 		};
 		checkValueChange(
 			props.componentId,
-			value,
+			props.multiSelect ? value : value[0],
 			props.beforeValueChange,
 			props.onValueChange,
 			performUpdate
@@ -116,7 +125,7 @@ class ToggleButton extends Component {
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
-			value,
+			value: props.multiSelect ? value : value[0].label,	// sets a string in URL not array
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
@@ -134,9 +143,9 @@ class ToggleButton extends Component {
 				{this.props.data.map(item => (
 					<Button
 						className={getClassName(this.props.innerClass, "button") || null}
-						onClick={() => this.handleToggle(item.value)}
+						onClick={() => this.handleToggle(item)}
 						key={item.label}
-						primary={this.state.currentValue.includes(item.value)}
+						primary={this.state.currentValue.includes(item)}
 						large
 					>
 						{item.label}

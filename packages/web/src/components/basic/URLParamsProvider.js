@@ -44,6 +44,7 @@ class URLParamsProvider extends Component {
 		if (!value || (typeof value === "string" && value.trim() === "") ||
 			(Array.isArray(value) && value.length === 0)) {
 			this.props.params.delete(component);
+			this.pushToHistory();
 		} else {
 			const data = JSON.stringify(this.getValue(value));
 			if (data !== this.props.params.get(component)) {

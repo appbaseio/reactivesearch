@@ -15,7 +15,7 @@ class Header extends Component {
 					justifyContent="space-between"
 				>
 					<FlexChild className={title}>Car Store</FlexChild>
-					<FlexChild flex={1} className={categorySearchContainer}>
+					<FlexChild className={categorySearchContainer}>
 						<CategorySearch
 							dataField="name"
 							categoryField="brand.raw"

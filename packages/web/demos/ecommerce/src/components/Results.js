@@ -2,7 +2,8 @@ import React from "react";
 import { ResultCard } from "@appbaseio/reactivesearch";
 import PropTypes from "prop-types";
 
-import Flex from "../styles/Flex";
+import Flex, { FlexChild } from "../styles/Flex";
+import Topic, { price } from "../styles/Topic";
 
 const onResultStats = (results, time) => (
 	<Flex justifyContent="flex-end" style={{ marginTop: "0.6rem" }}>
@@ -15,7 +16,18 @@ const onData = ({ _source: data }) => ({
 		"src/images/car.jpg" :
 		`src/images/${data.vehicleType.replace(/ /g, "-")}/${data.color}.jpg`,
 	title: data.name,
-	desc: data.model
+	desc: (<div>
+		<div className={price}>${data.price}</div>
+		<Flex justifyContent="space-between" responsive>
+			<FlexChild>{"⭐".repeat(data.rating)}</FlexChild>
+			<FlexChild>REGD. {data.yearOfRegistration}</FlexChild>
+		</Flex>
+		<Flex style={{ marginTop: 5 }} flexWrap>
+			{data.fuelType && <Topic>{data.fuelType}</Topic>}
+			{data.gearbox && <Topic>{data.gearbox}</Topic>}
+			{data.vehicleType && <Topic>{data.vehicleType}</Topic>}
+		</Flex>
+	</div>)
 });
 
 const Results = () => (
@@ -29,7 +41,8 @@ const Results = () => (
 		}}
 		innerClass={{
 			image: "card-image",
-			pagination: "pagination"
+			pagination: "pagination",
+			"list-item": "card-item"
 		}}
 		pagination
 		size={15}

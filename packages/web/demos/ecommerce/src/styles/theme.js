@@ -3,8 +3,9 @@ const theme = {
 	primaryColor: "rebeccapurple",
 	secondaryColor: "mediumpurple",
 	titleColor: "rebeccapurple",
+	accentColor: "palevioletred",
 	lightGray: "#eff3f6",
-	componentMaxHeight: "150px"
+	componentMaxHeight: "140px"
 };
 
 export default theme;
