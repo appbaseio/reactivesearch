@@ -32,6 +32,8 @@ class RangeSlider extends Component {
 			currentValue: [props.range.start, props.range.end],
 			stats: []
 		};
+
+		this.locked = false;
 		this.internalComponent = this.props.componentId + "__internal";
 	}
 
@@ -73,13 +75,16 @@ class RangeSlider extends Component {
 				stats: options
 			});
 		});
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.handleChange(
-				[nextProps.defaultSelected.start, nextProps.defaultSelected.end],
-				nextProps
-			);
-		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.handleChange(nextProps.selectedValue || [nextProps.range.start, nextProps.range.end]);
+
+		if (!this.locked) {
+			if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
+				this.handleChange(
+					[nextProps.defaultSelected.start, nextProps.defaultSelected.end],
+					nextProps
+				);
+			} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
+				this.handleChange(nextProps.selectedValue || [nextProps.range.start, nextProps.range.end]);
+			}
 		}
 	}
 
@@ -167,11 +172,13 @@ class RangeSlider extends Component {
 	};
 
 	handleChange = (currentValue, props = this.props) => {
+		this.locked = true;
 		const performUpdate = () => {
 			this.setState({
 				currentValue
 			}, () => {
 				this.updateQuery([currentValue[0], currentValue[1]], props);
+				this.locked = false;
 			});
 		};
 		checkValueChange(
@@ -187,7 +194,9 @@ class RangeSlider extends Component {
 	};
 
 	handleSlider = ({ values }) => {
-		this.handleChange(values);
+		if (!isEqual(values, this.state.currentValue)) {
+			this.handleChange(values);
+		}
 	};
 
 	updateQuery = (value, props) => {
