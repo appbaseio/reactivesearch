@@ -19,6 +19,8 @@ import DayPickerInput from "react-day-picker/DayPickerInput";
 
 import DateContainer from "../../styles/DateContainer";
 import Title from "../../styles/Title";
+import Flex from "../../styles/Flex";
+import CancelSvg from "../shared/CancelSvg";
 
 class DatePicker extends Component {
 	constructor(props) {
@@ -97,6 +99,12 @@ class DatePicker extends Component {
 		return query;
 	};
 
+	clearDayPicker = () => {
+		if (this.state.currentDate !== "") {
+			this.handleDateChange("");	// resets the day picker component
+		}
+	}
+
 	handleDayPicker = (date) => {
 		this.handleDateChange(date || "");
 	}
@@ -151,7 +159,7 @@ class DatePicker extends Component {
 
 	render() {
 		return (
-			<DateContainer style={this.props.style} className={this.props.className}>
+			<DateContainer showBorder={!this.props.showClear} style={this.props.style} className={this.props.className}>
 				{this.props.title && (
 					<Title
 						className={getClassName(this.props.innerClass, "title") || null}
@@ -159,34 +167,41 @@ class DatePicker extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				<DayPickerInput
-					showOverlay={this.props.focused}
-					formatDate={this.formatInputDate}
-					value={this.state.currentDate}
-					placeholder={this.props.placeholder}
-					dayPickerProps={{
-						numberOfMonths: this.props.numberOfMonths,
-						initialMonth: this.props.initialMonth
-					}}
-					onDayChange={this.handleDayPicker}
-					inputProps={{
-						readOnly: true
-					}}
-					classNames={{
-						container:
-							getClassName(this.props.innerClass, "daypicker-container") ||
-							"DayPickerInput",
-						overlayWrapper:
-							getClassName(
-								this.props.innerClass,
-								"daypicker-overlay-wrapper"
-							) || "DayPickerInput-OverlayWrapper",
-						overlay:
-							getClassName(this.props.innerClass, "daypicker-overlay") ||
-							"DayPickerInput-Overlay"
-					}}
-					{...this.props.dayPickerInputProps}
-				/>
+				<Flex showBorder={this.props.showClear} iconPosition="right">
+					<DayPickerInput
+						showOverlay={this.props.focused}
+						formatDate={this.formatInputDate}
+						value={this.state.currentDate}
+						placeholder={this.props.placeholder}
+						dayPickerProps={{
+							numberOfMonths: this.props.numberOfMonths,
+							initialMonth: this.props.initialMonth
+						}}
+						clickUnselectsDay={this.props.clickUnselectsDay}
+						onDayChange={this.handleDayPicker}
+						inputProps={{
+							readOnly: true
+						}}
+						classNames={{
+							container:
+								getClassName(this.props.innerClass, "daypicker-container") ||
+								"DayPickerInput",
+							overlayWrapper:
+								getClassName(
+									this.props.innerClass,
+									"daypicker-overlay-wrapper"
+								) || "DayPickerInput-OverlayWrapper",
+							overlay:
+								getClassName(this.props.innerClass, "daypicker-overlay") ||
+								"DayPickerInput-Overlay"
+						}}
+						{...this.props.dayPickerInputProps}
+					/>
+					{
+						this.props.showClear &&
+						<CancelSvg onClick={this.clearDayPicker} />
+					}
+				</Flex>
 			</DateContainer>
 		);
 	}
@@ -210,13 +225,17 @@ DatePicker.propTypes = {
 	initialMonth: types.dateObject,
 	dayPickerInputProps: types.props,
 	showFilter: types.bool,
-	filterLabel: types.string
+	filterLabel: types.string,
+	showClear: types.bool,
+	clickUnselectsDay: types.bool
 };
 
 DatePicker.defaultProps = {
 	placeholder: "Select Date",
 	numberOfMonths: 1,
-	showFilter: true
+	showFilter: true,
+	showClear: true,
+	clickUnselectsDay: true
 };
 
 const mapStateToProps = (state, props) => ({

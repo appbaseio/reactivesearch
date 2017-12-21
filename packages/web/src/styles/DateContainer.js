@@ -1,4 +1,4 @@
-import styled from "react-emotion";
+import styled, { css } from "react-emotion";
 import { withTheme } from "emotion-theming";
 import lighten from "polished/lib/color/lighten";
 
@@ -206,6 +206,9 @@ const DateContainer = styled.div`
 
 	.DayPickerInput input {
 		${input};
+		${({ showBorder }) => !showBorder && css`
+			border: none;
+		`};
 	}
 
 	.DayPickerInput-OverlayWrapper {
