@@ -198,7 +198,7 @@ class DatePicker extends Component {
 						{...this.props.dayPickerInputProps}
 					/>
 					{
-						this.props.showClear &&
+						this.props.showClear && this.state.currentDate &&
 						<CancelSvg onClick={this.clearDayPicker} />
 					}
 				</Flex>
