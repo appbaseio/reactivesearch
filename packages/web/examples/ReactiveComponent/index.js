@@ -37,9 +37,8 @@ class CustomComponent extends Component {
 }
 
 class Main extends Component {
-	onData = (res) => {
-		const data = res._source;
-		return (<div key={res._id}>
+	onData = (data) => {
+		return (<div key={data._id}>
 			<h2>{data.name}</h2>
 			<p>{data.price} - {data.rating} stars rated</p>
 		</div>);

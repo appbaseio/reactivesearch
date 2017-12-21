@@ -262,7 +262,7 @@ class ResultList extends Component {
 	};
 
 	renderAsListItem = (item) => {
-		const result = this.props.onData(item);
+		const result = this.props.onData({ _id: item.id, ...item._source });
 		return (<ListItem key={item._id} href={result.url} image={!!result.image} small={result.image_size === "small"}>
 			{
 				result.image

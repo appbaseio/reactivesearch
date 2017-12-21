@@ -262,7 +262,7 @@ class ResultCard extends Component {
 	};
 
 	renderAsCard = (item) => {
-		const result = this.props.onData(item);
+		const result = this.props.onData({ _id: item.id, ...item._source });
 		return (<Card key={item._id} href={result.url} className={getClassName(this.props.innerClass, "list-item")}>
 			<Image
 				style={{ backgroundImage: `url(${result.image})` }}

@@ -9,9 +9,8 @@ import {
 } from "../../src";
 
 class Main extends Component {
-	onData = (res) => {
-		const data = res._source;
-		return (<div key={res._id}>
+	onData = (data) => {
+		return (<div key={data._id}>
 			<h2>{data.owner}/{data.name}</h2>
 			<h4>{data.stars} 🌟</h4>
 		</div>);
