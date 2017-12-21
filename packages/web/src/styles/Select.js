@@ -26,7 +26,8 @@ const Select = styled("button")`
 		text-align: left;
 	}
 
-	&:hover, &:focus {
+	&:hover,
+	&:focus {
 		background-color: #fcfcfc;
 	}
 `;

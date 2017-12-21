@@ -1,20 +1,19 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-import {
-	ReactiveBase,
-	DateRange,
-	ReactiveList,
-	SelectedFilters
-} from "../../src";
+import { ReactiveBase, DateRange, ReactiveList, SelectedFilters } from "../../src";
 
 class Main extends Component {
-	onData = (data) => {
-		return (<div key={data._id}>
-			<h2>{data.owner}/{data.name}</h2>
-			<h4>{data.stars} 🌟</h4>
-		</div>);
-	}
+	onData = data => {
+		return (
+			<div key={data._id}>
+				<h2>
+					{data.owner}/{data.name}
+				</h2>
+				<h4>{data.stars} 🌟</h4>
+			</div>
+		);
+	};
 
 	render() {
 		return (

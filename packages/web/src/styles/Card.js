@@ -40,9 +40,9 @@ const Card = styled("a")`
 	justify-content: space-between;
 	margin: 8px;
 	padding: 10px;
-	box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
+	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 	color: ${props => props.theme.textColor};
-	${props => props.href ? "cursor: pointer" : null};
+	${props => (props.href ? "cursor: pointer" : null)};
 	transition: all 0.3s ease;
 
 	h2 {
@@ -57,7 +57,7 @@ const Card = styled("a")`
 	}
 
 	p {
-		margin: 0
+		margin: 0;
 	}
 
 	article {
@@ -65,8 +65,9 @@ const Card = styled("a")`
 		font-size: 0.9rem;
 	}
 
-	&:hover, &:focus {
-		box-shadow: 0 0 0 0 rgba(0,0,0,0.10);
+	&:hover,
+	&:focus {
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1);
 	}
 
 	@media (max-width: 420px) {
@@ -78,11 +79,12 @@ const Card = styled("a")`
 		box-shadow: none;
 		border: 1px solid #eee;
 
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			box-shadow: 0;
 		}
 	}
 `;
 
 export default Card;
-export { container, Title, Image }
+export { container, Title, Image };

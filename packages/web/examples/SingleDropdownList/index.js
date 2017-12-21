@@ -1,21 +1,20 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-import {
-	ReactiveBase,
-	SingleDropdownList,
-	ReactiveList,
-	SelectedFilters
-} from "../../src";
+import { ReactiveBase, SingleDropdownList, ReactiveList, SelectedFilters } from "../../src";
 
 class Main extends Component {
-	onData = (data) => {
-		return (<div key={data._id}>
-			<h2>{data.member.member_name}</h2>
-			<p>is going to {data.event.event_name} at {data.venue_name_ngrams}</p>
-			<p>{data.group_city_ngram}</p>
-		</div>);
-	}
+	onData = data => {
+		return (
+			<div key={data._id}>
+				<h2>{data.member.member_name}</h2>
+				<p>
+					is going to {data.event.event_name} at {data.venue_name_ngrams}
+				</p>
+				<p>{data.group_city_ngram}</p>
+			</div>
+		);
+	};
 
 	render() {
 		return (

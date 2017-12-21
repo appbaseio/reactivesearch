@@ -111,7 +111,7 @@ const formItem = props => css`
 
 const Radio = styled("input")`
 	${formItem};
-	${props => props.show ? null : hideInputControl};
+	${props => (props.show ? null : hideInputControl)};
 
 	+ label {
 		&::before,
@@ -153,7 +153,7 @@ Radio.defaultProps = {
 
 const Checkbox = styled("input")`
 	${formItem};
-	${props => props.show ? null : hideInputControl};
+	${props => (props.show ? null : hideInputControl)};
 
 	+ label {
 		&::before,
@@ -179,7 +179,7 @@ const Checkbox = styled("input")`
 	}
 
 	&:checked {
-	    + label {
+		+ label {
 			&::before {
 				border-color: ${props => props.theme.primaryColor};
 			}

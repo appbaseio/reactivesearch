@@ -1,21 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-	MultiDropdownList,
-	SingleDropdownRange,
-	RangeSlider
-} from "@appbaseio/reactivesearch";
+import { MultiDropdownList, SingleDropdownRange, RangeSlider } from "@appbaseio/reactivesearch";
 
 import Flex, { FlexChild } from "../styles/Flex";
 
 const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 	<Flex direction="column" hidden={!visible}>
 		<FlexChild margin="10px">
-			<MultiDropdownList
-				componentId="language"
-				dataField="language"
-				title="Language"
-			/>
+			<MultiDropdownList componentId="language" dataField="language" title="Language" />
 		</FlexChild>
 		<FlexChild margin="10px">
 			<MultiDropdownList

@@ -43,11 +43,7 @@ class SingleDataList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps)
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected);
@@ -89,12 +85,15 @@ class SingleDataList extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue: value
-			}, () => {
-				this.updateQuery(value, props);
-			});
-		}
+			this.setState(
+				{
+					currentValue: value
+				},
+				() => {
+					this.updateQuery(value, props);
+				}
+			);
+		};
 
 		checkValueChange(
 			props.componentId,
@@ -129,7 +128,7 @@ class SingleDataList extends Component {
 		});
 	};
 
-	handleInputChange = (e) => {
+	handleInputChange = e => {
 		const { value } = e.target;
 		this.setState({
 			searchTerm: value
@@ -138,20 +137,22 @@ class SingleDataList extends Component {
 
 	renderSearch = () => {
 		if (this.props.showSearch) {
-			return <Input
-				className={getClassName(this.props.innerClass, "input") || null}
-				onChange={this.handleInputChange}
-				value={this.state.searchTerm}
-				placeholder={this.props.placeholder}
-				style={{
-					margin: "0 0 8px"
-				}}
-			/>
+			return (
+				<Input
+					className={getClassName(this.props.innerClass, "input") || null}
+					onChange={this.handleInputChange}
+					value={this.state.searchTerm}
+					placeholder={this.props.placeholder}
+					style={{
+						margin: "0 0 8px"
+					}}
+				/>
+			);
 		}
 		return null;
 	};
 
-	handleClick = (e) => {
+	handleClick = e => {
 		this.setValue(e.target.value);
 	};
 
@@ -164,52 +165,60 @@ class SingleDataList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, "title") || null}>
+						{this.props.title}
+					</Title>
+				)}
 				{this.renderSearch()}
 				<UL className={getClassName(this.props.innerClass, "list") || null}>
-					{
-						selectAllLabel
-							? (<li key={selectAllLabel}>
+					{selectAllLabel ? (
+						<li key={selectAllLabel}>
+							<Radio
+								className={getClassName(this.props.innerClass, "input")}
+								id={selectAllLabel}
+								name={this.props.componentId}
+								value={selectAllLabel}
+								onClick={this.handleClick}
+								checked={this.state.currentValue === selectAllLabel}
+								show={this.props.showRadio}
+							/>
+							<label
+								className={getClassName(this.props.innerClass, "label") || null}
+								htmlFor={selectAllLabel}
+							>
+								{selectAllLabel}
+							</label>
+						</li>
+					) : null}
+					{this.props.data
+						.filter(item => {
+							if (this.props.showSearch && this.state.searchTerm) {
+								return item.label
+									.toLowerCase()
+									.includes(this.state.searchTerm.toLowerCase());
+							}
+							return true;
+						})
+						.map(item => (
+							<li key={item.label}>
 								<Radio
 									className={getClassName(this.props.innerClass, "input")}
-									id={selectAllLabel}
+									id={item.label}
 									name={this.props.componentId}
-									value={selectAllLabel}
+									value={item.label}
 									onClick={this.handleClick}
-									checked={this.state.currentValue === selectAllLabel}
+									checked={this.state.currentValue === item.label}
 									show={this.props.showRadio}
 								/>
-								<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={selectAllLabel}>
-									{selectAllLabel}
+								<label
+									className={getClassName(this.props.innerClass, "label") || null}
+									htmlFor={item.label}
+								>
+									{item.label}
 								</label>
-							</li>)
-							: null
-					}
-					{
-						this.props.data
-							.filter((item) => {
-								if (this.props.showSearch && this.state.searchTerm) {
-									return item.label.toLowerCase().includes(this.state.searchTerm.toLowerCase());
-								}
-								return true;
-							})
-							.map(item => (
-								<li key={item.label}>
-									<Radio
-										className={getClassName(this.props.innerClass, "input")}
-										id={item.label}
-										name={this.props.componentId}
-										value={item.label}
-										onClick={this.handleClick}
-										checked={this.state.currentValue === item.label}
-										show={this.props.showRadio}
-									/>
-									<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={item.label}>
-										{item.label}
-									</label>
-								</li>
-							))
-					}
+							</li>
+						))}
 				</UL>
 			</div>
 		);
@@ -241,7 +250,7 @@ SingleDataList.propTypes = {
 	style: types.style,
 	className: types.string,
 	innerClass: types.style
-}
+};
 
 SingleDataList.defaultProps = {
 	size: 100,
@@ -252,10 +261,13 @@ SingleDataList.defaultProps = {
 	showSearch: true,
 	style: {},
 	className: null
-}
+};
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue:
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null
 });
 
 const mapDispatchtoProps = dispatch => ({

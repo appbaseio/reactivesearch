@@ -13,6 +13,6 @@ RangeLabel.propTypes = {
 	align: types.rangeLabelsAlign,
 	children: types.children,
 	className: types.string
-}
+};
 
 export default RangeLabel;

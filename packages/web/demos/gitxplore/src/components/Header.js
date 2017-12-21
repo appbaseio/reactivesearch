@@ -10,7 +10,7 @@ class Header extends Component {
 		super(props);
 		this.state = {
 			visible: false
-		}
+		};
 	}
 
 	toggleVisibility = () => {
@@ -18,7 +18,7 @@ class Header extends Component {
 		this.setState({
 			visible
 		});
-	}
+	};
 
 	render() {
 		return (

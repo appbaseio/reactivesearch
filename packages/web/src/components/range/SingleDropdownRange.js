@@ -41,11 +41,7 @@ class SingleDropdownRange extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps)
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.setValue(nextProps.defaultSelected, true);
@@ -77,7 +73,7 @@ class SingleDropdownRange extends Component {
 			};
 		}
 		return null;
-	}
+	};
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
 		let currentValue = value;
@@ -86,12 +82,15 @@ class SingleDropdownRange extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue
-			}, () => {
-				this.updateQuery(currentValue, props);
-			});
-		}
+			this.setState(
+				{
+					currentValue
+				},
+				() => {
+					this.updateQuery(currentValue, props);
+				}
+			);
+		};
 
 		checkValueChange(
 			props.componentId,
@@ -100,7 +99,7 @@ class SingleDropdownRange extends Component {
 			props.onValueChange,
 			performUpdate
 		);
-	}
+	};
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
@@ -119,12 +118,16 @@ class SingleDropdownRange extends Component {
 			onQueryChange,
 			URLParams: props.URLParams
 		});
-	}
+	};
 
 	render() {
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, "title") || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<Dropdown
 					innerClass={this.props.innerClass}
 					items={this.props.data}
@@ -161,7 +164,7 @@ SingleDropdownRange.propTypes = {
 	style: types.style,
 	className: types.string,
 	innerClass: types.style
-}
+};
 
 SingleDropdownRange.defaultProps = {
 	placeholder: "Select a value",
@@ -169,10 +172,13 @@ SingleDropdownRange.defaultProps = {
 	showFilter: true,
 	style: {},
 	className: null
-}
+};
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue:
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null
 });
 
 const mapDispatchtoProps = dispatch => ({

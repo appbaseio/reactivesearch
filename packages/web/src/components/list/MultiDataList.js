@@ -44,11 +44,7 @@ class MultiDataList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps)
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
 		let selectedValue = Object.keys(this.state.currentValue);
 
@@ -80,7 +76,11 @@ class MultiDataList extends Component {
 	defaultQuery = (value, props) => {
 		let query = null;
 		const type = props.queryFormat === "or" ? "terms" : "term";
-		if (this.props.selectAllLabel && Array.isArray(value) && value.includes(this.props.selectAllLabel)) {
+		if (
+			this.props.selectAllLabel &&
+			Array.isArray(value) &&
+			value.includes(this.props.selectAllLabel)
+		) {
 			query = {
 				exists: {
 					field: props.dataField
@@ -96,13 +96,11 @@ class MultiDataList extends Component {
 				};
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
-				const queryArray = value.map(item => (
-					{
-						[type]: {
-							[props.dataField]: item
-						}
+				const queryArray = value.map(item => ({
+					[type]: {
+						[props.dataField]: item
 					}
-				));
+				}));
 				listQuery = {
 					bool: {
 						must: queryArray
@@ -120,14 +118,16 @@ class MultiDataList extends Component {
 		let { currentValue } = this.state;
 		let finalValues = null;
 
-		if (selectAllLabel &&
+		if (
+			selectAllLabel &&
 			((Array.isArray(value) && value.includes(selectAllLabel)) ||
-			(typeof value === "string" && value === selectAllLabel))) {
+				(typeof value === "string" && value === selectAllLabel))
+		) {
 			if (!!currentValue[selectAllLabel]) {
 				currentValue = {};
 				finalValues = [];
 			} else {
-				props.data.forEach((item) => {
+				props.data.forEach(item => {
 					currentValue[item.label] = true;
 				});
 				currentValue[selectAllLabel] = true;
@@ -136,9 +136,10 @@ class MultiDataList extends Component {
 		} else if (isDefaultValue) {
 			finalValues = value;
 			currentValue = {};
-			value && value.forEach((item) => {
-				currentValue[item] = true;
-			});
+			value &&
+				value.forEach(item => {
+					currentValue[item] = true;
+				});
 
 			if (selectAllLabel && selectAllLabel in currentValue) {
 				const { [selectAllLabel]: del, ...obj } = currentValue;
@@ -160,12 +161,15 @@ class MultiDataList extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue
-			}, () => {
-				this.updateQuery(finalValues, props);
-			});
-		}
+			this.setState(
+				{
+					currentValue
+				},
+				() => {
+					this.updateQuery(finalValues, props);
+				}
+			);
+		};
 
 		checkValueChange(
 			props.componentId,
@@ -193,7 +197,7 @@ class MultiDataList extends Component {
 		});
 	};
 
-	handleInputChange = (e) => {
+	handleInputChange = e => {
 		const { value } = e.target;
 		this.setState({
 			searchTerm: value
@@ -202,20 +206,22 @@ class MultiDataList extends Component {
 
 	renderSearch = () => {
 		if (this.props.showSearch) {
-			return <Input
-				className={getClassName(this.props.innerClass, "input") || null}
-				onChange={this.handleInputChange}
-				value={this.state.searchTerm}
-				placeholder={this.props.placeholder}
-				style={{
-					margin: "0 0 8px"
-				}}
-			/>
+			return (
+				<Input
+					className={getClassName(this.props.innerClass, "input") || null}
+					onChange={this.handleInputChange}
+					value={this.state.searchTerm}
+					placeholder={this.props.placeholder}
+					style={{
+						margin: "0 0 8px"
+					}}
+				/>
+			);
 		}
 		return null;
 	};
 
-	handleClick = (e) => {
+	handleClick = e => {
 		this.setValue(e.target.value);
 	};
 
@@ -228,52 +234,60 @@ class MultiDataList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, "title") || null}>
+						{this.props.title}
+					</Title>
+				)}
 				{this.renderSearch()}
 				<UL className={getClassName(this.props.innerClass, "list") || null}>
-					{
-						selectAllLabel
-							? (<li key={selectAllLabel}>
+					{selectAllLabel ? (
+						<li key={selectAllLabel}>
+							<Checkbox
+								className={getClassName(this.props.innerClass, "input") || null}
+								id={selectAllLabel}
+								name={selectAllLabel}
+								value={selectAllLabel}
+								onClick={this.handleClick}
+								checked={!!this.state.currentValue[selectAllLabel]}
+								show={this.props.showCheckbox}
+							/>
+							<label
+								className={getClassName(this.props.innerClass, "label") || null}
+								htmlFor={selectAllLabel}
+							>
+								{selectAllLabel}
+							</label>
+						</li>
+					) : null}
+					{this.props.data
+						.filter(item => {
+							if (this.props.showSearch && this.state.searchTerm) {
+								return item.label
+									.toLowerCase()
+									.includes(this.state.searchTerm.toLowerCase());
+							}
+							return true;
+						})
+						.map(item => (
+							<li key={item.label}>
 								<Checkbox
 									className={getClassName(this.props.innerClass, "input") || null}
-									id={selectAllLabel}
-									name={selectAllLabel}
-									value={selectAllLabel}
+									id={item.label}
+									name={this.props.componentId}
+									value={item.label}
 									onClick={this.handleClick}
-									checked={!!this.state.currentValue[selectAllLabel]}
+									checked={!!this.state.currentValue[item.label]}
 									show={this.props.showCheckbox}
 								/>
-								<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={selectAllLabel}>
-									{selectAllLabel}
+								<label
+									className={getClassName(this.props.innerClass, "label") || null}
+									htmlFor={item.label}
+								>
+									{item.label}
 								</label>
-							</li>)
-							: null
-					}
-					{
-						this.props.data
-							.filter((item) => {
-								if (this.props.showSearch && this.state.searchTerm) {
-									return item.label.toLowerCase().includes(this.state.searchTerm.toLowerCase());
-								}
-								return true;
-							})
-							.map(item => (
-								<li key={item.label}>
-									<Checkbox
-										className={getClassName(this.props.innerClass, "input") || null}
-										id={item.label}
-										name={this.props.componentId}
-										value={item.label}
-										onClick={this.handleClick}
-										checked={!!this.state.currentValue[item.label]}
-										show={this.props.showCheckbox}
-									/>
-									<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={item.label}>
-										{item.label}
-									</label>
-								</li>
-							))
-					}
+							</li>
+						))}
 				</UL>
 			</div>
 		);
@@ -305,7 +319,7 @@ MultiDataList.propTypes = {
 	style: types.style,
 	className: types.string,
 	innerClass: types.style
-}
+};
 
 MultiDataList.defaultProps = {
 	size: 100,
@@ -316,10 +330,13 @@ MultiDataList.defaultProps = {
 	showSearch: true,
 	style: {},
 	className: null
-}
+};
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue:
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null
 });
 
 const mapDispatchtoProps = dispatch => ({

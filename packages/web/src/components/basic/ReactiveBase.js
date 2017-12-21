@@ -17,9 +17,10 @@ class ReactiveBase extends Component {
 
 		this.type = props.type ? props.type : "*";
 
-		const credentials = props.url && props.url.trim() !== "" && !props.credentials
-			? "user:pass"
-			: props.credentials;
+		const credentials =
+			props.url && props.url.trim() !== "" && !props.credentials
+				? "user:pass"
+				: props.credentials;
 
 		const config = {
 			url: props.url && props.url.trim() !== "" ? props.url : "https://scalr.api.appbase.io",
@@ -32,12 +33,15 @@ class ReactiveBase extends Component {
 		let selectedValues = {};
 
 		try {
-			for(let key of this.params.keys()) {
-				selectedValues = { ...selectedValues, [key]: { value: JSON.parse(this.params.get(key)) } };
+			for (let key of this.params.keys()) {
+				selectedValues = {
+					...selectedValues,
+					[key]: { value: JSON.parse(this.params.get(key)) }
+				};
 			}
-		} catch(e) {
+		} catch (e) {
 			selectedValues = {};
-		};
+		}
 
 		const appbaseRef = new Appbase(config);
 		this.store = configureStore({ config, appbaseRef, selectedValues });

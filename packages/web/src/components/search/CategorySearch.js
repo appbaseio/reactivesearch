@@ -80,14 +80,9 @@ class CategorySearch extends Component {
 			}
 		);
 
-		checkPropChange(this.props.react, nextProps.react, () =>
-			this.setReact(nextProps)
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
-		if (
-			Array.isArray(nextProps.suggestions) &&
-			this.state.currentValue.trim().length
-		) {
+		if (Array.isArray(nextProps.suggestions) && this.state.currentValue.trim().length) {
 			checkPropChange(this.props.suggestions, nextProps.suggestions, () => {
 				this.setState({
 					suggestions: this.onSuggestions(nextProps.suggestions)
@@ -100,11 +95,7 @@ class CategorySearch extends Component {
 			nextProps,
 			["fieldWeights", "fuzziness", "queryFormat"],
 			() => {
-				this.updateQuery(
-					nextProps.componentId,
-					this.state.currentValue,
-					nextProps
-				);
+				this.updateQuery(nextProps.componentId, this.state.currentValue, nextProps);
 			}
 		);
 
@@ -134,7 +125,7 @@ class CategorySearch extends Component {
 		}
 	});
 
-	setReact = (props) => {
+	setReact = props => {
 		const { react } = props;
 		if (react) {
 			const newReact = pushToAndClause(react, this.internalComponent);
@@ -144,19 +135,17 @@ class CategorySearch extends Component {
 		}
 	};
 
-	highlightQuery = (props) => {
+	highlightQuery = props => {
 		if (!props.highlight) {
 			return null;
 		}
 		const fields = {};
-		const highlightField = props.highlightField
-			? props.highlightField
-			: props.dataField;
+		const highlightField = props.highlightField ? props.highlightField : props.dataField;
 
 		if (typeof highlightField === "string") {
 			fields[highlightField] = {};
 		} else if (Array.isArray(highlightField)) {
-			highlightField.forEach((item) => {
+			highlightField.forEach(item => {
 				fields[item] = {};
 			});
 		}
@@ -261,7 +250,7 @@ class CategorySearch extends Component {
 		];
 	};
 
-	onSuggestions = (suggestions) => {
+	onSuggestions = suggestions => {
 		if (this.props.onSuggestions) {
 			return this.props.onSuggestions(suggestions);
 		}
@@ -270,11 +259,7 @@ class CategorySearch extends Component {
 			? this.props.dataField
 			: [this.props.dataField];
 
-		return getSuggestions(
-			fields,
-			suggestions,
-			this.state.currentValue.toLowerCase()
-		);
+		return getSuggestions(fields, suggestions, this.state.currentValue.toLowerCase());
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, category) => {
@@ -304,7 +289,7 @@ class CategorySearch extends Component {
 		);
 	};
 
-	handleTextChange = debounce((value) => {
+	handleTextChange = debounce(value => {
 		if (this.props.autoSuggest) {
 			this.updateQuery(this.internalComponent, value, this.props);
 		} else {
@@ -329,7 +314,7 @@ class CategorySearch extends Component {
 		});
 	};
 
-	handleFocus = (event) => {
+	handleFocus = event => {
 		this.setState({
 			isOpen: true
 		});
@@ -343,7 +328,7 @@ class CategorySearch extends Component {
 		this.setValue(this.state.currentValue, true);
 	};
 
-	handleKeyDown = (event) => {
+	handleKeyDown = event => {
 		if (event.key === "Enter") {
 			event.target.blur();
 			this.setValue(event.target.value, true);
@@ -353,7 +338,7 @@ class CategorySearch extends Component {
 		}
 	};
 
-	onInputChange = (e) => {
+	onInputChange = e => {
 		this.setState({
 			suggestions: []
 		});
@@ -367,7 +352,7 @@ class CategorySearch extends Component {
 		}
 	};
 
-	handleStateChange = (changes) => {
+	handleStateChange = changes => {
 		const { isOpen, type } = changes;
 		if (type === Downshift.stateChangeTypes.mouseUp) {
 			this.setState({
@@ -403,9 +388,7 @@ class CategorySearch extends Component {
 					category: "*"
 				},
 				{
-					label: `${this.state.currentValue} in ${
-						this.props.categories[0].key
-					}`,
+					label: `${this.state.currentValue} in ${this.props.categories[0].key}`,
 					value: this.state.currentValue,
 					category: this.props.categories[0].key
 				}
@@ -415,9 +398,7 @@ class CategorySearch extends Component {
 				categorySuggestions = [
 					...categorySuggestions,
 					{
-						label: `${this.state.currentValue} in ${
-							this.props.categories[1].key
-						}`,
+						label: `${this.state.currentValue} in ${this.props.categories[1].key}`,
 						value: this.state.currentValue,
 						category: this.props.categories[1].key
 					}
@@ -429,9 +410,7 @@ class CategorySearch extends Component {
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.title && (
-					<Title
-						className={getClassName(this.props.innerClass, "title") || null}
-					>
+					<Title className={getClassName(this.props.innerClass, "title") || null}>
 						{this.props.title}
 					</Title>
 				)}
@@ -442,12 +421,7 @@ class CategorySearch extends Component {
 						onStateChange={this.handleStateChange}
 						isOpen={this.state.isOpen}
 						itemToString={i => i}
-						render={({
-							getInputProps,
-							getItemProps,
-							isOpen,
-							highlightedIndex
-						}) => (
+						render={({ getInputProps, getItemProps, isOpen, highlightedIndex }) => (
 							<div className={suggestionsContainer}>
 								<Flex
 									showBorder={this.props.showIcon}
@@ -486,10 +460,14 @@ class CategorySearch extends Component {
 													key={item.label}
 													style={{
 														backgroundColor:
-															highlightedIndex === index ? "#eee" : "#fff"
+															highlightedIndex === index
+																? "#eee"
+																: "#fff"
 													}}
 												>
-													<Label primary={!!item.category}>{item.label}</Label>
+													<Label primary={!!item.category}>
+														{item.label}
+													</Label>
 												</li>
 											))}
 										</ul>
@@ -499,10 +477,7 @@ class CategorySearch extends Component {
 						)}
 					/>
 				) : (
-					<Flex
-						showBorder={this.props.showIcon}
-						iconPosition={this.props.iconPosition}
-					>
+					<Flex showBorder={this.props.showIcon} iconPosition={this.props.iconPosition}>
 						<Input
 							className={getClassName(this.props.innerClass, "input") || null}
 							placeholder={this.props.placeholder}
@@ -581,8 +556,7 @@ CategorySearch.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	suggestions:
-		(state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	categories:
 		(state.aggregations[props.componentId] &&
 			state.aggregations[props.componentId][props.categoryField].buckets) ||
@@ -596,8 +570,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) =>
-		dispatch(watchComponent(component, react)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute))

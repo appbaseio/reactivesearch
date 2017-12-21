@@ -31,7 +31,8 @@ const filters = css`
 			margin-left: 8px;
 		}
 
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			span:first-child {
 				text-decoration: line-through;
 			}
@@ -68,7 +69,8 @@ const primary = props => css`
 	background-color: ${props.theme.primaryColor};
 	color: ${props.theme.primaryTextColor};
 
-	&:hover, &:focus {
+	&:hover,
+	&:focus {
 		background-color: ${darken(0.1, props.theme.primaryColor)};
 	}
 `;
@@ -103,12 +105,13 @@ const Button = styled("a")`
 	user-select: none;
 	transition: all 0.3s ease;
 
-	&:hover, &:focus {
+	&:hover,
+	&:focus {
 		background-color: #ccc;
 	}
 
-	${props => props.primary ? primary : null};
-	${props => props.disabled ? disabled : null};
+	${props => (props.primary ? primary : null)};
+	${props => (props.disabled ? disabled : null)};
 	${props => props.large && large};
 `;
 

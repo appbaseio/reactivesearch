@@ -27,29 +27,39 @@ const border = css`
 `;
 
 const Flex = styled("div")`
-	display: ${props => props.inline ? "inline-flex" : "flex"};
+	display: ${props => (props.inline ? "inline-flex" : "flex")};
 	${props => (props.labelPosition === "left" || props.iconPosition === "right") && leftLabel};
 	${props => (props.labelPosition === "right" || props.iconPosition === "left") && rightLabel};
-	${props => (props.labelPosition === "top") && topLabel};
-	${props => (props.labelPosition === "bottom") && bottomLabel};
+	${props => props.labelPosition === "top" && topLabel};
+	${props => props.labelPosition === "bottom" && bottomLabel};
 	${props => props.showBorder && border};
 
-	${props => props.justifyContent && css`
-		justify-content: ${props.justifyContent};
-	`};
-	${props => props.alignItems && css`
-		align-items: ${props.alignItems};
-	`};
+	${props =>
+		props.justifyContent &&
+		css`
+			justify-content: ${props.justifyContent};
+		`};
+	${props =>
+		props.alignItems &&
+		css`
+			align-items: ${props.alignItems};
+		`};
 
-	${props => props.flex && css`
-		flex: ${props.flex};
-	`};
-	${props => props.direction && css`
-		flex-direction: ${props.direction};
-	`};
-	${props => props.basis && css`
-		flex-basis: ${props.basis};
-	`};
+	${props =>
+		props.flex &&
+		css`
+			flex: ${props.flex};
+		`};
+	${props =>
+		props.direction &&
+		css`
+			flex-direction: ${props.direction};
+		`};
+	${props =>
+		props.basis &&
+		css`
+			flex-basis: ${props.basis};
+		`};
 
 	svg.search-icon {
 		fill: ${props => props.theme.primaryColor};

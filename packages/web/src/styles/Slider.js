@@ -15,13 +15,12 @@ const Slider = styled("div")`
 		background-color: #d8d8d8;
 		position: absolute;
 
-		${props => props.primary && primary}
+		${props => props.primary && primary};
 	}
 
 	.rheostat-handle {
 		border: 1px solid #9a9a9a;
-		${props => props.primary && primary}
-		background-color: #fff;
+		${props => props.primary && primary} background-color: #fff;
 		border-radius: 50%;
 		height: 24px;
 		outline: none;

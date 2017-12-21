@@ -1,20 +1,19 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-import {
-	ReactiveBase,
-	SingleDropdownRange,
-	ReactiveList,
-	SelectedFilters
-} from "../../src";
+import { ReactiveBase, SingleDropdownRange, ReactiveList, SelectedFilters } from "../../src";
 
 class Main extends Component {
-	onData = (data) => {
-		return (<div key={data._id}>
-			<h2>{data.name}</h2>
-			<p>{data.price} - {data.rating} stars rated</p>
-		</div>);
-	}
+	onData = data => {
+		return (
+			<div key={data._id}>
+				<h2>{data.name}</h2>
+				<p>
+					{data.price} - {data.rating} stars rated
+				</p>
+			</div>
+		);
+	};
 
 	render() {
 		return (
@@ -28,12 +27,12 @@ class Main extends Component {
 							componentId="PriceSensor"
 							dataField="price"
 							title="SingleDropdownRange"
-							data={
-								[{ "start": 0, "end": 100, "label": "Cheap" },
-									{ "start": 101, "end": 200, "label": "Moderate" },
-									{ "start": 201, "end": 500, "label": "Pricey" },
-									{ "start": 501, "end": 1000, "label": "First Date" }]
-							}
+							data={[
+								{ start: 0, end: 100, label: "Cheap" },
+								{ start: 101, end: 200, label: "Moderate" },
+								{ start: 201, end: 500, label: "Pricey" },
+								{ start: 501, end: 1000, label: "First Date" }
+							]}
 							URLParams
 						/>
 					</div>

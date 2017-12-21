@@ -20,7 +20,7 @@ const Chevron = styled("span")`
 		vertical-align: top;
 		width: 0.45em;
 
-		${props => props.open ? open : null}
+		${props => (props.open ? open : null)};
 	}
 `;
 

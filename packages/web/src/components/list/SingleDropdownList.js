@@ -50,25 +50,14 @@ class SingleDropdownList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps)
-		);
-		checkPropChange(
-			this.props.options,
-			nextProps.options,
-			() => {
-				this.setState({
-					options: nextProps.options[nextProps.dataField].buckets || []
-				});
-			}
-		);
-		checkSomePropChange(
-			this.props,
-			nextProps,
-			["size", "sortBy"],
-			() => this.updateQueryOptions(nextProps)
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkPropChange(this.props.options, nextProps.options, () => {
+			this.setState({
+				options: nextProps.options[nextProps.dataField].buckets || []
+			});
+		});
+		checkSomePropChange(this.props, nextProps, ["size", "sortBy"], () =>
+			this.updateQueryOptions(nextProps)
 		);
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected);
@@ -82,7 +71,7 @@ class SingleDropdownList extends Component {
 		this.props.removeComponent(this.internalComponent);
 	}
 
-	setReact = (props) => {
+	setReact = props => {
 		const { react } = props;
 		if (react) {
 			const newReact = pushToAndClause(react, this.internalComponent);
@@ -107,16 +96,19 @@ class SingleDropdownList extends Component {
 			};
 		}
 		return null;
-	}
+	};
 
 	setValue = (value, props = this.props) => {
 		const performUpdate = () => {
-			this.setState({
-				currentValue: value
-			}, () => {
-				this.updateQuery(value, props);
-			});
-		}
+			this.setState(
+				{
+					currentValue: value
+				},
+				() => {
+					this.updateQuery(value, props);
+				}
+			);
+		};
 
 		checkValueChange(
 			props.componentId,
@@ -142,9 +134,9 @@ class SingleDropdownList extends Component {
 			onQueryChange,
 			URLParams: props.URLParams
 		});
-	}
+	};
 
-	updateQueryOptions = (props) => {
+	updateQueryOptions = props => {
 		const queryOptions = getQueryOptions(props);
 		queryOptions.aggs = {
 			[props.dataField]: {
@@ -154,9 +146,9 @@ class SingleDropdownList extends Component {
 					order: getAggsOrder(props.sortBy)
 				}
 			}
-		}
+		};
 		props.setQueryOptions(this.internalComponent, queryOptions);
-	}
+	};
 
 	render() {
 		let selectAll = [];
@@ -166,17 +158,23 @@ class SingleDropdownList extends Component {
 		}
 
 		if (this.props.selectAllLabel) {
-			selectAll = [{
-				key: this.props.selectAllLabel
-			}]
+			selectAll = [
+				{
+					key: this.props.selectAllLabel
+				}
+			];
 		}
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, "title") || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<Dropdown
 					innerClass={this.props.innerClass}
-					items={[...selectAll , ...this.state.options]}
+					items={[...selectAll, ...this.state.options]}
 					onChange={this.setValue}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
@@ -214,7 +212,7 @@ SingleDropdownList.propTypes = {
 	className: types.string,
 	showCount: types.bool,
 	innerClass: types.style
-}
+};
 
 SingleDropdownList.defaultProps = {
 	size: 100,
@@ -225,11 +223,14 @@ SingleDropdownList.defaultProps = {
 	style: {},
 	className: null,
 	showCount: true
-}
+};
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue:
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null
 });
 
 const mapDispatchtoProps = dispatch => ({

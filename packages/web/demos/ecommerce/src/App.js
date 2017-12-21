@@ -25,7 +25,7 @@ class App extends Component {
 		this.setState({
 			visible: !visible
 		});
-	}
+	};
 
 	render() {
 		return (
@@ -45,11 +45,7 @@ class App extends Component {
 						</FlexChild>
 					</Flex>
 					<ToggleButton onClick={this.toggleFilters}>
-						{
-							this.state.visible ?
-								"🚗 SHOW CARS" :
-								"📂 SHOW FILTERS"
-						}
+						{this.state.visible ? "🚗 SHOW CARS" : "📂 SHOW FILTERS"}
 					</ToggleButton>
 				</ReactiveBase>
 			</Container>

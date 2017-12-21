@@ -50,25 +50,14 @@ class MultiDropdownList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps)
-		);
-		checkPropChange(
-			this.props.options,
-			nextProps.options,
-			() => {
-				this.setState({
-					options: nextProps.options[nextProps.dataField].buckets || []
-				});
-			}
-		);
-		checkSomePropChange(
-			this.props,
-			nextProps,
-			["size", "sortBy"],
-			() => this.updateQueryOptions(nextProps)
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkPropChange(this.props.options, nextProps.options, () => {
+			this.setState({
+				options: nextProps.options[nextProps.dataField].buckets || []
+			});
+		});
+		checkSomePropChange(this.props, nextProps, ["size", "sortBy"], () =>
+			this.updateQueryOptions(nextProps)
 		);
 
 		let selectedValue = Object.keys(this.state.currentValue);
@@ -93,7 +82,7 @@ class MultiDropdownList extends Component {
 		this.props.removeComponent(this.internalComponent);
 	}
 
-	setReact = (props) => {
+	setReact = props => {
 		const { react } = props;
 		if (react) {
 			const newReact = pushToAndClause(react, this.internalComponent);
@@ -122,13 +111,11 @@ class MultiDropdownList extends Component {
 				};
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
-				const queryArray = value.map(item => (
-					{
-						[type]: {
-							[props.dataField]: item
-						}
+				const queryArray = value.map(item => ({
+					[type]: {
+						[props.dataField]: item
 					}
-				));
+				}));
 				listQuery = {
 					bool: {
 						must: queryArray
@@ -151,7 +138,7 @@ class MultiDropdownList extends Component {
 				currentValue = {};
 				finalValues = [];
 			} else {
-				this.state.options.forEach((item) => {
+				this.state.options.forEach(item => {
 					currentValue[item.key] = true;
 				});
 				currentValue[selectAllLabel] = true;
@@ -160,9 +147,10 @@ class MultiDropdownList extends Component {
 		} else if (isDefaultValue) {
 			finalValues = value;
 			currentValue = {};
-			value && value.forEach((item) => {
-				currentValue[item] = true;
-			});
+			value &&
+				value.forEach(item => {
+					currentValue[item] = true;
+				});
 
 			if (selectAllLabel && selectAllLabel in currentValue) {
 				const { [selectAllLabel]: del, ...obj } = currentValue;
@@ -184,12 +172,15 @@ class MultiDropdownList extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue
-			}, () => {
-				this.updateQuery(finalValues, props);
-			});
-		}
+			this.setState(
+				{
+					currentValue
+				},
+				() => {
+					this.updateQuery(finalValues, props);
+				}
+			);
+		};
 
 		checkValueChange(
 			props.componentId,
@@ -217,7 +208,7 @@ class MultiDropdownList extends Component {
 		});
 	};
 
-	updateQueryOptions = (props) => {
+	updateQueryOptions = props => {
 		const queryOptions = getQueryOptions(props);
 		queryOptions.aggs = {
 			[props.dataField]: {
@@ -227,7 +218,7 @@ class MultiDropdownList extends Component {
 					order: getAggsOrder(props.sortBy)
 				}
 			}
-		}
+		};
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
@@ -239,17 +230,23 @@ class MultiDropdownList extends Component {
 		}
 
 		if (this.props.selectAllLabel) {
-			selectAll = [{
-				key: this.props.selectAllLabel
-			}]
+			selectAll = [
+				{
+					key: this.props.selectAllLabel
+				}
+			];
 		}
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, "title") || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<Dropdown
 					innerClass={this.props.innerClass}
-					items={[...selectAll , ...this.state.options]}
+					items={[...selectAll, ...this.state.options]}
 					onChange={this.setValue}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
@@ -290,7 +287,7 @@ MultiDropdownList.propTypes = {
 	style: types.style,
 	className: types.string,
 	innerClass: types.style
-}
+};
 
 MultiDropdownList.defaultProps = {
 	size: 100,
@@ -302,11 +299,14 @@ MultiDropdownList.defaultProps = {
 	showFilter: true,
 	style: {},
 	className: null
-}
+};
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue:
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null
 });
 
 const mapDispatchtoProps = dispatch => ({

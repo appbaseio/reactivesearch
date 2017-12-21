@@ -52,31 +52,20 @@ class TagCloud extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps)
-		);
-		checkPropChange(
-			this.props.options,
-			nextProps.options,
-			() => {
-				this.setState({
-					options: nextProps.options[nextProps.dataField].buckets || []
-				});
-			}
-		);
-		checkSomePropChange(
-			this.props,
-			nextProps,
-			["size", "sortBy"],
-			() => this.updateQueryOptions(nextProps)
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkPropChange(this.props.options, nextProps.options, () => {
+			this.setState({
+				options: nextProps.options[nextProps.dataField].buckets || []
+			});
+		});
+		checkSomePropChange(this.props, nextProps, ["size", "sortBy"], () =>
+			this.updateQueryOptions(nextProps)
 		);
 
 		let selectedValue = Object.keys(this.state.currentValue);
 
 		if (!nextProps.multiSelect) {
-			selectedValue = selectedValue.length && selectedValue[0] || "";
+			selectedValue = (selectedValue.length && selectedValue[0]) || "";
 		}
 
 		if (!this.locked) {
@@ -93,7 +82,7 @@ class TagCloud extends Component {
 		this.props.removeComponent(this.internalComponent);
 	}
 
-	setReact = (props) => {
+	setReact = props => {
 		const { react } = props;
 		if (react) {
 			const newReact = pushToAndClause(react, this.internalComponent);
@@ -117,13 +106,11 @@ class TagCloud extends Component {
 				};
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
-				const queryArray = value.map(item => (
-					{
-						[type]: {
-							[props.dataField]: item
-						}
+				const queryArray = value.map(item => ({
+					[type]: {
+						[props.dataField]: item
 					}
-				));
+				}));
 				listQuery = {
 					bool: {
 						must: queryArray
@@ -145,9 +132,10 @@ class TagCloud extends Component {
 			if (isDefaultValue) {
 				finalValues = value;
 				currentValue = {};
-				value && value.forEach((item) => {
-					currentValue[item] = true;
-				});
+				value &&
+					value.forEach(item => {
+						currentValue[item] = true;
+					});
 			} else {
 				if (currentValue[value]) {
 					const { [value]: del, ...rest } = currentValue;
@@ -165,13 +153,16 @@ class TagCloud extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue
-			}, () => {
-				this.updateQuery(finalValues, props);
-				this.locked = false;
-			});
-		}
+			this.setState(
+				{
+					currentValue
+				},
+				() => {
+					this.updateQuery(finalValues, props);
+					this.locked = false;
+				}
+			);
+		};
 
 		checkValueChange(
 			props.componentId,
@@ -199,7 +190,7 @@ class TagCloud extends Component {
 		});
 	};
 
-	updateQueryOptions = (props) => {
+	updateQueryOptions = props => {
 		const queryOptions = getQueryOptions(props);
 		queryOptions.aggs = {
 			[props.dataField]: {
@@ -209,46 +200,47 @@ class TagCloud extends Component {
 					order: getAggsOrder(props.sortBy)
 				}
 			}
-		}
+		};
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
 	render() {
-		const min = 0.8, max = 3;
+		const min = 0.8,
+			max = 3;
 
 		if (this.state.options.length === 0) {
 			return null;
 		}
 
 		let highestCount = 0;
-		this.state.options.forEach((item) => {
+		this.state.options.forEach(item => {
 			highestCount = item.doc_count > highestCount ? item.doc_count : highestCount;
 		});
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, "title") || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<TagList className={getClassName(this.props.innerClass, "list") || null}>
-					{
-						this.state.options
-							.map((item) => {
-								const size = ((item.doc_count / highestCount) * (max - min)) + min;
+					{this.state.options.map(item => {
+						const size = item.doc_count / highestCount * (max - min) + min;
 
-								return (<span
-									key={item.key}
-									className={getClassName(this.props.innerClass, "input")}
-									onClick={() => this.setValue(item.key)}
-									style={{ fontSize: `${size}em` }}
-									className={!!this.state.currentValue[item.key] ? "active" : null}
-								>
-									{item.key}
-									{
-										this.props.showCount &&
-										` (${item.doc_count})`
-									}
-								</span>);
-							})
-					}
+						return (
+							<span
+								key={item.key}
+								className={getClassName(this.props.innerClass, "input")}
+								onClick={() => this.setValue(item.key)}
+								style={{ fontSize: `${size}em` }}
+								className={!!this.state.currentValue[item.key] ? "active" : null}
+							>
+								{item.key}
+								{this.props.showCount && ` (${item.doc_count})`}
+							</span>
+						);
+					})}
 				</TagList>
 			</div>
 		);
@@ -283,7 +275,7 @@ TagCloud.propTypes = {
 	showCount: types.bool,
 	queryFormat: types.queryFormatSearch,
 	multiSelect: types.bool
-}
+};
 
 TagCloud.defaultProps = {
 	size: 100,
@@ -295,11 +287,14 @@ TagCloud.defaultProps = {
 	className: null,
 	queryFormat: "or",
 	multiSelect: false
-}
+};
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue:
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null
 });
 
 const mapDispatchtoProps = dispatch => ({

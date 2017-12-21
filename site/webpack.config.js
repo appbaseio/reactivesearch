@@ -20,7 +20,7 @@ const config = {
 			}
 		]
 	}
-}
+};
 
 if (process.env.NODE_ENV === "production") {
 	config.plugins = [
@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === "production") {
 			beautify: false,
 			dead_code: true
 		})
-	]
-};
+	];
+}
 
 module.exports = config;

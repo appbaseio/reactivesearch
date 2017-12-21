@@ -9,11 +9,7 @@ class Header extends Component {
 	render() {
 		return (
 			<Navbar>
-				<Flex
-					alignCenter
-					responsive
-					justifyContent="space-between"
-				>
+				<Flex alignCenter responsive justifyContent="space-between">
 					<FlexChild className={title}>Car Store</FlexChild>
 					<FlexChild className={categorySearchContainer}>
 						<CategorySearch

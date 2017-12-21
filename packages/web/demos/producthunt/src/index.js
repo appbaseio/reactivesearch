@@ -10,7 +10,7 @@ import {
 import Box from "react-layout-components";
 
 class ProductHuntApp extends Component {
-	onData = (hit) => {
+	onData = hit => {
 		const res = hit._source;
 		const topics = res.topics.map(topic => (
 			<span key={topic} className="tag">

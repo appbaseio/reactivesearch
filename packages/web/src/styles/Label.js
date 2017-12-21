@@ -15,8 +15,7 @@ const Label = styled("div")`
 	position: absolute;
 	top: -25px;
 
-	${props => props.align === "left" && left}
-	${props => props.align === "right" && right}
+	${props => props.align === "left" && left} ${props => props.align === "right" && right};
 `;
 
 export const rangeLabelsContainer = css`

@@ -11,15 +11,21 @@ export const alignCenter = css`
 `;
 
 export const FlexChild = styled.div`
-	${props => props.flex && css`
-		flex: ${props.flex};
-	`};
-	${props => props.marginLeft && css`
-		margin-left: ${props.marginLeft};
-	`};
-	${props => props.margin && css`
-		margin: ${props.margin};
-	`};
+	${props =>
+		props.flex &&
+		css`
+			flex: ${props.flex};
+		`};
+	${props =>
+		props.marginLeft &&
+		css`
+			margin-left: ${props.marginLeft};
+		`};
+	${props =>
+		props.margin &&
+		css`
+			margin: ${props.margin};
+		`};
 
 	.range-label {
 		color: white;
@@ -29,27 +35,37 @@ export const FlexChild = styled.div`
 const Flex = styled.div`
 	display: flex;
 
-	${props => props.justifyContent && css`
-		justify-content: ${props.justifyContent};
-	`};
+	${props =>
+		props.justifyContent &&
+		css`
+			justify-content: ${props.justifyContent};
+		`};
 
-	${props => props.responsive && queries.small`
+	${props =>
+		props.responsive &&
+		queries.small`
 		flex-direction: column;
 	`};
 
-	${props => props.direction && css`
-		flex-direction: ${props.direction};
-	`};
+	${props =>
+		props.direction &&
+		css`
+			flex-direction: ${props.direction};
+		`};
 
 	${props => props.alignCenter && alignCenter};
-	${props => props.flexWrap && css`
-		flex-wrap: wrap;
-	`};
-	${props => props.hidden && css`
-		${queries.xLarge`
+	${props =>
+		props.flexWrap &&
+		css`
+			flex-wrap: wrap;
+		`};
+	${props =>
+		props.hidden &&
+		css`
+			${queries.xLarge`
 			display: none;
 		`};
-	`};
+		`};
 `;
 
 export default Flex;
