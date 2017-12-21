@@ -10,6 +10,7 @@ const Container = styled.section`
 `;
 
 export const resultsContainer = css`
+	width: calc(100% - 360px);
 	.pagination {
 		padding: 20px 0;
 	}
@@ -17,11 +18,25 @@ export const resultsContainer = css`
 	.card-image {
 		background-size: cover;
 	}
+
+	.card-item {
+		position: relative;
+		${queries.small`
+			height: 250px;
+			width: 100%;
+			margin: 5px 0;
+		`}
+	}
+
+	${queries.medium`
+		width: 100%;
+	`};
 `;
 
 export const categorySearchContainer = css`
 	margin-left: 20px;
-	${queries.small`
+	width: calc(100% - 350px);
+	${queries.medium`
 		margin-left: 0;
 		width: 100%;
 	`};
@@ -30,8 +45,8 @@ export const categorySearchContainer = css`
 export const appContainer = css`
 	margin: 0 1rem;
 	padding-top: 100px;
-	${queries.small`
-		padding-top: 140px;
+	${queries.medium`
+		padding-top: 130px;
 	`};
 `;
 

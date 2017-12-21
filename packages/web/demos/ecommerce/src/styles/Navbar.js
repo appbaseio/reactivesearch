@@ -15,7 +15,7 @@ const Navbar = styled.nav`
 	top: 0;
 	padding: 1rem;
 	position: fixed;
-	z-index: 2;
+	z-index: 5;
 `;
 
 export default Navbar;

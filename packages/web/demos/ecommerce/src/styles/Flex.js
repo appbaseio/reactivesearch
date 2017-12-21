@@ -10,6 +10,12 @@ export const alignCenter = css`
 	align-items: center;
 `;
 
+export const card = css`
+	background: #fff;
+	padding: 10px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+`;
+
 export const FlexChild = styled.div`
 	${props => props.flex && css`
 		flex: ${props.flex};
@@ -20,6 +26,7 @@ export const FlexChild = styled.div`
 	${props => props.margin && css`
 		margin: ${props.margin};
 	`};
+	${props => props.card && card};
 
 	.range-label {
 		color: white;
@@ -33,7 +40,7 @@ const Flex = styled.div`
 		justify-content: ${props.justifyContent};
 	`};
 
-	${props => props.responsive && queries.small`
+	${props => props.responsive && queries.medium`
 		flex-direction: column;
 	`};
 
