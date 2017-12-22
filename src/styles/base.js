@@ -31,10 +31,9 @@ const decoratedLink = css`
 	border-bottom: 1px dashed ${primaryColor};
 	text-decoration: none;
 	padding: 3px 0;
-	transition: all 0.3s ease;
+	transition: all .3s ease;
 
-	&:hover,
-	&:focus {
+	&:hover, &:focus {
 		color: #3f4ab9;
 		border-bottom: 1px solid #3f4ab9;
 	}
@@ -44,7 +43,7 @@ const card = css`
 	width: 19%;
 	border-radius: 0.15rem;
 	text-align: center;
-	box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+	box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
 `;
 
 const title = css`
