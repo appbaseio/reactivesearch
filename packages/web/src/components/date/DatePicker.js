@@ -42,7 +42,9 @@ class DatePicker extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkPropChange(this.props.react, nextProps.react, () =>
+			this.setReact(nextProps)
+		);
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleDateChange(nextProps.defaultSelected, true, nextProps);
 		} else if (
@@ -78,7 +80,7 @@ class DatePicker extends Component {
 		}
 	};
 
-	formatInputDate = date => {
+	formatInputDate = (date) => {
 		return new XDate(date).toString("yyyy-MM-dd");
 	};
 
@@ -99,15 +101,19 @@ class DatePicker extends Component {
 
 	clearDayPicker = () => {
 		if (this.state.currentDate !== "") {
-			this.handleDateChange(""); // resets the day picker component
+			this.handleDateChange("");	// resets the day picker component
 		}
-	};
+	}
 
-	handleDayPicker = date => {
+	handleDayPicker = (date) => {
 		this.handleDateChange(date || "");
-	};
+	}
 
-	handleDateChange = (currentDate, isDefaultValue = false, props = this.props) => {
+	handleDateChange = (
+		currentDate,
+		isDefaultValue = false,
+		props = this.props
+	) => {
 		// currentDate should be valid or empty string for resetting the query
 		if (isDefaultValue && !new XDate(currentDate).valid() && currentDate.length) {
 			console.error(`DatePicker: ${props.componentId} invalid value passed for date`);
@@ -118,14 +124,11 @@ class DatePicker extends Component {
 			}
 
 			const performUpdate = () => {
-				this.setState(
-					{
-						currentDate
-					},
-					() => {
-						this.updateQuery(value, props);
-					}
-				);
+				this.setState({
+					currentDate
+				}, () => {
+					this.updateQuery(value, props);
+				});
 			};
 			checkValueChange(
 				props.componentId,
@@ -156,13 +159,11 @@ class DatePicker extends Component {
 
 	render() {
 		return (
-			<DateContainer
-				showBorder={!this.props.showClear}
-				style={this.props.style}
-				className={this.props.className}
-			>
+			<DateContainer showBorder={!this.props.showClear} style={this.props.style} className={this.props.className}>
 				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, "title") || null}>
+					<Title
+						className={getClassName(this.props.innerClass, "title") || null}
+					>
 						{this.props.title}
 					</Title>
 				)}
@@ -186,16 +187,20 @@ class DatePicker extends Component {
 								getClassName(this.props.innerClass, "daypicker-container") ||
 								"DayPickerInput",
 							overlayWrapper:
-								getClassName(this.props.innerClass, "daypicker-overlay-wrapper") ||
-								"DayPickerInput-OverlayWrapper",
+								getClassName(
+									this.props.innerClass,
+									"daypicker-overlay-wrapper"
+								) || "DayPickerInput-OverlayWrapper",
 							overlay:
 								getClassName(this.props.innerClass, "daypicker-overlay") ||
 								"DayPickerInput-Overlay"
 						}}
 						{...this.props.dayPickerInputProps}
 					/>
-					{this.props.showClear &&
-						this.state.currentDate && <CancelSvg onClick={this.clearDayPicker} />}
+					{
+						this.props.showClear && this.state.currentDate &&
+						<CancelSvg onClick={this.clearDayPicker} />
+					}
 				</Flex>
 			</DateContainer>
 		);
@@ -245,7 +250,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	watchComponent: (component, react) =>
+		dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
 });
 

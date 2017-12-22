@@ -2,14 +2,19 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-import { ReactiveBase, ReactiveComponent, ReactiveList, SelectedFilters } from "../../src";
+import {
+	ReactiveBase,
+	ReactiveComponent,
+	ReactiveList,
+	SelectedFilters
+} from "../../src";
 
 class CustomComponent extends Component {
 	constructor(props) {
 		super(props);
 	}
 
-	setValue = value => {
+	setValue = (value) => {
 		this.props.setQuery({
 			query: {
 				term: {
@@ -17,15 +22,13 @@ class CustomComponent extends Component {
 				}
 			},
 			value
-		});
-	};
+		})
+	}
 
 	render() {
 		if (this.props.aggregations) {
 			return this.props.aggregations["brand.raw"].buckets.map(item => (
-				<div key={item.key} onClick={() => this.setValue(item.key)}>
-					{item.key}
-				</div>
+				<div key={item.key} onClick={() => this.setValue(item.key)}>{item.key}</div>
 			));
 		}
 
@@ -34,16 +37,12 @@ class CustomComponent extends Component {
 }
 
 class Main extends Component {
-	onData = data => {
-		return (
-			<div key={data._id}>
-				<h2>{data.name}</h2>
-				<p>
-					{data.price} - {data.rating} stars rated
-				</p>
-			</div>
-		);
-	};
+	onData = (data) => {
+		return (<div key={data._id}>
+			<h2>{data.name}</h2>
+			<p>{data.price} - {data.rating} stars rated</p>
+		</div>);
+	}
 
 	render() {
 		return (

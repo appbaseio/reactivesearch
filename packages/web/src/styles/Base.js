@@ -5,16 +5,11 @@ const Base = styled("div")`
 	font-size: ${props => props.theme.fontSize};
 	color: ${props => props.theme.textColor};
 
-	input,
-	button,
-	textarea,
-	select {
+	input, button, textarea, select {
 		font-family: ${props => props.theme.fontFamily};
 	}
 
-	*,
-	*:before,
-	*:after {
+	*, *:before, *:after {
 		box-sizing: border-box;
 	}
 `;

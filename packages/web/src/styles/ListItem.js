@@ -20,7 +20,7 @@ const smallImage = css`
 const Image = styled("div")`
 	width: 160px;
 	height: 160px;
-	${props => (props.small ? smallImage : null)};
+	${props => props.small ? smallImage : null};
 	margin: 0;
 	background-color: #fcfcfc;
 	background-size: contain;
@@ -42,7 +42,7 @@ const ListItem = styled("a")`
 	padding: 10px;
 	border-bottom: 1px solid ${props => lighten(0.68, props.theme.textColor)};
 	color: ${props => props.theme.textColor};
-	${props => (props.href ? "cursor: pointer" : null)}; all 0.3s ease;
+	${props => props.href ? "cursor: pointer" : null}; all 0.3s ease;
 
 	&:hover, &:focus {
 		background-color: #fdfefd;
@@ -67,9 +67,8 @@ const ListItem = styled("a")`
 	}
 
 	article {
-		width: ${props =>
-			props.image ? (props.small ? "calc(100% - 100px)" : "calc(100% - 160px)") : "100%"};
-		padding-left: ${props => (props.image ? "10px" : 0)};
+		width: ${props => props.image ? props.small ? "calc(100% - 100px)" : "calc(100% - 160px)" : "100%"};
+		padding-left: ${props => props.image ? "10px" : 0};
 
 		* {
 			font-size: 0.9rem;
@@ -96,4 +95,4 @@ const ListItem = styled("a")`
 `;
 
 export default ListItem;
-export { container, Title, Image };
+export { container, Title, Image }

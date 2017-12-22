@@ -15,13 +15,11 @@ const FilterContainer = styled.div`
 		width: 100%;
 		padding-right: 10px;
 	`};
-	${({ visible }) =>
-		!visible &&
-		css`
-			${queries.medium`
+	${({ visible }) => !visible && css`
+		${queries.medium`
 			display: none;
 		`};
-		`};
+	`};
 `;
 
 export default FilterContainer;

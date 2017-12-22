@@ -40,7 +40,11 @@ class TextField extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected, true, nextProps);
 		} else if (this.state.currentValue !== nextProps.selectedValue) {
@@ -58,7 +62,7 @@ class TextField extends Component {
 		}
 	}
 
-	defaultQuery = value => {
+	defaultQuery = (value) => {
 		if (value && value.trim() !== "") {
 			return {
 				[this.type]: {
@@ -67,9 +71,9 @@ class TextField extends Component {
 			};
 		}
 		return null;
-	};
+	}
 
-	handleTextChange = debounce(value => {
+	handleTextChange = debounce((value) => {
 		this.updateQuery(value, this.props);
 	}, 300);
 
@@ -84,7 +88,7 @@ class TextField extends Component {
 				// debounce for handling text while typing
 				this.handleTextChange(value);
 			}
-		};
+		}
 		checkValueChange(
 			props.componentId,
 			value,
@@ -111,18 +115,14 @@ class TextField extends Component {
 		});
 	};
 
-	handleChange = e => {
+	handleChange = (e) => {
 		this.setValue(e.target.value);
 	};
 
 	render() {
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, "title") || null}>
-						{this.props.title}
-					</Title>
-				)}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
 				<Input
 					type="text"
 					className={getClassName(this.props.innerClass, "input") || null}
@@ -164,20 +164,19 @@ TextField.defaultProps = {
 	showFilter: true,
 	style: {},
 	className: null
-};
+}
 
 const mapStateToProps = (state, props) => ({
-	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
+	updateQuery: updateQueryObject => dispatch(
+		updateQuery(updateQueryObject)
+	)
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(TextField);

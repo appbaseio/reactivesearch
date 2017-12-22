@@ -1,11 +1,11 @@
 // flattens a nested array
-const flatten = arr =>
-	arr.reduce(
-		(flat, toFlatten) => flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten),
-		[]
-	);
+const flatten = arr => (
+	arr.reduce((flat, toFlatten) =>
+	  flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten), []
+	)
+);
 
-const extractSuggestion = val => {
+const extractSuggestion = (val) => {
 	switch (typeof val) {
 		case "string":
 			return val.toLowerCase();
@@ -18,13 +18,13 @@ const extractSuggestion = val => {
 		default:
 			return val;
 	}
-};
+}
 
 export const getSuggestions = (fields, suggestions, currentValue) => {
 	let suggestionsList = [];
 	let labelsList = [];
 
-	const populateSuggestionsList = val => {
+	const populateSuggestionsList = (val) => {
 		// check if the suggestion includes the current value and not already included in other suggestions
 		if (val.includes(currentValue) && !labelsList.includes(val)) {
 			const option = {
@@ -34,10 +34,10 @@ export const getSuggestions = (fields, suggestions, currentValue) => {
 			labelsList = [...labelsList, val];
 			suggestionsList = [...suggestionsList, option];
 		}
-	};
+	}
 
-	suggestions.forEach(item => {
-		fields.forEach(field => {
+	suggestions.forEach((item) => {
+		fields.forEach((field) => {
 			const label = item._source[field];
 			if (label) {
 				const val = extractSuggestion(label);

@@ -29,7 +29,7 @@ class Dropdown extends Component {
 		});
 	};
 
-	onChange = item => {
+	onChange = (item) => {
 		if (this.props.returnsObject) {
 			this.props.onChange(item);
 		} else {
@@ -43,7 +43,7 @@ class Dropdown extends Component {
 		}
 	};
 
-	handleStateChange = changes => {
+	handleStateChange = (changes) => {
 		const { isOpen, type } = changes;
 		if (type === Downshift.stateChangeTypes.mouseUp) {
 			this.setState({
@@ -61,7 +61,7 @@ class Dropdown extends Component {
 		return "#fff";
 	};
 
-	renderToString = value => {
+	renderToString = (value) => {
 		if (Array.isArray(value) && value.length) {
 			const arrayToRender = value.map(item => this.renderToString(item));
 			return arrayToRender.join(", ");
@@ -79,93 +79,78 @@ class Dropdown extends Component {
 	render() {
 		const { items, selectedItem, placeholder, labelField, keyField } = this.props;
 
-		return (
-			<Downshift
-				selectedItem={selectedItem}
-				onChange={this.onChange}
-				onOuterClick={this.close}
-				onStateChange={this.handleStateChange}
-				isOpen={this.state.isOpen}
-				itemToString={i => i && i[this.props.labelField]}
-				render={({ getButtonProps, getItemProps, isOpen, highlightedIndex }) => {
-					return (
-						<div className={suggestionsContainer}>
-							<Select
-								{...getButtonProps()}
-								className={getClassName(this.props.innerClass, "select") || null}
-								onClick={this.toggle}
-								title={
-									selectedItem ? this.renderToString(selectedItem) : placeholder
-								}
-							>
-								<div>
-									{selectedItem ? this.renderToString(selectedItem) : placeholder}
-								</div>
-								<Chevron open={isOpen} />
-							</Select>
-							{isOpen && items.length ? (
-								<div className={suggestions}>
-									<ul
-										className={
-											getClassName(this.props.innerClass, "list") || null
-										}
-									>
-										{items.map((item, index) => {
-											const selected =
-												this.props.multi &&
-												// MultiDropdownList
-												((selectedItem && !!selectedItem[item[keyField]]) ||
+		return (<Downshift
+			selectedItem={selectedItem}
+			onChange={this.onChange}
+			onOuterClick={this.close}
+			onStateChange={this.handleStateChange}
+			isOpen={this.state.isOpen}
+			itemToString={i => i && i[this.props.labelField]}
+			render={({
+				getButtonProps,
+				getItemProps,
+				isOpen,
+				highlightedIndex
+			}) => {
+				return (<div className={suggestionsContainer}>
+					<Select
+						{...getButtonProps()}
+						className={getClassName(this.props.innerClass, "select") || null}
+						onClick={this.toggle}
+						title={selectedItem ? this.renderToString(selectedItem) : placeholder}
+					>
+						<div>{selectedItem ? this.renderToString(selectedItem) : placeholder}</div>
+						<Chevron open={isOpen} />
+					</Select>
+					{
+						isOpen && items.length
+							? (<div className={suggestions}>
+								<ul className={getClassName(this.props.innerClass, "list") || null}>
+									{
+										items
+											.map((item, index) => {
+												const selected = this.props.multi && (
+													// MultiDropdownList
+													(selectedItem && !!selectedItem[item[keyField]]) ||
 													// MultiDropdownRange
-													(Array.isArray(selectedItem) &&
-														selectedItem.find(
-															value =>
-																value[labelField] ===
-																item[labelField]
-														)));
+													(Array.isArray(selectedItem) && selectedItem.find(value => value[labelField] === item[labelField]))
+												);
 
-											return (
-												<li
+												return (<li
 													{...getItemProps({ item })}
 													key={item[keyField]}
 													style={{
-														backgroundColor: this.getBackgroundColor(
-															highlightedIndex === index,
-															selected
-														)
+														backgroundColor: this.getBackgroundColor(highlightedIndex === index, selected)
 													}}
 												>
 													{item[labelField]}
-													{this.props.showCount &&
-														item.doc_count &&
-														` (${item.doc_count})`}
-													{selected ? (
-														<Tick
-															className={
-																getClassName(
-																	this.props.innerClass,
-																	"icon"
-																) || null
-															}
-														/>
-													) : null}
+													{
+														this.props.showCount && item.doc_count &&
+														` (${item.doc_count})`
+													}
+													{
+														selected
+															? (<Tick className={getClassName(this.props.innerClass, "icon") || null} />)
+															: null
+													}
 												</li>
-											);
-										})}
-									</ul>
-								</div>
-							) : null}
-						</div>
-					);
-				}}
-			/>
-		);
+												)
+											})
+									}
+								</ul>
+							</div>)
+							: null
+					}
+				</div>);
+			}}
+		/>);
 	}
 }
 
 Dropdown.defaultProps = {
 	labelField: "label",
 	keyField: "key"
-};
+}
 
 Dropdown.propTypes = {
 	items: types.data,
@@ -178,6 +163,6 @@ Dropdown.propTypes = {
 	returnsObject: types.bool,
 	showCount: types.bool,
 	innerClass: types.style
-};
+}
 
 export default Dropdown;

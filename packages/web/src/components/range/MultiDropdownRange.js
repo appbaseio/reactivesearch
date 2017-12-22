@@ -45,14 +45,16 @@ class MultiDropdownRange extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
 
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.selectItem(nextProps.defaultSelected, true);
-		} else if (
-			!isEqual(this.state.currentValue, nextProps.selectedValue) &&
-			(nextProps.selectedValue || nextProps.selectedValue === null)
-		) {
+		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)
+			&& (nextProps.selectedValue || nextProps.selectedValue === null)) {
 			this.selectItem(nextProps.selectedValue, true);
 		}
 	}
@@ -93,7 +95,7 @@ class MultiDropdownRange extends Component {
 			return query;
 		}
 		return null;
-	};
+	}
 
 	selectItem = (item, isDefaultValue = false, props = this.props) => {
 		let { currentValue } = this.state;
@@ -104,7 +106,7 @@ class MultiDropdownRange extends Component {
 		} else if (isDefaultValue) {
 			// checking if the items in defaultSeleted exist in the data prop
 			currentValue = props.data.filter(value => item.includes(value.label));
-			currentValue.forEach(value => {
+			currentValue.forEach((value) => {
 				this.selectedValues = { ...this.selectedValues, [value.label]: true };
 			});
 		} else {
@@ -118,15 +120,12 @@ class MultiDropdownRange extends Component {
 			}
 		}
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentValue
-				},
-				() => {
-					this.updateQuery(currentValue, props);
-				}
-			);
-		};
+			this.setState({
+				currentValue
+			}, () => {
+				this.updateQuery(currentValue, props);
+			});
+		}
 
 		checkValueChange(
 			props.componentId,
@@ -135,12 +134,12 @@ class MultiDropdownRange extends Component {
 			props.onValueChange,
 			performUpdate
 		);
-	};
+	}
 
 	toggleModal = () => {
 		this.setState({
 			showModal: !this.state.showModal
-		});
+		})
 	};
 
 	updateQuery = (value, props) => {
@@ -160,16 +159,12 @@ class MultiDropdownRange extends Component {
 			onQueryChange,
 			URLParams: props.URLParams
 		});
-	};
+	}
 
 	render() {
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, "title") || null}>
-						{this.props.title}
-					</Title>
-				)}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
 				<Dropdown
 					innerClass={this.props.innerClass}
 					items={this.props.data}
@@ -208,7 +203,7 @@ MultiDropdownRange.propTypes = {
 	style: types.style,
 	className: types.string,
 	innerClass: types.style
-};
+}
 
 MultiDropdownRange.defaultProps = {
 	placeholder: "Select a value",
@@ -216,12 +211,10 @@ MultiDropdownRange.defaultProps = {
 	showFilter: true,
 	style: {},
 	className: null
-};
+}
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId]
-		? state.selectedValues[props.componentId].value
-		: null
+	selectedValue: state.selectedValues[props.componentId] ? state.selectedValues[props.componentId].value : null
 });
 
 const mapDispatchtoProps = dispatch => ({

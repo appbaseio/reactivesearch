@@ -110,14 +110,11 @@ class NumberBox extends Component {
 
 	setValue = (value, props = this.props) => {
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentValue: value
-				},
-				() => {
-					this.updateQuery(value, props);
-				}
-			);
+			this.setState({
+				currentValue: value
+			}, () => {
+				this.updateQuery(value, props);
+			});
 		};
 		checkValueChange(
 			props.componentId,
@@ -139,7 +136,7 @@ class NumberBox extends Component {
 			query: query(value, props),
 			value,
 			onQueryChange,
-			showFilter: false, // we don't need filters for NumberBox
+			showFilter: false,	// we don't need filters for NumberBox
 			URLParams: props.URLParams
 		});
 	};
@@ -147,15 +144,9 @@ class NumberBox extends Component {
 	render() {
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, "title") || null}>
-						{this.props.title}
-					</Title>
-				)}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
 				<Flex labelPosition={this.props.labelPosition} inline>
-					<span className={getClassName(this.props.innerClass, "label") || null}>
-						{this.props.data.label}
-					</span>
+					<span className={getClassName(this.props.innerClass, "label") || null}>{this.props.data.label}</span>
 					<div className={numberBoxButtons}>
 						<Button
 							className={getClassName(this.props.innerClass, "button") || null}
@@ -205,15 +196,14 @@ NumberBox.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId]
-		? state.selectedValues[props.componentId].value
-		: null
+	selectedValue: state.selectedValues[props.componentId] ? state.selectedValues[props.componentId].value : null
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	watchComponent: (component, react) =>
+		dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
 });
 

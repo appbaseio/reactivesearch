@@ -17,20 +17,18 @@ const onData = data => ({
 			? "src/images/car.jpg"
 			: `src/images/${data.vehicleType.replace(/ /g, "-")}/${data.color}.jpg`,
 	title: data.name,
-	desc: (
-		<div>
-			<div className={price}>${data.price}</div>
-			<Flex justifyContent="space-between" responsive>
-				<FlexChild>{"⭐".repeat(data.rating)}</FlexChild>
-				<FlexChild>REGD. {data.yearOfRegistration}</FlexChild>
-			</Flex>
-			<Flex style={{ marginTop: 5 }} flexWrap>
-				{data.fuelType && <Topic>{data.fuelType}</Topic>}
-				{data.gearbox && <Topic>{data.gearbox}</Topic>}
-				{data.vehicleType && <Topic>{data.vehicleType}</Topic>}
-			</Flex>
-		</div>
-	)
+	desc: (<div>
+		<div className={price}>${data.price}</div>
+		<Flex justifyContent="space-between" responsive>
+			<FlexChild>{"⭐".repeat(data.rating)}</FlexChild>
+			<FlexChild>REGD. {data.yearOfRegistration}</FlexChild>
+		</Flex>
+		<Flex style={{ marginTop: 5 }} flexWrap>
+			{data.fuelType && <Topic>{data.fuelType}</Topic>}
+			{data.gearbox && <Topic>{data.gearbox}</Topic>}
+			{data.vehicleType && <Topic>{data.vehicleType}</Topic>}
+		</Flex>
+	</div>)
 });
 
 const Results = () => (

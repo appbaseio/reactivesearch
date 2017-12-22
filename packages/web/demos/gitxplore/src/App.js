@@ -6,11 +6,7 @@ import theme from "./styles/theme";
 import Header from "./components/Header";
 import Results from "./components/Results";
 
-import Container, {
-	resultsContainer,
-	categorySearchContainer,
-	appContainer
-} from "./styles/Container";
+import Container, { resultsContainer, categorySearchContainer, appContainer } from "./styles/Container";
 import Flex, { FlexChild } from "./styles/Flex";
 
 class App extends Component {
@@ -21,21 +17,21 @@ class App extends Component {
 		};
 	}
 
-	setTopics = currentTopics => {
+	setTopics = (currentTopics) => {
 		this.setState({
 			currentTopics: currentTopics || []
 		});
-	};
+	}
 
-	toggleTopic = topic => {
+	toggleTopic = (topic) => {
 		const { currentTopics } = this.state;
-		const nextState = currentTopics.includes(topic)
-			? currentTopics.filter(item => item !== topic)
-			: currentTopics.concat(topic);
+		const nextState = currentTopics.includes(topic) ?
+			currentTopics.filter(item => item !== topic) :
+			currentTopics.concat(topic);
 		this.setState({
 			currentTopics: nextState
 		});
-	};
+	}
 
 	render() {
 		return (
@@ -46,31 +42,18 @@ class App extends Component {
 					theme={theme}
 				>
 					<Flex direction="row-reverse" className={appContainer}>
-						<Header
-							currentTopics={this.state.currentTopics}
-							setTopics={this.setTopics}
-						/>
+						<Header currentTopics={this.state.currentTopics} setTopics={this.setTopics} />
 						<FlexChild className={resultsContainer}>
 							<CategorySearch
 								componentId="repo"
-								dataField={[
-									"name",
-									"description",
-									"name.raw",
-									"fullname",
-									"owner",
-									"topics"
-								]}
+								dataField={["name", "description", "name.raw", "fullname", "owner", "topics"]}
 								categoryField="language.raw"
 								queryFormat="and"
 								placeholder="Search Repos"
 								URLParams={true}
 								className={categorySearchContainer}
 							/>
-							<Results
-								currentTopics={this.state.currentTopics}
-								toggleTopic={this.toggleTopic}
-							/>
+							<Results currentTopics={this.state.currentTopics} toggleTopic={this.toggleTopic} />
 						</FlexChild>
 					</Flex>
 				</ReactiveBase>

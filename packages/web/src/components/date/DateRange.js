@@ -37,20 +37,19 @@ class DateRange extends Component {
 
 		if (this.props.selectedValue) {
 			// parsing string values from selectedValue to date objects for DayPicker
-			this.handleDateChange(
-				{
-					start: new Date(this.props.selectedValue[0]),
-					end: new Date(this.props.selectedValue[1])
-				},
-				false
-			);
+			this.handleDateChange({
+				start: new Date(this.props.selectedValue[0]),
+				end: new Date(this.props.selectedValue[1])
+			}, false);
 		} else if (this.props.defaultSelected) {
 			this.handleDateChange(this.props.defaultSelected, false);
 		}
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkPropChange(this.props.react, nextProps.react, () =>
+			this.setReact(nextProps)
+		);
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleDateChange(nextProps.defaultSelected, false, nextProps);
 		} else {
@@ -59,26 +58,18 @@ class DateRange extends Component {
 			// comparing array format of selectedValue with object form of the state if not null
 			if (
 				!isEqual(
-					currentDate
-						? [
-								this.formatInputDate(currentDate.start),
-								this.formatInputDate(currentDate.end)
-							]
-						: null,
+					currentDate ? [
+						this.formatInputDate(currentDate.start),
+						this.formatInputDate(currentDate.end)
+					] : null,
 					selectedValue
 				) &&
 				!isEqual(this.props.selectedValue, selectedValue)
 			) {
-				this.handleDateChange(
-					selectedValue
-						? {
-								start: nextProps.selectedValue[0],
-								end: nextProps.selectedValue[1]
-							}
-						: null,
-					true,
-					nextProps
-				);
+				this.handleDateChange(selectedValue ? {
+					start: nextProps.selectedValue[0],
+					end: nextProps.selectedValue[1]
+				} : null, true, nextProps);
 			}
 		}
 	}
@@ -108,7 +99,7 @@ class DateRange extends Component {
 		}
 	};
 
-	formatInputDate = date => {
+	formatInputDate = (date) => {
 		const xdate = new XDate(date);
 		return xdate.valid() ? xdate.toString("yyyy-MM-dd") : "";
 	};
@@ -119,22 +110,19 @@ class DateRange extends Component {
 			if (Array.isArray(props.dataField) && props.dataField.length === 2) {
 				query = {
 					bool: {
-						must: [
-							{
-								range: {
-									[props.dataField[0]]: {
-										lte: this.formatDate(new XDate(value.start), props)
-									}
-								}
-							},
-							{
-								range: {
-									[props.dataField[1]]: {
-										gte: this.formatDate(new XDate(value.end), props)
-									}
+						must: [{
+							range: {
+								[props.dataField[0]]: {
+									lte: this.formatDate(new XDate(value.start), props)
 								}
 							}
-						]
+						}, {
+							range: {
+								[props.dataField[1]]: {
+									gte: this.formatDate(new XDate(value.end), props)
+								}
+							}
+						}]
 					}
 				};
 			} else if (Array.isArray(props.dataField)) {
@@ -160,9 +148,9 @@ class DateRange extends Component {
 		return query;
 	};
 
-	getEndDateRef = ref => {
+	getEndDateRef = (ref) => {
 		this.endDateRef = ref;
-	};
+	}
 
 	clearDayPickerStart = () => {
 		if (this.state.currentDate && this.state.currentDate.start !== "") {
@@ -187,17 +175,21 @@ class DateRange extends Component {
 		if (this.props.autoFocusEnd && autoFocus) {
 			this.endDateRef.getInput().focus();
 		}
-	};
+	}
 
-	handleEndDate = date => {
+	handleEndDate = (date) => {
 		const { currentDate } = this.state;
 		this.handleDateChange({
 			start: currentDate ? currentDate.start : "",
 			end: date
 		});
-	};
+	}
 
-	handleDateChange = (currentDate, isDefaultValue = false, props = this.props) => {
+	handleDateChange = (
+		currentDate,
+		isDefaultValue = false,
+		props = this.props
+	) => {
 		let value = null;
 		if (currentDate && !(currentDate.start === "" && currentDate.end === "")) {
 			value = isDefaultValue
@@ -209,14 +201,11 @@ class DateRange extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentDate
-				},
-				() => {
-					this.updateQuery(value, props);
-				}
-			);
+			this.setState({
+				currentDate
+			}, () => {
+				this.updateQuery(value, props);
+			});
 		};
 		checkValueChange(
 			props.componentId,
@@ -250,7 +239,9 @@ class DateRange extends Component {
 		const { currentDate } = this.state;
 		const start = currentDate ? currentDate.start : "";
 		const end = currentDate ? currentDate.end : "";
-		const selectedDays = [start, { from: start, to: end }];
+		const selectedDays = [
+			start, { from: start, to: end }
+		]
 		const modifiers = { start, end };
 		return (
 			<DateContainer
@@ -260,7 +251,9 @@ class DateRange extends Component {
 				showBorder={!this.props.showClear}
 			>
 				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, "title") || null}>
+					<Title
+						className={getClassName(this.props.innerClass, "title") || null}
+					>
 						{this.props.title}
 					</Title>
 				)}
@@ -315,11 +308,7 @@ class DateRange extends Component {
 							dayPickerProps={{
 								numberOfMonths: this.props.numberOfMonths,
 								initialMonth: this.props.initialMonth,
-								disabledDays: {
-									before: this.state.currentDate
-										? this.state.currentDate.start
-										: ""
-								},
+								disabledDays: { before: this.state.currentDate ? this.state.currentDate.start : "" },
 								selectedDays,
 								modifiers
 							}}
@@ -400,7 +389,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	watchComponent: (component, react) =>
+		dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
 });
 

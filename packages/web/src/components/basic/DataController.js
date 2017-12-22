@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { addComponent, removeComponent, updateQuery } from "@appbaseio/reactivecore/lib/actions";
+import {
+	addComponent,
+	removeComponent,
+	updateQuery
+} from "@appbaseio/reactivecore/lib/actions";
 import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
 
 import types from "@appbaseio/reactivecore/lib/utils/types";
@@ -34,7 +38,7 @@ class DataController extends Component {
 
 	defaultQuery() {
 		return {
-			match_all: {}
+			"match_all": {}
 		};
 	}
 
@@ -66,14 +70,10 @@ class DataController extends Component {
 			props.onValueChange,
 			performUpdate
 		);
-	};
+	}
 
 	render() {
-		return (
-			<div style={this.props.style} className={this.props.className}>
-				{this.props.children}
-			</div>
-		);
+		return (<div style={this.props.style} className={this.props.className}>{this.props.children}</div>);
 	}
 }
 
@@ -82,7 +82,7 @@ DataController.defaultProps = {
 	showFilter: true,
 	style: {},
 	className: null
-};
+}
 
 DataController.propTypes = {
 	componentId: types.stringRequired,
@@ -102,13 +102,10 @@ DataController.propTypes = {
 	children: types.children,
 	style: types.style,
 	className: types.string
-};
+}
 
 const mapStateToProps = (state, props) => ({
-	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
 });
 
 const mapDispatchtoProps = dispatch => ({

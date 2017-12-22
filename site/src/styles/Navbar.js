@@ -29,10 +29,9 @@ const Navbar = styled("nav")`
 				padding: 5px 0;
 				text-decoration: none;
 				border-bottom: 1px solid transparent;
-				transition: all 0.3s ease;
+				transition: all .3s ease;
 
-				&:hover,
-				&:focus {
+				&:hover, &:focus {
 					border-bottom: 1px solid #fff;
 				}
 			}
@@ -41,7 +40,7 @@ const Navbar = styled("nav")`
 `;
 
 const logo = css`
-	background-image: linear-gradient(135deg, #3733d0 0%, #764ba2 100%);
+	background-image: linear-gradient(135deg,#3733d0 0%,#764ba2 100%);
 	padding: 5px 15px;
 	border-radius: 999em;
 	text-decoration: none;

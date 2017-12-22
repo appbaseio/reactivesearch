@@ -43,13 +43,11 @@ class ReactiveList extends Component {
 
 		const options = getQueryOptions(this.props);
 		if (this.props.sortBy) {
-			options.sort = [
-				{
-					[this.props.dataField]: {
-						order: this.props.sortBy
-					}
+			options.sort = [{
+				[this.props.dataField]: {
+					order: this.props.sortBy
 				}
-			];
+			}];
 		}
 
 		// Override sort query with defaultQuery's sort if defined
@@ -86,13 +84,11 @@ class ReactiveList extends Component {
 		if (this.props.sortBy !== nextProps.sortBy || this.props.size !== nextProps.size) {
 			const options = getQueryOptions(nextProps);
 			if (this.props.sortBy) {
-				options.sort = [
-					{
-						[this.props.dataField]: {
-							order: this.props.sortBy
-						}
+				options.sort = [{
+					[this.props.dataField]: {
+						order: this.props.sortBy
 					}
-				];
+				}];
 			}
 			this.props.setQueryOptions(this.props.componentId, options);
 		}
@@ -107,31 +103,20 @@ class ReactiveList extends Component {
 
 		// called when page is changed
 		if (this.props.pagination && this.state.isLoading) {
-			window.scrollTo(0, 0);
+			window.scrollTo(0,0);
 			this.setState({
 				isLoading: false
 			});
 		}
 
-		if (
-			!nextProps.pagination &&
-			this.props.hits &&
-			nextProps.hits &&
-			(this.props.hits.length < nextProps.hits.length ||
-				nextProps.hits.length === nextProps.total)
-		) {
+		if (!nextProps.pagination && this.props.hits && nextProps.hits && (this.props.hits.length < nextProps.hits.length || nextProps.hits.length === nextProps.total)) {
 			this.setState({
 				isLoading: false
 			});
 		}
 
-		if (
-			!nextProps.pagination &&
-			nextProps.hits &&
-			this.props.hits &&
-			nextProps.hits.length < this.props.hits.length
-		) {
-			window.scrollTo(0, 0);
+		if (!nextProps.pagination && nextProps.hits && this.props.hits && nextProps.hits.length < this.props.hits.length) {
+			window.scrollTo(0,0);
 			this.setState({
 				from: 0,
 				isLoading: false
@@ -158,10 +143,10 @@ class ReactiveList extends Component {
 		this.props.removeComponent(this.props.componentId);
 	}
 
-	setReact = props => {
+	setReact = (props) => {
 		const { react } = props;
 		if (react) {
-			const newReact = pushToAndClause(react, this.internalComponent);
+			const newReact = pushToAndClause(react, this.internalComponent)
 			props.watchComponent(props.componentId, newReact);
 		} else {
 			props.watchComponent(props.componentId, { and: this.internalComponent });
@@ -169,34 +154,23 @@ class ReactiveList extends Component {
 	};
 
 	scrollHandler = () => {
-		if (
-			!this.state.isLoading &&
-			window.innerHeight + window.scrollY + 300 >= document.body.offsetHeight
-		) {
+		if (!this.state.isLoading && (window.innerHeight + window.scrollY + 300) >= document.body.offsetHeight) {
 			this.loadMore();
 		}
 	};
 
 	loadMore = () => {
-		if (
-			this.props.hits &&
-			!this.props.pagination &&
-			this.props.total !== this.props.hits.length
-		) {
+		if (this.props.hits && !this.props.pagination && this.props.total !== this.props.hits.length) {
 			const value = this.state.from + this.props.size;
 			const options = getQueryOptions(this.props);
 			this.setState({
 				from: value,
 				isLoading: true
 			});
-			this.props.loadMore(
-				this.props.componentId,
-				{
-					...options,
-					from: value
-				},
-				true
-			);
+			this.props.loadMore(this.props.componentId, {
+				...options,
+				from: value
+			}, true);
 		} else if (this.state.isLoading) {
 			this.setState({
 				isLoading: false
@@ -204,7 +178,7 @@ class ReactiveList extends Component {
 		}
 	};
 
-	setPage = page => {
+	setPage = (page) => {
 		const value = this.props.size * page;
 		const options = getQueryOptions(this.props);
 		this.setState({
@@ -212,31 +186,27 @@ class ReactiveList extends Component {
 			isLoading: true,
 			currentPage: page
 		});
-		this.props.loadMore(
-			this.props.componentId,
-			{
-				...options,
-				from: value
-			},
-			false
-		);
+		this.props.loadMore(this.props.componentId, {
+			...options,
+			from: value
+		}, false);
 	};
 
 	prevPage = () => {
 		if (this.state.currentPage) {
-			this.setPage(this.state.currentPage - 1);
+			this.setPage(this.state.currentPage-1);
 		}
 	};
 
 	nextPage = () => {
-		if (this.state.currentPage < this.state.totalPages - 1) {
-			this.setPage(this.state.currentPage + 1);
+		if (this.state.currentPage < this.state.totalPages-1) {
+			this.setPage(this.state.currentPage+1);
 		}
 	};
 
 	getStart = () => {
-		const midValue = parseInt(this.props.pages / 2, 10);
-		const start = this.state.currentPage - midValue;
+		const midValue = parseInt(this.props.pages/2, 10);
+		const start =  this.state.currentPage - midValue;
 		return start > 1 ? start : 2;
 	};
 
@@ -246,16 +216,11 @@ class ReactiveList extends Component {
 
 		for (let i = start; i < start + this.props.pages - 1; i++) {
 			const pageBtn = (
-				<Button
-					className={getClassName(this.props.innerClass, "button") || null}
-					primary={this.state.currentPage === i - 1}
-					key={i - 1}
-					onClick={() => this.setPage(i - 1)}
-				>
+				<Button className={getClassName(this.props.innerClass, "button") || null} primary={this.state.currentPage === i-1} key={i-1} onClick={() => this.setPage(i-1)}>
 					{i}
 				</Button>
 			);
-			if (i <= this.state.totalPages + 1) {
+			if (i <= this.state.totalPages+1) {
 				pages.push(pageBtn);
 			}
 		}
@@ -266,38 +231,28 @@ class ReactiveList extends Component {
 
 		return (
 			<div className={`${pagination} ${getClassName(this.props.innerClass, "pagination")}`}>
-				<Button
-					className={getClassName(this.props.innerClass, "button") || null}
-					disabled={this.state.currentPage === 0}
-					onClick={this.prevPage}
-				>
+				<Button className={getClassName(this.props.innerClass, "button") || null} disabled={this.state.currentPage === 0} onClick={this.prevPage}>
 					Prev
 				</Button>
 				{
-					<Button
-						className={getClassName(this.props.innerClass, "button") || null}
-						primary={this.state.currentPage === 0}
-						onClick={() => this.setPage(0)}
-					>
+					<Button className={getClassName(this.props.innerClass, "button") || null} primary={this.state.currentPage === 0} onClick={() => this.setPage(0)}>
 						1
 					</Button>
 				}
-				{pages}
-				<Button
-					className={getClassName(this.props.innerClass, "button") || null}
-					disabled={this.state.currentPage >= this.state.totalPages - 1}
-					onClick={this.nextPage}
-				>
+				{
+					pages
+				}
+				<Button className={getClassName(this.props.innerClass, "button") || null} disabled={this.state.currentPage >= this.state.totalPages-1} onClick={this.nextPage}>
 					Next
 				</Button>
 			</div>
-		);
+		)
 	};
 
-	highlightResults = result => {
+	highlightResults = (result) => {
 		const data = { ...result };
 		if (data.highlight) {
-			Object.keys(data.highlight).forEach(highlightItem => {
+			Object.keys(data.highlight).forEach((highlightItem) => {
 				const highlightValue = data.highlight[highlightItem][0];
 				data._source = Object.assign({}, data._source, { [highlightItem]: highlightValue });
 			});
@@ -305,7 +260,7 @@ class ReactiveList extends Component {
 		return data;
 	};
 
-	parseHits = hits => {
+	parseHits = (hits) => {
 		let results = null;
 		if (hits) {
 			results = [...hits].map(this.highlightResults);
@@ -317,11 +272,9 @@ class ReactiveList extends Component {
 		if (this.props.onResultStats && this.props.total) {
 			return this.props.onResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
-			return (
-				<p className={getClassName(this.props.innerClass, "resultstats") || null}>
-					{this.props.total} results found in {this.props.time}ms
-				</p>
-			);
+			return (<p className={getClassName(this.props.innerClass, "resultstats") || null}>
+				{this.props.total} results found in {this.props.time}ms
+			</p>);
 		}
 		return null;
 	};
@@ -330,25 +283,38 @@ class ReactiveList extends Component {
 		const results = this.parseHits(this.props.hits) || [];
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.isLoading &&
-					this.props.pagination &&
-					this.props.loader &&
-					this.props.loader}
-				{this.props.showResultStats ? this.renderResultStats() : null}
-				{this.props.pagination && this.props.paginationAt !== "bottom"
-					? this.renderPagination()
-					: null}
-				{this.props.onAllData ? (
-					this.props.onAllData(this.parseHits(this.props.hits), this.loadMore)
-				) : (
-					<div className={getClassName(this.props.innerClass, "list")}>
-						{results.map(item => this.props.onData({ _id: item._id, ...item._source }))}
-					</div>
-				)}
-				{this.state.isLoading && !this.props.pagination ? <div>Loading...</div> : null}
-				{this.props.pagination && this.props.paginationAt !== "top"
-					? this.renderPagination()
-					: null}
+				{this.props.isLoading && this.props.pagination && this.props.loader && this.props.loader}
+				{
+					this.props.showResultStats
+						? this.renderResultStats()
+						: null
+				}
+				{
+					this.props.pagination && this.props.paginationAt !== "bottom"
+						? this.renderPagination()
+						: null
+				}
+				{
+					this.props.onAllData
+						? (this.props.onAllData(this.parseHits(this.props.hits), this.loadMore))
+						: (<div className={getClassName(this.props.innerClass, "list")}>
+							{
+								results.map(item => this.props.onData({ _id: item._id, ...item._source }))
+							}
+						</div>)
+				}
+				{
+					this.state.isLoading && !this.props.pagination
+						? (<div>
+							Loading...
+						</div>)
+						: null
+				}
+				{
+					this.props.pagination && this.props.paginationAt !== "top"
+						? this.renderPagination()
+						: null
+				}
 			</div>
 		);
 	}
@@ -383,7 +349,7 @@ ReactiveList.propTypes = {
 	stream: types.bool,
 	setStreaming: types.func,
 	innerClass: types.style
-};
+}
 
 ReactiveList.defaultProps = {
 	pagination: false,
@@ -394,12 +360,12 @@ ReactiveList.defaultProps = {
 	showResultStats: true,
 	style: {},
 	className: null
-};
+}
 
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
-	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	time: state.hits[props.componentId] && state.hits[props.componentId].time || 0,
 	isLoading: state.isLoading[props.componentId] || false
 });
 

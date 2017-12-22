@@ -42,9 +42,11 @@ export {
 	DataController,
 	TagCloud,
 	ReactiveComponent,
+
 	// date
 	DatePicker,
 	DateRange,
+
 	// list
 	SingleList,
 	MultiList,
@@ -52,6 +54,7 @@ export {
 	MultiDropdownList,
 	SingleDataList,
 	MultiDataList,
+
 	// range
 	SingleRange,
 	MultiRange,
@@ -60,11 +63,13 @@ export {
 	RangeSlider,
 	DynamicRangeSlider,
 	RangeInput,
+
 	// search
 	DataSearch,
 	CategorySearch,
+
 	// result
 	ReactiveList,
 	ResultCard,
 	ResultList
-};
+}

@@ -1,13 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { SingleList, SingleRange, MultiList, RangeSlider } from "@appbaseio/reactivesearch";
+import {
+	SingleList,
+	SingleRange,
+	MultiList,
+	RangeSlider
+} from "@appbaseio/reactivesearch";
 
 import Flex, { FlexChild } from "../styles/Flex";
 
 const SearchFilters = () => (
 	<Flex direction="column">
 		<FlexChild card margin="10px">
-			<SingleList componentId="brand" dataField="brand.raw" title="Cars" />
+			<SingleList
+				componentId="brand"
+				dataField="brand.raw"
+				title="Cars"
+			/>
 		</FlexChild>
 		<FlexChild card margin="10px">
 			<SingleRange

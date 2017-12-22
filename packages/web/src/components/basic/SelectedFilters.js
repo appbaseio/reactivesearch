@@ -7,7 +7,7 @@ import { getClassName } from "@appbaseio/reactivecore/lib/utils/helper";
 import Button, { filters } from "../../styles/Button";
 
 class SelectedFilters extends Component {
-	remove = component => {
+	remove = (component) => {
 		this.props.setValue(component, null);
 	};
 
@@ -23,52 +23,45 @@ class SelectedFilters extends Component {
 			return null;
 		}
 		return value;
-	};
+	}
 
 	render() {
 		const { selectedValues } = this.props;
 		let hasValues = false;
 
-		return (
-			<div style={this.props.style} className={`${filters} ${this.props.className || ""}`}>
-				{Object.keys(selectedValues)
-					.filter(
-						id => this.props.components.includes(id) && selectedValues[id].showFilter
-					)
+		return (<div style={this.props.style} className={`${filters} ${this.props.className || ""}`}>
+			{
+				Object.keys(selectedValues)
+					.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
 					.map((component, index) => {
 						const { label, value } = selectedValues[component];
 						const isArray = Array.isArray(value);
 
-						if ((label && (isArray && value.length)) || (!isArray && value)) {
+						if (label && (isArray && value.length) || (!isArray && value)) {
 							hasValues = true;
-							return (
-								<Button
-									className={
-										getClassName(this.props.innerClass, "button") || null
-									}
-									key={`${component}-${index}`}
-									onClick={() => this.remove(component)}
-								>
-									<span>
-										{selectedValues[component].label}:{" "}
-										{this.renderValue(value, isArray)}
-									</span>
-									<span>&#x2715;</span>
-								</Button>
-							);
+							return (<Button
+								className={getClassName(this.props.innerClass, "button") || null}
+								key={`${component}-${index}`}
+								onClick={() => this.remove(component)}
+							>
+								<span>{selectedValues[component].label}: {this.renderValue(value, isArray)}</span>
+								<span>&#x2715;</span>
+							</Button>);
 						}
 						return null;
-					})}
-				{this.props.showClearAll && hasValues ? (
-					<Button
+					})
+			}
+			{
+				this.props.showClearAll && hasValues
+					? <Button
 						className={getClassName(this.props.innerClass, "button") || null}
 						onClick={this.props.clearValues}
 					>
 						{this.props.clearAllLabel}
 					</Button>
-				) : null}
-			</div>
-		);
+					: null
+			}
+		</div>)
 	}
 }
 
@@ -89,7 +82,7 @@ SelectedFilters.defaultProps = {
 	className: null,
 	showClearAll: true,
 	clearAllLabel: "Clear All"
-};
+}
 
 const mapStateToProps = state => ({
 	selectedValues: state.selectedValues,
@@ -98,7 +91,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchtoProps = dispatch => ({
 	setValue: (component, value) => dispatch(setValue(component, value)),
-	clearValues: () => dispatch(clearValues())
+	clearValues: () => (dispatch(clearValues()))
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(SelectedFilters);

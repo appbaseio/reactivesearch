@@ -41,6 +41,6 @@ export const appContainer = css`
 	${queries.xLarge`
 		flex-direction: column;
 	`};
-`;
+`
 
 export default Container;

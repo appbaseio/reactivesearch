@@ -11,12 +11,12 @@ const getWidth = (index, range, item, props) => {
 		diff = props.range.end - item.key;
 	}
 	const fullRange = props.range.end - props.range.start;
-	return `${diff / fullRange * 100}%`;
+	return `${(diff / fullRange) * 100}%`;
 };
 
-const HistogramContainer = props => {
+const HistogramContainer = (props) => {
 	let max = props.stats[0].doc_count;
-	props.stats.forEach(item => {
+	props.stats.forEach((item) => {
 		if (max < item.doc_count) {
 			max = item.doc_count;
 		}
@@ -35,22 +35,24 @@ const HistogramContainer = props => {
 
 	return (
 		<div className={histogramContainer}>
-			{range.map((item, index) => (
-				<Histogram
-					key={item.key}
-					width={getWidth(index, range, item, props)}
-					height={`${100 * item.doc_count / max || 0}%`}
-					title={item.doc_count}
-				/>
-			))}
+			{
+				range.map((item, index) => (
+					<Histogram
+						key={item.key}
+						width={getWidth(index, range, item, props)}
+						height={`${(100 * item.doc_count) / max || 0}%`}
+						title={item.doc_count}
+					/>
+				))
+			}
 		</div>
 	);
-};
+}
 
 HistogramContainer.propTypes = {
 	stats: types.stats,
 	range: types.range,
 	interval: types.number
-};
+}
 
 export default HistogramContainer;

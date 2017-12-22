@@ -41,7 +41,11 @@ class SingleRange extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
 
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.setValue(nextProps.defaultSelected, true);
@@ -73,21 +77,18 @@ class SingleRange extends Component {
 			};
 		}
 		return null;
-	};
+	}
 
 	setValue = (value, isDefaultValue = false, props = this.props) => { // eslint-disable-line
 		const currentValue = props.data.find(item => item.label === value) || null;
 
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentValue
-				},
-				() => {
-					this.updateQuery(currentValue, props);
-				}
-			);
-		};
+			this.setState({
+				currentValue
+			}, () => {
+				this.updateQuery(currentValue, props);
+			});
+		}
 
 		checkValueChange(
 			props.componentId,
@@ -96,7 +97,7 @@ class SingleRange extends Component {
 			props.onValueChange,
 			performUpdate
 		);
-	};
+	}
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
@@ -117,41 +118,33 @@ class SingleRange extends Component {
 		});
 	};
 
-	handleClick = e => {
+	handleClick = (e) => {
 		this.setValue(e.target.value);
 	};
 
 	render() {
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, "title") || null}>
-						{this.props.title}
-					</Title>
-				)}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
 				<UL className={getClassName(this.props.innerClass, "list") || null}>
-					{this.props.data.map(item => (
-						<li key={item.label}>
-							<Radio
-								className={getClassName(this.props.innerClass, "input")}
-								id={item.label}
-								name={this.props.componentId}
-								value={item.label}
-								onClick={this.handleClick}
-								checked={
-									!!this.state.currentValue &&
-									this.state.currentValue.label === item.label
-								}
-								show={this.props.showRadio}
-							/>
-							<label
-								className={getClassName(this.props.innerClass, "label") || null}
-								htmlFor={item.label}
-							>
-								{item.label}
-							</label>
-						</li>
-					))}
+					{
+						this.props.data.map(item => (
+							<li key={item.label}>
+								<Radio
+									className={getClassName(this.props.innerClass, "input")}
+									id={item.label}
+									name={this.props.componentId}
+									value={item.label}
+									onClick={this.handleClick}
+									checked={!!this.state.currentValue && this.state.currentValue.label === item.label}
+									show={this.props.showRadio}
+								/>
+								<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={item.label}>
+									{item.label}
+								</label>
+							</li>
+						))
+					}
 				</UL>
 			</div>
 		);
@@ -180,7 +173,7 @@ SingleRange.propTypes = {
 	style: types.style,
 	className: types.string,
 	innerClass: types.style
-};
+}
 
 SingleRange.defaultProps = {
 	URLParams: false,
@@ -188,13 +181,10 @@ SingleRange.defaultProps = {
 	showRadio: true,
 	style: {},
 	className: null
-};
+}
 
 const mapStateToProps = (state, props) => ({
-	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
 });
 
 const mapDispatchtoProps = dispatch => ({

@@ -177,7 +177,7 @@ const DateContainer = styled.div`
 		color: #f0f8ff;
 		color: #f0f8ff;
 		background-color: ${({ theme }) => theme.primaryColor};
-		border-radius: ${({ range }) => (range ? 0 : "100%")};
+		border-radius: ${({ range }) => range ? 0 : "100%"};
 	}
 
 	.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover {
@@ -206,11 +206,9 @@ const DateContainer = styled.div`
 
 	.DayPickerInput input {
 		${input};
-		${({ showBorder }) =>
-			!showBorder &&
-			css`
-				border: none;
-			`};
+		${({ showBorder }) => !showBorder && css`
+			border: none;
+		`};
 	}
 
 	.DayPickerInput-OverlayWrapper {

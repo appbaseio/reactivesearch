@@ -8,20 +8,18 @@ import { isEqual } from "@appbaseio/reactivecore/lib/utils/helper";
 class URLParamsProvider extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (!isEqual(this.props.selectedValues, nextProps.selectedValues)) {
-			Object.keys(nextProps.selectedValues).forEach(component => {
-				if (nextProps.selectedValues[component].URLParams) {
-					this.setURL(
-						component,
-						this.getValue(nextProps.selectedValues[component].value)
-					);
-				} else {
-					this.props.params.delete(component);
-					this.pushToHistory();
-				}
-			});
+			Object.keys(nextProps.selectedValues)
+				.forEach((component) => {
+					if (nextProps.selectedValues[component].URLParams) {
+						this.setURL(component, this.getValue(nextProps.selectedValues[component].value));
+					} else {
+						this.props.params.delete(component);
+						this.pushToHistory();
+					}
+				});
 
 			if (!Object.keys(nextProps.selectedValues).length) {
-				Array.from(this.props.params.keys()).forEach(item => {
+				Array.from(this.props.params.keys()).forEach((item) => {
 					this.props.params.delete(item);
 				});
 				this.pushToHistory();
@@ -43,11 +41,8 @@ class URLParamsProvider extends Component {
 	}
 
 	setURL(component, value) {
-		if (
-			!value ||
-			(typeof value === "string" && value.trim() === "") ||
-			(Array.isArray(value) && value.length === 0)
-		) {
+		if (!value || (typeof value === "string" && value.trim() === "") ||
+			(Array.isArray(value) && value.length === 0)) {
 			this.props.params.delete(component);
 			this.pushToHistory();
 		} else {
@@ -61,18 +56,16 @@ class URLParamsProvider extends Component {
 
 	pushToHistory() {
 		if (history.pushState) {
-			const paramsSting = this.props.params.toString()
-				? `?${this.props.params.toString()}`
-				: "";
-			const newurl = `${window.location.protocol}//${window.location.host}${
-				window.location.pathname
-			}${paramsSting}`;
+			const paramsSting = this.props.params.toString() ? `?${this.props.params.toString()}` : "";
+			const newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}${paramsSting}`;
 			window.history.pushState({ path: newurl }, "", newurl);
 		}
 	}
 
 	render() {
-		return <Base>{this.props.children}</Base>;
+		return (<Base>
+			{this.props.children}
+		</Base>)
 	}
 }
 
@@ -81,6 +74,7 @@ URLParamsProvider.propTypes = {
 	params: types.params,
 	children: types.children
 };
+
 
 const mapStateToProps = state => ({
 	selectedValues: state.selectedValues

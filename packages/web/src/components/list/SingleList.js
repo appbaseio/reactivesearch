@@ -52,14 +52,25 @@ class SingleList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
-		checkPropChange(this.props.options, nextProps.options, () => {
-			this.setState({
-				options: nextProps.options[nextProps.dataField].buckets || []
-			});
-		});
-		checkSomePropChange(this.props, nextProps, ["size", "sortBy"], () =>
-			this.updateQueryOptions(nextProps)
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps)
+		);
+		checkPropChange(
+			this.props.options,
+			nextProps.options,
+			() => {
+				this.setState({
+					options: nextProps.options[nextProps.dataField].buckets || []
+				});
+			}
+		);
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			["size", "sortBy"],
+			() => this.updateQueryOptions(nextProps)
 		);
 
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
@@ -74,7 +85,7 @@ class SingleList extends Component {
 		this.props.removeComponent(this.internalComponent);
 	}
 
-	setReact = props => {
+	setReact = (props) => {
 		const { react } = props;
 		if (react) {
 			const newReact = pushToAndClause(react, this.internalComponent);
@@ -107,15 +118,12 @@ class SingleList extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentValue: value
-				},
-				() => {
-					this.updateQuery(value, props);
-				}
-			);
-		};
+			this.setState({
+				currentValue: value
+			}, () => {
+				this.updateQuery(value, props);
+			});
+		}
 
 		checkValueChange(
 			props.componentId,
@@ -143,7 +151,7 @@ class SingleList extends Component {
 		});
 	};
 
-	updateQueryOptions = props => {
+	updateQueryOptions = (props) => {
 		const queryOptions = getQueryOptions(props);
 		queryOptions.aggs = {
 			[props.dataField]: {
@@ -153,11 +161,11 @@ class SingleList extends Component {
 					order: getAggsOrder(props.sortBy)
 				}
 			}
-		};
+		}
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
-	handleInputChange = e => {
+	handleInputChange = (e) => {
 		const { value } = e.target;
 		this.setState({
 			searchTerm: value
@@ -166,22 +174,20 @@ class SingleList extends Component {
 
 	renderSearch = () => {
 		if (this.props.showSearch) {
-			return (
-				<Input
-					className={getClassName(this.props.innerClass, "input") || null}
-					onChange={this.handleInputChange}
-					value={this.state.searchTerm}
-					placeholder={this.props.placeholder}
-					style={{
-						margin: "0 0 8px"
-					}}
-				/>
-			);
+			return <Input
+				className={getClassName(this.props.innerClass, "input") || null}
+				onChange={this.handleInputChange}
+				value={this.state.searchTerm}
+				placeholder={this.props.placeholder}
+				style={{
+					margin: "0 0 8px"
+				}}
+			/>
 		}
 		return null;
 	};
 
-	handleClick = e => {
+	handleClick = (e) => {
 		this.setValue(e.target.value);
 	};
 
@@ -194,61 +200,56 @@ class SingleList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, "title") || null}>
-						{this.props.title}
-					</Title>
-				)}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
 				{this.renderSearch()}
 				<UL className={getClassName(this.props.innerClass, "list") || null}>
-					{selectAllLabel ? (
-						<li key={selectAllLabel}>
-							<Radio
-								className={getClassName(this.props.innerClass, "input")}
-								id={selectAllLabel}
-								name={this.props.componentId}
-								value={selectAllLabel}
-								onClick={this.handleClick}
-								checked={this.state.currentValue === selectAllLabel}
-								show={this.props.showRadio}
-							/>
-							<label
-								className={getClassName(this.props.innerClass, "label") || null}
-								htmlFor={selectAllLabel}
-							>
-								{selectAllLabel}
-							</label>
-						</li>
-					) : null}
-					{this.state.options
-						.filter(item => {
-							if (this.props.showSearch && this.state.searchTerm) {
-								return item.key
-									.toLowerCase()
-									.includes(this.state.searchTerm.toLowerCase());
-							}
-							return true;
-						})
-						.map(item => (
-							<li key={item.key}>
+					{
+						selectAllLabel
+							? (<li key={selectAllLabel}>
 								<Radio
 									className={getClassName(this.props.innerClass, "input")}
-									id={item.key}
+									id={selectAllLabel}
 									name={this.props.componentId}
-									value={item.key}
+									value={selectAllLabel}
 									onClick={this.handleClick}
-									checked={this.state.currentValue === item.key}
+									checked={this.state.currentValue === selectAllLabel}
 									show={this.props.showRadio}
 								/>
-								<label
-									className={getClassName(this.props.innerClass, "label") || null}
-									htmlFor={item.key}
-								>
-									{item.key}
-									{this.props.showCount && ` (${item.doc_count})`}
+								<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={selectAllLabel}>
+									{selectAllLabel}
 								</label>
-							</li>
-						))}
+							</li>)
+							: null
+					}
+					{
+						this.state.options
+							.filter((item) => {
+								if (this.props.showSearch && this.state.searchTerm) {
+									return item.key.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+								}
+								return true;
+							})
+							.map(item => (
+								<li key={item.key}>
+									<Radio
+										className={getClassName(this.props.innerClass, "input")}
+										id={item.key}
+										name={this.props.componentId}
+										value={item.key}
+										onClick={this.handleClick}
+										checked={this.state.currentValue === item.key}
+										show={this.props.showRadio}
+									/>
+									<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={item.key}>
+										{item.key}
+										{
+											this.props.showCount &&
+											` (${item.doc_count})`
+										}
+									</label>
+								</li>
+							))
+					}
 				</UL>
 			</div>
 		);
@@ -284,7 +285,7 @@ SingleList.propTypes = {
 	style: types.style,
 	className: types.string,
 	innerClass: types.style
-};
+}
 
 SingleList.defaultProps = {
 	size: 100,
@@ -297,14 +298,11 @@ SingleList.defaultProps = {
 	showSearch: true,
 	style: {},
 	className: null
-};
+}
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		""
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || ""
 });
 
 const mapDispatchtoProps = dispatch => ({

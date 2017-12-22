@@ -15,7 +15,7 @@ const dimensions = props => css`
 
 const Historam = styled("div")`
 	background-color: #efefef;
-	${dimensions};
+	${dimensions}
 `;
 
 export default Historam;

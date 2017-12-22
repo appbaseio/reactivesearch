@@ -39,7 +39,9 @@ class ToggleButton extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkPropChange(this.props.react, nextProps.react, () =>
+			this.setReact(nextProps)
+		);
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleToggle(nextProps.defaultSelected, true, nextProps);
 		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
@@ -64,7 +66,7 @@ class ToggleButton extends Component {
 						}
 					}))
 				}
-			};
+			}
 		}
 		return query;
 	};
@@ -77,20 +79,19 @@ class ToggleButton extends Component {
 				toggleValue = [toggleValue];
 			}
 			finalValue = toggleValue.reduce((fin, next) => {
-				const match = props.data.find(item => item.label === next);
+				const match = props.data.find(item => item.label === next)
 				return match ? fin.concat(match) : fin;
 			}, []);
 		} else if (this.props.multiSelect) {
-			finalValue = currentValue.some(item => item.label === toggleValue.label)
-				? currentValue.filter(item => item.label !== toggleValue.label)
-				: currentValue.concat(toggleValue);
+			finalValue = currentValue.some(item => item.label === toggleValue.label) ?
+				currentValue.filter(item => item.label !== toggleValue.label) :
+				currentValue.concat(toggleValue);
 		} else {
-			finalValue = currentValue.some(item => item.label === toggleValue.label)
-				? []
-				: [toggleValue];
+			finalValue = currentValue.some(item => item.label === toggleValue.label) ?
+				[] : [toggleValue];
 		}
 		this.setValue(finalValue);
-	};
+	}
 
 	setReact(props) {
 		if (props.react) {
@@ -100,14 +101,11 @@ class ToggleButton extends Component {
 
 	setValue = (value, props = this.props) => {
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentValue: value
-				},
-				() => {
-					this.updateQuery(value, props);
-				}
-			);
+			this.setState({
+				currentValue: value
+			}, () => {
+				this.updateQuery(value, props);
+			});
 		};
 		checkValueChange(
 			props.componentId,
@@ -127,7 +125,7 @@ class ToggleButton extends Component {
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
-			value: props.multiSelect ? value : value[0].label, // sets a string in URL not array
+			value: props.multiSelect ? value : value[0].label,	// sets a string in URL not array
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
@@ -137,15 +135,11 @@ class ToggleButton extends Component {
 
 	render() {
 		return (
-			<div
-				style={this.props.style}
-				className={`${toggleButtons} ${this.props.className || ""}`}
-			>
-				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, "title") || null}>
-						{this.props.title}
-					</Title>
-				)}
+			<div style={this.props.style} className={`${toggleButtons} ${this.props.className || ""}`}>
+				{
+					this.props.title &&
+					<Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>
+				}
 				{this.props.data.map(item => (
 					<Button
 						className={getClassName(this.props.innerClass, "button") || null}
@@ -198,7 +192,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	watchComponent: (component, react) =>
+		dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
 });
 

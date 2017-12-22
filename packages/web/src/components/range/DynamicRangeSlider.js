@@ -60,12 +60,15 @@ class DynamicRangeSlider extends Component {
 			if (nextProps.selectedValue) {
 				this.handleChange(nextProps.selectedValue);
 			} else if (nextProps.defaultSelected) {
-				this.handleChange([nextProps.defaultSelected.start, nextProps.defaultSelected.end]);
+				this.handleChange([
+					nextProps.defaultSelected.start,
+					nextProps.defaultSelected.end
+				]);
 			} else {
 				this.handleChange([
 					Math.floor(nextProps.range.start),
 					Math.ceil(nextProps.range.end)
-				]);
+				])
 			}
 		} else {
 			if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
@@ -74,17 +77,18 @@ class DynamicRangeSlider extends Component {
 					nextProps
 				);
 			} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-				this.handleChange(
-					nextProps.selectedValue || [nextProps.range.start, nextProps.range.end]
-				);
+				this.handleChange(nextProps.selectedValue || [nextProps.range.start, nextProps.range.end]);
 			}
 		}
 		checkPropChange(this.props.react, nextProps.react, () => {
 			this.updateRangeQueryOptions(this.props);
-			this.setReact(nextProps);
+			this.setReact(nextProps)
 		});
-		checkSomePropChange(this.props, nextProps, ["showHistogram", "interval"], () =>
-			this.updateQueryOptions(nextProps, nextProps.range || this.state.range)
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			["showHistogram", "interval"],
+			() => this.updateQueryOptions(nextProps, nextProps.range || this.state.range)
 		);
 		checkPropChange(this.props.options, nextProps.options, () => {
 			const { options } = nextProps;
@@ -101,13 +105,11 @@ class DynamicRangeSlider extends Component {
 
 	shouldComponentUpdate(nextProps, nextState) {
 		if (nextState.range) {
-			const upperLimit = Math.floor((nextState.range.end - nextState.range.start) / 2);
+			const upperLimit = Math.floor(
+				(nextState.range.end - nextState.range.start) / 2
+			);
 			if (nextProps.stepValue < 1 || nextProps.stepValue > upperLimit) {
-				console.warn(
-					`stepValue for DynamicRangeSlider ${
-						nextProps.componentId
-					} should be greater than 0 and less than or equal to ${upperLimit}`
-				);
+				console.warn(`stepValue for DynamicRangeSlider ${nextProps.componentId} should be greater than 0 and less than or equal to ${upperLimit}`);
 				return false;
 			}
 			return true;
@@ -122,24 +124,21 @@ class DynamicRangeSlider extends Component {
 		this.props.removeComponent(this.internalMatchAllComponent);
 	}
 
-	setReact = props => {
+	setReact = (props) => {
 		const { react } = props;
 		if (react) {
 			props.watchComponent(this.internalRangeComponent, props.react);
-			const newReact = pushToAndClause(react, this.internalHistogramComponent);
+			const newReact = pushToAndClause(
+				react,
+				this.internalHistogramComponent
+			);
 			props.watchComponent(props.componentId, newReact);
 		} else {
 			// internalRangeComponent watches internalMatchAll component allowing execution of query
 			// in case of no react prop
 			this.props.addComponent(this.internalMatchAllComponent);
-			props.setQueryOptions(
-				this.internalMatchAllComponent,
-				{ aggs: { match_all: {} } },
-				false
-			);
-			props.watchComponent(this.internalRangeComponent, {
-				and: this.internalMatchAllComponent
-			});
+			props.setQueryOptions(this.internalMatchAllComponent, { aggs: { match_all: {} } }, false);
+			props.watchComponent(this.internalRangeComponent, { and: this.internalMatchAllComponent });
 			props.watchComponent(props.componentId, { and: this.internalHistogramComponent });
 		}
 	};
@@ -183,11 +182,7 @@ class DynamicRangeSlider extends Component {
 		if (!props.interval) {
 			return min;
 		} else if (props.interval < min) {
-			console.error(
-				`${
-					props.componentId
-				}: interval prop's value should be greater than or equal to ${min}`
-			);
+			console.error(`${props.componentId}: interval prop's value should be greater than or equal to ${min}`);
 			return min;
 		} else {
 			return props.interval;
@@ -206,7 +201,7 @@ class DynamicRangeSlider extends Component {
 		};
 	};
 
-	rangeQuery = props => {
+	rangeQuery = (props) => {
 		return {
 			min: { min: { field: props.dataField } },
 			max: { max: { field: props.dataField } }
@@ -215,14 +210,11 @@ class DynamicRangeSlider extends Component {
 
 	handleChange = (currentValue, props = this.props) => {
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentValue
-				},
-				() => {
-					this.updateQuery([currentValue[0], currentValue[1]], props);
-				}
-			);
+			this.setState({
+				currentValue
+			}, () => {
+				this.updateQuery([currentValue[0], currentValue[1]], props);
+			});
 		};
 		checkValueChange(
 			props.componentId,
@@ -274,13 +266,13 @@ class DynamicRangeSlider extends Component {
 		}
 	};
 
-	updateRange = range => {
+	updateRange = (range) => {
 		this.setState({
 			range
 		});
-	};
+	}
 
-	updateRangeQueryOptions = props => {
+	updateRangeQueryOptions = (props) => {
 		const queryOptions = {
 			aggs: this.rangeQuery(props)
 		};
@@ -295,7 +287,9 @@ class DynamicRangeSlider extends Component {
 		return (
 			<Slider primary style={this.props.style} className={this.props.className}>
 				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, "title") || null}>
+					<Title
+						className={getClassName(this.props.innerClass, "title") || null}
+					>
 						{this.props.title}
 					</Title>
 				)}
@@ -373,19 +367,18 @@ DynamicRangeSlider.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options:
-		state.aggregations[props.componentId] &&
+		(state.aggregations[props.componentId] &&
 		state.aggregations[props.componentId][props.dataField] &&
-		state.aggregations[props.componentId][props.dataField].buckets
+		state.aggregations[props.componentId][props.dataField].buckets)
 			? state.aggregations[props.componentId][props.dataField].buckets
 			: [],
-	range:
-		state.aggregations[`${props.componentId}__range__internal`] &&
+	range: state.aggregations[`${props.componentId}__range__internal`] &&
 		state.aggregations[`${props.componentId}__range__internal`].min
-			? {
-					start: state.aggregations[`${props.componentId}__range__internal`].min.value,
-					end: state.aggregations[`${props.componentId}__range__internal`].max.value
-				}
-			: null,
+		? {
+			start: state.aggregations[`${props.componentId}__range__internal`].min.value,
+			end: state.aggregations[`${props.componentId}__range__internal`].max.value
+		}
+		: null,
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null
@@ -394,7 +387,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	watchComponent: (component, react) =>
+		dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute))

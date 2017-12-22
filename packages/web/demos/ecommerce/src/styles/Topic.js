@@ -10,7 +10,7 @@ export const price = css`
 	padding: 10px;
 	font-size: 1.3rem;
 	background: ${color.secondaryColor};
-`;
+`
 
 const Topic = styled.div`
 	background: ${color.lightGray};
