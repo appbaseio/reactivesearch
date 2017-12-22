@@ -11,7 +11,7 @@ const onResultStats = (results, time) => (
 	</Flex>
 );
 
-const onData = ({ _source: data }) => ({
+const onData = data => ({
 	image:
 		data.vehicleType === "other" || data.vehicleType === "unknown"
 			? "src/images/car.jpg"

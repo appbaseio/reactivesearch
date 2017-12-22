@@ -16,7 +16,7 @@ const onResultStats = (results, time) => (
 	</Flex>
 );
 
-const onData = ({ _source: data }, currentTopics, toggleTopic) => (
+const onData = (data, currentTopics, toggleTopic) => (
 	<ResultItem key={data.fullname}>
 		<Flex alignCenter justifyContent="center" className={resultCardHeader}>
 			<Avatar src={data.avatar} alt="User avatar" />

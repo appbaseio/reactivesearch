@@ -40,8 +40,8 @@ const onResultStats = (results, time) => (
 	</Flex>
 );
 
-const onData = ({ _source: data }) => (
-	<ResultItem key={data.id}>
+const onData = data => (
+	<ResultItem key={data._id}>
 		<div dangerouslySetInnerHTML={{ __html: data.title }} />
 		<div dangerouslySetInnerHTML={{ __html: data.text }} />
 		<Flex className={resultItemDetails} style={{ paddingTop: 5, marginTop: 5 }}>

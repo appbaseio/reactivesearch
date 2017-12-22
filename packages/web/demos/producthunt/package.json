@@ -12,10 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@appbaseio/reactivesearch": "^2.0.0-alpha-01",
+    "@appbaseio/reactivesearch": "^2.0.0-alpha-06",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-layout-components": "^3.0.6"
+    "react-dom": "^16.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -7,11 +7,9 @@ import {
 	ResultList,
 	SelectedFilters
 } from "@appbaseio/reactivesearch";
-import Box from "react-layout-components";
 
 class ProductHuntApp extends Component {
-	onData = hit => {
-		const res = hit._source;
+	onData = res => {
 		const topics = res.topics.map(topic => (
 			<span key={topic} className="tag">
 				{topic}
@@ -44,10 +42,10 @@ class ProductHuntApp extends Component {
 				type="post"
 			>
 				{/* header */}
-				<Box width={"100%"}>
+				<div>
 					<SelectedFilters />
-				</Box>
-				<Box width={"100%"} className="mt-20">
+				</div>
+				<div className="mt-20">
 					<DataSearch
 						title="Search"
 						componentId="searchbox"
@@ -57,9 +55,9 @@ class ProductHuntApp extends Component {
 						defaultSelected="iphone"
 						filterLabel="Search"
 					/>
-				</Box>
-				<Box flexDirection={"row"} className="mt-20">
-					<Box width={"30%"}>
+				</div>
+				<div className="mt-20">
+					<div>
 						{/* left sidebar */}
 						<MultiList
 							componentId="categories"
@@ -77,8 +75,8 @@ class ProductHuntApp extends Component {
 							showCheckbox={false}
 							filterLabel="Categories"
 						/>
-					</Box>
-					<Box width={"70%"}>
+					</div>
+					<div>
 						{/* right sidebar */}
 						<ResultList
 							componentId="results"
@@ -91,8 +89,8 @@ class ProductHuntApp extends Component {
 								return `Found ${results} results in ${time} milliseconds`;
 							}}
 						/>
-					</Box>
-				</Box>
+					</div>
+				</div>
 			</ReactiveBase>
 		);
 	}

@@ -32,6 +32,11 @@ export const categorySearchContainer = css`
 	`};
 `;
 
+export const filtersContainer = css`
+	max-height: calc(100vh - 100px);
+	overflow-y: auto;
+`;
+
 export const appContainer = css`
 	${queries.xLarge`
 		flex-direction: column;
