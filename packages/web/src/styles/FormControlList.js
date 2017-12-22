@@ -203,7 +203,7 @@ const UL = styled("ul")`
 	margin: 0;
 	max-height: ${props => props.theme.componentMaxHeight};
 	position: relative;
-	overflow-y: scroll;
+	overflow-y: auto;
 	padding-bottom: 12px;
 
 	li {
