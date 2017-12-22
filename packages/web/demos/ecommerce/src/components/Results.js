@@ -45,7 +45,7 @@ const Results = () => (
 		innerClass={{
 			image: "card-image",
 			pagination: "pagination",
-			"list-item": "card-item"
+			listItem: "card-item"
 		}}
 		pagination
 		size={15}

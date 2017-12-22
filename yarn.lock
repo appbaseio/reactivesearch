@@ -566,10 +566,6 @@ assert@^1.1.1:
   dependencies:
     util "0.10.3"
 
-assign-styles@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/assign-styles/-/assign-styles-1.0.2.tgz#3a5438937eca2902ef3f217c85b52e6a36919258"
-
 ast-types-flow@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/ast-types-flow/-/ast-types-flow-0.0.7.tgz#f70b735c6bca1a5c9c22d982c3e39e7feba3bdad"
@@ -4145,7 +4141,7 @@ inline-style-prefixer@^2.0.5:
     bowser "^1.0.0"
     hyphenate-style-name "^1.0.1"
 
-inline-style-prefixer@^3.0.0, inline-style-prefixer@^3.0.6:
+inline-style-prefixer@^3.0.6:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-3.0.8.tgz#8551b8e5b4d573244e66a34b04f7d32076a2b534"
   dependencies:
@@ -6078,14 +6074,6 @@ react-inspector@^2.2.2:
   dependencies:
     babel-runtime "^6.26.0"
     is-dom "^1.0.9"
-
-react-layout-components@^3.0.6:
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/react-layout-components/-/react-layout-components-3.0.6.tgz#96a39ecbb939765b44c830c973b94982c2d3d422"
-  dependencies:
-    assign-styles "^1.0.2"
-    inline-style-prefixer "^3.0.0"
-    prop-types "^15.5.10"
 
 react-modal@^3.1.8:
   version "3.1.10"
