@@ -338,7 +338,7 @@ class ResultCard extends Component {
 	};
 
 	renderResultStats = () => {
-		if (this.props.onResultStats) {
+		if (this.props.onResultStats && this.props.total) {
 			return this.props.onResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
 			return (
