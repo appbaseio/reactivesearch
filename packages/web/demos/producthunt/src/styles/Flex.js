@@ -50,7 +50,7 @@ const Flex = styled.div`
 
 	${props =>
 		props.responsive &&
-		queries.medium`
+		queries.small`
 		flex-direction: column;
 	`};
 

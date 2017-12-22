@@ -69,10 +69,7 @@ const ListItem = styled("a")`
 	article {
 		width: ${props => props.image ? props.small ? "calc(100% - 100px)" : "calc(100% - 160px)" : "100%"};
 		padding-left: ${props => props.image ? "10px" : 0};
-
-		* {
-			font-size: 0.9rem;
-		}
+		font-size: 0.9rem;
 	}
 
 	&:hover, &:focus {
@@ -80,9 +77,7 @@ const ListItem = styled("a")`
 	}
 
 	@media (max-width: 420px) {
-		width: 50%;
 		min-width: 0;
-		height: 210px;
 		margin: 0;
 		border-radius: 0;
 		box-shadow: none;

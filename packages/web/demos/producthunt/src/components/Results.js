@@ -1,32 +1,27 @@
 import React from "react";
 import { ResultList, SelectedFilters } from "@appbaseio/reactivesearch";
 
-const onData = res => {
-	const topics = res.topics.map(topic => (
-		<span key={topic} className="tag">
-			{topic}
-		</span>
-	));
-	return {
-		title: res.name,
-		desc: (
-			<div>
-				<p>{res.tagline}</p>
-				{topics}
-				<div className="stats">
-					<span>
-						<i className="fa fa-caret-up" /> {res.upvotes}
-					</span>
-					<span>
-						<i className="fa fa-comment" /> {res.comments_count}
-					</span>
-				</div>
-			</div>
-		)
-	};
-};
+import Topic from "../styles/Topic";
+import Flex from "../styles/Flex";
 
-const onResultStats = (results, time) => `Found ${results} results in ${time} milliseconds`;
+const onData = res => ({
+	title: res.name,
+	desc: (
+		<div>
+			<p style={{ marginBottom: 5 }}>{res.tagline}</p>
+			<Flex justifyContent="space-between" responsive>
+				<Flex>{res.topics.map(topic => <Topic key={topic}>{topic}</Topic>)}</Flex>
+				<Flex>
+					<Topic alt><i className="fa fa-caret-up" /> {res.upvotes}</Topic>
+					<Topic alt><i className="fa fa-comment" /> {res.comments_count}</Topic>
+				</Flex>
+			</Flex>
+		</div>
+	)
+});
+
+const onResultStats = (results, time) =>
+	<div style={{ margin: "10px 0" }}>{`Found ${results} results in ${time} milliseconds`}</div>;
 
 const Results = () => (
 	<div>
@@ -40,7 +35,7 @@ const Results = () => (
 			onData={onData}
 			onResultStats={onResultStats}
 			innerClass={{
-				listItem: "card-item"
+				listItem: "list-item"
 			}}
 		/>
 	</div>
