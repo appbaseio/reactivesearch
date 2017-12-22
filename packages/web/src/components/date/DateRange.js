@@ -21,6 +21,8 @@ import DateContainer from "../../styles/DateContainer";
 import Title from "../../styles/Title";
 import Flex from "../../styles/Flex";
 
+import CancelSvg from "../shared/CancelSvg";
+
 class DateRange extends Component {
 	constructor(props) {
 		super(props);
@@ -162,11 +164,19 @@ class DateRange extends Component {
 		this.endDateRef = ref;
 	};
 
-	handleDayPicker = date => {
-		this.handleDateChange(date);
+	clearDayPickerStart = () => {
+		if (this.state.currentDate && this.state.currentDate.start !== "") {
+			this.handleStartDate("", false); // resets the day picker component
+		}
 	};
 
-	handleStartDate = date => {
+	clearDayPickerEnd = () => {
+		if (this.state.currentDate && this.state.currentDate.end !== "") {
+			this.handleEndDate(""); // resets the day picker component
+		}
+	};
+
+	handleStartDate = (date, autoFocus = true) => {
 		const { currentDate } = this.state;
 		const end = currentDate ? currentDate.end : "";
 		this.handleDateChange({
@@ -174,7 +184,7 @@ class DateRange extends Component {
 			end
 		});
 		// focus the end date DayPicker if its empty
-		if (!end) {
+		if (this.props.autoFocusEnd && autoFocus) {
 			this.endDateRef.getInput().focus();
 		}
 	};
@@ -189,7 +199,7 @@ class DateRange extends Component {
 
 	handleDateChange = (currentDate, isDefaultValue = false, props = this.props) => {
 		let value = null;
-		if (currentDate) {
+		if (currentDate && !(currentDate.start === "" && currentDate.end === "")) {
 			value = isDefaultValue
 				? currentDate
 				: {
@@ -243,25 +253,27 @@ class DateRange extends Component {
 		const selectedDays = [start, { from: start, to: end }];
 		const modifiers = { start, end };
 		return (
-			<DateContainer range style={this.props.style} className={this.props.className}>
+			<DateContainer
+				range
+				style={this.props.style}
+				className={this.props.className}
+				showBorder={!this.props.showClear}
+			>
 				{this.props.title && (
 					<Title className={getClassName(this.props.innerClass, "title") || null}>
 						{this.props.title}
 					</Title>
 				)}
 				<Flex className={getClassName(this.props.innerClass, "input-container") || null}>
-					<Flex flex={2}>
+					<Flex flex={2} showBorder={this.props.showClear} iconPosition="right">
 						<DayPickerInput
 							showOverlay={this.props.focused}
 							formatDate={this.formatInputDate}
 							value={start}
-							placeholder={this.props.placeholder}
+							placeholder={this.props.placeholder.start}
 							dayPickerProps={{
 								numberOfMonths: this.props.numberOfMonths,
 								initialMonth: this.props.initialMonth,
-								disabledDays: {
-									after: this.state.currentDate ? this.state.currentDate.end : ""
-								},
 								selectedDays,
 								modifiers
 							}}
@@ -284,17 +296,22 @@ class DateRange extends Component {
 							}}
 							{...this.props.dayPickerInputProps}
 						/>
+						{this.props.showClear &&
+							this.state.currentDate &&
+							this.state.currentDate.start && (
+								<CancelSvg onClick={this.clearDayPickerStart} />
+							)}
 					</Flex>
 					<Flex justifyContent="center" alignItems="center" basis="20px">
 						-
 					</Flex>
-					<Flex flex={2}>
+					<Flex flex={2} showBorder={this.props.showClear} iconPosition="right">
 						<DayPickerInput
 							ref={this.getEndDateRef}
 							showOverlay={this.props.focused}
 							formatDate={this.formatInputDate}
 							value={end}
-							placeholder={this.props.placeholder}
+							placeholder={this.props.placeholder.end}
 							dayPickerProps={{
 								numberOfMonths: this.props.numberOfMonths,
 								initialMonth: this.props.initialMonth,
@@ -325,6 +342,11 @@ class DateRange extends Component {
 							}}
 							{...this.props.dayPickerInputProps}
 						/>
+						{this.props.showClear &&
+							this.state.currentDate &&
+							this.state.currentDate.end && (
+								<CancelSvg onClick={this.clearDayPickerEnd} />
+							)}
 					</Flex>
 				</Flex>
 			</DateContainer>
@@ -340,7 +362,7 @@ DateRange.propTypes = {
 	removeComponent: types.funcRequired,
 	queryFormat: types.queryFormatDate,
 	selectedValue: types.selectedValue,
-	placeholder: types.string,
+	placeholder: types.rangeLabels,
 	focused: types.bool,
 	innerClass: types.style,
 	title: types.string,
@@ -350,13 +372,20 @@ DateRange.propTypes = {
 	initialMonth: types.dateObject,
 	dayPickerInputProps: types.props,
 	showFilter: types.bool,
-	filterLabel: types.string
+	filterLabel: types.string,
+	autoFocusEnd: types.bool,
+	showClear: types.bool
 };
 
 DateRange.defaultProps = {
-	placeholder: "Select Date",
+	placeholder: {
+		start: "Select start date",
+		end: "Select end date"
+	},
 	numberOfMonths: 2,
-	showFilter: true
+	showFilter: true,
+	autoFocusEnd: true,
+	showClear: true
 };
 
 const mapStateToProps = (state, props) => ({
