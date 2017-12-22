@@ -1,30 +1,30 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
-	updateQuery
-} from "@appbaseio/reactivecore/lib/actions";
+	updateQuery,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	checkValueChange,
 	checkPropChange,
-	getClassName
-} from "@appbaseio/reactivecore/lib/utils/helper";
-import types from "@appbaseio/reactivecore/lib/utils/types";
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Title from "../../styles/Title";
-import Button, { numberBoxButtons } from "../../styles/Button";
-import Flex from "../../styles/Flex";
+import Title from '../../styles/Title';
+import Button, { numberBoxButtons } from '../../styles/Button';
+import Flex from '../../styles/Flex';
 
 class NumberBox extends Component {
 	constructor(props) {
 		super(props);
 
-		this.type = "term";
+		this.type = 'term';
 		this.state = {
-			currentValue: this.props.data.start
+			currentValue: this.props.data.start,
 		};
 	}
 
@@ -57,29 +57,29 @@ class NumberBox extends Component {
 
 	defaultQuery = (value, props) => {
 		switch (props.queryFormat) {
-			case "exact":
+			case 'exact':
 				return {
 					term: {
-						[props.dataField]: value
-					}
+						[props.dataField]: value,
+					},
 				};
-			case "lte":
+			case 'lte':
 				return {
 					range: {
 						[props.dataField]: {
 							lte: value,
-							boost: 2.0
-						}
-					}
+							boost: 2.0,
+						},
+					},
 				};
-			case "gte":
+			case 'gte':
 				return {
 					range: {
 						[props.dataField]: {
 							gte: value,
-							boost: 2.0
-						}
-					}
+							boost: 2.0,
+						},
+					},
 				};
 			default:
 				return null;
@@ -111,7 +111,7 @@ class NumberBox extends Component {
 	setValue = (value, props = this.props) => {
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value
+				currentValue: value,
 			}, () => {
 				this.updateQuery(value, props);
 			});
@@ -121,7 +121,7 @@ class NumberBox extends Component {
 			value,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -137,19 +137,19 @@ class NumberBox extends Component {
 			value,
 			onQueryChange,
 			showFilter: false,	// we don't need filters for NumberBox
-			URLParams: props.URLParams
+			URLParams: props.URLParams,
 		});
 	};
 
 	render() {
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<Flex labelPosition={this.props.labelPosition} inline>
-					<span className={getClassName(this.props.innerClass, "label") || null}>{this.props.data.label}</span>
+					<span className={getClassName(this.props.innerClass, 'label') || null}>{this.props.data.label}</span>
 					<div className={numberBoxButtons}>
 						<Button
-							className={getClassName(this.props.innerClass, "button") || null}
+							className={getClassName(this.props.innerClass, 'button') || null}
 							onClick={this.decrementValue}
 							disabled={this.state.currentValue === this.props.data.start}
 						>
@@ -157,7 +157,7 @@ class NumberBox extends Component {
 						</Button>
 						{this.state.currentValue}
 						<Button
-							className={getClassName(this.props.innerClass, "button") || null}
+							className={getClassName(this.props.innerClass, 'button') || null}
 							onClick={this.incrementValue}
 							disabled={this.state.currentValue === this.props.data.end}
 						>
@@ -184,19 +184,19 @@ NumberBox.propTypes = {
 	selectedValue: types.selectedValue,
 	style: types.style,
 	className: types.string,
-	innerClass: types.style
+	innerClass: types.style,
 };
 
 NumberBox.defaultProps = {
-	queryFormat: "gte",
-	labelPosition: "left",
+	queryFormat: 'gte',
+	labelPosition: 'left',
 	URLParams: false,
 	style: {},
-	className: null
+	className: null,
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] ? state.selectedValues[props.componentId].value : null
+	selectedValue: state.selectedValues[props.componentId] ? state.selectedValues[props.componentId].value : null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -204,7 +204,7 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) =>
 		dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(NumberBox);

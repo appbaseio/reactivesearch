@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react';
 import {
 	DataSearch,
 	SingleDropdownList,
-	SingleDropdownRange
-} from "@appbaseio/reactivesearch";
+	SingleDropdownRange,
+} from '@appbaseio/reactivesearch';
 
-import Flex, { FlexChild } from "../styles/Flex";
+import Flex, { FlexChild } from '../styles/Flex';
 
 const SearchFilters = () => (
-	<Flex responsive style={{ padding: "1rem" }}>
+	<Flex responsive style={{ padding: '1rem' }}>
 		<FlexChild flex={2}>
 			<DataSearch
 				componentId="title"
-				dataField={["title", "text"]}
+				dataField={['title', 'text']}
 				highlight
 			/>
 		</FlexChild>
@@ -28,9 +28,9 @@ const SearchFilters = () => (
 				componentId="time"
 				dataField="time"
 				data={[
-					{ start: "now-6M", end: "now", label: "Last 6 months" },
-					{ start: "now-1y", end: "now", label: "Last year" },
-					{ start: "now-10y", end: "now", label: "All time" }
+					{ start: 'now-6M', end: 'now', label: 'Last 6 months' },
+					{ start: 'now-1y', end: 'now', label: 'Last year' },
+					{ start: 'now-10y', end: 'now', label: 'All time' },
 				]}
 				placeholder="Select Time"
 			/>

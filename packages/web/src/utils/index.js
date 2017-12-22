@@ -1,40 +1,41 @@
 // flattens a nested array
 const flatten = arr => (
 	arr.reduce((flat, toFlatten) =>
-	  flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten), []
-	)
+		flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten), [])
 );
 
 const extractSuggestion = (val) => {
 	switch (typeof val) {
-		case "string":
+		case 'string':
 			return val.toLowerCase();
-		case "object":
+		case 'object':
 			if (Array.isArray(val)) {
 				return flatten(val);
-			} else {
-				return null;
 			}
+			return null;
+
 		default:
 			return val;
 	}
-}
+};
 
+// eslint-disable-next-line
 export const getSuggestions = (fields, suggestions, currentValue) => {
 	let suggestionsList = [];
 	let labelsList = [];
 
 	const populateSuggestionsList = (val) => {
-		// check if the suggestion includes the current value and not already included in other suggestions
+		// check if the suggestion includes the current value
+		// and not already included in other suggestions
 		if (val.includes(currentValue) && !labelsList.includes(val)) {
 			const option = {
 				label: val,
-				value: val
+				value: val,
 			};
 			labelsList = [...labelsList, val];
 			suggestionsList = [...suggestionsList, option];
 		}
-	}
+	};
 
 	suggestions.forEach((item) => {
 		fields.forEach((field) => {

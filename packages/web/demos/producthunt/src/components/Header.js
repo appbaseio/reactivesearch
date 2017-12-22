@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { DataSearch } from "@appbaseio/reactivesearch";
+import React, { Component } from 'react';
+import { DataSearch } from '@appbaseio/reactivesearch';
 
-import Navbar, { title, navbarContent } from "../styles/Navbar";
-import Flex, { FlexChild } from "../styles/Flex";
-import { dataSearchContainer } from "../styles/Container";
+import Navbar, { title, navbarContent } from '../styles/Navbar';
+import Flex, { FlexChild } from '../styles/Flex';
+import { dataSearchContainer } from '../styles/Container';
 
 class Header extends Component {
 	render() {
@@ -19,7 +19,7 @@ class Header extends Component {
 					<FlexChild className={dataSearchContainer}>
 						<DataSearch
 							componentId="search"
-							dataField={["name", "tagline"]}
+							dataField={['name', 'tagline']}
 							placeholder="Discover products..."
 							URLParams
 							filterLabel="Search"

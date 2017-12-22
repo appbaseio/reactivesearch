@@ -1,7 +1,7 @@
-import styled, { css } from "react-emotion";
+import styled, { css } from 'react-emotion';
 
-import { queries } from "./mediaQueries";
-import color from "./theme";
+import { queries } from './mediaQueries';
+import color from './theme';
 
 export const title = css`
 	color: white;
@@ -28,7 +28,7 @@ const Navbar = styled.nav`
 
 	${({ full }) => queries.xLarge`
 		width: 100%;
-		height: ${full ? "100vh" : "auto"};
+		height: ${full ? '100vh' : 'auto'};
 		display: flex;
 		flex-direction: column;
 	`};

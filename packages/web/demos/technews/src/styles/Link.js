@@ -1,4 +1,4 @@
-import styled from "react-emotion";
+import styled from 'react-emotion';
 
 const Link = styled.a`
 	cursor: pointer;

@@ -1,7 +1,7 @@
-import styled, { css } from "react-emotion";
+import styled, { css } from 'react-emotion';
 
-import color from "./theme";
-import { queries } from "./mediaQueries";
+import color from './theme';
+import { queries } from './mediaQueries';
 
 export const title = css`
 	color: ${color.primaryColor};

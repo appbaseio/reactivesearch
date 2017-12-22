@@ -1,5 +1,5 @@
-import { css } from "emotion";
-import styled from "react-emotion";
+import { css } from 'emotion';
+import styled from 'react-emotion';
 
 export const histogramContainer = css`
 	display: flex;
@@ -13,7 +13,7 @@ const dimensions = props => css`
 	height: ${props.height};
 `;
 
-const Historam = styled("div")`
+const Historam = styled('div')`
 	background-color: #efefef;
 	${dimensions}
 `;

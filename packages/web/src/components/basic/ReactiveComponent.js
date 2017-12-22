@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryOptions
-} from "@appbaseio/reactivecore/lib/actions";
-import { pushToAndClause } from "@appbaseio/reactivecore/lib/utils/helper";
-import types from "@appbaseio/reactivecore/lib/utils/types";
+	setQueryOptions,
+} from '@appbaseio/reactivecore/lib/actions';
+import { pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 class ReactiveComponent extends Component {
 	constructor(props) {
@@ -29,7 +29,7 @@ class ReactiveComponent extends Component {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				onQueryChange,
-				URLParams: props.URLParams
+				URLParams: props.URLParams,
 			});
 		};
 
@@ -56,7 +56,7 @@ class ReactiveComponent extends Component {
 
 			this.props.updateQuery({
 				componentId: this.internalComponent,
-				query: query || null
+				query: query || null,
 			});
 		}
 	}
@@ -97,10 +97,9 @@ class ReactiveComponent extends Component {
 
 		try {
 			const childrenWithProps = React.Children.map(children, child =>
-				React.cloneElement(child, { ...rest, setQuery: this.setQuery })
-			);
+				React.cloneElement(child, { ...rest, setQuery: this.setQuery }));
 			return <div>{childrenWithProps}</div>;
-		} catch(e) {
+		} catch (e) {
 			return null;
 		}
 	}
@@ -108,8 +107,8 @@ class ReactiveComponent extends Component {
 
 ReactiveComponent.defaultProps = {
 	URLParams: false,
-	showFilter: true
-}
+	showFilter: true,
+};
 
 ReactiveComponent.propTypes = {
 	componentId: types.stringRequired,
@@ -127,13 +126,13 @@ ReactiveComponent.propTypes = {
 	filterLabel: types.string,
 	defaultQuery: types.selectedValues,
 	react: types.react,
-	children: types.children
+	children: types.children,
 };
 
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits || [],
 	aggregations: state.aggregations[props.componentId] && state.aggregations[props.componentId] || null,
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -141,7 +140,7 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(component, props, execute))
+	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(component, props, execute)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveComponent);

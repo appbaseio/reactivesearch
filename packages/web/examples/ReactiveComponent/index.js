@@ -1,13 +1,13 @@
 /* eslint react/prop-types: 0 */
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 import {
 	ReactiveBase,
 	ReactiveComponent,
 	ReactiveList,
-	SelectedFilters
-} from "../../src";
+	SelectedFilters,
+} from '../../src';
 
 class CustomComponent extends Component {
 	constructor(props) {
@@ -18,16 +18,16 @@ class CustomComponent extends Component {
 		this.props.setQuery({
 			query: {
 				term: {
-					brand: value
-				}
+					brand: value,
+				},
 			},
-			value
-		})
+			value,
+		});
 	}
 
 	render() {
 		if (this.props.aggregations) {
-			return this.props.aggregations["brand.raw"].buckets.map(item => (
+			return this.props.aggregations['brand.raw'].buckets.map(item => (
 				<div key={item.key} onClick={() => this.setValue(item.key)}>{item.key}</div>
 			));
 		}
@@ -37,12 +37,10 @@ class CustomComponent extends Component {
 }
 
 class Main extends Component {
-	onData = (data) => {
-		return (<div key={data._id}>
-			<h2>{data.name}</h2>
-			<p>{data.price} - {data.rating} stars rated</p>
-		</div>);
-	}
+	onData = data => (<div key={data._id}>
+		<h2>{data.name}</h2>
+		<p>{data.price} - {data.rating} stars rated</p>
+	</div>)
 
 	render() {
 		return (
@@ -57,16 +55,16 @@ class Main extends Component {
 							componentId="CarSensor"
 							defaultQuery={{
 								aggs: {
-									["brand.raw"]: {
+									'brand.raw': {
 										terms: {
-											field: "brand.raw",
+											field: 'brand.raw',
 											order: {
-												_count: "desc"
+												_count: 'desc',
 											},
-											size: 10
-										}
-									}
-								}
+											size: 10,
+										},
+									},
+								},
 							}}
 						>
 							<CustomComponent />
@@ -83,7 +81,7 @@ class Main extends Component {
 							onData={this.onData}
 							pagination
 							react={{
-								and: "CarSensor"
+								and: 'CarSensor',
 							}}
 						/>
 					</div>
@@ -93,4 +91,4 @@ class Main extends Component {
 	}
 }
 
-ReactDOM.render(<Main />, document.getElementById("root"));
+ReactDOM.render(<Main />, document.getElementById('root'));

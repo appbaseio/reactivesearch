@@ -1,20 +1,18 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 import {
 	ReactiveBase,
 	RangeSlider,
 	ReactiveList,
-	SelectedFilters
-} from "../../src";
+	SelectedFilters,
+} from '../../src';
 
 class Main extends Component {
-	onData = (data) => {
-		return (<div key={data._id}>
-			<h2>{data.name}</h2>
-			<p>{data.price} - {data.rating} stars rated</p>
-		</div>);
-	}
+	onData = data => (<div key={data._id}>
+		<h2>{data.name}</h2>
+		<p>{data.price} - {data.rating} stars rated</p>
+	</div>)
 
 	render() {
 		return (
@@ -30,11 +28,11 @@ class Main extends Component {
 							title="Range Slider"
 							range={{
 								start: 0,
-								end: 6
+								end: 6,
 							}}
 							rangeLabels={{
-								start: "Start",
-								end: "End"
+								start: 'Start',
+								end: 'End',
 							}}
 						/>
 					</div>
@@ -50,7 +48,7 @@ class Main extends Component {
 							onData={this.onData}
 							pagination
 							react={{
-								and: "RangeSlider"
+								and: 'RangeSlider',
 							}}
 						/>
 					</div>
@@ -60,4 +58,4 @@ class Main extends Component {
 	}
 }
 
-ReactDOM.render(<Main />, document.getElementById("root"));
+ReactDOM.render(<Main />, document.getElementById('root'));

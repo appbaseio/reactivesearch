@@ -1,11 +1,11 @@
-import { css } from "emotion";
-import styled from "react-emotion";
+import { css } from 'emotion';
+import styled from 'react-emotion';
 
 const primary = props => css`
 	background-color: ${props.theme.primaryColor};
 `;
 
-const Slider = styled("div")`
+const Slider = styled('div')`
 	.rheostat {
 		overflow: visible;
 		margin: 24px 12px;

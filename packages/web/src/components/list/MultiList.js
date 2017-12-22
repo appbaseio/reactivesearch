@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryOptions
-} from "@appbaseio/reactivecore/lib/actions";
+	setQueryOptions,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	getQueryOptions,
@@ -16,14 +16,14 @@ import {
 	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
-	getClassName
-} from "@appbaseio/reactivecore/lib/utils/helper";
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Title from "../../styles/Title";
-import Input from "../../styles/Input";
-import { UL, Checkbox } from "../../styles/FormControlList";
+import Title from '../../styles/Title';
+import Input from '../../styles/Input';
+import { UL, Checkbox } from '../../styles/FormControlList';
 
 class MultiList extends Component {
 	constructor(props) {
@@ -32,9 +32,9 @@ class MultiList extends Component {
 		this.state = {
 			currentValue: {},
 			options: [],
-			searchTerm: ""
+			searchTerm: '',
 		};
-		this.internalComponent = props.componentId + "__internal";
+		this.internalComponent = `${props.componentId}__internal`;
 	}
 
 	componentWillMount() {
@@ -55,22 +55,22 @@ class MultiList extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 		checkPropChange(
 			this.props.options,
 			nextProps.options,
 			() => {
 				this.setState({
-					options: nextProps.options[nextProps.dataField].buckets || []
+					options: nextProps.options[nextProps.dataField].buckets || [],
 				});
-			}
+			},
 		);
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			["size", "sortBy"],
-			() => this.updateQueryOptions(nextProps)
+			['size', 'sortBy'],
+			() => this.updateQueryOptions(nextProps),
 		);
 
 		let selectedValue = Object.keys(this.state.currentValue);
@@ -78,7 +78,7 @@ class MultiList extends Component {
 		if (this.props.selectAllLabel) {
 			selectedValue = selectedValue.filter(val => val !== this.props.selectAllLabel);
 
-			if (!!this.state.currentValue[this.props.selectAllLabel]) {
+			if (this.state.currentValue[this.props.selectAllLabel]) {
 				selectedValue = [this.props.selectAllLabel];
 			}
 		}
@@ -107,34 +107,34 @@ class MultiList extends Component {
 
 	defaultQuery = (value, props) => {
 		let query = null;
-		const type = props.queryFormat === "or" ? "terms" : "term";
+		const type = props.queryFormat === 'or' ? 'terms' : 'term';
 		if (this.props.selectAllLabel && value.includes(this.props.selectAllLabel)) {
 			query = {
 				exists: {
-					field: props.dataField
-				}
+					field: props.dataField,
+				},
 			};
 		} else if (value) {
 			let listQuery;
-			if (props.queryFormat === "or") {
+			if (props.queryFormat === 'or') {
 				listQuery = {
 					[type]: {
-						[props.dataField]: value
-					}
+						[props.dataField]: value,
+					},
 				};
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
 				const queryArray = value.map(item => (
 					{
 						[type]: {
-							[props.dataField]: item
-						}
+							[props.dataField]: item,
+						},
 					}
 				));
 				listQuery = {
 					bool: {
-						must: queryArray
-					}
+						must: queryArray,
+					},
 				};
 			}
 
@@ -148,10 +148,10 @@ class MultiList extends Component {
 		let { currentValue } = this.state;
 		let finalValues = null;
 
-		if (selectAllLabel &&
-			((Array.isArray(value) && value.includes(selectAllLabel)) ||
-			(typeof value === "string" && value === selectAllLabel))) {
-			if (!!currentValue[selectAllLabel]) {
+		if (selectAllLabel
+			&& ((Array.isArray(value) && value.includes(selectAllLabel))
+			|| (typeof value === 'string' && value === selectAllLabel))) {
+			if (currentValue[selectAllLabel]) {
 				currentValue = {};
 				finalValues = [];
 			} else {
@@ -189,18 +189,18 @@ class MultiList extends Component {
 
 		const performUpdate = () => {
 			this.setState({
-				currentValue
+				currentValue,
 			}, () => {
 				this.updateQuery(finalValues, props);
 			});
-		}
+		};
 
 		checkValueChange(
 			props.componentId,
 			finalValues,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -217,7 +217,7 @@ class MultiList extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
-			URLParams: props.URLParams
+			URLParams: props.URLParams,
 		});
 	};
 
@@ -228,31 +228,31 @@ class MultiList extends Component {
 				terms: {
 					field: props.dataField,
 					size: props.size,
-					order: getAggsOrder(props.sortBy)
-				}
-			}
-		}
+					order: getAggsOrder(props.sortBy),
+				},
+			},
+		};
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
 	handleInputChange = (e) => {
 		const { value } = e.target;
 		this.setState({
-			searchTerm: value
+			searchTerm: value,
 		});
 	};
 
 	renderSearch = () => {
 		if (this.props.showSearch) {
-			return <Input
-				className={getClassName(this.props.innerClass, "input") || null}
+			return (<Input
+				className={getClassName(this.props.innerClass, 'input') || null}
 				onChange={this.handleInputChange}
 				value={this.state.searchTerm}
 				placeholder={this.props.placeholder}
 				style={{
-					margin: "0 0 8px"
+					margin: '0 0 8px',
 				}}
-			/>
+			/>);
 		}
 		return null;
 	};
@@ -270,14 +270,14 @@ class MultiList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{this.renderSearch()}
-				<UL className={getClassName(this.props.innerClass, "list") || null}>
+				<UL className={getClassName(this.props.innerClass, 'list') || null}>
 					{
 						selectAllLabel
 							? (<li key={selectAllLabel}>
 								<Checkbox
-									className={getClassName(this.props.innerClass, "input") || null}
+									className={getClassName(this.props.innerClass, 'input') || null}
 									id={selectAllLabel}
 									name={selectAllLabel}
 									value={selectAllLabel}
@@ -285,7 +285,7 @@ class MultiList extends Component {
 									checked={!!this.state.currentValue[selectAllLabel]}
 									show={this.props.showCheckbox}
 								/>
-								<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={selectAllLabel}>
+								<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
 									{selectAllLabel}
 								</label>
 							</li>)
@@ -302,7 +302,7 @@ class MultiList extends Component {
 							.map(item => (
 								<li key={item.key}>
 									<Checkbox
-										className={getClassName(this.props.innerClass, "input") || null}
+										className={getClassName(this.props.innerClass, 'input') || null}
 										id={item.key}
 										name={this.props.componentId}
 										value={item.key}
@@ -310,11 +310,11 @@ class MultiList extends Component {
 										checked={!!this.state.currentValue[item.key]}
 										show={this.props.showCheckbox}
 									/>
-									<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={item.key}>
+									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={item.key}>
 										{item.key}
 										{
-											this.props.showCount &&
-											` (${item.doc_count})`
+											this.props.showCount
+											&& ` (${item.doc_count})`
 										}
 									</label>
 								</li>
@@ -354,25 +354,25 @@ MultiList.propTypes = {
 	selectAllLabel: types.string,
 	style: types.style,
 	className: types.string,
-	innerClass: types.style
-}
+	innerClass: types.style,
+};
 
 MultiList.defaultProps = {
 	size: 100,
-	sortBy: "count",
+	sortBy: 'count',
 	showCheckbox: true,
-	queryFormat: "or",
+	queryFormat: 'or',
 	URLParams: false,
 	showCount: true,
-	placeholder: "Search",
+	placeholder: 'Search',
 	showSearch: true,
 	style: {},
-	className: null
-}
+	className: null,
+};
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -380,7 +380,7 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(MultiList);

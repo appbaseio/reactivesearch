@@ -1,8 +1,8 @@
-import styled, { css } from "react-emotion";
-import { withTheme } from "emotion-theming";
-import lighten from "polished/lib/color/lighten";
+import styled, { css } from 'react-emotion';
+import { withTheme } from 'emotion-theming';
+import lighten from 'polished/lib/color/lighten';
 
-import { input } from "./Input";
+import { input } from './Input';
 
 const DateContainer = styled.div`
 	position: relative;
@@ -177,7 +177,7 @@ const DateContainer = styled.div`
 		color: #f0f8ff;
 		color: #f0f8ff;
 		background-color: ${({ theme }) => theme.primaryColor};
-		border-radius: ${({ range }) => range ? 0 : "100%"};
+		border-radius: ${({ range }) => (range ? 0 : '100%')};
 	}
 
 	.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover {

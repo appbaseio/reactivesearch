@@ -1,8 +1,8 @@
-import React from "react";
-import { ResultList, SelectedFilters } from "@appbaseio/reactivesearch";
+import React from 'react';
+import { ResultList, SelectedFilters } from '@appbaseio/reactivesearch';
 
-import Topic from "../styles/Topic";
-import Flex from "../styles/Flex";
+import Topic from '../styles/Topic';
+import Flex from '../styles/Flex';
 
 const onData = res => ({
 	title: res.name,
@@ -17,11 +17,11 @@ const onData = res => ({
 				</Flex>
 			</Flex>
 		</div>
-	)
+	),
 });
 
 const onResultStats = (results, time) =>
-	<div style={{ margin: "10px 0" }}>{`Found ${results} results in ${time} milliseconds`}</div>;
+	<div style={{ margin: '10px 0' }}>{`Found ${results} results in ${time} milliseconds`}</div>;
 
 const Results = () => (
 	<div>
@@ -30,12 +30,12 @@ const Results = () => (
 			componentId="results"
 			dataField="name"
 			react={{
-				and: ["categories", "search"]
+				and: ['categories', 'search'],
 			}}
 			onData={onData}
 			onResultStats={onResultStats}
 			innerClass={{
-				listItem: "list-item"
+				listItem: 'list-item',
 			}}
 		/>
 	</div>

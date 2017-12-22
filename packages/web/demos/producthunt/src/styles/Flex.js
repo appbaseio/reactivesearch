@@ -1,6 +1,6 @@
-import styled, { css } from "react-emotion";
+import styled, { css } from 'react-emotion';
 
-import { queries } from "./mediaQueries";
+import { queries } from './mediaQueries';
 
 export const flex = css`
 	display: flex;
@@ -18,18 +18,18 @@ export const card = css`
 
 export const FlexChild = styled.div`
 	${props =>
-		props.flex &&
-		css`
+		props.flex
+		&& css`
 			flex: ${props.flex};
 		`};
 	${props =>
-		props.marginLeft &&
-		css`
+		props.marginLeft
+		&& css`
 			margin-left: ${props.marginLeft};
 		`};
 	${props =>
-		props.margin &&
-		css`
+		props.margin
+		&& css`
 			margin: ${props.margin};
 		`};
 	${props => props.card && card};
@@ -43,32 +43,32 @@ const Flex = styled.div`
 	display: flex;
 
 	${props =>
-		props.justifyContent &&
-		css`
+		props.justifyContent
+		&& css`
 			justify-content: ${props.justifyContent};
 		`};
 
 	${props =>
-		props.responsive &&
-		queries.small`
+		props.responsive
+		&& queries.small`
 		flex-direction: column;
 	`};
 
 	${props =>
-		props.direction &&
-		css`
+		props.direction
+		&& css`
 			flex-direction: ${props.direction};
 		`};
 
 	${props => props.alignCenter && alignCenter};
 	${props =>
-		props.flexWrap &&
-		css`
+		props.flexWrap
+		&& css`
 			flex-wrap: wrap;
 		`};
 	${props =>
-		props.hidden &&
-		css`
+		props.hidden
+		&& css`
 			${queries.xLarge`
 			display: none;
 		`};

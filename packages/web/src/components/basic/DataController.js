@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
-	updateQuery
-} from "@appbaseio/reactivecore/lib/actions";
-import { isEqual, checkValueChange } from "@appbaseio/reactivecore/lib/utils/helper";
+	updateQuery,
+} from '@appbaseio/reactivecore/lib/actions';
+import { isEqual, checkValueChange } from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 class DataController extends Component {
 	componentDidMount() {
@@ -38,7 +38,7 @@ class DataController extends Component {
 
 	defaultQuery() {
 		return {
-			"match_all": {}
+			match_all: {},
 		};
 	}
 
@@ -58,7 +58,7 @@ class DataController extends Component {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				onQueryChange,
-				URLParams: props.URLParams
+				URLParams: props.URLParams,
 			});
 			this.locked = false;
 		};
@@ -68,7 +68,7 @@ class DataController extends Component {
 			defaultSelected,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	}
 
@@ -81,8 +81,8 @@ DataController.defaultProps = {
 	URLParams: false,
 	showFilter: true,
 	style: {},
-	className: null
-}
+	className: null,
+};
 
 DataController.propTypes = {
 	componentId: types.stringRequired,
@@ -101,17 +101,17 @@ DataController.propTypes = {
 	showFilter: types.bool,
 	children: types.children,
 	style: types.style,
-	className: types.string
-}
+	className: types.string,
+};
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DataController);

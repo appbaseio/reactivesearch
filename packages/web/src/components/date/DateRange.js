@@ -1,33 +1,33 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
-	updateQuery
-} from "@appbaseio/reactivecore/lib/actions";
+	updateQuery,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
-	getClassName
-} from "@appbaseio/reactivecore/lib/utils/helper";
-import dateFormats from "@appbaseio/reactivecore/lib/utils/dateFormats";
-import types from "@appbaseio/reactivecore/lib/utils/types";
-import XDate from "xdate";
-import DayPickerInput from "react-day-picker/DayPickerInput";
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
+import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
+import types from '@appbaseio/reactivecore/lib/utils/types';
+import XDate from 'xdate';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
 
-import DateContainer from "../../styles/DateContainer";
-import Title from "../../styles/Title";
-import Flex from "../../styles/Flex";
+import DateContainer from '../../styles/DateContainer';
+import Title from '../../styles/Title';
+import Flex from '../../styles/Flex';
 
-import CancelSvg from "../shared/CancelSvg";
+import CancelSvg from '../shared/CancelSvg';
 
 class DateRange extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			currentDate: null
+			currentDate: null,
 		};
 	}
 
@@ -39,7 +39,7 @@ class DateRange extends Component {
 			// parsing string values from selectedValue to date objects for DayPicker
 			this.handleDateChange({
 				start: new Date(this.props.selectedValue[0]),
-				end: new Date(this.props.selectedValue[1])
+				end: new Date(this.props.selectedValue[1]),
 			}, false);
 		} else if (this.props.defaultSelected) {
 			this.handleDateChange(this.props.defaultSelected, false);
@@ -48,8 +48,7 @@ class DateRange extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		checkPropChange(this.props.react, nextProps.react, () =>
-			this.setReact(nextProps)
-		);
+			this.setReact(nextProps));
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleDateChange(nextProps.defaultSelected, false, nextProps);
 		} else {
@@ -60,15 +59,15 @@ class DateRange extends Component {
 				!isEqual(
 					currentDate ? [
 						this.formatInputDate(currentDate.start),
-						this.formatInputDate(currentDate.end)
+						this.formatInputDate(currentDate.end),
 					] : null,
-					selectedValue
-				) &&
-				!isEqual(this.props.selectedValue, selectedValue)
+					selectedValue,
+				)
+				&& !isEqual(this.props.selectedValue, selectedValue)
 			) {
 				this.handleDateChange(selectedValue ? {
 					start: nextProps.selectedValue[0],
-					end: nextProps.selectedValue[1]
+					end: nextProps.selectedValue[1],
 				} : null, true, nextProps);
 			}
 		}
@@ -86,9 +85,9 @@ class DateRange extends Component {
 
 	formatDate = (date, props = this.props) => {
 		switch (props.queryFormat) {
-			case "epoch_millis":
+			case 'epoch_millis':
 				return date.getTime();
-			case "epoch_seconds":
+			case 'epoch_seconds':
 				return Math.floor(date.getTime() / 1000);
 			default: {
 				if (dateFormats[props.queryFormat]) {
@@ -101,7 +100,7 @@ class DateRange extends Component {
 
 	formatInputDate = (date) => {
 		const xdate = new XDate(date);
-		return xdate.valid() ? xdate.toString("yyyy-MM-dd") : "";
+		return xdate.valid() ? xdate.toString('yyyy-MM-dd') : '';
 	};
 
 	defaultQuery = (value, props) => {
@@ -113,35 +112,35 @@ class DateRange extends Component {
 						must: [{
 							range: {
 								[props.dataField[0]]: {
-									lte: this.formatDate(new XDate(value.start), props)
-								}
-							}
+									lte: this.formatDate(new XDate(value.start), props),
+								},
+							},
 						}, {
 							range: {
 								[props.dataField[1]]: {
-									gte: this.formatDate(new XDate(value.end), props)
-								}
-							}
-						}]
-					}
+									gte: this.formatDate(new XDate(value.end), props),
+								},
+							},
+						}],
+					},
 				};
 			} else if (Array.isArray(props.dataField)) {
 				query = {
 					range: {
 						[props.dataField[0]]: {
 							gte: this.formatDate(new XDate(value.start), props),
-							lte: this.formatDate(new XDate(value.end), props)
-						}
-					}
+							lte: this.formatDate(new XDate(value.end), props),
+						},
+					},
 				};
 			} else {
 				query = {
 					range: {
 						[props.dataField]: {
 							gte: this.formatDate(new XDate(value.start), props),
-							lte: this.formatDate(new XDate(value.end), props)
-						}
-					}
+							lte: this.formatDate(new XDate(value.end), props),
+						},
+					},
 				};
 			}
 		}
@@ -153,23 +152,23 @@ class DateRange extends Component {
 	}
 
 	clearDayPickerStart = () => {
-		if (this.state.currentDate && this.state.currentDate.start !== "") {
-			this.handleStartDate("", false); // resets the day picker component
+		if (this.state.currentDate && this.state.currentDate.start !== '') {
+			this.handleStartDate('', false); // resets the day picker component
 		}
 	};
 
 	clearDayPickerEnd = () => {
-		if (this.state.currentDate && this.state.currentDate.end !== "") {
-			this.handleEndDate(""); // resets the day picker component
+		if (this.state.currentDate && this.state.currentDate.end !== '') {
+			this.handleEndDate(''); // resets the day picker component
 		}
 	};
 
 	handleStartDate = (date, autoFocus = true) => {
 		const { currentDate } = this.state;
-		const end = currentDate ? currentDate.end : "";
+		const end = currentDate ? currentDate.end : '';
 		this.handleDateChange({
 			start: date,
-			end
+			end,
 		});
 		// focus the end date DayPicker if its empty
 		if (this.props.autoFocusEnd && autoFocus) {
@@ -180,29 +179,29 @@ class DateRange extends Component {
 	handleEndDate = (date) => {
 		const { currentDate } = this.state;
 		this.handleDateChange({
-			start: currentDate ? currentDate.start : "",
-			end: date
+			start: currentDate ? currentDate.start : '',
+			end: date,
 		});
 	}
 
 	handleDateChange = (
 		currentDate,
 		isDefaultValue = false,
-		props = this.props
+		props = this.props,
 	) => {
 		let value = null;
-		if (currentDate && !(currentDate.start === "" && currentDate.end === "")) {
+		if (currentDate && !(currentDate.start === '' && currentDate.end === '')) {
 			value = isDefaultValue
 				? currentDate
 				: {
-						start: this.formatInputDate(currentDate.start),
-						end: this.formatInputDate(currentDate.end)
-					};
+					start: this.formatInputDate(currentDate.start),
+					end: this.formatInputDate(currentDate.end),
+				};
 		}
 
 		const performUpdate = () => {
 			this.setState({
-				currentDate
+				currentDate,
 			}, () => {
 				this.updateQuery(value, props);
 			});
@@ -212,7 +211,7 @@ class DateRange extends Component {
 			value,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -230,18 +229,18 @@ class DateRange extends Component {
 				showFilter: props.showFilter,
 				label: props.filterLabel,
 				onQueryChange,
-				URLParams: props.URLParams
+				URLParams: props.URLParams,
 			});
 		}
 	};
 
 	render() {
 		const { currentDate } = this.state;
-		const start = currentDate ? currentDate.start : "";
-		const end = currentDate ? currentDate.end : "";
+		const start = currentDate ? currentDate.start : '';
+		const end = currentDate ? currentDate.end : '';
 		const selectedDays = [
-			start, { from: start, to: end }
-		]
+			start, { from: start, to: end },
+		];
 		const modifiers = { start, end };
 		return (
 			<DateContainer
@@ -252,12 +251,12 @@ class DateRange extends Component {
 			>
 				{this.props.title && (
 					<Title
-						className={getClassName(this.props.innerClass, "title") || null}
+						className={getClassName(this.props.innerClass, 'title') || null}
 					>
 						{this.props.title}
 					</Title>
 				)}
-				<Flex className={getClassName(this.props.innerClass, "input-container") || null}>
+				<Flex className={getClassName(this.props.innerClass, 'input-container') || null}>
 					<Flex flex={2} showBorder={this.props.showClear} iconPosition="right">
 						<DayPickerInput
 							showOverlay={this.props.focused}
@@ -268,30 +267,30 @@ class DateRange extends Component {
 								numberOfMonths: this.props.numberOfMonths,
 								initialMonth: this.props.initialMonth,
 								selectedDays,
-								modifiers
+								modifiers,
 							}}
 							onDayChange={this.handleStartDate}
 							inputProps={{
-								readOnly: true
+								readOnly: true,
 							}}
 							classNames={{
 								container:
-									getClassName(this.props.innerClass, "daypicker-container") ||
-									"DayPickerInput",
+									getClassName(this.props.innerClass, 'daypicker-container')
+									|| 'DayPickerInput',
 								overlayWrapper:
 									getClassName(
 										this.props.innerClass,
-										"daypicker-overlay-wrapper"
-									) || "DayPickerInput-OverlayWrapper",
+										'daypicker-overlay-wrapper',
+									) || 'DayPickerInput-OverlayWrapper',
 								overlay:
-									getClassName(this.props.innerClass, "daypicker-overlay") ||
-									"DayPickerInput-Overlay"
+									getClassName(this.props.innerClass, 'daypicker-overlay')
+									|| 'DayPickerInput-Overlay',
 							}}
 							{...this.props.dayPickerInputProps}
 						/>
-						{this.props.showClear &&
-							this.state.currentDate &&
-							this.state.currentDate.start && (
+						{this.props.showClear
+							&& this.state.currentDate
+							&& this.state.currentDate.start && (
 								<CancelSvg onClick={this.clearDayPickerStart} />
 							)}
 					</Flex>
@@ -308,32 +307,32 @@ class DateRange extends Component {
 							dayPickerProps={{
 								numberOfMonths: this.props.numberOfMonths,
 								initialMonth: this.props.initialMonth,
-								disabledDays: { before: this.state.currentDate ? this.state.currentDate.start : "" },
+								disabledDays: { before: this.state.currentDate ? this.state.currentDate.start : '' },
 								selectedDays,
-								modifiers
+								modifiers,
 							}}
 							onDayChange={this.handleEndDate}
 							inputProps={{
-								readOnly: true
+								readOnly: true,
 							}}
 							classNames={{
 								container:
-									getClassName(this.props.innerClass, "daypicker-container") ||
-									"DayPickerInput",
+									getClassName(this.props.innerClass, 'daypicker-container')
+									|| 'DayPickerInput',
 								overlayWrapper:
 									getClassName(
 										this.props.innerClass,
-										"daypicker-overlay-wrapper"
-									) || "DayPickerInput-OverlayWrapper",
+										'daypicker-overlay-wrapper',
+									) || 'DayPickerInput-OverlayWrapper',
 								overlay:
-									getClassName(this.props.innerClass, "daypicker-overlay") ||
-									"DayPickerInput-Overlay"
+									getClassName(this.props.innerClass, 'daypicker-overlay')
+									|| 'DayPickerInput-Overlay',
 							}}
 							{...this.props.dayPickerInputProps}
 						/>
-						{this.props.showClear &&
-							this.state.currentDate &&
-							this.state.currentDate.end && (
+						{this.props.showClear
+							&& this.state.currentDate
+							&& this.state.currentDate.end && (
 								<CancelSvg onClick={this.clearDayPickerEnd} />
 							)}
 					</Flex>
@@ -363,18 +362,18 @@ DateRange.propTypes = {
 	showFilter: types.bool,
 	filterLabel: types.string,
 	autoFocusEnd: types.bool,
-	showClear: types.bool
+	showClear: types.bool,
 };
 
 DateRange.defaultProps = {
 	placeholder: {
-		start: "Select start date",
-		end: "Select end date"
+		start: 'Select start date',
+		end: 'Select end date',
 	},
 	numberOfMonths: 2,
 	showFilter: true,
 	autoFocusEnd: true,
-	showClear: true
+	showClear: true,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -383,7 +382,7 @@ const mapStateToProps = (state, props) => ({
 		: [],
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
-		: null
+		: null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -391,7 +390,7 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) =>
 		dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DateRange);

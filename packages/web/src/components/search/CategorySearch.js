@@ -1,36 +1,36 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import Downshift from "downshift";
-import { withTheme } from "emotion-theming";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Downshift from 'downshift';
+import { withTheme } from 'emotion-theming';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryOptions
-} from "@appbaseio/reactivecore/lib/actions";
+	setQueryOptions,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	debounce,
 	pushToAndClause,
 	checkValueChange,
 	checkPropChange,
 	checkSomePropChange,
-	getClassName
-} from "@appbaseio/reactivecore/lib/utils/helper";
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
-import Title from "../../styles/Title";
-import Input, { suggestionsContainer, suggestions } from "../../styles/Input";
-import SearchSvg from "../shared/SearchSvg";
-import Flex from "../../styles/Flex";
+import types from '@appbaseio/reactivecore/lib/utils/types';
+import Title from '../../styles/Title';
+import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
+import SearchSvg from '../shared/SearchSvg';
+import Flex from '../../styles/Flex';
 
-import { getSuggestions } from "../../utils";
+import { getSuggestions } from '../../utils';
 
 const Label = withTheme(props => (
 	<span
 		style={{
-			color: props.primary ? props.theme.primaryColor : props.theme.textColor
+			color: props.primary ? props.theme.primaryColor : props.theme.textColor,
 		}}
 	>
 		{props.children}
@@ -42,11 +42,11 @@ class CategorySearch extends Component {
 		super(props);
 
 		this.state = {
-			currentValue: "",
+			currentValue: '',
 			suggestions: [],
-			isOpen: false
+			isOpen: false,
 		};
-		this.internalComponent = props.componentId + "__internal";
+		this.internalComponent = `${props.componentId}__internal`;
 	}
 
 	componentWillMount() {
@@ -73,24 +73,23 @@ class CategorySearch extends Component {
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			["highlight", "dataField", "highlightField"],
+			['highlight', 'dataField', 'highlightField'],
 			() => {
 				const queryOptions = this.highlightQuery(nextProps);
 				this.props.setQueryOptions(nextProps.componentId, queryOptions);
-			}
+			},
 		);
 
 		checkPropChange(this.props.react, nextProps.react, () =>
-			this.setReact(nextProps)
-		);
+			this.setReact(nextProps));
 
 		if (
-			Array.isArray(nextProps.suggestions) &&
-			this.state.currentValue.trim().length
+			Array.isArray(nextProps.suggestions)
+			&& this.state.currentValue.trim().length
 		) {
 			checkPropChange(this.props.suggestions, nextProps.suggestions, () => {
 				this.setState({
-					suggestions: this.onSuggestions(nextProps.suggestions)
+					suggestions: this.onSuggestions(nextProps.suggestions),
 				});
 			});
 		}
@@ -98,24 +97,24 @@ class CategorySearch extends Component {
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			["fieldWeights", "fuzziness", "queryFormat"],
+			['fieldWeights', 'fuzziness', 'queryFormat'],
 			() => {
 				this.updateQuery(
 					nextProps.componentId,
 					this.state.currentValue,
-					nextProps
+					nextProps,
 				);
-			}
+			},
 		);
 
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected, true, nextProps);
 		} else if (
-			this.props.selectedValue !== nextProps.selectedValue &&
-			this.state.currentValue !== nextProps.selectedValue
+			this.props.selectedValue !== nextProps.selectedValue
+			&& this.state.currentValue !== nextProps.selectedValue
 		) {
 			// check for selected value prop change or selectedValue will never match currentValue
-			this.setValue(nextProps.selectedValue || "", true, nextProps);
+			this.setValue(nextProps.selectedValue || '', true, nextProps);
 		}
 	}
 
@@ -128,10 +127,10 @@ class CategorySearch extends Component {
 		aggs: {
 			[field]: {
 				terms: {
-					field
-				}
-			}
-		}
+					field,
+				},
+			},
+		},
 	});
 
 	setReact = (props) => {
@@ -153,7 +152,7 @@ class CategorySearch extends Component {
 			? props.highlightField
 			: props.dataField;
 
-		if (typeof highlightField === "string") {
+		if (typeof highlightField === 'string') {
 			fields[highlightField] = {};
 		} else if (Array.isArray(highlightField)) {
 			highlightField.forEach((item) => {
@@ -163,10 +162,10 @@ class CategorySearch extends Component {
 
 		return {
 			highlight: {
-				pre_tags: ["<mark>"],
-				post_tags: ["</mark>"],
-				fields
-			}
+				pre_tags: ['<mark>'],
+				post_tags: ['</mark>'],
+				fields,
+			},
 		};
 	};
 
@@ -183,25 +182,25 @@ class CategorySearch extends Component {
 			finalQuery = {
 				bool: {
 					should: this.shouldQuery(value, fields, props),
-					minimum_should_match: "1"
-				}
+					minimum_should_match: '1',
+				},
 			};
 
-			if (category && category !== "*") {
+			if (category && category !== '*') {
 				finalQuery = [
 					finalQuery,
 					{
 						term: {
-							[props.categoryField]: category
-						}
-					}
+							[props.categoryField]: category,
+						},
+					},
 				];
 			}
 		}
 
-		if (value === "") {
+		if (value === '') {
 			finalQuery = {
-				match_all: {}
+				match_all: {},
 			};
 		}
 
@@ -209,34 +208,32 @@ class CategorySearch extends Component {
 	};
 
 	shouldQuery = (value, dataFields, props) => {
-		const fields = dataFields.map(
-			(field, index) =>
-				`${field}${
-					Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-						? "^" + props.fieldWeights[index]
-						: ""
-				}`
-		);
+		const fields = dataFields.map((field, index) =>
+			`${field}${
+				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+					? `^${props.fieldWeights[index]}`
+					: ''
+			}`);
 
-		if (props.queryFormat === "and") {
+		if (props.queryFormat === 'and') {
 			return [
 				{
 					multi_match: {
 						query: value,
 						fields,
-						type: "cross_fields",
-						operator: "and",
-						fuzziness: props.fuzziness ? props.fuzziness : 0
-					}
+						type: 'cross_fields',
+						operator: 'and',
+						fuzziness: props.fuzziness ? props.fuzziness : 0,
+					},
 				},
 				{
 					multi_match: {
 						query: value,
 						fields,
-						type: "phrase_prefix",
-						operator: "and"
-					}
-				}
+						type: 'phrase_prefix',
+						operator: 'and',
+					},
+				},
 			];
 		}
 
@@ -245,19 +242,19 @@ class CategorySearch extends Component {
 				multi_match: {
 					query: value,
 					fields,
-					type: "best_fields",
-					operator: "or",
-					fuzziness: props.fuzziness ? props.fuzziness : 0
-				}
+					type: 'best_fields',
+					operator: 'or',
+					fuzziness: props.fuzziness ? props.fuzziness : 0,
+				},
 			},
 			{
 				multi_match: {
 					query: value,
 					fields,
-					type: "phrase_prefix",
-					operator: "or"
-				}
-			}
+					type: 'phrase_prefix',
+					operator: 'or',
+				},
+			},
 		];
 	};
 
@@ -273,19 +270,19 @@ class CategorySearch extends Component {
 		return getSuggestions(
 			fields,
 			suggestions,
-			this.state.currentValue.toLowerCase()
+			this.state.currentValue.toLowerCase(),
 		);
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, category) => {
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value
+				currentValue: value,
 			});
 			if (isDefaultValue) {
 				if (this.props.autoSuggest) {
 					this.setState({
-						isOpen: false
+						isOpen: false,
 					});
 					this.updateQuery(this.internalComponent, value, props);
 				}
@@ -300,7 +297,7 @@ class CategorySearch extends Component {
 			value,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -325,13 +322,13 @@ class CategorySearch extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
-			URLParams: props.URLParams
+			URLParams: props.URLParams,
 		});
 	};
 
 	handleFocus = (event) => {
 		this.setState({
-			isOpen: true
+			isOpen: true,
 		});
 		if (this.props.onFocus) {
 			this.props.onFocus(event);
@@ -344,7 +341,7 @@ class CategorySearch extends Component {
 	};
 
 	handleKeyDown = (event) => {
-		if (event.key === "Enter") {
+		if (event.key === 'Enter') {
 			event.target.blur();
 			this.setValue(event.target.value, true);
 		}
@@ -355,7 +352,7 @@ class CategorySearch extends Component {
 
 	onInputChange = (e) => {
 		this.setState({
-			suggestions: []
+			suggestions: [],
 		});
 		this.setValue(e.target.value);
 	};
@@ -371,7 +368,7 @@ class CategorySearch extends Component {
 		const { isOpen, type } = changes;
 		if (type === Downshift.stateChangeTypes.mouseUp) {
 			this.setState({
-				isOpen
+				isOpen,
 			});
 		}
 	};
@@ -384,31 +381,31 @@ class CategorySearch extends Component {
 	};
 
 	render() {
-		let suggestionsList =
-			this.state.currentValue === "" || this.state.currentValue === null
+		let suggestionsList
+			= this.state.currentValue === '' || this.state.currentValue === null
 				? this.props.defaultSuggestions && this.props.defaultSuggestions.length
 					? this.props.defaultSuggestions
 					: []
 				: this.state.suggestions;
 
 		if (
-			this.state.suggestions.length &&
-			this.props.categories &&
-			this.props.categories.length
+			this.state.suggestions.length
+			&& this.props.categories
+			&& this.props.categories.length
 		) {
 			let categorySuggestions = [
 				{
 					label: `${this.state.currentValue} in all categories`,
 					value: this.state.currentValue,
-					category: "*"
+					category: '*',
 				},
 				{
 					label: `${this.state.currentValue} in ${
 						this.props.categories[0].key
 					}`,
 					value: this.state.currentValue,
-					category: this.props.categories[0].key
-				}
+					category: this.props.categories[0].key,
+				},
 			];
 
 			if (this.props.categories.length > 1) {
@@ -419,8 +416,8 @@ class CategorySearch extends Component {
 							this.props.categories[1].key
 						}`,
 						value: this.state.currentValue,
-						category: this.props.categories[1].key
-					}
+						category: this.props.categories[1].key,
+					},
 				];
 			}
 			suggestionsList = [...categorySuggestions, ...suggestionsList];
@@ -430,7 +427,7 @@ class CategorySearch extends Component {
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.title && (
 					<Title
-						className={getClassName(this.props.innerClass, "title") || null}
+						className={getClassName(this.props.innerClass, 'title') || null}
 					>
 						{this.props.title}
 					</Title>
@@ -446,7 +443,7 @@ class CategorySearch extends Component {
 							getInputProps,
 							getItemProps,
 							isOpen,
-							highlightedIndex
+							highlightedIndex,
 						}) => (
 							<div className={suggestionsContainer}>
 								<Flex
@@ -457,18 +454,18 @@ class CategorySearch extends Component {
 										showIcon={this.props.showIcon}
 										iconPosition={this.props.iconPosition}
 										{...getInputProps({
-											className: getClassName(this.props.innerClass, "input"),
+											className: getClassName(this.props.innerClass, 'input'),
 											placeholder: this.props.placeholder,
 											value:
 												this.state.currentValue === null
-													? ""
+													? ''
 													: this.state.currentValue,
 											onChange: this.onInputChange,
 											onBlur: this.props.onBlur,
 											onFocus: this.handleFocus,
 											onKeyPress: this.props.onKeyPress,
 											onKeyDown: this.handleKeyDown,
-											onKeyUp: this.props.onKeyUp
+											onKeyUp: this.props.onKeyUp,
 										})}
 									/>
 									{this.renderIcon()}
@@ -477,7 +474,7 @@ class CategorySearch extends Component {
 									<div className={suggestions}>
 										<ul
 											className={
-												getClassName(this.props.innerClass, "list") || null
+												getClassName(this.props.innerClass, 'list') || null
 											}
 										>
 											{suggestionsList.map((item, index) => (
@@ -486,7 +483,7 @@ class CategorySearch extends Component {
 													key={item.label}
 													style={{
 														backgroundColor:
-															highlightedIndex === index ? "#eee" : "#fff"
+															highlightedIndex === index ? '#eee' : '#fff',
 													}}
 												>
 													<Label primary={!!item.category}>{item.label}</Label>
@@ -504,9 +501,9 @@ class CategorySearch extends Component {
 						iconPosition={this.props.iconPosition}
 					>
 						<Input
-							className={getClassName(this.props.innerClass, "input") || null}
+							className={getClassName(this.props.innerClass, 'input') || null}
 							placeholder={this.props.placeholder}
-							value={this.state.currentValue ? this.state.currentValue : ""}
+							value={this.state.currentValue ? this.state.currentValue : ''}
 							onChange={this.onInputChange}
 							onBlur={this.props.onBlur}
 							onFocus={this.props.onFocus}
@@ -565,32 +562,32 @@ CategorySearch.propTypes = {
 	categories: types.data,
 	showIcon: types.bool,
 	iconPosition: types.iconPosition,
-	icon: types.children
+	icon: types.children,
 };
 
 CategorySearch.defaultProps = {
-	placeholder: "Search",
+	placeholder: 'Search',
 	autoSuggest: true,
-	queryFormat: "or",
+	queryFormat: 'or',
 	URLParams: false,
 	showFilter: true,
 	style: {},
 	className: null,
 	showIcon: true,
-	iconPosition: "right"
+	iconPosition: 'right',
 };
 
 const mapStateToProps = (state, props) => ({
 	suggestions:
 		(state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	categories:
-		(state.aggregations[props.componentId] &&
-			state.aggregations[props.componentId][props.categoryField].buckets) ||
-		[],
+		(state.aggregations[props.componentId]
+			&& state.aggregations[props.componentId][props.categoryField].buckets)
+		|| [],
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -600,7 +597,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props, execute) =>
-		dispatch(setQueryOptions(component, props, execute))
+		dispatch(setQueryOptions(component, props, execute)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(CategorySearch);

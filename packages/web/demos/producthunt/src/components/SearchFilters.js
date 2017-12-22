@@ -1,5 +1,5 @@
-import React from "react";
-import { MultiList } from "@appbaseio/reactivesearch";
+import React from 'react';
+import { MultiList } from '@appbaseio/reactivesearch';
 
 const SearchFilters = () => (
 	<MultiList
@@ -10,7 +10,7 @@ const SearchFilters = () => (
 		sortBy="count"
 		queryFormat="and"
 		react={{
-			and: "search"
+			and: 'search',
 		}}
 		URLParams
 		showSearch={false}

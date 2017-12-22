@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
@@ -8,17 +8,17 @@ import {
 	watchComponent,
 	setQueryOptions,
 	updateQuery,
-	loadMore
-} from "@appbaseio/reactivecore/lib/actions";
+	loadMore,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	getQueryOptions,
 	pushToAndClause,
-	getClassName
-} from "@appbaseio/reactivecore/lib/utils/helper";
-import types from "@appbaseio/reactivecore/lib/utils/types";
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Button, { pagination } from "../../styles/Button";
+import Button, { pagination } from '../../styles/Button';
 
 class ReactiveList extends Component {
 	constructor(props) {
@@ -28,9 +28,9 @@ class ReactiveList extends Component {
 			from: 0,
 			isLoading: false,
 			totalPages: 0,
-			currentPage: 0
+			currentPage: 0,
 		};
-		this.internalComponent = props.componentId + "__internal";
+		this.internalComponent = `${props.componentId}__internal`;
 	}
 
 	componentDidMount() {
@@ -45,8 +45,8 @@ class ReactiveList extends Component {
 		if (this.props.sortBy) {
 			options.sort = [{
 				[this.props.dataField]: {
-					order: this.props.sortBy
-				}
+					order: this.props.sortBy,
+				},
 			}];
 		}
 
@@ -63,20 +63,20 @@ class ReactiveList extends Component {
 		this.setReact(this.props);
 
 		if (defaultQuery) {
-			let { sort, ...query } = defaultQuery;
+			const { sort, ...query } = defaultQuery;
 			this.props.updateQuery({
 				componentId: this.internalComponent,
-				query
+				query,
 			});
 		} else {
 			this.props.updateQuery({
 				componentId: this.internalComponent,
-				query: null
+				query: null,
 			});
 		}
 
 		if (!this.props.pagination) {
-			window.addEventListener("scroll", this.scrollHandler);
+			window.addEventListener('scroll', this.scrollHandler);
 		}
 	}
 
@@ -86,8 +86,8 @@ class ReactiveList extends Component {
 			if (this.props.sortBy) {
 				options.sort = [{
 					[this.props.dataField]: {
-						order: this.props.sortBy
-					}
+						order: this.props.sortBy,
+					},
 				}];
 			}
 			this.props.setQueryOptions(this.props.componentId, options);
@@ -103,38 +103,38 @@ class ReactiveList extends Component {
 
 		// called when page is changed
 		if (this.props.pagination && this.state.isLoading) {
-			window.scrollTo(0,0);
+			window.scrollTo(0, 0);
 			this.setState({
-				isLoading: false
+				isLoading: false,
 			});
 		}
 
 		if (!nextProps.pagination && this.props.hits && nextProps.hits && (this.props.hits.length < nextProps.hits.length || nextProps.hits.length === nextProps.total)) {
 			this.setState({
-				isLoading: false
+				isLoading: false,
 			});
 		}
 
 		if (!nextProps.pagination && nextProps.hits && this.props.hits && nextProps.hits.length < this.props.hits.length) {
-			window.scrollTo(0,0);
+			window.scrollTo(0, 0);
 			this.setState({
 				from: 0,
-				isLoading: false
+				isLoading: false,
 			});
 		}
 
 		if (nextProps.pagination && nextProps.total !== this.props.total) {
 			this.setState({
 				totalPages: nextProps.total / nextProps.size,
-				currentPage: 0
+				currentPage: 0,
 			});
 		}
 
 		if (nextProps.pagination !== this.props.pagination) {
 			if (nextProps.pagination) {
-				window.addEventListener("scroll", this.scrollHandler);
+				window.addEventListener('scroll', this.scrollHandler);
 			} else {
-				window.removeEventListener("scroll", this.scrollHandler);
+				window.removeEventListener('scroll', this.scrollHandler);
 			}
 		}
 	}
@@ -146,7 +146,7 @@ class ReactiveList extends Component {
 	setReact = (props) => {
 		const { react } = props;
 		if (react) {
-			const newReact = pushToAndClause(react, this.internalComponent)
+			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
 			props.watchComponent(props.componentId, { and: this.internalComponent });
@@ -165,15 +165,15 @@ class ReactiveList extends Component {
 			const options = getQueryOptions(this.props);
 			this.setState({
 				from: value,
-				isLoading: true
+				isLoading: true,
 			});
 			this.props.loadMore(this.props.componentId, {
 				...options,
-				from: value
+				from: value,
 			}, true);
 		} else if (this.state.isLoading) {
 			this.setState({
-				isLoading: false
+				isLoading: false,
 			});
 		}
 	};
@@ -184,29 +184,29 @@ class ReactiveList extends Component {
 		this.setState({
 			from: value,
 			isLoading: true,
-			currentPage: page
+			currentPage: page,
 		});
 		this.props.loadMore(this.props.componentId, {
 			...options,
-			from: value
+			from: value,
 		}, false);
 	};
 
 	prevPage = () => {
 		if (this.state.currentPage) {
-			this.setPage(this.state.currentPage-1);
+			this.setPage(this.state.currentPage - 1);
 		}
 	};
 
 	nextPage = () => {
-		if (this.state.currentPage < this.state.totalPages-1) {
-			this.setPage(this.state.currentPage+1);
+		if (this.state.currentPage < this.state.totalPages - 1) {
+			this.setPage(this.state.currentPage + 1);
 		}
 	};
 
 	getStart = () => {
-		const midValue = parseInt(this.props.pages/2, 10);
-		const start =  this.state.currentPage - midValue;
+		const midValue = parseInt(this.props.pages / 2, 10);
+		const start = this.state.currentPage - midValue;
 		return start > 1 ? start : 2;
 	};
 
@@ -216,11 +216,11 @@ class ReactiveList extends Component {
 
 		for (let i = start; i < start + this.props.pages - 1; i++) {
 			const pageBtn = (
-				<Button className={getClassName(this.props.innerClass, "button") || null} primary={this.state.currentPage === i-1} key={i-1} onClick={() => this.setPage(i-1)}>
+				<Button className={getClassName(this.props.innerClass, 'button') || null} primary={this.state.currentPage === i - 1} key={i - 1} onClick={() => this.setPage(i - 1)}>
 					{i}
 				</Button>
 			);
-			if (i <= this.state.totalPages+1) {
+			if (i <= this.state.totalPages + 1) {
 				pages.push(pageBtn);
 			}
 		}
@@ -230,23 +230,23 @@ class ReactiveList extends Component {
 		}
 
 		return (
-			<div className={`${pagination} ${getClassName(this.props.innerClass, "pagination")}`}>
-				<Button className={getClassName(this.props.innerClass, "button") || null} disabled={this.state.currentPage === 0} onClick={this.prevPage}>
+			<div className={`${pagination} ${getClassName(this.props.innerClass, 'pagination')}`}>
+				<Button className={getClassName(this.props.innerClass, 'button') || null} disabled={this.state.currentPage === 0} onClick={this.prevPage}>
 					Prev
 				</Button>
 				{
-					<Button className={getClassName(this.props.innerClass, "button") || null} primary={this.state.currentPage === 0} onClick={() => this.setPage(0)}>
+					<Button className={getClassName(this.props.innerClass, 'button') || null} primary={this.state.currentPage === 0} onClick={() => this.setPage(0)}>
 						1
 					</Button>
 				}
 				{
 					pages
 				}
-				<Button className={getClassName(this.props.innerClass, "button") || null} disabled={this.state.currentPage >= this.state.totalPages-1} onClick={this.nextPage}>
+				<Button className={getClassName(this.props.innerClass, 'button') || null} disabled={this.state.currentPage >= this.state.totalPages - 1} onClick={this.nextPage}>
 					Next
 				</Button>
 			</div>
-		)
+		);
 	};
 
 	highlightResults = (result) => {
@@ -272,7 +272,7 @@ class ReactiveList extends Component {
 		if (this.props.onResultStats && this.props.total) {
 			return this.props.onResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
-			return (<p className={getClassName(this.props.innerClass, "resultstats") || null}>
+			return (<p className={getClassName(this.props.innerClass, 'resultstats') || null}>
 				{this.props.total} results found in {this.props.time}ms
 			</p>);
 		}
@@ -290,14 +290,14 @@ class ReactiveList extends Component {
 						: null
 				}
 				{
-					this.props.pagination && this.props.paginationAt !== "bottom"
+					this.props.pagination && this.props.paginationAt !== 'bottom'
 						? this.renderPagination()
 						: null
 				}
 				{
 					this.props.onAllData
 						? (this.props.onAllData(this.parseHits(this.props.hits), this.loadMore))
-						: (<div className={getClassName(this.props.innerClass, "list")}>
+						: (<div className={getClassName(this.props.innerClass, 'list')}>
 							{
 								results.map(item => this.props.onData({ _id: item._id, ...item._source }))
 							}
@@ -311,7 +311,7 @@ class ReactiveList extends Component {
 						: null
 				}
 				{
-					this.props.pagination && this.props.paginationAt !== "top"
+					this.props.pagination && this.props.paginationAt !== 'top'
 						? this.renderPagination()
 						: null
 				}
@@ -348,25 +348,25 @@ ReactiveList.propTypes = {
 	className: types.string,
 	stream: types.bool,
 	setStreaming: types.func,
-	innerClass: types.style
-}
+	innerClass: types.style,
+};
 
 ReactiveList.defaultProps = {
 	pagination: false,
-	paginationAt: "bottom",
+	paginationAt: 'bottom',
 	pages: 5,
 	size: 10,
 	from: 0,
 	showResultStats: true,
 	style: {},
-	className: null
-}
+	className: null,
+};
 
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	time: state.hits[props.componentId] && state.hits[props.componentId].time || 0,
-	isLoading: state.isLoading[props.componentId] || false
+	isLoading: state.isLoading[props.componentId] || false,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -376,7 +376,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	loadMore: (component, options, append) => dispatch(loadMore(component, options, append))
+	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveList);

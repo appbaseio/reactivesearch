@@ -1,8 +1,8 @@
-import styled, { css } from "react-emotion";
+import styled, { css } from 'react-emotion';
 
-import { card } from "./Flex";
-import { queries } from "./mediaQueries";
-import color from "./theme";
+import { card } from './Flex';
+import { queries } from './mediaQueries';
+import color from './theme';
 
 const button = css`
 	cursor: pointer;

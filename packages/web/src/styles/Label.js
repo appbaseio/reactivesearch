@@ -1,5 +1,5 @@
-import { css } from "emotion";
-import styled from "react-emotion";
+import { css } from 'emotion';
+import styled from 'react-emotion';
 
 const left = css`
 	left: 0;
@@ -11,12 +11,12 @@ const right = css`
 	margin-right: 3px;
 `;
 
-const Label = styled("div")`
+const Label = styled('div')`
 	position: absolute;
 	top: -25px;
 
-	${props => props.align === "left" && left}
-	${props => props.align === "right" && right}
+	${props => props.align === 'left' && left}
+	${props => props.align === 'right' && right}
 `;
 
 export const rangeLabelsContainer = css`

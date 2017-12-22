@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import Base from "../../styles/Base";
-import types from "@appbaseio/reactivecore/lib/utils/types";
-import { isEqual } from "@appbaseio/reactivecore/lib/utils/helper";
+import Base from '../../styles/Base';
+import types from '@appbaseio/reactivecore/lib/utils/types';
+import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 
 class URLParamsProvider extends Component {
 	componentWillReceiveProps(nextProps) {
@@ -30,7 +30,7 @@ class URLParamsProvider extends Component {
 	getValue(value) {
 		if (Array.isArray(value) && value.length) {
 			return value.map(item => this.getValue(item));
-		} else if (value && typeof value === "object") {
+		} else if (value && typeof value === 'object') {
 			// TODO: support for NestedList
 			if (value.label || value.key) {
 				return value.label || value.key;
@@ -41,8 +41,8 @@ class URLParamsProvider extends Component {
 	}
 
 	setURL(component, value) {
-		if (!value || (typeof value === "string" && value.trim() === "") ||
-			(Array.isArray(value) && value.length === 0)) {
+		if (!value || (typeof value === 'string' && value.trim() === '')
+			|| (Array.isArray(value) && value.length === 0)) {
 			this.props.params.delete(component);
 			this.pushToHistory();
 		} else {
@@ -56,28 +56,28 @@ class URLParamsProvider extends Component {
 
 	pushToHistory() {
 		if (history.pushState) {
-			const paramsSting = this.props.params.toString() ? `?${this.props.params.toString()}` : "";
+			const paramsSting = this.props.params.toString() ? `?${this.props.params.toString()}` : '';
 			const newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}${paramsSting}`;
-			window.history.pushState({ path: newurl }, "", newurl);
+			window.history.pushState({ path: newurl }, '', newurl);
 		}
 	}
 
 	render() {
 		return (<Base>
 			{this.props.children}
-		</Base>)
+		</Base>);
 	}
 }
 
 URLParamsProvider.propTypes = {
 	selectedValues: types.selectedValues,
 	params: types.params,
-	children: types.children
+	children: types.children,
 };
 
 
 const mapStateToProps = state => ({
-	selectedValues: state.selectedValues
+	selectedValues: state.selectedValues,
 });
 
 export default connect(mapStateToProps, null)(URLParamsProvider);

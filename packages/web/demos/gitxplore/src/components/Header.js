@@ -1,22 +1,22 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import SearchFilters from "./SearchFilters";
+import SearchFilters from './SearchFilters';
 
-import Navbar, { title } from "../styles/Navbar";
-import { ToggleButton } from "../styles/Button";
+import Navbar, { title } from '../styles/Navbar';
+import { ToggleButton } from '../styles/Button';
 
 class Header extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			visible: false
-		}
+			visible: false,
+		};
 	}
 
 	toggleVisibility = () => {
 		const visible = !this.state.visible;
 		this.setState({
-			visible
+			visible,
 		});
 	}
 

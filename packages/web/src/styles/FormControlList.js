@@ -1,11 +1,11 @@
-import { css } from "emotion";
-import styled from "react-emotion";
-import lighten from "polished/lib/color/lighten";
+import { css } from 'emotion';
+import styled from 'react-emotion';
+import lighten from 'polished/lib/color/lighten';
 
 const item = {
-	width: "16px",
-	height: "16px",
-	scale: "4px"
+	width: '16px',
+	height: '16px',
+	scale: '4px',
 };
 
 const vh = css`
@@ -109,9 +109,9 @@ const formItem = props => css`
 	}
 `;
 
-const Radio = styled("input")`
+const Radio = styled('input')`
 	${formItem};
-	${props => props.show ? null : hideInputControl};
+	${props => (props.show ? null : hideInputControl)};
 
 	+ label {
 		&::before,
@@ -148,12 +148,12 @@ const Radio = styled("input")`
 `;
 
 Radio.defaultProps = {
-	type: "radio"
+	type: 'radio',
 };
 
-const Checkbox = styled("input")`
+const Checkbox = styled('input')`
 	${formItem};
-	${props => props.show ? null : hideInputControl};
+	${props => (props.show ? null : hideInputControl)};
 
 	+ label {
 		&::before,
@@ -194,10 +194,10 @@ const Checkbox = styled("input")`
 `;
 
 Checkbox.defaultProps = {
-	type: "checkbox"
+	type: 'checkbox',
 };
 
-const UL = styled("ul")`
+const UL = styled('ul')`
 	list-style: none;
 	padding: 0;
 	margin: 0;

@@ -1,20 +1,18 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 import {
 	ReactiveBase,
 	NumberBox,
 	ReactiveList,
-	SelectedFilters
-} from "../../src";
+	SelectedFilters,
+} from '../../src';
 
 class Main extends Component {
-	onData = (data) => {
-		return (<div key={data._id}>
-			<h2>{data.name}</h2>
-			<p>{data.price} - {data.rating} stars rated</p>
-		</div>);
-	}
+	onData = data => (<div key={data._id}>
+		<h2>{data.name}</h2>
+		<p>{data.price} - {data.rating} stars rated</p>
+	</div>)
 
 	render() {
 		return (
@@ -29,9 +27,9 @@ class Main extends Component {
 							componentId="CarSensor"
 							defaultSelected={3}
 							data={{
-								label: "Car Ratings",
+								label: 'Car Ratings',
 								start: 2,
-								end: 5
+								end: 5,
 							}}
 							URLParams
 						/>
@@ -48,7 +46,7 @@ class Main extends Component {
 							onData={this.onData}
 							pagination
 							react={{
-								and: "CarSensor"
+								and: 'CarSensor',
 							}}
 						/>
 					</div>
@@ -58,4 +56,4 @@ class Main extends Component {
 	}
 }
 
-ReactDOM.render(<Main />, document.getElementById("root"));
+ReactDOM.render(<Main />, document.getElementById('root'));

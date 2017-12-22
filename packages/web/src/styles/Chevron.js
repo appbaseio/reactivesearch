@@ -1,12 +1,12 @@
-import { css } from "emotion";
-import styled from "react-emotion";
+import { css } from 'emotion';
+import styled from 'react-emotion';
 
 const open = css`
 	top: 0.55em;
 	transform: rotate(-45deg);
 `;
 
-const Chevron = styled("span")`
+const Chevron = styled('span')`
 	&::before {
 		content: "";
 		border-style: solid;
@@ -20,7 +20,7 @@ const Chevron = styled("span")`
 		vertical-align: top;
 		width: 0.45em;
 
-		${props => props.open ? open : null}
+		${props => (props.open ? open : null)}
 	}
 `;
 

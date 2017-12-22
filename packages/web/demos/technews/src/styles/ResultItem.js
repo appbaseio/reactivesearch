@@ -1,4 +1,4 @@
-import styled, { css } from "react-emotion";
+import styled, { css } from 'react-emotion';
 
 export const resultItemDetails = css`
 	color: #a2a2a2;

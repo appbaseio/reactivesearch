@@ -1,35 +1,35 @@
-import React, { Component } from "react";
-import { ReactiveBase, CategorySearch } from "@appbaseio/reactivesearch";
+import React, { Component } from 'react';
+import { ReactiveBase, CategorySearch } from '@appbaseio/reactivesearch';
 
-import theme from "./styles/theme";
+import theme from './styles/theme';
 
-import Header from "./components/Header";
-import Results from "./components/Results";
+import Header from './components/Header';
+import Results from './components/Results';
 
-import Container, { resultsContainer, categorySearchContainer, appContainer } from "./styles/Container";
-import Flex, { FlexChild } from "./styles/Flex";
+import Container, { resultsContainer, categorySearchContainer, appContainer } from './styles/Container';
+import Flex, { FlexChild } from './styles/Flex';
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			currentTopics: []
+			currentTopics: [],
 		};
 	}
 
 	setTopics = (currentTopics) => {
 		this.setState({
-			currentTopics: currentTopics || []
+			currentTopics: currentTopics || [],
 		});
 	}
 
 	toggleTopic = (topic) => {
 		const { currentTopics } = this.state;
-		const nextState = currentTopics.includes(topic) ?
-			currentTopics.filter(item => item !== topic) :
-			currentTopics.concat(topic);
+		const nextState = currentTopics.includes(topic)
+			? currentTopics.filter(item => item !== topic)
+			: currentTopics.concat(topic);
 		this.setState({
-			currentTopics: nextState
+			currentTopics: nextState,
 		});
 	}
 
@@ -46,11 +46,11 @@ class App extends Component {
 						<FlexChild className={resultsContainer}>
 							<CategorySearch
 								componentId="repo"
-								dataField={["name", "description", "name.raw", "fullname", "owner", "topics"]}
+								dataField={['name', 'description', 'name.raw', 'fullname', 'owner', 'topics']}
 								categoryField="language.raw"
 								queryFormat="and"
 								placeholder="Search Repos"
-								URLParams={true}
+								URLParams
 								className={categorySearchContainer}
 							/>
 							<Results currentTopics={this.state.currentTopics} toggleTopic={this.toggleTopic} />

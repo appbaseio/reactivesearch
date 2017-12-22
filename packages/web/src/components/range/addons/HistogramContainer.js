@@ -1,7 +1,7 @@
-import React from "react";
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import React from 'react';
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Histogram, { histogramContainer } from "../../../styles/Histogram";
+import Histogram, { histogramContainer } from '../../../styles/Histogram';
 
 const getWidth = (index, range, item, props) => {
 	let diff;
@@ -47,12 +47,12 @@ const HistogramContainer = (props) => {
 			}
 		</div>
 	);
-}
+};
 
 HistogramContainer.propTypes = {
 	stats: types.stats,
 	range: types.range,
-	interval: types.number
-}
+	interval: types.number,
+};
 
 export default HistogramContainer;

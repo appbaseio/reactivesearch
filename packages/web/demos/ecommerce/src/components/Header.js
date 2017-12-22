@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { CategorySearch } from "@appbaseio/reactivesearch";
+import React, { Component } from 'react';
+import { CategorySearch } from '@appbaseio/reactivesearch';
 
-import Navbar, { title } from "../styles/Navbar";
-import Flex, { FlexChild } from "../styles/Flex";
-import { categorySearchContainer } from "../styles/Container";
+import Navbar, { title } from '../styles/Navbar';
+import Flex, { FlexChild } from '../styles/Flex';
+import { categorySearchContainer } from '../styles/Container';
 
 class Header extends Component {
 	render() {
@@ -22,7 +22,7 @@ class Header extends Component {
 							componentId="category"
 							placeholder="Search for cars..."
 							react={{
-								and: "brand"
+								and: 'brand',
 							}}
 						/>
 					</FlexChild>

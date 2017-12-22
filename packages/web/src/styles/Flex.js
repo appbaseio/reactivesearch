@@ -1,6 +1,6 @@
-import styled from "react-emotion";
-import { css } from "emotion";
-import lighten from "polished/lib/color/lighten";
+import styled from 'react-emotion';
+import { css } from 'emotion';
+import lighten from 'polished/lib/color/lighten';
 
 const leftLabel = css`
 	flex-direction: row;
@@ -26,12 +26,12 @@ const border = css`
 	border: 1px solid #ccc;
 `;
 
-const Flex = styled("div")`
-	display: ${props => props.inline ? "inline-flex" : "flex"};
-	${props => (props.labelPosition === "left" || props.iconPosition === "right") && leftLabel};
-	${props => (props.labelPosition === "right" || props.iconPosition === "left") && rightLabel};
-	${props => (props.labelPosition === "top") && topLabel};
-	${props => (props.labelPosition === "bottom") && bottomLabel};
+const Flex = styled('div')`
+	display: ${props => (props.inline ? 'inline-flex' : 'flex')};
+	${props => (props.labelPosition === 'left' || props.iconPosition === 'right') && leftLabel};
+	${props => (props.labelPosition === 'right' || props.iconPosition === 'left') && rightLabel};
+	${props => (props.labelPosition === 'top') && topLabel};
+	${props => (props.labelPosition === 'bottom') && bottomLabel};
 	${props => props.showBorder && border};
 
 	${props => props.justifyContent && css`

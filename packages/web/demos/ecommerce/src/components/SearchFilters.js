@@ -1,13 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
 	SingleList,
 	SingleRange,
 	MultiList,
-	RangeSlider
-} from "@appbaseio/reactivesearch";
+	RangeSlider,
+} from '@appbaseio/reactivesearch';
 
-import Flex, { FlexChild } from "../styles/Flex";
+import Flex, { FlexChild } from '../styles/Flex';
 
 const SearchFilters = () => (
 	<Flex direction="column">
@@ -24,9 +24,9 @@ const SearchFilters = () => (
 				dataField="rating"
 				title="Rating"
 				data={[
-					{ start: 4, end: 5, label: "4 stars and up" },
-					{ start: 3, end: 5, label: "3 stars and up" },
-					{ start: 2, end: 5, label: "2 stars and up" }
+					{ start: 4, end: 5, label: '4 stars and up' },
+					{ start: 3, end: 5, label: '3 stars and up' },
+					{ start: 2, end: 5, label: '2 stars and up' },
 				]}
 			/>
 		</FlexChild>
@@ -45,11 +45,11 @@ const SearchFilters = () => (
 				title="Price Range"
 				range={{
 					start: 0,
-					end: 10000
+					end: 10000,
 				}}
 				rangeLabels={{
-					start: "$0",
-					end: "$10,000"
+					start: '$0',
+					end: '$10,000',
 				}}
 				interval={1000}
 			/>
@@ -60,7 +60,7 @@ const SearchFilters = () => (
 SearchFilters.propTypes = {
 	currentTopics: PropTypes.arrayOf(PropTypes.string),
 	setTopics: PropTypes.func,
-	visible: PropTypes.bool
+	visible: PropTypes.bool,
 };
 
 export default SearchFilters;

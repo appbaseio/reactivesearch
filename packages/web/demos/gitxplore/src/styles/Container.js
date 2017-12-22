@@ -1,6 +1,6 @@
-import styled, { css } from "react-emotion";
+import styled, { css } from 'react-emotion';
 
-import { queries } from "./mediaQueries";
+import { queries } from './mediaQueries';
 
 const Container = styled.section`
 	width: 100%;
@@ -41,6 +41,6 @@ export const appContainer = css`
 	${queries.xLarge`
 		flex-direction: column;
 	`};
-`
+`;
 
 export default Container;

@@ -1,6 +1,6 @@
-import styled from "react-emotion";
+import styled from 'react-emotion';
 
-import color from "./theme";
+import color from './theme';
 
 const Link = styled.a`
 	cursor: pointer;

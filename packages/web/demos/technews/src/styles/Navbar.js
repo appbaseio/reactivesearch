@@ -1,6 +1,6 @@
-import styled from "react-emotion";
+import styled from 'react-emotion';
 
-import { flex, alignCenter } from "./Flex";
+import { flex, alignCenter } from './Flex';
 
 const Navbar = styled.nav`
 	background: coral;

@@ -1,23 +1,23 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
-	updateQuery
-} from "@appbaseio/reactivecore/lib/actions";
+	updateQuery,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	checkValueChange,
 	checkPropChange,
-	getClassName
-} from "@appbaseio/reactivecore/lib/utils/helper";
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Title from "../../styles/Title";
-import Input from "../../styles/Input";
-import { UL, Radio } from "../../styles/FormControlList";
+import Title from '../../styles/Title';
+import Input from '../../styles/Input';
+import { UL, Radio } from '../../styles/FormControlList';
 
 class SingleDataList extends Component {
 	constructor(props) {
@@ -25,9 +25,9 @@ class SingleDataList extends Component {
 
 		this.state = {
 			currentValue: null,
-			searchTerm: ""
+			searchTerm: '',
 		};
-		this.type = "term";
+		this.type = 'term';
 	}
 
 	componentWillMount() {
@@ -46,13 +46,13 @@ class SingleDataList extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected);
 		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || "");
+			this.setValue(nextProps.selectedValue || '');
 		}
 	}
 
@@ -70,14 +70,14 @@ class SingleDataList extends Component {
 		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
 			return {
 				exists: {
-					field: props.dataField
-				}
+					field: props.dataField,
+				},
 			};
 		} else if (value) {
 			return {
 				[this.type]: {
-					[props.dataField]: value
-				}
+					[props.dataField]: value,
+				},
 			};
 		}
 		return null;
@@ -85,23 +85,23 @@ class SingleDataList extends Component {
 
 	setValue = (value, props = this.props) => {
 		if (value == this.state.currentValue) {
-			value = "";
+			value = '';
 		}
 
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value
+				currentValue: value,
 			}, () => {
 				this.updateQuery(value, props);
 			});
-		}
+		};
 
 		checkValueChange(
 			props.componentId,
 			value,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -125,28 +125,28 @@ class SingleDataList extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
-			URLParams: props.URLParams
+			URLParams: props.URLParams,
 		});
 	};
 
 	handleInputChange = (e) => {
 		const { value } = e.target;
 		this.setState({
-			searchTerm: value
+			searchTerm: value,
 		});
 	};
 
 	renderSearch = () => {
 		if (this.props.showSearch) {
-			return <Input
-				className={getClassName(this.props.innerClass, "input") || null}
+			return (<Input
+				className={getClassName(this.props.innerClass, 'input') || null}
 				onChange={this.handleInputChange}
 				value={this.state.searchTerm}
 				placeholder={this.props.placeholder}
 				style={{
-					margin: "0 0 8px"
+					margin: '0 0 8px',
 				}}
-			/>
+			/>);
 		}
 		return null;
 	};
@@ -164,14 +164,14 @@ class SingleDataList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{this.renderSearch()}
-				<UL className={getClassName(this.props.innerClass, "list") || null}>
+				<UL className={getClassName(this.props.innerClass, 'list') || null}>
 					{
 						selectAllLabel
 							? (<li key={selectAllLabel}>
 								<Radio
-									className={getClassName(this.props.innerClass, "input")}
+									className={getClassName(this.props.innerClass, 'input')}
 									id={selectAllLabel}
 									name={this.props.componentId}
 									value={selectAllLabel}
@@ -179,7 +179,7 @@ class SingleDataList extends Component {
 									checked={this.state.currentValue === selectAllLabel}
 									show={this.props.showRadio}
 								/>
-								<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={selectAllLabel}>
+								<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
 									{selectAllLabel}
 								</label>
 							</li>)
@@ -196,7 +196,7 @@ class SingleDataList extends Component {
 							.map(item => (
 								<li key={item.label}>
 									<Radio
-										className={getClassName(this.props.innerClass, "input")}
+										className={getClassName(this.props.innerClass, 'input')}
 										id={item.label}
 										name={this.props.componentId}
 										value={item.label}
@@ -204,7 +204,7 @@ class SingleDataList extends Component {
 										checked={this.state.currentValue === item.label}
 										show={this.props.showRadio}
 									/>
-									<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={item.label}>
+									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={item.label}>
 										{item.label}
 									</label>
 								</li>
@@ -240,29 +240,29 @@ SingleDataList.propTypes = {
 	selectAllLabel: types.string,
 	style: types.style,
 	className: types.string,
-	innerClass: types.style
-}
+	innerClass: types.style,
+};
 
 SingleDataList.defaultProps = {
 	size: 100,
 	showRadio: true,
 	URLParams: false,
 	showFilter: true,
-	placeholder: "Search",
+	placeholder: 'Search',
 	showSearch: true,
 	style: {},
-	className: null
-}
+	className: null,
+};
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(SingleDataList);

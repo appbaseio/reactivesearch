@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryOptions
-} from "@appbaseio/reactivecore/lib/actions";
+	setQueryOptions,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	getQueryOptions,
 	pushToAndClause,
@@ -15,24 +15,24 @@ import {
 	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
-	getClassName
-} from "@appbaseio/reactivecore/lib/utils/helper";
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Title from "../../styles/Title";
-import Dropdown from "../shared/Dropdown";
+import Title from '../../styles/Title';
+import Dropdown from '../shared/Dropdown';
 
 class SingleDropdownList extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			currentValue: "",
-			options: []
+			currentValue: '',
+			options: [],
 		};
-		this.type = "term";
-		this.internalComponent = props.componentId + "__internal";
+		this.type = 'term';
+		this.internalComponent = `${props.componentId}__internal`;
 	}
 
 	componentWillMount() {
@@ -53,27 +53,27 @@ class SingleDropdownList extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 		checkPropChange(
 			this.props.options,
 			nextProps.options,
 			() => {
 				this.setState({
-					options: nextProps.options[nextProps.dataField].buckets || []
+					options: nextProps.options[nextProps.dataField].buckets || [],
 				});
-			}
+			},
 		);
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			["size", "sortBy"],
-			() => this.updateQueryOptions(nextProps)
+			['size', 'sortBy'],
+			() => this.updateQueryOptions(nextProps),
 		);
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected);
 		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || "");
+			this.setValue(nextProps.selectedValue || '');
 		}
 	}
 
@@ -96,14 +96,14 @@ class SingleDropdownList extends Component {
 		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
 			return {
 				exists: {
-					field: props.dataField
-				}
+					field: props.dataField,
+				},
 			};
 		} else if (value) {
 			return {
 				[this.type]: {
-					[props.dataField]: value
-				}
+					[props.dataField]: value,
+				},
 			};
 		}
 		return null;
@@ -112,18 +112,18 @@ class SingleDropdownList extends Component {
 	setValue = (value, props = this.props) => {
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value
+				currentValue: value,
 			}, () => {
 				this.updateQuery(value, props);
 			});
-		}
+		};
 
 		checkValueChange(
 			props.componentId,
 			value,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -140,7 +140,7 @@ class SingleDropdownList extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
-			URLParams: props.URLParams
+			URLParams: props.URLParams,
 		});
 	}
 
@@ -151,10 +151,10 @@ class SingleDropdownList extends Component {
 				terms: {
 					field: props.dataField,
 					size: props.size,
-					order: getAggsOrder(props.sortBy)
-				}
-			}
-		}
+					order: getAggsOrder(props.sortBy),
+				},
+			},
+		};
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	}
 
@@ -167,16 +167,16 @@ class SingleDropdownList extends Component {
 
 		if (this.props.selectAllLabel) {
 			selectAll = [{
-				key: this.props.selectAllLabel
-			}]
+				key: this.props.selectAllLabel,
+			}];
 		}
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<Dropdown
 					innerClass={this.props.innerClass}
-					items={[...selectAll , ...this.state.options]}
+					items={[...selectAll, ...this.state.options]}
 					onChange={this.setValue}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
@@ -213,23 +213,23 @@ SingleDropdownList.propTypes = {
 	style: types.style,
 	className: types.string,
 	showCount: types.bool,
-	innerClass: types.style
-}
+	innerClass: types.style,
+};
 
 SingleDropdownList.defaultProps = {
 	size: 100,
-	sortBy: "count",
-	placeholder: "Select a value",
+	sortBy: 'count',
+	placeholder: 'Select a value',
 	URLParams: false,
 	showFilter: true,
 	style: {},
 	className: null,
-	showCount: true
-}
+	showCount: true,
+};
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -237,7 +237,7 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList);

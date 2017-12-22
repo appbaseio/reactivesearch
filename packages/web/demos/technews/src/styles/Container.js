@@ -1,4 +1,4 @@
-import styled from "react-emotion";
+import styled from 'react-emotion';
 
 const Container = styled.section`
 	max-width: 1200px;

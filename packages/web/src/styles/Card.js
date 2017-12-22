@@ -1,7 +1,7 @@
-import { css } from "emotion";
-import styled from "react-emotion";
+import { css } from 'emotion';
+import styled from 'react-emotion';
 
-import Title from "./Title";
+import Title from './Title';
 
 const container = css`
 	display: flex;
@@ -15,7 +15,7 @@ const container = css`
 	}
 `;
 
-const Image = styled("div")`
+const Image = styled('div')`
 	width: calc(100% + 20px);
 	height: 220px;
 	margin: -10px -10px 0;
@@ -25,7 +25,7 @@ const Image = styled("div")`
 	background-repeat: no-repeat;
 `;
 
-const Card = styled("a")`
+const Card = styled('a')`
 	width: auto;
 	flex-grow: 1;
 	outline: none;
@@ -42,7 +42,7 @@ const Card = styled("a")`
 	padding: 10px;
 	box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
 	color: ${props => props.theme.textColor};
-	${props => props.href ? "cursor: pointer" : null};
+	${props => (props.href ? 'cursor: pointer' : null)};
 	transition: all 0.3s ease;
 
 	h2 {
@@ -85,4 +85,4 @@ const Card = styled("a")`
 `;
 
 export default Card;
-export { container, Title, Image }
+export { container, Title, Image };

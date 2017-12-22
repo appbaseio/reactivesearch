@@ -1,41 +1,41 @@
-import React from "react";
-import { ReactiveList } from "@appbaseio/reactivesearch";
-import PropTypes from "prop-types";
+import React from 'react';
+import { ReactiveList } from '@appbaseio/reactivesearch';
+import PropTypes from 'prop-types';
 
-import ResultItem, { resultItemDetails } from "../styles/ResultItem";
-import Flex, { FlexChild } from "../styles/Flex";
-import Link from "../styles/Link";
+import ResultItem, { resultItemDetails } from '../styles/ResultItem';
+import Flex, { FlexChild } from '../styles/Flex';
+import Link from '../styles/Link';
 
 function timeSince(date) {
-	var seconds = Math.floor((new Date() - date) / 1000);
+	const seconds = Math.floor((new Date() - date) / 1000);
 
-	var interval = Math.floor(seconds / 31536000);
+	let interval = Math.floor(seconds / 31536000);
 
 	if (interval >= 1) {
-		const postfix = interval === 1 ? " year" : " years";
+		const postfix = interval === 1 ? ' year' : ' years';
 		return interval + postfix;
 	}
 	interval = Math.floor(seconds / 2592000);
 	if (interval > 1) {
-		return interval + " months";
+		return `${interval} months`;
 	}
 	interval = Math.floor(seconds / 86400);
 	if (interval > 1) {
-		return interval + " days";
+		return `${interval} days`;
 	}
 	interval = Math.floor(seconds / 3600);
 	if (interval > 1) {
-		return interval + " hours";
+		return `${interval} hours`;
 	}
 	interval = Math.floor(seconds / 60);
 	if (interval > 1) {
-		return interval + " minutes";
+		return `${interval} minutes`;
 	}
-	return Math.floor(seconds) + " seconds";
+	return `${Math.floor(seconds)} seconds`;
 }
 
 const onResultStats = (results, time) => (
-	<Flex justifyContent="flex-end" style={{ padding: "0 1rem" }}>
+	<Flex justifyContent="flex-end" style={{ padding: '0 1rem' }}>
 		{results} results found in {time}ms
 	</Flex>
 );
@@ -47,7 +47,7 @@ const onData = data => (
 		<Flex className={resultItemDetails} style={{ paddingTop: 5, marginTop: 5 }}>
 			{!!data.parent && (
 				<FlexChild>
-					parent{" "}
+					parent{' '}
 					<Link
 						href={`https://news.ycombinator.com/item?id=${data.parent}`}
 						target="_blank"
@@ -79,7 +79,7 @@ const Results = () => (
 		onData={onData}
 		onResultStats={onResultStats}
 		react={{
-			and: ["title", "category", "time"]
+			and: ['title', 'category', 'time'],
 		}}
 		pagination
 	/>

@@ -1,6 +1,6 @@
-import { css } from "emotion";
-import styled from "react-emotion";
-import darken from "polished/lib/color/darken";
+import { css } from 'emotion';
+import styled from 'react-emotion';
+import darken from 'polished/lib/color/darken';
 
 const filters = css`
 	margin: 0 -3px;
@@ -88,7 +88,7 @@ const disabled = css`
 	}
 `;
 
-const Button = styled("a")`
+const Button = styled('a')`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
@@ -107,8 +107,8 @@ const Button = styled("a")`
 		background-color: #ccc;
 	}
 
-	${props => props.primary ? primary : null};
-	${props => props.disabled ? disabled : null};
+	${props => (props.primary ? primary : null)};
+	${props => (props.disabled ? disabled : null)};
 	${props => props.large && large};
 `;
 

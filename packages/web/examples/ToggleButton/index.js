@@ -1,20 +1,18 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 import {
 	ReactiveBase,
 	ToggleButton,
 	ReactiveList,
-	SelectedFilters
-} from "../../src";
+	SelectedFilters,
+} from '../../src';
 
 class Main extends Component {
-	onData = (data) => {
-		return (<div key={data._id}>
-			<h2>{data.name}</h2>
-			<p>{data.price} - {data.rating} stars rated</p>
-		</div>);
-	}
+	onData = data => (<div key={data._id}>
+		<h2>{data.name}</h2>
+		<p>{data.price} - {data.rating} stars rated</p>
+	</div>)
 
 	render() {
 		return (
@@ -28,10 +26,10 @@ class Main extends Component {
 							dataField="brand.raw"
 							componentId="CarSensor"
 							data={[
-								{ label: "Audi", value: "audi" },
-								{ label: "Nissan", value: "nissan" },
-								{ label: "Porsche", value: "porsche" },
-								{ label: "BMW", value: "bmw" }
+								{ label: 'Audi', value: 'audi' },
+								{ label: 'Nissan', value: 'nissan' },
+								{ label: 'Porsche', value: 'porsche' },
+								{ label: 'BMW', value: 'bmw' },
 							]}
 						/>
 					</div>
@@ -47,7 +45,7 @@ class Main extends Component {
 							onData={this.onData}
 							pagination
 							react={{
-								and: "CarSensor"
+								and: 'CarSensor',
 							}}
 						/>
 					</div>
@@ -57,4 +55,4 @@ class Main extends Component {
 	}
 }
 
-ReactDOM.render(<Main />, document.getElementById("root"));
+ReactDOM.render(<Main />, document.getElementById('root'));

@@ -1,17 +1,17 @@
-import React from "react";
-import { ReactiveList } from "@appbaseio/reactivesearch";
-import PropTypes from "prop-types";
+import React from 'react';
+import { ReactiveList } from '@appbaseio/reactivesearch';
+import PropTypes from 'prop-types';
 
-import Topic from "./Topic";
+import Topic from './Topic';
 
-import ResultItem, { resultListContainer, resultCardHeader } from "../styles/ResultItem";
-import Flex, { FlexChild } from "../styles/Flex";
-import Link from "../styles/Link";
-import Avatar from "../styles/Avatar";
-import Button from "../styles/Button";
+import ResultItem, { resultListContainer, resultCardHeader } from '../styles/ResultItem';
+import Flex, { FlexChild } from '../styles/Flex';
+import Link from '../styles/Link';
+import Avatar from '../styles/Avatar';
+import Button from '../styles/Button';
 
 const onResultStats = (results, time) => (
-	<Flex justifyContent="flex-end" style={{ margin: "1rem" }}>
+	<Flex justifyContent="flex-end" style={{ margin: '1rem' }}>
 		{results} results found in {time}ms
 	</Flex>
 );
@@ -27,19 +27,18 @@ const onData = (data, currentTopics, toggleTopic) => (
 				</Flex>
 			</Link>
 		</Flex>
-		<div style={{ margin: "10px 0" }}>{data.description}</div>
+		<div style={{ margin: '10px 0' }}>{data.description}</div>
 		<Flex flexWrap justifyContent="center">
 			{
 				data.topics.slice(0, 7)
 					.map(item =>
-						<Topic
+						(<Topic
 							key={item}
 							active={currentTopics.includes(item)}
 							toggleTopic={toggleTopic}
 						>
 							{item}
-						</Topic>
-					)
+       </Topic>))
 			}
 		</Flex>
 		<Flex>
@@ -57,12 +56,12 @@ const Results = ({ toggleTopic, currentTopics }) => (
 		onData={data => onData(data, currentTopics, toggleTopic)}
 		onResultStats={onResultStats}
 		react={{
-			and: ["name", "language", "topics", "pushed", "created", "stars", "forks", "repo"]
+			and: ['name', 'language', 'topics', 'pushed', 'created', 'stars', 'forks', 'repo'],
 		}}
 		pagination
 		innerClass={{
-			list: "result-list-container",
-			pagination: "result-list-pagination"
+			list: 'result-list-container',
+			pagination: 'result-list-pagination',
 		}}
 		className={resultListContainer}
 		size={6}
@@ -75,7 +74,7 @@ onData.propTypes = {
 
 Results.propTypes = {
 	toggleTopic: PropTypes.func,
-	currentTopics: PropTypes.arrayOf(PropTypes.string)
-}
+	currentTopics: PropTypes.arrayOf(PropTypes.string),
+};
 
 export default Results;

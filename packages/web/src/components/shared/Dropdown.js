@@ -1,31 +1,31 @@
-import React, { Component } from "react";
-import Downshift from "downshift";
+import React, { Component } from 'react';
+import Downshift from 'downshift';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
-import { getClassName } from "@appbaseio/reactivecore/lib/utils/helper";
+import types from '@appbaseio/reactivecore/lib/utils/types';
+import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
 
-import { suggestionsContainer, suggestions } from "../../styles/Input";
-import Select, { Tick } from "../../styles/Select";
-import Chevron from "../../styles/Chevron";
+import { suggestionsContainer, suggestions } from '../../styles/Input';
+import Select, { Tick } from '../../styles/Select';
+import Chevron from '../../styles/Chevron';
 
 class Dropdown extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			isOpen: false
+			isOpen: false,
 		};
 	}
 
 	toggle = () => {
 		this.setState({
-			isOpen: !this.state.isOpen
+			isOpen: !this.state.isOpen,
 		});
 	};
 
 	close = () => {
 		this.setState({
-			isOpen: false
+			isOpen: false,
 		});
 	};
 
@@ -38,7 +38,7 @@ class Dropdown extends Component {
 
 		if (!this.props.multi) {
 			this.setState({
-				isOpen: false
+				isOpen: false,
 			});
 		}
 	};
@@ -47,25 +47,25 @@ class Dropdown extends Component {
 		const { isOpen, type } = changes;
 		if (type === Downshift.stateChangeTypes.mouseUp) {
 			this.setState({
-				isOpen
+				isOpen,
 			});
 		}
 	};
 
 	getBackgroundColor = (highlighted, selected) => {
 		if (highlighted) {
-			return "#eee";
+			return '#eee';
 		} else if (selected) {
-			return "#fafafa";
+			return '#fafafa';
 		}
-		return "#fff";
+		return '#fff';
 	};
 
 	renderToString = (value) => {
 		if (Array.isArray(value) && value.length) {
 			const arrayToRender = value.map(item => this.renderToString(item));
-			return arrayToRender.join(", ");
-		} else if (value && typeof value === "object") {
+			return arrayToRender.join(', ');
+		} else if (value && typeof value === 'object') {
 			if (value[this.props.labelField]) {
 				return value[this.props.labelField];
 			} else if (Object.keys(value).length) {
@@ -77,7 +77,9 @@ class Dropdown extends Component {
 	};
 
 	render() {
-		const { items, selectedItem, placeholder, labelField, keyField } = this.props;
+		const {
+			items, selectedItem, placeholder, labelField, keyField,
+		} = this.props;
 
 		return (<Downshift
 			selectedItem={selectedItem}
@@ -90,67 +92,65 @@ class Dropdown extends Component {
 				getButtonProps,
 				getItemProps,
 				isOpen,
-				highlightedIndex
-			}) => {
-				return (<div className={suggestionsContainer}>
-					<Select
-						{...getButtonProps()}
-						className={getClassName(this.props.innerClass, "select") || null}
-						onClick={this.toggle}
-						title={selectedItem ? this.renderToString(selectedItem) : placeholder}
-					>
-						<div>{selectedItem ? this.renderToString(selectedItem) : placeholder}</div>
-						<Chevron open={isOpen} />
-					</Select>
-					{
-						isOpen && items.length
-							? (<div className={suggestions}>
-								<ul className={getClassName(this.props.innerClass, "list") || null}>
-									{
-										items
-											.map((item, index) => {
-												const selected = this.props.multi && (
-													// MultiDropdownList
-													(selectedItem && !!selectedItem[item[keyField]]) ||
+				highlightedIndex,
+			}) => (<div className={suggestionsContainer}>
+				<Select
+					{...getButtonProps()}
+					className={getClassName(this.props.innerClass, 'select') || null}
+					onClick={this.toggle}
+					title={selectedItem ? this.renderToString(selectedItem) : placeholder}
+				>
+					<div>{selectedItem ? this.renderToString(selectedItem) : placeholder}</div>
+					<Chevron open={isOpen} />
+				</Select>
+				{
+					isOpen && items.length
+						? (<div className={suggestions}>
+							<ul className={getClassName(this.props.innerClass, 'list') || null}>
+								{
+									items
+										.map((item, index) => {
+											const selected = this.props.multi && (
+												// MultiDropdownList
+												(selectedItem && !!selectedItem[item[keyField]])
 													// MultiDropdownRange
-													(Array.isArray(selectedItem) && selectedItem.find(value => value[labelField] === item[labelField]))
-												);
+													|| (Array.isArray(selectedItem) && selectedItem.find(value => value[labelField] === item[labelField]))
+											);
 
-												return (<li
-													{...getItemProps({ item })}
-													key={item[keyField]}
-													style={{
-														backgroundColor: this.getBackgroundColor(highlightedIndex === index, selected)
-													}}
-												>
-													{item[labelField]}
-													{
-														this.props.showCount && item.doc_count &&
-														` (${item.doc_count})`
-													}
-													{
-														selected
-															? (<Tick className={getClassName(this.props.innerClass, "icon") || null} />)
-															: null
-													}
-												</li>
-												)
-											})
-									}
-								</ul>
-							</div>)
-							: null
-					}
-				</div>);
-			}}
+											return (<li
+												{...getItemProps({ item })}
+												key={item[keyField]}
+												style={{
+													backgroundColor: this.getBackgroundColor(highlightedIndex === index, selected),
+												}}
+											>
+												{item[labelField]}
+												{
+													this.props.showCount && item.doc_count
+														&& ` (${item.doc_count})`
+												}
+												{
+													selected
+														? (<Tick className={getClassName(this.props.innerClass, 'icon') || null} />)
+														: null
+												}
+											</li>
+											);
+										})
+								}
+							</ul>
+						</div>)
+						: null
+				}
+			</div>)}
 		/>);
 	}
 }
 
 Dropdown.defaultProps = {
-	labelField: "label",
-	keyField: "key"
-}
+	labelField: 'label',
+	keyField: 'key',
+};
 
 Dropdown.propTypes = {
 	items: types.data,
@@ -162,7 +162,7 @@ Dropdown.propTypes = {
 	keyField: types.string,
 	returnsObject: types.bool,
 	showCount: types.bool,
-	innerClass: types.style
-}
+	innerClass: types.style,
+};
 
 export default Dropdown;

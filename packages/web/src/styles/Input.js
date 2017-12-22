@@ -1,5 +1,5 @@
-import { css } from "emotion";
-import styled from "react-emotion";
+import { css } from 'emotion';
+import styled from 'react-emotion';
 
 const alertBorder = ({ theme }) => css`
 	border: 1px solid ${theme.alertColor};
@@ -15,27 +15,27 @@ const input = css`
 	outline: none;
 `;
 
-const Input = styled("input")`
+const Input = styled('input')`
 	${input};
 
 	${props =>
-		props.showIcon &&
-		css`
+		props.showIcon
+		&& css`
 			border: none;
 			flex: 1;
 		`};
 
 	${props =>
-		props.showIcon &&
-		props.iconPosition === "left" &&
-		css`
+		props.showIcon
+		&& props.iconPosition === 'left'
+		&& css`
 			padding-left: 0;
 		`};
 
 	${props =>
-		props.showIcon &&
-		props.iconPosition === "right" &&
-		css`
+		props.showIcon
+		&& props.iconPosition === 'right'
+		&& css`
 			padding-right: 0;
 		`};
 

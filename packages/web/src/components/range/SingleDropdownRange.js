@@ -1,32 +1,32 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
-	updateQuery
-} from "@appbaseio/reactivecore/lib/actions";
+	updateQuery,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
-	getClassName
-} from "@appbaseio/reactivecore/lib/utils/helper";
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Title from "../../styles/Title";
-import Dropdown from "../shared/Dropdown";
+import Title from '../../styles/Title';
+import Dropdown from '../shared/Dropdown';
 
 class SingleDropdownRange extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			currentValue: null
+			currentValue: null,
 		};
-		this.type = "range";
+		this.type = 'range';
 	}
 
 	componentWillMount() {
@@ -44,7 +44,7 @@ class SingleDropdownRange extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
@@ -71,9 +71,9 @@ class SingleDropdownRange extends Component {
 					[props.dataField]: {
 						gte: value.start,
 						lte: value.end,
-						boost: 2.0
-					}
-				}
+						boost: 2.0,
+					},
+				},
 			};
 		}
 		return null;
@@ -87,18 +87,18 @@ class SingleDropdownRange extends Component {
 
 		const performUpdate = () => {
 			this.setState({
-				currentValue
+				currentValue,
 			}, () => {
 				this.updateQuery(currentValue, props);
 			});
-		}
+		};
 
 		checkValueChange(
 			props.componentId,
 			currentValue,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	}
 
@@ -117,14 +117,14 @@ class SingleDropdownRange extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
-			URLParams: props.URLParams
+			URLParams: props.URLParams,
 		});
 	}
 
 	render() {
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<Dropdown
 					innerClass={this.props.innerClass}
 					items={this.props.data}
@@ -160,26 +160,26 @@ SingleDropdownRange.propTypes = {
 	showFilter: types.bool,
 	style: types.style,
 	className: types.string,
-	innerClass: types.style
-}
+	innerClass: types.style,
+};
 
 SingleDropdownRange.defaultProps = {
-	placeholder: "Select a value",
+	placeholder: 'Select a value',
 	URLParams: false,
 	showFilter: true,
 	style: {},
-	className: null
-}
+	className: null,
+};
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject))
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownRange);

@@ -1,6 +1,6 @@
-import styled from "react-emotion";
+import styled from 'react-emotion';
 
-const TagList = styled("div")`
+const TagList = styled('div')`
 	display: flex;
     flex-wrap: wrap;
     align-items: center;

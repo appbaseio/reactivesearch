@@ -1,9 +1,9 @@
-import styled from "react-emotion";
+import styled from 'react-emotion';
 
-import color from "./theme";
+import color from './theme';
 
 const Topic = styled.div`
-	background: ${({ active }) => active ? color.primaryColor : color.secondaryColor};
+	background: ${({ active }) => (active ? color.primaryColor : color.secondaryColor)};
 	margin: 3px;
 	padding: 4px;
 	color: white;

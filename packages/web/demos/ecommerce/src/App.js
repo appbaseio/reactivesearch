@@ -1,29 +1,29 @@
-import React, { Component } from "react";
-import { ReactiveBase } from "@appbaseio/reactivesearch";
+import React, { Component } from 'react';
+import { ReactiveBase } from '@appbaseio/reactivesearch';
 
-import theme from "./styles/theme";
+import theme from './styles/theme';
 
-import Header from "./components/Header";
-import SearchFilters from "./components/SearchFilters";
-import Results from "./components/Results";
+import Header from './components/Header';
+import SearchFilters from './components/SearchFilters';
+import Results from './components/Results';
 
-import Container, { appContainer, resultsContainer } from "./styles/Container";
-import FilterContainer from "./styles/FilterContainer";
-import Flex, { FlexChild } from "./styles/Flex";
-import { ToggleButton } from "./styles/Button";
+import Container, { appContainer, resultsContainer } from './styles/Container';
+import FilterContainer from './styles/FilterContainer';
+import Flex, { FlexChild } from './styles/Flex';
+import { ToggleButton } from './styles/Button';
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			visible: false
+			visible: false,
 		};
 	}
 
 	toggleFilters = () => {
 		const { visible } = this.state;
 		this.setState({
-			visible: !visible
+			visible: !visible,
 		});
 	}
 
@@ -46,9 +46,9 @@ class App extends Component {
 					</Flex>
 					<ToggleButton onClick={this.toggleFilters}>
 						{
-							this.state.visible ?
-								"🚗 SHOW CARS" :
-								"📂 SHOW FILTERS"
+							this.state.visible
+								? '🚗 SHOW CARS'
+								: '📂 SHOW FILTERS'
 						}
 					</ToggleButton>
 				</ReactiveBase>

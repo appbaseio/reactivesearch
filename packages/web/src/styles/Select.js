@@ -1,6 +1,6 @@
-import styled from "react-emotion";
+import styled from 'react-emotion';
 
-const Select = styled("button")`
+const Select = styled('button')`
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -31,7 +31,7 @@ const Select = styled("button")`
 	}
 `;
 
-const Tick = styled("span")`
+const Tick = styled('span')`
 	width: 16px;
 	height: 16px;
 	display: inline-block;

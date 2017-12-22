@@ -1,30 +1,30 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
-	updateQuery
-} from "@appbaseio/reactivecore/lib/actions";
+	updateQuery,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	debounce,
 	checkValueChange,
 	checkPropChange,
-	getClassName
-} from "@appbaseio/reactivecore/lib/utils/helper";
-import types from "@appbaseio/reactivecore/lib/utils/types";
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Input from "../../styles/Input";
-import Title from "../../styles/Title";
+import Input from '../../styles/Input';
+import Title from '../../styles/Title';
 
 class TextField extends Component {
 	constructor(props) {
 		super(props);
 
-		this.type = "match";
+		this.type = 'match';
 		this.state = {
-			currentValue: ""
+			currentValue: '',
 		};
 	}
 
@@ -43,12 +43,12 @@ class TextField extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected, true, nextProps);
 		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || "", true, nextProps);
+			this.setValue(nextProps.selectedValue || '', true, nextProps);
 		}
 	}
 
@@ -63,11 +63,11 @@ class TextField extends Component {
 	}
 
 	defaultQuery = (value) => {
-		if (value && value.trim() !== "") {
+		if (value && value.trim() !== '') {
 			return {
 				[this.type]: {
-					[this.props.dataField]: value
-				}
+					[this.props.dataField]: value,
+				},
 			};
 		}
 		return null;
@@ -80,7 +80,7 @@ class TextField extends Component {
 	setValue = (value, isDefaultValue = false, props = this.props) => {
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value
+				currentValue: value,
 			});
 			if (isDefaultValue) {
 				this.updateQuery(value, props);
@@ -88,13 +88,13 @@ class TextField extends Component {
 				// debounce for handling text while typing
 				this.handleTextChange(value);
 			}
-		}
+		};
 		checkValueChange(
 			props.componentId,
 			value,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -111,7 +111,7 @@ class TextField extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
-			URLParams: props.URLParams
+			URLParams: props.URLParams,
 		});
 	};
 
@@ -122,10 +122,10 @@ class TextField extends Component {
 	render() {
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<Input
 					type="text"
-					className={getClassName(this.props.innerClass, "input") || null}
+					className={getClassName(this.props.innerClass, 'input') || null}
 					placeholder={this.props.placeholder}
 					onChange={this.handleChange}
 					value={this.state.currentValue}
@@ -155,28 +155,26 @@ TextField.propTypes = {
 	showFilter: types.bool,
 	style: types.style,
 	className: types.string,
-	innerClass: types.style
+	innerClass: types.style,
 };
 
 TextField.defaultProps = {
-	placeholder: "Search",
+	placeholder: 'Search',
 	URLParams: false,
 	showFilter: true,
 	style: {},
-	className: null
-}
+	className: null,
+};
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(
-		updateQuery(updateQueryObject)
-	)
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(TextField);

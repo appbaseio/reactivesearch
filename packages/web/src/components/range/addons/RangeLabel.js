@@ -1,7 +1,7 @@
-import React from "react";
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import React from 'react';
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Label from "../../../styles/Label";
+import Label from '../../../styles/Label';
 
 const RangeLabel = ({ align, children, className }) => (
 	<Label align={align} className={className}>
@@ -12,7 +12,7 @@ const RangeLabel = ({ align, children, className }) => (
 RangeLabel.propTypes = {
 	align: types.rangeLabelsAlign,
 	children: types.children,
-	className: types.string
-}
+	className: types.string,
+};
 
 export default RangeLabel;

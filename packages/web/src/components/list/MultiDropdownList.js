@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryOptions
-} from "@appbaseio/reactivecore/lib/actions";
+	setQueryOptions,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	getQueryOptions,
@@ -16,13 +16,13 @@ import {
 	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
-	getClassName
-} from "@appbaseio/reactivecore/lib/utils/helper";
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Title from "../../styles/Title";
-import Dropdown from "../shared/Dropdown";
+import Title from '../../styles/Title';
+import Dropdown from '../shared/Dropdown';
 
 class MultiDropdownList extends Component {
 	constructor(props) {
@@ -30,9 +30,9 @@ class MultiDropdownList extends Component {
 
 		this.state = {
 			currentValue: {},
-			options: []
+			options: [],
 		};
-		this.internalComponent = props.componentId + "__internal";
+		this.internalComponent = `${props.componentId}__internal`;
 	}
 
 	componentWillMount() {
@@ -53,22 +53,22 @@ class MultiDropdownList extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 		checkPropChange(
 			this.props.options,
 			nextProps.options,
 			() => {
 				this.setState({
-					options: nextProps.options[nextProps.dataField].buckets || []
+					options: nextProps.options[nextProps.dataField].buckets || [],
 				});
-			}
+			},
 		);
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			["size", "sortBy"],
-			() => this.updateQueryOptions(nextProps)
+			['size', 'sortBy'],
+			() => this.updateQueryOptions(nextProps),
 		);
 
 		let selectedValue = Object.keys(this.state.currentValue);
@@ -76,7 +76,7 @@ class MultiDropdownList extends Component {
 		if (this.props.selectAllLabel) {
 			selectedValue = selectedValue.filter(val => val !== this.props.selectAllLabel);
 
-			if (!!this.state.currentValue[this.props.selectAllLabel]) {
+			if (this.state.currentValue[this.props.selectAllLabel]) {
 				selectedValue = [this.props.selectAllLabel];
 			}
 		}
@@ -105,34 +105,34 @@ class MultiDropdownList extends Component {
 
 	defaultQuery = (value, props) => {
 		let query = null;
-		const type = props.queryFormat === "or" ? "terms" : "term";
+		const type = props.queryFormat === 'or' ? 'terms' : 'term';
 		if (this.props.selectAllLabel && value.includes(this.props.selectAllLabel)) {
 			query = {
 				exists: {
-					field: props.dataField
-				}
+					field: props.dataField,
+				},
 			};
 		} else if (value) {
 			let listQuery;
-			if (props.queryFormat === "or") {
+			if (props.queryFormat === 'or') {
 				listQuery = {
 					[type]: {
-						[props.dataField]: value
-					}
+						[props.dataField]: value,
+					},
 				};
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
 				const queryArray = value.map(item => (
 					{
 						[type]: {
-							[props.dataField]: item
-						}
+							[props.dataField]: item,
+						},
 					}
 				));
 				listQuery = {
 					bool: {
-						must: queryArray
-					}
+						must: queryArray,
+					},
 				};
 			}
 
@@ -147,7 +147,7 @@ class MultiDropdownList extends Component {
 		let finalValues = null;
 
 		if (selectAllLabel && value.includes(selectAllLabel)) {
-			if (!!currentValue[selectAllLabel]) {
+			if (currentValue[selectAllLabel]) {
 				currentValue = {};
 				finalValues = [];
 			} else {
@@ -185,18 +185,18 @@ class MultiDropdownList extends Component {
 
 		const performUpdate = () => {
 			this.setState({
-				currentValue
+				currentValue,
 			}, () => {
 				this.updateQuery(finalValues, props);
 			});
-		}
+		};
 
 		checkValueChange(
 			props.componentId,
 			finalValues,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -213,7 +213,7 @@ class MultiDropdownList extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
-			URLParams: props.URLParams
+			URLParams: props.URLParams,
 		});
 	};
 
@@ -224,10 +224,10 @@ class MultiDropdownList extends Component {
 				terms: {
 					field: props.dataField,
 					size: props.size,
-					order: getAggsOrder(props.sortBy)
-				}
-			}
-		}
+					order: getAggsOrder(props.sortBy),
+				},
+			},
+		};
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
@@ -240,16 +240,16 @@ class MultiDropdownList extends Component {
 
 		if (this.props.selectAllLabel) {
 			selectAll = [{
-				key: this.props.selectAllLabel
-			}]
+				key: this.props.selectAllLabel,
+			}];
 		}
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<Dropdown
 					innerClass={this.props.innerClass}
-					items={[...selectAll , ...this.state.options]}
+					items={[...selectAll, ...this.state.options]}
 					onChange={this.setValue}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
@@ -289,24 +289,24 @@ MultiDropdownList.propTypes = {
 	selectAllLabel: types.string,
 	style: types.style,
 	className: types.string,
-	innerClass: types.style
-}
+	innerClass: types.style,
+};
 
 MultiDropdownList.defaultProps = {
 	size: 100,
-	sortBy: "count",
-	queryFormat: "or",
+	sortBy: 'count',
+	queryFormat: 'or',
 	URLParams: false,
 	showCount: true,
-	placeholder: "Select values",
+	placeholder: 'Select values',
 	showFilter: true,
 	style: {},
-	className: null
-}
+	className: null,
+};
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -314,7 +314,7 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList);

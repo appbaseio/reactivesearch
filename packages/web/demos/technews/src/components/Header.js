@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import Navbar from "../styles/Navbar";
+import Navbar from '../styles/Navbar';
 
 const Header = () => (
 	<Navbar>Tech News</Navbar>

@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryOptions
-} from "@appbaseio/reactivecore/lib/actions";
+	setQueryOptions,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	getQueryOptions,
@@ -16,13 +16,13 @@ import {
 	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
-	getClassName
-} from "@appbaseio/reactivecore/lib/utils/helper";
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Title from "../../styles/Title";
-import TagList from "../../styles/TagList";
+import Title from '../../styles/Title';
+import TagList from '../../styles/TagList';
 
 class TagCloud extends Component {
 	constructor(props) {
@@ -30,11 +30,11 @@ class TagCloud extends Component {
 
 		this.state = {
 			currentValue: {},
-			options: []
+			options: [],
 		};
 		this.locked = false;
-		this.type = "term";
-		this.internalComponent = props.componentId + "__internal";
+		this.type = 'term';
+		this.internalComponent = `${props.componentId}__internal`;
 	}
 
 	componentWillMount() {
@@ -55,28 +55,28 @@ class TagCloud extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 		checkPropChange(
 			this.props.options,
 			nextProps.options,
 			() => {
 				this.setState({
-					options: nextProps.options[nextProps.dataField].buckets || []
+					options: nextProps.options[nextProps.dataField].buckets || [],
 				});
-			}
+			},
 		);
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			["size", "sortBy"],
-			() => this.updateQueryOptions(nextProps)
+			['size', 'sortBy'],
+			() => this.updateQueryOptions(nextProps),
 		);
 
 		let selectedValue = Object.keys(this.state.currentValue);
 
 		if (!nextProps.multiSelect) {
-			selectedValue = selectedValue.length && selectedValue[0] || "";
+			selectedValue = selectedValue.length && selectedValue[0] || '';
 		}
 
 		if (!this.locked) {
@@ -105,29 +105,29 @@ class TagCloud extends Component {
 
 	defaultQuery = (value, props) => {
 		let query = null;
-		let type = props.queryFormat === "or" ? "terms" : "term";
-		type = props.multiSelect ? type : "term";
+		let type = props.queryFormat === 'or' ? 'terms' : 'term';
+		type = props.multiSelect ? type : 'term';
 		if (value) {
 			let listQuery;
-			if (!props.multiSelect || props.queryFormat === "or") {
+			if (!props.multiSelect || props.queryFormat === 'or') {
 				listQuery = {
 					[type]: {
-						[props.dataField]: value
-					}
+						[props.dataField]: value,
+					},
 				};
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
 				const queryArray = value.map(item => (
 					{
 						[type]: {
-							[props.dataField]: item
-						}
+							[props.dataField]: item,
+						},
 					}
 				));
 				listQuery = {
 					bool: {
-						must: queryArray
-					}
+						must: queryArray,
+					},
 				};
 			}
 
@@ -159,26 +159,26 @@ class TagCloud extends Component {
 			}
 		} else {
 			currentValue = {
-				[value]: true
+				[value]: true,
 			};
 			finalValues = value;
 		}
 
 		const performUpdate = () => {
 			this.setState({
-				currentValue
+				currentValue,
 			}, () => {
 				this.updateQuery(finalValues, props);
 				this.locked = false;
 			});
-		}
+		};
 
 		checkValueChange(
 			props.componentId,
 			finalValues,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -195,7 +195,7 @@ class TagCloud extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
-			URLParams: props.URLParams
+			URLParams: props.URLParams,
 		});
 	};
 
@@ -206,15 +206,16 @@ class TagCloud extends Component {
 				terms: {
 					field: props.dataField,
 					size: props.size,
-					order: getAggsOrder(props.sortBy)
-				}
-			}
-		}
+					order: getAggsOrder(props.sortBy),
+				},
+			},
+		};
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
 	render() {
-		const min = 0.8, max = 3;
+		const min = 0.8,
+			max = 3;
 
 		if (this.state.options.length === 0) {
 			return null;
@@ -227,8 +228,8 @@ class TagCloud extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
-				<TagList className={getClassName(this.props.innerClass, "list") || null}>
+				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				<TagList className={getClassName(this.props.innerClass, 'list') || null}>
 					{
 						this.state.options
 							.map((item) => {
@@ -236,15 +237,15 @@ class TagCloud extends Component {
 
 								return (<span
 									key={item.key}
-									className={getClassName(this.props.innerClass, "input")}
+									className={getClassName(this.props.innerClass, 'input')}
 									onClick={() => this.setValue(item.key)}
 									style={{ fontSize: `${size}em` }}
-									className={!!this.state.currentValue[item.key] ? "active" : null}
+									className={this.state.currentValue[item.key] ? 'active' : null}
 								>
 									{item.key}
 									{
-										this.props.showCount &&
-										` (${item.doc_count})`
+										this.props.showCount
+										&& ` (${item.doc_count})`
 									}
 								</span>);
 							})
@@ -282,24 +283,24 @@ TagCloud.propTypes = {
 	innerClass: types.style,
 	showCount: types.bool,
 	queryFormat: types.queryFormatSearch,
-	multiSelect: types.bool
-}
+	multiSelect: types.bool,
+};
 
 TagCloud.defaultProps = {
 	size: 100,
-	sortBy: "asc",
+	sortBy: 'asc',
 	URLParams: false,
 	showFilter: true,
-	placeholder: "Search",
+	placeholder: 'Search',
 	style: {},
 	className: null,
-	queryFormat: "or",
-	multiSelect: false
-}
+	queryFormat: 'or',
+	multiSelect: false,
+};
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -307,7 +308,7 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(TagCloud);

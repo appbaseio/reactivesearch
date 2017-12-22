@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import StyledTopic from "../styles/Topic";
+import StyledTopic from '../styles/Topic';
 
 class Topic extends Component {
 	handleClick = () => {
@@ -19,7 +19,7 @@ class Topic extends Component {
 Topic.propTypes = {
 	children: PropTypes.string,
 	active: PropTypes.bool,
-	toggleTopic: PropTypes.func
+	toggleTopic: PropTypes.func,
 };
 
 export default Topic;

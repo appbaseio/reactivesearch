@@ -1,4 +1,4 @@
-import styled from "react-emotion";
+import styled from 'react-emotion';
 
 const Main = styled.section`
 	background: #fafafa;

@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryOptions
-} from "@appbaseio/reactivecore/lib/actions";
+	setQueryOptions,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	getQueryOptions,
 	pushToAndClause,
@@ -15,26 +15,26 @@ import {
 	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
-	getClassName
-} from "@appbaseio/reactivecore/lib/utils/helper";
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Title from "../../styles/Title";
-import Input from "../../styles/Input";
-import { UL, Radio } from "../../styles/FormControlList";
+import Title from '../../styles/Title';
+import Input from '../../styles/Input';
+import { UL, Radio } from '../../styles/FormControlList';
 
 class SingleList extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			currentValue: "",
+			currentValue: '',
 			options: [],
-			searchTerm: ""
+			searchTerm: '',
 		};
-		this.type = "term";
-		this.internalComponent = props.componentId + "__internal";
+		this.type = 'term';
+		this.internalComponent = `${props.componentId}__internal`;
 	}
 
 	componentWillMount() {
@@ -55,28 +55,28 @@ class SingleList extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 		checkPropChange(
 			this.props.options,
 			nextProps.options,
 			() => {
 				this.setState({
-					options: nextProps.options[nextProps.dataField].buckets || []
+					options: nextProps.options[nextProps.dataField].buckets || [],
 				});
-			}
+			},
 		);
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			["size", "sortBy"],
-			() => this.updateQueryOptions(nextProps)
+			['size', 'sortBy'],
+			() => this.updateQueryOptions(nextProps),
 		);
 
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected);
 		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || "");
+			this.setValue(nextProps.selectedValue || '');
 		}
 	}
 
@@ -99,14 +99,14 @@ class SingleList extends Component {
 		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
 			return {
 				exists: {
-					field: props.dataField
-				}
+					field: props.dataField,
+				},
 			};
 		} else if (value) {
 			return {
 				[this.type]: {
-					[props.dataField]: value
-				}
+					[props.dataField]: value,
+				},
 			};
 		}
 		return null;
@@ -114,23 +114,23 @@ class SingleList extends Component {
 
 	setValue = (value, props = this.props) => {
 		if (value == this.state.currentValue) {
-			value = "";
+			value = '';
 		}
 
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value
+				currentValue: value,
 			}, () => {
 				this.updateQuery(value, props);
 			});
-		}
+		};
 
 		checkValueChange(
 			props.componentId,
 			value,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -147,7 +147,7 @@ class SingleList extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
-			URLParams: props.URLParams
+			URLParams: props.URLParams,
 		});
 	};
 
@@ -158,31 +158,31 @@ class SingleList extends Component {
 				terms: {
 					field: props.dataField,
 					size: props.size,
-					order: getAggsOrder(props.sortBy)
-				}
-			}
-		}
+					order: getAggsOrder(props.sortBy),
+				},
+			},
+		};
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
 	handleInputChange = (e) => {
 		const { value } = e.target;
 		this.setState({
-			searchTerm: value
+			searchTerm: value,
 		});
 	};
 
 	renderSearch = () => {
 		if (this.props.showSearch) {
-			return <Input
-				className={getClassName(this.props.innerClass, "input") || null}
+			return (<Input
+				className={getClassName(this.props.innerClass, 'input') || null}
 				onChange={this.handleInputChange}
 				value={this.state.searchTerm}
 				placeholder={this.props.placeholder}
 				style={{
-					margin: "0 0 8px"
+					margin: '0 0 8px',
 				}}
-			/>
+			/>);
 		}
 		return null;
 	};
@@ -200,14 +200,14 @@ class SingleList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, "title") || null}>{this.props.title}</Title>}
+				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{this.renderSearch()}
-				<UL className={getClassName(this.props.innerClass, "list") || null}>
+				<UL className={getClassName(this.props.innerClass, 'list') || null}>
 					{
 						selectAllLabel
 							? (<li key={selectAllLabel}>
 								<Radio
-									className={getClassName(this.props.innerClass, "input")}
+									className={getClassName(this.props.innerClass, 'input')}
 									id={selectAllLabel}
 									name={this.props.componentId}
 									value={selectAllLabel}
@@ -215,7 +215,7 @@ class SingleList extends Component {
 									checked={this.state.currentValue === selectAllLabel}
 									show={this.props.showRadio}
 								/>
-								<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={selectAllLabel}>
+								<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
 									{selectAllLabel}
 								</label>
 							</li>)
@@ -232,7 +232,7 @@ class SingleList extends Component {
 							.map(item => (
 								<li key={item.key}>
 									<Radio
-										className={getClassName(this.props.innerClass, "input")}
+										className={getClassName(this.props.innerClass, 'input')}
 										id={item.key}
 										name={this.props.componentId}
 										value={item.key}
@@ -240,11 +240,11 @@ class SingleList extends Component {
 										checked={this.state.currentValue === item.key}
 										show={this.props.showRadio}
 									/>
-									<label className={getClassName(this.props.innerClass, "label") || null} htmlFor={item.key}>
+									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={item.key}>
 										{item.key}
 										{
-											this.props.showCount &&
-											` (${item.doc_count})`
+											this.props.showCount
+											&& ` (${item.doc_count})`
 										}
 									</label>
 								</li>
@@ -284,25 +284,25 @@ SingleList.propTypes = {
 	selectAllLabel: types.string,
 	style: types.style,
 	className: types.string,
-	innerClass: types.style
-}
+	innerClass: types.style,
+};
 
 SingleList.defaultProps = {
 	size: 100,
-	sortBy: "count",
+	sortBy: 'count',
 	showRadio: true,
 	URLParams: false,
 	showCount: true,
 	showFilter: true,
-	placeholder: "Search",
+	placeholder: 'Search',
 	showSearch: true,
 	style: {},
-	className: null
-}
+	className: null,
+};
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || ""
+	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || '',
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -310,7 +310,7 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(SingleList);

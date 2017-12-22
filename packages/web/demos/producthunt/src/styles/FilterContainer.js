@@ -1,6 +1,6 @@
-import styled, { css } from "react-emotion";
+import styled, { css } from 'react-emotion';
 
-import { queries } from "./mediaQueries";
+import { queries } from './mediaQueries';
 
 const FilterContainer = styled.div`
 	text-transform: capitalize;
@@ -17,8 +17,8 @@ const FilterContainer = styled.div`
 		margin-top: -25px;
 	`};
 	${({ visible }) =>
-		!visible &&
-		css`
+		!visible
+		&& css`
 			${queries.medium`
 			display: none;
 		`};

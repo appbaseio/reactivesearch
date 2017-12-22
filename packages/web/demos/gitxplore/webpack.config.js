@@ -1,22 +1,22 @@
-const path = require("path");
+const path = require('path');
 
 module.exports = {
-	context: path.resolve(__dirname, "src"),
+	context: path.resolve(__dirname, 'src'),
 	entry: {
-		main: "./index.js"
+		main: './index.js',
 	},
 	output: {
-		path: path.resolve(__dirname, "dist"),
-		filename: "index.js",
-		publicPath: "dist/"
+		path: path.resolve(__dirname, 'dist'),
+		filename: 'index.js',
+		publicPath: 'dist/',
 	},
 	module: {
 		rules: [
 			{
 				test: /.jsx?$/,
-				loader: "babel-loader",
-				exclude: /node_modules/
-			}
-		]
-	}
+				loader: 'babel-loader',
+				exclude: /node_modules/,
+			},
+		],
+	},
 };

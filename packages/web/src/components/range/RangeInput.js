@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import React, { Component } from 'react';
+import types from '@appbaseio/reactivecore/lib/utils/types';
 import {
 	isEqual,
-	getClassName
-} from "@appbaseio/reactivecore/lib/utils/helper";
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
-import RangeSlider from "./RangeSlider";
-import Input from "../../styles/Input";
-import Flex from "../../styles/Flex";
-import Content from "../../styles/Content";
+import RangeSlider from './RangeSlider';
+import Input from '../../styles/Input';
+import Flex from '../../styles/Flex';
+import Content from '../../styles/Content';
 
 class RangeInput extends Component {
 	constructor(props) {
@@ -17,7 +17,7 @@ class RangeInput extends Component {
 			start: this.props.defaultSelected ? this.props.defaultSelected.start : props.range.start,
 			end: this.props.defaultSelected ? this.props.defaultSelected.end : props.range.end,
 			isStartValid: true,
-			isEndValid: true
+			isEndValid: true,
 		};
 	}
 
@@ -31,41 +31,41 @@ class RangeInput extends Component {
 		const { name, value } = e.target;
 		if (isNaN(value)) {
 			// set errors for invalid inputs
-			if (name === "start") {
+			if (name === 'start') {
 				this.setState({
-					isStartValid: false
+					isStartValid: false,
 				});
 			} else {
 				this.setState({
-					isEndValid: false
+					isEndValid: false,
 				});
 			}
 		} else {
 			// reset error states for valid inputs
-			if (name === "start" && !this.state.isStartValid) {
+			if (name === 'start' && !this.state.isStartValid) {
 				this.setState({
-					isStartValid: true
+					isStartValid: true,
 				});
-			} else if (name === "end" && !this.state.isEndValid) {
+			} else if (name === 'end' && !this.state.isEndValid) {
 				this.setState({
-					isEndValid: true
+					isEndValid: true,
 				});
 			}
 		}
 		this.setState({
-			[name]: value
+			[name]: value,
 		});
 	};
 
 	handleSlider = ({ start, end }) => {
 		this.setState({
 			start,
-			end
+			end,
 		});
 		if (this.props.onValueChange) {
 			this.props.onValueChange({
 				start,
-				end
+				end,
 			});
 		}
 	}
@@ -78,12 +78,12 @@ class RangeInput extends Component {
 					{...rest}
 					defaultSelected={{
 						start: this.state.isStartValid ? Number(this.state.start) : this.props.range.start,
-						end: this.state.isEndValid ? Number(this.state.end) : this.props.range.end
+						end: this.state.isEndValid ? Number(this.state.end) : this.props.range.end,
 					}}
 					onValueChange={this.handleSlider}
-					className={getClassName(this.props.innerClass, "slider-container") || null}
+					className={getClassName(this.props.innerClass, 'slider-container') || null}
 				/>
-				<Flex className={getClassName(this.props.innerClass, "input-container") || null}>
+				<Flex className={getClassName(this.props.innerClass, 'input-container') || null}>
 					<Flex direction="column" flex={2}>
 						<Input
 							name="start"
@@ -94,8 +94,8 @@ class RangeInput extends Component {
 							alert={!this.state.isStartValid}
 						/>
 						{
-							!this.state.isStartValid &&
-							<Content alert>Input range is invalid</Content>
+							!this.state.isStartValid
+							&& <Content alert>Input range is invalid</Content>
 						}
 					</Flex>
 					<Flex justifyContent="center" alignItems="center" flex={1}>-</Flex>
@@ -109,8 +109,8 @@ class RangeInput extends Component {
 							alert={!this.state.isEndValid}
 						/>
 						{
-							!this.state.isEndValid &&
-							<Content alert>Input range is invalid</Content>
+							!this.state.isEndValid
+							&& <Content alert>Input range is invalid</Content>
 						}
 					</Flex>
 				</Flex>
@@ -126,15 +126,15 @@ RangeInput.propTypes = {
 	onValueChange: types.func,
 	className: types.string,
 	style: types.style,
-	innerClass: types.style
+	innerClass: types.style,
 };
 
 RangeInput.defaultProps = {
 	range: {
 		start: 0,
-		end: 10
+		end: 10,
 	},
-	stepValue: 1
+	stepValue: 1,
 };
 
 export default RangeInput;

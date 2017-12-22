@@ -1,20 +1,18 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 import {
 	ReactiveBase,
 	DateRange,
 	ReactiveList,
-	SelectedFilters
-} from "../../src";
+	SelectedFilters,
+} from '../../src';
 
 class Main extends Component {
-	onData = (data) => {
-		return (<div key={data._id}>
-			<h2>{data.owner}/{data.name}</h2>
-			<h4>{data.stars} 🌟</h4>
-		</div>);
-	}
+	onData = data => (<div key={data._id}>
+		<h2>{data.owner}/{data.name}</h2>
+		<h4>{data.stars} 🌟</h4>
+	</div>)
 
 	render() {
 		return (
@@ -22,7 +20,7 @@ class Main extends Component {
 				app="gitxplore-live"
 				credentials="bYTSo47tj:d001826a-f4ef-42c5-b0aa-a94f29967ba0"
 				theme={{
-					primaryColor: "salmon"
+					primaryColor: 'salmon',
 				}}
 			>
 				<div className="row">
@@ -32,7 +30,7 @@ class Main extends Component {
 							dataField="pushed"
 							queryFormat="date_time_no_millis"
 							title="Date Range"
-							initialMonth={new Date("2017-04-07")}
+							initialMonth={new Date('2017-04-07')}
 							URLParams
 						/>
 					</div>
@@ -48,14 +46,14 @@ class Main extends Component {
 							pagination
 							defaultQuery={() => ({
 								query: {
-									match_all: {}
+									match_all: {},
 								},
 								sort: {
-									stars: { order: "desc" }
-								}
+									stars: { order: 'desc' },
+								},
 							})}
 							react={{
-								and: ["DateRangeComponent"]
+								and: ['DateRangeComponent'],
 							}}
 						/>
 					</div>
@@ -65,4 +63,4 @@ class Main extends Component {
 	}
 }
 
-ReactDOM.render(<Main />, document.getElementById("root"));
+ReactDOM.render(<Main />, document.getElementById('root'));
