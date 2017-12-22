@@ -314,6 +314,7 @@ class ResultList extends Component {
 				href={result.url}
 				image={!!result.image}
 				small={result.image_size === "small"}
+				className={getClassName(this.props.innerClass, "listItem")}
 			>
 				{result.image ? (
 					<Image src={result.image} small={result.image_size === "small"} />

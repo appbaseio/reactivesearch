@@ -312,7 +312,7 @@ class ResultCard extends Component {
 			<Card
 				key={item._id}
 				href={result.url}
-				className={getClassName(this.props.innerClass, "list-item")}
+				className={getClassName(this.props.innerClass, "listItem")}
 			>
 				<Image
 					style={{ backgroundImage: `url(${result.image})` }}
