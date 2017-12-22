@@ -1,6 +1,7 @@
 import styled, { css } from "react-emotion";
 
 import color from "./theme";
+import { queries } from "./mediaQueries";
 
 export const title = css`
 	color: ${color.primaryColor};
@@ -11,6 +12,10 @@ export const title = css`
 	border: 1px solid ${color.primaryColor};
 	padding: 3px 12px;
 	border-left-width: 12px;
+
+	${queries.large`
+		font-size: 1rem;
+	`};
 `;
 
 export const navbarContent = css`

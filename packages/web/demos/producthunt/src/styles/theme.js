@@ -1,11 +1,11 @@
 const theme = {
 	fontFamily: "Lato, Helvetica, sans-serif",
 	primaryColor: "tomato",
-	secondaryColor: "mediumpurple",
+	secondaryColor: "orangered",
 	titleColor: "tomato",
-	accentColor: "palevioletred",
 	lightGray: "#eff3f6",
-	componentMaxHeight: "540px"
+	componentMaxHeight: "540px",
+	textColor: "#777"
 };
 
 export default theme;
