@@ -1,6 +1,6 @@
-import { css } from "emotion";
+import { css } from 'emotion';
 
-const primaryColor = "#6772e5";
+const primaryColor = '#6772e5';
 
 const boldHeading = css`
 	letter-spacing: 0.04rem;

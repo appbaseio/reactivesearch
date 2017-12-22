@@ -1,7 +1,7 @@
-import styled from "react-emotion";
-import { css } from "emotion";
+import styled from 'react-emotion';
+import { css } from 'emotion';
 
-const Navbar = styled("nav")`
+const Navbar = styled('nav')`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
