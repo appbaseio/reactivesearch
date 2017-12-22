@@ -12,7 +12,7 @@
 		"no-underscore-dangle": 0,
 		"operator-linebreak": ["error", "before"],
 		"prefer-destructuring": 0,
-		"no-console": ["error", { allow: ["warn", "error"] }],
+		"no-console": ["error", { "allow": ["warn", "error"] }],
 		"class-methods-use-this": 0,
 
 		"react/jsx-indent": [2, "tab"],
@@ -22,5 +22,6 @@
 		"react/no-typos": 0,
 		"react/require-default-props": 0,
 		"react/no-unused-prop-types": 0,
+		"react/sort-comp": 0
 	}
 }
