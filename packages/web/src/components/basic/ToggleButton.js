@@ -70,8 +70,9 @@ class ToggleButton extends Component {
 		return query;
 	};
 
-	handleToggle = (toggleValue, isDefaultValue = false, props = this.props) => {
+	handleToggle = (value, isDefaultValue = false, props = this.props) => {
 		const { currentValue } = this.state;
+		let toggleValue = value;
 		let finalValue = [];
 		if (isDefaultValue) {
 			if (!Array.isArray(toggleValue)) {
@@ -171,6 +172,7 @@ ToggleButton.propTypes = {
 	style: types.style,
 	className: types.string,
 	innerClass: types.style,
+	URLParams: types.bool,
 };
 
 ToggleButton.defaultProps = {

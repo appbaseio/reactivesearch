@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import Base from '../../styles/Base';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+
+import Base from '../../styles/Base';
 
 class URLParamsProvider extends Component {
 	componentWillReceiveProps(nextProps) {
@@ -55,7 +55,7 @@ class URLParamsProvider extends Component {
 	}
 
 	pushToHistory() {
-		if (history.pushState) {
+		if (window.history.pushState) {
 			const paramsSting = this.props.params.toString() ? `?${this.props.params.toString()}` : '';
 			const newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}${paramsSting}`;
 			window.history.pushState({ path: newurl }, '', newurl);
@@ -63,9 +63,11 @@ class URLParamsProvider extends Component {
 	}
 
 	render() {
-		return (<Base>
-			{this.props.children}
-		</Base>);
+		return (
+			<Base>
+				{this.props.children}
+			</Base>
+		);
 	}
 }
 

@@ -76,7 +76,7 @@ class TagCloud extends Component {
 		let selectedValue = Object.keys(this.state.currentValue);
 
 		if (!nextProps.multiSelect) {
-			selectedValue = selectedValue.length && selectedValue[0] || '';
+			selectedValue = (selectedValue.length && selectedValue[0]) || '';
 		}
 
 		if (!this.locked) {
@@ -145,9 +145,11 @@ class TagCloud extends Component {
 			if (isDefaultValue) {
 				finalValues = value;
 				currentValue = {};
-				value && value.forEach((item) => {
-					currentValue[item] = true;
-				});
+				if (value) {
+					value.forEach((item) => {
+						currentValue[item] = true;
+					});
+				}
 			} else {
 				if (currentValue[value]) {
 					const { [value]: del, ...rest } = currentValue;
@@ -214,8 +216,8 @@ class TagCloud extends Component {
 	};
 
 	render() {
-		const min = 0.8,
-			max = 3;
+		const min = 0.8;
+		const max = 3;
 
 		if (this.state.options.length === 0) {
 			return null;
@@ -235,19 +237,22 @@ class TagCloud extends Component {
 							.map((item) => {
 								const size = ((item.doc_count / highestCount) * (max - min)) + min;
 
-								return (<span
-									key={item.key}
-									className={getClassName(this.props.innerClass, 'input')}
-									onClick={() => this.setValue(item.key)}
-									style={{ fontSize: `${size}em` }}
-									className={this.state.currentValue[item.key] ? 'active' : null}
-								>
-									{item.key}
-									{
-										this.props.showCount
-										&& ` (${item.doc_count})`
-									}
-								</span>);
+								return (
+									<span
+										key={item.key}
+										className={getClassName(this.props.innerClass, 'input')}
+										onClick={() => this.setValue(item.key)}
+										style={{ fontSize: `${size}em` }}
+										className={this.state.currentValue[item.key] ? 'active' : null}
+
+									>
+										{item.key}
+										{
+											this.props.showCount
+											&& ` (${item.doc_count})`
+										}
+									</span>
+								);
 							})
 					}
 				</TagList>
@@ -300,7 +305,8 @@ TagCloud.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
+	selectedValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value) || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
