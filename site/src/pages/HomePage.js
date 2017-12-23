@@ -3,7 +3,7 @@ import { Flex, H1, H2, Title, Button, Text } from '@appbaseio/designkit';
 
 import Navbar, { logo } from '../styles/Navbar';
 import { SlopeWrapper, Slope, WhiteBackdrop } from '../styles/Slope';
-import { boldHeading, button, col, colored, decoratedLink, card, title, code } from '../styles/base';
+import { boldHeading, button, col, colored, decoratedLink, decoratedSecondaryLink, card, title, code } from '../styles/base';
 import { mockDataSearch, mockDataSearchFull } from '../components/mock';
 
 function isScrolledIntoView(el) {
@@ -83,12 +83,12 @@ export default class HomePage extends Component {
 								lineHeight="1.4rem"
 								margin="10px 0 30px"
 								light
-							>Reactivesearch offers blazing fast ⚡ search UI components that run on elasticsearch
+							><span className={`${boldHeading} ${logo}`}>v2</span> Moar configurable, lighter and performant. <a className={`${decoratedSecondaryLink} ${decoratedLink}`} href="https://github.com/appbaseio/reactivesearch">Open source</a>.
 							</Text>
 
 							<Flex>
-								<Button primary className={button}>Get Started</Button>
-								<Button className={button} style={{ marginLeft: '10px' }}>View Components</Button>
+								<Button light style={{ borderRadius: "2px" }} primary className={button}>Getting Started</Button>
+								<Button transparent light className={button} style={{ marginLeft: '10px' , borderRadius: "2px" }}>View Components</Button>
 							</Flex>
 						</Flex>
 
@@ -104,9 +104,9 @@ export default class HomePage extends Component {
 						<img width="100%" src="images/components.png" alt="Reactivesearch Components" />
 					</div>
 
-					<Flex className={col} flexDirection="column" justifyContent="flex-end" padding="5rem 1rem">
+					<Flex className={col} flexDirection="column" justifyContent="center" padding="5rem 1rem">
 						<H2 className={colored}>UI Components for every occasion</H2>
-						<Text fontSize="1rem" lineHeight="1.6rem">Ecommerce, Search and Media apps, we've got you covered. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, sapiente.</Text>
+						<Text theme={{ textDark: "#424242" }} fontSize="1rem" lineHeight="1.6rem">Ecommerce, Search and Media apps, we have got you covered. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, sapiente.</Text>
 						<a className={decoratedLink} href="">View components</a>
 					</Flex>
 				</Flex>
