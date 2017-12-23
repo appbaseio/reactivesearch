@@ -11,6 +11,6 @@
 		"react"
 	],
 	"plugins": [
-		"emotion"
+		["emotion", { "sourceMap": true }]
 	]
 }
