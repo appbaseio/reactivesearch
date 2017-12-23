@@ -105,9 +105,12 @@ export default class HomePage extends Component {
 					</div>
 
 					<Flex className={col} flexDirection="column" justifyContent="center" padding="5rem 1rem">
-						<H2 className={colored}>UI Components for every occasion</H2>
-						<Text theme={{ textDark: "#424242" }} fontSize="1rem" lineHeight="1.6rem">Ecommerce, Search and Media apps, we have got you covered. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, sapiente.</Text>
+						<H2 className={colored}>Components for every occasion</H2>
+						<Text theme={{ textDark: "#424242" }} fontSize="1rem" lineHeight="1.6rem">Build and ship faster: E-commerce stores, personalized feeds, realtime search experiences with over 30 UI components.</Text>
 						<a className={decoratedLink} href="">View components</a>
+						<H2 style={{ paddingTop: "1rem" }} className={colored}>Progressively add components</H2>
+						<Text theme={{ textDark: "#424242" }} fontSize="1rem" lineHeight="1.6rem">Bring your existing UI components to Reactivesearch, one component at a time. <br/> Start building things in no time!</Text>
+						<a className={decoratedLink} href="">Custom components</a>
 					</Flex>
 				</Flex>
 
