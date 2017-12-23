@@ -33,7 +33,7 @@ const decoratedLink = css`
 	padding: 3px 0;
 	transition: all .3s ease;
 	width: fit-content;
-	max-width: 150px;
+	max-width: 175px;
 
 	&:hover, &:focus {
 		color: #3f4ab9;
