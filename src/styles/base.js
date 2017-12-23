@@ -58,6 +58,7 @@ const decoratedSecondaryLink = css`
 const card = css`
 	width: 19%;
 	border-radius: 0.15rem;
+	margin-top: 1rem;
 	text-align: center;
 	box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
 `;
