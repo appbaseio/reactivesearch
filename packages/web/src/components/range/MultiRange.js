@@ -26,7 +26,8 @@ class MultiRange extends Component {
 		this.state = {
 			currentValue: [],
 			showModal: false,
-			selectedValues: {}, // selectedValues hold the selected items as keys for O(1) complexity
+			// selectedValues hold the selected items as keys for O(1) complexity
+			selectedValues: {},
 		};
 
 		this.type = 'range';
@@ -81,6 +82,7 @@ class MultiRange extends Component {
 					},
 				}));
 			}
+			return null;
 		};
 
 		if (values && values.length) {
@@ -181,7 +183,10 @@ class MultiRange extends Component {
 									checked={!!this.state.selectedValues[item.label]}
 									show={this.props.showCheckbox}
 								/>
-								<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={item.label}>
+								<label
+									className={getClassName(this.props.innerClass, 'label') || null}
+									htmlFor={item.label}
+								>
 									{item.label}
 								</label>
 							</li>
@@ -228,7 +233,9 @@ MultiRange.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] ? state.selectedValues[props.componentId].value : null,
+	selectedValue: state.selectedValues[props.componentId]
+		? state.selectedValues[props.componentId].value
+		: null,
 });
 
 const mapDispatchtoProps = dispatch => ({
