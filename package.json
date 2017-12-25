@@ -10,7 +10,7 @@
     "build": "NODE_ENV=production webpack -p"
   },
   "dependencies": {
-    "@appbaseio/designkit": "^0.2.6",
+    "@appbaseio/designkit": "^0.2.8",
     "emotion": "^8.0.12",
     "emotion-theming": "^8.0.12",
     "react": "^16.2.0",
