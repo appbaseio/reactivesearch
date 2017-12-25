@@ -262,7 +262,7 @@ class DataSearch extends Component {
 		} else {
 			this.updateQuery(this.props.componentId, value, this.props);
 		}
-	}, 300);
+	}, this.props.debounce);
 
 	updateQuery = (componentId, value, props) => {
 		const query = props.customQuery || this.defaultQuery;
@@ -469,6 +469,7 @@ DataSearch.propTypes = {
 	showIcon: types.bool,
 	iconPosition: types.iconPosition,
 	icon: types.children,
+	debounce: types.number,
 };
 
 DataSearch.defaultProps = {
@@ -481,6 +482,7 @@ DataSearch.defaultProps = {
 	className: null,
 	showIcon: true,
 	iconPosition: 'right',
+	debounce: 300,
 };
 
 const mapStateToProps = (state, props) => ({

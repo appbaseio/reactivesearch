@@ -307,7 +307,7 @@ class CategorySearch extends Component {
 		} else {
 			this.updateQuery(this.props.componentId, value, this.props);
 		}
-	}, 300);
+	}, this.props.debounce);
 
 	updateQuery = (componentId, value, props, category) => {
 		const query = props.customQuery || this.defaultQuery;
@@ -563,6 +563,7 @@ CategorySearch.propTypes = {
 	showIcon: types.bool,
 	iconPosition: types.iconPosition,
 	icon: types.children,
+	debounce: types.number,
 };
 
 CategorySearch.defaultProps = {
@@ -575,6 +576,7 @@ CategorySearch.defaultProps = {
 	className: null,
 	showIcon: true,
 	iconPosition: 'right',
+	debounce: 300,
 };
 
 const mapStateToProps = (state, props) => ({
