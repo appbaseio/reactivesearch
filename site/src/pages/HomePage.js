@@ -34,8 +34,8 @@ export default class HomePage extends Component {
 		window.addEventListener('scroll', () => {
 			const { isVisible, Ti } = isScrolledIntoView(el);
 
-			const L = 1850,
-				K = 500;
+			const L = 1850;
+			const K = 500;
 			const Tc = window.innerHeight / 2;
 			const delta = Tc - Ti;
 			const scroll = Math.min((delta * L) / K, L - K);
@@ -87,8 +87,8 @@ export default class HomePage extends Component {
 							</Text>
 
 							<Flex>
-								<Button light style={{ borderRadius: "2px" }} primary className={button}>Getting Started</Button>
-								<Button transparent light className={button} style={{ marginLeft: '10px' , borderRadius: "2px" }}>View Components</Button>
+								<Button light primary shadow className={button}>Getting Started</Button>
+								<Button shadow className={button} style={{ marginLeft: '10px' }}>View Components</Button>
 							</Flex>
 						</Flex>
 
@@ -106,10 +106,10 @@ export default class HomePage extends Component {
 
 					<Flex className={col} flexDirection="column" justifyContent="center" padding="5rem 1rem">
 						<H2 className={colored}>Components for every occasion</H2>
-						<Text theme={{ textDark: "#424242" }} fontSize="1rem" lineHeight="1.6rem">Build and ship faster: E-commerce stores, personalized feeds, realtime search experiences with over 30 UI components.</Text>
+						<Text fontSize="1rem" lineHeight="1.6rem">Build and ship faster: E-commerce stores, personalized feeds, realtime search experiences with over 30 UI components.</Text>
 						<a className={decoratedLink} href="">View components</a>
 						<H2 style={{ paddingTop: "1rem" }} className={colored}>Progressively add components</H2>
-						<Text theme={{ textDark: "#424242" }} fontSize="1rem" lineHeight="1.6rem">Bring your existing UI components to Reactivesearch, one component at a time. <br/> Start building things in no time!</Text>
+						<Text fontSize="1rem" lineHeight="1.6rem">Bring your existing UI components to Reactivesearch, one component at a time. <br/> Start building things in no time!</Text>
 						<a className={decoratedLink} href="">Custom components</a>
 					</Flex>
 				</Flex>
