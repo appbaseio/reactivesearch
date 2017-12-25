@@ -3,7 +3,7 @@ import { Flex, H1, H2, Title, Button, Text } from '@appbaseio/designkit';
 
 import Navbar, { logo } from '../styles/Navbar';
 import { SlopeWrapper, Slope, WhiteBackdrop } from '../styles/Slope';
-import { boldHeading, button, col, colored, decoratedLink, card, title, code } from '../styles/base';
+import { boldHeading, button, col, colored, decoratedLink, decoratedSecondaryLink, card, title, code } from '../styles/base';
 import { mockDataSearch, mockDataSearchFull } from '../components/mock';
 
 function isScrolledIntoView(el) {
@@ -83,12 +83,12 @@ export default class HomePage extends Component {
 								lineHeight="1.4rem"
 								margin="10px 0 30px"
 								light
-							>Reactivesearch offers blazing fast ⚡ search UI components that run on elasticsearch
+							><span className={`${boldHeading} ${logo}`}>v2</span> Now moar configurable, lighter and performant. <a className={`${decoratedSecondaryLink} ${decoratedLink}`} href="https://github.com/appbaseio/reactivesearch">Open source licensed</a>.
 							</Text>
 
 							<Flex>
-								<Button primary className={button}>Get Started</Button>
-								<Button className={button} style={{ marginLeft: '10px' }}>View Components</Button>
+								<Button light style={{ borderRadius: "2px" }} primary className={button}>Getting Started</Button>
+								<Button transparent light className={button} style={{ marginLeft: '10px' , borderRadius: "2px" }}>View Components</Button>
 							</Flex>
 						</Flex>
 
@@ -104,10 +104,13 @@ export default class HomePage extends Component {
 						<img width="100%" src="images/components.png" alt="Reactivesearch Components" />
 					</div>
 
-					<Flex className={col} flexDirection="column" justifyContent="flex-end" padding="5rem 1rem">
-						<H2 className={colored}>UI Components for every occasion</H2>
-						<Text fontSize="1rem" lineHeight="1.6rem">Ecommerce, Search and Media apps, we've got you covered. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, sapiente.</Text>
+					<Flex className={col} flexDirection="column" justifyContent="center" padding="5rem 1rem">
+						<H2 className={colored}>Components for every occasion</H2>
+						<Text theme={{ textDark: "#424242" }} fontSize="1rem" lineHeight="1.6rem">Build and ship faster: E-commerce stores, personalized feeds, realtime search experiences with over 30 UI components.</Text>
 						<a className={decoratedLink} href="">View components</a>
+						<H2 style={{ paddingTop: "1rem" }} className={colored}>Progressively add components</H2>
+						<Text theme={{ textDark: "#424242" }} fontSize="1rem" lineHeight="1.6rem">Bring your existing UI components to Reactivesearch, one component at a time. <br/> Start building things in no time!</Text>
+						<a className={decoratedLink} href="">Custom components</a>
 					</Flex>
 				</Flex>
 
@@ -118,9 +121,11 @@ export default class HomePage extends Component {
 					justifyContent="center"
 					alignItems="center"
 				>
-					<H2>Batteries included</H2>
-
-					<Flex margin="2rem 0" justifyContent="space-between" style={{ width: '100%' }}>
+					<H2>Up to 10x Time Savings</H2>
+					<Text fontSize="1rem" lineHeight="1.6rem">
+						Focus on the design and user experience, let us handle the details.
+					</Text>
+					<Flex margin="2rem 0" justifyContent="space-between" style={{ width: '100%', flexWrap: 'wrap' }}>
 						<Flex
 							className={card}
 							flexDirection="column"
@@ -129,8 +134,8 @@ export default class HomePage extends Component {
 							padding="1rem"
 							backgroundColor="#fff"
 						>
-							<Title margin="0" fontWeight="700" fontSize="1rem">Style as per your taste</Title>
-							<Text margin="12px 0 0">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
+							<Title margin="0" fontWeight="700" fontSize="1rem">Build data-driven UIs</Title>
+							<Text margin="12px 0 0">30+ prebuilt components: Lists, Ranges, Dates, Search, Results and more.</Text>
 						</Flex>
 
 						<Flex
@@ -141,8 +146,8 @@ export default class HomePage extends Component {
 							padding="1rem"
 							backgroundColor="#fff"
 						>
-							<Title margin="0" fontWeight="700" fontSize="1rem">Customizable queries</Title>
-							<Text margin="12px 0 0">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
+							<Title margin="0" fontWeight="700" fontSize="1rem">Bring your components</Title>
+							<Text margin="12px 0 0">Wrap your React components inside ReactiveComponent and allow them to interact with the backend.</Text>
 						</Flex>
 
 						<Flex
@@ -153,8 +158,8 @@ export default class HomePage extends Component {
 							padding="1rem"
 							backgroundColor="#fff"
 						>
-							<Title margin="0" fontWeight="700" fontSize="1rem">Completely Opensource</Title>
-							<Text margin="12px 0 0">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
+							<Title margin="0" fontWeight="700" fontSize="1rem">Configurable styles</Title>
+							<Text margin="12px 0 0">Styled components with rich theming, classname and inline style injection  support.</Text>
 						</Flex>
 
 						<Flex
@@ -165,8 +170,8 @@ export default class HomePage extends Component {
 							padding="1rem"
 							backgroundColor="#fff"
 						>
-							<Title margin="0" fontWeight="700" fontSize="1rem">Works with any elasticsearch cluster</Title>
-							<Text margin="12px 0 0">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
+							<Title margin="0" fontWeight="700" fontSize="1rem">Elasticsearch compatible</Title>
+							<Text margin="12px 0 0">Connect to an ES index hosted anywhere. Supports v2, v5 and v6.</Text>
 						</Flex>
 
 						<Flex
@@ -177,8 +182,57 @@ export default class HomePage extends Component {
 							padding="1rem"
 							backgroundColor="#fff"
 						>
-							<Title margin="0" fontWeight="700" fontSize="1rem">Offers 30+ components</Title>
-							<Text margin="12px 0 0">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
+							<Title margin="0" fontWeight="700" fontSize="1rem">Write less code</Title>
+							<Text margin="12px 0 0">Reactivesearch provides scaffolding for UI rendering, handling query requests and managing state.</Text>
+						</Flex>
+
+						<Flex
+							className={card}
+							flexDirection="column"
+							alignItems="center"
+							justifyContent="center"
+							padding="1rem"
+							backgroundColor="#fff"
+						>
+							<Title margin="0" fontWeight="700" fontSize="1rem">Easy to secure</Title>
+							<Text margin="12px 0 0">Use appbase.io to get read-only credentials, or set up a middleware proxy with authorization rules. See example.</Text>
+						</Flex>
+
+						<Flex
+							className={card}
+							flexDirection="column"
+							alignItems="center"
+							justifyContent="center"
+							padding="1rem"
+							backgroundColor="#fff"
+						>
+							<Title margin="0" fontWeight="700" fontSize="1rem">Customizable Queries</Title>
+							<Text margin="12px 0 0">Components come with query defaults, that can be customized or overwritten. 100% Query DSL supported.</Text>
+						</Flex>
+
+
+						{/*<!--Flex
+							className={card}
+							flexDirection="column"
+							alignItems="center"
+							justifyContent="center"
+							padding="1rem"
+							backgroundColor="#fff"
+						>
+							<Title margin="0" fontWeight="700" fontSize="1rem">Build cross-platform UIs</Title>
+							<Text margin="12px 0 0">Build native iOS and Android UIs with Reactivesearch. <a className={decoratedLink} style={{ fontSize: "0.9rem" }} href="https://producthunt.com/upcoming/reactivesearch-native" target="_blank">Coming soon</a></Text>
+						</Flex-->*/}
+
+						<Flex
+							className={card}
+							flexDirection="column"
+							alignItems="center"
+							justifyContent="center"
+							padding="1rem"
+							backgroundColor="#fff"
+						>
+							<Title margin="0" fontWeight="700" fontSize="1rem">Starter Apps</Title>
+							<Text margin="12px 0 0">Get started quickly by using any of our pre-configured starter apps. See examples.</Text>
 						</Flex>
 					</Flex>
 				</Flex>
@@ -191,8 +245,9 @@ export default class HomePage extends Component {
 						justifyContent="center"
 						alignItems="center"
 					>
-						<H2 className={colored}>Build 10x faster</H2>
-						<Text fontSize="1rem" lineHeight="1.4rem">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, cumque!</Text>
+						<H2 className={colored}>Build your own v/s Reactivesearch</H2>
+						<Text fontSize="1rem" lineHeight="1.4rem">With less code, you need to solve fewer edge cases.</Text>
+						<Text>Reactivesearch handles UI rendering, query requests and manages response state so you can focus on the product experience.</Text>
 
 						<Flex
 							padding="30px 30px 0"
@@ -232,9 +287,9 @@ export default class HomePage extends Component {
 					alignItems="center"
 					padding="7rem 3rem 0"
 				>
-					<H2 className={colored}>Configure your search experiences</H2>
+					<H2 className={colored}>Reactivesearch In Action</H2>
 					<Text fontSize="1rem" lineHeight="1.5rem" style={{ maxWidth: '600px', textAlign: 'center' }}>
-						Reactivesearch comes with a range of UI components making it easier for you to design the perfect search experience for your product.
+						Check out these starter apps.
 					</Text>
 
 					<Flex padding="30px" justifyContent="space-between" style={{ width: '100%' }} margin="0 40px 40px" flexWrap="wrap">

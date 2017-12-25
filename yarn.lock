@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@appbaseio/designkit@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@appbaseio/designkit/-/designkit-0.1.2.tgz#b039bfe86271b0ec9a7a92cd8eb58c8d44240fac"
+"@appbaseio/designkit@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@appbaseio/designkit/-/designkit-0.2.6.tgz#8ac481e41d7cd3078f0e5a84d2ecd27b22797f7c"
   dependencies:
     emotion "^8.0.10"
     emotion-theming "^8.0.10"

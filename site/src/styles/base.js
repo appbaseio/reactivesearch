@@ -1,6 +1,7 @@
 import { css } from 'emotion';
 
 const primaryColor = '#6772e5';
+const secondaryColor = '#fefefe';
 
 const boldHeading = css`
 	letter-spacing: 0.04rem;
@@ -23,7 +24,6 @@ const colored = css`
 `;
 
 const decoratedLink = css`
-	width: 146px;
 	display: inline-flex;
 	font-size: 1.1rem;
 	margin: 1rem 0;
@@ -32,6 +32,8 @@ const decoratedLink = css`
 	text-decoration: none;
 	padding: 3px 0;
 	transition: all .3s ease;
+	width: fit-content;
+	max-width: 175px;
 
 	&:hover, &:focus {
 		color: #3f4ab9;
@@ -39,9 +41,24 @@ const decoratedLink = css`
 	}
 `;
 
+const decoratedSecondaryLink = css`
+	${decoratedLink} {
+		color: ${secondaryColor};
+		border-bottom: 1px dashed ${secondaryColor};
+		font-size: 1rem;
+
+		&:hover, &:focus {
+			color: ${secondaryColor};
+			border-bottom: 1px solid ${secondaryColor};
+			filter: brightness(90%);
+		}
+	}
+`;
+
 const card = css`
 	width: 19%;
 	border-radius: 0.15rem;
+	margin-top: 1rem;
 	text-align: center;
 	box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
 `;
@@ -64,4 +81,4 @@ const code = css`
 	overflow-y: hidden;
 `;
 
-export { boldHeading, button, col, colored, decoratedLink, card, title, code };
+export { boldHeading, button, col, colored, decoratedLink, decoratedSecondaryLink, card, title, code };
