@@ -240,11 +240,16 @@ class TagCloud extends Component {
 								return (
 									<span
 										key={item.key}
-										className={getClassName(this.props.innerClass, 'input')}
 										onClick={() => this.setValue(item.key)}
+										onKeyPress={() => this.setValue(item.key)}
 										style={{ fontSize: `${size}em` }}
-										className={this.state.currentValue[item.key] ? 'active' : null}
-
+										className={
+											this.state.currentValue[item.key]
+												? `${getClassName(this.props.innerClass, 'input') || ''} active`
+												: getClassName(this.props.innerClass, 'input')
+										}
+										role="menuitem"
+										tabIndex="0"
 									>
 										{item.key}
 										{
