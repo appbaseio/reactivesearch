@@ -22,6 +22,14 @@
 		"react/no-typos": 0,
 		"react/require-default-props": 0,
 		"react/no-unused-prop-types": 0,
-		"react/sort-comp": 0
+		"react/sort-comp": 0,
+
+		"jsx-a11y/label-has-for": [ 2, {
+			"components": ["Label"],
+			"required": {
+				"every": ["id"]
+			},
+			"allowChildren": false
+		}]
 	}
 }

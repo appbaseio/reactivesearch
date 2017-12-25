@@ -34,9 +34,9 @@ class SingleRange extends Component {
 		this.setReact(this.props);
 
 		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue, true);
+			this.setValue(this.props.selectedValue);
 		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected, true);
+			this.setValue(this.props.defaultSelected);
 		}
 	}
 
@@ -48,9 +48,9 @@ class SingleRange extends Component {
 		);
 
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.setValue(nextProps.defaultSelected, true);
+			this.setValue(nextProps.defaultSelected);
 		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.setValue(nextProps.selectedValue, true);
+			this.setValue(nextProps.selectedValue);
 		}
 	}
 
@@ -79,7 +79,7 @@ class SingleRange extends Component {
 		return null;
 	}
 
-	setValue = (value, isDefaultValue = false, props = this.props) => { // eslint-disable-line
+	setValue = (value, props = this.props) => {
 		const currentValue = props.data.find(item => item.label === value) || null;
 
 		const performUpdate = () => {
@@ -136,10 +136,19 @@ class SingleRange extends Component {
 									name={this.props.componentId}
 									value={item.label}
 									onClick={this.handleClick}
-									checked={!!this.state.currentValue && this.state.currentValue.label === item.label}
+									onChange={() => {}}
+									checked={
+										!!this.state.currentValue
+										&& this.state.currentValue.label === item.label
+									}
 									show={this.props.showRadio}
 								/>
-								<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={item.label}>
+								<label
+									className={
+										getClassName(this.props.innerClass, 'label') || null
+									}
+									htmlFor={item.label}
+								>
 									{item.label}
 								</label>
 							</li>
@@ -184,7 +193,10 @@ SingleRange.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
+	selectedValue: (
+		state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value
+	) || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
