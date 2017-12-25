@@ -17,6 +17,7 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
+	handleA11yAction,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -241,7 +242,7 @@ class TagCloud extends Component {
 									<span
 										key={item.key}
 										onClick={() => this.setValue(item.key)}
-										onKeyPress={() => this.setValue(item.key)}
+										onKeyPress={e => handleA11yAction(e, () => this.setValue(item.key))}
 										style={{ fontSize: `${size}em` }}
 										className={
 											this.state.currentValue[item.key]
