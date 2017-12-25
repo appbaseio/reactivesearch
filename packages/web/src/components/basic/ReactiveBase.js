@@ -32,9 +32,9 @@ class ReactiveBase extends Component {
 		let selectedValues = {};
 
 		try {
-			for (const key of this.params.keys()) {
+			Array.from(this.params.keys()).forEach((key) => {
 				selectedValues = { ...selectedValues, [key]: { value: JSON.parse(this.params.get(key)) } };
-			}
+			});
 		} catch (e) {
 			selectedValues = {};
 		}
