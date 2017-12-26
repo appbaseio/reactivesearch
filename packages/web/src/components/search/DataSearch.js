@@ -499,7 +499,7 @@ DataSearch.defaultProps = {
 	className: null,
 	showIcon: true,
 	iconPosition: 'right',
-	debounce: 300,
+	debounce: 0,
 };
 
 const mapStateToProps = (state, props) => ({
