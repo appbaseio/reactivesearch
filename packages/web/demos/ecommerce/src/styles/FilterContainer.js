@@ -11,12 +11,16 @@ const FilterContainer = styled.div`
 	position: fixed;
 	background: #fafafa;
 	z-index: 2;
-	${queries.medium`
+	${queries.large`
 		width: 100%;
+		min-height: 100vh;
 		padding-right: 10px;
 	`};
+	${queries.medium`
+		min-height: auto;
+	`};
 	${({ visible }) => !visible && css`
-		${queries.medium`
+		${queries.large`
 			display: none;
 		`};
 	`};

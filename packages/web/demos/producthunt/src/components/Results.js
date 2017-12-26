@@ -12,8 +12,8 @@ const onData = res => ({
 			<Flex justifyContent="space-between" responsive>
 				<Flex>{res.topics.map(topic => <Topic key={topic}>{topic}</Topic>)}</Flex>
 				<Flex>
-					<Topic alt><i className="fa fa-caret-up" /> {res.upvotes}</Topic>
-					<Topic alt><i className="fa fa-comment" /> {res.comments_count}</Topic>
+					<Topic hollow><i className="fa fa-caret-up" /> {res.upvotes}</Topic>
+					<Topic hollow><i className="fa fa-comment" /> {res.comments_count}</Topic>
 				</Flex>
 			</Flex>
 		</div>

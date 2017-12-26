@@ -28,7 +28,7 @@ export const resultsContainer = css`
 		`}
 	}
 
-	${queries.medium`
+	${queries.large`
 		width: 100%;
 	`};
 `;
@@ -45,6 +45,9 @@ export const categorySearchContainer = css`
 export const appContainer = css`
 	margin: 0 1rem;
 	padding-top: 100px;
+	${queries.large`
+		padding-top: 85px;
+	`};
 	${queries.medium`
 		padding-top: 130px;
 	`};
