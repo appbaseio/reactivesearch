@@ -273,14 +273,21 @@ class ResultList extends Component {
 			>
 				{
 					result.image
-						? <Image src={result.image} small={result.image_size === 'small'} />
+						? <Image
+							src={result.image}
+							small={result.image_size === 'small'}
+							className={getClassName(this.props.innerClass, 'image')}
+						/>
 						: null
 				}
 				<article>
 					{
 						typeof result.title === 'string'
-							? <Title dangerouslySetInnerHTML={{ __html: result.title }} />
-							: <Title>{result.title}</Title>
+							? <Title
+								dangerouslySetInnerHTML={{ __html: result.title }}
+								className={getClassName(this.props.innerClass, 'title')}
+							/>
+							: <Title className={getClassName(this.props.innerClass, 'title')}>{result.title}</Title>
 					}
 					{
 						typeof result.desc === 'string'
