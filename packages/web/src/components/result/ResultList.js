@@ -102,13 +102,24 @@ class ResultList extends Component {
 			});
 		}
 
-		if (!nextProps.pagination && this.props.hits && nextProps.hits && (this.props.hits.length < nextProps.hits.length || nextProps.hits.length === nextProps.total)) {
+		if (
+			!nextProps.pagination
+			&& this.props.hits
+			&& nextProps.hits
+			&& (this.props.hits.length < nextProps.hits.length
+				|| nextProps.hits.length === nextProps.total)
+		) {
 			this.setState({
 				isLoading: false,
 			});
 		}
 
-		if (!nextProps.pagination && nextProps.hits && this.props.hits && nextProps.hits.length < this.props.hits.length) {
+		if (
+			!nextProps.pagination
+			&& nextProps.hits
+			&& this.props.hits
+			&& nextProps.hits.length < this.props.hits.length
+		) {
 			window.scrollTo(0, 0);
 			this.setState({
 				from: 0,
@@ -147,7 +158,10 @@ class ResultList extends Component {
 	};
 
 	scrollHandler = () => {
-		if (!this.state.isLoading && (window.innerHeight + window.scrollY + 300) >= document.body.offsetHeight) {
+		if (
+			!this.state.isLoading
+			&& (window.innerHeight + window.scrollY + 300) >= document.body.offsetHeight
+		) {
 			this.loadMore();
 		}
 	};
@@ -204,10 +218,10 @@ class ResultList extends Component {
 	};
 
 	renderPagination = () => {
-		let start = this.getStart(),
-			pages = [];
+		const start = this.getStart();
+		const pages = [];
 
-		for (let i = start; i < start + this.props.pages - 1; i++) {
+		for (let i = start; i < (start + this.props.pages) - 1; i += 1) {
 			const pageBtn = (
 				<Button className={getClassName(this.props.innerClass, 'button') || null} primary={this.state.currentPage === i - 1} key={i - 1} onClick={() => this.setPage(i - 1)}>
 					{i}
@@ -303,9 +317,11 @@ class ResultList extends Component {
 		if (this.props.onResultStats && this.props.total) {
 			return this.props.onResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
-			return (<p className={getClassName(this.props.innerClass, 'resultstats') || null}>
-				{this.props.total} results found in {this.props.time}ms
-			</p>);
+			return (
+				<p className={getClassName(this.props.innerClass, 'resultstats') || null}>
+					{this.props.total} results found in {this.props.time}ms
+				</p>
+			);
 		}
 		return null;
 	};
@@ -337,9 +353,11 @@ class ResultList extends Component {
 				</div>
 				{
 					this.state.isLoading && !this.props.pagination
-						? (<div style={{ textAlign: 'center', margin: '20px 0', color: '#666' }}>
-							Loading...
-						</div>)
+						? (
+							<div style={{ textAlign: 'center', margin: '20px 0', color: '#666' }}>
+								Loading...
+							</div>
+						)
 						: null
 				}
 				{
@@ -385,7 +403,6 @@ ResultList.defaultProps = {
 	paginationAt: 'bottom',
 	pages: 5,
 	size: 10,
-	from: 0,
 	showResultStats: true,
 	style: {},
 	className: null,
@@ -394,7 +411,7 @@ ResultList.defaultProps = {
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
-	time: state.hits[props.componentId] && state.hits[props.componentId].time || 0,
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	isLoading: state.isLoading[props.componentId] || false,
 });
 
