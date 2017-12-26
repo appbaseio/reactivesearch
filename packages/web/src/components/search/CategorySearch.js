@@ -27,7 +27,7 @@ import Flex from '../../styles/Flex';
 
 import { getSuggestions } from '../../utils';
 
-const Label = withTheme(props => (
+const Text = withTheme(props => (
 	<span
 		style={{
 			color: props.primary ? props.theme.primaryColor : props.theme.textColor,
@@ -170,8 +170,8 @@ class CategorySearch extends Component {
 	};
 
 	defaultQuery = (value, category, props) => {
-		let finalQuery = null,
-			fields;
+		let finalQuery = null;
+		let fields;
 
 		if (value) {
 			if (Array.isArray(props.dataField)) {
@@ -258,9 +258,9 @@ class CategorySearch extends Component {
 		];
 	};
 
-	onSuggestions = (suggestions) => {
+	onSuggestions = (searchSuggestions) => {
 		if (this.props.onSuggestions) {
-			return this.props.onSuggestions(suggestions);
+			return this.props.onSuggestions(searchSuggestions);
 		}
 
 		const fields = Array.isArray(this.props.dataField)
@@ -269,7 +269,7 @@ class CategorySearch extends Component {
 
 		return getSuggestions(
 			fields,
-			suggestions,
+			searchSuggestions,
 			this.state.currentValue.toLowerCase(),
 		);
 	};
@@ -307,7 +307,7 @@ class CategorySearch extends Component {
 		} else {
 			this.updateQuery(this.props.componentId, value, this.props);
 		}
-	}, 300);
+	}, this.props.debounce);
 
 	updateQuery = (componentId, value, props, category) => {
 		const query = props.customQuery || this.defaultQuery;
@@ -381,12 +381,14 @@ class CategorySearch extends Component {
 	};
 
 	render() {
-		let suggestionsList
-			= this.state.currentValue === '' || this.state.currentValue === null
-				? this.props.defaultSuggestions && this.props.defaultSuggestions.length
-					? this.props.defaultSuggestions
-					: []
-				: this.state.suggestions;
+		let suggestionsList;
+		if (this.state.currentValue === '' || this.state.currentValue === null) {
+			suggestionsList = this.props.defaultSuggestions && this.props.defaultSuggestions.length
+				? this.props.defaultSuggestions
+				: [];
+		} else {
+			suggestionsList = this.state.suggestions;
+		}
 
 		if (
 			this.state.suggestions.length
@@ -486,7 +488,7 @@ class CategorySearch extends Component {
 															highlightedIndex === index ? '#eee' : '#fff',
 													}}
 												>
-													<Label primary={!!item.category}>{item.label}</Label>
+													<Text primary={!!item.category}>{item.label}</Text>
 												</li>
 											))}
 										</ul>
@@ -563,6 +565,7 @@ CategorySearch.propTypes = {
 	showIcon: types.bool,
 	iconPosition: types.iconPosition,
 	icon: types.children,
+	debounce: types.number,
 };
 
 CategorySearch.defaultProps = {
@@ -575,6 +578,7 @@ CategorySearch.defaultProps = {
 	className: null,
 	showIcon: true,
 	iconPosition: 'right',
+	debounce: 300,
 };
 
 const mapStateToProps = (state, props) => ({

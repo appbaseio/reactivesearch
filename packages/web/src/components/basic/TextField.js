@@ -75,7 +75,7 @@ class TextField extends Component {
 
 	handleTextChange = debounce((value) => {
 		this.updateQuery(value, this.props);
-	}, 300);
+	}, this.props.debounce);
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
 		const performUpdate = () => {
@@ -156,6 +156,7 @@ TextField.propTypes = {
 	style: types.style,
 	className: types.string,
 	innerClass: types.style,
+	debounce: types.number,
 };
 
 TextField.defaultProps = {
@@ -164,6 +165,7 @@ TextField.defaultProps = {
 	showFilter: true,
 	style: {},
 	className: null,
+	debounce: 300,
 };
 
 const mapStateToProps = (state, props) => ({
