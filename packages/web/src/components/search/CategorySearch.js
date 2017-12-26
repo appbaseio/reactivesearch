@@ -393,9 +393,11 @@ class CategorySearch extends Component {
 			suggestionsList = this.state.suggestions;
 		}
 
-		if (this.state.suggestions.length
+		if (
+			this.state.suggestions.length
 			&& this.props.categories
-			&& this.props.categories.length) {
+			&& this.props.categories.length
+		) {
 			let categorySuggestions = [
 				{
 					label: `${this.state.currentValue} in all categories`,
