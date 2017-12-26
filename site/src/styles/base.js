@@ -13,6 +13,7 @@ const button = css`
 	margin-top: 20px;
 	font-size: 1rem;
 	text-shadow: 0px 0px 1px rgba(255, 255, 255, 1);
+	text-decoration: none;
 `;
 
 const col = css`
@@ -32,8 +33,6 @@ const decoratedLink = css`
 	text-decoration: none;
 	padding: 3px 0;
 	transition: all .3s ease;
-	width: fit-content;
-	max-width: 175px;
 
 	&:hover, &:focus {
 		color: #3f4ab9;
@@ -56,11 +55,20 @@ const decoratedSecondaryLink = css`
 `;
 
 const card = css`
-	width: 19%;
+	width: 24%;
 	border-radius: 0.15rem;
 	margin-top: 1rem;
+	padding: 2rem 1rem;
+	background-color: #fff;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
 	text-align: center;
 	box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
+
+	img {
+		margin-bottom: 15px;
+	}
 `;
 
 const title = css`
@@ -81,4 +89,56 @@ const code = css`
 	overflow-y: hidden;
 `;
 
-export { boldHeading, button, col, colored, decoratedLink, decoratedSecondaryLink, card, title, code };
+const showcase = css`
+	width: 100%;
+	max-width: 400px;
+	padding: 2rem;
+	text-align: center;
+	margin: -40px auto 0;
+	border-radius: 4px;
+`;
+
+const footer = css`
+	.logo {
+		img {
+			margin: 12px;
+		}
+	}
+
+	.column {
+		padding: 0 45px;
+	}
+
+	.heading {
+		color: #4f5882;
+		text-transform: uppercase;
+		margin: 12px 0;
+		font-size: 0.85rem;
+		letter-spacing: 0.05rem;
+		font-weight: 700;
+	}
+
+	a {
+		color: #8994c6;
+		line-height: 1.6rem;
+		text-decoration: none;
+
+		&:hover {
+			color: #eee;
+		}
+	}
+`;
+
+export {
+	boldHeading,
+	button,
+	col,
+	colored,
+	decoratedLink,
+	decoratedSecondaryLink,
+	card,
+	title,
+	code,
+	showcase,
+	footer,
+};
