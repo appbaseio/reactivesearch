@@ -181,7 +181,6 @@ class DataSearch extends Component {
 						fields,
 						type: 'cross_fields',
 						operator: 'and',
-						fuzziness: props.fuzziness ? props.fuzziness : 0,
 					},
 				},
 				{
