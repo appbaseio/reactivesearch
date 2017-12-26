@@ -93,56 +93,79 @@ class Dropdown extends Component {
 				getItemProps,
 				isOpen,
 				highlightedIndex,
-			}) => (<div className={suggestionsContainer}>
-				<Select
-					{...getButtonProps()}
-					className={getClassName(this.props.innerClass, 'select') || null}
-					onClick={this.toggle}
-					title={selectedItem ? this.renderToString(selectedItem) : placeholder}
-				>
-					<div>{selectedItem ? this.renderToString(selectedItem) : placeholder}</div>
-					<Chevron open={isOpen} />
-				</Select>
-				{
-					isOpen && items.length
-						? (<div className={suggestions}>
-							<ul className={getClassName(this.props.innerClass, 'list') || null}>
-								{
-									items
-										.map((item, index) => {
-											const selected = this.props.multi && (
-												// MultiDropdownList
-												(selectedItem && !!selectedItem[item[keyField]])
-													// MultiDropdownRange
-													|| (Array.isArray(selectedItem) && selectedItem.find(value => value[labelField] === item[labelField]))
-											);
+			}) => (
+				<div className={suggestionsContainer}>
+					<Select
+						{...getButtonProps()}
+						className={getClassName(this.props.innerClass, 'select') || null}
+						onClick={this.toggle}
+						title={selectedItem ? this.renderToString(selectedItem) : placeholder}
+					>
+						<div>{selectedItem ? this.renderToString(selectedItem) : placeholder}</div>
+						<Chevron open={isOpen} />
+					</Select>
+					{
+						isOpen && items.length
+							? (
+								<div className={suggestions}>
+									<ul className={getClassName(this.props.innerClass, 'list') || null}>
+										{
+											items
+												.map((item, index) => {
+													const selected = this.props.multi && (
+														// MultiDropdownList
+														(selectedItem && !!selectedItem[item[keyField]])
+														// MultiDropdownRange
+														|| (Array.isArray(selectedItem)
+															&& selectedItem.find(value =>
+																value[labelField] === item[labelField]))
+													);
 
-											return (<li
-												{...getItemProps({ item })}
-												key={item[keyField]}
-												style={{
-													backgroundColor: this.getBackgroundColor(highlightedIndex === index, selected),
-												}}
-											>
-												{item[labelField]}
-												{
-													this.props.showCount && item.doc_count
-														&& ` (${item.doc_count})`
-												}
-												{
-													selected
-														? (<Tick className={getClassName(this.props.innerClass, 'icon') || null} />)
-														: null
-												}
-											</li>
-											);
-										})
-								}
-							</ul>
-						</div>)
-						: null
-				}
-			</div>)}
+													return (
+														<li
+															{...getItemProps({ item })}
+															key={item[keyField]}
+															style={{
+																backgroundColor: this.getBackgroundColor(
+																	highlightedIndex === index,
+																	selected,
+																),
+															}}
+														>
+															{
+																typeof item[labelField] === 'string'
+																	? <div
+																		dangerouslySetInnerHTML={{
+																			__html: item[labelField],
+																		}}
+																	/>
+																	: item[labelField]
+															}
+															{
+																this.props.showCount && item.doc_count
+																	&& ` (${item.doc_count})`
+															}
+															{
+																selected
+																	? (<Tick
+																		className={
+																			getClassName(this.props.innerClass, 'icon')
+																			|| null
+																		}
+																	/>)
+																	: null
+															}
+														</li>
+													);
+												})
+										}
+									</ul>
+								</div>
+							)
+							: null
+					}
+				</div>
+			)}
 		/>);
 	}
 }

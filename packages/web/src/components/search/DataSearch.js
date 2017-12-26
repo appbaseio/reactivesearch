@@ -144,8 +144,9 @@ class DataSearch extends Component {
 	};
 
 	defaultQuery = (value, props) => {
-		let finalQuery = null,
-			fields;
+		let finalQuery = null;
+		let fields;
+
 		if (value) {
 			if (Array.isArray(props.dataField)) {
 				fields = props.dataField;
@@ -215,16 +216,17 @@ class DataSearch extends Component {
 		];
 	};
 
-	onSuggestions = (suggestions) => {
+	onSuggestions = (results) => {
 		if (this.props.onSuggestion) {
-			return suggestions.map(suggestion => this.props.onSuggestion(suggestion));
+			return results.map(suggestion => this.props.onSuggestion(suggestion));
 		}
 
-		const fields = Array.isArray(this.props.dataField) ? this.props.dataField : [this.props.dataField];
+		const fields = Array.isArray(this.props.dataField)
+			? this.props.dataField : [this.props.dataField];
 
 		return getSuggestions(
 			fields,
-			suggestions,
+			results,
 			this.state.currentValue.toLowerCase(),
 		);
 	};
@@ -336,11 +338,17 @@ class DataSearch extends Component {
 	}
 
 	render() {
-		const suggestionsList = this.state.currentValue === '' || this.state.currentValue === null
-			? this.props.defaultSuggestions && this.props.defaultSuggestions.length
-				? this.props.defaultSuggestions
-				: []
-			: this.state.suggestions;
+		let suggestionsList = [];
+
+		if (
+			!this.state.currentValue
+			&& this.props.defaultSuggestions
+			&& this.props.defaultSuggestions.length
+		) {
+			suggestionsList = this.props.defaultSuggestions;
+		} else if (this.state.currentValue) {
+			suggestionsList = this.state.suggestions;
+		}
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
@@ -390,10 +398,19 @@ class DataSearch extends Component {
 																		{...getItemProps({ item })}
 																		key={item.label}
 																		style={{
-																			backgroundColor: highlightedIndex === index ? '#eee' : '#fff',
+																			backgroundColor: highlightedIndex === index
+																				? '#eee' : '#fff',
 																		}}
 																	>
-																		{item.label}
+																		{
+																			typeof item.label === 'string'
+																				? <div
+																					dangerouslySetInnerHTML={{
+																						__html: item.label,
+																					}}
+																				/>
+																				: item.label
+																		}
 																	</li>
 																))
 														}

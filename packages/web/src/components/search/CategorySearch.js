@@ -381,20 +381,21 @@ class CategorySearch extends Component {
 	};
 
 	render() {
-		let suggestionsList;
-		if (this.state.currentValue === '' || this.state.currentValue === null) {
-			suggestionsList = this.props.defaultSuggestions && this.props.defaultSuggestions.length
-				? this.props.defaultSuggestions
-				: [];
-		} else {
+		let suggestionsList = [];
+
+		if (
+			!this.state.currentValue
+			&& this.props.defaultSuggestions
+			&& this.props.defaultSuggestions.length
+		) {
+			suggestionsList = this.props.defaultSuggestions;
+		} else if (this.state.currentValue) {
 			suggestionsList = this.state.suggestions;
 		}
 
-		if (
-			this.state.suggestions.length
+		if (this.state.suggestions.length
 			&& this.props.categories
-			&& this.props.categories.length
-		) {
+			&& this.props.categories.length) {
 			let categorySuggestions = [
 				{
 					label: `${this.state.currentValue} in all categories`,
