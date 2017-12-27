@@ -145,7 +145,7 @@ class ToggleButton extends Component {
 						className={getClassName(this.props.innerClass, 'button') || null}
 						onClick={() => this.handleToggle(item)}
 						key={item.label}
-						primary={this.state.currentValue.includes(item)}
+						primary={this.state.currentValue.some(value => value.label === item.label)}
 						large
 					>
 						{item.label}
