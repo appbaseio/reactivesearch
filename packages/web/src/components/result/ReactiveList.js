@@ -81,7 +81,10 @@ class ReactiveList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.props.sortBy !== nextProps.sortBy || this.props.size !== nextProps.size) {
+		if (
+			this.props.sortBy !== nextProps.sortBy
+			|| this.props.size !== nextProps.size
+		) {
 			const options = getQueryOptions(nextProps);
 			if (this.props.sortBy) {
 				options.sort = [{
@@ -109,13 +112,26 @@ class ReactiveList extends Component {
 			});
 		}
 
-		if (!nextProps.pagination && this.props.hits && nextProps.hits && (this.props.hits.length < nextProps.hits.length || nextProps.hits.length === nextProps.total)) {
+		if (
+			!nextProps.pagination
+			&& this.props.hits
+			&& nextProps.hits
+			&& (
+				this.props.hits.length < nextProps.hits.length
+				|| nextProps.hits.length === nextProps.total
+			)
+		) {
 			this.setState({
 				isLoading: false,
 			});
 		}
 
-		if (!nextProps.pagination && nextProps.hits && this.props.hits && nextProps.hits.length < this.props.hits.length) {
+		if (
+			!nextProps.pagination
+			&& nextProps.hits
+			&& this.props.hits
+			&& nextProps.hits.length < this.props.hits.length
+		) {
 			window.scrollTo(0, 0);
 			this.setState({
 				from: 0,
@@ -154,15 +170,23 @@ class ReactiveList extends Component {
 	};
 
 	scrollHandler = () => {
-		if (!this.state.isLoading && (window.innerHeight + window.scrollY + 300) >= document.body.offsetHeight) {
+		if (
+			!this.state.isLoading
+			&& (window.innerHeight + window.scrollY + 300) >= document.body.offsetHeight
+		) {
 			this.loadMore();
 		}
 	};
 
 	loadMore = () => {
-		if (this.props.hits && !this.props.pagination && this.props.total !== this.props.hits.length) {
+		if (
+			this.props.hits
+			&& !this.props.pagination
+			&& this.props.total !== this.props.hits.length
+		) {
 			const value = this.state.from + this.props.size;
 			const options = getQueryOptions(this.props);
+
 			this.setState({
 				from: value,
 				isLoading: true,
@@ -274,9 +298,11 @@ class ReactiveList extends Component {
 		if (this.props.onResultStats && this.props.total) {
 			return this.props.onResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
-			return (<p className={getClassName(this.props.innerClass, 'resultstats') || null}>
-				{this.props.total} results found in {this.props.time}ms
-			</p>);
+			return (
+				<p className={getClassName(this.props.innerClass, 'resultstats') || null}>
+					{this.props.total} results found in {this.props.time}ms
+				</p>
+			);
 		}
 		return null;
 	};
@@ -299,17 +325,20 @@ class ReactiveList extends Component {
 				{
 					this.props.onAllData
 						? (this.props.onAllData(this.parseHits(this.props.hits), this.loadMore))
-						: (<div className={getClassName(this.props.innerClass, 'list')}>
-							{
-								results.map(item => this.props.onData({ _id: item._id, ...item._source }))
-							}
-						</div>)
+						: (
+							<div className={getClassName(this.props.innerClass, 'list')}>
+								{
+									results.map(item => this.props.onData({
+										_id: item._id,
+										...item._source,
+									}))
+								}
+							</div>
+						)
 				}
 				{
 					this.state.isLoading && !this.props.pagination
-						? (<div>
-							Loading...
-						</div>)
+						? (<div>Loading...</div>)
 						: null
 				}
 				{
@@ -358,7 +387,6 @@ ReactiveList.defaultProps = {
 	paginationAt: 'bottom',
 	pages: 5,
 	size: 10,
-	from: 0,
 	showResultStats: true,
 	style: {},
 	className: null,
@@ -367,7 +395,7 @@ ReactiveList.defaultProps = {
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
-	time: state.hits[props.componentId] && state.hits[props.componentId].time || 0,
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	isLoading: state.isLoading[props.componentId] || false,
 });
 
