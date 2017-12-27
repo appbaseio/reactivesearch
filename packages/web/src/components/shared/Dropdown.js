@@ -132,19 +132,21 @@ class Dropdown extends Component {
 																),
 															}}
 														>
-															{
-																typeof item[labelField] === 'string'
-																	? <div
-																		dangerouslySetInnerHTML={{
-																			__html: item[labelField],
-																		}}
-																	/>
-																	: item[labelField]
-															}
-															{
-																this.props.showCount && item.doc_count
-																	&& ` (${item.doc_count})`
-															}
+															<div>
+																{
+																	typeof item[labelField] === 'string'
+																		? <span
+																			dangerouslySetInnerHTML={{
+																				__html: item[labelField],
+																			}}
+																		/>
+																		: item[labelField]
+																}
+																{
+																	this.props.showCount && item.doc_count
+																		&& ` (${item.doc_count})`
+																}
+															</div>
 															{
 																selected
 																	? (<Tick
