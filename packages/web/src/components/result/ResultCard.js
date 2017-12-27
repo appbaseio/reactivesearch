@@ -371,7 +371,7 @@ class ResultCard extends Component {
 			},
 		}];
 		this.props.setQueryOptions(this.props.componentId, options);
-	}
+	};
 
 	renderSortOptions = () => (
 		<select
