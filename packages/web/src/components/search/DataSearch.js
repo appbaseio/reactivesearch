@@ -307,9 +307,11 @@ class DataSearch extends Component {
 	};
 
 	onInputChange = (e) => {
-		this.setState({
-			suggestions: [],
-		});
+		if (e.target.value.trim() !== this.state.currentValue.trim()) {
+			this.setState({
+				suggestions: [],
+			});
+		}
 		this.setValue(e.target.value);
 	};
 
@@ -498,7 +500,7 @@ DataSearch.defaultProps = {
 	className: null,
 	showIcon: true,
 	iconPosition: 'right',
-	debounce: 300,
+	debounce: 0,
 };
 
 const mapStateToProps = (state, props) => ({

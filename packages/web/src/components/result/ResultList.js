@@ -221,14 +221,16 @@ class ResultList extends Component {
 		const start = this.getStart();
 		const pages = [];
 
-		for (let i = start; i < (start + this.props.pages) - 1; i += 1) {
-			const pageBtn = (
-				<Button className={getClassName(this.props.innerClass, 'button') || null} primary={this.state.currentPage === i - 1} key={i - 1} onClick={() => this.setPage(i - 1)}>
-					{i}
-				</Button>
-			);
-			if (i <= this.state.totalPages + 1) {
-				pages.push(pageBtn);
+		if (start < this.state.totalPages) {
+			for (let i = start; i < (start + this.props.pages) - 1; i += 1) {
+				const pageBtn = (
+					<Button className={getClassName(this.props.innerClass, 'button') || null} primary={this.state.currentPage === i - 1} key={i - 1} onClick={() => this.setPage(i - 1)}>
+						{i}
+					</Button>
+				);
+				if (i <= this.state.totalPages + 1) {
+					pages.push(pageBtn);
+				}
 			}
 		}
 

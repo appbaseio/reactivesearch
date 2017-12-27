@@ -80,7 +80,9 @@ class MultiDataList extends Component {
 	defaultQuery = (value, props) => {
 		let query = null;
 		const type = props.queryFormat === 'or' ? 'terms' : 'term';
-		if (this.props.selectAllLabel && Array.isArray(value) && value.includes(this.props.selectAllLabel)) {
+		if (
+			this.props.selectAllLabel && Array.isArray(value) && value.includes(this.props.selectAllLabel)
+		) {
 			query = {
 				exists: {
 					field: props.dataField,
@@ -136,9 +138,11 @@ class MultiDataList extends Component {
 		} else if (isDefaultValue) {
 			finalValues = value;
 			currentValue = {};
-			value && value.forEach((item) => {
-				currentValue[item] = true;
-			});
+			if (value) {
+				value.forEach((item) => {
+					currentValue[item] = true;
+				});
+			}
 
 			if (selectAllLabel && selectAllLabel in currentValue) {
 				const { [selectAllLabel]: del, ...obj } = currentValue;
@@ -233,20 +237,22 @@ class MultiDataList extends Component {
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
 					{
 						selectAllLabel
-							? (<li key={selectAllLabel}>
-								<Checkbox
-									className={getClassName(this.props.innerClass, 'input') || null}
-									id={selectAllLabel}
-									name={selectAllLabel}
-									value={selectAllLabel}
-									onClick={this.handleClick}
-									checked={!!this.state.currentValue[selectAllLabel]}
-									show={this.props.showCheckbox}
-								/>
-								<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
-									{selectAllLabel}
-								</label>
-							</li>)
+							? (
+								<li key={selectAllLabel}>
+									<Checkbox
+										className={getClassName(this.props.innerClass, 'input') || null}
+										id={selectAllLabel}
+										name={selectAllLabel}
+										value={selectAllLabel}
+										onClick={this.handleClick}
+										checked={!!this.state.currentValue[selectAllLabel]}
+										show={this.props.showCheckbox}
+									/>
+									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
+										{selectAllLabel}
+									</label>
+								</li>
+							)
 							: null
 					}
 					{
@@ -308,7 +314,6 @@ MultiDataList.propTypes = {
 };
 
 MultiDataList.defaultProps = {
-	size: 100,
 	showCheckbox: true,
 	URLParams: false,
 	showFilter: true,
@@ -319,7 +324,8 @@ MultiDataList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
+	selectedValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value) || null,
 });
 
 const mapDispatchtoProps = dispatch => ({

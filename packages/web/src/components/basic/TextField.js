@@ -165,7 +165,7 @@ TextField.defaultProps = {
 	showFilter: true,
 	style: {},
 	className: null,
-	debounce: 300,
+	debounce: 0,
 };
 
 const mapStateToProps = (state, props) => ({

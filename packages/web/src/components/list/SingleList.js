@@ -112,8 +112,9 @@ class SingleList extends Component {
 		return null;
 	};
 
-	setValue = (value, props = this.props) => {
-		if (value == this.state.currentValue) {
+	setValue = (nextValue, props = this.props) => {
+		let value = nextValue;
+		if (nextValue === this.state.currentValue) {
 			value = '';
 		}
 
@@ -205,29 +206,34 @@ class SingleList extends Component {
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
 					{
 						selectAllLabel
-							? (<li key={selectAllLabel}>
-								<Radio
-									className={getClassName(this.props.innerClass, 'input')}
-									id={selectAllLabel}
-									name={this.props.componentId}
-									value={selectAllLabel}
-									onClick={this.handleClick}
-									checked={this.state.currentValue === selectAllLabel}
-									show={this.props.showRadio}
-								/>
-								<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
-									{selectAllLabel}
-								</label>
-							</li>)
+							? (
+								<li key={selectAllLabel}>
+									<Radio
+										className={getClassName(this.props.innerClass, 'input')}
+										id={selectAllLabel}
+										name={this.props.componentId}
+										value={selectAllLabel}
+										onClick={this.handleClick}
+										checked={this.state.currentValue === selectAllLabel}
+										show={this.props.showRadio}
+									/>
+									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
+										{selectAllLabel}
+									</label>
+								</li>
+							)
 							: null
 					}
 					{
 						this.state.options
 							.filter((item) => {
-								if (this.props.showSearch && this.state.searchTerm) {
-									return item.key.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+								if (String(item.key).length) {
+									if (this.props.showSearch && this.state.searchTerm) {
+										return item.key.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+									}
+									return true;
 								}
-								return true;
+								return false;
 							})
 							.map(item => (
 								<li key={item.key}>
@@ -302,7 +308,8 @@ SingleList.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || '',
+	selectedValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value) || '',
 });
 
 const mapDispatchtoProps = dispatch => ({

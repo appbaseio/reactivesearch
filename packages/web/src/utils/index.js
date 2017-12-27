@@ -27,7 +27,8 @@ export const getSuggestions = (fields, suggestions, currentValue) => {
 	const populateSuggestionsList = (val) => {
 		// check if the suggestion includes the current value
 		// and not already included in other suggestions
-		if (val.includes(currentValue) && !labelsList.includes(val)) {
+		const isWordMatch = currentValue.trim().split(' ').some(term => val.includes(term));
+		if (isWordMatch && !labelsList.includes(val)) {
 			const option = {
 				label: val,
 				value: val,

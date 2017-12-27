@@ -176,7 +176,7 @@ class SingleDropdownList extends Component {
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<Dropdown
 					innerClass={this.props.innerClass}
-					items={[...selectAll, ...this.state.options]}
+					items={[...selectAll, ...this.state.options.filter(item => String(item.key).length)]}
 					onChange={this.setValue}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
@@ -214,6 +214,7 @@ SingleDropdownList.propTypes = {
 	className: types.string,
 	showCount: types.bool,
 	innerClass: types.style,
+	size: types.number,
 };
 
 SingleDropdownList.defaultProps = {
@@ -229,7 +230,8 @@ SingleDropdownList.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
+	selectedValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value) || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
