@@ -10,6 +10,7 @@ const resultsInfo = css`
 
 const sortOptions = css`
 	position: absolute;
+	color: #424242;
 	right: 0;
 	height: 30px;
 	padding: 0 25px 0 10px;
