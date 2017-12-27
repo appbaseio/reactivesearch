@@ -4,9 +4,9 @@
   "description": "Ecommerce app built with ReactiveSearch",
   "main": "index.js",
   "author": "Divyanshu Maithani <div.blackcat@gmail.com>",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
-    "@appbaseio/reactivesearch": "^2.0.0-alpha-04",
+    "@appbaseio/reactivesearch": "^2.0.0-alpha-07",
     "emotion": "*",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -22,7 +22,6 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.9.5"
   },

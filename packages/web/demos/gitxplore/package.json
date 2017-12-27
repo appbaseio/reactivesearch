@@ -4,9 +4,9 @@
   "description": "Github Explorer app built with ReactiveSearch",
   "main": "index.js",
   "author": "Divyanshu Maithani <div.blackcat@gmail.com>",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
-    "@appbaseio/reactivesearch": "^2.0.0-alpha-04",
+    "@appbaseio/reactivesearch": "^2.0.0-alpha-07",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
