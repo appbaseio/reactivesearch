@@ -176,7 +176,7 @@ class SingleDropdownList extends Component {
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<Dropdown
 					innerClass={this.props.innerClass}
-					items={[...selectAll, ...this.state.options]}
+					items={[...selectAll, ...this.state.options.filter(item => String(item.key).length)]}
 					onChange={this.setValue}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}

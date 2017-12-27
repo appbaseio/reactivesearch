@@ -224,10 +224,13 @@ class SingleList extends Component {
 					{
 						this.state.options
 							.filter((item) => {
-								if (this.props.showSearch && this.state.searchTerm) {
-									return item.key.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+								if (String(item.key).length) {
+									if (this.props.showSearch && this.state.searchTerm) {
+										return item.key.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+									}
+									return true;
 								}
-								return true;
+								return false;
 							})
 							.map(item => (
 								<li key={item.key}>
