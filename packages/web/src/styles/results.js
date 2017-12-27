@@ -8,6 +8,10 @@ const resultsInfo = css`
 	position: relative;
 `;
 
+const resultStats = css`
+	flex-grow: 1;
+`;
+
 const sortOptions = css`
 	position: absolute;
 	color: #424242;
@@ -26,4 +30,4 @@ const sortOptions = css`
 	outline-offset: -1px;
 `;
 
-export { resultsInfo, sortOptions };
+export { resultsInfo, resultStats, sortOptions };
