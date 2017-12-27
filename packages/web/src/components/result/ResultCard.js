@@ -20,6 +20,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Button, { pagination } from '../../styles/Button';
 import Card, { container, Image } from '../../styles/Card';
+import { resultsInfo, sortOptions } from '../../styles/results';
 
 class ResultCard extends Component {
 	constructor(props) {
@@ -39,7 +40,13 @@ class ResultCard extends Component {
 		this.props.addComponent(this.props.componentId);
 
 		const options = getQueryOptions(this.props);
-		if (this.props.sortBy) {
+		if (this.props.sortOptions) {
+			options.sort = [{
+				[this.props.sortOptions[0].dataField]: {
+					order: this.props.sortOptions[0].sortBy,
+				},
+			}];
+		} else if (this.props.sortBy) {
 			options.sort = [{
 				[this.props.dataField]: {
 					order: this.props.sortBy,
@@ -78,12 +85,22 @@ class ResultCard extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.props.sortBy !== nextProps.sortBy || this.props.size !== nextProps.size) {
+		if (
+			!isEqual(this.props.sortOptions, nextProps.sortOptions)
+			|| this.props.sortBy !== nextProps.sortBy
+			|| this.props.size !== nextProps.size
+		) {
 			const options = getQueryOptions(nextProps);
-			if (this.props.sortBy) {
+			if (nextProps.sortOptions) {
 				options.sort = [{
-					[this.props.dataField]: {
-						order: this.props.sortBy,
+					[nextProps.sortOptions[0].dataField]: {
+						order: nextProps.sortOptions[0].sortBy,
+					},
+				}];
+			} else if (nextProps.sortBy) {
+				options.sort = [{
+					[nextProps.dataField]: {
+						order: nextProps.sortBy,
 					},
 				}];
 			}
@@ -167,9 +184,14 @@ class ResultCard extends Component {
 	};
 
 	loadMore = () => {
-		if (this.props.hits && !this.props.pagination && this.props.total !== this.props.hits.length) {
+		if (
+			this.props.hits
+			&& !this.props.pagination
+			&& this.props.total !== this.props.hits.length
+		) {
 			const value = this.state.from + this.props.size;
 			const options = getQueryOptions(this.props);
+
 			this.setState({
 				from: value,
 				isLoading: true,
@@ -224,7 +246,12 @@ class ResultCard extends Component {
 		if (start < this.state.totalPages) {
 			for (let i = start; i < (start + this.props.pages) - 1; i += 1) {
 				const pageBtn = (
-					<Button className={getClassName(this.props.innerClass, 'button') || null} primary={this.state.currentPage === i - 1} key={i - 1} onClick={() => this.setPage(i - 1)}>
+					<Button
+						className={getClassName(this.props.innerClass, 'button') || null}
+						primary={this.state.currentPage === i - 1}
+						key={i - 1}
+						onClick={() => this.setPage(i - 1)}
+					>
 						{i}
 					</Button>
 				);
@@ -240,18 +267,30 @@ class ResultCard extends Component {
 
 		return (
 			<div className={`${pagination} ${getClassName(this.props.innerClass, 'pagination')}`}>
-				<Button className={getClassName(this.props.innerClass, 'button') || null} disabled={this.state.currentPage === 0} onClick={this.prevPage}>
+				<Button
+					className={getClassName(this.props.innerClass, 'button') || null}
+					disabled={this.state.currentPage === 0}
+					onClick={this.prevPage}
+				>
 					Prev
 				</Button>
 				{
-					<Button className={getClassName(this.props.innerClass, 'button') || null} primary={this.state.currentPage === 0} onClick={() => this.setPage(0)}>
+					<Button
+						className={getClassName(this.props.innerClass, 'button') || null}
+						primary={this.state.currentPage === 0}
+						onClick={() => this.setPage(0)}
+					>
 						1
 					</Button>
 				}
 				{
 					pages
 				}
-				<Button className={getClassName(this.props.innerClass, 'button') || null} disabled={this.state.currentPage >= this.state.totalPages - 1} onClick={this.nextPage}>
+				<Button
+					className={getClassName(this.props.innerClass, 'button') || null}
+					disabled={this.state.currentPage >= this.state.totalPages - 1}
+					onClick={this.nextPage}
+				>
 					Next
 				</Button>
 			</div>
@@ -289,12 +328,17 @@ class ResultCard extends Component {
 					style={{ backgroundImage: `url(${result.image})` }}
 					className={getClassName(this.props.innerClass, 'image')}
 				/>
-				{typeof result.title === 'string'
-					? <Title
-						dangerouslySetInnerHTML={{ __html: result.title }}
-						className={getClassName(this.props.innerClass, 'title')}
-					/>
-					: <Title className={getClassName(this.props.innerClass, 'title')}>{result.title}</Title>
+				{
+					typeof result.title === 'string'
+						? <Title
+							dangerouslySetInnerHTML={{ __html: result.title }}
+							className={getClassName(this.props.innerClass, 'title')}
+						/>
+						: (
+							<Title className={getClassName(this.props.innerClass, 'title')}>
+								{result.title}
+							</Title>
+						)
 				}
 				{
 					typeof result.desc === 'string'
@@ -317,16 +361,49 @@ class ResultCard extends Component {
 		return null;
 	};
 
+	handleSortChange = (e) => {
+		const index = e.target.value;
+		const options = getQueryOptions(this.props);
+
+		options.sort = [{
+			[this.props.sortOptions[index].dataField]: {
+				order: this.props.sortOptions[index].sortBy,
+			},
+		}];
+		this.props.setQueryOptions(this.props.componentId, options);
+	}
+
+	renderSortOptions = () => (
+		<select
+			className={`${sortOptions} ${getClassName(this.props.innerClass, 'sortOptions')}`}
+			name="sort-options"
+			onChange={this.handleSortChange}
+		>
+			{
+				this.props.sortOptions.map((sort, index) => (
+					<option key={sort.label} value={index}>{sort.label}</option>
+				))
+			}
+		</select>
+	);
+
 	render() {
 		const results = this.parseHits(this.props.hits) || [];
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.isLoading && this.props.pagination && this.props.loader && this.props.loader}
-				{
-					this.props.showResultStats
-						? this.renderResultStats()
-						: null
-				}
+				<div className={`${resultsInfo} ${getClassName(this.props.innerClass, 'resultsInfo')}`}>
+					{
+						this.props.showResultStats
+							? this.renderResultStats()
+							: null
+					}
+					{
+						this.props.sortOptions
+							? this.renderSortOptions()
+							: null
+					}
+				</div>
 				{
 					this.props.pagination && this.props.paginationAt !== 'bottom'
 						? this.renderPagination()
@@ -365,6 +442,7 @@ ResultCard.propTypes = {
 	addComponent: types.funcRequired,
 	componentId: types.stringRequired,
 	sortBy: types.sortBy,
+	sortOptions: types.sortOptions,
 	dataField: types.stringRequired,
 	setQueryOptions: types.funcRequired,
 	defaultQuery: types.func,
