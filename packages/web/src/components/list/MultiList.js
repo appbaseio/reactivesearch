@@ -164,9 +164,11 @@ class MultiList extends Component {
 		} else if (isDefaultValue) {
 			finalValues = value;
 			currentValue = {};
-			value && value.forEach((item) => {
-				currentValue[item] = true;
-			});
+			if (value) {
+				value.forEach((item) => {
+					currentValue[item] = true;
+				});
+			}
 
 			if (selectAllLabel && selectAllLabel in currentValue) {
 				const { [selectAllLabel]: del, ...obj } = currentValue;
@@ -275,20 +277,22 @@ class MultiList extends Component {
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
 					{
 						selectAllLabel
-							? (<li key={selectAllLabel}>
-								<Checkbox
-									className={getClassName(this.props.innerClass, 'input') || null}
-									id={selectAllLabel}
-									name={selectAllLabel}
-									value={selectAllLabel}
-									onClick={this.handleClick}
-									checked={!!this.state.currentValue[selectAllLabel]}
-									show={this.props.showCheckbox}
-								/>
-								<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
-									{selectAllLabel}
-								</label>
-							</li>)
+							? (
+								<li key={selectAllLabel}>
+									<Checkbox
+										className={getClassName(this.props.innerClass, 'input') || null}
+										id={selectAllLabel}
+										name={selectAllLabel}
+										value={selectAllLabel}
+										onClick={this.handleClick}
+										checked={!!this.state.currentValue[selectAllLabel]}
+										show={this.props.showCheckbox}
+									/>
+									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
+										{selectAllLabel}
+									</label>
+								</li>
+							)
 							: null
 					}
 					{
@@ -375,7 +379,8 @@ MultiList.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
+	selectedValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value) || null,
 });
 
 const mapDispatchtoProps = dispatch => ({

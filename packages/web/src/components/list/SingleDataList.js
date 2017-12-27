@@ -83,8 +83,9 @@ class SingleDataList extends Component {
 		return null;
 	};
 
-	setValue = (value, props = this.props) => {
-		if (value == this.state.currentValue) {
+	setValue = (nextValue, props = this.props) => {
+		let value = nextValue;
+		if (nextValue === this.state.currentValue) {
 			value = '';
 		}
 
@@ -169,20 +170,22 @@ class SingleDataList extends Component {
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
 					{
 						selectAllLabel
-							? (<li key={selectAllLabel}>
-								<Radio
-									className={getClassName(this.props.innerClass, 'input')}
-									id={selectAllLabel}
-									name={this.props.componentId}
-									value={selectAllLabel}
-									onClick={this.handleClick}
-									checked={this.state.currentValue === selectAllLabel}
-									show={this.props.showRadio}
-								/>
-								<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
-									{selectAllLabel}
-								</label>
-							</li>)
+							? (
+								<li key={selectAllLabel}>
+									<Radio
+										className={getClassName(this.props.innerClass, 'input')}
+										id={selectAllLabel}
+										name={this.props.componentId}
+										value={selectAllLabel}
+										onClick={this.handleClick}
+										checked={this.state.currentValue === selectAllLabel}
+										show={this.props.showRadio}
+									/>
+									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
+										{selectAllLabel}
+									</label>
+								</li>
+							)
 							: null
 					}
 					{
@@ -244,7 +247,6 @@ SingleDataList.propTypes = {
 };
 
 SingleDataList.defaultProps = {
-	size: 100,
 	showRadio: true,
 	URLParams: false,
 	showFilter: true,
@@ -255,7 +257,8 @@ SingleDataList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
+	selectedValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value) || null,
 });
 
 const mapDispatchtoProps = dispatch => ({

@@ -214,6 +214,7 @@ SingleDropdownList.propTypes = {
 	className: types.string,
 	showCount: types.bool,
 	innerClass: types.style,
+	size: types.number,
 };
 
 SingleDropdownList.defaultProps = {
@@ -229,7 +230,8 @@ SingleDropdownList.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
+	selectedValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value) || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
