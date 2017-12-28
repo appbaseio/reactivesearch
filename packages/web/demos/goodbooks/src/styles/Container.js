@@ -12,44 +12,39 @@ const Container = styled.section`
 
 export const resultsContainer = css`
 	width: calc(100% - 360px);
-	.pagination {
-		padding: 20px 0;
-	}
+	margin: 0 10px;
+	margin-left: 380px;
 
-	.card-image {
-		background-size: cover;
-	}
-
-	.card-item {
-		position: relative;
-		${queries.small`
-			height: 250px;
-			width: 100%;
-			margin: 5px 0;
-		`}
+	.list-item {
+		margin: 5px 0;
+		border: 1px solid #eee;
+		padding: 20px;
 	}
 
 	${queries.large`
+		margin-left: 10px;
+		margin-top: 10px;
 		width: 100%;
 	`};
 `;
 
-export const categorySearchContainer = css`
-	margin-left: 20px;
-	width: calc(100% - 350px);
-	${queries.medium`
+export const dataSearchContainer = css`
+	width: 100%;
+	max-width: 600px;
+	${queries.large`
+		margin-left: 10px;
+	`};
+	${queries.small`
 		margin-left: 0;
-		width: 100%;
+		margin-top: 10px;
 	`};
 `;
 
 export const appContainer = css`
-	margin: 0 1rem;
+	margin: 0 auto;
 	padding-top: 100px;
-	${queries.large`
-		padding-top: 85px;
-	`};
-	${queries.medium`
+	max-width: 1100px;
+	${queries.small`
 		padding-top: 130px;
 	`};
 `;
