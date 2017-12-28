@@ -1,9 +1,9 @@
 import React from 'react';
-import { CategorySearch } from '@appbaseio/reactivesearch';
+import { DataSearch } from '@appbaseio/reactivesearch';
 
-import Navbar, { title } from '../styles/Navbar';
+import Navbar, { title, navbarContent } from '../styles/Navbar';
 import Flex, { FlexChild } from '../styles/Flex';
-import { categorySearchContainer } from '../styles/Container';
+import { dataSearchContainer } from '../styles/Container';
 
 const Header = () => (
 	<Navbar>
@@ -11,14 +11,19 @@ const Header = () => (
 			alignCenter
 			responsive
 			justifyContent="space-between"
+			className={navbarContent}
 		>
 			<FlexChild className={title}>Good<b>Books</b></FlexChild>
-			<FlexChild className={categorySearchContainer}>
-				<CategorySearch
-					dataField="name"
-					categoryField="brand.raw"
-					componentId="category"
-					placeholder="Find your next read..."
+			<FlexChild className={dataSearchContainer}>
+				<DataSearch
+					componentId="search"
+					dataField={['original_title', 'authors']}
+					placeholder="Find your next favorite book..."
+					URLParams
+					filterLabel="Search"
+					react={{
+						and: ['series', 'rating', 'authors'],
+					}}
 				/>
 			</FlexChild>
 		</Flex>

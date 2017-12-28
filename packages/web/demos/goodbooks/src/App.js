@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { ReactiveBase } from '@appbaseio/reactivesearch';
 
-import theme from './styles/theme';
-
 import Header from './components/Header';
 import SearchFilters from './components/SearchFilters';
 import Results from './components/Results';
 
+import theme from './styles/theme';
 import Container, { appContainer, resultsContainer } from './styles/Container';
-import FilterContainer from './styles/FilterContainer';
 import Flex, { FlexChild } from './styles/Flex';
+import FilterContainer from './styles/FilterContainer';
 import { ToggleButton } from './styles/Button';
 
 class App extends Component {
@@ -25,7 +24,7 @@ class App extends Component {
 		this.setState({
 			visible: !visible,
 		});
-	}
+	};
 
 	render() {
 		return (
@@ -36,7 +35,7 @@ class App extends Component {
 					theme={theme}
 				>
 					<Header />
-					<Flex className={appContainer} direction="row-reverse">
+					<Flex className={appContainer}>
 						<FilterContainer visible={this.state.visible}>
 							<SearchFilters />
 						</FilterContainer>
@@ -47,8 +46,11 @@ class App extends Component {
 					<ToggleButton onClick={this.toggleFilters}>
 						{
 							this.state.visible
-								? '🚗 SHOW CARS'
-								: ' SHOW FILTERS'
+							&& <span><i className="fas fa-book" /> Show Books</span>
+						}
+						{
+							!this.state.visible
+							&& <span><i className="fas fa-sliders-h" /> Show Filters</span>
 						}
 					</ToggleButton>
 				</ReactiveBase>

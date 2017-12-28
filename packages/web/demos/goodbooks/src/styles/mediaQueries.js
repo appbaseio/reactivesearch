@@ -2,15 +2,17 @@ import { css } from 'emotion';
 
 const breakpoints = {
 	small: 576,
-	medium: 750,
-	mlarge: 840,
+	medium: 768,
 	large: 992,
 	xLarge: 1200,
 	xxLarge: 1280,
-	tallPhone: '(max-width: 360px) and (min-height: 740px)',
+	tallPhone: '(max-width: 360px) and (max-height: 740px)',
+	tallTablet: '(min-width: 768px) and (max-height: 1024px)',
 };
 
-export const queries = Object.keys(breakpoints).reduce((accumulator, label) => {
+// eslint-disable-next-line
+export const queries = Object.keys(breakpoints).reduce((acc, label) => {
+	const accumulator = acc;
 	if (typeof breakpoints[label] === 'string') {
 		accumulator[label] = (...args) =>
 			css`
