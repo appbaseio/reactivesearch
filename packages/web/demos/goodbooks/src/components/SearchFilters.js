@@ -1,66 +1,47 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {
-	SingleList,
-	SingleRange,
-	MultiList,
-	RangeSlider,
-} from '@appbaseio/reactivesearch';
+import { MultiList, SingleDropdownRange } from '@appbaseio/reactivesearch';
 
 import Flex, { FlexChild } from '../styles/Flex';
 
 const SearchFilters = () => (
 	<Flex direction="column">
-		<FlexChild card margin="10px">
-			<SingleList
-				componentId="brand"
-				dataField="brand.raw"
-				title="Cars"
-			/>
-		</FlexChild>
-		<FlexChild card margin="10px">
-			<SingleRange
+		<FlexChild margin="10px 0">
+			<SingleDropdownRange
 				componentId="rating"
-				dataField="rating"
-				title="Rating"
+				dataField="average_rating"
+				title="Average Rating"
 				data={[
-					{ start: 4, end: 5, label: '4 stars and up' },
-					{ start: 3, end: 5, label: '3 stars and up' },
-					{ start: 2, end: 5, label: '2 stars and up' },
+					{ start: 2, end: 3, label: 'Less than 3 stars' },
+					{ start: 3, end: 4, label: 'Between 3 and 4 stars' },
+					{ start: 4, end: 5, label: 'More than 4 stars' },
 				]}
+				placeholder="Select Rating"
+				filterLabel="Rating"
 			/>
 		</FlexChild>
-		<FlexChild card margin="10px">
+		<FlexChild margin="10px 0">
 			<MultiList
-				componentId="vehicle"
-				dataField="vehicleType.raw"
-				title="Vehicle Type"
-				showSearch={false}
+				componentId="series"
+				dataField="original_series.raw"
+				title="Books Series"
+				size={250}
+				sortBy="count"
+				queryFormat="and"
+				filterLabel="Series"
 			/>
 		</FlexChild>
-		<FlexChild card margin="10px">
-			<RangeSlider
-				componentId="price"
-				dataField="price"
-				title="Price Range"
-				range={{
-					start: 0,
-					end: 10000,
-				}}
-				rangeLabels={{
-					start: '$0',
-					end: '$10,000',
-				}}
-				interval={1000}
+		<FlexChild margin="10px 0">
+			<MultiList
+				componentId="authors"
+				dataField="authors.raw"
+				title="Authors"
+				size={500}
+				sortBy="count"
+				queryFormat="and"
+				filterLabel="Authors"
 			/>
 		</FlexChild>
 	</Flex>
 );
-
-SearchFilters.propTypes = {
-	currentTopics: PropTypes.arrayOf(PropTypes.string),
-	setTopics: PropTypes.func,
-	visible: PropTypes.bool,
-};
 
 export default SearchFilters;

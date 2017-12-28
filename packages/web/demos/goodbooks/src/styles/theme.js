@@ -1,11 +1,10 @@
 const theme = {
 	fontFamily: 'Roboto, Helvetica, sans-serif',
 	primaryColor: 'dodgerblue',
-	secondaryColor: 'dodgerblue',
-	titleColor: 'rebeccapurple',
-	accentColor: 'palevioletred',
+	secondaryColor: 'deepskyblue',
+	titleColor: 'dodgerblue',
 	lightGray: '#eff3f6',
-	componentMaxHeight: '140px',
+	textColor: '#777',
 };
 
 export default theme;

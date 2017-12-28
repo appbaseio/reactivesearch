@@ -40,6 +40,7 @@ const Card = styled('a')`
 	justify-content: space-between;
 	margin: 8px;
 	padding: 10px;
+	overflow: hidden;
 	box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
 	color: ${props => props.theme.textColor};
 	${props => (props.href ? 'cursor: pointer' : null)};

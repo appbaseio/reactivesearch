@@ -12,8 +12,6 @@
 		"react"
 	],
 	"plugins": [
-		"emotion",
-		"transform-class-properties",
-		"transform-object-rest-spread"
+		"emotion"
 	]
 }

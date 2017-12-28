@@ -311,6 +311,7 @@ MultiDataList.propTypes = {
 	style: types.style,
 	className: types.string,
 	innerClass: types.style,
+	queryFormat: types.queryFormatSearch,
 };
 
 MultiDataList.defaultProps = {
@@ -321,6 +322,7 @@ MultiDataList.defaultProps = {
 	showSearch: true,
 	style: {},
 	className: null,
+	queryFormat: 'or',
 };
 
 const mapStateToProps = (state, props) => ({

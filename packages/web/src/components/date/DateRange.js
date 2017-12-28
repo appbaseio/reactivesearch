@@ -367,8 +367,8 @@ DateRange.propTypes = {
 
 DateRange.defaultProps = {
 	placeholder: {
-		start: 'Select start date',
-		end: 'Select end date',
+		start: 'Start date',
+		end: 'End date',
 	},
 	numberOfMonths: 2,
 	showFilter: true,

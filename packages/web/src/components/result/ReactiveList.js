@@ -19,7 +19,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Button, { pagination } from '../../styles/Button';
-import { resultsInfo, sortOptions } from '../../styles/results';
+import { resultsInfo, resultStats, sortOptions } from '../../styles/results';
 
 class ReactiveList extends Component {
 	constructor(props) {
@@ -330,7 +330,7 @@ class ReactiveList extends Component {
 			return this.props.onResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
 			return (
-				<p className={getClassName(this.props.innerClass, 'resultstats') || null}>
+				<p className={`${resultStats} ${getClassName(this.props.innerClass, 'resultStats')}`}>
 					{this.props.total} results found in {this.props.time}ms
 				</p>
 			);

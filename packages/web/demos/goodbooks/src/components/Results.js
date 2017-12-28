@@ -1,57 +1,52 @@
 import React from 'react';
-import { ResultCard } from '@appbaseio/reactivesearch';
-import PropTypes from 'prop-types';
+import { ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
 
-import Flex, { FlexChild } from '../styles/Flex';
-import Topic, { price } from '../styles/Topic';
+import Flex from '../styles/Flex';
+import ResultItem, { bookHeader, authorsList, avgRating } from '../styles/ResultItem';
 
-const onResultStats = (results, time) => (
-	<Flex justifyContent="flex-end" style={{ marginTop: '0.6rem' }}>
-		{results} results found in {time}ms
-	</Flex>
+const onData = data => (
+	<ResultItem key={data._id}>
+		<img src={data.image} alt="Book Cover" />
+		<Flex direction="column" justifyContent="center" style={{ marginLeft: 20 }}>
+			<div className={bookHeader}>{data.original_title}</div>
+			<Flex direction="column" justifyContent="space-between">
+				<div>
+					<div>by <span className={authorsList}>{data.authors}</span></div>
+					<Flex alignCenter style={{ padding: '10px 0' }}>
+						<span style={{ color: 'gold' }}>
+							{
+								Array(data.average_rating_rounded).fill('x')
+									.map((item, index) => <i className="fas fa-star" key={index} />) // eslint-disable-line
+							}
+						</span>
+						<span className={avgRating}>({data.average_rating} avg)</span>
+					</Flex>
+				</div>
+				<div>Pub {data.original_publication_year}</div>
+			</Flex>
+		</Flex>
+	</ResultItem>
 );
 
-const onData = data => ({
-	image:
-		data.vehicleType === 'other' || data.vehicleType === 'unknown'
-			? 'src/images/car.jpg'
-			: `src/images/${data.vehicleType.replace(/ /g, '-')}/${data.color}.jpg`,
-	title: data.name,
-	desc: (<div>
-		<div className={price}>${data.price}</div>
-		<Flex justifyContent="space-between" responsive>
-			<FlexChild>{'⭐'.repeat(data.rating)}</FlexChild>
-			<FlexChild>REGD. {data.yearOfRegistration}</FlexChild>
-		</Flex>
-		<Flex style={{ marginTop: 5 }} flexWrap>
-			{data.fuelType && <Topic>{data.fuelType}</Topic>}
-			{data.gearbox && <Topic>{data.gearbox}</Topic>}
-			{data.vehicleType && <Topic>{data.vehicleType}</Topic>}
-		</Flex>
-	</div>),
-});
+const onResultStats = (results, time) =>
+	<Flex justifyContent="flex-end" style={{ margin: '10px 0', flex: 1 }}>{`Found ${results} books in ${time} ms`}</Flex>;
 
 const Results = () => (
-	<ResultCard
-		componentId="results"
-		dataField="name"
-		onData={onData}
-		onResultStats={onResultStats}
-		react={{
-			and: ['category', 'brand', 'rating', 'vehicle', 'price'],
-		}}
-		innerClass={{
-			image: 'card-image',
-			pagination: 'pagination',
-			listItem: 'card-item',
-		}}
-		pagination
-		size={15}
-	/>
+	<div>
+		<SelectedFilters />
+		<ReactiveList
+			componentId="results"
+			dataField="original_title"
+			react={{
+				and: ['series', 'search', 'rating', 'authors'],
+			}}
+			onData={onData}
+			onResultStats={onResultStats}
+			innerClass={{
+				listItem: 'list-item',
+			}}
+		/>
+	</div>
 );
-
-onData.propTypes = {
-	_source: PropTypes.object // eslint-disable-line
-};
 
 export default Results;
