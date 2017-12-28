@@ -48,10 +48,12 @@ class App extends Component {
 								componentId="repo"
 								dataField={['name', 'description', 'name.raw', 'fullname', 'owner', 'topics']}
 								categoryField="language.raw"
-								queryFormat="and"
 								placeholder="Search Repos"
 								URLParams
 								className={categorySearchContainer}
+								innerClass={{
+									input: 'search-input',
+								}}
 							/>
 							<Results currentTopics={this.state.currentTopics} toggleTopic={this.toggleTopic} />
 						</FlexChild>
