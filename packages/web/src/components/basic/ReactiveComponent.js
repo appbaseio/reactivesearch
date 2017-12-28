@@ -48,7 +48,7 @@ class ReactiveComponent extends Component {
 
 		// set query for internal component
 		if (this.internalComponent && this.props.defaultQuery) {
-			const { query, ...queryOptions } = this.props.defaultQuery;
+			const { query, ...queryOptions } = this.props.defaultQuery();
 
 			if (queryOptions) {
 				this.props.setQueryOptions(this.internalComponent, queryOptions, false);
@@ -124,7 +124,7 @@ ReactiveComponent.propTypes = {
 	URLParams: types.boolRequired,
 	showFilter: types.bool,
 	filterLabel: types.string,
-	defaultQuery: types.selectedValues,
+	defaultQuery: types.func,
 	react: types.react,
 	children: types.children,
 };
