@@ -98,13 +98,13 @@ export default class HomePage extends Component {
 								light
 							>
 								<span className={`${boldHeading} ${logo}`}>v2</span> Now
-								moar configurable, lighter and performant -&nbsp;
+								moar configurable, lighter and performant.&nbsp;
 								<a
 									className={`${decoratedLink} ${decoratedSecondaryLink}`}
 									target="_blank"
 									rel="noopener noreferrer"
 									href="https://github.com/appbaseio/reactivesearch"
-								>Open source licensed
+								>Open-source licensed.
 								</a>
 							</Text>
 
@@ -147,21 +147,29 @@ export default class HomePage extends Component {
 					>
 						<H2 className={colored}>Components for every occasion</H2>
 						<Text fontSize="1rem" lineHeight="1.6rem">
-							Build and ship faster: E-commerce stores, personalized feeds, realtime
-							search experiences with over 30 UI components.
+							Build the perfect search experience using our UI components or by creating your own.
 						</Text>
-						<div>
+						<Text fontSize="1rem" lineHeight="1.6rem">
+							30+ prebuilt components with customizable queries and configurable styles.
+						</Text>
+						<Flex>
 							<Button
 								className={button}
 								shadow
 								primary
-								target="_blank"
-								rel="noopener noreferrer"
-								href="https://opensource.appbase.io/playground"
+								href="https://opensource.appbase.io/reactive-manual/base-components/textfield"
 							>
 								View components
 							</Button>
-						</div>
+							<Button
+								shadow
+								className={button}
+								style={{ marginLeft: '10px' }}
+								href="https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent"
+							>
+								Create your own
+							</Button>
+						</Flex>
 					</Flex>
 				</Flex>
 
