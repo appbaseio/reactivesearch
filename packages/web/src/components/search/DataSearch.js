@@ -369,7 +369,11 @@ class DataSearch extends Component {
 								highlightedIndex,
 							}) => (
 								<div className={suggestionsContainer}>
-									<Flex showBorder={this.props.showIcon} iconPosition={this.props.iconPosition}>
+									<Flex
+										className={getClassName(this.props.innerClass, 'inputContainer')}
+										showBorder={this.props.showIcon}
+										iconPosition={this.props.iconPosition}
+									>
 										<Input
 											showIcon={this.props.showIcon}
 											iconPosition={this.props.iconPosition}
@@ -424,7 +428,11 @@ class DataSearch extends Component {
 							)}
 						/>)
 						: (
-							<Flex showBorder={this.props.showIcon} iconPosition={this.props.iconPosition}>
+							<Flex
+								showBorder={this.props.showIcon}
+								iconPosition={this.props.iconPosition}
+								className={getClassName(this.props.innerClass, 'inputContainer')}
+							>
 								<Input
 									className={getClassName(this.props.innerClass, 'input') || null}
 									placeholder={this.props.placeholder}
