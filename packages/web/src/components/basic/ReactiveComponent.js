@@ -87,11 +87,11 @@ class ReactiveComponent extends Component {
 	render() {
 		const {
 			children,
-			addComponent,
-			watchComponent,
-			removeComponent,
-			setQueryOptions,
-			updateQuery,
+			addComponent: addFn,
+			watchComponent: watchFn,
+			removeComponent: removeFn,
+			setQueryOptions: queryOptionsFn,
+			updateQuery: updateFn,
 			...rest
 		} = this.props;
 
@@ -130,9 +130,12 @@ ReactiveComponent.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-	hits: state.hits[props.componentId] && state.hits[props.componentId].hits || [],
-	aggregations: state.aggregations[props.componentId] && state.aggregations[props.componentId] || null,
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
+	hits: (state.hits[props.componentId]
+		&& state.hits[props.componentId].hits) || [],
+	aggregations: (state.aggregations[props.componentId]
+		&& state.aggregations[props.componentId]) || null,
+	selectedValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value) || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -140,7 +143,11 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(component, props, execute)),
+	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(
+		component,
+		props,
+		execute,
+	)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveComponent);
