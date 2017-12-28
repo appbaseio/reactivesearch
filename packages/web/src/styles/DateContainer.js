@@ -215,6 +215,7 @@ const DateContainer = styled.div`
 		position: absolute;
 		width: 100%;
 		left: 0;
+		z-index: 4;
 	}
 
 	.DayPickerInput-Overlay {

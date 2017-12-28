@@ -156,7 +156,11 @@ class DatePicker extends Component {
 
 	render() {
 		return (
-			<DateContainer showBorder={!this.props.showClear} style={this.props.style} className={this.props.className}>
+			<DateContainer
+				showBorder={!this.props.showClear}
+				style={this.props.style}
+				className={this.props.className}
+			>
 				{this.props.title && (
 					<Title
 						className={getClassName(this.props.innerClass, 'title') || null}

@@ -62,6 +62,20 @@
     react-addons-create-fragment "^15.5.3"
     util-deprecate "^1.0.2"
 
+"@storybook/addon-info@^3.3.2":
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-info/-/addon-info-3.3.2.tgz#f38d2b4b94e0ae1ce0e1fe127c8f80ee27a72acd"
+  dependencies:
+    "@storybook/client-logger" "^3.3.2"
+    "@storybook/components" "^3.3.2"
+    babel-runtime "^6.26.0"
+    global "^4.3.2"
+    marksy "^6.0.1"
+    nested-object-assign "^1.0.1"
+    prop-types "^15.6.0"
+    react-addons-create-fragment "^15.5.3"
+    util-deprecate "^1.0.2"
+
 "@storybook/addon-knobs@^3.1.8":
   version "3.2.19"
   resolved "https://registry.yarnpkg.com/@storybook/addon-knobs/-/addon-knobs-3.2.19.tgz#ac9aeb3f7853dfe6bea4ae41e4ccbac22434bda9"
@@ -107,9 +121,21 @@
   version "3.2.19"
   resolved "https://registry.yarnpkg.com/@storybook/channels/-/channels-3.2.19.tgz#36996ccf8b86bafb420172d8b5380b2e91fdd976"
 
+"@storybook/client-logger@^3.3.2":
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@storybook/client-logger/-/client-logger-3.3.2.tgz#8eea764463545fce3ec9901a844b0be2e24a71ba"
+
 "@storybook/components@^3.2.19":
   version "3.2.19"
   resolved "https://registry.yarnpkg.com/@storybook/components/-/components-3.2.19.tgz#53b8a50df0fd0d18c96aea61e5c0a19765db7ddf"
+  dependencies:
+    glamor "^2.20.40"
+    glamorous "^4.11.2"
+    prop-types "^15.6.0"
+
+"@storybook/components@^3.3.2":
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@storybook/components/-/components-3.3.2.tgz#b60dd0771a97ac333d96f29bc03abc2a76b40736"
   dependencies:
     glamor "^2.20.40"
     glamorous "^4.11.2"
@@ -4666,6 +4692,14 @@ marksy@^2.0.0:
     he "^1.1.1"
     marked "^0.3.6"
 
+marksy@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/marksy/-/marksy-6.0.1.tgz#ea05f170a5f8a3f935b2ef51a9b7847c947b7402"
+  dependencies:
+    babel-standalone "^6.24.0"
+    he "^1.1.1"
+    marked "^0.3.6"
+
 material-colors@^1.2.1:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/material-colors/-/material-colors-1.2.5.tgz#5292593e6754cb1bcc2b98030e4e0d6a3afc9ea1"
@@ -4888,6 +4922,10 @@ natural-compare@^1.4.0:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
+
+nested-object-assign@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/nested-object-assign/-/nested-object-assign-1.0.2.tgz#9a84ef51b5c11298b5476d6c65b26458c9eae82b"
 
 node-abi@^2.1.1:
   version "2.1.2"
