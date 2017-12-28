@@ -1,9 +1,16 @@
 import styled from 'react-emotion';
 
+import queries from './mediaQueries';
+
 const SlopeWrapper = styled('div')`
 	position: relative;
 	padding: ${props => (props.small ? '0' : '180px 0')};
 	margin-bottom: ${props => (props.small ? '0' : '150px')};
+
+	${queries.medium`
+		padding: 140px 0;
+		margin-bottom: 45px;
+	`};
 `;
 
 const Slope = styled('div')`
@@ -22,10 +29,14 @@ const Slope = styled('div')`
 	z-index: -1;
 	background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 
+	${queries.medium`
+		transform: none;
+	`};
+
 	${props => (
 		props.border
 			? `&:after {
-				content: "";
+				content: '';
 				background: rgba(12,12,12,0.05);
 				height: 50px;
 				bottom: 0;
@@ -50,6 +61,10 @@ const WhiteBackdrop = styled('div')`
 	right: 0;
 	transform: translate(0,150px) skewY(${props => (props.degree ? props.degree : 8)}deg);
 	z-index: -2;
+
+	${queries.medium`
+		display: none;
+	`};
 	`;
 
 export { Slope, SlopeWrapper, WhiteBackdrop };

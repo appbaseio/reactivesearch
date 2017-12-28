@@ -1,5 +1,7 @@
 import { css } from 'emotion';
 
+import queries from './mediaQueries';
+
 const primaryColor = '#6772e5';
 const secondaryColor = '#fefefe';
 
@@ -18,10 +20,18 @@ const button = css`
 
 const col = css`
 	width: 50%;
+
+	${queries.medium`
+		width: 100%;
+	`};
 `;
 
 const colored = css`
 	color: ${primaryColor};
+
+	${queries.medium`
+		text-align: center;
+	`};
 `;
 
 const decoratedLink = css`
@@ -69,6 +79,14 @@ const card = css`
 	img {
 		margin-bottom: 15px;
 	}
+
+	${queries.medium`
+		width: 49%;
+	`};
+
+	${queries.small`
+		width: 100%;
+	`};
 `;
 
 const title = css`
@@ -90,18 +108,22 @@ const code = css`
 `;
 
 const showcase = css`
-	width: 100%;
+	width: 95%;
 	max-width: 400px;
 	padding: 2rem;
 	text-align: center;
 	margin: -40px auto 0;
 	border-radius: 4px;
+
+	${queries.medium`
+		margin: 40px auto 0;
+	`};
 `;
 
 const footer = css`
 	.logo {
 		img {
-			margin: 12px;
+			margin: 12px 12px 30px;
 		}
 	}
 
@@ -127,6 +149,95 @@ const footer = css`
 			color: #eee;
 		}
 	}
+
+	${queries.medium`
+		flex-wrap: wrap;
+
+		.column-wrapper {
+			width: 100%;
+		}
+
+		.column {
+			width: 25%;
+			padding: 0 15px;
+		}
+	`};
+
+	${queries.small`
+		.column-wrapper {
+			flex-direction: column;
+			text-align: center;
+		}
+
+		.column {
+			width: 100%;
+			margin-top: 25px;
+		}
+	`};
+`;
+
+const tabCol = css`
+	${queries.medium`
+		flex-direction: column;
+		text-align: center;
+
+		img {
+			margin-bottom: 30px;
+		}
+	`};
+`;
+
+const tabCenterHeading = css`
+	max-width: 450px;
+
+	${queries.medium`
+		font-size: 1.5rem;
+		line-height: 1.9rem;
+		margin: 0 auto 10px;
+		max-width: none;
+	`};
+`;
+
+const tabHide = css`
+	${queries.medium`
+		display: none;
+	`};
+`;
+
+const tabJustifyCenter = css`
+	${queries.medium`
+		justify-content: center;
+	`};
+
+	${queries.small`
+		flex-direction: column;
+
+		a {
+			margin-left: 0 !important;
+		}
+	`};
+`;
+
+const tabBanner = css`
+	${queries.medium`
+		padding: 0 2rem;
+		text-align: center;
+		align-items: center;
+
+		h1 {
+			font-size: 1.8rem;
+		}
+	`};
+`;
+
+const mobHide = css`
+	${queries.small`
+		display: none !important;
+	`};
+`;
+
+const textCenter = css`
+	text-align: center;
 `;
 
 export {
@@ -141,4 +252,11 @@ export {
 	code,
 	showcase,
 	footer,
+	tabCol,
+	tabCenterHeading,
+	tabHide,
+	tabJustifyCenter,
+	tabBanner,
+	mobHide,
+	textCenter,
 };
