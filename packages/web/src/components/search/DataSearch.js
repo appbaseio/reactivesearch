@@ -236,7 +236,7 @@ class DataSearch extends Component {
 				currentValue: value,
 			});
 			if (isDefaultValue) {
-				if (this.props.autoSuggest) {
+				if (this.props.autosuggest) {
 					this.setState({
 						isOpen: false,
 					});
@@ -258,7 +258,7 @@ class DataSearch extends Component {
 	};
 
 	handleTextChange = debounce((value) => {
-		if (this.props.autoSuggest) {
+		if (this.props.autosuggest) {
 			this.updateQuery(this.internalComponent, value, this.props);
 		} else {
 			this.updateQuery(this.props.componentId, value, this.props);
@@ -355,7 +355,7 @@ class DataSearch extends Component {
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{
-					this.props.autoSuggest
+					this.props.autosuggest
 						? (<Downshift
 							onChange={this.onSuggestionSelected}
 							onOuterClick={this.handleOuterClick}
@@ -463,7 +463,7 @@ DataSearch.propTypes = {
 	fieldWeights: types.fieldWeights,
 	queryFormat: types.queryFormatSearch,
 	fuzziness: types.fuzziness,
-	autoSuggest: types.bool,
+	autosuggest: types.bool,
 	beforeValueChange: types.func,
 	onValueChange: types.func,
 	customQuery: types.func,
@@ -492,7 +492,7 @@ DataSearch.propTypes = {
 
 DataSearch.defaultProps = {
 	placeholder: 'Search',
-	autoSuggest: true,
+	autosuggest: true,
 	queryFormat: 'or',
 	URLParams: false,
 	showFilter: true,
