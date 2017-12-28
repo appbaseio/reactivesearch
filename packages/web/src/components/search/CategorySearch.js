@@ -87,11 +87,13 @@ class CategorySearch extends Component {
 			Array.isArray(nextProps.suggestions)
 			&& this.state.currentValue.trim().length
 		) {
-			checkPropChange(this.props.suggestions, nextProps.suggestions, () => {
+			// shallow check allows us to set suggestions even if the next set
+			// of suggestions are same as the current one
+			if (this.props.suggestions !== nextProps.suggestions) {
 				this.setState({
 					suggestions: this.onSuggestions(nextProps.suggestions),
 				});
-			});
+			}
 		}
 
 		checkSomePropChange(
