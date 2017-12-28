@@ -99,13 +99,13 @@ export default class HomePage extends Component {
 								light
 							>
 								<span className={`${boldHeading} ${logo}`}>v2</span> Now
-								moar configurable, lighter and performant -&nbsp;
+								moar configurable, lighter and performant.&nbsp;
 								<a
 									className={`${decoratedLink} ${decoratedSecondaryLink}`}
 									target="_blank"
 									rel="noopener noreferrer"
 									href="https://github.com/appbaseio/reactivesearch"
-								>Open source licensed
+								>Open-source licensed.
 								</a>
 							</Text>
 
@@ -148,21 +148,29 @@ export default class HomePage extends Component {
 					>
 						<H2 className={colored}>Components for every occasion</H2>
 						<Text fontSize="1rem" lineHeight="1.6rem">
-							Build and ship faster: E-commerce stores, personalized feeds, realtime
-							search experiences with over 30 UI components.
+							Build the perfect search experience using our UI components or by creating your own.
 						</Text>
-						<div>
+						<Text fontSize="1rem" lineHeight="1.6rem">
+							30+ prebuilt components with customizable queries and configurable styles.
+						</Text>
+						<Flex>
 							<Button
 								className={button}
 								shadow
 								primary
-								target="_blank"
-								rel="noopener noreferrer"
-								href="https://opensource.appbase.io/playground"
+								href="https://opensource.appbase.io/reactive-manual/base-components/textfield"
 							>
 								View components
 							</Button>
-						</div>
+							<Button
+								shadow
+								className={button}
+								style={{ marginLeft: '10px' }}
+								href="https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent"
+							>
+								Create your own
+							</Button>
+						</Flex>
 					</Flex>
 				</Flex>
 
@@ -425,45 +433,52 @@ export default class HomePage extends Component {
 					backgroundColor="#fafafa"
 					justifyContent="center"
 					alignItems="center"
-					padding="100px 100px 50px"
+					padding="100px 3rem 50px"
 					style={{
 						backgroundImage: 'linear-gradient(to top, rgb(223, 233, 243) 0%, white 100%)',
 					}}
 				>
-					<Flex className={col}>
-						<div style={{ textAlign: 'center' }}>
-							<img width="100%" src="images/banner.png" alt="Signup on appbase.io" />
-						</div>
-					</Flex>
-
 					<Flex
-						className={col}
-						flexDirection="column"
+						style={{
+							width: '100%',
+							maxWidth: '950px',
+						}}
 					>
-						<H2
-							fontWeight="700"
-							fontSize="1.8rem"
-							lineHeight="2.4rem"
-							margin="0 0 12px 0"
-							style={{ maxWidth: '450px' }}
+						<Flex className={col}>
+							<div style={{ textAlign: 'center' }}>
+								<img style={{ maxWidth: '400px' }} width="100%" src="images/banner.png" alt="Signup on appbase.io" />
+							</div>
+						</Flex>
+
+						<Flex
+							className={col}
+							flexDirection="column"
 						>
-							Build your Elasticsearch backend with appbase.io
-						</H2>
-						<Text fontSize="1.2rem" lineHeight="1.5rem">
-							Get a free account for up to 10,000 records.
-						</Text>
-						<div>
-							<Button
-								primary
-								shadow
-								className={button}
-								href="https://appbase.io"
-								target="_blank"
-								rel="noopener noreferrer"
+							<H2
+								fontWeight="700"
+								fontSize="1.8rem"
+								lineHeight="2.4rem"
+								margin="0 0 12px 0"
+								style={{ maxWidth: '450px' }}
 							>
-								Signup for free
-							</Button>
-						</div>
+								Build your Elasticsearch backend with appbase.io
+							</H2>
+							<Text fontSize="1.2rem" lineHeight="1.5rem">
+								Get a free account for up to 10,000 records.
+							</Text>
+							<div>
+								<Button
+									primary
+									shadow
+									className={button}
+									href="https://appbase.io"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									Signup for free
+								</Button>
+							</div>
+						</Flex>
 					</Flex>
 				</Flex>
 
