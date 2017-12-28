@@ -4,6 +4,7 @@ import { Flex, H1, H2, Title, Button, Text } from '@appbaseio/designkit';
 import Navbar, { logo } from '../styles/Navbar';
 import { SlopeWrapper, Slope, WhiteBackdrop } from '../styles/Slope';
 import Bubble from '../styles/Bubble';
+import Image from '../styles/Image';
 import {
 	boldHeading,
 	button,
@@ -16,6 +17,13 @@ import {
 	code,
 	showcase,
 	footer,
+	tabCol,
+	tabCenterHeading,
+	tabHide,
+	tabJustifyCenter,
+	tabBanner,
+	mobHide,
+	textCenter,
 } from '../styles/base';
 import { mockDataSearch, mockDataSearchFull } from '../components/mock';
 
@@ -68,7 +76,7 @@ export default class HomePage extends Component {
 			<div>
 				<Navbar>
 					<a className={`${boldHeading} ${logo}`} href="/">Reactivesearch</a>
-					<ul>
+					<ul className={mobHide}>
 						<li><a href="#examples">Examples</a></li>
 						<li><a href="htpps://opensource.appbase.io/reactive-manual">Documentation</a></li>
 						<li><a href="https://github.com/appbaseio/reactivesearch">Github</a></li>
@@ -78,7 +86,7 @@ export default class HomePage extends Component {
 					<Flex justifyContent="space-between">
 						<Slope border />
 						<Flex
-							className={col}
+							className={`${col} ${tabBanner}`}
 							flexDirection="column"
 							padding="0 0 0 3rem"
 							justifyContent="center"
@@ -98,7 +106,7 @@ export default class HomePage extends Component {
 								margin="10px 0 30px"
 								light
 							>
-								<span className={`${boldHeading} ${logo}`}>v2</span> Now
+								<span className={`${boldHeading} ${logo} ${mobHide}`}>v2</span> Now
 								moar configurable, lighter and performant.&nbsp;
 								<a
 									className={`${decoratedLink} ${decoratedSecondaryLink}`}
@@ -109,7 +117,7 @@ export default class HomePage extends Component {
 								</a>
 							</Text>
 
-							<Flex>
+							<Flex className={tabJustifyCenter}>
 								<Button light primary shadow className={button}>
 									Getting Started
 								</Button>
@@ -119,7 +127,7 @@ export default class HomePage extends Component {
 							</Flex>
 						</Flex>
 
-						<Flex style={{ position: 'absolute', right: 0 }}>
+						<Flex style={{ position: 'absolute', right: 0 }} className={tabHide}>
 							<img
 								height="590px"
 								src="images/browser.png"
@@ -131,7 +139,7 @@ export default class HomePage extends Component {
 					</Flex>
 				</SlopeWrapper>
 
-				<Flex padding="0 3rem 3rem">
+				<Flex padding="0 3rem 3rem" className={tabCol}>
 					<div className={col}>
 						<img
 							width="100%"
@@ -153,7 +161,7 @@ export default class HomePage extends Component {
 						<Text fontSize="1rem" lineHeight="1.6rem">
 							30+ prebuilt components with customizable queries and configurable styles.
 						</Text>
-						<Flex>
+						<Flex className={tabJustifyCenter}>
 							<Button
 								className={button}
 								shadow
@@ -163,7 +171,6 @@ export default class HomePage extends Component {
 								View components
 							</Button>
 							<Button
-								shadow
 								className={button}
 								style={{ marginLeft: '10px' }}
 								href="https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent"
@@ -181,8 +188,8 @@ export default class HomePage extends Component {
 					justifyContent="center"
 					alignItems="center"
 				>
-					<H2>Up to 10x Time Savings</H2>
-					<Text fontSize="1rem" lineHeight="1.6rem">
+					<H2 className={textCenter}>Up to 10x Time Savings</H2>
+					<Text fontSize="1rem" lineHeight="1.6rem" className={textCenter}>
 						Focus on the design and user experience, let us handle the details.
 					</Text>
 					<Flex
@@ -302,7 +309,7 @@ export default class HomePage extends Component {
 					</Flex>
 				</Flex>
 
-				<SlopeWrapper small>
+				<SlopeWrapper small className={tabHide}>
 					<Slope style={{ backgroundImage: 'linear-gradient(to top, #dfe9f3 0%, white 100%)' }} />
 					<Flex
 						padding="3rem 3rem 1rem"
@@ -381,36 +388,17 @@ export default class HomePage extends Component {
 					</Text>
 
 					<Flex
-						padding="30px"
 						justifyContent="center"
-						style={{ width: '100%' }}
-						margin="0 40px 40px"
+						style={{ width: '100%', maxWidth: '1100px' }}
+						margin="30px 0 0"
 						flexWrap="wrap"
 					>
-						<div style={{
-							width: '39%', height: '400px', margin: '20px', borderRadius: '10px', backgroundColor: '#fafafa',
-						}}
-						/>
-						<div style={{
-							width: '39%', height: '400px', margin: '20px', borderRadius: '10px', backgroundColor: '#fafafa',
-						}}
-						/>
-						<div style={{
-							width: '39%', height: '400px', margin: '20px', borderRadius: '10px', backgroundColor: '#fafafa',
-						}}
-						/>
-						<div style={{
-							width: '39%', height: '400px', margin: '20px', borderRadius: '10px', backgroundColor: '#fafafa',
-						}}
-						/>
-						<div style={{
-							width: '39%', height: '400px', margin: '20px', borderRadius: '10px', backgroundColor: '#fafafa',
-						}}
-						/>
-						<div style={{
-							width: '39%', height: '400px', margin: '20px', borderRadius: '10px', backgroundColor: '#fafafa',
-						}}
-						/>
+						<Image />
+						<Image />
+						<Image />
+						<Image />
+						<Image />
+						<Image />
 					</Flex>
 				</Flex>
 
@@ -443,9 +431,10 @@ export default class HomePage extends Component {
 							width: '100%',
 							maxWidth: '950px',
 						}}
+						className={tabCol}
 					>
 						<Flex className={col}>
-							<div style={{ textAlign: 'center' }}>
+							<div style={{ textAlign: 'center', margin: '0 auto' }}>
 								<img style={{ maxWidth: '400px' }} width="100%" src="images/banner.png" alt="Signup on appbase.io" />
 							</div>
 						</Flex>
@@ -459,7 +448,7 @@ export default class HomePage extends Component {
 								fontSize="1.8rem"
 								lineHeight="2.4rem"
 								margin="0 0 12px 0"
-								style={{ maxWidth: '450px' }}
+								className={tabCenterHeading}
 							>
 								Build your Elasticsearch backend with appbase.io
 							</H2>
@@ -496,7 +485,7 @@ export default class HomePage extends Component {
 						</div>
 					</Flex>
 
-					<Flex>
+					<Flex className="column-wrapper">
 						<Flex className="column" flexDirection="column">
 							<Title className="heading">Documentation</Title>
 							<Text light margin="3px 0"><a href="/">Quick Start</a></Text>

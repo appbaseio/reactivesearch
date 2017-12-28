@@ -17,12 +17,11 @@ const queries = Object.keys(breakpoints).reduce((accumulator, label) => {
 		`;
 	} else {
 		acc[label] = (...args) => css`
-			@media (min-width: ${breakpoints[label]}px) {
+			@media (max-width: ${breakpoints[label]}px) {
 				${css(...args)};
 			}
 		`;
 	}
-
 	return acc;
 }, {});
 
