@@ -23,7 +23,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
-import Flex from '../../styles/Flex';
+import InputIcon from '../../styles/InputIcon';
 
 import { getSuggestions } from '../../utils';
 
@@ -452,31 +452,27 @@ class CategorySearch extends Component {
 							highlightedIndex,
 						}) => (
 							<div className={suggestionsContainer}>
-								<Flex
-									showBorder={this.props.showIcon}
+								<Input
+									showIcon={this.props.showIcon}
 									iconPosition={this.props.iconPosition}
-									className={getClassName(this.props.innerClass, 'inputContainer')}
-								>
-									<Input
-										showIcon={this.props.showIcon}
-										iconPosition={this.props.iconPosition}
-										{...getInputProps({
-											className: getClassName(this.props.innerClass, 'input'),
-											placeholder: this.props.placeholder,
-											value:
-												this.state.currentValue === null
-													? ''
-													: this.state.currentValue,
-											onChange: this.onInputChange,
-											onBlur: this.props.onBlur,
-											onFocus: this.handleFocus,
-											onKeyPress: this.props.onKeyPress,
-											onKeyDown: this.handleKeyDown,
-											onKeyUp: this.props.onKeyUp,
-										})}
-									/>
+									{...getInputProps({
+										className: getClassName(this.props.innerClass, 'input'),
+										placeholder: this.props.placeholder,
+										value:
+											this.state.currentValue === null
+												? ''
+												: this.state.currentValue,
+										onChange: this.onInputChange,
+										onBlur: this.props.onBlur,
+										onFocus: this.handleFocus,
+										onKeyPress: this.props.onKeyPress,
+										onKeyDown: this.handleKeyDown,
+										onKeyUp: this.props.onKeyUp,
+									})}
+								/>
+								<InputIcon iconPosition={this.props.iconPosition}>
 									{this.renderIcon()}
-								</Flex>
+								</InputIcon>
 								{isOpen && suggestionsList.length ? (
 									<div className={suggestions}>
 										<ul
@@ -503,11 +499,7 @@ class CategorySearch extends Component {
 						)}
 					/>
 				) : (
-					<Flex
-						showBorder={this.props.showIcon}
-						iconPosition={this.props.iconPosition}
-						className={getClassName(this.props.innerClass, 'inputContainer')}
-					>
+					<div>
 						<Input
 							className={getClassName(this.props.innerClass, 'input')}
 							placeholder={this.props.placeholder}
@@ -521,8 +513,10 @@ class CategorySearch extends Component {
 							autoFocus={this.props.autoFocus}
 							showIcon={this.props.showIcon}
 						/>
-						{this.renderIcon()}
-					</Flex>
+						<InputIcon iconPosition={this.props.iconPosition}>
+							{this.renderIcon()}
+						</InputIcon>
+					</div>
 				)}
 			</div>
 		);
