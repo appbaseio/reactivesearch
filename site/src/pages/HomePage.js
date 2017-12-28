@@ -425,45 +425,52 @@ export default class HomePage extends Component {
 					backgroundColor="#fafafa"
 					justifyContent="center"
 					alignItems="center"
-					padding="100px 100px 50px"
+					padding="100px 3rem 50px"
 					style={{
 						backgroundImage: 'linear-gradient(to top, rgb(223, 233, 243) 0%, white 100%)',
 					}}
 				>
-					<Flex className={col}>
-						<div style={{ textAlign: 'center' }}>
-							<img width="100%" src="images/banner.png" alt="Signup on appbase.io" />
-						</div>
-					</Flex>
-
 					<Flex
-						className={col}
-						flexDirection="column"
+						style={{
+							width: '100%',
+							maxWidth: '950px',
+						}}
 					>
-						<H2
-							fontWeight="700"
-							fontSize="1.8rem"
-							lineHeight="2.4rem"
-							margin="0 0 12px 0"
-							style={{ maxWidth: '450px' }}
+						<Flex className={col}>
+							<div style={{ textAlign: 'center' }}>
+								<img style={{ maxWidth: '400px' }} width="100%" src="images/banner.png" alt="Signup on appbase.io" />
+							</div>
+						</Flex>
+
+						<Flex
+							className={col}
+							flexDirection="column"
 						>
-							Build your Elasticsearch backend with appbase.io
-						</H2>
-						<Text fontSize="1.2rem" lineHeight="1.5rem">
-							Get a free account for up to 10,000 records.
-						</Text>
-						<div>
-							<Button
-								primary
-								shadow
-								className={button}
-								href="https://appbase.io"
-								target="_blank"
-								rel="noopener noreferrer"
+							<H2
+								fontWeight="700"
+								fontSize="1.8rem"
+								lineHeight="2.4rem"
+								margin="0 0 12px 0"
+								style={{ maxWidth: '450px' }}
 							>
-								Signup for free
-							</Button>
-						</div>
+								Build your Elasticsearch backend with appbase.io
+							</H2>
+							<Text fontSize="1.2rem" lineHeight="1.5rem">
+								Get a free account for up to 10,000 records.
+							</Text>
+							<div>
+								<Button
+									primary
+									shadow
+									className={button}
+									href="https://appbase.io"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									Signup for free
+								</Button>
+							</div>
+						</Flex>
 					</Flex>
 				</Flex>
 
