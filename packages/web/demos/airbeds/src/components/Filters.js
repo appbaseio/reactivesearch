@@ -5,6 +5,15 @@ import { leftCol } from '../styles';
 
 export default () => (
 	<div className={leftCol}>
+		<DateRange
+			dataField="date_from"
+			componentId="DateRangeSensor"
+			title="When"
+			numberOfMonths={2}
+			queryFormat="basic_date"
+			initialMonth={new Date('04-01-2017')}
+		/>
+
 		<NumberBox
 			componentId="GuestSensor"
 			dataField="accommodates"
@@ -14,15 +23,6 @@ export default () => (
 				start: 1,
 				end: 16,
 			}}
-		/>
-
-		<DateRange
-			dataField="date_from"
-			componentId="DateRangeSensor"
-			title="When"
-			numberOfMonths={2}
-			queryFormat="basic_date"
-			initialMonth={new Date('04-01-2017')}
 		/>
 
 		<RangeSlider
