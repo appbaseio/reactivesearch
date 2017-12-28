@@ -279,7 +279,7 @@ class CategorySearch extends Component {
 				currentValue: value,
 			});
 			if (isDefaultValue) {
-				if (this.props.autoSuggest) {
+				if (this.props.autosuggest) {
 					this.setState({
 						isOpen: false,
 					});
@@ -301,7 +301,7 @@ class CategorySearch extends Component {
 	};
 
 	handleTextChange = debounce((value) => {
-		if (this.props.autoSuggest) {
+		if (this.props.autosuggest) {
 			this.updateQuery(this.internalComponent, value, this.props);
 		} else {
 			this.updateQuery(this.props.componentId, value, this.props);
@@ -438,7 +438,7 @@ class CategorySearch extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				{this.props.autoSuggest ? (
+				{this.props.autosuggest ? (
 					<Downshift
 						onChange={this.onSuggestionSelected}
 						onOuterClick={this.handleOuterClick}
@@ -543,7 +543,7 @@ CategorySearch.propTypes = {
 	fieldWeights: types.fieldWeights,
 	queryFormat: types.queryFormatSearch,
 	fuzziness: types.fuzziness,
-	autoSuggest: types.bool,
+	autosuggest: types.bool,
 	beforeValueChange: types.func,
 	onValueChange: types.func,
 	customQuery: types.func,
@@ -574,7 +574,7 @@ CategorySearch.propTypes = {
 
 CategorySearch.defaultProps = {
 	placeholder: 'Search',
-	autoSuggest: true,
+	autosuggest: true,
 	queryFormat: 'or',
 	URLParams: false,
 	showFilter: true,
