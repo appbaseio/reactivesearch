@@ -3,6 +3,7 @@ import { Flex, H1, H2, Title, Button, Text } from '@appbaseio/designkit';
 
 import Navbar, { logo } from '../styles/Navbar';
 import { SlopeWrapper, Slope, WhiteBackdrop } from '../styles/Slope';
+import Bubble from '../styles/Bubble';
 import {
 	boldHeading,
 	button,
@@ -403,6 +404,21 @@ export default class HomePage extends Component {
 						}}
 						/>
 					</Flex>
+				</Flex>
+
+				<Flex
+					flexDirection="column"
+					justifyContent="center"
+					alignItems="center"
+					padding="3rem 3rem 4rem"
+				>
+					<H2>Testimonials</H2>
+					<Bubble>
+						The time savings have been off the charts in getting our
+						search up and running with searchbase.io
+					</Bubble>
+
+					<Text>Rob Whitley, Co-Founder, Salespipe</Text>
 				</Flex>
 
 				<Flex
