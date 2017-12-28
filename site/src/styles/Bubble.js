@@ -16,8 +16,9 @@ const Bubble = styled('div')`
 	&::after {
 		content: '';
 		position: absolute;
-		top: 100%;
+		top: calc(100% - 1px);
 		left: calc(50% - 10px);
+		z-index: 1;
 		width: 0;
 		height: 0;
 		margin: 0 auto;
