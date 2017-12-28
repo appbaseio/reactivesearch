@@ -51,11 +51,6 @@ const Flex = styled('div')`
 		flex-basis: ${props.basis};
 	`};
 
-	svg.search-icon {
-		fill: ${props => props.theme.primaryColor};
-		flex-basis: 30px;
-	}
-
 	svg.cancel-icon {
 		cursor: pointer;
 		fill: ${props => lighten(0.3, props.theme.textColor)};

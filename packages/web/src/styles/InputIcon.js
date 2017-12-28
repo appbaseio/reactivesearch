@@ -1,0 +1,30 @@
+import styled, { css } from 'react-emotion';
+
+const left = css`
+	padding-left: 8px;
+	left: 0;
+`;
+
+const right = css`
+	padding-right: 8px;
+	right: 0;
+`;
+
+const InputIcon = styled.div`
+	position: absolute;
+	top: calc(50% - 8px);
+	${({ iconPosition }) => {
+		if (iconPosition === 'left') {
+			return left;
+		} else if (iconPosition === 'right') {
+			return right;
+		}
+		return null;
+	}}
+
+	svg.search-icon {
+		fill: ${props => props.theme.primaryColor};
+	}
+`;
+
+export default InputIcon;

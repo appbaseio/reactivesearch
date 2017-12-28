@@ -455,6 +455,7 @@ class CategorySearch extends Component {
 								<Flex
 									showBorder={this.props.showIcon}
 									iconPosition={this.props.iconPosition}
+									className={getClassName(this.props.innerClass, 'inputContainer')}
 								>
 									<Input
 										showIcon={this.props.showIcon}
@@ -505,9 +506,10 @@ class CategorySearch extends Component {
 					<Flex
 						showBorder={this.props.showIcon}
 						iconPosition={this.props.iconPosition}
+						className={getClassName(this.props.innerClass, 'inputContainer')}
 					>
 						<Input
-							className={getClassName(this.props.innerClass, 'input') || null}
+							className={getClassName(this.props.innerClass, 'input')}
 							placeholder={this.props.placeholder}
 							value={this.state.currentValue ? this.state.currentValue : ''}
 							onChange={this.onInputChange}

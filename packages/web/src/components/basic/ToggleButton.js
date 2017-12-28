@@ -122,10 +122,14 @@ class ToggleButton extends Component {
 		if (props.onQueryChange) {
 			onQueryChange = props.onQueryChange;
 		}
+		let filterValue = value;
+		if (!props.multiSelect) {
+			filterValue = value[0] ? value[0].label : null;
+		}
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
-			value: props.multiSelect ? value : value[0].label,	// sets a string in URL not array
+			value: filterValue,	// sets a string in URL not array
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,

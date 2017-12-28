@@ -20,23 +20,16 @@ const Input = styled('input')`
 
 	${props =>
 		props.showIcon
-		&& css`
-			border: none;
-			flex: 1;
-		`};
-
-	${props =>
-		props.showIcon
 		&& props.iconPosition === 'left'
 		&& css`
-			padding-left: 0;
+			padding-left: 30px;
 		`};
 
 	${props =>
 		props.showIcon
 		&& props.iconPosition === 'right'
 		&& css`
-			padding-right: 0;
+			padding-right: 30px;
 		`};
 
 	${props => props.alert && alertBorder};

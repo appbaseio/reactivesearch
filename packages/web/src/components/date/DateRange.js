@@ -172,7 +172,8 @@ class DateRange extends Component {
 		});
 		// focus the end date DayPicker if its empty
 		if (this.props.autoFocusEnd && autoFocus) {
-			this.endDateRef.getInput().focus();
+			// TODO: replace with a single date component in v2.1.0
+			window.setTimeout(() => this.endDateRef.getInput().focus(), 0);
 		}
 	}
 
