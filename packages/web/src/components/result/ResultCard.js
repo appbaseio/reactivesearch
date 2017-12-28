@@ -107,6 +107,26 @@ class ResultCard extends Component {
 			this.props.setQueryOptions(this.props.componentId, options);
 		}
 
+		if (
+			nextProps.defaultQuery
+			&& !isEqual(nextProps.defaultQuery(), this.props.defaultQuery())
+		) {
+			const options = getQueryOptions(nextProps);
+			const defaultQuery = nextProps.defaultQuery();
+
+			const { sort, ...query } = defaultQuery;
+
+			if (sort) {
+				options.sort = defaultQuery.sort;
+				nextProps.setQueryOptions(nextProps.componentId, options);
+			}
+
+			this.props.updateQuery({
+				componentId: this.internalComponent,
+				query,
+			});
+		}
+
 		if (!isEqual(nextProps.react, this.props.react)) {
 			this.setReact(nextProps);
 		}
