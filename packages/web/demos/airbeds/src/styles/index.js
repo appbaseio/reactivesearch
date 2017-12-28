@@ -34,7 +34,7 @@ const leftCol = css`
 		margin: 40px 0;
 	}
 
-	@media all and (max-width: 767px) {
+	@media all and (max-width: 768px) {
 		position: static;
 		width: 100%;
 		height: auto;
@@ -102,14 +102,22 @@ const rightCol = css`
 		font-size: 15px;
 	}
 
-	@media all and (max-width: 767px) {
-		width: 100%;
-		position: static;
-		padding: 25px 15px;
+	@media all and (min-width: 1441px) {
+		.list-item {
+			width: calc(25% - 16px);
+		}
+	}
 
+	@media all and (max-width: 1024px) {
 		.list-item {
 			width: calc(50% - 16px);
 		}
+	}
+
+	@media all and (max-width: 768px) {
+		width: 100%;
+		position: static;
+		padding: 25px 15px;
 	}
 
 	@media all and (max-width: 480px) {
