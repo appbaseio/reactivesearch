@@ -49,19 +49,6 @@
     react-inspector "^2.2.2"
     uuid "^3.1.0"
 
-"@storybook/addon-info@^3.1.6":
-  version "3.2.19"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-info/-/addon-info-3.2.19.tgz#dfc0165ec49666c5d533f4019b3b24ad02600daf"
-  dependencies:
-    "@storybook/addons" "^3.2.19"
-    "@storybook/components" "^3.2.19"
-    babel-runtime "^6.26.0"
-    global "^4.3.2"
-    marksy "^2.0.0"
-    prop-types "^15.6.0"
-    react-addons-create-fragment "^15.5.3"
-    util-deprecate "^1.0.2"
-
 "@storybook/addon-info@^3.3.2":
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/@storybook/addon-info/-/addon-info-3.3.2.tgz#f38d2b4b94e0ae1ce0e1fe127c8f80ee27a72acd"
@@ -4683,14 +4670,6 @@ map-obj@^1.0.0, map-obj@^1.0.1:
 marked@^0.3.6:
   version "0.3.9"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.9.tgz#54ce6a57e720c3ac6098374ec625fcbcc97ff290"
-
-marksy@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/marksy/-/marksy-2.0.1.tgz#019eb9c13ff37120ce4dddeb7774aba152b5d7e0"
-  dependencies:
-    babel-standalone "^6.24.0"
-    he "^1.1.1"
-    marked "^0.3.6"
 
 marksy@^6.0.1:
   version "6.0.1"
