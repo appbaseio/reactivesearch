@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { View } from 'react-native';
 
 import { addComponent, removeComponent, updateQuery } from '@appbaseio/reactivecore/lib/actions';
 import { isEqual, checkValueChange } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -54,7 +55,7 @@ class DataController extends Component {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				onQueryChange,
-				URLParams: props.URLParams,
+				URLParams: false,
 			});
 			this.locked = false;
 		};
@@ -70,18 +71,16 @@ class DataController extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<View style={this.props.style}>
 				{this.props.children}
-			</div>
+			</View>
 		);
 	}
 }
 
 DataController.defaultProps = {
-	URLParams: false,
 	showFilter: true,
 	style: {},
-	className: null,
 };
 
 DataController.propTypes = {
@@ -97,11 +96,9 @@ DataController.propTypes = {
 	onQueryChange: types.func,
 	updateQuery: types.funcRequired,
 	filterLabel: types.string,
-	URLParams: types.boolRequired,
 	showFilter: types.bool,
 	children: types.children,
 	style: types.style,
-	className: types.string,
 };
 
 const mapStateToProps = (state, props) => ({

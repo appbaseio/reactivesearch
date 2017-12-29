@@ -1,26 +1,26 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { View } from "react-native";
-import { Text, Spinner, Button, Icon } from "native-base";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { View } from 'react-native';
+import { Text, Spinner, Button, Icon } from 'native-base';
 
-import List from "./addons/List";
+import List from './addons/List';
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	setQueryOptions,
 	updateQuery,
-	loadMore
-} from "@appbaseio/reactivecore/lib/actions";
+	loadMore,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	getQueryOptions,
 	pushToAndClause,
 	checkPropChange,
-	checkSomePropChange
-} from "@appbaseio/reactivecore/lib/utils/helper";
+	checkSomePropChange,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 class ReactiveList extends Component {
 	constructor(props) {
@@ -30,10 +30,10 @@ class ReactiveList extends Component {
 			from: 0,
 			isLoading: false,
 			totalPages: 0,
-			currentPage: 0
+			currentPage: 0,
 		};
 		this.listRef = null;
-		this.internalComponent = this.props.componentId + "__internal";
+		this.internalComponent = `${this.props.componentId}__internal`;
 	}
 
 	componentDidMount() {
@@ -44,8 +44,8 @@ class ReactiveList extends Component {
 		if (this.props.sortBy) {
 			options.sort = [{
 				[this.props.dataField]: {
-					order: this.props.sortBy
-				}
+					order: this.props.sortBy,
+				},
 			}];
 		}
 
@@ -62,7 +62,7 @@ class ReactiveList extends Component {
 		this.setReact(this.props);
 
 		if (defaultQuery) {
-			let { sort, ...query } = defaultQuery;
+			const { sort, ...query } = defaultQuery;
 			this.props.updateQuery(this.internalComponent, query);
 		} else {
 			this.props.updateQuery(this.internalComponent, null);
@@ -73,24 +73,24 @@ class ReactiveList extends Component {
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			["sortBy", "size"],
+			['sortBy', 'size'],
 			() => {
 				const options = getQueryOptions(nextProps);
 				if (nextProps.sortBy) {
 					options.sort = [{
 						[nextProps.dataField]: {
-							order: nextProps.sortBy
-						}
+							order: nextProps.sortBy,
+						},
 					}];
 				}
 				nextProps.setQueryOptions(nextProps.componentId, options);
-			}
+			},
 		);
 
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 
 		if (!nextProps.pagination && nextProps.hits && this.props.hits && nextProps.hits.length < this.props.hits.length) {
@@ -99,7 +99,7 @@ class ReactiveList extends Component {
 			}
 			this.setState({
 				from: 0,
-				isLoading: false
+				isLoading: false,
 			});
 		}
 
@@ -107,13 +107,13 @@ class ReactiveList extends Component {
 			checkSomePropChange(
 				this.props,
 				nextProps,
-				["total", "pagination"],
+				['total', 'pagination'],
 				() => {
 					this.setState({
 						totalPages: nextProps.total / nextProps.size,
-						currentPage: 0
+						currentPage: 0,
 					});
-				}
+				},
 			);
 		}
 	}
@@ -138,15 +138,15 @@ class ReactiveList extends Component {
 			const options = getQueryOptions(this.props);
 			this.setState({
 				from: value,
-				isLoading: true
+				isLoading: true,
 			});
 			this.props.loadMore(this.props.componentId, {
 				...options,
-				from: value
+				from: value,
 			}, true);
 		} else if (this.state.isLoading) {
 			this.setState({
-				isLoading: false
+				isLoading: false,
 			});
 		}
 	};
@@ -157,29 +157,29 @@ class ReactiveList extends Component {
 		this.setState({
 			from: value,
 			isLoading: true,
-			currentPage: page
+			currentPage: page,
 		});
 		this.props.loadMore(this.props.componentId, {
 			...options,
-			from: value
+			from: value,
 		}, false);
 	};
 
 	prevPage = () => {
 		if (this.state.currentPage) {
-			this.setPage(this.state.currentPage-1);
+			this.setPage(this.state.currentPage - 1);
 		}
 	};
 
 	nextPage = () => {
-		if (this.state.currentPage < this.state.totalPages-1) {
-			this.setPage(this.state.currentPage+1);
+		if (this.state.currentPage < this.state.totalPages - 1) {
+			this.setPage(this.state.currentPage + 1);
 		}
 	};
 
 	getStart = () => {
-		const midValue = parseInt(this.props.pages/2, 10);
-		const start =  this.state.currentPage - midValue;
+		const midValue = parseInt(this.props.pages / 2, 10);
+		const start = this.state.currentPage - midValue;
 		return start > 1 ? start : 2;
 	};
 
@@ -189,11 +189,11 @@ class ReactiveList extends Component {
 
 		for (let i = start; i < start + this.props.pages - 1; i++) {
 			const pageBtn = (
-				<Button key={i-1} light primary={this.state.currentPage === i-1} onPress={() => this.setPage(i-1)}>
+				<Button key={i - 1} light primary={this.state.currentPage === i - 1} onPress={() => this.setPage(i - 1)}>
 					<Text>{i}</Text>
 				</Button>
 			);
-			if (i <= this.state.totalPages+1) {
+			if (i <= this.state.totalPages + 1) {
 				pages.push(pageBtn);
 			}
 		}
@@ -203,7 +203,10 @@ class ReactiveList extends Component {
 		}
 
 		return (
-			<View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 20, marginBottom: 20 }}>
+			<View style={{
+				flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, marginBottom: 20,
+			}}
+			>
 				<Button light disabled={this.state.currentPage === 0} onPress={this.prevPage}>
 					<Icon name="ios-arrow-back" />
 				</Button>
@@ -215,11 +218,11 @@ class ReactiveList extends Component {
 				{
 					pages
 				}
-				<Button light disabled={this.state.currentPage >= this.state.totalPages-1} onPress={this.nextPage}>
+				<Button light disabled={this.state.currentPage >= this.state.totalPages - 1} onPress={this.nextPage}>
 					<Icon name="ios-arrow-forward" />
 				</Button>
 			</View>
-		)
+		);
 	}
 
 	setRef = (node) => {
@@ -292,19 +295,19 @@ ReactiveList.propTypes = {
 	loadMore: types.loadMore,
 	pages: types.pages,
 	onAllData: types.onAllData,
-	onData: types.onData
-}
+	onData: types.onData,
+};
 
 ReactiveList.defaultProps = {
 	pagination: false,
 	pages: 5,
 	size: 10,
-	from: 0
-}
+	from: 0,
+};
 
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
-	total: state.hits[props.componentId] && state.hits[props.componentId].total
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -313,7 +316,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: (component, query) => dispatch(updateQuery(component, query)),
-	loadMore: (component, options, append) => dispatch(loadMore(component, options, append))
+	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveList);

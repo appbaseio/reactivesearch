@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { View, Modal, TouchableWithoutFeedback } from "react-native";
+import React, { Component } from 'react';
+import { View, Modal, TouchableWithoutFeedback } from 'react-native';
 import {
 	Input,
 	Item,
@@ -10,38 +10,38 @@ import {
 	Header,
 	Left,
 	Right,
-	Icon
-} from "native-base";
-import { connect } from "react-redux";
+	Icon,
+} from 'native-base';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryOptions
-} from "@appbaseio/reactivecore/lib/actions";
+	setQueryOptions,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	debounce,
 	pushToAndClause,
 	checkValueChange,
 	checkSomePropChange,
-	checkPropChange
-} from "@appbaseio/reactivecore/lib/utils/helper";
+	checkPropChange,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 class DataSearch extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			currentValue: "",
+			currentValue: '',
 			suggestions: [],
-			showModal: false
+			showModal: false,
 		};
-		this.internalComponent = this.props.componentId + "__internal";
+		this.internalComponent = `${this.props.componentId}__internal`;
 	}
 
 	componentDidMount() {
@@ -63,17 +63,17 @@ class DataSearch extends Component {
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			["highlight", "dataField", "highlightField"],
+			['highlight', 'dataField', 'highlightField'],
 			() => {
 				const queryOptions = this.highlightQuery(nextProps);
 				this.props.setQueryOptions(nextProps.componentId, queryOptions);
-			}
+			},
 		);
 
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 
 		if (Array.isArray(nextProps.suggestions) && this.state.currentValue.trim().length) {
@@ -82,25 +82,25 @@ class DataSearch extends Component {
 				nextProps.suggestions,
 				() => {
 					this.setState({
-						suggestions: nextProps.suggestions
+						suggestions: nextProps.suggestions,
 					});
-				}
+				},
 			);
 		}
 
 		checkPropChange(
 			this.props.defaultSelected,
 			nextProps.defaultSelected,
-			() => this.setValue(nextProps.defaultSelected, true, nextProps)
+			() => this.setValue(nextProps.defaultSelected, true, nextProps),
 		);
 
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			["fieldWeights", "fuzziness", "queryFormat"],
+			['fieldWeights', 'fuzziness', 'queryFormat'],
 			() => {
-				this.updateQuery(nextProps.componentId, this.state.currentValue, nextProps)
-			}
+				this.updateQuery(nextProps.componentId, this.state.currentValue, nextProps);
+			},
 		);
 	}
 
@@ -126,7 +126,7 @@ class DataSearch extends Component {
 		const fields = {};
 		const highlightField = props.highlightField ? props.highlightField : props.dataField;
 
-		if (typeof highlightField === "string") {
+		if (typeof highlightField === 'string') {
 			fields[highlightField] = {};
 		} else if (Array.isArray(highlightField)) {
 			highlightField.forEach((item) => {
@@ -136,10 +136,10 @@ class DataSearch extends Component {
 
 		return {
 			highlight: {
-				pre_tags: ["<em>"],
-				post_tags: ["</em>"],
-				fields
-			}
+				pre_tags: ['<em>'],
+				post_tags: ['</em>'],
+				fields,
+			},
 		};
 	}
 
@@ -155,44 +155,42 @@ class DataSearch extends Component {
 			finalQuery = {
 				bool: {
 					should: this.shouldQuery(value, fields, props),
-					minimum_should_match: "1"
-				}
+					minimum_should_match: '1',
+				},
 			};
 		}
 
-		if (value === "") {
+		if (value === '') {
 			finalQuery = {
-				"match_all": {}
-			}
+				match_all: {},
+			};
 		}
 
 		return finalQuery;
 	}
 
 	shouldQuery(value, dataFields, props) {
-		const fields = dataFields.map(
-			(field, index) => `${field}${(Array.isArray(props.fieldWeights) && props.fieldWeights[index]) ? ("^" + props.fieldWeights[index]) : ""}`
-		);
+		const fields = dataFields.map((field, index) => `${field}${(Array.isArray(props.fieldWeights) && props.fieldWeights[index]) ? (`^${props.fieldWeights[index]}`) : ''}`);
 
-		if (props.queryFormat === "and") {
+		if (props.queryFormat === 'and') {
 			return [
 				{
 					multi_match: {
 						query: value,
 						fields,
-						type: "cross_fields",
-						operator: "and",
-						fuzziness: props.fuzziness ? props.fuzziness : 0
-					}
+						type: 'cross_fields',
+						operator: 'and',
+						fuzziness: props.fuzziness ? props.fuzziness : 0,
+					},
 				},
 				{
 					multi_match: {
 						query: value,
 						fields,
-						type: "phrase_prefix",
-						operator: "and"
-					}
-				}
+						type: 'phrase_prefix',
+						operator: 'and',
+					},
+				},
 			];
 		}
 
@@ -201,26 +199,26 @@ class DataSearch extends Component {
 				multi_match: {
 					query: value,
 					fields,
-					type: "best_fields",
-					operator: "or",
-					fuzziness: props.fuzziness ? props.fuzziness : 0
-				}
+					type: 'best_fields',
+					operator: 'or',
+					fuzziness: props.fuzziness ? props.fuzziness : 0,
+				},
 			},
 			{
 				multi_match: {
 					query: value,
 					fields,
-					type: "phrase_prefix",
-					operator: "or"
-				}
-			}
+					type: 'phrase_prefix',
+					operator: 'or',
+				},
+			},
 		];
 	}
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value
+				currentValue: value,
 			});
 			if (isDefaultValue) {
 				if (props.autoSuggest) {
@@ -231,13 +229,13 @@ class DataSearch extends Component {
 				// debounce for handling text while typing
 				this.handleTextChange(value);
 			}
-		}
+		};
 		checkValueChange(
 			props.componentId,
 			value,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -251,7 +249,7 @@ class DataSearch extends Component {
 
 	selectSuggestion = (value) => {
 		this.setState({
-			suggestions: []
+			suggestions: [],
 		});
 		this.setValue(value, true);
 		this.toggleModal();
@@ -259,19 +257,19 @@ class DataSearch extends Component {
 
 	setSuggestions = () => {
 		let suggestions = [];
-		if (this.state.currentValue.trim() !== "") {
+		if (this.state.currentValue.trim() !== '') {
 			suggestions = this.props.suggestions;
 		}
 
 		this.setState({
-			suggestions
+			suggestions,
 		});
 	};
 
 	toggleModal = () => {
 		this.setState({
-			showModal: !this.state.showModal
-		})
+			showModal: !this.state.showModal,
+		});
 	};
 
 	updateQuery = (component, value, props) => {
@@ -288,14 +286,14 @@ class DataSearch extends Component {
 			return (<List
 				dataArray={this.state.suggestions}
 				keyboardShouldPersistTaps="always"
-				renderRow={(item) =>
-					<ListItem
+				renderRow={item =>
+					(<ListItem
 						onPress={() => this.selectSuggestion(item._source.name)}
 					>
 						<Text>{item._source.name}</Text>
-					</ListItem>
-				}>
-			</List>)
+      </ListItem>)
+				}
+			/>);
 		}
 
 		return null;
@@ -321,7 +319,7 @@ class DataSearch extends Component {
 								<Button
 									style={{ paddingRight: 0 }}
 									transparent
-									onPress={() => this.selectSuggestion("")}
+									onPress={() => this.selectSuggestion('')}
 								>
 									<Text>Reset</Text>
 								</Button>
@@ -332,7 +330,7 @@ class DataSearch extends Component {
 				<Item regular style={{ marginLeft: 10, margin: 10 }}>
 					<Input
 						returnKeyType="search"
-						onSubmitEditing={(e) => this.selectSuggestion(e.nativeEvent.text)}
+						onSubmitEditing={e => this.selectSuggestion(e.nativeEvent.text)}
 						placeholder={this.props.placeholder}
 						onChangeText={this.setValue}
 						value={this.state.currentValue}
@@ -351,25 +349,25 @@ class DataSearch extends Component {
 				<Text
 					style={{
 						flex: 1,
-						alignItems: "center",
-						color: this.state.currentValue && this.state.currentValue !== "" ? "#000" : "#555",
+						alignItems: 'center',
+						color: this.state.currentValue && this.state.currentValue !== '' ? '#000' : '#555',
 						flex: 1,
 						fontSize: 17,
 						height: 50,
 						lineHeight: 24,
 						paddingLeft: 8,
 						paddingRight: 5,
-						paddingTop: 12
+						paddingTop: 12,
 					}}
 				>
 					{
-						this.state.currentValue && this.state.currentValue !== ""
+						this.state.currentValue && this.state.currentValue !== ''
 							? this.state.currentValue
 							: this.props.placeholder
 					}
 				</Text>
 			</TouchableWithoutFeedback>
-		</Item>)
+		</Item>);
 	}
 
 	render() {
@@ -413,27 +411,25 @@ DataSearch.propTypes = {
 	updateQuery: types.updateQuery,
 	supportedOrientations: types.supportedOrientations,
 	placeholder: types.placeholder,
-	filterLabel: types.filterLabel
-}
+	filterLabel: types.filterLabel,
+};
 
 DataSearch.defaultProps = {
-	placeholder: "Search",
+	placeholder: 'Search',
 	autoSuggest: true,
-	queryFormat: "or"
-}
+	queryFormat: 'or',
+};
 
 const mapStateToProps = (state, props) => ({
-	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits
+	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
-		updateQuery(component, query, value, filterLabel, onQueryChange)
-	),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
+	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(updateQuery(component, query, value, filterLabel, onQueryChange)),
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DataSearch);

@@ -1,15 +1,15 @@
-import React from "react";
-import { ScrollView } from "react-native";
+import React from 'react';
+import { ScrollView } from 'react-native';
 
 import {
 	ReactiveBase,
 	TextField,
-	ReactiveList
-} from "@appbaseio/reactivebase-native";
+	ReactiveList,
+} from '@appbaseio/reactivebase-native';
 
-import { onAllDataGitXplore } from "../../helpers";
+import { onAllDataGitXplore } from '../../helpers';
 
-const ReactiveListStory = (props) => (
+const ReactiveListStory = props => (
 	<ReactiveBase
 		app="gitxplore-live"
 		credentials="bYTSo47tj:d001826a-f4ef-42c5-b0aa-a94f29967ba0"
@@ -28,14 +28,14 @@ const ReactiveListStory = (props) => (
 				pagination
 				defaultQuery={() => ({
 					query: {
-						match_all: {}
+						match_all: {},
 					},
 					sort: {
-						stars: { order: "desc" }
-					}
+						stars: { order: 'desc' },
+					},
 				})}
 				react={{
-					and: ["TextFieldComponent"]
+					and: ['TextFieldComponent'],
 				}}
 				{...props}
 			/>

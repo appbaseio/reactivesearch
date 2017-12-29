@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { View, Modal, FlatList, TouchableWithoutFeedback } from "react-native";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { View, Modal, FlatList, TouchableWithoutFeedback } from 'react-native';
 import {
 	CheckBox,
 	Text,
@@ -11,27 +11,27 @@ import {
 	Button,
 	Icon,
 	Title,
-	Right
-} from "native-base";
+	Right,
+} from 'native-base';
 
-import CheckboxItem from "./addons/CheckboxItem";
+import CheckboxItem from './addons/CheckboxItem';
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryOptions
-} from "@appbaseio/reactivecore/lib/actions";
+	setQueryOptions,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
 	getAggsOrder,
-	checkPropChange
-} from "@appbaseio/reactivecore/lib/utils/helper";
+	checkPropChange,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 class MultiDropdownList extends Component {
 	constructor(props) {
@@ -40,11 +40,11 @@ class MultiDropdownList extends Component {
 		this.state = {
 			currentValue: [],
 			options: [],
-			showModal: false
+			showModal: false,
 		};
 
-		this.type = this.props.queryFormat === "or" ? "Terms" : "Term";
-		this.internalComponent = this.props.componentId + "__internal";
+		this.type = this.props.queryFormat === 'or' ? 'Terms' : 'Term';
+		this.internalComponent = `${this.props.componentId}__internal`;
 	}
 
 	componentDidMount() {
@@ -63,26 +63,26 @@ class MultiDropdownList extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 		checkPropChange(
 			this.props.options,
 			nextProps.options,
 			() => {
 				this.setState({
-					options: nextProps.options[nextProps.dataField].buckets || []
+					options: nextProps.options[nextProps.dataField].buckets || [],
 				});
-			}
+			},
 		);
 		checkPropChange(
 			this.props.defaultSelected,
 			nextProps.defaultSelected,
-			() => this.selectItem(nextProps.defaultSelected, true)
+			() => this.selectItem(nextProps.defaultSelected, true),
 		);
 		checkPropChange(
 			this.props.sortBy,
 			nextProps.sortBy,
-			() => this.updateQueryOptions(nextProps)
+			() => this.updateQueryOptions(nextProps),
 		);
 	}
 
@@ -105,29 +105,29 @@ class MultiDropdownList extends Component {
 		if (this.selectAll) {
 			return {
 				exists: {
-					field: [props.dataField]
-				}
+					field: [props.dataField],
+				},
 			};
 		} else if (value && value.length) {
-			if (props.queryFormat === "and") {
+			if (props.queryFormat === 'and') {
 				const queryArray = value.map(item => (
 					{
 						[this.type]: {
-							[props.dataField]: item
-						}
+							[props.dataField]: item,
+						},
 					}
 				));
 				return {
 					bool: {
-						must: queryArray
-					}
+						must: queryArray,
+					},
 				};
 			}
 
 			return {
 				[this.type]: {
-					[props.dataField]: value
-				}
+					[props.dataField]: value,
+				},
 			};
 		}
 		return null;
@@ -138,33 +138,31 @@ class MultiDropdownList extends Component {
 
 		if (isDefaultValue) {
 			currentValue = item;
+		} else if (currentValue.includes(item)) {
+			currentValue = currentValue.filter(value => value !== item);
 		} else {
-			if (currentValue.includes(item)) {
-				currentValue = currentValue.filter(value => value !== item);
-			} else {
-				currentValue = [ ...currentValue, item ];
-			}
+			currentValue = [...currentValue, item];
 		}
 		const performUpdate = () => {
 			this.setState({
-				currentValue
+				currentValue,
 			});
 			this.updateQuery(currentValue, props);
-		}
+		};
 
 		checkValueChange(
 			props.componentId,
 			currentValue,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
 	toggleModal = () => {
 		this.setState({
-			showModal: !this.state.showModal
-		})
+			showModal: !this.state.showModal,
+		});
 	};
 
 	updateQuery = (value, props) => {
@@ -183,10 +181,10 @@ class MultiDropdownList extends Component {
 				terms: {
 					field: props.dataField,
 					size: 100,
-					order: getAggsOrder(props.sortBy)
-				}
-			}
-		}
+					order: getAggsOrder(props.sortBy),
+				},
+			},
+		};
 		props.setQueryOptions(this.internalComponent, queryOptions);
 		// Since the queryOptions are attached to the internal component,
 		// we need to notify the subscriber (parent component)
@@ -238,20 +236,20 @@ class MultiDropdownList extends Component {
 								<Text
 									style={{
 										flex: 1,
-										alignItems: "center",
-										color: this.state.currentValue.length ? "#000" : "#555",
+										alignItems: 'center',
+										color: this.state.currentValue.length ? '#000' : '#555',
 										flex: 1,
 										fontSize: 17,
 										height: 50,
 										lineHeight: 24,
 										paddingLeft: 8,
 										paddingRight: 5,
-										paddingTop: 12
+										paddingTop: 12,
 									}}
 								>
 									{
 										this.state.currentValue.length
-											? this.state.currentValue.join(", ")
+											? this.state.currentValue.join(', ')
 											: this.props.placeholder
 									}
 								</Text>
@@ -281,28 +279,26 @@ MultiDropdownList.propTypes = {
 	customQuery: types.customQuery,
 	onQueryChange: types.onQueryChange,
 	supportedOrientations: types.supportedOrientations,
-	placeholder: types.placeholder
-}
+	placeholder: types.placeholder,
+};
 
 MultiDropdownList.defaultProps = {
 	size: 100,
-	queryFormat: "or",
-	placeholder: "Select a value",
-	sortBy: "count"
-}
+	queryFormat: 'or',
+	placeholder: 'Select a value',
+	sortBy: 'count',
+};
 
 const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId]
+	options: state.aggregations[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
-		updateQuery(component, query, value, filterLabel, onQueryChange)
-	),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props))
+	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(updateQuery(component, query, value, filterLabel, onQueryChange)),
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList);

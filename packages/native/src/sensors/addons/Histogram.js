@@ -1,11 +1,11 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 const Histogram = (props) => {
 	let max = props.stats[0].doc_count;
-	props.stats.forEach(item => {
+	props.stats.forEach((item) => {
 		if (max < item.doc_count) {
 			max = item.doc_count;
 		}
@@ -17,32 +17,35 @@ const Histogram = (props) => {
 	}
 
 	return (
-		<View style={{ flex: 1, flexDirection: "row", height: 50, alignItems: "flex-end", paddingHorizontal: props.paddingHorizontal }}>
+		<View style={{
+			flex: 1, flexDirection: 'row', height: 50, alignItems: 'flex-end', paddingHorizontal: props.paddingHorizontal,
+		}}
+		>
 			{
-				range.map(item => {
+				range.map((item) => {
 					const value = props.stats.find(stat => stat.key === item) || 0;
 
 					return (
 						<View
 							key={item}
 							style={{
-								backgroundColor: "#efefef",
+								backgroundColor: '#efefef',
 								width: `${100 / range.length}%`,
-								height: `${(100 * value.doc_count) / max || 0}%`
+								height: `${(100 * value.doc_count) / max || 0}%`,
 							}}
-						></View>
+						/>
 					);
 				})
 			}
 		</View>
 	);
-}
+};
 
 Histogram.propTypes = {
 	stats: types.stats,
 	range: types.range,
 	interval: types.interval,
-	paddingHorizontal: types.paddingHorizontal
-}
+	paddingHorizontal: types.paddingHorizontal,
+};
 
 export default Histogram;

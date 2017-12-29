@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Input, Item } from 'native-base';
 import { connect } from 'react-redux';
 
 import {
@@ -14,9 +15,6 @@ import {
 	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-
-import Input from '../../styles/Input';
-import Title from '../../styles/Title';
 
 class TextField extends Component {
 	constructor(props) {
@@ -111,26 +109,19 @@ class TextField extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
-			URLParams: props.URLParams,
+			URLParams: false,
 		});
-	};
-
-	handleChange = (e) => {
-		this.setValue(e.target.value);
 	};
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+			<Item regular style={{ marginLeft: 0, ...this.props.style }}>
 				<Input
-					type="text"
-					className={getClassName(this.props.innerClass, 'input') || null}
 					placeholder={this.props.placeholder}
-					onChange={this.handleChange}
+					onChangeText={this.setValue}
 					value={this.state.currentValue}
 				/>
-			</div>
+			</Item>
 		);
 	}
 }
@@ -151,20 +142,15 @@ TextField.propTypes = {
 	placeholder: types.string,
 	selectedValue: types.selectedValue,
 	filterLabel: types.string,
-	URLParams: types.boolRequired,
 	showFilter: types.bool,
 	style: types.style,
-	className: types.string,
-	innerClass: types.style,
 	debounce: types.number,
 };
 
 TextField.defaultProps = {
 	placeholder: 'Search',
-	URLParams: false,
 	showFilter: true,
 	style: {},
-	className: null,
 	debounce: 0,
 };
 

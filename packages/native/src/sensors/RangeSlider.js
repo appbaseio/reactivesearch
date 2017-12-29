@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { View, Platform } from "react-native";
-import { connect } from "react-redux";
-import MultiSlider from "@ptomasroos/react-native-multi-slider";
+import React, { Component } from 'react';
+import { View, Platform } from 'react-native';
+import { connect } from 'react-redux';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
-import Histogram from "./addons/Histogram";
+import Histogram from './addons/Histogram';
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryOptions
-} from "@appbaseio/reactivecore/lib/actions";
-import { isEqual, checkValueChange, checkPropChange } from "@appbaseio/reactivecore/lib/utils/helper";
+	setQueryOptions,
+} from '@appbaseio/reactivecore/lib/actions';
+import { isEqual, checkValueChange, checkPropChange } from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 class RangeSlider extends Component {
 	constructor(props) {
@@ -22,9 +22,9 @@ class RangeSlider extends Component {
 		this.state = {
 			width: 0,
 			currentValue: [props.range.start, props.range.end],
-			stats: []
+			stats: [],
 		};
-		this.internalComponent = this.props.componentId + "__internal";
+		this.internalComponent = `${this.props.componentId}__internal`;
 	}
 
 	componentDidMount() {
@@ -33,7 +33,7 @@ class RangeSlider extends Component {
 		this.setReact(this.props);
 
 		const queryOptions = {
-			aggs: this.histogramQuery()
+			aggs: this.histogramQuery(),
 		};
 
 		this.props.setQueryOptions(this.internalComponent, queryOptions);
@@ -45,7 +45,7 @@ class RangeSlider extends Component {
 		this.props.updateQuery(this.internalComponent, null);
 
 		if (this.props.defaultSelected) {
-			this.handleChange([ this.props.defaultSelected.start, this.props.defaultSelected.end ]);
+			this.handleChange([this.props.defaultSelected.start, this.props.defaultSelected.end]);
 		}
 	}
 
@@ -53,27 +53,27 @@ class RangeSlider extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 		checkPropChange(
 			this.props.options,
 			nextProps.options,
 			() => {
 				const { options } = nextProps;
-				options.sort(function(a, b){
-					if(a.key < b.key) return -1;
-					if(a.key > b.key) return 1;
+				options.sort((a, b) => {
+					if (a.key < b.key) return -1;
+					if (a.key > b.key) return 1;
 					return 0;
 				});
 				this.setState({
-					stats: options
+					stats: options,
 				});
-			}
+			},
 		);
 		checkPropChange(
 			this.props.defaultSelected,
 			nextProps.defaultSelected,
-			() => this.handleChange([ nextProps.defaultSelected.start, nextProps.defaultSelected.end ], nextProps)
+			() => this.handleChange([nextProps.defaultSelected.start, nextProps.defaultSelected.end], nextProps),
 		);
 	}
 
@@ -98,48 +98,46 @@ class RangeSlider extends Component {
 					[props.dataField]: {
 						gte: value[0],
 						lte: value[1],
-						boost: 2.0
-					}
-				}
+						boost: 2.0,
+					},
+				},
 			};
 		}
 		return null;
 	};
 
-	histogramQuery = () => {
-		return {
-			[this.props.dataField]: {
-				histogram: {
-					field: this.props.dataField,
-					interval: this.props.interval || Math.ceil((this.props.range.end - this.props.range.start) / 10)
-				}
-			}
-		};
-	};
+	histogramQuery = () => ({
+		[this.props.dataField]: {
+			histogram: {
+				field: this.props.dataField,
+				interval: this.props.interval || Math.ceil((this.props.range.end - this.props.range.start) / 10),
+			},
+		},
+	});
 
 	setWidth = (width) => {
-		const margin = Platform.OS === "ios" ? 30 : 12;
+		const margin = Platform.OS === 'ios' ? 30 : 12;
 		this.setState({
-			width: width - margin
-		})
+			width: width - margin,
+		});
 	};
 
 	handleChange = (currentValue, props = this.props) => {
 		const performUpdate = () => {
 			this.setState({
-				currentValue
+				currentValue,
 			});
 			this.updateQuery(currentValue, props);
-		}
+		};
 		checkValueChange(
 			props.componentId,
 			{
 				start: currentValue[0],
-				end: currentValue[1]
+				end: currentValue[1],
 			},
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -157,23 +155,23 @@ class RangeSlider extends Component {
 			height: 30,
 			...Platform.select({
 				ios: {
-					paddingHorizontal: 15
+					paddingHorizontal: 15,
 				},
 				android: {
-					paddingHorizontal: 6
-				}
-			})
+					paddingHorizontal: 6,
+				},
+			}),
 		};
 		return (
 			<View style={{ paddingTop: 25 }}>
-				<View onLayout={(e) => this.setWidth(e.nativeEvent.layout.width)}>
+				<View onLayout={e => this.setWidth(e.nativeEvent.layout.width)}>
 					{
 						this.state.stats.length && this.props.showHistogram
 							? (<Histogram
 								stats={this.state.stats}
 								range={this.props.range}
 								interval={this.props.interval || Math.ceil((this.props.range.end - this.props.range.start) / 10)}
-								paddingHorizontal={Platform.OS === "ios" ? 15 : 6}
+								paddingHorizontal={Platform.OS === 'ios' ? 15 : 6}
 							/>)
 							: null
 					}
@@ -215,30 +213,28 @@ RangeSlider.propTypes = {
 	customQuery: types.customQuery,
 	onQueryChange: types.onQueryChange,
 	showHistogram: types.showHistogram,
-	stepValue: types.stepValue
-}
+	stepValue: types.stepValue,
+};
 
 RangeSlider.defaultProps = {
 	range: {
 		start: 0,
-		end: 10
+		end: 10,
 	},
 	stepValue: 1,
-	showHistogram: true
+	showHistogram: true,
 };
 
 const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId] ? state.aggregations[props.componentId][props.dataField].buckets : []
+	options: state.aggregations[props.componentId] ? state.aggregations[props.componentId][props.dataField].buckets : [],
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
-		updateQuery(component, query, value, filterLabel, onQueryChange)
-	),
-	setQueryOptions: (component, props, onQueryChange) => dispatch(setQueryOptions(component, props, onQueryChange))
+	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(updateQuery(component, query, value, filterLabel, onQueryChange)),
+	setQueryOptions: (component, props, onQueryChange) => dispatch(setQueryOptions(component, props, onQueryChange)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(RangeSlider);
