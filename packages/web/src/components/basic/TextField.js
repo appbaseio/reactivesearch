@@ -62,11 +62,11 @@ class TextField extends Component {
 		}
 	}
 
-	defaultQuery = (value) => {
+	defaultQuery = (value, props) => {
 		if (value && value.trim() !== '') {
 			return {
 				[this.type]: {
-					[this.props.dataField]: value,
+					[props.dataField]: value,
 				},
 			};
 		}
