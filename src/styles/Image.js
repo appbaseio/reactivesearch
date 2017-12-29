@@ -6,7 +6,9 @@ const Image = styled('div')`
 	width: calc(50% - 40px);
 	margin: 20px;
 	height: 400px;
-	background-color: #fafafa;
+	background: ${props => (props.src ? 'url("'+props.src+'")' : "#fafafa")};
+	background-size: 760px 400px;
+	background-repeat: 'repeat-y';
 	border-radius: 10px;
 
 	${queries.medium`

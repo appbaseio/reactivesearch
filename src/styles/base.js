@@ -109,9 +109,10 @@ const code = css`
 
 const showcase = css`
 	width: 95%;
-	max-width: 400px;
+	max-width: 490px;
 	padding: 2rem;
 	text-align: center;
+	align-items: center;
 	margin: -40px auto 0;
 	border-radius: 4px;
 
