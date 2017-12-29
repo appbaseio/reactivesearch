@@ -175,7 +175,7 @@ export default class HomePage extends Component {
 								style={{ marginLeft: '10px' }}
 								href="https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent"
 							>
-								Create your own
+								Or create your own
 							</Button>
 						</Flex>
 					</Flex>
@@ -313,15 +313,6 @@ export default class HomePage extends Component {
 							margin="12px 0 10px"
 							style={{ width: '100%', textAlign: 'left' }}
 						>
-							<Flex className={code}>
-								<p className={title}>Without Reactivesearch</p>
-							</Flex>
-
-							<Flex className={code} margin="0">
-								<p className={title} style={{ backgroundColor: '#22C91A' }}>
-									With Reactivesearch
-								</p>
-							</Flex>
 						</Flex>
 						<Flex padding="0 30px" justifyContent="center">
 							<Flex id="code" className={code}>
@@ -347,9 +338,11 @@ export default class HomePage extends Component {
 					backgroundColor="#fff"
 					boxShadow="0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07)"
 				>
-					<H2 margin="1rem 0 0.5rem">Excited much?</H2>
-					<Text>Don&apos;t hold yourself. Get onboard!</Text>
-					<Button shadow primary className={button}>Build a live app in minutes</Button>
+					<H2 margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
+					<Flex>
+						<Button shadow primary className={button} style={{ maxWidth: "250px" }}>Build a live app in 5 mins</Button>
+						<Button className={button} style={{ maxWidth: "250px", marginLeft: "1rem" }}>Read the docs</Button>
+					</Flex>
 				</Flex>
 
 				<Flex
@@ -358,14 +351,7 @@ export default class HomePage extends Component {
 					alignItems="center"
 					padding="7rem 3rem 0"
 				>
-					<H2 className={colored}>Reactivesearch In Action</H2>
-					<Text
-						fontSize="1rem"
-						lineHeight="1.5rem"
-						style={{ maxWidth: '600px', textAlign: 'center' }}
-					>
-						Check out these starter apps.
-					</Text>
+					<H2 className={colored}>Checkout these starter apps</H2>
 
 					<Flex
 						justifyContent="center"
@@ -373,12 +359,12 @@ export default class HomePage extends Component {
 						margin="30px 0 0"
 						flexWrap="wrap"
 					>
-						<Image />
-						<Image />
-						<Image />
-						<Image />
-						<Image />
-						<Image />
+						<Image src="images/apps/airbeds.png" />
+						<Image src="images/apps/productsearch.png" />
+						<Image src="images/apps/gitxplore.png" />
+						<Image src="images/apps/carstore.png" />
+						<Image src="images/apps/goodbooks.png" />
+						<Image src="images/apps/technews.png" />
 					</Flex>
 				</Flex>
 
