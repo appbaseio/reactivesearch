@@ -1,15 +1,15 @@
-import React from "react";
-import { ScrollView } from "react-native";
+import React from 'react';
+import { ScrollView } from 'react-native';
 
 import {
 	ReactiveBase,
 	DatePicker,
-	ReactiveList
-} from "@appbaseio/reactivebase-native";
+	ReactiveList,
+} from '@appbaseio/reactivebase-native';
 
-import { onAllDataGitXplore } from "../../helpers";
+import { onAllDataGitXplore } from '../../helpers';
 
-const DatePickerStory = (props) => (
+const DatePickerStory = props => (
 	<ReactiveBase
 		app="gitxplore-live"
 		credentials="bYTSo47tj:d001826a-f4ef-42c5-b0aa-a94f29967ba0"
@@ -31,14 +31,14 @@ const DatePickerStory = (props) => (
 				pagination
 				defaultQuery={() => ({
 					query: {
-						match_all: {}
+						match_all: {},
 					},
 					sort: {
-						stars: { order: "desc" }
-					}
+						stars: { order: 'desc' },
+					},
 				})}
 				react={{
-					and: ["DatePickerComponent"]
+					and: ['DatePickerComponent'],
 				}}
 			/>
 		</ScrollView>

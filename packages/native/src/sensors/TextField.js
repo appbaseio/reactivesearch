@@ -1,29 +1,29 @@
-import React, { Component } from "react";
-import { Input, Item } from "native-base";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { Input, Item } from 'native-base';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
-	updateQuery
-} from "@appbaseio/reactivecore/lib/actions";
+	updateQuery,
+} from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	debounce,
 	checkValueChange,
-	checkPropChange
-} from "@appbaseio/reactivecore/lib/utils/helper";
+	checkPropChange,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 class TextField extends Component {
 	constructor(props) {
 		super(props);
 
-		this.type = "match";
+		this.type = 'match';
 		this.state = {
-			currentValue: ""
+			currentValue: '',
 		};
 	}
 
@@ -40,12 +40,12 @@ class TextField extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 		checkPropChange(
 			this.props.defaultSelected,
 			nextProps.defaultSelected,
-			() => this.setValue(nextProps.defaultSelected, true, nextProps)
+			() => this.setValue(nextProps.defaultSelected, true, nextProps),
 		);
 	}
 
@@ -60,11 +60,11 @@ class TextField extends Component {
 	}
 
 	defaultQuery = (value, props) => {
-		if (value && value.trim() !== "") {
+		if (value && value.trim() !== '') {
 			return {
 				[this.type]: {
-					[props.dataField]: value
-				}
+					[props.dataField]: value,
+				},
 			};
 		}
 		return null;
@@ -77,7 +77,7 @@ class TextField extends Component {
 	setValue = (value, isDefaultValue = false, props = this.props) => {
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value
+				currentValue: value,
 			});
 			if (isDefaultValue) {
 				this.updateQuery(value, props);
@@ -85,13 +85,13 @@ class TextField extends Component {
 				// debounce for handling text while typing
 				this.handleTextChange(value);
 			}
-		}
+		};
 		checkValueChange(
 			props.componentId,
 			value,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -129,20 +129,18 @@ TextField.propTypes = {
 	customQuery: types.customQuery,
 	onQueryChange: types.onQueryChange,
 	updateQuery: types.updateQuery,
-	placeholder: types.placeholder
+	placeholder: types.placeholder,
 };
 
 TextField.defaultProps = {
-	placeholder: "Search"
-}
+	placeholder: 'Search',
+};
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
-		updateQuery(component, query, value, filterLabel, onQueryChange)
-	)
+	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(updateQuery(component, query, value, filterLabel, onQueryChange)),
 });
 
 export default connect(null, mapDispatchtoProps)(TextField);

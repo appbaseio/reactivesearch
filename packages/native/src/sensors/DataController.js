@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { View } from "react-native";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { View } from 'react-native';
 
 import {
 	addComponent,
 	removeComponent,
-	updateQuery
-} from "@appbaseio/reactivecore/lib/actions";
-import { checkValueChange, checkPropChange } from "@appbaseio/reactivecore/lib/utils/helper";
+	updateQuery,
+} from '@appbaseio/reactivecore/lib/actions';
+import { checkValueChange, checkPropChange } from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 class DataController extends Component {
 	componentDidMount() {
@@ -26,7 +26,7 @@ class DataController extends Component {
 		checkPropChange(
 			this.props.defaultSelected,
 			nextProps.defaultSelected,
-			() => this.updateQuery(nextProps.defaultSelected, nextProps)
+			() => this.updateQuery(nextProps.defaultSelected, nextProps),
 		);
 	}
 
@@ -36,8 +36,8 @@ class DataController extends Component {
 
 	defaultQuery() {
 		return {
-			"match_all": {}
-		}
+			match_all: {},
+		};
 	}
 
 	updateQuery = (defaultSelected = null, props = this.props) => {
@@ -49,15 +49,15 @@ class DataController extends Component {
 				query(defaultSelected, props),
 				defaultSelected,
 				props.filterLabel,
-				callback
+				callback,
 			);
-		}
+		};
 		checkValueChange(
 			props.componentId,
 			defaultSelected,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	}
 
@@ -82,15 +82,13 @@ DataController.propTypes = {
 	beforeValueChange: types.beforeValueChange,
 	onValueChange: types.onValueChange,
 	children: types.children,
-	filterLabel: types.filterLabel
-}
+	filterLabel: types.filterLabel,
+};
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
-		updateQuery(component, query, value, filterLabel, onQueryChange)
-	)
+	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(updateQuery(component, query, value, filterLabel, onQueryChange)),
 });
 
 export default connect(null, mapDispatchtoProps)(DataController);

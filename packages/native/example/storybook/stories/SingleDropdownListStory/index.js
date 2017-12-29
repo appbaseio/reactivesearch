@@ -1,15 +1,15 @@
-import React from "react";
-import { ScrollView } from "react-native";
+import React from 'react';
+import { ScrollView } from 'react-native';
 
 import {
 	ReactiveBase,
 	SingleDropdownList,
-	ReactiveList
-} from "@appbaseio/reactivebase-native";
+	ReactiveList,
+} from '@appbaseio/reactivebase-native';
 
-import { onAllData } from "../../helpers";
+import { onAllData } from '../../helpers';
 
-const SingleDropdownListStory = (props) => (
+const SingleDropdownListStory = props => (
 	<ReactiveBase
 		app="car-store"
 		credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
@@ -30,14 +30,14 @@ const SingleDropdownListStory = (props) => (
 				pagination
 				defaultQuery={() => ({
 					query: {
-						match_all: {}
+						match_all: {},
 					},
 					sort: {
-						price: { order: "asc" }
-					}
+						price: { order: 'asc' },
+					},
 				})}
 				react={{
-					and: ["SingleDropdownListComponent"]
+					and: ['SingleDropdownListComponent'],
 				}}
 			/>
 		</ScrollView>

@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { View, Modal, ListView, TouchableWithoutFeedback } from "react-native";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { View, Modal, ListView, TouchableWithoutFeedback } from 'react-native';
 import {
 	CheckBox,
 	Text,
@@ -11,19 +11,19 @@ import {
 	Button,
 	Icon,
 	Title,
-	Right
-} from "native-base";
+	Right,
+} from 'native-base';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryOptions
-} from "@appbaseio/reactivecore/lib/actions";
-import { isEqual, checkValueChange, checkPropChange } from "@appbaseio/reactivecore/lib/utils/helper";
+	setQueryOptions,
+} from '@appbaseio/reactivecore/lib/actions';
+import { isEqual, checkValueChange, checkPropChange } from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 class MultiDropdownRange extends Component {
 	constructor(props) {
@@ -31,13 +31,13 @@ class MultiDropdownRange extends Component {
 
 		this.state = {
 			currentValue: [],
-			showModal: false
+			showModal: false,
 		};
 
 		this.ds = new ListView.DataSource({
-			rowHasChanged: (r1, r2) => r1.start !== r2.start || r1.end !== r2.end || r1.label !== r2.label
+			rowHasChanged: (r1, r2) => r1.start !== r2.start || r1.end !== r2.end || r1.label !== r2.label,
 		});
-		this.type = "range";
+		this.type = 'range';
 	}
 
 	componentDidMount() {
@@ -52,12 +52,12 @@ class MultiDropdownRange extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 		checkPropChange(
 			this.props.defaultSelected,
 			nextProps.defaultSelected,
-			() => this.selectItem(nextProps.defaultSelected, true, nextProps)
+			() => this.selectItem(nextProps.defaultSelected, true, nextProps),
 		);
 	}
 
@@ -79,21 +79,21 @@ class MultiDropdownRange extends Component {
 						[dataField]: {
 							gte: value.start,
 							lte: value.end,
-							boost: 2.0
-						}
-					}
+							boost: 2.0,
+						},
+					},
 				}));
 			}
 		};
 
 		if (values) {
-			const selectedItems =props.data.filter(item => values.includes(item.label));
+			const selectedItems = props.data.filter(item => values.includes(item.label));
 			const query = {
 				bool: {
 					should: generateRangeQuery(props.dataField, selectedItems),
 					minimum_should_match: 1,
-					boost: 1.0
-				}
+					boost: 1.0,
+				},
 			};
 			return query;
 		}
@@ -105,34 +105,32 @@ class MultiDropdownRange extends Component {
 		if (isDefaultValue) {
 			// checking if the items in defaultSeleted exist in the data prop
 			currentValue = item.filter(currentItem => props.data.find(dataItem => dataItem.label === currentItem));
+		} else if (currentValue.includes(item)) {
+			currentValue = currentValue.filter(value => value !== item);
 		} else {
-			if (currentValue.includes(item)) {
-				currentValue = currentValue.filter(value => value !== item);
-			} else {
-				currentValue = [...currentValue, item];
-			}
+			currentValue = [...currentValue, item];
 		}
 		const performUpdate = () => {
 			this.setState({
-				currentValue
+				currentValue,
 			});
 			const query = props.customQuery || this.defaultQuery;
 			this.updateQuery(currentValue, props);
-		}
+		};
 
 		checkValueChange(
 			props.componentId,
 			currentValue,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	}
 
 	toggleModal = () => {
 		this.setState({
-			showModal: !this.state.showModal
-		})
+			showModal: !this.state.showModal,
+		});
 	};
 
 	updateQuery = (value, props) => {
@@ -170,16 +168,17 @@ class MultiDropdownRange extends Component {
 							</Header>
 							<ListView
 								dataSource={this.ds.cloneWithRows(this.props.data)}
-								enableEmptySections={true}
-								renderRow={(item) => (
+								enableEmptySections
+								renderRow={item => (
 									<TouchableWithoutFeedback onPress={() => this.selectItem(item.label)}>
 										<View style={{
 											flex: 1,
-											flexDirection: "row",
+											flexDirection: 'row',
 											padding: 15,
-											borderBottomColor: "#c9c9c9",
-											borderBottomWidth: 0.5
-										}}>
+											borderBottomColor: '#c9c9c9',
+											borderBottomWidth: 0.5,
+										}}
+										>
 											<CheckBox
 												onPress={() => this.selectItem(item.label)}
 												checked={this.state.currentValue.includes(item.label)}
@@ -197,20 +196,20 @@ class MultiDropdownRange extends Component {
 								<Text
 									style={{
 										flex: 1,
-										alignItems: "center",
-										color: this.state.currentValue.length ? "#000" : "#555",
+										alignItems: 'center',
+										color: this.state.currentValue.length ? '#000' : '#555',
 										flex: 1,
 										fontSize: 17,
 										height: 50,
 										lineHeight: 24,
 										paddingLeft: 8,
 										paddingRight: 5,
-										paddingTop: 12
+										paddingTop: 12,
 									}}
 								>
 									{
 										this.state.currentValue.length
-											? this.state.currentValue.join(", ")
+											? this.state.currentValue.join(', ')
 											: this.props.placeholder
 									}
 								</Text>
@@ -237,20 +236,18 @@ MultiDropdownRange.propTypes = {
 	onQueryChange: types.onQueryChange,
 	updateQuery: types.updateQuery,
 	supportedOrientations: types.supportedOrientations,
-	placeholder: types.placeholder
-}
+	placeholder: types.placeholder,
+};
 
 MultiDropdownRange.defaultProps = {
-	placeholder: "Select a value"
-}
+	placeholder: 'Select a value',
+};
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, customQuery) => dispatch(
-		updateQuery(component, query, value, filterLabel, customQuery)
-	)
+	updateQuery: (component, query, value, filterLabel, customQuery) => dispatch(updateQuery(component, query, value, filterLabel, customQuery)),
 });
 
 export default connect(null, mapDispatchtoProps)(MultiDropdownRange);

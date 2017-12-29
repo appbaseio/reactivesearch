@@ -1,15 +1,15 @@
-import React from "react";
-import { ScrollView } from "react-native";
+import React from 'react';
+import { ScrollView } from 'react-native';
 
 import {
 	ReactiveBase,
 	MultiDropdownRange,
-	ReactiveList
-} from "@appbaseio/reactivebase-native";
+	ReactiveList,
+} from '@appbaseio/reactivebase-native';
 
-import { onAllData } from "../../helpers";
+import { onAllData } from '../../helpers';
 
-const MultiDropdownRangeStory = (props) => (
+const MultiDropdownRangeStory = props => (
 	<ReactiveBase
 		app="car-store"
 		credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
@@ -20,10 +20,10 @@ const MultiDropdownRangeStory = (props) => (
 				componentId="MultiDropdownRangeComponent"
 				dataField="price"
 				data={
-					[{ "start": 0, "end": 100, "label": "Cheap" },
-						{ "start": 101, "end": 200, "label": "Moderate" },
-						{ "start": 201, "end": 500, "label": "Pricey" },
-						{ "start": 501, "end": 1000, "label": "First Date" }]
+					[{ start: 0, end: 100, label: 'Cheap' },
+						{ start: 101, end: 200, label: 'Moderate' },
+						{ start: 201, end: 500, label: 'Pricey' },
+						{ start: 501, end: 1000, label: 'First Date' }]
 				}
 				{...props}
 			/>
@@ -36,14 +36,14 @@ const MultiDropdownRangeStory = (props) => (
 				pagination
 				defaultQuery={() => ({
 					query: {
-						match_all: {}
+						match_all: {},
 					},
 					sort: {
-						price: { order: "asc" }
-					}
+						price: { order: 'asc' },
+					},
 				})}
 				react={{
-					and: ["MultiDropdownRangeComponent"]
+					and: ['MultiDropdownRangeComponent'],
 				}}
 			/>
 		</ScrollView>

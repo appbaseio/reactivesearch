@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { View, Modal, TouchableWithoutFeedback } from "react-native";
-import { Calendar } from "react-native-calendars";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { View, Modal, TouchableWithoutFeedback } from 'react-native';
+import { Calendar } from 'react-native-calendars';
 import {
 	Text,
 	Body,
@@ -11,30 +11,30 @@ import {
 	Button,
 	Icon,
 	Title,
-	Right
-} from "native-base";
+	Right,
+} from 'native-base';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
-	updateQuery
-} from "@appbaseio/reactivecore/lib/actions";
-import { isEqual, checkValueChange, checkPropChange } from "@appbaseio/reactivecore/lib/utils/helper";
-import dateFormats from "@appbaseio/reactivecore/lib/utils/dateFormats";
+	updateQuery,
+} from '@appbaseio/reactivecore/lib/actions';
+import { isEqual, checkValueChange, checkPropChange } from '@appbaseio/reactivecore/lib/utils/helper';
+import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
-const XDate = require("xdate");
+const XDate = require('xdate');
 
 class DatePicker extends Component {
 	constructor(props) {
 		super(props);
 
-		this.type = "range";
+		this.type = 'range';
 		this.state = {
 			currentDate: null,
-			showModal: false
+			showModal: false,
 		};
 	}
 
@@ -44,9 +44,9 @@ class DatePicker extends Component {
 
 		if (this.props.defaultSelected) {
 			const currentDate = {
-				dateString: new XDate(this.props.defaultSelected).toString("yyyy-MM-dd"),
-				timestamp: new XDate(this.props.defaultSelected).getTime()
-			}
+				dateString: new XDate(this.props.defaultSelected).toString('yyyy-MM-dd'),
+				timestamp: new XDate(this.props.defaultSelected).getTime(),
+			};
 			this.handleDateChange(currentDate);
 		}
 	}
@@ -55,18 +55,18 @@ class DatePicker extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 		checkPropChange(
 			this.props.defaultSelected,
 			nextProps.defaultSelected,
 			() => {
 				const currentDate = {
-					dateString: new XDate(nextProps.defaultSelected).toString("yyyy-MM-dd"),
-					timestamp: new XDate(nextProps.defaultSelected).getTime()
-				}
+					dateString: new XDate(nextProps.defaultSelected).toString('yyyy-MM-dd'),
+					timestamp: new XDate(nextProps.defaultSelected).getTime(),
+				};
 				this.handleDateChange(currentDate, nextProps);
-			}
+			},
 		);
 	}
 
@@ -81,9 +81,9 @@ class DatePicker extends Component {
 	}
 
 	formatDate = (date) => {
-		switch(this.props.queryFormat) {
-			case "epoch_millis": return date.getTime();
-			case "epoch_seconds": return Math.floor(date.getTime() / 1000);
+		switch (this.props.queryFormat) {
+			case 'epoch_millis': return date.getTime();
+			case 'epoch_seconds': return Math.floor(date.getTime() / 1000);
 			default: {
 				if (dateFormats[this.props.queryFormat]) {
 					return date.toString(dateFormats[this.props.queryFormat]);
@@ -100,9 +100,9 @@ class DatePicker extends Component {
 				range: {
 					[props.dataField]: {
 						gte: this.formatDate(new XDate(value).addHours(-24)),
-						lte: this.formatDate(new XDate(value))
-					}
-				}
+						lte: this.formatDate(new XDate(value)),
+					},
+				},
 			};
 		}
 		return query;
@@ -118,16 +118,16 @@ class DatePicker extends Component {
 
 		const performUpdate = () => {
 			this.setState({
-				currentDate
+				currentDate,
 			});
 			this.updateQuery(value, props);
-		}
+		};
 		checkValueChange(
 			props.componentId,
 			date,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	};
 
@@ -142,8 +142,8 @@ class DatePicker extends Component {
 
 	toggleModal = () => {
 		this.setState({
-			showModal: !this.state.showModal
-		})
+			showModal: !this.state.showModal,
+		});
 	};
 
 	render() {
@@ -157,9 +157,9 @@ class DatePicker extends Component {
 				[this.state.currentDate.dateString]: [{
 					startingDay: true,
 					endingDay: true,
-					textColor: "#fff",
-					color: "#0B6AFF"
-				}]
+					textColor: '#fff',
+					color: '#0B6AFF',
+				}],
 			};
 		}
 
@@ -171,15 +171,15 @@ class DatePicker extends Component {
 					<Text
 						style={{
 							flex: 1,
-							alignItems: "center",
-							color: this.state.currentDate ? "#000" : "#555",
+							alignItems: 'center',
+							color: this.state.currentDate ? '#000' : '#555',
 							flex: 1,
 							fontSize: 17,
 							height: 50,
 							lineHeight: 24,
 							paddingLeft: 8,
 							paddingRight: 5,
-							paddingTop: 12
+							paddingTop: 12,
 						}}
 					>
 						{
@@ -223,13 +223,13 @@ class DatePicker extends Component {
 					current={current}
 					onDayPress={this.handleDateChange}
 					markedDates={markedDates}
-					markingType={"interactive"}
+					markingType="interactive"
 					style={{
-						marginTop: 10
+						marginTop: 10,
 					}}
 				/>
 			</Modal>
-		</View>)
+		</View>);
 	}
 }
 
@@ -248,21 +248,19 @@ DatePicker.propTypes = {
 	updateQuery: types.updateQuery,
 	startDate: types.date,
 	placeholder: types.placeholder,
-	supportedOrientations: types.supportedOrientations
-}
+	supportedOrientations: types.supportedOrientations,
+};
 
 DatePicker.defaultProps = {
-	queryFormat: "epoch_millis",
-	placeholder: "Select a date"
-}
+	queryFormat: 'epoch_millis',
+	placeholder: 'Select a date',
+};
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(
-		updateQuery(component, query, value, filterLabel, onQueryChange)
-	)
+	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(updateQuery(component, query, value, filterLabel, onQueryChange)),
 });
 
 export default connect(null, mapDispatchtoProps)(DatePicker);

@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
 	TouchableNativeFeedback,
 	TouchableOpacity,
 	Platform,
-	View
-} from "react-native";
+	View,
+} from 'react-native';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 const LOLLIPOP = 21;
 
@@ -16,9 +16,11 @@ class TouchableItem extends Component {
 	};
 
 	render() {
-		const { style, pressOpacity, pressColor, ...rest } = this.props;
+		const {
+			style, pressOpacity, pressColor, ...rest
+		} = this.props;
 
-		if (Platform.OS === "android" && Platform.Version >= LOLLIPOP) {
+		if (Platform.OS === 'android' && Platform.Version >= LOLLIPOP) {
 			return (
 				<TouchableNativeFeedback
 					onPress={this.handlePress}
@@ -27,18 +29,17 @@ class TouchableItem extends Component {
 					<View style={style}>{React.Children.only(this.props.children)}</View>
 				</TouchableNativeFeedback>
 			);
-		} else {
-			return (
-				<TouchableOpacity
-					{...rest}
-					onPress={this.handlePress}
-					style={style}
-					activeOpacity={pressOpacity}
-				>
-					{this.props.children}
-				</TouchableOpacity>
-			);
 		}
+		return (
+			<TouchableOpacity
+				{...rest}
+				onPress={this.handlePress}
+				style={style}
+				activeOpacity={pressOpacity}
+			>
+				{this.props.children}
+			</TouchableOpacity>
+		);
 	}
 }
 
@@ -47,11 +48,11 @@ TouchableItem.propTypes = {
 	style: types.style,
 	pressOpacity: types.pressOpacity,
 	pressColor: types.pressColor,
-	children: types.children
-}
+	children: types.children,
+};
 
 TouchableItem.defaultProps = {
-	pressColor: "rgba(0, 0, 0, .2)"
+	pressColor: 'rgba(0, 0, 0, .2)',
 };
 
 export default TouchableItem;

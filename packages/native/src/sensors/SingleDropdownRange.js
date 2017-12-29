@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import { Picker } from "native-base";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { Picker } from 'native-base';
+import { connect } from 'react-redux';
 
 import {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryOptions
-} from "@appbaseio/reactivecore/lib/actions";
-import { isEqual, checkValueChange, checkPropChange } from "@appbaseio/reactivecore/lib/utils/helper";
+	setQueryOptions,
+} from '@appbaseio/reactivecore/lib/actions';
+import { isEqual, checkValueChange, checkPropChange } from '@appbaseio/reactivecore/lib/utils/helper';
 
-import types from "@appbaseio/reactivecore/lib/utils/types";
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 const Item = Picker.Item;
 
@@ -20,9 +20,9 @@ class SingleDropdownRange extends Component {
 		super(props);
 
 		this.state = {
-			currentValue: null
+			currentValue: null,
 		};
-		this.type = "range";
+		this.type = 'range';
 	}
 
 	componentDidMount() {
@@ -37,12 +37,12 @@ class SingleDropdownRange extends Component {
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
-			() => this.setReact(nextProps)
+			() => this.setReact(nextProps),
 		);
 		checkPropChange(
 			this.props.defaultSelected,
 			nextProps.defaultSelected,
-			() => this.setValue(nextProps.defaultSelected, true, nextProps)
+			() => this.setValue(nextProps.defaultSelected, true, nextProps),
 		);
 	}
 
@@ -63,30 +63,30 @@ class SingleDropdownRange extends Component {
 					[props.dataField]: {
 						gte: value.start,
 						lte: value.end,
-						boost: 2.0
-					}
-				}
+						boost: 2.0,
+					},
+				},
 			};
 		}
 		return null;
 	}
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
-		const currentValue = isDefaultValue ?
-			props.data.find(item => item.label === value) :
-			value;
+		const currentValue = isDefaultValue
+			? props.data.find(item => item.label === value)
+			: value;
 		const performUpdate = () => {
 			this.setState({
-				currentValue
+				currentValue,
 			});
 			this.updateQuery(currentValue, props);
-		}
+		};
 		checkValueChange(
 			props.componentId,
 			currentValue,
 			props.beforeValueChange,
 			props.onValueChange,
-			performUpdate
+			performUpdate,
 		);
 	}
 
@@ -106,7 +106,7 @@ class SingleDropdownRange extends Component {
 				mode="dropdown"
 				placeholder={this.props.placeholder}
 				selectedValue={this.state.currentValue}
-				onValueChange={(item) => this.setValue(item)}
+				onValueChange={item => this.setValue(item)}
 			>
 				{
 					this.props.data.map(item => (
@@ -131,20 +131,18 @@ SingleDropdownRange.propTypes = {
 	customQuery: types.customQuery,
 	onQueryChange: types.onQueryChange,
 	updateQuery: types.updateQuery,
-	placeholder: types.placeholder
-}
+	placeholder: types.placeholder,
+};
 
 SingleDropdownRange.defaultProps = {
-	placeholder: "Select a value"
-}
+	placeholder: 'Select a value',
+};
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, customQuery) => dispatch(
-		updateQuery(component, query, value, filterLabel, customQuery)
-	)
+	updateQuery: (component, query, value, filterLabel, customQuery) => dispatch(updateQuery(component, query, value, filterLabel, customQuery)),
 });
 
 export default connect(null, mapDispatchtoProps)(SingleDropdownRange);
