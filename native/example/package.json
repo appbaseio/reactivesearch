@@ -1,0 +1,41 @@
+{
+  "name": "rbexample",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-native-scripts start",
+    "start-storybook": "RUN=storybook react-native-scripts start",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
+    "storybook": "storybook start -p 7007"
+  },
+  "dependencies": {
+    "@appbaseio/reactivecore": "^0.2.3",
+    "@ptomasroos/react-native-multi-slider": "^0.0.11",
+    "appbase-js": "^2.2.1",
+    "escape-string-regexp": "^1.0.5",
+    "expo": "22.0.0",
+    "native-base": "^2.3.3",
+    "react": "^16.1.1",
+    "react-native": "^0.49.0",
+    "react-native-calendars": "^1.9.3",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "xdate": "^0.8.2"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^3.2.16",
+    "@storybook/addon-knobs": "^3.2.16",
+    "@storybook/addon-links": "^3.2.16",
+    "@storybook/react-native": "^3.2.16",
+    "babel-plugin-module-resolver": "^2.7.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.2.0",
+    "babel-preset-expo": "^1.0.1",
+    "metro-bundler": "^0.20.0",
+    "prop-types": "^15.6.0",
+    "react-dom": "^16.1.1",
+    "react-native-scripts": "0.0.50"
+  },
+  "main": "src/App.js"
+}

@@ -1,0 +1,13 @@
+{
+	"presets": [
+		"expo"
+	],
+	"plugins": [
+		["module-resolver", {
+			"alias": {
+				"@appbaseio/reactivebase-native": "../src"
+			}
+		}],
+		"transform-inline-environment-variables"
+	]
+}
