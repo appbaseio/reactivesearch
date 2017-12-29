@@ -20,7 +20,8 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Button, { pagination } from '../../styles/Button';
 import ListItem, { container, Image } from '../../styles/ListItem';
-import ResultsInfo, { resultStats, sortOptions } from '../../styles/ResultsInfo';
+import Flex from '../../styles/Flex';
+import { resultStats, sortOptions } from '../../styles/results';
 
 class ResultList extends Component {
 	constructor(props) {
@@ -423,8 +424,8 @@ class ResultList extends Component {
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.isLoading && this.props.pagination && this.props.loader && this.props.loader}
-				<ResultsInfo
-					reverse={!!this.props.sortOptions}
+				<Flex
+					labelPosition={this.props.sortOptions ? 'right' : 'left'}
 					className={getClassName(this.props.innerClass, 'resultsInfo')}
 				>
 					{
@@ -437,7 +438,7 @@ class ResultList extends Component {
 							? this.renderResultStats()
 							: null
 					}
-				</ResultsInfo>
+				</Flex>
 				{
 					this.props.pagination && this.props.paginationAt !== 'bottom'
 						? this.renderPagination()

@@ -1,12 +1,4 @@
-import styled from 'react-emotion';
 import { css } from 'emotion';
-
-const ResultsInfo = styled('div')`
-	display: flex;
-	flex-direction: ${props => (props.reverse ? 'row-reverse' : 'row')};
-	justify-content: space-between;
-	align-items: center;
-`;
 
 const resultStats = css`
 	flex-grow: 1;
@@ -28,5 +20,4 @@ const sortOptions = css`
 	outline-offset: -1px;
 `;
 
-export default ResultsInfo;
 export { resultStats, sortOptions };
