@@ -2,14 +2,6 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivecore@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-1.2.3.tgz#1ba4df0cbf2c1d664ae64c2b870fb33ac6c2a924"
-  dependencies:
-    prop-types "^15.6.0"
-    redux "^3.7.2"
-    redux-thunk "^2.2.0"
-
 "@ccheever/crayon@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@ccheever/crayon/-/crayon-5.0.0.tgz#a7192753c1c25d7588ed01d6058c64c457a71c63"

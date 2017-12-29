@@ -39,10 +39,16 @@ class Main extends Component {
 		style={{ width: '100%' }}
 		data={items || []}
 		keyExtractor={item => item._id}
-		renderItem={({ item }) => (<View style={{ margin: 5 }}>
-			<Text style={{ flex: 1, fontWeight: 'bold' }}>{this.parseToElement(item._source.name)}</Text>
-			<Text>{item._source.brand} - {item._source.model}</Text>
-		</View>)}
+		renderItem={({ item }) => (
+			<View style={{ margin: 5 }}>
+				<Text
+					style={{ flex: 1, fontWeight: 'bold' }}
+				>
+					{this.parseToElement(item._source.name)}
+				</Text>
+				<Text>{item._source.brand} - {item._source.model}</Text>
+			</View>
+		)}
 		onEndReachedThreshold={0.5}
 		onEndReached={loadMore}
 	/>)
@@ -56,11 +62,13 @@ class Main extends Component {
 			const highlight = str.substring(start + 4, end);
 			const post = str.substring(end + 5, str.length);
 
-			return (<Text style={{ flex: 1, fontWeight: 'bold' }}>
-				{pre}
-				<Text style={{ backgroundColor: 'yellow' }}>{highlight}</Text>
-				{this.parseToElement(post)}
-			</Text>);
+			return (
+				<Text style={{ flex: 1, fontWeight: 'bold' }}>
+					{pre}
+					<Text style={{ backgroundColor: 'yellow' }}>{highlight}</Text>
+					{this.parseToElement(post)}
+				</Text>
+			);
 		}
 
 		return str;
@@ -77,6 +85,11 @@ class Main extends Component {
 				credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
 				type="cars"
 			>
+				<Header>
+					<Body>
+						<Title>ReactiveBase Native Demo</Title>
+					</Body>
+				</Header>
 				<Text>It works!</Text>
 			</ReactiveBase>
 		);
