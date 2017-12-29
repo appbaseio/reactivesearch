@@ -188,7 +188,7 @@ export default class HomePage extends Component {
 					justifyContent="center"
 					alignItems="center"
 				>
-					<H2 className={textCenter}>Up to 10x Time Savings</H2>
+					<H2 className={textCenter}>Up To 10x Time Savings</H2>
 					<Text fontSize="1rem" lineHeight="1.6rem" className={textCenter}>
 						Focus on the design and user experience, let us handle the details.
 					</Text>
@@ -197,16 +197,16 @@ export default class HomePage extends Component {
 						justifyContent="space-between"
 						style={{ width: '100%', flexWrap: 'wrap' }}
 					>
+
 						<Flex className={card}>
 							<div>
 								<img src="images/octocat.png" alt="Data-driven UIs" />
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">
-								Build data-driven UIs
+								Launch and iterate faster
 							</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								30+ prebuilt components: Lists, Ranges, Dates, Search, Results
-								and more.
+								30+ well-designed and performance optimized UI components. Ship faster and solve fewer edge cases.
 							</Text>
 						</Flex>
 
@@ -215,30 +215,38 @@ export default class HomePage extends Component {
 								<img src="images/octocat.png" alt="Data-driven UIs" />
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">
-								Bring your components
+								Works with existing UIs
 							</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								Wrap your React components inside ReactiveComponent and allow
-								them to interact with the backend.
+								Already have your own components? Bring them to ReactiveSearch.
 							</Text>
 						</Flex>
 
 						<Flex className={card}>
 							<div>
-								<img src="images/octocat.png" alt="Data-driven UIs" />
+								<img src="images/configurablestyles.png" alt="Data-driven UIs" />
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">
 								Configurable styles
 							</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								Styled components with rich theming, classname and inline
-								style injection  support.
+								Styled components with rich theming and css class-injection support.
 							</Text>
 						</Flex>
 
 						<Flex className={card}>
 							<div>
 								<img src="images/octocat.png" alt="Data-driven UIs" />
+							</div>
+							<Title margin="0" fontWeight="700" fontSize="1rem">Create cross-platform apps</Title>
+							<Text margin="12px 0 0" lineHeight="1.3rem">
+								Reactivesearch components can be ported to create native mobile UIs.
+							</Text>
+						</Flex>
+
+						<Flex className={card}>
+							<div>
+								<img src="images/elasticsearch.png" alt="Data-driven UIs" />
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">
 								Elasticsearch compatible
@@ -250,12 +258,11 @@ export default class HomePage extends Component {
 
 						<Flex className={card}>
 							<div>
-								<img src="images/octocat.png" alt="Data-driven UIs" />
+								<img src="images/customizablequeries.png" alt="Data-driven UIs" />
 							</div>
-							<Title margin="0" fontWeight="700" fontSize="1rem">Write less code</Title>
+							<Title margin="0" fontWeight="700" fontSize="1rem">Customizable queries</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								Reactivesearch provides scaffolding for UI rendering, handling
-								query requests and managing state.
+								Components come with good query defaults, that can be customized with Elasticsearch query DSL.
 							</Text>
 						</Flex>
 
@@ -266,7 +273,7 @@ export default class HomePage extends Component {
 							<Title margin="0" fontWeight="700" fontSize="1rem">Easy to secure</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
 								Use appbase.io to get read-only credentials, or set up a
-								middleware proxy with authorization rules. See example.
+								middleware proxy with authorization rules.
 							</Text>
 						</Flex>
 
@@ -274,36 +281,9 @@ export default class HomePage extends Component {
 							<div>
 								<img src="images/octocat.png" alt="Data-driven UIs" />
 							</div>
-							<Title margin="0" fontWeight="700" fontSize="1rem">Customizable Queries</Title>
+							<Title margin="0" fontWeight="700" fontSize="1rem">Starter apps</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								Components come with query defaults, that can be customized or
-								overwritten. 100% Query DSL supported.
-							</Text>
-						</Flex>
-
-
-						{/*
-							<!--Flex
-							className={card}
-							flexDirection="column"
-							alignItems="center"
-							justifyContent="center"
-							padding="1rem"
-							backgroundColor="#fff"
-						>
-							<Title margin="0" fontWeight="700" fontSize="1rem">Build cross-platform UIs</Title>
-							<Text margin="12px 0 0" lineHeight="1.3rem">Build native iOS and Android UIs with Reactivesearch. <a className={decoratedLink} style={{ fontSize: "0.9rem" }} href="https://producthunt.com/upcoming/reactivesearch-native" target="_blank">Coming soon</a></Text>
-							</Flex-->
-						*/}
-
-						<Flex className={card}>
-							<div>
-								<img src="images/octocat.png" alt="Data-driven UIs" />
-							</div>
-							<Title margin="0" fontWeight="700" fontSize="1rem">Starter Apps</Title>
-							<Text margin="12px 0 0" lineHeight="1.3rem">
-								Get started quickly by using any of our pre-configured starter
-								apps. See examples.
+								Get started quickly by using any of our pre-configured starter apps.
 							</Text>
 						</Flex>
 					</Flex>
@@ -324,7 +304,7 @@ export default class HomePage extends Component {
 							style={{ maxWidth: '600px', textAlign: 'center' }}
 						>
 							Reactivesearch handles UI rendering, query requests and manages
-							response state so you can focus on the product experience.
+							response state so you can focus on the product experience, ship faster and iterate quicker.
 						</Text>
 
 						<Flex
