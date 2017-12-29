@@ -118,10 +118,6 @@ const Results = ({ toggleTopic, currentTopics }) => (
 	/>
 );
 
-onData.propTypes = {
-	_source: PropTypes.object // eslint-disable-line
-};
-
 Results.propTypes = {
 	toggleTopic: PropTypes.func,
 	currentTopics: PropTypes.arrayOf(PropTypes.string),
