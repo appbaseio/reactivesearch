@@ -7233,7 +7233,7 @@ react-modal@^3.1.10:
     prop-types "^15.5.10"
     warning "^3.0.0"
 
-react-native-calendars@^1.9.3:
+react-native-calendars@^1.16.1:
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.16.1.tgz#b1729e329996a1cd11e43479c7612a213712ee4b"
   dependencies:

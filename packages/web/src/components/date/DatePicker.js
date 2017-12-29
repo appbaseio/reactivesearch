@@ -42,8 +42,11 @@ class DatePicker extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () =>
-			this.setReact(nextProps));
+		checkPropChange(
+			this.props.react,
+			nextProps.react,
+			() => this.setReact(nextProps),
+		);
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleDateChange(nextProps.defaultSelected, true, nextProps);
 		} else if (
@@ -240,9 +243,6 @@ DatePicker.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId]
-		? state.aggregations[props.componentId][props.dataField].buckets
-		: [],
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
