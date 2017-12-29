@@ -1,8 +1,0 @@
-node_modules
-.expo/
-npm-debug.*
-*.swp
-.DS_Store
-**/.DS_Store
-*.log
-logs
