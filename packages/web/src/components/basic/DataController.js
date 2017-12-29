@@ -105,10 +105,10 @@ DataController.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+	selectedValue: (
+		state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value
+	) || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
