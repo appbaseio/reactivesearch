@@ -1,6 +1,7 @@
-import ReactiveBase from './sensors/ReactiveBase';
-import DataController from './sensors/DataController';
-import TextField from './sensors/TextField';
+import ReactiveBase from './components/basic/ReactiveBase';
+import TextField from './components/basic/TextField';
+import DataController from './components/basic/DataController';
+
 import DataSearch from './sensors/DataSearch';
 import SingleDropdownList from './sensors/SingleDropdownList';
 import MultiDropdownList from './sensors/MultiDropdownList';
