@@ -87,10 +87,18 @@ class Main extends Component {
 			>
 				<Header>
 					<Body>
-						<Title>ReactiveBase Native Demo</Title>
+						<Title>ReactiveSearch Native</Title>
 					</Body>
 				</Header>
-				<Text>It works!</Text>
+				<ScrollView>
+					<View style={{ padding: 10 }}>
+						<TextField
+							componentId="TextFieldComponent"
+							dataField="color"
+							placeholder="Search color"
+						/>
+					</View>
+				</ScrollView>
 			</ReactiveBase>
 		);
 	}
