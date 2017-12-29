@@ -58,19 +58,19 @@ class ReactiveList extends Component {
 		}
 
 		// Override sort query with defaultQuery's sort if defined
-		let defaultQuery = null;
+		this.defaultQuery = null;
 		if (this.props.defaultQuery) {
-			defaultQuery = this.props.defaultQuery();
-			if (defaultQuery.sort) {
-				options.sort = defaultQuery.sort;
+			this.defaultQuery = this.props.defaultQuery();
+			if (this.defaultQuery.sort) {
+				options.sort = this.defaultQuery.sort;
 			}
 		}
 
 		this.props.setQueryOptions(this.props.componentId, options);
 		this.setReact(this.props);
 
-		if (defaultQuery) {
-			const { sort, ...query } = defaultQuery;
+		if (this.defaultQuery) {
+			const { sort, ...query } = this.defaultQuery;
 			this.props.updateQuery({
 				componentId: this.internalComponent,
 				query,
@@ -115,12 +115,12 @@ class ReactiveList extends Component {
 			&& !isEqual(nextProps.defaultQuery(), this.props.defaultQuery())
 		) {
 			const options = getQueryOptions(nextProps);
-			const defaultQuery = nextProps.defaultQuery();
+			this.defaultQuery = nextProps.defaultQuery();
 
-			const { sort, ...query } = defaultQuery;
+			const { sort, ...query } = this.defaultQuery;
 
 			if (sort) {
-				options.sort = defaultQuery.sort;
+				options.sort = this.defaultQuery.sort;
 				nextProps.setQueryOptions(nextProps.componentId, options);
 			}
 
