@@ -25,6 +25,7 @@ const Navbar = styled.nav`
 	padding: 1rem;
 	height: 100vh;
 	position: fixed;
+	z-index: 3;
 
 	${({ full }) => queries.xLarge`
 		width: 100%;

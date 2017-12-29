@@ -11,7 +11,7 @@ import Avatar from '../styles/Avatar';
 import Button from '../styles/Button';
 
 const onResultStats = (results, time) => (
-	<Flex justifyContent="flex-end" style={{ margin: '1rem' }}>
+	<Flex justifyContent="flex-end">
 		{results} results found in {time}ms
 	</Flex>
 );
@@ -32,13 +32,15 @@ const onData = (data, currentTopics, toggleTopic) => (
 			{
 				data.topics.slice(0, 7)
 					.map(item =>
-						(<Topic
-							key={item}
-							active={currentTopics.includes(item)}
-							toggleTopic={toggleTopic}
-						>
-							{item}
-       </Topic>))
+						(
+							<Topic
+								key={item}
+								active={currentTopics.includes(item)}
+								toggleTopic={toggleTopic}
+							>
+								{item}
+							</Topic>
+						))
 			}
 		</Flex>
 		<Flex>
@@ -62,9 +64,57 @@ const Results = ({ toggleTopic, currentTopics }) => (
 		innerClass={{
 			list: 'result-list-container',
 			pagination: 'result-list-pagination',
+			resultsInfo: 'result-list-info',
 		}}
 		className={resultListContainer}
 		size={6}
+		sortOptions={[
+			{
+				label: 'Best Match',
+				dataField: '_score',
+				sortBy: 'desc',
+			},
+			{
+				label: 'Most Stars',
+				dataField: 'stars',
+				sortBy: 'desc',
+			},
+			{
+				label: 'Fewest Stars',
+				dataField: 'stars',
+				sortBy: 'asc',
+			},
+			{
+				label: 'Most Forks',
+				dataField: 'forks',
+				sortBy: 'desc',
+			},
+			{
+				label: 'Fewest Forks',
+				dataField: 'forks',
+				sortBy: 'asc',
+			},
+			{
+				label: 'A to Z',
+				dataField: 'owner.raw',
+				sortBy: 'asc',
+			},
+			{
+				label: 'Z to A',
+				dataField: 'owner.raw',
+				sortBy: 'desc',
+			},
+			{
+				label: 'Recently Updated',
+				dataField: 'pushed',
+				sortBy: 'desc',
+			},
+			{
+				label: 'Least Recently Updated',
+				dataField: 'pushed',
+				sortBy: 'asc',
+			},
+		]}
 	/>
 );
 

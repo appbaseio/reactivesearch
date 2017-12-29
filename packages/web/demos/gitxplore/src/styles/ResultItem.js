@@ -31,6 +31,9 @@ export const resultListContainer = css`
 		margin: 40px 0 50px;
 	}
 
+	.result-list-info {
+		margin: 1rem;
+	}
 `;
 
 export const resultCardHeader = css`

@@ -1,6 +1,7 @@
 import styled, { css } from 'react-emotion';
 
 import { queries } from './mediaQueries';
+import color from './theme';
 
 const Container = styled.section`
 	width: 100%;
@@ -17,7 +18,20 @@ export const resultsContainer = css`
 
 export const categorySearchContainer = css`
 	position: fixed;
+	z-index: 3;
 	${resultsContainer};
+
+	.search-input {
+		border: none;
+		border-bottom: 1px solid #ccc;
+		background: #fafafa;
+		transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+		&:focus {
+			border-color: ${color.primaryColor};
+			box-shadow: 0 1px 0 0 ${color.primaryColor};
+		}
+	}
 
 	${queries.xLarge`
 		margin-top: 20px;
@@ -35,6 +49,7 @@ export const categorySearchContainer = css`
 export const filtersContainer = css`
 	max-height: calc(100vh - 100px);
 	overflow-y: auto;
+	height: 100%;
 `;
 
 export const appContainer = css`
