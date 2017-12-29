@@ -19,7 +19,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Button, { pagination } from '../../styles/Button';
-import { resultsInfo, resultStats, sortOptions } from '../../styles/results';
+import ResultsInfo, { resultStats, sortOptions } from '../../styles/ResultsInfo';
 
 class ReactiveList extends Component {
 	constructor(props) {
@@ -389,18 +389,21 @@ class ReactiveList extends Component {
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.isLoading && this.props.pagination && this.props.loader && this.props.loader}
-				<div className={`${resultsInfo} ${getClassName(this.props.innerClass, 'resultsInfo')}`}>
-					{
-						this.props.showResultStats
-							? this.renderResultStats()
-							: null
-					}
+				<ResultsInfo
+					reverse={!!this.props.sortOptions}
+					className={getClassName(this.props.innerClass, 'resultsInfo')}
+				>
 					{
 						this.props.sortOptions
 							? this.renderSortOptions()
 							: null
 					}
-				</div>
+					{
+						this.props.showResultStats
+							? this.renderResultStats()
+							: null
+					}
+				</ResultsInfo>
 				{
 					this.props.pagination && this.props.paginationAt !== 'bottom'
 						? this.renderPagination()

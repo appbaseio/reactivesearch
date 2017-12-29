@@ -20,7 +20,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Button, { pagination } from '../../styles/Button';
 import Card, { container, Image } from '../../styles/Card';
-import { resultsInfo, resultStats, sortOptions } from '../../styles/results';
+import ResultsInfo, { resultStats, sortOptions } from '../../styles/ResultsInfo';
 
 class ResultCard extends Component {
 	constructor(props) {
@@ -412,18 +412,21 @@ class ResultCard extends Component {
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.isLoading && this.props.pagination && this.props.loader && this.props.loader}
-				<div className={`${resultsInfo} ${getClassName(this.props.innerClass, 'resultsInfo')}`}>
-					{
-						this.props.showResultStats
-							? this.renderResultStats()
-							: null
-					}
+				<ResultsInfo
+					reverse={!!this.props.sortOptions}
+					className={getClassName(this.props.innerClass, 'resultsInfo')}
+				>
 					{
 						this.props.sortOptions
 							? this.renderSortOptions()
 							: null
 					}
-				</div>
+					{
+						this.props.showResultStats
+							? this.renderResultStats()
+							: null
+					}
+				</ResultsInfo>
 				{
 					this.props.pagination && this.props.paginationAt !== 'bottom'
 						? this.renderPagination()
