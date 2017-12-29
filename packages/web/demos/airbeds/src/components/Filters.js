@@ -42,6 +42,7 @@ export default () => (
 				end: 50,
 			}}
 			stepValue={10}
+			interval={20}
 			react={{
 				and: ['DateRangeSensor'],
 			}}
