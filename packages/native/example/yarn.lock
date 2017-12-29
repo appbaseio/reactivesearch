@@ -6419,7 +6419,7 @@ react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.0.0-beta.3.tgz#2167af86bbc9f964bd45bd5f37684e5b54965e32"
 
-react-native-calendars@^1.9.3:
+react-native-calendars@^1.16.1:
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.16.1.tgz#b1729e329996a1cd11e43479c7612a213712ee4b"
   dependencies:
@@ -6653,7 +6653,7 @@ react-tween-state@^0.1.5:
     raf "^3.1.0"
     tween-functions "^1.0.1"
 
-react@^16.1.1:
+react@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.2.0.tgz#a31bd2dab89bff65d42134fa187f24d054c273ba"
   dependencies:

@@ -97,6 +97,11 @@ class Main extends Component {
 							dataField="color"
 							placeholder="Search color"
 						/>
+
+						<DatePicker
+							dataField="someField"
+							componentId="DatePicker"
+						/>
 					</View>
 				</ScrollView>
 			</ReactiveBase>
