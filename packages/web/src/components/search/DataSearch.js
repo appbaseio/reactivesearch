@@ -386,7 +386,7 @@ class DataSearch extends Component {
 									{
 										isOpen && suggestionsList.length
 											? (
-												<ul className={`${suggestions} getClassName(this.props.innerClass, 'list')`}>
+												<ul className={`${suggestions} ${getClassName(this.props.innerClass, 'list')}`}>
 													{
 														suggestionsList
 															.map((item, index) => (
