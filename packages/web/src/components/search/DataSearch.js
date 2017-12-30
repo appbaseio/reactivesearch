@@ -386,33 +386,31 @@ class DataSearch extends Component {
 									{
 										isOpen && suggestionsList.length
 											? (
-												<div className={suggestions}>
-													<ul className={getClassName(this.props.innerClass, 'list') || null}>
-														{
-															suggestionsList
-																.map((item, index) => (
-																	<li
-																		{...getItemProps({ item })}
-																		key={item.label}
-																		style={{
-																			backgroundColor: highlightedIndex === index
-																				? '#eee' : '#fff',
-																		}}
-																	>
-																		{
-																			typeof item.label === 'string'
-																				? <div
-																					dangerouslySetInnerHTML={{
-																						__html: item.label,
-																					}}
-																				/>
-																				: item.label
-																		}
-																	</li>
-																))
-														}
-													</ul>
-												</div>
+												<ul className={`${suggestions} getClassName(this.props.innerClass, 'list')`}>
+													{
+														suggestionsList
+															.map((item, index) => (
+																<li
+																	{...getItemProps({ item })}
+																	key={item.label}
+																	style={{
+																		backgroundColor: highlightedIndex === index
+																			? '#eee' : '#fff',
+																	}}
+																>
+																	{
+																		typeof item.label === 'string'
+																			? <div
+																				dangerouslySetInnerHTML={{
+																					__html: item.label,
+																				}}
+																			/>
+																			: item.label
+																	}
+																</li>
+															))
+													}
+												</ul>
 											)
 											: null
 									}

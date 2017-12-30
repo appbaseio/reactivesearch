@@ -107,62 +107,60 @@ class Dropdown extends Component {
 					{
 						isOpen && items.length
 							? (
-								<div className={suggestions}>
-									<ul className={getClassName(this.props.innerClass, 'list') || null}>
-										{
-											items
-												.map((item, index) => {
-													const selected = this.props.multi && (
-														// MultiDropdownList
-														(selectedItem && !!selectedItem[item[keyField]])
-														// MultiDropdownRange
-														|| (Array.isArray(selectedItem)
-															&& selectedItem.find(value =>
-																value[labelField] === item[labelField]))
-													);
+								<ul className={`${suggestions} ${getClassName(this.props.innerClass, 'list')}`}>
+									{
+										items
+											.map((item, index) => {
+												const selected = this.props.multi && (
+													// MultiDropdownList
+													(selectedItem && !!selectedItem[item[keyField]])
+													// MultiDropdownRange
+													|| (Array.isArray(selectedItem)
+														&& selectedItem.find(value =>
+															value[labelField] === item[labelField]))
+												);
 
-													return (
-														<li
-															{...getItemProps({ item })}
-															key={item[keyField]}
-															style={{
-																backgroundColor: this.getBackgroundColor(
-																	highlightedIndex === index,
-																	selected,
-																),
-															}}
-														>
-															<div>
-																{
-																	typeof item[labelField] === 'string'
-																		? <span
-																			dangerouslySetInnerHTML={{
-																				__html: item[labelField],
-																			}}
-																		/>
-																		: item[labelField]
-																}
-																{
-																	this.props.showCount && item.doc_count
-																		&& ` (${item.doc_count})`
-																}
-															</div>
+												return (
+													<li
+														{...getItemProps({ item })}
+														key={item[keyField]}
+														style={{
+															backgroundColor: this.getBackgroundColor(
+																highlightedIndex === index,
+																selected,
+															),
+														}}
+													>
+														<div>
 															{
-																selected
-																	? (<Tick
-																		className={
-																			getClassName(this.props.innerClass, 'icon')
-																			|| null
-																		}
-																	/>)
-																	: null
+																typeof item[labelField] === 'string'
+																	? <span
+																		dangerouslySetInnerHTML={{
+																			__html: item[labelField],
+																		}}
+																	/>
+																	: item[labelField]
 															}
-														</li>
-													);
-												})
-										}
-									</ul>
-								</div>
+															{
+																this.props.showCount && item.doc_count
+																	&& ` (${item.doc_count})`
+															}
+														</div>
+														{
+															selected
+																? (<Tick
+																	className={
+																		getClassName(this.props.innerClass, 'icon')
+																		|| null
+																	}
+																/>)
+																: null
+														}
+													</li>
+												);
+											})
+									}
+								</ul>
 							)
 							: null
 					}

@@ -476,26 +476,22 @@ class CategorySearch extends Component {
 									{this.renderIcon()}
 								</InputIcon>
 								{isOpen && suggestionsList.length ? (
-									<div className={suggestions}>
-										<ul
-											className={
-												getClassName(this.props.innerClass, 'list') || null
-											}
-										>
-											{suggestionsList.map((item, index) => (
-												<li
-													{...getItemProps({ item })}
-													key={item.label}
-													style={{
-														backgroundColor:
-															highlightedIndex === index ? '#eee' : '#fff',
-													}}
-												>
-													<Text primary={!!item.category}>{item.label}</Text>
-												</li>
-											))}
-										</ul>
-									</div>
+									<ul
+										className={`${suggestions} ${getClassName(this.props.innerClass, 'list')}`}
+									>
+										{suggestionsList.map((item, index) => (
+											<li
+												{...getItemProps({ item })}
+												key={item.label}
+												style={{
+													backgroundColor:
+														highlightedIndex === index ? '#eee' : '#fff',
+												}}
+											>
+												<Text primary={!!item.category}>{item.label}</Text>
+											</li>
+										))}
+									</ul>
 								) : null}
 							</div>
 						)}

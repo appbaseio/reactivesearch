@@ -44,25 +44,22 @@ const suggestions = css`
 	z-index: 3;
 	position: absolute;
 	top: 41px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	max-height: 260px;
+	overflow-y: auto;
 
-	ul {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-		max-height: 260px;
-		overflow-y: auto;
+	li {
+		display: flex;
+		justify-content: space-between;
+		cursor: pointer;
+		padding: 10px;
+		user-select: none;
 
-		li {
-			display: flex;
-			justify-content: space-between;
-			cursor: pointer;
-			padding: 10px;
-			user-select: none;
-
-			&:hover,
-			&:focus {
-				background-color: #eee;
-			}
+		&:hover,
+		&:focus {
+			background-color: #eee;
 		}
 	}
 `;
