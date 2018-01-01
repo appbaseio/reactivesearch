@@ -378,9 +378,6 @@ DateRange.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId]
-		? state.aggregations[props.componentId][props.dataField].buckets
-		: [],
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
