@@ -102,6 +102,15 @@ class Main extends Component {
 							dataField="someField"
 							componentId="DatePicker"
 						/>
+
+						<DateRange
+							dataField="someField"
+							componentId="DateRange"
+							defaultSelected={{
+								start: '2017-04-04',
+								end: '2017-04-10',
+							}}
+						/>
 					</View>
 				</ScrollView>
 			</ReactiveBase>
