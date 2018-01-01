@@ -418,7 +418,7 @@ class DataSearch extends Component {
 							)}
 						/>)
 						: (
-							<div>
+							<div className={suggestionsContainer}>
 								<Input
 									className={getClassName(this.props.innerClass, 'input') || null}
 									placeholder={this.props.placeholder}
