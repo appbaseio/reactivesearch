@@ -1,17 +1,13 @@
-**I'm submitting a ...**
-<!-- (check one with "x") -->
-- [ ] bug report
-- [ ] feature request
-- [ ] other
+<!-- Pick relevant type -->
+## Bug Report
+## Feature Request
+## <!-- other, please specify -->
 
-**Current behavior:**
-<!-- Describe how the bug manifests / how the current features are insufficient. Attach Screenshots if it helps -->
+**Description:**
+<!-- Describe the bug or feature request. Attach Screenshots if it helps -->
 
 **Screenshots:**
 <!-- Attach Screenshots if it helps -->
-
-**Expected / new behavior:**
-<!-- Describe what the behavior would be without the bug / how the feature would improve reactivesearch -->
 
 **Minimal reproduction of the problem with instructions:**
 <!--
