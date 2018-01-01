@@ -1,7 +1,7 @@
 <!-- Pick relevant type -->
-- ## Bug Report
-- ## Feature Request
-- ## <!-- other, please specify -->
+## Bug Report
+## Feature Request
+## <!-- other, please specify -->
 
 **Description:**
 <!-- Describe the bug or feature request. Attach Screenshots if it helps -->
