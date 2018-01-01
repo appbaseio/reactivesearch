@@ -60,7 +60,9 @@ class SingleDropdownList extends Component {
 			nextProps.options,
 			() => {
 				this.setState({
-					options: nextProps.options[nextProps.dataField].buckets || [],
+					options: nextProps.options[nextProps.dataField]
+						? nextProps.options[nextProps.dataField].buckets
+						: [],
 				});
 			},
 		);
@@ -70,6 +72,16 @@ class SingleDropdownList extends Component {
 			['size', 'sortBy'],
 			() => this.updateQueryOptions(nextProps),
 		);
+
+		checkPropChange(
+			this.props.dataField,
+			nextProps.dataField,
+			() => {
+				this.updateQueryOptions(nextProps);
+				this.updateQuery(this.state.currentValue, nextProps);
+			},
+		);
+
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected);
 		} else if (this.state.currentValue !== nextProps.selectedValue) {
