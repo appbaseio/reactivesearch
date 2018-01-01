@@ -110,7 +110,7 @@ class ResultCard extends Component {
 
 		if (
 			nextProps.defaultQuery
-			&& !isEqual(nextProps.defaultQuery(), this.props.defaultQuery())
+			&& !isEqual(nextProps.defaultQuery(), this.defaultQuery)
 		) {
 			const options = getQueryOptions(nextProps);
 			this.defaultQuery = nextProps.defaultQuery();
