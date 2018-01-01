@@ -497,7 +497,7 @@ class CategorySearch extends Component {
 						)}
 					/>
 				) : (
-					<div>
+					<div className={suggestionsContainer}>
 						<Input
 							className={getClassName(this.props.innerClass, 'input')}
 							placeholder={this.props.placeholder}
