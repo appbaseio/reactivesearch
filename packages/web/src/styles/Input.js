@@ -10,9 +10,13 @@ const input = css`
 	height: 42px;
 	padding: 8px;
 	border: 1px solid #ccc;
-	background-color: #fff;
+	background-color: #fafafa;
 	font-size: 0.9rem;
 	outline: none;
+
+	&:focus {
+		background-color: #fff;
+	}
 `;
 
 const Input = styled('input')`
