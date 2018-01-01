@@ -18,6 +18,8 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import PoweredBy from './addons/PoweredBy';
+
 import Button, { pagination } from '../../styles/Button';
 import Flex from '../../styles/Flex';
 import { resultStats, sortOptions } from '../../styles/results';
@@ -434,6 +436,15 @@ class ReactiveList extends Component {
 						? this.renderPagination()
 						: null
 				}
+				{
+					this.props.url.endsWith('appbase.io') && results.length
+						? (
+							<Flex direction="row-reverse" className={getClassName(this.props.innerClass, 'poweredBy')}>
+								<PoweredBy />
+							</Flex>
+						)
+						: null
+				}
 			</div>
 		);
 	}
@@ -469,6 +480,7 @@ ReactiveList.propTypes = {
 	stream: types.bool,
 	setStreaming: types.func,
 	innerClass: types.style,
+	url: types.string,
 };
 
 ReactiveList.defaultProps = {
@@ -486,6 +498,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	isLoading: state.isLoading[props.componentId] || false,
+	url: state.config.url,
 });
 
 const mapDispatchtoProps = dispatch => ({

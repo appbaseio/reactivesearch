@@ -17,6 +17,8 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import PoweredBy from './addons/PoweredBy';
+
 import Title from '../../styles/Title';
 import Button, { pagination } from '../../styles/Button';
 import ListItem, { container, Image } from '../../styles/ListItem';
@@ -473,6 +475,15 @@ class ResultList extends Component {
 						? this.renderPagination()
 						: null
 				}
+				{
+					this.props.url.endsWith('appbase.io') && results.length
+						? (
+							<Flex direction="row-reverse" className={getClassName(this.props.innerClass, 'poweredBy')}>
+								<PoweredBy />
+							</Flex>
+						)
+						: null
+				}
 			</div>
 		);
 	}
@@ -505,6 +516,7 @@ ResultList.propTypes = {
 	style: types.style,
 	className: types.string,
 	innerClass: types.style,
+	url: types.string,
 };
 
 ResultList.defaultProps = {
@@ -522,6 +534,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	isLoading: state.isLoading[props.componentId] || false,
+	url: state.config.url,
 });
 
 const mapDispatchtoProps = dispatch => ({
