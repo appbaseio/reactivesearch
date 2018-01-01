@@ -340,44 +340,49 @@ class ResultList extends Component {
 
 	renderAsListItem = (item) => {
 		const result = this.props.onData({ _id: item._id, ...item._source });
-		return (
-			<ListItem
-				key={item._id}
-				href={result.url}
-				image={!!result.image}
-				small={result.image_size === 'small'}
-				className={getClassName(this.props.innerClass, 'listItem')}
-			>
-				{
-					result.image
-						? <Image
-							src={result.image}
-							small={result.image_size === 'small'}
-							className={getClassName(this.props.innerClass, 'image')}
-						/>
-						: null
-				}
-				<article>
+
+		if (result) {
+			return (
+				<ListItem
+					key={item._id}
+					href={result.url}
+					image={!!result.image}
+					small={result.image_size === 'small'}
+					className={getClassName(this.props.innerClass, 'listItem')}
+				>
 					{
-						typeof result.title === 'string'
-							? <Title
-								dangerouslySetInnerHTML={{ __html: result.title }}
-								className={getClassName(this.props.innerClass, 'title')}
+						result.image
+							? <Image
+								src={result.image}
+								small={result.image_size === 'small'}
+								className={getClassName(this.props.innerClass, 'image')}
 							/>
-							: (
-								<Title className={getClassName(this.props.innerClass, 'title')}>
-									{result.title}
-								</Title>
-							)
+							: null
 					}
-					{
-						typeof result.desc === 'string'
-							? <div dangerouslySetInnerHTML={{ __html: result.desc }} />
-							: <div>{result.desc}</div>
-					}
-				</article>
-			</ListItem>
-		);
+					<article>
+						{
+							typeof result.title === 'string'
+								? <Title
+									dangerouslySetInnerHTML={{ __html: result.title }}
+									className={getClassName(this.props.innerClass, 'title')}
+								/>
+								: (
+									<Title className={getClassName(this.props.innerClass, 'title')}>
+										{result.title}
+									</Title>
+								)
+						}
+						{
+							typeof result.desc === 'string'
+								? <div dangerouslySetInnerHTML={{ __html: result.desc }} />
+								: <div>{result.desc}</div>
+						}
+					</article>
+				</ListItem>
+			);
+		}
+
+		return null;
 	};
 
 	renderResultStats = () => {

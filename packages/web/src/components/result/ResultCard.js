@@ -339,34 +339,40 @@ class ResultCard extends Component {
 
 	renderAsCard = (item) => {
 		const result = this.props.onData({ _id: item._id, ...item._source });
-		return (
-			<Card
-				key={item._id}
-				href={result.url}
-				className={getClassName(this.props.innerClass, 'listItem')}
-			>
-				<Image
-					style={{ backgroundImage: `url(${result.image})` }}
-					className={getClassName(this.props.innerClass, 'image')}
-				/>
-				{
-					typeof result.title === 'string'
-						? <Title
-							dangerouslySetInnerHTML={{ __html: result.title }}
-							className={getClassName(this.props.innerClass, 'title')}
-						/>
-						: (
-							<Title className={getClassName(this.props.innerClass, 'title')}>
-								{result.title}
-							</Title>
-						)
-				}
-				{
-					typeof result.desc === 'string'
-						? <article dangerouslySetInnerHTML={{ __html: result.desc }} />
-						: <article>{result.desc}</article>
-				}
-			</Card>);
+
+		if (result) {
+			return (
+				<Card
+					key={item._id}
+					href={result.url}
+					className={getClassName(this.props.innerClass, 'listItem')}
+				>
+					<Image
+						style={{ backgroundImage: `url(${result.image})` }}
+						className={getClassName(this.props.innerClass, 'image')}
+					/>
+					{
+						typeof result.title === 'string'
+							? <Title
+								dangerouslySetInnerHTML={{ __html: result.title }}
+								className={getClassName(this.props.innerClass, 'title')}
+							/>
+							: (
+								<Title className={getClassName(this.props.innerClass, 'title')}>
+									{result.title}
+								</Title>
+							)
+					}
+					{
+						typeof result.desc === 'string'
+							? <article dangerouslySetInnerHTML={{ __html: result.desc }} />
+							: <article>{result.desc}</article>
+					}
+				</Card>
+			);
+		}
+
+		return null;
 	};
 
 	renderResultStats = () => {
