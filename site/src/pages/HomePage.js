@@ -6,6 +6,7 @@ import { SlopeWrapper, Slope, WhiteBackdrop } from '../styles/Slope';
 import Bubble from '../styles/Bubble';
 import Image from '../styles/Image';
 import {
+	container,
 	boldHeading,
 	button,
 	col,
@@ -13,7 +14,6 @@ import {
 	decoratedLink,
 	decoratedSecondaryLink,
 	card,
-	title,
 	code,
 	showcase,
 	footer,
@@ -73,7 +73,7 @@ export default class HomePage extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className={container}>
 				<Navbar>
 					<a className={`${boldHeading} ${logo}`} href="/">Reactivesearch</a>
 					<ul className={mobHide}>
@@ -173,7 +173,8 @@ export default class HomePage extends Component {
 							<Button
 								transparent
 								no-shadow
-								style={{ marginTop: '20px', border: 0, cursor: 'default' }}
+								className={button}
+								style={{ border: 0, cursor: 'default' }}
 							>
 								or
 							</Button>
@@ -310,16 +311,10 @@ export default class HomePage extends Component {
 							style={{ maxWidth: '600px', textAlign: 'center' }}
 						>
 							Reactivesearch handles UI rendering, query requests and manages
-							response state so you can focus on the product experience, ship faster and iterate quicker.
+							response state so you can focus on the product experience,
+							ship faster and iterate quicker.
 						</Text>
 
-						<Flex
-							padding="30px 30px 0"
-							justifyContent="center"
-							margin="12px 0 10px"
-							style={{ width: '100%', textAlign: 'left' }}
-						>
-						</Flex>
 						<Flex padding="0 30px" justifyContent="center">
 							<Flex id="code" className={code}>
 								<div
@@ -345,7 +340,7 @@ export default class HomePage extends Component {
 					boxShadow="0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07)"
 				>
 					<H2 margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
-					<Flex>
+					<Flex className={tabJustifyCenter}>
 						<Button shadow primary className={button} style={{ maxWidth: "250px" }}>Build a live app in 5 mins</Button>
 						<Button className={button} style={{ maxWidth: "250px", marginLeft: "1rem" }}>Read the docs</Button>
 					</Flex>
