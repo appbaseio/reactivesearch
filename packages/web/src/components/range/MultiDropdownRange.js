@@ -96,7 +96,7 @@ class MultiDropdownRange extends Component {
 			return query;
 		}
 		return null;
-	}
+	};
 
 	selectItem = (item, isDefaultValue = false, props = this.props) => {
 		let { currentValue } = this.state;
@@ -133,7 +133,7 @@ class MultiDropdownRange extends Component {
 			props.onValueChange,
 			performUpdate,
 		);
-	}
+	};
 
 	toggleModal = () => {
 		this.setState({
@@ -158,7 +158,7 @@ class MultiDropdownRange extends Component {
 			onQueryChange,
 			URLParams: props.URLParams,
 		});
-	}
+	};
 
 	render() {
 		return (
