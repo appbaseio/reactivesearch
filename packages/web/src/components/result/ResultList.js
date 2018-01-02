@@ -352,6 +352,8 @@ class ResultList extends Component {
 					image={!!result.image}
 					small={result.image_size === 'small'}
 					className={getClassName(this.props.innerClass, 'listItem')}
+					target={this.props.target}
+					rel={this.props.target === '_blank' ? 'noopener noreferrer' : null}
 				>
 					{
 						result.image
@@ -376,9 +378,9 @@ class ResultList extends Component {
 								)
 						}
 						{
-							typeof result.desc === 'string'
-								? <div dangerouslySetInnerHTML={{ __html: result.desc }} />
-								: <div>{result.desc}</div>
+							typeof result.description === 'string'
+								? <div dangerouslySetInnerHTML={{ __html: result.description }} />
+								: <div>{result.description}</div>
 						}
 					</article>
 				</ListItem>
@@ -518,6 +520,7 @@ ResultList.propTypes = {
 	className: types.string,
 	innerClass: types.style,
 	url: types.string,
+	target: types.stringRequired,
 };
 
 ResultList.defaultProps = {
@@ -528,6 +531,7 @@ ResultList.defaultProps = {
 	showResultStats: true,
 	style: {},
 	className: null,
+	target: '_blank',
 };
 
 const mapStateToProps = (state, props) => ({

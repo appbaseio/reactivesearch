@@ -27,7 +27,7 @@ export default () => (
 				onData={data => ({
 					image: data.image,
 					title: data.name,
-					desc: (
+					description: (
 						<div>
 							<div className="price">${data.price}</div>
 							<p className="info">{data.room_type} · {data.accommodates} guests</p>
