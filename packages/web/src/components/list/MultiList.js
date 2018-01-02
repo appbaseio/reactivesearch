@@ -80,7 +80,7 @@ class MultiList extends Component {
 			nextProps.dataField,
 			() => {
 				this.updateQueryOptions(nextProps);
-				this.updateQuery(this.state.currentValue, nextProps);
+				this.updateQuery(Object.keys(this.state.currentValue), nextProps);
 			},
 		);
 
