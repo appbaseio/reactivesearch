@@ -2,9 +2,9 @@ import styled from 'react-emotion';
 
 const Bubble = styled('div')`
 	width: 90%;
-	max-width: 500px;
-	margin: 30px auto;
-	background-color: #4187c3;
+	max-width: ${props => (props.big ? '600px' : '450px')};
+	margin: 30px 0;
+	background-color: ${props => (props.backgroundColor ? props.backgroundColor : '#4187c3')};
 	border-radius: 10px;
 	padding: 2rem;
 	text-align: center;
@@ -24,7 +24,17 @@ const Bubble = styled('div')`
 		margin: 0 auto;
 		border-left: 12px solid transparent;
 		border-right: 12px solid transparent;
-		border-top: 14px solid #4187c3;
+		border-top: 14px solid ${props => (props.backgroundColor ? props.backgroundColor : '#4187c3')};
+	}
+
+	footer {
+		display: block;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		margin-top: 30px;
+		width: 100%;
+		color: #424242;
 	}
 `;
 

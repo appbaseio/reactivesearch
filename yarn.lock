@@ -8958,7 +8958,7 @@ webpack-dev-middleware@^1.11.0, webpack-dev-middleware@^1.12.2:
     range-parser "^1.0.3"
     time-stamp "^2.0.0"
 
-webpack-dev-server@^2.5.1, webpack-dev-server@^2.9.5, webpack-dev-server@^2.9.7:
+webpack-dev-server@^2.9.5, webpack-dev-server@^2.9.7:
   version "2.9.7"
   resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-2.9.7.tgz#100ad6a14775478924d417ca6dcfb9d52a98faed"
   dependencies:

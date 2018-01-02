@@ -67,7 +67,7 @@ const Card = styled('a')`
 	}
 
 	&:hover, &:focus {
-		box-shadow: 0 0 0 0 rgba(0,0,0,0.10);
+		box-shadow: 0 0 8px 1px rgba(0,0,0,.3);
 	}
 
 	@media (max-width: 420px) {

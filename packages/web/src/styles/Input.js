@@ -61,6 +61,18 @@ const suggestions = css`
 		padding: 10px;
 		user-select: none;
 
+		& > div {
+			display: block;
+			display: -webkit-box;
+			width: 100%;
+			max-height: 2.3rem;
+			line-height: 1.2rem;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
 		&:hover,
 		&:focus {
 			background-color: #eee;

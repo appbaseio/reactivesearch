@@ -6,7 +6,7 @@ import Flex from '../styles/Flex';
 
 const onData = res => ({
 	title: res.name,
-	desc: (
+	description: (
 		<div>
 			<p style={{ marginBottom: 5 }}>{res.tagline}</p>
 			<Flex justifyContent="space-between" responsive>

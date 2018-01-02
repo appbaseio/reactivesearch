@@ -6,6 +6,7 @@ import { SlopeWrapper, Slope, WhiteBackdrop } from '../styles/Slope';
 import Bubble from '../styles/Bubble';
 import Image from '../styles/Image';
 import {
+	container,
 	boldHeading,
 	button,
 	col,
@@ -13,12 +14,13 @@ import {
 	decoratedLink,
 	decoratedSecondaryLink,
 	card,
-	title,
 	code,
 	showcase,
 	footer,
+	tabPadding,
 	tabCol,
 	tabCenterHeading,
+	tabShow,
 	tabHide,
 	tabJustifyCenter,
 	tabBanner,
@@ -73,7 +75,7 @@ export default class HomePage extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className={container}>
 				<Navbar>
 					<a className={`${boldHeading} ${logo}`} href="/">Reactivesearch</a>
 					<ul className={mobHide}>
@@ -171,11 +173,18 @@ export default class HomePage extends Component {
 								View components
 							</Button>
 							<Button
+								transparent
+								no-shadow
 								className={button}
-								style={{ marginLeft: '10px' }}
+								style={{ border: 0, cursor: 'default' }}
+							>
+								or
+							</Button>
+							<Button
+								className={button}
 								href="https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent"
 							>
-								Or create your own
+								Create your own
 							</Button>
 						</Flex>
 					</Flex>
@@ -187,6 +196,7 @@ export default class HomePage extends Component {
 					backgroundColor="#fefefe"
 					justifyContent="center"
 					alignItems="center"
+					className={tabPadding}
 				>
 					<H2 className={textCenter}>Up To 10x Time Savings</H2>
 					<Text fontSize="1rem" lineHeight="1.6rem" className={textCenter}>
@@ -304,17 +314,11 @@ export default class HomePage extends Component {
 							style={{ maxWidth: '600px', textAlign: 'center' }}
 						>
 							Reactivesearch handles UI rendering, query requests and manages
-							response state so you can focus on the product experience, ship faster and iterate quicker.
+							response state so you can focus on the product experience,
+							ship faster and iterate quicker.
 						</Text>
 
-						<Flex
-							padding="30px 30px 0"
-							justifyContent="center"
-							margin="12px 0 10px"
-							style={{ width: '100%', textAlign: 'left' }}
-						>
-						</Flex>
-						<Flex padding="0 30px" justifyContent="center">
+						<Flex padding="0 30px" justifyContent="center" margin="30px 0 0">
 							<Flex id="code" className={code}>
 								<div
 									style={{
@@ -339,9 +343,9 @@ export default class HomePage extends Component {
 					boxShadow="0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07)"
 				>
 					<H2 margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
-					<Flex>
-						<Button shadow primary className={button} style={{ maxWidth: "250px" }}>Build a live app in 5 mins</Button>
-						<Button className={button} style={{ maxWidth: "250px", marginLeft: "1rem" }}>Read the docs</Button>
+					<Flex className={tabJustifyCenter}>
+						<Button shadow primary className={button} style={{ maxWidth: '250px' }}>Build a live app in 5 mins</Button>
+						<Button className={button} style={{ maxWidth: '250px', marginLeft: '1rem' }}>Read the docs</Button>
 					</Flex>
 				</Flex>
 
@@ -349,22 +353,35 @@ export default class HomePage extends Component {
 					flexDirection="column"
 					justifyContent="center"
 					alignItems="center"
-					padding="7rem 3rem 0"
+					padding="5rem 3rem 0"
+					className={tabPadding}
 				>
 					<H2 className={colored}>Checkout these starter apps</H2>
 
 					<Flex
 						justifyContent="center"
-						style={{ width: '100%', maxWidth: '1100px' }}
+						style={{ width: '100%', maxWidth: '1200px' }}
 						margin="30px 0 0"
 						flexWrap="wrap"
 					>
-						<Image src="images/apps/airbeds.png" />
-						<Image src="images/apps/productsearch.png" />
-						<Image src="images/apps/gitxplore.png" />
-						<Image src="images/apps/carstore.png" />
-						<Image src="images/apps/goodbooks.png" />
-						<Image src="images/apps/technews.png" />
+						<Image src="images/apps/airbeds.png">
+							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+						</Image>
+						<Image src="images/apps/productsearch.png">
+							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+						</Image>
+						<Image src="images/apps/gitxplore.png">
+							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+						</Image>
+						<Image src="images/apps/carstore.png">
+							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+						</Image>
+						<Image src="images/apps/goodbooks.png">
+							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+						</Image>
+						<Image src="images/apps/technews.png">
+							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+						</Image>
 					</Flex>
 				</Flex>
 
@@ -373,23 +390,80 @@ export default class HomePage extends Component {
 					justifyContent="center"
 					alignItems="center"
 					padding="3rem 3rem 4rem"
+					className={tabPadding}
 				>
 					<H2>Testimonials</H2>
-					<Bubble>
-						The time savings have been off the charts in getting our
-						search up and running with searchbase.io
-					</Bubble>
 
-					<Text>Rob Whitley, Co-Founder, Salespipe</Text>
+					<Flex
+						flexDirection="column"
+						justifyContent="center"
+						alignItems="flex-start"
+						margin="30px 0 20px"
+						style={{ width: '100%', maxWidth: '800px' }}
+						className={tabHide}
+					>
+						<Bubble backgroundColor="#5846AB" big>
+							The time savings have been off the charts in getting our
+							search up and running with searchbase.io
+
+							<footer>Rob Whitley, Co-Founder, Salespipe</footer>
+						</Bubble>
+					</Flex>
+					<Flex
+						flexDirection="column"
+						justifyContent="center"
+						alignItems="flex-end"
+						style={{ width: '100%', maxWidth: '1100px' }}
+						className={tabHide}
+					>
+						<Bubble>
+							The time savings have been off the charts in getting our
+							search up and running with searchbase.io
+
+							<footer>Rob Whitley, Co-Founder, Salespipe</footer>
+						</Bubble>
+					</Flex>
+
+					<Flex
+						flexDirection="column"
+						justifyContent="center"
+						alignItems="flex-start"
+						style={{ width: '100%', maxWidth: '900px' }}
+						className={tabHide}
+					>
+						<Bubble backgroundColor="#5C67E1">
+							The time savings have been off the charts in getting our
+							search up and running with searchbase.io
+
+							<footer>Rob Whitley, Co-Founder, Salespipe</footer>
+						</Bubble>
+					</Flex>
+
+					<Flex
+						flexDirection="column"
+						justifyContent="center"
+						alignItems="center"
+						style={{ width: '100%', maxWidth: '900px' }}
+						className={tabShow}
+					>
+						<Bubble backgroundColor="#5C67E1">
+							The time savings have been off the charts in getting our
+							search up and running with searchbase.io
+
+							<footer>Rob Whitley, Co-Founder, Salespipe</footer>
+						</Bubble>
+					</Flex>
 				</Flex>
 
 				<Flex
 					backgroundColor="#fafafa"
 					justifyContent="center"
 					alignItems="center"
-					padding="100px 3rem 50px"
+					className={tabPadding}
 					style={{
 						backgroundImage: 'linear-gradient(to top, rgb(223, 233, 243) 0%, white 100%)',
+						paddingTop: '100px',
+						paddingBottom: '60px',
 					}}
 				>
 					<Flex

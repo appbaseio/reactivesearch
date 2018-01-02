@@ -349,6 +349,8 @@ class ResultCard extends Component {
 					key={item._id}
 					href={result.url}
 					className={getClassName(this.props.innerClass, 'listItem')}
+					target={this.props.target}
+					rel={this.props.target === '_blank' ? 'noopener noreferrer' : null}
 				>
 					<Image
 						style={{ backgroundImage: `url(${result.image})` }}
@@ -367,9 +369,9 @@ class ResultCard extends Component {
 							)
 					}
 					{
-						typeof result.desc === 'string'
-							? <article dangerouslySetInnerHTML={{ __html: result.desc }} />
-							: <article>{result.desc}</article>
+						typeof result.description === 'string'
+							? <article dangerouslySetInnerHTML={{ __html: result.description }} />
+							: <article>{result.description}</article>
 					}
 				</Card>
 			);
@@ -508,6 +510,7 @@ ResultCard.propTypes = {
 	className: types.string,
 	innerClass: types.style,
 	url: types.string,
+	target: types.stringRequired,
 };
 
 ResultCard.defaultProps = {
@@ -518,6 +521,7 @@ ResultCard.defaultProps = {
 	showResultStats: true,
 	style: {},
 	className: null,
+	target: '_blank',
 };
 
 const mapStateToProps = (state, props) => ({

@@ -5,6 +5,20 @@ import queries from './mediaQueries';
 const primaryColor = '#6772e5';
 const secondaryColor = '#fefefe';
 
+const container = css`
+	${queries.medium`
+		h1 {
+			font-size: 1.6rem;
+			line-height: 2rem;
+		}
+
+		h2 {
+			font-size: 1.4rem;
+			line-height: 1.8rem;
+		}
+	`};
+`;
+
 const boldHeading = css`
 	letter-spacing: 0.04rem;
 	word-spacing: 0.15rem;
@@ -16,6 +30,10 @@ const button = css`
 	font-size: 1rem;
 	text-shadow: 0px 0px 1px rgba(255, 255, 255, 1);
 	text-decoration: none;
+
+	${queries.small`
+		margin-top: 10px;
+	`}
 `;
 
 const col = css`
@@ -75,6 +93,22 @@ const card = css`
 	align-items: center;
 	text-align: center;
 	box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
+	cursor: pointer;
+
+	&:hover, &:focus {
+		box-shadow: 0 15px 35px rgba(50,50,93,.2), 0 5px 15px rgba(0,0,0,.2);
+
+		h4 {
+			color: ${primaryColor};
+		}
+	}
+
+	& > div:first-child {
+		height: 88px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 
 	img {
 		margin-bottom: 15px;
@@ -87,17 +121,6 @@ const card = css`
 	${queries.small`
 		width: 100%;
 	`};
-`;
-
-const title = css`
-	display: inline-flex;
-	background: #6772e5;
-	border-radius: 999em;
-	padding: 0 15px;
-	height: 32px;
-	color: #fff;
-	justify-content: center;
-	align-items: center;
 `;
 
 const code = css`
@@ -117,7 +140,7 @@ const showcase = css`
 	border-radius: 4px;
 
 	${queries.medium`
-		margin: 40px auto 0;
+		margin: 40px auto;
 	`};
 `;
 
@@ -181,6 +204,7 @@ const tabCol = css`
 	${queries.medium`
 		flex-direction: column;
 		text-align: center;
+		padding: 0 1.2rem;
 
 		img {
 			margin-bottom: 30px;
@@ -199,10 +223,24 @@ const tabCenterHeading = css`
 	`};
 `;
 
+const tabShow = css`
+	display: none;
+
+	${queries.medium`
+		display: flex;
+	`};
+`;
+
 const tabHide = css`
 	${queries.medium`
 		display: none;
 	`};
+`;
+
+const tabPadding = css`
+	${queries.medium`
+		padding: 1.5rem;
+	`}
 `;
 
 const tabJustifyCenter = css`
@@ -221,13 +259,9 @@ const tabJustifyCenter = css`
 
 const tabBanner = css`
 	${queries.medium`
-		padding: 0 2rem;
+		padding: 0 1.6rem;
 		text-align: center;
 		align-items: center;
-
-		h1 {
-			font-size: 1.8rem;
-		}
 	`};
 `;
 
@@ -242,6 +276,7 @@ const textCenter = css`
 `;
 
 export {
+	container,
 	boldHeading,
 	button,
 	col,
@@ -249,12 +284,13 @@ export {
 	decoratedLink,
 	decoratedSecondaryLink,
 	card,
-	title,
 	code,
 	showcase,
 	footer,
 	tabCol,
 	tabCenterHeading,
+	tabPadding,
+	tabShow,
 	tabHide,
 	tabJustifyCenter,
 	tabBanner,

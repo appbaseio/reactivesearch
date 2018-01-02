@@ -17,7 +17,7 @@ const onData = data => ({
 			? 'src/images/car.jpg'
 			: `src/images/${data.vehicleType.replace(/ /g, '-')}/${data.color}.jpg`,
 	title: data.name,
-	desc: (
+	description: (
 		<div>
 			<div className={price}>${data.price}</div>
 			<Flex justifyContent="space-between" responsive>

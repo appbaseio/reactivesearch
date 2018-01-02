@@ -47,6 +47,14 @@ class DatePicker extends Component {
 			nextProps.react,
 			() => this.setReact(nextProps),
 		);
+		checkPropChange(
+			this.props.dataField,
+			nextProps.dataField,
+			() => this.updateQuery(
+				this.state.currentDate ? this.formatInputDate(this.state.currentDate) : null,
+				nextProps,
+			),
+		);
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleDateChange(nextProps.defaultSelected, true, nextProps);
 		} else if (
@@ -232,6 +240,7 @@ DatePicker.propTypes = {
 	filterLabel: types.string,
 	showClear: types.bool,
 	clickUnselectsDay: types.bool,
+	dataField: types.stringRequired,
 };
 
 DatePicker.defaultProps = {
