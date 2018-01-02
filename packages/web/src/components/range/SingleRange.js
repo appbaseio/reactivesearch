@@ -134,7 +134,7 @@ class SingleRange extends Component {
 					{
 						this.props.data.map((item) => {
 							const selected = !!this.state.currentValue
-												&& this.state.currentValue.label === item.label;
+								&& this.state.currentValue.label === item.label;
 							return (
 								<li key={item.label} className={`${selected ? 'active' : ''}`}>
 									<Radio
