@@ -62,7 +62,9 @@ class MultiList extends Component {
 			nextProps.options,
 			() => {
 				this.setState({
-					options: nextProps.options[nextProps.dataField].buckets || [],
+					options: nextProps.options[nextProps.dataField]
+						? nextProps.options[nextProps.dataField].buckets
+						: [],
 				});
 			},
 		);
@@ -71,6 +73,15 @@ class MultiList extends Component {
 			nextProps,
 			['size', 'sortBy'],
 			() => this.updateQueryOptions(nextProps),
+		);
+
+		checkPropChange(
+			this.props.dataField,
+			nextProps.dataField,
+			() => {
+				this.updateQueryOptions(nextProps);
+				this.updateQuery(this.state.currentValue, nextProps);
+			},
 		);
 
 		let selectedValue = Object.keys(this.state.currentValue);
@@ -313,7 +324,7 @@ class MultiList extends Component {
 										id={item.key}
 										name={this.props.componentId}
 										value={item.key}
-										onClick={this.handleClick}
+										onChange={this.handleClick}
 										checked={!!this.state.currentValue[item.key]}
 										show={this.props.showCheckbox}
 									/>
