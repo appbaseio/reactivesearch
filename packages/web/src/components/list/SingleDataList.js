@@ -49,6 +49,14 @@ class SingleDataList extends Component {
 			() => this.setReact(nextProps),
 		);
 
+		checkPropChange(
+			this.props.dataField,
+			nextProps.dataField,
+			() => {
+				this.updateQuery(this.state.currentValue, nextProps);
+			},
+		);
+
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected);
 		} else if (this.state.currentValue !== nextProps.selectedValue) {
@@ -203,6 +211,7 @@ class SingleDataList extends Component {
 										id={item.label}
 										name={this.props.componentId}
 										value={item.label}
+										onChange={() => {}}
 										onClick={this.handleClick}
 										checked={this.state.currentValue === item.label}
 										show={this.props.showRadio}
