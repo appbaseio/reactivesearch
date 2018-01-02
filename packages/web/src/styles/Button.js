@@ -58,9 +58,13 @@ const toggleButtons = css`
 	}
 `;
 
-const numberBoxButtons = css`
+const numberBoxContainer = css`
+	margin: 0 -5px;
 	a {
 		margin: 5px;
+	}
+	span {
+		margin: 0 5px;
 	}
 `;
 
@@ -112,5 +116,5 @@ const Button = styled('a')`
 	${props => props.large && large};
 `;
 
-export { pagination, filters, toggleButtons, numberBoxButtons };
+export { pagination, filters, toggleButtons, numberBoxContainer };
 export default Button;
