@@ -171,11 +171,17 @@ export default class HomePage extends Component {
 								View components
 							</Button>
 							<Button
+								transparent
+								no-shadow
+								style={{ marginTop: '20px', border: 0, cursor: 'default' }}
+							>
+								or
+							</Button>
+							<Button
 								className={button}
-								style={{ marginLeft: '10px' }}
 								href="https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent"
 							>
-								Or create your own
+								Create your own
 							</Button>
 						</Flex>
 					</Flex>
