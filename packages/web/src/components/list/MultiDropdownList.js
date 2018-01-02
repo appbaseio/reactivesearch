@@ -60,7 +60,9 @@ class MultiDropdownList extends Component {
 			nextProps.options,
 			() => {
 				this.setState({
-					options: nextProps.options[nextProps.dataField].buckets || [],
+					options: nextProps.options[nextProps.dataField]
+						? nextProps.options[nextProps.dataField].buckets
+						: [],
 				});
 			},
 		);
@@ -69,6 +71,15 @@ class MultiDropdownList extends Component {
 			nextProps,
 			['size', 'sortBy'],
 			() => this.updateQueryOptions(nextProps),
+		);
+
+		checkPropChange(
+			this.props.dataField,
+			nextProps.dataField,
+			() => {
+				this.updateQueryOptions(nextProps);
+				this.updateQuery(Object.keys(this.state.currentValue), nextProps);
+			},
 		);
 
 		let selectedValue = Object.keys(this.state.currentValue);
