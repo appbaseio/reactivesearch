@@ -85,7 +85,7 @@ class DataSearch extends Component {
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			['fieldWeights', 'fuzziness', 'queryFormat'],
+			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField'],
 			() => {
 				this.updateQuery(nextProps.componentId, this.state.currentValue, nextProps);
 			},
