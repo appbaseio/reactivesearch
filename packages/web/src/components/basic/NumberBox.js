@@ -15,7 +15,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
-import Button, { numberBoxButtons } from '../../styles/Button';
+import Button, { numberBoxContainer } from '../../styles/Button';
 import Flex from '../../styles/Flex';
 
 class NumberBox extends Component {
@@ -149,11 +149,11 @@ class NumberBox extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				<Flex labelPosition={this.props.labelPosition} inline>
+				<Flex labelPosition={this.props.labelPosition} justifyContent="space-between" className={numberBoxContainer}>
 					<span className={getClassName(this.props.innerClass, 'label') || null}>
 						{this.props.data.label}
 					</span>
-					<div className={numberBoxButtons}>
+					<div>
 						<Button
 							className={getClassName(this.props.innerClass, 'button') || null}
 							onClick={this.decrementValue}

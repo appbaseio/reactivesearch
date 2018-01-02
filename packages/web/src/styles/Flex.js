@@ -14,12 +14,10 @@ const rightLabel = css`
 
 const topLabel = css`
 	flex-direction: column;
-	align-items: center;
 `;
 
 const bottomLabel = css`
 	flex-direction: column-reverse;
-	align-items: center;
 `;
 
 const border = css`
