@@ -92,6 +92,10 @@ class Main extends Component {
 				</Header>
 				<ScrollView>
 					<View style={{ padding: 10 }}>
+						<SingleDropdownList
+							componentId="StComponent"
+							dataField="brand.raw"
+						/>
 						<TextField
 							componentId="TextFieldComponent"
 							dataField="color"
