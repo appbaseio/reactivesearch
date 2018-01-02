@@ -19,6 +19,7 @@ import {
 	footer,
 	tabCol,
 	tabCenterHeading,
+	tabShow,
 	tabHide,
 	tabJustifyCenter,
 	tabBanner,
@@ -315,7 +316,7 @@ export default class HomePage extends Component {
 							ship faster and iterate quicker.
 						</Text>
 
-						<Flex padding="0 30px" justifyContent="center">
+						<Flex padding="0 30px" justifyContent="center" margin="30px 0 0">
 							<Flex id="code" className={code}>
 								<div
 									style={{
@@ -376,12 +377,66 @@ export default class HomePage extends Component {
 					padding="3rem 3rem 4rem"
 				>
 					<H2>Testimonials</H2>
-					<Bubble>
-						The time savings have been off the charts in getting our
-						search up and running with searchbase.io
-					</Bubble>
 
-					<Text>Rob Whitley, Co-Founder, Salespipe</Text>
+					<Flex
+						flexDirection="column"
+						justifyContent="center"
+						alignItems="flex-start"
+						margin="30px 0 20px"
+						style={{ width: '100%', maxWidth: '800px' }}
+						className={tabHide}
+					>
+						<Bubble backgroundColor="#5846AB" big>
+							The time savings have been off the charts in getting our
+							search up and running with searchbase.io
+
+							<footer>Rob Whitley, Co-Founder, Salespipe</footer>
+						</Bubble>
+					</Flex>
+					<Flex
+						flexDirection="column"
+						justifyContent="center"
+						alignItems="flex-end"
+						style={{ width: '100%', maxWidth: '1100px' }}
+						className={tabHide}
+					>
+						<Bubble>
+							The time savings have been off the charts in getting our
+							search up and running with searchbase.io
+
+							<footer>Rob Whitley, Co-Founder, Salespipe</footer>
+						</Bubble>
+					</Flex>
+
+					<Flex
+						flexDirection="column"
+						justifyContent="center"
+						alignItems="flex-start"
+						style={{ width: '100%', maxWidth: '900px' }}
+						className={tabHide}
+					>
+						<Bubble backgroundColor="#5C67E1">
+							The time savings have been off the charts in getting our
+							search up and running with searchbase.io
+
+							<footer>Rob Whitley, Co-Founder, Salespipe</footer>
+						</Bubble>
+					</Flex>
+
+					<Flex
+						flexDirection="column"
+						justifyContent="center"
+						alignItems="center"
+						style={{ width: '100%', maxWidth: '900px' }}
+						className={tabShow}
+					>
+						<Bubble backgroundColor="#5C67E1">
+							The time savings have been off the charts in getting our
+							search up and running with searchbase.io
+
+							<footer>Rob Whitley, Co-Founder, Salespipe</footer>
+						</Bubble>
+					</Flex>
 				</Flex>
 
 				<Flex
