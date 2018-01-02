@@ -10,17 +10,15 @@ import {
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
-	isEqual,
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
 	getAggsOrder,
 	checkPropChange,
+	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
-
-const Item = Picker.Item;
 
 class SingleDropdownList extends Component {
 	constructor(props) {
@@ -30,18 +28,20 @@ class SingleDropdownList extends Component {
 			currentValue: '',
 			options: [],
 		};
-		this.type = 'Term';
+		this.type = 'term';
 		this.internalComponent = `${this.props.componentId}__internal`;
 	}
 
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
-
 		this.updateQueryOptions(this.props);
 
-		if (this.props.defaultSelected) {
+		this.setReact(this.props);
+
+		if (this.props.selectedValue) {
+			this.setValue(this.props.selectedValue);
+		} else if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected);
 		}
 	}
@@ -57,20 +57,33 @@ class SingleDropdownList extends Component {
 			nextProps.options,
 			() => {
 				this.setState({
-					options: nextProps.options[nextProps.dataField].buckets || [],
+					options: nextProps.options[nextProps.dataField]
+						? nextProps.options[nextProps.dataField].buckets
+						: [],
 				});
 			},
 		);
-		checkPropChange(
-			this.props.defaultSelected,
-			nextProps.defaultSelected,
-			() => this.setValue(nextProps.defaultSelected, nextProps),
-		);
-		checkPropChange(
-			this.props.sortBy,
-			nextProps.sortBy,
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			['size', 'sortBy'],
 			() => this.updateQueryOptions(nextProps),
 		);
+
+		checkPropChange(
+			this.props.dataField,
+			nextProps.dataField,
+			() => {
+				this.updateQueryOptions(nextProps);
+				this.updateQuery(this.state.currentValue, nextProps);
+			},
+		);
+
+		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+			this.setValue(nextProps.defaultSelected);
+		} else if (this.state.currentValue !== nextProps.selectedValue) {
+			this.setValue(nextProps.selectedValue || '');
+		}
 	}
 
 	componentWillUnmount() {
@@ -89,10 +102,10 @@ class SingleDropdownList extends Component {
 	};
 
 	defaultQuery = (value, props) => {
-		if (this.selectAll) {
+		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
 			return {
 				exists: {
-					field: [props.dataField],
+					field: props.dataField,
 				},
 			};
 		} else if (value) {
@@ -102,15 +115,18 @@ class SingleDropdownList extends Component {
 				},
 			};
 		}
+		return null;
 	}
 
 	setValue = (value, props = this.props) => {
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value,
+			}, () => {
+				this.updateQuery(value, props);
 			});
-			this.updateQuery(value, props);
 		};
+
 		checkValueChange(
 			props.componentId,
 			value,
@@ -126,11 +142,19 @@ class SingleDropdownList extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
-		let callback = null;
+		let onQueryChange = null;
 		if (props.onQueryChange) {
-			callback = props.onQueryChange;
+			onQueryChange = props.onQueryChange;
 		}
-		props.updateQuery(props.componentId, query(value, props), value, props.filterLabel, callback);
+		props.updateQuery({
+			componentId: props.componentId,
+			query: query(value, props),
+			value,
+			label: props.filterLabel,
+			showFilter: props.showFilter,
+			onQueryChange,
+			URLParams: false,
+		});
 	}
 
 	updateQueryOptions = (props) => {
@@ -139,21 +163,27 @@ class SingleDropdownList extends Component {
 			[props.dataField]: {
 				terms: {
 					field: props.dataField,
-					size: 100,
+					size: props.size,
 					order: getAggsOrder(props.sortBy),
 				},
 			},
 		};
 		props.setQueryOptions(this.internalComponent, queryOptions);
-		// Since the queryOptions are attached to the internal component,
-		// we need to notify the subscriber (parent component)
-		// that the query has changed because no new query will be
-		// auto-generated for the internal component as its
-		// dependency tree is empty
-		props.updateQuery(this.internalComponent, null);
 	}
 
 	render() {
+		let selectAll = [];
+
+		if (this.state.options.length === 0) {
+			return null;
+		}
+
+		if (this.props.selectAllLabel) {
+			selectAll = [{
+				key: this.props.selectAllLabel,
+			}];
+		}
+
 		return (
 			<Picker
 				iosHeader="Select one"
@@ -161,6 +191,7 @@ class SingleDropdownList extends Component {
 				placeholder={this.props.placeholder}
 				selectedValue={this.state.currentValue}
 				onValueChange={this.handleValueChange}
+				style={this.props.style}
 			>
 				{
 					this.state.options.map(item => (
@@ -173,38 +204,51 @@ class SingleDropdownList extends Component {
 }
 
 SingleDropdownList.propTypes = {
-	componentId: types.componentId,
-	addComponent: types.addComponent,
-	dataField: types.dataField,
+	componentId: types.stringRequired,
+	addComponent: types.funcRequired,
+	dataField: types.stringRequired,
 	sortBy: types.sortByWithCount,
-	setQueryOptions: types.setQueryOptions,
-	updateQuery: types.updateQuery,
+	setQueryOptions: types.funcRequired,
+	updateQuery: types.funcRequired,
 	defaultSelected: types.string,
 	react: types.react,
 	options: types.options,
-	removeComponent: types.removeComponent,
-	beforeValueChange: types.beforeValueChange,
-	onValueChange: types.onValueChange,
-	customQuery: types.customQuery,
-	onQueryChange: types.onQueryChange,
-	placeholder: types.placeholder,
+	removeComponent: types.funcRequired,
+	beforeValueChange: types.func,
+	onValueChange: types.func,
+	customQuery: types.func,
+	onQueryChange: types.func,
+	placeholder: types.string,
+	title: types.title,
+	filterLabel: types.string,
+	selectedValue: types.selectedValue,
+	showFilter: types.bool,
+	selectAllLabel: types.string,
+	style: types.style,
+	showCount: types.bool,
+	size: types.number,
 };
 
 SingleDropdownList.defaultProps = {
 	size: 100,
-	placeholder: 'Select a value',
 	sortBy: 'count',
+	placeholder: 'Select a value',
+	showFilter: true,
+	style: {},
+	showCount: true,
 };
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
+	selectedValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value) || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(updateQuery(component, query, value, filterLabel, onQueryChange)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
