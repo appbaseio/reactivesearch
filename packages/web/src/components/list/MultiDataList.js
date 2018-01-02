@@ -50,6 +50,14 @@ class MultiDataList extends Component {
 			() => this.setReact(nextProps),
 		);
 
+		checkPropChange(
+			this.props.dataField,
+			nextProps.dataField,
+			() => {
+				this.updateQuery(Object.keys(this.state.currentValue), nextProps);
+			},
+		);
+
 		let selectedValue = Object.keys(this.state.currentValue);
 
 		if (this.props.selectAllLabel) {
