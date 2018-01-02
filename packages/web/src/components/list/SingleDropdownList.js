@@ -154,7 +154,7 @@ class SingleDropdownList extends Component {
 			onQueryChange,
 			URLParams: props.URLParams,
 		});
-	}
+	};
 
 	updateQueryOptions = (props) => {
 		const queryOptions = getQueryOptions(props);
