@@ -124,6 +124,7 @@ class Dropdown extends Component {
 													<li
 														{...getItemProps({ item })}
 														key={item[keyField]}
+														className={`${selected ? 'active' : ''}`}
 														style={{
 															backgroundColor: this.getBackgroundColor(
 																highlightedIndex === index,

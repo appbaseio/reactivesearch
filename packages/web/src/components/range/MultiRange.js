@@ -177,7 +177,7 @@ class MultiRange extends Component {
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
 					{
 						this.props.data.map(item => (
-							<li key={item.label}>
+							<li key={item.label} className={`${!!this.state.selectedValues[item.label] ? 'active' : ''}`}>
 								<Checkbox
 									className={getClassName(this.props.innerClass, 'input') || null}
 									id={item.label}
