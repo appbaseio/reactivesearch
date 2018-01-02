@@ -9,7 +9,6 @@
   ],
   "scripts": {
     "watch": "yarn run build -w",
-    "start": "webpack-dev-server --hot --inline --progress --colors --port 8012",
     "build": "babel src --out-dir lib",
     "build:umd": "webpack --progress -p --config webpack.config.umd.js",
     "stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
@@ -55,7 +54,6 @@
     "compression-webpack-plugin": "^1.0.1",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
-    "webpack": "^3.2.0",
-    "webpack-dev-server": "^2.5.1"
+    "webpack": "^3.2.0"
   }
 }
