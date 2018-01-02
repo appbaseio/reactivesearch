@@ -71,6 +71,19 @@ class DateRange extends Component {
 				} : null, true, nextProps);
 			}
 		}
+		checkPropChange(
+			this.props.dataField,
+			nextProps.dataField,
+			() => this.updateQuery(
+				this.state.currentDate
+					? { // we need the date in correct queryFormat
+						start: this.formatDate(this.state.currentDate.start),
+						end: this.formatDate(this.state.currentDate.end),
+					}
+					: this.state.currentDate,
+				nextProps,
+			),
+		);
 	}
 
 	componentWillUnmount() {
@@ -364,6 +377,7 @@ DateRange.propTypes = {
 	filterLabel: types.string,
 	autoFocusEnd: types.bool,
 	showClear: types.bool,
+	dataField: types.stringRequired,
 };
 
 DateRange.defaultProps = {
