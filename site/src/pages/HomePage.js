@@ -17,6 +17,7 @@ import {
 	code,
 	showcase,
 	footer,
+	tabPadding,
 	tabCol,
 	tabCenterHeading,
 	tabShow,
@@ -195,6 +196,7 @@ export default class HomePage extends Component {
 					backgroundColor="#fefefe"
 					justifyContent="center"
 					alignItems="center"
+					className={tabPadding}
 				>
 					<H2 className={textCenter}>Up To 10x Time Savings</H2>
 					<Text fontSize="1rem" lineHeight="1.6rem" className={textCenter}>
@@ -351,7 +353,8 @@ export default class HomePage extends Component {
 					flexDirection="column"
 					justifyContent="center"
 					alignItems="center"
-					padding="7rem 3rem 0"
+					padding="5rem 3rem 0"
+					className={tabPadding}
 				>
 					<H2 className={colored}>Checkout these starter apps</H2>
 
@@ -387,6 +390,7 @@ export default class HomePage extends Component {
 					justifyContent="center"
 					alignItems="center"
 					padding="3rem 3rem 4rem"
+					className={tabPadding}
 				>
 					<H2>Testimonials</H2>
 
@@ -455,9 +459,11 @@ export default class HomePage extends Component {
 					backgroundColor="#fafafa"
 					justifyContent="center"
 					alignItems="center"
-					padding="100px 3rem 50px"
+					className={tabPadding}
 					style={{
 						backgroundImage: 'linear-gradient(to top, rgb(223, 233, 243) 0%, white 100%)',
+						paddingTop: '100px',
+						paddingBottom: '60px',
 					}}
 				>
 					<Flex
