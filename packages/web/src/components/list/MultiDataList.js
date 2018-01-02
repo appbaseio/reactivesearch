@@ -244,7 +244,7 @@ class MultiDataList extends Component {
 										id={selectAllLabel}
 										name={selectAllLabel}
 										value={selectAllLabel}
-										onClick={this.handleClick}
+										onChange={this.handleClick}
 										checked={!!this.state.currentValue[selectAllLabel]}
 										show={this.props.showCheckbox}
 									/>
@@ -270,7 +270,7 @@ class MultiDataList extends Component {
 										id={item.label}
 										name={this.props.componentId}
 										value={item.label}
-										onClick={this.handleClick}
+										onChange={this.handleClick}
 										checked={!!this.state.currentValue[item.label]}
 										show={this.props.showCheckbox}
 									/>

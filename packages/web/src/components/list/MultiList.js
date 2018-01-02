@@ -295,7 +295,7 @@ class MultiList extends Component {
 										id={selectAllLabel}
 										name={selectAllLabel}
 										value={selectAllLabel}
-										onClick={this.handleClick}
+										onChange={this.handleClick}
 										checked={!!this.state.currentValue[selectAllLabel]}
 										show={this.props.showCheckbox}
 									/>

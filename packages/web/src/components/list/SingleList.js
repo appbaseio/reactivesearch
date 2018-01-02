@@ -224,7 +224,7 @@ class SingleList extends Component {
 										id={selectAllLabel}
 										name={this.props.componentId}
 										value={selectAllLabel}
-										onClick={this.handleClick}
+										onChange={this.handleClick}
 										checked={this.state.currentValue === selectAllLabel}
 										show={this.props.showRadio}
 									/>

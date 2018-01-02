@@ -135,8 +135,7 @@ class SingleRange extends Component {
 									id={item.label}
 									name={this.props.componentId}
 									value={item.label}
-									onClick={this.handleClick}
-									onChange={() => {}}
+									onChange={this.handleClick}
 									checked={
 										!!this.state.currentValue
 										&& this.state.currentValue.label === item.label

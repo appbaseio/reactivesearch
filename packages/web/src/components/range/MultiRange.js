@@ -179,7 +179,7 @@ class MultiRange extends Component {
 									id={item.label}
 									name={this.props.componentId}
 									value={item.label}
-									onClick={this.handleClick}
+									onChange={this.handleClick}
 									checked={!!this.state.selectedValues[item.label]}
 									show={this.props.showCheckbox}
 								/>
