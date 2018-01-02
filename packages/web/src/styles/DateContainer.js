@@ -206,6 +206,7 @@ const DateContainer = styled.div`
 
 	.DayPickerInput input {
 		${input};
+		background: #fff;
 		${({ showBorder }) => !showBorder && css`
 			border: none;
 		`};
