@@ -19,7 +19,7 @@ export const title = css`
 `;
 
 export const navbarContent = css`
-	max-width: 1200px;
+	max-width: 1100px;
 	margin: 0 auto;
 `;
 

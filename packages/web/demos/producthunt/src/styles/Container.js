@@ -26,13 +26,15 @@ export const resultsContainer = css`
 
 export const dataSearchContainer = css`
 	width: 100%;
-	max-width: 600px;
+	max-width: calc(100% - 370px);
 	${queries.large`
 		margin-left: 10px;
+		max-width: calc(100% - 250px);
 	`};
 	${queries.small`
 		margin-left: 0;
 		margin-top: 10px;
+		max-width: 100%;
 	`};
 `;
 
