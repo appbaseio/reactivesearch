@@ -39,8 +39,14 @@ class ToggleButton extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () =>
-			this.setReact(nextProps));
+		checkPropChange(this.props.react, nextProps.react, () => {
+			this.setReact(nextProps);
+		});
+
+		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+			this.updateQuery(this.state.currentValue, nextProps);
+		});
+
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleToggle(nextProps.defaultSelected, true, nextProps);
 		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
@@ -164,6 +170,7 @@ ToggleButton.propTypes = {
 	addComponent: types.funcRequired,
 	componentId: types.stringRequired,
 	data: types.data,
+	dataField: types.stringRequired,
 	selectedValue: types.selectedValue,
 	defaultSelected: types.stringArray,
 	multiSelect: types.bool,
