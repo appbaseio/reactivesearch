@@ -140,7 +140,7 @@ const showcase = css`
 	border-radius: 4px;
 
 	${queries.medium`
-		margin: 40px auto 0;
+		margin: 40px auto;
 	`};
 `;
 
@@ -204,6 +204,7 @@ const tabCol = css`
 	${queries.medium`
 		flex-direction: column;
 		text-align: center;
+		padding: 0 1.2rem;
 
 		img {
 			margin-bottom: 30px;
@@ -236,6 +237,12 @@ const tabHide = css`
 	`};
 `;
 
+const tabPadding = css`
+	${queries.medium`
+		padding: 1.5rem;
+	`}
+`;
+
 const tabJustifyCenter = css`
 	${queries.medium`
 		justify-content: center;
@@ -252,7 +259,7 @@ const tabJustifyCenter = css`
 
 const tabBanner = css`
 	${queries.medium`
-		padding: 0 2rem;
+		padding: 0 1.6rem;
 		text-align: center;
 		align-items: center;
 	`};
@@ -282,6 +289,7 @@ export {
 	footer,
 	tabCol,
 	tabCenterHeading,
+	tabPadding,
 	tabShow,
 	tabHide,
 	tabJustifyCenter,
