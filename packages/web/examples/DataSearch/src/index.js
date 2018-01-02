@@ -44,27 +44,34 @@ class Main extends Component {
 		);
 	}
 
-	onData = data => ({
-		title: <div className="book-title" dangerouslySetInnerHTML={{ __html: data.original_title }} />,
-		description: (
-			<div className="flex column justify-space-between">
-				<div>
-					<div>by <span className="authors-list">{data.authors}</span></div>
-					<div className="ratings-list flex align-center">
-						<span className="stars">
-							{
-								Array(data.average_rating_rounded).fill('x')
-									.map((item, index) => <i className="fas fa-star" key={index} />)	// eslint-disable-line
-							}
-						</span>
-						<span className="avg-rating">({data.average_rating} avg)</span>
+	onData(data) {
+		return ({
+			title: <div className="book-title" dangerouslySetInnerHTML={{ __html: data.original_title }} />,
+			description: (
+				<div className="flex column justify-space-between">
+					<div>
+						<div>by <span className="authors-list">{data.authors}</span></div>
+						<div className="ratings-list flex align-center">
+							<span className="stars">
+								{
+									Array(data.average_rating_rounded).fill('x')
+										.map((item, index) => <i className="fas fa-star" key={index} />)	// eslint-disable-line
+								}
+							</span>
+							<span className="avg-rating">({data.average_rating} avg)</span>
+						</div>
 					</div>
+					<span className="pub-year">Pub {data.original_publication_year}</span>
 				</div>
-				<span className="pub-year">Pub {data.original_publication_year}</span>
-			</div>
-		),
-		image: data.image,
-	})
+			),
+			image: data.image,
+		});
+	}
+
+	constructor(props) {
+		super(props);
+		this.onData = this.onData.bind(this);
+	}
 }
 
 ReactDOM.render(<Main />, document.getElementById('root'));
