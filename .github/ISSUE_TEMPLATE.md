@@ -1,7 +1,5 @@
-<!-- Pick relevant type -->
-## Bug Report
-## Feature Request
-## <!-- other, please specify -->
+**Issue Type:**
+<!-- Please specify if this is a 'bug' or an 'enhancement' issue. -->
 
 **Description:**
 <!-- Describe the bug or feature request. Attach Screenshots if it helps -->
