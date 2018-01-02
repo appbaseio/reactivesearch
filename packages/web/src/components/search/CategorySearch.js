@@ -99,7 +99,7 @@ class CategorySearch extends Component {
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			['fieldWeights', 'fuzziness', 'queryFormat'],
+			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'categoryField'],
 			() => {
 				this.updateQuery(
 					nextProps.componentId,
@@ -582,10 +582,11 @@ CategorySearch.defaultProps = {
 const mapStateToProps = (state, props) => ({
 	suggestions:
 		(state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
-	categories:
-		(state.aggregations[props.componentId]
-			&& state.aggregations[props.componentId][props.categoryField].buckets)
-		|| [],
+	categories: (
+		state.aggregations[props.componentId]
+		&& state.aggregations[props.componentId][props.categoryField]
+		&& state.aggregations[props.componentId][props.categoryField].buckets
+	) || [],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
