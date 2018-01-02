@@ -25,6 +25,7 @@ export const resultsContainer = css`
 			height: 250px;
 			width: 100%;
 			margin: 5px 0;
+			max-width: 100%;
 		`}
 	}
 
