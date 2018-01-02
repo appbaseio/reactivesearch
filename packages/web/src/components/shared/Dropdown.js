@@ -111,7 +111,7 @@ class Dropdown extends Component {
 									{
 										items
 											.map((item, index) => {
-												const selected = this.props.multi && (
+												let selected = this.props.multi && (
 													// MultiDropdownList
 													(selectedItem && !!selectedItem[item[keyField]])
 													// MultiDropdownRange
@@ -119,6 +119,8 @@ class Dropdown extends Component {
 														&& selectedItem.find(value =>
 															value[labelField] === item[labelField]))
 												);
+
+												if (this.props.single) selected = item.key === selectedItem;
 
 												return (
 													<li
@@ -148,7 +150,7 @@ class Dropdown extends Component {
 															}
 														</div>
 														{
-															selected
+															selected && !this.props.single
 																? (<Tick
 																	className={
 																		getClassName(this.props.innerClass, 'icon')
@@ -182,6 +184,7 @@ Dropdown.propTypes = {
 	onChange: types.func,
 	placeholder: types.string,
 	multi: types.bool,
+	single: types.bool,
 	labelField: types.string,
 	keyField: types.string,
 	returnsObject: types.bool,
