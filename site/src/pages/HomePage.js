@@ -357,16 +357,28 @@ export default class HomePage extends Component {
 
 					<Flex
 						justifyContent="center"
-						style={{ width: '100%', maxWidth: '1100px' }}
+						style={{ width: '100%', maxWidth: '1200px' }}
 						margin="30px 0 0"
 						flexWrap="wrap"
 					>
-						<Image src="images/apps/airbeds.png" />
-						<Image src="images/apps/productsearch.png" />
-						<Image src="images/apps/gitxplore.png" />
-						<Image src="images/apps/carstore.png" />
-						<Image src="images/apps/goodbooks.png" />
-						<Image src="images/apps/technews.png" />
+						<Image src="images/apps/airbeds.png">
+							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+						</Image>
+						<Image src="images/apps/productsearch.png">
+							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+						</Image>
+						<Image src="images/apps/gitxplore.png">
+							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+						</Image>
+						<Image src="images/apps/carstore.png">
+							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+						</Image>
+						<Image src="images/apps/goodbooks.png">
+							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+						</Image>
+						<Image src="images/apps/technews.png">
+							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+						</Image>
 					</Flex>
 				</Flex>
 
