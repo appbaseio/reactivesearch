@@ -222,6 +222,14 @@ const tabCenterHeading = css`
 	`};
 `;
 
+const tabShow = css`
+	display: none;
+
+	${queries.medium`
+		display: flex;
+	`};
+`;
+
 const tabHide = css`
 	${queries.medium`
 		display: none;
@@ -274,6 +282,7 @@ export {
 	footer,
 	tabCol,
 	tabCenterHeading,
+	tabShow,
 	tabHide,
 	tabJustifyCenter,
 	tabBanner,
