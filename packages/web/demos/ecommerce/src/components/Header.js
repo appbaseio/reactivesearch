@@ -19,6 +19,7 @@ export default () => (
 					categoryField="brand.raw"
 					componentId="category"
 					placeholder="Search for cars..."
+					iconPosition="left"
 					react={{
 						and: 'brand',
 					}}

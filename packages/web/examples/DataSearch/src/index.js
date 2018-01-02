@@ -8,6 +8,8 @@ import {
 	SelectedFilters,
 } from '@appbaseio/reactivesearch';
 
+import './index.css';
+
 class Main extends Component {
 	render() {
 		return (
