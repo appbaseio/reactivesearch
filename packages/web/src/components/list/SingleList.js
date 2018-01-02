@@ -224,7 +224,8 @@ class SingleList extends Component {
 										id={selectAllLabel}
 										name={this.props.componentId}
 										value={selectAllLabel}
-										onChange={this.handleClick}
+										onClick={this.handleClick}
+										readOnly
 										checked={this.state.currentValue === selectAllLabel}
 										show={this.props.showRadio}
 									/>
@@ -240,7 +241,8 @@ class SingleList extends Component {
 							.filter((item) => {
 								if (String(item.key).length) {
 									if (this.props.showSearch && this.state.searchTerm) {
-										return item.key.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+										return String(item.key).toLowerCase()
+											.includes(this.state.searchTerm.toLowerCase());
 									}
 									return true;
 								}
@@ -253,8 +255,9 @@ class SingleList extends Component {
 										id={item.key}
 										name={this.props.componentId}
 										value={item.key}
-										onChange={this.handleClick}
-										checked={this.state.currentValue === item.key}
+										readOnly
+										onClick={this.handleClick}
+										checked={this.state.currentValue === String(item.key)}
 										show={this.props.showRadio}
 									/>
 									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={item.key}>

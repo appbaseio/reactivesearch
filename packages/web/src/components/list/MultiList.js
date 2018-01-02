@@ -311,7 +311,8 @@ class MultiList extends Component {
 							.filter((item) => {
 								if (String(item.key).length) {
 									if (this.props.showSearch && this.state.searchTerm) {
-										return item.key.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+										return String(item.key).toLowerCase()
+											.includes(this.state.searchTerm.toLowerCase());
 									}
 									return true;
 								}
