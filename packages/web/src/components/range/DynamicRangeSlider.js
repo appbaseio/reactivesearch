@@ -79,8 +79,11 @@ class DynamicRangeSlider extends Component {
 			this.handleChange(nextProps.selectedValue || [nextProps.range.start, nextProps.range.end]);
 		}
 		checkPropChange(this.props.react, nextProps.react, () => {
-			this.updateRangeQueryOptions(this.props);
+			this.updateRangeQueryOptions(nextProps);
 			this.setReact(nextProps);
+		});
+		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+			this.updateRangeQueryOptions(nextProps);
 		});
 		checkSomePropChange(
 			this.props,
