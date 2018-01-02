@@ -47,6 +47,10 @@ class SingleDropdownRange extends Component {
 			() => this.setReact(nextProps),
 		);
 
+		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+			this.updateQuery(this.state.currentValue, nextProps);
+		});
+
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.setValue(nextProps.defaultSelected, true);
 		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {

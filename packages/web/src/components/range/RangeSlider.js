@@ -65,14 +65,21 @@ class RangeSlider extends Component {
 		);
 		checkPropChange(this.props.options, nextProps.options, () => {
 			const { options } = nextProps;
-			options.sort((a, b) => {
-				if (a.key < b.key) return -1;
-				if (a.key > b.key) return 1;
-				return 0;
-			});
+			if (Array.isArray(options)) {
+				options.sort((a, b) => {
+					if (a.key < b.key) return -1;
+					if (a.key > b.key) return 1;
+					return 0;
+				});
+			}
 			this.setState({
-				stats: options,
+				stats: options || [],
 			});
+		});
+
+		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+			this.updateQueryOptions(nextProps);
+			this.handleChange(this.state.currentValue, nextProps);
 		});
 
 		if (!this.locked) {
@@ -323,7 +330,8 @@ RangeSlider.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId]
-		? state.aggregations[props.componentId][props.dataField].buckets
+		? (state.aggregations[props.componentId][props.dataField]
+			&& state.aggregations[props.componentId][props.dataField].buckets)
 		: [],
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
