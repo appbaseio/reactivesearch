@@ -92,6 +92,7 @@ class ResultList extends Component {
 			!isEqual(this.props.sortOptions, nextProps.sortOptions)
 			|| this.props.sortBy !== nextProps.sortBy
 			|| this.props.size !== nextProps.size
+			|| !isEqual(this.props.dataField, nextProps.dataField)
 		) {
 			const options = getQueryOptions(nextProps);
 			if (nextProps.sortOptions) {
