@@ -11,6 +11,7 @@
 	"workspaces": [
 		"packages/*",
 		"packages/web/demos/*",
+		"packages/web/examples/*",
 		"site"
 	],
 	"devDependencies": {
