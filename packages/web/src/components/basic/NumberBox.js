@@ -49,6 +49,9 @@ class NumberBox extends Component {
 		checkPropChange(this.props.queryFormat, nextProps.queryFormat, () => {
 			this.updateQuery(this.state.currentValue, nextProps);
 		});
+		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+			this.updateQuery(this.state.currentValue, nextProps);
+		});
 	}
 
 	componentWillUnmount() {
@@ -180,6 +183,7 @@ NumberBox.propTypes = {
 	addComponent: types.funcRequired,
 	componentId: types.stringRequired,
 	defaultSelected: types.number,
+	dataField: types.stringRequired,
 	data: types.dataNumberBox,
 	react: types.react,
 	removeComponent: types.funcRequired,
