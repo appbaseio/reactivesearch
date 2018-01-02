@@ -132,30 +132,31 @@ class SingleRange extends Component {
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
 					{
-						this.props.data.map(item => (
-							<li key={item.label}>
-								<Radio
-									className={getClassName(this.props.innerClass, 'input')}
-									id={item.label}
-									name={this.props.componentId}
-									value={item.label}
-									onChange={this.handleClick}
-									checked={
-										!!this.state.currentValue
-										&& this.state.currentValue.label === item.label
-									}
-									show={this.props.showRadio}
-								/>
-								<label
-									className={
-										getClassName(this.props.innerClass, 'label') || null
-									}
-									htmlFor={item.label}
-								>
-									{item.label}
-								</label>
-							</li>
-						))
+						this.props.data.map((item) => {
+							const selected = !!this.state.currentValue
+								&& this.state.currentValue.label === item.label;
+							return (
+								<li key={item.label} className={`${selected ? 'active' : ''}`}>
+									<Radio
+										className={getClassName(this.props.innerClass, 'input')}
+										id={item.label}
+										name={this.props.componentId}
+										value={item.label}
+										onChange={this.handleClick}
+										checked={selected}
+										show={this.props.showRadio}
+									/>
+									<label
+										className={
+											getClassName(this.props.innerClass, 'label') || null
+										}
+										htmlFor={item.label}
+									>
+										{item.label}
+									</label>
+								</li>
+							)
+						})
 					}
 				</UL>
 			</div>

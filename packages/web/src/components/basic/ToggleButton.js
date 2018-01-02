@@ -150,17 +150,20 @@ class ToggleButton extends Component {
 					this.props.title
 					&& <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>
 				}
-				{this.props.data.map(item => (
-					<Button
-						className={getClassName(this.props.innerClass, 'button') || null}
-						onClick={() => this.handleToggle(item)}
-						key={item.label}
-						primary={this.state.currentValue.some(value => value.label === item.label)}
-						large
-					>
-						{item.label}
-					</Button>
-				))}
+				{this.props.data.map((item) => {
+					const isSelected = this.state.currentValue.some(value => value.label === item.label);
+					return (
+						<Button
+							className={`${getClassName(this.props.innerClass, 'button')} ${isSelected ? 'active' : ''}`}
+							onClick={() => this.handleToggle(item)}
+							key={item.label}
+							primary={isSelected}
+							large
+						>
+							{item.label}
+						</Button>
+					);
+				})}
 			</div>
 		);
 	}
