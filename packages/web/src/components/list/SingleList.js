@@ -253,7 +253,7 @@ class SingleList extends Component {
 										id={item.key}
 										name={this.props.componentId}
 										value={item.key}
-										onClick={this.handleClick}
+										onChange={this.handleClick}
 										checked={this.state.currentValue === item.key}
 										show={this.props.showRadio}
 									/>
