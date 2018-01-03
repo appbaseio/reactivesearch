@@ -44,7 +44,12 @@ class DataSearch extends Component {
 
 		if (this.props.highlight) {
 			const queryOptions = this.highlightQuery(this.props);
+			queryOptions.size = 20;
 			this.props.setQueryOptions(this.props.componentId, queryOptions);
+		} else {
+			this.props.setQueryOptions(this.props.componentId, {
+				size: 20,
+			});
 		}
 		this.setReact(this.props);
 
@@ -62,6 +67,7 @@ class DataSearch extends Component {
 			['highlight', 'dataField', 'highlightField'],
 			() => {
 				const queryOptions = this.highlightQuery(nextProps);
+				queryOptions.size = 20;
 				this.props.setQueryOptions(nextProps.componentId, queryOptions);
 			},
 		);
@@ -389,6 +395,7 @@ class DataSearch extends Component {
 												<ul className={`${suggestions} ${getClassName(this.props.innerClass, 'list')}`}>
 													{
 														suggestionsList
+															.slice(0, 10)
 															.map((item, index) => (
 																<li
 																	{...getItemProps({ item })}

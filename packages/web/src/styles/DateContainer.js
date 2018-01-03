@@ -1,6 +1,6 @@
 import styled, { css } from 'react-emotion';
 import { withTheme } from 'emotion-theming';
-import lighten from 'polished/lib/color/lighten';
+import { shade } from '../utils';
 
 import { input } from './Input';
 
@@ -181,12 +181,12 @@ const DateContainer = styled.div`
 	}
 
 	.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover {
-		background-color: ${({ theme }) => lighten(0.1, theme.primaryColor)};
+		background-color: ${({ theme }) => shade(theme.primaryColor, 0.1)};
 	}
 
 	.DayPicker:not(.DayPicker--interactionDisabled)
 		.DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
-		background-color: ${({ theme }) => lighten(0.1, theme.primaryColor)};
+		background-color: ${({ theme }) => shade(theme.primaryColor, 0.1)};
 		border-radius: 50%;
 	}
 

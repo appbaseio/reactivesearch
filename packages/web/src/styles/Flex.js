@@ -1,6 +1,6 @@
 import styled from 'react-emotion';
 import { css } from 'emotion';
-import lighten from 'polished/lib/color/lighten';
+import { shade } from '../utils';
 
 const leftLabel = css`
 	flex-direction: row;
@@ -51,7 +51,7 @@ const Flex = styled('div')`
 
 	svg.cancel-icon {
 		cursor: pointer;
-		fill: ${props => lighten(0.3, props.theme.textColor)};
+		fill: ${props => shade(props.theme.textColor, 0.3)};
 		flex-basis: 30px;
 
 		&:hover {

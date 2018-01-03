@@ -1,6 +1,6 @@
 import { css } from 'emotion';
 import styled from 'react-emotion';
-import darken from 'polished/lib/color/darken';
+import { shade } from '../utils';
 
 const filters = css`
 	margin: 0 -3px;
@@ -74,7 +74,7 @@ const primary = props => css`
 	color: ${props.theme.primaryTextColor};
 
 	&:hover, &:focus {
-		background-color: ${darken(0.1, props.theme.primaryColor)};
+		background-color: ${shade(props.theme.primaryColor, -0.1)};
 	}
 `;
 
