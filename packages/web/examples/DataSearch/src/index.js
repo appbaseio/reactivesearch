@@ -69,11 +69,6 @@ class Main extends Component {
 			image: data.image,
 		});
 	}
-
-	constructor(props) {
-		super(props);
-		this.onData = this.onData.bind(this);
-	}
 }
 
 ReactDOM.render(<Main />, document.getElementById('root'));
