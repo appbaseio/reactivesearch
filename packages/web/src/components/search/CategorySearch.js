@@ -20,12 +20,11 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
-
-import { getSuggestions } from '../../utils';
 
 const Text = withTheme(props => (
 	<span
