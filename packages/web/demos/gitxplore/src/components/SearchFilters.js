@@ -14,8 +14,9 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 		<FlexChild margin="10px">
 			<MultiDropdownList
 				componentId="language"
-				dataField="language"
+				dataField="language.raw"
 				title="Language"
+				placeholder="Select languages"
 			/>
 		</FlexChild>
 		<FlexChild margin="10px">
@@ -23,6 +24,7 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 				componentId="topics"
 				dataField="topics.raw"
 				title="Repo Topics"
+				placeholder="Select topics"
 				size={1000}
 				queryFormat="and"
 				defaultSelected={currentTopics}
@@ -34,6 +36,7 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 				componentId="pushed"
 				dataField="pushed"
 				title="Last Active"
+				placeholder="Repo last active"
 				data={[
 					{ start: 'now-1M', end: 'now', label: 'Last 30 days' },
 					{ start: 'now-6M', end: 'now', label: 'Last 6 months' },
@@ -46,6 +49,7 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 				componentId="created"
 				dataField="created"
 				title="Created"
+				placeholder="Repo created"
 				data={[
 					{
 						start: '2017-01-01T00:00:00Z',

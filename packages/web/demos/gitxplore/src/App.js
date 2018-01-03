@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { ReactiveBase, CategorySearch } from '@appbaseio/reactivesearch';
+import { ReactiveBase, DataSearch } from '@appbaseio/reactivesearch';
 
 import theme from './styles/theme';
 
 import Header from './components/Header';
 import Results from './components/Results';
 
-import Container, { resultsContainer, categorySearchContainer, appContainer } from './styles/Container';
+import Container, { resultsContainer, dataSearchContainer, appContainer } from './styles/Container';
 import Flex, { FlexChild } from './styles/Flex';
 
 class App extends Component {
@@ -37,20 +37,21 @@ class App extends Component {
 		return (
 			<Container>
 				<ReactiveBase
-					app="gitxplore-latest"
-					credentials="W7ZomvYgQ:df994896-a25d-4d4e-8724-e26659b93001"
+					app="gitxplore-latest-app"
+					credentials="LsxvulCKp:a500b460-73ff-4882-8d34-9df8064b3b38"
 					theme={theme}
 				>
 					<Flex direction="row-reverse" className={appContainer}>
 						<Header currentTopics={this.state.currentTopics} setTopics={this.setTopics} />
 						<FlexChild className={resultsContainer}>
-							<CategorySearch
+							<DataSearch
 								componentId="repo"
 								dataField={['name', 'description', 'name.raw', 'fullname', 'owner', 'topics']}
-								categoryField="language.raw"
 								placeholder="Search Repos"
+								iconPosition="left"
+								autosuggest={false}
 								URLParams
-								className={categorySearchContainer}
+								className={dataSearchContainer}
 								innerClass={{
 									input: 'search-input',
 								}}

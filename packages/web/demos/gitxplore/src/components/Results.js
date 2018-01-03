@@ -65,6 +65,7 @@ const Results = ({ toggleTopic, currentTopics }) => (
 			list: 'result-list-container',
 			pagination: 'result-list-pagination',
 			resultsInfo: 'result-list-info',
+			poweredBy: 'powered-by',
 		}}
 		className={resultListContainer}
 		size={6}

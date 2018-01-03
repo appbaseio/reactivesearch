@@ -33,6 +33,11 @@ export const resultListContainer = css`
 
 	.result-list-info {
 		margin: 1rem;
+		justify-content: space-between;
+	}
+
+	.powered-by {
+		margin: 0 20px 20px 0;
 	}
 `;
 
