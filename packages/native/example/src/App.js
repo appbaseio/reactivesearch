@@ -44,9 +44,9 @@ class Main extends Component {
 				<Text
 					style={{ flex: 1, fontWeight: 'bold' }}
 				>
-					{this.parseToElement(item._source.name)}
+					{this.parseToElement(item.name)}
 				</Text>
-				<Text>{item._source.brand} - {item._source.model}</Text>
+				<Text>{item.brand} - {item.model}</Text>
 			</View>
 		)}
 		onEndReachedThreshold={0.5}
@@ -126,6 +126,16 @@ class Main extends Component {
 								{ start: 501, end: 1000, label: 'First Date' },
 							]}
 							defaultSelected="Pricey"
+						/>
+
+						<DataSearch
+							componentId="DataSearchComponent"
+							dataField="name"
+							defaultSelected="Nissan"
+							onValueChange={val => console.log('DataSearch onValueChange', val)}
+							react={{
+								and: 'TextFieldComponent'
+							}}
 						/>
 					</View>
 				</ScrollView>
