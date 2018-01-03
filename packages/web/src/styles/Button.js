@@ -23,6 +23,7 @@ const filters = css`
 		span:last-child {
 			display: flex;
 			height: 100%;
+			top: 0;
 			right: 8px;
 			position: absolute;
 			align-items: center;
