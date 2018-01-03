@@ -19,6 +19,7 @@ export default () => (
 			dataField="accommodates"
 			title="Guests"
 			defaultSelected={2}
+			labelPosition="right"
 			data={{
 				start: 1,
 				end: 16,

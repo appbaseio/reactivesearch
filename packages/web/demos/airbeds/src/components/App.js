@@ -1,7 +1,7 @@
 import React from 'react';
-import { ReactiveBase, ResultCard } from '@appbaseio/reactivesearch';
+import { ReactiveBase, DataSearch, ResultCard } from '@appbaseio/reactivesearch';
 
-import { nav, container, rightCol } from '../styles';
+import { nav, container, rightCol, search, title } from '../styles';
 import Filters from './Filters';
 
 export default () => (
@@ -15,7 +15,16 @@ export default () => (
 			}}
 		>
 			<nav className={nav}>
-				Airbeds
+				<div className={title}>airbeds</div>
+
+				<DataSearch
+					componentId="search"
+					dataField="name"
+					autosuggest={false}
+					placeholder="Search housings..."
+					iconPosition="left"
+					className={search}
+				/>
 			</nav>
 			<Filters />
 
@@ -37,7 +46,7 @@ export default () => (
 				})}
 				pagination
 				react={{
-					and: ['GuestSensor', 'PriceSensor', 'DateRangeSensor'],
+					and: ['GuestSensor', 'PriceSensor', 'DateRangeSensor', 'search'],
 				}}
 				innerClass={{
 					resultStats: 'result-stats',

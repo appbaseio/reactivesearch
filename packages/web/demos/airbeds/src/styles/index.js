@@ -7,13 +7,32 @@ const nav = css`
 	left: 0;
 	z-index: 1;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 	background-color: #FF3A4E;
 	color: #fff;
 	height: 52px;
-	font-size: 15px;
+	padding: 0 25px;
+
+	@media all and (max-width: 768px) {
+		flex-direction: column;
+		height: 100px;
+	}
+	`;
+
+const title = css`
+	@import url('https://fonts.googleapis.com/css?family=Pacifico');
+	font-size: 25px;
 	letter-spacing: 0.05rem;
+	font-family: Pacifico, sans-serif;
+`;
+
+const search = css`
+	width: calc(100% - 320px);
+	@media all and (max-width: 768px) {
+		width: 100%;
+		padding-bottom: 20px;
+	}
 `;
 
 const container = css`
@@ -133,4 +152,6 @@ export {
 	container,
 	leftCol,
 	rightCol,
+	search,
+	title,
 };
