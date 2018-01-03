@@ -118,7 +118,7 @@ class SingleDropdownRange extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
-			URLParams: props.URLParams,
+			URLParams: false,
 		});
 	};
 

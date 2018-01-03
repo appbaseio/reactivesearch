@@ -22,15 +22,15 @@ import {
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
-	isEqual,
 	debounce,
 	pushToAndClause,
 	checkValueChange,
-	checkSomePropChange,
 	checkPropChange,
+	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -50,11 +50,18 @@ class DataSearch extends Component {
 
 		if (this.props.highlight) {
 			const queryOptions = this.highlightQuery(this.props);
+			queryOptions.size = 20;
 			this.props.setQueryOptions(this.props.componentId, queryOptions);
+		} else {
+			this.props.setQueryOptions(this.props.componentId, {
+				size: 20,
+			});
 		}
 		this.setReact(this.props);
 
-		if (this.props.defaultSelected) {
+		if (this.props.selectedValue) {
+			this.setValue(this.props.selectedValue, true);
+		} else if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected, true);
 		}
 	}
@@ -66,6 +73,7 @@ class DataSearch extends Component {
 			['highlight', 'dataField', 'highlightField'],
 			() => {
 				const queryOptions = this.highlightQuery(nextProps);
+				queryOptions.size = 20;
 				this.props.setQueryOptions(nextProps.componentId, queryOptions);
 			},
 		);
@@ -77,31 +85,29 @@ class DataSearch extends Component {
 		);
 
 		if (Array.isArray(nextProps.suggestions) && this.state.currentValue.trim().length) {
-			checkPropChange(
-				this.props.suggestions,
-				nextProps.suggestions,
-				() => {
-					this.setState({
-						suggestions: nextProps.suggestions,
-					});
-				},
-			);
+			// shallow check allows us to set suggestions even if the next set
+			// of suggestions are same as the current one
+			if (this.props.suggestions !== nextProps.suggestions) {
+				this.setState({
+					suggestions: this.onSuggestions(nextProps.suggestions),
+				});
+			}
 		}
-
-		checkPropChange(
-			this.props.defaultSelected,
-			nextProps.defaultSelected,
-			() => this.setValue(nextProps.defaultSelected, true, nextProps),
-		);
 
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			['fieldWeights', 'fuzziness', 'queryFormat'],
+			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField'],
 			() => {
 				this.updateQuery(nextProps.componentId, this.state.currentValue, nextProps);
 			},
 		);
+
+		if (this.props.defaultSelected !== nextProps.defaultSelected) {
+			this.setValue(nextProps.defaultSelected, true, nextProps);
+		} else if (this.props.selectedValue !== nextProps.selectedValue) {
+			this.setValue(nextProps.selectedValue || '', true, nextProps);
+		}
 	}
 
 	componentWillUnmount() {
@@ -141,11 +147,12 @@ class DataSearch extends Component {
 				fields,
 			},
 		};
-	}
+	};
 
 	defaultQuery = (value, props) => {
-		let finalQuery = null,
-			fields;
+		let finalQuery = null;
+		let fields;
+
 		if (value) {
 			if (Array.isArray(props.dataField)) {
 				fields = props.dataField;
@@ -167,10 +174,15 @@ class DataSearch extends Component {
 		}
 
 		return finalQuery;
-	}
+	};
 
-	shouldQuery(value, dataFields, props) {
-		const fields = dataFields.map((field, index) => `${field}${(Array.isArray(props.fieldWeights) && props.fieldWeights[index]) ? (`^${props.fieldWeights[index]}`) : ''}`);
+	shouldQuery = (value, dataFields, props) => {
+		const fields = dataFields.map((field, index) =>
+			`${field}${
+				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+					? `^${props.fieldWeights[index]}`
+					: ''
+			}`);
 
 		if (props.queryFormat === 'and') {
 			return [
@@ -180,7 +192,6 @@ class DataSearch extends Component {
 						fields,
 						type: 'cross_fields',
 						operator: 'and',
-						fuzziness: props.fuzziness ? props.fuzziness : 0,
 					},
 				},
 				{
@@ -213,7 +224,18 @@ class DataSearch extends Component {
 				},
 			},
 		];
-	}
+	};
+
+	onSuggestions = (results) => {
+		const fields = Array.isArray(this.props.dataField)
+			? this.props.dataField : [this.props.dataField];
+
+		return getSuggestions(
+			fields,
+			results,
+			this.state.currentValue.toLowerCase(),
+		);
+	};
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
 		const performUpdate = () => {
@@ -221,7 +243,7 @@ class DataSearch extends Component {
 				currentValue: value,
 			});
 			if (isDefaultValue) {
-				if (props.autoSuggest) {
+				if (props.autosuggest) {
 					this.updateQuery(this.internalComponent, value, props);
 				}
 				this.updateQuery(props.componentId, value, props);
@@ -240,12 +262,12 @@ class DataSearch extends Component {
 	};
 
 	handleTextChange = debounce((value) => {
-		if (this.props.autoSuggest) {
+		if (this.props.autosuggest) {
 			this.updateQuery(this.internalComponent, value, this.props);
 		} else {
 			this.updateQuery(this.props.componentId, value, this.props);
 		}
-	}, 300);
+	}, this.props.debounce);
 
 	selectSuggestion = (value) => {
 		this.setState({
@@ -258,7 +280,7 @@ class DataSearch extends Component {
 	setSuggestions = () => {
 		let suggestions = [];
 		if (this.state.currentValue.trim() !== '') {
-			suggestions = this.props.suggestions;
+			suggestions = this.onSuggestions(this.props.suggestions);
 		}
 
 		this.setState({
@@ -272,117 +294,141 @@ class DataSearch extends Component {
 		});
 	};
 
-	updateQuery = (component, value, props) => {
+	updateQuery = (componentId, value, props) => {
 		const query = props.customQuery || this.defaultQuery;
-		let callback = null;
-		if (component === props.componentId && props.onQueryChange) {
-			callback = props.onQueryChange;
+		let onQueryChange = null;
+		if (componentId === props.componentId && props.onQueryChange) {
+			onQueryChange = props.onQueryChange;
 		}
-		props.updateQuery(component, query(value, props), value, props.filterLabel, callback);
+		props.updateQuery({
+			componentId,
+			query: query(value, props),
+			value,
+			label: props.filterLabel,
+			showFilter: props.showFilter,
+			onQueryChange,
+			URLParams: false,
+		});
 	};
 
 	renderSuggestions() {
-		if (this.props.autoSuggest && Array.isArray(this.state.suggestions)) {
-			return (<List
-				dataArray={this.state.suggestions}
-				keyboardShouldPersistTaps="always"
-				renderRow={item =>
-					(<ListItem
-						onPress={() => this.selectSuggestion(item._source.name)}
-					>
-						<Text>{item._source.name}</Text>
-      </ListItem>)
-				}
-			/>);
+		let suggestionsList = [];
+
+		if (
+			!this.state.currentValue
+			&& this.props.defaultSuggestions
+			&& this.props.defaultSuggestions.length
+		) {
+			suggestionsList = this.props.defaultSuggestions;
+		} else if (this.state.currentValue) {
+			suggestionsList = this.state.suggestions;
 		}
 
-		return null;
+		return (
+			<List
+				dataArray={suggestionsList}
+				keyboardShouldPersistTaps="always"
+				renderRow={item => (
+					<ListItem onPress={() => this.selectSuggestion(item.label)}>
+						<Text>{item.label}</Text>
+					</ListItem>
+				)}
+			/>
+		);
 	}
 
 	renderDataSearch = () => {
 		if (this.state.showModal) {
-			return (<Modal
-				supportedOrientations={this.props.supportedOrientations || null}
-				transparent={false}
-				visible={this.state.showModal}
-				onRequestClose={this.toggleModal}
-			>
-				<Header>
-					<Left>
-						<Button transparent onPress={this.toggleModal}>
-							<Icon name="arrow-back" />
-						</Button>
-					</Left>
-					{
-						this.state.currentValue
-							? (<Right>
-								<Button
-									style={{ paddingRight: 0 }}
-									transparent
-									onPress={() => this.selectSuggestion('')}
-								>
-									<Text>Reset</Text>
-								</Button>
-							</Right>)
-							: null
-					}
-				</Header>
-				<Item regular style={{ marginLeft: 10, margin: 10 }}>
-					<Input
-						returnKeyType="search"
-						onSubmitEditing={e => this.selectSuggestion(e.nativeEvent.text)}
-						placeholder={this.props.placeholder}
-						onChangeText={this.setValue}
-						value={this.state.currentValue}
-						onFocus={this.setSuggestions}
-						autoFocus
-					/>
-				</Item>
-				{this.renderSuggestions()}
-			</Modal>);
+			return (
+				<Modal
+					supportedOrientations={this.props.supportedOrientations || null}
+					transparent={false}
+					visible={this.state.showModal}
+					onRequestClose={this.toggleModal}
+				>
+					<Header>
+						<Left>
+							<Button transparent onPress={this.toggleModal}>
+								<Icon name="arrow-back" />
+							</Button>
+						</Left>
+						{
+							this.state.currentValue
+								? (
+									<Right>
+										<Button
+											style={{ paddingRight: 0 }}
+											transparent
+											onPress={() => this.selectSuggestion('')}
+										>
+											<Text>Reset</Text>
+										</Button>
+									</Right>
+								)
+								: null
+						}
+					</Header>
+					<Item regular style={{ marginLeft: 10, margin: 10 }}>
+						<Input
+							returnKeyType="search"
+							onSubmitEditing={e => this.selectSuggestion(e.nativeEvent.text)}
+							placeholder={this.props.placeholder}
+							onChangeText={this.setValue}
+							value={this.state.currentValue}
+							onFocus={this.setSuggestions}
+							autoFocus
+						/>
+					</Item>
+					{this.renderSuggestions()}
+				</Modal>
+			);
 		}
 
-		return (<Item regular style={{ marginLeft: 0 }}>
-			<TouchableWithoutFeedback
-				onPress={this.toggleModal}
-			>
-				<Text
-					style={{
-						flex: 1,
-						alignItems: 'center',
-						color: this.state.currentValue && this.state.currentValue !== '' ? '#000' : '#555',
-						flex: 1,
-						fontSize: 17,
-						height: 50,
-						lineHeight: 24,
-						paddingLeft: 8,
-						paddingRight: 5,
-						paddingTop: 12,
-					}}
+		return (
+			<Item regular style={{ marginLeft: 0 }}>
+				<TouchableWithoutFeedback
+					onPress={this.toggleModal}
 				>
-					{
-						this.state.currentValue && this.state.currentValue !== ''
-							? this.state.currentValue
-							: this.props.placeholder
-					}
-				</Text>
-			</TouchableWithoutFeedback>
-		</Item>);
+					<Text
+						style={{
+							flex: 1,
+							alignItems: 'center',
+							color: (this.state.currentValue
+								&& this.state.currentValue !== '') ? '#000' : '#555',
+							fontSize: 17,
+							height: 50,
+							lineHeight: 24,
+							paddingLeft: 8,
+							paddingRight: 5,
+							paddingTop: 12,
+						}}
+					>
+						{
+							this.state.currentValue && this.state.currentValue !== ''
+								? this.state.currentValue
+								: this.props.placeholder
+						}
+					</Text>
+				</TouchableWithoutFeedback>
+			</Item>
+		);
 	}
 
 	render() {
 		return (
 			<View>
 				{
-					this.props.autoSuggest
+					this.props.autosuggest
 						? this.renderDataSearch()
-						: <Item regular style={{ marginLeft: 0 }}>
-							<Input
-								placeholder={this.props.placeholder}
-								onChangeText={this.setValue}
-								value={this.state.currentValue}
-							/>
-						</Item>
+						: (
+							<Item regular style={{ marginLeft: 0 }}>
+								<Input
+									placeholder={this.props.placeholder}
+									onChangeText={this.setValue}
+									value={this.state.currentValue}
+								/>
+							</Item>
+						)
 				}
 			</View>
 		);
@@ -390,45 +436,56 @@ class DataSearch extends Component {
 }
 
 DataSearch.propTypes = {
-	componentId: types.componentId,
-	addComponent: types.addComponent,
-	highlight: types.highlight,
-	setQueryOptions: types.setQueryOptions,
+	componentId: types.stringRequired,
+	title: types.title,
+	addComponent: types.funcRequired,
+	highlight: types.bool,
+	setQueryOptions: types.funcRequired,
 	defaultSelected: types.string,
 	dataField: types.dataFieldArray,
 	highlightField: types.highlightField,
 	react: types.react,
 	suggestions: types.suggestions,
-	removeComponent: types.removeComponent,
+	defaultSuggestions: types.suggestions,
+	removeComponent: types.funcRequired,
 	fieldWeights: types.fieldWeights,
 	queryFormat: types.queryFormatSearch,
 	fuzziness: types.fuzziness,
-	autoSuggest: types.autoSuggest,
-	beforeValueChange: types.beforeValueChange,
-	onValueChange: types.beforeValueChange,
-	customQuery: types.customQuery,
-	onQueryChange: types.onQueryChange,
-	updateQuery: types.updateQuery,
+	autosuggest: types.bool,
+	beforeValueChange: types.func,
+	onValueChange: types.func,
+	customQuery: types.func,
+	onQueryChange: types.func,
+	updateQuery: types.funcRequired,
+	placeholder: types.string,
+	selectedValue: types.selectedValue,
+	showFilter: types.bool,
+	filterLabel: types.string,
+	style: types.style,
+	debounce: types.number,
 	supportedOrientations: types.supportedOrientations,
-	placeholder: types.placeholder,
-	filterLabel: types.filterLabel,
 };
 
 DataSearch.defaultProps = {
 	placeholder: 'Search',
-	autoSuggest: true,
+	autosuggest: true,
 	queryFormat: 'or',
+	showFilter: true,
+	style: {},
+	debounce: 0,
 };
 
 const mapStateToProps = (state, props) => ({
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	selectedValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value) || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(updateQuery(component, query, value, filterLabel, onQueryChange)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
