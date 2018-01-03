@@ -6,13 +6,19 @@ import {
 	TextField,
 	ReactiveList,
 	SelectedFilters,
-} from '../../src';
+} from '@appbaseio/reactivesearch';
+
+import './index.css';
 
 class Main extends Component {
-	onData = data => (<div key={data._id}>
-		<h2>{data.name}</h2>
-		<p>{data.price} - {data.rating} stars rated</p>
-	</div>)
+	onData(data) {
+		return (
+			<div key={data._id}>
+				<h2>{data.name}</h2>
+				<p>{data.price} - {data.rating} stars rated</p>
+			</div>
+		);
+	}
 
 	render() {
 		return (
@@ -47,6 +53,12 @@ class Main extends Component {
 				</div>
 			</ReactiveBase>
 		);
+	}
+
+
+	constructor(props) {
+		super(props);
+		this.onData = this.onData.bind(this);
 	}
 }
 
