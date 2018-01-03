@@ -28,6 +28,7 @@ import InputIcon from '../../styles/InputIcon';
 
 const Text = withTheme(props => (
 	<span
+		className="trim"
 		style={{
 			color: props.primary ? props.theme.primaryColor : props.theme.textColor,
 		}}
@@ -398,7 +399,8 @@ class CategorySearch extends Component {
 		}
 
 		if (
-			this.state.suggestions.length
+			this.state.currentValue
+			&& this.state.suggestions.length
 			&& this.props.categories
 			&& this.props.categories.length
 		) {

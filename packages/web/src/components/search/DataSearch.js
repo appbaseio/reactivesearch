@@ -409,6 +409,7 @@ class DataSearch extends Component {
 																	{
 																		typeof item.label === 'string'
 																			? <div
+																				className="trim"
 																				dangerouslySetInnerHTML={{
 																					__html: item.label,
 																				}}

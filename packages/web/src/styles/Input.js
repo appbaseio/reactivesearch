@@ -61,7 +61,7 @@ const suggestions = css`
 		padding: 10px;
 		user-select: none;
 
-		& > div {
+		& > .trim {
 			display: block;
 			display: -webkit-box;
 			width: 100%;
