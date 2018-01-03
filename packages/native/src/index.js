@@ -7,9 +7,10 @@ import DateRange from './components/date/DateRange';
 
 import SingleDropdownList from './components/list/SingleDropdownList';
 
+import SingleDropdownRange from './components/range/SingleDropdownRange';
+
 import DataSearch from './sensors/DataSearch';
 import MultiDropdownList from './sensors/MultiDropdownList';
-import SingleDropdownRange from './sensors/SingleDropdownRange';
 import MultiDropdownRange from './sensors/MultiDropdownRange';
 import RangeSlider from './sensors/RangeSlider';
 
@@ -18,7 +19,6 @@ import ReactiveList from './actuators/ReactiveList';
 export {
 	DataSearch,
 	MultiDropdownList,
-	SingleDropdownRange,
 	MultiDropdownRange,
 	RangeSlider,
 	ReactiveList,
@@ -34,4 +34,7 @@ export {
 
 	// list
 	SingleDropdownList,
+
+	// range
+	SingleDropdownRange,
 };
