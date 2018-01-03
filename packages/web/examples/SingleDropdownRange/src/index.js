@@ -6,14 +6,11 @@ import {
 	SingleDropdownRange,
 	ReactiveList,
 	SelectedFilters,
-} from '../../src';
+} from '@appbaseio/reactivesearch';
+
+import './index.css';
 
 class Main extends Component {
-	onData = data => (<div key={data._id}>
-		<h2>{data.name}</h2>
-		<p>{data.price} - {data.rating} stars rated</p>
-	</div>)
-
 	render() {
 		return (
 			<ReactiveBase
@@ -53,6 +50,15 @@ class Main extends Component {
 					</div>
 				</div>
 			</ReactiveBase>
+		);
+	}
+
+	onData(data) {
+		return (
+			<div key={data._id}>
+				<h2>{data.name}</h2>
+				<p>{data.price} - {data.rating} stars rated</p>
+			</div>
 		);
 	}
 }
