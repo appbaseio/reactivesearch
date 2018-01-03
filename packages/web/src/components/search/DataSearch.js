@@ -437,6 +437,7 @@ class DataSearch extends Component {
 									onKeyDown={this.props.onKeyDown}
 									onKeyUp={this.props.onKeyUp}
 									autoFocus={this.props.autoFocus}
+									iconPosition={this.props.iconPosition}
 									showIcon={this.props.showIcon}
 								/>
 								<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
