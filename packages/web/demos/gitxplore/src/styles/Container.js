@@ -16,12 +16,13 @@ export const resultsContainer = css`
 	`};
 `;
 
-export const categorySearchContainer = css`
+export const dataSearchContainer = css`
 	position: fixed;
 	z-index: 3;
 	${resultsContainer};
 
 	.search-input {
+		height: 50px;
 		border: none;
 		border-bottom: 1px solid #ccc;
 		background: #fafafa;
@@ -37,6 +38,10 @@ export const categorySearchContainer = css`
 		margin-top: 20px;
 		width: calc(100% - 280px);
 		right: 20px;
+
+		.search-input {
+			height: 42px;
+		}
 	`};
 	${queries.medium`
 		width: 100%;
