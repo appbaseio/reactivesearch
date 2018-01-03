@@ -1,6 +1,6 @@
 import styled, { css } from 'react-emotion';
 import { withTheme } from 'emotion-theming';
-import { shade } from '../utils';
+import { shade } from './utils';
 
 import { input } from './Input';
 

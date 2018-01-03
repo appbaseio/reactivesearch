@@ -1,6 +1,6 @@
 import { css } from 'emotion';
 import styled from 'react-emotion';
-import { shade } from '../utils';
+import { shade } from './utils';
 
 import Title from './Title';
 

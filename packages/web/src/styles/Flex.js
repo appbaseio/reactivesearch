@@ -1,6 +1,6 @@
 import styled from 'react-emotion';
 import { css } from 'emotion';
-import { shade } from '../utils';
+import { shade } from './utils';
 
 const leftLabel = css`
 	flex-direction: row;
