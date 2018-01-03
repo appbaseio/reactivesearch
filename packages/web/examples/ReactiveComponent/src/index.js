@@ -7,41 +7,11 @@ import {
 	ReactiveComponent,
 	ReactiveList,
 	SelectedFilters,
-} from '../../src';
+} from '@appbaseio/reactivesearch';
 
-class CustomComponent extends Component {
-	constructor(props) {
-		super(props);
-	}
-
-	setValue = (value) => {
-		this.props.setQuery({
-			query: {
-				term: {
-					brand: value,
-				},
-			},
-			value,
-		});
-	}
-
-	render() {
-		if (this.props.aggregations) {
-			return this.props.aggregations['brand.raw'].buckets.map(item => (
-				<div key={item.key} onClick={() => this.setValue(item.key)}>{item.key}</div>
-			));
-		}
-
-		return null;
-	}
-}
+import './index.css';
 
 class Main extends Component {
-	onData = data => (<div key={data._id}>
-		<h2>{data.name}</h2>
-		<p>{data.price} - {data.rating} stars rated</p>
-	</div>)
-
 	render() {
 		return (
 			<ReactiveBase
@@ -53,7 +23,7 @@ class Main extends Component {
 						<SelectedFilters />
 						<ReactiveComponent
 							componentId="CarSensor"
-							defaultQuery={{
+							defaultQuery={() => ({
 								aggs: {
 									'brand.raw': {
 										terms: {
@@ -65,7 +35,7 @@ class Main extends Component {
 										},
 									},
 								},
-							}}
+							})}
 						>
 							<CustomComponent />
 						</ReactiveComponent>
@@ -88,6 +58,38 @@ class Main extends Component {
 				</div>
 			</ReactiveBase>
 		);
+	}
+
+	onData(data) {
+		return (
+			<div key={data._id}>
+				<h2>{data.name}</h2>
+				<p>{data.price} - {data.rating} stars rated</p>
+			</div>
+		);
+	}
+}
+
+class CustomComponent extends Component {
+	setValue(value) {
+		this.props.setQuery({
+			query: {
+				term: {
+					brand: value,
+				},
+			},
+			value,
+		});
+	}
+
+	render() {
+		if (this.props.aggregations) {
+			return this.props.aggregations['brand.raw'].buckets.map(item => (
+				<div key={item.key} onClick={() => this.setValue(item.key)}>{item.key}</div>
+			));
+		}
+
+		return null;
 	}
 }
 
