@@ -24,6 +24,7 @@ import MultiDropdownRange from './components/range/MultiDropdownRange';
 import RangeSlider from './components/range/RangeSlider';
 import DynamicRangeSlider from './components/range/DynamicRangeSlider';
 import RangeInput from './components/range/RangeInput';
+import RatingsFilter from './components/range/RatingsFilter';
 
 import DataSearch from './components/search/DataSearch';
 import CategorySearch from './components/search/CategorySearch';
@@ -63,6 +64,7 @@ export {
 	RangeSlider,
 	DynamicRangeSlider,
 	RangeInput,
+	RatingsFilter,
 
 	// search
 	DataSearch,
