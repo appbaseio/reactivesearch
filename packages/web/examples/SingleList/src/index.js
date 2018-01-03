@@ -6,15 +6,11 @@ import {
 	SingleList,
 	ReactiveList,
 	SelectedFilters,
-} from '../../src';
+} from '@appbaseio/reactivesearch';
+
+import './index.css';
 
 class Main extends Component {
-	onData = data => (<div key={data._id}>
-		<h2>{data.member.member_name}</h2>
-		<p>is going to {data.event.event_name} at {data.venue_name_ngrams}</p>
-		<p>{data.group_city_ngram}</p>
-	</div>)
-
 	render() {
 		return (
 			<ReactiveBase
@@ -24,7 +20,6 @@ class Main extends Component {
 			>
 				<div className="row">
 					<div className="col">
-						<SelectedFilters />
 						<SingleList
 							componentId="CitySensor"
 							dataField="group.group_city.raw"
@@ -35,6 +30,7 @@ class Main extends Component {
 					</div>
 
 					<div className="col">
+						<SelectedFilters />
 						<ReactiveList
 							componentId="SearchResult"
 							dataField="name"
@@ -49,6 +45,16 @@ class Main extends Component {
 					</div>
 				</div>
 			</ReactiveBase>
+		);
+	}
+
+	onData(data) {
+		return (
+			<div key={data._id}>
+				<h2>{data.member.member_name}</h2>
+				<p>is going to {data.event.event_name} at {data.venue_name_ngrams}</p>
+				<p>{data.group_city_ngram}</p>
+			</div>
 		);
 	}
 }
