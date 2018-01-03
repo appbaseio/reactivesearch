@@ -171,7 +171,12 @@ class DataSearch extends Component {
 	};
 
 	shouldQuery = (value, dataFields, props) => {
-		const fields = dataFields.map((field, index) => `${field}${(Array.isArray(props.fieldWeights) && props.fieldWeights[index]) ? (`^${props.fieldWeights[index]}`) : ''}`);
+		const fields = dataFields.map((field, index) =>
+			`${field}${
+				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+					? `^${props.fieldWeights[index]}`
+					: ''
+			}`);
 
 		if (props.queryFormat === 'and') {
 			return [
