@@ -81,7 +81,7 @@ class SingleDropdownRange extends Component {
 			};
 		}
 		return null;
-	}
+	};
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
 		let currentValue = value;
@@ -104,7 +104,7 @@ class SingleDropdownRange extends Component {
 			props.onValueChange,
 			performUpdate,
 		);
-	}
+	};
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
@@ -123,7 +123,7 @@ class SingleDropdownRange extends Component {
 			onQueryChange,
 			URLParams: props.URLParams,
 		});
-	}
+	};
 
 	render() {
 		return (
@@ -176,7 +176,10 @@ SingleDropdownRange.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value || null,
+	selectedValue: (
+		state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value
+	) || null,
 });
 
 const mapDispatchtoProps = dispatch => ({
