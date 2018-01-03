@@ -6,14 +6,11 @@ import {
 	DatePicker,
 	ReactiveList,
 	SelectedFilters,
-} from '../../src';
+} from '@appbaseio/reactivesearch';
+
+import './index.css';
 
 class Main extends Component {
-	onData = data => (<div key={data._id}>
-		<h2>{data.owner}/{data.name}</h2>
-		<h4>{data.stars} 🌟</h4>
-	</div>)
-
 	render() {
 		return (
 			<ReactiveBase
@@ -59,6 +56,15 @@ class Main extends Component {
 					</div>
 				</div>
 			</ReactiveBase>
+		);
+	}
+
+	onData(data) {
+		return (
+			<div key={data._id}>
+				<h2>{data.owner}/{data.name}</h2>
+				<h4>{data.stars} <span role="img" aria-label="stars">🌟</span></h4>
+			</div>
 		);
 	}
 }
