@@ -116,11 +116,7 @@ class CategorySearch extends Component {
 
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected, true, nextProps);
-		} else if (
-			this.props.selectedValue !== nextProps.selectedValue
-			&& this.state.currentValue !== nextProps.selectedValue
-		) {
-			// check for selected value prop change or selectedValue will never match currentValue
+		} else if (this.props.selectedValue !== nextProps.selectedValue) {
 			this.setValue(nextProps.selectedValue || '', true, nextProps);
 		}
 	}
