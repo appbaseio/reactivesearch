@@ -26,7 +26,6 @@
     "downshift": "^1.22.1",
     "emotion": "^8.0.11",
     "emotion-theming": "^8.0.11",
-    "polished": "^1.9.0",
     "prop-types": "^15.6.0",
     "react-day-picker": "^7.0.5",
     "react-emotion": "^8.0.11",
