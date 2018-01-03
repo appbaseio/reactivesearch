@@ -312,12 +312,16 @@ class DataSearch extends Component {
 	};
 
 	onInputChange = (e) => {
-		if (e.target.value.trim() !== this.state.currentValue.trim()) {
+		const { value } = e.target;
+		if (value.trim() !== this.state.currentValue.trim()) {
 			this.setState({
 				suggestions: [],
+			}, () => {
+				this.setValue(value);
 			});
+		} else {
+			this.setValue(value);
 		}
-		this.setValue(e.target.value);
 	};
 
 	onSuggestionSelected = (suggestion, event) => {
