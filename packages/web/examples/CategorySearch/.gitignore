@@ -1,0 +1,8 @@
+# Build
+dist
+
+# Packages
+node_modules
+
+# Directory
+.directory
