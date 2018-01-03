@@ -20,7 +20,6 @@ class Main extends Component {
 			>
 				<div className="row">
 					<div className="col">
-						<SelectedFilters />
 						<MultiList
 							componentId="CitySensor"
 							dataField="group.group_city.raw"
@@ -31,6 +30,7 @@ class Main extends Component {
 					</div>
 
 					<div className="col">
+						<SelectedFilters />
 						<ReactiveList
 							componentId="SearchResult"
 							dataField="name"
