@@ -41,7 +41,7 @@ Sensor components can be configured to create a combined query context and rende
 
 **ReactiveSearch** primarily comes with two actuators: `ResultCard` and `ResultList`. ResultCard displays the results in a card interface whereas ResultList displays them in a list. Both provide built-in support for pagination and infinite scroll views.
 
-Besides these, the library also provides low level actuators (ReactiveElement, ReactiveList) to render in a more customized fashion.
+Besides these, the library also provides low level actuators (ReactiveComponent and ReactiveList) to render in a more customized fashion.
 
 ## 2. Features
 
