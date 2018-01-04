@@ -432,10 +432,9 @@ export default class HomePage extends Component {
 						className={tabHide}
 					>
 						<Bubble backgroundColor="#5C67E1">
-							The time savings have been off the charts in getting our
-							search up and running with searchbase.io
+							As someone who’s avoided React for as long as I possibly could, these made for an awesome (and really useful) intro, good job
 
-							<footer>Rob Whitley, Co-Founder, Salespipe</footer>
+							<footer>Treeasaurusrex, via Reddit</footer>
 						</Bubble>
 					</Flex>
 
