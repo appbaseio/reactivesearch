@@ -68,18 +68,16 @@ Besides these, the library also provides low level actuators (ReactiveElement, R
 Try the live component playground at [playground](https://opensource.appbase.io/playground/?filterBy=ReactiveSearch&selectedKind=s%2FRatingsFilter&selectedStory=Basic&full=0&down=1&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-knobs). Look out for the knobs section in the playground part of the stories to tweak each prop and see the effects.
 
 
-## 4. Live Examples
+## 4. Live Demos
 
-A set of examples built with ReactiveSearch and inspired by real world apps.
+A set of live demos inspired by real world apps, built with ReactiveSearch.
 
-### TODO - Links to be updated.
-
-- [examples/airbeds](https://opensource.appbase.io/reactivesearch/examples/airbeds/) - An airbnb-like booking search experience.
-- [examples/news](https://opensource.appbase.io/reactivesearch/examples/news) - A full-text search app on the Hacker News dataset.
-- [examples/whosintown](https://opensource.appbase.io/reactivesearch/examples/whosintown/) - A live feed of meetup RSVPs based on topics, location and distance filters.
-- [examples/productsearch](https://opensource.appbase.io/reactivesearch/examples/productsearch/) - Filtered feed of products based on a small Product Hunt dataset.
-- [examples/ecommerce](https://opensource.appbase.io/reactivesearch/examples/ecommerce/) - An e-commerce car store app built with ReactiveSearch.
-- [examples/yelpsearch](https://opensource.appbase.io/reactivesearch/examples/yelpsearch/) - A yelp-like app for finding local eateries.
+- [demos/airbeds](https://opensource.appbase.io/reactivesearch/demos/airbeds/) - An airbnb-like booking search experience.
+- [demos/technews](https://opensource.appbase.io/reactivesearch/demos/technews/) - A full-text search app on the Hacker News dataset.
+- [demos/gitxplore](https://opensource.appbase.io/reactivesearch/demos/gitxplore/) - Explore all the popular Github repositories.
+- [demos/productsearch](https://opensource.appbase.io/reactivesearch/demos/producthunt/) - Filtered feed of products based on a small Product Hunt dataset.
+- [demos/booksearch](https://opensource.appbase.io/reactivesearch/demos/goodbooks/) - An book search app based on a goodbooks dataset.
+- [demos/ecommerce](https://opensource.appbase.io/reactivesearch/demos/ecommerce/) - An e-commerce car store app.
 
 
 You can check all of them on the [examples page](https://opensource.appbase.io/reactivesearch/examples/).
