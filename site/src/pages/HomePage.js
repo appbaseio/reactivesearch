@@ -404,7 +404,7 @@ export default class HomePage extends Component {
 					>
 						<Bubble backgroundColor="#5846AB" big>
 							We use Reactivesearch for powering our search at Lyearn.
-							It has saved us at least a month of work!
+							It has saved us <mark style={{ padding: '1px 4px' }}>at least a month of work.</mark>
 
 							<footer>
 								Kishan Patel, CTO,&nbsp;
@@ -428,8 +428,8 @@ export default class HomePage extends Component {
 						className={tabHide}
 					>
 						<Bubble>
-							The time savings have been off the charts in getting our
-							search up and running with searchbase.io ...
+							The time savings have been <mark style={{ padding: '1px 4px' }}>off the charts</mark> in getting our
+							search up and running!
 
 							<footer>
 								Rob Whitley, Co-Founder,&nbsp;
@@ -455,7 +455,7 @@ export default class HomePage extends Component {
 					>
 						<Bubble backgroundColor="#5C67E1">
 							As someone who’s avoided React for as long as I possibly could,
-							these made for an awesome (and really useful) intro, good job
+							these made for an <mark style={{ padding: '1px 4px' }}>awesome</mark> (and really useful) intro, good job! 👍
 
 							<footer>Treeasaurusrex, via Reddit</footer>
 						</Bubble>
@@ -469,8 +469,8 @@ export default class HomePage extends Component {
 						className={tabShow}
 					>
 						<Bubble backgroundColor="#5C67E1">
-							The time savings have been off the charts in getting our
-							search up and running with searchbase.io ...
+							The time savings have been <mark style={{ padding: '1px 4px' }}>off the charts</mark> in getting our
+							search up and running!
 
 							<footer>
 								Rob Whitley, Co-Founder,&nbsp;
@@ -571,7 +571,7 @@ export default class HomePage extends Component {
 						<Flex className="column" flexDirection="column">
 							<Title className="heading">Community</Title>
 							<Text light margin="3px 0"><a href="https://github.com/appbaseio/reactivesearch/">GitHub</a></Text>
-							<Text light margin="3px 0"><a href="https://appbaseio.slack.com/">Slack</a></Text>
+							<Text light margin="3px 0"><a href="http://slack.appbase.io">Slack</a></Text>
 							<Text light margin="3px 0"><a href="https://twitter.com/appbaseio">Twitter</a></Text>
 						</Flex>
 
