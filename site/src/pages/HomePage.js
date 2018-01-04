@@ -80,7 +80,7 @@ export default class HomePage extends Component {
 					<a className={`${boldHeading} ${logo}`} href="/">Reactivesearch</a>
 					<ul className={mobHide}>
 						<li><a href="#examples">Examples</a></li>
-						<li><a href="htpps://opensource.appbase.io/reactive-manual">Documentation</a></li>
+						<li><a href="https://opensource.appbase.io/reactive-manual">Documentation</a></li>
 						<li><a href="https://github.com/appbaseio/reactivesearch">Github</a></li>
 					</ul>
 				</Navbar>
@@ -120,10 +120,10 @@ export default class HomePage extends Component {
 							</Text>
 
 							<Flex className={tabJustifyCenter}>
-								<Button light primary shadow className={button}>
+								<Button light primary shadow className={button} href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html">
 									Getting Started
 								</Button>
-								<Button shadow className={button} style={{ marginLeft: '10px' }}>
+								<Button shadow className={button} style={{ marginLeft: '10px' }} href="https://opensource.appbase.io/reactive-manual/base-components/textfield.html">
 									View Components
 								</Button>
 							</Flex>
@@ -344,8 +344,8 @@ export default class HomePage extends Component {
 				>
 					<H2 margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
 					<Flex className={tabJustifyCenter}>
-						<Button shadow primary className={button} style={{ maxWidth: '250px' }}>Build a live app in 5 mins</Button>
-						<Button className={button} style={{ maxWidth: '250px', marginLeft: '1rem' }}>Read the docs</Button>
+						<Button shadow primary className={button} style={{ maxWidth: '250px' }} href="https://codeburst.io/how-to-build-an-e-commerce-search-ui-with-react-and-elasticsearch-a581c823b2c3">Build a live app in 5 mins</Button>
+						<Button className={button} style={{ maxWidth: '250px', marginLeft: '1rem' }} href="https://opensource.appbase.io/reactive-manual">Read the docs</Button>
 					</Flex>
 				</Flex>
 
@@ -356,7 +356,7 @@ export default class HomePage extends Component {
 					padding="5rem 3rem 0"
 					className={tabPadding}
 				>
-					<H2 className={colored}>Checkout these starter apps</H2>
+					<H2 className={colored} id="examples">Checkout these starter apps</H2>
 
 					<Flex
 						justifyContent="center"
