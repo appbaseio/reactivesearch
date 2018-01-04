@@ -365,22 +365,22 @@ export default class HomePage extends Component {
 						flexWrap="wrap"
 					>
 						<Image src="images/apps/airbeds.png">
-							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+							<a href="demos/airbeds"><Button primary shadow className={button}>Check Demo</Button></a>
 						</Image>
 						<Image src="images/apps/productsearch.png">
-							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+							<a href="demos/producthunt"><Button primary shadow className={button}>Check Demo</Button></a>
 						</Image>
 						<Image src="images/apps/gitxplore.png">
-							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+							<a href="demos/gitxplore"><Button primary shadow className={button}>Check Demo</Button></a>
 						</Image>
 						<Image src="images/apps/carstore.png">
-							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+							<a href="demos/ecommerce"><Button primary shadow className={button}>Check Demo</Button></a>
 						</Image>
 						<Image src="images/apps/goodbooks.png">
-							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+							<a href="demos/goodbooks"><Button primary shadow className={button}>Check Demo</Button></a>
 						</Image>
 						<Image src="images/apps/technews.png">
-							<a href="/"><Button primary shadow className={button}>Check Demo</Button></a>
+							<a href="demos/technews"><Button primary shadow className={button}>Check Demo</Button></a>
 						</Image>
 					</Flex>
 				</Flex>

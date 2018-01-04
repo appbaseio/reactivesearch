@@ -10,9 +10,9 @@
 	"license": "Apache-2.0",
 	"workspaces": [
 		"packages/*",
-		"packages/web/demos/*",
 		"packages/web/examples/*",
-		"site"
+		"site",
+		"site/demos/*"
 	],
 	"devDependencies": {
 		"eslint": "^4.10.0",
