@@ -27,7 +27,6 @@ class Main extends Component {
 									{ start: 3, end: 4, label: 'Rating 3 to 4' },
 									{ start: 4, end: 5, label: 'Rating > 4' }]
 							}
-							{...this.props}
 						/>
 					</div>
 					<div className="col" style={{ backgroundColor: '#fafafa' }}>

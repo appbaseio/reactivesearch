@@ -22,7 +22,6 @@ class Main extends Component {
 						<TextField
 							dataField="original_title.search"
 							componentId="BookSensor"
-							{...this.props}
 						/>
 					</div>
 

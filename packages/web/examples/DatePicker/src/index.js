@@ -25,7 +25,6 @@ class Main extends Component {
 							dataField="date_from"
 							customQuery={this.dateQuery}
 							initialMonth={this.props.defaultSelected ? null : new Date('2017-05-05')}
-							{...this.props}
 						/>
 					</div>
 
