@@ -344,7 +344,13 @@ class ReactiveList extends Component {
 	parseHits = (hits) => {
 		let results = null;
 		if (hits) {
-			results = [...hits].map(this.highlightResults);
+			results = [...hits].map((item) => {
+				const data = this.highlightResults(item);
+				return {
+					_id: data._id,
+					...data._source,
+				};
+			});
 		}
 		return results;
 	};
@@ -409,20 +415,17 @@ class ReactiveList extends Component {
 					}
 				</Flex>
 				{
-					this.props.pagination && this.props.paginationAt !== 'bottom'
+					this.props.pagination && this.props.paginationAt === 'top'
 						? this.renderPagination()
 						: null
 				}
 				{
 					this.props.onAllData
-						? (this.props.onAllData(this.parseHits(this.props.hits), this.loadMore))
+						? (this.props.onAllData(results, this.loadMore))
 						: (
 							<div className={getClassName(this.props.innerClass, 'list')}>
 								{
-									results.map(item => this.props.onData({
-										_id: item._id,
-										...item._source,
-									}))
+									results.map(this.props.onData)
 								}
 							</div>
 						)
@@ -433,14 +436,17 @@ class ReactiveList extends Component {
 						: null
 				}
 				{
-					this.props.pagination && this.props.paginationAt !== 'top'
+					this.props.pagination && this.props.paginationAt === 'bottom'
 						? this.renderPagination()
 						: null
 				}
 				{
 					this.props.url.endsWith('appbase.io') && results.length
 						? (
-							<Flex direction="row-reverse" className={getClassName(this.props.innerClass, 'poweredBy')}>
+							<Flex
+								direction="row-reverse"
+								className={getClassName(this.props.innerClass, 'poweredBy')}
+							>
 								<PoweredBy />
 							</Flex>
 						)
