@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivebase-native",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"description": "Native data components for building reactive UIs",
 	"main": "src/index.js",
 	"files": [
