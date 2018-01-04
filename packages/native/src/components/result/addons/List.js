@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
-import PropTypes from 'prop-types';
 
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
-
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 class List extends Component {
