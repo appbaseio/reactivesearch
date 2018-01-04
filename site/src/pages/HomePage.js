@@ -538,7 +538,7 @@ export default class HomePage extends Component {
 						<Flex className="column" flexDirection="column">
 							<Title className="heading">Community</Title>
 							<Text light margin="3px 0"><a href="https://github.com/appbaseio/reactivesearch/">GitHub</a></Text>
-							<Text light margin="3px 0"><a href="https://slack.appbase.io/">Slack</a></Text>
+							<Text light margin="3px 0"><a href="https://appbaseio.slack.com/">Slack</a></Text>
 							<Text light margin="3px 0"><a href="https://twitter.com/appbaseio">Twitter</a></Text>
 						</Flex>
 
