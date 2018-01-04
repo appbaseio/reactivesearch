@@ -336,13 +336,19 @@ class ResultList extends Component {
 	parseHits = (hits) => {
 		let results = null;
 		if (hits) {
-			results = [...hits].map(this.highlightResults);
+			results = [...hits].map((item) => {
+				const data = this.highlightResults(item);
+				return {
+					_id: data._id,
+					...data._source,
+				};
+			});
 		}
 		return results;
 	};
 
 	renderAsListItem = (item) => {
-		const result = this.props.onData({ _id: item._id, ...item._source });
+		const result = this.props.onData(item);
 
 		if (result) {
 			return (
@@ -450,12 +456,7 @@ class ResultList extends Component {
 					}
 				</Flex>
 				{
-					this.props.pagination && this.props.paginationAt !== 'bottom'
-						? this.renderPagination()
-						: null
-				}
-				{
-					this.props.pagination && this.props.paginationAt !== 'bottom'
+					this.props.pagination && this.props.paginationAt === 'top'
 						? this.renderPagination()
 						: null
 				}
@@ -474,7 +475,7 @@ class ResultList extends Component {
 						: null
 				}
 				{
-					this.props.pagination && this.props.paginationAt !== 'top'
+					this.props.pagination && this.props.paginationAt === 'bottom'
 						? this.renderPagination()
 						: null
 				}
