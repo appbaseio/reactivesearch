@@ -210,7 +210,7 @@ export default class HomePage extends Component {
 
 						<Flex className={card}>
 							<div>
-								<img src="images/octocat.png" alt="Data-driven UIs" />
+								<img src="images/rocket.png" alt="Data-driven UIs" />
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">
 								Launch and iterate faster
@@ -222,7 +222,7 @@ export default class HomePage extends Component {
 
 						<Flex className={card}>
 							<div>
-								<img src="images/octocat.png" alt="Data-driven UIs" />
+								<img src="images/remix.png" alt="Data-driven UIs" />
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">
 								Works with existing UIs
@@ -246,7 +246,7 @@ export default class HomePage extends Component {
 
 						<Flex className={card}>
 							<div>
-								<img src="images/octocat.png" alt="Data-driven UIs" />
+								<img src="images/devices.png" alt="Data-driven UIs" />
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">Create cross-platform apps</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
@@ -278,7 +278,7 @@ export default class HomePage extends Component {
 
 						<Flex className={card}>
 							<div>
-								<img src="images/octocat.png" alt="Data-driven UIs" />
+								<img src="images/shield.png" alt="Data-driven UIs" />
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">Easy to secure</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
@@ -289,7 +289,7 @@ export default class HomePage extends Component {
 
 						<Flex className={card}>
 							<div>
-								<img src="images/octocat.png" alt="Data-driven UIs" />
+								<img src="images/blocks.png" alt="Data-driven UIs" />
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">Starter apps</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
