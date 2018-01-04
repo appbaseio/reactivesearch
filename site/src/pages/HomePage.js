@@ -561,11 +561,11 @@ export default class HomePage extends Component {
 					<Flex className="column-wrapper">
 						<Flex className="column" flexDirection="column">
 							<Title className="heading">Documentation</Title>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/getting-started/">Quick Start</a></Text>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/base-components/textfield.html">Basic Components</a></Text>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/map-components/geodistanceslider.html">Map Components</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html">Quick Start</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/base-components/textfield.html">Base Components</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/list-components/singlelist.html">List Components</a></Text>
 							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/search-components/categorysearch.html">Search Components</a></Text>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/advanced/customquery.html">Advanced options</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/result-components/resultlist.html">Result Components</a></Text>
 						</Flex>
 
 						<Flex className="column" flexDirection="column">
