@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { ReactiveBase } from '@appbaseio/reactivesearch';
-
-import Header from './components/Header';
-import SearchFilters from './components/SearchFilters';
-import Results from './components/Results';
-
-import theme from './styles/theme';
-import Container, { appContainer, resultsContainer } from './styles/Container';
-import Flex, { FlexChild } from './styles/Flex';
-import FilterContainer from './styles/FilterContainer';
-import { ToggleButton } from './styles/Button';
+import {
+	ReactiveBase,
+	DataSearch,
+	MultiList,
+	RangeSlider,
+	SingleRange,
+	SelectedFilters,
+	ResultCard,
+} from '@appbaseio/reactivesearch';
+import './App.css';
 
 class App extends Component {
 	constructor(props) {
@@ -19,7 +18,7 @@ class App extends Component {
 		};
 	}
 
-	toggleFilters = () => {
+	toggleState = () => {
 		const { visible } = this.state;
 		this.setState({
 			visible: !visible,
@@ -28,33 +27,164 @@ class App extends Component {
 
 	render() {
 		return (
-			<Container>
-				<ReactiveBase
-					app="good-books-live"
-					credentials="sHZWU7AYJ:d1e2922c-035c-429f-bfe4-62aa38b1c395"
-					theme={theme}
-				>
-					<Header />
-					<Flex className={appContainer}>
-						<FilterContainer visible={this.state.visible}>
-							<SearchFilters />
-						</FilterContainer>
-						<FlexChild className={resultsContainer}>
-							<Results />
-						</FlexChild>
-					</Flex>
-					<ToggleButton onClick={this.toggleFilters}>
+			<ReactiveBase
+				app="good-books-ds"
+				credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d"
+			>
+				<div className="navbar">
+					<div className="logo">
+						Good<b>Books</b>
+					</div>
+					<DataSearch
+						className="datasearch"
+						componentId="mainSearch"
+						dataField={[
+							'original_title',
+							'original_title.search',
+							'authors',
+							'authors.search',
+						]}
+						queryFormat="and"
+						placeholder="Search for a book title or an author"
+						innerClass={{
+							input: 'searchbox',
+							list: 'suggestionlist',
+						}}
+						autosuggest={false}
+						iconPosition="left"
+						filterLabel="search"
+					/>
+				</div>
+				<div className="display">
+					<div className={`leftSidebar ${this.state.visible ? 'active' : ''}`}>
+						<SingleRange
+							componentId="ratingsFilter"
+							dataField="average_rating_rounded"
+							title="Book Ratings"
+							data={[
+								{
+									start: 4,
+									end: 5,
+									label: '★★★★ & up',
+								},
+								{
+									start: 3,
+									end: 5,
+									label: '★★★ & up',
+								},
+								{
+									start: 2,
+									end: 5,
+									label: '★★ & up',
+								},
+								{
+									start: 1,
+									end: 5,
+									label: '★ & up',
+								},
+							]}
+							react={{
+								and: 'mainSearch',
+							}}
+							filterLabel="Ratings"
+						/>
+						<RangeSlider
+							componentId="publishFilter"
+							dataField="original_publication_year"
+							title="Year of Publication"
+							filterLabel="published"
+							range={{
+								start: 1970,
+								end: 2017,
+							}}
+							rangeLabels={{
+								start: '1970',
+								end: '2017',
+							}}
+							interval={2}
+						/>
+						<MultiList
+							componentId="authorFilter"
+							dataField="authors.raw"
+							title="Authors"
+							size={1000}
+							showCheckbox={false}
+							className="authors"
+							innerClass={{
+								list: 'author-list',
+							}}
+							placeholder="Filter by author name"
+							filterLabel="Authors"
+						/>
+					</div>
+					<div className="mainBar">
+						<SelectedFilters />
+						<ResultCard
+							componentId="results"
+							dataField="original_title"
+							react={{
+								and: [
+									'mainSearch',
+									'ratingsFilter',
+									'publishFilter',
+									'authorFilter',
+								],
+							}}
+							pagination
+							size={12}
+							sortOptions={[
+								{
+									dataField: 'average_rating',
+									sortBy: 'desc',
+									label: 'Ratings (High to low)',
+								},
+								{
+									dataField: 'original_title.raw',
+									sortBy: 'asc',
+									label: 'Title A->Z',
+								},
+								{
+									dataField: 'original_title.raw',
+									sortBy: 'desc',
+									label: 'Title Z->A',
+								},
+							]}
+							onData={res => ({
+								image: res.image,
+								title: res.original_title || ' ',
+								description:
+									`<div class='result-author' title='${
+										res.authors
+									}'>by ${res.authors}</div>`
+									+ `<span class="star">${'★'.repeat(res.average_rating_rounded)}</span>`,
+								url: `https://google.com/search?q=${
+									res.original_title
+								}`,
+							})}
+							className="result-data"
+							innerClass={{
+								title: 'result-title',
+								image: 'result-image',
+								resultStats: 'result-stats',
+								listItem: 'result-item',
+							}}
+						/>
+					</div>
+					<div
+						role="button"
+						tabIndex="0"
+						onKeyPress={this.toggleState}
+						onClick={this.toggleState}
+						className={`toggle-btn ${this.state.visible ? 'active' : ''}`}
+					>
 						{
 							this.state.visible
-							&& <span><i className="fas fa-book" /> Show Books</span>
+								? '📚  Show Books'
+								: '📂  Show Filters'
 						}
-						{
-							!this.state.visible
-							&& <span><i className="fas fa-sliders-h" /> Show Filters</span>
-						}
-					</ToggleButton>
-				</ReactiveBase>
-			</Container>
+					</div>
+				</div>
+			</ReactiveBase>
 		);
 	}
 }

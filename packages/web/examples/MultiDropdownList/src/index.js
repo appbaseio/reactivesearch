@@ -14,18 +14,15 @@ class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="reactivemap-demo"
-				credentials="qMzzgez0t:a9138c3f-f246-4cd8-ba3d-0b99f9550c05"
-				type="meetupdata1"
+				app="good-books-live"
+				credentials="sHZWU7AYJ:d1e2922c-035c-429f-bfe4-62aa38b1c395"
 			>
 				<div className="row">
 					<div className="col">
 						<MultiDropdownList
-							componentId="CitySensor"
-							dataField="group.group_city.raw"
-							title="MultiDropdownList"
+							componentId="BookSensor"
+							dataField="original_series.raw"
 							size={100}
-							URLParams
 						/>
 					</div>
 
@@ -33,13 +30,13 @@ class Main extends Component {
 						<SelectedFilters />
 						<ReactiveList
 							componentId="SearchResult"
-							dataField="name"
+							dataField="original_title.raw"
+							className="result-list-container"
 							from={0}
-							size={20}
-							onData={this.onData}
-							pagination
+							size={5}
+							onData={this.booksReactiveList}
 							react={{
-								and: ['CitySensor'],
+								and: ['BookSensor'],
 							}}
 						/>
 					</div>
@@ -48,12 +45,28 @@ class Main extends Component {
 		);
 	}
 
-	onData(data) {
+	booksReactiveList(data) {
 		return (
-			<div key={data._id}>
-				<h2>{data.member.member_name}</h2>
-				<p>is going to {data.event.event_name} at {data.venue_name_ngrams}</p>
-				<p>{data.group_city_ngram}</p>
+			<div className="flex book-content" key={data._id}>
+				<img src={data.image} alt="Book Cover" className="book-image" />
+				<div className="flex column justify-center" style={{ marginLeft: 20 }}>
+					<div className="book-header">{data.original_title}</div>
+					<div className="flex column justify-space-between">
+						<div>
+							<div>by <span className="authors-list">{data.authors}</span></div>
+							<div className="ratings-list flex align-center">
+								<span className="stars">
+									{
+										Array(data.average_rating_rounded).fill('x')
+											.map((item, index) => <i className="fas fa-star" key={index} />)
+									}
+								</span>
+								<span className="avg-rating">({data.average_rating} avg)</span>
+							</div>
+						</div>
+						<span className="pub-year">Pub {data.original_publication_year}</span>
+					</div>
+				</div>
 			</div>
 		);
 	}
