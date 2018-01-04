@@ -112,6 +112,7 @@ const card = css`
 
 	img {
 		margin-bottom: 15px;
+		max-width: 65px;
 	}
 
 	${queries.medium`
