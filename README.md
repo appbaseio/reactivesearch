@@ -4,7 +4,7 @@ React UI components for Elasticsearch.
 
 **v2 of `reactivesearch` is here 🍾.** Go [read how to build an e-commerce search UI on codeburst](https://codeburst.io/how-to-build-an-e-commerce-search-ui-with-react-and-elasticsearch-a581c823b2c3).
 
-#### npm install @appbaseio/reactivesearch :rocket:
+#### :rocket: `npm install @appbaseio/reactivesearch`
 
 ![Banner Image showing all the UI components we offer](https://i.imgur.com/bJ1QKZS.png)
 
