@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import {
 	ReactiveBase,
 	ToggleButton,
-	ReactiveList,
+	ResultList,
 	SelectedFilters,
 } from '@appbaseio/reactivesearch';
 
@@ -14,35 +14,39 @@ class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="car-store"
-				credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
+				app="meetup_demo"
+				credentials="LPpISlEBe:2a8935f5-0f63-4084-bc3e-2b2b4d1a8e02"
+				type="meetupdata1"
 			>
 				<div className="row">
 					<div className="col">
 						<ToggleButton
-							dataField="brand.raw"
-							componentId="CarSensor"
+							componentId="CitySensor"
+							dataField="group.group_topics.topic_name_raw.raw"
 							data={[
-								{ label: 'Audi', value: 'audi' },
-								{ label: 'Nissan', value: 'nissan' },
-								{ label: 'Porsche', value: 'porsche' },
-								{ label: 'BMW', value: 'bmw' },
+								{ label: 'Social', value: 'Social' },
+								{ label: 'Adventure', value: 'Adventure' },
+								{ label: 'Music', value: 'Music' },
 							]}
 						/>
 					</div>
-
 					<div className="col">
-						<SelectedFilters />
-						<ReactiveList
+						<SelectedFilters componentId="CitySensor" />
+						<ResultList
 							componentId="SearchResult"
-							dataField="name"
-							title="ReactiveList"
+							dataField="group.group_topics.topic_name_raw"
+							title="Results"
+							sortBy="asc"
+							className="result-list-container"
 							from={0}
-							size={20}
-							onData={this.onData}
+							size={5}
+							onData={this.meetupList}
+							innerClass={{
+								image: 'meetup-list-image',
+							}}
 							pagination
 							react={{
-								and: 'CarSensor',
+								and: ['CitySensor'],
 							}}
 						/>
 					</div>
@@ -51,14 +55,32 @@ class Main extends Component {
 		);
 	}
 
-	onData(data) {
-		return (
-			<div key={data._id}>
-				<h2>{data.name}</h2>
-				<p>{data.price} - {data.rating} stars rated</p>
-			</div>
-		);
+	meetupList(data) {
+		return {
+			title: (
+				<div className="meetup-title">
+					{data.member ? data.member.member_name : ''} is going to ${data.event ? data.event.event_name : ''}
+				</div>
+			),
+			image: data.member.photo,
+			image_size: 'small',
+			description: (
+				<div className="flex column">
+					<div className="meetup-location">
+						<span className="location"><i className="fas fa-map-marker-alt" /></span>
+						{data.group ? data.group.group_city : ''}
+					</div>
+					<div className="flex wrap meetup-topics">
+						{
+							data.group.group_topics.slice(0, 4).map(tag => (
+								<div className="meetup-topic" key={tag.topic_name}>{tag.topic_name}</div>
+							))
+						}
+					</div>
+				</div>
+			),
+			url: data.event.event_url,
+		};
 	}
 }
-
 ReactDOM.render(<Main />, document.getElementById('root'));

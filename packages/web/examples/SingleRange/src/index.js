@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 
 import {
 	ReactiveBase,
-	TextField,
-	ResultList,
+	SingleRange,
+	ResultCard,
 	SelectedFilters,
 } from '@appbaseio/reactivesearch';
 
@@ -17,24 +17,26 @@ class Main extends Component {
 				app="good-books-live"
 				credentials="sHZWU7AYJ:d1e2922c-035c-429f-bfe4-62aa38b1c395"
 			>
-				<div className="row">
+				<div className="row reverse-labels">
 					<div className="col">
-						<TextField
-							dataField="original_title.search"
+						<SingleRange
 							componentId="BookSensor"
+							dataField="average_rating"
+							data={
+								[{ start: 0, end: 3, label: 'Rating < 3' },
+									{ start: 3, end: 4, label: 'Rating 3 to 4' },
+									{ start: 4, end: 5, label: 'Rating > 4' }]
+							}
 						/>
 					</div>
-
-					<div className="col">
-						<SelectedFilters componentId="BookSensor" />
-						<ResultList
+					<div className="col" style={{ backgroundColor: '#fafafa' }}>
+						<SelectedFilters />
+						<ResultCard
 							componentId="SearchResult"
-							dataField="original_title"
+							dataField="original_title.raw"
 							from={0}
-							size={3}
-							onData={this.booksList}
-							className="result-list-container"
-							pagination
+							size={10}
+							onData={this.booksCard}
 							react={{
 								and: 'BookSensor',
 							}}
@@ -45,14 +47,14 @@ class Main extends Component {
 		);
 	}
 
-	booksList(data) {
+	booksCard(data) {
 		return {
-			title: <div className="book-title" dangerouslySetInnerHTML={{ __html: data.original_title }} />,
+			title: <div className="book-title-card text-center" dangerouslySetInnerHTML={{ __html: data.original_title }} />,
 			description: (
-				<div className="flex column justify-space-between">
+				<div className="flex column justify-space-between text-center">
 					<div>
 						<div>by <span className="authors-list">{data.authors}</span></div>
-						<div className="ratings-list flex align-center">
+						<div className="ratings-list flex align-center justify-center">
 							<span className="stars">
 								{
 									Array(data.average_rating_rounded).fill('x')

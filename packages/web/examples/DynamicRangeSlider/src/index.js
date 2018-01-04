@@ -4,40 +4,37 @@ import ReactDOM from 'react-dom';
 import {
 	ReactiveBase,
 	DynamicRangeSlider,
-	ReactiveList,
-	SelectedFilters,
+	ResultList,
 } from '@appbaseio/reactivesearch';
 
 import './index.css';
 
-class Main extends Component {
+export default class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="car-store"
-				credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
+				app="good-books-live"
+				credentials="sHZWU7AYJ:d1e2922c-035c-429f-bfe4-62aa38b1c395"
 			>
 				<div className="row">
 					<div className="col">
 						<DynamicRangeSlider
-							dataField="rating"
-							componentId="DynamicRangeSlider"
-							title="Dynamic Range Slider"
+							dataField="books_count"
+							componentId="BookSensor"
 						/>
 					</div>
 
 					<div className="col">
-						<SelectedFilters />
-						<ReactiveList
+						<ResultList
 							componentId="SearchResult"
-							dataField="name"
-							title="ReactiveList"
+							dataField="original_title"
 							from={0}
-							size={20}
-							onData={this.onData}
+							size={3}
+							className="result-list-container"
+							onData={this.booksList}
 							pagination
 							react={{
-								and: 'DynamicRangeSlider',
+								and: 'BookSensor',
 							}}
 						/>
 					</div>
@@ -46,13 +43,28 @@ class Main extends Component {
 		);
 	}
 
-	onData(data) {
-		return (
-			<div key={data._id}>
-				<h2>{data.name}</h2>
-				<p>{data.price} - {data.rating} stars rated</p>
-			</div>
-		);
+	booksList(data) {
+		return {
+			title: <div className="book-title" dangerouslySetInnerHTML={{ __html: data.original_title }} />,
+			description: (
+				<div className="flex column justify-space-between">
+					<div>
+						<div>by <span className="authors-list">{data.authors}</span></div>
+						<div className="ratings-list flex align-center">
+							<span className="stars">
+								{
+									Array(data.average_rating_rounded).fill('x')
+										.map((item, index) => <i className="fas fa-star" key={index} />)
+								}
+							</span>
+							<span className="avg-rating">({data.average_rating} avg)</span>
+						</div>
+					</div>
+					<span className="pub-year">Pub {data.original_publication_year}</span>
+				</div>
+			),
+			image: data.image,
+		};
 	}
 }
 

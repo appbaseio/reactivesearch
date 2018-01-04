@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import {
 	ReactiveBase,
 	DatePicker,
-	ReactiveList,
+	ResultCard,
 	SelectedFilters,
 } from '@appbaseio/reactivesearch';
 
@@ -14,43 +14,31 @@ class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="gitxplore-live"
-				credentials="bYTSo47tj:d001826a-f4ef-42c5-b0aa-a94f29967ba0"
-				theme={{
-					primaryColor: 'mediumseagreen',
-				}}
+				app="housing"
+				credentials="0aL1X5Vts:1ee67be1-9195-4f4b-bd4f-a91cd1b5e4b5"
+				type="listing"
 			>
 				<div className="row">
 					<div className="col">
 						<DatePicker
-							componentId="DatePickerComponent"
-							dataField="pushed"
-							queryFormat="date_time_no_millis"
-							title="Date Picker"
-							initialMonth={new Date('2017-04-07')}
-							URLParams
+							componentId="DateSensor"
+							dataField="date_from"
+							customQuery={this.dateQuery}
+							initialMonth={new Date('2017-05-05')}
 						/>
 					</div>
 
 					<div className="col">
-						<SelectedFilters />
-						<ReactiveList
+						<SelectedFilters componentId="DateSensor" />
+						<ResultCard
+							componentId="SearchResult"
 							dataField="name"
-							componentId="ReactiveList"
-							size={20}
 							from={0}
+							size={40}
 							onData={this.onData}
-							pagination
-							defaultQuery={() => ({
-								query: {
-									match_all: {},
-								},
-								sort: {
-									stars: { order: 'desc' },
-								},
-							})}
+							showPagination
 							react={{
-								and: ['DatePickerComponent'],
+								and: ['DateSensor'],
 							}}
 						/>
 					</div>
@@ -59,13 +47,35 @@ class Main extends Component {
 		);
 	}
 
-	onData(data) {
-		return (
-			<div key={data._id}>
-				<h2>{data.owner}/{data.name}</h2>
-				<h4>{data.stars} <span role="img" aria-label="stars">🌟</span></h4>
-			</div>
-		);
+	dateQuery(value, props) {
+		let query = null;
+		if (value) {
+			query = [
+				{
+					range: {
+						[props.dataField]: {
+							lte: moment(value).format('YYYYMMDD'),
+						},
+					},
+				},
+			];
+		}
+		return query;
+	}
+
+	onData(res) {
+		return {
+			image: res.image,
+			title: res.name,
+			description: (
+				<div>
+					<div>${res.price}</div>
+					<span style={{ backgroundImage: `url(${res.host_image})` }} />
+					<p>{res.room_type} · {res.accommodates} guests</p>
+				</div>
+			),
+			url: res.listing_url,
+		};
 	}
 }
 
