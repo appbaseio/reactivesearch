@@ -21,7 +21,6 @@ export default class Main extends Component {
 						<DynamicRangeSlider
 							dataField="books_count"
 							componentId="BookSensor"
-							{...this.props}
 						/>
 					</div>
 

@@ -21,7 +21,6 @@ class Main extends Component {
 						<NumberBox
 							componentId="BookSensor"
 							dataField="average_rating_rounded"
-							{...this.props}
 						/>
 					</div>
 					<div className="col" style={{ backgroundColor: '#fafafa' }}>

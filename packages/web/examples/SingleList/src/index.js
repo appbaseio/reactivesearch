@@ -23,7 +23,6 @@ class Main extends Component {
 							componentId="BookSensor"
 							dataField="original_series.raw"
 							size={100}
-							{...this.props}
 						/>
 					</div>
 

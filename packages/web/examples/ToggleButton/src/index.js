@@ -28,7 +28,6 @@ class Main extends Component {
 								{ label: 'Adventure', value: 'Adventure' },
 								{ label: 'Music', value: 'Music' },
 							]}
-							{...this.props}
 						/>
 					</div>
 					<div className="col">
