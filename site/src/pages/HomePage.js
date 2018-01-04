@@ -528,31 +528,32 @@ export default class HomePage extends Component {
 					<Flex className="column-wrapper">
 						<Flex className="column" flexDirection="column">
 							<Title className="heading">Documentation</Title>
-							<Text light margin="3px 0"><a href="/">Quick Start</a></Text>
-							<Text light margin="3px 0"><a href="/">Basic Components</a></Text>
-							<Text light margin="3px 0"><a href="/">Map Components</a></Text>
-							<Text light margin="3px 0"><a href="/">Advanced options</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/getting-started/">Quick Start</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/base-components/textfield.html">Basic Components</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/map-components/geodistanceslider.html">Map Components</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/search-components/categorysearch.html">Search Components</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/advanced/customquery.html">Advanced options</a></Text>
 						</Flex>
 
 						<Flex className="column" flexDirection="column">
 							<Title className="heading">Community</Title>
-							<Text light margin="3px 0"><a href="/">Github</a></Text>
-							<Text light margin="3px 0"><a href="/">Slack</a></Text>
-							<Text light margin="3px 0"><a href="/">Twitter</a></Text>
+							<Text light margin="3px 0"><a href="https://github.com/appbaseio/reactivesearch/">GitHub</a></Text>
+							<Text light margin="3px 0"><a href="https://appbaseio.slack.com/">Slack</a></Text>
+							<Text light margin="3px 0"><a href="https://twitter.com/appbaseio">Twitter</a></Text>
 						</Flex>
 
 						<Flex className="column" flexDirection="column">
 							<Title className="heading">Helpful Tools</Title>
-							<Text light margin="3px 0"><a href="/">Data Browser</a></Text>
-							<Text light margin="3px 0"><a href="/">GUI Query Builder</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/dejavu/">Data Browser</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/mirage/">GUI Query Builder</a></Text>
 						</Flex>
 
 						<Flex className="column" flexDirection="column">
 							<Title className="heading">More</Title>
-							<Text light margin="3px 0"><a href="/">Blog</a></Text>
-							<Text light margin="3px 0"><a href="/">Appbase.io docs</a></Text>
-							<Text light margin="3px 0"><a href="/">Gitter</a></Text>
-							<Text light margin="3px 0"><a href="/">Support Email</a></Text>
+							<Text light margin="3px 0"><a href="https://medium.appbase.io/">Blog</a></Text>
+							<Text light margin="3px 0"><a href="http://docs.appbase.io/">Appbase.io docs</a></Text>
+							<Text light margin="3px 0"><a href="https://gitter.im/appbaseio/reactivesearch">Gitter</a></Text>
+							<Text light margin="3px 0"><a href="mailto:support@appbase.io">Support Email</a></Text>
 						</Flex>
 					</Flex>
 				</Flex>
