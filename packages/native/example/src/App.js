@@ -51,7 +51,7 @@ class Main extends Component {
 		)}
 		onEndReachedThreshold={0.5}
 		onEndReached={loadMore}
-	/>)
+	/>);
 
 	parseToElement = (str) => {
 		const start = str.indexOf('<em>');
@@ -132,9 +132,31 @@ class Main extends Component {
 							componentId="DataSearchComponent"
 							dataField="name"
 							defaultSelected="Nissan"
-							onValueChange={val => console.log('DataSearch onValueChange', val)}
 							react={{
-								and: 'TextFieldComponent'
+								and: 'TextFieldComponent',
+							}}
+						/>
+
+						<ReactiveList
+							dataField="name"
+							componentId="ReactiveList"
+							size={20}
+							onAllData={this.onAllData}
+							pagination
+							defaultQuery={() => ({
+								query: {
+									match_all: {},
+								},
+								sort: {
+									price: { order: 'asc' },
+								},
+							})}
+							react={{
+								and: [
+									'DataSearchComponent',
+									'TextFieldComponent',
+									'SingleDropdownRange',
+								],
 							}}
 						/>
 					</View>
