@@ -344,7 +344,7 @@ export default class HomePage extends Component {
 				>
 					<H2 margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
 					<Flex className={tabJustifyCenter}>
-						<Button shadow primary className={button} style={{ maxWidth: '250px' }} href="https://codeburst.io/how-to-build-an-e-commerce-search-ui-with-react-and-elasticsearch-a581c823b2c3">Build a live app in 5 mins</Button>
+						<Button shadow primary className={button} style={{ maxWidth: '250px' }} href="https://appbaseio-apps.github.io/booksearch-onboarding/">Build a live app in 5 mins</Button>
 						<Button className={button} style={{ maxWidth: '250px', marginLeft: '1rem' }} href="https://opensource.appbase.io/reactive-manual">Read the docs</Button>
 					</Flex>
 				</Flex>
