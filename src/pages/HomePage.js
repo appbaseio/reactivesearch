@@ -403,10 +403,21 @@ export default class HomePage extends Component {
 						className={tabHide}
 					>
 						<Bubble backgroundColor="#5846AB" big>
-							The time savings have been off the charts in getting our
-							search up and running with searchbase.io
+							We use Reactivesearch for powering our search at Lyearn.
+							It has saved us at least a month of work!
 
-							<footer>Rob Whitley, Co-Founder, Salespipe</footer>
+							<footer>
+								Kishan Patel, CTO,&nbsp;
+								<a
+									target="_blank"
+									rel="noopener noreferrer"
+									href="https://www.lyearn.com/"
+									className={decoratedLink}
+									style={{ marginTop: 0 }}
+								>
+									Lyearn
+								</a>
+							</footer>
 						</Bubble>
 					</Flex>
 					<Flex
@@ -418,9 +429,20 @@ export default class HomePage extends Component {
 					>
 						<Bubble>
 							The time savings have been off the charts in getting our
-							search up and running with searchbase.io
+							search up and running with searchbase.io ...
 
-							<footer>Rob Whitley, Co-Founder, Salespipe</footer>
+							<footer>
+								Rob Whitley, Co-Founder,&nbsp;
+								<a
+									target="_blank"
+									rel="noopener noreferrer"
+									href="https://www.getsalespipe.com/"
+									className={decoratedLink}
+									style={{ marginTop: 0 }}
+								>
+									Salespipe
+								</a>
+							</footer>
 						</Bubble>
 					</Flex>
 
@@ -432,7 +454,8 @@ export default class HomePage extends Component {
 						className={tabHide}
 					>
 						<Bubble backgroundColor="#5C67E1">
-							As someone who’s avoided React for as long as I possibly could, these made for an awesome (and really useful) intro, good job
+							As someone who’s avoided React for as long as I possibly could,
+							these made for an awesome (and really useful) intro, good job
 
 							<footer>Treeasaurusrex, via Reddit</footer>
 						</Bubble>
@@ -447,9 +470,20 @@ export default class HomePage extends Component {
 					>
 						<Bubble backgroundColor="#5C67E1">
 							The time savings have been off the charts in getting our
-							search up and running with searchbase.io
+							search up and running with searchbase.io ...
 
-							<footer>Rob Whitley, Co-Founder, Salespipe</footer>
+							<footer>
+								Rob Whitley, Co-Founder,&nbsp;
+								<a
+									target="_blank"
+									rel="noopener noreferrer"
+									href="https://www.getsalespipe.com/"
+									className={decoratedLink}
+									style={{ marginTop: 0 }}
+								>
+									Salespipe
+								</a>
+							</footer>
 						</Bubble>
 					</Flex>
 				</Flex>
