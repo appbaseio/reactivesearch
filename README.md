@@ -2,9 +2,11 @@
 
 React UI components for Elasticsearch.
 
-**[ALPHA RELEASE Note]: This is the version-2 (re-write) of `reactivesearch` actively in development. Not recommended for production-use.** We're in active documentation transition, so some links may not work.
+**v2 of `reactivesearch` is here 🍾.**
 
-![](https://i.imgur.com/dIix6Jl.png)
+#### npm install @appbaseio/reactivesearch :rocket:
+
+![Banner Image showing all the UI components we offer](https://i.imgur.com/bJ1QKZS.png)
 
 ## TOC
 
@@ -20,9 +22,9 @@ React UI components for Elasticsearch.
 
 <br>
 
-## 1. Reactive Search: Intro
+## 1. ReactiveSearch: Intro
 
-Reactive Search is a React components library for building realtime search experiences. It is built on top of the appbase.io realtime DB service and ships with 25+ components for Lists, Dropdowns, Range Sliders, Data Search, Multi Level Menu, Calendars, Feeds Maps, Ratings Filter, Result Cards and Result Lists.
+ReactiveSearch is a React UI components library for Elasticsearch. It has 25+ components for Lists, Dropdowns, RangeSliders, DataSearch, MultiLevelMenu, Calendars, Feeds, RatingsFilter, ResultCard and ResultList.
 
 The library is conceptually divided into two parts:  
 
@@ -49,14 +51,14 @@ Besides these, the library also provides low level actuators (ReactiveElement, R
 * The library handles the transformation of the UI interactions into database queries. You only need to include the components and associate each with a DB field.
 * Built in live updates - Actuators can be set to update results even when the underlying data changes in the DB.
 * Comes with a cleanly namespaced CSS classes API that allows extending built-in styles without hassle.
-* Built in `light` and `dark` UI themes.
+* Is themable via `ThemeProvider`.
 
 
 ### Ease of Use
 
-* One step installation with [npm install @appbaseio/reactivesearch](https://opensource.appbase.io/reactive-manual/v1/getting-started/RSInstallation.html),
-* A UMD build that works directly in the browser. See a demo [here](https://github.com/appbaseio-apps/reactivesearch-starter-app#try-in-browser-without-npm),
-* Works out of the box with Materialize CSS and comes with a polyfill CSS for Bootstrap. Compatibility for other frameworks can be added too,
+* One step installation with [npm install @appbaseio/reactivesearch](https://opensource.appbase.io/reactive-manual/v1/getting-started/reactivesearch.html),
+* A UMD build that works directly in the browser. Installation steps [here](https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html#reactivesearch-as-umd),
+* Styled and scoped components that can be easily extended,
 * See the [reactivesearch starter app](https://github.com/appbaseio-apps/reactivesearch-starter-app).
 
 [⬆ Back to Top](#reactive-search)
@@ -69,6 +71,8 @@ Try the live component playground at [playground](https://opensource.appbase.io/
 ## 4. Live Examples
 
 A set of examples built with ReactiveSearch and inspired by real world apps.
+
+### TODO - Links to be updated.
 
 - [examples/airbeds](https://opensource.appbase.io/reactivesearch/examples/airbeds/) - An airbnb-like booking search experience.
 - [examples/news](https://opensource.appbase.io/reactivesearch/examples/news) - A full-text search app on the Hacker News dataset.
@@ -87,26 +91,26 @@ You can check all of them on the [examples page](https://opensource.appbase.io/r
 Installing ReactiveSearch is just one command.
 
 ```javascript
-npm i @appbaseio/reactivesearch
+npm install --save @appbaseio/reactivesearch
 ```
 
-You can also read about it [here](https://opensource.appbase.io/reactive-manual/v1.0.0/getting-started/RSInstallation.html).
+You can also read about it [here](https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html).
 
-(In the works) You can try out the library live without any installation via the [interactive tutorial](https://opensource.appbase.io/reactivesearch/dashboard/tutorial/).
 
 ## 6. Getting Started
 
-Follow the getting started guide to build a Hello Maps! app from the official docs [here](https://opensource.appbase.io/reactive-manual/v1.0.0/getting-started/RSStart.html).
+Follow the getting started guide to build a Hello Search! app from the official docs [here](https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html).
 
 ## 7. Docs Manual
 
 The official docs for the library are at [https://opensource.appbase.io/reactive-manual](https://opensource.appbase.io/reactive-manual).
 
-The components are divided into two sections:
-* Generic UI components are at [https://opensource.appbase.io/reactive-manual/v1/components](https://opensource.appbase.io/reactive-manual/v1/components/).
-* Map based UI components are at [https://opensource.appbase.io/reactive-manual/v1/map-components](https://opensource.appbase.io/reactive-manual/v1.0.0/map-components/).
-* Each component's styles API is mentioned in a separate **CSS Styles API** section. See here for [SingleList](https://opensource.appbase.io/reactive-manual/v1/components/SingleList.html#-singlelist-css-styles-api).
-* You can read more about the Styles API here - https://opensource.appbase.io/reactive-manual/v1/advanced/StyleGuide.html.
+The components are divided into four sections:
+* Generic UI components are at [reactive-manual/base-components](https://opensource.appbase.io/reactive-manual/base-components/).
+* List based UI components are at [reactive-manual/list-components](https://opensource.appbase.io/reactive-manual/list-components/).
+* Range based UI components are at [reactive-manual/range-components](https://opensource.appbase.io/reactive-manual/range-components/).
+* Search UI components are at [reactive-manual/search-components](https://opensource.appbase.io/reactive-manual/search-components/).
+* Result components are at [reactive-manual/result-components](https://opensource.appbase.io/reactive-manual/result-components/).
 
 [⬆ Back to Top](#reactive-search)
 
@@ -120,7 +124,7 @@ git clone https://github.com/appbaseio/reactivesearch.git
 
 2. `cd` into the project directory
 
-3. checkout `dev` branch
+3. Checkout the `dev` branch (should be default)
 
 4. fetch the submodules. In case you don't have `ssh` setup for github, change the URLs in `.gitmodules` to use `https` instead
 
