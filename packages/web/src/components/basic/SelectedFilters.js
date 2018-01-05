@@ -29,39 +29,47 @@ class SelectedFilters extends Component {
 		const { selectedValues } = this.props;
 		let hasValues = false;
 
-		return (<div style={this.props.style} className={`${filters} ${this.props.className || ''}`}>
-			{
-				Object.keys(selectedValues)
-					.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
-					.map((component, index) => {
-						const { label, value } = selectedValues[component];
-						const isArray = Array.isArray(value);
+		return (
+			<div style={this.props.style} className={`${filters} ${this.props.className || ''}`}>
+				{
+					Object.keys(selectedValues)
+						.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
+						.map((component, index) => {
+							const { label, value } = selectedValues[component];
+							const isArray = Array.isArray(value);
 
-						if (label && (isArray && value.length) || (!isArray && value)) {
-							hasValues = true;
-							return (<Button
+							if (label && ((isArray && value.length) || (!isArray && value))) {
+								hasValues = true;
+								return (
+									<Button
+										className={getClassName(this.props.innerClass, 'button') || null}
+										key={`${component}-${index}`} // eslint-disable-line
+										onClick={() => this.remove(component)}
+									>
+										<span>
+											{selectedValues[component].label}: {this.renderValue(value, isArray)}
+										</span>
+										<span>&#x2715;</span>
+									</Button>
+								);
+							}
+							return null;
+						})
+				}
+				{
+					this.props.showClearAll && hasValues
+						? (
+							<Button
 								className={getClassName(this.props.innerClass, 'button') || null}
-								key={`${component}-${index}`}
-								onClick={() => this.remove(component)}
+								onClick={this.props.clearValues}
 							>
-								<span>{selectedValues[component].label}: {this.renderValue(value, isArray)}</span>
-								<span>&#x2715;</span>
-							</Button>);
-						}
-						return null;
-					})
-			}
-			{
-				this.props.showClearAll && hasValues
-					? <Button
-						className={getClassName(this.props.innerClass, 'button') || null}
-						onClick={this.props.clearValues}
-					>
-						{this.props.clearAllLabel}
-					</Button>
-					: null
-			}
-		</div>);
+								{this.props.clearAllLabel}
+							</Button>
+						)
+						: null
+				}
+			</div>
+		);
 	}
 }
 
