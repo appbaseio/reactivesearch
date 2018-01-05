@@ -28,6 +28,7 @@ class DatePicker extends Component {
 		this.state = {
 			currentDate: '',
 		};
+		this.locked = false;
 	}
 
 	componentWillMount() {
@@ -126,6 +127,12 @@ class DatePicker extends Component {
 		if (isDefaultValue && !new XDate(currentDate).valid() && currentDate.length) {
 			console.error(`DatePicker: ${props.componentId} invalid value passed for date`);
 		} else {
+			// ignore state updates when component is locked
+			if (props.beforeValueChange && this.locked) {
+				return;
+			}
+
+			this.locked = true;
 			let value = null;
 			if (currentDate) {
 				value = isDefaultValue ? currentDate : this.formatInputDate(currentDate);
@@ -136,6 +143,7 @@ class DatePicker extends Component {
 					currentDate,
 				}, () => {
 					this.updateQuery(value, props);
+					this.locked = false;
 				});
 			};
 			checkValueChange(
