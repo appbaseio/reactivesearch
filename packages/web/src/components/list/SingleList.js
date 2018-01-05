@@ -34,6 +34,7 @@ class SingleList extends Component {
 			searchTerm: '',
 		};
 		this.type = 'term';
+		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 	}
 
@@ -124,6 +125,12 @@ class SingleList extends Component {
 	};
 
 	setValue = (nextValue, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		let value = nextValue;
 		if (nextValue === this.state.currentValue) {
 			value = '';
@@ -134,6 +141,7 @@ class SingleList extends Component {
 				currentValue: value,
 			}, () => {
 				this.updateQuery(value, props);
+				this.locked = false;
 			});
 		};
 
