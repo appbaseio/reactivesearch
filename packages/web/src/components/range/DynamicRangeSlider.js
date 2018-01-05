@@ -36,6 +36,7 @@ class DynamicRangeSlider extends Component {
 		this.internalHistogramComponent = `${this.props.componentId}__histogram__internal`;
 		this.internalRangeComponent = `${this.props.componentId}__range__internal`;
 		this.internalMatchAllComponent = `${this.props.componentId}__match_all__internal`;
+		this.locked = false;
 	}
 
 	componentWillMount() {
@@ -203,11 +204,18 @@ class DynamicRangeSlider extends Component {
 	});
 
 	handleChange = (currentValue, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		const performUpdate = () => {
 			this.setState({
 				currentValue,
 			}, () => {
 				this.updateQuery([currentValue[0], currentValue[1]], props);
+				this.locked = false;
 			});
 		};
 		checkValueChange(
