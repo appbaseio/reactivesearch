@@ -32,6 +32,7 @@ class SingleDropdownList extends Component {
 			options: [],
 		};
 		this.type = 'term';
+		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 	}
 
@@ -122,11 +123,18 @@ class SingleDropdownList extends Component {
 	}
 
 	setValue = (value, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value,
 			}, () => {
 				this.updateQuery(value, props);
+				this.locked = false;
 			});
 		};
 
