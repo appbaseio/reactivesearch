@@ -55,7 +55,7 @@ const toggleButtons = css`
 	max-width: 100%;
 
 	a {
-		margin: 0 3px;
+		margin: 3px 3px;
 	}
 `;
 
