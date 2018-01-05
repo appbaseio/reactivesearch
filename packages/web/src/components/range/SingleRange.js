@@ -155,7 +155,7 @@ class SingleRange extends Component {
 										{item.label}
 									</label>
 								</li>
-							)
+							);
 						})
 					}
 				</UL>
