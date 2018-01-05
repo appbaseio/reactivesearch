@@ -8,7 +8,7 @@ const alertBorder = ({ theme }) => css`
 const input = css`
 	width: 100%;
 	height: 42px;
-	padding: 8px;
+	padding: 8px 12px;
 	border: 1px solid #ccc;
 	background-color: #fafafa;
 	font-size: 0.9rem;
@@ -26,14 +26,14 @@ const Input = styled('input')`
 		props.showIcon
 		&& props.iconPosition === 'left'
 		&& css`
-			padding-left: 30px;
+			padding-left: 32px;
 		`};
 
 	${props =>
 		props.showIcon
 		&& props.iconPosition === 'right'
 		&& css`
-			padding-right: 30px;
+			padding-right: 32px;
 		`};
 
 	${props => props.alert && alertBorder};

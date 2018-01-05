@@ -523,7 +523,7 @@ DataSearch.defaultProps = {
 	style: {},
 	className: null,
 	showIcon: true,
-	iconPosition: 'right',
+	iconPosition: 'left',
 	debounce: 0,
 };
 

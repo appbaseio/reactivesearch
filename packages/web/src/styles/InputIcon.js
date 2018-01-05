@@ -1,12 +1,12 @@
 import styled, { css } from 'react-emotion';
 
 const left = css`
-	padding-left: 8px;
+	padding-left: 12px;
 	left: 0;
 `;
 
 const right = css`
-	padding-right: 8px;
+	padding-right: 12px;
 	right: 0;
 `;
 
