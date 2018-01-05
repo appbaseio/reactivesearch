@@ -31,6 +31,7 @@ class MultiRange extends Component {
 		};
 
 		this.type = 'range';
+		this.locked = false;
 	}
 
 	componentWillMount() {
@@ -103,6 +104,12 @@ class MultiRange extends Component {
 	}
 
 	selectItem = (item, isDefaultValue = false, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		let { currentValue, selectedValues } = this.state;
 
 		if (!item) {
@@ -129,6 +136,7 @@ class MultiRange extends Component {
 				selectedValues,
 			}, () => {
 				this.updateQuery(currentValue, props);
+				this.locked = false;
 			});
 		};
 
