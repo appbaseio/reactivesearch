@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { css } from 'emotion';
 import styled from 'react-emotion';
 import { shade } from './utils';
@@ -63,11 +64,16 @@ const ListItem = styled('a')`
 	}
 
 	p {
-		margin: 0
+		margin: 0;
 	}
 
 	article {
-		width: ${props => (props.image ? props.small ? 'calc(100% - 100px)' : 'calc(100% - 160px)' : '100%')};
+		width: ${(props) => {
+			if (props.image) {
+				return props.small ? 'calc(100% - 100px)' : 'calc(100% - 160px)';
+			}
+			return '100%';
+		}};
 		padding-left: ${props => (props.image ? '10px' : 0)};
 		font-size: 0.9rem;
 	}
