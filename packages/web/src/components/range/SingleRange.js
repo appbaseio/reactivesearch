@@ -27,6 +27,7 @@ class SingleRange extends Component {
 			currentValue: null,
 		};
 		this.type = 'range';
+		this.locked = false;
 	}
 
 	componentWillMount() {
@@ -84,6 +85,12 @@ class SingleRange extends Component {
 	}
 
 	setValue = (value, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		const currentValue = props.data.find(item => item.label === value) || null;
 
 		const performUpdate = () => {
@@ -91,6 +98,7 @@ class SingleRange extends Component {
 				currentValue,
 			}, () => {
 				this.updateQuery(currentValue, props);
+				this.locked = false;
 			});
 		};
 
