@@ -216,7 +216,8 @@ export default class HomePage extends Component {
 								Launch and iterate faster
 							</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								30+ well-designed and performance optimized UI components. Ship faster and solve fewer edge cases.
+								30+ well-designed and performance optimized UI components.
+								Ship faster and solve fewer edge cases.
 							</Text>
 						</Flex>
 
@@ -272,7 +273,8 @@ export default class HomePage extends Component {
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">Customizable queries</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								Components come with good query defaults, that can be customized with Elasticsearch query DSL.
+								Components come with good query defaults,
+								that can be customized with Elasticsearch query DSL.
 							</Text>
 						</Flex>
 
