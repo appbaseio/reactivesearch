@@ -436,7 +436,7 @@ export default class HomePage extends Component {
 								<a
 									target="_blank"
 									rel="noopener noreferrer"
-									href="https://www.getsalespipe.com/"
+									href="http://www.getsalespipe.com/"
 									className={decoratedLink}
 									style={{ marginTop: 0 }}
 								>
@@ -477,7 +477,7 @@ export default class HomePage extends Component {
 								<a
 									target="_blank"
 									rel="noopener noreferrer"
-									href="https://www.getsalespipe.com/"
+									href="http://www.getsalespipe.com/"
 									className={decoratedLink}
 									style={{ marginTop: 0 }}
 								>
