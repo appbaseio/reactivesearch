@@ -31,6 +31,7 @@ class MultiDropdownRange extends Component {
 		// selectedValues hold the selected items as keys for O(1) complexity
 		this.selectedValues = {};
 		this.type = 'range';
+		this.locked = false;
 	}
 
 	componentWillMount() {
@@ -103,6 +104,12 @@ class MultiDropdownRange extends Component {
 	};
 
 	selectItem = (item, isDefaultValue = false, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		let { currentValue } = this.state;
 
 		if (!item) {
@@ -127,6 +134,7 @@ class MultiDropdownRange extends Component {
 				currentValue,
 			}, () => {
 				this.updateQuery(currentValue, props);
+				this.locked = false;
 			});
 		};
 
