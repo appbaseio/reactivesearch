@@ -26,6 +26,7 @@ class TextField extends Component {
 		this.state = {
 			currentValue: '',
 		};
+		this.locked = false;
 	}
 
 	componentWillMount() {
@@ -50,7 +51,14 @@ class TextField extends Component {
 
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected, true, nextProps);
-		} else if (this.state.currentValue !== nextProps.selectedValue) {
+		} else if (
+			// since, selectedValue will be updated when currentValue changes,
+			// we must only check for the changes introduced by
+			// clear action from SelectedFilters component in which case,
+			// the currentValue will never match the updated selectedValue
+			this.props.selectedValue !== nextProps.selectedValue
+			&& this.state.currentValue !== nextProps.selectedValue
+		) {
 			this.setValue(nextProps.selectedValue || '', true, nextProps);
 		}
 	}
@@ -81,16 +89,24 @@ class TextField extends Component {
 	}, this.props.debounce);
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value,
+			}, () => {
+				if (isDefaultValue) {
+					this.updateQuery(value, props);
+				} else {
+					// debounce for handling text while typing
+					this.handleTextChange(value);
+				}
+				this.locked = false;
 			});
-			if (isDefaultValue) {
-				this.updateQuery(value, props);
-			} else {
-				// debounce for handling text while typing
-				this.handleTextChange(value);
-			}
 		};
 		checkValueChange(
 			props.componentId,
