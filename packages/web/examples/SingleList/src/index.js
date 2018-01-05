@@ -58,7 +58,7 @@ class Main extends Component {
 								<span className="stars">
 									{
 										Array(data.average_rating_rounded).fill('x')
-											.map((item, index) => <i className="fas fa-star" key={item} />) // eslint-disable-line
+											.map((item, index) => <i className="fas fa-star" key={index} />) // eslint-disable-line
 									}
 								</span>
 								<span className="avg-rating">({data.average_rating} avg)</span>
