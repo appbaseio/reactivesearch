@@ -91,12 +91,10 @@ class TagCloud extends Component {
 			selectedValue = (selectedValue.length && selectedValue[0]) || '';
 		}
 
-		if (!this.locked) {
-			if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-				this.setValue(nextProps.defaultSelected, true, nextProps);
-			} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
-				this.setValue(nextProps.selectedValue, true, nextProps);
-			}
+		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
+			this.setValue(nextProps.defaultSelected, true, nextProps);
+		} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
+			this.setValue(nextProps.selectedValue, true, nextProps);
 		}
 	}
 
@@ -149,9 +147,14 @@ class TagCloud extends Component {
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		let { currentValue } = this.state;
 		let finalValues = null;
-		this.locked = true;
 
 		if (props.multiSelect) {
 			if (isDefaultValue) {
