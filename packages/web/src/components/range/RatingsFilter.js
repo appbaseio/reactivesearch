@@ -27,6 +27,7 @@ class RatingsFilter extends Component {
 		this.state = {
 			currentValue: null,
 		};
+		this.locked = false;
 	}
 
 	componentWillMount() {
@@ -82,11 +83,18 @@ class RatingsFilter extends Component {
 	}
 
 	setValue = (value, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value,
 			}, () => {
 				this.updateQuery(value, props);
+				this.locked = false;
 			});
 		};
 		checkValueChange(
