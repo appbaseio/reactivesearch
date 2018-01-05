@@ -29,6 +29,7 @@ class DateRange extends Component {
 		this.state = {
 			currentDate: null,
 		};
+		this.locked = false;
 	}
 
 	componentWillMount() {
@@ -203,6 +204,12 @@ class DateRange extends Component {
 		isDefaultValue = false,
 		props = this.props,
 	) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		let value = null;
 		if (currentDate && !(currentDate.start === '' && currentDate.end === '')) {
 			value = isDefaultValue
@@ -218,6 +225,7 @@ class DateRange extends Component {
 				currentDate,
 			}, () => {
 				this.updateQuery(value, props);
+				this.locked = false;
 			});
 		};
 		checkValueChange(
