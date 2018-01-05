@@ -9,7 +9,9 @@ const breakpoints = {
 	tallPhone: '(max-width: 360px) and (min-height: 740px)',
 };
 
-export const queries = Object.keys(breakpoints).reduce((accumulator, label) => {
+// eslint-disable-next-line
+export const queries = Object.keys(breakpoints).reduce((acc, label) => {
+	const accumulator = acc;
 	if (typeof breakpoints[label] === 'string') {
 		accumulator[label] = (...args) =>
 			css`
