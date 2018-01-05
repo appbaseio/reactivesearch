@@ -29,7 +29,7 @@ class RangeInput extends Component {
 
 	handleInputChange = (e) => {
 		const { name, value } = e.target;
-		if (isNaN(value)) {
+		if (Number.isNaN(value)) {
 			// set errors for invalid inputs
 			if (name === 'start') {
 				this.setState({
@@ -42,6 +42,7 @@ class RangeInput extends Component {
 			}
 		} else {
 			// reset error states for valid inputs
+			// eslint-disable-next-line
 			if (name === 'start' && !this.state.isStartValid) {
 				this.setState({
 					isStartValid: true,
