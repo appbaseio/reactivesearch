@@ -82,15 +82,13 @@ class RangeSlider extends Component {
 			this.handleChange(this.state.currentValue, nextProps);
 		});
 
-		if (!this.locked) {
-			if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-				this.handleChange(
-					[nextProps.defaultSelected.start, nextProps.defaultSelected.end],
-					nextProps,
-				);
-			} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-				this.handleChange(nextProps.selectedValue || [nextProps.range.start, nextProps.range.end]);
-			}
+		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
+			this.handleChange(
+				[nextProps.defaultSelected.start, nextProps.defaultSelected.end],
+				nextProps,
+			);
+		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
+			this.handleChange(nextProps.selectedValue || [nextProps.range.start, nextProps.range.end]);
 		}
 	}
 
@@ -173,6 +171,11 @@ class RangeSlider extends Component {
 	});
 
 	handleChange = (currentValue, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
 		this.locked = true;
 		const performUpdate = () => {
 			this.setState({
