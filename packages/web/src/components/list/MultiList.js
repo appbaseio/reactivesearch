@@ -34,6 +34,7 @@ class MultiList extends Component {
 			options: [],
 			searchTerm: '',
 		};
+		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 	}
 
@@ -155,6 +156,12 @@ class MultiList extends Component {
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		const { selectAllLabel } = this.props;
 		let { currentValue } = this.state;
 		let finalValues = null;
@@ -205,6 +212,7 @@ class MultiList extends Component {
 				currentValue,
 			}, () => {
 				this.updateQuery(finalValues, props);
+				this.locked = false;
 			});
 		};
 
@@ -289,7 +297,7 @@ class MultiList extends Component {
 					{
 						selectAllLabel
 							? (
-								<li key={selectAllLabel} className={`${!!this.state.currentValue[selectAllLabel] ? 'active' : ''}`}>
+								<li key={selectAllLabel} className={`${this.state.currentValue[selectAllLabel] ? 'active' : ''}`}>
 									<Checkbox
 										className={getClassName(this.props.innerClass, 'input') || null}
 										id={selectAllLabel}
@@ -319,7 +327,7 @@ class MultiList extends Component {
 								return false;
 							})
 							.map(item => (
-								<li key={item.key} className={`${!!this.state.currentValue[item.key] ? 'active' : ''}`}>
+								<li key={item.key} className={`${this.state.currentValue[item.key] ? 'active' : ''}`}>
 									<Checkbox
 										className={getClassName(this.props.innerClass, 'input') || null}
 										id={item.key}
