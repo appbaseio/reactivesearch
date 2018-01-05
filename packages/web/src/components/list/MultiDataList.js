@@ -29,6 +29,7 @@ class MultiDataList extends Component {
 			searchTerm: '',
 		};
 		this.type = 'term';
+		this.locked = false;
 	}
 
 	componentWillMount() {
@@ -126,6 +127,12 @@ class MultiDataList extends Component {
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		const { selectAllLabel } = this.props;
 		let { currentValue } = this.state;
 		let finalValues = null;
@@ -176,6 +183,7 @@ class MultiDataList extends Component {
 				currentValue,
 			}, () => {
 				this.updateQuery(finalValues, props);
+				this.locked = false;
 			});
 		};
 
@@ -246,7 +254,7 @@ class MultiDataList extends Component {
 					{
 						selectAllLabel
 							? (
-								<li key={selectAllLabel} className={`${!!this.state.currentValue[selectAllLabel] ? 'active' : ''}`}>
+								<li key={selectAllLabel} className={`${this.state.currentValue[selectAllLabel] ? 'active' : ''}`}>
 									<Checkbox
 										className={getClassName(this.props.innerClass, 'input') || null}
 										id={selectAllLabel}
@@ -272,7 +280,7 @@ class MultiDataList extends Component {
 								return true;
 							})
 							.map(item => (
-								<li key={item.label} className={`${!!this.state.currentValue[item.label] ? 'active' : ''}`}>
+								<li key={item.label} className={`${this.state.currentValue[item.label] ? 'active' : ''}`}>
 									<Checkbox
 										className={getClassName(this.props.innerClass, 'input') || null}
 										id={item.label}
