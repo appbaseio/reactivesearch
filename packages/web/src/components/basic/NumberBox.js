@@ -26,6 +26,7 @@ class NumberBox extends Component {
 		this.state = {
 			currentValue: this.props.data.start,
 		};
+		this.locked = false;
 	}
 
 	componentWillMount() {
@@ -112,11 +113,18 @@ class NumberBox extends Component {
 	};
 
 	setValue = (value, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value,
 			}, () => {
 				this.updateQuery(value, props);
+				this.locked = false;
 			});
 		};
 		checkValueChange(
