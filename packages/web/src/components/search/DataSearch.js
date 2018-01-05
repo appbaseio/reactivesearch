@@ -36,6 +36,7 @@ class DataSearch extends Component {
 			isOpen: false,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
+		this.locked = false;
 	}
 
 	componentWillMount() {
@@ -99,7 +100,14 @@ class DataSearch extends Component {
 
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected, true, nextProps);
-		} else if (this.props.selectedValue !== nextProps.selectedValue) {
+		} else if (
+			// since, selectedValue will be updated when currentValue changes,
+			// we must only check for the changes introduced by
+			// clear action from SelectedFilters component in which case,
+			// the currentValue will never match the updated selectedValue
+			this.props.selectedValue !== nextProps.selectedValue
+			&& this.state.currentValue !== nextProps.selectedValue
+		) {
 			this.setValue(nextProps.selectedValue || '', true, nextProps);
 		}
 	}
@@ -236,22 +244,30 @@ class DataSearch extends Component {
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value,
-			});
-			if (isDefaultValue) {
-				if (this.props.autosuggest) {
-					this.setState({
-						isOpen: false,
-					});
-					this.updateQuery(this.internalComponent, value, props);
+			}, () => {
+				if (isDefaultValue) {
+					if (this.props.autosuggest) {
+						this.setState({
+							isOpen: false,
+						});
+						this.updateQuery(this.internalComponent, value, props);
+					}
+					this.updateQuery(props.componentId, value, props);
+				} else {
+					// debounce for handling text while typing
+					this.handleTextChange(value);
 				}
-				this.updateQuery(props.componentId, value, props);
-			} else {
-				// debounce for handling text while typing
-				this.handleTextChange(value);
-			}
+				this.locked = false;
+			});
 		};
 		checkValueChange(
 			props.componentId,
