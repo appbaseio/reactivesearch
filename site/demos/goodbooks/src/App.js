@@ -107,7 +107,7 @@ class App extends Component {
 							componentId="authorFilter"
 							dataField="authors.raw"
 							title="Authors"
-							size={1000}
+							size={100}
 							showCheckbox={false}
 							className="authors"
 							innerClass={{
