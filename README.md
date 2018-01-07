@@ -39,9 +39,9 @@ The library is conceptually divided into two parts:
 
 Each sensor component is purpose built for applying a specific filter on the data. For example:
 
-* A `[SingleList](https://opensource.appbase.io/reactive-manual/list-components/singlelist.html)` sensor component applies an exact match filter based on the selected item.
-* A `[RangeSlider` component applies a numeric range query based on the values selected from the UI.
-* A `RatingsFilter` component conveniently applies a ★ ratings filter on a dataset containing ratings like data.
+* A [`SingleList`](https://opensource.appbase.io/reactive-manual/list-components/singlelist.html) sensor component applies an exact match filter based on the selected item.
+* A [`RangeSlider`](https://opensource.appbase.io/reactive-manual/range-components/rangeslider.html) component applies a numeric range query based on the values selected from the UI.
+* A [`DataSearch`](https://opensource.appbase.io/reactive-manual/search-components/datasearch.html) component applies a suggestions and search query based on the search term typed by the user.
 
 Sensor components can be configured to create a combined query context and render the matching results via an actuator component.
 
