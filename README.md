@@ -86,7 +86,7 @@ A set of live demos inspired by real world apps, built with ReactiveSearch.
 - [demos/ecommerce](https://opensource.appbase.io/reactivesearch/demos/ecommerce/) - An e-commerce car store app.
 
 
-You can check all of them on the [examples page](https://opensource.appbase.io/reactivesearch/examples/).
+You can check all of them on the [examples page](https://opensource.appbase.io/reactivesearch/examples/). // TODO: Fix the examples page link.
 
 [⬆ Back to Top](#reactive-search)
 
