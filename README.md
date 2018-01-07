@@ -95,7 +95,7 @@ You can check all of them on the [examples page](https://opensource.appbase.io/r
 Installing ReactiveSearch is just one command.
 
 ```javascript
-npm install --save @appbaseio/reactivesearch
+npm install @appbaseio/reactivesearch
 ```
 
 You can also read about it [here](https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html).
