@@ -14,7 +14,7 @@ React UI components for Elasticsearch.
 
 ![Banner Image showing all the UI components we offer](https://i.imgur.com/bJ1QKZS.png)
 
-Get our designer templates for sketch - [Download sketch file](https://opensource.appbase.io/reactivesearch/resources/ReactiveSearch_Playground.sketch)
+[Get our designer templates for sketch](https://opensource.appbase.io/reactivesearch/resources/ReactiveSearch_Playground.sketch).
 
 ## TOC
 
@@ -22,11 +22,12 @@ Get our designer templates for sketch - [Download sketch file](https://opensourc
 2. **[Features](#2-features)**
 3. **[Component Playground](#3-component-playground)**
 4. **[Live Examples](#4-live-demos)**
-5. **[Installation](#5-installation)**
-6. **[Getting Started](#6-getting-started)**
-7. **[Docs Manual](#7-docs-manual)**
-8. **[Developing Locally](#8-developing-locally)**
-9. **[Other Projects You Might Like](#9-other-projects-you-might-like)**
+5. **[Comparison with Other Projects](#5-comparison-with-other-projects)**
+6. **[Installation](#6-installation)**
+7. **[Getting Started](#7-getting-started)**
+8. **[Docs Manual](#8-docs-manual)**
+9. **[Developing Locally](#9-developing-locally)**
+10. **[Other Projects You Might Like](#10-other-projects-you-might-like)**
 
 <br>
 
@@ -88,11 +89,28 @@ A set of live demos inspired by real world apps, built with ReactiveSearch.
 - [demos/ecommerce](https://opensource.appbase.io/reactivesearch/demos/ecommerce/) - An e-commerce car store app.
 
 
-You can check all of them on the [examples page](https://opensource.appbase.io/reactivesearch/#examples).
+You can check all of them on the [examples section of website](https://opensource.appbase.io/reactivesearch/#examples).
 
 [⬆ Back to Top](#reactive-search)
 
-## 5. Installation
+## 5. Comparison with Other Projects
+
+Here, we share how `ReactiveSearch` compares with other projects that have similar aims.
+
+|  **#** | **ReactiveSearch** | **SearchKit** | **InstantSearch** |
+|  ------: | :------: | :------: | :------: |
+|  **Backend** | Any Elasticsearch index hosted on any Elasticsearch cluster. | Any Elasticsearch index hosted on any Elasticsearch cluster. | Custom-built for Algolia, a proprietary search engine. |
+|  **Development** | Actively developed and maintained. | Active issue responses, some development and maintenance. | Actively developed and maintained. |
+|  **Onboarding Experience** | Starter apps, Live interactive tutorial, getting started guide, component playground, every component has a live working demo with codesandbox. | Getting started tutorial, no live component demos, sparse reference spec for many components. | Starter apps, getting started guide, component playground. |
+|  **Styling Support** | Styled and scoped components. No external CSS import required. Rich theming supported as React props. | CSS based styles with BEM, not scoped to components. Theming supported with SCSS. | CSS based styles, requires external style import. Theming supported by manipulating CSS. |
+|  **Types of Components** | Lists, Ranges, Search, Dates, Maps*, Result Displays. Can use your own UI components. (Maps need an upgrade) | Lists, Ranges, Search*, Result*. Can't use your own UI components. (Only one component for Search and Result, resulting in more code to be written for customizability) | Lists, Range, Search, Result. Can use your own UI components. |
+|  **Supported Distribution Platforms** | React, React Native for mobile in alpha and actively developed. | React for Web. | React, Vue, Angular for Web, React Native for mobile but latter has no UI components. |
+
+We welcome contributions to this section. If you are building a project or you know of another project that is in the similar space, let us know and we will update the comparisons.
+
+[⬆ Back to Top](#reactive-search)
+
+## 6. Installation
 
 Installing ReactiveSearch is just one command.
 
@@ -103,11 +121,11 @@ npm install @appbaseio/reactivesearch
 You can also read about it [here](https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html).
 
 
-## 6. Getting Started
+## 7. Getting Started
 
 Follow the getting started guide to build a Hello Search! app from the official docs [here](https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html).
 
-## 7. Docs Manual
+## 8. Docs Manual
 
 The official docs for the library are at [https://opensource.appbase.io/reactive-manual](https://opensource.appbase.io/reactive-manual).
 
@@ -120,7 +138,7 @@ The components are divided into four sections:
 
 [⬆ Back to Top](#reactive-search)
 
-## 8. Developing Locally
+## 9. Developing Locally
 
 
 1. Clone the repo
@@ -142,7 +160,7 @@ git submodule update --remote
 
 5. The submodules will be fetched into `/packages`. Defaults to `dev` in `/packages/playground` and `master` in `/packages/reactivecore`.
 
-## 9. Other Projects You Might Like
+## 10. Other Projects You Might Like
 
 - [**ReactiveSearch Dashboard**](https://dashboard.appbase.io/reactivesearch/) All your Reactive Search related apps (created via interactive tutorial, shared by others, etc.) can be accessed from here.
 - [**ReactiveMaps**](https://github.com/appbaseio/reactivemaps) is a similar project to Reactive Search that allows building realtime maps easily.
