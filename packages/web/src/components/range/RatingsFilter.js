@@ -141,6 +141,7 @@ class RatingsFilter extends Component {
 								}
 								onClick={() => this.setValue(item)}
 								onKeyPress={e => handleA11yAction(e, () => this.setValue(item))}
+								key={item.label}
 							>
 								<StarRating stars={item.start} />
 								{

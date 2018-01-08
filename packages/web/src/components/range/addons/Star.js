@@ -1,5 +1,5 @@
 import React from 'react';
-import { string } from '@appbaseio/reactivecore/lib/utils/types';
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 function Star(props) {
 	return (
@@ -30,7 +30,7 @@ function Star(props) {
 }
 
 Star.propTypes = {
-	className: string,
+	className: types.string,
 };
 
 export default Star;
