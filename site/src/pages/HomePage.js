@@ -191,7 +191,7 @@ export default class HomePage extends Component {
 							</Button>
 						</Flex>
 
-						<Title>Get started with building your custom UIs in sketch</Title>
+						<Title>Get our designer templates for sketch.</Title>
 						<Button href="resources/ReactiveSearch_Playground.sketch" warning shadow className={button} style={{ maxWidth: 220 }}>
 							Download Sketch File
 						</Button>
