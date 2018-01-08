@@ -91,7 +91,7 @@ export default class HomePage extends Component {
 					<ul className={mobHide}>
 						<li><a href="#examples">Examples</a></li>
 						<li><a href="https://opensource.appbase.io/reactive-manual">Documentation</a></li>
-						<li><a href="https://github.com/appbaseio/reactivesearch">Github</a></li>
+						<li><a href="https://github.com/appbaseio/reactivesearch">GitHub</a></li>
 					</ul>
 				</Navbar>
 				<SlopeWrapper>
@@ -237,6 +237,9 @@ export default class HomePage extends Component {
 								30+ well-designed and performance optimized UI components.
 								Ship faster and solve fewer edge cases.
 							</Text>
+							<div className={mobShow}>
+								<Button className={button}>Read More</Button>
+							</div>
 						</Flex>
 
 						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html')}>
@@ -249,6 +252,9 @@ export default class HomePage extends Component {
 							<Text margin="12px 0 0" lineHeight="1.3rem">
 								Already have your own components? Bring them to ReactiveSearch.
 							</Text>
+							<div className={mobShow}>
+								<Button className={button}>Read More</Button>
+							</div>
 						</Flex>
 
 						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/theming/themes.html')}>
@@ -261,6 +267,9 @@ export default class HomePage extends Component {
 							<Text margin="12px 0 0" lineHeight="1.3rem">
 								Styled components with rich theming and css class-injection support.
 							</Text>
+							<div className={mobShow}>
+								<Button className={button}>Read More</Button>
+							</div>
 						</Flex>
 
 						<Flex className={card} onClick={() => this.openLink('https://github.com/appbaseio/reactivesearch/tree/dev/packages/native')}>
@@ -271,6 +280,9 @@ export default class HomePage extends Component {
 							<Text margin="12px 0 0" lineHeight="1.3rem">
 								Reactivesearch components can be ported to create native mobile UIs.
 							</Text>
+							<div className={mobShow}>
+								<Button className={button}>Read More</Button>
+							</div>
 						</Flex>
 
 						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html')}>
@@ -283,6 +295,9 @@ export default class HomePage extends Component {
 							<Text margin="12px 0 0" lineHeight="1.3rem">
 								Connect to an ES index hosted anywhere. Supports v2, v5 and v6.
 							</Text>
+							<div className={mobShow}>
+								<Button className={button}>Read More</Button>
+							</div>
 						</Flex>
 
 						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/advanced/customquery.html')}>
@@ -294,6 +309,9 @@ export default class HomePage extends Component {
 								Components come with good query defaults,
 								that can be customized with Elasticsearch query DSL.
 							</Text>
+							<div className={mobShow}>
+								<Button className={button}>Read More</Button>
+							</div>
 						</Flex>
 
 						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html#connect-to-elasticsearch')}>
@@ -305,6 +323,9 @@ export default class HomePage extends Component {
 								Use appbase.io to get read-only credentials, or set up a
 								middleware proxy with authorization rules.
 							</Text>
+							<div className={mobShow}>
+								<Button className={button}>Read More</Button>
+							</div>
 						</Flex>
 
 						<Flex className={card} onClick={() => this.goToLink('./#examples')}>
@@ -315,6 +336,9 @@ export default class HomePage extends Component {
 							<Text margin="12px 0 0" lineHeight="1.3rem">
 								Get started quickly by using any of our pre-configured starter apps.
 							</Text>
+							<div className={mobShow}>
+								<Button className={button}>Read More</Button>
+							</div>
 						</Flex>
 					</Flex>
 				</Flex>
