@@ -248,6 +248,7 @@ const tabPadding = css`
 const tabJustifyCenter = css`
 	${queries.medium`
 		justify-content: center;
+		align-items: center;
 	`};
 
 	${queries.small`
