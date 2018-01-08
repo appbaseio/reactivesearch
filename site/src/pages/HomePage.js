@@ -194,7 +194,7 @@ export default class HomePage extends Component {
 						<Flex flexDirection="column" className={tabJustifyCenter}>
 							<Title>Get our designer templates for sketch.</Title>
 							<Button href="resources/ReactiveSearch_Playground.sketch" warning shadow className={button} style={{ maxWidth: 220 }}>
-								Download Sketch File
+								Download sketch file
 							</Button>
 						</Flex>
 					</Flex>
