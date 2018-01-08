@@ -87,7 +87,7 @@ export default class HomePage extends Component {
 		return (
 			<div className={container}>
 				<Navbar>
-					<a className={`${boldHeading} ${logo}`} href="/">Reactivesearch</a>
+					<a className={`${boldHeading} ${logo}`} href="/reactivesearch/">Reactivesearch</a>
 					<ul className={mobHide}>
 						<li><a href="#examples">Examples</a></li>
 						<li><a href="https://opensource.appbase.io/reactive-manual">Documentation</a></li>
