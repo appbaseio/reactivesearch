@@ -19,7 +19,7 @@ React UI components for Elasticsearch.
 1. **[Reactive Search: Intro](#1-reactive-search-intro)**
 2. **[Features](#2-features)**
 3. **[Component Playground](#3-component-playground)**
-4. **[Live Examples](#4-live-examples)**
+4. **[Live Examples](#4-live-demos)**
 5. **[Installation](#5-installation)**
 6. **[Getting Started](#6-getting-started)**
 7. **[Docs Manual](#7-docs-manual)**
