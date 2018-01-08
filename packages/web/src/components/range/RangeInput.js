@@ -93,6 +93,7 @@ class RangeInput extends Component {
 							value={this.state.start}
 							step={this.props.stepValue}
 							alert={!this.state.isStartValid}
+							className={getClassName(this.props.innerClass, 'input') || null}
 						/>
 						{
 							!this.state.isStartValid
@@ -108,6 +109,7 @@ class RangeInput extends Component {
 							value={this.state.end}
 							step={this.props.stepValue}
 							alert={!this.state.isEndValid}
+							className={getClassName(this.props.innerClass, 'input') || null}
 						/>
 						{
 							!this.state.isEndValid
