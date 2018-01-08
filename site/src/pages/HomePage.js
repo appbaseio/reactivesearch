@@ -75,6 +75,14 @@ export default class HomePage extends Component {
 		window.scrollTo(0, 0);
 	}
 
+	openLink(link) {
+		window.open(link);
+	}
+
+	goToLink(link) {
+		window.location = link;
+	}
+
 	render() {
 		return (
 			<div className={container}>
@@ -231,7 +239,7 @@ export default class HomePage extends Component {
 							</Text>
 						</Flex>
 
-						<Flex className={card}>
+						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html')}>
 							<div>
 								<img src="images/remix.png" alt="Data-driven UIs" />
 							</div>
@@ -243,7 +251,7 @@ export default class HomePage extends Component {
 							</Text>
 						</Flex>
 
-						<Flex className={card}>
+						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/theming/themes.html')}>
 							<div>
 								<img src="images/configurablestyles.png" alt="Data-driven UIs" />
 							</div>
@@ -265,7 +273,7 @@ export default class HomePage extends Component {
 							</Text>
 						</Flex>
 
-						<Flex className={card}>
+						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html')}>
 							<div>
 								<img src="images/elasticsearch.png" alt="Data-driven UIs" />
 							</div>
@@ -277,7 +285,7 @@ export default class HomePage extends Component {
 							</Text>
 						</Flex>
 
-						<Flex className={card}>
+						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/advanced/customquery.html')}>
 							<div>
 								<img src="images/customizablequeries.png" alt="Data-driven UIs" />
 							</div>
@@ -288,7 +296,7 @@ export default class HomePage extends Component {
 							</Text>
 						</Flex>
 
-						<Flex className={card}>
+						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html#connect-to-elasticsearch')}>
 							<div>
 								<img src="images/shield.png" alt="Data-driven UIs" />
 							</div>
@@ -299,7 +307,7 @@ export default class HomePage extends Component {
 							</Text>
 						</Flex>
 
-						<Flex className={card}>
+						<Flex className={card} onClick={() => this.goToLink('./#examples')}>
 							<div>
 								<img src="images/blocks.png" alt="Data-driven UIs" />
 							</div>
