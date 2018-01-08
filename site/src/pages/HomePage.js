@@ -226,7 +226,7 @@ export default class HomePage extends Component {
 						style={{ width: '100%', flexWrap: 'wrap' }}
 					>
 
-						<Flex className={card}>
+						<Flex className={card} onClick={() => this.openLink('https://medium.com/@siddharthlatest/v2-ui-components-for-elasticsearch-23743d9a1070')}>
 							<div>
 								<img src="images/rocket.png" alt="Data-driven UIs" />
 							</div>
