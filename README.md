@@ -14,6 +14,8 @@ React UI components for Elasticsearch.
 
 ![Banner Image showing all the UI components we offer](https://i.imgur.com/bJ1QKZS.png)
 
+Get our designer templates for sketch - [Download sketch file](https://opensource.appbase.io/reactivesearch/resources/ReactiveSearch_Playground.sketch)
+
 ## TOC
 
 1. **[Reactive Search: Intro](#1-reactive-search-intro)**
