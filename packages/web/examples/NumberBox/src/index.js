@@ -21,6 +21,13 @@ class Main extends Component {
 						<NumberBox
 							componentId="BookSensor"
 							dataField="average_rating_rounded"
+							defaultSelected={2}
+							data={{
+								label: "Book Rating",
+								start: 2,
+								end: 5
+							}}
+							labelPosition="left"
 						/>
 					</div>
 					<div className="col" style={{ backgroundColor: '#fafafa' }}>
