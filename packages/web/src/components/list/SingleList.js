@@ -228,7 +228,7 @@ class SingleList extends Component {
 							? (
 								<li key={selectAllLabel} className={`${this.state.currentValue === selectAllLabel ? 'active' : ''}`}>
 									<Radio
-										className={getClassName(this.props.innerClass, 'input')}
+										className={getClassName(this.props.innerClass, 'radio')}
 										id={selectAllLabel}
 										name={this.props.componentId}
 										value={selectAllLabel}
@@ -259,7 +259,7 @@ class SingleList extends Component {
 							.map(item => (
 								<li key={item.key} className={`${this.state.currentValue === String(item.key) ? 'active' : ''}`}>
 									<Radio
-										className={getClassName(this.props.innerClass, 'input')}
+										className={getClassName(this.props.innerClass, 'radio')}
 										id={item.key}
 										name={this.props.componentId}
 										value={item.key}
