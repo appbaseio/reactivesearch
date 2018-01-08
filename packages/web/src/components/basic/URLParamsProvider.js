@@ -8,7 +8,7 @@ import Base from '../../styles/Base';
 class URLParamsProvider extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (!isEqual(this.props.selectedValues, nextProps.selectedValues)) {
-			console.log(nextProps.selectedValues, this.props.selectedValues);
+			Object.keys(nextProps.selectedValues)
 				.filter(item => nextProps.selectedValues[item].URLParams)
 				.forEach((component) => {
 					if (nextProps.selectedValues[component].URLParams) {
@@ -55,7 +55,8 @@ class URLParamsProvider extends Component {
 	pushToHistory() {
 		if (window.history.pushState) {
 			const paramsSting = this.props.params.toString() ? `?${this.props.params.toString()}` : '';
-			const newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}${paramsSting}`;
+			const base = window.location.href.split('?')[0];
+			const newurl = `${base}${paramsSting}`;
 			window.history.pushState({ path: newurl }, '', newurl);
 		}
 	}
