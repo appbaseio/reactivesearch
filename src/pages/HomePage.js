@@ -380,7 +380,7 @@ export default class HomePage extends Component {
 							<Image src="images/apps/airbeds.png" />
 							<div className="info">
 								<Title>Airbeds</Title>
-								<Button href="demos/airbeds" primary shadow className={button}>Check Demo</Button>
+								<Button target="_blank" rel="noopener noreferrer" href="demos/airbeds" primary shadow className={button}>Check Demo</Button>
 							</div>
 						</ImageCard>
 
@@ -388,7 +388,7 @@ export default class HomePage extends Component {
 							<Image src="images/apps/productsearch.png" />
 							<div className="info">
 								<Title>Product Search</Title>
-								<Button href="demos/producthunt" primary shadow className={button}>Check Demo</Button>
+								<Button target="_blank" rel="noopener noreferrer" href="demos/producthunt" primary shadow className={button}>Check Demo</Button>
 							</div>
 						</ImageCard>
 
@@ -396,7 +396,7 @@ export default class HomePage extends Component {
 							<Image src="images/apps/gitxplore.png" />
 							<div className="info">
 								<Title>GitHub Search</Title>
-								<Button href="demos/gitxplore" primary shadow className={button}>Check Demo</Button>
+								<Button target="_blank" rel="noopener noreferrer" href="demos/gitxplore" primary shadow className={button}>Check Demo</Button>
 							</div>
 						</ImageCard>
 
@@ -404,7 +404,7 @@ export default class HomePage extends Component {
 							<Image src="images/apps/carstore.png" />
 							<div className="info">
 								<Title>Car Store</Title>
-								<Button href="demos/ecommerce" primary shadow className={button}>Check Demo</Button>
+								<Button target="_blank" rel="noopener noreferrer" href="demos/ecommerce" primary shadow className={button}>Check Demo</Button>
 							</div>
 						</ImageCard>
 
@@ -412,7 +412,7 @@ export default class HomePage extends Component {
 							<Image src="images/apps/goodbooks.png" />
 							<div className="info">
 								<Title>Book Search</Title>
-								<Button href="demos/goodbooks" primary shadow className={button}>Check Demo</Button>
+								<Button target="_blank" rel="noopener noreferrer" href="demos/goodbooks" primary shadow className={button}>Check Demo</Button>
 							</div>
 						</ImageCard>
 
@@ -420,7 +420,7 @@ export default class HomePage extends Component {
 							<Image src="images/apps/technews.png" />
 							<div className="info">
 								<Title>Tech News Search</Title>
-								<Button href="demos/technews" primary shadow className={button}>Check Demo</Button>
+								<Button target="_blank" rel="noopener noreferrer" href="demos/technews" primary shadow className={button}>Check Demo</Button>
 							</div>
 						</ImageCard>
 					</Flex>
