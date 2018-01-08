@@ -4,7 +4,7 @@ import { Flex, H1, H2, Title, Button, Text } from '@appbaseio/designkit';
 import Navbar, { logo } from '../styles/Navbar';
 import { SlopeWrapper, Slope, WhiteBackdrop } from '../styles/Slope';
 import Bubble from '../styles/Bubble';
-import Image from '../styles/Image';
+import { Image, ImageCard } from '../styles/Image';
 import {
 	container,
 	boldHeading,
@@ -25,6 +25,8 @@ import {
 	tabJustifyCenter,
 	tabBanner,
 	mobHide,
+	mobShow,
+	mobBottomMargin,
 	textCenter,
 } from '../styles/base';
 import { mockDataSearch, mockDataSearchFull } from '../components/mock';
@@ -143,6 +145,7 @@ export default class HomePage extends Component {
 
 				<Flex padding="0 3rem 3rem" className={tabCol}>
 					<div className={col}>
+						<H2 style={{ marginBottom: 35 }} className={`${colored} ${mobShow}`}>Components for every occasion</H2>
 						<img
 							width="100%"
 							src="images/components.png"
@@ -151,12 +154,12 @@ export default class HomePage extends Component {
 					</div>
 
 					<Flex
-						className={col}
+						className={`${col} ${tabPadding}`}
 						flexDirection="column"
 						justifyContent="center"
 						padding="5rem 1rem"
 					>
-						<H2 className={colored}>Components for every occasion</H2>
+						<H2 className={`${colored} ${mobHide}`}>Components for every occasion</H2>
 						<Text fontSize="1rem" lineHeight="1.6rem">
 							Build the perfect search experience using our UI components or by creating your own.
 						</Text>
@@ -181,7 +184,7 @@ export default class HomePage extends Component {
 								or
 							</Button>
 							<Button
-								className={button}
+								className={`${button} ${mobBottomMargin}`}
 								href="https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent"
 							>
 								Create your own
@@ -346,8 +349,8 @@ export default class HomePage extends Component {
 				>
 					<H2 margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
 					<Flex className={tabJustifyCenter}>
-						<Button shadow primary className={button} style={{ maxWidth: '250px' }} href="https://appbaseio-apps.github.io/booksearch-onboarding/">Build a live app in 5 mins</Button>
-						<Button className={button} style={{ maxWidth: '250px', marginLeft: '1rem' }} href="https://opensource.appbase.io/reactive-manual">Read the docs</Button>
+						<Button shadow primary className={button} href="https://appbaseio-apps.github.io/booksearch-onboarding/">Build a live app in 5 mins</Button>
+						<Button className={button} style={{ marginLeft: '1rem' }} href="https://opensource.appbase.io/reactive-manual">Read the docs</Button>
 					</Flex>
 				</Flex>
 
@@ -366,24 +369,53 @@ export default class HomePage extends Component {
 						margin="30px 0 0"
 						flexWrap="wrap"
 					>
-						<Image src="images/apps/airbeds.png">
-							<a href="demos/airbeds"><Button primary shadow className={button}>Check Demo</Button></a>
-						</Image>
-						<Image src="images/apps/productsearch.png">
-							<a href="demos/producthunt"><Button primary shadow className={button}>Check Demo</Button></a>
-						</Image>
-						<Image src="images/apps/gitxplore.png">
-							<a href="demos/gitxplore"><Button primary shadow className={button}>Check Demo</Button></a>
-						</Image>
-						<Image src="images/apps/carstore.png">
-							<a href="demos/ecommerce"><Button primary shadow className={button}>Check Demo</Button></a>
-						</Image>
-						<Image src="images/apps/goodbooks.png">
-							<a href="demos/goodbooks"><Button primary shadow className={button}>Check Demo</Button></a>
-						</Image>
-						<Image src="images/apps/technews.png">
-							<a href="demos/technews"><Button primary shadow className={button}>Check Demo</Button></a>
-						</Image>
+						<ImageCard>
+							<Image src="images/apps/airbeds.png" />
+							<div className="info">
+								<Title>Airbeds</Title>
+								<Button href="demos/airbeds" primary shadow className={button}>Check Demo</Button>
+							</div>
+						</ImageCard>
+
+						<ImageCard>
+							<Image src="images/apps/productsearch.png" />
+							<div className="info">
+								<Title>Product Search</Title>
+								<Button href="demos/producthunt" primary shadow className={button}>Check Demo</Button>
+							</div>
+						</ImageCard>
+
+						<ImageCard>
+							<Image src="images/apps/gitxplore.png" />
+							<div className="info">
+								<Title>GitHub Repo Search</Title>
+								<Button href="demos/gitxplore" primary shadow className={button}>Check Demo</Button>
+							</div>
+						</ImageCard>
+
+						<ImageCard>
+							<Image src="images/apps/carstore.png" />
+							<div className="info">
+								<Title>Car Store</Title>
+								<Button href="demos/ecommerce" primary shadow className={button}>Check Demo</Button>
+							</div>
+						</ImageCard>
+
+						<ImageCard>
+							<Image src="images/apps/goodbooks.png" />
+							<div className="info">
+								<Title>Book Search</Title>
+								<Button href="demos/goodbooks" primary shadow className={button}>Check Demo</Button>
+							</div>
+						</ImageCard>
+
+						<ImageCard>
+							<Image src="images/apps/technews.png" />
+							<div className="info">
+								<Title>Tech News Search</Title>
+								<Button href="demos/technews" primary shadow className={button}>Check Demo</Button>
+							</div>
+						</ImageCard>
 					</Flex>
 				</Flex>
 

@@ -32,7 +32,8 @@ const button = css`
 	text-decoration: none;
 
 	${queries.small`
-		margin-top: 10px;
+		width: 100%;
+		margin-top: 12px;
 	`}
 `;
 
@@ -250,6 +251,7 @@ const tabJustifyCenter = css`
 	`};
 
 	${queries.small`
+		width: 100%;
 		flex-direction: column;
 
 		a {
@@ -270,6 +272,18 @@ const mobHide = css`
 	${queries.small`
 		display: none !important;
 	`};
+`;
+
+const mobShow = css`
+	display: none;
+
+	${queries.small`
+		display: block;
+	`};
+`;
+
+const mobBottomMargin = css`
+	margin-bottom: 30px;
 `;
 
 const textCenter = css`
@@ -296,5 +310,7 @@ export {
 	tabJustifyCenter,
 	tabBanner,
 	mobHide,
+	mobShow,
+	mobBottomMargin,
 	textCenter,
 };
