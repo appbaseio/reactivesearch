@@ -299,7 +299,7 @@ class MultiList extends Component {
 							? (
 								<li key={selectAllLabel} className={`${this.state.currentValue[selectAllLabel] ? 'active' : ''}`}>
 									<Checkbox
-										className={getClassName(this.props.innerClass, 'input') || null}
+										className={getClassName(this.props.innerClass, 'checkbox') || null}
 										id={selectAllLabel}
 										name={selectAllLabel}
 										value={selectAllLabel}
@@ -329,7 +329,7 @@ class MultiList extends Component {
 							.map(item => (
 								<li key={item.key} className={`${this.state.currentValue[item.key] ? 'active' : ''}`}>
 									<Checkbox
-										className={getClassName(this.props.innerClass, 'input') || null}
+										className={getClassName(this.props.innerClass, 'checkbox') || null}
 										id={item.key}
 										name={this.props.componentId}
 										value={item.key}

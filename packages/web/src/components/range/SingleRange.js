@@ -146,7 +146,7 @@ class SingleRange extends Component {
 							return (
 								<li key={item.label} className={`${selected ? 'active' : ''}`}>
 									<Radio
-										className={getClassName(this.props.innerClass, 'input')}
+										className={getClassName(this.props.innerClass, 'radio')}
 										id={item.label}
 										name={this.props.componentId}
 										value={item.label}
