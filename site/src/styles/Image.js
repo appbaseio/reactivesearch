@@ -2,44 +2,39 @@ import styled from 'react-emotion';
 
 import queries from './mediaQueries';
 
-const Image = styled('div')`
+const ImageCard = styled('div')`
 	width: calc(50% - 40px);
+	height: auto;
 	margin: 20px;
-	height: 300px;
-	background-image: ${props => (props.src ? `url(${props.src})` : '#fafafa')};
-	background-size: cover;
 	border-radius: 10px;
-	box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
-	transition: all .3s ease;
-	cursor: pointer;
-	position: relative;
 	overflow: hidden;
+	background-color: #fff;
+	box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
 
-	& > a {
-		position: absolute;
-		background-color: rgba(0,0,0,0.4);
+	.info {
 		width: 100%;
-		height: 100%;
-		display: none;
-		justify-content: center;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
 		align-items: center;
 		text-decoration: none;
-		color: #fff;
-		transition: all .3s ease;
-	}
+		padding: 10px 15px;
+		border-top: 1px solid #eee;
 
-	&:hover, &:focus {
-		transform: scale(1.07);
-		box-shadow: 0 15px 35px rgba(50,50,93,.2), 0 5px 15px rgba(0,0,0,.2);
+		h4 {
+			font-weight: bold;
+			color: #555;
+			font-size: 16px;
+		}
 
-		& > a {
-			display: flex;
+		a {
+			margin: 0;
+			width: 126px !important;
 		}
 	}
 
 	${queries.medium`
 		width: calc(50% - 20px);
-		height: 200px;
 		margin: 10px;
 	`};
 
@@ -49,4 +44,16 @@ const Image = styled('div')`
 	`};
 `;
 
-export default Image;
+const Image = styled('div')`
+	width: 100%;
+	height: 300px;
+	background-image: ${props => (props.src ? `url(${props.src})` : '#fafafa')};
+	background-size: cover;
+	transition: all .3s ease;
+
+	${queries.medium`
+		height: 200px;
+	`};
+`;
+
+export { Image, ImageCard };
