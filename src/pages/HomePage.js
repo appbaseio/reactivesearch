@@ -191,10 +191,12 @@ export default class HomePage extends Component {
 							</Button>
 						</Flex>
 
-						<Title>Get our designer templates for sketch.</Title>
-						<Button href="resources/ReactiveSearch_Playground.sketch" warning shadow className={button} style={{ maxWidth: 220 }}>
-							Download Sketch File
-						</Button>
+						<Flex flexDirection="column" className={tabJustifyCenter}>
+							<Title>Get our designer templates for sketch.</Title>
+							<Button href="resources/ReactiveSearch_Playground.sketch" warning shadow className={button} style={{ maxWidth: 220 }}>
+								Download Sketch File
+							</Button>
+						</Flex>
 					</Flex>
 				</Flex>
 
@@ -393,7 +395,7 @@ export default class HomePage extends Component {
 						<ImageCard>
 							<Image src="images/apps/gitxplore.png" />
 							<div className="info">
-								<Title>GitHub Repo Search</Title>
+								<Title>GitHub Search</Title>
 								<Button href="demos/gitxplore" primary shadow className={button}>Check Demo</Button>
 							</div>
 						</ImageCard>
