@@ -74,7 +74,7 @@ Besides these, the library also provides low level actuators (ReactiveComponent 
 
 ## 3. Component Playground
 
-Try the live component playground at [playground](https://opensource.appbase.io/playground/?filterBy=ReactiveSearch&selectedKind=s%2FRatingsFilter&selectedStory=Basic&full=0&down=1&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-knobs). Look out for the knobs section in the playground part of the stories to tweak each prop and see the effects.
+Try the live component playground at [playground](https://opensource.appbase.io/playground/?filterBy=ReactiveSearch&selectedKind=Range%20components%2FRatingsFilter). Look out for the knobs section in the playground part of the stories to tweak each prop and see the effects.
 
 
 ## 4. Live Demos
@@ -130,11 +130,11 @@ Follow the getting started guide to build a Hello Search! app from the official 
 The official docs for the library are at [https://opensource.appbase.io/reactive-manual](https://opensource.appbase.io/reactive-manual).
 
 The components are divided into four sections:
-* Generic UI components are at [reactive-manual/base-components](https://opensource.appbase.io/reactive-manual/base-components/).
-* List based UI components are at [reactive-manual/list-components](https://opensource.appbase.io/reactive-manual/list-components/).
-* Range based UI components are at [reactive-manual/range-components](https://opensource.appbase.io/reactive-manual/range-components/).
-* Search UI components are at [reactive-manual/search-components](https://opensource.appbase.io/reactive-manual/search-components/).
-* Result components are at [reactive-manual/result-components](https://opensource.appbase.io/reactive-manual/result-components/).
+* Generic UI components are at [reactive-manual/base-components](https://opensource.appbase.io/reactive-manual/base-components/textfield.html).
+* List based UI components are at [reactive-manual/list-components](https://opensource.appbase.io/reactive-manual/list-components/singlelist.html).
+* Range based UI components are at [reactive-manual/range-components](https://opensource.appbase.io/reactive-manual/range-components/singlerange.html).
+* Search UI components are at [reactive-manual/search-components](https://opensource.appbase.io/reactive-manual/search-components/datasearch.html).
+* Result components are at [reactive-manual/result-components](https://opensource.appbase.io/reactive-manual/result-components/resultlist.html).
 
 [⬆ Back to Top](#reactive-search)
 
