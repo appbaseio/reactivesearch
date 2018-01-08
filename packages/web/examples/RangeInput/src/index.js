@@ -42,7 +42,7 @@ class Main extends Component {
 							onData={this.booksList}
 							pagination
 							react={{
-								and: "BookSensor"
+								and: 'BookSensor'
 							}}
 						/>
 					</div>
