@@ -130,6 +130,11 @@ const code = css`
 	max-height: 500px;
 	margin: 0 50px;
 	overflow-y: hidden;
+
+	& > div {
+		width: 100%;
+		max-width: 811px;
+	}
 `;
 
 const showcase = css`
