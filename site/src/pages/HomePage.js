@@ -263,7 +263,7 @@ export default class HomePage extends Component {
 							</Text>
 						</Flex>
 
-						<Flex className={card}>
+						<Flex className={card} onClick={() => this.openLink('https://github.com/appbaseio/reactivesearch/tree/dev/packages/native')}>
 							<div>
 								<img src="images/devices.png" alt="Data-driven UIs" />
 							</div>
