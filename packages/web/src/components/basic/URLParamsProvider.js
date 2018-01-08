@@ -8,7 +8,8 @@ import Base from '../../styles/Base';
 class URLParamsProvider extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (!isEqual(this.props.selectedValues, nextProps.selectedValues)) {
-			Object.keys(nextProps.selectedValues)
+			console.log(nextProps.selectedValues, this.props.selectedValues);
+				.filter(item => nextProps.selectedValues[item].URLParams)
 				.forEach((component) => {
 					if (nextProps.selectedValues[component].URLParams) {
 						this.setURL(component, this.getValue(nextProps.selectedValues[component].value));
@@ -32,10 +33,7 @@ class URLParamsProvider extends Component {
 			return value.map(item => this.getValue(item));
 		} else if (value && typeof value === 'object') {
 			// TODO: support for NestedList
-			if (value.label || value.key) {
-				return value.label || value.key;
-			}
-			return null;
+			return value.label || value.key || null;
 		}
 		return value;
 	}
