@@ -19,10 +19,8 @@ import {
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
-import { isEqual, checkValueChange, checkPropChange } from '@appbaseio/reactivecore/lib/utils/helper';
-
+import { checkValueChange, checkPropChange } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 class MultiDropdownRange extends Component {
@@ -35,7 +33,8 @@ class MultiDropdownRange extends Component {
 		};
 
 		this.ds = new ListView.DataSource({
-			rowHasChanged: (r1, r2) => r1.start !== r2.start || r1.end !== r2.end || r1.label !== r2.label,
+			rowHasChanged: (r1, r2) => r1.start !== r2.start
+			|| r1.end !== r2.end || r1.label !== r2.label,
 		});
 		this.type = 'range';
 	}
@@ -104,7 +103,8 @@ class MultiDropdownRange extends Component {
 		let { currentValue } = this.state;
 		if (isDefaultValue) {
 			// checking if the items in defaultSeleted exist in the data prop
-			currentValue = item.filter(currentItem => props.data.find(dataItem => dataItem.label === currentItem));
+			currentValue = item.filter(currentItem =>
+				props.data.find(dataItem => dataItem.label === currentItem));
 		} else if (currentValue.includes(item)) {
 			currentValue = currentValue.filter(value => value !== item);
 		} else {
@@ -114,7 +114,7 @@ class MultiDropdownRange extends Component {
 			this.setState({
 				currentValue,
 			});
-			const query = props.customQuery || this.defaultQuery;
+			// const query = props.customQuery || this.defaultQuery;
 			this.updateQuery(currentValue, props);
 		};
 
@@ -147,74 +147,75 @@ class MultiDropdownRange extends Component {
 			<View>
 				{
 					this.state.showModal
-						? (<Modal
-							supportedOrientations={this.props.supportedOrientations || null}
-							transparent={false}
-							visible={this.state.showModal}
-							onRequestClose={() => {
-								this.toggleModal();
-							}}
-						>
-							<Header>
-								<Left>
-									<Button transparent onPress={this.toggleModal}>
-										<Icon name="arrow-back" />
-									</Button>
-								</Left>
-								<Body>
-									<Title>{this.props.placeholder}</Title>
-								</Body>
-								<Right />
-							</Header>
-							<ListView
-								dataSource={this.ds.cloneWithRows(this.props.data)}
-								enableEmptySections
-								renderRow={item => (
-									<TouchableWithoutFeedback onPress={() => this.selectItem(item.label)}>
-										<View style={{
-											flex: 1,
-											flexDirection: 'row',
-											padding: 15,
-											borderBottomColor: '#c9c9c9',
-											borderBottomWidth: 0.5,
-										}}
-										>
-											<CheckBox
-												onPress={() => this.selectItem(item.label)}
-												checked={this.state.currentValue.includes(item.label)}
-											/>
-											<Text style={{ marginLeft: 20 }}>{item.label}</Text>
-										</View>
-									</TouchableWithoutFeedback>
-								)}
-							/>
-						</Modal>)
-						: (<Item regular style={{ marginLeft: 0 }}>
-							<TouchableWithoutFeedback
-								onPress={this.toggleModal}
+						? (
+							<Modal
+								supportedOrientations={this.props.supportedOrientations || null}
+								transparent={false}
+								visible={this.state.showModal}
+								onRequestClose={() => {
+									this.toggleModal();
+								}}
 							>
-								<Text
-									style={{
-										flex: 1,
-										alignItems: 'center',
-										color: this.state.currentValue.length ? '#000' : '#555',
-										flex: 1,
-										fontSize: 17,
-										height: 50,
-										lineHeight: 24,
-										paddingLeft: 8,
-										paddingRight: 5,
-										paddingTop: 12,
-									}}
+								<Header>
+									<Left>
+										<Button transparent onPress={this.toggleModal}>
+											<Icon name="arrow-back" />
+										</Button>
+									</Left>
+									<Body>
+										<Title>{this.props.placeholder}</Title>
+									</Body>
+									<Right />
+								</Header>
+								<ListView
+									dataSource={this.ds.cloneWithRows(this.props.data)}
+									enableEmptySections
+									renderRow={item => (
+										<TouchableWithoutFeedback onPress={() => this.selectItem(item.label)}>
+											<View style={{
+												flex: 1,
+												flexDirection: 'row',
+												padding: 15,
+												borderBottomColor: '#c9c9c9',
+												borderBottomWidth: 0.5,
+											}}
+											>
+												<CheckBox
+													onPress={() => this.selectItem(item.label)}
+													checked={this.state.currentValue.includes(item.label)}
+												/>
+												<Text style={{ marginLeft: 20 }}>{item.label}</Text>
+											</View>
+										</TouchableWithoutFeedback>
+									)}
+								/>
+							</Modal>)
+						: (
+							<Item regular style={{ marginLeft: 0 }}>
+								<TouchableWithoutFeedback
+									onPress={this.toggleModal}
 								>
-									{
-										this.state.currentValue.length
-											? this.state.currentValue.join(', ')
-											: this.props.placeholder
-									}
-								</Text>
-							</TouchableWithoutFeedback>
-						</Item>)
+									<Text
+										style={{
+											flex: 1,
+											alignItems: 'center',
+											color: this.state.currentValue.length ? '#000' : '#555',
+											fontSize: 17,
+											height: 50,
+											lineHeight: 24,
+											paddingLeft: 8,
+											paddingRight: 5,
+											paddingTop: 12,
+										}}
+									>
+										{
+											this.state.currentValue.length
+												? this.state.currentValue.join(', ')
+												: this.props.placeholder
+										}
+									</Text>
+								</TouchableWithoutFeedback>
+							</Item>)
 
 				}
 			</View>

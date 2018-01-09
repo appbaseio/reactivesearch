@@ -12,7 +12,6 @@ import {
 	debounce,
 	checkValueChange,
 	checkPropChange,
-	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 

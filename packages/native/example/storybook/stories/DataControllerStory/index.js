@@ -37,7 +37,7 @@ const DataControllerStory = props => (
 							fontSize: 20,
 						}}
 					>
-						A custom 💪 UI component
+						A custom <span role="img" aria-label="img">💪</span>UI component
 					</Text>
 				</View>
 			</DataController>
