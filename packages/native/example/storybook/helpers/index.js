@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
+
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Text } from 'native-base';
@@ -55,7 +57,7 @@ export const onAllDataGitXplore = (items, loadMore) => (<FlatList
 			}}
 		>
 			<Text style={{ fontWeight: 'bold' }}>{parseToElement(item._source.name)}</Text>
-			<Text>{item._source.stars} <span role="img" aria-label="img">🌟</span></Text>
+			<Text>{item._source.stars} 🌟</Text>
 		</View>
 	)}
 	onEndReachedThreshold={0.5}

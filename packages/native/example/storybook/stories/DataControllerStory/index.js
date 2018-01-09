@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
+
 import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
 
@@ -37,7 +39,7 @@ const DataControllerStory = props => (
 							fontSize: 20,
 						}}
 					>
-						A custom <span role="img" aria-label="img">💪</span>UI component
+						A custom 💪 UI component
 					</Text>
 				</View>
 			</DataController>
