@@ -17,7 +17,6 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 class SingleDropdownList extends Component {

@@ -3,7 +3,6 @@ import { View, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
-import Histogram from './addons/Histogram';
 import {
 	addComponent,
 	removeComponent,
@@ -11,9 +10,10 @@ import {
 	updateQuery,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
-import { isEqual, checkValueChange, checkPropChange } from '@appbaseio/reactivecore/lib/utils/helper';
-
+import { checkValueChange, checkPropChange } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+
+import Histogram from './addons/Histogram';
 
 class RangeSlider extends Component {
 	constructor(props) {
@@ -73,7 +73,9 @@ class RangeSlider extends Component {
 		checkPropChange(
 			this.props.defaultSelected,
 			nextProps.defaultSelected,
-			() => this.handleChange([nextProps.defaultSelected.start, nextProps.defaultSelected.end], nextProps),
+			() => this.handleChange([
+				nextProps.defaultSelected.start, nextProps.defaultSelected.end,
+			], nextProps),
 		);
 	}
 
@@ -110,7 +112,8 @@ class RangeSlider extends Component {
 		[this.props.dataField]: {
 			histogram: {
 				field: this.props.dataField,
-				interval: this.props.interval || Math.ceil((this.props.range.end - this.props.range.start) / 10),
+				interval: this.props.interval
+				|| Math.ceil((this.props.range.end - this.props.range.start) / 10),
 			},
 		},
 	});
@@ -170,7 +173,8 @@ class RangeSlider extends Component {
 							? (<Histogram
 								stats={this.state.stats}
 								range={this.props.range}
-								interval={this.props.interval || Math.ceil((this.props.range.end - this.props.range.start) / 10)}
+								interval={this.props.interval
+									|| Math.ceil((this.props.range.end - this.props.range.start) / 10)}
 								paddingHorizontal={Platform.OS === 'ios' ? 15 : 6}
 							/>)
 							: null
@@ -226,15 +230,18 @@ RangeSlider.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId] ? state.aggregations[props.componentId][props.dataField].buckets : [],
+	options: state.aggregations[props.componentId]
+		? state.aggregations[props.componentId][props.dataField].buckets : [],
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(updateQuery(component, query, value, filterLabel, onQueryChange)),
-	setQueryOptions: (component, props, onQueryChange) => dispatch(setQueryOptions(component, props, onQueryChange)),
+	updateQuery: (component, query, value, filterLabel, onQueryChange) =>
+		dispatch(updateQuery(component, query, value, filterLabel, onQueryChange)),
+	setQueryOptions: (component, props, onQueryChange) =>
+		dispatch(setQueryOptions(component, props, onQueryChange)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(RangeSlider);

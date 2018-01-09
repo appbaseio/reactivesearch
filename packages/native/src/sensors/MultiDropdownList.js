@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Modal, FlatList, TouchableWithoutFeedback } from 'react-native';
 import {
-	CheckBox,
 	Text,
 	Body,
 	Item,
@@ -14,7 +13,6 @@ import {
 	Right,
 } from 'native-base';
 
-import CheckboxItem from './addons/CheckboxItem';
 import {
 	addComponent,
 	removeComponent,
@@ -23,15 +21,15 @@ import {
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
-	isEqual,
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
 	getAggsOrder,
 	checkPropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-
 import types from '@appbaseio/reactivecore/lib/utils/types';
+
+import CheckboxItem from './addons/CheckboxItem';
 
 class MultiDropdownList extends Component {
 	constructor(props) {
@@ -199,62 +197,63 @@ class MultiDropdownList extends Component {
 			<View>
 				{
 					this.state.showModal
-						? (<Modal
-							supportedOrientations={this.props.supportedOrientations || null}
-							transparent={false}
-							visible={this.state.showModal}
-							onRequestClose={() => {
-								this.toggleModal();
-							}}
-						>
-							<Header>
-								<Left>
-									<Button transparent onPress={this.toggleModal}>
-										<Icon name="arrow-back" />
-									</Button>
-								</Left>
-								<Body>
-									<Title>{this.props.placeholder}</Title>
-								</Body>
-								<Right />
-							</Header>
-							<FlatList
-								data={this.state.options}
-								renderItem={({ item }) => (
-									<CheckboxItem
-										label={item.key}
-										onPress={this.selectItem}
-										checked={this.state.currentValue.includes(item.key)}
-									/>
-								)}
-							/>
-						</Modal>)
-						: (<Item regular style={{ marginLeft: 0 }}>
-							<TouchableWithoutFeedback
-								onPress={this.toggleModal}
+						? (
+							<Modal
+								supportedOrientations={this.props.supportedOrientations || null}
+								transparent={false}
+								visible={this.state.showModal}
+								onRequestClose={() => {
+									this.toggleModal();
+								}}
 							>
-								<Text
-									style={{
-										flex: 1,
-										alignItems: 'center',
-										color: this.state.currentValue.length ? '#000' : '#555',
-										flex: 1,
-										fontSize: 17,
-										height: 50,
-										lineHeight: 24,
-										paddingLeft: 8,
-										paddingRight: 5,
-										paddingTop: 12,
-									}}
+								<Header>
+									<Left>
+										<Button transparent onPress={this.toggleModal}>
+											<Icon name="arrow-back" />
+										</Button>
+									</Left>
+									<Body>
+										<Title>{this.props.placeholder}</Title>
+									</Body>
+									<Right />
+								</Header>
+								<FlatList
+									data={this.state.options}
+									renderItem={({ item }) => (
+										<CheckboxItem
+											label={item.key}
+											onPress={this.selectItem}
+											checked={this.state.currentValue.includes(item.key)}
+										/>
+									)}
+								/>
+							</Modal>)
+						: (
+							<Item regular style={{ marginLeft: 0 }}>
+								<TouchableWithoutFeedback
+									onPress={this.toggleModal}
 								>
-									{
-										this.state.currentValue.length
-											? this.state.currentValue.join(', ')
-											: this.props.placeholder
-									}
-								</Text>
-							</TouchableWithoutFeedback>
-						</Item>)
+									<Text
+										style={{
+											flex: 1,
+											alignItems: 'center',
+											color: this.state.currentValue.length ? '#000' : '#555',
+											fontSize: 17,
+											height: 50,
+											lineHeight: 24,
+											paddingLeft: 8,
+											paddingRight: 5,
+											paddingTop: 12,
+										}}
+									>
+										{
+											this.state.currentValue.length
+												? this.state.currentValue.join(', ')
+												: this.props.placeholder
+										}
+									</Text>
+								</TouchableWithoutFeedback>
+							</Item>)
 
 				}
 			</View>
@@ -267,6 +266,7 @@ MultiDropdownList.propTypes = {
 	componentId: types.componentId,
 	addComponent: types.addComponent,
 	dataField: types.dataField,
+	size: types.number,
 	sortBy: types.sortByWithCount,
 	setQueryOptions: types.setQueryOptions,
 	updateQuery: types.updateQuery,
@@ -297,7 +297,8 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, onQueryChange) => dispatch(updateQuery(component, query, value, filterLabel, onQueryChange)),
+	updateQuery: (component, query, value, filterLabel, onQueryChange) =>
+		dispatch(updateQuery(component, query, value, filterLabel, onQueryChange)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
