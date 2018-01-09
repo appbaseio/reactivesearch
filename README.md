@@ -33,7 +33,7 @@ React UI components for Elasticsearch.
 
 ## 1. ReactiveSearch: Intro
 
-ReactiveSearch is a React UI components library for Elasticsearch. It has 25+ components for Lists, Dropdowns, RangeSliders, DataSearch, MultiLevelMenu, Calendars, Feeds, RatingsFilter, ResultCard and ResultList.
+ReactiveSearch is a React UI components library for Elasticsearch. It has 25+ components consisting of Lists, Ranges, Search UIs, Result displays and a way to bring any existing UI component into the library.
 
 The library is conceptually divided into two parts:  
 
@@ -48,9 +48,7 @@ Each sensor component is purpose built for applying a specific filter on the dat
 
 Sensor components can be configured to create a combined query context and render the matching results via an actuator component.
 
-**ReactiveSearch** primarily comes with two actuators: `ResultCard` and `ResultList`. ResultCard displays the results in a card interface whereas ResultList displays them in a list. Both provide built-in support for pagination and infinite scroll views.
-
-Besides these, the library also provides low level actuators (ReactiveComponent and ReactiveList) to render in a more customized fashion.
+**ReactiveSearch** primarily comes with two actuators: `ResultCard` and `ResultList`. ResultCard displays the results in a card interface whereas ResultList displays them in a list. Both provide built-in support for pagination and infinite scroll views. Besides these, the library also provides low level actuators (ReactiveComponent and ReactiveList) to render in a more customized fashion.
 
 ## 2. Features
 
@@ -59,8 +57,8 @@ Besides these, the library also provides low level actuators (ReactiveComponent 
 * The sensor / actuator design pattern allows creating complex UIs where any number of sensors can be chained together to reactively update an actuator (or even multiple actuators).
 * The library handles the transformation of the UI interactions into database queries. You only need to include the components and associate each with a DB field.
 * Built in live updates - Actuators can be set to update results even when the underlying data changes in the DB.
-* Comes with a cleanly namespaced CSS classes API that allows extending built-in styles without hassle.
-* Is themable via `ThemeProvider`.
+* Comes with scoped and styled components. Doesn't require any external CSS library import, comes with className and innerClass support.
+* Is themable via [`ThemeProvider`](https://opensource.appbase.io/reactive-manual/theming/themes.html).
 
 
 ### Ease of Use
