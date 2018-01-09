@@ -6,13 +6,9 @@ import { Text, Header, Body, Title } from 'native-base';
 import {
 	ReactiveBase,
 	DataSearch,
-	DataController,
 	TextField,
 	SingleDropdownList,
-	MultiDropdownList,
 	SingleDropdownRange,
-	MultiDropdownRange,
-	RangeSlider,
 	DatePicker,
 	DateRange,
 	ReactiveList,
