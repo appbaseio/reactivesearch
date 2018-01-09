@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Modal, ListView, TouchableWithoutFeedback } from 'react-native';

@@ -193,7 +193,7 @@ class SingleDropdownList extends Component {
 				style={this.props.style}
 			>
 				{
-					this.state.options.map(item => (
+					[...selectAll, ...this.state.options].map(item => (
 						<Picker.Item key={item.key} label={item.key} value={item.key} />
 					))
 				}

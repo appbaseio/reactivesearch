@@ -1,8 +1,6 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react-native';
-import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
 import { text, boolean, number, select, array, object } from '@storybook/addon-knobs';
 
 import DataControllerStory from './DataControllerStory';

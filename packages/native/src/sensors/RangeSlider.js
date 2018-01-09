@@ -9,6 +9,7 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
+	pushToAndClause,
 } from '@appbaseio/reactivecore/lib/actions';
 import { checkValueChange, checkPropChange } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
