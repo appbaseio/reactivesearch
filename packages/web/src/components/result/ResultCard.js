@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {
 	addComponent,
 	removeComponent,
+	setStreaming,
 	watchComponent,
 	setQueryOptions,
 	updateQuery,
@@ -14,6 +15,7 @@ import {
 	getQueryOptions,
 	pushToAndClause,
 	getClassName,
+	parseHits,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -41,6 +43,10 @@ class ResultCard extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
+
+		if (this.props.stream) {
+			this.props.setStreaming(this.props.componentId, true);
+		}
 
 		const options = getQueryOptions(this.props);
 		if (this.props.sortOptions) {
@@ -129,6 +135,10 @@ class ResultCard extends Component {
 				componentId: this.internalComponent,
 				query,
 			});
+		}
+
+		if (this.props.stream !== nextProps.stream) {
+			this.props.setStreaming(nextProps.componentId, nextProps.stream);
 		}
 
 		if (!isEqual(nextProps.react, this.props.react)) {
@@ -319,31 +329,6 @@ class ResultCard extends Component {
 		);
 	};
 
-	highlightResults = (result) => {
-		const data = { ...result };
-		if (data.highlight) {
-			Object.keys(data.highlight).forEach((highlightItem) => {
-				const highlightValue = data.highlight[highlightItem][0];
-				data._source = Object.assign({}, data._source, { [highlightItem]: highlightValue });
-			});
-		}
-		return data;
-	};
-
-	parseHits = (hits) => {
-		let results = null;
-		if (hits) {
-			results = [...hits].map((item) => {
-				const data = this.highlightResults(item);
-				return {
-					_id: data._id,
-					...data._source,
-				};
-			});
-		}
-		return results;
-	};
-
 	renderAsCard = (item) => {
 		const result = this.props.onData(item);
 
@@ -424,7 +409,15 @@ class ResultCard extends Component {
 	);
 
 	render() {
-		const results = this.parseHits(this.props.hits) || [];
+		const results = parseHits(this.props.hits) || [];
+		const streamResults = parseHits(this.props.streamHits) || [];
+		let filteredResults = results;
+
+		if (streamResults.length) {
+			const ids = streamResults.map(item => item._id);
+			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+		}
+
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.isLoading && this.props.pagination && this.props.loader && this.props.loader}
@@ -450,7 +443,7 @@ class ResultCard extends Component {
 				}
 				<div className={`${container} ${getClassName(this.props.innerClass, 'list')}`}>
 					{
-						results.map(item => this.renderAsCard(item))
+						[...streamResults, ...filteredResults].map(item => this.renderAsCard(item))
 					}
 				</div>
 				{
@@ -495,6 +488,9 @@ ResultCard.propTypes = {
 	pagination: types.bool,
 	paginationAt: types.paginationAt,
 	hits: types.hits,
+	setStreaming: types.func,
+	stream: types.bool,
+	streamHits: types.hits,
 	total: types.number,
 	removeComponent: types.funcRequired,
 	loadMore: types.funcRequired,
@@ -525,6 +521,7 @@ ResultCard.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	streamHits: state.streamHits[props.componentId] || [],
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	isLoading: state.isLoading[props.componentId] || false,
@@ -534,6 +531,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
+	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
