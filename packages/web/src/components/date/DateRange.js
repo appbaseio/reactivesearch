@@ -240,10 +240,9 @@ class DateRange extends Component {
 	updateQuery = (value, props) => {
 		if (!value || (value && value.start.length && value.end.length)) {
 			const query = props.customQuery || this.defaultQuery;
-			let onQueryChange = null;
-			if (props.onQueryChange) {
-				onQueryChange = props.onQueryChange;
-			}
+
+			const { onQueryChange = null } = props;
+
 			props.updateQuery({
 				componentId: props.componentId,
 				query: query(value, props),
