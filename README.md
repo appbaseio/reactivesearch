@@ -4,6 +4,8 @@
 [![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/appbaseio/mirage/blob/dev/LICENSE.md)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/appbaseio/reactivesearch)
 [![npm](https://img.shields.io/npm/dt/@appbaseio/reactivesearch.svg)](https://www.npmjs.com/package/@appbaseio/reactivesearch)
+[![bitHound Overall Score](https://www.bithound.io/github/appbaseio/reactivesearch/badges/score.svg)](https://www.bithound.io/github/appbaseio/reactivesearch)
+[![bitHound Code](https://www.bithound.io/github/appbaseio/reactivesearch/badges/code.svg)](https://www.bithound.io/github/appbaseio/reactivesearch)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/appbaseio/reactivesearch/#8-developing-locally)
 
 React UI components for Elasticsearch.
