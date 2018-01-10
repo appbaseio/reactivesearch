@@ -17,10 +17,7 @@ class ReactiveComponent extends Component {
 
 		this.internalComponent = null;
 
-		let onQueryChange = null;
-		if (props.onQueryChange) {
-			onQueryChange = props.onQueryChange;
-		}
+		const { onQueryChange = null } = props;
 
 		this.setQuery = (obj) => {
 			this.props.updateQuery({

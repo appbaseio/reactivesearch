@@ -132,10 +132,9 @@ class ToggleButton extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
-		let onQueryChange = null;
-		if (props.onQueryChange) {
-			onQueryChange = props.onQueryChange;
-		}
+
+		const { onQueryChange = null } = props;
+
 		let filterValue = value;
 		if (!props.multiSelect) {
 			filterValue = value[0] ? value[0].label : null;
@@ -195,6 +194,7 @@ ToggleButton.propTypes = {
 	className: types.string,
 	innerClass: types.style,
 	URLParams: types.bool,
+	onQueryChange: types.func,
 };
 
 ToggleButton.defaultProps = {

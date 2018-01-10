@@ -156,10 +156,9 @@ class SingleList extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
-		let onQueryChange = null;
-		if (props.onQueryChange) {
-			onQueryChange = props.onQueryChange;
-		}
+
+		const { onQueryChange = null } = props;
+
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
