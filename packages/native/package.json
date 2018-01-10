@@ -37,7 +37,7 @@
 	"dependencies": {
 		"@appbaseio/reactivecore": "^1.2.6",
 		"@ptomasroos/react-native-multi-slider": "^0.0.11",
-		"appbase-js": "^2.2.3",
+		"appbase-js": "^2.2.4",
 		"native-base": "^2.3.3",
 		"prop-types": "^15.6.0",
 		"react-native-calendars": "^1.16.1",

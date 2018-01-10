@@ -41,8 +41,15 @@ class ReactiveBase extends Component {
 			selectedValues = {};
 		}
 
+		const { headers = {} } = props;
+
 		const appbaseRef = new Appbase(config);
-		this.store = configureStore({ config, appbaseRef, selectedValues });
+		this.store = configureStore({
+			config,
+			appbaseRef,
+			selectedValues,
+			headers,
+		});
 	}
 
 	componentDidCatch() {
@@ -59,7 +66,7 @@ class ReactiveBase extends Component {
 		return (
 			<ThemeProvider theme={{ ...theme, ...this.props.theme }}>
 				<Provider store={this.store}>
-					<URLParamsProvider params={this.params}>
+					<URLParamsProvider params={this.params} headers={this.props.headers}>
 						{this.props.children}
 					</URLParamsProvider>
 				</Provider>
@@ -79,6 +86,7 @@ ReactiveBase.propTypes = {
 	app: types.stringRequired,
 	children: types.children,
 	theme: types.style,
+	headers: types.headers,
 };
 
 export default ReactiveBase;

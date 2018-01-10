@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { setHeaders } from '@appbaseio/reactivecore/lib/actions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 
@@ -25,6 +26,10 @@ class URLParamsProvider extends Component {
 				});
 				this.pushToHistory();
 			}
+		}
+
+		if (!isEqual(this.props.headers, nextProps.headers)) {
+			nextProps.setHeaders(nextProps.headers);
 		}
 	}
 
@@ -74,11 +79,16 @@ URLParamsProvider.propTypes = {
 	selectedValues: types.selectedValues,
 	params: types.params,
 	children: types.children,
+	headers: types.headers,
+	setHeaders: types.func,
 };
-
 
 const mapStateToProps = state => ({
 	selectedValues: state.selectedValues,
 });
 
-export default connect(mapStateToProps, null)(URLParamsProvider);
+const mapDispatchtoProps = dispatch => ({
+	setHeaders: headers => dispatch(setHeaders(headers)),
+});
+
+export default connect(mapStateToProps, mapDispatchtoProps)(URLParamsProvider);
