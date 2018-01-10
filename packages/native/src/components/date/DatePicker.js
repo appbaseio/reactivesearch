@@ -269,6 +269,7 @@ DatePicker.propTypes = {
 	showFilter: types.bool,
 	filterLabel: types.string,
 	supportedOrientations: types.supportedOrientations,
+	onQueryChange: types.func,
 };
 
 DatePicker.defaultProps = {
