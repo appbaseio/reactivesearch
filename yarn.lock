@@ -414,9 +414,9 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-appbase-js@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-2.2.2.tgz#169024c91c312ce6a659c2534092bc8b999a0dc8"
+appbase-js@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-2.2.3.tgz#b57a82b0fed96e13f9a3447c3371a0914f7361a2"
   dependencies:
     babel-polyfill "^6.26.0"
     es6-promise "^4.1.1"
