@@ -249,6 +249,7 @@ DatePicker.propTypes = {
 	showClear: types.bool,
 	clickUnselectsDay: types.bool,
 	dataField: types.stringRequired,
+	onQueryChange: types.func,
 };
 
 DatePicker.defaultProps = {
