@@ -1,3 +1,5 @@
+/* eslint-disable global-require */
+
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import Appbase from 'appbase-js';
@@ -41,6 +43,16 @@ class ReactiveBase extends Component {
 
 		const appbaseRef = new Appbase(config);
 		this.store = configureStore({ config, appbaseRef, selectedValues });
+	}
+
+	componentDidCatch() {
+		console.error(
+			'An error has occured. You\'re using Reactivesearch Version:',
+			`${process.env.VERSION || require('../../../package.json').version}.`,
+			'If you think this is a problem with Reactivesearch, please try updating',
+			'to the latest version. If you\'re already at the latest version, please open',
+			'an issue at https://github.com/appbaseio/reactivesearch/issues',
+		);
 	}
 
 	render() {
