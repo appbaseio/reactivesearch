@@ -386,6 +386,7 @@ DateRange.propTypes = {
 	autoFocusEnd: types.bool,
 	showClear: types.bool,
 	dataField: types.stringRequired,
+	onQueryChange: types.func,
 };
 
 DateRange.defaultProps = {
