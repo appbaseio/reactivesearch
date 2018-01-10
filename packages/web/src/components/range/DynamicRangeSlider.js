@@ -61,9 +61,11 @@ class DynamicRangeSlider extends Component {
 			if (nextProps.selectedValue) {
 				this.handleChange(nextProps.selectedValue);
 			} else if (nextProps.defaultSelected) {
+				const { start, end }
+					= nextProps.defaultSelected(nextProps.range.start, nextProps.range.end);
 				this.handleChange([
-					nextProps.defaultSelected.start,
-					nextProps.defaultSelected.end,
+					start,
+					end,
 				]);
 			} else {
 				this.handleChange([
@@ -72,8 +74,9 @@ class DynamicRangeSlider extends Component {
 				]);
 			}
 		} else if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
+			const { start, end } = nextProps.defaultSelected(nextProps.range.start, nextProps.range.end);
 			this.handleChange(
-				[nextProps.defaultSelected.start, nextProps.defaultSelected.end],
+				[start, end],
 				nextProps,
 			);
 		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
@@ -335,7 +338,7 @@ DynamicRangeSlider.propTypes = {
 	addComponent: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	defaultSelected: types.range,
+	defaultSelected: types.func,
 	react: types.react,
 	options: types.options,
 	removeComponent: types.funcRequired,
@@ -355,6 +358,7 @@ DynamicRangeSlider.propTypes = {
 	className: types.string,
 	snap: types.bool,
 	innerClass: types.style,
+	rangeLabels: types.func,
 };
 
 DynamicRangeSlider.defaultProps = {
