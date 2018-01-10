@@ -203,6 +203,7 @@ NumberBox.propTypes = {
 	style: types.style,
 	className: types.string,
 	innerClass: types.style,
+	onQueryChange: types.func,
 };
 
 NumberBox.defaultProps = {
