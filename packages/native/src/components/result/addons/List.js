@@ -27,9 +27,9 @@ class List extends Component {
 
 List.propTypes = {
 	data: types.data,
-	setRef: types.setRef,
-	onData: types.onData,
-	onEndReached: types.onEndReached,
+	setRef: types.func,
+	onData: types.func,
+	onEndReached: types.func,
 };
 
 export default List;

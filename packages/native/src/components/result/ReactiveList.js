@@ -6,6 +6,7 @@ import { Text, Spinner, Button, Icon } from 'native-base';
 import {
 	addComponent,
 	removeComponent,
+	setStreaming,
 	watchComponent,
 	setQueryOptions,
 	updateQuery,
@@ -17,6 +18,7 @@ import {
 	pushToAndClause,
 	checkPropChange,
 	checkSomePropChange,
+	parseHits,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -39,6 +41,10 @@ class ReactiveList extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
+
+		if (this.props.stream) {
+			this.props.setStreaming(this.props.componentId, true);
+		}
 
 		const options = getQueryOptions(this.props);
 		if (this.props.sortBy) {
@@ -111,6 +117,10 @@ class ReactiveList extends Component {
 				componentId: this.internalComponent,
 				query,
 			});
+		}
+
+		if (this.props.stream !== nextProps.stream) {
+			this.props.setStreaming(nextProps.componentId, nextProps.stream);
 		}
 
 		checkPropChange(
@@ -292,31 +302,6 @@ class ReactiveList extends Component {
 		this.listRef = node;
 	};
 
-	highlightResults = (result) => {
-		const data = { ...result };
-		if (data.highlight) {
-			Object.keys(data.highlight).forEach((highlightItem) => {
-				const highlightValue = data.highlight[highlightItem][0];
-				data._source = Object.assign({}, data._source, { [highlightItem]: highlightValue });
-			});
-		}
-		return data;
-	};
-
-	parseHits = (hits) => {
-		let results = null;
-		if (hits) {
-			results = [...hits].map((item) => {
-				const data = this.highlightResults(item);
-				return {
-					_id: data._id,
-					...data._source,
-				};
-			});
-		}
-		return results;
-	};
-
 	renderResultStats = () => {
 		if (this.props.onResultStats && this.props.total) {
 			return this.props.onResultStats(this.props.total, this.props.time);
@@ -331,6 +316,15 @@ class ReactiveList extends Component {
 	};
 
 	render() {
+		const results = parseHits(this.props.hits) || [];
+		const streamResults = parseHits(this.props.streamHits) || [];
+		let filteredResults = results;
+
+		if (streamResults.length) {
+			const ids = streamResults.map(item => item._id);
+			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+		}
+
 		return (
 			<View>
 				{
@@ -345,11 +339,17 @@ class ReactiveList extends Component {
 				}
 				{
 					this.props.onAllData
-						? (this.props.onAllData(this.parseHits(this.props.hits), this.loadMore))
+						? (
+							this.props.onAllData(
+								results,
+								streamResults,
+								this.loadMore,
+							)
+						)
 						: (
 							<List
 								setRef={this.setRef}
-								data={this.parseHits(this.props.hits)}
+								data={[...streamResults, ...filteredResults]}
 								onData={this.props.onData}
 								onEndReached={this.loadMore}
 							/>
@@ -383,6 +383,9 @@ ReactiveList.propTypes = {
 	pagination: types.bool,
 	paginationAt: types.paginationAt,
 	hits: types.hits,
+	streamHits: types.hits,
+	stream: types.bool,
+	setStreaming: types.func,
 	total: types.number,
 	removeComponent: types.funcRequired,
 	loadMore: types.funcRequired,
@@ -413,6 +416,7 @@ ReactiveList.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	streamHits: state.streamHits[props.componentId] || [],
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	isLoading: state.isLoading[props.componentId] || false,
@@ -422,6 +426,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
+	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
