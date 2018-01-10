@@ -330,7 +330,13 @@ class ReactiveList extends Component {
 				}
 				{
 					this.props.onAllData
-						? (this.props.onAllData(parseHits(this.props.hits), parseHits(this.props.streamHits), this.loadMore))
+						? (
+							this.props.onAllData(
+								parseHits(this.props.hits),
+								parseHits(this.props.streamHits),
+								this.loadMore,
+							)
+						)
 						: (
 							<List
 								setRef={this.setRef}
