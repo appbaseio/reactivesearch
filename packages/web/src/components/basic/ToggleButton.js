@@ -195,6 +195,7 @@ ToggleButton.propTypes = {
 	className: types.string,
 	innerClass: types.style,
 	URLParams: types.bool,
+	onQueryChange: types.func,
 };
 
 ToggleButton.defaultProps = {
