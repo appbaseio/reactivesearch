@@ -46,7 +46,13 @@ class ReactiveBase extends Component {
 	}
 
 	componentDidCatch() {
-		console.error(`An error has occured. You're using Reactivesearch Version: ${process.env.VERSION || require('../../../package.json').version}. If you think this is a problem with Reactivesearch, please try updating to the latest version. If you're already at the latest version, please open an issue at https://github.com/appbaseio/reactivesearch/issues`);
+		console.error(
+			'An error has occured. You\'re using Reactivesearch Version:',
+			`${process.env.VERSION || require('../../../package.json').version}.`,
+			'If you think this is a problem with Reactivesearch, please try updating',
+			'to the latest version. If you\'re already at the latest version, please open',
+			'an issue at https://github.com/appbaseio/reactivesearch/issues',
+		);
 	}
 
 	render() {
