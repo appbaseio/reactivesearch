@@ -40,11 +40,10 @@ class DataController extends Component {
 
 	updateQuery = (defaultSelected = null, props) => {
 		this.locked = true;
+
 		const query = props.customQuery ? props.customQuery : this.defaultQuery;
-		let onQueryChange = null;
-		if (props.onQueryChange) {
-			onQueryChange = props.onQueryChange;
-		}
+
+		const { onQueryChange = null } = props;
 
 		const performUpdate = () => {
 			props.updateQuery({
