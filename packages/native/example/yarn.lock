@@ -57,9 +57,9 @@
     component-type "^1.2.1"
     join-component "^1.1.0"
 
-"@storybook/addon-actions@^3.2.16", "@storybook/addon-actions@^3.3.6":
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-3.3.6.tgz#1f85eaf603d26bd14e97c14665f5716a5cb32272"
+"@storybook/addon-actions@^3.2.16", "@storybook/addon-actions@^3.3.7":
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-3.3.7.tgz#edc2d4fe3472a3f542d7c3ed990400b5433e58fc"
   dependencies:
     deep-equal "^1.0.1"
     global "^4.3.2"
@@ -69,8 +69,8 @@
     uuid "^3.1.0"
 
 "@storybook/addon-knobs@^3.2.16":
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-knobs/-/addon-knobs-3.3.6.tgz#e842924be06c7d5d0c413d89983bef4f5140d2cc"
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-knobs/-/addon-knobs-3.3.7.tgz#d541de3d897987e21c10e25a5ae6a74c3606320e"
   dependencies:
     babel-runtime "^6.26.0"
     deep-equal "^1.0.1"
@@ -84,32 +84,32 @@
     react-textarea-autosize "^5.2.1"
     util-deprecate "^1.0.2"
 
-"@storybook/addon-links@^3.2.16", "@storybook/addon-links@^3.3.6":
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-links/-/addon-links-3.3.6.tgz#f66efea8e4b1b7c6c41d1554623de5e74c891e53"
+"@storybook/addon-links@^3.2.16", "@storybook/addon-links@^3.3.7":
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-links/-/addon-links-3.3.7.tgz#df3114718bc7f0a39b6cdc61e301363768d7f2a0"
   dependencies:
-    "@storybook/components" "^3.3.6"
+    "@storybook/components" "^3.3.7"
     global "^4.3.2"
     prop-types "^15.5.10"
 
-"@storybook/addons@^3.3.6":
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-3.3.6.tgz#05422ecaf720e5c95e34792ba82b2cad8792776a"
+"@storybook/addons@^3.3.7":
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-3.3.7.tgz#cc27f4ba9da47810f7eae4013224fb5f72b22ffd"
 
-"@storybook/channel-websocket@^3.3.6":
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/@storybook/channel-websocket/-/channel-websocket-3.3.6.tgz#c418fa55024924108ce0359aa582023c43884e7d"
+"@storybook/channel-websocket@^3.3.7":
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/@storybook/channel-websocket/-/channel-websocket-3.3.7.tgz#5cdcd718c24f9d6f691c4d41c6aa23b04c841433"
   dependencies:
-    "@storybook/channels" "^3.3.6"
+    "@storybook/channels" "^3.3.7"
     global "^4.3.2"
 
-"@storybook/channels@^3.3.6":
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/@storybook/channels/-/channels-3.3.6.tgz#1e775598ec14d95afc0624f76563a7cbd84410df"
+"@storybook/channels@^3.3.7":
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/@storybook/channels/-/channels-3.3.7.tgz#227d1aac8d8d227354bdcfcef1e4ad5bee6afc44"
 
-"@storybook/components@^3.3.6":
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/@storybook/components/-/components-3.3.6.tgz#e8bbb2003eee6dad67132e6d46bd54063f86e77c"
+"@storybook/components@^3.3.7":
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/@storybook/components/-/components-3.3.7.tgz#6f64d56e9516907cd077e66564b8171a5745bc82"
   dependencies:
     glamor "^2.20.40"
     glamorous "^4.11.2"
@@ -134,14 +134,14 @@
     shallowequal "^0.2.2"
 
 "@storybook/react-native@^3.2.16":
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/@storybook/react-native/-/react-native-3.3.6.tgz#27c62310b5541b840b4e0bddae8c766aaed7de08"
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/@storybook/react-native/-/react-native-3.3.7.tgz#68d7808bdb4290d4eec83fe63bfef196623cd751"
   dependencies:
-    "@storybook/addon-actions" "^3.3.6"
-    "@storybook/addon-links" "^3.3.6"
-    "@storybook/addons" "^3.3.6"
-    "@storybook/channel-websocket" "^3.3.6"
-    "@storybook/ui" "^3.3.6"
+    "@storybook/addon-actions" "^3.3.7"
+    "@storybook/addon-links" "^3.3.7"
+    "@storybook/addons" "^3.3.7"
+    "@storybook/channel-websocket" "^3.3.7"
+    "@storybook/ui" "^3.3.7"
     autoprefixer "^7.2.3"
     babel-loader "^7.1.2"
     babel-plugin-syntax-async-functions "^6.13.0"
@@ -199,11 +199,11 @@
   dependencies:
     babel-runtime "^6.5.0"
 
-"@storybook/ui@^3.3.6":
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/@storybook/ui/-/ui-3.3.6.tgz#97d04c513e4a22838c68e6dc915183b2e7a7bce5"
+"@storybook/ui@^3.3.7":
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/@storybook/ui/-/ui-3.3.7.tgz#6d58b65955e47ac65588b7244c587fe28df3a1f3"
   dependencies:
-    "@storybook/components" "^3.3.6"
+    "@storybook/components" "^3.3.7"
     "@storybook/mantra-core" "^1.7.2"
     "@storybook/react-komposer" "^2.0.3"
     babel-runtime "^6.26.0"
@@ -6454,9 +6454,9 @@ react-native-compat@^1.0.0:
   dependencies:
     prop-types "^15.5.10"
 
-"react-native-drawer@https://github.com/GeekyAnts/react-native-drawer":
+"react-native-drawer@git+https://github.com/GeekyAnts/react-native-drawer.git":
   version "2.3.0"
-  resolved "https://github.com/GeekyAnts/react-native-drawer#8d9078516d177c9cb02d2579a6860706d2370d25"
+  resolved "git+https://github.com/GeekyAnts/react-native-drawer.git#8d9078516d177c9cb02d2579a6860706d2370d25"
   dependencies:
     prop-types "^15.5.8"
     tween-functions "^1.0.1"
@@ -6474,12 +6474,12 @@ react-native-gesture-handler@1.0.0-alpha.28:
     prop-types "^15.5.10"
 
 react-native-iphone-x-helper@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.1.tgz#950dbdaca66f458689a7e9697c5beb9bd53f98f2"
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.2.tgz#7dbca530930f7c1ce8633cc8fd13ba94102992e1"
 
-"react-native-keyboard-aware-scroll-view@https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view":
+"react-native-keyboard-aware-scroll-view@git+https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view.git":
   version "0.2.9"
-  resolved "https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view#f4805f254d6cc8e3329f5fb224944401f66655db"
+  resolved "git+https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view.git#f4805f254d6cc8e3329f5fb224944401f66655db"
   dependencies:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
