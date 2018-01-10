@@ -421,9 +421,7 @@ class ResultList extends Component {
 	render() {
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
-		console.log('streamResults: ', streamResults);
 		let filteredResults = results;
-		console.log('filteredResults: ', filteredResults);
 
 		if (streamResults.length) {
 			const ids = streamResults.map(item => item._id);
