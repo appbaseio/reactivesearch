@@ -316,6 +316,15 @@ class ReactiveList extends Component {
 	};
 
 	render() {
+		const results = parseHits(this.props.hits) || [];
+		const streamResults = parseHits(this.props.streamHits) || [];
+		let filteredResults = results;
+
+		if (streamResults.length) {
+			const ids = streamResults.map(item => item._id);
+			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+		}
+
 		return (
 			<View>
 				{
@@ -332,15 +341,15 @@ class ReactiveList extends Component {
 					this.props.onAllData
 						? (
 							this.props.onAllData(
-								parseHits(this.props.hits),
-								parseHits(this.props.streamHits),
+								results,
+								streamResults,
 								this.loadMore,
 							)
 						)
 						: (
 							<List
 								setRef={this.setRef}
-								data={parseHits(this.props.hits)}
+								data={[...streamResults, ...filteredResults]}
 								onData={this.props.onData}
 								onEndReached={this.loadMore}
 							/>
@@ -407,6 +416,7 @@ ReactiveList.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	streamHits: state.streamHits[props.componentId] || [],
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	isLoading: state.isLoading[props.componentId] || false,
