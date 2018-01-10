@@ -31,23 +31,28 @@ class Main extends Component {
 		this.setState({ isReady: true });
 	}
 
-	onAllData = (items, loadMore) => (<FlatList
-		style={{ width: '100%' }}
-		data={items || []}
-		keyExtractor={item => item._id}
-		renderItem={({ item }) => (
-			<View style={{ margin: 5 }}>
-				<Text
-					style={{ flex: 1, fontWeight: 'bold' }}
-				>
-					{this.parseToElement(item.name)}
-				</Text>
-				<Text>{item.brand} - {item.model}</Text>
-			</View>
-		)}
-		onEndReachedThreshold={0.5}
-		onEndReached={loadMore}
-	/>);
+	onAllData = (items, streamData, loadMore) => {
+		console.log('streamData: ', streamData);
+		return (
+			<FlatList
+				style={{ width: '100%' }}
+				data={items || []}
+				keyExtractor={item => item._id}
+				renderItem={({ item }) => (
+					<View style={{ margin: 5 }}>
+						<Text
+							style={{ flex: 1, fontWeight: 'bold' }}
+						>
+							{this.parseToElement(item.name)}
+						</Text>
+						<Text>{item.brand} - {item.model}</Text>
+					</View>
+				)}
+				onEndReachedThreshold={0.5}
+				onEndReached={loadMore}
+			/>
+		)
+	};
 
 	parseToElement = (str) => {
 		const start = str.indexOf('<em>');
@@ -139,6 +144,7 @@ class Main extends Component {
 							size={20}
 							onAllData={this.onAllData}
 							pagination
+							stream
 							defaultQuery={() => ({
 								query: {
 									match_all: {},
