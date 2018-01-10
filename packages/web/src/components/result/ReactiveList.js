@@ -343,10 +343,19 @@ class ReactiveList extends Component {
 		let results = null;
 		if (hits) {
 			results = [...hits].map((item) => {
+				const streamProps = {};
+
+				if (item._updated) {
+					streamProps._updated = item._updated;
+				} else if (item._deleted) {
+					streamProps._deleted = item._deleted;
+				}
+
 				const data = this.highlightResults(item);
 				return {
 					_id: data._id,
 					...data._source,
+					...streamProps,
 				};
 			});
 		}
@@ -394,6 +403,14 @@ class ReactiveList extends Component {
 
 	render() {
 		const results = this.parseHits(this.props.hits) || [];
+		const streamResults = this.parseHits(this.props.streamHits) || [];
+		let filteredResults = results;
+
+		if (streamResults.length) {
+			const ids = streamResults.map(item => item._id);
+			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+		}
+
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.isLoading && this.props.pagination && this.props.loader && this.props.loader}
@@ -419,11 +436,11 @@ class ReactiveList extends Component {
 				}
 				{
 					this.props.onAllData
-						? (this.props.onAllData(results, this.loadMore))
+						? (this.props.onAllData(results, streamResults, this.loadMore))
 						: (
 							<div className={getClassName(this.props.innerClass, 'list')}>
 								{
-									results.map(this.props.onData)
+									[...streamResults, ...filteredResults].map(this.props.onData)
 								}
 							</div>
 						)
@@ -469,6 +486,7 @@ ReactiveList.propTypes = {
 	pagination: types.bool,
 	paginationAt: types.paginationAt,
 	hits: types.hits,
+	streamHits: types.hits,
 	total: types.number,
 	removeComponent: types.funcRequired,
 	loadMore: types.funcRequired,
@@ -500,6 +518,7 @@ ReactiveList.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	streamHits: state.streamHits[props.componentId] || [],
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	isLoading: state.isLoading[props.componentId] || false,
