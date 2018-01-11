@@ -180,7 +180,7 @@ class ResultCard extends Component {
 
 		if (nextProps.pagination && nextProps.total !== this.props.total) {
 			this.setState({
-				totalPages: nextProps.total / nextProps.size,
+				totalPages: Math.ceil(nextProps.total / nextProps.size),
 				currentPage: 0,
 			});
 		}
@@ -277,19 +277,25 @@ class ResultCard extends Component {
 		const start = this.getStart();
 		const pages = [];
 
-		for (let i = start; i < (start + this.props.pages) - 1; i += 1) {
-			const pageBtn = (
-				<Button
-					className={getClassName(this.props.innerClass, 'button') || null}
-					primary={this.state.currentPage === i - 1}
-					key={i - 1}
-					onClick={() => this.setPage(i - 1)}
-				>
-					{i}
-				</Button>
-			);
-			if (i <= this.state.totalPages + 1) {
-				pages.push(pageBtn);
+		if (start <= this.state.totalPages) {
+			const totalPagesToShow = this.props.pages < this.state.totalPages
+				? (start + this.props.pages) - 1
+				: this.state.totalPages + 1;
+
+			for (let i = start; i < totalPagesToShow; i += 1) {
+				const pageBtn = (
+					<Button
+						className={getClassName(this.props.innerClass, 'button') || null}
+						primary={this.state.currentPage === i - 1}
+						key={i - 1}
+						onClick={() => this.setPage(i - 1)}
+					>
+						{i}
+					</Button>
+				);
+				if (i <= this.state.totalPages + 1) {
+					pages.push(pageBtn);
+				}
 			}
 		}
 
