@@ -21,6 +21,18 @@ export default class Main extends Component {
 						<DynamicRangeSlider
 							dataField="books_count"
 							componentId="BookSensor"
+							defaultSelected={(min, max) => {
+								return {
+									"start": 1000,
+									"end": 2000
+								}
+							}}
+							rangeLabels={(min, max) => (
+								{
+									"start": min + 10 + " book",
+									"end": max + " books"
+								}
+							)}
 						/>
 					</div>
 
