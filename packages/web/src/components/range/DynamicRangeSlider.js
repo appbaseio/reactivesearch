@@ -58,30 +58,29 @@ class DynamicRangeSlider extends Component {
 				end: Math.ceil(nextProps.range.end),
 			});
 
-			if (nextProps.selectedValue) {
-				this.handleChange(nextProps.selectedValue);
+			if (nextProps.selectedValue && !this.state.currentValue) {
+				this.handleChange(nextProps.selectedValue, nextProps);
 			} else if (nextProps.defaultSelected) {
 				const { start, end }
 					= nextProps.defaultSelected(nextProps.range.start, nextProps.range.end);
 				this.handleChange([
 					start,
 					end,
-				]);
+				], nextProps);
 			} else {
 				this.handleChange([
 					Math.floor(nextProps.range.start),
 					Math.ceil(nextProps.range.end),
-				]);
+				], nextProps);
 			}
-		} else if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
+		} else if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected) && nextProps.range) {
 			const { start, end } = nextProps.defaultSelected(nextProps.range.start, nextProps.range.end);
 			this.handleChange(
 				[start, end],
 				nextProps,
 			);
-		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.handleChange(nextProps.selectedValue || [nextProps.range.start, nextProps.range.end]);
 		}
+
 		checkPropChange(this.props.react, nextProps.react, () => {
 			this.updateRangeQueryOptions(nextProps);
 			this.setReact(nextProps);
@@ -211,21 +210,26 @@ class DynamicRangeSlider extends Component {
 		if (props.beforeValueChange && this.locked) {
 			return;
 		}
+		// always keep the values within range
+		const normalizedValue = [
+			currentValue[0] < props.range.start ? props.range.start : currentValue[0],
+			currentValue[1] > props.range.end ? props.range.end : currentValue[1],
+		];
 
 		this.locked = true;
 		const performUpdate = () => {
 			this.setState({
-				currentValue,
+				currentValue: normalizedValue,
 			}, () => {
-				this.updateQuery([currentValue[0], currentValue[1]], props);
+				this.updateQuery([normalizedValue[0], normalizedValue[1]], props);
 				this.locked = false;
 			});
 		};
 		checkValueChange(
 			props.componentId,
 			{
-				start: currentValue[0],
-				end: currentValue[1],
+				start: normalizedValue[0],
+				end: normalizedValue[1],
 			},
 			props.beforeValueChange,
 			props.onValueChange,
