@@ -58,27 +58,31 @@ class DynamicRangeSlider extends Component {
 				end: Math.ceil(nextProps.range.end),
 			});
 
-			if (nextProps.selectedValue) {
-				this.handleChange(nextProps.selectedValue);
+			// only listen to selectedValue initially, after the
+			// component has mounted and range is received
+			if (nextProps.selectedValue && !this.state.currentValue) {
+				this.handleChange(nextProps.selectedValue, nextProps);
 			} else if (nextProps.defaultSelected) {
+				const { start, end }
+					= nextProps.defaultSelected(nextProps.range.start, nextProps.range.end);
 				this.handleChange([
-					nextProps.defaultSelected.start,
-					nextProps.defaultSelected.end,
-				]);
+					start,
+					end,
+				], nextProps);
 			} else {
 				this.handleChange([
 					Math.floor(nextProps.range.start),
 					Math.ceil(nextProps.range.end),
-				]);
+				], nextProps);
 			}
-		} else if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
+		} else if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected) && nextProps.range) {
+			const { start, end } = nextProps.defaultSelected(nextProps.range.start, nextProps.range.end);
 			this.handleChange(
-				[nextProps.defaultSelected.start, nextProps.defaultSelected.end],
+				[start, end],
 				nextProps,
 			);
-		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.handleChange(nextProps.selectedValue || [nextProps.range.start, nextProps.range.end]);
 		}
+
 		checkPropChange(this.props.react, nextProps.react, () => {
 			this.updateRangeQueryOptions(nextProps);
 			this.setReact(nextProps);
@@ -208,21 +212,26 @@ class DynamicRangeSlider extends Component {
 		if (props.beforeValueChange && this.locked) {
 			return;
 		}
+		// always keep the values within range
+		const normalizedValue = [
+			currentValue[0] < props.range.start ? props.range.start : currentValue[0],
+			currentValue[1] > props.range.end ? props.range.end : currentValue[1],
+		];
 
 		this.locked = true;
 		const performUpdate = () => {
 			this.setState({
-				currentValue,
+				currentValue: normalizedValue,
 			}, () => {
-				this.updateQuery([currentValue[0], currentValue[1]], props);
+				this.updateQuery([normalizedValue[0], normalizedValue[1]], props);
 				this.locked = false;
 			});
 		};
 		checkValueChange(
 			props.componentId,
 			{
-				start: currentValue[0],
-				end: currentValue[1],
+				start: normalizedValue[0],
+				end: normalizedValue[1],
 			},
 			props.beforeValueChange,
 			props.onValueChange,
@@ -281,10 +290,28 @@ class DynamicRangeSlider extends Component {
 		props.setQueryOptions(this.internalRangeComponent, queryOptions);
 	};
 
+	getRangeLabels = () => {
+		let { start: startLabel, end: endLabel } = this.state.range;
+
+		if (this.props.rangeLabels) {
+			const rangeLabels = this.props.rangeLabels(this.props.range.start, this.props.range.end);
+			startLabel = rangeLabels.start;
+			endLabel = rangeLabels.end;
+		}
+
+		return {
+			startLabel,
+			endLabel,
+		};
+	}
+
 	render() {
 		if (!this.state.currentValue || !this.state.range) {
 			return null;
 		}
+
+		const { startLabel, endLabel } = this.getRangeLabels();
+
 		return (
 			<Slider primary style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -315,13 +342,13 @@ class DynamicRangeSlider extends Component {
 						align="left"
 						className={getClassName(this.props.innerClass, 'label') || null}
 					>
-						{this.state.range.start}
+						{startLabel}
 					</RangeLabel>
 					<RangeLabel
 						align="right"
 						className={getClassName(this.props.innerClass, 'label') || null}
 					>
-						{this.state.range.end}
+						{endLabel}
 					</RangeLabel>
 				</div>
 			</Slider>
@@ -335,7 +362,7 @@ DynamicRangeSlider.propTypes = {
 	addComponent: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	defaultSelected: types.range,
+	defaultSelected: types.func,
 	react: types.react,
 	options: types.options,
 	removeComponent: types.funcRequired,
@@ -355,6 +382,7 @@ DynamicRangeSlider.propTypes = {
 	className: types.string,
 	snap: types.bool,
 	innerClass: types.style,
+	rangeLabels: types.func,
 };
 
 DynamicRangeSlider.defaultProps = {
