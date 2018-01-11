@@ -58,6 +58,8 @@ class DynamicRangeSlider extends Component {
 				end: Math.ceil(nextProps.range.end),
 			});
 
+			// only listen to selectedValue initially, after the
+			// component has mounted and range is received
 			if (nextProps.selectedValue && !this.state.currentValue) {
 				this.handleChange(nextProps.selectedValue, nextProps);
 			} else if (nextProps.defaultSelected) {
