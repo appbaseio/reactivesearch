@@ -284,10 +284,28 @@ class DynamicRangeSlider extends Component {
 		props.setQueryOptions(this.internalRangeComponent, queryOptions);
 	};
 
+	getRangeLabels = () => {
+		let { start: startLabel, end: endLabel } = this.state.range;
+
+		if (this.props.rangeLabels) {
+			const rangeLabels = this.props.rangeLabels(this.props.range.start, this.props.range.end);
+			startLabel = rangeLabels.start;
+			endLabel = rangeLabels.end;
+		}
+
+		return {
+			startLabel,
+			endLabel,
+		};
+	}
+
 	render() {
 		if (!this.state.currentValue || !this.state.range) {
 			return null;
 		}
+
+		const { startLabel, endLabel } = this.getRangeLabels();
+
 		return (
 			<Slider primary style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -318,13 +336,13 @@ class DynamicRangeSlider extends Component {
 						align="left"
 						className={getClassName(this.props.innerClass, 'label') || null}
 					>
-						{this.state.range.start}
+						{startLabel}
 					</RangeLabel>
 					<RangeLabel
 						align="right"
 						className={getClassName(this.props.innerClass, 'label') || null}
 					>
-						{this.state.range.end}
+						{endLabel}
 					</RangeLabel>
 				</div>
 			</Slider>
