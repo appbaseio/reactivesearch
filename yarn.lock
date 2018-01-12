@@ -19,6 +19,24 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
+"@appbaseio/reactivesearch@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-2.1.0.tgz#7231c4047c86f2ca6e6ca4b9b3ef79c8dd75106b"
+  dependencies:
+    "@appbaseio/reactivecore" "^1.3.0"
+    appbase-js "^2.2.4"
+    downshift "^1.22.1"
+    emotion "^8.0.11"
+    emotion-theming "^8.0.11"
+    prop-types "^15.6.0"
+    react-day-picker "^7.0.5"
+    react-emotion "^8.0.11"
+    react-redux "^5.0.6"
+    redux "^3.7.2"
+    rheostat "^2.1.1"
+    url-search-params "^0.10.0"
+    xdate "^0.8.2"
+
 "@babel/helper-module-imports@7.0.0-beta.32":
   version "7.0.0-beta.32"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.0.0-beta.32.tgz#8126fc024107c226879841b973677a4f4e510a03"
