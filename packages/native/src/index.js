@@ -1,6 +1,7 @@
 import ReactiveBase from './components/basic/ReactiveBase';
 import TextField from './components/basic/TextField';
 import DataController from './components/basic/DataController';
+import ReactiveComponent from './components/basic/ReactiveComponent';
 
 import DatePicker from './components/date/DatePicker';
 import DateRange from './components/date/DateRange';
@@ -26,6 +27,7 @@ export {
 	ReactiveBase,
 	DataController,
 	TextField,
+	ReactiveComponent,
 
 	// date
 	DatePicker,
