@@ -20,13 +20,13 @@ yarn add @appbaseio/reactivesearch
 
 The library is conceptually divided into two parts:
 
-1. Sensor components
+**1. Sensor components**
 
 Each sensor component is purpose built for applying a specific filter on the data. For example:
 
 Rendering a Radio UI elements list based on the available dataset - [SingleList](https://opensource.appbase.io/reactive-manual/list-components/singlelist.html)
 
-2. Actuator components.
+**2. Actuator components**
 
 Actuators represent the result UI view components. ReactiveSearch primarily comes with two actuators: `ResultCard` and `ResultList`. 
 
