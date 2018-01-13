@@ -1,6 +1,14 @@
 # Reactive Search
 
+[![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/appbaseio/mirage/blob/dev/LICENSE.md)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/appbaseio/reactivesearch)
+
 React UI components for Elasticsearch.
+
+![Banner Image showing all the UI components we offer](https://i.imgur.com/bJ1QKZS.png)
+
+[Get our designer templates for sketch](https://opensource.appbase.io/reactivesearch/resources/ReactiveSearch_Playground.sketch).
+
 
 ## Installation
 
