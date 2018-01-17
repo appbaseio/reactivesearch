@@ -437,7 +437,6 @@ class DataSearch extends Component {
 
 DataSearch.propTypes = {
 	componentId: types.stringRequired,
-	title: types.title,
 	addComponent: types.funcRequired,
 	highlight: types.bool,
 	setQueryOptions: types.funcRequired,
