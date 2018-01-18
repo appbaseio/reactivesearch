@@ -217,7 +217,6 @@ SingleDropdownList.propTypes = {
 	customQuery: types.func,
 	onQueryChange: types.func,
 	placeholder: types.string,
-	title: types.title,
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
 	showFilter: types.bool,

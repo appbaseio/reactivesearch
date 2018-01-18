@@ -154,7 +154,6 @@ SingleDropdownRange.propTypes = {
 	placeholder: types.string,
 	filterLabel: types.string,
 	selectedValue: types.selectedValue,
-	title: types.title,
 	showFilter: types.bool,
 	style: types.style,
 };

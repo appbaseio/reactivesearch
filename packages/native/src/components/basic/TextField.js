@@ -131,7 +131,6 @@ TextField.propTypes = {
 	react: types.react,
 	removeComponent: types.funcRequired,
 	dataField: types.stringRequired,
-	title: types.title,
 	beforeValueChange: types.func,
 	onValueChange: types.func,
 	customQuery: types.func,
