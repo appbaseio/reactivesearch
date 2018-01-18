@@ -49,7 +49,7 @@ export const onAllData = (items, streamData, loadMore) => (
 	/>
 );
 
-export const onAllDataGitXplore = (items, loadMore) => (<FlatList
+export const onAllDataGitXplore = (items, streamData, loadMore) => (<FlatList
 	style={{ width: '100%' }}
 	data={items || []}
 	keyExtractor={item => item._id}
@@ -66,8 +66,8 @@ export const onAllDataGitXplore = (items, loadMore) => (<FlatList
 				marginBottom: 5,
 			}}
 		>
-			<Text style={{ fontWeight: 'bold' }}>{parseToElement(item._source.name)}</Text>
-			<Text>{item._source.stars} 🌟</Text>
+			<Text style={{ fontWeight: 'bold' }}>{parseToElement(item.name)}</Text>
+			<Text>{item.stars} 🌟</Text>
 		</View>
 	)}
 	onEndReachedThreshold={0.5}
