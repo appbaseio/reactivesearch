@@ -11,6 +11,12 @@
 			"config": "./rn-cli.config.js",
 			"assetExts": ["ttf", "otf"],
 			"projectRoots": ""
+		},
+		"ios": {
+			"bundleIdentifier": "com.appbaseio.reactivebasenativedemos"
+		},
+		"android": {
+			"package": "com.appbaseio.reactivebasenativedemos"
 		}
 	}
 }
