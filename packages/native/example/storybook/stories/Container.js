@@ -30,8 +30,8 @@ class Container extends Component {
 			<View
 				style={{
 					flex: 1,
-					paddingLeft: 10,
-					paddingRight: 10,
+					paddingLeft: 20,
+					paddingRight: 15,
 				}}
 			>
 				{this.props.story()}
