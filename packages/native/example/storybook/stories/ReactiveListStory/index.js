@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import {
 	ReactiveBase,
@@ -15,30 +15,48 @@ const ReactiveListStory = props => (
 		credentials="bYTSo47tj:d001826a-f4ef-42c5-b0aa-a94f29967ba0"
 		type="gitxplore-live"
 	>
-		<ScrollView>
-			<TextField
-				componentId="TextFieldComponent"
-				dataField="name"
-				placeholder="Search Repos"
-			/>
-			<ReactiveList
-				dataField="name"
-				componentId="ReactiveList"
-				onAllData={onAllDataGitXplore}
-				pagination
-				defaultQuery={() => ({
-					query: {
-						match_all: {},
-					},
-					sort: {
-						stars: { order: 'desc' },
-					},
-				})}
-				react={{
-					and: ['TextFieldComponent'],
+		<ScrollView
+			style={{
+				flex: 1,
+				paddingTop: 15,
+			}}
+		>
+			<View
+				style={{
+					backgroundColor: '#F8F8F8',
 				}}
-				{...props}
-			/>
+			>
+				<TextField
+					componentId="TextFieldComponent"
+					dataField="name"
+					placeholder="Search Repos"
+				/>
+			</View>
+			<View
+				style={{
+					flex: 1,
+					paddingTop: 15,
+				}}
+			>
+				<ReactiveList
+					dataField="name"
+					componentId="ReactiveList"
+					onAllData={onAllDataGitXplore}
+					pagination
+					defaultQuery={() => ({
+						query: {
+							match_all: {},
+						},
+						sort: {
+							stars: { order: 'desc' },
+						},
+					})}
+					react={{
+						and: ['TextFieldComponent'],
+					}}
+					{...props}
+				/>
+			</View>
 		</ScrollView>
 	</ReactiveBase>
 );

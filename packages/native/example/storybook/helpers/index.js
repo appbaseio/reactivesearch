@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { View, FlatList } from 'react-native';
-import { Text } from 'native-base';
+import { Text, Content, Card, CardItem, Body } from 'native-base';
 
 const parseToElement = (str) => {
 	const start = str.indexOf('<em>');
@@ -25,21 +25,31 @@ const parseToElement = (str) => {
 	return str;
 };
 
-export const onAllData = (items, loadMore) => (<FlatList
-	style={{ width: '100%' }}
-	data={items || []}
-	keyExtractor={item => item._id}
-	renderItem={({ item }) => (
-		<View style={{ margin: 5 }}>
-			<Text style={{ flex: 1, fontWeight: 'bold' }}>{parseToElement(item._source.name)}</Text>
-			<Text>{parseToElement(item._source.brand)} - {parseToElement(item._source.model)}</Text>
-		</View>
-	)}
-	onEndReachedThreshold={0.5}
-	onEndReached={loadMore}
-/>);
+export const onAllData = (items, streamData, loadMore) => (
+	<FlatList
+		style={{ width: '100%' }}
+		data={items || []}
+		keyExtractor={item => item._id}
+		renderItem={({ item }) => (
+			<Content>
+				<Card>
+					<CardItem>
+						<Body>
+							<View style={{ margin: 5, padding: 5 }}>
+								<Text style={{ flex: 1, fontWeight: 'bold' }}>{parseToElement(item.name)}</Text>
+								<Text>{parseToElement(item.brand)} - {parseToElement(item.model)}</Text>
+							</View>
+						</Body>
+					</CardItem>
+				</Card>
+			</Content>
+		)}
+		onEndReachedThreshold={0.5}
+		onEndReached={loadMore}
+	/>
+);
 
-export const onAllDataGitXplore = (items, loadMore) => (<FlatList
+export const onAllDataGitXplore = (items, streamData, loadMore) => (<FlatList
 	style={{ width: '100%' }}
 	data={items || []}
 	keyExtractor={item => item._id}
@@ -56,8 +66,8 @@ export const onAllDataGitXplore = (items, loadMore) => (<FlatList
 				marginBottom: 5,
 			}}
 		>
-			<Text style={{ fontWeight: 'bold' }}>{parseToElement(item._source.name)}</Text>
-			<Text>{item._source.stars} 🌟</Text>
+			<Text style={{ fontWeight: 'bold' }}>{parseToElement(item.name)}</Text>
+			<Text>{item.stars} 🌟</Text>
 		</View>
 	)}
 	onEndReachedThreshold={0.5}

@@ -17,7 +17,12 @@ const DataControllerStory = props => (
 		credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
 		type="cars"
 	>
-		<ScrollView>
+		<ScrollView
+			style={{
+				flex: 1,
+				paddingTop: 15,
+			}}
+		>
 			<DataController
 				componentId="DataControllerComponent"
 				dataField="brand"
@@ -43,25 +48,32 @@ const DataControllerStory = props => (
 					</Text>
 				</View>
 			</DataController>
-			<ReactiveList
-				dataField="name"
-				componentId="ReactiveList"
-				size={20}
-				from={0}
-				onAllData={onAllData}
-				pagination
-				defaultQuery={() => ({
-					query: {
-						match_all: {},
-					},
-					sort: {
-						price: { order: 'asc' },
-					},
-				})}
-				react={{
-					and: ['DataControllerComponent'],
+			<View
+				style={{
+					flex: 1,
+					paddingTop: 15,
 				}}
-			/>
+			>
+				<ReactiveList
+					dataField="name"
+					componentId="ReactiveList"
+					size={20}
+					from={0}
+					onAllData={onAllData}
+					pagination
+					defaultQuery={() => ({
+						query: {
+							match_all: {},
+						},
+						sort: {
+							price: { order: 'asc' },
+						},
+					})}
+					react={{
+						and: ['DataControllerComponent'],
+					}}
+				/>
+			</View>
 		</ScrollView>
 	</ReactiveBase>
 );
