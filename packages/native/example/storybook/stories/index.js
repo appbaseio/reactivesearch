@@ -1,16 +1,16 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react-native';
-import { text, boolean, number, select, array, object } from '@storybook/addon-knobs';
+import { text, boolean, number, select, object } from '@storybook/addon-knobs';
 
 import DataControllerStory from './DataControllerStory';
 import DataSearchStory from './DataSearchStory';
 import TextFieldStory from './TextFieldStory';
 import SingleDropdownListStory from './SingleDropdownListStory';
-import MultiDropdownListStory from './MultiDropdownListStory';
+// import MultiDropdownListStory from './MultiDropdownListStory';
 import SingleDropdownRangeStory from './SingleDropdownRangeStory';
-import MultiDropdownRangeStory from './MultiDropdownRangeStory';
-import RangeSliderStory from './RangeSliderStory';
+// import MultiDropdownRangeStory from './MultiDropdownRangeStory';
+// import RangeSliderStory from './RangeSliderStory';
 import DatePickerStory from './DatePickerStory';
 import DateRangeStory from './DateRangeStory';
 import ReactiveListStory from './ReactiveListStory';
@@ -93,19 +93,19 @@ storiesOf('SingleDropdownList', module)
 		<SingleDropdownListStory sortBy={select('sortBy', ['count', 'asc', 'desc'], 'desc')} />
 	));
 
-storiesOf('MultiDropdownList', module)
-	.add('Basic', () => (
-		<MultiDropdownListStory />
-	))
-	.add('with placeholder', () => (
-		<MultiDropdownListStory placeholder={text('placeholder', 'Pick Car Brand')} />
-	))
-	.add('with defaultSelected', () => (
-		<MultiDropdownListStory defaultSelected={array('defaultSelected', ['porsche', 'bmw'])} />
-	))
-	.add('with sortBy', () => (
-		<MultiDropdownListStory sortBy={select('sortBy', ['count', 'asc', 'desc'], 'desc')} />
-	));
+// storiesOf('MultiDropdownList', module)
+// 	.add('Basic', () => (
+// 		<MultiDropdownListStory />
+// 	))
+// 	.add('with placeholder', () => (
+// 		<MultiDropdownListStory placeholder={text('placeholder', 'Pick Car Brand')} />
+// 	))
+// 	.add('with defaultSelected', () => (
+// 		<MultiDropdownListStory defaultSelected={array('defaultSelected', ['porsche', 'bmw'])} />
+// 	))
+// 	.add('with sortBy', () => (
+// 		<MultiDropdownListStory sortBy={select('sortBy', ['count', 'asc', 'desc'], 'desc')} />
+// 	));
 
 storiesOf('SingleDropdownRange', module)
 	.add('Basic', () => (
@@ -118,73 +118,73 @@ storiesOf('SingleDropdownRange', module)
 		<SingleDropdownRangeStory defaultSelected={text('defaultSelected', 'First Date')} />
 	));
 
-storiesOf('MultiDropdownRange', module)
-	.add('Basic', () => (
-		<MultiDropdownRangeStory />
-	))
-	.add('with placeholder', () => (
-		<MultiDropdownRangeStory placeholder={text('placeholder', 'Pick Category')} />
-	))
-	.add('with defaultSelected', () => (
-		<MultiDropdownRangeStory defaultSelected={array('defaultSelected', ['First Date', 'Pricey'])} />
-	));
+// storiesOf('MultiDropdownRange', module)
+// 	.add('Basic', () => (
+// 		<MultiDropdownRangeStory />
+// 	))
+// 	.add('with placeholder', () => (
+// 		<MultiDropdownRangeStory placeholder={text('placeholder', 'Pick Category')} />
+// 	))
+// 	.add('with defaultSelected', () => (
+// 		<MultiDropdownRangeStory defaultSelected={array('defaultSelected', ['First Date', 'Pricey'])} />
+// 	));
 
-storiesOf('RangeSlider', module)
-	.add('Basic', () => (
-		<RangeSliderStory
-			range={{
-				start: 0,
-				end: 5,
-			}}
-		/>
-	))
-	.add('with range', () => (
-		<RangeSliderStory
-			range={object('range', {
-				start: 0,
-				end: 5,
-			})}
-		/>
-	))
-	.add('with defaultSelected', () => (
-		<RangeSliderStory
-			range={{
-				start: 0,
-				end: 5,
-			}}
-			defaultSelected={object('defaultSelected', {
-				start: 1,
-				end: 3,
-			})}
-		/>
-	))
-	.add('without histogram', () => (
-		<RangeSliderStory
-			range={{
-				start: 0,
-				end: 5,
-			}}
-			showHistogram={boolean('showHistogram', false)}
-		/>
-	))
-	.add('with interval', () => (
-		<RangeSliderStory
-			range={{
-				start: 0,
-				end: 5,
-			}}
-			interval={number('interval', 1)}
-		/>
-	))
-	.add('with stepValue', () => (
-		<RangeSliderStory
-			range={{
-				start: 0,
-				end: 5,
-			}}
-			stepValue={number('stepValue', 1)}
-		/>
-	));
+// storiesOf('RangeSlider', module)
+// 	.add('Basic', () => (
+// 		<RangeSliderStory
+// 			range={{
+// 				start: 0,
+// 				end: 5,
+// 			}}
+// 		/>
+// 	))
+// 	.add('with range', () => (
+// 		<RangeSliderStory
+// 			range={object('range', {
+// 				start: 0,
+// 				end: 5,
+// 			})}
+// 		/>
+// 	))
+// 	.add('with defaultSelected', () => (
+// 		<RangeSliderStory
+// 			range={{
+// 				start: 0,
+// 				end: 5,
+// 			}}
+// 			defaultSelected={object('defaultSelected', {
+// 				start: 1,
+// 				end: 3,
+// 			})}
+// 		/>
+// 	))
+// 	.add('without histogram', () => (
+// 		<RangeSliderStory
+// 			range={{
+// 				start: 0,
+// 				end: 5,
+// 			}}
+// 			showHistogram={boolean('showHistogram', false)}
+// 		/>
+// 	))
+// 	.add('with interval', () => (
+// 		<RangeSliderStory
+// 			range={{
+// 				start: 0,
+// 				end: 5,
+// 			}}
+// 			interval={number('interval', 1)}
+// 		/>
+// 	))
+// 	.add('with stepValue', () => (
+// 		<RangeSliderStory
+// 			range={{
+// 				start: 0,
+// 				end: 5,
+// 			}}
+// 			stepValue={number('stepValue', 1)}
+// 		/>
+// 	));
 
 storiesOf('DatePicker', module)
 	.add('Basic', () => (
