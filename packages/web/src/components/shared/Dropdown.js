@@ -120,7 +120,7 @@ class Dropdown extends Component {
 															value[labelField] === item[labelField]))
 												);
 
-												if (this.props.single) selected = item.key === selectedItem;
+												if (!this.props.multi) selected = item.key === selectedItem;
 
 												return (
 													<li
@@ -150,7 +150,7 @@ class Dropdown extends Component {
 															}
 														</div>
 														{
-															selected && !this.props.single
+															selected && this.props.multi
 																? (<Tick
 																	className={
 																		getClassName(this.props.innerClass, 'icon')
