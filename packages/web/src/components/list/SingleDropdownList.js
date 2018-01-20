@@ -201,7 +201,6 @@ class SingleDropdownList extends Component {
 					placeholder={this.props.placeholder}
 					labelField="key"
 					showCount={this.props.showCount}
-					single
 				/>
 			</div>
 		);
