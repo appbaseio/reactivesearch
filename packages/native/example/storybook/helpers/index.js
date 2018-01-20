@@ -31,18 +31,16 @@ export const onAllData = (items, streamData, loadMore) => (
 		data={items || []}
 		keyExtractor={item => item._id}
 		renderItem={({ item }) => (
-			<Content>
-				<Card>
-					<CardItem>
-						<Body>
-							<View style={{ margin: 5, padding: 5 }}>
-								<Text style={{ flex: 1, fontWeight: 'bold' }}>{parseToElement(item.name)}</Text>
-								<Text>{parseToElement(item.brand)} - {parseToElement(item.model)}</Text>
-							</View>
-						</Body>
-					</CardItem>
-				</Card>
-			</Content>
+			<Card>
+				<CardItem>
+					<Body>
+						<View style={{ margin: 5, padding: 5 }}>
+							<Text style={{ flex: 1, fontWeight: 'bold' }}>{parseToElement(item.name)}</Text>
+							<Text>{parseToElement(item.brand)} - {parseToElement(item.model)}</Text>
+						</View>
+					</Body>
+				</CardItem>
+			</Card>
 		)}
 		onEndReachedThreshold={0.5}
 		onEndReached={loadMore}
