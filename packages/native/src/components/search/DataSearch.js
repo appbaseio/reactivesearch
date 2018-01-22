@@ -416,7 +416,7 @@ class DataSearch extends Component {
 
 	render() {
 		return (
-			<View>
+			<View style={this.props.style}>
 				{
 					this.props.autosuggest
 						? this.renderDataSearch()
