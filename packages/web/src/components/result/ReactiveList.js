@@ -9,6 +9,7 @@ import {
 	setQueryOptions,
 	updateQuery,
 	loadMore,
+	setValue,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -30,10 +31,10 @@ class ReactiveList extends Component {
 		super(props);
 
 		this.state = {
-			from: 0,
+			from: props.currentPage * props.size,
 			isLoading: false,
 			totalPages: 0,
-			currentPage: 0,
+			currentPage: props.currentPage,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 	}
@@ -47,6 +48,7 @@ class ReactiveList extends Component {
 		}
 
 		const options = getQueryOptions(this.props);
+		options.from = this.state.from;
 		if (this.props.sortOptions) {
 			options.sort = [{
 				[this.props.sortOptions[0].dataField]: {
@@ -99,6 +101,7 @@ class ReactiveList extends Component {
 			|| !isEqual(this.props.dataField, nextProps.dataField)
 		) {
 			const options = getQueryOptions(nextProps);
+			options.from = this.state.from;
 			if (nextProps.sortOptions) {
 				options.sort = [{
 					[nextProps.sortOptions[0].dataField]: {
@@ -120,6 +123,7 @@ class ReactiveList extends Component {
 			&& !isEqual(nextProps.defaultQuery(), this.defaultQuery)
 		) {
 			const options = getQueryOptions(nextProps);
+			options.from = this.state.from;
 			this.defaultQuery = nextProps.defaultQuery();
 
 			const { sort, ...query } = this.defaultQuery;
@@ -181,7 +185,7 @@ class ReactiveList extends Component {
 		if (nextProps.pagination && nextProps.total !== this.props.total) {
 			this.setState({
 				totalPages: Math.ceil(nextProps.total / nextProps.size),
-				currentPage: 0,
+				currentPage: this.props.total ? 0 : this.state.currentPage,
 			});
 		}
 
@@ -244,6 +248,7 @@ class ReactiveList extends Component {
 	setPage = (page) => {
 		const value = this.props.size * page;
 		const options = getQueryOptions(this.props);
+		options.from = this.state.from;
 		this.setState({
 			from: value,
 			isLoading: true,
@@ -253,6 +258,16 @@ class ReactiveList extends Component {
 			...options,
 			from: value,
 		}, false);
+
+		if (this.props.URLParams) {
+			this.props.setPageURL(
+				`${this.props.componentId}-page`,
+				page + 1,
+				`${this.props.componentId}-page`,
+				false,
+				true,
+			);
+		}
 	};
 
 	renderResultStats = () => {
@@ -271,6 +286,7 @@ class ReactiveList extends Component {
 	handleSortChange = (e) => {
 		const index = e.target.value;
 		const options = getQueryOptions(this.props);
+		options.from = this.state.from;
 
 		options.sort = [{
 			[this.props.sortOptions[index].dataField]: {
@@ -409,6 +425,9 @@ ReactiveList.propTypes = {
 	setStreaming: types.func,
 	innerClass: types.style,
 	url: types.string,
+	URLParams: types.bool,
+	currentPage: types.number,
+	setPageURL: types.func,
 };
 
 ReactiveList.defaultProps = {
@@ -419,6 +438,7 @@ ReactiveList.defaultProps = {
 	showResultStats: true,
 	style: {},
 	className: null,
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -428,6 +448,10 @@ const mapStateToProps = (state, props) => ({
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	isLoading: state.isLoading[props.componentId] || false,
 	url: state.config.url,
+	currentPage: (
+		state.selectedValues[`${props.componentId}-page`]
+		&& state.selectedValues[`${props.componentId}-page`].value - 1
+	) || 0,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -438,6 +462,8 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
+	setPageURL: (component, value, label, showFilter, URLParams) =>
+		dispatch(setValue(component, value, label, showFilter, URLParams)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveList);

@@ -33,9 +33,10 @@ class Main extends Component {
 						<ResultCard
 							componentId="SearchResult"
 							dataField="original_title.raw"
-							from={0}
 							size={10}
 							onData={this.booksCard}
+							pagination
+							URLParams
 							react={{
 								and: 'BookSensor',
 							}}

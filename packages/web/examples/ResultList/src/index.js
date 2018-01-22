@@ -33,11 +33,11 @@ class Main extends Component {
 						<ResultList
 							componentId="SearchResult"
 							dataField="original_title"
-							from={0}
 							size={3}
 							onData={this.booksList}
 							className="result-list-container"
 							pagination
+							URLParams
 							react={{
 								and: 'BookSensor',
 							}}
