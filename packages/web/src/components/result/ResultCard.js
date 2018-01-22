@@ -19,10 +19,10 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import Pagination from './addons/Pagination';
 import PoweredBy from './addons/PoweredBy';
 
 import Title from '../../styles/Title';
-import Button, { pagination } from '../../styles/Button';
 import Card, { container, Image } from '../../styles/Card';
 import Flex from '../../styles/Flex';
 import { resultStats, sortOptions } from '../../styles/results';
@@ -255,86 +255,6 @@ class ResultCard extends Component {
 		}, false);
 	};
 
-	prevPage = () => {
-		if (this.state.currentPage) {
-			this.setPage(this.state.currentPage - 1);
-		}
-	};
-
-	nextPage = () => {
-		if (this.state.currentPage < this.state.totalPages - 1) {
-			this.setPage(this.state.currentPage + 1);
-		}
-	};
-
-	getStart = () => {
-		const midValue = parseInt(this.props.pages / 2, 10);
-		const start = this.state.currentPage - midValue;
-		return start > 1 ? start : 2;
-	};
-
-	renderPagination = () => {
-		const start = this.getStart();
-		const pages = [];
-
-		if (start <= this.state.totalPages) {
-			const totalPagesToShow = this.props.pages < this.state.totalPages
-				? (start + this.props.pages) - 1
-				: this.state.totalPages + 1;
-
-			for (let i = start; i < totalPagesToShow; i += 1) {
-				const pageBtn = (
-					<Button
-						className={getClassName(this.props.innerClass, 'button') || null}
-						primary={this.state.currentPage === i - 1}
-						key={i - 1}
-						onClick={() => this.setPage(i - 1)}
-					>
-						{i}
-					</Button>
-				);
-				if (i <= this.state.totalPages + 1) {
-					pages.push(pageBtn);
-				}
-			}
-		}
-
-		if (!this.state.totalPages) {
-			return null;
-		}
-
-		return (
-			<div className={`${pagination} ${getClassName(this.props.innerClass, 'pagination')}`}>
-				<Button
-					className={getClassName(this.props.innerClass, 'button') || null}
-					disabled={this.state.currentPage === 0}
-					onClick={this.prevPage}
-				>
-					Prev
-				</Button>
-				{
-					<Button
-						className={getClassName(this.props.innerClass, 'button') || null}
-						primary={this.state.currentPage === 0}
-						onClick={() => this.setPage(0)}
-					>
-						1
-					</Button>
-				}
-				{
-					pages
-				}
-				<Button
-					className={getClassName(this.props.innerClass, 'button') || null}
-					disabled={this.state.currentPage >= this.state.totalPages - 1}
-					onClick={this.nextPage}
-				>
-					Next
-				</Button>
-			</div>
-		);
-	};
-
 	renderAsCard = (item) => {
 		const result = this.props.onData(item);
 
@@ -444,7 +364,13 @@ class ResultCard extends Component {
 				</Flex>
 				{
 					this.props.pagination && this.props.paginationAt === 'top'
-						? this.renderPagination()
+						? (<Pagination
+							pages={this.props.pages}
+							totalPages={this.state.totalPages}
+							currentPage={this.state.currentPage}
+							setPage={this.setPage}
+							innerClass={this.props.innerClass}
+						/>)
 						: null
 				}
 				<div className={`${container} ${getClassName(this.props.innerClass, 'list')}`}>
@@ -463,7 +389,13 @@ class ResultCard extends Component {
 				}
 				{
 					this.props.pagination && this.props.paginationAt === 'bottom'
-						? this.renderPagination()
+						? (<Pagination
+							pages={this.props.pages}
+							totalPages={this.state.totalPages}
+							currentPage={this.state.currentPage}
+							setPage={this.setPage}
+							innerClass={this.props.innerClass}
+						/>)
 						: null
 				}
 				{
