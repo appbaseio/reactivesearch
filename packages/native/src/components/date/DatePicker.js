@@ -165,7 +165,7 @@ class DatePicker extends Component {
 		let markedDates = {};
 		const current = this.state.currentDate
 			? this.state.currentDate.dateString
-			: this.props.startDate || Date();
+			: this.props.initialMonth || Date();
 
 		if (this.state.currentDate) {
 			markedDates = {
@@ -259,7 +259,7 @@ DatePicker.propTypes = {
 	componentId: types.stringRequired,
 	defaultSelected: types.date,
 	react: types.react,
-	startDate: types.date,
+	initialMonth: types.date,
 	removeComponent: types.funcRequired,
 	queryFormat: types.queryFormatDate,
 	selectedValue: types.selectedValue,
