@@ -93,6 +93,6 @@ Pagination.propTypes = {
 	pages: types.number,
 	totalPages: types.number,
 	currentPage: types.number,
-	setPage: types.function,
+	setPage: types.func,
 	innerClass: types.style,
 };
