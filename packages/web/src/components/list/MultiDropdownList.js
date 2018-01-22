@@ -272,7 +272,7 @@ class MultiDropdownList extends Component {
 					items={
 						[
 							...selectAll,
-							...this.state.options.filter(item => String(item.key).length),
+							...this.state.options.filter(item => String(item.key).trim().length),
 						]
 					}
 					onChange={this.setValue}
