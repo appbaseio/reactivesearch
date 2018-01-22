@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { View, FlatList } from 'react-native';
-import { Text, Content, Card, CardItem, Body } from 'native-base';
+import { Text, Card, CardItem, Body } from 'native-base';
 
 const parseToElement = (str) => {
 	const start = str.indexOf('<em>');
