@@ -9,6 +9,7 @@ import {
 	setQueryOptions,
 	updateQuery,
 	loadMore,
+	setValue,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -19,10 +20,10 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import Pagination from './addons/Pagination';
 import PoweredBy from './addons/PoweredBy';
 
 import Title from '../../styles/Title';
-import Button, { pagination } from '../../styles/Button';
 import Card, { container, Image } from '../../styles/Card';
 import Flex from '../../styles/Flex';
 import { resultStats, sortOptions } from '../../styles/results';
@@ -32,10 +33,10 @@ class ResultCard extends Component {
 		super(props);
 
 		this.state = {
-			from: 0,
+			from: props.currentPage * props.size,
 			isLoading: false,
 			totalPages: 0,
-			currentPage: 0,
+			currentPage: props.currentPage,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 	}
@@ -49,6 +50,7 @@ class ResultCard extends Component {
 		}
 
 		const options = getQueryOptions(this.props);
+		options.from = this.state.from;
 		if (this.props.sortOptions) {
 			options.sort = [{
 				[this.props.sortOptions[0].dataField]: {
@@ -101,6 +103,7 @@ class ResultCard extends Component {
 			|| !isEqual(this.props.dataField, nextProps.dataField)
 		) {
 			const options = getQueryOptions(nextProps);
+			options.from = this.state.from;
 			if (nextProps.sortOptions) {
 				options.sort = [{
 					[nextProps.sortOptions[0].dataField]: {
@@ -122,6 +125,7 @@ class ResultCard extends Component {
 			&& !isEqual(nextProps.defaultQuery(), this.defaultQuery)
 		) {
 			const options = getQueryOptions(nextProps);
+			options.from = this.state.from;
 			this.defaultQuery = nextProps.defaultQuery();
 
 			const { sort, ...query } = this.defaultQuery;
@@ -181,7 +185,7 @@ class ResultCard extends Component {
 		if (nextProps.pagination && nextProps.total !== this.props.total) {
 			this.setState({
 				totalPages: Math.ceil(nextProps.total / nextProps.size),
-				currentPage: 0,
+				currentPage: this.props.total ? 0 : this.state.currentPage,
 			});
 		}
 
@@ -244,6 +248,7 @@ class ResultCard extends Component {
 	setPage = (page) => {
 		const value = this.props.size * page;
 		const options = getQueryOptions(this.props);
+		options.from = this.state.from;
 		this.setState({
 			from: value,
 			isLoading: true,
@@ -253,86 +258,16 @@ class ResultCard extends Component {
 			...options,
 			from: value,
 		}, false);
-	};
 
-	prevPage = () => {
-		if (this.state.currentPage) {
-			this.setPage(this.state.currentPage - 1);
+		if (this.props.URLParams) {
+			this.props.setPageURL(
+				`${this.props.componentId}-page`,
+				page + 1,
+				`${this.props.componentId}-page`,
+				false,
+				true,
+			);
 		}
-	};
-
-	nextPage = () => {
-		if (this.state.currentPage < this.state.totalPages - 1) {
-			this.setPage(this.state.currentPage + 1);
-		}
-	};
-
-	getStart = () => {
-		const midValue = parseInt(this.props.pages / 2, 10);
-		const start = this.state.currentPage - midValue;
-		return start > 1 ? start : 2;
-	};
-
-	renderPagination = () => {
-		const start = this.getStart();
-		const pages = [];
-
-		if (start <= this.state.totalPages) {
-			const totalPagesToShow = this.props.pages < this.state.totalPages
-				? (start + this.props.pages) - 1
-				: this.state.totalPages + 1;
-
-			for (let i = start; i < totalPagesToShow; i += 1) {
-				const pageBtn = (
-					<Button
-						className={getClassName(this.props.innerClass, 'button') || null}
-						primary={this.state.currentPage === i - 1}
-						key={i - 1}
-						onClick={() => this.setPage(i - 1)}
-					>
-						{i}
-					</Button>
-				);
-				if (i <= this.state.totalPages + 1) {
-					pages.push(pageBtn);
-				}
-			}
-		}
-
-		if (!this.state.totalPages) {
-			return null;
-		}
-
-		return (
-			<div className={`${pagination} ${getClassName(this.props.innerClass, 'pagination')}`}>
-				<Button
-					className={getClassName(this.props.innerClass, 'button') || null}
-					disabled={this.state.currentPage === 0}
-					onClick={this.prevPage}
-				>
-					Prev
-				</Button>
-				{
-					<Button
-						className={getClassName(this.props.innerClass, 'button') || null}
-						primary={this.state.currentPage === 0}
-						onClick={() => this.setPage(0)}
-					>
-						1
-					</Button>
-				}
-				{
-					pages
-				}
-				<Button
-					className={getClassName(this.props.innerClass, 'button') || null}
-					disabled={this.state.currentPage >= this.state.totalPages - 1}
-					onClick={this.nextPage}
-				>
-					Next
-				</Button>
-			</div>
-		);
 	};
 
 	renderAsCard = (item) => {
@@ -391,6 +326,7 @@ class ResultCard extends Component {
 	handleSortChange = (e) => {
 		const index = e.target.value;
 		const options = getQueryOptions(this.props);
+		options.from = this.state.from;
 
 		options.sort = [{
 			[this.props.sortOptions[index].dataField]: {
@@ -444,7 +380,13 @@ class ResultCard extends Component {
 				</Flex>
 				{
 					this.props.pagination && this.props.paginationAt === 'top'
-						? this.renderPagination()
+						? (<Pagination
+							pages={this.props.pages}
+							totalPages={this.state.totalPages}
+							currentPage={this.state.currentPage}
+							setPage={this.setPage}
+							innerClass={this.props.innerClass}
+						/>)
 						: null
 				}
 				<div className={`${container} ${getClassName(this.props.innerClass, 'list')}`}>
@@ -463,7 +405,13 @@ class ResultCard extends Component {
 				}
 				{
 					this.props.pagination && this.props.paginationAt === 'bottom'
-						? this.renderPagination()
+						? (<Pagination
+							pages={this.props.pages}
+							totalPages={this.state.totalPages}
+							currentPage={this.state.currentPage}
+							setPage={this.setPage}
+							innerClass={this.props.innerClass}
+						/>)
 						: null
 				}
 				{
@@ -512,6 +460,9 @@ ResultCard.propTypes = {
 	innerClass: types.style,
 	url: types.string,
 	target: types.stringRequired,
+	URLParams: types.bool,
+	currentPage: types.number,
+	setPageURL: types.func,
 };
 
 ResultCard.defaultProps = {
@@ -523,6 +474,7 @@ ResultCard.defaultProps = {
 	style: {},
 	className: null,
 	target: '_blank',
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -532,6 +484,10 @@ const mapStateToProps = (state, props) => ({
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	isLoading: state.isLoading[props.componentId] || false,
 	url: state.config.url,
+	currentPage: (
+		state.selectedValues[`${props.componentId}-page`]
+		&& state.selectedValues[`${props.componentId}-page`].value - 1
+	) || 0,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -542,6 +498,8 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
+	setPageURL: (component, value, label, showFilter, URLParams) =>
+		dispatch(setValue(component, value, label, showFilter, URLParams)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ResultCard);

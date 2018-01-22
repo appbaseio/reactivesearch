@@ -31,9 +31,10 @@ class Main extends Component {
 							componentId="SearchResult"
 							dataField="original_title.raw"
 							className="result-list-container"
-							from={0}
 							size={5}
 							onData={this.booksReactiveList}
+							pagination
+							URLParams
 							react={{
 								and: ['BookSensor'],
 							}}

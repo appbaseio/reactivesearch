@@ -15,7 +15,7 @@
     "@storybook/addon-knobs": "^3.2.16",
     "@storybook/addon-links": "^3.2.16",
     "@storybook/react-native": "^3.2.16",
-    "appbase-js": "^2.2.4",
+    "appbase-js": "^2.2.5",
     "escape-string-regexp": "^1.0.5",
     "expo": "22.0.0",
     "metro-bundler": "^0.22.1",
