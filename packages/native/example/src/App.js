@@ -9,6 +9,7 @@ import {
 	TextField,
 	SingleDropdownList,
 	SingleDropdownRange,
+	RangeSlider,
 	DatePicker,
 	DateRange,
 	ReactiveList,
@@ -124,6 +125,15 @@ class Main extends Component {
 								{ start: 501, end: 1000, label: 'First Date' },
 							]}
 							defaultSelected="Pricey"
+						/>
+
+						<RangeSlider
+							componentId="RangeSlider"
+							dataField="rating"
+							range={{
+								start: 0,
+								end: 5,
+							}}
 						/>
 
 						<DataSearch
