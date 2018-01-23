@@ -46,13 +46,9 @@ export default StyleSheet.create({
 		paddingTop: 3,
 		color: COLORS.secondary,
 	},
-	headerBody: {
-		flex: 1,
-		flexDirection: 'row',
-	},
 	headerTitle: {
 		color: COLORS.secondary,
-		paddingLeft: 10,
+		marginLeft: -83,
 	},
 	listContainer: {
 		width: '100%',
