@@ -147,6 +147,12 @@ class TextField extends Component {
 					placeholder={this.props.placeholder}
 					onChange={this.handleChange}
 					value={this.state.currentValue}
+					onBlur={this.props.onBlur}
+					onFocus={this.props.onFocus}
+					onKeyPress={this.props.onKeyPress}
+					onKeyDown={this.props.onKeyDown}
+					onKeyUp={this.props.onKeyUp}
+					autoFocus={this.props.autoFocus}
 				/>
 			</div>
 		);
@@ -175,6 +181,12 @@ TextField.propTypes = {
 	className: types.string,
 	innerClass: types.style,
 	debounce: types.number,
+	onBlur: types.func,
+	onFocus: types.func,
+	onKeyPress: types.func,
+	onKeyDown: types.func,
+	onKeyUp: types.func,
+	autoFocus: types.bool,
 };
 
 TextField.defaultProps = {
