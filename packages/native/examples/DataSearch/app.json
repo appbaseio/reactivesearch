@@ -1,8 +1,8 @@
 {
 	"expo": {
-		"name": "DataSearch Demo",
-		"description": "Demo for Reactivesearch Native components",
-		"slug": "reactivebase-native-demos",
+		"name": "DataSearch Example",
+		"description": "Example for ReactiveSearch Native DataSearch Component",
+		"slug": "datasearch",
 		"sdkVersion": "22.0.0",
 		"version": "1.0.0",
 		"orientation": "portrait",
@@ -13,10 +13,10 @@
 			"projectRoots": ""
 		},
 		"ios": {
-			"bundleIdentifier": "com.appbaseio.reactivebasenativedemos"
+			"bundleIdentifier": "com.appbaseio.datasearch"
 		},
 		"android": {
-			"package": "com.appbaseio.reactivebasenativedemos"
+			"package": "com.appbaseio.datasearch"
 		}
 	}
 }
