@@ -28,6 +28,7 @@ module.exports = {
 	getBlacklistRE() {
 		return blacklist([
 			new RegExp(`^${escape(path.resolve(__dirname, '..', 'node_modules'))}\\/.*$`),
+			new RegExp(`^${escape(path.resolve(__dirname, '../examples'))}\\/.*\\/node_modules\\/.*$`),
 			new RegExp(`^${escape(path.resolve(__dirname, '../../playground', 'node_modules'))}\\/.*$`),
 			new RegExp(`^${escape(path.resolve(__dirname, '../../reactivecore', 'node_modules'))}\\/.*$`),
 			new RegExp(`^${escape(path.resolve(__dirname, '../../web', 'node_modules'))}\\/.*$`),
