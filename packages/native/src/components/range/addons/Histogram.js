@@ -44,8 +44,8 @@ const Histogram = (props) => {
 Histogram.propTypes = {
 	stats: types.stats,
 	range: types.range,
-	interval: types.interval,
-	paddingHorizontal: types.paddingHorizontal,
+	interval: types.number,
+	paddingHorizontal: types.number,
 };
 
 export default Histogram;
