@@ -6,4 +6,5 @@ playground
 packages/web/webpack.config.js
 packages/web/webpack.config.umd.js
 packages/web/examples
+packages/native/examples
 .expo/

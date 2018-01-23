@@ -270,8 +270,8 @@ class CategorySearch extends Component {
 	};
 
 	onSuggestions = (searchSuggestions) => {
-		if (this.props.onSuggestions) {
-			return this.props.onSuggestions(searchSuggestions);
+		if (this.props.onSuggestion) {
+			return this.props.onSuggestion(searchSuggestions);
 		}
 
 		const fields = Array.isArray(this.props.dataField)
@@ -566,7 +566,7 @@ CategorySearch.propTypes = {
 	onValueChange: types.func,
 	customQuery: types.func,
 	onQueryChange: types.func,
-	onSuggestions: types.func,
+	onSuggestion: types.func,
 	updateQuery: types.funcRequired,
 	placeholder: types.string,
 	onBlur: types.func,
