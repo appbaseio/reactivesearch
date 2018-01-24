@@ -1,121 +1,206 @@
 import Expo from 'expo';
-import React, { Component } from 'react';
-import { View, ScrollView, FlatList } from 'react-native';
-import { Text, Header, Body, Title } from 'native-base';
+import React from 'react';
+import { View } from 'react-native';
+import { DrawerNavigator } from 'react-navigation';
+import { Ionicons } from '@expo/vector-icons';
+import DataSearch from './DataSearchView';
 
-import {
-	ReactiveBase,
-	DataSearch,
-	ReactiveList,
-} from '@appbaseio/reactivebase-native';
-
-class Main extends Component {
-	state = {
-		isReady: false,
-	}
-
-	async componentWillMount() {
-		await Expo.Font.loadAsync({
-			Roboto: require('native-base/Fonts/Roboto.ttf'), // eslint-disable-line global-require
-			Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'), // eslint-disable-line global-require
-			Ionicons: require('native-base/Fonts/Ionicons.ttf'), // eslint-disable-line global-require
-		});
-
-		this.setState({ isReady: true });
-	}
-
-	onAllData = (items, streamData, loadMore) => (
-		<FlatList
-			style={{ width: '100%' }}
-			data={items || []}
-			keyExtractor={item => item._id}
-			renderItem={({ item }) => (
-				<View style={{ margin: 5 }}>
-					<Text
-						style={{ flex: 1, fontWeight: 'bold' }}
-					>
-						{this.parseToElement(item.name)}
-					</Text>
-					<Text>{item.brand} - {item.model}</Text>
-				</View>
-			)}
-			onEndReachedThreshold={0.5}
-			onEndReached={loadMore}
+const navigationOptionsBuilder = (drawerLabel, iconName) => ({
+	drawerLabel,
+	drawerIcon: iconName ? ({ tintColor, focused }) => ( // eslint-disable-line react/prop-types
+		<Ionicons
+			name={focused ? `${iconName}` : `${iconName}-outline`}
+			size={26}
+			style={{ color: tintColor }}
 		/>
-	);
+	) : null,
+});
 
-	parseToElement = (str) => {
-		const start = str.indexOf('<em>');
-		const end = str.indexOf('</em>');
+const RootDrawer = DrawerNavigator({
+	DrawerOption1: {
+		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
+		screen: DataSearch,
+	},
+	DrawerOption2: {
+		navigationOptions: navigationOptionsBuilder('With title'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				title="Books Search"
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption3: {
+		navigationOptions: navigationOptionsBuilder('Without search icon'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				showIcon={false}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption4: {
+		navigationOptions: navigationOptionsBuilder('With iconPosition'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				iconPosition="left"
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption5: {
+		navigationOptions: navigationOptionsBuilder('With custom icon'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				icon={<View>📚</View>} // eslint-disable-line
+				iconPosition="left"
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption6: {
+		navigationOptions: navigationOptionsBuilder('With filter'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter
+				filterLabel="Books filter"
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption7: {
+		navigationOptions: navigationOptionsBuilder('With debounce'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				debounce={300}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption8: {
+		navigationOptions: navigationOptionsBuilder('Without autosuggest'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				autosuggest={false}
+				showFilter={false}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption9: {
+		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				defaultSelected="Harry Potter"
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption10: {
+		navigationOptions: navigationOptionsBuilder('With defaultSuggestions'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				defaultSuggestions={[
+					{ label: 'Sherlock Holmes', value: 'Sherlock Holmes' },
+					{ label: 'The Lord of the Rings', value: 'The Lord of the Rings' },
+				]}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption11: {
+		navigationOptions: navigationOptionsBuilder('With fieldWeights'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				fieldWeights={[1, 3]}
+				showFilter={false}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption12: {
+		navigationOptions: navigationOptionsBuilder('With fuzziness as a number'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				fuzziness={1}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption13: {
+		navigationOptions: navigationOptionsBuilder('With fuzziness as AUTO'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				fuzziness="AUTO"
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption14: {
+		navigationOptions: navigationOptionsBuilder('With highlight'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				highlight
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption15: {
+		navigationOptions: navigationOptionsBuilder('With queryFormat'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				queryFormat="and"
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption16: {
+		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				title="DataSearch: Books..."
+				placeholder="Search Books..."
+				defaultSelected="Harry Potter"
+				autosuggest
+				fieldWeights={[1, 3]}
+				fuzziness={1}
+				queryFormat="or"
+				showFilter
+				iconPosition="left"
+				filterLabel="Books filter"
+				highlight={false}
+				navigation={navigation}
+			/>
+		),
+	},
+});
 
-		if (start > -1) {
-			const pre = str.substring(0, start);
-			const highlight = str.substring(start + 4, end);
-			const post = str.substring(end + 5, str.length);
+const Navigator = () => (
+	<RootDrawer />
+);
 
-			return (
-				<Text style={{ flex: 1, fontWeight: 'bold' }}>
-					{pre}
-					<Text style={{ backgroundColor: 'yellow' }}>{highlight}</Text>
-					{this.parseToElement(post)}
-				</Text>
-			);
-		}
-
-		return str;
-	}
-
-	render() {
-		if (!this.state.isReady) {
-			return <Text>Loading...</Text>;
-		}
-
-		return (
-			<ReactiveBase
-				app="car-store"
-				credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
-				type="cars"
-			>
-				<Header>
-					<Body>
-						<Title>ReactiveSearch Native</Title>
-					</Body>
-				</Header>
-				<ScrollView>
-					<View style={{ padding: 10 }}>
-						<DataSearch
-							componentId="DataSearchComponent"
-							dataField="name"
-							defaultSelected="Nissan"
-						/>
-
-						<ReactiveList
-							dataField="name"
-							componentId="ReactiveList"
-							size={20}
-							onAllData={this.onAllData}
-							pagination
-							stream
-							defaultQuery={() => ({
-								query: {
-									match_all: {},
-								},
-								sort: {
-									price: { order: 'asc' },
-								},
-							})}
-							react={{
-								and: [
-									'DataSearchComponent',
-								],
-							}}
-						/>
-					</View>
-				</ScrollView>
-			</ReactiveBase>
-		);
-	}
-}
-
-module.exports = Main;
-Expo.registerRootComponent(Main);
+module.exports = Navigator;
+Expo.registerRootComponent(Navigator);
