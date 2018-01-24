@@ -289,6 +289,22 @@ class ReactiveList extends Component {
 					</Button>
 				}
 				{
+					this.state.currentPage >= this.props.pages
+						? (
+							<View
+								style={{
+									height: 45,
+									display: 'flex',
+									justifyContent: 'center',
+									alignItems: 'center',
+								}}
+							>
+								<Text>...</Text>
+							</View>
+						)
+						: null
+				}
+				{
 					pages
 				}
 				<Button
