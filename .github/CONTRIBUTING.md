@@ -65,12 +65,24 @@ yarn start
 3. You can also try the native storybook from `/packages/native/example` by:
 
 ```bash
+yarn storybook
+```
+
+and in a new terminal:
+
+```bash
 yarn start-storybook
 ```
 
+4. You may browse the stories using the Expo app on your phone or on the browser at http://localhost:7007
+
 **Troubleshooting:** You might need to add a flag `--reset-cache` to the above commands if you're seeing stale builds.
 
-4. The individual components examples for native are present in `/packages/native/examples` in order to test the components.
+5. The individual components examples for native are present in `/packages/native/examples` in order to test the components.
+
+## Native Debugging
+
+The simplest way to debug the app is using [React Native Debugger](https://github.com/jhen0409/react-native-debugger).
 
 ## Site
 
