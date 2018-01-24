@@ -8,12 +8,14 @@ import {
 	StatusBar,
 	TouchableOpacity,
 	View,
+	Linking,
 } from 'react-native';
 import {
 	Body,
 	Button,
 	Header,
 	Left,
+	Right,
 	Spinner,
 	Text,
 	Title,
@@ -39,9 +41,14 @@ import styles from './Styles';
 const COMPONENT_DEMO = 'DataSearch';
 
 export default class Main extends Component {
+
 	render() {
 		const { isReady } = this.state;
 		const { navigation } = this.props; // eslint-disable-line
+
+		const isIOS = Platform.OS === 'ios' ? true : false;
+
+		const headerColor = isIOS ? "#1A237E" : "white";
 
 		if (!isReady) {
 			return (
@@ -50,7 +57,7 @@ export default class Main extends Component {
 						backgroundColor={COLORS.primary}
 						barStyle="light-content"
 					/>
-					{this.renderTopBarSpacer()}
+					{this.renderStatusBar()}
 					<Spinner color={COLORS.primary} />
 				</View>
 			);
@@ -65,15 +72,32 @@ export default class Main extends Component {
 					>
 						<Ionicons
 							name="md-menu"
-							size={20}
-							color={COLORS.secondary}
-							style={{ paddingHorizontal: 5, paddingRight: 20 }}
+							size={22}
+							color={headerColor}
 						/>
 					</Button>
 				</Left>
 				<Body>
-					<Title style={styles.headerTitle}>{ COMPONENT_DEMO }</Title>
+					<Title
+						style={{ color: headerColor }}
+					>
+						{ COMPONENT_DEMO }
+					</Title>
 				</Body>
+				{isIOS && (
+					<Right>
+						<Button
+							transparent
+							onPress={() => Linking.openURL("exp://")}
+						>
+							<Ionicons
+								name="ios-arrow-back"
+								size={22}
+								color={headerColor}
+							/>
+						</Button>
+					</Right>
+				)}
 			</Header>
 		);
 
@@ -98,7 +122,7 @@ export default class Main extends Component {
 				credentials={APPBASE_CONFIG.credentials}
 				type={APPBASE_CONFIG.type}
 			>
-				{this.renderTopBarSpacer()}
+				{this.renderStatusBar()}
 				{header}
 				{componentMarkup}
 				<ScrollView>
@@ -111,7 +135,7 @@ export default class Main extends Component {
 								dataField="original_title"
 								size={5}
 								onAllData={this.onAllData}
-								// onData={this.onData}
+								// onData={this.renderBookCard}
 								pagination
 								paginationAt="bottom"
 								react={{
@@ -197,15 +221,6 @@ export default class Main extends Component {
 		</TouchableOpacity>
 	)
 
-	onData = (item) => {
-		// console.count();
-		// When returning null, onData gets called (size) times
-		// return null;
-
-		// When returning markup, onData gets called (2 x size) times
-		return this.renderBookCard(item);
-	}
-
 	onAllData = (items) => {
 		// console.count();
 		return (
@@ -220,22 +235,12 @@ export default class Main extends Component {
 		);
 	}
 
-	renderTopBarSpacer = () => {
-	// Fix status bar top space in Expo
-		if (typeof Expo !== 'undefined' && Platform.OS === 'android') {
-			return (
-				<View
-					style={styles.topBarSpacer}
-				/>
-			);
-		}
+	renderStatusBar = () => (
+		<StatusBar
+			backgroundColor={COLORS.primary}
+			barStyle="light-content"
+		/>
+	)
 
-		return (
-			<StatusBar
-				backgroundColor={COLORS.primary}
-				barStyle="light-content"
-			/>
-		);
-	};
 }
 
