@@ -5,6 +5,7 @@ import {
 	Image,
 	Platform,
 	ScrollView,
+	StatusBar,
 	TouchableOpacity,
 	View,
 } from 'react-native';
@@ -45,6 +46,10 @@ export default class Main extends Component {
 		if (!isReady) {
 			return (
 				<View style={common.alignCenter}>
+					<StatusBar
+						backgroundColor={COLORS.primary}
+						barStyle="light-content"
+					/>
 					{this.renderTopBarSpacer()}
 					<Spinner color={COLORS.primary} />
 				</View>
@@ -62,6 +67,7 @@ export default class Main extends Component {
 							name="md-menu"
 							size={20}
 							color={COLORS.secondary}
+							style={{ paddingHorizontal: 5, paddingRight: 20 }}
 						/>
 					</Button>
 				</Left>
@@ -224,7 +230,12 @@ export default class Main extends Component {
 			);
 		}
 
-		return null;
+		return (
+			<StatusBar
+				backgroundColor={COLORS.primary}
+				barStyle="light-content"
+			/>
+		);
 	};
 }
 

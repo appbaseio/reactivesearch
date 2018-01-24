@@ -26,7 +26,7 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DataSearch
 				title="Books Search"
-
+				navigation={navigation}
 			/>
 		),
 	},
