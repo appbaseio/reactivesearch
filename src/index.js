@@ -1,8 +1,13 @@
 import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'emotion-theming';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import Loadable from 'react-loadable';
+import createHistory from 'history/createBrowserHistory';	// eslint-disable-line
+
+const history = createHistory({
+	basename: process.env.NODE_ENV === 'production' ? '/reactivesearch' : '/',
+});
 
 const Loading = () => (
 	<div />
@@ -20,9 +25,9 @@ const HomePageNative = Loadable({
 
 ReactDOM.render(
 	<ThemeProvider theme={{ fontFamily: 'Rubik', primaryColor: '#FF307A', textLight: '#fefefe' }}>
-		<Router basename={process.env.NODE_ENV === 'production' ? '/reactivesearch' : '/'}>
+		<Router history={history}>
 			<Fragment>
-				<Route path="/" component={HomePage} />
+				<Route exact path="/" component={HomePage} />
 				<Route path="/native" component={HomePageNative} />
 			</Fragment>
 		</Router>
