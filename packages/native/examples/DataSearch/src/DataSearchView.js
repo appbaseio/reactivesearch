@@ -104,8 +104,8 @@ export default class Main extends Component {
 								componentId="ReactiveList"
 								dataField="original_title"
 								size={5}
-								// onAllData={this.onAllData}
-								onData={this.onData}
+								onAllData={this.onAllData}
+								// onData={this.onData}
 								pagination
 								paginationAt="bottom"
 								react={{
@@ -192,7 +192,7 @@ export default class Main extends Component {
 	)
 
 	onData = (item) => {
-		console.count('onData');
+		// console.count();
 		// When returning null, onData gets called (size) times
 		// return null;
 
@@ -201,7 +201,7 @@ export default class Main extends Component {
 	}
 
 	onAllData = (items) => {
-		console.count('onAllData');
+		// console.count();
 		return (
 			<FlatList
 				style={styles.listContainer}
