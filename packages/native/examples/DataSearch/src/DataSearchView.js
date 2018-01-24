@@ -72,14 +72,14 @@ export default class Main extends Component {
 					>
 						<Ionicons
 							name="md-menu"
-							size={22}
+							size={25}
 							color={headerColor}
 						/>
 					</Button>
 				</Left>
 				<Body>
 					<Title
-						style={{ color: headerColor }}
+						style={{ color: headerColor, fontSize: 18, marginLeft: 15 }}
 					>
 						{ COMPONENT_DEMO }
 					</Title>
@@ -92,7 +92,7 @@ export default class Main extends Component {
 						>
 							<Ionicons
 								name="ios-arrow-back"
-								size={22}
+								size={25}
 								color={headerColor}
 							/>
 						</Button>
