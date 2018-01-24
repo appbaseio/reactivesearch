@@ -47,8 +47,8 @@ export default StyleSheet.create({
 		color: COLORS.secondary,
 	},
 	headerTitle: {
-		color: COLORS.secondary,
-		marginLeft: -83,
+		color: "white",
+		paddingLeft: 5,
 	},
 	listContainer: {
 		width: '100%',
