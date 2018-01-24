@@ -14,7 +14,7 @@ import {
 	ReactiveList,
 } from '@appbaseio/reactivebase-native';
 
-import StorybookUI from './storybook';
+import StorybookUI from '../storybook';
 
 const showStoryBook = process.env.RUN === 'storybook';
 
