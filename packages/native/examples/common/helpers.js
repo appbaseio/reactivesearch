@@ -1,7 +1,7 @@
 export const DEFAULT_COLORS = {
 	primary: '#1A237E',
 	secondary: '#D1C4E9',
-	seperator: '#EEEEEE',
+	seperator: '#E6E6E6',
 };
 
 export const commonStyles = {

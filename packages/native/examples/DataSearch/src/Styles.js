@@ -38,17 +38,7 @@ export default StyleSheet.create({
 		padding: 8,
 	},
 	header: {
-		backgroundColor: COLORS.primary,
-	},
-	headerIcon: {
-		paddingLeft: 5,
-		paddingRight: 10,
-		paddingTop: 3,
-		color: COLORS.secondary,
-	},
-	headerTitle: {
-		color: "white",
-		paddingLeft: 5,
+		// backgroundColor: COLORS.primary,
 	},
 	listContainer: {
 		width: '100%',

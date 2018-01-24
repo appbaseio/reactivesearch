@@ -64,137 +64,137 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// DrawerOption6: {
-	// 	navigationOptions: navigationOptionsBuilder('With filter'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			placeholder="Search Books..."
-	// 			showFilter
-	// 			filterLabel="Books filter"
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// DrawerOption7: {
-	// 	navigationOptions: navigationOptionsBuilder('With debounce'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			placeholder="Search Books..."
-	// 			showFilter={false}
-	// 			debounce={300}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// DrawerOption8: {
-	// 	navigationOptions: navigationOptionsBuilder('Without autosuggest'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			placeholder="Search Books..."
-	// 			autosuggest={false}
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// DrawerOption9: {
-	// 	navigationOptions: navigationOptionsBuilder('With defaultSelected'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			placeholder="Search Books..."
-	// 			showFilter={false}
-	// 			defaultSelected="Harry Potter"
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// DrawerOption10: {
-	// 	navigationOptions: navigationOptionsBuilder('With defaultSuggestions'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			placeholder="Search Books..."
-	// 			showFilter={false}
-	// 			defaultSuggestions={[
-	// 				{ label: 'Sherlock Holmes', value: 'Sherlock Holmes' },
-	// 				{ label: 'The Lord of the Rings', value: 'The Lord of the Rings' },
-	// 			]}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// DrawerOption11: {
-	// 	navigationOptions: navigationOptionsBuilder('With fieldWeights'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			placeholder="Search Books..."
-	// 			fieldWeights={[1, 3]}
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// DrawerOption12: {
-	// 	navigationOptions: navigationOptionsBuilder('With fuzziness as a number'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			placeholder="Search Books..."
-	// 			showFilter={false}
-	// 			fuzziness={1}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// DrawerOption13: {
-	// 	navigationOptions: navigationOptionsBuilder('With fuzziness as AUTO'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			placeholder="Search Books..."
-	// 			showFilter={false}
-	// 			fuzziness="AUTO"
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// DrawerOption14: {
-	// 	navigationOptions: navigationOptionsBuilder('With highlight'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			placeholder="Search Books..."
-	// 			showFilter={false}
-	// 			highlight
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// DrawerOption15: {
-	// 	navigationOptions: navigationOptionsBuilder('With queryFormat'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			placeholder="Search Books..."
-	// 			showFilter={false}
-	// 			queryFormat="and"
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// DrawerOption16: {
-	// 	navigationOptions: navigationOptionsBuilder('Playground'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			title="DataSearch: Books..."
-	// 			placeholder="Search Books..."
-	// 			autosuggest
-	// 			fieldWeights={[1, 3]}
-	// 			fuzziness={1}
-	// 			queryFormat="or"
-	// 			showFilter
-	// 			iconPosition="left"
-	// 			filterLabel="Books filter"
-	// 			highlight={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
+	DrawerOption6: {
+		navigationOptions: navigationOptionsBuilder('With filter'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter
+				filterLabel="Books filter"
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption7: {
+		navigationOptions: navigationOptionsBuilder('With debounce'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				debounce={300}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption8: {
+		navigationOptions: navigationOptionsBuilder('Without autosuggest'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				autosuggest={false}
+				showFilter={false}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption9: {
+		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				defaultSelected="Harry Potter"
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption10: {
+		navigationOptions: navigationOptionsBuilder('With defaultSuggestions'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				defaultSuggestions={[
+					{ label: 'Sherlock Holmes', value: 'Sherlock Holmes' },
+					{ label: 'The Lord of the Rings', value: 'The Lord of the Rings' },
+				]}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption11: {
+		navigationOptions: navigationOptionsBuilder('With fieldWeights'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				fieldWeights={[1, 3]}
+				showFilter={false}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption12: {
+		navigationOptions: navigationOptionsBuilder('With fuzziness as a number'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				fuzziness={1}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption13: {
+		navigationOptions: navigationOptionsBuilder('With fuzziness as AUTO'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				fuzziness="AUTO"
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption14: {
+		navigationOptions: navigationOptionsBuilder('With highlight'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				highlight
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption15: {
+		navigationOptions: navigationOptionsBuilder('With queryFormat'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				placeholder="Search Books..."
+				showFilter={false}
+				queryFormat="and"
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption16: {
+		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DataSearch
+				title="DataSearch: Books..."
+				placeholder="Search Books..."
+				autosuggest
+				fieldWeights={[1, 3]}
+				fuzziness={1}
+				queryFormat="or"
+				showFilter
+				iconPosition="left"
+				filterLabel="Books filter"
+				highlight={false}
+				navigation={navigation}
+			/>
+		),
+	},
 });
 
 const Navigator = () => (
