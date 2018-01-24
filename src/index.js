@@ -2,9 +2,21 @@ import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'emotion-theming';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Loadable from 'react-loadable';
 
-import HomePage from './pages/HomePage';
-import HomePageNative from './pages/HomePageNative';
+const Loading = () => (
+	<div />
+);
+
+const HomePage = Loadable({
+	loader: () => import('./pages/HomePage'),
+	loading: Loading,
+});
+
+const HomePageNative = Loadable({
+	loader: () => import('./pages/HomePageNative'),
+	loading: Loading,
+});
 
 ReactDOM.render(
 	<ThemeProvider theme={{ fontFamily: 'Rubik', primaryColor: '#FF307A', textLight: '#fefefe' }}>
