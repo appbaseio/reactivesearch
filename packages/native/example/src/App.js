@@ -163,8 +163,6 @@ class Main extends Component {
 							react={{
 								and: [
 									'DataSearchComponent',
-									'TextFieldComponent',
-									'SingleDropdownRange',
 								],
 							}}
 						/>

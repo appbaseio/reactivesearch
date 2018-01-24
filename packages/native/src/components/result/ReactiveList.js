@@ -64,7 +64,11 @@ class ReactiveList extends Component {
 			}
 		}
 
-		this.props.setQueryOptions(this.props.componentId, options);
+		this.props.setQueryOptions(
+			this.props.componentId,
+			options,
+			!(this.defaultQuery && this.defaultQuery.query),
+		);
 		this.setReact(this.props);
 
 		if (this.defaultQuery) {
@@ -95,7 +99,7 @@ class ReactiveList extends Component {
 						},
 					}];
 				}
-				this.props.setQueryOptions(this.props.componentId, options);
+				this.props.setQueryOptions(this.props.componentId, options, true);
 			},
 		);
 
@@ -110,7 +114,7 @@ class ReactiveList extends Component {
 
 			if (sort) {
 				options.sort = this.defaultQuery.sort;
-				nextProps.setQueryOptions(nextProps.componentId, options);
+				nextProps.setQueryOptions(nextProps.componentId, options, !query);
 			}
 
 			this.props.updateQuery({
@@ -428,7 +432,8 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryOptions: (component, props, execute) =>
+		dispatch(setQueryOptions(component, props, execute)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
 });
