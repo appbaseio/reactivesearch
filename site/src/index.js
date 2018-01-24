@@ -20,7 +20,7 @@ const HomePageNative = Loadable({
 
 ReactDOM.render(
 	<ThemeProvider theme={{ fontFamily: 'Rubik', primaryColor: '#FF307A', textLight: '#fefefe' }}>
-		<Router>
+		<Router basename={process.env.NODE_ENV === 'production' ? '/reactivesearch' : '/'}>
 			<Fragment>
 				<Route path="/" component={HomePage} />
 				<Route path="/native" component={HomePageNative} />
