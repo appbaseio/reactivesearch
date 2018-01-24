@@ -87,7 +87,7 @@ export default class Main extends Component {
 					<Right>
 						<Button
 							transparent
-							onPress={() => Linking.openURL('exp://')}
+							onPress={() => Linking.openURL('exp://+')}
 						>
 							<Ionicons
 								name="ios-arrow-back"

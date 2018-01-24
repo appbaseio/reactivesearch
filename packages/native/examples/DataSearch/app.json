@@ -3,7 +3,7 @@
 		"name": "DataSearch Example",
 		"description": "Example for ReactiveSearch Native DataSearch Component",
 		"slug": "datasearch",
-		"sdkVersion": "22.0.0",
+		"sdkVersion": "23.0.0",
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"primaryColor": "#1A237E",
