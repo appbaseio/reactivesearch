@@ -2,7 +2,7 @@
 
 Welcome to the contribution guide! We welcome all contributions. A [list of issues](https://github.com/appbaseio/reactivesearch/issues) is present [here](https://github.com/appbaseio/reactivesearch/issues). If you're interested in picking up something, feel free to start a discussion 😺
 
-The reactivesearch monorepo contains the code for both the [web](packages/web) and [native](packages/native) libraries. Both uses a common [core](packages/core) architecture. Project specific readme files are available inside each package.
+The reactivesearch monorepo contains the code for both the [web](../packages/web) and [native](../packages/native) libraries. Both uses a common [core](../packages/core) architecture. Project specific readme files are available inside each package.
 
 ## Initial setup
 
