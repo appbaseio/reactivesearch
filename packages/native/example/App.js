@@ -14,6 +14,10 @@ import {
 	ReactiveList,
 } from '@appbaseio/reactivebase-native';
 
+import StorybookUI from './storybook';
+
+const showStoryBook = process.env.RUN === 'storybook';
+
 export default class App extends Component {
 	onAllData = (items, streamData, loadMore) => (
 		<FlatList
@@ -57,6 +61,12 @@ export default class App extends Component {
 	}
 
 	render() {
+		if (showStoryBook) {
+			return (
+				<StorybookUI />
+			);
+		}
+
 		return (
 			<ReactiveBase
 				app="car-store"

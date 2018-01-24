@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "start-storybook": "RUN=storybook npm start",
+    "storybook": "storybook start -p 7007"
   },
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "^0.0.11",
