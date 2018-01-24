@@ -12,6 +12,8 @@ import {
   View
 } from 'react-native';
 
+import { ReactiveBase } from '@appbaseio/reactivebase-native'
+
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
     'Cmd+D or shake for dev menu',
@@ -21,10 +23,11 @@ const instructions = Platform.select({
 
 export default class App extends Component<{}> {
   render() {
+		console.log("ReactiveBase", ReactiveBase);
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Welcome to ReactiveBase!
         </Text>
         <Text style={styles.instructions}>
           To get started, edit App.js
