@@ -15,7 +15,8 @@
     "emotion-theming": "^8.0.12",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-emotion": "^8.0.12"
+    "react-emotion": "^8.0.12",
+    "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
