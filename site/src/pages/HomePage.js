@@ -119,7 +119,7 @@ export default class HomePage extends Component {
 								light
 							>
 								<span className={`${boldHeading} ${logo} ${mobHide}`}>v2</span> Now
-								moar configurable, lighter and performant.&nbsp;
+								more configurable, lighter and performant.&nbsp;
 								<a
 									className={`${decoratedLink} ${decoratedSecondaryLink}`}
 									target="_blank"
