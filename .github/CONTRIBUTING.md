@@ -1,6 +1,6 @@
 # ReactiveSearch Contribution Guide 🔍
 
-Welcome to the contribution guide! We welcome all contributions. A [list of issues](https://github.com/appbaseio/reactivesearch/issues) is present [here](https://github.com/appbaseio/reactivesearch/issues). If you're interested in picking up something, feel free to start a discussion 😺
+Welcome to the contribution guide! We welcome all contributions. A list of issues is present [here](https://github.com/appbaseio/reactivesearch/issues). If you're interested in picking up something, feel free to start a discussion 😺
 
 The reactivesearch monorepo contains the code for both the [web](../packages/web) and [native](../packages/native) libraries. Both uses a common [core](../packages/core) architecture. Project specific readme files are available inside each package.
 
@@ -16,7 +16,7 @@ Currently the initial setup is a bit manual which we're planning to improve. We 
 
 4. Checkout the `dev` branch (should be default)
 
-5. fetch the submodules. In case you don't have `ssh` setup for github, change the URLs in `.gitmodules` to use `https` instead
+5. Fetch the submodules. In case you don't have `ssh` setup for github, change the URLs in `.gitmodules` to use `https` instead
 
 ```bash
 git submodule init
@@ -44,13 +44,13 @@ Alternatively the manual approach would be to open the sub-projects for `/web` a
 
 2. You can try the examples for any of the `web` components inside `/packages/web/examples` which will also pick the updated code as and when you make changes to the `/packages/web/src` files.
 
-3. Another way to try out the components is by checking into `/packages/playground` and running the storybook which also updates itself from the components inside `/packages/web/src`:
+3. Another way to try out the components is by checking into `/packages/playground` and running the storybook which also updates itself from the components inside `/packages/web/src`.
 
 ```bash
 yarn storybook
 ```
 
-**Note:** If you see any errors about missing dependencies please try running `yarn` inside the sub-directory you're at.
+**Note:** If you see any errors about missing dependencies, please try running `yarn` inside the sub-directory you're at.
 
 ## Native
 
