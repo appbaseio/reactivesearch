@@ -41,14 +41,13 @@ import styles from './Styles';
 const COMPONENT_DEMO = 'DataSearch';
 
 export default class Main extends Component {
-
 	render() {
 		const { isReady } = this.state;
 		const { navigation } = this.props; // eslint-disable-line
 
-		const isIOS = Platform.OS === 'ios' ? true : false;
+		const isIOS = Platform.OS === 'ios';
 
-		const headerColor = isIOS ? "#1A237E" : "white";
+		const headerColor = isIOS ? '#1A237E' : 'white';
 
 		if (!isReady) {
 			return (
@@ -88,7 +87,7 @@ export default class Main extends Component {
 					<Right>
 						<Button
 							transparent
-							onPress={() => Linking.openURL("exp://")}
+							onPress={() => Linking.openURL('exp://')}
 						>
 							<Ionicons
 								name="ios-arrow-back"
@@ -221,19 +220,17 @@ export default class Main extends Component {
 		</TouchableOpacity>
 	)
 
-	onAllData = (items) => {
-		// console.count();
-		return (
-			<FlatList
-				style={styles.listContainer}
-				data={items || []}
-				keyExtractor={item => item.id}
-				renderItem={
-					({ item }) => this.renderBookCard(item)
-				}
-			/>
-		);
-	}
+	onAllData = items => (
+		<FlatList
+			style={styles.listContainer}
+			data={items || []}
+			keyExtractor={item => item.id}
+			renderItem={
+				({ item }) => this.renderBookCard(item)
+			}
+		/>
+	)
+
 
 	renderStatusBar = () => (
 		<StatusBar
@@ -241,6 +238,5 @@ export default class Main extends Component {
 			barStyle="light-content"
 		/>
 	)
-
 }
 
