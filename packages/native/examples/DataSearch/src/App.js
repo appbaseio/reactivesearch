@@ -183,6 +183,7 @@ const RootDrawer = DrawerNavigator({
 			<DataSearch
 				title="DataSearch: Books..."
 				placeholder="Search Books..."
+				defaultSelected="Harry Potter"
 				autosuggest
 				fieldWeights={[1, 3]}
 				fuzziness={1}
