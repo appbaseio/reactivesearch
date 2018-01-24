@@ -12,7 +12,10 @@
 	},
 	"author": "Deepak Grover <deepakgrover333@gmail.com> (https://github.com/metagrover)",
 	"license": "Apache-2.0",
-	"peerDependencies": {},
+	"peerDependencies": {
+		"react": "*",
+		"react-native": "*"
+	},
 	"devDependencies": {
 		"babel-cli": "^6.24.1",
 		"babel-eslint": "^7.2.3",
