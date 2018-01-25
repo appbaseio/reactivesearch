@@ -18,7 +18,7 @@
     "@storybook/react-native": "^3.2.16",
     "appbase-js": "^2.2.5",
     "escape-string-regexp": "^1.0.5",
-    "metro-bundler": "^0.22.1",
+    "metro": "^0.24.6",
     "native-base": "^2.3.7",
     "react": "^16.2.0",
     "react-native": "0.52.1",

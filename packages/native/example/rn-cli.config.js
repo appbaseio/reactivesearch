@@ -1,6 +1,6 @@
 const path = require('path');
 const escape = require('escape-string-regexp');
-const blacklist = require('metro-bundler/src/blacklist');
+const blacklist = require('metro/src/blacklist');
 
 module.exports = {
 	getProjectRoots() {
