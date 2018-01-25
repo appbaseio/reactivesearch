@@ -4,14 +4,5 @@
     "development": {
       "plugins": ["transform-react-jsx-source"]
     }
-  },
-  "plugins": [
-		["module-resolver", {
-			"alias": {
-				"@appbaseio/reactivebase-native": "../../src",
-				"@appbaseio/reactivecore": "../../../reactivecore"
-			}
-		}],
-		"transform-inline-environment-variables"
-	]
+  }
 }

@@ -7,6 +7,7 @@
     "sdkVersion": "25.0.0",
     "platforms": ["ios", "android"],
     "version": "1.0.0",
+    "primaryColor": "#1A237E",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -15,12 +16,13 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
-    },
-    "packagerOpts": {
-			"config": "./rn-cli.config.js",
-			"assetExts": ["ttf", "otf"],
-			"projectRoots": ""
+			"bundleIdentifier": "com.appbaseio.datasearch"
+		},
+		"android": {
+			"package": "com.appbaseio.datasearch"
+		},
+		"androidStatusBar": {
+			"backgroundColor": "#1A237E"
 		}
   }
 }
