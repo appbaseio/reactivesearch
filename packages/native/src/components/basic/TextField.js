@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Item } from 'native-base';
+import { Input, Item, Icon } from 'native-base';
 import { connect } from 'react-redux';
 
 import {
@@ -112,14 +112,39 @@ class TextField extends Component {
 	};
 
 	render() {
+		let style = {};
+
+		if (this.props.showIcon) {
+			if (this.props.iconPosition === 'left') {
+				style = {
+					paddingLeft: 0,
+				};
+			} else {
+				style = {
+					paddingRight: 0,
+				};
+			}
+		}
+
 		return (
 			<Item regular style={{ marginLeft: 0, ...this.props.style }}>
+				{
+					this.props.showIcon && this.props.iconPosition === 'left'
+						? <Icon name="search" />
+						: null
+				}
 				<Input
+					style={style}
 					placeholder={this.props.placeholder}
 					onChangeText={this.setValue}
 					value={this.state.currentValue}
 					autoFocus={this.props.autoFocus}
 				/>
+				{
+					this.props.showIcon && this.props.iconPosition === 'right'
+						? <Icon name="search" />
+						: null
+				}
 			</Item>
 		);
 	}
@@ -144,10 +169,14 @@ TextField.propTypes = {
 	style: types.style,
 	debounce: types.number,
 	autoFocus: types.bool,
+	showIcon: types.bool,
+	iconPosition: types.string,
 };
 
 TextField.defaultProps = {
 	placeholder: 'Search',
+	showIcon: true,
+	iconPosition: 'left',
 	autoFocus: false,
 	showFilter: true,
 	style: {},
