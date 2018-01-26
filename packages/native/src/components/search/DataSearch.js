@@ -445,6 +445,7 @@ class DataSearch extends Component {
 									placeholder={this.props.placeholder}
 									onChangeText={this.setValue}
 									value={this.state.currentValue}
+									autoFocus={this.props.autoFocus}
 								/>
 							</Item>
 						)
@@ -482,10 +483,12 @@ DataSearch.propTypes = {
 	style: types.style,
 	debounce: types.number,
 	supportedOrientations: types.supportedOrientations,
+	autoFocus: types.bool,
 };
 
 DataSearch.defaultProps = {
 	placeholder: 'Search',
+	autoFocus: false,
 	autosuggest: true,
 	queryFormat: 'or',
 	showFilter: true,

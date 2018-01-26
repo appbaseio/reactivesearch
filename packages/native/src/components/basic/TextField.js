@@ -118,6 +118,7 @@ class TextField extends Component {
 					placeholder={this.props.placeholder}
 					onChangeText={this.setValue}
 					value={this.state.currentValue}
+					autoFocus={this.props.autoFocus}
 				/>
 			</Item>
 		);
@@ -142,10 +143,12 @@ TextField.propTypes = {
 	showFilter: types.bool,
 	style: types.style,
 	debounce: types.number,
+	autoFocus: types.bool,
 };
 
 TextField.defaultProps = {
 	placeholder: 'Search',
+	autoFocus: false,
 	showFilter: true,
 	style: {},
 	debounce: 0,
