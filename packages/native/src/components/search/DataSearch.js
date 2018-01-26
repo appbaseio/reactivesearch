@@ -337,7 +337,7 @@ class DataSearch extends Component {
 		);
 	}
 
-	renderDataSearch = () => {
+	renderDataSearch = (style) => {
 		if (this.state.showModal) {
 			return (
 				<Modal
@@ -384,11 +384,17 @@ class DataSearch extends Component {
 										</Button>
 									</Right>
 								)
-								: null
+								: <Right />
 						}
 					</Header>
 					<Item regular style={{ marginLeft: 10, margin: 10 }}>
+						{
+							this.props.showIcon && this.props.iconPosition === 'left'
+								? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+								: null
+						}
 						<Input
+							style={style}
 							returnKeyType="search"
 							onSubmitEditing={e => this.selectSuggestion(e.nativeEvent.text)}
 							placeholder={this.props.placeholder}
@@ -397,6 +403,11 @@ class DataSearch extends Component {
 							onFocus={this.setSuggestions}
 							autoFocus
 						/>
+						{
+							this.props.showIcon && this.props.iconPosition === 'right'
+								? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+								: null
+						}
 					</Item>
 					{this.renderSuggestions()}
 				</Modal>
@@ -405,6 +416,11 @@ class DataSearch extends Component {
 
 		return (
 			<Item regular style={{ marginLeft: 0 }}>
+				{
+					this.props.showIcon && this.props.iconPosition === 'left'
+						? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+						: null
+				}
 				<TouchableWithoutFeedback
 					onPress={this.toggleModal}
 				>
@@ -419,7 +435,8 @@ class DataSearch extends Component {
 							lineHeight: 24,
 							paddingLeft: 8,
 							paddingRight: 5,
-							paddingTop: 12,
+							paddingTop: 13,
+							...style,
 						}}
 					>
 						{
@@ -429,24 +446,54 @@ class DataSearch extends Component {
 						}
 					</Text>
 				</TouchableWithoutFeedback>
+				{
+					this.props.showIcon && this.props.iconPosition === 'right'
+						? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+						: null
+				}
 			</Item>
 		);
 	}
 
 	render() {
+		let style = {};
+
+		if (this.props.showIcon) {
+			if (this.props.iconPosition === 'left') {
+				style = {
+					paddingLeft: 0,
+				};
+			} else {
+				style = {
+					paddingRight: 0,
+				};
+			}
+		}
+
 		return (
 			<View style={this.props.style}>
 				{
 					this.props.autosuggest
-						? this.renderDataSearch()
+						? this.renderDataSearch(style)
 						: (
 							<Item regular style={{ marginLeft: 0 }}>
+								{
+									this.props.showIcon && this.props.iconPosition === 'left'
+										? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+										: null
+								}
 								<Input
+									style={style}
 									placeholder={this.props.placeholder}
 									onChangeText={this.setValue}
 									value={this.state.currentValue}
 									autoFocus={this.props.autoFocus}
 								/>
+								{
+									this.props.showIcon && this.props.iconPosition === 'right'
+										? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+										: null
+								}
 							</Item>
 						)
 				}
@@ -484,10 +531,14 @@ DataSearch.propTypes = {
 	debounce: types.number,
 	supportedOrientations: types.supportedOrientations,
 	autoFocus: types.bool,
+	showIcon: types.bool,
+	iconPosition: types.string,
 };
 
 DataSearch.defaultProps = {
 	placeholder: 'Search',
+	showIcon: true,
+	iconPosition: 'left',
 	autoFocus: false,
 	autosuggest: true,
 	queryFormat: 'or',

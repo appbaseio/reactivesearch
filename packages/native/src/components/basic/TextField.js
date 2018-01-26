@@ -130,7 +130,7 @@ class TextField extends Component {
 			<Item regular style={{ marginLeft: 0, ...this.props.style }}>
 				{
 					this.props.showIcon && this.props.iconPosition === 'left'
-						? <Icon name="search" />
+						? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
 						: null
 				}
 				<Input
@@ -142,7 +142,7 @@ class TextField extends Component {
 				/>
 				{
 					this.props.showIcon && this.props.iconPosition === 'right'
-						? <Icon name="search" />
+						? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
 						: null
 				}
 			</Item>
