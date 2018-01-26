@@ -103,7 +103,7 @@ export default class Main extends Component {
 		const componentMarkup = (
 			<View style={styles.componentContainer}>
 				<DataSearch
-					componentId="SearchText"
+					componentId="DataSearchSensor"
 					dataField={[
 						'original_title',
 						'original_title.search',
@@ -139,7 +139,7 @@ export default class Main extends Component {
 								pagination
 								paginationAt="bottom"
 								react={{
-									and: ['showAll', 'SearchText'],
+									and: ['DataSearchSensor'],
 								}}
 								showResultStats={false}
 								defaultQuery={
