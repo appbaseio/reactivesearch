@@ -1,3 +1,4 @@
+import Expo from 'expo';
 import React, { Component } from 'react';
 import { View, ScrollView, FlatList } from 'react-native';
 import { Text, Header, Body, Title } from 'native-base';
@@ -16,9 +17,21 @@ import {
 
 import StorybookUI from '../storybook';
 
-const showStoryBook = process.env.RUN === 'storybook';
+class Main extends Component {
+	state = {
+		isReady: false,
+	}
 
-export default class App extends Component {
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			Roboto: require('native-base/Fonts/Roboto.ttf'), // eslint-disable-line global-require
+			Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'), // eslint-disable-line global-require
+			Ionicons: require('native-base/Fonts/Ionicons.ttf'), // eslint-disable-line global-require
+		});
+
+		this.setState({ isReady: true });
+	}
+
 	onAllData = (items, streamData, loadMore) => (
 		<FlatList
 			style={{ width: '100%' }}
@@ -61,10 +74,8 @@ export default class App extends Component {
 	}
 
 	render() {
-		if (showStoryBook) {
-			return (
-				<StorybookUI />
-			);
+		if (!this.state.isReady) {
+			return <Text>Loading...</Text>;
 		}
 
 		return (
@@ -160,4 +171,12 @@ export default class App extends Component {
 			</ReactiveBase>
 		);
 	}
+}
+
+if (process.env.RUN === 'storybook') {
+	module.exports = StorybookUI;
+	Expo.registerRootComponent(StorybookUI);
+} else {
+	module.exports = Main;
+	Expo.registerRootComponent(Main);
 }

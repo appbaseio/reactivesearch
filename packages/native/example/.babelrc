@@ -1,6 +1,8 @@
 {
-  "presets": ["react-native"],
-  "plugins": [
+	"presets": [
+		"expo"
+	],
+	"plugins": [
 		["module-resolver", {
 			"alias": {
 				"@appbaseio/reactivebase-native": "../src",
