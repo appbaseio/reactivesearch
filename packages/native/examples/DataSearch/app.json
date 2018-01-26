@@ -12,6 +12,7 @@
 			"assetExts": ["ttf", "otf"],
 			"projectRoots": ""
 		},
+		"icon": "icon.png",
 		"ios": {
 			"bundleIdentifier": "com.appbaseio.datasearch"
 		},

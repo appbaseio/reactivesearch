@@ -110,6 +110,7 @@ export default class Main extends Component {
 						'authors',
 						'authors.search',
 					]}
+					placeholder="🔍  Search for a book title or an author"
 					{...this.props} // injecting props from navigator drawer
 				/>
 			</View>
@@ -230,7 +231,6 @@ export default class Main extends Component {
 			}
 		/>
 	)
-
 
 	renderStatusBar = () => (
 		<StatusBar
