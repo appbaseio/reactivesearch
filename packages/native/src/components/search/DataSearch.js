@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Modal, TouchableWithoutFeedback } from 'react-native';
+import { Platform, View, Modal, TouchableWithoutFeedback } from 'react-native';
 import {
 	Input,
 	Item,
@@ -349,7 +349,16 @@ class DataSearch extends Component {
 					<Header>
 						<Left>
 							<Button transparent onPress={this.toggleModal}>
-								<Icon name="arrow-back" />
+								<Icon
+									name="arrow-back"
+									style={{
+										...Platform.select({
+											android: {
+												color: '#fff',
+											},
+										}),
+									}}
+								/>
 							</Button>
 						</Left>
 						{
@@ -361,7 +370,17 @@ class DataSearch extends Component {
 											transparent
 											onPress={() => this.selectSuggestion('')}
 										>
-											<Text>Reset</Text>
+											<Text
+												style={{
+													...Platform.select({
+														android: {
+															color: '#fff',
+														},
+													}),
+												}}
+											>
+												Reset
+											</Text>
 										</Button>
 									</Right>
 								)
