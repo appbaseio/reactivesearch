@@ -109,7 +109,7 @@ export default class HomePageNative extends Component {
 								lineHeight="2.6rem"
 								margin="40px 0 10px"
 								className={boldHeading}
-							>React UI components for Elasticsearch
+							>React Native UI components for search
 							</H1>
 
 							<Text
@@ -118,8 +118,7 @@ export default class HomePageNative extends Component {
 								margin="10px 0 30px"
 								light
 							>
-								<span className={`${boldHeading} ${logo} ${mobHide}`}>v2</span> Now
-								moar configurable, lighter and performant.&nbsp;
+								<span className={`${boldHeading} ${logo} ${mobHide}`}>v0.5</span> TODO - Needs a sub-heading.&nbsp;
 								<a
 									className={`${decoratedLink} ${decoratedSecondaryLink}`}
 									target="_blank"
@@ -130,10 +129,10 @@ export default class HomePageNative extends Component {
 							</Text>
 
 							<Flex className={tabJustifyCenter}>
-								<Button light primary shadow className={button} href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html">
+								<Button light primary shadow className={button} href="https://opensource.appbase.io/native-reactive-manual/getting-started/reactivesearch.html">
 									Getting Started
 								</Button>
-								<Button shadow className={button} style={{ marginLeft: '10px' }} href="https://opensource.appbase.io/reactive-manual/base-components/textfield.html">
+								<Button shadow className={button} style={{ marginLeft: '10px' }} href="https://opensource.appbase.io/native-reactive-manual/components/textfield.html">
 									View Components
 								</Button>
 							</Flex>
@@ -142,7 +141,7 @@ export default class HomePageNative extends Component {
 						<Flex style={{ position: 'absolute', right: 0 }} className={tabHide}>
 							<img
 								height="590px"
-								src="images/browser.png"
+								src="images/native/landingscreen.png"
 								alt="Reactivesearch"
 								style={{ boxShadow: '0 5px 24px 0 rgba(0,0,0,0.3)' }}
 							/>
@@ -156,7 +155,7 @@ export default class HomePageNative extends Component {
 						<H2 style={{ marginBottom: 35 }} className={`${colored} ${mobShow}`}>Components for every occasion</H2>
 						<img
 							width="100%"
-							src="images/components.png"
+							src="images/native/components.png"
 							alt="Reactivesearch Components"
 						/>
 					</div>
@@ -172,14 +171,14 @@ export default class HomePageNative extends Component {
 							Build the perfect search experience using our UI components or by creating your own.
 						</Text>
 						<Text fontSize="1rem" lineHeight="1.6rem">
-							30+ prebuilt components with customizable queries and configurable styles.
+							Over 10 prebuilt components with customizable queries and configurable styles.
 						</Text>
 						<Flex className={tabJustifyCenter}>
 							<Button
 								className={button}
 								shadow
 								primary
-								href="https://opensource.appbase.io/reactive-manual/base-components/textfield"
+								href="https://opensource.appbase.io/native-reactive-manual/components/textfield.html"
 							>
 								View components
 							</Button>
@@ -193,7 +192,7 @@ export default class HomePageNative extends Component {
 							</Button>
 							<Button
 								className={`${button} ${mobBottomMargin}`}
-								href="https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent"
+								href="https://opensource.appbase.io/native-reactive-manual/advanced/reactivecomponent.html"
 							>
 								Create your own
 							</Button>
@@ -234,7 +233,7 @@ export default class HomePageNative extends Component {
 								Launch and iterate faster
 							</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								30+ well-designed and performance optimized UI components.
+								Well-designed and performance optimized UI components.
 								Ship faster and solve fewer edge cases.
 							</Text>
 							<div className={mobShow}>
@@ -265,20 +264,20 @@ export default class HomePageNative extends Component {
 								Configurable styles
 							</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								Styled components with rich theming and css class-injection support.
+								Styled components with rich theming and style injection support.
 							</Text>
 							<div className={mobShow}>
 								<Button className={button}>Read More</Button>
 							</div>
 						</Flex>
 
-						<Flex className={card} onClick={() => this.openLink('https://github.com/appbaseio/reactivesearch/tree/dev/packages/native')}>
+						<Flex className={card} onClick={() => this.openLink('https://github.com/appbaseio/reactivesearch/tree/dev/packages/web')}>
 							<div>
-								<img src="images/devices.png" alt="Data-driven UIs" />
+								<img src="images/native/components.png" alt="Data-driven UIs" />
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">Create cross-platform apps</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								Reactivesearch components can be ported to create native mobile UIs.
+								Reactivesearch Native components can be ported to create web apps.
 							</Text>
 							<div className={mobShow}>
 								<Button className={button}>Read More</Button>
