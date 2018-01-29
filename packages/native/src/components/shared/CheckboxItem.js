@@ -52,9 +52,9 @@ class CheckboxItem extends Component {
 }
 
 CheckboxItem.propTypes = {
-	checked: types.checked,
-	onPress: types.onPress,
-	label: types.label,
+	checked: types.bool,
+	onPress: types.func,
+	label: types.string,
 };
 
 export default CheckboxItem;

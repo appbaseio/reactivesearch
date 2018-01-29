@@ -8,6 +8,7 @@ import {
 	DataSearch,
 	TextField,
 	SingleDropdownList,
+	MultiDropdownList,
 	SingleDropdownRange,
 	RangeSlider,
 	DatePicker,
@@ -95,6 +96,12 @@ class Main extends Component {
 							componentId="StComponent"
 							dataField="brand.raw"
 						/>
+
+						<MultiDropdownList
+							componentId="MultiDropdownListComponent"
+							dataField="brand.raw"
+						/>
+
 						<TextField
 							componentId="TextFieldComponent"
 							dataField="color"

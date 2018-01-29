@@ -44,10 +44,10 @@ class TouchableItem extends Component {
 }
 
 TouchableItem.propTypes = {
-	onPress: types.onPress,
+	onPress: types.func,
 	style: types.style,
-	pressOpacity: types.pressOpacity,
-	pressColor: types.pressColor,
+	pressOpacity: types.number,
+	pressColor: types.string,
 	children: types.children,
 };
 

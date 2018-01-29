@@ -7,6 +7,7 @@ import DatePicker from './components/date/DatePicker';
 import DateRange from './components/date/DateRange';
 
 import SingleDropdownList from './components/list/SingleDropdownList';
+import MultiDropdownList from './components/list/MultiDropdownList';
 
 import SingleDropdownRange from './components/range/SingleDropdownRange';
 import RangeSlider from './components/range/RangeSlider';
@@ -15,13 +16,10 @@ import DataSearch from './components/search/DataSearch';
 
 import ReactiveList from './components/result/ReactiveList';
 
-// import MultiDropdownList from './sensors/MultiDropdownList';
 // import MultiDropdownRange from './sensors/MultiDropdownRange';
 
 export {
-	// MultiDropdownList,
 	// MultiDropdownRange,
-	// RangeSlider,
 
 	// basic
 	ReactiveBase,
@@ -35,6 +33,7 @@ export {
 
 	// list
 	SingleDropdownList,
+	MultiDropdownList,
 
 	// range
 	SingleDropdownRange,
