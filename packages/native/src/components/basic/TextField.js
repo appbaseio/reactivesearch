@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Item, Icon } from 'native-base';
+import { Input, Item, Icon, Button } from 'native-base';
 import { connect } from 'react-redux';
 
 import {
@@ -111,6 +111,10 @@ class TextField extends Component {
 		});
 	};
 
+	clearValue = () => {
+		this.setValue('', true);
+	}
+
 	render() {
 		let style = {};
 
@@ -140,6 +144,28 @@ class TextField extends Component {
 					value={this.state.currentValue}
 					autoFocus={this.props.autoFocus}
 				/>
+				{
+					this.state.currentValue && this.props.showClear
+						? (
+							<Button transparent onPress={this.clearValue}>
+								<Icon
+									name="md-close"
+									style={{
+										fontSize: 22,
+										top: 3,
+										color: '#666',
+										marginLeft: 10,
+										marginRight: (
+											this.props.showIcon && this.props.iconPosition === 'right'
+												? 0
+												: 10
+										),
+									}}
+								/>
+							</Button>
+						)
+						: null
+				}
 				{
 					this.props.showIcon && this.props.iconPosition === 'right'
 						? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
@@ -171,6 +197,7 @@ TextField.propTypes = {
 	autoFocus: types.bool,
 	showIcon: types.bool,
 	iconPosition: types.string,
+	showClear: types.bool,
 };
 
 TextField.defaultProps = {
@@ -181,6 +208,7 @@ TextField.defaultProps = {
 	showFilter: true,
 	style: {},
 	debounce: 0,
+	showClear: true,
 };
 
 const mapStateToProps = (state, props) => ({

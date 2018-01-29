@@ -453,7 +453,11 @@ class DataSearch extends Component {
 				}
 			</Item>
 		);
-	}
+	};
+
+	clearValue = () => {
+		this.setValue('', true);
+	};
 
 	render() {
 		let style = {};
@@ -489,6 +493,28 @@ class DataSearch extends Component {
 									value={this.state.currentValue}
 									autoFocus={this.props.autoFocus}
 								/>
+								{
+									this.state.currentValue && this.props.showClear
+										? (
+											<Button transparent onPress={this.clearValue}>
+												<Icon
+													name="md-close"
+													style={{
+														fontSize: 22,
+														top: 3,
+														color: '#666',
+														marginLeft: 10,
+														marginRight: (
+															this.props.showIcon && this.props.iconPosition === 'right'
+																? 0
+																: 10
+														),
+													}}
+												/>
+											</Button>
+										)
+										: null
+								}
 								{
 									this.props.showIcon && this.props.iconPosition === 'right'
 										? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
@@ -533,6 +559,7 @@ DataSearch.propTypes = {
 	autoFocus: types.bool,
 	showIcon: types.bool,
 	iconPosition: types.string,
+	showClear: types.bool,
 };
 
 DataSearch.defaultProps = {
@@ -545,6 +572,7 @@ DataSearch.defaultProps = {
 	showFilter: true,
 	style: {},
 	debounce: 0,
+	showClear: true,
 };
 
 const mapStateToProps = (state, props) => ({
