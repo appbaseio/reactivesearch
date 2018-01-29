@@ -144,7 +144,7 @@ class SingleRange extends Component {
 								<li key={item.label} className={`${selected ? 'active' : ''}`}>
 									<Radio
 										className={getClassName(this.props.innerClass, 'radio')}
-										id={item.label}
+										id={`${this.props.componentId}-${item.label}`}
 										name={this.props.componentId}
 										value={item.label}
 										onChange={this.handleClick}
@@ -152,10 +152,8 @@ class SingleRange extends Component {
 										show={this.props.showRadio}
 									/>
 									<label
-										className={
-											getClassName(this.props.innerClass, 'label') || null
-										}
-										htmlFor={item.label}
+										className={getClassName(this.props.innerClass, 'label') || null}
+										htmlFor={`${this.props.componentId}-${item.label}`}
 									>
 										{item.label}
 									</label>

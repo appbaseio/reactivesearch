@@ -256,14 +256,17 @@ class MultiDataList extends Component {
 								<li key={selectAllLabel} className={`${this.state.currentValue[selectAllLabel] ? 'active' : ''}`}>
 									<Checkbox
 										className={getClassName(this.props.innerClass, 'checkbox') || null}
-										id={selectAllLabel}
+										id={`${this.props.componentId}-${selectAllLabel}`}
 										name={selectAllLabel}
 										value={selectAllLabel}
 										onChange={this.handleClick}
 										checked={!!this.state.currentValue[selectAllLabel]}
 										show={this.props.showCheckbox}
 									/>
-									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
+									<label
+										className={getClassName(this.props.innerClass, 'label') || null}
+										htmlFor={`${this.props.componentId}-${selectAllLabel}`}
+									>
 										{selectAllLabel}
 									</label>
 								</li>
@@ -282,14 +285,17 @@ class MultiDataList extends Component {
 								<li key={item.label} className={`${this.state.currentValue[item.label] ? 'active' : ''}`}>
 									<Checkbox
 										className={getClassName(this.props.innerClass, 'checkbox') || null}
-										id={item.label}
+										id={`${this.props.componentId}-${item.label}`}
 										name={this.props.componentId}
 										value={item.label}
 										onChange={this.handleClick}
 										checked={!!this.state.currentValue[item.label]}
 										show={this.props.showCheckbox}
 									/>
-									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={item.label}>
+									<label
+										className={getClassName(this.props.innerClass, 'label') || null}
+										htmlFor={`${this.props.componentId}-${item.label}`}
+									>
 										{item.label}
 									</label>
 								</li>
