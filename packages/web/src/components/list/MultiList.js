@@ -299,14 +299,17 @@ class MultiList extends Component {
 								<li key={selectAllLabel} className={`${this.state.currentValue[selectAllLabel] ? 'active' : ''}`}>
 									<Checkbox
 										className={getClassName(this.props.innerClass, 'checkbox') || null}
-										id={selectAllLabel}
+										id={`${this.props.componentId}-${selectAllLabel}`}
 										name={selectAllLabel}
 										value={selectAllLabel}
 										onChange={this.handleClick}
 										checked={!!this.state.currentValue[selectAllLabel]}
 										show={this.props.showCheckbox}
 									/>
-									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
+									<label
+										className={getClassName(this.props.innerClass, 'label') || null}
+										htmlFor={`${this.props.componentId}-${selectAllLabel}`}
+									>
 										{selectAllLabel}
 									</label>
 								</li>
@@ -329,14 +332,17 @@ class MultiList extends Component {
 								<li key={item.key} className={`${this.state.currentValue[item.key] ? 'active' : ''}`}>
 									<Checkbox
 										className={getClassName(this.props.innerClass, 'checkbox') || null}
-										id={item.key}
+										id={`${this.props.componentId}-${item.key}`}
 										name={this.props.componentId}
 										value={item.key}
 										onChange={this.handleClick}
 										checked={!!this.state.currentValue[item.key]}
 										show={this.props.showCheckbox}
 									/>
-									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={item.key}>
+									<label
+										className={getClassName(this.props.innerClass, 'label') || null}
+										htmlFor={`${this.props.componentId}-${item.key}`}
+									>
 										{item.key}
 										{
 											this.props.showCount

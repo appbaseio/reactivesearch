@@ -228,7 +228,7 @@ class SingleList extends Component {
 								<li key={selectAllLabel} className={`${this.state.currentValue === selectAllLabel ? 'active' : ''}`}>
 									<Radio
 										className={getClassName(this.props.innerClass, 'radio')}
-										id={selectAllLabel}
+										id={`${this.props.componentId}-${selectAllLabel}`}
 										name={this.props.componentId}
 										value={selectAllLabel}
 										onClick={this.handleClick}
@@ -236,7 +236,10 @@ class SingleList extends Component {
 										checked={this.state.currentValue === selectAllLabel}
 										show={this.props.showRadio}
 									/>
-									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
+									<label
+										className={getClassName(this.props.innerClass, 'label') || null}
+										htmlFor={`${this.props.componentId}-${selectAllLabel}`}
+									>
 										{selectAllLabel}
 									</label>
 								</li>
@@ -259,7 +262,7 @@ class SingleList extends Component {
 								<li key={item.key} className={`${this.state.currentValue === String(item.key) ? 'active' : ''}`}>
 									<Radio
 										className={getClassName(this.props.innerClass, 'radio')}
-										id={item.key}
+										id={`${this.props.componentId}-${item.key}`}
 										name={this.props.componentId}
 										value={item.key}
 										readOnly
@@ -267,7 +270,10 @@ class SingleList extends Component {
 										checked={this.state.currentValue === String(item.key)}
 										show={this.props.showRadio}
 									/>
-									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={item.key}>
+									<label
+										className={getClassName(this.props.innerClass, 'label') || null}
+										htmlFor={`${this.props.componentId}-${item.key}`}
+									>
 										{item.key}
 										{
 											this.props.showCount

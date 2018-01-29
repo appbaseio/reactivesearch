@@ -195,7 +195,10 @@ class SingleDataList extends Component {
 										checked={this.state.currentValue === selectAllLabel}
 										show={this.props.showRadio}
 									/>
-									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={selectAllLabel}>
+									<label
+										className={getClassName(this.props.innerClass, 'label') || null}
+										htmlFor={`${this.props.componentId}-${selectAllLabel}`}
+									>
 										{selectAllLabel}
 									</label>
 								</li>
@@ -214,14 +217,17 @@ class SingleDataList extends Component {
 								<li key={item.label} className={`${this.state.currentValue === item.label ? 'active' : ''}`}>
 									<Radio
 										className={getClassName(this.props.innerClass, 'radio')}
-										id={item.label}
+										id={`${this.props.componentId}-${item.label}`}
 										name={this.props.componentId}
 										value={item.label}
 										onChange={this.handleClick}
 										checked={this.state.currentValue === item.label}
 										show={this.props.showRadio}
 									/>
-									<label className={getClassName(this.props.innerClass, 'label') || null} htmlFor={item.label}>
+									<label
+										className={getClassName(this.props.innerClass, 'label') || null}
+										htmlFor={`${this.props.componentId}-${item.label}`}
+									>
 										{item.label}
 									</label>
 								</li>

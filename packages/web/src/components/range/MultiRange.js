@@ -185,7 +185,7 @@ class MultiRange extends Component {
 							<li key={item.label} className={`${this.state.selectedValues[item.label] ? 'active' : ''}`}>
 								<Checkbox
 									className={getClassName(this.props.innerClass, 'checkbox') || null}
-									id={item.label}
+									id={`${this.props.componentId}-${item.label}`}
 									name={this.props.componentId}
 									value={item.label}
 									onChange={this.handleClick}
@@ -194,7 +194,7 @@ class MultiRange extends Component {
 								/>
 								<label
 									className={getClassName(this.props.innerClass, 'label') || null}
-									htmlFor={item.label}
+									htmlFor={`${this.props.componentId}-${item.label}`}
 								>
 									{item.label}
 								</label>
