@@ -1,0 +1,38 @@
+{
+  "name": "daterange-example",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-native-scripts start",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^6.2.2",
+    "@ptomasroos/react-native-multi-slider": "^0.0.11",
+    "appbase-js": "^2.2.5",
+    "escape-string-regexp": "^1.0.5",
+    "expo": "^23.0.0",
+    "metro-bundler": "^0.22.1",
+    "native-base": "^2.3.3",
+    "react": "16.0.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
+    "react-native-calendars": "^1.16.1",
+    "react-native-communications": "^2.2.1",
+    "react-native-gesture-handler": "^1.0.0-alpha.40",
+    "react-navigation": "^1.0.0-beta.19",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "xdate": "^0.8.2"
+  },
+  "devDependencies": {
+    "babel-plugin-module-resolver": "^2.7.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.2.0",
+    "babel-preset-expo": "^1.0.1",
+    "prop-types": "^15.6.0",
+    "react-dom": "^16.1.1",
+    "react-native-scripts": "0.0.50"
+  },
+  "main": "src/App.js"
+}
