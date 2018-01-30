@@ -26,9 +26,8 @@ React UI components for Elasticsearch.
 6. **[Installation](#6-installation)**
 7. **[Getting Started](#7-getting-started)**
 8. **[Docs Manual](#8-docs-manual)**
-9. **[Developing Locally](#9-developing-locally)**
-10. **[Contributing](#10-contributing)**
-11. **[Other Projects You Might Like](#11-other-projects-you-might-like)**
+9. **[Contributing](#9-contributing)**
+10. **[Other Projects You Might Like](#10-other-projects-you-might-like)**
 
 <br>
 
@@ -137,33 +136,11 @@ The components are divided into four sections:
 
 [⬆ Back to Top](#reactive-search)
 
-## 9. Developing Locally
-
-
-1. Clone the repo
-```bash
-git clone https://github.com/appbaseio/reactivesearch.git
-```
-
-2. `cd` into the project directory
-
-3. Checkout the `dev` branch (should be default)
-
-4. fetch the submodules. In case you don't have `ssh` setup for github, change the URLs in `.gitmodules` to use `https` instead
-
-```bash
-git submodule init
-git submodule sync
-git submodule update --remote
-```
-
-5. The submodules will be fetched into `/packages`. Defaults to `dev` in `/packages/playground` and `master` in `/packages/reactivecore`.
-
-## 10. Contributing
+## 9. Contributing
 
 Please check the [contribution guide](.github/CONTRIBUTING.md).
 
-## 11. Other Projects You Might Like
+## 10. Other Projects You Might Like
 
 - [**ReactiveSearch Dashboard**](https://dashboard.appbase.io/reactivesearch/) All your Reactive Search related apps (created via interactive tutorial, shared by others, etc.) can be accessed from here.
 - [**ReactiveMaps**](https://github.com/appbaseio/reactivemaps) is a similar project to Reactive Search that allows building realtime maps easily.
