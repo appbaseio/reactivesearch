@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Item } from 'native-base';
+import { Input, Item, Icon, Button } from 'native-base';
 import { connect } from 'react-redux';
 
 import {
@@ -111,14 +111,66 @@ class TextField extends Component {
 		});
 	};
 
+	clearValue = () => {
+		this.setValue('', true);
+	}
+
 	render() {
+		let style = {};
+
+		if (this.props.showIcon) {
+			if (this.props.iconPosition === 'left') {
+				style = {
+					paddingLeft: 0,
+				};
+			} else {
+				style = {
+					paddingRight: 0,
+				};
+			}
+		}
+
 		return (
 			<Item regular style={{ marginLeft: 0, ...this.props.style }}>
+				{
+					this.props.showIcon && this.props.iconPosition === 'left'
+						? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+						: null
+				}
 				<Input
+					style={style}
 					placeholder={this.props.placeholder}
 					onChangeText={this.setValue}
 					value={this.state.currentValue}
+					autoFocus={this.props.autoFocus}
 				/>
+				{
+					this.state.currentValue && this.props.showClear
+						? (
+							<Button transparent onPress={this.clearValue}>
+								<Icon
+									name="md-close"
+									style={{
+										fontSize: 22,
+										top: 3,
+										color: '#666',
+										marginLeft: 10,
+										marginRight: (
+											this.props.showIcon && this.props.iconPosition === 'right'
+												? 0
+												: 10
+										),
+									}}
+								/>
+							</Button>
+						)
+						: null
+				}
+				{
+					this.props.showIcon && this.props.iconPosition === 'right'
+						? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+						: null
+				}
 			</Item>
 		);
 	}
@@ -142,13 +194,21 @@ TextField.propTypes = {
 	showFilter: types.bool,
 	style: types.style,
 	debounce: types.number,
+	autoFocus: types.bool,
+	showIcon: types.bool,
+	iconPosition: types.string,
+	showClear: types.bool,
 };
 
 TextField.defaultProps = {
 	placeholder: 'Search',
+	showIcon: true,
+	iconPosition: 'left',
+	autoFocus: false,
 	showFilter: true,
 	style: {},
 	debounce: 0,
+	showClear: true,
 };
 
 const mapStateToProps = (state, props) => ({

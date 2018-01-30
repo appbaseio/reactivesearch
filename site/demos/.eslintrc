@@ -1,0 +1,7 @@
+{
+	"extends": "../../.eslintrc",
+	"rules": {
+		"import/extensions": 0,
+		"import/no-unresolved": 0
+	}
+}

@@ -248,6 +248,24 @@ class DatePicker extends Component {
 							marginTop: 10,
 						}}
 					/>
+					{
+						this.state.currentDate
+							? (
+								<Button
+									primary
+									onPress={this.toggleModal}
+									style={{
+										width: '100%',
+										borderRadius: 0,
+										alignItems: 'center',
+										justifyContent: 'center',
+									}}
+								>
+									<Text>View Results</Text>
+								</Button>
+							)
+							: null
+					}
 				</Modal>
 			</View>
 		);
@@ -291,4 +309,3 @@ const mapDispatchtoProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DatePicker);
-

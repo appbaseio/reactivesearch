@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Modal, TouchableWithoutFeedback } from 'react-native';
+import { Platform, View, Modal, TouchableWithoutFeedback } from 'react-native';
 import {
 	Input,
 	Item,
@@ -337,7 +337,7 @@ class DataSearch extends Component {
 		);
 	}
 
-	renderDataSearch = () => {
+	renderDataSearch = (style) => {
 		if (this.state.showModal) {
 			return (
 				<Modal
@@ -349,7 +349,16 @@ class DataSearch extends Component {
 					<Header>
 						<Left>
 							<Button transparent onPress={this.toggleModal}>
-								<Icon name="arrow-back" />
+								<Icon
+									name="arrow-back"
+									style={{
+										...Platform.select({
+											android: {
+												color: '#fff',
+											},
+										}),
+									}}
+								/>
 							</Button>
 						</Left>
 						{
@@ -361,15 +370,31 @@ class DataSearch extends Component {
 											transparent
 											onPress={() => this.selectSuggestion('')}
 										>
-											<Text>Reset</Text>
+											<Text
+												style={{
+													...Platform.select({
+														android: {
+															color: '#fff',
+														},
+													}),
+												}}
+											>
+												Reset
+											</Text>
 										</Button>
 									</Right>
 								)
-								: null
+								: <Right />
 						}
 					</Header>
 					<Item regular style={{ marginLeft: 10, margin: 10 }}>
+						{
+							this.props.showIcon && this.props.iconPosition === 'left'
+								? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+								: null
+						}
 						<Input
+							style={style}
 							returnKeyType="search"
 							onSubmitEditing={e => this.selectSuggestion(e.nativeEvent.text)}
 							placeholder={this.props.placeholder}
@@ -378,6 +403,11 @@ class DataSearch extends Component {
 							onFocus={this.setSuggestions}
 							autoFocus
 						/>
+						{
+							this.props.showIcon && this.props.iconPosition === 'right'
+								? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+								: null
+						}
 					</Item>
 					{this.renderSuggestions()}
 				</Modal>
@@ -386,6 +416,11 @@ class DataSearch extends Component {
 
 		return (
 			<Item regular style={{ marginLeft: 0 }}>
+				{
+					this.props.showIcon && this.props.iconPosition === 'left'
+						? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+						: null
+				}
 				<TouchableWithoutFeedback
 					onPress={this.toggleModal}
 				>
@@ -400,7 +435,8 @@ class DataSearch extends Component {
 							lineHeight: 24,
 							paddingLeft: 8,
 							paddingRight: 5,
-							paddingTop: 12,
+							paddingTop: 13,
+							...style,
 						}}
 					>
 						{
@@ -410,23 +446,80 @@ class DataSearch extends Component {
 						}
 					</Text>
 				</TouchableWithoutFeedback>
+				{
+					this.props.showIcon && this.props.iconPosition === 'right'
+						? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+						: null
+				}
 			</Item>
 		);
-	}
+	};
+
+	clearValue = () => {
+		this.setValue('', true);
+	};
 
 	render() {
+		let style = {};
+
+		if (this.props.showIcon) {
+			if (this.props.iconPosition === 'left') {
+				style = {
+					paddingLeft: 0,
+				};
+			} else {
+				style = {
+					paddingRight: 0,
+				};
+			}
+		}
+
 		return (
 			<View style={this.props.style}>
 				{
 					this.props.autosuggest
-						? this.renderDataSearch()
+						? this.renderDataSearch(style)
 						: (
 							<Item regular style={{ marginLeft: 0 }}>
+								{
+									this.props.showIcon && this.props.iconPosition === 'left'
+										? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+										: null
+								}
 								<Input
+									style={style}
 									placeholder={this.props.placeholder}
 									onChangeText={this.setValue}
 									value={this.state.currentValue}
+									autoFocus={this.props.autoFocus}
 								/>
+								{
+									this.state.currentValue && this.props.showClear
+										? (
+											<Button transparent onPress={this.clearValue}>
+												<Icon
+													name="md-close"
+													style={{
+														fontSize: 22,
+														top: 3,
+														color: '#666',
+														marginLeft: 10,
+														marginRight: (
+															this.props.showIcon && this.props.iconPosition === 'right'
+																? 0
+																: 10
+														),
+													}}
+												/>
+											</Button>
+										)
+										: null
+								}
+								{
+									this.props.showIcon && this.props.iconPosition === 'right'
+										? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+										: null
+								}
 							</Item>
 						)
 				}
@@ -463,15 +556,23 @@ DataSearch.propTypes = {
 	style: types.style,
 	debounce: types.number,
 	supportedOrientations: types.supportedOrientations,
+	autoFocus: types.bool,
+	showIcon: types.bool,
+	iconPosition: types.string,
+	showClear: types.bool,
 };
 
 DataSearch.defaultProps = {
 	placeholder: 'Search',
+	showIcon: true,
+	iconPosition: 'left',
+	autoFocus: false,
 	autosuggest: true,
 	queryFormat: 'or',
 	showFilter: true,
 	style: {},
 	debounce: 0,
+	showClear: true,
 };
 
 const mapStateToProps = (state, props) => ({

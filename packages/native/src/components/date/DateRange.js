@@ -84,9 +84,12 @@ class DateRange extends Component {
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			startDate = nextProps.defaultSelected.start;
 			endDate = nextProps.defaultSelected.end || null;
-		} else if (!isEqual(this.props.selectedValue, nextProps.selectedValue)) {
-			startDate = nextProps.selectedValue.start;
-			endDate = nextProps.selectedValue.end || null;
+		} else if (
+			!isEqual(this.props.selectedValue, nextProps.selectedValue)
+			&& !isEqual(this.state.currentDate, nextProps.selectedValue)
+		) {
+			startDate = nextProps.selectedValue ? nextProps.selectedValue.start : null;
+			endDate = nextProps.selectedValue ? nextProps.selectedValue.end : null;
 		}
 
 		if (startDate) {
@@ -371,6 +374,24 @@ class DateRange extends Component {
 							marginTop: 10,
 						}}
 					/>
+					{
+						this.state.currentDate && this.state.currentDate.end
+							? (
+								<Button
+									primary
+									onPress={this.toggleModal}
+									style={{
+										width: '100%',
+										borderRadius: 0,
+										alignItems: 'center',
+										justifyContent: 'center',
+									}}
+								>
+									<Text>View Results</Text>
+								</Button>
+							)
+							: null
+					}
 				</Modal>
 			</View>
 		);
@@ -418,4 +439,3 @@ const mapDispatchtoProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DateRange);
-
