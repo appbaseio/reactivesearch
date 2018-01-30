@@ -135,7 +135,7 @@ export default class Main extends Component {
 								dataField="original_title"
 								size={5}
 								onAllData={this.onAllData}
-								// onData={this.renderBookCard}
+								// onData={this.itemCardMarkup}
 								pagination
 								paginationAt="bottom"
 								react={{
@@ -173,7 +173,7 @@ export default class Main extends Component {
 		});
 	}
 
-	renderBookCard = bookData => (
+	itemCardMarkup = bookData => (
 		<TouchableOpacity
 			onPress={
 				() => web(`https://google.com/search?q=${bookData.original_title}`)
@@ -227,7 +227,7 @@ export default class Main extends Component {
 			data={items || []}
 			keyExtractor={item => item.id}
 			renderItem={
-				({ item }) => this.renderBookCard(item)
+				({ item }) => this.itemCardMarkup(item)
 			}
 		/>
 	)
