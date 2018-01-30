@@ -2368,8 +2368,8 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000795"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000795.tgz#644f03fab00dd8bd1693e5e1e70d86b31c5cfece"
+  version "1.0.30000799"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000799.tgz#0904953de93f3f492647e58c1a1bda7a73a0cb0b"
 
 caniuse-lite@^1.0.30000791, caniuse-lite@^1.0.30000792:
   version "1.0.30000792"
@@ -3752,8 +3752,8 @@ eslint-plugin-react-native@^3.0.1:
     eslint-plugin-react-native-globals "^0.1.1"
 
 eslint-plugin-react@^7.1.0, eslint-plugin-react@^7.5.1:
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.6.0.tgz#351651188c74c5b2fecc2717e3936b7207baa728"
+  version "7.6.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.6.1.tgz#5d0e908be599f0c02fbf4eef0c7ed6f29dff7633"
   dependencies:
     doctrine "^2.0.2"
     has "^1.0.1"
@@ -4567,8 +4567,8 @@ global@^4.3.0, global@^4.3.2:
     process "~0.5.1"
 
 globals@^11.0.1:
-  version "11.2.0"
-  resolved "https://registry.yarnpkg.com/globals/-/globals-11.2.0.tgz#aa2ece052a787563ba70a3dcd9dc2eb8a9a0488c"
+  version "11.3.0"
+  resolved "https://registry.yarnpkg.com/globals/-/globals-11.3.0.tgz#e04fdb7b9796d8adac9c8f64c14837b2313378b0"
 
 globals@^9.18.0:
   version "9.18.0"
@@ -5522,13 +5522,8 @@ jquery@^2.1.4:
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
 
 js-base64@^2.1.9:
-<<<<<<< HEAD
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.3.tgz#2e545ec2b0f2957f41356510205214e98fad6582"
-=======
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.2.tgz#1896da010ef8862f385d8887648e9b6dc4a7a2e9"
->>>>>>> e423761ea83bbd1692b7c9c9903fbb9d3e73b506
 
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
