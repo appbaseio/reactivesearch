@@ -17,7 +17,7 @@ const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 
 const RootDrawer = DrawerNavigator({
 	DrawerOption1: {
-		navigationOptions: navigationOptionsBuilder('Basic'),
+		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<TextField
 				showFilter={false}
@@ -36,17 +36,26 @@ const RootDrawer = DrawerNavigator({
 		),
 	},
 	DrawerOption3: {
-		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
+		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<TextField
-				defaultSelected="The Murder of Roger Ackroyd"
-				title="Search books"
+				placeholder="Search for a book title"
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	// DrawerOption4: {
+	DrawerOption4: {
+		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<TextField
+				defaultSelected="The Murder of Roger Ackroyd"
+				showFilter={false}
+				navigation={navigation}
+			/>
+		),
+	},
+	// DrawerOption5: {
 	// 	navigationOptions: navigationOptionsBuilder('With filter'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	//         <TextField
@@ -56,23 +65,22 @@ const RootDrawer = DrawerNavigator({
 	//         />
 	// 	),
 	// },
-	DrawerOption5: {
+	DrawerOption6: {
 		navigationOptions: navigationOptionsBuilder('With debounce'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<TextField
-				title="Search books"
 				debounce={300}
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	DrawerOption6: {
-		navigationOptions: navigationOptionsBuilder('Playground'),
+	DrawerOption7: {
+		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<TextField
 				title="Books Search"
-				placeholder="Search for books"
+				placeholder="Search for a book title"
 				defaultSelected="The Hitchhiker's Guide to the Galaxy"
 				showFilter={false}
 				filterLabel="Books filter"
