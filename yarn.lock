@@ -423,8 +423,8 @@ anymatch@^2.0.0:
     normalize-path "^2.1.1"
 
 appbase-js@^2.2.5:
-  version "2.2.6"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-2.2.6.tgz#5fcd9af48dcf82d3e198b936f0c08c77e0dc1f15"
+  version "2.2.7"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-2.2.7.tgz#0126478490eec8da9467bc46f6c25318b87272d5"
   dependencies:
     babel-polyfill "^6.26.0"
     es6-promise "^4.1.1"
