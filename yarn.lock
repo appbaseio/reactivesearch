@@ -422,15 +422,16 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-appbase-js@^2.2.5:
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-2.2.7.tgz#0126478490eec8da9467bc46f6c25318b87272d5"
+appbase-js@^2.2.8:
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-2.2.8.tgz#025b6a73c9dc8a41e07e2a5eb470e8b14f324694"
   dependencies:
     babel-polyfill "^6.26.0"
     es6-promise "^4.1.1"
     eventemitter2 "^4.1.2"
     fetch-everywhere "^1.0.5"
     json-stable-stringify "^1.0.1"
+    querystring "^0.2.0"
     stream "^0.0.2"
     url-parser-lite "^0.1.0"
     ws "^2.2.0"
