@@ -1,8 +1,8 @@
 {
 	"expo": {
-		"name": "DataSearch Example",
-		"description": "Example for ReactiveSearch Native DataSearch Component",
-		"slug": "datasearch",
+		"name": "TextField Example",
+		"description": "Example for ReactiveSearch Native TextField Component",
+		"slug": "textfield",
 		"sdkVersion": "23.0.0",
 		"version": "1.0.0",
 		"orientation": "portrait",
@@ -12,11 +12,12 @@
 			"assetExts": ["ttf", "otf"],
 			"projectRoots": ""
 		},
+		"icon": "icon.png",
 		"ios": {
-			"bundleIdentifier": "com.appbaseio.datasearch"
+			"bundleIdentifier": "com.appbaseio.textfield"
 		},
 		"android": {
-			"package": "com.appbaseio.datasearch"
+			"package": "com.appbaseio.textfield"
 		},
 		"androidStatusBar": {
 			"backgroundColor": "#1A237E"

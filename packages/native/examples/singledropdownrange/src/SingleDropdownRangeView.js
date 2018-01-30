@@ -24,7 +24,7 @@ import { FontAwesome as Icon, Ionicons } from '@expo/vector-icons';
 import { web } from 'react-native-communications';
 
 import {
-	DataSearch,
+	SingleDropdownRange,
 	ReactiveBase,
 	ReactiveList,
 } from '@appbaseio/reactivebase-native';
@@ -38,7 +38,7 @@ import {
 
 import styles from './Styles';
 
-const COMPONENT_DEMO = 'DataSearch';
+const COMPONENT_DEMO = 'SingleDropdownRange';
 
 export default class Main extends Component {
 	render() {
@@ -78,7 +78,7 @@ export default class Main extends Component {
 				</Left>
 				<Body>
 					<Title
-						style={{ color: headerColor, fontSize: 18, marginLeft: 15 }}
+						style={{ color: headerColor, fontSize: 18 }}
 					>
 						{ COMPONENT_DEMO }
 					</Title>
@@ -102,13 +102,13 @@ export default class Main extends Component {
 
 		const componentMarkup = (
 			<View style={styles.componentContainer}>
-				<DataSearch
-					componentId="SearchText"
-					dataField={[
-						'original_title',
-						'original_title.search',
-						'authors',
-						'authors.search',
+				<SingleDropdownRange
+					componentId="SingleDropdownRangeSensor"
+					dataField="average_rating"
+					data={[
+						{ start: 0, end: 3, label: 'Rating < 3' },
+						{ start: 3, end: 4, label: 'Rating 3 to 4' },
+						{ start: 4, end: 5, label: 'Rating > 4' },
 					]}
 					{...this.props} // injecting props from navigator drawer
 				/>
@@ -134,11 +134,11 @@ export default class Main extends Component {
 								dataField="original_title"
 								size={5}
 								onAllData={this.onAllData}
-								// onData={this.renderBookCard}
+								// onData={this.itemCardMarkup}
 								pagination
 								paginationAt="bottom"
 								react={{
-									and: ['showAll', 'SearchText'],
+									and: ['SingleDropdownRangeSensor'],
 								}}
 								showResultStats={false}
 								defaultQuery={
@@ -172,7 +172,7 @@ export default class Main extends Component {
 		});
 	}
 
-	renderBookCard = bookData => (
+	itemCardMarkup = bookData => (
 		<TouchableOpacity
 			onPress={
 				() => web(`https://google.com/search?q=${bookData.original_title}`)
@@ -226,11 +226,10 @@ export default class Main extends Component {
 			data={items || []}
 			keyExtractor={item => item.id}
 			renderItem={
-				({ item }) => this.renderBookCard(item)
+				({ item }) => this.itemCardMarkup(item)
 			}
 		/>
 	)
-
 
 	renderStatusBar = () => (
 		<StatusBar

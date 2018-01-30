@@ -1,0 +1,26 @@
+{
+	"expo": {
+		"name": "SingleDropdownRange Example",
+		"description": "Example for ReactiveSearch Native SingleDropdownRange Component",
+		"slug": "singledropdownrange",
+		"sdkVersion": "23.0.0",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"primaryColor": "#1A237E",
+		"packagerOpts": {
+			"config": "./rn-cli.config.js",
+			"assetExts": ["ttf", "otf"],
+			"projectRoots": ""
+		},
+		"icon": "icon.png",
+		"ios": {
+			"bundleIdentifier": "com.appbaseio.singledropdownrange"
+		},
+		"android": {
+			"package": "com.appbaseio.singledropdownrange"
+		},
+		"androidStatusBar": {
+			"backgroundColor": "#1A237E"
+		}
+	}
+}
