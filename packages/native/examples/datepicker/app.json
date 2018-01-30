@@ -1,0 +1,26 @@
+{
+	"expo": {
+		"name": "DatePicker Example",
+		"description": "Example for ReactiveSearch Native DatePicker Component",
+		"slug": "datepicker",
+		"sdkVersion": "23.0.0",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"primaryColor": "#1A237E",
+		"packagerOpts": {
+			"config": "./rn-cli.config.js",
+			"assetExts": ["ttf", "otf"],
+			"projectRoots": ""
+		},
+		"icon": "icon.png",
+		"ios": {
+			"bundleIdentifier": "com.appbaseio.datepicker"
+		},
+		"android": {
+			"package": "com.appbaseio.datepicker"
+		},
+		"androidStatusBar": {
+			"backgroundColor": "#1A237E"
+		}
+	}
+}
