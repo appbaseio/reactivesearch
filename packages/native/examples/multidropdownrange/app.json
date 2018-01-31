@@ -1,0 +1,30 @@
+{
+	"expo": {
+		"name": "MultiDropdownRange Example",
+		"description": "Example for ReactiveSearch Native MultiDropdownRange Component",
+		"slug": "multidropdownrange",
+		"privacy": "public",
+		"sdkVersion": "23.0.0",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"primaryColor": "#1A237E",
+		"packagerOpts": {
+			"config": "./rn-cli.config.js",
+			"assetExts": [
+				"ttf",
+				"otf"
+			],
+			"projectRoots": ""
+		},
+		"icon": "icon.png",
+		"ios": {
+			"bundleIdentifier": "com.appbaseio.multidropdownrange"
+		},
+		"android": {
+			"package": "com.appbaseio.multidropdownrange"
+		},
+		"androidStatusBar": {
+			"backgroundColor": "#1A237E"
+		}
+	}
+}
