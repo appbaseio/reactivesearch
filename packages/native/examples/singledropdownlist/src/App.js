@@ -25,21 +25,20 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	DrawerOption2: {
-		navigationOptions: navigationOptionsBuilder('With title'),
-		screen: ({ navigation }) => ( // eslint-disable-line
-			<SingleDropdownList
-				title="series list"
-				showFilter={false}
-				navigation={navigation}
-			/>
-		),
-	},
+	// DrawerOption2: {
+	// 	navigationOptions: navigationOptionsBuilder('With title'),
+	// 	screen: ({ navigation }) => ( // eslint-disable-line
+	// 		<SingleDropdownList
+	// 			title="Series List"
+	// 			showFilter={false}
+	// 			navigation={navigation}
+	// 		/>
+	// 	),
+	// },
 	DrawerOption3: {
 		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
-				title="series list"
 				placeholder="Select one"
 				showFilter={false}
 				navigation={navigation}
@@ -109,7 +108,7 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
-				title="Search Series"
+				// title="Series List"
 				size={100}
 				showCount
 				sortBy="asc"

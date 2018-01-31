@@ -21,15 +21,15 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: DataSearch,
 	},
-	DrawerOption2: {
-		navigationOptions: navigationOptionsBuilder('With title'),
-		screen: ({ navigation }) => ( // eslint-disable-line
-			<DataSearch
-				title="Books Search"
-				navigation={navigation}
-			/>
-		),
-	},
+	// DrawerOption2: {
+	// 	navigationOptions: navigationOptionsBuilder('With title'),
+	// 	screen: ({ navigation }) => ( // eslint-disable-line
+	// 		<DataSearch
+	// 			title="Books Search"
+	// 			navigation={navigation}
+	// 		/>
+	// 	),
+	// },
 	DrawerOption3: {
 		navigationOptions: navigationOptionsBuilder('Without search icon'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -168,7 +168,7 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DataSearch
-				title="DataSearch: Books..."
+				// title="DataSearch: Books..."
 				defaultSelected="Harry Potter"
 				autosuggest
 				fieldWeights={[1, 3]}

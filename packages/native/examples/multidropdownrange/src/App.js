@@ -2,7 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
-import TextField from './TextFieldView';
+import MultiDropdownRange from './MultiDropdownRangeView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 	drawerLabel,
@@ -19,7 +19,7 @@ const RootDrawer = DrawerNavigator({
 	DrawerOption1: {
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<TextField
+			<MultiDropdownRange
 				showFilter={false}
 				navigation={navigation}
 			/>
@@ -28,8 +28,8 @@ const RootDrawer = DrawerNavigator({
 	// DrawerOption2: {
 	// 	navigationOptions: navigationOptionsBuilder('With title'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<TextField
-	// 			title="Search books"
+	// 		<MultiDropdownRange
+	// 			title="Ratings list"
 	// 			showFilter={false}
 	// 			navigation={navigation}
 	// 		/>
@@ -38,52 +38,84 @@ const RootDrawer = DrawerNavigator({
 	DrawerOption3: {
 		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<TextField
-				placeholder="Search for a book title"
+			<MultiDropdownRange
+				placeholder="Select ratings"
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	DrawerOption4: {
-		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
-		screen: ({ navigation }) => ( // eslint-disable-line
-			<TextField
-				defaultSelected="The Murder of Roger Ackroyd"
-				showFilter={false}
-				navigation={navigation}
-			/>
-		),
-	},
+	// DrawerOption4: {
+	// 	navigationOptions: navigationOptionsBuilder('With size'),
+	// 	screen: ({ navigation }) => ( // eslint-disable-line
+	// 		<MultiDropdownRange
+	// 			size={2}
+	// 			showFilter={false}
+	// 			navigation={navigation}
+	// 		/>
+	// 	),
+	// },
 	// DrawerOption5: {
 	// 	navigationOptions: navigationOptionsBuilder('With filter'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <TextField
-	//             title="Search books"
+	//         <MultiDropdownRange
 	//             showFilter={true}
 	//             navigation={navigation}
 	//         />
 	// 	),
 	// },
-	DrawerOption6: {
-		navigationOptions: navigationOptionsBuilder('With debounce'),
+	// DrawerOption6: {
+	// 	navigationOptions: navigationOptionsBuilder('With custom sort'),
+	// 	screen: ({ navigation }) => ( // eslint-disable-line
+	// 		<MultiDropdownRange
+	// 			sortBy="asc"
+	// 			showFilter={false}
+	// 			navigation={navigation}
+	// 		/>
+	// 	),
+	// },
+	// DrawerOption7: {
+	// 	navigationOptions: navigationOptionsBuilder('Without count'),
+	// 	screen: ({ navigation }) => ( // eslint-disable-line
+	// 		<MultiDropdownRange
+	// 			showCount={false}
+	// 			showFilter={false}
+	// 			navigation={navigation}
+	// 		/>
+	// 	),
+	// },
+	// DrawerOption8: {
+	// 	navigationOptions: navigationOptionsBuilder('With Select All'),
+	// 	screen: ({ navigation }) => ( // eslint-disable-line
+	// 		<MultiDropdownRange
+	// 			selectAllLabel="All Ratings"
+	// 			showFilter={false}
+	// 			navigation={navigation}
+	// 		/>
+	// 	),
+	// },
+	DrawerOption9: {
+		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<TextField
-				debounce={300}
+			<MultiDropdownRange
+				defaultSelected={['Rating 3 to 4']}
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	DrawerOption7: {
+	DrawerOption10: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<TextField
-				// title="Books Search"
-				placeholder="Search for a book title"
-				defaultSelected="The Hitchhiker's Guide to the Galaxy"
+			<MultiDropdownRange
+				// title="Ratings list"
+				size={100}
+				sortBy="asc"
+				selectAllLabel="All Ratings"
+				defaultSelected={['Rating 3 to 4']}
+				placeholder="Select ratings"
 				showFilter={false}
-				filterLabel="Books filter"
+				filterLabel="Ratings filter"
 				navigation={navigation}
 			/>
 		),

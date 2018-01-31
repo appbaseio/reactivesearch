@@ -45,7 +45,7 @@ const COMPONENT_DEMO = 'DatePicker';
 export default class Main extends Component {
 	render() {
 		const { isReady } = this.state;
-		const { navigation } = this.props; // eslint-disable-line
+		const { navigation, ...storyProps } = this.props;  // eslint-disable-line
 
 		const isIOS = Platform.OS === 'ios';
 
@@ -110,7 +110,7 @@ export default class Main extends Component {
 					dataField="pushed"
 					queryFormat="date_time_no_millis"
 					initialMonth="03-03-2017" // defaulting initialMonth because of older dataset
-					{...this.props} // injecting props from navigator drawer
+					{...storyProps} // injecting props from navigator drawer story
 				/>
 			</View>
 		);

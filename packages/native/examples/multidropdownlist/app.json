@@ -1,8 +1,8 @@
 {
 	"expo": {
-		"name": "DatePicker Example",
-		"description": "Example for ReactiveSearch Native DatePicker Component",
-		"slug": "datepicker",
+		"name": "MultiDropdownList Example",
+		"description": "Example for ReactiveSearch Native MultiDropdownList Component",
+		"slug": "multidropdownlist",
 		"privacy": "public",
 		"sdkVersion": "23.0.0",
 		"version": "1.0.0",
@@ -18,10 +18,10 @@
 		},
 		"icon": "icon.png",
 		"ios": {
-			"bundleIdentifier": "com.appbaseio.datepicker"
+			"bundleIdentifier": "com.appbaseio.multidropdownlist"
 		},
 		"android": {
-			"package": "com.appbaseio.datepicker"
+			"package": "com.appbaseio.multidropdownlist"
 		},
 		"androidStatusBar": {
 			"backgroundColor": "#1A237E"

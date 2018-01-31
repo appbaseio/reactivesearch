@@ -2,7 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
-import TextField from './TextFieldView';
+import MultiDropdownList from './MultiDropdownListView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 	drawerLabel,
@@ -19,7 +19,7 @@ const RootDrawer = DrawerNavigator({
 	DrawerOption1: {
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<TextField
+			<MultiDropdownList
 				showFilter={false}
 				navigation={navigation}
 			/>
@@ -28,8 +28,8 @@ const RootDrawer = DrawerNavigator({
 	// DrawerOption2: {
 	// 	navigationOptions: navigationOptionsBuilder('With title'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<TextField
-	// 			title="Search books"
+	// 		<MultiDropdownList
+	// 			title="Series list"
 	// 			showFilter={false}
 	// 			navigation={navigation}
 	// 		/>
@@ -38,18 +38,18 @@ const RootDrawer = DrawerNavigator({
 	DrawerOption3: {
 		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<TextField
-				placeholder="Search for a book title"
+			<MultiDropdownList
+				placeholder="Select multiple series"
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
 	DrawerOption4: {
-		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
+		navigationOptions: navigationOptionsBuilder('With size'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<TextField
-				defaultSelected="The Murder of Roger Ackroyd"
+			<MultiDropdownList
+				size={10}
 				showFilter={false}
 				navigation={navigation}
 			/>
@@ -58,32 +58,63 @@ const RootDrawer = DrawerNavigator({
 	// DrawerOption5: {
 	// 	navigationOptions: navigationOptionsBuilder('With filter'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <TextField
-	//             title="Search books"
+	//         <MultiDropdownList
 	//             showFilter={true}
 	//             navigation={navigation}
 	//         />
 	// 	),
 	// },
 	DrawerOption6: {
-		navigationOptions: navigationOptionsBuilder('With debounce'),
+		navigationOptions: navigationOptionsBuilder('With custom sort'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<TextField
-				debounce={300}
+			<MultiDropdownList
+				sortBy="asc"
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
 	DrawerOption7: {
+		navigationOptions: navigationOptionsBuilder('Without count'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<MultiDropdownList
+				showCount={false}
+				showFilter={false}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption8: {
+		navigationOptions: navigationOptionsBuilder('With Select All'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<MultiDropdownList
+				selectAllLabel="All Series"
+				showFilter={false}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption9: {
+		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<MultiDropdownList
+				defaultSelected={['Anita Blake', 'Discworld']}
+				showFilter={false}
+				navigation={navigation}
+			/>
+		),
+	},
+	DrawerOption10: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<TextField
-				// title="Books Search"
-				placeholder="Search for a book title"
-				defaultSelected="The Hitchhiker's Guide to the Galaxy"
+			<MultiDropdownList
+				// title="Series List"
+				size={100}
+				sortBy="asc"
+				defaultSelected={['Anita Blake', 'Discworld']}
+				placeholder="Select multi series"
 				showFilter={false}
-				filterLabel="Books filter"
+				filterLabel="Series filter"
 				navigation={navigation}
 			/>
 		),

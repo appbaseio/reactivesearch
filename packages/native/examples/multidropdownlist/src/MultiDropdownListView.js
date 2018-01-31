@@ -24,7 +24,7 @@ import { FontAwesome as Icon, Ionicons } from '@expo/vector-icons';
 import { web } from 'react-native-communications';
 
 import {
-	TextField,
+	MultiDropdownList,
 	ReactiveBase,
 	ReactiveList,
 } from '@appbaseio/reactivebase-native';
@@ -38,7 +38,7 @@ import {
 
 import styles from './Styles';
 
-const COMPONENT_DEMO = 'TextField';
+const COMPONENT_DEMO = 'MultiDropdownList';
 
 export default class Main extends Component {
 	render() {
@@ -78,7 +78,7 @@ export default class Main extends Component {
 				</Left>
 				<Body>
 					<Title
-						style={{ color: headerColor, fontSize: 18, marginLeft: 15 }}
+						style={{ color: headerColor, fontSize: 18 }}
 					>
 						{ COMPONENT_DEMO }
 					</Title>
@@ -102,9 +102,10 @@ export default class Main extends Component {
 
 		const componentMarkup = (
 			<View style={styles.componentContainer}>
-				<TextField
-					componentId="TextFieldSensor"
-					dataField="original_title.search"
+				<MultiDropdownList
+					componentId="MultiDropdownListSensor"
+					dataField="original_series.raw"
+					size={30}
 					{...storyProps} // injecting props from navigator drawer story
 				/>
 			</View>
@@ -133,7 +134,7 @@ export default class Main extends Component {
 								pagination
 								paginationAt="bottom"
 								react={{
-									and: ['TextFieldSensor'],
+									and: ['MultiDropdownListSensor'],
 								}}
 								showResultStats={false}
 								defaultQuery={

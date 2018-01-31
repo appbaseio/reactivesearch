@@ -45,7 +45,7 @@ const COMPONENT_DEMO = 'DateRange';
 export default class Main extends Component {
 	render() {
 		const { isReady } = this.state;
-		const { navigation } = this.props; // eslint-disable-line
+		const { navigation, ...storyProps } = this.props;  // eslint-disable-line
 
 		const isIOS = Platform.OS === 'ios';
 
@@ -109,7 +109,7 @@ export default class Main extends Component {
 					placeholder="Select dates"
 					dataField="pushed"
 					queryFormat="date_time_no_millis"
-					{...this.props} // injecting props from navigator drawer
+					{...storyProps} // injecting props from navigator drawer story
 				/>
 			</View>
 		);

@@ -3,13 +3,17 @@
 		"name": "SingleDropdownRange Example",
 		"description": "Example for ReactiveSearch Native SingleDropdownRange Component",
 		"slug": "singledropdownrange",
+		"privacy": "public",
 		"sdkVersion": "23.0.0",
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"primaryColor": "#1A237E",
 		"packagerOpts": {
 			"config": "./rn-cli.config.js",
-			"assetExts": ["ttf", "otf"],
+			"assetExts": [
+				"ttf",
+				"otf"
+			],
 			"projectRoots": ""
 		},
 		"icon": "icon.png",
