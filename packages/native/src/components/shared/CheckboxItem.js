@@ -9,20 +9,8 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import TouchableItem from './TouchableItem';
 
 class CheckboxItem extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			selected: props.checked,
-		};
-	}
-
 	handlePress = () => {
-		this.setState({
-			selected: !this.state.selected,
-		});
-
-		this.props.onPress(this.props.label);
+		this.props.onPress(this.props.value);
 	};
 
 	render() {
@@ -42,7 +30,7 @@ class CheckboxItem extends Component {
 				>
 					<CheckBox
 						onPress={this.handlePress}
-						checked={this.state.selected}
+						checked={this.props.checked}
 					/>
 					<Text style={{ marginLeft: 20 }}>{this.props.label}</Text>
 				</View>
@@ -55,6 +43,7 @@ CheckboxItem.propTypes = {
 	checked: types.bool,
 	onPress: types.func,
 	label: types.string,
+	value: types.string,
 };
 
 export default CheckboxItem;

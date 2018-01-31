@@ -21,7 +21,13 @@ import {
 	watchComponent,
 	updateQuery,
 } from '@appbaseio/reactivecore/lib/actions';
-import { checkValueChange, checkPropChange } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	isEqual,
+	checkValueChange,
+	checkPropChange,
+	getClassName,
+} from '@appbaseio/reactivecore/lib/utils/helper';
+
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 class MultiDropdownRange extends Component {
@@ -37,13 +43,20 @@ class MultiDropdownRange extends Component {
 			rowHasChanged: (r1, r2) => r1.start !== r2.start
 			|| r1.end !== r2.end || r1.label !== r2.label,
 		});
+
+		// selectedValues hold the selected items as keys for O(1) complexity
+		this.selectedValues = {};
 		this.type = 'range';
+		this.locked = false;
 	}
 
 	componentDidMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
-		if (this.props.defaultSelected) {
+
+		if (this.props.selectedValue) {
+			this.selectItem(this.props.selectedValue, true);
+		} else if (this.props.defaultSelected) {
 			this.selectItem(this.props.defaultSelected, true);
 		}
 	}
@@ -54,11 +67,17 @@ class MultiDropdownRange extends Component {
 			nextProps.react,
 			() => this.setReact(nextProps),
 		);
-		checkPropChange(
-			this.props.defaultSelected,
-			nextProps.defaultSelected,
-			() => this.selectItem(nextProps.defaultSelected, true, nextProps),
-		);
+
+		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+			this.updateQuery(this.state.currentValue, nextProps);
+		});
+
+		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
+			this.selectItem(nextProps.defaultSelected, true);
+		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)
+			&& (nextProps.selectedValue || nextProps.selectedValue === null)) {
+			this.selectItem(nextProps.selectedValue, true);
+		}
 	}
 
 	componentWillUnmount() {
@@ -84,13 +103,13 @@ class MultiDropdownRange extends Component {
 					},
 				}));
 			}
+			return null;
 		};
 
-		if (values) {
-			const selectedItems = props.data.filter(item => values.includes(item.label));
+		if (values && values.length) {
 			const query = {
 				bool: {
-					should: generateRangeQuery(props.dataField, selectedItems),
+					should: generateRangeQuery(props.dataField, values),
 					minimum_should_match: 1,
 					boost: 1.0,
 				},
@@ -98,25 +117,42 @@ class MultiDropdownRange extends Component {
 			return query;
 		}
 		return null;
-	}
+	};
 
 	selectItem = (item, isDefaultValue = false, props = this.props) => {
+		// ignore state updates when component is locked
+		if (props.beforeValueChange && this.locked) {
+			return;
+		}
+
+		this.locked = true;
 		let { currentValue } = this.state;
-		if (isDefaultValue) {
+
+		if (!item) {
+			currentValue = [];
+			this.selectedValues = {};
+		} else if (isDefaultValue) {
 			// checking if the items in defaultSeleted exist in the data prop
-			currentValue = item.filter(currentItem =>
-				props.data.find(dataItem => dataItem.label === currentItem));
-		} else if (currentValue.includes(item)) {
-			currentValue = currentValue.filter(value => value !== item);
+			currentValue = props.data.filter(value => item.includes(value.label));
+			currentValue.forEach((value) => {
+				this.selectedValues = { ...this.selectedValues, [value.label]: true };
+			});
+		} else if (this.selectedValues[item]) {
+			currentValue = currentValue.filter(value => value.label !== item);
+			const { [item]: del, ...selectedValues } = this.selectedValues;
+			this.selectedValues = selectedValues;
 		} else {
-			currentValue = [...currentValue, item];
+			const selectedItem = this.props.data.find(value => value.label === item);
+			currentValue = [...currentValue, selectedItem];
+			this.selectedValues = { ...this.selectedValues, [item]: true };
 		}
 		const performUpdate = () => {
 			this.setState({
 				currentValue,
+			}, () => {
+				this.updateQuery(currentValue, props);
+				this.locked = false;
 			});
-			// const query = props.customQuery || this.defaultQuery;
-			this.updateQuery(currentValue, props);
 		};
 
 		checkValueChange(
@@ -126,7 +162,7 @@ class MultiDropdownRange extends Component {
 			props.onValueChange,
 			performUpdate,
 		);
-	}
+	};
 
 	toggleModal = () => {
 		this.setState({
@@ -136,12 +172,19 @@ class MultiDropdownRange extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
-		let callback = null;
-		if (props.onQueryChange) {
-			callback = props.onQueryChange;
-		}
-		props.updateQuery(props.componentId, query(value, props), callback);
-	}
+
+		const { onQueryChange = null } = props;
+
+		props.updateQuery({
+			componentId: props.componentId,
+			query: query(value, props),
+			value,
+			label: props.filterLabel,
+			showFilter: props.showFilter,
+			onQueryChange,
+			URLParams: false,
+		});
+	};
 
 	render() {
 		return (
@@ -183,7 +226,7 @@ class MultiDropdownRange extends Component {
 											>
 												<CheckBox
 													onPress={() => this.selectItem(item.label)}
-													checked={this.state.currentValue.includes(item.label)}
+													checked={!!this.selectedValues[item.label]}
 												/>
 												<Text style={{ marginLeft: 20 }}>{item.label}</Text>
 											</View>
@@ -210,8 +253,8 @@ class MultiDropdownRange extends Component {
 										}}
 									>
 										{
-											this.state.currentValue.length
-												? this.state.currentValue.join(', ')
+											Object.keys(this.state.currentValue).length
+												? this.state.currentValue.map(item => item.label).join(', ')
 												: this.props.placeholder
 										}
 									</Text>
@@ -225,31 +268,44 @@ class MultiDropdownRange extends Component {
 }
 
 MultiDropdownRange.propTypes = {
-	addComponent: types.addComponent,
-	componentId: types.componentId,
+	addComponent: types.funcRequired,
+	componentId: types.stringRequired,
 	defaultSelected: types.stringArray,
 	react: types.react,
-	removeComponent: types.removeComponent,
+	removeComponent: types.funcRequired,
 	data: types.data,
-	dataField: types.dataField,
-	customQuery: types.customQuery,
-	beforeValueChange: types.beforeValueChange,
-	onValueChange: types.onValueChange,
-	onQueryChange: types.onQueryChange,
-	updateQuery: types.updateQuery,
+	dataField: types.stringRequired,
+	customQuery: types.func,
+	beforeValueChange: types.func,
+	onValueChange: types.func,
+	onQueryChange: types.func,
+	updateQuery: types.funcRequired,
 	supportedOrientations: types.supportedOrientations,
-	placeholder: types.placeholder,
+	placeholder: types.string,
+	selectedValue: types.selectedValue,
+	showFilter: types.bool,
+	filterLabel: types.filterLabel,
+	style: types.style,
 };
 
 MultiDropdownRange.defaultProps = {
 	placeholder: 'Select a value',
+	URLParams: false,
+	showFilter: true,
+	style: {},
 };
+
+const mapStateToProps = (state, props) => ({
+	selectedValue: state.selectedValues[props.componentId]
+		? state.selectedValues[props.componentId].value
+		: null,
+});
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: (component, query, value, filterLabel, customQuery) => dispatch(updateQuery(component, query, value, filterLabel, customQuery)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
-export default connect(null, mapDispatchtoProps)(MultiDropdownRange);
+export default connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownRange);

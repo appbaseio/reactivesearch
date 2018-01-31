@@ -311,13 +311,20 @@ class MultiDropdownList extends Component {
 										...selectAll,
 										...this.state.options.filter(item => String(item.key).trim().length),
 									]}
-									renderItem={({ item }) => (
-										<CheckboxItem
-											label={item.key}
-											onPress={this.setValue}
-											checked={Object.keys(this.state.currentValue).includes(item.key)}
-										/>
-									)}
+									renderItem={({ item }) => {
+										const label = this.props.showCount && item.doc_count
+											? `${item.key} (${item.doc_count})`
+											: item.key;
+
+										return (
+											<CheckboxItem
+												label={label}
+												value={item.key}
+												onPress={this.setValue}
+												checked={Object.keys(this.state.currentValue).includes(item.key)}
+											/>
+										);
+									}}
 								/>
 							</Modal>)
 						: (

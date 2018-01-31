@@ -10,17 +10,14 @@ import SingleDropdownList from './components/list/SingleDropdownList';
 import MultiDropdownList from './components/list/MultiDropdownList';
 
 import SingleDropdownRange from './components/range/SingleDropdownRange';
+import MultiDropdownRange from './components/range/MultiDropdownRange';
 import RangeSlider from './components/range/RangeSlider';
 
 import DataSearch from './components/search/DataSearch';
 
 import ReactiveList from './components/result/ReactiveList';
 
-// import MultiDropdownRange from './sensors/MultiDropdownRange';
-
 export {
-	// MultiDropdownRange,
-
 	// basic
 	ReactiveBase,
 	DataController,
@@ -37,6 +34,7 @@ export {
 
 	// range
 	SingleDropdownRange,
+	MultiDropdownRange,
 	RangeSlider,
 
 	// search
