@@ -110,7 +110,7 @@ export default class Main extends Component {
 						'authors',
 						'authors.search',
 					]}
-					placeholder="🔍  Search for a book title or an author"
+					placeholder="Search for a book title or an author"
 					{...storyProps} // injecting props from navigator drawer story
 				/>
 			</View>

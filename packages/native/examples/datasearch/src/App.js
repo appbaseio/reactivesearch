@@ -1,6 +1,5 @@
 import Expo from 'expo';
 import React from 'react';
-import { View } from 'react-native';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import DataSearch from './DataSearchView';
@@ -45,22 +44,22 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DataSearch
 				showFilter={false}
-				iconPosition="left"
+				iconPosition="right"
 				navigation={navigation}
 			/>
 		),
 	},
-	DrawerOption5: {
-		navigationOptions: navigationOptionsBuilder('With custom icon'),
-		screen: ({ navigation }) => ( // eslint-disable-line
-			<DataSearch
-				showFilter={false}
-				icon={<View>📚</View>} // eslint-disable-line
-				iconPosition="left"
-				navigation={navigation}
-			/>
-		),
-	},
+	// DrawerOption5: {
+	// 	navigationOptions: navigationOptionsBuilder('With custom icon'),
+	// 	screen: ({ navigation }) => ( // eslint-disable-line
+	// 		<DataSearch
+	// 			showFilter={false}
+	// 			icon={<View>📚</View>} // eslint-disable-line
+	// 			iconPosition="left"
+	// 			navigation={navigation}
+	// 		/>
+	// 	),
+	// },
 	// DrawerOption6: {
 	// 	navigationOptions: navigationOptionsBuilder('With filter'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
