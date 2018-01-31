@@ -43,7 +43,7 @@ const COMPONENT_DEMO = 'SingleDropdownRange';
 export default class Main extends Component {
 	render() {
 		const { isReady } = this.state;
-		const { navigation } = this.props; // eslint-disable-line
+		const { navigation, ...storyProps } = this.props;  // eslint-disable-line
 
 		const isIOS = Platform.OS === 'ios';
 
@@ -110,7 +110,7 @@ export default class Main extends Component {
 						{ start: 3, end: 4, label: 'Rating 3 to 4' },
 						{ start: 4, end: 5, label: 'Rating > 4' },
 					]}
-					{...this.props} // injecting props from navigator drawer
+					{...storyProps} // injecting props from navigator drawer story
 				/>
 			</View>
 		);

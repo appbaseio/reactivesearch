@@ -43,7 +43,7 @@ const COMPONENT_DEMO = 'SingleDropdownList';
 export default class Main extends Component {
 	render() {
 		const { isReady } = this.state;
-		const { navigation } = this.props; // eslint-disable-line
+		const { navigation, ...storyProps } = this.props;  // eslint-disable-line
 
 		const isIOS = Platform.OS === 'ios';
 
@@ -107,7 +107,7 @@ export default class Main extends Component {
 					placeholder="Select a series"
 					dataField="original_series.raw"
 					size={30}
-					{...this.props} // injecting props from navigator drawer
+					{...storyProps} // injecting props from navigator drawer story
 				/>
 			</View>
 		);

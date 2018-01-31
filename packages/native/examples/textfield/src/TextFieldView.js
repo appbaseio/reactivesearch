@@ -43,7 +43,7 @@ const COMPONENT_DEMO = 'TextField';
 export default class Main extends Component {
 	render() {
 		const { isReady } = this.state;
-		const { navigation } = this.props; // eslint-disable-line
+		const { navigation, ...storyProps } = this.props;  // eslint-disable-line
 
 		const isIOS = Platform.OS === 'ios';
 
@@ -105,7 +105,7 @@ export default class Main extends Component {
 				<TextField
 					componentId="TextFieldSensor"
 					dataField="original_title.search"
-					{...this.props} // injecting props from navigator drawer
+					{...storyProps} // injecting props from navigator drawer story
 				/>
 			</View>
 		);

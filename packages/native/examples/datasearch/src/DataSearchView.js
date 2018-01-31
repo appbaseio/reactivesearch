@@ -43,7 +43,7 @@ const COMPONENT_DEMO = 'DataSearch';
 export default class Main extends Component {
 	render() {
 		const { isReady } = this.state;
-		const { navigation } = this.props; // eslint-disable-line
+		const { navigation, ...storyProps } = this.props;  // eslint-disable-line
 
 		const isIOS = Platform.OS === 'ios';
 
@@ -111,7 +111,7 @@ export default class Main extends Component {
 						'authors.search',
 					]}
 					placeholder="🔍  Search for a book title or an author"
-					{...this.props} // injecting props from navigator drawer
+					{...storyProps} // injecting props from navigator drawer story
 				/>
 			</View>
 		);
