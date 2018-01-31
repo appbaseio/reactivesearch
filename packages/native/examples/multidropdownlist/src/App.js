@@ -2,7 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
-import SingleDropdownList from './SingleDropdownListView';
+import MultiDropdownList from './MultiDropdownListView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 	drawerLabel,
@@ -19,7 +19,7 @@ const RootDrawer = DrawerNavigator({
 	DrawerOption1: {
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<SingleDropdownList
+			<MultiDropdownList
 				showFilter={false}
 				navigation={navigation}
 			/>
@@ -28,8 +28,8 @@ const RootDrawer = DrawerNavigator({
 	DrawerOption2: {
 		navigationOptions: navigationOptionsBuilder('With title'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<SingleDropdownList
-				title="Series List"
+			<MultiDropdownList
+				title="Series list"
 				showFilter={false}
 				navigation={navigation}
 			/>
@@ -38,9 +38,9 @@ const RootDrawer = DrawerNavigator({
 	DrawerOption3: {
 		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<SingleDropdownList
-				title="Series List"
-				placeholder="Select one"
+			<MultiDropdownList
+				title="Series list"
+				placeholder="Select multiple series"
 				showFilter={false}
 				navigation={navigation}
 			/>
@@ -49,7 +49,7 @@ const RootDrawer = DrawerNavigator({
 	DrawerOption4: {
 		navigationOptions: navigationOptionsBuilder('With size'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<SingleDropdownList
+			<MultiDropdownList
 				size={10}
 				showFilter={false}
 				navigation={navigation}
@@ -59,7 +59,7 @@ const RootDrawer = DrawerNavigator({
 	// DrawerOption5: {
 	// 	navigationOptions: navigationOptionsBuilder('With filter'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <SingleDropdownList
+	//         <MultiDropdownList
 	//             showFilter={true}
 	//             navigation={navigation}
 	//         />
@@ -68,7 +68,7 @@ const RootDrawer = DrawerNavigator({
 	DrawerOption6: {
 		navigationOptions: navigationOptionsBuilder('With custom sort'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<SingleDropdownList
+			<MultiDropdownList
 				sortBy="asc"
 				showFilter={false}
 				navigation={navigation}
@@ -78,7 +78,7 @@ const RootDrawer = DrawerNavigator({
 	DrawerOption7: {
 		navigationOptions: navigationOptionsBuilder('Without count'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<SingleDropdownList
+			<MultiDropdownList
 				showCount={false}
 				showFilter={false}
 				navigation={navigation}
@@ -88,7 +88,7 @@ const RootDrawer = DrawerNavigator({
 	DrawerOption8: {
 		navigationOptions: navigationOptionsBuilder('With Select All'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<SingleDropdownList
+			<MultiDropdownList
 				selectAllLabel="All Series"
 				showFilter={false}
 				navigation={navigation}
@@ -98,8 +98,8 @@ const RootDrawer = DrawerNavigator({
 	DrawerOption9: {
 		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<SingleDropdownList
-				defaultSelected="Discworld"
+			<MultiDropdownList
+				defaultSelected={['Anita Blake', 'Discworld']}
 				showFilter={false}
 				navigation={navigation}
 			/>
@@ -108,14 +108,12 @@ const RootDrawer = DrawerNavigator({
 	DrawerOption10: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
-			<SingleDropdownList
+			<MultiDropdownList
 				title="Series List"
 				size={100}
-				showCount
 				sortBy="asc"
-				selectAllLabel="All Series"
-				defaultSelected="Discworld"
-				placeholder="Select one"
+				defaultSelected={['Anita Blake', 'Discworld']}
+				placeholder="Select multi series"
 				showFilter={false}
 				filterLabel="Series filter"
 				navigation={navigation}
