@@ -183,6 +183,7 @@ class Main extends Component {
 							react={{
 								and: [
 									'DataSearchComponent',
+									'StComponent',
 								],
 							}}
 						/>

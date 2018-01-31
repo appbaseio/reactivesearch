@@ -22,7 +22,7 @@ class CheckboxItem extends Component {
 			selected: !this.state.selected,
 		});
 
-		this.props.onPress(this.props.label);
+		this.props.onPress(this.props.value);
 	};
 
 	render() {
@@ -55,6 +55,7 @@ CheckboxItem.propTypes = {
 	checked: types.bool,
 	onPress: types.func,
 	label: types.string,
+	value: types.string,
 };
 
 export default CheckboxItem;
