@@ -25,21 +25,20 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	DrawerOption2: {
-		navigationOptions: navigationOptionsBuilder('With title'),
-		screen: ({ navigation }) => ( // eslint-disable-line
-			<MultiDropdownRange
-				title="Ratings list"
-				showFilter={false}
-				navigation={navigation}
-			/>
-		),
-	},
+	// DrawerOption2: {
+	// 	navigationOptions: navigationOptionsBuilder('With title'),
+	// 	screen: ({ navigation }) => ( // eslint-disable-line
+	// 		<MultiDropdownRange
+	// 			title="Ratings list"
+	// 			showFilter={false}
+	// 			navigation={navigation}
+	// 		/>
+	// 	),
+	// },
 	DrawerOption3: {
 		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownRange
-				title="Ratings list"
 				placeholder="Select ratings"
 				showFilter={false}
 				navigation={navigation}
@@ -109,7 +108,7 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownRange
-				title="Ratings list"
+				// title="Ratings list"
 				size={100}
 				sortBy="asc"
 				selectAllLabel="All Ratings"

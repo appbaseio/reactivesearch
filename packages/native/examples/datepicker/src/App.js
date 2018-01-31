@@ -25,16 +25,16 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	DrawerOption2: {
-		navigationOptions: navigationOptionsBuilder('With title'),
-		screen: ({ navigation }) => ( // eslint-disable-line
-			<DatePicker
-				title="Choose a date"
-				showFilter={false}
-				navigation={navigation}
-			/>
-		),
-	},
+	// DrawerOption2: {
+	// 	navigationOptions: navigationOptionsBuilder('With title'),
+	// 	screen: ({ navigation }) => ( // eslint-disable-line
+	// 		<DatePicker
+	// 			title="Choose a date"
+	// 			showFilter={false}
+	// 			navigation={navigation}
+	// 		/>
+	// 	),
+	// },
 	DrawerOption3: {
 		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -118,7 +118,7 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DatePicker
-				title="Date Picker"
+				// title="Date Picker"
 				placeholder="Choose a date"
 				queryFormat="date_time_no_millis"
 				showFilter={false}

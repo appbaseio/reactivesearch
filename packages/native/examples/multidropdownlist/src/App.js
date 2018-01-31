@@ -25,21 +25,20 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	DrawerOption2: {
-		navigationOptions: navigationOptionsBuilder('With title'),
-		screen: ({ navigation }) => ( // eslint-disable-line
-			<MultiDropdownList
-				title="Series list"
-				showFilter={false}
-				navigation={navigation}
-			/>
-		),
-	},
+	// DrawerOption2: {
+	// 	navigationOptions: navigationOptionsBuilder('With title'),
+	// 	screen: ({ navigation }) => ( // eslint-disable-line
+	// 		<MultiDropdownList
+	// 			title="Series list"
+	// 			showFilter={false}
+	// 			navigation={navigation}
+	// 		/>
+	// 	),
+	// },
 	DrawerOption3: {
 		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
-				title="Series list"
 				placeholder="Select multiple series"
 				showFilter={false}
 				navigation={navigation}
@@ -109,7 +108,7 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
-				title="Series List"
+				// title="Series List"
 				size={100}
 				sortBy="asc"
 				defaultSelected={['Anita Blake', 'Discworld']}

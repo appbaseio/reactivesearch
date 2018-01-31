@@ -25,16 +25,16 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	DrawerOption2: {
-		navigationOptions: navigationOptionsBuilder('With title'),
-		screen: ({ navigation }) => ( // eslint-disable-line
-			<TextField
-				title="Search books"
-				showFilter={false}
-				navigation={navigation}
-			/>
-		),
-	},
+	// DrawerOption2: {
+	// 	navigationOptions: navigationOptionsBuilder('With title'),
+	// 	screen: ({ navigation }) => ( // eslint-disable-line
+	// 		<TextField
+	// 			title="Search books"
+	// 			showFilter={false}
+	// 			navigation={navigation}
+	// 		/>
+	// 	),
+	// },
 	DrawerOption3: {
 		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -79,7 +79,7 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<TextField
-				title="Books Search"
+				// title="Books Search"
 				placeholder="Search for a book title"
 				defaultSelected="The Hitchhiker's Guide to the Galaxy"
 				showFilter={false}
