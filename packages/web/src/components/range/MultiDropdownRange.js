@@ -25,7 +25,6 @@ class MultiDropdownRange extends Component {
 
 		this.state = {
 			currentValue: [],
-			showModal: false,
 		};
 
 		// selectedValues hold the selected items as keys for O(1) complexity
@@ -147,12 +146,6 @@ class MultiDropdownRange extends Component {
 		);
 	};
 
-	toggleModal = () => {
-		this.setState({
-			showModal: !this.state.showModal,
-		});
-	};
-
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
 
@@ -201,7 +194,6 @@ MultiDropdownRange.propTypes = {
 	onValueChange: types.func,
 	onQueryChange: types.func,
 	updateQuery: types.funcRequired,
-	supportedOrientations: types.supportedOrientations,
 	placeholder: types.string,
 	selectedValue: types.selectedValue,
 	title: types.title,

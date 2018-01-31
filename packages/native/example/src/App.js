@@ -10,6 +10,7 @@ import {
 	SingleDropdownList,
 	MultiDropdownList,
 	SingleDropdownRange,
+	MultiDropdownRange,
 	RangeSlider,
 	DatePicker,
 	DateRange,
@@ -132,6 +133,18 @@ class Main extends Component {
 								{ start: 501, end: 1000, label: 'First Date' },
 							]}
 							defaultSelected="Pricey"
+						/>
+
+						<MultiDropdownRange
+							componentId="MultiDropdownRange"
+							dataField="price"
+							data={[
+								{ start: 0, end: 100, label: 'Cheap' },
+								{ start: 101, end: 200, label: 'Moderate' },
+								{ start: 201, end: 500, label: 'Pricey' },
+								{ start: 501, end: 1000, label: 'First Date' },
+							]}
+							defaultSelected={['Pricey', 'First Date']}
 						/>
 
 						<RangeSlider
