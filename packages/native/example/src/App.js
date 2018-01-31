@@ -101,6 +101,7 @@ class Main extends Component {
 						<MultiDropdownList
 							componentId="MultiDropdownListComponent"
 							dataField="brand.raw"
+							selectAllLabel="All"
 						/>
 
 						<TextField

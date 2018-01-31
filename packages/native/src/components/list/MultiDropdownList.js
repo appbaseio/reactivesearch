@@ -312,7 +312,7 @@ class MultiDropdownList extends Component {
 										...this.state.options.filter(item => String(item.key).trim().length),
 									]}
 									renderItem={({ item }) => {
-										const label = this.props.showCount
+										const label = this.props.showCount && item.doc_count
 											? `${item.key} (${item.doc_count})`
 											: item.key;
 
