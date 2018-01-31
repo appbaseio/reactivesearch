@@ -1,7 +1,7 @@
 {
 	"name": "@appbaseio/reactivesearch-native",
 	"version": "0.4.0",
-	"description": "Native data components for building reactive UIs",
+	"description": "Native data components for building reactive UIs with Elasticsearch",
 	"main": "src/index.js",
 	"files": [
 		"src/"
@@ -10,8 +10,17 @@
 		"lint": "eslint .",
 		"precommit": "eslint ."
 	},
-	"author": "Deepak Grover <deepakgrover333@gmail.com> (https://github.com/metagrover)",
+	"author": "Appbase Inc. <info@appbase.io> (https://github.com/appbaseio)",
 	"license": "Apache-2.0",
+	"homepage": "https://github.com/appbaseio/reactivesearch",
+	"keywords": [
+		"appbaseio",
+		"appbase",
+		"search",
+		"UI components",
+		"react-native",
+		"reactivesearch"
+	],
 	"peerDependencies": {
 		"react": "*",
 		"react-native": "*"
