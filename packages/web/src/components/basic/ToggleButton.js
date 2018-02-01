@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import {
 	addComponent,
@@ -17,6 +16,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
 import Button, { toggleButtons } from '../../styles/Button';
+import { connect } from '../../utils';
 
 class ToggleButton extends Component {
 	constructor(props) {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
 	addComponent,
 	removeComponent,
@@ -23,6 +22,7 @@ import RangeLabel from './addons/RangeLabel';
 import Slider from '../../styles/Slider';
 import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
+import { connect } from '../../utils';
 
 class RangeSlider extends Component {
 	constructor(props) {

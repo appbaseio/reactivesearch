@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
 
@@ -25,6 +24,7 @@ import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
+import { connect } from '../../utils';
 
 const Text = withTheme(props => (
 	<span

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import {
 	addComponent,
@@ -17,6 +16,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Button, { numberBoxContainer } from '../../styles/Button';
 import Flex from '../../styles/Flex';
+import { connect } from '../../utils';
 
 class NumberBox extends Component {
 	constructor(props) {

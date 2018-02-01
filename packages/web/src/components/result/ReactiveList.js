@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import {
 	addComponent,
@@ -25,6 +24,7 @@ import PoweredBy from './addons/PoweredBy';
 
 import Flex from '../../styles/Flex';
 import { resultStats, sortOptions } from '../../styles/results';
+import { connect } from '../../utils';
 
 class ReactiveList extends Component {
 	constructor(props) {

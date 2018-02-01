@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
 	addComponent,
 	removeComponent,
@@ -21,6 +20,7 @@ import DateContainer from '../../styles/DateContainer';
 import Title from '../../styles/Title';
 import Flex from '../../styles/Flex';
 import CancelSvg from '../shared/CancelSvg';
+import { connect } from '../../utils';
 
 class DatePicker extends Component {
 	constructor(props) {

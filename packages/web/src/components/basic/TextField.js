@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import {
 	addComponent,
@@ -17,6 +16,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Input from '../../styles/Input';
 import Title from '../../styles/Title';
+import { connect } from '../../utils';
 
 class TextField extends Component {
 	constructor(props) {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import {
 	addComponent,
@@ -27,6 +26,7 @@ import Title from '../../styles/Title';
 import Card, { container, Image } from '../../styles/Card';
 import Flex from '../../styles/Flex';
 import { resultStats, sortOptions } from '../../styles/results';
+import { connect } from '../../utils';
 
 class ResultCard extends Component {
 	constructor(props) {

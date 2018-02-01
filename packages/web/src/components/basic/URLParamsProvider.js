@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { setHeaders } from '@appbaseio/reactivecore/lib/actions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import Base from '../../styles/Base';
+import { connect } from '../../utils';
 
 class URLParamsProvider extends Component {
 	componentWillReceiveProps(nextProps) {

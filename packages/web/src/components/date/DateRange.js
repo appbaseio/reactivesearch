@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
 	addComponent,
 	removeComponent,
@@ -20,6 +19,7 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import DateContainer from '../../styles/DateContainer';
 import Title from '../../styles/Title';
 import Flex from '../../styles/Flex';
+import { connect } from '../../utils';
 
 import CancelSvg from '../shared/CancelSvg';
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import {
 	addComponent,
@@ -23,6 +22,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
 import Dropdown from '../shared/Dropdown';
+import { connect } from '../../utils';
 
 class MultiDropdownList extends Component {
 	constructor(props) {
