@@ -11,7 +11,7 @@ export default () => (
 			title="When"
 			numberOfMonths={2}
 			queryFormat="basic_date"
-			initialMonth={new Date('04-01-2017')}
+			initialMonth={new Date('04/01/2017')}
 		/>
 
 		<NumberBox
