@@ -23,8 +23,8 @@ export default class Main extends Component {
 							componentId="BookSensor"
 							rangeLabels={(min, max) => (
 								{
-									start: min + " book",
-									end: max + " books"
+									start: `${min} book`,
+									end: `${max} books`,
 								}
 							)}
 						/>

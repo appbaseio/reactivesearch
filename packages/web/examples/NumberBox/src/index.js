@@ -23,9 +23,9 @@ class Main extends Component {
 							dataField="average_rating_rounded"
 							defaultSelected={2}
 							data={{
-								label: "Book Rating",
+								label: 'Book Rating',
 								start: 2,
-								end: 5
+								end: 5,
 							}}
 							labelPosition="left"
 						/>
