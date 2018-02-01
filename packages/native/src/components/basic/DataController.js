@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { View } from 'react-native';
 
 import { addComponent, removeComponent, updateQuery } from '@appbaseio/reactivecore/lib/actions';
 import { isEqual, checkValueChange } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
+
+import { connect } from '../../utils';
 
 class DataController extends Component {
 	componentDidMount() {

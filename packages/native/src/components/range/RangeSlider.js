@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Platform } from 'react-native';
-import { connect } from 'react-redux';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 import {
@@ -20,6 +19,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Histogram from './addons/Histogram';
+import { connect } from '../../utils';
 
 class RangeSlider extends Component {
 	constructor(props) {

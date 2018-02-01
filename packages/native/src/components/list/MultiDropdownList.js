@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { View, Modal, FlatList, TouchableWithoutFeedback } from 'react-native';
 import {
 	Text,
@@ -33,6 +32,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import CheckboxItem from '../shared/CheckboxItem';
+import { connect } from '../../utils';
 
 class MultiDropdownList extends Component {
 	constructor(props) {

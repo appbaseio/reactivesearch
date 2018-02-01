@@ -1,6 +1,5 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { View, Modal, ListView, TouchableWithoutFeedback } from 'react-native';
 import {
 	CheckBox,
@@ -29,6 +28,8 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
+
+import { connect } from '../../utils';
 
 class MultiDropdownRange extends Component {
 	constructor(props) {

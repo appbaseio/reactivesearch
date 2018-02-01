@@ -12,7 +12,6 @@ import {
 	Right,
 	Icon,
 } from 'native-base';
-import { connect } from 'react-redux';
 
 import {
 	addComponent,
@@ -31,6 +30,8 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
+
+import { connect } from '../../utils';
 
 class DataSearch extends Component {
 	constructor(props) {

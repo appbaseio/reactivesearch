@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { View } from 'react-native';
 import { Text, Spinner, Button, Icon } from 'native-base';
 
@@ -23,6 +22,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import List from './addons/List';
+import { connect } from '../../utils';
 
 class ReactiveList extends Component {
 	constructor(props) {

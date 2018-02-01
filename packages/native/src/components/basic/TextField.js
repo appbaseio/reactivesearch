@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Input, Item, Icon, Button } from 'native-base';
-import { connect } from 'react-redux';
 
 import {
 	addComponent,
@@ -14,6 +13,8 @@ import {
 	checkPropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+
+import { connect } from '../../utils';
 
 class TextField extends Component {
 	constructor(props) {

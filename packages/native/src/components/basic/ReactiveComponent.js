@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { connect } from 'react-redux';
 
 import {
 	addComponent,
@@ -11,6 +10,8 @@ import {
 } from '@appbaseio/reactivecore/lib/actions';
 import { pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+
+import { connect } from '../../utils';
 
 class ReactiveComponent extends Component {
 	constructor(props) {

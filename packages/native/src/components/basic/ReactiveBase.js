@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
+import { createProvider } from 'react-redux';
 import { Container } from 'native-base';
 import Appbase from 'appbase-js';
 
-import configureStore from '@appbaseio/reactivecore';
+import configureStore, { storeKey } from '@appbaseio/reactivecore';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
+
+/* use a custom store key so reactivesearch does not interfere
+   with a different redux store in a nested context */
+const Provider = createProvider(storeKey);
 
 class ReactiveBase extends Component {
 	constructor(props) {

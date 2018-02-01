@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { View, Modal, TouchableWithoutFeedback } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import {
@@ -27,6 +26,8 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+
+import { connect } from '../../utils';
 
 const XDate = require('xdate');
 

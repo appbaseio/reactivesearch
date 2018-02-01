@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Picker } from 'native-base';
-import { connect } from 'react-redux';
 
 import {
 	addComponent,
@@ -15,6 +14,8 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
+
+import { connect } from '../../utils';
 
 class SingleDropdownRange extends Component {
 	constructor(props) {
