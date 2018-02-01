@@ -1,5 +1,5 @@
 {
-	"extends": "../../../../.eslintrc",
+	"extends": "../../../.eslintrc",
 	"rules": {
 		"import/no-extraneous-dependencies": 0,
 		"import/extensions": 0,
