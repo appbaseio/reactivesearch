@@ -70,6 +70,7 @@ class Main extends Component {
 	}
 }
 
+/* eslint react/no-multi-comp: 0 */
 class CustomComponent extends Component {
 	setValue(value) {
 		this.props.setQuery({
@@ -85,7 +86,7 @@ class CustomComponent extends Component {
 	render() {
 		if (this.props.aggregations) {
 			return this.props.aggregations['brand.raw'].buckets.map(item => (
-				<div key={item.key} onClick={() => this.setValue(item.key)}>{item.key}</div>
+				<div key={item.key} onClick={() => this.setValue(item.key)}>{item.key}</div> // eslint-disable-line
 			));
 		}
 

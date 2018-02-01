@@ -5,7 +5,4 @@ umd
 playground
 packages/web/webpack.config.js
 packages/web/webpack.config.umd.js
-packages/web/examples
 .expo/
-packages/native/examples
-packages/native/example

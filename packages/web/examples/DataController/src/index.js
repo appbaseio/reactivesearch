@@ -23,10 +23,13 @@ class Main extends Component {
 							title="DataController"
 							componentId="BookSensor"
 							dataField="original_series.raw"
-							customQuery={(book, props) => (book ? { match: { [props.dataField]: book } } : { match_all: {} })}
+							customQuery={
+								(book, props) =>
+									(book ? { match: { [props.dataField]: book } } : { match_all: {} })
+							}
 							size={100}
 						>
-							<div>A custom 💪 UI component</div>
+							<div>A custom <span role="img" aria-label="img">💪</span> UI component</div>
 						</DataController>
 					</div>
 

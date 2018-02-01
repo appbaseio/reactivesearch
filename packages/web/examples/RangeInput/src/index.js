@@ -23,11 +23,11 @@ class Main extends Component {
 							componentId="BookSensor"
 							range={{
 								start: 3000,
-								end: 50000
+								end: 50000,
 							}}
 							rangeLabels={{
 								start: '3K',
-								end: '50K'
+								end: '50K',
 							}}
 						/>
 					</div>
@@ -42,7 +42,7 @@ class Main extends Component {
 							onData={this.booksList}
 							pagination
 							react={{
-								and: 'BookSensor'
+								and: 'BookSensor',
 							}}
 						/>
 					</div>
