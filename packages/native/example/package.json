@@ -4,20 +4,16 @@
   "private": true,
   "scripts": {
     "start": "react-native-scripts start",
-    "start-storybook": "RUN=storybook react-native-scripts start",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "storybook": "storybook start -p 7007"
+    "postinstall": "rm -rf node_modules/native-base-shoutem-theme/node_modules/hoist-non-react-statics"
   },
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "^0.0.11",
-    "@storybook/addon-actions": "^3.2.16",
-    "@storybook/addon-knobs": "^3.2.16",
-    "@storybook/addon-links": "^3.2.16",
-    "@storybook/react-native": "^3.2.16",
     "appbase-js": "^2.2.8",
     "escape-string-regexp": "^1.0.5",
     "expo": "22.0.0",
+    "hoist-non-react-statics": "^2.3.1",
     "metro-bundler": "^0.22.1",
     "native-base": "^2.3.7",
     "react": "^16.2.0",

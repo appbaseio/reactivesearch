@@ -308,8 +308,8 @@ acorn@^4.0.3:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.13.tgz#105495ae5361d697bd195c825192e1ad7f253787"
 
 acorn@^5.0.0, acorn@^5.2.1:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.4.0.tgz#51c581c9d4b1943dda59a3e73bcf02661ac727ea"
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.4.1.tgz#fdc58d9d17f4a4e98d102ded826a9b9759125102"
 
 airbnb-js-shims@^1.4.0:
   version "1.4.1"

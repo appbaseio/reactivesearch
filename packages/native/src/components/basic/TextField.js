@@ -14,6 +14,8 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import withTheme from '../../theme/withTheme';
+
 import { connect } from '../../utils';
 
 class TextField extends Component {
@@ -224,4 +226,4 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(TextField);
+export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(TextField));

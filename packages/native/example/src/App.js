@@ -17,8 +17,6 @@ import {
 	ReactiveList,
 } from '@appbaseio/reactivebase-native';
 
-import StorybookUI from '../storybook';
-
 class Main extends Component {
 	state = {
 		isReady: false,
@@ -195,10 +193,6 @@ class Main extends Component {
 	}
 }
 
-if (process.env.RUN === 'storybook') {
-	module.exports = StorybookUI;
-	Expo.registerRootComponent(StorybookUI);
-} else {
-	module.exports = Main;
-	Expo.registerRootComponent(Main);
-}
+module.exports = Main;
+Expo.registerRootComponent(Main);
+

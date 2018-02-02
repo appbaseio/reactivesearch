@@ -23,6 +23,7 @@ module.exports = {
 			'react-native-calendars',
 			'xdate',
 			'prop-types',
+			'hoist-non-react-statics',
 		];
 	},
 	getBlacklistRE() {

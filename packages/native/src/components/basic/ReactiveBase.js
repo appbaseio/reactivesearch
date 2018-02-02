@@ -7,6 +7,9 @@ import configureStore, { storeKey } from '@appbaseio/reactivecore';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import ThemeProvider from '../../theme/ThemeProvider';
+import theme from '../../theme';
+
 /* use a custom store key so reactivesearch does not interfere
    with a different redux store in a nested context */
 const Provider = createProvider(storeKey);
@@ -34,11 +37,13 @@ class ReactiveBase extends Component {
 
 	render() {
 		return (
-			<Provider store={this.store}>
-				<Container>
-					{this.props.children}
-				</Container>
-			</Provider>
+			<ThemeProvider theming={{ ...theme, ...this.props.theme }}>
+				<Provider store={this.store}>
+					<Container>
+						{this.props.children}
+					</Container>
+				</Provider>
+			</ThemeProvider>
 		);
 	}
 }
@@ -48,6 +53,7 @@ ReactiveBase.propTypes = {
 	url: types.string,
 	credentials: types.string,
 	app: types.stringRequired,
+	theme: types.style,
 	children: types.children,
 };
 
