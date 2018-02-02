@@ -16,7 +16,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import withTheme from '../../theme/withTheme';
 
-import { connect } from '../../utils';
+import { connect, getInnerStyle } from '../../utils';
 
 class TextField extends Component {
 	constructor(props) {
@@ -137,11 +137,24 @@ class TextField extends Component {
 			<Item regular style={{ marginLeft: 0, ...this.props.style }}>
 				{
 					this.props.showIcon && this.props.iconPosition === 'left'
-						? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+						? (
+							<Icon
+								name="search"
+								style={{
+									fontSize: 22,
+									top: 2,
+									...getInnerStyle(this.props.innerStyle, 'icon'),
+								}}
+							/>
+						)
 						: null
 				}
 				<Input
-					style={style}
+					style={{
+						color: this.props.theming.textColor,
+						...style,
+						...getInnerStyle(this.props.innerStyle, 'input'),
+					}}
 					placeholder={this.props.placeholder}
 					onChangeText={this.setValue}
 					value={this.state.currentValue}
@@ -163,6 +176,7 @@ class TextField extends Component {
 												? 0
 												: 10
 										),
+										...getInnerStyle(this.props.innerStyle, 'icon'),
 									}}
 								/>
 							</Button>
@@ -171,7 +185,16 @@ class TextField extends Component {
 				}
 				{
 					this.props.showIcon && this.props.iconPosition === 'right'
-						? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+						? (
+							<Icon
+								name="search"
+								style={{
+									fontSize: 22,
+									top: 2,
+									...getInnerStyle(this.props.innerStyle, 'icon'),
+								}}
+							/>
+						)
 						: null
 				}
 			</Item>
@@ -201,6 +224,8 @@ TextField.propTypes = {
 	showIcon: types.bool,
 	iconPosition: types.string,
 	showClear: types.bool,
+	theming: types.style,
+	innerStyle: types.style,
 };
 
 TextField.defaultProps = {

@@ -83,6 +83,9 @@ class Main extends Component {
 				app="car-store"
 				credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
 				type="cars"
+				// theme={{
+				// 	textColor: 'yellow',
+				// }}
 			>
 				<Header>
 					<Body>
@@ -106,6 +109,11 @@ class Main extends Component {
 							componentId="TextFieldComponent"
 							dataField="color"
 							placeholder="Search color"
+							innerStyle={{
+								icon: {
+									color: 'blue',
+								},
+							}}
 						/>
 
 						<DatePicker
@@ -195,4 +203,3 @@ class Main extends Component {
 
 module.exports = Main;
 Expo.registerRootComponent(Main);
-
