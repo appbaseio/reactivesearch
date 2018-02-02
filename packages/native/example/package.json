@@ -19,7 +19,7 @@
     "escape-string-regexp": "^1.0.5",
     "expo": "22.0.0",
     "metro-bundler": "^0.22.1",
-    "native-base": "^2.3.3",
+    "native-base": "^2.3.7",
     "react": "^16.2.0",
     "react-native": "^0.49.0",
     "react-native-calendars": "^1.16.1",

@@ -28,7 +28,7 @@ class Main extends Component {
 		await Expo.Font.loadAsync({
 			Roboto: require('native-base/Fonts/Roboto.ttf'), // eslint-disable-line global-require
 			Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'), // eslint-disable-line global-require
-			Ionicons: require('native-base/Fonts/Ionicons.ttf'), // eslint-disable-line global-require
+			Ionicons: require('@expo/vector-icons/fonts/Ionicons.ttf'), // eslint-disable-line global-require
 		});
 
 		this.setState({ isReady: true });
