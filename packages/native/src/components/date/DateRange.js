@@ -27,7 +27,8 @@ import {
 import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { connect } from '../../utils';
+import withTheme from '../../theme/withTheme';
+import { connect, getInnerStyle } from '../../utils';
 
 const XDate = require('xdate');
 
@@ -282,8 +283,8 @@ class DateRange extends Component {
 			markedDates = {
 				[this.state.currentDate.start.dateString]: {
 					startingDay: true,
-					textColor: '#fff',
-					color: '#0B6AFF',
+					color: this.props.theming.primaryColor,
+					textColor: this.props.theming.primaryTextColor,
 				},
 			};
 			if (this.state.currentDate.end) {
@@ -293,21 +294,21 @@ class DateRange extends Component {
 				);
 				range.forEach((date) => {
 					markedDates[date] = {
-						textColor: '#fff',
-						color: '#0b6aff',
+						color: this.props.theming.primaryColor,
+						textColor: this.props.theming.primaryTextColor,
 					};
 				});
 				markedDates[this.state.currentDate.end.dateString] = {
 					endingDay: true,
-					textColor: '#fff',
-					color: '#0b6aff',
+					color: this.props.theming.primaryColor,
+					textColor: this.props.theming.primaryTextColor,
 				};
 			}
 		}
 
 		return (
 			<View>
-				<Item regular style={{ marginLeft: 0 }}>
+				<Item regular style={{ marginLeft: 0, ...this.props.style }}>
 					<TouchableWithoutFeedback
 						onPress={this.toggleModal}
 					>
@@ -315,13 +316,14 @@ class DateRange extends Component {
 							style={{
 								flex: 1,
 								alignItems: 'center',
-								color: this.state.currentDate ? '#000' : '#555',
+								color: this.state.currentDate ? this.props.theming.textColor : '#555',
 								fontSize: 17,
 								height: 50,
 								lineHeight: 24,
 								paddingLeft: 8,
 								paddingRight: 5,
 								paddingTop: 12,
+								...getInnerStyle(this.props.innerStyle, 'label'),
 							}}
 						>
 							{
@@ -340,26 +342,41 @@ class DateRange extends Component {
 				>
 					<Header>
 						<Left>
-							<Button transparent onPress={this.toggleModal}>
-								<Icon name="arrow-back" />
+							<Button
+								transparent
+								onPress={this.toggleModal}
+								style={getInnerStyle(this.props.innerStyle, 'button')}
+							>
+								<Icon
+									name="arrow-back"
+									color={this.props.theming.primaryColor}
+									style={getInnerStyle(this.props.innerStyle, 'icon')}
+								/>
 							</Button>
 						</Left>
 						<Body>
-							<Title>{this.props.placeholder}</Title>
+							<Title style={getInnerStyle(this.props.innerStyle, 'title')}>
+								{this.props.placeholder}
+							</Title>
 						</Body>
 						<Right>
 							{
 								this.state.currentDate
 									? (
 										<Button
-											style={{ paddingRight: 0 }}
+											style={{
+												paddingRight: 0,
+												...getInnerStyle(this.props.innerStyle, 'button'),
+											}}
 											transparent
 											onPress={() => {
 												this.handleDateChange(null);
 												this.toggleModal();
 											}}
 										>
-											<Text>Reset</Text>
+											<Text style={getInnerStyle(this.props.innerStyle, 'label')}>
+												Reset
+											</Text>
 										</Button>
 									)
 									: null
@@ -373,22 +390,31 @@ class DateRange extends Component {
 						markingType="period"
 						style={{
 							marginTop: 10,
+							...getInnerStyle(this.props.innerStyle, 'calendar'),
 						}}
 					/>
 					{
 						this.state.currentDate && this.state.currentDate.end
 							? (
 								<Button
-									primary
 									onPress={this.toggleModal}
 									style={{
 										width: '100%',
 										borderRadius: 0,
 										alignItems: 'center',
 										justifyContent: 'center',
+										backgroundColor: this.props.theming.primaryColor,
+										...getInnerStyle(this.props.innerStyle, 'button'),
 									}}
 								>
-									<Text>View Results</Text>
+									<Text
+										style={{
+											color: this.props.theming.primaryTextColor,
+											...getInnerStyle(this.props.innerStyle, 'label'),
+										}}
+									>
+										View Results
+									</Text>
 								</Button>
 							)
 							: null
@@ -418,6 +444,8 @@ DateRange.propTypes = {
 	onQueryChange: types.func,
 	updateQuery: types.funcRequired,
 	supportedOrientations: types.supportedOrientations,
+	theming: types.style,
+	innerStyle: types.style,
 };
 
 DateRange.defaultProps = {
@@ -439,4 +467,4 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(DateRange);
+export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(DateRange));
