@@ -19,7 +19,8 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Histogram from './addons/Histogram';
-import { connect } from '../../utils';
+import withTheme from '../../theme/withTheme';
+import { connect, getInnerStyle } from '../../utils';
 
 class RangeSlider extends Component {
 	constructor(props) {
@@ -230,7 +231,7 @@ class RangeSlider extends Component {
 			}),
 		};
 		return (
-			<View style={{ paddingTop: 25 }}>
+			<View style={{ paddingTop: 25, ...this.props.style }}>
 				<View onLayout={e => this.setWidth(e.nativeEvent.layout.width)}>
 					{
 						this.state.stats.length && this.props.showHistogram
@@ -242,6 +243,7 @@ class RangeSlider extends Component {
 									|| Math.ceil((this.props.range.end - this.props.range.start) / 10)
 								}
 								paddingHorizontal={Platform.OS === 'ios' ? 15 : 6}
+								barStyle={getInnerStyle(this.props.innerStyle, 'histogramBar')}
 							/>)
 							: null
 					}
@@ -255,6 +257,9 @@ class RangeSlider extends Component {
 								allowOverlap={false}
 								snapped
 								containerStyle={styles}
+								selectedStyle={{
+									backgroundColor: this.props.theming.primaryColor,
+								}}
 								sliderLength={this.state.width}
 								onValuesChangeFinish={this.handleChange}
 							/>)
@@ -288,6 +293,9 @@ RangeSlider.propTypes = {
 	filterLabel: types.string,
 	rangeLabels: types.rangeLabels,
 	selectedValue: types.selectedValue,
+	style: types.style,
+	theming: types.style,
+	innerStyle: types.style,
 };
 
 RangeSlider.defaultProps = {
@@ -319,4 +327,4 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryOptions(component, props, execute)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(RangeSlider);
+export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(RangeSlider));
