@@ -2,6 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+
 import MultiDropdownRange from './MultiDropdownRangeView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
@@ -116,6 +117,23 @@ const RootDrawer = DrawerNavigator({
 				placeholder="Select ratings"
 				showFilter={false}
 				filterLabel="Ratings filter"
+				innerStyle={{
+					icon: {
+						color: 'white',
+					},
+					title: {
+						color: 'white',
+					},
+					label: {
+						color: 'purple',
+					},
+					header: {
+						backgroundColor: 'purple',
+					},
+					checkbox: {
+						color: 'purple',
+					},
+				}}
 				navigation={navigation}
 			/>
 		),
