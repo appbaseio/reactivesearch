@@ -2,6 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+
 import SingleDropdownRange from './SingleDropdownRangeView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
@@ -73,6 +74,14 @@ const RootDrawer = DrawerNavigator({
 				defaultSelected="Rating 3 to 4"
 				filterLabel="Book filter"
 				showFilter={false}
+				innerStyle={{
+					title: {
+						color: 'purple',
+					},
+					label: {
+						color: 'purple',
+					},
+				}}
 				navigation={navigation}
 			/>
 		),
