@@ -7,7 +7,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import TouchableItem from './TouchableItem';
-import { getInnerStyle, getCheckboxInnerStyle } from '../../utils';
+import { getInnerStyle } from '../../utils';
 
 class CheckboxItem extends Component {
 	handlePress = () => {
