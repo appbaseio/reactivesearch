@@ -15,7 +15,6 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import withTheme from '../../theme/withTheme';
-
 import { connect, getInnerStyle } from '../../utils';
 
 class TextField extends Component {
@@ -163,7 +162,11 @@ class TextField extends Component {
 				{
 					this.state.currentValue && this.props.showClear
 						? (
-							<Button transparent onPress={this.clearValue}>
+							<Button
+								transparent
+								onPress={this.clearValue}
+								style={getInnerStyle(this.props.innerStyle, 'button')}
+							>
 								<Icon
 									name="md-close"
 									style={{
