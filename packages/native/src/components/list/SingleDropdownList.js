@@ -18,7 +18,8 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { connect } from '../../utils';
+import withTheme from '../../theme/withTheme';
+import { connect, getInnerStyle } from '../../utils';
 
 class SingleDropdownList extends Component {
 	constructor(props) {
@@ -190,7 +191,19 @@ class SingleDropdownList extends Component {
 				placeholder={this.props.placeholder}
 				selectedValue={this.state.currentValue}
 				onValueChange={this.handleValueChange}
-				style={this.props.style}
+				style={{
+					width: '100%',
+					borderRadius: 0,
+					...this.props.style,
+				}}
+				textStyle={{
+					color: this.props.theming.textColor,
+				}}
+				headerStyle={getInnerStyle(this.props.innerStyle, 'title')}
+				itemTextStyle={{
+					color: this.props.theming.textColor,
+					...getInnerStyle(this.props.innerStyle, 'label'),
+				}}
 			>
 				{
 					[
@@ -236,6 +249,8 @@ SingleDropdownList.propTypes = {
 	style: types.style,
 	showCount: types.bool,
 	size: types.number,
+	theming: types.style,
+	innerStyle: types.style,
 };
 
 SingleDropdownList.defaultProps = {
@@ -261,4 +276,4 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList);
+export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(SingleDropdownList));
