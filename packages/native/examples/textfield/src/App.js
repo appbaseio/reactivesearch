@@ -4,9 +4,6 @@ import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 
 import TextField from './TextFieldView';
-import {
-	DEFAULT_COLORS as COLORS,
-} from '../../common/helpers';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 	drawerLabel,
@@ -90,10 +87,10 @@ const RootDrawer = DrawerNavigator({
 				filterLabel="Books filter"
 				innerStyle={{
 					icon: {
-						color: COLORS.primary,
+						color: 'purple',
 					},
 					input: {
-						color: COLORS.primary,
+						color: 'purple',
 					},
 				}}
 				navigation={navigation}
