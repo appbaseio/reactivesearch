@@ -22,7 +22,8 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import List from './addons/List';
-import { connect } from '../../utils';
+import withTheme from '../../theme/withTheme';
+import { connect, getInnerStyle } from '../../utils';
 
 class ReactiveList extends Component {
 	constructor(props) {
@@ -245,14 +246,38 @@ class ReactiveList extends Component {
 		const pages = [];
 
 		for (let i = start; i < (start + this.props.pages) - 1; i += 1) {
+			const activeStyles = {
+				button: {},
+				text: {},
+			};
+
+			if (this.state.currentPage === i - 1) {
+				activeStyles.button = {
+					backgroundColor: this.props.theming.primaryColor,
+				};
+				activeStyles.text = {
+					color: this.props.theming.primaryTextColor,
+				};
+			}
+
 			const pageBtn = (
 				<Button
 					key={i - 1}
 					onPress={() => this.setPage(i - 1)}
 					light={this.state.currentPage !== i - 1}
-					primary={this.state.currentPage === i - 1}
+					style={{
+						...activeStyles.button,
+						...getInnerStyle(this.props.innerStyle, 'button'),
+					}}
 				>
-					<Text>{i}</Text>
+					<Text
+						style={{
+							...activeStyles.text,
+							...getInnerStyle(this.props.innerStyle, 'label'),
+						}}
+					>
+						{i}
+					</Text>
 				</Button>
 			);
 			if (i <= this.state.totalPages + 1) {
@@ -264,28 +289,57 @@ class ReactiveList extends Component {
 			return null;
 		}
 
+		const primaryStyles = {
+			button: {},
+			text: {},
+		};
+
+		if (this.state.currentPage === 0) {
+			primaryStyles.button = {
+				backgroundColor: this.props.theming.primaryColor,
+			};
+			primaryStyles.text = {
+				color: this.props.theming.primaryTextColor,
+			};
+		}
+
 		return (
-			<View style={{
-				flexDirection: 'row',
-				justifyContent: 'space-between',
-				marginTop: 20,
-				marginBottom: 20,
-			}}
+			<View
+				style={{
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+					marginTop: 20,
+					marginBottom: 20,
+				}}
 			>
 				<Button
 					light={this.state.currentPage !== 0}
 					disabled={this.state.currentPage === 0}
 					onPress={this.prevPage}
+					style={getInnerStyle(this.props.innerStyle, 'button')}
 				>
-					<Icon name="ios-arrow-back" />
+					<Icon
+						name="ios-arrow-back"
+						style={getInnerStyle(this.props.innerStyle, 'icon')}
+					/>
 				</Button>
 				{
 					<Button
 						onPress={() => this.setPage(0)}
 						light={this.state.currentPage !== 0}
-						primary={this.state.currentPage === 0}
+						style={{
+							...primaryStyles.button,
+							...getInnerStyle(this.props.innerStyle, 'button'),
+						}}
 					>
-						<Text>1</Text>
+						<Text
+							style={{
+								...primaryStyles.text,
+								...getInnerStyle(this.props.innerStyle, 'label'),
+							}}
+						>
+							1
+						</Text>
 					</Button>
 				}
 				{
@@ -299,7 +353,7 @@ class ReactiveList extends Component {
 									alignItems: 'center',
 								}}
 							>
-								<Text>...</Text>
+								<Text style={getInnerStyle(this.props.innerStyle, 'label')}>...</Text>
 							</View>
 						)
 						: null
@@ -311,8 +365,12 @@ class ReactiveList extends Component {
 					onPress={this.nextPage}
 					light={this.state.currentPage < this.state.totalPages - 1}
 					disabled={this.state.currentPage >= this.state.totalPages - 1}
+					style={getInnerStyle(this.props.innerStyle, 'button')}
 				>
-					<Icon name="ios-arrow-forward" />
+					<Icon
+						name="ios-arrow-forward"
+						style={getInnerStyle(this.props.innerStyle, 'icon')}
+					/>
 				</Button>
 			</View>
 		);
@@ -346,7 +404,7 @@ class ReactiveList extends Component {
 		}
 
 		return (
-			<View>
+			<View style={this.props.style}>
 				{
 					this.props.showResultStats
 						? this.renderResultStats()
@@ -417,6 +475,8 @@ ReactiveList.propTypes = {
 	onResultStats: types.func,
 	isLoading: types.bool,
 	style: types.style,
+	theming: types.style,
+	innerStyle: types.style,
 };
 
 ReactiveList.defaultProps = {
@@ -454,4 +514,4 @@ const mapDispatchtoProps = dispatch => ({
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveList);
+export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(ReactiveList));

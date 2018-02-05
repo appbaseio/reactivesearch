@@ -32,6 +32,7 @@ const Histogram = (props) => {
 								backgroundColor: '#efefef',
 								width: `${100 / range.length}%`,
 								height: `${(100 * value.doc_count) / max || 0}%`,
+								...props.barStyle,
 							}}
 						/>
 					);
@@ -46,6 +47,7 @@ Histogram.propTypes = {
 	range: types.range,
 	interval: types.number,
 	paddingHorizontal: types.number,
+	barStyle: types.style,
 };
 
 export default Histogram;
