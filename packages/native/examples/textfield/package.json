@@ -5,7 +5,8 @@
   "scripts": {
     "start": "react-native-scripts start",
     "android": "react-native-scripts android",
-    "ios": "react-native-scripts ios"
+    "ios": "react-native-scripts ios",
+    "postinstall": "rm -rf node_modules/native-base-shoutem-theme/node_modules/hoist-non-react-statics"
   },
   "dependencies": {
     "@expo/vector-icons": "^6.2.2",
@@ -13,6 +14,7 @@
     "appbase-js": "^2.2.9",
     "escape-string-regexp": "^1.0.5",
     "expo": "^23.0.0",
+    "hoist-non-react-statics": "^2.3.1",
     "metro-bundler": "^0.22.1",
     "native-base": "^2.3.3",
     "react": "16.0.0",
