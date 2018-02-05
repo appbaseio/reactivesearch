@@ -392,6 +392,7 @@ class DateRange extends Component {
 							marginTop: 10,
 							...getInnerStyle(this.props.innerStyle, 'calendar'),
 						}}
+						theme={getInnerStyle(this.props.innerStyle, 'theme')}
 					/>
 					{
 						this.state.currentDate && this.state.currentDate.end
