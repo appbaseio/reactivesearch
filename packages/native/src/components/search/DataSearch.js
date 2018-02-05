@@ -31,7 +31,8 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 
-import { connect } from '../../utils';
+import withTheme from '../../theme/withTheme';
+import { connect, getInnerStyle } from '../../utils';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -331,7 +332,9 @@ class DataSearch extends Component {
 				keyboardShouldPersistTaps="always"
 				renderRow={item => (
 					<ListItem onPress={() => this.selectSuggestion(item.label)}>
-						<Text>{item.label}</Text>
+						<Text style={getInnerStyle(this.props.innerStyle, 'label')}>
+							{item.label}
+						</Text>
 					</ListItem>
 				)}
 			/>
@@ -349,7 +352,11 @@ class DataSearch extends Component {
 				>
 					<Header>
 						<Left>
-							<Button transparent onPress={this.toggleModal}>
+							<Button
+								transparent
+								onPress={this.toggleModal}
+								style={getInnerStyle(this.props.innerStyle, 'button')}
+							>
 								<Icon
 									name="arrow-back"
 									style={{
@@ -357,7 +364,11 @@ class DataSearch extends Component {
 											android: {
 												color: '#fff',
 											},
+											ios: {
+												color: this.props.theming.primaryColor,
+											},
 										}),
+										...getInnerStyle(this.props.innerStyle, 'icon'),
 									}}
 								/>
 							</Button>
@@ -367,7 +378,10 @@ class DataSearch extends Component {
 								? (
 									<Right>
 										<Button
-											style={{ paddingRight: 0 }}
+											style={{
+												paddingRight: 0,
+												...getInnerStyle(this.props.innerStyle, 'button'),
+											}}
 											transparent
 											onPress={() => this.selectSuggestion('')}
 										>
@@ -391,11 +405,24 @@ class DataSearch extends Component {
 					<Item regular style={{ marginLeft: 10, margin: 10 }}>
 						{
 							this.props.showIcon && this.props.iconPosition === 'left'
-								? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+								? (
+									<Icon
+										name="search"
+										style={{
+											fontSize: 22,
+											top: 2,
+											...getInnerStyle(this.props.innerStyle, 'icon'),
+										}}
+									/>
+								)
 								: null
 						}
 						<Input
-							style={style}
+							style={{
+								color: this.props.theming.textColor,
+								...style,
+								...getInnerStyle(this.props.innerStyle, 'input'),
+							}}
 							returnKeyType="search"
 							onSubmitEditing={e => this.selectSuggestion(e.nativeEvent.text)}
 							placeholder={this.props.placeholder}
@@ -406,7 +433,16 @@ class DataSearch extends Component {
 						/>
 						{
 							this.props.showIcon && this.props.iconPosition === 'right'
-								? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+								? (
+									<Icon
+										name="search"
+										style={{
+											fontSize: 22,
+											top: 2,
+											...getInnerStyle(this.props.innerStyle, 'icon'),
+										}}
+									/>
+								)
 								: null
 						}
 					</Item>
@@ -419,7 +455,16 @@ class DataSearch extends Component {
 			<Item regular style={{ marginLeft: 0 }}>
 				{
 					this.props.showIcon && this.props.iconPosition === 'left'
-						? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+						? (
+							<Icon
+								name="search"
+								style={{
+									fontSize: 22,
+									top: 2,
+									...getInnerStyle(this.props.innerStyle, 'icon'),
+								}}
+							/>
+						)
 						: null
 				}
 				<TouchableWithoutFeedback
@@ -429,8 +474,10 @@ class DataSearch extends Component {
 						style={{
 							flex: 1,
 							alignItems: 'center',
-							color: (this.state.currentValue
-								&& this.state.currentValue !== '') ? '#000' : '#555',
+							color: (
+								this.state.currentValue
+								&& this.state.currentValue !== ''
+							) ? this.props.theming.textColor : '#555',
 							fontSize: 17,
 							height: 50,
 							lineHeight: 24,
@@ -438,6 +485,7 @@ class DataSearch extends Component {
 							paddingRight: 5,
 							paddingTop: 13,
 							...style,
+							...getInnerStyle(this.props.innerStyle, 'label'),
 						}}
 					>
 						{
@@ -449,7 +497,16 @@ class DataSearch extends Component {
 				</TouchableWithoutFeedback>
 				{
 					this.props.showIcon && this.props.iconPosition === 'right'
-						? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+						? (
+							<Icon
+								name="search"
+								style={{
+									fontSize: 22,
+									top: 2,
+									...getInnerStyle(this.props.innerStyle, 'icon'),
+								}}
+							/>
+						)
 						: null
 				}
 			</Item>
@@ -484,11 +541,24 @@ class DataSearch extends Component {
 							<Item regular style={{ marginLeft: 0 }}>
 								{
 									this.props.showIcon && this.props.iconPosition === 'left'
-										? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+										? (
+											<Icon
+												name="search"
+												style={{
+													fontSize: 22,
+													top: 2,
+													...getInnerStyle(this.props.innerStyle, 'icon'),
+												}}
+											/>
+										)
 										: null
 								}
 								<Input
-									style={style}
+									style={{
+										color: this.props.theming.textColor,
+										...style,
+										...getInnerStyle(this.props.innerStyle, 'input'),
+									}}
 									placeholder={this.props.placeholder}
 									onChangeText={this.setValue}
 									value={this.state.currentValue}
@@ -497,7 +567,11 @@ class DataSearch extends Component {
 								{
 									this.state.currentValue && this.props.showClear
 										? (
-											<Button transparent onPress={this.clearValue}>
+											<Button
+												transparent
+												onPress={this.clearValue}
+												style={getInnerStyle(this.props.innerStyle, 'button')}
+											>
 												<Icon
 													name="md-close"
 													style={{
@@ -510,6 +584,7 @@ class DataSearch extends Component {
 																? 0
 																: 10
 														),
+														...getInnerStyle(this.props.innerStyle, 'icon'),
 													}}
 												/>
 											</Button>
@@ -518,7 +593,16 @@ class DataSearch extends Component {
 								}
 								{
 									this.props.showIcon && this.props.iconPosition === 'right'
-										? <Icon name="search" style={{ fontSize: 22, top: 2 }} />
+										? (
+											<Icon
+												name="search"
+												style={{
+													fontSize: 22,
+													top: 2,
+													...getInnerStyle(this.props.innerStyle, 'icon'),
+												}}
+											/>
+										)
 										: null
 								}
 							</Item>
@@ -561,6 +645,8 @@ DataSearch.propTypes = {
 	showIcon: types.bool,
 	iconPosition: types.string,
 	showClear: types.bool,
+	theming: types.style,
+	innerStyle: types.style,
 };
 
 DataSearch.defaultProps = {
@@ -590,4 +676,4 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(DataSearch);
+export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(DataSearch));
