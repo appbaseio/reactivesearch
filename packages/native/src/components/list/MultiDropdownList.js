@@ -294,7 +294,7 @@ class MultiDropdownList extends Component {
 								visible={this.state.showModal}
 								onRequestClose={this.toggleModal}
 							>
-								<Header>
+								<Header style={getInnerStyle(this.props.innerStyle, 'header')}>
 									<Left>
 										<Button
 											transparent
