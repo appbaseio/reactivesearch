@@ -32,7 +32,8 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import CheckboxItem from '../shared/CheckboxItem';
-import { connect } from '../../utils';
+import withTheme from '../../theme/withTheme';
+import { connect, getInnerStyle } from '../../utils';
 
 class MultiDropdownList extends Component {
 	constructor(props) {
@@ -291,18 +292,26 @@ class MultiDropdownList extends Component {
 								supportedOrientations={this.props.supportedOrientations || null}
 								transparent={false}
 								visible={this.state.showModal}
-								onRequestClose={() => {
-									this.toggleModal();
-								}}
+								onRequestClose={this.toggleModal}
 							>
 								<Header>
 									<Left>
-										<Button transparent onPress={this.toggleModal}>
-											<Icon name="arrow-back" />
+										<Button
+											transparent
+											onPress={this.toggleModal}
+											style={getInnerStyle(this.props.innerStyle, 'button')}
+										>
+											<Icon
+												name="arrow-back"
+												color={this.props.theming.primaryColor}
+												style={getInnerStyle(this.props.innerStyle, 'icon')}
+											/>
 										</Button>
 									</Left>
 									<Body>
-										<Title>{this.props.placeholder}</Title>
+										<Title style={getInnerStyle(this.props.innerStyle, 'title')}>
+											{this.props.placeholder}
+										</Title>
 									</Body>
 									<Right />
 								</Header>
@@ -322,6 +331,8 @@ class MultiDropdownList extends Component {
 												value={item.key}
 												onPress={this.setValue}
 												checked={Object.keys(this.state.currentValue).includes(item.key)}
+												innerStyle={this.props.innerStyle}
+												theming={this.props.theming}
 											/>
 										);
 									}}
@@ -336,13 +347,14 @@ class MultiDropdownList extends Component {
 										style={{
 											flex: 1,
 											alignItems: 'center',
-											color: Object.keys(this.state.currentValue).length ? '#000' : '#555',
+											color: this.state.currentDate ? this.props.theming.textColor : '#555',
 											fontSize: 17,
 											height: 50,
 											lineHeight: 24,
 											paddingLeft: 8,
 											paddingRight: 5,
 											paddingTop: 12,
+											...getInnerStyle(this.props.innerStyle, 'label'),
 										}}
 									>
 										{
@@ -352,8 +364,8 @@ class MultiDropdownList extends Component {
 										}
 									</Text>
 								</TouchableWithoutFeedback>
-							</Item>)
-
+							</Item>
+						)
 				}
 			</View>
 		);
@@ -386,6 +398,8 @@ MultiDropdownList.propTypes = {
 	selectAllLabel: types.string,
 	style: types.style,
 	supportedOrientations: types.supportedOrientations,
+	theming: types.style,
+	innerStyle: types.style,
 };
 
 MultiDropdownList.defaultProps = {
@@ -411,4 +425,4 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList);
+export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(MultiDropdownList));

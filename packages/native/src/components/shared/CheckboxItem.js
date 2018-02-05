@@ -7,6 +7,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import TouchableItem from './TouchableItem';
+import { getInnerStyle } from '../../utils';
 
 class CheckboxItem extends Component {
 	handlePress = () => {
@@ -20,19 +21,30 @@ class CheckboxItem extends Component {
 				delayPressIn={0}
 				onPress={this.handlePress}
 			>
-				<View style={{
-					flex: 1,
-					flexDirection: 'row',
-					padding: 15,
-					borderBottomColor: '#c9c9c9',
-					borderBottomWidth: 0.5,
-				}}
+				<View
+					style={{
+						flex: 1,
+						flexDirection: 'row',
+						padding: 15,
+						borderBottomColor: '#c9c9c9',
+						borderBottomWidth: 0.5,
+					}}
 				>
 					<CheckBox
 						onPress={this.handlePress}
 						checked={this.props.checked}
+						color={this.props.theming.primaryColor}
+						style={getInnerStyle(this.props.innerStyle, 'checkbox')}
 					/>
-					<Text style={{ marginLeft: 20 }}>{this.props.label}</Text>
+					<Text
+						style={{
+							color: this.props.theming.textColor,
+							marginLeft: 20,
+							...getInnerStyle(this.props.innerStyle, 'label'),
+						}}
+					>
+						{this.props.label}
+					</Text>
 				</View>
 			</TouchableItem>
 		);
@@ -44,6 +56,8 @@ CheckboxItem.propTypes = {
 	onPress: types.func,
 	label: types.string,
 	value: types.string,
+	innerStyle: types.style,
+	theming: types.style,
 };
 
 export default CheckboxItem;
