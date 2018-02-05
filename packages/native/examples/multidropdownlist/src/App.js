@@ -2,6 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+
 import MultiDropdownList from './MultiDropdownListView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
@@ -109,12 +110,29 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
 				// title="Series List"
-				size={100}
+				size={30}
 				sortBy="asc"
 				defaultSelected={['Anita Blake', 'Discworld']}
 				placeholder="Select multi series"
 				showFilter={false}
 				filterLabel="Series filter"
+				innerStyle={{
+					icon: {
+						color: 'white',
+					},
+					title: {
+						color: 'white',
+					},
+					label: {
+						color: 'purple',
+					},
+					header: {
+						backgroundColor: 'purple',
+					},
+					checkbox: {
+						color: 'purple',
+					},
+				}}
 				navigation={navigation}
 			/>
 		),
