@@ -15,7 +15,8 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { connect } from '../../utils';
+import withTheme from '../../theme/withTheme';
+import { connect, getInnerStyle } from '../../utils';
 
 class SingleDropdownRange extends Component {
 	constructor(props) {
@@ -128,6 +129,20 @@ class SingleDropdownRange extends Component {
 				placeholder={this.props.placeholder}
 				selectedValue={this.state.currentValue}
 				onValueChange={item => this.setValue(item)}
+				style={{
+					width: '100%',
+					borderRadius: 0,
+					...this.props.style,
+				}}
+				textStyle={{
+					color: this.props.theming.textColor,
+				}}
+				headerStyle={getInnerStyle(this.props.innerStyle, 'title')}
+				itemTextStyle={{
+					flexGrow: 1,
+					color: this.props.theming.textColor,
+					...getInnerStyle(this.props.innerStyle, 'label'),
+				}}
 			>
 				{
 					this.props.data.map(item => (
@@ -157,6 +172,8 @@ SingleDropdownRange.propTypes = {
 	selectedValue: types.selectedValue,
 	showFilter: types.bool,
 	style: types.style,
+	theming: types.style,
+	innerStyle: types.style,
 };
 
 SingleDropdownRange.defaultProps = {
@@ -179,4 +196,4 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownRange);
+export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(SingleDropdownRange));
