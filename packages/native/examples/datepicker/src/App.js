@@ -2,6 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+
 import DatePicker from './DatePickerView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
@@ -123,6 +124,22 @@ const RootDrawer = DrawerNavigator({
 				queryFormat="date_time_no_millis"
 				showFilter={false}
 				filterLabel="Date"
+				innerStyle={{
+					theme: {
+						backgroundColor: '#f2f2f2',
+						calendarBackground: '#f2f2f2',
+						textSectionTitleColor: '#ffb3ff',
+						selectedDayBackgroundColor: 'purple',
+						selectedDayTextColor: '#f2f2f2',
+						todayTextColor: 'purple',
+						dayTextColor: '#cc00cc',
+						textDisabledColor: '#ffb3ff',
+						dotColor: 'purple',
+						selectedDotColor: '#f2f2f2',
+						arrowColor: 'purple',
+						monthTextColor: 'purple',
+					},
+				}}
 				navigation={navigation}
 			/>
 		),
