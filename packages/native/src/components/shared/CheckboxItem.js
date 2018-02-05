@@ -15,6 +15,7 @@ class CheckboxItem extends Component {
 	};
 
 	render() {
+		const { color, ...checkBoxStyles } = getInnerStyle(this.props.innerStyle, 'checkbox');
 		return (
 			<TouchableItem
 				pressOpacity={0.5}
@@ -33,8 +34,8 @@ class CheckboxItem extends Component {
 					<CheckBox
 						onPress={this.handlePress}
 						checked={this.props.checked}
-						color={this.props.theming.primaryColor}
-						style={getInnerStyle(this.props.innerStyle, 'checkbox')}
+						color={color || this.props.theming.primaryColor}
+						style={checkBoxStyles}
 					/>
 					<Text
 						style={{
