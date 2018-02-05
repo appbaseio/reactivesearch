@@ -29,7 +29,8 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { connect } from '../../utils';
+import withTheme from '../../theme/withTheme';
+import { connect, getInnerStyle } from '../../utils';
 
 class MultiDropdownRange extends Component {
 	constructor(props) {
@@ -197,18 +198,26 @@ class MultiDropdownRange extends Component {
 								supportedOrientations={this.props.supportedOrientations || null}
 								transparent={false}
 								visible={this.state.showModal}
-								onRequestClose={() => {
-									this.toggleModal();
-								}}
+								onRequestClose={this.toggleModal}
 							>
 								<Header>
 									<Left>
-										<Button transparent onPress={this.toggleModal}>
-											<Icon name="arrow-back" />
+										<Button
+											transparent
+											onPress={this.toggleModal}
+											style={getInnerStyle(this.props.innerStyle, 'button')}
+										>
+											<Icon
+												name="arrow-back"
+												color={this.props.theming.primaryColor}
+												style={getInnerStyle(this.props.innerStyle, 'icon')}
+											/>
 										</Button>
 									</Left>
 									<Body>
-										<Title>{this.props.placeholder}</Title>
+										<Title style={getInnerStyle(this.props.innerStyle, 'title')}>
+											{this.props.placeholder}
+										</Title>
 									</Body>
 									<Right />
 								</Header>
@@ -228,8 +237,18 @@ class MultiDropdownRange extends Component {
 												<CheckBox
 													onPress={() => this.selectItem(item.label)}
 													checked={!!this.selectedValues[item.label]}
+													color={this.props.theming.primaryColor}
+													style={getInnerStyle(this.props.innerStyle, 'checkbox')}
 												/>
-												<Text style={{ marginLeft: 20 }}>{item.label}</Text>
+												<Text
+													style={{
+														color: this.props.theming.textColor,
+														marginLeft: 20,
+														...getInnerStyle(this.props.innerStyle, 'label'),
+													}}
+												>
+													{item.label}
+												</Text>
 											</View>
 										</TouchableWithoutFeedback>
 									)}
@@ -244,13 +263,14 @@ class MultiDropdownRange extends Component {
 										style={{
 											flex: 1,
 											alignItems: 'center',
-											color: this.state.currentValue.length ? '#000' : '#555',
+											color: this.state.currentDate ? this.props.theming.textColor : '#555',
 											fontSize: 17,
 											height: 50,
 											lineHeight: 24,
 											paddingLeft: 8,
 											paddingRight: 5,
 											paddingTop: 12,
+											...getInnerStyle(this.props.innerStyle, 'label'),
 										}}
 									>
 										{
@@ -287,6 +307,8 @@ MultiDropdownRange.propTypes = {
 	showFilter: types.bool,
 	filterLabel: types.filterLabel,
 	style: types.style,
+	theming: types.style,
+	innerStyle: types.style,
 };
 
 MultiDropdownRange.defaultProps = {
@@ -309,4 +331,4 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownRange);
+export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(MultiDropdownRange));
