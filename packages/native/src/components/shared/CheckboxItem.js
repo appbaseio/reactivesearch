@@ -33,7 +33,7 @@ class CheckboxItem extends Component {
 					<CheckBox
 						onPress={this.handlePress}
 						checked={this.props.checked}
-						color={getCheckboxInnerStyle(this.props.theming.primaryColor, this.props.innerStyle, 'checkbox')}
+						color={this.props.theming.primaryColor}
 						style={getInnerStyle(this.props.innerStyle, 'checkbox')}
 					/>
 					<Text
