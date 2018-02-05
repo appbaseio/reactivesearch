@@ -189,6 +189,7 @@ class MultiDropdownRange extends Component {
 	};
 
 	render() {
+		const { color, ...checkBoxStyles } = getInnerStyle(this.props.innerStyle, 'checkbox');
 		return (
 			<View>
 				{
@@ -237,8 +238,8 @@ class MultiDropdownRange extends Component {
 												<CheckBox
 													onPress={() => this.selectItem(item.label)}
 													checked={!!this.selectedValues[item.label]}
-													color={this.props.theming.primaryColor}
-													style={getInnerStyle(this.props.innerStyle, 'checkbox')}
+													color={color || this.props.theming.primaryColor}
+													style={checkBoxStyles}
 												/>
 												<Text
 													style={{

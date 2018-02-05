@@ -152,6 +152,11 @@ class Main extends Component {
 								{ start: 501, end: 1000, label: 'First Date' },
 							]}
 							defaultSelected={['Pricey', 'First Date']}
+							innerStyle={{
+								checkbox: {
+									color: 'yellow',
+								},
+							}}
 						/>
 
 						<RangeSlider
