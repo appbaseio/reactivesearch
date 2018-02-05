@@ -485,7 +485,7 @@ class DataSearch extends Component {
 							paddingRight: 5,
 							paddingTop: 13,
 							...style,
-							...getInnerStyle(this.props.innerStyle, 'label'),
+							...getInnerStyle(this.props.innerStyle, 'input'),
 						}}
 					>
 						{
