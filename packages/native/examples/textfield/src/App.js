@@ -2,7 +2,11 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+
 import TextField from './TextFieldView';
+import {
+	DEFAULT_COLORS as COLORS,
+} from '../../common/helpers';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 	drawerLabel,
@@ -65,25 +69,33 @@ const RootDrawer = DrawerNavigator({
 	//         />
 	// 	),
 	// },
-	DrawerOption6: {
-		navigationOptions: navigationOptionsBuilder('With debounce'),
-		screen: ({ navigation }) => ( // eslint-disable-line
-			<TextField
-				debounce={300}
-				showFilter={false}
-				navigation={navigation}
-			/>
-		),
-	},
+	// DrawerOption6: {
+	// 	navigationOptions: navigationOptionsBuilder('With debounce'),
+	// 	screen: ({ navigation }) => ( // eslint-disable-line
+	// 		<TextField
+	// 			debounce={300}
+	// 			showFilter={false}
+	// 			navigation={navigation}
+	// 		/>
+	// 	),
+	// },
 	DrawerOption7: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<TextField
 				// title="Books Search"
 				placeholder="Search for a book title"
-				defaultSelected="The Hitchhiker's Guide to the Galaxy"
+				defaultSelected="Harry Potter"
 				showFilter={false}
 				filterLabel="Books filter"
+				innerStyle={{
+					icon: {
+						color: COLORS.primary,
+					},
+					input: {
+						color: COLORS.primary,
+					},
+				}}
 				navigation={navigation}
 			/>
 		),
