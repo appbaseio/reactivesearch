@@ -2,6 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+
 import DataSearch from './DataSearchView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
@@ -177,6 +178,23 @@ const RootDrawer = DrawerNavigator({
 				iconPosition="left"
 				filterLabel="Books filter"
 				highlight={false}
+				innerStyle={{
+					icon: {
+						color: 'purple',
+					},
+					input: {
+						color: 'purple',
+					},
+					label: {
+						color: '#9900cc',
+					},
+					header: {
+						backgroundColor: 'purple',
+					},
+					checkbox: {
+						color: 'purple',
+					},
+				}}
 				navigation={navigation}
 			/>
 		),
