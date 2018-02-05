@@ -7,7 +7,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import TouchableItem from './TouchableItem';
-import { getInnerStyle } from '../../utils';
+import { getInnerStyle, getCheckboxInnerStyle } from '../../utils';
 
 class CheckboxItem extends Component {
 	handlePress = () => {
@@ -33,7 +33,7 @@ class CheckboxItem extends Component {
 					<CheckBox
 						onPress={this.handlePress}
 						checked={this.props.checked}
-						color={this.props.theming.primaryColor}
+						color={getCheckboxInnerStyle(this.props.theming.primaryColor, this.props.innerStyle, 'checkbox')}
 						style={getInnerStyle(this.props.innerStyle, 'checkbox')}
 					/>
 					<Text
