@@ -2,6 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+
 import SingleDropdownList from './SingleDropdownListView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
@@ -117,6 +118,14 @@ const RootDrawer = DrawerNavigator({
 				placeholder="Select one"
 				showFilter={false}
 				filterLabel="Series filter"
+				innerStyle={{
+					title: {
+						color: 'purple',
+					},
+					label: {
+						color: 'purple',
+					},
+				}}
 				navigation={navigation}
 			/>
 		),
