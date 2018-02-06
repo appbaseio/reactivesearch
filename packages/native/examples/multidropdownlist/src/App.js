@@ -17,7 +17,7 @@ const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 });
 
 const RootDrawer = DrawerNavigator({
-	DrawerOption1: {
+	basic: {
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
@@ -36,27 +36,27 @@ const RootDrawer = DrawerNavigator({
 	// 		/>
 	// 	),
 	// },
-	DrawerOption3: {
-		navigationOptions: navigationOptionsBuilder('With placeholder'),
+	withPlaceholder: {
+		navigationOptions: navigationOptionsBuilder('Without placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
-				placeholder="Select multiple series"
+				placeholder=""
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	DrawerOption4: {
-		navigationOptions: navigationOptionsBuilder('With size'),
+	withSize: {
+		navigationOptions: navigationOptionsBuilder('With max size as 5'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
-				size={10}
+				size={5}
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	// DrawerOption5: {
+	// withFilter: {
 	// 	navigationOptions: navigationOptionsBuilder('With filter'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	//         <MultiDropdownList
@@ -65,17 +65,7 @@ const RootDrawer = DrawerNavigator({
 	//         />
 	// 	),
 	// },
-	DrawerOption6: {
-		navigationOptions: navigationOptionsBuilder('With custom sort'),
-		screen: ({ navigation }) => ( // eslint-disable-line
-			<MultiDropdownList
-				sortBy="asc"
-				showFilter={false}
-				navigation={navigation}
-			/>
-		),
-	},
-	DrawerOption7: {
+	withoutCount: {
 		navigationOptions: navigationOptionsBuilder('Without count'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
@@ -85,7 +75,18 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	DrawerOption8: {
+	withCustomSort: {
+		navigationOptions: navigationOptionsBuilder('With sort Z->A'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<MultiDropdownList
+				sortBy="desc"
+				showCount={false}
+				showFilter={false}
+				navigation={navigation}
+			/>
+		),
+	},
+	withSelectAll: {
 		navigationOptions: navigationOptionsBuilder('With Select All'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
@@ -95,7 +96,7 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	DrawerOption9: {
+	withDefaultSelected: {
 		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
@@ -105,12 +106,12 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	DrawerOption10: {
+	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
 				// title="Series List"
-				size={30}
+				size={10}
 				sortBy="asc"
 				defaultSelected={['Anita Blake', 'Discworld']}
 				placeholder="Select multi series"
