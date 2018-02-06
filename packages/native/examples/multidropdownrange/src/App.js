@@ -17,7 +17,7 @@ const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 });
 
 const RootDrawer = DrawerNavigator({
-	DrawerOption1: {
+	basic: {
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownRange
@@ -26,7 +26,7 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// DrawerOption2: {
+	// withTitle: {
 	// 	navigationOptions: navigationOptionsBuilder('With title'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	// 		<MultiDropdownRange
@@ -36,17 +36,17 @@ const RootDrawer = DrawerNavigator({
 	// 		/>
 	// 	),
 	// },
-	DrawerOption3: {
-		navigationOptions: navigationOptionsBuilder('With placeholder'),
+	withoutPlaceholder: {
+		navigationOptions: navigationOptionsBuilder('Without placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownRange
-				placeholder="Select ratings"
+				placeholder=""
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	// DrawerOption4: {
+	// withSize: {
 	// 	navigationOptions: navigationOptionsBuilder('With size'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	// 		<MultiDropdownRange
@@ -56,7 +56,7 @@ const RootDrawer = DrawerNavigator({
 	// 		/>
 	// 	),
 	// },
-	// DrawerOption5: {
+	// withFilter: {
 	// 	navigationOptions: navigationOptionsBuilder('With filter'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	//         <MultiDropdownRange
@@ -65,7 +65,7 @@ const RootDrawer = DrawerNavigator({
 	//         />
 	// 	),
 	// },
-	// DrawerOption6: {
+	// withCustomSort: {
 	// 	navigationOptions: navigationOptionsBuilder('With custom sort'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	// 		<MultiDropdownRange
@@ -75,7 +75,7 @@ const RootDrawer = DrawerNavigator({
 	// 		/>
 	// 	),
 	// },
-	// DrawerOption7: {
+	// withoutCount: {
 	// 	navigationOptions: navigationOptionsBuilder('Without count'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	// 		<MultiDropdownRange
@@ -85,7 +85,7 @@ const RootDrawer = DrawerNavigator({
 	// 		/>
 	// 	),
 	// },
-	// DrawerOption8: {
+	// withSelectAll: {
 	// 	navigationOptions: navigationOptionsBuilder('With Select All'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	// 		<MultiDropdownRange
@@ -95,7 +95,7 @@ const RootDrawer = DrawerNavigator({
 	// 		/>
 	// 	),
 	// },
-	DrawerOption9: {
+	withDefaultSelected: {
 		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownRange
@@ -105,7 +105,7 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	DrawerOption10: {
+	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownRange
