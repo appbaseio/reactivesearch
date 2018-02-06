@@ -6,3 +6,4 @@ npm-debug.log*
 lib
 stats.json
 .expo/
+.vscode/
