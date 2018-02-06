@@ -356,6 +356,8 @@ class MultiDropdownList extends Component {
 									onPress={this.toggleModal}
 								>
 									<Text
+										numberOfLines={1}
+										ellipsizeMode="tail"
 										style={{
 											flex: 1,
 											alignItems: 'center',
