@@ -2,6 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+
 import SingleDropdownList from './SingleDropdownListView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
@@ -16,7 +17,7 @@ const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 });
 
 const RootDrawer = DrawerNavigator({
-	DrawerOption1: {
+	basic: {
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
@@ -35,21 +36,21 @@ const RootDrawer = DrawerNavigator({
 	// 		/>
 	// 	),
 	// },
-	DrawerOption3: {
-		navigationOptions: navigationOptionsBuilder('With placeholder'),
+	withoutPlaceholder: {
+		navigationOptions: navigationOptionsBuilder('Without placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
-				placeholder="Select one"
+				placeholder=""
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	DrawerOption4: {
-		navigationOptions: navigationOptionsBuilder('With size'),
+	withSize: {
+		navigationOptions: navigationOptionsBuilder('With max size as 5'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
-				size={10}
+				size={5}
 				showFilter={false}
 				navigation={navigation}
 			/>
@@ -64,17 +65,7 @@ const RootDrawer = DrawerNavigator({
 	//         />
 	// 	),
 	// },
-	DrawerOption6: {
-		navigationOptions: navigationOptionsBuilder('With custom sort'),
-		screen: ({ navigation }) => ( // eslint-disable-line
-			<SingleDropdownList
-				sortBy="asc"
-				showFilter={false}
-				navigation={navigation}
-			/>
-		),
-	},
-	DrawerOption7: {
+	withoutCount: {
 		navigationOptions: navigationOptionsBuilder('Without count'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
@@ -84,8 +75,19 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	DrawerOption8: {
-		navigationOptions: navigationOptionsBuilder('With Select All'),
+	withCustomSort: {
+		navigationOptions: navigationOptionsBuilder('With sort Z->A'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<SingleDropdownList
+				sortBy="desc"
+				showCount={false}
+				showFilter={false}
+				navigation={navigation}
+			/>
+		),
+	},
+	withSelectAll: {
+		navigationOptions: navigationOptionsBuilder('With SelectAll option'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
 				selectAllLabel="All Series"
@@ -94,7 +96,7 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	DrawerOption9: {
+	withDefaultSelected: {
 		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
@@ -104,7 +106,7 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	DrawerOption10: {
+	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
@@ -117,6 +119,14 @@ const RootDrawer = DrawerNavigator({
 				placeholder="Select one"
 				showFilter={false}
 				filterLabel="Series filter"
+				innerStyle={{
+					title: {
+						color: 'purple',
+					},
+					// label: {
+					// 	color: 'purple',
+					// },
+				}}
 				navigation={navigation}
 			/>
 		),

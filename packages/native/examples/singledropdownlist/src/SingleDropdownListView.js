@@ -63,8 +63,8 @@ export default class Main extends Component {
 		}
 
 		const header = (
-			<Header style={styles.header}>
-				<Left>
+			<Header style={{ alignSelf: 'center' }}>
+				<Left style={{ flex: 1 }}>
 					<Button
 						transparent
 						onPress={() => navigation.navigate('DrawerToggle')}
@@ -76,27 +76,28 @@ export default class Main extends Component {
 						/>
 					</Button>
 				</Left>
-				<Body>
+				<Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 					<Title
-						style={{ color: headerColor, fontSize: 18 }}
+						style={{
+							color: headerColor, fontSize: 18,
+						}}
 					>
 						{ COMPONENT_DEMO }
 					</Title>
 				</Body>
-				{isIOS && (
-					<Right>
-						<Button
-							transparent
-							onPress={() => Linking.openURL('exp://+')}
-						>
-							<Ionicons
-								name="ios-arrow-back"
-								size={25}
-								color={headerColor}
-							/>
-						</Button>
-					</Right>
-				)}
+				<Right style={{ flex: 1 }}>
+					<Button
+						transparent
+						onPress={() => Linking.openURL('exp://+')}
+						style={{ opacity: isIOS ? 1 : 0 }}
+					>
+						<Ionicons
+							name="ios-arrow-back"
+							size={25}
+							color={headerColor}
+						/>
+					</Button>
+				</Right>
 			</Header>
 		);
 
@@ -104,7 +105,6 @@ export default class Main extends Component {
 			<View style={styles.componentContainer}>
 				<SingleDropdownList
 					componentId="SingleDropdownListSensor"
-					placeholder="Select a series"
 					dataField="original_series.raw"
 					size={30}
 					{...storyProps} // injecting props from navigator drawer story

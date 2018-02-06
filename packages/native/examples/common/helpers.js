@@ -42,3 +42,5 @@ export const commonStyles = {
 	},
 };
 
+export const kFormatter = num => (num > 100 ? `${(num / 1000).toFixed(1)}k` : num);
+

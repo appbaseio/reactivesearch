@@ -2,6 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+
 import TextField from './TextFieldView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
@@ -16,7 +17,7 @@ const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 });
 
 const RootDrawer = DrawerNavigator({
-	DrawerOption1: {
+	basic: {
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<TextField
@@ -25,7 +26,7 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// DrawerOption2: {
+	// withTitle: {
 	// 	navigationOptions: navigationOptionsBuilder('With title'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	// 		<TextField
@@ -35,17 +36,17 @@ const RootDrawer = DrawerNavigator({
 	// 		/>
 	// 	),
 	// },
-	DrawerOption3: {
-		navigationOptions: navigationOptionsBuilder('With placeholder'),
+	withoutPlaceholder: {
+		navigationOptions: navigationOptionsBuilder('Without placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<TextField
-				placeholder="Search for a book title"
+				placeholder=""
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	DrawerOption4: {
+	withDefaultSelected: {
 		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<TextField
@@ -55,7 +56,7 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// DrawerOption5: {
+	// withFilter: {
 	// 	navigationOptions: navigationOptionsBuilder('With filter'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	//         <TextField
@@ -65,25 +66,33 @@ const RootDrawer = DrawerNavigator({
 	//         />
 	// 	),
 	// },
-	DrawerOption6: {
-		navigationOptions: navigationOptionsBuilder('With debounce'),
-		screen: ({ navigation }) => ( // eslint-disable-line
-			<TextField
-				debounce={300}
-				showFilter={false}
-				navigation={navigation}
-			/>
-		),
-	},
-	DrawerOption7: {
+	// withDebounce: {
+	// 	navigationOptions: navigationOptionsBuilder('With debounce'),
+	// 	screen: ({ navigation }) => ( // eslint-disable-line
+	// 		<TextField
+	// 			debounce={300}
+	// 			showFilter={false}
+	// 			navigation={navigation}
+	// 		/>
+	// 	),
+	// },
+	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<TextField
 				// title="Books Search"
 				placeholder="Search for a book title"
-				defaultSelected="The Hitchhiker's Guide to the Galaxy"
+				defaultSelected="Harry Potter"
 				showFilter={false}
 				filterLabel="Books filter"
+				innerStyle={{
+					icon: {
+						color: 'purple',
+					},
+					input: {
+						color: 'purple',
+					},
+				}}
 				navigation={navigation}
 			/>
 		),
