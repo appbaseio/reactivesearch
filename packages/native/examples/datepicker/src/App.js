@@ -124,20 +124,22 @@ const RootDrawer = DrawerNavigator({
 				queryFormat="date_time_no_millis"
 				showFilter={false}
 				filterLabel="Date"
-				innerStyle={{
-					theme: {
-						backgroundColor: '#f2f2f2',
-						calendarBackground: '#f2f2f2',
-						textSectionTitleColor: '#ffb3ff',
-						selectedDayBackgroundColor: 'purple',
-						selectedDayTextColor: '#f2f2f2',
-						todayTextColor: 'purple',
-						dayTextColor: '#cc00cc',
-						textDisabledColor: '#ffb3ff',
-						dotColor: 'purple',
-						selectedDotColor: '#f2f2f2',
-						arrowColor: 'purple',
-						monthTextColor: 'purple',
+				innerProps={{
+					calendar: {
+						theme: {
+							backgroundColor: '#f2f2f2',
+							calendarBackground: '#f2f2f2',
+							textSectionTitleColor: '#b3b3ff',
+							selectedDayBackgroundColor: '#000066',
+							selectedDayTextColor: '#f2f2f2',
+							todayTextColor: '#000066',
+							dayTextColor: '#0000cc',
+							textDisabledColor: '#b3b3ff',
+							dotColor: '#000066',
+							selectedDotColor: '#f2f2f2',
+							arrowColor: '#000066',
+							monthTextColor: '#000066',
+						},
 					},
 				}}
 				navigation={navigation}
