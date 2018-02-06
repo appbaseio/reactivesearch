@@ -204,6 +204,7 @@ class SingleDropdownList extends Component {
 					flexGrow: 1,
 					...getInnerKey(this.props.innerStyle, 'label'),
 				}}
+				{...getInnerKey(this.props.innerProps, 'picker')}
 			>
 				{
 					[
@@ -218,6 +219,7 @@ class SingleDropdownList extends Component {
 							key={item.key}
 							label={label}
 							value={item.key}
+							{...getInnerKey(this.props.innerProps, 'pickerItem')}
 						/>);
 					})
 				}
@@ -251,6 +253,7 @@ SingleDropdownList.propTypes = {
 	size: types.number,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 SingleDropdownList.defaultProps = {
