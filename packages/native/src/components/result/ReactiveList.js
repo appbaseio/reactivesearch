@@ -317,10 +317,12 @@ class ReactiveList extends Component {
 					disabled={this.state.currentPage === 0}
 					onPress={this.prevPage}
 					style={getInnerKey(this.props.innerStyle, 'button')}
+					{...getInnerKey(this.props.innerProps, 'button')}
 				>
 					<Icon
 						name="ios-arrow-back"
 						style={getInnerKey(this.props.innerStyle, 'icon')}
+						{...getInnerKey(this.props.innerProps, 'icon')}
 					/>
 				</Button>
 				{
@@ -331,12 +333,14 @@ class ReactiveList extends Component {
 							...primaryStyles.button,
 							...getInnerKey(this.props.innerStyle, 'button'),
 						}}
+						{...getInnerKey(this.props.innerProps, 'button')}
 					>
 						<Text
 							style={{
 								...primaryStyles.text,
 								...getInnerKey(this.props.innerStyle, 'label'),
 							}}
+							{...getInnerKey(this.props.innerProps, 'text')}
 						>
 							1
 						</Text>
@@ -353,7 +357,12 @@ class ReactiveList extends Component {
 									alignItems: 'center',
 								}}
 							>
-								<Text style={getInnerKey(this.props.innerStyle, 'label')}>...</Text>
+								<Text
+									style={getInnerKey(this.props.innerStyle, 'label')}
+									{...getInnerKey(this.props.innerProps, 'text')}
+								>
+									...
+								</Text>
 							</View>
 						)
 						: null
@@ -366,10 +375,12 @@ class ReactiveList extends Component {
 					light={this.state.currentPage < this.state.totalPages - 1}
 					disabled={this.state.currentPage >= this.state.totalPages - 1}
 					style={getInnerKey(this.props.innerStyle, 'button')}
+					{...getInnerKey(this.props.innerProps, 'button')}
 				>
 					<Icon
 						name="ios-arrow-forward"
 						style={getInnerKey(this.props.innerStyle, 'icon')}
+						{...getInnerKey(this.props.innerProps, 'icon')}
 					/>
 				</Button>
 			</View>
@@ -385,7 +396,7 @@ class ReactiveList extends Component {
 			return this.props.onResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
 			return (
-				<Text>
+				<Text {...getInnerKey(this.props.innerProps, 'text')}>
 					{this.props.total} results found in {this.props.time}ms
 				</Text>
 			);
@@ -430,12 +441,13 @@ class ReactiveList extends Component {
 								data={[...streamResults, ...filteredResults]}
 								onData={this.props.onData}
 								onEndReached={this.loadMore}
+								innerProps={this.props.innerProps}
 							/>
 						)
 				}
 				{
 					this.state.isLoading && !this.props.pagination
-						? (<View><Spinner /></View>)
+						? (<View><Spinner {...getInnerKey(this.props.innerProps, 'spinner')} /></View>)
 						: null
 				}
 				{
@@ -477,6 +489,7 @@ ReactiveList.propTypes = {
 	style: types.style,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 ReactiveList.defaultProps = {
