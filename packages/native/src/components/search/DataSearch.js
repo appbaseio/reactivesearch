@@ -359,7 +359,7 @@ class DataSearch extends Component {
 					{...getInnerKey(this.props.innerProps, 'modal')}
 				>
 					<Header {...getInnerKey(this.props.innerProps, 'header')}>
-						<Left {...getInnerKey(this.props.innerProps, 'left')}>
+						<Left style={getInnerKey(this.props.innerStyle, 'left')}>
 							<Button
 								transparent
 								onPress={this.toggleModal}
@@ -386,7 +386,7 @@ class DataSearch extends Component {
 						{
 							this.state.currentValue
 								? (
-									<Right {...getInnerKey(this.props.innerProps, 'right')}>
+									<Right style={getInnerKey(this.props.innerStyle, 'right')}>
 										<Button
 											style={{
 												paddingRight: 0,
@@ -411,7 +411,7 @@ class DataSearch extends Component {
 										</Button>
 									</Right>
 								)
-								: <Right {...getInnerKey(this.props.innerProps, 'right')} />
+								: <Right style={getInnerKey(this.props.innerStyle, 'right')} />
 						}
 					</Header>
 					<Item
