@@ -32,7 +32,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect, getInnerKey } from '../../utils';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -332,7 +332,7 @@ class DataSearch extends Component {
 				keyboardShouldPersistTaps="always"
 				renderRow={item => (
 					<ListItem onPress={() => this.selectSuggestion(item.label)}>
-						<Text style={getInnerStyle(this.props.innerStyle, 'label')}>
+						<Text style={getInnerKey(this.props.innerStyle, 'label')}>
 							{item.label}
 						</Text>
 					</ListItem>
@@ -355,7 +355,7 @@ class DataSearch extends Component {
 							<Button
 								transparent
 								onPress={this.toggleModal}
-								style={getInnerStyle(this.props.innerStyle, 'button')}
+								style={getInnerKey(this.props.innerStyle, 'button')}
 							>
 								<Icon
 									name="arrow-back"
@@ -368,7 +368,7 @@ class DataSearch extends Component {
 												color: this.props.theming.primaryColor,
 											},
 										}),
-										...getInnerStyle(this.props.innerStyle, 'icon'),
+										...getInnerKey(this.props.innerStyle, 'icon'),
 									}}
 								/>
 							</Button>
@@ -380,7 +380,7 @@ class DataSearch extends Component {
 										<Button
 											style={{
 												paddingRight: 0,
-												...getInnerStyle(this.props.innerStyle, 'button'),
+												...getInnerKey(this.props.innerStyle, 'button'),
 											}}
 											transparent
 											onPress={() => this.selectSuggestion('')}
@@ -411,7 +411,7 @@ class DataSearch extends Component {
 										style={{
 											fontSize: 22,
 											top: 2,
-											...getInnerStyle(this.props.innerStyle, 'icon'),
+											...getInnerKey(this.props.innerStyle, 'icon'),
 										}}
 									/>
 								)
@@ -421,7 +421,7 @@ class DataSearch extends Component {
 							style={{
 								color: this.props.theming.textColor,
 								...style,
-								...getInnerStyle(this.props.innerStyle, 'input'),
+								...getInnerKey(this.props.innerStyle, 'input'),
 							}}
 							returnKeyType="search"
 							onSubmitEditing={e => this.selectSuggestion(e.nativeEvent.text)}
@@ -439,7 +439,7 @@ class DataSearch extends Component {
 										style={{
 											fontSize: 22,
 											top: 2,
-											...getInnerStyle(this.props.innerStyle, 'icon'),
+											...getInnerKey(this.props.innerStyle, 'icon'),
 										}}
 									/>
 								)
@@ -461,7 +461,7 @@ class DataSearch extends Component {
 								style={{
 									fontSize: 22,
 									top: 2,
-									...getInnerStyle(this.props.innerStyle, 'icon'),
+									...getInnerKey(this.props.innerStyle, 'icon'),
 								}}
 							/>
 						)
@@ -485,7 +485,7 @@ class DataSearch extends Component {
 							paddingRight: 5,
 							paddingTop: 13,
 							...style,
-							...getInnerStyle(this.props.innerStyle, 'input'),
+							...getInnerKey(this.props.innerStyle, 'input'),
 						}}
 					>
 						{
@@ -503,7 +503,7 @@ class DataSearch extends Component {
 								style={{
 									fontSize: 22,
 									top: 2,
-									...getInnerStyle(this.props.innerStyle, 'icon'),
+									...getInnerKey(this.props.innerStyle, 'icon'),
 								}}
 							/>
 						)
@@ -547,7 +547,7 @@ class DataSearch extends Component {
 												style={{
 													fontSize: 22,
 													top: 2,
-													...getInnerStyle(this.props.innerStyle, 'icon'),
+													...getInnerKey(this.props.innerStyle, 'icon'),
 												}}
 											/>
 										)
@@ -557,7 +557,7 @@ class DataSearch extends Component {
 									style={{
 										color: this.props.theming.textColor,
 										...style,
-										...getInnerStyle(this.props.innerStyle, 'input'),
+										...getInnerKey(this.props.innerStyle, 'input'),
 									}}
 									placeholder={this.props.placeholder}
 									onChangeText={this.setValue}
@@ -570,7 +570,7 @@ class DataSearch extends Component {
 											<Button
 												transparent
 												onPress={this.clearValue}
-												style={getInnerStyle(this.props.innerStyle, 'button')}
+												style={getInnerKey(this.props.innerStyle, 'button')}
 											>
 												<Icon
 													name="md-close"
@@ -584,7 +584,7 @@ class DataSearch extends Component {
 																? 0
 																: 10
 														),
-														...getInnerStyle(this.props.innerStyle, 'icon'),
+														...getInnerKey(this.props.innerStyle, 'icon'),
 													}}
 												/>
 											</Button>
@@ -599,7 +599,7 @@ class DataSearch extends Component {
 												style={{
 													fontSize: 22,
 													top: 2,
-													...getInnerStyle(this.props.innerStyle, 'icon'),
+													...getInnerKey(this.props.innerStyle, 'icon'),
 												}}
 											/>
 										)

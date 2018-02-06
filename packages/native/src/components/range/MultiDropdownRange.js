@@ -30,7 +30,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect, getInnerKey } from '../../utils';
 
 class MultiDropdownRange extends Component {
 	constructor(props) {
@@ -189,7 +189,7 @@ class MultiDropdownRange extends Component {
 	};
 
 	render() {
-		const { color, ...checkBoxStyles } = getInnerStyle(this.props.innerStyle, 'checkbox');
+		const { color, ...checkBoxStyles } = getInnerKey(this.props.innerStyle, 'checkbox');
 		return (
 			<View>
 				{
@@ -206,17 +206,17 @@ class MultiDropdownRange extends Component {
 										<Button
 											transparent
 											onPress={this.toggleModal}
-											style={getInnerStyle(this.props.innerStyle, 'button')}
+											style={getInnerKey(this.props.innerStyle, 'button')}
 										>
 											<Icon
 												name="arrow-back"
 												color={this.props.theming.primaryColor}
-												style={getInnerStyle(this.props.innerStyle, 'icon')}
+												style={getInnerKey(this.props.innerStyle, 'icon')}
 											/>
 										</Button>
 									</Left>
 									<Body>
-										<Title style={getInnerStyle(this.props.innerStyle, 'title')}>
+										<Title style={getInnerKey(this.props.innerStyle, 'title')}>
 											{this.props.placeholder}
 										</Title>
 									</Body>
@@ -245,7 +245,7 @@ class MultiDropdownRange extends Component {
 													style={{
 														color: this.props.theming.textColor,
 														marginLeft: 20,
-														...getInnerStyle(this.props.innerStyle, 'label'),
+														...getInnerKey(this.props.innerStyle, 'label'),
 													}}
 												>
 													{item.label}
@@ -271,7 +271,7 @@ class MultiDropdownRange extends Component {
 											paddingLeft: 8,
 											paddingRight: 5,
 											paddingTop: 12,
-											...getInnerStyle(this.props.innerStyle, 'label'),
+											...getInnerKey(this.props.innerStyle, 'label'),
 										}}
 									>
 										{

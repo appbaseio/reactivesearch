@@ -16,7 +16,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect, getInnerKey } from '../../utils';
 
 class SingleDropdownRange extends Component {
 	constructor(props) {
@@ -137,10 +137,10 @@ class SingleDropdownRange extends Component {
 				textStyle={{
 					color: this.props.theming.textColor,
 				}}
-				headerStyle={getInnerStyle(this.props.innerStyle, 'title')}
+				headerStyle={getInnerKey(this.props.innerStyle, 'title')}
 				itemTextStyle={{
 					flexGrow: 1,
-					...getInnerStyle(this.props.innerStyle, 'label'),
+					...getInnerKey(this.props.innerStyle, 'label'),
 				}}
 			>
 				{

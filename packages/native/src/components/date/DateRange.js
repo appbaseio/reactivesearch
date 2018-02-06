@@ -28,7 +28,7 @@ import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect, getInnerKey } from '../../utils';
 
 const XDate = require('xdate');
 
@@ -308,7 +308,11 @@ class DateRange extends Component {
 
 		return (
 			<View>
-				<Item regular style={{ marginLeft: 0, ...this.props.style }}>
+				<Item
+					regular
+					style={{ marginLeft: 0, ...this.props.style }}
+					{...getInnerKey(this.props.innerProps, 'item')}
+				>
 					<TouchableWithoutFeedback
 						onPress={this.toggleModal}
 					>
@@ -323,8 +327,9 @@ class DateRange extends Component {
 								paddingLeft: 8,
 								paddingRight: 5,
 								paddingTop: 12,
-								...getInnerStyle(this.props.innerStyle, 'label'),
+								...getInnerKey(this.props.innerStyle, 'label'),
 							}}
+							{...getInnerKey(this.props.innerProps, 'text')}
 						>
 							{
 								this.state.currentDate
@@ -339,42 +344,52 @@ class DateRange extends Component {
 					transparent={false}
 					visible={this.state.showModal}
 					onRequestClose={this.toggleModal}
+					{...getInnerKey(this.props.innerProps, 'modal')}
 				>
-					<Header>
-						<Left>
+					<Header {...getInnerKey(this.props.innerProps, 'header')}>
+						<Left {...getInnerKey(this.props.innerProps, 'left')}>
 							<Button
 								transparent
 								onPress={this.toggleModal}
-								style={getInnerStyle(this.props.innerStyle, 'button')}
+								style={getInnerKey(this.props.innerStyle, 'button')}
+								{...getInnerKey(this.props.innerProps, 'button')}
 							>
 								<Icon
 									name="arrow-back"
 									color={this.props.theming.primaryColor}
-									style={getInnerStyle(this.props.innerStyle, 'icon')}
+									style={getInnerKey(this.props.innerStyle, 'icon')}
+									{...getInnerKey(this.props.innerProps, 'icon')}
 								/>
 							</Button>
 						</Left>
-						<Body>
-							<Title style={getInnerStyle(this.props.innerStyle, 'title')}>
+						<Body {...getInnerKey(this.props.innerProps, 'body')}>
+							<Title
+								style={getInnerKey(this.props.innerStyle, 'title')}
+								{...getInnerKey(this.props.innerProps, 'title')}
+							>
 								{this.props.placeholder}
 							</Title>
 						</Body>
-						<Right>
+						<Right {...getInnerKey(this.props.innerProps, 'right')}>
 							{
 								this.state.currentDate
 									? (
 										<Button
 											style={{
 												paddingRight: 0,
-												...getInnerStyle(this.props.innerStyle, 'button'),
+												...getInnerKey(this.props.innerStyle, 'button'),
 											}}
 											transparent
 											onPress={() => {
 												this.handleDateChange(null);
 												this.toggleModal();
 											}}
+											{...getInnerKey(this.props.innerProps, 'button')}
 										>
-											<Text style={getInnerStyle(this.props.innerStyle, 'label')}>
+											<Text
+												style={getInnerKey(this.props.innerStyle, 'label')}
+												{...getInnerKey(this.props.innerProps, 'text')}
+											>
 												Reset
 											</Text>
 										</Button>
@@ -390,8 +405,9 @@ class DateRange extends Component {
 						markingType="period"
 						style={{
 							marginTop: 10,
-							...getInnerStyle(this.props.innerStyle, 'calendar'),
+							...getInnerKey(this.props.innerStyle, 'calendar'),
 						}}
+						{...getInnerKey(this.props.innerProps, 'calendar')}
 					/>
 					{
 						this.state.currentDate && this.state.currentDate.end
@@ -404,14 +420,16 @@ class DateRange extends Component {
 										alignItems: 'center',
 										justifyContent: 'center',
 										backgroundColor: this.props.theming.primaryColor,
-										...getInnerStyle(this.props.innerStyle, 'button'),
+										...getInnerKey(this.props.innerStyle, 'button'),
 									}}
+									{...getInnerKey(this.props.innerProps, 'button')}
 								>
 									<Text
 										style={{
 											color: this.props.theming.primaryTextColor,
-											...getInnerStyle(this.props.innerStyle, 'label'),
+											...getInnerKey(this.props.innerStyle, 'label'),
 										}}
+										{...getInnerKey(this.props.innerProps, 'text')}
 									>
 										View Results
 									</Text>
@@ -446,6 +464,7 @@ DateRange.propTypes = {
 	supportedOrientations: types.supportedOrientations,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 DateRange.defaultProps = {

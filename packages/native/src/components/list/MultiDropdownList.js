@@ -33,7 +33,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import CheckboxItem from '../shared/CheckboxItem';
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect, getInnerKey } from '../../utils';
 
 class MultiDropdownList extends Component {
 	constructor(props) {
@@ -299,17 +299,17 @@ class MultiDropdownList extends Component {
 										<Button
 											transparent
 											onPress={this.toggleModal}
-											style={getInnerStyle(this.props.innerStyle, 'button')}
+											style={getInnerKey(this.props.innerStyle, 'button')}
 										>
 											<Icon
 												name="arrow-back"
 												color={this.props.theming.primaryColor}
-												style={getInnerStyle(this.props.innerStyle, 'icon')}
+												style={getInnerKey(this.props.innerStyle, 'icon')}
 											/>
 										</Button>
 									</Left>
 									<Body>
-										<Title style={getInnerStyle(this.props.innerStyle, 'title')}>
+										<Title style={getInnerKey(this.props.innerStyle, 'title')}>
 											{this.props.placeholder}
 										</Title>
 									</Body>
@@ -354,7 +354,7 @@ class MultiDropdownList extends Component {
 											paddingLeft: 8,
 											paddingRight: 5,
 											paddingTop: 12,
-											...getInnerStyle(this.props.innerStyle, 'label'),
+											...getInnerKey(this.props.innerStyle, 'label'),
 										}}
 									>
 										{
