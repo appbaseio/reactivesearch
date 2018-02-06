@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Modal, TouchableWithoutFeedback } from 'react-native';
+import { View, Modal, TouchableWithoutFeedback, Platform } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import {
 	Text,
@@ -180,6 +180,12 @@ class DatePicker extends Component {
 			};
 		}
 
+		const resetButtonStyles = {};
+
+		if (Platform.OS === 'android') {
+			resetButtonStyles.color = this.props.theming.primaryTextColor;
+		}
+
 		return (
 			<View>
 				<Item
@@ -261,7 +267,10 @@ class DatePicker extends Component {
 											{...getInnerKey(this.props.innerProps, 'button')}
 										>
 											<Text
-												style={getInnerKey(this.props.innerStyle, 'label')}
+												style={{
+													...resetButtonStyles,
+													...getInnerKey(this.props.innerStyle, 'label'),
+												}}
 												{...getInnerKey(this.props.innerProps, 'text')}
 											>
 												Reset
