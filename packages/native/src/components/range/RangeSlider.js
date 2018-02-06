@@ -262,6 +262,7 @@ class RangeSlider extends Component {
 								}}
 								sliderLength={this.state.width}
 								onValuesChangeFinish={this.handleChange}
+								{...getInnerKey(this.props.innerProps, 'slider')}
 							/>)
 							: null
 					}
@@ -296,6 +297,7 @@ RangeSlider.propTypes = {
 	style: types.style,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 RangeSlider.defaultProps = {

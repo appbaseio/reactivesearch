@@ -343,7 +343,7 @@ class MultiDropdownList extends Component {
 											/>
 										);
 									}}
-									{...getInnerKey(this.props.innerProps, 'flatlist')}
+									{...getInnerKey(this.props.innerProps, 'flatList')}
 								/>
 							</Modal>)
 						: (

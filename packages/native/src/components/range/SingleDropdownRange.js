@@ -142,10 +142,16 @@ class SingleDropdownRange extends Component {
 					flexGrow: 1,
 					...getInnerKey(this.props.innerStyle, 'label'),
 				}}
+				{...getInnerKey(this.props.innerProps, 'picker')}
 			>
 				{
 					this.props.data.map(item => (
-						<Picker.Item key={item.label} label={item.label} value={item} />
+						<Picker.Item
+							key={item.label}
+							label={item.label}
+							value={item}
+							{...getInnerKey(this.props.innerProps, 'pickerItem')}
+						/>
 					))
 				}
 			</Picker>
@@ -173,6 +179,7 @@ SingleDropdownRange.propTypes = {
 	style: types.style,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 SingleDropdownRange.defaultProps = {
