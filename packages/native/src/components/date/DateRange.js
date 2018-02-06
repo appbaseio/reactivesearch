@@ -387,7 +387,10 @@ class DateRange extends Component {
 											{...getInnerKey(this.props.innerProps, 'button')}
 										>
 											<Text
-												style={getInnerKey(this.props.innerStyle, 'label')}
+												style={{
+													color: this.props.theming.primaryTextColor,
+													...getInnerKey(this.props.innerStyle, 'label'),
+												}}
 												{...getInnerKey(this.props.innerProps, 'text')}
 											>
 												Reset
