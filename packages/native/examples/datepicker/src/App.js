@@ -17,7 +17,7 @@ const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 });
 
 const RootDrawer = DrawerNavigator({
-	DrawerOption1: {
+	basic: {
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DatePicker
@@ -26,7 +26,7 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// DrawerOption2: {
+	// withTitle: {
 	// 	navigationOptions: navigationOptionsBuilder('With title'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	// 		<DatePicker
@@ -36,7 +36,7 @@ const RootDrawer = DrawerNavigator({
 	// 		/>
 	// 	),
 	// },
-	DrawerOption3: {
+	withPlaceholder: {
 		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DatePicker
@@ -46,7 +46,7 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// DrawerOption4: {
+	// withFilter: {
 	// 	navigationOptions: navigationOptionsBuilder('With filter'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	//         <DatePicker
@@ -55,7 +55,7 @@ const RootDrawer = DrawerNavigator({
 	//         />
 	// 	),
 	// },
-	// DrawerOption5: {
+	// withFocus: {
 	// 	navigationOptions: navigationOptionsBuilder('With focus'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	//         <DatePicker
@@ -65,7 +65,7 @@ const RootDrawer = DrawerNavigator({
 	//         />
 	// 	),
 	// },
-	// DrawerOption6: {
+	// withShowMoreThanMonth: {
 	// 	navigationOptions: navigationOptionsBuilder('Show more than 1 month'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	//         <DatePicker
@@ -75,7 +75,7 @@ const RootDrawer = DrawerNavigator({
 	//         />
 	// 	),
 	// },
-	DrawerOption7: {
+	withInitialMonth: {
 		navigationOptions: navigationOptionsBuilder('With initialMonth'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DatePicker
@@ -85,7 +85,7 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// DrawerOption8: {
+	// withoutClearButton: {
 	// 	navigationOptions: navigationOptionsBuilder('Without clear button'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	//         <DatePicker
@@ -95,7 +95,7 @@ const RootDrawer = DrawerNavigator({
 	//         />
 	// 	),
 	// },
-	// DrawerOption9: {
+	// withoutClickUnselectsDay: {
 	// 	navigationOptions: navigationOptionsBuilder('Without clickUnselectsDay'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	//         <DatePicker
@@ -105,7 +105,7 @@ const RootDrawer = DrawerNavigator({
 	//         />
 	// 	),
 	// },
-	// DrawerOption10: {
+	// withQueryFormat: {
 	// 	navigationOptions: navigationOptionsBuilder('With queryFormat'),
 	// 	screen: ({ navigation }) => ( // eslint-disable-line
 	// 		<DatePicker
@@ -115,7 +115,7 @@ const RootDrawer = DrawerNavigator({
 	// 		/>
 	// 	),
 	// },
-	DrawerOption11: {
+	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DatePicker
