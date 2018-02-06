@@ -114,6 +114,11 @@ class Main extends Component {
 									color: 'blue',
 								},
 							}}
+							innerProps={{
+								icon: {
+									color: 'yellow',
+								},
+							}}
 						/>
 
 						<DatePicker

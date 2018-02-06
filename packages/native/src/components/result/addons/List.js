@@ -4,6 +4,8 @@ import { FlatList } from 'react-native';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import { getInnerKey } from '../../../utils';
+
 class List extends Component {
 	shouldComponentUpdate(nextProps) {
 		if (!isEqual(this.props.data, nextProps.data)) {
@@ -21,6 +23,7 @@ class List extends Component {
 			renderItem={({ item }) => this.props.onData(item)}
 			onEndReachedThreshold={0.5}
 			onEndReached={this.props.onEndReached}
+			{...getInnerKey(this.props.innerProps, 'flatList')}
 		/>);
 	}
 }
@@ -30,6 +33,7 @@ List.propTypes = {
 	setRef: types.func,
 	onData: types.func,
 	onEndReached: types.func,
+	innerProps: types.props,
 };
 
 export default List;

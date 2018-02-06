@@ -23,7 +23,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import List from './addons/List';
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect, getInnerKey } from '../../utils';
 
 class ReactiveList extends Component {
 	constructor(props) {
@@ -267,13 +267,13 @@ class ReactiveList extends Component {
 					light={this.state.currentPage !== i - 1}
 					style={{
 						...activeStyles.button,
-						...getInnerStyle(this.props.innerStyle, 'button'),
+						...getInnerKey(this.props.innerStyle, 'button'),
 					}}
 				>
 					<Text
 						style={{
 							...activeStyles.text,
-							...getInnerStyle(this.props.innerStyle, 'label'),
+							...getInnerKey(this.props.innerStyle, 'label'),
 						}}
 					>
 						{i}
@@ -316,11 +316,13 @@ class ReactiveList extends Component {
 					light={this.state.currentPage !== 0}
 					disabled={this.state.currentPage === 0}
 					onPress={this.prevPage}
-					style={getInnerStyle(this.props.innerStyle, 'button')}
+					style={getInnerKey(this.props.innerStyle, 'button')}
+					{...getInnerKey(this.props.innerProps, 'button')}
 				>
 					<Icon
 						name="ios-arrow-back"
-						style={getInnerStyle(this.props.innerStyle, 'icon')}
+						style={getInnerKey(this.props.innerStyle, 'icon')}
+						{...getInnerKey(this.props.innerProps, 'icon')}
 					/>
 				</Button>
 				{
@@ -329,14 +331,16 @@ class ReactiveList extends Component {
 						light={this.state.currentPage !== 0}
 						style={{
 							...primaryStyles.button,
-							...getInnerStyle(this.props.innerStyle, 'button'),
+							...getInnerKey(this.props.innerStyle, 'button'),
 						}}
+						{...getInnerKey(this.props.innerProps, 'button')}
 					>
 						<Text
 							style={{
 								...primaryStyles.text,
-								...getInnerStyle(this.props.innerStyle, 'label'),
+								...getInnerKey(this.props.innerStyle, 'label'),
 							}}
+							{...getInnerKey(this.props.innerProps, 'text')}
 						>
 							1
 						</Text>
@@ -353,7 +357,12 @@ class ReactiveList extends Component {
 									alignItems: 'center',
 								}}
 							>
-								<Text style={getInnerStyle(this.props.innerStyle, 'label')}>...</Text>
+								<Text
+									style={getInnerKey(this.props.innerStyle, 'label')}
+									{...getInnerKey(this.props.innerProps, 'text')}
+								>
+									...
+								</Text>
 							</View>
 						)
 						: null
@@ -365,11 +374,13 @@ class ReactiveList extends Component {
 					onPress={this.nextPage}
 					light={this.state.currentPage < this.state.totalPages - 1}
 					disabled={this.state.currentPage >= this.state.totalPages - 1}
-					style={getInnerStyle(this.props.innerStyle, 'button')}
+					style={getInnerKey(this.props.innerStyle, 'button')}
+					{...getInnerKey(this.props.innerProps, 'button')}
 				>
 					<Icon
 						name="ios-arrow-forward"
-						style={getInnerStyle(this.props.innerStyle, 'icon')}
+						style={getInnerKey(this.props.innerStyle, 'icon')}
+						{...getInnerKey(this.props.innerProps, 'icon')}
 					/>
 				</Button>
 			</View>
@@ -385,7 +396,7 @@ class ReactiveList extends Component {
 			return this.props.onResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
 			return (
-				<Text>
+				<Text {...getInnerKey(this.props.innerProps, 'text')}>
 					{this.props.total} results found in {this.props.time}ms
 				</Text>
 			);
@@ -430,12 +441,13 @@ class ReactiveList extends Component {
 								data={[...streamResults, ...filteredResults]}
 								onData={this.props.onData}
 								onEndReached={this.loadMore}
+								innerProps={this.props.innerProps}
 							/>
 						)
 				}
 				{
 					this.state.isLoading && !this.props.pagination
-						? (<View><Spinner /></View>)
+						? (<View><Spinner {...getInnerKey(this.props.innerProps, 'spinner')} /></View>)
 						: null
 				}
 				{
@@ -477,6 +489,7 @@ ReactiveList.propTypes = {
 	style: types.style,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 ReactiveList.defaultProps = {

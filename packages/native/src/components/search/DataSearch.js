@@ -32,7 +32,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect, getInnerKey } from '../../utils';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -331,12 +331,19 @@ class DataSearch extends Component {
 				dataArray={suggestionsList}
 				keyboardShouldPersistTaps="always"
 				renderRow={item => (
-					<ListItem onPress={() => this.selectSuggestion(item.label)}>
-						<Text style={getInnerStyle(this.props.innerStyle, 'label')}>
+					<ListItem
+						onPress={() => this.selectSuggestion(item.label)}
+						{...getInnerKey(this.props.innerProps, 'listItem')}
+					>
+						<Text
+							style={getInnerKey(this.props.innerStyle, 'label')}
+							{...getInnerKey(this.props.innerProps, 'text')}
+						>
 							{item.label}
 						</Text>
 					</ListItem>
 				)}
+				{...getInnerKey(this.props.innerProps, 'list')}
 			/>
 		);
 	}
@@ -349,13 +356,15 @@ class DataSearch extends Component {
 					transparent={false}
 					visible={this.state.showModal}
 					onRequestClose={this.toggleModal}
+					{...getInnerKey(this.props.innerProps, 'modal')}
 				>
-					<Header style={getInnerStyle(this.props.innerStyle, 'header')}>
-						<Left>
+					<Header {...getInnerKey(this.props.innerProps, 'header')}>
+						<Left {...getInnerKey(this.props.innerProps, 'left')}>
 							<Button
 								transparent
 								onPress={this.toggleModal}
-								style={getInnerStyle(this.props.innerStyle, 'button')}
+								style={getInnerKey(this.props.innerStyle, 'button')}
+								{...getInnerKey(this.props.innerProps, 'button')}
 							>
 								<Icon
 									name="arrow-back"
@@ -368,22 +377,24 @@ class DataSearch extends Component {
 												color: this.props.theming.primaryColor,
 											},
 										}),
-										...getInnerStyle(this.props.innerStyle, 'icon'),
+										...getInnerKey(this.props.innerStyle, 'icon'),
 									}}
+									{...getInnerKey(this.props.innerProps, 'icon')}
 								/>
 							</Button>
 						</Left>
 						{
 							this.state.currentValue
 								? (
-									<Right>
+									<Right {...getInnerKey(this.props.innerProps, 'right')}>
 										<Button
 											style={{
 												paddingRight: 0,
-												...getInnerStyle(this.props.innerStyle, 'button'),
+												...getInnerKey(this.props.innerStyle, 'button'),
 											}}
 											transparent
 											onPress={() => this.selectSuggestion('')}
+											{...getInnerKey(this.props.innerProps, 'button')}
 										>
 											<Text
 												style={{
@@ -393,16 +404,21 @@ class DataSearch extends Component {
 														},
 													}),
 												}}
+												{...getInnerKey(this.props.innerProps, 'text')}
 											>
 												Reset
 											</Text>
 										</Button>
 									</Right>
 								)
-								: <Right />
+								: <Right {...getInnerKey(this.props.innerProps, 'right')} />
 						}
 					</Header>
-					<Item regular style={{ marginLeft: 10, margin: 10 }}>
+					<Item
+						regular
+						style={{ marginLeft: 10, margin: 10 }}
+						{...getInnerKey(this.props.innerProps, 'item')}
+					>
 						{
 							this.props.showIcon && this.props.iconPosition === 'left'
 								? (
@@ -411,7 +427,7 @@ class DataSearch extends Component {
 										style={{
 											fontSize: 22,
 											top: 2,
-											...getInnerStyle(this.props.innerStyle, 'icon'),
+											...getInnerKey(this.props.innerStyle, 'icon'),
 										}}
 									/>
 								)
@@ -421,7 +437,7 @@ class DataSearch extends Component {
 							style={{
 								color: this.props.theming.textColor,
 								...style,
-								...getInnerStyle(this.props.innerStyle, 'input'),
+								...getInnerKey(this.props.innerStyle, 'input'),
 							}}
 							returnKeyType="search"
 							onSubmitEditing={e => this.selectSuggestion(e.nativeEvent.text)}
@@ -430,6 +446,7 @@ class DataSearch extends Component {
 							value={this.state.currentValue}
 							onFocus={this.setSuggestions}
 							autoFocus
+							{...getInnerKey(this.props.innerProps, 'input')}
 						/>
 						{
 							this.props.showIcon && this.props.iconPosition === 'right'
@@ -439,8 +456,9 @@ class DataSearch extends Component {
 										style={{
 											fontSize: 22,
 											top: 2,
-											...getInnerStyle(this.props.innerStyle, 'icon'),
+											...getInnerKey(this.props.innerStyle, 'icon'),
 										}}
+										{...getInnerKey(this.props.innerProps, 'icon')}
 									/>
 								)
 								: null
@@ -452,7 +470,11 @@ class DataSearch extends Component {
 		}
 
 		return (
-			<Item regular style={{ marginLeft: 0 }}>
+			<Item
+				regular
+				style={{ marginLeft: 0 }}
+				{...getInnerKey(this.props.innerProps, 'item')}
+			>
 				{
 					this.props.showIcon && this.props.iconPosition === 'left'
 						? (
@@ -461,7 +483,7 @@ class DataSearch extends Component {
 								style={{
 									fontSize: 22,
 									top: 2,
-									...getInnerStyle(this.props.innerStyle, 'icon'),
+									...getInnerKey(this.props.innerStyle, 'icon'),
 								}}
 							/>
 						)
@@ -485,8 +507,9 @@ class DataSearch extends Component {
 							paddingRight: 5,
 							paddingTop: 13,
 							...style,
-							...getInnerStyle(this.props.innerStyle, 'input'),
+							...getInnerKey(this.props.innerStyle, 'input'),
 						}}
+						{...getInnerKey(this.props.innerProps, 'text')}
 					>
 						{
 							this.state.currentValue && this.state.currentValue !== ''
@@ -503,8 +526,9 @@ class DataSearch extends Component {
 								style={{
 									fontSize: 22,
 									top: 2,
-									...getInnerStyle(this.props.innerStyle, 'icon'),
+									...getInnerKey(this.props.innerStyle, 'icon'),
 								}}
+								{...getInnerKey(this.props.innerProps, 'icon')}
 							/>
 						)
 						: null
@@ -538,7 +562,11 @@ class DataSearch extends Component {
 					this.props.autosuggest
 						? this.renderDataSearch(style)
 						: (
-							<Item regular style={{ marginLeft: 0 }}>
+							<Item
+								regular
+								style={{ marginLeft: 0 }}
+								{...getInnerKey(this.props.innerProps, 'item')}
+							>
 								{
 									this.props.showIcon && this.props.iconPosition === 'left'
 										? (
@@ -547,8 +575,9 @@ class DataSearch extends Component {
 												style={{
 													fontSize: 22,
 													top: 2,
-													...getInnerStyle(this.props.innerStyle, 'icon'),
+													...getInnerKey(this.props.innerStyle, 'icon'),
 												}}
+												{...getInnerKey(this.props.innerProps, 'icon')}
 											/>
 										)
 										: null
@@ -557,12 +586,13 @@ class DataSearch extends Component {
 									style={{
 										color: this.props.theming.textColor,
 										...style,
-										...getInnerStyle(this.props.innerStyle, 'input'),
+										...getInnerKey(this.props.innerStyle, 'input'),
 									}}
 									placeholder={this.props.placeholder}
 									onChangeText={this.setValue}
 									value={this.state.currentValue}
 									autoFocus={this.props.autoFocus}
+									{...getInnerKey(this.props.innerProps, 'input')}
 								/>
 								{
 									this.state.currentValue && this.props.showClear
@@ -570,7 +600,8 @@ class DataSearch extends Component {
 											<Button
 												transparent
 												onPress={this.clearValue}
-												style={getInnerStyle(this.props.innerStyle, 'button')}
+												style={getInnerKey(this.props.innerStyle, 'button')}
+												{...getInnerKey(this.props.innerProps, 'button')}
 											>
 												<Icon
 													name="md-close"
@@ -584,8 +615,9 @@ class DataSearch extends Component {
 																? 0
 																: 10
 														),
-														...getInnerStyle(this.props.innerStyle, 'icon'),
+														...getInnerKey(this.props.innerStyle, 'icon'),
 													}}
+													{...getInnerKey(this.props.innerProps, 'icon')}
 												/>
 											</Button>
 										)
@@ -599,8 +631,9 @@ class DataSearch extends Component {
 												style={{
 													fontSize: 22,
 													top: 2,
-													...getInnerStyle(this.props.innerStyle, 'icon'),
+													...getInnerKey(this.props.innerStyle, 'icon'),
 												}}
+												{...getInnerKey(this.props.innerProps, 'icon')}
 											/>
 										)
 										: null
@@ -647,6 +680,7 @@ DataSearch.propTypes = {
 	showClear: types.bool,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 DataSearch.defaultProps = {
