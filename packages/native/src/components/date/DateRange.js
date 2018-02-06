@@ -347,7 +347,7 @@ class DateRange extends Component {
 					{...getInnerKey(this.props.innerProps, 'modal')}
 				>
 					<Header {...getInnerKey(this.props.innerProps, 'header')}>
-						<Left {...getInnerKey(this.props.innerProps, 'left')}>
+						<Left style={getInnerKey(this.props.innerStyle, 'left')}>
 							<Button
 								transparent
 								onPress={this.toggleModal}
@@ -362,7 +362,7 @@ class DateRange extends Component {
 								/>
 							</Button>
 						</Left>
-						<Body {...getInnerKey(this.props.innerProps, 'body')}>
+						<Body style={getInnerKey(this.props.innerStyle, 'body')}>
 							<Title
 								style={getInnerKey(this.props.innerStyle, 'title')}
 								{...getInnerKey(this.props.innerProps, 'title')}
@@ -370,7 +370,7 @@ class DateRange extends Component {
 								{this.props.placeholder}
 							</Title>
 						</Body>
-						<Right {...getInnerKey(this.props.innerProps, 'right')}>
+						<Right style={getInnerKey(this.props.innerStyle, 'right')}>
 							{
 								this.state.currentDate
 									? (
