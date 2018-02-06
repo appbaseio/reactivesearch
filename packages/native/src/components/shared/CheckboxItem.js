@@ -36,6 +36,7 @@ class CheckboxItem extends Component {
 						checked={this.props.checked}
 						color={color || this.props.theming.primaryColor}
 						style={checkBoxStyles}
+						{...getInnerKey(this.props.innerProps, 'checkbox')}
 					/>
 					<Text
 						style={{
@@ -43,6 +44,7 @@ class CheckboxItem extends Component {
 							marginLeft: 20,
 							...getInnerKey(this.props.innerStyle, 'label'),
 						}}
+						{...getInnerKey(this.props.innerProps, 'text')}
 					>
 						{this.props.label}
 					</Text>
@@ -59,6 +61,7 @@ CheckboxItem.propTypes = {
 	value: types.string,
 	innerStyle: types.style,
 	theming: types.style,
+	innerProps: types.props,
 };
 
 export default CheckboxItem;
