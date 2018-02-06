@@ -12,6 +12,7 @@ import {
 import {
 	Body,
 	Button,
+	Container,
 	Card,
 	CardItem,
 	Header,
@@ -34,13 +35,21 @@ import {
 import { GITXPLORE as APPBASE_CONFIG } from './../../common/credentials';
 
 import {
-	DEFAULT_COLORS as COLORS,
+	DEFAULT_COLORS,
 	commonStyles as common,
+	kFormatter,
 } from './../../common/helpers';
 
 import styles from './Styles';
 
 const COMPONENT_DEMO = 'DatePicker';
+
+const COLORS = {
+	...DEFAULT_COLORS,
+	cardtitle: '#404040',
+	carddesc: '#737373',
+	bluecard: '#739ffc',
+};
 
 export default class Main extends Component {
 	render() {
@@ -82,7 +91,7 @@ export default class Main extends Component {
 					<Title
 						style={{ color: headerColor, fontSize: 18 }}
 					>
-						{ COMPONENT_DEMO }
+						{COMPONENT_DEMO}
 					</Title>
 				</Body>
 				{isIOS && (
@@ -121,37 +130,39 @@ export default class Main extends Component {
 				credentials={APPBASE_CONFIG.credentials}
 				type={APPBASE_CONFIG.type}
 			>
-				{this.renderStatusBar()}
-				{header}
-				{componentMarkup}
-				<ScrollView>
-					<View style={[common.container, common.column]}>
-						<View
-							style={[common.fullWidth, common.alignCenter, styles.results]}
-						>
-							<ReactiveList
-								componentId="ReactiveList"
-								dataField="original_title"
-								size={5}
-								onAllData={this.onAllData}
-								// onData={this.itemCardMarkup}
-								pagination
-								paginationAt="bottom"
-								react={{
-									and: ['DatePickerSensor'],
-								}}
-								showResultStats={false}
-								defaultQuery={
-									() => ({
-										query: {
-											match_all: {},
-										},
-									})
-								}
-							/>
+				<Container>
+					{this.renderStatusBar()}
+					{header}
+					{componentMarkup}
+					<ScrollView>
+						<View style={[common.container, common.column]}>
+							<View
+								style={[common.fullWidth, common.alignCenter, styles.results]}
+							>
+								<ReactiveList
+									componentId="ReactiveList"
+									dataField="original_title"
+									size={5}
+									onAllData={this.onAllData}
+									// onData={this.itemCardMarkup}
+									pagination
+									paginationAt="bottom"
+									react={{
+										and: ['DatePickerSensor'],
+									}}
+									showResultStats={false}
+									defaultQuery={
+										() => ({
+											query: {
+												match_all: {},
+											},
+										})
+									}
+								/>
+							</View>
 						</View>
-					</View>
-				</ScrollView>
+					</ScrollView>
+				</Container>
 			</ReactiveBase>
 		);
 	}
@@ -172,27 +183,156 @@ export default class Main extends Component {
 		});
 	}
 
-	// TODO: Complete markup
 	itemCardMarkup = item => (
 		<TouchableOpacity onPress={() => web(item.url)} key={item._id}>
-			<View style={[styles.fullWidth, { paddingHorizontal: 25, paddingVertical: 10 }]}>
-				<Card>
-					<CardItem>
-						<Body style={{ alignItems: 'center' }}>
-							<Thumbnail
-								source={{ uri: item.avatar }}
-							/>
-							<Text
-								onPress={() => web(item.url)}
+			<View style={[styles.fullWidth, {
+				paddingHorizontal: 10,
+				paddingVertical: 10,
+				overflow: 'hidden',
+			}]}
+			>
+				<Card style={{ overflow: 'hidden' }}>
+					<CardItem style={{ overflow: 'hidden' }}>
+						<Body
+							style={{
+								alignItems: 'center',
+								flex: 1,
+								overflow: 'hidden',
+							}}
+						>
+							<View
 								style={{
-									fontWeight: 'bold', color: COLORS.primary, paddingBottom: 5, paddingTop: 5,
+									flexDirection: 'row',
+									justifyContent: 'flex-start',
+									flex: 1,
+									width: '100%',
+									overflow: 'hidden',
 								}}
 							>
-								{item.owner}/{item.name}
+								<Thumbnail source={{ uri: item.avatar }} />
+								<View style={{ flexDirection: 'column', flex: 1 }}>
+									<Text
+										style={{
+											fontWeight: 'bold',
+											color: COLORS.cardtitle,
+											paddingTop: 8,
+											justifyContent: 'flex-start',
+											paddingLeft: 10,
+										}}
+									>
+										{item.name}
+									</Text>
+									<Text
+										style={{
+											fontWeight: 'bold',
+											color: COLORS.carddesc,
+											justifyContent: 'flex-start',
+											paddingLeft: 10,
+										}}
+									>
+										@{item.owner}
+									</Text>
+								</View>
+							</View>
+							<Text
+								style={{
+									paddingBottom: 15,
+									textAlign: 'left',
+									color: COLORS.carddesc,
+									paddingVertical: 25,
+								}}
+							>
+								{item.description}
 							</Text>
-							<Text style={{ paddingBottom: 15, textAlign: 'center' }}>{item.description}</Text>
+
+							<View
+								style={{
+									flex: 1,
+									flexDirection: 'row',
+									justifyContent: 'space-between',
+									alignItems: 'flex-end',
+									width: '100%',
+								}}
+							>
+								<View
+									style={{
+										flex: 1,
+										flexDirection: 'row',
+										justifyContent: 'flex-start',
+										alignItems: 'center',
+										paddingBottom: 5,
+									}}
+								>
+									<Ionicons
+										name="md-git-branch"
+										style={{ fontSize: 20, paddingRight: 3, color: COLORS.bluecard }}
+									/>
+									<Text style={{ fontSize: 15, color: COLORS.carddesc }}>
+										{kFormatter(item.forks)}
+									</Text>
+									<Ionicons
+										name="md-eye"
+										style={{
+											fontSize: 20,
+											paddingLeft: 15,
+											paddingRight: 3,
+											color: COLORS.bluecard,
+										}}
+									/>
+									<Text style={{ fontSize: 15, color: COLORS.carddesc }}>
+										{kFormatter(item.watchers)}
+									</Text>
+								</View>
+								<View>
+									<Button
+										style={{
+											padding: 5,
+											height: 30,
+											borderRadius: 15,
+											backgroundColor: COLORS.bluecard,
+											marginBottom: 5,
+										}}
+										onPress={() => web(item.url)}
+									>
+										<Text>View</Text>
+									</Button>
+								</View>
+							</View>
 						</Body>
+						<View
+							style={{
+								position: 'absolute',
+								top: -30,
+								right: -30,
+								backgroundColor: '#fee7e9',
+								height: 60,
+								width: 60,
+								borderRadius: 30,
+								zIndex: 98,
+							}}
+						/>
 					</CardItem>
+					<Ionicons
+						name="md-star"
+						style={{
+							position: 'absolute',
+							fontSize: 15,
+							backgroundColor: '#fee7e9',
+							color: '#fa9ea8',
+							top: 5,
+							right: 5,
+						}}
+					/>
+					<Text
+						style={{
+							position: 'absolute',
+							top: 5,
+							right: 35,
+							color: COLORS.carddesc,
+						}}
+					>
+						{kFormatter(item.stars)}
+					</Text>
 				</Card>
 			</View>
 		</TouchableOpacity>
