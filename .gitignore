@@ -7,3 +7,4 @@ lib
 stats.json
 .expo/
 .vscode/
+*.swp
