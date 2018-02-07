@@ -15,7 +15,7 @@ import {
 	DatePicker,
 	DateRange,
 	ReactiveList,
-} from '@appbaseio/reactivebase-native';
+} from '@appbaseio/reactivesearch-native';
 
 class Main extends Component {
 	state = {

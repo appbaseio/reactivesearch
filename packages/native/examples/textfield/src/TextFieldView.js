@@ -27,7 +27,7 @@ import {
 	TextField,
 	ReactiveBase,
 	ReactiveList,
-} from '@appbaseio/reactivebase-native';
+} from '@appbaseio/reactivesearch-native';
 
 import { GOOD_BOOKS as APPBASE_CONFIG } from './../../common/credentials';
 

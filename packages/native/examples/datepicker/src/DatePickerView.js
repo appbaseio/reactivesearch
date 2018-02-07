@@ -30,7 +30,7 @@ import {
 	DatePicker,
 	ReactiveBase,
 	ReactiveList,
-} from '@appbaseio/reactivebase-native';
+} from '@appbaseio/reactivesearch-native';
 
 import { GITXPLORE as APPBASE_CONFIG } from './../../common/credentials';
 
