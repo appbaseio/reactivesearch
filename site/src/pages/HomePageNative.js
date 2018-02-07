@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Flex, H1, H2, Title, Button, Text } from '@appbaseio/designkit';
 
 import Navbar, { logo } from '../styles/Navbar';
-import { SlopeWrapper, Slope } from '../styles/Slope';
+import { SlopeWrapper, Slope, WhiteBackdrop } from '../styles/Slope';
 import Bubble from '../styles/Bubble';
 import { Image, ImageCard } from '../styles/Image';
 import {
@@ -28,7 +28,6 @@ import {
 	mobShow,
 	mobBottomMargin,
 	textCenter,
-	primaryBg,
 } from '../styles/base';
 import { mockDataSearch, mockDataSearchFull } from '../components/mock';
 
@@ -95,56 +94,63 @@ export default class HomePageNative extends Component {
 						<li><a href="https://github.com/appbaseio/reactivesearch">GitHub</a></li>
 					</ul>
 				</Navbar>
-				<Flex
-					justifyContent="center"
-					padding="0 3rem"
-					className={primaryBg}
-				>
-					<div className="wrapper" />
-					<Flex
-						className={`${tabBanner}`}
-						flexDirection="column"
-						padding="0 0 0 3rem"
-					>
-						<H1
-							fontWeight="700"
-							fontSize="1.5rem"
-							lineHeight="2rem"
-							margin="0 0 10px"
-							className={boldHeading}
-							style={{ textAlign: 'center' }}
+				<SlopeWrapper>
+					<Flex justifyContent="space-between">
+						<Slope border />
+						<Flex
+							className={`${col} ${tabBanner}`}
+							flexDirection="column"
+							padding="0 0 0 3rem"
+							justifyContent="center"
 						>
-							React Native UI components for ElasticSearch
-						</H1>
+							<H1
+								fontWeight="700"
+								fontSize="2rem"
+								lineHeight="2.6rem"
+								margin="40px 0 10px"
+								className={boldHeading}
+							>React Native UI components for ElasticSearch
+							</H1>
 
-						<Text
-							fontSize="1rem"
-							lineHeight="1.4rem"
-							margin="10px 0 30px"
-							light
-							style={{ textAlign: 'center' }}
-						>
-							<span className={`${boldHeading} ${logo} ${mobHide}`}>v0.5</span> TODO - Needs a sub-heading.&nbsp;
-							<a
-								className={`${decoratedLink} ${decoratedSecondaryLink}`}
-								target="_blank"
-								rel="noopener noreferrer"
-								href="https://github.com/appbaseio/reactivesearch"
+							<Text
+								fontSize="1rem"
+								lineHeight="1.4rem"
+								margin="10px 0 30px"
+								light
 							>
-								Open-source licensed.
-							</a>
-						</Text>
+								<span className={`${boldHeading} ${logo} ${mobHide}`}>v0.5</span>
+								TODO - Needs a sub-heading.&nbsp;
+								<a
+									className={`${decoratedLink} ${decoratedSecondaryLink}`}
+									target="_blank"
+									rel="noopener noreferrer"
+									href="https://github.com/appbaseio/reactivesearch"
+								>
+									Open-source licensed.
+								</a>
+							</Text>
 
-						<Flex className={tabJustifyCenter} justifyContent="center">
-							<Button light primary shadow className={button} href="https://opensource.appbase.io/native-reactive-manual/getting-started/reactivesearch.html">
-								Getting Started
-							</Button>
-							<Button shadow className={button} style={{ marginLeft: '10px' }} href="https://opensource.appbase.io/native-reactive-manual/components/textfield.html">
-								View Components
-							</Button>
+							<Flex className={tabJustifyCenter}>
+								<Button light primary shadow className={button} href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html">
+									Getting Started
+								</Button>
+								<Button shadow className={button} style={{ marginLeft: '10px' }} href="https://opensource.appbase.io/reactive-manual/base-components/textfield.html">
+									View Components
+								</Button>
+							</Flex>
 						</Flex>
+
+						<Flex style={{ position: 'absolute', right: 0 }} className={tabHide}>
+							<img
+								height="590px"
+								src="images/browser.png"
+								alt="Reactivesearch"
+								style={{ boxShadow: '0 5px 24px 0 rgba(0,0,0,0.3)' }}
+							/>
+						</Flex>
+						<WhiteBackdrop degree={-15} />
 					</Flex>
-				</Flex>
+				</SlopeWrapper>
 
 				<Flex padding="0 3rem 3rem" className={tabCol}>
 					<div className={col}>

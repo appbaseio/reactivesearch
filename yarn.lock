@@ -2,13 +2,11 @@
 # yarn lockfile v1
 
 
-"@appbaseio/designkit@^0.2.8":
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/@appbaseio/designkit/-/designkit-0.2.8.tgz#7f38468c1c9442d4c9ef507205e42c879637cc0f"
+"@appbaseio/designkit@^0.2.9":
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/@appbaseio/designkit/-/designkit-0.2.9.tgz#c2a28b1bdcebb20c389a964b8ed5de7223e2c846"
   dependencies:
     "@storybook/react" "^3.2.19"
-    emotion "^8.0.10"
-    emotion-theming "^8.0.10"
     prop-types "^15.6.0"
     react-emotion "^8.0.10"
 
@@ -3515,9 +3513,9 @@ emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
 
-emotion-theming@^8.0.10, emotion-theming@^8.0.11, emotion-theming@^8.0.12:
-  version "8.0.12"
-  resolved "https://registry.yarnpkg.com/emotion-theming/-/emotion-theming-8.0.12.tgz#7773fc448d717cc39d6eddb458d31fad39703d00"
+emotion-theming@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/emotion-theming/-/emotion-theming-9.0.0.tgz#3b7dd07ceae70aab98280e81df8bfd7f9254d5c3"
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
@@ -3529,21 +3527,12 @@ emotion-utils@^9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-9.0.0.tgz#e34099f6f8566d4f30932363cffbc29fbdcd3294"
 
-emotion@*:
+emotion@*, emotion@^9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/emotion/-/emotion-9.0.0.tgz#dfc5761f04658b4e315cfd3bb399320fb0190f27"
   dependencies:
     babel-plugin-emotion "^9.0.0"
     create-emotion "^9.0.0"
-
-emotion@^8.0.10, emotion@^8.0.11, emotion@^8.0.12:
-  version "8.0.12"
-  resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.12.tgz#03de11ce26b1b2401c334b94d438652124c514c6"
-  dependencies:
-    babel-plugin-emotion "^8.0.12"
-    emotion-utils "^8.0.12"
-    stylis "^3.3.2"
-    stylis-rule-sheet "^0.0.5"
 
 encodeurl@~1.0.1:
   version "1.0.2"
@@ -7739,14 +7728,14 @@ react-dom@^16.0.0, react-dom@^16.1.1, react-dom@^16.2.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-emotion@*:
+react-emotion@*, react-emotion@^9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-9.0.0.tgz#10df4a2e4122db0187390f876d52fc7ad05438ab"
   dependencies:
     babel-plugin-emotion "^9.0.0"
     create-emotion-styled "^9.0.0"
 
-react-emotion@^8.0.10, react-emotion@^8.0.11, react-emotion@^8.0.12:
+react-emotion@^8.0.10:
   version "8.0.12"
   resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-8.0.12.tgz#3dd94c151197e2e3399e34e3e118df141b5ebb7b"
   dependencies:
