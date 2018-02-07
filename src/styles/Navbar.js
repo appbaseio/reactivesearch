@@ -1,5 +1,11 @@
 import styled from 'react-emotion';
 import { css } from 'emotion';
+import queries from './mediaQueries';
+
+const solid = css`
+	background-color: #1573FF;
+	box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.05);
+`;
 
 const Navbar = styled('nav')`
 	display: flex;
@@ -10,8 +16,14 @@ const Navbar = styled('nav')`
 	left: 0;
 	width: 100%;
 	height: 90px;
-	padding: 0 2.5rem;
+	padding: ${props => (props.small ? '0 6rem' : '0 2.5rem')};
 	z-index: 10;
+
+	${props => (props.solid ? solid : null)};
+
+	${queries.medium`
+		padding: 0 2rem;
+	`};
 
 	ul {
 		list-style: none;
