@@ -86,30 +86,32 @@ export default class HomePageNative extends Component {
 	render() {
 		return (
 			<div className={container}>
-				<Navbar>
+				<Navbar small>
 					<a className={`${boldHeading} ${logo}`} href="/reactivesearch/">Reactivesearch Native</a>
-					<ul className={mobHide}>
-						<li><a href="#examples">Examples</a></li>
-						<li><a href="https://opensource.appbase.io/reactive-manual">Documentation</a></li>
-						<li><a href="https://github.com/appbaseio/reactivesearch">GitHub</a></li>
-					</ul>
 				</Navbar>
 				<SlopeWrapper>
 					<Flex justifyContent="space-between">
-						<Slope border />
+						<Slope degree={5} border>
+							<Flex style={{ position: 'absolute', right: 0 }} className={tabHide}>
+								<img
+									src="images/native/landing.png"
+									alt="Reactivesearch"
+								/>
+							</Flex>
+						</Slope>
 						<Flex
 							className={`${col} ${tabBanner}`}
 							flexDirection="column"
-							padding="0 0 0 3rem"
+							padding="0 0 0 6rem"
 							justifyContent="center"
 						>
 							<H1
 								fontWeight="700"
-								fontSize="2rem"
-								lineHeight="2.6rem"
-								margin="40px 0 10px"
+								fontSize="1.8rem"
+								lineHeight="2.4rem"
+								margin="30px 0 10px"
 								className={boldHeading}
-							>React Native UI components for ElasticSearch
+							>React Native UI kit for Search
 							</H1>
 
 							<Text
@@ -118,7 +120,7 @@ export default class HomePageNative extends Component {
 								margin="10px 0 30px"
 								light
 							>
-								<span className={`${boldHeading} ${logo} ${mobHide}`}>v0.5</span>
+								<span className={`${boldHeading} ${logo} ${mobHide}`}>v0.5</span>&nbsp;
 								TODO - Needs a sub-heading.&nbsp;
 								<a
 									className={`${decoratedLink} ${decoratedSecondaryLink}`}
@@ -134,19 +136,11 @@ export default class HomePageNative extends Component {
 								<Button light primary shadow className={button} href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html">
 									Getting Started
 								</Button>
-								<Button shadow className={button} style={{ marginLeft: '10px' }} href="https://opensource.appbase.io/reactive-manual/base-components/textfield.html">
-									View Components
+								<Button shadow className={button} style={{ marginLeft: '10px' }} href="https://github.com/appbaseio/reactivesearch">
+									<img src="images/native/github.svg" alt="GitHub" width="18" />
+									<span style={{ marginLeft: 5, position: 'relative', top: 1 }}>GitHub</span>
 								</Button>
 							</Flex>
-						</Flex>
-
-						<Flex style={{ position: 'absolute', right: 0 }} className={tabHide}>
-							<img
-								height="590px"
-								src="images/browser.png"
-								alt="Reactivesearch"
-								style={{ boxShadow: '0 5px 24px 0 rgba(0,0,0,0.3)' }}
-							/>
 						</Flex>
 						<WhiteBackdrop degree={-15} />
 					</Flex>

@@ -29,6 +29,18 @@ const Slope = styled('div')`
 	z-index: -1;
 	background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 
+	& > div {
+		transform: skewY(-5deg);
+		top: -100px;
+
+	${queries.xLarge`
+		img {
+			position: absolute;
+			right: -150px;
+		}
+	`};
+	}
+
 	${queries.medium`
 		transform: none;
 	`};
