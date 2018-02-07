@@ -8,14 +8,12 @@ import {
 	StatusBar,
 	TouchableOpacity,
 	View,
-	Linking,
 } from 'react-native';
 import {
 	Body,
 	Button,
 	Header,
 	Left,
-	Right,
 	Spinner,
 	Text,
 	Title,
@@ -64,7 +62,7 @@ export default class Main extends Component {
 
 		const header = (
 			<Header style={{ alignSelf: 'center' }}>
-				<Left style={{ flex: 1 }}>
+				<Left style={{ flex: 0 }}>
 					<Button
 						transparent
 						onPress={() => navigation.navigate('DrawerToggle')}
@@ -79,25 +77,15 @@ export default class Main extends Component {
 				<Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 					<Title
 						style={{
-							color: headerColor, fontSize: 18,
+							color: headerColor,
+							fontSize: 18,
+							textAlign: 'center',
+							left: -5,
 						}}
 					>
 						{ COMPONENT_DEMO }
 					</Title>
 				</Body>
-				<Right style={{ flex: 1 }}>
-					<Button
-						transparent
-						onPress={() => Linking.openURL('exp://+')}
-						style={{ opacity: isIOS ? 1 : 0 }}
-					>
-						<Ionicons
-							name="ios-arrow-back"
-							size={25}
-							color={headerColor}
-						/>
-					</Button>
-				</Right>
 			</Header>
 		);
 

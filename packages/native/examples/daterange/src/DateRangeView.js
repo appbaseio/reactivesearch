@@ -2,7 +2,6 @@ import Expo from 'expo';
 import React, { Component } from 'react';
 import {
 	FlatList,
-	Linking,
 	Platform,
 	ScrollView,
 	StatusBar,
@@ -17,7 +16,6 @@ import {
 	Container,
 	Header,
 	Left,
-	Right,
 	Spinner,
 	Text,
 	Thumbnail,
@@ -74,8 +72,8 @@ export default class Main extends Component {
 		}
 
 		const header = (
-			<Header style={styles.header}>
-				<Left>
+			<Header style={{ alignSelf: 'center' }}>
+				<Left style={{ flex: 0 }}>
 					<Button
 						transparent
 						onPress={() => navigation.navigate('DrawerToggle')}
@@ -87,27 +85,18 @@ export default class Main extends Component {
 						/>
 					</Button>
 				</Left>
-				<Body>
+				<Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 					<Title
-						style={{ color: headerColor, fontSize: 18 }}
+						style={{
+							color: headerColor,
+							fontSize: 18,
+							textAlign: 'center',
+							left: -5,
+						}}
 					>
-						{COMPONENT_DEMO}
+						{ COMPONENT_DEMO }
 					</Title>
 				</Body>
-				{isIOS && (
-					<Right>
-						<Button
-							transparent
-							onPress={() => Linking.openURL('exp://+')}
-						>
-							<Ionicons
-								name="ios-arrow-back"
-								size={25}
-								color={headerColor}
-							/>
-						</Button>
-					</Right>
-				)}
 			</Header>
 		);
 
