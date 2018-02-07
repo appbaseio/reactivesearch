@@ -46,6 +46,39 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
+	withCustomStyles: {
+		navigationOptions: navigationOptionsBuilder('With custom styles', 'ios-flask'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<MultiDropdownRange
+				// title="Ratings list"
+				size={100}
+				sortBy="asc"
+				selectAllLabel="All Ratings"
+				defaultSelected={['Rating 3 to 4']}
+				placeholder="Select ratings"
+				showFilter={false}
+				filterLabel="Ratings filter"
+				innerStyle={{
+					icon: {
+						color: 'white',
+					},
+					title: {
+						color: 'white',
+					},
+					label: {
+						color: 'purple',
+					},
+					header: {
+						backgroundColor: 'purple',
+					},
+					checkbox: {
+						color: 'purple',
+					},
+				}}
+				navigation={navigation}
+			/>
+		),
+	},
 	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line

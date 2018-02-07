@@ -46,6 +46,26 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
+	withCustomStyles: {
+		navigationOptions: navigationOptionsBuilder('With custom styles', 'ios-flask'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<SingleDropdownRange
+				// title="Books Filter"
+				placeholder="Select a rating"
+				defaultSelected="Rating 3 to 4"
+				showFilter={false}
+				innerStyle={{
+					title: {
+						color: 'purple',
+					},
+					label: {
+						color: 'purple',
+					},
+				}}
+				navigation={navigation}
+			/>
+		),
+	},
 	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line

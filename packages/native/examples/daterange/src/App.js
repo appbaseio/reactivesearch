@@ -49,6 +49,42 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
+	withCustomStyles: {
+		navigationOptions: navigationOptionsBuilder('With custom styles', 'ios-flask'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DateRange
+				// title="Date Picker"
+				placeholder="Pick dates"
+				numberOfMonths={1}
+				queryFormat="date_time_no_millis"
+				defaultSelected={{
+					start: new Date('2017-01-01'),
+					end: new Date('2017-01-05'),
+				}}
+				showFilter={false}
+				filterLabel="Date Range"
+				innerProps={{
+					calendar: {
+						theme: {
+							backgroundColor: '#f2f2f2',
+							calendarBackground: '#f2f2f2',
+							textSectionTitleColor: '#b3b3ff',
+							selectedDayBackgroundColor: '#000066',
+							selectedDayTextColor: '#f2f2f2',
+							todayTextColor: '#000066',
+							dayTextColor: '#0000cc',
+							textDisabledColor: '#b3b3ff',
+							dotColor: '#000066',
+							selectedDotColor: '#f2f2f2',
+							arrowColor: '#000066',
+							monthTextColor: '#000066',
+						},
+					},
+				}}
+				navigation={navigation}
+			/>
+		),
+	},
 	withQueryFormat: {
 		navigationOptions: navigationOptionsBuilder('With queryFormat'),
 		screen: ({ navigation }) => ( // eslint-disable-line
