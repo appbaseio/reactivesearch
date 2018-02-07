@@ -26,16 +26,6 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// withTitle: {
-	// 	navigationOptions: navigationOptionsBuilder('With title'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<TextField
-	// 			title="Search books"
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
 	withoutPlaceholder: {
 		navigationOptions: navigationOptionsBuilder('Without placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -56,26 +46,6 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// withFilter: {
-	// 	navigationOptions: navigationOptionsBuilder('With filter'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <TextField
-	//             title="Search books"
-	//             showFilter={true}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	// withDebounce: {
-	// 	navigationOptions: navigationOptionsBuilder('With debounce'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<TextField
-	// 			debounce={300}
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
 	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
