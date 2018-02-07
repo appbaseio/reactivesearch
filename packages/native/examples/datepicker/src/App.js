@@ -50,6 +50,14 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('With custom styles'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DatePicker
+				innerStyle={{
+					button: {
+						backgroundColor: '#000066',
+					},
+					icon: {
+						color: '#f2f2f2',
+					},
+				}}
 				innerProps={{
 					calendar: {
 						theme: {
