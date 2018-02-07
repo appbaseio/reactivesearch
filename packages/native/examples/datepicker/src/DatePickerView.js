@@ -107,7 +107,6 @@ export default class Main extends Component {
 					placeholder="Select date"
 					dataField="pushed"
 					queryFormat="date_time_no_millis"
-					initialMonth="2017-03-03" // defaulting initialMonth because of older dataset
 					{...storyProps} // injecting props from navigator drawer story
 				/>
 			</View>

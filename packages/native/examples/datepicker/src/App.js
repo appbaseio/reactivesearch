@@ -40,8 +40,34 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('With initialMonth'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DatePicker
-				initialMonth="05-05-2017"
+				initialMonth="2017-05-05"
 				showFilter={false}
+				navigation={navigation}
+			/>
+		),
+	},
+	withCustomStyles: {
+		navigationOptions: navigationOptionsBuilder('With custom styles'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DatePicker
+				innerProps={{
+					calendar: {
+						theme: {
+							backgroundColor: '#f2f2f2',
+							calendarBackground: '#f2f2f2',
+							textSectionTitleColor: '#b3b3ff',
+							selectedDayBackgroundColor: '#000066',
+							selectedDayTextColor: '#f2f2f2',
+							todayTextColor: '#000066',
+							dayTextColor: '#0000cc',
+							textDisabledColor: '#b3b3ff',
+							dotColor: '#000066',
+							selectedDotColor: '#f2f2f2',
+							arrowColor: '#000066',
+							monthTextColor: '#000066',
+						},
+					},
+				}}
 				navigation={navigation}
 			/>
 		),
