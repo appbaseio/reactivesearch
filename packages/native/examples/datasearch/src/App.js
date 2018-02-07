@@ -21,15 +21,6 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: DataSearch,
 	},
-	// DrawerOption2: {
-	// 	navigationOptions: navigationOptionsBuilder('With title'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			title="Books Search"
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
 	withIconPosition: {
 		navigationOptions: navigationOptionsBuilder('With iconPosition'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -60,37 +51,6 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// withCustomIcon: {
-	// 	navigationOptions: navigationOptionsBuilder('With custom icon'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			showFilter={false}
-	// 			icon={<View>📚</View>} // eslint-disable-line
-	// 			iconPosition="left"
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// withFilter: {
-	// 	navigationOptions: navigationOptionsBuilder('With filter'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			showFilter
-	// 			filterLabel="Books filter"
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// withDebounce: {
-	// 	navigationOptions: navigationOptionsBuilder('With debounce'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			showFilter={false}
-	// 			debounce={300}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
 	withCustomStyles: {
 		navigationOptions: navigationOptionsBuilder('With custom styles'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -141,26 +101,6 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// withFieldWeight: {
-	// 	navigationOptions: navigationOptionsBuilder('With fieldWeights'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			fieldWeights={[1, 3]}
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// withFuzziness: {
-	// 	navigationOptions: navigationOptionsBuilder('With fuzziness as a number'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			showFilter={false}
-	// 			fuzziness={1}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
 	withFuzzinessAsAuto: {
 		navigationOptions: navigationOptionsBuilder('With fuzziness'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -171,16 +111,6 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// withQueryFormat: {
-	// 	navigationOptions: navigationOptionsBuilder('With queryFormat'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DataSearch
-	// 			showFilter={false}
-	// 			queryFormat="and"
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
 	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line

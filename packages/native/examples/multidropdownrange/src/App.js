@@ -26,16 +26,6 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// withTitle: {
-	// 	navigationOptions: navigationOptionsBuilder('With title'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<MultiDropdownRange
-	// 			title="Ratings list"
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
 	withoutPlaceholder: {
 		navigationOptions: navigationOptionsBuilder('Without placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -46,55 +36,6 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// withSize: {
-	// 	navigationOptions: navigationOptionsBuilder('With size'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<MultiDropdownRange
-	// 			size={2}
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// withFilter: {
-	// 	navigationOptions: navigationOptionsBuilder('With filter'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <MultiDropdownRange
-	//             showFilter={true}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	// withCustomSort: {
-	// 	navigationOptions: navigationOptionsBuilder('With custom sort'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<MultiDropdownRange
-	// 			sortBy="asc"
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// withoutCount: {
-	// 	navigationOptions: navigationOptionsBuilder('Without count'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<MultiDropdownRange
-	// 			showCount={false}
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// withSelectAll: {
-	// 	navigationOptions: navigationOptionsBuilder('With Select All'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<MultiDropdownRange
-	// 			selectAllLabel="All Ratings"
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
 	withDefaultSelected: {
 		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
 		screen: ({ navigation }) => ( // eslint-disable-line

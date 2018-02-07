@@ -26,16 +26,6 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// withTitle: {
-	// 	navigationOptions: navigationOptionsBuilder('With title'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DatePicker
-	// 			title="Choose a date"
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
 	withPlaceholder: {
 		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -46,35 +36,6 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// withFilter: {
-	// 	navigationOptions: navigationOptionsBuilder('With filter'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DatePicker
-	//             showFilter={true}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	// withFocus: {
-	// 	navigationOptions: navigationOptionsBuilder('With focus'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DatePicker
-	//             focused={true}
-	//             showFilter={false}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	// withShowMoreThanMonth: {
-	// 	navigationOptions: navigationOptionsBuilder('Show more than 1 month'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DatePicker
-	//             numberOfMonths={2}
-	//             showFilter={false}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
 	withInitialMonth: {
 		navigationOptions: navigationOptionsBuilder('With initialMonth'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -85,36 +46,6 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// withoutClearButton: {
-	// 	navigationOptions: navigationOptionsBuilder('Without clear button'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DatePicker
-	//             showClear={false}
-	//             showFilter={false}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	// withoutClickUnselectsDay: {
-	// 	navigationOptions: navigationOptionsBuilder('Without clickUnselectsDay'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DatePicker
-	//             clickUnselectsDay={fasle}
-	//             showFilter={false}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	// withQueryFormat: {
-	// 	navigationOptions: navigationOptionsBuilder('With queryFormat'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DatePicker
-	// 			queryFormat="date_time_no_millis"
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
 	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line

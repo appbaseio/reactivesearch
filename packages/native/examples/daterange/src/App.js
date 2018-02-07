@@ -26,16 +26,6 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// withTitle: {
-	// 	navigationOptions: navigationOptionsBuilder('With title'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DateRange
-	// 			title="Choose a date range"
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
 	withPlaceholder: {
 		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -46,35 +36,6 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// withoutshowClear: {
-	// 	navigationOptions: navigationOptionsBuilder('Without showClear'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DateRange
-	// 			showClear={false}
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// withFilter: {
-	// 	navigationOptions: navigationOptionsBuilder('With filter'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DateRange
-	//             showFilter={true}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	// showMoreThanOneMonth: {
-	// 	navigationOptions: navigationOptionsBuilder('Show more than 1 month'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DateRange
-	//             numberOfMonths={2}
-	//             showFilter={false}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
 	withDefaultSelected: {
 		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
 		screen: ({ navigation }) => ( // eslint-disable-line

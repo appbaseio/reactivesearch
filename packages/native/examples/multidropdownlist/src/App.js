@@ -26,16 +26,6 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// DrawerOption2: {
-	// 	navigationOptions: navigationOptionsBuilder('With title'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<MultiDropdownList
-	// 			title="Series list"
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
 	withPlaceholder: {
 		navigationOptions: navigationOptionsBuilder('Without placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -50,21 +40,12 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('With max size as 5'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
-				size={5}
+				size={6}
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	// withFilter: {
-	// 	navigationOptions: navigationOptionsBuilder('With filter'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <MultiDropdownList
-	//             showFilter={true}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
 	withoutCount: {
 		navigationOptions: navigationOptionsBuilder('Without count'),
 		screen: ({ navigation }) => ( // eslint-disable-line
