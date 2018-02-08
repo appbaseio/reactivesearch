@@ -50,7 +50,7 @@
 		"hoist-non-react-statics": "^2.3.1",
 		"native-base": "^2.3.7",
 		"prop-types": "^15.6.0",
-		"react-native-calendars": "^1.16.1",
+		"react-native-calendars": "^1.17.0",
 		"react-redux": "^5.0.6",
 		"redux": "^3.7.2",
 		"redux-thunk": "^2.2.0",
