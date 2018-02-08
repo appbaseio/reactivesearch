@@ -283,8 +283,16 @@ class DateRange extends Component {
 			markedDates = {
 				[this.state.currentDate.start.dateString]: {
 					startingDay: true,
-					color: this.props.theming.primaryColor,
-					textColor: this.props.theming.primaryTextColor,
+					color: (this.props.innerProps && this.props.innerProps.calendar
+						&& this.props.innerProps.calendar.theme
+						&& this.props.innerProps.calendar.theme.selectedDayBackgroundColor)
+						? this.props.innerProps.calendar.theme.selectedDayBackgroundColor
+						: this.props.theming.primaryColor,
+					textColor: (this.props.innerProps && this.props.innerProps.calendar
+						&& this.props.innerProps.calendar.theme
+						&& this.props.innerProps.calendar.theme.selectedDayTextColor)
+						? this.props.innerProps.calendar.theme.selectedDayTextColor
+						: this.props.theming.primaryTextColor,
 				},
 			};
 			if (this.state.currentDate.end) {
@@ -294,14 +302,30 @@ class DateRange extends Component {
 				);
 				range.forEach((date) => {
 					markedDates[date] = {
-						color: this.props.theming.primaryColor,
-						textColor: this.props.theming.primaryTextColor,
+						color: (this.props.innerProps && this.props.innerProps.calendar
+							&& this.props.innerProps.calendar.theme
+							&& this.props.innerProps.calendar.theme.selectedDayBackgroundColor)
+							? this.props.innerProps.calendar.theme.selectedDayBackgroundColor
+							: this.props.theming.primaryColor,
+						textColor: (this.props.innerProps && this.props.innerProps.calendar
+							&& this.props.innerProps.calendar.theme
+							&& this.props.innerProps.calendar.theme.selectedDayTextColor)
+							? this.props.innerProps.calendar.theme.selectedDayTextColor
+							: this.props.theming.primaryTextColor,
 					};
 				});
 				markedDates[this.state.currentDate.end.dateString] = {
 					endingDay: true,
-					color: this.props.theming.primaryColor,
-					textColor: this.props.theming.primaryTextColor,
+					color: (this.props.innerProps && this.props.innerProps.calendar
+						&& this.props.innerProps.calendar.theme
+						&& this.props.innerProps.calendar.theme.selectedDayBackgroundColor)
+						? this.props.innerProps.calendar.theme.selectedDayBackgroundColor
+						: this.props.theming.primaryColor,
+					textColor: (this.props.innerProps && this.props.innerProps.calendar
+						&& this.props.innerProps.calendar.theme
+						&& this.props.innerProps.calendar.theme.selectedDayTextColor)
+						? this.props.innerProps.calendar.theme.selectedDayTextColor
+						: this.props.theming.primaryTextColor,
 				};
 			}
 		}
