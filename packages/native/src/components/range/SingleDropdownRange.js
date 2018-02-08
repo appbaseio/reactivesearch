@@ -137,7 +137,7 @@ class SingleDropdownRange extends Component {
 				textStyle={{
 					color: this.props.theming.textColor,
 				}}
-				headerStyle={getInnerKey(this.props.innerStyle, 'title')}
+				headerTitleStyle={getInnerKey(this.props.innerStyle, 'title')}
 				itemTextStyle={{
 					flexGrow: 1,
 					...getInnerKey(this.props.innerStyle, 'label'),
