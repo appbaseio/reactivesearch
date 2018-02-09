@@ -40,7 +40,7 @@ The library is conceptually divided into two parts:
 1. Sensor components and
 2. Actuator components.
 
-Each sensor component is purpose built for applying a specific filter on the data. For example:
+Each sensor component is built for applying a specific filter on the data. For example:
 
 * A [`SingleList`](https://opensource.appbase.io/reactive-manual/list-components/singlelist.html) sensor component applies an exact match filter based on the selected item.
 * A [`RangeSlider`](https://opensource.appbase.io/reactive-manual/range-components/rangeslider.html) component applies a numeric range query based on the values selected from the UI.
