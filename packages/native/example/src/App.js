@@ -15,6 +15,7 @@ import {
 	DatePicker,
 	DateRange,
 	ReactiveList,
+	SelectedFilters,
 } from '@appbaseio/reactivesearch-native';
 
 class Main extends Component {
@@ -94,6 +95,7 @@ class Main extends Component {
 				</Header>
 				<ScrollView>
 					<View style={{ padding: 10 }}>
+						<SelectedFilters />
 						<SingleDropdownList
 							componentId="StComponent"
 							dataField="brand.raw"
