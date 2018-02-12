@@ -21,7 +21,6 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -31,7 +30,6 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
 				placeholder=""
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -41,33 +39,21 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
 				size={6}
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
 	withCustomStyles: {
-		navigationOptions: navigationOptionsBuilder('With custom styles', 'ios-flask'),
+		navigationOptions: navigationOptionsBuilder('With custom styles'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
 				// title="Series List"
-				size={10}
-				defaultSelected={['Anita Blake', 'Discworld']}
-				placeholder="Select multiple series"
-				showFilter={false}
-				filterLabel="Series filter"
 				innerStyle={{
-					icon: {
-						color: 'white',
-					},
 					title: {
-						color: 'white',
+						color: 'purple',
 					},
 					label: {
 						color: 'purple',
-					},
-					header: {
-						backgroundColor: 'purple',
 					},
 					checkbox: {
 						color: 'purple',
@@ -82,7 +68,6 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
 				showCount={false}
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -92,8 +77,6 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
 				sortBy="desc"
-				showCount={false}
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -103,7 +86,6 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
 				selectAllLabel="All Series"
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -113,7 +95,6 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownList
 				defaultSelected={['Anita Blake', 'Discworld']}
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -124,23 +105,17 @@ const RootDrawer = DrawerNavigator({
 			<MultiDropdownList
 				// title="Series List"
 				size={10}
-				sortBy="desc"
+				sortBy="count"
 				defaultSelected={['Anita Blake', 'Discworld']}
 				placeholder="Select multiple series"
 				showFilter={false}
 				filterLabel="Series filter"
 				innerStyle={{
-					icon: {
-						color: 'white',
-					},
 					title: {
-						color: 'white',
+						color: 'purple',
 					},
 					label: {
 						color: 'purple',
-					},
-					header: {
-						backgroundColor: 'purple',
 					},
 					checkbox: {
 						color: 'purple',

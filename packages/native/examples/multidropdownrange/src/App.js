@@ -21,7 +21,6 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownRange
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -31,7 +30,6 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownRange
 				placeholder=""
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -41,35 +39,20 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownRange
 				defaultSelected={['Rating 3 to 4']}
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
 	withCustomStyles: {
-		navigationOptions: navigationOptionsBuilder('With custom styles', 'ios-flask'),
+		navigationOptions: navigationOptionsBuilder('With custom styles'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownRange
-				// title="Ratings list"
-				size={100}
-				sortBy="asc"
-				selectAllLabel="All Ratings"
-				defaultSelected={['Rating 3 to 4']}
-				placeholder="Select ratings"
-				showFilter={false}
-				filterLabel="Ratings filter"
 				innerStyle={{
-					icon: {
-						color: 'white',
-					},
 					title: {
-						color: 'white',
+						color: 'purple',
 					},
 					label: {
 						color: 'purple',
-					},
-					header: {
-						backgroundColor: 'purple',
 					},
 					checkbox: {
 						color: 'purple',
@@ -83,28 +66,13 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<MultiDropdownRange
-				// title="Ratings list"
-				size={100}
-				sortBy="asc"
-				selectAllLabel="All Ratings"
 				defaultSelected={['Rating 3 to 4']}
 				placeholder="Select ratings"
-				showFilter={false}
-				filterLabel="Ratings filter"
 				innerStyle={{
-					icon: {
-						color: 'white',
-					},
 					title: {
-						color: 'white',
-					},
-					label: {
 						color: 'purple',
 					},
-					header: {
-						backgroundColor: 'purple',
-					},
-					checkbox: {
+					label: {
 						color: 'purple',
 					},
 				}}

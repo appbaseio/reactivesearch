@@ -21,7 +21,6 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -41,7 +40,6 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
 				size={6}
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -51,7 +49,6 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
 				showCount={false}
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -61,14 +58,6 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
 				// title="Series List"
-				size={100}
-				showCount
-				sortBy="asc"
-				selectAllLabel="All Series"
-				defaultSelected="Discworld"
-				placeholder="Select one"
-				showFilter={false}
-				filterLabel="Series filter"
 				innerStyle={{
 					title: {
 						color: 'purple',
@@ -86,8 +75,6 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
 				sortBy="desc"
-				showCount={false}
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -97,7 +84,6 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
 				selectAllLabel="All Series"
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -107,7 +93,6 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
 				defaultSelected="Discworld"
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -119,7 +104,7 @@ const RootDrawer = DrawerNavigator({
 				// title="Series List"
 				size={100}
 				showCount
-				sortBy="asc"
+				sortBy="count"
 				selectAllLabel="All Series"
 				defaultSelected="Discworld"
 				placeholder="Select one"

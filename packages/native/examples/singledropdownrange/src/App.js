@@ -21,7 +21,6 @@ const RootDrawer = DrawerNavigator({
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownRange
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -31,7 +30,6 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownRange
 				placeholder=""
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
@@ -41,19 +39,14 @@ const RootDrawer = DrawerNavigator({
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownRange
 				defaultSelected="Rating 3 to 4"
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
 	withCustomStyles: {
-		navigationOptions: navigationOptionsBuilder('With custom styles', 'ios-flask'),
+		navigationOptions: navigationOptionsBuilder('With custom styles'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownRange
-				// title="Books Filter"
-				placeholder="Select a rating"
-				defaultSelected="Rating 3 to 4"
-				showFilter={false}
 				innerStyle={{
 					title: {
 						color: 'purple',
