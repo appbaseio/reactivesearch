@@ -34,7 +34,14 @@ class ReactiveBase extends Component {
 			type: this.type,
 		};
 
-		this.params = new URLSearchParams(window.location.search);
+		let queryParams = '';
+		if (typeof window !== 'undefined') {
+			queryParams = window.location.search;
+		} else {
+			queryParams = this.props.queryParams || '';
+		}
+
+		this.params = new URLSearchParams(queryParams);
 		let selectedValues = {};
 
 		try {
@@ -91,6 +98,7 @@ ReactiveBase.propTypes = {
 	children: types.children,
 	theme: types.style,
 	headers: types.headers,
+	queryParams: types.string,
 };
 
 export default ReactiveBase;
