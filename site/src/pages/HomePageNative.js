@@ -400,10 +400,11 @@ export default class HomePageNative extends Component {
 						alignItems="center"
 						padding="3rem 0 0 0"
 						style={{
-							width: '90%',
+							width: '95%',
+							maxWidth: '900px',
 						}}
+						className={tabJustifyCenter}
 					>
-						<img src="images/native/mobile.png" alt="Demo app" />
 						<img src="images/native/mobile.png" alt="Demo app" />
 						<img src="images/native/mobile.png" alt="Demo app" />
 						<img src="images/native/mobile.png" alt="Demo app" />
