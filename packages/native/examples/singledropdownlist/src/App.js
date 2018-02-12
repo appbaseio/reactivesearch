@@ -56,6 +56,28 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
+	withCustomStyles: {
+		navigationOptions: navigationOptionsBuilder('With custom styles', 'ios-flask'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<SingleDropdownList
+				// title="Series List"
+				size={100}
+				showCount
+				sortBy="asc"
+				selectAllLabel="All Series"
+				defaultSelected="Discworld"
+				placeholder="Select one"
+				showFilter={false}
+				filterLabel="Series filter"
+				innerStyle={{
+					title: {
+						color: 'purple',
+					},
+				}}
+				navigation={navigation}
+			/>
+		),
+	},
 	withCustomSort: {
 		navigationOptions: navigationOptionsBuilder('With sort Z->A'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -104,9 +126,6 @@ const RootDrawer = DrawerNavigator({
 					title: {
 						color: 'purple',
 					},
-					// label: {
-					// 	color: 'purple',
-					// },
 				}}
 				navigation={navigation}
 			/>

@@ -5,7 +5,8 @@
 		"dev:web": "concurrently --kill-others -n \"CORE\",\"WEB\" -c \"cyan\",\"yellow\" \"npm start --prefix packages/reactivecore\" \"npm run watch --prefix packages/web\"",
 		"lint": "eslint .",
 		"precommit": "eslint .",
-		"deploy-site": "scripts/deploy-site.sh"
+		"deploy-site": "scripts/deploy-site.sh",
+		"native:publish-stories": "cd packages/native/examples/datasearch/ && exp publish && cd .. && cd datepicker/ && exp publish && cd .. && cd daterange/ && exp publish && cd .. && cd multidropdownlist/ && exp publish && cd .. && cd multidropdownrange/ && exp publish && cd .. && cd singledropdownlist/ && exp publish && cd .. && cd singledropdownrange/ && exp publish && cd .. && cd textfield/ && exp publish && cd ../../../../"
 	},
 	"author": "metagrover",
 	"license": "Apache-2.0",

@@ -46,6 +46,26 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
+	withCustomStyles: {
+		navigationOptions: navigationOptionsBuilder('With custom styles', 'ios-flask'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<TextField
+				// title="Books Search"
+				placeholder="Search for a book title"
+				defaultSelected="Harry Potter"
+				showFilter={false}
+				innerStyle={{
+					icon: {
+						color: 'purple',
+					},
+					input: {
+						color: 'purple',
+					},
+				}}
+				navigation={navigation}
+			/>
+		),
+	},
 	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line

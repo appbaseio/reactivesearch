@@ -46,6 +46,37 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
+	withCustomStyles: {
+		navigationOptions: navigationOptionsBuilder('With custom styles', 'ios-flask'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<MultiDropdownList
+				// title="Series List"
+				size={10}
+				defaultSelected={['Anita Blake', 'Discworld']}
+				placeholder="Select multiple series"
+				showFilter={false}
+				filterLabel="Series filter"
+				innerStyle={{
+					icon: {
+						color: 'white',
+					},
+					title: {
+						color: 'white',
+					},
+					label: {
+						color: 'purple',
+					},
+					header: {
+						backgroundColor: 'purple',
+					},
+					checkbox: {
+						color: 'purple',
+					},
+				}}
+				navigation={navigation}
+			/>
+		),
+	},
 	withoutCount: {
 		navigationOptions: navigationOptionsBuilder('Without count'),
 		screen: ({ navigation }) => ( // eslint-disable-line
@@ -93,9 +124,9 @@ const RootDrawer = DrawerNavigator({
 			<MultiDropdownList
 				// title="Series List"
 				size={10}
-				sortBy="asc"
+				sortBy="desc"
 				defaultSelected={['Anita Blake', 'Discworld']}
-				placeholder="Select multi series"
+				placeholder="Select multiple series"
 				showFilter={false}
 				filterLabel="Series filter"
 				innerStyle={{
