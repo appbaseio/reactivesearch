@@ -4,7 +4,6 @@ import { Flex, H1, H2, Title, Button, Text } from '@appbaseio/designkit';
 import Navbar, { logo } from '../styles/Navbar';
 import { SlopeWrapper, Slope, WhiteBackdrop } from '../styles/Slope';
 import Bubble from '../styles/Bubble';
-import { Image, ImageCard } from '../styles/Image';
 import {
 	container,
 	boldHeading,
@@ -133,10 +132,10 @@ export default class HomePageNative extends Component {
 							</Text>
 
 							<Flex className={tabJustifyCenter}>
-								<Button light primary shadow className={button} href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html">
+								<Button light primary shadow big className={button} href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html">
 									Getting Started
 								</Button>
-								<Button shadow className={button} style={{ marginLeft: '10px' }} href="https://github.com/appbaseio/reactivesearch">
+								<Button shadow big className={button} style={{ marginLeft: '10px' }} href="https://github.com/appbaseio/reactivesearch">
 									<img src="images/native/github.svg" alt="GitHub" width="18" />
 									<span style={{ marginLeft: 5, position: 'relative', top: 1 }}>GitHub</span>
 								</Button>
@@ -384,7 +383,7 @@ export default class HomePageNative extends Component {
 					<H2 margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
 					<Flex className={tabJustifyCenter}>
 						<Button shadow primary className={button} href="https://appbaseio-apps.github.io/booksearch-onboarding/">Build a live app in 5 mins</Button>
-						<Button className={button} style={{ marginLeft: '1rem' }} href="https://opensource.appbase.io/reactive-manual">Read the docs</Button>
+						<Button className={button} style={{ marginLeft: '1rem' }} href="https://opensource.appbase.io/reactive-manual/native/">Read the docs</Button>
 					</Flex>
 				</Flex>
 
@@ -392,64 +391,22 @@ export default class HomePageNative extends Component {
 					flexDirection="column"
 					justifyContent="center"
 					alignItems="center"
-					padding="5rem 3rem 0"
+					padding="3rem 3rem 4rem"
 					className={tabPadding}
 				>
-					<H2 className={colored} id="examples">Checkout these starter apps</H2>
-
 					<Flex
-						justifyContent="center"
-						style={{ width: '100%', maxWidth: '1200px' }}
-						margin="30px 0 0"
-						flexWrap="wrap"
+						flexDirection="row"
+						justifyContent="space-around"
+						alignItems="center"
+						padding="3rem 0 0 0"
+						style={{
+							width: '90%',
+						}}
 					>
-						<ImageCard>
-							<Image src="images/apps/airbeds.png" />
-							<div className="info">
-								<Title>Airbeds</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/airbeds" primary shadow className={button}>Check Demo</Button>
-							</div>
-						</ImageCard>
-
-						<ImageCard>
-							<Image src="images/apps/productsearch.png" />
-							<div className="info">
-								<Title>Product Search</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/producthunt" primary shadow className={button}>Check Demo</Button>
-							</div>
-						</ImageCard>
-
-						<ImageCard>
-							<Image src="images/apps/gitxplore.png" />
-							<div className="info">
-								<Title>GitHub Search</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/gitxplore" primary shadow className={button}>Check Demo</Button>
-							</div>
-						</ImageCard>
-
-						<ImageCard>
-							<Image src="images/apps/carstore.png" />
-							<div className="info">
-								<Title>Car Store</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/ecommerce" primary shadow className={button}>Check Demo</Button>
-							</div>
-						</ImageCard>
-
-						<ImageCard>
-							<Image src="images/apps/goodbooks.png" />
-							<div className="info">
-								<Title>Book Search</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/goodbooks" primary shadow className={button}>Check Demo</Button>
-							</div>
-						</ImageCard>
-
-						<ImageCard>
-							<Image src="images/apps/technews.png" />
-							<div className="info">
-								<Title>Tech News Search</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/technews" primary shadow className={button}>Check Demo</Button>
-							</div>
-						</ImageCard>
+						<img src="images/native/mobile.png" alt="Demo app" />
+						<img src="images/native/mobile.png" alt="Demo app" />
+						<img src="images/native/mobile.png" alt="Demo app" />
+						<img src="images/native/mobile.png" alt="Demo app" />
 					</Flex>
 				</Flex>
 
