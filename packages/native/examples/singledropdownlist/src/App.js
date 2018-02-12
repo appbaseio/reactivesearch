@@ -57,7 +57,7 @@ const RootDrawer = DrawerNavigator({
 		),
 	},
 	withCustomStyles: {
-		navigationOptions: navigationOptionsBuilder('With custom styles', 'ios-flask'),
+		navigationOptions: navigationOptionsBuilder('With custom styles'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
 				// title="Series List"
@@ -71,6 +71,9 @@ const RootDrawer = DrawerNavigator({
 				filterLabel="Series filter"
 				innerStyle={{
 					title: {
+						color: 'purple',
+					},
+					label: {
 						color: 'purple',
 					},
 				}}
@@ -124,6 +127,9 @@ const RootDrawer = DrawerNavigator({
 				filterLabel="Series filter"
 				innerStyle={{
 					title: {
+						color: 'purple',
+					},
+					label: {
 						color: 'purple',
 					},
 				}}
