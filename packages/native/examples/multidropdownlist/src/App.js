@@ -1,5 +1,4 @@
-import Expo from 'expo';
-import React from 'react';
+import React, { Component } from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -127,9 +126,11 @@ const RootDrawer = DrawerNavigator({
 	},
 });
 
-const Navigator = () => (
-	<RootDrawer />
-);
+class App extends Component {
+	state: {};
+	render() {
+		return <RootDrawer />;
+	}
+}
 
-module.exports = Navigator;
-Expo.registerRootComponent(Navigator);
+export default App;
