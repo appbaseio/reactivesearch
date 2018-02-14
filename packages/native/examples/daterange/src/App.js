@@ -50,7 +50,7 @@ const RootDrawer = DrawerNavigator({
 		),
 	},
 	withCustomStyles: {
-		navigationOptions: navigationOptionsBuilder('With custom styles', 'ios-flask'),
+		navigationOptions: navigationOptionsBuilder('With custom styles'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DateRange
 				// title="Date Picker"
