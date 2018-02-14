@@ -27,7 +27,7 @@ const Slope = styled('div')`
 	overflow: hidden;
 	transform: skewY(${props => (props.degree ? props.degree : -8)}deg);
 	z-index: -1;
-	background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	background-image: linear-gradient(180deg, #1573FF 0%, #5d7ffd 100%);
 
 	& > div {
 		transform: skewY(-5deg);

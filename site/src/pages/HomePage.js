@@ -389,7 +389,7 @@ export default class HomePage extends Component {
 					<H2 margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
 					<Flex className={tabJustifyCenter}>
 						<Button big shadow primary className={button} href="https://appbaseio-apps.github.io/booksearch-onboarding/">Build a live app in 5 mins</Button>
-						<Button big className={button} style={{ marginLeft: '1rem' }} href="https://opensource.appbase.io/reactive-manual">Read the docs</Button>
+						<Button big shadow className={button} style={{ marginLeft: '1rem' }} href="https://opensource.appbase.io/reactive-manual">Read the docs</Button>
 					</Flex>
 				</Flex>
 
@@ -412,7 +412,7 @@ export default class HomePage extends Component {
 							<Image src="images/apps/airbeds.png" />
 							<div className="info">
 								<Title>Airbeds</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/airbeds" success shadow className={button}>Check Demo</Button>
+								<Button target="_blank" rel="noopener noreferrer" href="demos/airbeds" shadow className={button}>Check Demo</Button>
 							</div>
 						</ImageCard>
 
@@ -420,7 +420,7 @@ export default class HomePage extends Component {
 							<Image src="images/apps/productsearch.png" />
 							<div className="info">
 								<Title>Product Search</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/producthunt" success shadow className={button}>Check Demo</Button>
+								<Button target="_blank" rel="noopener noreferrer" href="demos/producthunt" shadow className={button}>Check Demo</Button>
 							</div>
 						</ImageCard>
 
@@ -428,7 +428,7 @@ export default class HomePage extends Component {
 							<Image src="images/apps/gitxplore.png" />
 							<div className="info">
 								<Title>GitHub Search</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/gitxplore" success shadow className={button}>Check Demo</Button>
+								<Button target="_blank" rel="noopener noreferrer" href="demos/gitxplore" shadow className={button}>Check Demo</Button>
 							</div>
 						</ImageCard>
 
@@ -436,7 +436,7 @@ export default class HomePage extends Component {
 							<Image src="images/apps/carstore.png" />
 							<div className="info">
 								<Title>Car Store</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/ecommerce" success shadow className={button}>Check Demo</Button>
+								<Button target="_blank" rel="noopener noreferrer" href="demos/ecommerce" shadow className={button}>Check Demo</Button>
 							</div>
 						</ImageCard>
 
@@ -444,7 +444,7 @@ export default class HomePage extends Component {
 							<Image src="images/apps/goodbooks.png" />
 							<div className="info">
 								<Title>Book Search</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/goodbooks" success shadow className={button}>Check Demo</Button>
+								<Button target="_blank" rel="noopener noreferrer" href="demos/goodbooks" shadow className={button}>Check Demo</Button>
 							</div>
 						</ImageCard>
 
@@ -452,7 +452,7 @@ export default class HomePage extends Component {
 							<Image src="images/apps/technews.png" />
 							<div className="info">
 								<Title>Tech News Search</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/technews" success shadow className={button}>Check Demo</Button>
+								<Button target="_blank" rel="noopener noreferrer" href="demos/technews" shadow className={button}>Check Demo</Button>
 							</div>
 						</ImageCard>
 					</Flex>

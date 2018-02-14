@@ -86,7 +86,10 @@ export default class HomePageNative extends Component {
 		return (
 			<div className={container}>
 				<Navbar small>
-					<a className={`${boldHeading} ${logo}`} href="/reactivesearch/">Reactivesearch Native</a>
+					<a href="/reactivesearch/native" className="img-logo">
+						<img src="images/native/logo.png" alt="Reactivesearch" />
+						<span>Reactivesearch Native</span>
+					</a>
 				</Navbar>
 				<SlopeWrapper>
 					<Flex justifyContent="space-between">

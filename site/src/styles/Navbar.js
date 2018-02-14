@@ -49,6 +49,21 @@ const Navbar = styled('nav')`
 			}
 		}
 	}
+
+	.img-logo {
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 18px;
+		text-decoration: none;
+		color: #fff;
+
+		span {
+			position: relative;
+			margin-left: 10px;
+			top: 3px;
+		}
+	}
 `;
 
 const logo = css`
