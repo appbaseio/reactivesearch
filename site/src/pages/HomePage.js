@@ -87,7 +87,10 @@ export default class HomePage extends Component {
 		return (
 			<div className={container}>
 				<Navbar>
-					<a className={`${boldHeading} ${logo}`} href="/reactivesearch/">Reactivesearch</a>
+					<a href="/reactivesearch/native" className="img-logo">
+						<img src="images/native/logo.png" alt="Reactivesearch" />
+						<span>Reactivesearch</span>
+					</a>
 					<ul className={mobHide}>
 						<li><a href="#examples">Examples</a></li>
 						<li><a href="https://opensource.appbase.io/reactive-manual">Documentation</a></li>
@@ -144,7 +147,6 @@ export default class HomePage extends Component {
 								height="590px"
 								src="images/browser.png"
 								alt="Reactivesearch"
-								style={{ boxShadow: '0 5px 24px 0 rgba(0,0,0,0.3)' }}
 							/>
 						</Flex>
 						<WhiteBackdrop degree={-15} />
@@ -201,7 +203,7 @@ export default class HomePage extends Component {
 
 						<Flex flexDirection="column" className={tabJustifyCenter}>
 							<Title>Get our designer templates for sketch.</Title>
-							<Button href="resources/ReactiveSearch_Playground.sketch" warning shadow className={button} style={{ maxWidth: 220 }}>
+							<Button href="resources/ReactiveSearchNative_Playground.sketch" warning shadow className={button} style={{ maxWidth: 220 }}>
 								Download sketch file
 							</Button>
 						</Flex>

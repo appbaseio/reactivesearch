@@ -409,13 +409,13 @@ export default class HomePageNative extends Component {
 						className={tabJustifyCenter}
 					>
 						<a target="_blank" rel="noopener noreferrer" href="https://expo.io/@dhruvdutt/book-search" className="demo">
-							<img width="240" src="images/native/booksearch-app.jpg" alt="Demo app" />
+							<img width="240" src="images/native/booksearch.png" alt="Demo app" />
 						</a>
 						<a target="_blank" rel="noopener noreferrer" href="https://snack.expo.io/@dhruvdutt/gitxplore-native-app" className="demo">
-							<img width="240" src="images/native/gitxplore-app.jpg" alt="Demo app" />
+							<img width="240" src="images/native/gitxplore.png" alt="Demo app" />
 						</a>
-						<a target="_blank" rel="noopener noreferrer" href="https://expo.io/@dhruvdutt/todos" className="demo">
-							<img width="240" src="images/native/reactive-todos.jpg" alt="Demo app" />
+						<a target="_blank" rel="noopener noreferrer" href="https://snack.expo.io/@dhruvdutt/todo" className="demo">
+							<img width="240" src="images/native/todo.png" alt="Demo app" />
 						</a>
 					</Flex>
 				</Flex>

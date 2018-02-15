@@ -67,7 +67,7 @@ const Navbar = styled('nav')`
 `;
 
 const logo = css`
-	background-image: linear-gradient(135deg,#3733d0 0%,#764ba2 100%);
+	background-image: linear-gradient(to top,#327ab7 0%,#1e4b9c 1%,#1356cc 100%);
 	padding: 5px 15px;
 	border-radius: 999em;
 	text-decoration: none;
