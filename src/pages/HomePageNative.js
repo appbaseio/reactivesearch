@@ -113,7 +113,7 @@ export default class HomePageNative extends Component {
 								lineHeight="2.4rem"
 								margin="30px 0 10px"
 								className={boldHeading}
-							>React Native UI kit for Search
+							>React Native UI components
 							</H1>
 
 							<Text
@@ -123,7 +123,7 @@ export default class HomePageNative extends Component {
 								light
 							>
 								<span className={`${boldHeading} ${logo} ${mobHide}`}>v0.5</span>&nbsp;
-								TODO - Needs a sub-heading.&nbsp;
+								Build data-driven mobile apps.&nbsp;
 								<a
 									className={`${decoratedLink} ${decoratedSecondaryLink}`}
 									target="_blank"
@@ -135,12 +135,11 @@ export default class HomePageNative extends Component {
 							</Text>
 
 							<Flex className={tabJustifyCenter}>
-								<Button light primary shadow big className={button} href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html">
+								<Button light primary shadow big className={button} href="https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html">
 									Getting Started
 								</Button>
-								<Button shadow big className={button} style={{ marginLeft: '10px' }} href="https://github.com/appbaseio/reactivesearch">
-									<img src="images/native/github.svg" alt="GitHub" width="18" />
-									<span style={{ marginLeft: 5, position: 'relative', top: 1 }}>GitHub</span>
+								<Button shadow big className={button} style={{ marginLeft: '10px' }} href="https://opensource.appbase.io/reactive-manual/native/getting-started/componentsindex.html">
+									<span style={{ marginLeft: 5, position: 'relative', top: 1 }}>View Components</span>
 								</Button>
 							</Flex>
 						</Flex>
@@ -176,7 +175,7 @@ export default class HomePageNative extends Component {
 								className={button}
 								shadow
 								primary
-								href="https://opensource.appbase.io/native-reactive-manual/components/textfield.html"
+								href="https://opensource.appbase.io/reactive-manual/native/components/textfield.html"
 							>
 								View components
 							</Button>
@@ -190,15 +189,15 @@ export default class HomePageNative extends Component {
 							</Button>
 							<Button
 								className={`${button} ${mobBottomMargin}`}
-								href="https://opensource.appbase.io/native-reactive-manual/advanced/reactivecomponent.html"
+								href="https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html"
 							>
 								Create your own
 							</Button>
 						</Flex>
 
 						<Flex flexDirection="column" className={tabJustifyCenter}>
-							<Title>Get our designer templates for sketch.</Title>
-							<Button href="resources/ReactiveSearch_Playground.sketch" warning shadow className={button} style={{ maxWidth: 220 }}>
+							<Title>Get our iOS and Android specific designer templates for sketch.</Title>
+							<Button href="resources/ReactiveSearchNative_Playground.sketch" warning shadow className={button} style={{ maxWidth: 220 }}>
 								Download sketch file
 							</Button>
 						</Flex>
@@ -271,7 +270,7 @@ export default class HomePageNative extends Component {
 
 						<Flex className={card} onClick={() => this.openLink('https://github.com/appbaseio/reactivesearch/tree/dev/packages/web')}>
 							<div>
-								<img src="images/native/components.png" alt="Data-driven UIs" />
+								<img src="images/devices.png" alt="Data-driven UIs" />
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">Create cross-platform apps</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
@@ -385,7 +384,7 @@ export default class HomePageNative extends Component {
 				>
 					<H2 margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
 					<Flex className={tabJustifyCenter}>
-						<Button shadow primary className={button} href="https://appbaseio-apps.github.io/booksearch-onboarding/">Build a live app in 5 mins</Button>
+						<Button shadow primary className={button} href="https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html">Build a live app in 5 mins</Button>
 						<Button className={button} style={{ marginLeft: '1rem' }} href="https://opensource.appbase.io/reactive-manual/native/">Read the docs</Button>
 					</Flex>
 				</Flex>
