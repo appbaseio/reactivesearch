@@ -178,31 +178,33 @@ class ToggleButton extends Component {
 
 ToggleButton.propTypes = {
 	addComponent: types.funcRequired,
+	removeComponent: types.funcRequired,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
+	selectedValue: types.selectedValue,
+	// component props
+	className: types.string,
 	componentId: types.stringRequired,
 	data: types.data,
 	dataField: types.stringRequired,
-	selectedValue: types.selectedValue,
 	defaultSelected: types.stringArray,
-	multiSelect: types.bool,
-	react: types.react,
-	removeComponent: types.funcRequired,
-	title: types.title,
-	updateQuery: types.funcRequired,
-	showFilter: types.bool,
 	filterLabel: types.string,
-	style: types.style,
-	className: types.string,
 	innerClass: types.style,
-	URLParams: types.bool,
+	multiSelect: types.bool,
 	onQueryChange: types.func,
+	react: types.react,
+	showFilter: types.bool,
+	style: types.style,
+	title: types.title,
+	URLParams: types.bool,
 };
 
 ToggleButton.defaultProps = {
+	className: null,
 	multiSelect: true,
-	URLParams: false,
 	showFilter: true,
 	style: {},
-	className: null,
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -215,9 +217,9 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) =>
 		dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ToggleButton);
