@@ -240,40 +240,42 @@ class SingleDataList extends Component {
 }
 
 SingleDataList.propTypes = {
-	componentId: types.stringRequired,
 	addComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	updateQuery: types.funcRequired,
-	data: types.data,
-	defaultSelected: types.string,
-	react: types.react,
 	removeComponent: types.funcRequired,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
-	placeholder: types.string,
-	title: types.title,
-	showRadio: types.boolRequired,
-	filterLabel: types.string,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	URLParams: types.boolRequired,
-	showFilter: types.bool,
-	showSearch: types.bool,
-	selectAllLabel: types.string,
-	style: types.style,
+	// component props
+	beforeValueChange: types.func,
 	className: types.string,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	data: types.data,
+	dataField: types.stringRequired,
+	defaultSelected: types.string,
+	filterLabel: types.string,
 	innerClass: types.style,
+	onQueryChange: types.func,
+	onValueChange: types.func,
+	placeholder: types.string,
+	react: types.react,
+	selectAllLabel: types.string,
+	showFilter: types.bool,
+	showRadio: types.boolRequired,
+	showSearch: types.bool,
+	style: types.style,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 SingleDataList.defaultProps = {
-	showRadio: true,
-	URLParams: false,
-	showFilter: true,
+	className: null,
 	placeholder: 'Search',
+	showFilter: true,
+	showRadio: true,
 	showSearch: true,
 	style: {},
-	className: null,
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -284,8 +286,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(SingleDataList);
