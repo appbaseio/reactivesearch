@@ -174,22 +174,22 @@ class Dropdown extends Component {
 }
 
 Dropdown.defaultProps = {
-	labelField: 'label',
 	keyField: 'key',
+	labelField: 'label',
 };
 
 Dropdown.propTypes = {
+	innerClass: types.style,
 	items: types.data,
-	selectedItem: types.selectedValue,
+	keyField: types.string,
+	labelField: types.string,
+	multi: types.bool,
 	onChange: types.func,
 	placeholder: types.string,
-	multi: types.bool,
-	single: types.bool,
-	labelField: types.string,
-	keyField: types.string,
 	returnsObject: types.bool,
+	selectedItem: types.selectedValue,
 	showCount: types.bool,
-	innerClass: types.style,
+	single: types.bool,
 };
 
 export default Dropdown;
