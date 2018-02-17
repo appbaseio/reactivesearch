@@ -159,30 +159,32 @@ class RatingsFilter extends Component {
 
 RatingsFilter.propTypes = {
 	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
-	defaultSelected: types.string,
-	react: types.react,
-	data: types.data,
 	removeComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	title: types.title,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
 	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	filterLabel: types.string,
-	URLParams: types.boolRequired,
-	style: types.style,
+	// component props
+	beforeValueChange: types.func,
 	className: types.string,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	data: types.data,
+	dataField: types.stringRequired,
+	defaultSelected: types.string,
+	filterLabel: types.string,
 	innerClass: types.style,
+	onQueryChange: types.func,
+	onValueChange: types.func,
+	react: types.react,
+	style: types.style,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 RatingsFilter.defaultProps = {
-	URLParams: false,
-	style: {},
 	className: null,
+	style: {},
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -193,8 +195,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(RatingsFilter);
