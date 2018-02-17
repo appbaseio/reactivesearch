@@ -91,14 +91,14 @@ ReactiveBase.defaultProps = {
 };
 
 ReactiveBase.propTypes = {
-	type: types.string,
-	url: types.string,
-	credentials: types.string,
 	app: types.stringRequired,
 	children: types.children,
-	theme: types.style,
+	credentials: types.string,
 	headers: types.headers,
 	queryParams: types.string,
+	theme: types.style,
+	type: types.string,
+	url: types.string,
 };
 
 export default ReactiveBase;
