@@ -183,34 +183,36 @@ class MultiDropdownRange extends Component {
 
 MultiDropdownRange.propTypes = {
 	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
-	defaultSelected: types.stringArray,
-	react: types.react,
 	removeComponent: types.funcRequired,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
+	selectedValue: types.selectedValue,
+	// component props
+	beforeValueChange: types.func,
+	className: types.string,
+	componentId: types.stringRequired,
+	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
-	customQuery: types.func,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
+	defaultSelected: types.stringArray,
+	filterLabel: types.filterLabel,
+	innerClass: types.style,
 	onQueryChange: types.func,
-	updateQuery: types.funcRequired,
+	onValueChange: types.func,
 	placeholder: types.string,
-	selectedValue: types.selectedValue,
+	react: types.react,
+	showFilter: types.bool,
+	style: types.style,
 	title: types.title,
 	URLParams: types.boolRequired,
-	showFilter: types.bool,
-	filterLabel: types.filterLabel,
-	style: types.style,
-	className: types.string,
-	innerClass: types.style,
 };
 
 MultiDropdownRange.defaultProps = {
+	className: null,
 	placeholder: 'Select a value',
-	URLParams: false,
 	showFilter: true,
 	style: {},
-	className: null,
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -222,8 +224,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownRange);
