@@ -162,42 +162,44 @@ class TextField extends Component {
 
 TextField.propTypes = {
 	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
-	defaultSelected: types.string,
-	react: types.react,
 	removeComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	title: types.title,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
 	updateQuery: types.funcRequired,
-	placeholder: types.string,
+	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	filterLabel: types.string,
-	URLParams: types.boolRequired,
-	showFilter: types.bool,
-	style: types.style,
+	// component props
+	autoFocus: types.bool,
+	beforeValueChange: types.func,
 	className: types.string,
-	innerClass: types.style,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	dataField: types.stringRequired,
 	debounce: types.number,
+	defaultSelected: types.string,
+	filterLabel: types.string,
+	innerClass: types.style,
 	onBlur: types.func,
 	onFocus: types.func,
-	onKeyPress: types.func,
 	onKeyDown: types.func,
+	onKeyPress: types.func,
 	onKeyUp: types.func,
-	autoFocus: types.bool,
+	onQueryChange: types.func,
+	onValueChange: types.func,
+	placeholder: types.string,
+	react: types.react,
 	ref: types.func,
+	showFilter: types.bool,
+	style: types.style,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 TextField.defaultProps = {
-	placeholder: 'Search',
-	URLParams: false,
-	showFilter: true,
-	style: {},
 	className: null,
 	debounce: 0,
+	placeholder: 'Search',
+	showFilter: true,
+	style: {},
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -208,8 +210,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(TextField);
