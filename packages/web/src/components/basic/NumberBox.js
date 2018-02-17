@@ -188,29 +188,32 @@ class NumberBox extends Component {
 
 NumberBox.propTypes = {
 	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
-	defaultSelected: types.number,
-	dataField: types.stringRequired,
-	data: types.dataNumberBox,
-	react: types.react,
 	removeComponent: types.funcRequired,
-	title: types.title,
-	queryFormat: types.queryFormatNumberBox,
-	labelPosition: types.labelPosition,
-	URLParams: types.boolRequired,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	style: types.style,
+	// component props
 	className: types.string,
+	componentId: types.stringRequired,
+	data: types.dataNumberBox,
+	dataField: types.stringRequired,
+	defaultSelected: types.number,
 	innerClass: types.style,
+	labelPosition: types.labelPosition,
 	onQueryChange: types.func,
+	queryFormat: types.queryFormatNumberBox,
+	react: types.react,
+	style: types.style,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 NumberBox.defaultProps = {
-	queryFormat: 'gte',
-	labelPosition: 'left',
-	URLParams: false,
-	style: {},
 	className: null,
+	labelPosition: 'left',
+	queryFormat: 'gte',
+	style: {},
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -222,8 +225,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(NumberBox);
