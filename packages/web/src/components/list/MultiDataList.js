@@ -308,42 +308,44 @@ class MultiDataList extends Component {
 }
 
 MultiDataList.propTypes = {
-	componentId: types.stringRequired,
 	addComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	updateQuery: types.funcRequired,
-	data: types.data,
-	defaultSelected: types.stringArray,
-	react: types.react,
 	removeComponent: types.funcRequired,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
-	placeholder: types.string,
-	title: types.title,
-	showCheckbox: types.boolRequired,
-	filterLabel: types.string,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	URLParams: types.boolRequired,
+	// component props
+	beforeValueChange: types.func,
+	className: types.string,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	data: types.data,
+	dataField: types.stringRequired,
+	defaultSelected: types.stringArray,
+	filterLabel: types.string,
+	innerClass: types.style,
+	onQueryChange: types.func,
+	onValueChange: types.func,
+	placeholder: types.string,
+	queryFormat: types.queryFormatSearch,
+	react: types.react,
+	selectAllLabel: types.string,
+	showCheckbox: types.boolRequired,
 	showFilter: types.bool,
 	showSearch: types.bool,
-	selectAllLabel: types.string,
 	style: types.style,
-	className: types.string,
-	innerClass: types.style,
-	queryFormat: types.queryFormatSearch,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 MultiDataList.defaultProps = {
-	showCheckbox: true,
-	URLParams: false,
-	showFilter: true,
+	className: null,
 	placeholder: 'Search',
+	queryFormat: 'or',
+	showCheckbox: true,
+	showFilter: true,
 	showSearch: true,
 	style: {},
-	className: null,
-	queryFormat: 'or',
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -354,8 +356,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(MultiDataList);
