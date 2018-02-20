@@ -365,38 +365,41 @@ class DateRange extends Component {
 
 DateRange.propTypes = {
 	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
-	defaultSelected: types.dateObject,
-	react: types.react,
 	removeComponent: types.funcRequired,
-	queryFormat: types.queryFormatDate,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	placeholder: types.rangeLabels,
-	focused: types.bool,
-	innerClass: types.style,
-	title: types.string,
-	style: types.style,
-	className: types.string,
-	numberOfMonths: types.number,
-	initialMonth: types.dateObject,
-	dayPickerInputProps: types.props,
-	showFilter: types.bool,
-	filterLabel: types.string,
+	// component props
 	autoFocusEnd: types.bool,
-	showClear: types.bool,
+	className: types.string,
+	componentId: types.stringRequired,
 	dataField: types.stringRequired,
+	dayPickerInputProps: types.props,
+	defaultSelected: types.dateObject,
+	filterLabel: types.string,
+	focused: types.bool,
+	initialMonth: types.dateObject,
+	innerClass: types.style,
+	numberOfMonths: types.number,
 	onQueryChange: types.func,
+	placeholder: types.rangeLabels,
+	queryFormat: types.queryFormatDate,
+	react: types.react,
+	showClear: types.bool,
+	showFilter: types.bool,
+	style: types.style,
+	title: types.string,
 };
 
 DateRange.defaultProps = {
+	autoFocusEnd: true,
+	numberOfMonths: 2,
 	placeholder: {
 		start: 'Start date',
 		end: 'End date',
 	},
-	numberOfMonths: 2,
-	showFilter: true,
-	autoFocusEnd: true,
 	showClear: true,
+	showFilter: true,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -408,9 +411,9 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) =>
 		dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DateRange);

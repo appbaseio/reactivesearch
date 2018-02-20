@@ -90,9 +90,9 @@ export default function Pagination(props) {
 }
 
 Pagination.propTypes = {
-	pages: types.number,
-	totalPages: types.number,
 	currentPage: types.number,
-	setPage: types.func,
 	innerClass: types.style,
+	pages: types.number,
+	setPage: types.func,
+	totalPages: types.number,
 };

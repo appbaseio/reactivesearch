@@ -228,35 +228,38 @@ class DatePicker extends Component {
 
 DatePicker.propTypes = {
 	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
-	defaultSelected: types.date,
-	react: types.react,
 	removeComponent: types.funcRequired,
-	queryFormat: types.queryFormatDate,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	placeholder: types.string,
-	focused: types.bool,
-	innerClass: types.style,
-	title: types.string,
-	style: types.style,
+	// component props
 	className: types.string,
-	numberOfMonths: types.number,
-	initialMonth: types.dateObject,
-	dayPickerInputProps: types.props,
-	showFilter: types.bool,
-	filterLabel: types.string,
-	showClear: types.bool,
 	clickUnselectsDay: types.bool,
+	componentId: types.stringRequired,
 	dataField: types.stringRequired,
+	dayPickerInputProps: types.props,
+	defaultSelected: types.date,
+	filterLabel: types.string,
+	focused: types.bool,
+	initialMonth: types.dateObject,
+	innerClass: types.style,
+	numberOfMonths: types.number,
 	onQueryChange: types.func,
+	placeholder: types.string,
+	queryFormat: types.queryFormatDate,
+	react: types.react,
+	showClear: types.bool,
+	showFilter: types.bool,
+	style: types.style,
+	title: types.string,
 };
 
 DatePicker.defaultProps = {
-	placeholder: 'Select Date',
-	numberOfMonths: 1,
-	showFilter: true,
-	showClear: true,
 	clickUnselectsDay: true,
+	numberOfMonths: 1,
+	placeholder: 'Select Date',
+	showClear: true,
+	showFilter: true,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -268,9 +271,9 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) =>
 		dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DatePicker);

@@ -242,7 +242,7 @@ TextField.propTypes = {
 };
 
 TextField.defaultProps = {
-	placeholder: 'Search',
+	placeholder: '',
 	showIcon: false,
 	iconPosition: 'left',
 	autoFocus: false,

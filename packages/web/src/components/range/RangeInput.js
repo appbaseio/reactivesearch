@@ -123,13 +123,13 @@ class RangeInput extends Component {
 }
 
 RangeInput.propTypes = {
+	className: types.string,
+	defaultSelected: types.range,
+	innerClass: types.style,
+	onValueChange: types.func,
 	range: types.range,
 	stepValue: types.number,
-	defaultSelected: types.range,
-	onValueChange: types.func,
-	className: types.string,
 	style: types.style,
-	innerClass: types.style,
 };
 
 RangeInput.defaultProps = {
