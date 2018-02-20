@@ -17,7 +17,16 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '@appbaseio/reactivesearch/lib/styles/Title';
+import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
+
+const Standard = require('./addons/styles/Standard');
+const BlueEssence = require('./addons/styles/BlueEssence');
+const BlueWater = require('./addons/styles/BlueWater');
+const FlatMap = require('./addons/styles/FlatMap');
+const LightMonochrome = require('./addons/styles/LightMonochrome');
+const MidnightCommander = require('./addons/styles/MidnightCommander');
+const UnsaturatedBrowns = require('./addons/styles/UnsaturatedBrowns');
 
 const MapComponent = (withGoogleMap((props) => {
 	const { children, onMapMounted, ...allProps } = props;
@@ -34,6 +43,24 @@ const MapComponent = (withGoogleMap((props) => {
 }));
 
 class ReactiveMap extends Component {
+	constructor(props) {
+		super(props);
+
+		this.mapStyles = [
+			{ label: 'Standard', value: Standard },
+			{ label: 'Blue Essence', value: BlueEssence },
+			{ label: 'Blue Water', value: BlueWater },
+			{ label: 'Flat Map', value: FlatMap },
+			{ label: 'Light Monochrome', value: LightMonochrome },
+			{ label: 'Midnight Commander', value: MidnightCommander },
+			{ label: 'Unsaturated Browns', value: UnsaturatedBrowns },
+		];
+
+		this.state = {
+			currentMapStyle: this.mapStyles[0],
+		};
+	}
+
 	componentWillMount() {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
@@ -84,6 +111,12 @@ class ReactiveMap extends Component {
 		};
 	}
 
+	setMapStyle = (currentMapStyle) => {
+		this.setState({
+			currentMapStyle,
+		});
+	};
+
 	render() {
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
@@ -108,6 +141,9 @@ class ReactiveMap extends Component {
 							? this.getPosition(filteredResults[0])
 							: this.parseLocation(this.props.defaultCenter)
 					}
+					options={{
+						styles: this.state.currentMapStyle.value,
+					}}
 				>
 					{
 						[...streamResults, ...filteredResults].map((item) => {
@@ -123,6 +159,14 @@ class ReactiveMap extends Component {
 						})
 					}
 				</MapComponent>
+				<Dropdown
+					innerClass={this.props.innerClass}
+					items={this.mapStyles}
+					onChange={this.setMapStyle}
+					selectedItem={this.state.currentMapStyle}
+					keyField="label"
+					returnsObject
+				/>
 			</div>
 		);
 	}
