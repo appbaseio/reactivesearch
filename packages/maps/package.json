@@ -1,0 +1,53 @@
+{
+  "name": "@appbaseio/reactivemaps",
+  "version": "2.0.0",
+  "description": "React Components for building map UIs",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "umd"
+  ],
+  "scripts": {
+    "watch": "yarn run build -w",
+    "build": "babel src --out-dir lib",
+    "build:umd": "webpack --progress -p --config webpack.config.umd.js",
+    "stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
+    "prepublish": "yarn run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appbaseio/reactivesearch.git"
+  },
+  "author": "Deepak Grover <deepakgrover333@gmail.com> (https://github.com/metagrover)",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "downshift": "^1.22.1",
+    "emotion": "^9.0.0",
+    "emotion-theming": "^9.0.0",
+    "prop-types": "^15.6.0",
+    "react-emotion": "^9.0.0",
+    "react-google-maps": "^9.4.5"
+  },
+  "peerDependencies": {
+    "@appbaseio/reactivesearch": "*",
+    "react": ">=15",
+    "react-dom": ">=15"
+  },
+  "devDependencies": {
+    "@appbaseio/reactivesearch": "^2.2.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-emotion": "^9.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babili-webpack-plugin": "^0.1.2",
+    "brotli-webpack-plugin": "^0.5.0",
+    "compression-webpack-plugin": "^1.0.1",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "webpack": "^3.2.0"
+  }
+}
