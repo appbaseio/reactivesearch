@@ -74,32 +74,32 @@ class SelectedFilters extends Component {
 }
 
 SelectedFilters.propTypes = {
-	selectedValues: types.selectedValues,
-	setValue: types.func,
 	clearValues: types.func,
+	setValue: types.func,
 	components: types.components,
-	style: types.style,
+	selectedValues: types.selectedValues,
 	className: types.string,
+	clearAllLabel: types.title,
 	innerClass: types.style,
 	showClearAll: types.bool,
-	clearAllLabel: types.title,
+	style: types.style,
 };
 
 SelectedFilters.defaultProps = {
-	style: {},
 	className: null,
-	showClearAll: true,
 	clearAllLabel: 'Clear All',
+	showClearAll: true,
+	style: {},
 };
 
 const mapStateToProps = state => ({
-	selectedValues: state.selectedValues,
 	components: state.components,
+	selectedValues: state.selectedValues,
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setValue: (component, value) => dispatch(setValue(component, value)),
 	clearValues: () => (dispatch(clearValues())),
+	setValue: (component, value) => dispatch(setValue(component, value)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(SelectedFilters);

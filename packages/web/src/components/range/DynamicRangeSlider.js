@@ -357,41 +357,43 @@ class DynamicRangeSlider extends Component {
 }
 
 DynamicRangeSlider.propTypes = {
-	range: types.range,
-	componentId: types.stringRequired,
 	addComponent: types.funcRequired,
+	removeComponent: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	defaultSelected: types.func,
-	react: types.react,
+	watchComponent: types.funcRequired,
 	options: types.options,
-	removeComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	interval: types.number,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
-	showHistogram: types.bool,
-	stepValue: types.number,
-	URLParams: types.boolRequired,
-	title: types.title,
-	filterLabel: types.string,
+	range: types.range,
 	selectedValue: types.selectedValue,
-	style: types.style,
+	// component props
+	beforeValueChange: types.func,
 	className: types.string,
-	snap: types.bool,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	dataField: types.stringRequired,
+	defaultSelected: types.func,
+	filterLabel: types.string,
 	innerClass: types.style,
+	interval: types.number,
+	onQueryChange: types.func,
+	onValueChange: types.func,
 	rangeLabels: types.func,
+	react: types.react,
+	showHistogram: types.bool,
+	snap: types.bool,
+	stepValue: types.number,
+	style: types.style,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 DynamicRangeSlider.defaultProps = {
-	stepValue: 1,
-	showHistogram: true,
-	URLParams: false,
-	style: {},
 	className: null,
+	showHistogram: true,
 	snap: true,
+	stepValue: 1,
+	style: {},
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -416,11 +418,11 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) =>
-		dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) =>
+		dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider);

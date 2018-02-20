@@ -50,9 +50,9 @@ const HistogramContainer = (props) => {
 };
 
 HistogramContainer.propTypes = {
-	stats: types.stats,
-	range: types.range,
 	interval: types.number,
+	range: types.range,
+	stats: types.stats,
 };
 
 export default HistogramContainer;

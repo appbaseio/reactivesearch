@@ -76,11 +76,12 @@ class URLParamsProvider extends Component {
 }
 
 URLParamsProvider.propTypes = {
+	setHeaders: types.func,
 	selectedValues: types.selectedValues,
-	params: types.params,
+	// component props
 	children: types.children,
 	headers: types.headers,
-	setHeaders: types.func,
+	params: types.params,
 };
 
 const mapStateToProps = state => ({
