@@ -153,7 +153,7 @@ class TextField extends Component {
 					onKeyDown={this.props.onKeyDown}
 					onKeyUp={this.props.onKeyUp}
 					autoFocus={this.props.autoFocus}
-					ref={this.props.ref}
+					innerRef={this.props.innerRef}
 				/>
 			</div>
 		);
@@ -177,6 +177,7 @@ TextField.propTypes = {
 	defaultSelected: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
+	innerRef: types.func,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,

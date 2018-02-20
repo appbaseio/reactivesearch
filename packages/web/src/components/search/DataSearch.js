@@ -397,6 +397,7 @@ class DataSearch extends Component {
 									<Input
 										showIcon={this.props.showIcon}
 										iconPosition={this.props.iconPosition}
+										innerRef={this.props.innerRef}
 										{...getInputProps({
 											className: getClassName(this.props.innerClass, 'input'),
 											placeholder: this.props.placeholder,
@@ -461,6 +462,7 @@ class DataSearch extends Component {
 									autoFocus={this.props.autoFocus}
 									iconPosition={this.props.iconPosition}
 									showIcon={this.props.showIcon}
+									innerRef={this.props.innerRef}
 								/>
 								<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
 							</div>
@@ -499,6 +501,7 @@ DataSearch.propTypes = {
 	icon: types.children,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
+	innerRef: types.func,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
