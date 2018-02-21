@@ -207,10 +207,12 @@ export default class HomePageNative extends Component {
 				<Flex
 					padding="3rem"
 					flexDirection="column"
-					backgroundColor="#fefefe"
 					justifyContent="center"
 					alignItems="center"
 					className={tabPadding}
+					style={{
+						backgroundImage: 'linear-gradient(to top, #dfe9f3 0%, white 100%)',
+					}}
 				>
 					<H2 className={textCenter}>Up To 10x Time Savings</H2>
 					<Text fontSize="1rem" lineHeight="1.6rem" className={textCenter}>
@@ -340,7 +342,7 @@ export default class HomePageNative extends Component {
 				</Flex>
 
 				<SlopeWrapper small className={tabHide}>
-					<Slope style={{ backgroundImage: 'linear-gradient(to top, #dfe9f3 0%, white 100%)' }} />
+					<Slope style={{ background: '#fff' }} />
 					<Flex
 						padding="3rem 3rem 1rem"
 						flexDirection="column"
@@ -389,35 +391,75 @@ export default class HomePageNative extends Component {
 					</Flex>
 				</Flex>
 
-				<Flex
-					flexDirection="column"
-					justifyContent="center"
-					alignItems="center"
-					padding="3rem 3rem 4rem"
-					className={tabPadding}
-				>
+				<SlopeWrapper small style={{ marginTop: '-20px' }} className="no-tab-padding">
+					<Slope style={{ backgroundImage: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' }} />
 					<Flex
-						flexDirection="row"
-						justifyContent="space-around"
+						flexDirection="column"
+						justifyContent="center"
 						alignItems="center"
-						padding="3rem 0 0 0"
-						style={{
-							width: '95%',
-							maxWidth: '900px',
-						}}
-						className={tabJustifyCenter}
+						padding="3rem 3rem 5rem"
+						className={tabPadding}
 					>
-						<a target="_blank" rel="noopener noreferrer" href="https://expo.io/@dhruvdutt/book-search" className="demo">
-							<img width="240" src="images/native/booksearch.png" alt="Demo app" />
-						</a>
-						<a target="_blank" rel="noopener noreferrer" href="https://snack.expo.io/@dhruvdutt/gitxplore-native-app" className="demo">
-							<img width="240" src="images/native/gitxplore.png" alt="Demo app" />
-						</a>
-						<a target="_blank" rel="noopener noreferrer" href="https://snack.expo.io/@dhruvdutt/todo" className="demo">
-							<img width="240" src="images/native/todo.png" alt="Demo app" />
-						</a>
+						<Flex
+							flexDirection="row"
+							justifyContent="space-around"
+							alignItems="center"
+							padding="3rem 0 0 0"
+							style={{
+								width: '95%',
+								maxWidth: '900px',
+							}}
+							className={tabJustifyCenter}
+						>
+							<Flex flexDirection="column" justifyContent="center" alignItems="center">
+								<a target="_blank" rel="noopener noreferrer" href="https://expo.io/@dhruvdutt/book-search" className="demo">
+									<img width="240" src="images/native/booksearch.png" alt="Demo app" />
+								</a>
+								<Button
+									rel="noopener noreferrer"
+									style={{ width: 140, marginTop: 0, marginBottom: 50 }}
+									shadow
+									className={button}
+									href="https://expo.io/@dhruvdutt/book-search"
+								>
+									Check Demo
+								</Button>
+							</Flex>
+
+							<Flex flexDirection="column" justifyContent="center" alignItems="center">
+								<a target="_blank" rel="noopener noreferrer" href="https://expo.io/@dhruvdutt/gitxplore-native-app" className="demo">
+									<img width="240" src="images/native/gitxplore.png" alt="Demo app" />
+								</a>
+								<Button
+									rel="noopener noreferrer"
+									style={{ width: 140, marginTop: 0, marginBottom: 50 }}
+									shadow
+									className={button}
+									href="https://snack.expo.io/@dhruvdutt/gitxplore-native-app"
+								>
+									Check Demo
+								</Button>
+							</Flex>
+
+							<Flex flexDirection="column" justifyContent="center" alignItems="center">
+								<a target="_blank" rel="noopener noreferrer" href="https://snack.expo.io/@dhruvdutt/todo" className="demo">
+									<img width="240" src="images/native/todo.png" alt="Demo app" />
+								</a>
+								<Button
+									rel="noopener noreferrer"
+									style={{ width: 140, marginTop: 0, marginBottom: 50 }}
+									shadow
+									className={button}
+									href="https://snack.expo.io/@dhruvdutt/todo"
+								>
+									Check Demo
+								</Button>
+							</Flex>
+
+
+						</Flex>
 					</Flex>
-				</Flex>
+				</SlopeWrapper>
 
 				<Flex
 					flexDirection="column"

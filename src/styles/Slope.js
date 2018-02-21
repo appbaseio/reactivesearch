@@ -11,6 +11,12 @@ const SlopeWrapper = styled('div')`
 		padding: 140px 0;
 		margin-bottom: 45px;
 	`};
+
+	&.no-tab-padding {
+		${queries.medium`
+			padding: 0;
+		`};
+	}
 `;
 
 const Slope = styled('div')`
