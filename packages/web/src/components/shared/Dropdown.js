@@ -100,6 +100,7 @@ class Dropdown extends Component {
 						className={getClassName(this.props.innerClass, 'select') || null}
 						onClick={this.toggle}
 						title={selectedItem ? this.renderToString(selectedItem) : placeholder}
+						small={this.props.small}
 					>
 						<div>{selectedItem ? this.renderToString(selectedItem) : placeholder}</div>
 						<Chevron open={isOpen} />
@@ -107,7 +108,7 @@ class Dropdown extends Component {
 					{
 						isOpen && items.length
 							? (
-								<ul className={`${suggestions} ${getClassName(this.props.innerClass, 'list')}`}>
+								<ul className={`${suggestions} ${this.props.small ? 'small' : ''} ${getClassName(this.props.innerClass, 'list')}`}>
 									{
 										items
 											.map((item, index) => {
@@ -176,6 +177,7 @@ class Dropdown extends Component {
 Dropdown.defaultProps = {
 	keyField: 'key',
 	labelField: 'label',
+	small: false,
 };
 
 Dropdown.propTypes = {
@@ -190,6 +192,7 @@ Dropdown.propTypes = {
 	selectedItem: types.selectedValue,
 	showCount: types.bool,
 	single: types.bool,
+	small: types.bool,
 };
 
 export default Dropdown;

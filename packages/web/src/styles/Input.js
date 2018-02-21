@@ -54,6 +54,10 @@ const suggestions = css`
 	max-height: 260px;
 	overflow-y: auto;
 
+	&.small {
+		top: 30px;
+	}
+
 	li {
 		display: flex;
 		justify-content: space-between;

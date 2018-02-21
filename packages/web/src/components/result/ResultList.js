@@ -204,6 +204,7 @@ class ResultList extends Component {
 
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
+		this.props.removeComponent(this.internalComponent);
 	}
 
 	setReact = (props) => {

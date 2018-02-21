@@ -10,7 +10,9 @@ import {
 	loadMore,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
-	checkPropChange,
+	isEqual,
+	getQueryOptions,
+	pushToAndClause,
 	getClassName,
 	parseHits,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -19,6 +21,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '@appbaseio/reactivesearch/lib/styles/Title';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
+import Pagination from '@appbaseio/reactivesearch/lib/components/result/addons/Pagination';
 
 const Standard = require('./addons/styles/Standard');
 const BlueEssence = require('./addons/styles/BlueEssence');
@@ -58,37 +61,235 @@ class ReactiveMap extends Component {
 
 		this.state = {
 			currentMapStyle: this.mapStyles[0],
+			from: props.currentPage * props.size,
+			isLoading: false,
+			totalPages: 0,
+			currentPage: props.currentPage,
 		};
+		this.mapRef = null;
+		this.internalComponent = `${props.componentId}__internal`;
 	}
 
-	componentWillMount() {
+	componentDidMount() {
+		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
+
+		if (this.props.stream) {
+			this.props.setStreaming(this.props.componentId, true);
+		}
+
+		const options = getQueryOptions(this.props);
+		options.from = this.state.from;
+		if (this.props.sortBy) {
+			options.sort = [{
+				[this.props.dataField]: {
+					order: this.props.sortBy,
+				},
+			}];
+		}
+
+		// Override sort query with defaultQuery's sort if defined
+		this.defaultQuery = null;
+		if (this.props.defaultQuery) {
+			this.defaultQuery = this.props.defaultQuery();
+			if (this.defaultQuery.sort) {
+				options.sort = this.defaultQuery.sort;
+			}
+		}
+
+		this.props.setQueryOptions(
+			this.props.componentId,
+			options,
+			!(this.defaultQuery && this.defaultQuery.query),
+		);
 		this.setReact(this.props);
+
+		if (this.defaultQuery) {
+			const { sort, ...query } = this.defaultQuery;
+			this.props.updateQuery({
+				componentId: this.internalComponent,
+				query,
+			});
+		} else {
+			this.props.updateQuery({
+				componentId: this.internalComponent,
+				query: null,
+			});
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+		if (
+			this.props.sortBy !== nextProps.sortBy
+			|| this.props.size !== nextProps.size
+			|| !isEqual(this.props.dataField, nextProps.dataField)
+		) {
+			const options = getQueryOptions(nextProps);
+			options.from = this.state.from;
+			if (nextProps.sortBy) {
+				options.sort = [{
+					[nextProps.dataField]: {
+						order: nextProps.sortBy,
+					},
+				}];
+			}
+			this.props.setQueryOptions(this.props.componentId, options, true);
+		}
+
+		if (
+			nextProps.defaultQuery
+			&& !isEqual(nextProps.defaultQuery(), this.defaultQuery)
+		) {
+			const options = getQueryOptions(nextProps);
+			options.from = this.state.from;
+			this.defaultQuery = nextProps.defaultQuery();
+
+			const { sort, ...query } = this.defaultQuery;
+
+			if (sort) {
+				options.sort = this.defaultQuery.sort;
+				nextProps.setQueryOptions(nextProps.componentId, options, !query);
+			}
+
+			this.props.updateQuery({
+				componentId: this.internalComponent,
+				query,
+			});
+		}
+
+		if (this.props.stream !== nextProps.stream) {
+			this.props.setStreaming(nextProps.componentId, nextProps.stream);
+		}
+
+		if (!isEqual(nextProps.react, this.props.react)) {
+			this.setReact(nextProps);
+		}
+
+		// called when page is changed
+		if (this.props.pagination && this.state.isLoading) {
+			this.setState({
+				isLoading: false,
+			});
+		}
+
+		if (
+			!nextProps.pagination
+			&& this.props.hits
+			&& nextProps.hits
+			&& (
+				this.props.hits.length < nextProps.hits.length
+				|| nextProps.hits.length === nextProps.total
+			)
+		) {
+			this.setState({
+				isLoading: false,
+			});
+		}
+
+		if (
+			!nextProps.pagination
+			&& nextProps.hits
+			&& this.props.hits
+			&& nextProps.hits.length < this.props.hits.length
+		) {
+			this.setState({
+				from: 0,
+				isLoading: false,
+			});
+		}
+
+		if (nextProps.pagination && nextProps.total !== this.props.total) {
+			this.setState({
+				totalPages: Math.ceil(nextProps.total / nextProps.size),
+				currentPage: this.props.total ? 0 : this.state.currentPage,
+			});
+		}
+	}
+
+	shouldComponentUpdate(nextProps, nextState) {
+		if (!isEqual(this.state.currentMapStyle, nextState.currentMapStyle)) {
+			return true;
+		}
+
+		if (
+			isEqual(this.props.hits, nextProps.hits)
+			&& isEqual(this.props.streamHits, nextProps.streamHits)
+		) {
+			return false;
+		}
+
+		return true;
 	}
 
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
+		this.props.removeComponent(this.internalComponent);
 	}
 
-	setReact(props) {
-		if (props.react) {
-			props.watchComponent(props.componentId, props.react);
+	setReact = (props) => {
+		const { react } = props;
+		if (react) {
+			const newReact = pushToAndClause(react, this.internalComponent);
+			props.watchComponent(props.componentId, newReact);
+		} else {
+			props.watchComponent(props.componentId, { and: this.internalComponent });
 		}
-	}
+	};
+
+	loadMore = () => {
+		if (
+			this.props.hits
+			&& !this.props.pagination
+			&& this.props.total !== this.props.hits.length
+		) {
+			const value = this.state.from + this.props.size;
+			const options = getQueryOptions(this.props);
+
+			this.setState({
+				from: value,
+				isLoading: true,
+			});
+			this.props.loadMore(this.props.componentId, {
+				...options,
+				from: value,
+			}, true);
+		} else if (this.state.isLoading) {
+			this.setState({
+				isLoading: false,
+			});
+		}
+	};
+
+	setPage = (page) => {
+		const value = this.props.size * page;
+		const options = getQueryOptions(this.props);
+		options.from = this.state.from;
+		this.setState({
+			from: value,
+			isLoading: true,
+			currentPage: page,
+		});
+		this.props.loadMore(this.props.componentId, {
+			...options,
+			from: value,
+		}, false);
+
+		if (this.props.URLParams) {
+			this.props.setPageURL(
+				`${this.props.componentId}-page`,
+				page + 1,
+				`${this.props.componentId}-page`,
+				false,
+				true,
+			);
+		}
+	};
 
 	getIcon = (result) => {
-		if (this.props.onData) {
-			return this.props.onData(result);
+		if (this.props.renderMapPin) {
+			return this.props.renderMapPin(result);
 		}
-		return this.props.historicPin;
+		return this.props.mapPin;
 	};
 
 	getPosition = (result) => {
@@ -127,9 +328,8 @@ class ReactiveMap extends Component {
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 		}
 
-		return (
-			<div style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+		const Map = () => (
+			<div style={{ position: 'relative' }}>
 				<MapComponent
 					onMapMounted={(ref) => {
 						this.mapRef = ref;
@@ -159,14 +359,56 @@ class ReactiveMap extends Component {
 						})
 					}
 				</MapComponent>
-				<Dropdown
-					innerClass={this.props.innerClass}
-					items={this.mapStyles}
-					onChange={this.setMapStyle}
-					selectedItem={this.state.currentMapStyle}
-					keyField="label"
-					returnsObject
-				/>
+				{
+					this.props.showMapStyles
+						? (
+							<div
+								style={{
+									position: 'absolute',
+									top: 10,
+									right: 46,
+									width: 120,
+								}}
+							>
+								<Dropdown
+									innerClass={this.props.innerClass}
+									items={this.mapStyles}
+									onChange={this.setMapStyle}
+									selectedItem={this.state.currentMapStyle}
+									keyField="label"
+									returnsObject
+									small
+								/>
+							</div>
+						)
+						: null
+				}
+			</div>
+		);
+
+		const PaginationComponent = () => (
+			<Pagination
+				pages={this.props.pages}
+				totalPages={this.state.totalPages}
+				currentPage={this.state.currentPage}
+				setPage={this.setPage}
+				innerClass={this.props.innerClass}
+			/>
+		);
+
+		return (
+			<div style={this.props.style} className={this.props.className}>
+				{
+					this.props.onAllData
+						? this.props.onAllData(
+							this.props.hits,
+							this.props.streamHits,
+							this.loadMore,
+							Map,
+							PaginationComponent,
+						)
+						: <Map />
+				}
 			</div>
 		);
 	}
@@ -174,34 +416,48 @@ class ReactiveMap extends Component {
 
 ReactiveMap.propTypes = {
 	addComponent: types.funcRequired,
+	loadMore: types.funcRequired,
+	removeComponent: types.funcRequired,
+	setPageURL: types.func,
+	setQueryOptions: types.funcRequired,
+	setStreaming: types.func,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
+	currentPage: types.number,
+	hits: types.hits,
+	isLoading: types.bool,
+	streamHits: types.hits,
+	time: types.number,
+	total: types.number,
+	url: types.string,
+	// component props
+	className: types.string,
 	componentId: types.stringRequired,
 	dataField: types.stringRequired,
-	setQueryOptions: types.funcRequired,
 	defaultQuery: types.func,
-	updateQuery: types.funcRequired,
-	size: types.number,
-	react: types.react,
-	hits: types.hits,
-	streamHits: types.hits,
-	removeComponent: types.funcRequired,
-	loadMore: types.funcRequired,
-	onData: types.func,
-	style: types.style,
-	className: types.string,
-	stream: types.bool,
-	setStreaming: types.func,
 	innerClass: types.style,
-	url: types.string,
+	loader: types.title,
+	onAllData: types.func,
+	pages: types.number,
+	pagination: types.bool,
+	react: types.react,
+	size: types.number,
+	sortBy: types.sortBy,
+	sortOptions: types.sortOptions,
+	stream: types.bool,
+	style: types.style,
 	URLParams: types.bool,
-	title: types.title,
-	historicPin: types.string,
+	mapPin: types.string,
+	renderMapPin: types.func,
 	defaultCenter: types.location,
+	showMapStyles: types.bool,
 };
 
 ReactiveMap.defaultProps = {
 	size: 10,
 	style: {},
 	className: null,
+	showMapStyles: true,
 	defaultCenter: {
 		lat: -34.397,
 		lng: 150.644,

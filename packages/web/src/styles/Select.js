@@ -1,4 +1,12 @@
-import styled from 'react-emotion';
+import styled, { css } from 'react-emotion';
+
+const small = css`
+	min-height: 0;
+	height: 30px;
+	border: 0;
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+	border-radius: 2px;
+`;
 
 const Select = styled('button')`
 	width: 100%;
@@ -17,6 +25,8 @@ const Select = styled('button')`
 	cursor: pointer;
 	user-select: none;
 	transition: all 0.3s ease;
+
+	${props => (props.small ? small : null)};
 
 	& > div {
 		width: calc(100% - 24px);
