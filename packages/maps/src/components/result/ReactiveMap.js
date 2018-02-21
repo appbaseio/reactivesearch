@@ -13,12 +13,10 @@ import {
 	isEqual,
 	getQueryOptions,
 	pushToAndClause,
-	getClassName,
 	parseHits,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Title from '@appbaseio/reactivesearch/lib/styles/Title';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
 import Pagination from '@appbaseio/reactivesearch/lib/components/result/addons/Pagination';
