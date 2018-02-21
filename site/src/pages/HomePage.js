@@ -87,12 +87,12 @@ export default class HomePage extends Component {
 		return (
 			<div className={container}>
 				<Navbar>
-					<a href="/reactivesearch/native" className="img-logo">
+					<a href="/reactivesearch" className="img-logo">
 						<img src="images/native/logo.png" alt="Reactivesearch" />
 						<span>Reactivesearch</span>
 					</a>
 					<ul className={mobHide}>
-						<li><a href="/native">Native</a></li>
+						<li><a href="/reactivesearch/native">Native</a></li>
 						<li><a href="#examples">Examples</a></li>
 						<li><a href="https://opensource.appbase.io/reactive-manual">Documentation</a></li>
 						<li><a href="https://github.com/appbaseio/reactivesearch">GitHub</a></li>
