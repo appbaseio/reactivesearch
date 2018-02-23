@@ -655,7 +655,7 @@ DataSearch.propTypes = {
 	setQueryOptions: types.funcRequired,
 	defaultSelected: types.string,
 	dataField: types.dataFieldArray,
-	highlightField: types.highlightField,
+	highlightField: types.stringOrArray,
 	react: types.react,
 	suggestions: types.suggestions,
 	defaultSuggestions: types.suggestions,

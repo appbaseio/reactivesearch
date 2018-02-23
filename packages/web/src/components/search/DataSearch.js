@@ -497,7 +497,7 @@ DataSearch.propTypes = {
 	filterLabel: types.string,
 	fuzziness: types.fuzziness,
 	highlight: types.bool,
-	highlightField: types.highlightField,
+	highlightField: types.stringOrArray,
 	icon: types.children,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,

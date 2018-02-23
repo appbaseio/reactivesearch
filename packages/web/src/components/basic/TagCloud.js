@@ -294,7 +294,7 @@ TagCloud.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	dataField: types.stringRequired,
-	defaultSelected: types.highlightField,
+	defaultSelected: types.stringOrArray,
 	filterLabel: types.string,
 	innerClass: types.style,
 	multiSelect: types.bool,
