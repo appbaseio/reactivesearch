@@ -35,7 +35,6 @@ const MapComponent = (withGoogleMap((props) => {
 
 	return (
 		<GoogleMap
-			defaultZoom={8}
 			ref={onMapMounted}
 			{...allProps}
 		>
@@ -245,6 +244,58 @@ class ReactiveMap extends Component {
 		}
 	};
 
+	getHitsCenter = (hits) => {
+		const data = hits.map(hit => hit[this.props.dataField]);
+
+		if (data.length) {
+			const numCoords = data.length;
+
+			let X = 0.0;
+			let Y = 0.0;
+			let Z = 0.0;
+
+			data.forEach((location) => {
+				if (location) {
+					let lat = 0.0;
+					let lng = 0.0;
+
+					if (Array.isArray(location)) {
+						lat = (location[0] * Math.PI) / 180;
+						lng = (location[1] * Math.PI) / 180;
+					} else {
+						lat = (location.lat * Math.PI) / 180;
+						lng = ((location.lng !== undefined ? location.lng : location.lon) * Math.PI) / 180;
+					}
+
+					const a = Math.cos(lat) * Math.cos(lng);
+					const b = Math.cos(lat) * Math.sin(lng);
+					const c = Math.sin(lat);
+
+					X += a;
+					Y += b;
+					Z += c;
+				}
+			});
+
+			X /= numCoords;
+			Y /= numCoords;
+			Z /= numCoords;
+
+			const lng = Math.atan2(Y, X);
+			const hyp = Math.sqrt((X * X) + (Y * Y));
+			const lat = Math.atan2(Z, hyp);
+
+			const newX = (lat * 180) / Math.PI;
+			const newY = (lng * 180) / Math.PI;
+
+			return {
+				lat: newX,
+				lng: newY,
+			};
+		}
+		return false;
+	}
+
 	getGeoQuery = () => {
 		if (this.mapRef) {
 			const mapBounds = this.mapRef.getBounds();
@@ -354,8 +405,12 @@ class ReactiveMap extends Component {
 			};
 		}
 		return {
-			lat: location ? Number(location.lat) : null,
-			lng: location ? Number(location.lon === undefined ? location.lng : location.lon) : null,
+			lat: location
+				? Number(location.lat)
+				: this.props.defaultCenter.lat,
+			lng: location
+				? Number(location.lon === undefined ? location.lng : location.lon)
+				: this.props.defaultCenter.lng,
 		};
 	}
 
@@ -363,6 +418,20 @@ class ReactiveMap extends Component {
 		this.setState({
 			currentMapStyle,
 		});
+	};
+
+	getCenter = (hits) => {
+		if (hits) {
+			if (this.props.autoCenter) {
+				return this.getHitsCenter(hits) || this.parseLocation(this.props.defaultCenter);
+			}
+
+			return hits[0] && hits[0][this.props.dataField]
+				? this.getPosition(hits[0])
+				: this.parseLocation(this.props.defaultCenter);
+		}
+
+		return this.parseLocation(this.props.defaultCenter);
 	};
 
 	render() {
@@ -381,14 +450,11 @@ class ReactiveMap extends Component {
 					onMapMounted={(ref) => {
 						this.mapRef = ref;
 					}}
+					defaultZoom={this.props.defaultZoom}
 					onIdle={this.setGeoQuery}
 					containerElement={<div style={{ height: '100vh' }} />}
 					mapElement={<div style={{ height: '100%' }} />}
-					center={
-						filteredResults[0] && filteredResults[0][this.props.dataField]
-							? this.getPosition(filteredResults[0])
-							: this.parseLocation(this.props.defaultCenter)
-					}
+					center={this.getCenter(filteredResults)}
 					options={{
 						styles: this.state.currentMapStyle.value,
 					}}
@@ -501,6 +567,8 @@ ReactiveMap.propTypes = {
 	defaultCenter: types.location,
 	center: types.location,
 	showMapStyles: types.bool,
+	autoCenter: types.bool,
+	defaultZoom: types.number,
 };
 
 ReactiveMap.defaultProps = {
@@ -512,6 +580,8 @@ ReactiveMap.defaultProps = {
 		lat: -34.397,
 		lng: 150.644,
 	},
+	autoCenter: true,
+	defaultZoom: 8,
 };
 
 const mapStateToProps = (state, props) => ({
