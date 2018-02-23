@@ -50,8 +50,19 @@ class ToggleButton extends Component {
 
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleToggle(nextProps.defaultSelected, true, nextProps);
-		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.handleToggle(nextProps.selectedValue || [], true, nextProps);
+		} else if (nextProps.multiSelect) {
+			// for multiselect selectedValue will be an array
+			if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
+				this.handleToggle(nextProps.selectedValue || [], true, nextProps);
+			}
+		} else {
+			// else multiselect will be a string
+			const currentValue = this.state.currentValue[0]
+				? this.state.currentValue[0].label
+				: null;
+			if (!isEqual(currentValue, nextProps.selectedValue)) {
+				this.handleToggle(nextProps.selectedValue || [], true, nextProps);
+			}
 		}
 	}
 
