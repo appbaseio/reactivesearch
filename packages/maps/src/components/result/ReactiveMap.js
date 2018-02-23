@@ -8,6 +8,7 @@ import {
 	setQueryOptions,
 	updateQuery,
 	loadMore,
+	setMapData,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -59,10 +60,11 @@ class ReactiveMap extends Component {
 
 		this.state = {
 			currentMapStyle: this.mapStyles[0],
-			from: props.currentPage * props.size,
+			from: props.currentPage * props.size || 0,
 			isLoading: false,
 			totalPages: 0,
 			currentPage: props.currentPage,
+			mapBoxBounds: null,
 		};
 		this.mapRef = null;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -71,6 +73,7 @@ class ReactiveMap extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
+		this.props.setMapData(this.props.componentId, null, !!this.props.center);
 
 		if (this.props.stream) {
 			this.props.setStreaming(this.props.componentId, true);
@@ -86,10 +89,10 @@ class ReactiveMap extends Component {
 			}];
 		}
 
-		// Override sort query with defaultQuery's sort if defined
 		this.defaultQuery = null;
 		if (this.props.defaultQuery) {
 			this.defaultQuery = this.props.defaultQuery();
+			// Override sort query with defaultQuery's sort if defined
 			if (this.defaultQuery.sort) {
 				options.sort = this.defaultQuery.sort;
 			}
@@ -132,6 +135,14 @@ class ReactiveMap extends Component {
 				}];
 			}
 			this.props.setQueryOptions(this.props.componentId, options, true);
+		}
+
+		if (!isEqual(this.props.center, nextProps.center)) {
+			this.props.setMapData(
+				this.props.componentId,
+				this.getGeoQuery(),
+				!!nextProps.center,
+			);
 		}
 
 		if (
@@ -234,6 +245,44 @@ class ReactiveMap extends Component {
 		}
 	};
 
+	getGeoQuery = () => {
+		if (this.mapRef) {
+			const mapBounds = this.mapRef.getBounds();
+			const north = mapBounds.getNorthEast().lat();
+			const south = mapBounds.getSouthWest().lat();
+			const east = mapBounds.getNorthEast().lng();
+			const west = mapBounds.getSouthWest().lng();
+			const boundingBoxCoordinates = {
+				top_left: [west, north],
+				bottom_right: [east, south],
+			};
+
+			this.setState({
+				mapBoxBounds: boundingBoxCoordinates,
+			});
+
+			return {
+				geo_bounding_box: {
+					[this.props.dataField]: boundingBoxCoordinates,
+				},
+			};
+		}
+		return null;
+	};
+
+	setGeoQuery = () => {
+		// execute a new query on initial mount
+		if (!this.props.defaultQuery && !this.state.mapBoxBounds) {
+			this.defaultQuery = this.getGeoQuery();
+
+			this.props.setMapData(
+				this.props.componentId,
+				this.defaultQuery,
+				!!this.props.center,
+			);
+		}
+	}
+
 	loadMore = () => {
 		if (
 			this.props.hits
@@ -332,6 +381,7 @@ class ReactiveMap extends Component {
 					onMapMounted={(ref) => {
 						this.mapRef = ref;
 					}}
+					onIdle={this.setGeoQuery}
 					containerElement={<div style={{ height: '100vh' }} />}
 					mapElement={<div style={{ height: '100%' }} />}
 					center={
@@ -414,6 +464,7 @@ class ReactiveMap extends Component {
 
 ReactiveMap.propTypes = {
 	addComponent: types.funcRequired,
+	setMapData: types.funcRequired,
 	loadMore: types.funcRequired,
 	removeComponent: types.funcRequired,
 	setPageURL: types.func,
@@ -448,6 +499,7 @@ ReactiveMap.propTypes = {
 	mapPin: types.string,
 	renderMapPin: types.func,
 	defaultCenter: types.location,
+	center: types.location,
 	showMapStyles: types.bool,
 };
 
@@ -476,6 +528,8 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryOptions(component, props, execute)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
+	setMapData: (component, geoQuery, mustExecute) =>
+		dispatch(setMapData(component, geoQuery, mustExecute)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveMap);
