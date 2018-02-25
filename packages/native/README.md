@@ -33,7 +33,7 @@ Docs are accessible at [reactive-manual/native](https://opensource.appbase.io/re
 We have published the following apps to the App Store / Playstore.
 
 - [Booksearch on Play Store](https://play.google.com/store/apps/details?id=com.booksnative): A booksearch app showing a searchable collection of over 10k books built with ReactiveSearch.  
-- [Gitxplore on Play Store](https://play.google.com/store/apps/details?id=com.appbaseio.gitxplore): A Github repositoriy explorer app allowing search over 25k popular github repos.  
+- [Gitxplore on Play Store](https://play.google.com/store/apps/details?id=com.appbaseio.gitxplore): A Github repository explorer app to  search over the 25k+ most popular github repos.  
 - [ReactiveTodos on App Store](https://itunes.apple.com/us/app/reactivetodos/id1347926945?mt=8): A shared collaborative to-do list app to showcase the capability of Reactivesearch.
 
 ## Development
