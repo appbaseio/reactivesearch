@@ -32,10 +32,15 @@ export default function Pagination(props) {
 			: props.totalPages + 1;
 
 		for (let i = start; i < totalPagesToShow; i += 1) {
+			const primary = props.currentPage === i - 1;
+			const innerClassName = getClassName(props.innerClass, 'button');
+			const className = innerClassName || primary
+				? `${innerClassName} ${primary ? 'active' : ''}`
+				: null;
 			const pageBtn = (
 				<Button
-					className={getClassName(props.innerClass, 'button') || null}
-					primary={props.currentPage === i - 1}
+					className={className}
+					primary={primary}
 					key={i - 1}
 					onClick={() => props.setPage(i - 1)}
 				>
@@ -52,6 +57,12 @@ export default function Pagination(props) {
 		return null;
 	}
 
+	const innerClassName = getClassName(props.innerClass, 'button');
+	const primary = props.currentPage === 0;
+	const className = innerClassName || primary
+		? `${innerClassName} ${primary ? 'active' : ''}`
+		: null;
+
 	return (
 		<div className={`${pagination} ${getClassName(props.innerClass, 'pagination')}`}>
 			<Button
@@ -63,8 +74,8 @@ export default function Pagination(props) {
 			</Button>
 			{
 				<Button
-					className={getClassName(props.innerClass, 'button') || null}
-					primary={props.currentPage === 0}
+					className={className}
+					primary={primary}
 					onClick={() => props.setPage(0)}
 				>
 					1
