@@ -223,7 +223,7 @@ export default class HomePageNative extends Component {
 						style={{ width: '100%', flexWrap: 'wrap' }}
 					>
 
-						<Flex className={card} onClick={() => this.openLink('https://medium.com/@siddharthlatest/v2-ui-components-for-elasticsearch-23743d9a1070')}>
+						<Flex className={card} onClick={() => this.openLink('https://medium.appbase.io/build-your-next-react-native-app-with-reactivesearch-ce21829f3bf5')}>
 							<div>
 								<img src="images/rocket.png" alt="Data-driven UIs" />
 							</div>
@@ -254,7 +254,7 @@ export default class HomePageNative extends Component {
 							</div>
 						</Flex>
 
-						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/theming/themes.html')}>
+						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/native/advanced/style.html')}>
 							<div>
 								<img src="images/configurablestyles.png" alt="Data-driven UIs" />
 							</div>
