@@ -147,7 +147,16 @@ class Dropdown extends Component {
 															}
 															{
 																this.props.showCount && item.doc_count
-																	&& ` (${item.doc_count})`
+																	&& (
+																		<span
+																			className={
+																				getClassName(this.props.innerClass, 'count')
+																				|| null
+																			}
+																		>
+																			&nbsp;({item.doc_count})
+																		</span>
+																	)
 															}
 														</div>
 														{

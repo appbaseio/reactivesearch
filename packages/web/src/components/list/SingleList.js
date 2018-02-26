@@ -277,7 +277,16 @@ class SingleList extends Component {
 										{item.key}
 										{
 											this.props.showCount
-											&& ` (${item.doc_count})`
+											&& (
+												<span
+													className={
+														getClassName(this.props.innerClass, 'count')
+														|| null
+													}
+												>
+													&nbsp;({item.doc_count})
+												</span>
+											)
 										}
 									</label>
 								</li>
