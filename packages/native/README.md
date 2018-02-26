@@ -8,12 +8,21 @@
 <p align="center" style="font-size: 1.2rem">A React Native UI components library for Elasticsearch</p>
 <p align="center"><a href="https://medium.appbase.io/build-your-next-react-native-app-with-reactivesearch-ce21829f3bf5">Read the launch blog post here</a>.</p>
 
+<hr />
+
+[![npm version](https://badge.fury.io/js/%40appbaseio%2Freactivesearch-native.svg)](https://badge.fury.io/js/%40appbaseio%2Freactivesearch-native)
+[![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/appbaseio/reactivesearch/blob/dev/LICENSE)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/appbaseio/reactivesearch)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/appbaseio/reactivesearch/blob/dev/.github/CONTRIBUTING.md)
+
+<br />
+
+#### :rocket: Jumpstart your app development with
+```
+npm install @appbaseio/reactivesearch-native
+```
+
 ![](https://i.imgur.com/h33Qt6A.png)
-
-
-```
-yarn add @appbaseio/reactivesearch-native
-```
 
 ## Introduction
 
