@@ -6,7 +6,7 @@
 </h2>
 
 <p align="center" style="font-size: 1.2rem">A React Native UI components library for Elasticsearch</p>
-<p align="center"><a href="https://medium.appbase.io/build-your-next-react-native-app-with-reactivesearch-ce21829f3bf5">Read the launch blog post here</a></p>
+<p align="center"><a href="https://medium.appbase.io/build-your-next-react-native-app-with-reactivesearch-ce21829f3bf5">Read the launch blog post here</a>.</p>
 
 ![](https://i.imgur.com/h33Qt6A.png)
 
