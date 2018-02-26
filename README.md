@@ -1,4 +1,14 @@
-## Reactive Search
+<h2 align="center">
+  <img src="https://i.imgur.com/iiR9wAs.png" alt="reactivesearch" title="reactivesearch" width="200">
+  <br />
+  Reactive Search
+  <br />
+</h2>
+
+<p align="center" style="font-size: 1.2rem">A React and React Native UI components library for Elasticsearch</p>
+<p align="center"><a href="https://codeburst.io/how-to-build-an-e-commerce-search-ui-with-react-and-elasticsearch-a581c823b2c3">Read how to build an e-commerce search UI on codeburst</a></p>
+
+<hr />
 
 [![npm version](https://badge.fury.io/js/%40appbaseio%2Freactivesearch.svg)](https://badge.fury.io/js/%40appbaseio%2Freactivesearch)
 [![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/appbaseio/reactivesearch/blob/dev/LICENSE)
@@ -6,11 +16,10 @@
 [![npm](https://img.shields.io/npm/dt/@appbaseio/reactivesearch.svg)](https://www.npmjs.com/package/@appbaseio/reactivesearch)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/appbaseio/reactivesearch/#8-developing-locally)
 
-React UI components for Elasticsearch.
-
-**v2 of `reactivesearch` is here 🍾.** Go [read how to build an e-commerce search UI on codeburst](https://codeburst.io/how-to-build-an-e-commerce-search-ui-with-react-and-elasticsearch-a581c823b2c3).
-
-#### :rocket: `npm install @appbaseio/reactivesearch`
+#### :rocket: Jumpstart your app development with
+```
+npm install @appbaseio/reactivesearch
+```
 
 ![Banner Image showing all the UI components we offer](https://i.imgur.com/bJ1QKZS.png)
 
