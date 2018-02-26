@@ -113,7 +113,7 @@ export default class HomePageNative extends Component {
 								lineHeight="2.4rem"
 								margin="30px 0 10px"
 								className={boldHeading}
-							>React Native UI components
+							>React Native UI components for Elasticsearch
 							</H1>
 
 							<Text
@@ -122,7 +122,7 @@ export default class HomePageNative extends Component {
 								margin="10px 0 30px"
 								light
 							>
-								<span className={`${boldHeading} ${logo} ${mobHide}`}>v0.5</span>&nbsp;
+								<span className={`${boldHeading} ${logo} ${mobHide}`}>v0.6</span>&nbsp;
 								Build data-driven mobile apps.&nbsp;
 								<a
 									className={`${decoratedLink} ${decoratedSecondaryLink}`}
@@ -136,10 +136,10 @@ export default class HomePageNative extends Component {
 
 							<Flex className={tabJustifyCenter}>
 								<Button light primary shadow big className={button} href="https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html">
-									Getting Started
+									Get Started with React Native
 								</Button>
-								<Button shadow big className={button} style={{ marginLeft: '10px' }} href="https://opensource.appbase.io/reactive-manual/native/getting-started/componentsindex.html">
-									<span style={{ marginLeft: 5, position: 'relative', top: 1 }}>View Components</span>
+								<Button shadow big className={button} style={{ marginLeft: '10px' }} href="../">
+									<span style={{ marginLeft: 5, position: 'relative', top: 1 }}>React UI components</span>
 								</Button>
 							</Flex>
 						</Flex>
@@ -240,7 +240,7 @@ export default class HomePageNative extends Component {
 							</div>
 						</Flex>
 
-						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html')}>
+						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html')}>
 							<div>
 								<img src="images/remix.png" alt="Data-driven UIs" />
 							</div>
@@ -248,7 +248,7 @@ export default class HomePageNative extends Component {
 								Works with existing UIs
 							</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								Already have your own components? Bring them to ReactiveSearch.
+								Already have your own design components? Bring them to Reactivesearch Native.
 							</Text>
 							<div className={mobShow}>
 								<Button className={button}>Read More</Button>
@@ -276,14 +276,15 @@ export default class HomePageNative extends Component {
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">Create cross-platform apps</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								Reactivesearch Native components can be ported to create web apps.
+								All Native components have equivalent React UI components,
+								allowing creation of consistent cross-platform apps.
 							</Text>
 							<div className={mobShow}>
 								<Button className={button}>Read More</Button>
 							</div>
 						</Flex>
 
-						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html')}>
+						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/getting-started/native/reactivebase.html')}>
 							<div>
 								<img src="images/elasticsearch.png" alt="Data-driven UIs" />
 							</div>
@@ -312,7 +313,7 @@ export default class HomePageNative extends Component {
 							</div>
 						</Flex>
 
-						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html#connect-to-elasticsearch')}>
+						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/native/getting-started/reactivebase.html#connect-to-elasticsearch')}>
 							<div>
 								<img src="images/shield.png" alt="Data-driven UIs" />
 							</div>

@@ -92,7 +92,7 @@ export default class HomePage extends Component {
 						<span>Reactivesearch</span>
 					</a>
 					<ul className={mobHide}>
-						<li><a href="/reactivesearch/native">Native</a></li>
+						<li><a href="native">React Native</a></li>
 						<li><a href="#examples">Examples</a></li>
 						<li><a href="https://opensource.appbase.io/reactive-manual">Documentation</a></li>
 						<li><a href="https://github.com/appbaseio/reactivesearch">GitHub</a></li>
@@ -135,10 +135,10 @@ export default class HomePage extends Component {
 
 							<Flex className={tabJustifyCenter}>
 								<Button big light primary shadow className={button} href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html">
-									Getting Started
+									Get Started with React
 								</Button>
-								<Button big shadow className={button} style={{ marginLeft: '10px' }} href="https://opensource.appbase.io/reactive-manual/base-components/textfield.html">
-									View Components
+								<Button big shadow className={button} style={{ marginLeft: '10px' }} href="native">
+									React Native UI components
 								</Button>
 							</Flex>
 						</Flex>
