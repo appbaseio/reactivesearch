@@ -2,10 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'emotion-theming';
 import { Router, Route, Switch } from 'react-router-dom';
+import Loadable from 'react-loadable';
 import createHistory from 'history/createBrowserHistory';	// eslint-disable-line
 
-import HomePage from './pages/HomePage';
-import HomePageNative from './pages/HomePageNative';
+const Loading = () => (
+	<div />
+);
+
+const HomePage = Loadable({
+	loader: () => import('./pages/HomePage'),
+	loading: Loading,
+});
+
+const HomePageNative = Loadable({
+	loader: () => import('./pages/HomePageNative'),
+	loading: Loading,
+});
 
 const history = createHistory({
 	basename: process.env.NODE_ENV === 'production' ? '/reactivesearch' : '/',

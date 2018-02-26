@@ -184,11 +184,11 @@ class SingleDataList extends Component {
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
 					{
 						selectAllLabel
-							? (
+							&& (
 								<li key={selectAllLabel} className={`${this.state.currentValue === selectAllLabel ? 'active' : ''}`}>
 									<Radio
 										className={getClassName(this.props.innerClass, 'radio')}
-										id={selectAllLabel}
+										id={`${this.props.componentId}-${selectAllLabel}`}
 										name={this.props.componentId}
 										value={selectAllLabel}
 										onChange={this.handleClick}
@@ -203,7 +203,6 @@ class SingleDataList extends Component {
 									</label>
 								</li>
 							)
-							: null
 					}
 					{
 						this.props.data
