@@ -1,5 +1,5 @@
 <h2 align="center">
-  <img src="https://i.imgur.com/iiR9wAs.png" alt="reactivesearch" title="reactivesearch" width="200">
+  <img src="https://i.imgur.com/iiR9wAs.png" alt="reactivesearch" title="reactivesearch" width="200" />
   <br />
   Reactive Search
   <br />
@@ -7,6 +7,12 @@
 
 <p align="center" style="font-size: 1.2rem">A React and React Native UI components library for Elasticsearch</p>
 <p align="center"><a href="https://codeburst.io/how-to-build-an-e-commerce-search-ui-with-react-and-elasticsearch-a581c823b2c3">Read how to build an e-commerce search UI on codeburst</a></p>
+
+<br/>
+<p align="center">
+  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/web" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/DFBEXNf.png" alt="web" title="web" width="40%" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/native" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/sIBRBxg.png" alt="native" title="native" width="40%" /></a>
+</p>
 
 <hr />
 
