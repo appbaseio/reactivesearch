@@ -17,11 +17,11 @@ yarn add @appbaseio/reactivesearch-native
 
 ## Introduction
 
-ReactiveSearch provides scaffolding to build data-driven apps. From our experience, it takes anywhere between several weeks to months to build and ship anything meaningful. And building for multiple platforms adds in more complexity and significantly increases the timeframe compounds. With ReactiveSearch, we have been able to compress these timeframes consistently to days and sometimes, even hours.
+Gone are those days, when it used to take several weeks or months to build and ship meaningful apps. With ReactiveSearch Native, you can ship mobile apps in days and sometimes, even a few hours.
 
-This library bundles a range of React Native UI components that are built with extendibility in mind: You can customize the backend queries, define how the components react to changes, extend styles with theming and style injection support.
+ReactiveSearch provides scaffolding to build data-driven apps. This library bundles a range of React Native UI components that are built with extendibility in mind: You can customize the backend queries, define how the components react to changes, extend the styles with theming and style injection support.
 
-> Above all, we've kept the API exactly the same as that of reactivesearch for web, enabling you to write once and use everywhere.
+> Above all, we've kept the components API exactly the same as that of reactivesearch for web, enabling you to write once and use everywhere.
 
 ## Available Components
 
@@ -51,7 +51,7 @@ We have published the following apps to the App Store / Playstore.
 
 ## Contributing
 
-Please check the [contribution guide](.github/CONTRIBUTING.md).
+Please check the [contribution guide](https://github.com/appbaseio/reactivesearch/tree/dev/.github/CONTRIBUTING.md).
 
 ## Debugging
 
