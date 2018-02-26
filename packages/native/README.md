@@ -22,7 +22,7 @@
 npm install @appbaseio/reactivesearch-native
 ```
 
-![](https://i.imgur.com/h33Qt6A.png)
+![](https://ph-files.imgix.net/2d1eab6b-c836-4255-89df-0553841d7c33?auto=format&auto=compress&codec=mozjpeg&cs=strip)
 
 ## Introduction
 
@@ -32,23 +32,29 @@ ReactiveSearch provides scaffolding to build data-driven apps. This library bund
 
 > Above all, we've kept the components API exactly the same as that of reactivesearch for web, enabling you to write once and use everywhere.
 
-## Available Components
+<br />
 
-Currently, we support the following components:
+## Features
 
-- TextField [Doc](https://opensource.appbase.io/reactive-manual/native/components/textfield.html), [Demo](https://expo.io/@siddharthlatest/textfield)
-- DataSearch [Doc](https://opensource.appbase.io/reactive-manual/native/components/datasearch.html), [Demo](https://expo.io/@siddharthlatest/datasearch)
-- SingleDropdownList [Doc](https://opensource.appbase.io/reactive-manual/native/components/singledropdownlist.html), [Demo](https://expo.io/@siddharthlatest/singledropdownlist)
-- SingleDropdownRange [Doc](https://opensource.appbase.io/reactive-manual/native/components/singledropdownrange.html), [Demo](https://expo.io/@siddharthlatest/singledropdownrange)
-- MultiDropdownList [Doc](https://opensource.appbase.io/reactive-manual/native/components/multidropdownlist.html), [Demo](https://expo.io/@siddharthlatest/multidropdownlist)
-- MultiDropdownRange [Doc](https://opensource.appbase.io/reactive-manual/native/components/multidropdownrange.html), [Demo](https://expo.io/@siddharthlatest/multidropdownrange)
-- DatePicker [Doc](https://opensource.appbase.io/reactive-manual/native/components/datepicker.html), [Demo](https://expo.io/@siddharthlatest/datepicker)
-- DateRange [Doc](https://opensource.appbase.io/reactive-manual/native/components/daterange.html), [Demo](https://expo.io/@siddharthlatest/daterange)
-- ReactiveList [Doc](https://opensource.appbase.io/reactive-manual/native/components/reactivelist.html) 
-- ReactiveComponent [Doc](https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html), [Demo](https://snack.expo.io/Sy0tN0K8f)
+- Works on both iOS and Android
+- Extendible architecture - enabling you to build your own custom components
+- Full theming support with NativeBase.io
+- Consistent API with [Reactivesearch for web](https://github.com/appbaseio/reactivesearch)
+- Easy Customisation support in-built
 
+<br />
 
-Docs are accessible at [reactive-manual/native](https://opensource.appbase.io/reactive-manual/native). 
+## Try it out
+
+Run the [example app with Snack Editor](https://snack.expo.io/@metagrover/booksearch) to see it in action.
+
+<br />
+
+## Getting Started
+
+Follow along with our [getting started guide here](https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html)
+
+<br />
 
 ## Example Apps
 
@@ -58,16 +64,17 @@ We have published the following apps to the App Store / Playstore.
 - [Gitxplore on Play Store](https://play.google.com/store/apps/details?id=com.appbaseio.gitxplore): A Github repository explorer app to  search over the 25k+ most popular github repos.  
 - [ReactiveTodos on App Store](https://itunes.apple.com/us/app/reactivetodos/id1347926945?mt=8): A shared collaborative to-do list app to showcase the capability of Reactivesearch.
 
+<br />
+
 ## Contributing
 
 Please check the [contribution guide](https://github.com/appbaseio/reactivesearch/tree/dev/.github/CONTRIBUTING.md).
 
-## Debugging
+<br />
+
+## Debugging and Troubleshooting
 
 The simplest way to debug the app is using [React Native Debugger](https://github.com/jhen0409/react-native-debugger).
-
-## Troubleshooting
-
 If you are having trouble running your react native app and are seeing any dependency warnings, reset cache via 
 
 ```
