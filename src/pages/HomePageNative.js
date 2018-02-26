@@ -327,7 +327,7 @@ export default class HomePageNative extends Component {
 							</div>
 						</Flex>
 
-						<Flex className={card} onClick={() => this.goToLink('./#examples')}>
+						<Flex className={card} onClick={() => this.goToLink('/native#examples')}>
 							<div>
 								<img src="images/blocks.png" alt="Data-driven UIs" />
 							</div>
@@ -385,9 +385,9 @@ export default class HomePageNative extends Component {
 					backgroundColor="#fff"
 					boxShadow="0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07)"
 				>
-					<H2 margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
+					<H2 id="examples" margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
 					<Flex className={tabJustifyCenter}>
-						<Button shadow primary className={button} href="https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html">Build a live app in 5 mins</Button>
+						<Button shadow primary className={button} href="https://snack.expo.io/@metagrover/booksearch">Check demo app</Button>
 						<Button className={button} style={{ marginLeft: '1rem' }} href="https://opensource.appbase.io/reactive-manual/native/">Read the docs</Button>
 					</Flex>
 				</Flex>
@@ -413,7 +413,7 @@ export default class HomePageNative extends Component {
 							className={tabJustifyCenter}
 						>
 							<Flex flexDirection="column" justifyContent="center" alignItems="center">
-								<a target="_blank" rel="noopener noreferrer" href="https://expo.io/@dhruvdutt/book-search" className="demo">
+								<a target="_blank" rel="noopener noreferrer" href="https://snack.expo.io/@metagrover/booksearch" className="demo">
 									<img width="240" src="images/native/booksearch.png" alt="Demo app" />
 								</a>
 								<Button
@@ -421,14 +421,14 @@ export default class HomePageNative extends Component {
 									style={{ width: 140, marginTop: 0, marginBottom: 50 }}
 									shadow
 									className={button}
-									href="https://expo.io/@dhruvdutt/book-search"
+									href="https://snack.expo.io/@metagrover/booksearch"
 								>
 									Check Demo
 								</Button>
 							</Flex>
 
 							<Flex flexDirection="column" justifyContent="center" alignItems="center">
-								<a target="_blank" rel="noopener noreferrer" href="https://expo.io/@dhruvdutt/gitxplore-native-app" className="demo">
+								<a target="_blank" rel="noopener noreferrer" href="https://snack.expo.io/@dhruvdutt/gitxplore-native-app" className="demo">
 									<img width="240" src="images/native/gitxplore.png" alt="Demo app" />
 								</a>
 								<Button
@@ -581,43 +581,36 @@ export default class HomePageNative extends Component {
 							width: '100%',
 							maxWidth: '950px',
 						}}
-						className={tabCol}
+						flexDirection="column"
+						alignItems="center"
 					>
-						<Flex className={col}>
-							<div style={{ textAlign: 'center', margin: '0 auto' }}>
-								<img style={{ maxWidth: '400px' }} width="100%" src="images/banner.png" alt="Signup on appbase.io" />
-							</div>
-						</Flex>
-
-						<Flex
-							className={col}
-							flexDirection="column"
+						<H2
+							fontWeight="700"
+							fontSize="1.8rem"
+							lineHeight="2.4rem"
+							margin="0 0 16px 0"
+							style={{
+								maxWidth: 500,
+								textAlign: 'center',
+							}}
 						>
-							<H2
-								fontWeight="700"
-								fontSize="1.8rem"
-								lineHeight="2.4rem"
-								margin="0 0 12px 0"
-								className={tabCenterHeading}
+							Hire us to build customized React and React Native apps
+						</H2>
+						<Text fontSize="1.2rem" lineHeight="1.5rem">
+							Get your apps to market 3x faster.
+						</Text>
+						<div>
+							<Button
+								primary
+								shadow
+								className={button}
+								href="mailto:info@appbase.io?subject=Custom+React/Native+App&body=Hi!+I+am+looking+to+build+a+custom+react+app+for+<an awesome idea>"
+								target="_blank"
+								rel="noopener noreferrer"
 							>
-								Build your Elasticsearch backend with appbase.io
-							</H2>
-							<Text fontSize="1.2rem" lineHeight="1.5rem">
-								Get a free account for up to 10,000 records.
-							</Text>
-							<div>
-								<Button
-									primary
-									shadow
-									className={button}
-									href="https://appbase.io"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									Signup for free
-								</Button>
-							</div>
-						</Flex>
+								Get in touch
+							</Button>
+						</div>
 					</Flex>
 				</Flex>
 
@@ -638,11 +631,10 @@ export default class HomePageNative extends Component {
 					<Flex className="column-wrapper">
 						<Flex className="column" flexDirection="column">
 							<Title className="heading">Documentation</Title>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html">Quick Start</a></Text>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/base-components/textfield.html">Base Components</a></Text>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/list-components/singlelist.html">List Components</a></Text>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/search-components/categorysearch.html">Search Components</a></Text>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/result-components/resultlist.html">Result Components</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html">Quick Start</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/native/components/textfield.html">Components</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html">Create a custom component</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/">Reactivesearch for web</a></Text>
 						</Flex>
 
 						<Flex className="column" flexDirection="column">
