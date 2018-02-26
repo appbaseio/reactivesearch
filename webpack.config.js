@@ -8,7 +8,8 @@ const config = {
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'build.js',
+		filename: '[name].js',
+		chunkFilename: '[name].bundle.js',
 		publicPath: 'dist/',
 	},
 	module: {
@@ -35,6 +36,9 @@ if (process.env.NODE_ENV === 'production') {
 			sourcemap: false,
 			beautify: false,
 			dead_code: true,
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'common',
 		}),
 	];
 }
