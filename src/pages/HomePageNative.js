@@ -138,7 +138,7 @@ export default class HomePageNative extends Component {
 								<Button light primary shadow big className={button} href="https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html">
 									Get Started with React Native
 								</Button>
-								<Button shadow big className={button} style={{ marginLeft: '10px' }} href="../">
+								<Button shadow big className={button} style={{ marginLeft: '10px' }} href="/reactivesearch">
 									<span style={{ marginLeft: 5, position: 'relative', top: 1 }}>React UI components</span>
 								</Button>
 							</Flex>
