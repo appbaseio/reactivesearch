@@ -11,6 +11,7 @@ import {
 	checkPropChange,
 	getClassName,
 	handleA11yAction,
+	isEqual,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -37,7 +38,10 @@ class RatingsFilter extends Component {
 		if (this.props.selectedValue) {
 			this.setValue(this.props.selectedValue);
 		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+			this.setValue([
+				this.props.defaultSelected.start,
+				this.props.defaultSelected.end,
+			]);
 		}
 	}
 
@@ -50,10 +54,18 @@ class RatingsFilter extends Component {
 			this.updateQuery(this.state.currentValue, nextProps);
 		});
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected, nextProps);
-		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || '', nextProps);
+		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
+			this.setValue(
+				nextProps.defaultSelected
+					? [
+						nextProps.defaultSelected.start,
+						nextProps.defaultSelected.end,
+					]
+					: null,
+				nextProps,
+			);
+		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
+			this.setValue(nextProps.selectedValue || null, nextProps);
 		}
 	}
 
@@ -72,8 +84,8 @@ class RatingsFilter extends Component {
 			return {
 				range: {
 					[props.dataField]: {
-						gte: value.start,
-						lte: value.end,
+						gte: value[0],
+						lte: value[1],
 						boost: 2.0,
 					},
 				},
@@ -134,12 +146,12 @@ class RatingsFilter extends Component {
 								tabIndex="0"
 								className={
 									this.state.currentValue
-									&& this.state.currentValue.start === item.start
+									&& this.state.currentValue[0] === item.start
 										? 'active'
 										: ''
 								}
-								onClick={() => this.setValue(item)}
-								onKeyPress={e => handleA11yAction(e, () => this.setValue(item))}
+								onClick={() => this.setValue([item.start, item.end])}
+								onKeyPress={e => handleA11yAction(e, () => this.setValue([item.start, item.end]))}
 								key={item.label}
 							>
 								<StarRating stars={item.start} />
@@ -170,7 +182,7 @@ RatingsFilter.propTypes = {
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
-	defaultSelected: types.string,
+	defaultSelected: types.range,
 	filterLabel: types.string,
 	innerClass: types.style,
 	onQueryChange: types.func,
