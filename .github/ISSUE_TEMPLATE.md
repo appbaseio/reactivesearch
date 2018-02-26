@@ -1,6 +1,9 @@
 **Issue Type:**
 <!-- Please specify if this is a 'bug' or an 'enhancement' issue. -->
 
+**Platform:**
+<!-- Are you using ReactiveSearch for Web or Native? -->
+
 **Description:**
 <!-- Describe the bug or feature request. Attach Screenshots if it helps -->
 
