@@ -22,6 +22,8 @@
 [![npm](https://img.shields.io/npm/dt/@appbaseio/reactivesearch.svg)](https://www.npmjs.com/package/@appbaseio/reactivesearch)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/appbaseio/reactivesearch/#8-developing-locally)
 
+<br />
+
 #### :rocket: Jumpstart your app development with
 ```
 npm install @appbaseio/reactivesearch
@@ -30,6 +32,8 @@ npm install @appbaseio/reactivesearch
 ![Banner Image showing all the UI components we offer](https://i.imgur.com/bJ1QKZS.png)
 
 [Get our designer templates for sketch](https://opensource.appbase.io/reactivesearch/resources/ReactiveSearch_Playground.sketch).
+
+<br />
 
 ## TOC
 
@@ -44,7 +48,7 @@ npm install @appbaseio/reactivesearch
 9. **[Contributing](#9-contributing)**
 10. **[Other Projects You Might Like](#10-other-projects-you-might-like)**
 
-<br>
+<br />
 
 ## 1. ReactiveSearch: Intro
 
@@ -65,6 +69,8 @@ Sensor components can be configured to create a combined query context and rende
 
 **ReactiveSearch** primarily comes with two actuators: `ResultCard` and `ResultList`. ResultCard displays the results in a card interface whereas ResultList displays them in a list. Both provide built-in support for pagination and infinite scroll views. Besides these, the library also provides low level actuators (ReactiveComponent and ReactiveList) to render in a more customized fashion.
 
+<br />
+
 ## 2. Features
 
 ### Design
@@ -75,7 +81,6 @@ Sensor components can be configured to create a combined query context and rende
 * Comes with scoped and styled components. Doesn't require any external CSS library import, comes with className and innerClass support.
 * Is themable via [`ThemeProvider`](https://opensource.appbase.io/reactive-manual/theming/themes.html).
 
-
 ### Ease of Use
 
 * One step installation with [npm install @appbaseio/reactivesearch](https://opensource.appbase.io/reactive-manual/v1/getting-started/reactivesearch.html),
@@ -85,14 +90,19 @@ Sensor components can be configured to create a combined query context and rende
 
 [⬆ Back to Top](#reactive-search)
 
+<br />
+
 ## 3. Component Playground
 
 Try the live component playground at [playground](https://opensource.appbase.io/playground/?filterBy=ReactiveSearch&selectedKind=Range%20components%2FRatingsFilter). Look out for the knobs section in the playground part of the stories to tweak each prop and see the effects.
 
+<br />
 
 ## 4. Live Demos
 
 A set of live demos inspired by real world apps, built with ReactiveSearch.
+
+### Web
 
 - [demos/airbeds](https://opensource.appbase.io/reactivesearch/demos/airbeds/) - An airbnb-like booking search experience.
 - [demos/technews](https://opensource.appbase.io/reactivesearch/demos/technews/) - A full-text search app on the Hacker News dataset.
@@ -101,10 +111,17 @@ A set of live demos inspired by real world apps, built with ReactiveSearch.
 - [demos/booksearch](https://opensource.appbase.io/reactivesearch/demos/goodbooks/) - An book search app based on a goodbooks dataset.
 - [demos/ecommerce](https://opensource.appbase.io/reactivesearch/demos/ecommerce/) - An e-commerce car store app.
 
-
 You can check all of them on the [examples section of website](https://opensource.appbase.io/reactivesearch/#examples).
 
+### Mobile
+
+- [Booksearch on Play Store](https://play.google.com/store/apps/details?id=com.booksnative): A booksearch app showing a searchable collection of over 10k books built with ReactiveSearch.  
+- [Gitxplore on Play Store](https://play.google.com/store/apps/details?id=com.appbaseio.gitxplore): A Github repository explorer app to  search over the 25k+ most popular github repos.  
+- [ReactiveTodos on App Store](https://itunes.apple.com/us/app/reactivetodos/id1347926945?mt=8): A shared collaborative to-do list app to showcase the capability of Reactivesearch.
+
 [⬆ Back to Top](#reactive-search)
+
+<br />
 
 ## 5. Comparison with Other Projects
 
@@ -117,26 +134,41 @@ Here, we share how `ReactiveSearch` compares with other projects that have simil
 |  **Onboarding Experience** | Starter apps, Live interactive tutorial, getting started guide, component playground, every component has a live working demo with codesandbox. | Getting started tutorial, no live component demos, sparse reference spec for many components. | Starter apps, getting started guide, component playground. |
 |  **Styling Support** | Styled and scoped components. No external CSS import required. Rich theming supported as React props. | CSS based styles with BEM, not scoped to components. Theming supported with SCSS. | CSS based styles, requires external style import. Theming supported by manipulating CSS. |
 |  **Types of Components** | Lists, Ranges, Search, Dates, Maps*, Result Displays. Can use your own UI components. (Maps need an upgrade) | Lists, Ranges, Search*, Result*. Can't use your own UI components. (Only one component for Search and Result, resulting in more code to be written for customizability) | Lists, Range, Search, Result. Can use your own UI components. |
-|  **Supported Distribution Platforms** | React for Web, React Native for mobile in alpha and actively developed. | React for Web. | React, Vue, Angular, vanilla JS for Web, React Native for mobile but latter has no UI components. |
+|  **Supported Distribution Platforms** | React for Web, React Native for mobile with a range of UI components actively maintained. | React for Web. | React, Vue, Angular, vanilla JS for Web, React Native for mobile but latter has no UI components. |
 
 We welcome contributions to this section. If you are building a project or you know of another project that is in the similar space, let us know and we will update the comparisons.
 
 [⬆ Back to Top](#reactive-search)
 
+<br />
+
 ## 6. Installation
 
 Installing ReactiveSearch is just one command.
+
+* If you're using reactivesearch on web
 
 ```javascript
 npm install @appbaseio/reactivesearch
 ```
 
-You can also read about it [here](https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html).
+You can read about the usage with react [here](https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html).
 
+* If you're using reactivesearch with React Native
+
+```javascript
+npm install @appbaseio/reactivesearch-native
+```
+
+You can read about the usage with React Native [here](https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html).
+
+<br />
 
 ## 7. Getting Started
 
 Follow the getting started guide to build a Hello Search! app from the official docs [here](https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html).
+
+<br />
 
 ## 8. Docs Manual
 
@@ -149,11 +181,17 @@ The components are divided into four sections:
 * Search UI components are at [reactive-manual/search-components](https://opensource.appbase.io/reactive-manual/search-components/datasearch.html).
 * Result components are at [reactive-manual/result-components](https://opensource.appbase.io/reactive-manual/result-components/resultlist.html).
 
+Docs for React-Native are accessible at [reactive-manual/native](https://opensource.appbase.io/reactive-manual/native).
+
 [⬆ Back to Top](#reactive-search)
+
+<br />
 
 ## 9. Contributing
 
 Please check the [contribution guide](.github/CONTRIBUTING.md).
+
+<br />
 
 ## 10. Other Projects You Might Like
 
