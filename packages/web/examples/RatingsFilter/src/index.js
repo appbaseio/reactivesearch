@@ -24,7 +24,6 @@ class Main extends Component {
 								{ start: 2, end: 5, label: '2 stars and up' },
 								{ start: 1, end: 5, label: '> 1 stars' },
 							]}
-							defaultSelected="2 stars and up"
 						/>
 					</div>
 
