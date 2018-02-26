@@ -18,7 +18,6 @@ import {
 	footer,
 	tabPadding,
 	tabCol,
-	tabCenterHeading,
 	tabShow,
 	tabHide,
 	tabJustifyCenter,
