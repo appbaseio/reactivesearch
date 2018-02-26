@@ -344,7 +344,10 @@ class ReactiveList extends Component {
 					}
 				</Flex>
 				{
-					this.props.pagination && this.props.paginationAt === 'top'
+					this.props.pagination && (
+						this.props.paginationAt === 'top'
+						|| this.props.paginationAt === 'both'
+					)
 						? (<Pagination
 							pages={this.props.pages}
 							totalPages={this.state.totalPages}
@@ -371,7 +374,10 @@ class ReactiveList extends Component {
 						: null
 				}
 				{
-					this.props.pagination && this.props.paginationAt === 'bottom'
+					this.props.pagination && (
+						this.props.paginationAt === 'bottom'
+						|| this.props.paginationAt === 'both'
+					)
 						? (<Pagination
 							pages={this.props.pages}
 							totalPages={this.state.totalPages}
