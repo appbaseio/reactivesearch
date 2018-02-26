@@ -37,7 +37,7 @@ class MultiDataList extends Component {
 
 		this.setReact(this.props);
 
-		if (this.props.selectedValue) {
+		if (this.props.selectedValue.length) {
 			this.setValue(this.props.selectedValue, true);
 		} else if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected, true);
@@ -201,9 +201,18 @@ class MultiDataList extends Component {
 
 		const { onQueryChange = null } = props;
 
+		// find the corresponding value of the label for running the query
+		const queryValue = value.reduce((acc, item) => {
+			if (item === props.selectAllLabel) {
+				return acc.concat(item);
+			}
+			const matchingItem = props.data.find(dataItem => dataItem.label === item);
+			return matchingItem ? acc.concat(matchingItem.value) : acc;
+		}, []);
+
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query: query(queryValue, props),
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
