@@ -386,7 +386,7 @@ export default class HomePageNative extends Component {
 				>
 					<H2 id="examples" margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
 					<Flex className={tabJustifyCenter}>
-						<Button shadow primary className={button} href="https://snack.expo.io/@metagrover/booksearch">Check demo app</Button>
+						<Button shadow primary className={button} href="https://snack.expo.io/@metagrover/booksearch">Interactive Demo</Button>
 						<Button className={button} style={{ marginLeft: '1rem' }} href="https://opensource.appbase.io/reactive-manual/native/">Read the docs</Button>
 					</Flex>
 				</Flex>
@@ -596,7 +596,7 @@ export default class HomePageNative extends Component {
 							Hire us to build customized React and React Native apps
 						</H2>
 						<Text fontSize="1.2rem" lineHeight="1.5rem">
-							Get your apps to market 3x faster.
+							Ship quality apps cost effectively.
 						</Text>
 						<div>
 							<Button
