@@ -13,6 +13,7 @@ import {
 	checkPropChange,
 	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import Rheostat from 'rheostat';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -23,10 +24,10 @@ import Input, {
 } from '@appbaseio/reactivesearch/lib/styles/Input';
 import InputIcon from '@appbaseio/reactivesearch/lib/styles/InputIcon';
 import SearchSvg from '@appbaseio/reactivesearch/lib/components/shared/SearchSvg';
-import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
+import Slider from '@appbaseio/reactivesearch/lib/styles/Slider';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
 
-class GeoDistanceDropdown extends Component {
+class GeoDistanceSlider extends Component {
 	constructor(props) {
 		super(props);
 
@@ -56,20 +57,14 @@ class GeoDistanceDropdown extends Component {
 				currentLocation: this.props.selectedValue.location,
 			});
 			this.getCoordinates(this.props.selectedValue.location, () => {
-				const selected = this.props.data.find(item => (
-					item.label === this.props.selectedValue.label
-				));
-				this.setDistance(selected.distance);
+				this.setDistance(this.props.selectedValue.distance);
 			});
 		} else if (this.props.defaultSelected) {
 			this.setState({
 				currentLocation: this.props.defaultSelected.location,
 			});
 			this.getCoordinates(this.props.defaultSelected.location, () => {
-				const selected = this.props.data.find(item => (
-					item.label === this.props.defaultSelected.label
-				));
-				this.setDistance(selected.distance);
+				this.setDistance(this.props.defaultSelected.distance);
 			});
 		}
 	}
@@ -95,14 +90,14 @@ class GeoDistanceDropdown extends Component {
 			&& nextProps.defaultSelected.location
 			&& !isEqual(this.props.defaultSelected, nextProps.defaultSelected)
 		) {
-			this.setValues(nextProps.defaultSelected, nextProps);
+			this.setValues(nextProps.defaultSelected);
 		} else if (
 			nextProps.selectedValue
 			&& nextProps.selectedValue.label
 			&& nextProps.selectedValue.location
 			&& !isEqual(this.state.currentLocation, nextProps.selectedValue.location)
 		) {
-			this.setValues(nextProps.selectedValue, nextProps);
+			this.setValues(nextProps.selectedValue);
 		}
 	}
 
@@ -116,15 +111,12 @@ class GeoDistanceDropdown extends Component {
 		}
 	}
 
-	setValues = (selected, props) => {
+	setValues = (selected) => {
 		this.setState({
 			currentLocation: selected.location,
 		});
 		this.getCoordinates(selected.location, () => {
-			const selectedDistance = props.data.find(item => (
-				item.label === selected.label
-			));
-			this.setDistance(selectedDistance.distance);
+			this.setDistance(selected.distance);
 		});
 	}
 
@@ -179,8 +171,6 @@ class GeoDistanceDropdown extends Component {
 		}
 	}
 
-	getSelectedLabel = distance => this.props.data.find(item => item.distance === distance);
-
 	setLocation = (currentValue, props = this.props) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
@@ -205,7 +195,7 @@ class GeoDistanceDropdown extends Component {
 
 		checkValueChange(
 			props.componentId,
-			{ label: this.getSelectedLabel(this.state.currentDistance), location: currentValue.value },
+			{ label: this.state.currentDistance, location: currentValue.value },
 			props.beforeValueChange,
 			props.onValueChange,
 			performUpdate,
@@ -223,12 +213,11 @@ class GeoDistanceDropdown extends Component {
 	updateQuery = (distance, props = this.props) => {
 		const query = props.customQuery || this.defaultQuery;
 		const { onQueryChange = null } = props;
-		const selectedDistance = this.getSelectedLabel(distance);
 
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(this.coordinates, distance, props),
-			value: { label: selectedDistance.label, location: this.state.currentLocation },
+			value: { label: distance, location: this.state.currentLocation },
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
@@ -242,10 +231,6 @@ class GeoDistanceDropdown extends Component {
 		}
 		return null;
 	};
-
-	onDistanceChange = (value) => {
-		this.setDistance(value.distance);
-	}
 
 	onInputChange = (e) => {
 		const { value } = e.target;
@@ -377,26 +362,30 @@ class GeoDistanceDropdown extends Component {
 		/>);
 	};
 
+	handleSlider = ({ values }) => {
+		if (values[0] !== this.state.currentDistance) {
+			this.setDistance(values[0]);
+		}
+	};
+
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Slider primary style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{this.renderSearchBox()}
-				<Dropdown
-					innerClass={this.props.innerClass}
-					items={this.props.data}
-					onChange={this.onDistanceChange}
-					selectedItem={this.getSelectedLabel(this.state.currentDistance)}
-					placeholder="Select distance"
-					keyField="label"
-					returnsObject
+				<Rheostat
+					min={this.props.range.start}
+					max={this.props.range.end}
+					values={[this.state.currentDistance]}
+					onChange={this.handleSlider}
+					className={getClassName(this.props.innerClass, 'slider')}
 				/>
-			</div>
+			</Slider>
 		);
 	}
 }
 
-GeoDistanceDropdown.propTypes = {
+GeoDistanceSlider.propTypes = {
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
 	updateQuery: types.funcRequired,
@@ -432,11 +421,16 @@ GeoDistanceDropdown.propTypes = {
 	iconPosition: types.iconPosition,
 	mapKey: types.stringRequired,
 	autoLocation: types.boolRequired,
+	range: types.range,
 };
 
-GeoDistanceDropdown.defaultProps = {
+GeoDistanceSlider.defaultProps = {
 	className: null,
 	placeholder: 'Select a value',
+	range: {
+		start: 1,
+		end: 200,
+	},
 	showFilter: true,
 	style: {},
 	URLParams: false,
@@ -459,4 +453,4 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(GeoDistanceDropdown);
+export default connect(mapStateToProps, mapDispatchtoProps)(GeoDistanceSlider);
