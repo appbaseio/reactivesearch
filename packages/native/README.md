@@ -49,6 +49,12 @@ ReactiveSearch offers cross-platform UI components that work not only for iOS an
 - Full theming support, components are built with primitives from NativeBase.io.
 - Built with accessibility in mind, all components have an interactive playground (see an example for [DataSearch](https://opensource.appbase.io/reactive-manual/native/components/datasearch.html#demo)), live examples and [comprehensive docs](https://opensource.appbase.io/reactive-manual/native/).
 
+A sneak peek of the UI components.
+
+![Banner Image showing all the mobile UI components we offer](https://i.imgur.com/13TvjbE.png)
+
+[💎 Get the iOS and Android designer templates for sketch](https://opensource.appbase.io/reactivesearch/resources/ReactiveSearch_Playground.sketch).
+
 <br />
 
 ## Try it out
