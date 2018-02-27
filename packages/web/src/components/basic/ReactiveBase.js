@@ -56,7 +56,7 @@ class ReactiveBase extends Component {
 
 		const appbaseRef = new Appbase(config);
 		this.store = configureStore({
-			config,
+			config: { ...config, mapKey: props.mapKey },
 			appbaseRef,
 			selectedValues,
 			headers,
@@ -99,6 +99,7 @@ ReactiveBase.propTypes = {
 	theme: types.style,
 	type: types.string,
 	url: types.string,
+	mapKey: types.string,
 };
 
 export default ReactiveBase;

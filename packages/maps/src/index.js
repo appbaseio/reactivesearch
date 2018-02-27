@@ -1,3 +1,8 @@
 import ReactiveMap from './components/result/ReactiveMap';
 
-export { ReactiveMap }; // eslint-disable-line
+import GeoDistanceDropdown from './components/basic/GeoDistanceDropdown';
+
+export {
+	ReactiveMap,
+	GeoDistanceDropdown,
+};

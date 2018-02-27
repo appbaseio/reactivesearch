@@ -30,7 +30,7 @@ const LightMonochrome = require('./addons/styles/LightMonochrome');
 const MidnightCommander = require('./addons/styles/MidnightCommander');
 const UnsaturatedBrowns = require('./addons/styles/UnsaturatedBrowns');
 
-const MapComponent = (withGoogleMap((props) => {
+const MapComponent = withGoogleMap((props) => {
 	const { children, onMapMounted, ...allProps } = props;
 
 	return (
@@ -41,7 +41,7 @@ const MapComponent = (withGoogleMap((props) => {
 			{children}
 		</GoogleMap>
 	);
-}));
+});
 
 class ReactiveMap extends Component {
 	constructor(props) {
@@ -447,13 +447,13 @@ class ReactiveMap extends Component {
 		const Map = () => (
 			<div style={{ position: 'relative' }}>
 				<MapComponent
+					containerElement={<div style={{ height: '100vh' }} />}
+					mapElement={<div style={{ height: '100%' }} />}
 					onMapMounted={(ref) => {
 						this.mapRef = ref;
 					}}
 					defaultZoom={this.props.defaultZoom}
 					onIdle={this.setGeoQuery}
-					containerElement={<div style={{ height: '100vh' }} />}
-					mapElement={<div style={{ height: '100%' }} />}
 					center={this.getCenter(filteredResults)}
 					options={{
 						styles: this.state.currentMapStyle.value,
@@ -580,11 +580,12 @@ ReactiveMap.defaultProps = {
 		lat: -34.397,
 		lng: 150.644,
 	},
-	autoCenter: true,
+	autoCenter: false,
 	defaultZoom: 8,
 };
 
 const mapStateToProps = (state, props) => ({
+	mapKey: state.config.mapKey,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	streamHits: state.streamHits[props.componentId] || [],
 });
