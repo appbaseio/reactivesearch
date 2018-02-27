@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev:web": "concurrently --kill-others -n \"CORE\",\"WEB\" -c \"cyan\",\"yellow\" \"npm start --prefix packages/reactivecore\" \"npm run watch --prefix packages/web\"",
 		"lint": "eslint .",
-		"precommit": "eslint .",
+		"precommit": "lint-staged",
 		"deploy-site": "scripts/deploy-site.sh",
 		"native:publish-stories": "cd packages/native/examples/datasearch/ && exp publish && cd .. && cd datepicker/ && exp publish && cd .. && cd daterange/ && exp publish && cd .. && cd multidropdownlist/ && exp publish && cd .. && cd multidropdownrange/ && exp publish && cd .. && cd singledropdownlist/ && exp publish && cd .. && cd singledropdownrange/ && exp publish && cd .. && cd textfield/ && exp publish && cd ../../../../"
 	},
@@ -16,6 +16,11 @@
 		"site",
 		"site/demos/*"
 	],
+	"lint-staged": {
+		"*.js": [
+			"eslint"
+		]
+	},
 	"devDependencies": {
 		"concurrently": "^3.5.1",
 		"eslint": "^4.10.0",
@@ -23,6 +28,7 @@
 		"eslint-plugin-babel": "^4.1.2",
 		"eslint-plugin-jsx-a11y": "^6.0.3",
 		"eslint-plugin-react": "^7.5.1",
-		"husky": "^0.14.3"
+		"husky": "^0.14.3",
+		"lint-staged": "^7.0.0"
 	}
 }
