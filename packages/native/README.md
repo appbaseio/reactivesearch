@@ -5,15 +5,16 @@
   <br />
 </h2>
 
-<p align="center" style="font-size: 1.2rem">Elasticsearch UI components for React Native. <a href="https://opensource.appbase.io/reactivesearch/native">🌐 Website</a></p>
-<p align="center"><a href="https://medium.appbase.io/build-your-next-react-native-app-with-reactivesearch-ce21829f3bf5">Read the launch blog post here</a>.</p>
+<p align="center">Elasticsearch UI components for React Native. <a href="https://opensource.appbase.io/reactivesearch/native">🌐 Website</a></p>
+<p align="center"  style="font-size: 1.2rem"><a href="https://medium.appbase.io/build-your-next-react-native-app-with-reactivesearch-ce21829f3bf5">Read the launch blog post here</a>.</p>
 
 <hr />
 
 [![npm version](https://badge.fury.io/js/%40appbaseio%2Freactivesearch-native.svg)](https://badge.fury.io/js/%40appbaseio%2Freactivesearch-native)
 [![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/appbaseio/reactivesearch/blob/dev/LICENSE)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/appbaseio/reactivesearch)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/appbaseio/reactivesearch/blob/dev/.github/CONTRIBUTING.md)
+[![npm](https://img.shields.io/npm/dt/@appbaseio/reactivesearch-native.svg)](https://www.npmjs.com/package/@appbaseio/reactivesearch-native)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/appbaseio/reactivesearch/tree/dev/.github/CONTRIBUTING.md)
 
 <br />
 
@@ -61,7 +62,9 @@ A sneak peek of the UI components.
 
 Run this [example app with Snack Editor](https://snack.expo.io/@metagrover/booksearch) to see ReactiveSearch in action.
 
-Or get your own app up and running in 15 mins by following the [quickstart guide](https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html).
+- Or get your own app up and running in 15 mins by following the [quickstart guide](https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html).
+
+- [Tutorial Post](https://hackernoon.com/building-an-e-commerce-search-app-with-react-native-2c87760a2315): Building An E-commerce Search App with React Native. 🔰
 
 <br />
 
