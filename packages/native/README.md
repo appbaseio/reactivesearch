@@ -5,7 +5,7 @@
   <br />
 </h2>
 
-<p align="center" style="font-size: 1.2rem">A React Native UI components library for Elasticsearch. <a href="https://opensource.appbase.io/reactivesearch/native">🌐 &nbsp;Website</a></p>
+<p align="center" style="font-size: 1.2rem">Elasticsearch UI components for React Native. <a href="https://opensource.appbase.io/reactivesearch/native">🌐 Website</a></p>
 <p align="center"><a href="https://medium.appbase.io/build-your-next-react-native-app-with-reactivesearch-ce21829f3bf5">Read the launch blog post here</a>.</p>
 
 <hr />
@@ -22,21 +22,22 @@
 npm install @appbaseio/reactivesearch-native
 ```
 
-and this [quickstart guide](https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html).
+and the [quickstart guide](https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html).
 
 ![](https://ph-files.imgix.net/2d1eab6b-c836-4255-89df-0553841d7c33?auto=format&auto=compress&codec=mozjpeg&cs=strip)
 
 
 ## Introduction
 
-Building a data-driven mobile app with React Native takes anywhere between several weeks to months today.
+Building a meaningful data-driven mobile app with React Native today takes anywhere between weeks to months.
 
-ReactiveSearch offers cross-platform UI components that work not only for iOS and Android, but also for the [web](https://github.com/appbaseio/reactivesearch/tree/dev/packages/web). These UI components can further directly talk to an Elasticsearch backend with a `ReactiveBase` backend provider component.
+ReactiveSearch is built with the aim of bringing down the development lifecycle of a data-driven app to days.
+
+#### Learn once, write anywhere!
+
+ReactiveSearch offers cross-platform UI components that work not only for iOS and Android, but also for the [web](https://github.com/appbaseio/reactivesearch/tree/dev/packages/web). These UI components can further directly talk to an Elasticsearch backend with a [`ReactiveBase` backend provider component](https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html).
 
 > Much like how Bootstrap and Materialize provide scaffolding to build styles for your website, ReactiveSearch provides scaffolding to build data-driven apps.
-
-Using it, we have been able to consistently ship apps within days, and we hope that you will build your next React Native app using ReactiveSearch.
-
 
 <br />
 
