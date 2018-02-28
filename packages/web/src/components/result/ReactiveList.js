@@ -153,7 +153,11 @@ class ReactiveList extends Component {
 
 		// called when page is changed
 		if (this.props.pagination && this.state.isLoading) {
-			window.scrollTo(0, 0);
+			if (nextProps.onPageChange) {
+				nextProps.onPageChange();
+			} else {
+				window.scrollTo(0, 0);
+			}
 			this.setState({
 				isLoading: false,
 			});
@@ -179,7 +183,11 @@ class ReactiveList extends Component {
 			&& this.props.hits
 			&& nextProps.hits.length < this.props.hits.length
 		) {
-			window.scrollTo(0, 0);
+			if (nextProps.onPageChange) {
+				nextProps.onPageChange();
+			} else {
+				window.scrollTo(0, 0);
+			}
 			this.setState({
 				from: 0,
 				isLoading: false,
@@ -441,6 +449,7 @@ ReactiveList.propTypes = {
 	stream: types.bool,
 	style: types.style,
 	URLParams: types.bool,
+	onPageChange: types.func,
 };
 
 ReactiveList.defaultProps = {

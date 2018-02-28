@@ -155,7 +155,11 @@ class ResultList extends Component {
 
 		// called when page is changed
 		if (this.props.pagination && this.state.isLoading) {
-			window.scrollTo(0, 0);
+			if (nextProps.onPageChange) {
+				nextProps.onPageChange();
+			} else {
+				window.scrollTo(0, 0);
+			}
 			this.setState({
 				isLoading: false,
 			});
@@ -179,7 +183,11 @@ class ResultList extends Component {
 			&& this.props.hits
 			&& nextProps.hits.length < this.props.hits.length
 		) {
-			window.scrollTo(0, 0);
+			if (nextProps.onPageChange) {
+				nextProps.onPageChange();
+			} else {
+				window.scrollTo(0, 0);
+			}
 			this.setState({
 				from: 0,
 				isLoading: false,
@@ -485,6 +493,7 @@ ResultList.propTypes = {
 	style: types.style,
 	target: types.stringRequired,
 	URLParams: types.bool,
+	onPageChange: types.func,
 };
 
 ResultList.defaultProps = {
