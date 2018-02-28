@@ -103,6 +103,16 @@ class GeoDistanceDropdown extends Component {
 			&& !isEqual(this.state.currentLocation, nextProps.selectedValue.location)
 		) {
 			this.setValues(nextProps.selectedValue, nextProps);
+		} else if (
+			!isEqual(this.props.selectedValue, nextProps.selectedValue)
+			&& !nextProps.selectedValue
+		) {
+			this.setState({
+				currentLocation: null,
+				currentDistance: null,
+			}, () => {
+				this.updateQuery(null);
+			});
 		}
 	}
 
@@ -224,11 +234,18 @@ class GeoDistanceDropdown extends Component {
 		const query = props.customQuery || this.defaultQuery;
 		const { onQueryChange = null } = props;
 		const selectedDistance = this.getSelectedLabel(distance);
+		let value = null;
+		if (selectedDistance) {
+			value = {
+				label: selectedDistance.label,
+				location: this.state.currentLocation,
+			};
+		}
 
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(this.coordinates, distance, props),
-			value: { label: selectedDistance.label, location: this.state.currentLocation },
+			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,
