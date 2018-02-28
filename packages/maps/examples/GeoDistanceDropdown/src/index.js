@@ -25,6 +25,7 @@ const Main = () => (
 					placeholder="Search Location"
 					dataField="location"
 					unit="mi"
+					URLParams
 					data={[
 						{ distance: 100, label: 'Under 100 miles' },
 						{ distance: 200, label: 'Under 200 miles' },

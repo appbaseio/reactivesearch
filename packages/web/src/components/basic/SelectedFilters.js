@@ -17,10 +17,11 @@ class SelectedFilters extends Component {
 			return arrayToRender.join(', ');
 		} else if (value && typeof value === 'object') {
 			// TODO: support for NestedList
-			if (value.label || value.key) {
-				return value.label || value.key;
+			let label = value.label || value.key || null;
+			if (value.location) {
+				label = `${value.location} - ${label}`;
 			}
-			return null;
+			return label;
 		}
 		return value;
 	}
