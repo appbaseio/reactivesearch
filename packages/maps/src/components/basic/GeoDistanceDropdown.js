@@ -461,7 +461,6 @@ GeoDistanceDropdown.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	fullstore: state,
 	mapKey: state.config.mapKey,
 	selectedValue: (
 		state.selectedValues[props.componentId]
