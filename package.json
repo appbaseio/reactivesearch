@@ -2,7 +2,7 @@
 	"private": true,
 	"name": "reactivesearch-packages",
 	"scripts": {
-		"dev:web": "concurrently --kill-others -n \"CORE\",\"WEB\" -c \"cyan\",\"yellow\" \"npm start --prefix packages/reactivecore\" \"npm run watch --prefix packages/web\"",
+		"dev:web": "concurrently --kill-others -n \"CORE\",\"WEB\",\"MAPS\", -c \"cyan\",\"yellow\",\"green\", \"npm start --prefix packages/reactivecore\" \"npm run watch --prefix packages/web\" \"npm run watch --prefix packages/maps\"",
 		"lint": "eslint .",
 		"precommit": "lint-staged",
 		"deploy-site": "scripts/deploy-site.sh",
