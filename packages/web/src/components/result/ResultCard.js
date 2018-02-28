@@ -412,7 +412,7 @@ class ResultCard extends Component {
 				</div>
 				{
 					this.state.isLoading && !this.props.pagination
-						? (
+						? this.props.loader || (
 							<div style={{ textAlign: 'center', margin: '20px 0', color: '#666' }}>
 								Loading...
 							</div>
