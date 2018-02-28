@@ -464,9 +464,9 @@ app-root-path@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/app-root-path/-/app-root-path-2.0.1.tgz#cd62dcf8e4fd5a417efc664d2e5b10653c651b46"
 
-appbase-js@^2.2.10:
-  version "2.2.10"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-2.2.10.tgz#277af94ad0077ab17b92e591712764e52a10c289"
+appbase-js@^2.2.11:
+  version "2.2.11"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-2.2.11.tgz#84bddaa419f107cba8346c1399750ffde64d2c6d"
   dependencies:
     babel-polyfill "^6.26.0"
     cross-fetch "^1.1.1"
@@ -674,7 +674,7 @@ async@^1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
-async@^2.1.2, async@^2.1.4, async@^2.4.0, async@^2.4.1, async@~2.6.0:
+async@^2.1.2, async@^2.1.4, async@^2.4.0, async@~2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/async/-/async-2.6.0.tgz#61a29abb6fcc026fea77e56d1c6ec53a795951f4"
   dependencies:
@@ -2807,12 +2807,12 @@ compressible@~2.0.13, compressible@~2.0.5:
     mime-db ">= 1.33.0 < 2"
 
 compression-webpack-plugin@^1.0.1:
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/compression-webpack-plugin/-/compression-webpack-plugin-1.1.9.tgz#6a76e2a5926976ba2c5ec966e6685b6c98d2a838"
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/compression-webpack-plugin/-/compression-webpack-plugin-1.1.10.tgz#dbc2d2d65729a89f7b195668211d38ea0883df98"
   dependencies:
-    async "^2.4.1"
     cacache "^10.0.1"
     find-cache-dir "^1.0.0"
+    neo-async "^2.5.0"
     serialize-javascript "^1.4.0"
     webpack-sources "^1.0.1"
 
@@ -3589,8 +3589,8 @@ dotenv@^5.0.1:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
 
 downshift@^1.22.1:
-  version "1.28.1"
-  resolved "https://registry.yarnpkg.com/downshift/-/downshift-1.28.1.tgz#8e787eda4e31c8a5519dccaf0e16dd90787720a4"
+  version "1.28.2"
+  resolved "https://registry.yarnpkg.com/downshift/-/downshift-1.28.2.tgz#ff5b4e89ff439943a8e58890993015199604e1e6"
 
 duplexer2@0.0.2:
   version "0.0.2"
@@ -6929,6 +6929,10 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
+neo-async@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.5.0.tgz#76b1c823130cca26acfbaccc8fbaf0a2fa33b18f"
+
 nested-object-assign@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/nested-object-assign/-/nested-object-assign-1.0.2.tgz#9a84ef51b5c11298b5476d6c65b26458c9eae82b"
@@ -8201,8 +8205,8 @@ react-clone-referenced-element@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-clone-referenced-element/-/react-clone-referenced-element-1.0.1.tgz#2bba8c69404c5e4a944398600bcc4c941f860682"
 
 react-color@^2.11.4:
-  version "2.13.8"
-  resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.13.8.tgz#bcc58f79a722b9bfc37c402e68cd18f26970aee4"
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.14.0.tgz#5828a11c034aa0939befbd888a066ee37d8c3cc2"
   dependencies:
     lodash "^4.0.1"
     material-colors "^1.2.1"
