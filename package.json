@@ -13,6 +13,7 @@
 	"workspaces": [
 		"packages/*",
 		"packages/web/examples/*",
+		"packages/maps/examples/*",
 		"site",
 		"site/demos/*"
 	],
