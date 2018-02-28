@@ -33,7 +33,7 @@ class GeoDistanceSlider extends Component {
 
 		this.state = {
 			currentLocation: null,
-			currentDistance: 0,
+			currentDistance: props.range.start,
 			userLocation: null,
 			suggestions: [],
 			isOpen: false,
@@ -52,19 +52,25 @@ class GeoDistanceSlider extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
-		if (this.props.selectedValue) {
+		if (this.props.selectedValue && this.props.selectedValue.location) {
 			this.setState({
 				currentLocation: this.props.selectedValue.location,
+			}, () => {
+				this.getCoordinates(this.props.selectedValue.location, () => {
+					if (this.props.selectedValue.distance) {
+						this.setDistance(this.props.selectedValue.distance);
+					}
+				});
 			});
-			this.getCoordinates(this.props.selectedValue.location, () => {
-				this.setDistance(this.props.selectedValue.distance);
-			});
-		} else if (this.props.defaultSelected) {
+		} else if (this.props.defaultSelected && this.props.selectedValue.location) {
 			this.setState({
 				currentLocation: this.props.defaultSelected.location,
-			});
-			this.getCoordinates(this.props.defaultSelected.location, () => {
-				this.setDistance(this.props.defaultSelected.distance);
+			}, () => {
+				this.getCoordinates(this.props.defaultSelected.location, () => {
+					if (this.props.defaultSelected.distance) {
+						this.setDistance(this.props.defaultSelected.distance);
+					}
+				});
 			});
 		}
 	}
@@ -86,18 +92,28 @@ class GeoDistanceSlider extends Component {
 
 		if (
 			nextProps.defaultSelected
-			&& nextProps.defaultSelected.label
+			&& nextProps.defaultSelected.distance
 			&& nextProps.defaultSelected.location
 			&& !isEqual(this.props.defaultSelected, nextProps.defaultSelected)
 		) {
 			this.setValues(nextProps.defaultSelected);
 		} else if (
 			nextProps.selectedValue
-			&& nextProps.selectedValue.label
+			&& nextProps.selectedValue.distance
 			&& nextProps.selectedValue.location
 			&& !isEqual(this.state.currentLocation, nextProps.selectedValue.location)
 		) {
 			this.setValues(nextProps.selectedValue);
+		} else if (
+			!isEqual(this.props.selectedValue, nextProps.selectedValue)
+			&& !nextProps.selectedValue
+		) {
+			this.setState({
+				currentLocation: null,
+				currentDistance: null,
+			}, () => {
+				this.updateQuery(null);
+			});
 		}
 	}
 
@@ -195,7 +211,7 @@ class GeoDistanceSlider extends Component {
 
 		checkValueChange(
 			props.componentId,
-			{ label: this.state.currentDistance, location: currentValue.value },
+			{ distance: this.state.currentDistance, location: currentValue.value },
 			props.beforeValueChange,
 			props.onValueChange,
 			performUpdate,
@@ -206,7 +222,9 @@ class GeoDistanceSlider extends Component {
 		this.setState({
 			currentDistance,
 		}, () => {
-			this.updateQuery(currentDistance, this.props);
+			if (this.state.currentLocation) {
+				this.updateQuery(currentDistance, this.props);
+			}
 		});
 	};
 
@@ -214,10 +232,19 @@ class GeoDistanceSlider extends Component {
 		const query = props.customQuery || this.defaultQuery;
 		const { onQueryChange = null } = props;
 
+		let value = null;
+		if (distance && this.state.currentLocation) {
+			value = {
+				distance,
+				location: this.state.currentLocation,
+				// unit: props.unit,
+			};
+		}
+
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(this.coordinates, distance, props),
-			value: { label: distance, location: this.state.currentLocation },
+			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			onQueryChange,

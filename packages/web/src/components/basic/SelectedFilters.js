@@ -17,7 +17,7 @@ class SelectedFilters extends Component {
 			return arrayToRender.join(', ');
 		} else if (value && typeof value === 'object') {
 			// TODO: support for NestedList
-			let label = value.label || value.key || null;
+			let label = value.label || value.key || value.distance || null;
 			if (value.location) {
 				label = `${value.location} - ${label}`;
 			}
