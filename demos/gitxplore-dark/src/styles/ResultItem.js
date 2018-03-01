@@ -56,7 +56,7 @@ const ResultItem = styled.div`
 	padding: 20px 0;
 	margin: 15px;
 	padding: 25px;
-	border: 1px solid #eee;
+	border: 1px solid #424242;
 	flex-basis: 400px;
 	max-width: 400px;
 	min-height: 300px;
@@ -67,6 +67,7 @@ const ResultItem = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
+	background: #424242;
 
 	${queries.xxLarge`
 		flex-basis: 350px;
