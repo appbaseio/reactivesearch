@@ -85,7 +85,7 @@ const large = () => css`
 
 const disabled = css`
 	background-color: #fafafa;
-	color: #ccc
+	color: #ccc;
 	cursor: not-allowed;
 
 	&:hover, &:focus {
