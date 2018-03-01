@@ -227,6 +227,8 @@ const DateContainer = styled.div`
 		background: white;
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 	}
+
+	${({ theme }) => theme.component};
 `;
 
 export default withTheme(DateContainer);

@@ -4,6 +4,7 @@ import { setValue, clearValues } from '@appbaseio/reactivecore/lib/actions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
 import Button, { filters } from '../../styles/Button';
+import Container from '../../styles/Container';
 import { connect } from '../../utils';
 
 class SelectedFilters extends Component {
@@ -31,7 +32,7 @@ class SelectedFilters extends Component {
 		let hasValues = false;
 
 		return (
-			<div style={this.props.style} className={`${filters} ${this.props.className || ''}`}>
+			<Container style={this.props.style} className={`${filters} ${this.props.className || ''}`}>
 				{
 					Object.keys(selectedValues)
 						.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
@@ -69,7 +70,7 @@ class SelectedFilters extends Component {
 						)
 						: null
 				}
-			</div>
+			</Container>
 		);
 	}
 }

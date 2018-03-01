@@ -5,6 +5,7 @@ import { isEqual, checkValueChange } from '@appbaseio/reactivecore/lib/utils/hel
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import Container from '../../styles/Container';
 import { connect } from '../../utils';
 
 class DataController extends Component {
@@ -70,9 +71,9 @@ class DataController extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.children}
-			</div>
+			</Container>
 		);
 	}
 }

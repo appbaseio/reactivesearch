@@ -16,6 +16,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Button, { numberBoxContainer } from '../../styles/Button';
 import Flex from '../../styles/Flex';
+import Container from '../../styles/Container';
 import { connect } from '../../utils';
 
 class NumberBox extends Component {
@@ -153,7 +154,7 @@ class NumberBox extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
 					<Title className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
@@ -181,7 +182,7 @@ class NumberBox extends Component {
 						</Button>
 					</div>
 				</Flex>
-			</div>
+			</Container>
 		);
 	}
 }

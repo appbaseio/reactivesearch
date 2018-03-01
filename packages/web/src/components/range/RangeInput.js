@@ -9,6 +9,7 @@ import RangeSlider from './RangeSlider';
 import Input from '../../styles/Input';
 import Flex from '../../styles/Flex';
 import Content from '../../styles/Content';
+import Container from '../../styles/Container';
 
 class RangeInput extends Component {
 	constructor(props) {
@@ -74,7 +75,7 @@ class RangeInput extends Component {
 	render() {
 		const { className, style, ...rest } = this.props;
 		return (
-			<div style={style} className={className}>
+			<Container style={style} className={className}>
 				<RangeSlider
 					{...rest}
 					defaultSelected={{
@@ -117,7 +118,7 @@ class RangeInput extends Component {
 						}
 					</Flex>
 				</Flex>
-			</div>
+			</Container>
 		);
 	}
 }

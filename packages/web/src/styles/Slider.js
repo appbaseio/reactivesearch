@@ -51,6 +51,8 @@ const Slider = styled('div')`
 		margin-left: -12px;
 		top: -10px;
 	}
+
+	${({ theme }) => theme.component};
 `;
 
 export default Slider;

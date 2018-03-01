@@ -16,6 +16,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
+import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { connect } from '../../utils';
 
@@ -177,7 +178,7 @@ class MultiRange extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
 					{
@@ -202,7 +203,7 @@ class MultiRange extends Component {
 						))
 					}
 				</UL>
-			</div>
+			</Container>
 		);
 	}
 }

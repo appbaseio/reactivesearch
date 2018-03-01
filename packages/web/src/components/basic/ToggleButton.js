@@ -15,6 +15,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
+import Container from '../../styles/Container';
 import Button, { toggleButtons } from '../../styles/Button';
 import { connect } from '../../utils';
 
@@ -163,7 +164,7 @@ class ToggleButton extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={`${toggleButtons} ${this.props.className || ''}`}>
+			<Container style={this.props.style} className={`${toggleButtons} ${this.props.className || ''}`}>
 				{
 					this.props.title
 					&& <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>
@@ -182,7 +183,7 @@ class ToggleButton extends Component {
 						</Button>
 					);
 				})}
-			</div>
+			</Container>
 		);
 	}
 }

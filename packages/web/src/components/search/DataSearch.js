@@ -23,6 +23,7 @@ import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
+import Container from '../../styles/Container';
 import { connect } from '../../utils';
 
 
@@ -377,7 +378,7 @@ class DataSearch extends Component {
 		}
 
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{
 					this.props.autosuggest
@@ -468,7 +469,7 @@ class DataSearch extends Component {
 							</div>
 						)
 				}
-			</div>
+			</Container>
 		);
 	}
 }

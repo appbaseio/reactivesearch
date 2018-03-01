@@ -16,6 +16,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
+import Container from '../../styles/Container';
 import Dropdown from '../shared/Dropdown';
 import { connect } from '../../utils';
 
@@ -132,7 +133,7 @@ class SingleDropdownRange extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<Dropdown
 					innerClass={this.props.innerClass}
@@ -143,7 +144,7 @@ class SingleDropdownRange extends Component {
 					keyField="label"
 					returnsObject
 				/>
-			</div>
+			</Container>
 		);
 	}
 }

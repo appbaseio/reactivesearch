@@ -16,6 +16,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
+import Container from '../../styles/Container';
 import StarRating from './addons/StarRating';
 import { ratingsList } from '../../styles/ratingsList';
 import { connect } from '../../utils';
@@ -136,7 +137,7 @@ class RatingsFilter extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<ul className={ratingsList}>
 					{
@@ -164,7 +165,7 @@ class RatingsFilter extends Component {
 						))
 					}
 				</ul>
-			</div>
+			</Container>
 		);
 	}
 }

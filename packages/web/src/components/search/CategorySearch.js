@@ -24,6 +24,7 @@ import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
+import Container from '../../styles/Container';
 import { connect } from '../../utils';
 
 const Text = withTheme(props => (
@@ -455,7 +456,7 @@ class CategorySearch extends Component {
 		}
 
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
 					<Title
 						className={getClassName(this.props.innerClass, 'title') || null}
@@ -542,7 +543,7 @@ class CategorySearch extends Component {
 						</InputIcon>
 					</div>
 				)}
-			</div>
+			</Container>
 		);
 	}
 }
