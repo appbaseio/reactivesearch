@@ -9,10 +9,11 @@
   ],
   "scripts": {
     "watch": "yarn run build -w",
-    "build": "babel src --out-dir lib",
+    "build": "babel --ignore __tests__ src --out-dir lib",
     "build:umd": "webpack --progress -p --config webpack.config.umd.js",
     "stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
-    "prepublish": "yarn run build"
+    "prepublish": "yarn run build",
+    "test": "../../node_modules/jest/bin/jest.js --watch"
   },
   "repository": {
     "type": "git",
@@ -51,6 +52,8 @@
     "babili-webpack-plugin": "^0.1.2",
     "brotli-webpack-plugin": "^0.5.0",
     "compression-webpack-plugin": "^1.0.1",
+    "eslint-plugin-jest": "^21.12.2",
+    "jest": "^22.4.2",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "webpack": "^3.2.0"
