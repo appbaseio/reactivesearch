@@ -1,7 +1,7 @@
 import styled, { css } from 'react-emotion';
 
 const alert = ({ theme }) => css`
-	color: ${theme.alertColor};
+	color: ${theme.colors.alertColor};
 `;
 
 const Content = styled.div`

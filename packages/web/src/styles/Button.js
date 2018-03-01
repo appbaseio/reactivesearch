@@ -69,12 +69,12 @@ const numberBoxContainer = css`
 	}
 `;
 
-const primary = props => css`
-	background-color: ${props.theme.primaryColor};
-	color: ${props.theme.primaryTextColor};
+const primary = ({ theme }) => css`
+	background-color: ${theme.colors.primaryColor};
+	color: ${theme.colors.primaryTextColor};
 
 	&:hover, &:focus {
-		background-color: ${shade(props.theme.primaryColor, -0.1)};
+		background-color: ${shade(theme.colors.primaryColor, -0.1)};
 	}
 `;
 

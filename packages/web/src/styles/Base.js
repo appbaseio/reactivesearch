@@ -1,12 +1,12 @@
 import styled from 'react-emotion';
 
 const Base = styled('div')`
-	font-family: ${props => props.theme.fontFamily};
-	font-size: ${props => props.theme.fontSize};
-	color: ${props => props.theme.textColor};
+	font-family: ${({ theme }) => theme.typography.fontFamily};
+	font-size: ${({ theme }) => theme.typography.fontSize};
+	color: ${({ theme }) => theme.colors.textColor};
 
 	input, button, textarea, select {
-		font-family: ${props => props.theme.fontFamily};
+		font-family: ${({ theme }) => theme.typography.fontFamily};
 	}
 
 	*, *:before, *:after {

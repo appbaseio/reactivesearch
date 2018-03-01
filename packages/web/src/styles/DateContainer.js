@@ -145,12 +145,12 @@ const DateContainer = styled.div`
 		-webkit-box-shadow: none;
 		box-shadow: none;
 		cursor: pointer;
-		color: ${({ theme }) => theme.primaryColor};
+		color: ${({ theme }) => theme.colors.primaryColor};
 		font-size: 0.875em;
 	}
 
 	.DayPicker-Day--today {
-		color: ${({ theme }) => theme.primaryColor};
+		color: ${({ theme }) => theme.colors.primaryColor};
 		font-weight: 700;
 	}
 
@@ -176,17 +176,17 @@ const DateContainer = styled.div`
 		position: relative;
 		color: #f0f8ff;
 		color: #f0f8ff;
-		background-color: ${({ theme }) => theme.primaryColor};
+		background-color: ${({ theme }) => theme.colors.primaryColor};
 		border-radius: ${({ range }) => (range ? 0 : '100%')};
 	}
 
 	.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover {
-		background-color: ${({ theme }) => shade(theme.primaryColor, 0.1)};
+		background-color: ${({ theme }) => shade(theme.colors.primaryColor, 0.1)};
 	}
 
 	.DayPicker:not(.DayPicker--interactionDisabled)
 		.DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
-		background-color: ${({ theme }) => shade(theme.primaryColor, 0.1)};
+		background-color: ${({ theme }) => shade(theme.colors.primaryColor, 0.1)};
 		border-radius: 50%;
 	}
 

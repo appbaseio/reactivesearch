@@ -42,7 +42,7 @@ const Card = styled('a')`
 	padding: 10px;
 	overflow: hidden;
 	box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
-	color: ${props => props.theme.textColor};
+	color: ${({ theme }) => theme.colors.textColor};
 	${props => (props.href ? 'cursor: pointer' : null)};
 	transition: all 0.3s ease;
 

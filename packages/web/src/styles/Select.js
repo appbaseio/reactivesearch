@@ -60,7 +60,7 @@ const Tick = styled('span')`
 		height: 4px;
 		margin-top: -4px;
 		border-style: solid;
-		border-color: ${props => props.theme.primaryColor};
+		border-color: ${({ theme }) => theme.colors.primaryColor};
 		border-width: 0 0 2px 2px;
 		border-radius: 0;
 		border-image: none;

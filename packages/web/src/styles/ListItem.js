@@ -41,8 +41,8 @@ const ListItem = styled('a')`
 	flex-direction: row;
 	margin: 0;
 	padding: 10px;
-	border-bottom: 1px solid ${props => shade(props.theme.textColor, 0.68)};
-	color: ${props => props.theme.textColor};
+	border-bottom: 1px solid ${({ theme }) => shade(theme.colors.textColor, 0.68)};
+	color: ${({ theme }) => theme.colors.textColor};
 	${props => (props.href ? 'cursor: pointer' : null)}; all 0.3s ease;
 
 	&:hover, &:focus {

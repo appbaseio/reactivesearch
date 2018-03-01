@@ -9,7 +9,8 @@ import configureStore, { storeKey } from '@appbaseio/reactivecore';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import URLParamsProvider from './URLParamsProvider';
 
-import theme from '../../styles/theme';
+import getTheme from '../../styles/theme';
+import { composeThemeObject } from '../../utils';
 
 const URLSearchParams = require('url-search-params');
 
@@ -74,8 +75,14 @@ class ReactiveBase extends Component {
 	}
 
 	render() {
+		const theme = composeThemeObject(
+			getTheme(this.props.themePreset),
+			this.props.theme,
+		);
 		return (
-			<ThemeProvider theme={{ ...theme, ...this.props.theme }}>
+			<ThemeProvider
+				theme={theme}
+			>
 				<Provider store={this.store}>
 					<URLParamsProvider params={this.params} headers={this.props.headers}>
 						{this.props.children}
@@ -88,6 +95,7 @@ class ReactiveBase extends Component {
 
 ReactiveBase.defaultProps = {
 	theme: {},
+	themePreset: 'light',
 };
 
 ReactiveBase.propTypes = {
@@ -97,6 +105,7 @@ ReactiveBase.propTypes = {
 	headers: types.headers,
 	queryParams: types.string,
 	theme: types.style,
+	themePreset: types.themePreset,
 	type: types.string,
 	url: types.string,
 	mapKey: types.string,

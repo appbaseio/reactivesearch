@@ -2,7 +2,7 @@ import { css } from 'emotion';
 import styled from 'react-emotion';
 
 const alertBorder = ({ theme }) => css`
-	border: 1px solid ${theme.alertColor};
+	border: 1px solid ${theme.colors.alertColor};
 `;
 
 const input = css`

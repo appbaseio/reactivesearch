@@ -16,6 +16,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Input from '../../styles/Input';
 import Title from '../../styles/Title';
+import Container from '../../styles/Container';
 import { connect } from '../../utils';
 
 class TextField extends Component {
@@ -139,7 +140,7 @@ class TextField extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<Input
 					type="text"
@@ -155,7 +156,7 @@ class TextField extends Component {
 					autoFocus={this.props.autoFocus}
 					innerRef={this.props.innerRef}
 				/>
-			</div>
+			</Container>
 		);
 	}
 }

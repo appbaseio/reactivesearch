@@ -51,11 +51,11 @@ const Flex = styled('div')`
 
 	svg.cancel-icon {
 		cursor: pointer;
-		fill: ${props => shade(props.theme.textColor, 0.3)};
+		fill: ${({ theme }) => shade(theme.colors.textColor, 0.3)};
 		flex-basis: 30px;
 
 		&:hover {
-			fill: ${props => props.theme.textColor};
+			fill: ${({ theme }) => theme.colors.textColor};
 		}
 	}
 `;
