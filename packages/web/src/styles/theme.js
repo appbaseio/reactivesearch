@@ -19,10 +19,10 @@ const dark = {
 	typography,
 
 	colors: {
-		textColor: '#424242',
+		textColor: '#fff',
 		primaryColor: '#0B6AFF',
 		primaryTextColor: '#fff',
-		titleColor: '#424242',
+		titleColor: '#fff',
 		alertColor: '#d9534f',
 	},
 };
