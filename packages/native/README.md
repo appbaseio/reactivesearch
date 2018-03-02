@@ -70,7 +70,7 @@ Run this [example app with Snack Editor](https://snack.expo.io/@metagrover/books
 
 **Tutorials** 
 
-- [Building An E-commerce Search App with React Native 🔰](https://hackernoon.com/building-an-e-commerce-search-app-with-react-native-2c87760a2315),
+- [Building an E-commerce Search App with React Native 🔰](https://hackernoon.com/building-an-e-commerce-search-app-with-react-native-2c87760a2315),
 - [Building a realtime todos app with ReactiveSearch & React Native](https://medium.freecodecamp.org/how-to-build-a-real-time-todo-app-with-react-native-19a1ce15b0b3).
 
 <br />
