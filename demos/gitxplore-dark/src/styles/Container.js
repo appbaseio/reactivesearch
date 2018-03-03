@@ -58,7 +58,6 @@ export const filtersContainer = css`
 `;
 
 export const appContainer = css`
-	background: #303030;
 	${queries.xLarge`
 		flex-direction: column;
 	`};
