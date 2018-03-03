@@ -8,6 +8,16 @@ const small = css`
 	border-radius: 2px;
 `;
 
+const dark = ({ theme }) => css`
+	background-color: ${theme.colors.backgroundColor};
+	border-color: ${theme.colors.borderColor};
+	color: ${theme.colors.textColor};
+
+	&:hover {
+		background-color: ${theme.colors.backgroundColor};
+	}
+`;
+
 const Select = styled('button')`
 	width: 100%;
 	display: flex;
@@ -39,6 +49,8 @@ const Select = styled('button')`
 	&:hover, &:focus {
 		background-color: #fcfcfc;
 	}
+
+	${({ themePreset }) => themePreset === 'dark' && dark};
 `;
 
 const Tick = styled('span')`

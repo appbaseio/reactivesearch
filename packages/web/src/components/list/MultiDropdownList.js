@@ -282,6 +282,7 @@ class MultiDropdownList extends Component {
 					labelField="key"
 					multi
 					showCount={this.props.showCount}
+					themePreset={this.props.themePreset}
 				/>
 			</Container>
 		);
@@ -316,6 +317,7 @@ MultiDropdownList.propTypes = {
 	size: types.number,
 	sortBy: types.sortByWithCount,
 	style: types.style,
+	themePreset: types.themePreset,
 	title: types.title,
 	URLParams: types.boolRequired,
 };
@@ -336,6 +338,7 @@ const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({

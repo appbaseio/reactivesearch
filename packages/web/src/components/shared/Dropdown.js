@@ -53,12 +53,13 @@ class Dropdown extends Component {
 	};
 
 	getBackgroundColor = (highlighted, selected) => {
+		const isDark = this.props.themePreset === 'dark';
 		if (highlighted) {
-			return '#eee';
+			return isDark ? '#555' : '#eee';
 		} else if (selected) {
-			return '#fafafa';
+			return isDark ? '#686868' : '#fafafa';
 		}
-		return '#fff';
+		return isDark ? '#424242' : '#fff';
 	};
 
 	renderToString = (value) => {
@@ -101,6 +102,7 @@ class Dropdown extends Component {
 						onClick={this.toggle}
 						title={selectedItem ? this.renderToString(selectedItem) : placeholder}
 						small={this.props.small}
+						themePreset={this.props.themePreset}
 					>
 						<div>{selectedItem ? this.renderToString(selectedItem) : placeholder}</div>
 						<Chevron open={isOpen} />
@@ -202,6 +204,7 @@ Dropdown.propTypes = {
 	showCount: types.bool,
 	single: types.bool,
 	small: types.bool,
+	themePreset: types.themePreset,
 };
 
 export default Dropdown;

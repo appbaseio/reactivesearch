@@ -24,6 +24,8 @@ const dark = {
 		primaryTextColor: '#fff',
 		titleColor: '#fff',
 		alertColor: '#d9534f',
+		backgroundColor: '#212121',
+		borderColor: '#666',
 	},
 };
 

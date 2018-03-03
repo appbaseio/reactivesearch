@@ -53,11 +53,11 @@ class ReactiveBase extends Component {
 			selectedValues = {};
 		}
 
-		const { headers = {} } = props;
+		const { headers = {}, themePreset } = props;
 
 		const appbaseRef = new Appbase(config);
 		this.store = configureStore({
-			config: { ...config, mapKey: props.mapKey },
+			config: { ...config, mapKey: props.mapKey, themePreset },
 			appbaseRef,
 			selectedValues,
 			headers,
