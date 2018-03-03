@@ -25,6 +25,8 @@ import Input, {
 import InputIcon from '@appbaseio/reactivesearch/lib/styles/InputIcon';
 import SearchSvg from '@appbaseio/reactivesearch/lib/components/shared/SearchSvg';
 import Slider from '@appbaseio/reactivesearch/lib/styles/Slider';
+import RangeLabel from '@appbaseio/reactivesearch/lib/components/range/addons/RangeLabel';
+import { rangeLabelsContainer } from '@appbaseio/reactivesearch/lib/styles/Label';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
 
 class GeoDistanceSlider extends Component {
@@ -62,7 +64,7 @@ class GeoDistanceSlider extends Component {
 					}
 				});
 			});
-		} else if (this.props.defaultSelected && this.props.selectedValue.location) {
+		} else if (this.props.defaultSelected && this.props.defaultSelected.location) {
 			this.setState({
 				currentLocation: this.props.defaultSelected.location,
 			}, () => {
@@ -407,6 +409,26 @@ class GeoDistanceSlider extends Component {
 					onChange={this.handleSlider}
 					className={getClassName(this.props.innerClass, 'slider')}
 				/>
+				{
+					this.props.rangeLabels
+						? (
+							<div className={rangeLabelsContainer}>
+								<RangeLabel
+									align="left"
+									className={getClassName(this.props.innerClass, 'label') || null}
+								>
+									{this.props.rangeLabels.start}
+								</RangeLabel>
+								<RangeLabel
+									align="right"
+									className={getClassName(this.props.innerClass, 'label') || null}
+								>
+									{this.props.rangeLabels.end}
+								</RangeLabel>
+							</div>
+						)
+						: null
+				}
 			</Slider>
 		);
 	}
@@ -449,6 +471,7 @@ GeoDistanceSlider.propTypes = {
 	mapKey: types.stringRequired,
 	autoLocation: types.boolRequired,
 	range: types.range,
+	rangeLabels: types.rangeLabels,
 };
 
 GeoDistanceSlider.defaultProps = {
