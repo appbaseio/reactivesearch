@@ -169,7 +169,7 @@ const Checkbox = styled('input')`
 			height: calc(${item.width} / 5);
 			margin-top: calc(${item.height} / -2 / 2 * 0.8);
 			border-style: solid;
-			border-color: ${({ theme }) => theme.primaryColor};
+			border-color: ${({ theme }) => theme.colors.primaryColor};
 			border-width: 0 0 2px 2px;
 			border-radius: 0;
 			border-image: none;
@@ -181,7 +181,7 @@ const Checkbox = styled('input')`
 	&:checked {
 	    + label {
 			&::before {
-				border-color: ${({ theme }) => theme.primaryColor};
+				border-color: ${({ theme }) => theme.colors.primaryColor};
 			}
 
 			&::after {

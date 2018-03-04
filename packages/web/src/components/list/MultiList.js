@@ -273,6 +273,7 @@ class MultiList extends Component {
 				style={{
 					margin: '0 0 8px',
 				}}
+				themePreset={this.props.themePreset}
 			/>);
 		}
 		return null;
@@ -397,6 +398,7 @@ MultiList.propTypes = {
 	size: types.number,
 	sortBy: types.sortByWithCount,
 	style: types.style,
+	themePreset: types.themePreset,
 	title: types.title,
 	URLParams: types.boolRequired,
 };
@@ -418,6 +420,7 @@ const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({

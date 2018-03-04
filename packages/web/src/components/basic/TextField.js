@@ -155,6 +155,7 @@ class TextField extends Component {
 					onKeyUp={this.props.onKeyUp}
 					autoFocus={this.props.autoFocus}
 					innerRef={this.props.innerRef}
+					themePreset={this.props.themePreset}
 				/>
 			</Container>
 		);
@@ -191,6 +192,7 @@ TextField.propTypes = {
 	ref: types.func,
 	showFilter: types.bool,
 	style: types.style,
+	themePreset: types.themePreset,
 	title: types.title,
 	URLParams: types.boolRequired,
 };
@@ -207,6 +209,7 @@ TextField.defaultProps = {
 const mapStateToProps = (state, props) => ({
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({

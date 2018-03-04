@@ -239,6 +239,7 @@ class MultiDataList extends Component {
 				style={{
 					margin: '0 0 8px',
 				}}
+				themePreset={this.props.themePreset}
 			/>);
 		}
 		return null;
@@ -343,6 +344,7 @@ MultiDataList.propTypes = {
 	showFilter: types.bool,
 	showSearch: types.bool,
 	style: types.style,
+	themePreset: types.themePreset,
 	title: types.title,
 	URLParams: types.boolRequired,
 };
@@ -361,6 +363,7 @@ MultiDataList.defaultProps = {
 const mapStateToProps = (state, props) => ({
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || [],
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({

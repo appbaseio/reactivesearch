@@ -162,6 +162,7 @@ class SingleDataList extends Component {
 				style={{
 					margin: '0 0 8px',
 				}}
+				themePreset={this.props.themePreset}
 			/>);
 		}
 		return null;
@@ -264,6 +265,7 @@ SingleDataList.propTypes = {
 	showRadio: types.boolRequired,
 	showSearch: types.bool,
 	style: types.style,
+	themePreset: types.themePreset,
 	title: types.title,
 	URLParams: types.boolRequired,
 };
@@ -281,6 +283,7 @@ SingleDataList.defaultProps = {
 const mapStateToProps = (state, props) => ({
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
