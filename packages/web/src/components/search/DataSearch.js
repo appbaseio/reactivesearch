@@ -480,6 +480,7 @@ class DataSearch extends Component {
 									iconPosition={this.props.iconPosition}
 									showIcon={this.props.showIcon}
 									innerRef={this.props.innerRef}
+									themePreset={themePreset}
 								/>
 								<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
 							</div>

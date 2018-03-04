@@ -31,7 +31,7 @@ const Text = withTheme(props => (
 	<span
 		className="trim"
 		style={{
-			color: props.primary ? props.theme.primaryColor : props.theme.textColor,
+			color: props.primary ? props.theme.colors.primaryColor : props.theme.colors.textColor,
 		}}
 	>
 		{props.children}
@@ -408,6 +408,7 @@ class CategorySearch extends Component {
 
 	render() {
 		let suggestionsList = [];
+		const { theme, themePreset } = this.props;
 
 		if (
 			!this.state.currentValue
@@ -496,13 +497,14 @@ class CategorySearch extends Component {
 										onKeyDown: this.handleKeyDown,
 										onKeyUp: this.props.onKeyUp,
 									})}
+									themePreset={themePreset}
 								/>
 								<InputIcon iconPosition={this.props.iconPosition}>
 									{this.renderIcon()}
 								</InputIcon>
 								{isOpen && suggestionsList.length ? (
 									<ul
-										className={`${suggestions} ${getClassName(this.props.innerClass, 'list')}`}
+										className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}
 									>
 										{suggestionsList.slice(0, 10).map((item, index) => (
 											<li
@@ -537,6 +539,7 @@ class CategorySearch extends Component {
 							iconPosition={this.props.iconPosition}
 							showIcon={this.props.showIcon}
 							innerRef={this.props.innerRef}
+							themePreset={themePreset}
 						/>
 						<InputIcon iconPosition={this.props.iconPosition}>
 							{this.renderIcon()}
@@ -594,6 +597,8 @@ CategorySearch.propTypes = {
 	showIcon: types.bool,
 	style: types.style,
 	title: types.title,
+	theme: types.style,
+	themePreset: types.themePreset,
 	URLParams: types.boolRequired,
 };
 
