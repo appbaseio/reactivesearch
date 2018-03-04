@@ -3,7 +3,7 @@ const theme = {
 		fontFamily: 'Raleway, Helvetica, sans-serif',
 	},
 	colors: {
-		primaryColor: 'dodgerblue',
+		primaryColor: 'aquamarine',
 		secondaryColor: '#303030',
 		lightGray: '#eff3f6',
 	},

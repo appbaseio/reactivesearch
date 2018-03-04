@@ -4,7 +4,7 @@ import { queries } from './mediaQueries';
 import theme from './theme';
 
 export const title = css`
-	color: white;
+	color: ${theme.colors.primaryColor};
 	font-family: Monoton, cursive;
 	font-size: 2rem;
 	text-align: center;

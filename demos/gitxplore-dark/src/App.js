@@ -50,7 +50,6 @@ class App extends Component {
 								dataField={['name', 'description', 'name.raw', 'fullname', 'owner', 'topics']}
 								placeholder="Search Repos"
 								iconPosition="left"
-								autosuggest={false}
 								URLParams
 								className={dataSearchContainer}
 								innerClass={{
