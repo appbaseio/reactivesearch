@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Downshift from 'downshift';
+import { withTheme } from 'emotion-theming';
 
 import {
 	addComponent,
@@ -312,6 +313,7 @@ class GeoDistanceSlider extends Component {
 
 	renderSearchBox = () => {
 		let suggestionsList = [...this.state.suggestions];
+		const { theme, themePreset } = this.props;
 
 		if (this.state.userLocation) {
 			suggestionsList = [
@@ -351,12 +353,13 @@ class GeoDistanceSlider extends Component {
 							onKeyDown: this.handleKeyDown,
 							onKeyUp: this.props.onKeyUp,
 						})}
+						themePreset={themePreset}
 					/>
 					<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
 					{
 						isOpen && this.state.suggestions.length
 							? (
-								<ul className={`${suggestions} ${getClassName(this.props.innerClass, 'list')}`}>
+								<ul className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}>
 									{
 										suggestionsList
 											.slice(0, 11)
@@ -472,6 +475,8 @@ GeoDistanceSlider.propTypes = {
 	autoLocation: types.boolRequired,
 	range: types.range,
 	rangeLabels: types.rangeLabels,
+	theme: types.style,
+	themePreset: types.themePreset,
 };
 
 GeoDistanceSlider.defaultProps = {
@@ -493,6 +498,7 @@ const mapStateToProps = (state, props) => ({
 		state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value
 	) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -502,4 +508,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(GeoDistanceSlider);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(GeoDistanceSlider));

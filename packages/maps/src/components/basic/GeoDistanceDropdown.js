@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Downshift from 'downshift';
+import { withTheme } from 'emotion-theming';
 
 import {
 	addComponent,
@@ -22,6 +23,7 @@ import Input, {
 	suggestions,
 } from '@appbaseio/reactivesearch/lib/styles/Input';
 import InputIcon from '@appbaseio/reactivesearch/lib/styles/InputIcon';
+import Container from '@appbaseio/reactivesearch/lib/styles/Container';
 import SearchSvg from '@appbaseio/reactivesearch/lib/components/shared/SearchSvg';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
@@ -315,6 +317,7 @@ class GeoDistanceDropdown extends Component {
 
 	renderSearchBox = () => {
 		let suggestionsList = [...this.state.suggestions];
+		const { theme, themePreset } = this.props;
 
 		if (this.state.userLocation) {
 			suggestionsList = [
@@ -354,12 +357,13 @@ class GeoDistanceDropdown extends Component {
 							onKeyDown: this.handleKeyDown,
 							onKeyUp: this.props.onKeyUp,
 						})}
+						themePreset={themePreset}
 					/>
 					<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
 					{
 						isOpen && this.state.suggestions.length
 							? (
-								<ul className={`${suggestions} ${getClassName(this.props.innerClass, 'list')}`}>
+								<ul className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}>
 									{
 										suggestionsList
 											.slice(0, 11)
@@ -396,7 +400,7 @@ class GeoDistanceDropdown extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{this.renderSearchBox()}
 				<Dropdown
@@ -407,8 +411,9 @@ class GeoDistanceDropdown extends Component {
 					placeholder="Select distance"
 					keyField="label"
 					returnsObject
+					themePreset={this.props.themePreset}
 				/>
-			</div>
+			</Container>
 		);
 	}
 }
@@ -449,6 +454,8 @@ GeoDistanceDropdown.propTypes = {
 	iconPosition: types.iconPosition,
 	mapKey: types.stringRequired,
 	autoLocation: types.boolRequired,
+	theme: types.style,
+	themePreset: types.themePreset,
 };
 
 GeoDistanceDropdown.defaultProps = {
@@ -466,6 +473,7 @@ const mapStateToProps = (state, props) => ({
 		state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value
 	) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -475,4 +483,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(GeoDistanceDropdown);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(GeoDistanceDropdown));
