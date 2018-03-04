@@ -11,6 +11,8 @@ import Flex from '../../styles/Flex';
 import Content from '../../styles/Content';
 import Container from '../../styles/Container';
 
+import { connect } from '../../utils';
+
 class RangeInput extends Component {
 	constructor(props) {
 		super(props);
@@ -73,7 +75,9 @@ class RangeInput extends Component {
 	}
 
 	render() {
-		const { className, style, ...rest } = this.props;
+		const {
+			className, style, themePreset, ...rest
+		} = this.props;
 		return (
 			<Container style={style} className={className}>
 				<RangeSlider
@@ -95,6 +99,7 @@ class RangeInput extends Component {
 							step={this.props.stepValue}
 							alert={!this.state.isStartValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
+							themePreset={themePreset}
 						/>
 						{
 							!this.state.isStartValid
@@ -111,6 +116,7 @@ class RangeInput extends Component {
 							step={this.props.stepValue}
 							alert={!this.state.isEndValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
+							themePreset={themePreset}
 						/>
 						{
 							!this.state.isEndValid
@@ -131,6 +137,7 @@ RangeInput.propTypes = {
 	range: types.range,
 	stepValue: types.number,
 	style: types.style,
+	themePreset: types.themePreset,
 };
 
 RangeInput.defaultProps = {
@@ -141,4 +148,8 @@ RangeInput.defaultProps = {
 	stepValue: 1,
 };
 
-export default RangeInput;
+const mapStateToProps = state => ({
+	themePreset: state.config.themePreset,
+});
+
+export default connect(mapStateToProps, null)(RangeInput);
