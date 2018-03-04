@@ -23,7 +23,7 @@ const InputIcon = styled.div`
 	}}
 
 	svg.search-icon {
-		fill: ${({ theme }) => theme.primaryColor};
+		fill: ${({ theme }) => theme.colors.primaryColor};
 	}
 `;
 

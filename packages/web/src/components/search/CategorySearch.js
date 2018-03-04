@@ -622,6 +622,7 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	suggestions:
 			(state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -633,4 +634,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(CategorySearch);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(CategorySearch));

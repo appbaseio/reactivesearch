@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Downshift from 'downshift';
+import { withTheme } from 'emotion-theming';
 
 import {
 	addComponent,
@@ -357,6 +358,16 @@ class DataSearch extends Component {
 		}
 	};
 
+	getBackgroundColor = (highlightedIndex, index) => {
+		const isDark = this.props.themePreset === 'dark';
+		if (isDark) {
+			return highlightedIndex === index
+				? '#555' : '#424242';
+		}
+		return highlightedIndex === index
+			? '#eee' : '#fff';
+	};
+
 	renderIcon = () => {
 		if (this.props.showIcon) {
 			return this.props.icon || <SearchSvg />;
@@ -376,6 +387,8 @@ class DataSearch extends Component {
 		} else if (this.state.currentValue) {
 			suggestionsList = this.state.suggestions;
 		}
+
+		const { theme, themePreset } = this.props;
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
@@ -410,12 +423,13 @@ class DataSearch extends Component {
 											onKeyDown: this.handleKeyDown,
 											onKeyUp: this.props.onKeyUp,
 										})}
+										themePreset={themePreset}
 									/>
 									<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
 									{
 										isOpen && suggestionsList.length
 											? (
-												<ul className={`${suggestions} ${getClassName(this.props.innerClass, 'list')}`}>
+												<ul className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}>
 													{
 														suggestionsList
 															.slice(0, 10)
@@ -424,8 +438,10 @@ class DataSearch extends Component {
 																	{...getItemProps({ item })}
 																	key={item.label}
 																	style={{
-																		backgroundColor: highlightedIndex === index
-																			? '#eee' : '#fff',
+																		backgroundColor: this.getBackgroundColor(
+																			highlightedIndex,
+																			index,
+																		),
 																	}}
 																>
 																	{
@@ -518,6 +534,8 @@ DataSearch.propTypes = {
 	showIcon: types.bool,
 	style: types.style,
 	title: types.title,
+	theme: types.style,
+	themePreset: types.themePreset,
 	URLParams: types.boolRequired,
 };
 
@@ -538,6 +556,7 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -548,4 +567,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(DataSearch);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(DataSearch));

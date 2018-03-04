@@ -143,6 +143,7 @@ class SingleDropdownRange extends Component {
 					placeholder={this.props.placeholder}
 					keyField="label"
 					returnsObject
+					themePreset={this.props.themePreset}
 				/>
 			</Container>
 		);
@@ -172,6 +173,7 @@ SingleDropdownRange.propTypes = {
 	showFilter: types.bool,
 	style: types.style,
 	title: types.title,
+	themePreset: types.themePreset,
 	URLParams: types.boolRequired,
 };
 
@@ -188,6 +190,7 @@ const mapStateToProps = (state, props) => ({
 		state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value
 	) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({

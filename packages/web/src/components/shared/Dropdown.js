@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Downshift from 'downshift';
+import { withTheme } from 'emotion-theming';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -79,7 +80,7 @@ class Dropdown extends Component {
 
 	render() {
 		const {
-			items, selectedItem, placeholder, labelField, keyField,
+			items, selectedItem, placeholder, labelField, keyField, themePreset, theme,
 		} = this.props;
 
 		return (<Downshift
@@ -110,7 +111,7 @@ class Dropdown extends Component {
 					{
 						isOpen && items.length
 							? (
-								<ul className={`${suggestions} ${this.props.small ? 'small' : ''} ${getClassName(this.props.innerClass, 'list')}`}>
+								<ul className={`${suggestions(themePreset, theme)} ${this.props.small ? 'small' : ''} ${getClassName(this.props.innerClass, 'list')}`}>
 									{
 										items
 											.map((item, index) => {
@@ -204,7 +205,8 @@ Dropdown.propTypes = {
 	showCount: types.bool,
 	single: types.bool,
 	small: types.bool,
+	theme: types.style,
 	themePreset: types.themePreset,
 };
 
-export default Dropdown;
+export default withTheme(Dropdown);

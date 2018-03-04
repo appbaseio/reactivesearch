@@ -176,6 +176,7 @@ class MultiDropdownRange extends Component {
 					keyField="label"
 					multi
 					returnsObject
+					themePreset={this.props.themePreset}
 				/>
 			</Container>
 		);
@@ -205,6 +206,7 @@ MultiDropdownRange.propTypes = {
 	showFilter: types.bool,
 	style: types.style,
 	title: types.title,
+	themePreset: types.themePreset,
 	URLParams: types.boolRequired,
 };
 
@@ -220,6 +222,7 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({

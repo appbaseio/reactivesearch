@@ -207,6 +207,7 @@ class SingleDropdownList extends Component {
 					placeholder={this.props.placeholder}
 					labelField="key"
 					showCount={this.props.showCount}
+					themePreset={this.props.themePreset}
 				/>
 			</Container>
 		);
@@ -241,6 +242,7 @@ SingleDropdownList.propTypes = {
 	sortBy: types.sortByWithCount,
 	style: types.style,
 	title: types.title,
+	themePreset: types.themePreset,
 	URLParams: types.boolRequired,
 };
 
@@ -259,6 +261,7 @@ const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
