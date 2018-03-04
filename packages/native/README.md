@@ -8,6 +8,10 @@
 <p align="center">Elasticsearch UI components for React Native. <a href="https://opensource.appbase.io/reactivesearch/native">Website 🌐</a></p>
 <p align="center"  style="font-size: 1.2rem"><a href="https://medium.appbase.io/build-your-next-react-native-app-with-reactivesearch-ce21829f3bf5">Read the launch blog post here</a>.</p>
 
+<p align="center">
+  <img src="https://i.imgur.com/1soqoin.gif">
+</p>
+
 <hr />
 
 [![npm version](https://badge.fury.io/js/%40appbaseio%2Freactivesearch-native.svg)](https://badge.fury.io/js/%40appbaseio%2Freactivesearch-native)
@@ -64,7 +68,10 @@ Run this [example app with Snack Editor](https://snack.expo.io/@metagrover/books
 
 - Or get your own app up and running in 15 mins by following the [quickstart guide](https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html).
 
-- [Tutorial Post](https://hackernoon.com/building-an-e-commerce-search-app-with-react-native-2c87760a2315): Building An E-commerce Search App with React Native. 🔰
+**Tutorials** 
+
+- [Building an E-commerce Search App with React Native 🔰](https://hackernoon.com/building-an-e-commerce-search-app-with-react-native-2c87760a2315),
+- [Building a realtime todos app with ReactiveSearch & React Native](https://medium.freecodecamp.org/how-to-build-a-real-time-todo-app-with-react-native-19a1ce15b0b3).
 
 <br />
 
