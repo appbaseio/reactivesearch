@@ -15,11 +15,12 @@ import {
 	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
+	getInnerKey,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerKey } from '../../utils';
+import { connect } from '../../utils';
 
 class SingleDropdownList extends Component {
 	constructor(props) {

@@ -27,13 +27,14 @@ import {
 	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
+	getInnerKey,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import CheckboxItem from '../shared/CheckboxItem';
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerKey } from '../../utils';
+import { connect } from '../../utils';
 
 class MultiDropdownList extends Component {
 	constructor(props) {

@@ -26,13 +26,14 @@ import {
 	checkValueChange,
 	checkPropChange,
 	checkSomePropChange,
+	getInnerKey,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerKey } from '../../utils';
+import { connect } from '../../utils';
 
 class DataSearch extends Component {
 	constructor(props) {

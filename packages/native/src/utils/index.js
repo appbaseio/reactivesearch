@@ -9,5 +9,3 @@ export const connect = (...args) => connectToStore(
 		storeKey,
 	},
 );
-
-export const getInnerKey = (innerStyle, item) => (innerStyle && innerStyle[item]) || {};
