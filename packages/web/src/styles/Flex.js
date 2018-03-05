@@ -20,8 +20,8 @@ const bottomLabel = css`
 	flex-direction: column-reverse;
 `;
 
-const border = css`
-	border: 1px solid #ccc;
+const border = ({ theme: { colors } }) => css`
+	border: 1px solid ${colors.borderColor || '#ccc'};
 `;
 
 const Flex = styled('div')`
@@ -51,7 +51,8 @@ const Flex = styled('div')`
 
 	svg.cancel-icon {
 		cursor: pointer;
-		fill: ${({ theme }) => shade(theme.colors.textColor, 0.3)};
+		fill: ${({ theme: { colors } }) =>
+		(colors.borderColor || shade(colors.textColor, 0.3))};
 		flex-basis: 30px;
 
 		&:hover {

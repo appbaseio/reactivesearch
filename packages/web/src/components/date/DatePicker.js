@@ -15,6 +15,7 @@ import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import XDate from 'xdate';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
+import { withTheme } from 'emotion-theming';
 
 import DateContainer from '../../styles/DateContainer';
 import Title from '../../styles/Title';
@@ -186,7 +187,13 @@ class DatePicker extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				<Flex showBorder={this.props.showClear} iconPosition="right">
+				<Flex
+					showBorder={this.props.showClear}
+					iconPosition="right"
+					style={{
+						background: this.props.theme.colors.backgroundColor || 'transparent',
+					}}
+				>
 					<DayPickerInput
 						showOverlay={this.props.focused}
 						formatDate={this.formatInputDate}
@@ -251,6 +258,7 @@ DatePicker.propTypes = {
 	showClear: types.bool,
 	showFilter: types.bool,
 	style: types.style,
+	theme: types.style,
 	title: types.string,
 };
 
@@ -276,4 +284,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(DatePicker);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(DatePicker));

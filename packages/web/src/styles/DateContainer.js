@@ -206,10 +206,14 @@ const DateContainer = styled.div`
 
 	.DayPickerInput input {
 		${input};
-		background: #fff;
+		background-color: ${({ theme: { colors } }) => colors.backgroundColor || '#fff'};
+		color: ${({ theme: { colors } }) => colors.textColor};
 		${({ showBorder }) => !showBorder && css`
-			border: none;
+		border: none;
 		`};
+		&:focus {
+			background-color: ${({ theme: { colors } }) => colors.backgroundColor || '#fff'};
+		}
 	}
 
 	.DayPickerInput-OverlayWrapper {
@@ -224,7 +228,10 @@ const DateContainer = styled.div`
 		top: 1px;
 		z-index: 1;
 		position: absolute;
-		background: white;
+		background: ${({ theme: { colors } }) =>
+		(colors.backgroundColor
+			? shade(colors.backgroundColor, 0.15)
+			: '#fff')};
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 	}
 
