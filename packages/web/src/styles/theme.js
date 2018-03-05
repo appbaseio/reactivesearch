@@ -8,8 +8,8 @@ const light = {
 
 	colors: {
 		textColor: '#424242',
-		primaryColor: '#0B6AFF',
 		primaryTextColor: '#fff',
+		primaryColor: '#0B6AFF',
 		titleColor: '#424242',
 		alertColor: '#d9534f',
 	},
@@ -20,11 +20,11 @@ const dark = {
 
 	colors: {
 		textColor: '#fff',
-		primaryColor: '#0B6AFF',
+		backgroundColor: '#212121',
 		primaryTextColor: '#fff',
+		primaryColor: '#0B6AFF',
 		titleColor: '#fff',
 		alertColor: '#d9534f',
-		backgroundColor: '#212121',
 		borderColor: '#666',
 	},
 };
