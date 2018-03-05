@@ -245,6 +245,7 @@ class ReactiveMap extends Component {
 	shouldComponentUpdate(nextProps, nextState) {
 		if (
 			this.state.searchAsMove !== nextState.searchAsMove
+			|| this.props.showMapStyles !== nextProps.showMapStyles
 			|| this.props.autoCenter !== nextProps.autoCenter
 			|| this.props.defaultZoom !== nextProps.defaultZoom
 			|| !isEqual(this.state.currentMapStyle, nextState.currentMapStyle)
@@ -548,7 +549,7 @@ class ReactiveMap extends Component {
 		return null;
 	};
 
-	render() {
+	renderMap = () => {
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
 		let filteredResults = results;
@@ -558,7 +559,7 @@ class ReactiveMap extends Component {
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 		}
 
-		const Map = () => (
+		return (
 			<div style={{ position: 'relative' }}>
 				<MapComponent
 					containerElement={<div style={{ height: '100vh' }} />}
@@ -566,8 +567,8 @@ class ReactiveMap extends Component {
 					onMapMounted={(ref) => {
 						this.mapRef = ref;
 					}}
-					defaultZoom={this.state.zoom}
-					defaultCenter={this.getCenter(filteredResults)}
+					zoom={this.state.zoom}
+					center={this.getCenter(filteredResults)}
 					{...this.props.mapProps}
 					onIdle={this.handleOnIdle}
 					onZoomChanged={this.handleZoomChange}
@@ -622,17 +623,19 @@ class ReactiveMap extends Component {
 				}
 			</div>
 		);
+	};
 
-		const PaginationComponent = () => (
-			<Pagination
-				pages={this.props.pages}
-				totalPages={this.state.totalPages}
-				currentPage={this.state.currentPage}
-				setPage={this.setPage}
-				innerClass={this.props.innerClass}
-			/>
-		);
+	renderPagination = () => (
+		<Pagination
+			pages={this.props.pages}
+			totalPages={this.state.totalPages}
+			currentPage={this.state.currentPage}
+			setPage={this.setPage}
+			innerClass={this.props.innerClass}
+		/>
+	);
 
+	render() {
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{
@@ -641,10 +644,10 @@ class ReactiveMap extends Component {
 							this.props.hits,
 							this.props.streamHits,
 							this.loadMore,
-							Map,
-							PaginationComponent,
+							this.renderMap,
+							this.renderPagination,
 						)
-						: <Map />
+						: this.renderMap()
 				}
 			</div>
 		);
