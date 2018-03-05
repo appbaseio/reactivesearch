@@ -22,7 +22,7 @@ const dark = {
 		textColor: '#fff',
 		backgroundColor: '#212121',
 		primaryTextColor: '#fff',
-		primaryColor: '#0B6AFF',
+		primaryColor: '#2196F3',
 		titleColor: '#fff',
 		alertColor: '#d9534f',
 		borderColor: '#666',
