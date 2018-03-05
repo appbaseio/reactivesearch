@@ -399,6 +399,16 @@ class CategorySearch extends Component {
 		}
 	};
 
+	getBackgroundColor = (highlightedIndex, index) => {
+		const isDark = this.props.themePreset === 'dark';
+		if (isDark) {
+			return highlightedIndex === index
+				? '#555' : '#424242';
+		}
+		return highlightedIndex === index
+			? '#eee' : '#fff';
+	};
+
 	renderIcon = () => {
 		if (this.props.showIcon) {
 			return this.props.icon || <SearchSvg />;
@@ -511,8 +521,10 @@ class CategorySearch extends Component {
 												{...getItemProps({ item })}
 												key={item.label}
 												style={{
-													backgroundColor:
-														highlightedIndex === index ? '#eee' : '#fff',
+													backgroundColor: this.getBackgroundColor(
+														highlightedIndex,
+														index,
+													),
 												}}
 											>
 												<Text primary={!!item.category}>{item.label}</Text>
