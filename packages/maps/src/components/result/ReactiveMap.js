@@ -15,12 +15,15 @@ import {
 	getQueryOptions,
 	pushToAndClause,
 	parseHits,
+	getInnerKey,
+	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
 import Pagination from '@appbaseio/reactivesearch/lib/components/result/addons/Pagination';
+import { Checkbox } from '@appbaseio/reactivesearch/lib/styles/FormControlList';
 
 const Standard = require('./addons/styles/Standard');
 const BlueEssence = require('./addons/styles/BlueEssence');
@@ -64,6 +67,9 @@ class ReactiveMap extends Component {
 			totalPages: 0,
 			currentPage: props.currentPage,
 			mapBoxBounds: null,
+			searchAsMove: props.searchAsMove,
+			zoom: props.defaultZoom,
+			useCurrentCenter: false,
 		};
 		this.mapRef = null;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -212,10 +218,25 @@ class ReactiveMap extends Component {
 				currentPage: this.props.total ? 0 : this.state.currentPage,
 			});
 		}
+
+		if (this.props.searchAsMove !== nextProps.searchAsMove) {
+			this.setState({
+				searchAsMove: nextProps.searchAsMove,
+			});
+		}
+
+		if (this.props.defaultZoom !== nextProps.defaultZoom) {
+			this.setState({
+				zoom: nextProps.defaultZoom,
+			});
+		}
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		if (!isEqual(this.state.currentMapStyle, nextState.currentMapStyle)) {
+		if (
+			this.state.searchAsMove !== nextState.searchAsMove
+			|| !isEqual(this.state.currentMapStyle, nextState.currentMapStyle)
+		) {
 			return true;
 		}
 
@@ -225,7 +246,6 @@ class ReactiveMap extends Component {
 		) {
 			return false;
 		}
-
 		return true;
 	}
 
@@ -321,9 +341,9 @@ class ReactiveMap extends Component {
 		return null;
 	};
 
-	setGeoQuery = () => {
+	setGeoQuery = (executeUpdate = false) => {
 		// execute a new query on initial mount
-		if (!this.props.defaultQuery && !this.state.mapBoxBounds) {
+		if (executeUpdate || (!this.props.defaultQuery && !this.state.mapBoxBounds)) {
 			this.defaultQuery = this.getGeoQuery();
 
 			this.props.setMapData(
@@ -421,17 +441,99 @@ class ReactiveMap extends Component {
 	};
 
 	getCenter = (hits) => {
-		if (hits) {
+		if (this.state.searchAsMove && this.mapRef && this.state.useCurrentCenter) {
+			const currentCenter = this.mapRef.getCenter();
+			this.setState({
+				useCurrentCenter: false,
+			});
+			return this.parseLocation({
+				lat: currentCenter.lat(),
+				lng: currentCenter.lng(),
+			});
+		}
+
+		if (hits && hits.length) {
 			if (this.props.autoCenter) {
 				return this.getHitsCenter(hits) || this.parseLocation(this.props.defaultCenter);
 			}
-
 			return hits[0] && hits[0][this.props.dataField]
 				? this.getPosition(hits[0])
 				: this.parseLocation(this.props.defaultCenter);
 		}
-
 		return this.parseLocation(this.props.defaultCenter);
+	};
+
+	handleOnIdle = () => {
+		this.setGeoQuery();
+		if (this.props.mapProps.onIdle) this.props.mapProps.onIdle();
+	};
+
+	handleOnDragEnd = () => {
+		if (this.state.searchAsMove) {
+			this.setState({
+				useCurrentCenter: true,
+			}, () => {
+				this.setGeoQuery(true);
+			});
+		}
+		if (this.props.mapProps.onDragEnd) this.props.mapProps.onDragEnd();
+	};
+
+	handleZoomChange = () => {
+		const zoom = this.mapRef.getZoom();
+		if (this.state.searchAsMove) {
+			this.setState({
+				zoom,
+				useCurrentCenter: true,
+			}, () => {
+				this.setGeoQuery(true);
+			});
+		} else {
+			this.setState({
+				zoom,
+			});
+		}
+		if (this.props.mapProps.onZoomChanged) this.props.mapProps.onZoomChanged();
+	}
+
+	toggleSearchAsMove = () => {
+		this.setState({
+			searchAsMove: !this.state.searchAsMove,
+		});
+	}
+
+	renderSearchAsMove = () => {
+		if (this.props.showSearchAsMove) {
+			return (
+				<div
+					style={{
+						position: 'absolute',
+						bottom: 30,
+						left: 10,
+						width: 170,
+						backgroundColor: '#fff',
+						padding: '8px 10px',
+						boxShadow: 'rgba(0,0,0,0.3) 0px 1px 4px -1px',
+						borderRadius: 2,
+					}}
+				>
+					<Checkbox
+						className={getClassName(this.props.innerClass, 'checkbox') || null}
+						id="searchasmove"
+						onChange={this.toggleSearchAsMove}
+						checked={this.state.searchAsMove}
+					/>
+					<label
+						className={getClassName(this.props.innerClass, 'label') || null}
+						htmlFor="searchasmove"
+					>
+						Search as move
+					</label>
+				</div>
+			);
+		}
+
+		return null;
 	};
 
 	render() {
@@ -452,15 +554,21 @@ class ReactiveMap extends Component {
 					onMapMounted={(ref) => {
 						this.mapRef = ref;
 					}}
-					defaultZoom={this.props.defaultZoom}
-					onIdle={this.setGeoQuery}
-					center={this.getCenter(filteredResults)}
+					defaultZoom={this.state.zoom}
+					defaultCenter={this.getCenter(filteredResults)}
+					{...this.props.mapProps}
+					onIdle={this.handleOnIdle}
+					onZoomChanged={this.handleZoomChange}
+					onDragEnd={this.handleOnDragEnd}
 					options={{
 						styles: this.state.currentMapStyle.value,
+						...getInnerKey(this.props.mapProps, 'options'),
 					}}
 				>
 					{
 						[...streamResults, ...filteredResults].map((item) => {
+							if (this.props.onData) return this.props.onData(item);
+
 							const icon = this.getIcon(item);
 							const position = this.getPosition(item);
 							return (
@@ -468,10 +576,13 @@ class ReactiveMap extends Component {
 									key={item._id}
 									icon={icon}
 									position={position}
+									{...this.props.markerProps}
 								/>
 							);
 						})
 					}
+					{this.props.markers}
+					{this.renderSearchAsMove()}
 				</MapComponent>
 				{
 					this.props.showMapStyles
@@ -552,6 +663,7 @@ ReactiveMap.propTypes = {
 	defaultQuery: types.func,
 	innerClass: types.style,
 	loader: types.title,
+	onData: types.func,
 	onAllData: types.func,
 	pages: types.number,
 	pagination: types.bool,
@@ -569,6 +681,11 @@ ReactiveMap.propTypes = {
 	showMapStyles: types.bool,
 	autoCenter: types.bool,
 	defaultZoom: types.number,
+	mapProps: types.props,
+	markerProps: types.props,
+	markers: types.children,
+	searchAsMove: types.bool,
+	showSearchAsMove: types.bool,
 };
 
 ReactiveMap.defaultProps = {
@@ -582,6 +699,10 @@ ReactiveMap.defaultProps = {
 	},
 	autoCenter: false,
 	defaultZoom: 8,
+	mapProps: {},
+	markerProps: {},
+	markers: null,
+	searchAsMove: false,
 };
 
 const mapStateToProps = (state, props) => ({
