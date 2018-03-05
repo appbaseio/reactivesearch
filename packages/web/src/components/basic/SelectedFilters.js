@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withTheme } from 'emotion-theming';
 
 import { setValue, clearValues } from '@appbaseio/reactivecore/lib/actions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -28,11 +29,11 @@ class SelectedFilters extends Component {
 	}
 
 	render() {
-		const { selectedValues } = this.props;
+		const { selectedValues, theme } = this.props;
 		let hasValues = false;
 
 		return (
-			<Container style={this.props.style} className={`${filters} ${this.props.className || ''}`}>
+			<Container style={this.props.style} className={`${filters(theme)} ${this.props.className || ''}`}>
 				{
 					Object.keys(selectedValues)
 						.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
@@ -85,6 +86,7 @@ SelectedFilters.propTypes = {
 	innerClass: types.style,
 	showClearAll: types.bool,
 	style: types.style,
+	theme: types.style,
 };
 
 SelectedFilters.defaultProps = {
@@ -104,4 +106,7 @@ const mapDispatchtoProps = dispatch => ({
 	setValue: (component, value) => dispatch(setValue(component, value)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SelectedFilters);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(SelectedFilters));
