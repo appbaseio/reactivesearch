@@ -150,6 +150,7 @@ const Radio = styled('input')`
 
 Radio.defaultProps = {
 	type: 'radio',
+	show: true,
 };
 
 const Checkbox = styled('input')`
@@ -196,6 +197,7 @@ const Checkbox = styled('input')`
 
 Checkbox.defaultProps = {
 	type: 'checkbox',
+	show: true,
 };
 
 const UL = styled('ul')`
