@@ -15,6 +15,7 @@ import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import XDate from 'xdate';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
+import { withTheme } from 'emotion-theming';
 
 import DateContainer from '../../styles/DateContainer';
 import Title from '../../styles/Title';
@@ -278,7 +279,14 @@ class DateRange extends Component {
 					</Title>
 				)}
 				<Flex className={getClassName(this.props.innerClass, 'input-container') || null}>
-					<Flex flex={2} showBorder={this.props.showClear} iconPosition="right">
+					<Flex
+						flex={2}
+						showBorder={this.props.showClear}
+						iconPosition="right"
+						style={{
+							background: this.props.theme.colors.backgroundColor || 'transparent',
+						}}
+					>
 						<DayPickerInput
 							showOverlay={this.props.focused}
 							formatDate={this.formatInputDate}
@@ -318,7 +326,14 @@ class DateRange extends Component {
 					<Flex justifyContent="center" alignItems="center" basis="20px">
 						-
 					</Flex>
-					<Flex flex={2} showBorder={this.props.showClear} iconPosition="right">
+					<Flex
+						flex={2}
+						showBorder={this.props.showClear}
+						iconPosition="right"
+						style={{
+							background: this.props.theme.colors.backgroundColor || 'transparent',
+						}}
+					>
 						<DayPickerInput
 							ref={this.getEndDateRef}
 							showOverlay={this.props.focused}
@@ -388,6 +403,7 @@ DateRange.propTypes = {
 	showClear: types.bool,
 	showFilter: types.bool,
 	style: types.style,
+	theme: types.style,
 	title: types.string,
 };
 
@@ -416,4 +432,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(DateRange);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(DateRange));
