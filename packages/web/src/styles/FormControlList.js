@@ -79,7 +79,8 @@ const formItem = ({ theme }) => css`
 
 		&::before {
 			background-color: #fff;
-			border: 2px solid ${shade(theme.colors.textColor, 0.2)};
+			border: 2px solid ${theme.colors.borderColor
+				|| shade(theme.colors.textColor, 0.2)};
 			box-sizing: content-box;
 			content: "";
 			color: ${theme.colors.primaryColor};
