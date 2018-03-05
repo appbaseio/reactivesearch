@@ -60,8 +60,11 @@ class ReactiveMap extends Component {
 			{ label: 'Unsaturated Browns', value: UnsaturatedBrowns },
 		];
 
+		const currentMapStyle = this.mapStyles
+			.find(style => style.label === props.defaultMapStyle) || this.mapStyles[0];
+
 		this.state = {
-			currentMapStyle: this.mapStyles[0],
+			currentMapStyle,
 			from: props.currentPage * props.size || 0,
 			isLoading: false,
 			totalPages: 0,
@@ -230,11 +233,20 @@ class ReactiveMap extends Component {
 				zoom: nextProps.defaultZoom,
 			});
 		}
+
+		if (this.props.defaultMapStyle !== nextProps.defaultMapStyle) {
+			this.setState({
+				currentMapStyle: this.mapStyles.find(style =>
+					style.label === nextProps.defaultMapStyle) || this.mapStyles[0],
+			});
+		}
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
 		if (
 			this.state.searchAsMove !== nextState.searchAsMove
+			|| this.props.autoCenter !== nextProps.autoCenter
+			|| this.props.defaultZoom !== nextProps.defaultZoom
 			|| !isEqual(this.state.currentMapStyle, nextState.currentMapStyle)
 		) {
 			return true;
@@ -686,6 +698,7 @@ ReactiveMap.propTypes = {
 	markers: types.children,
 	searchAsMove: types.bool,
 	showSearchAsMove: types.bool,
+	defaultMapStyle: types.string,
 };
 
 ReactiveMap.defaultProps = {
@@ -693,6 +706,7 @@ ReactiveMap.defaultProps = {
 	style: {},
 	className: null,
 	showMapStyles: true,
+	defaultMapStyle: 'Standard',
 	defaultCenter: {
 		lat: -34.397,
 		lng: 150.644,
