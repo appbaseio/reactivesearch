@@ -23,7 +23,6 @@ const Image = styled('div')`
 	height: 160px;
 	${props => (props.small ? smallImage : null)};
 	margin: 0;
-	background-color: #fcfcfc;
 	background-size: contain;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -36,17 +35,29 @@ const ListItem = styled('a')`
 	outline: none;
 	text-decoration: none;
 	border-radius: 0;
-	background-color: #fff;
+	background-color: ${({ theme }) =>
+		theme.colors.backgroundColor
+			? shade(theme.colors.backgroundColor, 0.2)
+			: '#fff'
+	};
 	display: flex;
 	flex-direction: row;
 	margin: 0;
 	padding: 10px;
-	border-bottom: 1px solid ${({ theme }) => shade(theme.colors.textColor, 0.68)};
+	border-bottom: 1px solid ${({ theme }) =>
+		theme.colors.backgroundColor
+			? shade(theme.colors.backgroundColor, 0.68)
+			: shade(theme.colors.textColor, 0.68)
+	};
 	color: ${({ theme }) => theme.colors.textColor};
 	${props => (props.href ? 'cursor: pointer' : null)}; all 0.3s ease;
 
 	&:hover, &:focus {
-		background-color: #fdfefd;
+		background-color: ${({ theme }) =>
+		theme.colors.backgroundColor
+			? shade(theme.colors.backgroundColor, 0.3)
+			: '#fdfefd'
+	};
 	}
 
 	&:last-child {
