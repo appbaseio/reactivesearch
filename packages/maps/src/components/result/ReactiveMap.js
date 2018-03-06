@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
+import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import {
 	addComponent,
 	removeComponent,
@@ -255,6 +256,7 @@ class ReactiveMap extends Component {
 			|| this.props.showMapStyles !== nextProps.showMapStyles
 			|| this.props.autoCenter !== nextProps.autoCenter
 			|| this.props.defaultZoom !== nextProps.defaultZoom
+			|| this.props.showMarkerClusters !== nextProps.showMarkerClusters
 			|| !isEqual(this.state.currentMapStyle, nextState.currentMapStyle)
 			|| !isEqual(this.state.openMarkers, nextState.openMarkers)
 		) {
@@ -599,6 +601,28 @@ class ReactiveMap extends Component {
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 		}
 
+		const markers = [...streamResults, ...filteredResults].map((item) => {
+			if (this.props.onData) return this.props.onData(item);
+
+			const icon = this.getIcon(item);
+			const position = this.getPosition(item);
+			return (
+				<Marker
+					key={item._id}
+					icon={icon}
+					position={position}
+					onClick={() => this.openMarkerInfo(item._id)}
+					{...this.props.markerProps}
+				>
+					{
+						this.props.onPopoverClick
+							? this.renderPopover(item)
+							: null
+					}
+				</Marker>
+			);
+		});
+
 		return (
 			<div style={{ position: 'relative' }}>
 				<MapComponent
@@ -619,27 +643,17 @@ class ReactiveMap extends Component {
 					}}
 				>
 					{
-						[...streamResults, ...filteredResults].map((item) => {
-							if (this.props.onData) return this.props.onData(item);
-
-							const icon = this.getIcon(item);
-							const position = this.getPosition(item);
-							return (
-								<Marker
-									key={item._id}
-									icon={icon}
-									position={position}
-									onClick={() => this.openMarkerInfo(item._id)}
-									{...this.props.markerProps}
+						this.props.showMarkerClusters
+							? (
+								<MarkerClusterer
+									averageCenter
+									enableRetinaIcons
+									gridSize={60}
 								>
-									{
-										this.props.onPopoverClick
-											? this.renderPopover(item)
-											: null
-									}
-								</Marker>
-							);
-						})
+									{markers}
+								</MarkerClusterer>
+							)
+							: markers
 					}
 					{this.props.markers}
 					{this.renderSearchAsMove()}
@@ -750,6 +764,7 @@ ReactiveMap.propTypes = {
 	showSearchAsMove: types.bool,
 	defaultMapStyle: types.string,
 	onPopoverClick: types.func,
+	showMarkerClusters: types.bool,
 };
 
 ReactiveMap.defaultProps = {
@@ -768,6 +783,7 @@ ReactiveMap.defaultProps = {
 	markerProps: {},
 	markers: null,
 	searchAsMove: false,
+	showMarkerClusters: false,
 };
 
 const mapStateToProps = (state, props) => ({
