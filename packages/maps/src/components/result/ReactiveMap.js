@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import {
 	addComponent,
 	removeComponent,
@@ -72,7 +72,8 @@ class ReactiveMap extends Component {
 			mapBoxBounds: null,
 			searchAsMove: props.searchAsMove,
 			zoom: props.defaultZoom,
-			useCurrentCenter: false,
+			openMarkers: {},
+			preserveCenter: false,
 		};
 		this.mapRef = null;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -151,6 +152,12 @@ class ReactiveMap extends Component {
 				this.getGeoQuery(),
 				!!nextProps.center,
 			);
+		}
+
+		if (!isEqual(this.props.hits, nextProps.hits)) {
+			this.setState({
+				openMarkers: {},
+			});
 		}
 
 		if (
@@ -249,6 +256,7 @@ class ReactiveMap extends Component {
 			|| this.props.autoCenter !== nextProps.autoCenter
 			|| this.props.defaultZoom !== nextProps.defaultZoom
 			|| !isEqual(this.state.currentMapStyle, nextState.currentMapStyle)
+			|| !isEqual(this.state.openMarkers, nextState.openMarkers)
 		) {
 			return true;
 		}
@@ -454,11 +462,13 @@ class ReactiveMap extends Component {
 	};
 
 	getCenter = (hits) => {
-		if (this.state.searchAsMove && this.mapRef && this.state.useCurrentCenter) {
+		if (!!this.mapRef && this.state.preserveCenter) {
 			const currentCenter = this.mapRef.getCenter();
-			this.setState({
-				useCurrentCenter: false,
-			});
+			setTimeout(() => {
+				this.setState({
+					preserveCenter: false,
+				});
+			}, 100);
 			return this.parseLocation({
 				lat: currentCenter.lat(),
 				lng: currentCenter.lng(),
@@ -484,7 +494,7 @@ class ReactiveMap extends Component {
 	handleOnDragEnd = () => {
 		if (this.state.searchAsMove) {
 			this.setState({
-				useCurrentCenter: true,
+				preserveCenter: true,
 			}, () => {
 				this.setGeoQuery(true);
 			});
@@ -497,7 +507,7 @@ class ReactiveMap extends Component {
 		if (this.state.searchAsMove) {
 			this.setState({
 				zoom,
-				useCurrentCenter: true,
+				preserveCenter: true,
 			}, () => {
 				this.setGeoQuery(true);
 			});
@@ -549,6 +559,36 @@ class ReactiveMap extends Component {
 		return null;
 	};
 
+	openMarkerInfo = (id) => {
+		this.setState({
+			openMarkers: { ...this.state.openMarkers, ...{ [id]: true } },
+			preserveCenter: true,
+		});
+	}
+
+	closeMarkerInfo = (id) => {
+		const { [id]: del, ...activeMarkers } = this.state.openMarkers;
+		this.setState({
+			openMarkers: activeMarkers,
+			preserveCenter: true,
+		});
+	}
+
+	renderPopover = (item) => {
+		if (item._id in this.state.openMarkers) {
+			return (
+				<InfoWindow
+					zIndex={500}
+					key={`${item._id}-InfoWindow`}
+					onCloseClick={() => this.closeMarkerInfo(item._id)}
+				>
+					{this.props.onPopoverClick(item)}
+				</InfoWindow>
+			);
+		}
+		return null;
+	}
+
 	renderMap = () => {
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
@@ -589,8 +629,15 @@ class ReactiveMap extends Component {
 									key={item._id}
 									icon={icon}
 									position={position}
+									onClick={() => this.openMarkerInfo(item._id)}
 									{...this.props.markerProps}
-								/>
+								>
+									{
+										this.props.onPopoverClick
+											? this.renderPopover(item)
+											: null
+									}
+								</Marker>
 							);
 						})
 					}
@@ -702,6 +749,7 @@ ReactiveMap.propTypes = {
 	searchAsMove: types.bool,
 	showSearchAsMove: types.bool,
 	defaultMapStyle: types.string,
+	onPopoverClick: types.func,
 };
 
 ReactiveMap.defaultProps = {
