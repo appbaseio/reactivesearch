@@ -13,7 +13,7 @@ const dark = ({ theme }) => css`
 	border-color: ${theme.colors.borderColor};
 	color: ${theme.colors.textColor};
 
-	&:hover {
+	&:hover, &:focus {
 		background-color: ${theme.colors.backgroundColor};
 	}
 `;
