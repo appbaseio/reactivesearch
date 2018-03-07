@@ -8,4 +8,4 @@
 
 ## v2.3.1
 
-- Add 🌳 tree shaking capabilities with ES modules support 62a2ace6148fbbe6795ea69fc85a0ea260501a72
+- Add 🌳 tree shaking capabilities with ES modules support [here](https://github.com/appbaseio/reactivesearch/commit/62a2ace6148fbbe6795ea69fc85a0ea260501a72)
