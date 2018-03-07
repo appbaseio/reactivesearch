@@ -5,5 +5,5 @@
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 
-    - Add 🌳 tree shaking capabilities with ES modules support
+    - Add 🌳 tree shaking capabilities with ES modules support 62a2ace6148fbbe6795ea69fc85a0ea260501a72
 </details>
