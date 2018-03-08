@@ -11,6 +11,9 @@ const FilterContainer = styled.div`
 	position: fixed;
 	background: #fafafa;
 	z-index: 2;
+	.list {
+		max-height: 140px;
+	}
 	${queries.large`
 		width: 100%;
 		min-height: 100vh;

@@ -27,7 +27,7 @@ const onData = (data, currentTopics, toggleTopic) => (
 				</Flex>
 			</Link>
 		</Flex>
-		<div style={{ margin: '10px 0' }}>{data.description}</div>
+		<div style={{ margin: '10px 0', color: '#424242' }}>{data.description}</div>
 		<Flex flexWrap justifyContent="center">
 			{
 				data.topics.slice(0, 7)

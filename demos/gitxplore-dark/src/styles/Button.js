@@ -43,7 +43,7 @@ const Button = styled.div`
 
 	&:hover {
 		background: ${theme.colors.primaryColor};
-		color: white;
+		color: #424242;
 	}
 `;
 

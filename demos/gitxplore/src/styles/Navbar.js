@@ -1,7 +1,7 @@
 import styled, { css } from 'react-emotion';
 
 import { queries } from './mediaQueries';
-import color from './theme';
+import theme from './theme';
 
 export const title = css`
 	color: white;
@@ -19,7 +19,7 @@ export const title = css`
 `;
 
 const Navbar = styled.nav`
-	background: ${color.secondaryColor};
+	background: ${theme.colors.secondaryColor};
 	left: 0;
 	width: 400px;
 	padding: 1rem;

@@ -5,7 +5,7 @@ const theme = {
 	colors: {
 		primaryColor: 'aquamarine',
 		secondaryColor: '#303030',
-		lightGray: '#eff3f6',
+		lightGray: '#424242',
 	},
 	component: {
 	},
