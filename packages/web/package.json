@@ -11,7 +11,7 @@
     "umd"
   ],
   "scripts": {
-    "watch": "yarn run build -w",
+    "watch": "yarn build:commonjs -w && yarn build:es -w",
     "build": "yarn build:commonjs && yarn build:es",
     "build:commonjs": "BABEL_ENV=commonjs babel --ignore __tests__ src --out-dir lib",
     "build:es": "BABEL_ENV=es babel src/index.js --out-file lib/index.es.js",
