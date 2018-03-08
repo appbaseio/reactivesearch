@@ -65,6 +65,10 @@ The components are divided into four sections:
 * Search UI components are at [reactive-manual/search-components](https://opensource.appbase.io/reactive-manual/search-components/datasearch.html).
 * Result components are at [reactive-manual/result-components](https://opensource.appbase.io/reactive-manual/result-components/resultlist.html).
 
+## Changelog
+
+Check out the [changelog](./CHANGELOG.md) for more info.
+
 ## Related tooling and projects
 
 - [**ReactiveSearch Dashboard**](https://dashboard.appbase.io/reactivesearch/) All your Reactive Search related apps (created via interactive tutorial, shared by others, etc.) can be accessed from here.
