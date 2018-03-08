@@ -1,6 +1,6 @@
 import styled, { css } from 'react-emotion';
 
-import color from './theme';
+import theme from './theme';
 
 export const price = css`
 	color: #fff;
@@ -9,14 +9,14 @@ export const price = css`
 	right: 0;
 	padding: 10px;
 	font-size: 1.3rem;
-	background: ${color.secondaryColor};
+	background: ${theme.colors.secondaryColor};
 `;
 
 const Topic = styled.div`
-	background: ${color.lightGray};
+	background: ${theme.colors.lightGray};
 	margin: 3px;
 	padding: 3px;
-	color: ${color.secondaryColor};
+	color: ${theme.colors.secondaryColor};
 	font-weight: bold;
 	border-radius: 4px;
 `;

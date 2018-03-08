@@ -6,6 +6,9 @@ const FilterContainer = styled.div`
 	text-transform: capitalize;
 	width: 330px;
 	margin: 0 20px;
+	.list {
+		max-height: 540px;
+	}
 	${queries.medium`
 		position: fixed;
 		height: 100vh;

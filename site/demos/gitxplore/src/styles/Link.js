@@ -1,17 +1,17 @@
 import styled from 'react-emotion';
 
-import color from './theme';
+import theme from './theme';
 
 const Link = styled.a`
 	cursor: pointer;
-	color: ${color.secondaryColor};
+	color: ${theme.colors.secondaryColor};
 	text-decoration: none;
 	font-weight: bold;
 	margin-left: 20px;
 	font-size: 1.2rem;
 
 	&:hover {
-		color: ${color.primaryColor};
+		color: ${theme.colors.primaryColor};
 	}
 `;
 

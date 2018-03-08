@@ -10,6 +10,7 @@ const Topic = styled.div`
 	font-weight: bold;
 	cursor: pointer;
 	border-radius: 4px;
+	color: ${({ active }) => (active ? '#424242' : theme.colors.textColor)};
 
 	&:hover {
 		background: ${theme.colors.primaryColor};

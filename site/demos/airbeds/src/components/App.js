@@ -11,7 +11,9 @@ export default () => (
 			credentials="0aL1X5Vts:1ee67be1-9195-4f4b-bd4f-a91cd1b5e4b5"
 			type="listing"
 			theme={{
-				primaryColor: '#FF3A4E',
+				colors: {
+					primaryColor: '#FF3A4E',
+				},
 			}}
 		>
 			<nav className={nav}>
