@@ -4,6 +4,8 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
+
+    - Add `customHighlight` prop support in `DataSearch` and `CategorySearch` #285
 </details>
 
 ## v2.3.1
