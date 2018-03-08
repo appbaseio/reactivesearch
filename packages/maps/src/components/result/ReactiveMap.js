@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
+import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
 import {
 	addComponent,
 	removeComponent,
@@ -25,6 +26,7 @@ import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
 import Pagination from '@appbaseio/reactivesearch/lib/components/result/addons/Pagination';
 import { Checkbox } from '@appbaseio/reactivesearch/lib/styles/FormControlList';
+import { MapPin, MapPinArrow } from './addons/styles/MapPin';
 
 const Standard = require('./addons/styles/Standard');
 const BlueEssence = require('./addons/styles/BlueEssence');
@@ -426,13 +428,6 @@ class ReactiveMap extends Component {
 		}
 	};
 
-	getIcon = (result) => {
-		if (this.props.onData) {
-			return this.props.onData(result);
-		}
-		return this.props.mapPin;
-	};
-
 	getPosition = (result) => {
 		if (result) {
 			return this.parseLocation(result[this.props.dataField]);
@@ -602,14 +597,49 @@ class ReactiveMap extends Component {
 		}
 
 		const markers = [...streamResults, ...filteredResults].map((item) => {
-			const icon = this.getIcon(item);
-			const position = this.getPosition(item);
+			const markerProps = {
+				position: this.getPosition(item),
+			};
+
+			if (this.props.onData) {
+				const data = this.props.onData(item);
+
+				if ('label' in data) {
+					return (
+						<MarkerWithLabel
+							key={item._id}
+							labelAnchor={new window.google.maps.Point(0, 30)}
+							icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
+							{...markerProps}
+							{...this.props.markerProps}
+						>
+							<div>
+								<MapPin>{data.label}</MapPin>
+								<MapPinArrow />
+							</div>
+						</MarkerWithLabel>
+					);
+				} else if ('icon' in data) {
+					markerProps.icon = data.icon;
+				} else {
+					return (
+						<MarkerWithLabel
+							key={item._id}
+							labelAnchor={new window.google.maps.Point(0, 0)}
+							{...markerProps}
+							{...this.props.markerProps}
+						>
+							{data.custom}
+						</MarkerWithLabel>
+					);
+				}
+			}
+
 			return (
 				<Marker
 					key={item._id}
-					icon={icon}
-					position={position}
 					onClick={() => this.openMarkerInfo(item._id)}
+					{...markerProps}
 					{...this.props.markerProps}
 				>
 					{
@@ -748,7 +778,7 @@ ReactiveMap.propTypes = {
 	stream: types.bool,
 	style: types.style,
 	URLParams: types.bool,
-	mapPin: types.string,
+	defaultPin: types.string,
 	defaultCenter: types.location,
 	center: types.location,
 	showMapStyles: types.bool,
