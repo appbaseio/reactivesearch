@@ -427,8 +427,8 @@ class ReactiveMap extends Component {
 	};
 
 	getIcon = (result) => {
-		if (this.props.renderMapPin) {
-			return this.props.renderMapPin(result);
+		if (this.props.onData) {
+			return this.props.onData(result);
 		}
 		return this.props.mapPin;
 	};
@@ -602,8 +602,6 @@ class ReactiveMap extends Component {
 		}
 
 		const markers = [...streamResults, ...filteredResults].map((item) => {
-			if (this.props.onData) return this.props.onData(item);
-
 			const icon = this.getIcon(item);
 			const position = this.getPosition(item);
 			return (
@@ -751,7 +749,6 @@ ReactiveMap.propTypes = {
 	style: types.style,
 	URLParams: types.bool,
 	mapPin: types.string,
-	renderMapPin: types.func,
 	defaultCenter: types.location,
 	center: types.location,
 	showMapStyles: types.bool,
