@@ -157,6 +157,9 @@ class CategorySearch extends Component {
 	};
 
 	highlightQuery = (props) => {
+		if (props.customHighlight) {
+			return props.customHighlight(props);
+		}
 		if (!props.highlight) {
 			return null;
 		}
@@ -580,6 +583,7 @@ CategorySearch.propTypes = {
 	categoryField: types.string,
 	className: types.string,
 	componentId: types.stringRequired,
+	customHighlight: types.func,
 	customQuery: types.func,
 	dataField: types.dataFieldArray,
 	debounce: types.number,
