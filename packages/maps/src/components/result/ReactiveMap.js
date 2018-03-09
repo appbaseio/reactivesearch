@@ -843,7 +843,7 @@ ReactiveMap.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	mapKey: state.config.mapKey,
-	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	streamHits: state.streamHits[props.componentId] || [],
 });
 
