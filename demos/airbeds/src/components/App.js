@@ -1,5 +1,6 @@
 import React from 'react';
-import { ReactiveBase, DataSearch, ResultCard } from '@appbaseio/reactivesearch';
+import { ReactiveBase, DataSearch } from '@appbaseio/reactivesearch';
+import { ReactiveMap } from '@appbaseio/reactivemaps';
 
 import { nav, container, rightCol, search, title } from '../styles';
 import Filters from './Filters';
@@ -30,31 +31,36 @@ export default () => (
 			</nav>
 			<Filters />
 
-			<ResultCard
+			<ReactiveMap
 				className={rightCol}
-				componentId="SearchResult"
-				dataField="name"
-				size={12}
-				onData={data => ({
-					image: data.image,
-					title: data.name,
-					description: (
-						<div>
-							<div className="price">${data.price}</div>
-							<p className="info">{data.room_type} · {data.accommodates} guests</p>
+				componentId="map"
+				dataField="location"
+				defaultZoom={13}
+				onAllData={(hits, streamHits, loadMore, renderMap, renderPagination) => (
+					<div style={{ display: 'flex' }}>
+						<div style={{ width: '100%' }}>
+							{hits && hits.map(data => (
+								<div key={data._id} className="card">
+									<img src={data._source.image} alt={data._source.name} />
+									<div>
+										<h2>{data._source.name}</h2>
+										<div className="price">${data._source.price}</div>
+										<p className="info">{data._source.room_type} · {data._source.accommodates} guests</p>
+									</div>
+								</div>
+							))}
+							{renderPagination()}
 						</div>
-					),
-					url: data.listing_url,
+						<div style={{ width: '800px' }}>
+							{renderMap()}
+						</div>
+					</div>
+				)}
+				onData={data => ({
+					label: <span style={{ width: 40, display: 'block', textAlign: 'center' }}>${data.price}</span>,
 				})}
-				pagination
 				react={{
 					and: ['GuestSensor', 'PriceSensor', 'DateRangeSensor', 'search'],
-				}}
-				innerClass={{
-					resultStats: 'result-stats',
-					list: 'list',
-					listItem: 'list-item',
-					image: 'image',
 				}}
 			/>
 		</ReactiveBase>
