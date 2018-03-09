@@ -80,7 +80,14 @@ class Dropdown extends Component {
 
 	render() {
 		const {
-			items, selectedItem, placeholder, labelField, keyField, themePreset, theme,
+			items,
+			selectedItem,
+			placeholder,
+			labelField,
+			keyField,
+			themePreset,
+			theme,
+			renderListItem,
 		} = this.props;
 
 		return (<Downshift
@@ -138,30 +145,36 @@ class Dropdown extends Component {
 															),
 														}}
 													>
-														<div>
-															{
-																typeof item[labelField] === 'string'
-																	? <span
-																		dangerouslySetInnerHTML={{
-																			__html: item[labelField],
-																		}}
-																	/>
-																	: item[labelField]
-															}
-															{
-																this.props.showCount && item.doc_count
-																	&& (
-																		<span
-																			className={
-																				getClassName(this.props.innerClass, 'count')
-																				|| null
-																			}
-																		>
-																			&nbsp;({item.doc_count})
-																		</span>
-																	)
-															}
-														</div>
+														{
+															renderListItem
+																? renderListItem(item[labelField], item.doc_count)
+																: (
+																	<div>
+																		{
+																			typeof item[labelField] === 'string'
+																				? <span
+																					dangerouslySetInnerHTML={{
+																						__html: item[labelField],
+																					}}
+																				/>
+																				: item[labelField]
+																		}
+																		{
+																			this.props.showCount && item.doc_count
+																				&& (
+																					<span
+																						className={
+																							getClassName(this.props.innerClass, 'count')
+																							|| null
+																						}
+																					>
+																						&nbsp;({item.doc_count})
+																					</span>
+																				)
+																		}
+																	</div>
+																)
+														}
 														{
 															selected && this.props.multi
 																? (<Tick
@@ -201,6 +214,7 @@ Dropdown.propTypes = {
 	onChange: types.func,
 	placeholder: types.string,
 	returnsObject: types.bool,
+	renderListItem: types.func,
 	selectedItem: types.selectedValue,
 	showCount: types.bool,
 	single: types.bool,

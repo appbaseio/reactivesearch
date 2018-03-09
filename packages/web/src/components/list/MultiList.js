@@ -284,7 +284,7 @@ class MultiList extends Component {
 	};
 
 	render() {
-		const { selectAllLabel } = this.props;
+		const { selectAllLabel, renderListItem } = this.props;
 
 		if (this.state.options.length === 0) {
 			return null;
@@ -345,19 +345,27 @@ class MultiList extends Component {
 										className={getClassName(this.props.innerClass, 'label') || null}
 										htmlFor={`${this.props.componentId}-${item.key}`}
 									>
-										{item.key}
 										{
-											this.props.showCount
-											&& (
-												<span
-													className={
-														getClassName(this.props.innerClass, 'count')
-														|| null
-													}
-												>
-													&nbsp;({item.doc_count})
-												</span>
-											)
+											renderListItem
+												? renderListItem(item.key, item.doc_count)
+												: (
+													<span>
+														{item.key}
+														{
+															this.props.showCount
+															&& (
+																<span
+																	className={
+																		getClassName(this.props.innerClass, 'count')
+																		|| null
+																	}
+																>
+																	&nbsp;({item.doc_count})
+																</span>
+															)
+														}
+													</span>
+												)
 										}
 									</label>
 								</li>
@@ -391,6 +399,7 @@ MultiList.propTypes = {
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
+	renderListItem: types.func,
 	selectAllLabel: types.string,
 	showCheckbox: types.boolRequired,
 	showCount: types.bool,
