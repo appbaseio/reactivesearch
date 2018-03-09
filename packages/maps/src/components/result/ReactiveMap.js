@@ -688,7 +688,7 @@ class ReactiveMap extends Component {
 		return (
 			<div style={{ ...style, ...this.props.style }}>
 				<MapComponent
-					containerElement={<div style={{ ...style, ...this.props.style }}	/>}
+					containerElement={<div style={{ ...style, ...this.props.style }} />}
 					mapElement={<div style={{ height: '100%' }} />}
 					onMapMounted={(ref) => {
 						this.mapRef = ref;
@@ -827,7 +827,6 @@ ReactiveMap.propTypes = {
 	defaultMapStyle: types.string,
 	onPopoverClick: types.func,
 	showMarkerClusters: types.bool,
-	containerElement: types.title,
 };
 
 ReactiveMap.defaultProps = {
