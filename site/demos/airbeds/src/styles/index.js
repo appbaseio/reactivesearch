@@ -73,10 +73,9 @@ const rightCol = css`
 		margin-bottom: 30px;
 	}
 
-	.list-item {
+	.card {
 		max-width: none;
 		min-width: 0;
-		width: calc(30% - 16px);
 		height: auto;
 		background-color: transparent;
 		border: 0;
@@ -87,9 +86,11 @@ const rightCol = css`
 
 		h2 {
 			padding-bottom: 4px;
+			font-size: 1rem;
+			margin: 0;
 		}
 
-		.image {
+		image {
 			background-size: cover;
 		}
 
@@ -98,7 +99,7 @@ const rightCol = css`
 			height: 44px;
 			background-color: #424242;
 			position: absolute;
-			top: 160px;
+			top: 130px;
 			left: 0;
 			color: #fafafa;
 			font-size: 18px;
@@ -111,6 +112,7 @@ const rightCol = css`
 		.info {
 			color: #555;
 			font-size: 14px;
+			margin: 0;
 			margin-bottom: 4px;
 		}
 	}
