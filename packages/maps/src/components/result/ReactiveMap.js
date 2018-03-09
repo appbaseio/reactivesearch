@@ -827,6 +827,8 @@ ReactiveMap.defaultProps = {
 	style: {},
 	className: null,
 	showMapStyles: true,
+	pages: 5,
+	pagination: false,
 	defaultMapStyle: 'Standard',
 	defaultCenter: {
 		lat: -34.397,
@@ -845,6 +847,12 @@ const mapStateToProps = (state, props) => ({
 	mapKey: state.config.mapKey,
 	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	streamHits: state.streamHits[props.componentId] || [],
+	currentPage: (
+		state.selectedValues[`${props.componentId}-page`]
+		&& state.selectedValues[`${props.componentId}-page`].value - 1
+	) || 0,
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 });
 
 const mapDispatchtoProps = dispatch => ({

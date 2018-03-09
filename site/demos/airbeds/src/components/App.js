@@ -36,10 +36,11 @@ export default () => (
 				componentId="map"
 				dataField="location"
 				defaultZoom={13}
+				pagination
 				onAllData={(hits, streamHits, loadMore, renderMap, renderPagination) => (
 					<div style={{ display: 'flex' }}>
 						<div style={{ width: '100%' }}>
-							{hits && hits.map(data => (
+							{hits.map(data => (
 								<div key={data._id} className="card">
 									<img src={data._source.image} alt={data._source.name} />
 									<div>
