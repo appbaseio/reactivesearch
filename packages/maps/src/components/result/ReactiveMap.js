@@ -679,10 +679,16 @@ class ReactiveMap extends Component {
 			);
 		});
 
+		const style = {
+			width: '100%',
+			height: '100vh',
+			position: 'relative',
+		};
+
 		return (
-			<div style={{ position: 'relative' }}>
+			<div style={{ ...style, ...this.props.style }}>
 				<MapComponent
-					containerElement={<div style={{ height: '100vh' }} />}
+					containerElement={<div style={{ ...style, ...this.props.style }}	/>}
 					mapElement={<div style={{ height: '100%' }} />}
 					onMapMounted={(ref) => {
 						this.mapRef = ref;
@@ -723,6 +729,7 @@ class ReactiveMap extends Component {
 									top: 10,
 									right: 46,
 									width: 120,
+									zIndex: window.google.maps.Marker.MAX_ZINDEX + 1,
 								}}
 							>
 								<Dropdown
@@ -758,8 +765,8 @@ class ReactiveMap extends Component {
 				{
 					this.props.onAllData
 						? this.props.onAllData(
-							this.props.hits,
-							this.props.streamHits,
+							parseHits(this.props.hits),
+							parseHits(this.props.streamHits),
 							this.loadMore,
 							this.renderMap,
 							this.renderPagination,
@@ -820,6 +827,7 @@ ReactiveMap.propTypes = {
 	defaultMapStyle: types.string,
 	onPopoverClick: types.func,
 	showMarkerClusters: types.bool,
+	containerElement: types.title,
 };
 
 ReactiveMap.defaultProps = {
