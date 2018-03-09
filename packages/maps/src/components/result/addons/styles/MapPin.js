@@ -1,4 +1,4 @@
-import styled from 'react-emotion';
+import styled, { css } from 'react-emotion';
 
 const MapPin = styled('div')`
 	height: 24px;
@@ -25,7 +25,14 @@ const MapPinArrow = styled('div')`
 	transform: rotate(45deg);
 `;
 
+const mapPinWrapper = css`
+	&:hover, &:focus {
+		z-index: 200;
+	}
+`;
+
 export {
 	MapPin,
 	MapPinArrow,
+	mapPinWrapper,
 };

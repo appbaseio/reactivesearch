@@ -26,7 +26,7 @@ import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
 import Pagination from '@appbaseio/reactivesearch/lib/components/result/addons/Pagination';
 import { Checkbox } from '@appbaseio/reactivesearch/lib/styles/FormControlList';
-import { MapPin, MapPinArrow } from './addons/styles/MapPin';
+import { MapPin, MapPinArrow, mapPinWrapper } from './addons/styles/MapPin';
 
 const Standard = require('./addons/styles/Standard');
 const BlueEssence = require('./addons/styles/BlueEssence');
@@ -77,6 +77,7 @@ class ReactiveMap extends Component {
 			zoom: props.defaultZoom,
 			openMarkers: {},
 			preserveCenter: false,
+			markerOnTop: null,
 		};
 		this.mapRef = null;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -255,6 +256,7 @@ class ReactiveMap extends Component {
 	shouldComponentUpdate(nextProps, nextState) {
 		if (
 			this.state.searchAsMove !== nextState.searchAsMove
+			|| this.state.markerOnTop !== nextState.markerOnTop
 			|| this.props.showMapStyles !== nextProps.showMapStyles
 			|| this.props.autoCenter !== nextProps.autoCenter
 			|| this.props.defaultZoom !== nextProps.defaultZoom
@@ -530,7 +532,7 @@ class ReactiveMap extends Component {
 						position: 'absolute',
 						bottom: 30,
 						left: 10,
-						width: 170,
+						width: 235,
 						backgroundColor: '#fff',
 						padding: '8px 10px',
 						boxShadow: 'rgba(0,0,0,0.3) 0px 1px 4px -1px',
@@ -547,7 +549,7 @@ class ReactiveMap extends Component {
 						className={getClassName(this.props.innerClass, 'label') || null}
 						htmlFor="searchasmove"
 					>
-						Search as move
+						Search as I move the map
 					</label>
 				</div>
 			);
@@ -586,6 +588,20 @@ class ReactiveMap extends Component {
 		return null;
 	}
 
+	increaseMarkerZIndex = (id) => {
+		this.setState({
+			markerOnTop: id,
+			preserveCenter: true,
+		});
+	}
+
+	removeMarkerZIndex = () => {
+		this.setState({
+			markerOnTop: null,
+			preserveCenter: true,
+		});
+	}
+
 	renderMap = () => {
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
@@ -601,6 +617,10 @@ class ReactiveMap extends Component {
 				position: this.getPosition(item),
 			};
 
+			if (this.state.markerOnTop === item._id) {
+				markerProps.zIndex = window.google.maps.Marker.MAX_ZINDEX + 1;
+			}
+
 			if (this.props.onData) {
 				const data = this.props.onData(item);
 
@@ -610,10 +630,14 @@ class ReactiveMap extends Component {
 							key={item._id}
 							labelAnchor={new window.google.maps.Point(0, 30)}
 							icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
+							onMouseOver={() => this.increaseMarkerZIndex(item._id)}
+							onFocus={() => this.increaseMarkerZIndex(item._id)}
+							onMouseOut={this.removeMarkerZIndex}
+							onBlur={this.removeMarkerZIndex}
 							{...markerProps}
 							{...this.props.markerProps}
 						>
-							<div>
+							<div className={mapPinWrapper}>
 								<MapPin>{data.label}</MapPin>
 								<MapPinArrow />
 							</div>
@@ -626,6 +650,10 @@ class ReactiveMap extends Component {
 						<MarkerWithLabel
 							key={item._id}
 							labelAnchor={new window.google.maps.Point(0, 0)}
+							onMouseOver={() => this.increaseMarkerZIndex(item._id)}
+							onFocus={() => this.increaseMarkerZIndex(item._id)}
+							onMouseOut={this.removeMarkerZIndex}
+							onBlur={this.removeMarkerZIndex}
 							{...markerProps}
 							{...this.props.markerProps}
 						>
