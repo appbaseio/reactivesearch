@@ -5,9 +5,9 @@ import {
 	Text,
 } from 'native-base';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { getInnerKey } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import TouchableItem from './TouchableItem';
-import { getInnerKey } from '../../utils';
 
 class CheckboxItem extends Component {
 	handlePress = () => {
