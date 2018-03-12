@@ -195,6 +195,9 @@ class ReactiveMap extends Component {
 
 		// called when page is changed
 		if (this.props.pagination && this.state.isLoading) {
+			if (nextProps.onPageChange) {
+				nextProps.onPageChange();
+			}
 			this.setState({
 				isLoading: false,
 			});
@@ -220,6 +223,9 @@ class ReactiveMap extends Component {
 			&& this.props.hits
 			&& nextProps.hits.length < this.props.hits.length
 		) {
+			if (nextProps.onPageChange) {
+				nextProps.onPageChange();
+			}
 			this.setState({
 				from: 0,
 				isLoading: false,
@@ -532,7 +538,7 @@ class ReactiveMap extends Component {
 						position: 'absolute',
 						bottom: 30,
 						left: 10,
-						width: 235,
+						width: 240,
 						backgroundColor: '#fff',
 						padding: '8px 10px',
 						boxShadow: 'rgba(0,0,0,0.3) 0px 1px 4px -1px',
@@ -827,13 +833,13 @@ ReactiveMap.propTypes = {
 	defaultMapStyle: types.string,
 	onPopoverClick: types.func,
 	showMarkerClusters: types.bool,
+	onPageChange: types.func,
 };
 
 ReactiveMap.defaultProps = {
 	size: 10,
 	style: {},
 	className: null,
-	showMapStyles: true,
 	pages: 5,
 	pagination: false,
 	defaultMapStyle: 'Standard',
@@ -846,6 +852,8 @@ ReactiveMap.defaultProps = {
 	mapProps: {},
 	markerProps: {},
 	markers: null,
+	showMapStyles: false,
+	showSearchAsMove: false,
 	searchAsMove: false,
 	showMarkerClusters: false,
 };
