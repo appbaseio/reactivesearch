@@ -2,7 +2,7 @@ import React from 'react';
 import { ReactiveBase, DataSearch } from '@appbaseio/reactivesearch';
 import { ReactiveMap } from '@appbaseio/reactivemaps';
 
-import { nav, container, search, title } from '../styles';
+import { nav, container, rightCol, search, title } from '../styles';
 import Filters from './Filters';
 
 export default () => (
@@ -36,28 +36,27 @@ export default () => (
 				dataField="location"
 				defaultZoom={13}
 				pagination
-				showSearchAsMove
+				onPageChange={() => { window.scrollTo(0, 0); }}
 				style={{
-				// 	width: '400px',
 					height: 'calc(100vh - 52px)',
-				// 	position: 'fixed',
-				// 	top: '52px',
-				// 	right: 0,
-				// 	zIndex: 200,
 				}}
+				className={rightCol}
 				onAllData={(hits, streamHits, loadMore, renderMap, renderPagination) => (
-					<div style={{
-						width: 'calc(100% - 320px)',
-						position: 'absolute',
-						right: 0,
-						display: 'flex',
-					}}
-					>
-						<div style={{ width: '50%' }}>
-							{hits.map(item => (<div key={item._id}>{item.price}</div>))}
+					<div style={{ display: 'flex' }}>
+						<div className="card-container">
+							{hits.map(data => (
+								<div key={data._id} className="card">
+									<div className="card__image" style={{ backgroundImage: `url(${data.image})` }} alt={data.name} />
+									<div>
+										<h2>{data.name}</h2>
+										<div className="card__price">${data.price}</div>
+										<p className="card__info">{data.room_type} · {data.accommodates} guests</p>
+									</div>
+								</div>
+							))}
 							{renderPagination()}
 						</div>
-						<div style={{ width: '50%' }}>
+						<div className="map-container">
 							{renderMap()}
 						</div>
 					</div>
