@@ -14,7 +14,7 @@ import {
 	checkPropChange,
 	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-import Rheostat from 'rheostat';
+import Rheostat from 'rheostat/lib/Slider';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
