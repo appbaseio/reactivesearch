@@ -15,7 +15,7 @@
     "build": "yarn build:commonjs && yarn build:es",
     "build:commonjs": "BABEL_ENV=commonjs babel --ignore __tests__ src --out-dir lib",
     "build:es": "BABEL_ENV=es babel src/index.js --out-file lib/index.es.js",
-    "build:umd": "webpack --progress -p --config webpack.config.umd.js",
+    "build:umd": "BABEL_ENV=commonjs webpack --progress -p --config webpack.config.umd.js",
     "stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
     "prepublish": "yarn run build",
     "test": "../../node_modules/jest/bin/jest.js --watch"
