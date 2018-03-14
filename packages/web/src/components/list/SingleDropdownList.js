@@ -108,12 +108,24 @@ class SingleDropdownList extends Component {
 
 	defaultQuery = (value, props) => {
 		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
+			if (this.props.showMissing === true) {
+				return {};
+			}
 			return {
 				exists: {
 					field: props.dataField,
 				},
 			};
 		} else if (value) {
+			if (this.props.showMissing === true && value === this.props.missingLabel) {
+				return {
+					bool: {
+						must_not: {
+							exists: { field: props.dataField },
+						},
+					},
+				};
+			}
 			return {
 				[this.type]: {
 					[props.dataField]: value,
@@ -172,6 +184,7 @@ class SingleDropdownList extends Component {
 					field: props.dataField,
 					size: props.size,
 					order: getAggsOrder(props.sortBy),
+					...(this.props.showMissing ? { missing: this.props.missingLabel } : {}),
 				},
 			},
 		};
@@ -239,6 +252,9 @@ SingleDropdownList.propTypes = {
 	renderListItem: types.func,
 	selectAllLabel: types.string,
 	showCount: types.bool,
+	showMissing: types.bool,
+	missingLabel: types.string,
+	innerClass: types.style,
 	showFilter: types.bool,
 	size: types.number,
 	sortBy: types.sortByWithCount,
@@ -256,6 +272,10 @@ SingleDropdownList.defaultProps = {
 	size: 100,
 	sortBy: 'count',
 	style: {},
+	showMissing: false,
+	missingLabel: 'N/A',
+	className: null,
+	showCount: true,
 	URLParams: false,
 };
 
