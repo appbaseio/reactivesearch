@@ -618,72 +618,76 @@ class ReactiveMap extends Component {
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 		}
 
-		const markers = [...streamResults, ...filteredResults].map((item) => {
-			const markerProps = {
-				position: this.getPosition(item),
-			};
+		let markers = [];
 
-			if (this.state.markerOnTop === item._id) {
-				markerProps.zIndex = window.google.maps.Marker.MAX_ZINDEX + 1;
-			}
+		if (this.props.showMarkers) {
+			markers = [...streamResults, ...filteredResults].map((item) => {
+				const markerProps = {
+					position: this.getPosition(item),
+				};
 
-			if (this.props.onData) {
-				const data = this.props.onData(item);
-
-				if ('label' in data) {
-					return (
-						<MarkerWithLabel
-							key={item._id}
-							labelAnchor={new window.google.maps.Point(0, 30)}
-							icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
-							onMouseOver={() => this.increaseMarkerZIndex(item._id)}
-							onFocus={() => this.increaseMarkerZIndex(item._id)}
-							onMouseOut={this.removeMarkerZIndex}
-							onBlur={this.removeMarkerZIndex}
-							{...markerProps}
-							{...this.props.markerProps}
-						>
-							<div className={mapPinWrapper}>
-								<MapPin>{data.label}</MapPin>
-								<MapPinArrow />
-							</div>
-						</MarkerWithLabel>
-					);
-				} else if ('icon' in data) {
-					markerProps.icon = data.icon;
-				} else {
-					return (
-						<MarkerWithLabel
-							key={item._id}
-							labelAnchor={new window.google.maps.Point(0, 0)}
-							onMouseOver={() => this.increaseMarkerZIndex(item._id)}
-							onFocus={() => this.increaseMarkerZIndex(item._id)}
-							onMouseOut={this.removeMarkerZIndex}
-							onBlur={this.removeMarkerZIndex}
-							{...markerProps}
-							{...this.props.markerProps}
-						>
-							{data.custom}
-						</MarkerWithLabel>
-					);
+				if (this.state.markerOnTop === item._id) {
+					markerProps.zIndex = window.google.maps.Marker.MAX_ZINDEX + 1;
 				}
-			}
 
-			return (
-				<Marker
-					key={item._id}
-					onClick={() => this.openMarkerInfo(item._id)}
-					{...markerProps}
-					{...this.props.markerProps}
-				>
-					{
-						this.props.onPopoverClick
-							? this.renderPopover(item)
-							: null
+				if (this.props.onData) {
+					const data = this.props.onData(item);
+
+					if ('label' in data) {
+						return (
+							<MarkerWithLabel
+								key={item._id}
+								labelAnchor={new window.google.maps.Point(0, 30)}
+								icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
+								onMouseOver={() => this.increaseMarkerZIndex(item._id)}
+								onFocus={() => this.increaseMarkerZIndex(item._id)}
+								onMouseOut={this.removeMarkerZIndex}
+								onBlur={this.removeMarkerZIndex}
+								{...markerProps}
+								{...this.props.markerProps}
+							>
+								<div className={mapPinWrapper}>
+									<MapPin>{data.label}</MapPin>
+									<MapPinArrow />
+								</div>
+							</MarkerWithLabel>
+						);
+					} else if ('icon' in data) {
+						markerProps.icon = data.icon;
+					} else {
+						return (
+							<MarkerWithLabel
+								key={item._id}
+								labelAnchor={new window.google.maps.Point(0, 0)}
+								onMouseOver={() => this.increaseMarkerZIndex(item._id)}
+								onFocus={() => this.increaseMarkerZIndex(item._id)}
+								onMouseOut={this.removeMarkerZIndex}
+								onBlur={this.removeMarkerZIndex}
+								{...markerProps}
+								{...this.props.markerProps}
+							>
+								{data.custom}
+							</MarkerWithLabel>
+						);
 					}
-				</Marker>
-			);
-		});
+				}
+
+				return (
+					<Marker
+						key={item._id}
+						onClick={() => this.openMarkerInfo(item._id)}
+						{...markerProps}
+						{...this.props.markerProps}
+					>
+						{
+							this.props.onPopoverClick
+								? this.renderPopover(item)
+								: null
+						}
+					</Marker>
+				);
+			});
+		}
 
 		const style = {
 			width: '100%',
@@ -698,7 +702,9 @@ class ReactiveMap extends Component {
 					mapElement={<div style={{ height: '100%' }} />}
 					onMapMounted={(ref) => {
 						this.mapRef = ref;
-						this.props.innerRef(ref);
+						if (this.props.innerRef) {
+							this.props.innerRef(ref);
+						}
 					}}
 					zoom={this.state.zoom}
 					center={this.getCenter(filteredResults)}
@@ -712,7 +718,7 @@ class ReactiveMap extends Component {
 					}}
 				>
 					{
-						this.props.showMarkerClusters
+						this.props.showMarkers && this.props.showMarkerClusters
 							? (
 								<MarkerClusterer
 									averageCenter
@@ -724,7 +730,7 @@ class ReactiveMap extends Component {
 							)
 							: markers
 					}
-					{this.props.markers}
+					{this.props.showMarkers && this.props.markers}
 					{this.renderSearchAsMove()}
 				</MapComponent>
 				{
@@ -833,6 +839,7 @@ ReactiveMap.propTypes = {
 	showSearchAsMove: types.bool,
 	defaultMapStyle: types.string,
 	onPopoverClick: types.func,
+	showMarkers: types.bool,
 	showMarkerClusters: types.bool,
 	onPageChange: types.func,
 	innerRef: types.func,
@@ -857,6 +864,7 @@ ReactiveMap.defaultProps = {
 	showMapStyles: false,
 	showSearchAsMove: false,
 	searchAsMove: false,
+	showMarkers: true,
 	showMarkerClusters: false,
 };
 
