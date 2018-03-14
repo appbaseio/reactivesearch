@@ -111,7 +111,7 @@ class SingleList extends Component {
 	defaultQuery = (value, props) => {
 		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
 			if (this.props.showMissing === true) {
-				return {};
+				return { match_all: {} };
 			}
 			return {
 				exists: {
