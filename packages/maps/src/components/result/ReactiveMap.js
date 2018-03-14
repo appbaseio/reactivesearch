@@ -862,10 +862,10 @@ ReactiveMap.defaultProps = {
 	markerProps: {},
 	markers: null,
 	showMapStyles: false,
-	showSearchAsMove: false,
+	showSearchAsMove: true,
 	searchAsMove: false,
 	showMarkers: true,
-	showMarkerClusters: false,
+	showMarkerClusters: true,
 };
 
 const mapStateToProps = (state, props) => ({
