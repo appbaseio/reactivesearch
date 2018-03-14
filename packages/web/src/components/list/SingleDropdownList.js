@@ -107,8 +107,8 @@ class SingleDropdownList extends Component {
 	};
 
 	defaultQuery = (value, props) => {
-		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
-			if (this.props.showMissing === true) {
+		if (props.selectAllLabel && props.selectAllLabel === value) {
+			if (props.showMissing === true) {
 				return { match_all: {} };
 			}
 			return {
@@ -117,7 +117,7 @@ class SingleDropdownList extends Component {
 				},
 			};
 		} else if (value) {
-			if (this.props.showMissing === true && value === this.props.missingLabel) {
+			if (props.showMissing && value === props.missingLabel) {
 				return {
 					bool: {
 						must_not: {
@@ -184,7 +184,7 @@ class SingleDropdownList extends Component {
 					field: props.dataField,
 					size: props.size,
 					order: getAggsOrder(props.sortBy),
-					...(this.props.showMissing ? { missing: this.props.missingLabel } : {}),
+					...(props.showMissing ? { missing: props.missingLabel } : {}),
 				},
 			},
 		};
