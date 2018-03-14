@@ -7,7 +7,11 @@ import {
 	updateQuery,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
-import { pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	pushToAndClause,
+	parseHits,
+	isEqual,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import { connect } from '../../utils';
@@ -56,6 +60,18 @@ class ReactiveComponent extends Component {
 				componentId: this.internalComponent,
 				query: query || null,
 			});
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (
+			nextProps.onAllData
+			&& (
+				!isEqual(nextProps.hits, this.props.hits)
+				|| !isEqual(nextProps.aggregations, this.props.aggregations)
+			)
+		) {
+			nextProps.onAllData(parseHits(nextProps.hits), nextProps.aggregations);
 		}
 	}
 
@@ -126,6 +142,7 @@ ReactiveComponent.propTypes = {
 	react: types.react,
 	showFilter: types.bool,
 	URLParams: types.boolRequired,
+	onAllData: types.func,
 };
 
 const mapStateToProps = (state, props) => ({
