@@ -15,7 +15,7 @@ import {
 	pushToAndClause,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import Rheostat from 'rheostat';
+import Rheostat from 'rheostat/lib/Slider';
 
 import HistogramContainer from './addons/HistogramContainer';
 import RangeLabel from './addons/RangeLabel';
