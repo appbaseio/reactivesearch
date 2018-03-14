@@ -109,12 +109,24 @@ class SingleList extends Component {
 
 	defaultQuery = (value, props) => {
 		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
+			if (this.props.showMissing === true) {
+				return {};
+			}
 			return {
 				exists: {
 					field: props.dataField,
 				},
 			};
 		} else if (value) {
+			if (this.props.showMissing === true && value === this.props.missingLabel) {
+				return {
+					bool: {
+						must_not: {
+							exists: { field: props.dataField },
+						},
+					},
+				};
+			}
 			return {
 				[this.type]: {
 					[props.dataField]: value,
@@ -178,6 +190,7 @@ class SingleList extends Component {
 					field: props.dataField,
 					size: props.size,
 					order: getAggsOrder(props.sortBy),
+					...(this.props.showMissing ? { missing: this.props.missingLabel } : {}),
 				},
 			},
 		};
@@ -316,6 +329,8 @@ SingleList.propTypes = {
 	showSearch: types.bool,
 	selectAllLabel: types.string,
 	style: types.style,
+	showMissing: types.bool,
+	missingLabel: types.string,
 	className: types.string,
 	innerClass: types.style,
 };
@@ -327,6 +342,8 @@ SingleList.defaultProps = {
 	URLParams: false,
 	showCount: true,
 	showFilter: true,
+	showMissing: false,
+	missingLabel: 'N/A',
 	placeholder: 'Search',
 	showSearch: true,
 	style: {},
