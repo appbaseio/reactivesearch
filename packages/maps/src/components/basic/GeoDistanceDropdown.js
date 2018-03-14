@@ -156,7 +156,7 @@ class GeoDistanceDropdown extends Component {
 		navigator.geolocation.getCurrentPosition((location) => {
 			const coordinates = `${location.coords.latitude}, ${location.coords.longitude}`;
 
-			fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${this.props.mapKey}&latlng=${coordinates}`)
+			fetch(`https://<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q&v=3.31&libraries=places"></script>apis.com/maps/api/geocode/json?key=${this.props.mapKey}&latlng=${coordinates}`)
 				.then(res => res.json())
 				.then((res) => {
 					if (Array.isArray(res.results) && res.results.length) {
@@ -174,7 +174,7 @@ class GeoDistanceDropdown extends Component {
 
 	getCoordinates(value, cb) {
 		if (value) {
-			fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${this.props.mapKey}&address=${value}`)
+			fetch(`https://<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q&v=3.31&libraries=places"></script>apis.com/maps/api/geocode/json?key=${this.props.mapKey}&address=${value}`)
 				.then(res => res.json())
 				.then((res) => {
 					if (Array.isArray(res.results) && res.results.length) {
