@@ -698,6 +698,7 @@ class ReactiveMap extends Component {
 					mapElement={<div style={{ height: '100%' }} />}
 					onMapMounted={(ref) => {
 						this.mapRef = ref;
+						this.props.innerRef(ref);
 					}}
 					zoom={this.state.zoom}
 					center={this.getCenter(filteredResults)}
@@ -834,6 +835,7 @@ ReactiveMap.propTypes = {
 	onPopoverClick: types.func,
 	showMarkerClusters: types.bool,
 	onPageChange: types.func,
+	innerRef: types.func,
 };
 
 ReactiveMap.defaultProps = {
