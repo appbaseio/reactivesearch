@@ -1,7 +1,20 @@
-# Reactive Search
+<h2 align="center">
+  <img src="https://i.imgur.com/iiR9wAs.png" alt="reactivesearch" title="reactivesearch" width="200" />
+  <br />
+  ReactiveSearch
+  <br />
+</h2>
 
+<p align="center">Elasticsearch UI components for React. <a href="https://opensource.appbase.io/reactivesearch/">Website 🌐</a></p>
+<p align="center" style="font-size: 1.2rem"><a href="https://scotch.io/tutorials/build-an-airbnb-clone-with-react-and-elasticsearch">Read how to build an Airbnb clone with ReactiveSearch</a>.</p>
+
+<hr />
+
+[![npm version](https://badge.fury.io/js/%40appbaseio%2Freactivesearch.svg)](https://badge.fury.io/js/%40appbaseio%2Freactivesearch)
 [![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/appbaseio/mirage/blob/dev/LICENSE.md)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/appbaseio/reactivesearch)
+[![npm](https://img.shields.io/npm/dt/@appbaseio/reactivesearch.svg)](https://www.npmjs.com/package/@appbaseio/reactivesearch)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/appbaseio/reactivesearch/blob/dev/.github/CONTRIBUTING.md)
 
 React UI components for Elasticsearch.
 
@@ -26,7 +39,7 @@ Each sensor component is purpose built for applying a specific filter on the dat
 
 **2. Actuator components**
 
-Actuators represent the result UI view components. ReactiveSearch primarily comes with two actuators: `ResultCard` and `ResultList`. 
+Actuators represent the result UI view components. ReactiveSearch primarily comes with two actuators: `ResultCard` and `ResultList`.
 
 ResultCard displays the results in a card interface whereas ResultList displays them in a list. Both provide built-in support for pagination and infinite scroll views. Besides these, the library also provides low level actuators (ReactiveComponent and ReactiveList) to render in a more customized fashion.
 
@@ -51,6 +64,10 @@ The components are divided into four sections:
 * Range based UI components are at [reactive-manual/range-components](https://opensource.appbase.io/reactive-manual/range-components/singlerange.html).
 * Search UI components are at [reactive-manual/search-components](https://opensource.appbase.io/reactive-manual/search-components/datasearch.html).
 * Result components are at [reactive-manual/result-components](https://opensource.appbase.io/reactive-manual/result-components/resultlist.html).
+
+## Changelog
+
+Check out the [changelog](./CHANGELOG.md) for more info.
 
 ## Related tooling and projects
 

@@ -5,9 +5,9 @@ import {
 	Text,
 } from 'native-base';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { getInnerKey } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import TouchableItem from './TouchableItem';
-import { getInnerStyle } from '../../utils';
 
 class CheckboxItem extends Component {
 	handlePress = () => {
@@ -15,7 +15,7 @@ class CheckboxItem extends Component {
 	};
 
 	render() {
-		const { color, ...checkBoxStyles } = getInnerStyle(this.props.innerStyle, 'checkbox');
+		const { color, ...checkBoxStyles } = getInnerKey(this.props.innerStyle, 'checkbox');
 		return (
 			<TouchableItem
 				pressOpacity={0.5}
@@ -36,13 +36,15 @@ class CheckboxItem extends Component {
 						checked={this.props.checked}
 						color={color || this.props.theming.primaryColor}
 						style={checkBoxStyles}
+						{...getInnerKey(this.props.innerProps, 'checkbox')}
 					/>
 					<Text
 						style={{
 							color: this.props.theming.textColor,
 							marginLeft: 20,
-							...getInnerStyle(this.props.innerStyle, 'label'),
+							...getInnerKey(this.props.innerStyle, 'label'),
 						}}
+						{...getInnerKey(this.props.innerProps, 'text')}
 					>
 						{this.props.label}
 					</Text>
@@ -59,6 +61,7 @@ CheckboxItem.propTypes = {
 	value: types.string,
 	innerStyle: types.style,
 	theming: types.style,
+	innerProps: types.props,
 };
 
 export default CheckboxItem;

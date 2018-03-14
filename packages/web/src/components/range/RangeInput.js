@@ -9,6 +9,9 @@ import RangeSlider from './RangeSlider';
 import Input from '../../styles/Input';
 import Flex from '../../styles/Flex';
 import Content from '../../styles/Content';
+import Container from '../../styles/Container';
+
+import { connect } from '../../utils';
 
 class RangeInput extends Component {
 	constructor(props) {
@@ -72,9 +75,11 @@ class RangeInput extends Component {
 	}
 
 	render() {
-		const { className, style, ...rest } = this.props;
+		const {
+			className, style, themePreset, ...rest
+		} = this.props;
 		return (
-			<div style={style} className={className}>
+			<Container style={style} className={className}>
 				<RangeSlider
 					{...rest}
 					defaultSelected={{
@@ -94,6 +99,7 @@ class RangeInput extends Component {
 							step={this.props.stepValue}
 							alert={!this.state.isStartValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
+							themePreset={themePreset}
 						/>
 						{
 							!this.state.isStartValid
@@ -110,6 +116,7 @@ class RangeInput extends Component {
 							step={this.props.stepValue}
 							alert={!this.state.isEndValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
+							themePreset={themePreset}
 						/>
 						{
 							!this.state.isEndValid
@@ -117,19 +124,20 @@ class RangeInput extends Component {
 						}
 					</Flex>
 				</Flex>
-			</div>
+			</Container>
 		);
 	}
 }
 
 RangeInput.propTypes = {
+	className: types.string,
+	defaultSelected: types.range,
+	innerClass: types.style,
+	onValueChange: types.func,
 	range: types.range,
 	stepValue: types.number,
-	defaultSelected: types.range,
-	onValueChange: types.func,
-	className: types.string,
 	style: types.style,
-	innerClass: types.style,
+	themePreset: types.themePreset,
 };
 
 RangeInput.defaultProps = {
@@ -140,4 +148,8 @@ RangeInput.defaultProps = {
 	stepValue: 1,
 };
 
-export default RangeInput;
+const mapStateToProps = state => ({
+	themePreset: state.config.themePreset,
+});
+
+export default connect(mapStateToProps, null)(RangeInput);

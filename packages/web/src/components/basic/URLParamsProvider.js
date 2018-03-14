@@ -38,6 +38,7 @@ class URLParamsProvider extends Component {
 			return value.map(item => this.getValue(item));
 		} else if (value && typeof value === 'object') {
 			// TODO: support for NestedList
+			if (value.location) return value;
 			return value.label || value.key || null;
 		}
 		return value;
@@ -76,11 +77,12 @@ class URLParamsProvider extends Component {
 }
 
 URLParamsProvider.propTypes = {
+	setHeaders: types.func,
 	selectedValues: types.selectedValues,
-	params: types.params,
+	// component props
 	children: types.children,
 	headers: types.headers,
-	setHeaders: types.func,
+	params: types.params,
 };
 
 const mapStateToProps = state => ({

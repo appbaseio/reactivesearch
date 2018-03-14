@@ -11,12 +11,13 @@ import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
+	getInnerKey,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect } from '../../utils';
 
 class SingleDropdownRange extends Component {
 	constructor(props) {
@@ -137,15 +138,21 @@ class SingleDropdownRange extends Component {
 				textStyle={{
 					color: this.props.theming.textColor,
 				}}
-				headerStyle={getInnerStyle(this.props.innerStyle, 'title')}
+				headerTitleStyle={getInnerKey(this.props.innerStyle, 'title')}
 				itemTextStyle={{
 					flexGrow: 1,
-					...getInnerStyle(this.props.innerStyle, 'label'),
+					...getInnerKey(this.props.innerStyle, 'label'),
 				}}
+				{...getInnerKey(this.props.innerProps, 'picker')}
 			>
 				{
 					this.props.data.map(item => (
-						<Picker.Item key={item.label} label={item.label} value={item} />
+						<Picker.Item
+							key={item.label}
+							label={item.label}
+							value={item}
+							{...getInnerKey(this.props.innerProps, 'pickerItem')}
+						/>
 					))
 				}
 			</Picker>
@@ -173,6 +180,7 @@ SingleDropdownRange.propTypes = {
 	style: types.style,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 SingleDropdownRange.defaultProps = {

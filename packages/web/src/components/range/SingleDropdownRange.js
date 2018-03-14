@@ -16,6 +16,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
+import Container from '../../styles/Container';
 import Dropdown from '../shared/Dropdown';
 import { connect } from '../../utils';
 
@@ -132,7 +133,7 @@ class SingleDropdownRange extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<Dropdown
 					innerClass={this.props.innerClass}
@@ -142,42 +143,46 @@ class SingleDropdownRange extends Component {
 					placeholder={this.props.placeholder}
 					keyField="label"
 					returnsObject
+					themePreset={this.props.themePreset}
 				/>
-			</div>
+			</Container>
 		);
 	}
 }
 
 SingleDropdownRange.propTypes = {
 	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
-	defaultSelected: types.string,
-	react: types.react,
 	removeComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	data: types.data,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
 	updateQuery: types.funcRequired,
-	placeholder: types.string,
-	filterLabel: types.string,
+	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	title: types.title,
-	URLParams: types.boolRequired,
+	// component props
+	beforeValueChange: types.func,
+	className: types.string,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	data: types.data,
+	dataField: types.stringRequired,
+	defaultSelected: types.string,
+	filterLabel: types.string,
+	innerClass: types.style,
+	onQueryChange: types.func,
+	onValueChange: types.func,
+	placeholder: types.string,
+	react: types.react,
 	showFilter: types.bool,
 	style: types.style,
-	className: types.string,
-	innerClass: types.style,
+	title: types.title,
+	themePreset: types.themePreset,
+	URLParams: types.boolRequired,
 };
 
 SingleDropdownRange.defaultProps = {
+	className: null,
 	placeholder: 'Select a value',
-	URLParams: false,
 	showFilter: true,
 	style: {},
-	className: null,
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -185,13 +190,14 @@ const mapStateToProps = (state, props) => ({
 		state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value
 	) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownRange);

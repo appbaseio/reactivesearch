@@ -20,6 +20,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
+import Container from '../../styles/Container';
 import Dropdown from '../shared/Dropdown';
 import { connect } from '../../utils';
 
@@ -204,7 +205,7 @@ class SingleDropdownList extends Component {
 		}
 
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<Dropdown
 					innerClass={this.props.innerClass}
@@ -219,68 +220,78 @@ class SingleDropdownList extends Component {
 					placeholder={this.props.placeholder}
 					labelField="key"
 					showCount={this.props.showCount}
+					themePreset={this.props.themePreset}
+					renderListItem={this.props.renderListItem}
 				/>
-			</div>
+			</Container>
 		);
 	}
 }
 
 SingleDropdownList.propTypes = {
-	componentId: types.stringRequired,
 	addComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	sortBy: types.sortByWithCount,
+	removeComponent: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	defaultSelected: types.string,
-	react: types.react,
+	watchComponent: types.funcRequired,
 	options: types.options,
-	removeComponent: types.funcRequired,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
-	placeholder: types.string,
-	title: types.title,
-	filterLabel: types.string,
 	selectedValue: types.selectedValue,
-	URLParams: types.boolRequired,
-	showFilter: types.bool,
-	selectAllLabel: types.string,
-	style: types.style,
+	// component props
+	beforeValueChange: types.func,
 	className: types.string,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	dataField: types.stringRequired,
+	defaultSelected: types.string,
+	filterLabel: types.string,
+	innerClass: types.style,
+	onQueryChange: types.func,
+	onValueChange: types.func,
+	placeholder: types.string,
+	react: types.react,
+	renderListItem: types.func,
+	selectAllLabel: types.string,
 	showCount: types.bool,
 	showMissing: types.bool,
 	missingLabel: types.string,
 	innerClass: types.style,
+	showFilter: types.bool,
 	size: types.number,
+	sortBy: types.sortByWithCount,
+	style: types.style,
+	title: types.title,
+	themePreset: types.themePreset,
+	URLParams: types.boolRequired,
 };
 
 SingleDropdownList.defaultProps = {
+	className: null,
+	placeholder: 'Select a value',
+	showCount: true,
+	showFilter: true,
 	size: 100,
 	sortBy: 'count',
-	placeholder: 'Select a value',
-	URLParams: false,
-	showFilter: true,
 	style: {},
 	showMissing: false,
 	missingLabel: 'N/A',
 	className: null,
 	showCount: true,
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Downshift from 'downshift';
+import { withTheme } from 'emotion-theming';
 
 import {
 	addComponent,
@@ -23,6 +24,7 @@ import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
+import Container from '../../styles/Container';
 import { connect } from '../../utils';
 
 
@@ -128,6 +130,9 @@ class DataSearch extends Component {
 	};
 
 	highlightQuery = (props) => {
+		if (props.customHighlight) {
+			return props.customHighlight(props);
+		}
 		if (!props.highlight) {
 			return null;
 		}
@@ -356,6 +361,16 @@ class DataSearch extends Component {
 		}
 	};
 
+	getBackgroundColor = (highlightedIndex, index) => {
+		const isDark = this.props.themePreset === 'dark';
+		if (isDark) {
+			return highlightedIndex === index
+				? '#555' : '#424242';
+		}
+		return highlightedIndex === index
+			? '#eee' : '#fff';
+	};
+
 	renderIcon = () => {
 		if (this.props.showIcon) {
 			return this.props.icon || <SearchSvg />;
@@ -376,8 +391,10 @@ class DataSearch extends Component {
 			suggestionsList = this.state.suggestions;
 		}
 
+		const { theme, themePreset } = this.props;
+
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{
 					this.props.autosuggest
@@ -397,6 +414,7 @@ class DataSearch extends Component {
 									<Input
 										showIcon={this.props.showIcon}
 										iconPosition={this.props.iconPosition}
+										innerRef={this.props.innerRef}
 										{...getInputProps({
 											className: getClassName(this.props.innerClass, 'input'),
 											placeholder: this.props.placeholder,
@@ -408,12 +426,13 @@ class DataSearch extends Component {
 											onKeyDown: this.handleKeyDown,
 											onKeyUp: this.props.onKeyUp,
 										})}
+										themePreset={themePreset}
 									/>
 									<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
 									{
 										isOpen && suggestionsList.length
 											? (
-												<ul className={`${suggestions} ${getClassName(this.props.innerClass, 'list')}`}>
+												<ul className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}>
 													{
 														suggestionsList
 															.slice(0, 10)
@@ -422,8 +441,10 @@ class DataSearch extends Component {
 																	{...getItemProps({ item })}
 																	key={item.label}
 																	style={{
-																		backgroundColor: highlightedIndex === index
-																			? '#eee' : '#fff',
+																		backgroundColor: this.getBackgroundColor(
+																			highlightedIndex,
+																			index,
+																		),
 																	}}
 																>
 																	{
@@ -461,84 +482,97 @@ class DataSearch extends Component {
 									autoFocus={this.props.autoFocus}
 									iconPosition={this.props.iconPosition}
 									showIcon={this.props.showIcon}
+									innerRef={this.props.innerRef}
+									themePreset={themePreset}
 								/>
 								<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
 							</div>
 						)
 				}
-			</div>
+			</Container>
 		);
 	}
 }
 
 DataSearch.propTypes = {
-	componentId: types.stringRequired,
-	title: types.title,
 	addComponent: types.funcRequired,
-	highlight: types.bool,
-	setQueryOptions: types.funcRequired,
-	defaultSelected: types.string,
-	dataField: types.dataFieldArray,
-	highlightField: types.highlightField,
-	react: types.react,
-	suggestions: types.suggestions,
-	defaultSuggestions: types.suggestions,
 	removeComponent: types.funcRequired,
-	fieldWeights: types.fieldWeights,
-	queryFormat: types.queryFormatSearch,
-	fuzziness: types.fuzziness,
+	setQueryOptions: types.funcRequired,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
+	options: types.options,
+	selectedValue: types.selectedValue,
+	suggestions: types.suggestions,
+	// component props
+	autoFocus: types.bool,
 	autosuggest: types.bool,
 	beforeValueChange: types.func,
-	onValueChange: types.func,
+	className: types.string,
+	componentId: types.stringRequired,
+	customHighlight: types.func,
 	customQuery: types.func,
-	onQueryChange: types.func,
-	onSuggestion: types.func,
-	updateQuery: types.funcRequired,
-	placeholder: types.string,
+	dataField: types.dataFieldArray,
+	debounce: types.number,
+	defaultSelected: types.string,
+	defaultSuggestions: types.suggestions,
+	fieldWeights: types.fieldWeights,
+	filterLabel: types.string,
+	fuzziness: types.fuzziness,
+	highlight: types.bool,
+	highlightField: types.stringOrArray,
+	icon: types.children,
+	iconPosition: types.iconPosition,
+	innerClass: types.style,
+	innerRef: types.func,
 	onBlur: types.func,
 	onFocus: types.func,
-	onKeyPress: types.func,
 	onKeyDown: types.func,
+	onKeyPress: types.func,
 	onKeyUp: types.func,
-	autoFocus: types.bool,
-	selectedValue: types.selectedValue,
-	URLParams: types.boolRequired,
+	onQueryChange: types.func,
+	onSuggestion: types.func,
+	onValueChange: types.func,
+	placeholder: types.string,
+	queryFormat: types.queryFormatSearch,
+	react: types.react,
 	showFilter: types.bool,
-	filterLabel: types.string,
-	style: types.style,
-	className: types.string,
-	innerClass: types.style,
 	showIcon: types.bool,
-	iconPosition: types.iconPosition,
-	icon: types.children,
-	debounce: types.number,
+	style: types.style,
+	title: types.title,
+	theme: types.style,
+	themePreset: types.themePreset,
+	URLParams: types.boolRequired,
 };
 
 DataSearch.defaultProps = {
-	placeholder: 'Search',
 	autosuggest: true,
-	queryFormat: 'or',
-	URLParams: false,
-	showFilter: true,
-	style: {},
 	className: null,
-	showIcon: true,
-	iconPosition: 'left',
 	debounce: 0,
+	iconPosition: 'left',
+	placeholder: 'Search',
+	queryFormat: 'or',
+	showFilter: true,
+	showIcon: true,
+	style: {},
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
-	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
+	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(DataSearch);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(DataSearch));

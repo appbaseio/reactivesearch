@@ -153,7 +153,11 @@ class ReactiveList extends Component {
 
 		// called when page is changed
 		if (this.props.pagination && this.state.isLoading) {
-			window.scrollTo(0, 0);
+			if (nextProps.onPageChange) {
+				nextProps.onPageChange();
+			} else {
+				window.scrollTo(0, 0);
+			}
 			this.setState({
 				isLoading: false,
 			});
@@ -179,7 +183,11 @@ class ReactiveList extends Component {
 			&& this.props.hits
 			&& nextProps.hits.length < this.props.hits.length
 		) {
-			window.scrollTo(0, 0);
+			if (nextProps.onPageChange) {
+				nextProps.onPageChange();
+			} else {
+				window.scrollTo(0, 0);
+			}
 			this.setState({
 				from: 0,
 				isLoading: false,
@@ -204,6 +212,7 @@ class ReactiveList extends Component {
 
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
+		this.props.removeComponent(this.internalComponent);
 	}
 
 	setReact = (props) => {
@@ -343,7 +352,10 @@ class ReactiveList extends Component {
 					}
 				</Flex>
 				{
-					this.props.pagination && this.props.paginationAt === 'top'
+					this.props.pagination && (
+						this.props.paginationAt === 'top'
+						|| this.props.paginationAt === 'both'
+					)
 						? (<Pagination
 							pages={this.props.pages}
 							totalPages={this.state.totalPages}
@@ -366,11 +378,18 @@ class ReactiveList extends Component {
 				}
 				{
 					this.state.isLoading && !this.props.pagination
-						? (<div>Loading...</div>)
+						? this.props.loader || (
+							<div style={{ textAlign: 'center', margin: '20px 0', color: '#666' }}>
+								Loading...
+							</div>
+						)
 						: null
 				}
 				{
-					this.props.pagination && this.props.paginationAt === 'bottom'
+					this.props.pagination && (
+						this.props.paginationAt === 'bottom'
+						|| this.props.paginationAt === 'both'
+					)
 						? (<Pagination
 							pages={this.props.pages}
 							totalPages={this.state.totalPages}
@@ -399,76 +418,79 @@ class ReactiveList extends Component {
 
 ReactiveList.propTypes = {
 	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
-	sortBy: types.sortBy,
-	sortOptions: types.sortOptions,
-	dataField: types.stringRequired,
-	setQueryOptions: types.funcRequired,
-	defaultQuery: types.func,
-	updateQuery: types.funcRequired,
-	size: types.number,
-	react: types.react,
-	pagination: types.bool,
-	paginationAt: types.paginationAt,
-	hits: types.hits,
-	streamHits: types.hits,
-	total: types.number,
-	removeComponent: types.funcRequired,
 	loadMore: types.funcRequired,
-	pages: types.number,
+	removeComponent: types.funcRequired,
+	setPageURL: types.func,
+	setQueryOptions: types.funcRequired,
+	setStreaming: types.func,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
+	currentPage: types.number,
+	hits: types.hits,
+	isLoading: types.bool,
+	streamHits: types.hits,
+	time: types.number,
+	total: types.number,
+	url: types.string,
+	// component props
+	className: types.string,
+	componentId: types.stringRequired,
+	dataField: types.stringRequired,
+	defaultQuery: types.func,
+	innerClass: types.style,
+	loader: types.title,
 	onAllData: types.func,
 	onData: types.func,
-	time: types.number,
-	showResultStats: types.bool,
 	onResultStats: types.func,
-	loader: types.title,
-	isLoading: types.bool,
-	style: types.style,
-	className: types.string,
+	pages: types.number,
+	pagination: types.bool,
+	paginationAt: types.paginationAt,
+	react: types.react,
+	showResultStats: types.bool,
+	size: types.number,
+	sortBy: types.sortBy,
+	sortOptions: types.sortOptions,
 	stream: types.bool,
-	setStreaming: types.func,
-	innerClass: types.style,
-	url: types.string,
+	style: types.style,
 	URLParams: types.bool,
-	currentPage: types.number,
-	setPageURL: types.func,
+	onPageChange: types.func,
 };
 
 ReactiveList.defaultProps = {
+	className: null,
+	pages: 5,
 	pagination: false,
 	paginationAt: 'bottom',
-	pages: 5,
-	size: 10,
 	showResultStats: true,
+	size: 10,
 	style: {},
-	className: null,
 	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
-	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
-	streamHits: state.streamHits[props.componentId] || [],
-	total: state.hits[props.componentId] && state.hits[props.componentId].total,
-	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
-	isLoading: state.isLoading[props.componentId] || false,
-	url: state.config.url,
 	currentPage: (
 		state.selectedValues[`${props.componentId}-page`]
 		&& state.selectedValues[`${props.componentId}-page`].value - 1
 	) || 0,
+	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	isLoading: state.isLoading[props.componentId] || false,
+	streamHits: state.streamHits[props.componentId] || [],
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	url: state.config.url,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
-	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	setQueryOptions: (component, props, execute) =>
-		dispatch(setQueryOptions(component, props, execute)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
+	removeComponent: component => dispatch(removeComponent(component)),
 	setPageURL: (component, value, label, showFilter, URLParams) =>
 		dispatch(setValue(component, value, label, showFilter, URLParams)),
+	setQueryOptions: (component, props, execute) =>
+		dispatch(setQueryOptions(component, props, execute)),
+	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveList);

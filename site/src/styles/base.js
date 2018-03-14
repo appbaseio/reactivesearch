@@ -251,6 +251,18 @@ const tabPadding = css`
 `;
 
 const tabJustifyCenter = css`
+	.demo {
+		margin: 20px 0;
+
+		img {
+			transition: all .3s ease;
+
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+	}
+
 	${queries.medium`
 		justify-content: center;
 		align-items: center;
@@ -296,55 +308,6 @@ const textCenter = css`
 	text-align: center;
 `;
 
-const primaryBg = css`
-	height: 100vh;
-	background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-	position: relative;
-
-	${queries.medium`
-		margin-bottom: 40px;
-	`};
-
-	${queries.small`
-		min-height: 100vh;
-		height: auto;
-		padding: 180px 3rem 120px;
-		align-items: center;
-	`};
-
-	.wrapper {
-		width: 100%;
-		height: 60%;
-		bottom: 0
-		position: absolute;
-		background-image: url('images/native/landingscreen.png');
-		background-size: cover;
-		background-position: top center;
-		background-repeat: no-repeat;
-
-		${queries.xLarge`
-			height: 50%;
-		`};
-
-		${queries.medium`
-			height: 40%;
-		`};
-
-		${queries.small`
-			display: none;
-		`};
-	}
-
-	h1 {
-		margin-top: 25vh;
-
-		${queries.small`
-			margin-top: 0;
-			line-height: 2.2rem;
-		`};
-	}
-`;
-
 export {
 	container,
 	boldHeading,
@@ -368,5 +331,4 @@ export {
 	mobShow,
 	mobBottomMargin,
 	textCenter,
-	primaryBg,
 };

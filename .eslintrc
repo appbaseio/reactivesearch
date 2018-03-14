@@ -4,7 +4,10 @@
 		"es6": true,
 		"node": true
 	},
-	"extends": "airbnb",
+	"plugins": [
+		"jest"
+	],
+	"extends": ["airbnb", "plugin:jest/recommended"],
 	"parser": "babel-eslint",
 	"rules": {
 		"indent": [2, "tab", { "SwitchCase": 1, "VariableDeclarator": 1 }],

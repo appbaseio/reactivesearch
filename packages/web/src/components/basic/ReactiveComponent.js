@@ -104,34 +104,35 @@ class ReactiveComponent extends Component {
 }
 
 ReactiveComponent.defaultProps = {
-	URLParams: false,
 	showFilter: true,
+	URLParams: false,
 };
 
 ReactiveComponent.propTypes = {
-	componentId: types.stringRequired,
-	hits: types.data,
-	aggregations: types.selectedValues,
-	selectedValue: types.selectedValue,
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
-	watchComponent: types.funcRequired,
-	updateQuery: types.funcRequired,
 	setQueryOptions: types.funcRequired,
-	onQueryChange: types.func,
-	URLParams: types.boolRequired,
-	showFilter: types.bool,
-	filterLabel: types.string,
-	defaultQuery: types.func,
-	react: types.react,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
+	aggregations: types.selectedValues,
+	hits: types.data,
+	selectedValue: types.selectedValue,
+	// component props
 	children: types.children,
+	componentId: types.stringRequired,
+	defaultQuery: types.func,
+	filterLabel: types.string,
+	onQueryChange: types.func,
+	react: types.react,
+	showFilter: types.bool,
+	URLParams: types.boolRequired,
 };
 
 const mapStateToProps = (state, props) => ({
-	hits: (state.hits[props.componentId]
-		&& state.hits[props.componentId].hits) || [],
 	aggregations: (state.aggregations[props.componentId]
 		&& state.aggregations[props.componentId]) || null,
+	hits: (state.hits[props.componentId]
+		&& state.hits[props.componentId].hits) || [],
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
 });
@@ -139,13 +140,13 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(
 		component,
 		props,
 		execute,
 	)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveComponent);

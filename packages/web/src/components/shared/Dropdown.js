@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Downshift from 'downshift';
+import { withTheme } from 'emotion-theming';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -53,12 +54,13 @@ class Dropdown extends Component {
 	};
 
 	getBackgroundColor = (highlighted, selected) => {
+		const isDark = this.props.themePreset === 'dark';
 		if (highlighted) {
-			return '#eee';
+			return isDark ? '#555' : '#eee';
 		} else if (selected) {
-			return '#fafafa';
+			return isDark ? '#686868' : '#fafafa';
 		}
-		return '#fff';
+		return isDark ? '#424242' : '#fff';
 	};
 
 	renderToString = (value) => {
@@ -78,7 +80,14 @@ class Dropdown extends Component {
 
 	render() {
 		const {
-			items, selectedItem, placeholder, labelField, keyField,
+			items,
+			selectedItem,
+			placeholder,
+			labelField,
+			keyField,
+			themePreset,
+			theme,
+			renderListItem,
 		} = this.props;
 
 		return (<Downshift
@@ -100,6 +109,8 @@ class Dropdown extends Component {
 						className={getClassName(this.props.innerClass, 'select') || null}
 						onClick={this.toggle}
 						title={selectedItem ? this.renderToString(selectedItem) : placeholder}
+						small={this.props.small}
+						themePreset={this.props.themePreset}
 					>
 						<div>{selectedItem ? this.renderToString(selectedItem) : placeholder}</div>
 						<Chevron open={isOpen} />
@@ -107,7 +118,7 @@ class Dropdown extends Component {
 					{
 						isOpen && items.length
 							? (
-								<ul className={`${suggestions} ${getClassName(this.props.innerClass, 'list')}`}>
+								<ul className={`${suggestions(themePreset, theme)} ${this.props.small ? 'small' : ''} ${getClassName(this.props.innerClass, 'list')}`}>
 									{
 										items
 											.map((item, index) => {
@@ -134,21 +145,36 @@ class Dropdown extends Component {
 															),
 														}}
 													>
-														<div>
-															{
-																typeof item[labelField] === 'string'
-																	? <span
-																		dangerouslySetInnerHTML={{
-																			__html: item[labelField],
-																		}}
-																	/>
-																	: item[labelField]
-															}
-															{
-																this.props.showCount && item.doc_count
-																	&& ` (${item.doc_count})`
-															}
-														</div>
+														{
+															renderListItem
+																? renderListItem(item[labelField], item.doc_count)
+																: (
+																	<div>
+																		{
+																			typeof item[labelField] === 'string'
+																				? <span
+																					dangerouslySetInnerHTML={{
+																						__html: item[labelField],
+																					}}
+																				/>
+																				: item[labelField]
+																		}
+																		{
+																			this.props.showCount && item.doc_count
+																				&& (
+																					<span
+																						className={
+																							getClassName(this.props.innerClass, 'count')
+																							|| null
+																						}
+																					>
+																						&nbsp;({item.doc_count})
+																					</span>
+																				)
+																		}
+																	</div>
+																)
+														}
 														{
 															selected && this.props.multi
 																? (<Tick
@@ -174,22 +200,27 @@ class Dropdown extends Component {
 }
 
 Dropdown.defaultProps = {
-	labelField: 'label',
 	keyField: 'key',
+	labelField: 'label',
+	small: false,
 };
 
 Dropdown.propTypes = {
+	innerClass: types.style,
 	items: types.data,
-	selectedItem: types.selectedValue,
+	keyField: types.string,
+	labelField: types.string,
+	multi: types.bool,
 	onChange: types.func,
 	placeholder: types.string,
-	multi: types.bool,
-	single: types.bool,
-	labelField: types.string,
-	keyField: types.string,
 	returnsObject: types.bool,
+	renderListItem: types.func,
+	selectedItem: types.selectedValue,
 	showCount: types.bool,
-	innerClass: types.style,
+	single: types.bool,
+	small: types.bool,
+	theme: types.style,
+	themePreset: types.themePreset,
 };
 
-export default Dropdown;
+export default withTheme(Dropdown);

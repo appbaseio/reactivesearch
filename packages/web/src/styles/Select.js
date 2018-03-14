@@ -1,4 +1,22 @@
-import styled from 'react-emotion';
+import styled, { css } from 'react-emotion';
+
+const small = css`
+	min-height: 0;
+	height: 30px;
+	border: 0;
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+	border-radius: 2px;
+`;
+
+const dark = ({ theme }) => css`
+	background-color: ${theme.colors.backgroundColor};
+	border-color: ${theme.colors.borderColor};
+	color: ${theme.colors.textColor};
+
+	&:hover, &:focus {
+		background-color: ${theme.colors.backgroundColor};
+	}
+`;
 
 const Select = styled('button')`
 	width: 100%;
@@ -18,6 +36,8 @@ const Select = styled('button')`
 	user-select: none;
 	transition: all 0.3s ease;
 
+	${props => (props.small ? small : null)};
+
 	& > div {
 		width: calc(100% - 24px);
 		white-space: nowrap;
@@ -29,6 +49,8 @@ const Select = styled('button')`
 	&:hover, &:focus {
 		background-color: #fcfcfc;
 	}
+
+	${({ themePreset }) => themePreset === 'dark' && dark};
 `;
 
 const Tick = styled('span')`
@@ -50,7 +72,7 @@ const Tick = styled('span')`
 		height: 4px;
 		margin-top: -4px;
 		border-style: solid;
-		border-color: ${props => props.theme.primaryColor};
+		border-color: ${({ theme }) => theme.colors.primaryColor};
 		border-width: 0 0 2px 2px;
 		border-radius: 0;
 		border-image: none;

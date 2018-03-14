@@ -1,6 +1,7 @@
 import { css } from 'emotion';
 import styled from 'react-emotion';
 
+import { shade } from './utils';
 import Title from './Title';
 
 const container = css`
@@ -19,7 +20,8 @@ const Image = styled('div')`
 	width: calc(100% + 20px);
 	height: 220px;
 	margin: -10px -10px 0;
-	background-color: #fcfcfc;
+	background-color: ${({ theme: { colors } }) =>
+		colors.backgroundColor || '#fcfcfc'};
 	background-size: contain;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -33,7 +35,10 @@ const Card = styled('a')`
 	min-width: 240px;
 	max-width: 250px;
 	border-radius: 0.25rem;
-	background-color: #fff;
+	background-color: ${({ theme }) =>
+		(theme.colors.backgroundColor
+			? shade(theme.colors.backgroundColor, 0.2)
+			: '#fff')};
 	height: 300px;
 	display: flex;
 	flex-direction: column;
@@ -42,7 +47,7 @@ const Card = styled('a')`
 	padding: 10px;
 	overflow: hidden;
 	box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
-	color: ${props => props.theme.textColor};
+	color: ${({ theme }) => theme.colors.textColor};
 	${props => (props.href ? 'cursor: pointer' : null)};
 	transition: all 0.3s ease;
 

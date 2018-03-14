@@ -17,6 +17,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
+import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { connect } from '../../utils';
 
@@ -37,7 +38,7 @@ class MultiDataList extends Component {
 
 		this.setReact(this.props);
 
-		if (this.props.selectedValue) {
+		if (this.props.selectedValue.length) {
 			this.setValue(this.props.selectedValue, true);
 		} else if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected, true);
@@ -201,9 +202,18 @@ class MultiDataList extends Component {
 
 		const { onQueryChange = null } = props;
 
+		// find the corresponding value of the label for running the query
+		const queryValue = value.reduce((acc, item) => {
+			if (item === props.selectAllLabel) {
+				return acc.concat(item);
+			}
+			const matchingItem = props.data.find(dataItem => dataItem.label === item);
+			return matchingItem ? acc.concat(matchingItem.value) : acc;
+		}, []);
+
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query: query(queryValue, props),
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
@@ -229,6 +239,7 @@ class MultiDataList extends Component {
 				style={{
 					margin: '0 0 8px',
 				}}
+				themePreset={this.props.themePreset}
 			/>);
 		}
 		return null;
@@ -246,7 +257,7 @@ class MultiDataList extends Component {
 		}
 
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{this.renderSearch()}
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
@@ -302,60 +313,64 @@ class MultiDataList extends Component {
 							))
 					}
 				</UL>
-			</div>
+			</Container>
 		);
 	}
 }
 
 MultiDataList.propTypes = {
-	componentId: types.stringRequired,
 	addComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	updateQuery: types.funcRequired,
-	data: types.data,
-	defaultSelected: types.stringArray,
-	react: types.react,
 	removeComponent: types.funcRequired,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
-	placeholder: types.string,
-	title: types.title,
-	showCheckbox: types.boolRequired,
-	filterLabel: types.string,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	URLParams: types.boolRequired,
+	// component props
+	beforeValueChange: types.func,
+	className: types.string,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	data: types.data,
+	dataField: types.stringRequired,
+	defaultSelected: types.stringArray,
+	filterLabel: types.string,
+	innerClass: types.style,
+	onQueryChange: types.func,
+	onValueChange: types.func,
+	placeholder: types.string,
+	queryFormat: types.queryFormatSearch,
+	react: types.react,
+	selectAllLabel: types.string,
+	showCheckbox: types.boolRequired,
 	showFilter: types.bool,
 	showSearch: types.bool,
-	selectAllLabel: types.string,
 	style: types.style,
-	className: types.string,
-	innerClass: types.style,
-	queryFormat: types.queryFormatSearch,
+	themePreset: types.themePreset,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 MultiDataList.defaultProps = {
-	showCheckbox: true,
-	URLParams: false,
-	showFilter: true,
+	className: null,
 	placeholder: 'Search',
+	queryFormat: 'or',
+	showCheckbox: true,
+	showFilter: true,
 	showSearch: true,
 	style: {},
-	className: null,
-	queryFormat: 'or',
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
 	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+		&& state.selectedValues[props.componentId].value) || [],
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(MultiDataList);

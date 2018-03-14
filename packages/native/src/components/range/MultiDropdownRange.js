@@ -25,12 +25,13 @@ import {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	getInnerKey,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect } from '../../utils';
 
 class MultiDropdownRange extends Component {
 	constructor(props) {
@@ -189,7 +190,7 @@ class MultiDropdownRange extends Component {
 	};
 
 	render() {
-		const { color, ...checkBoxStyles } = getInnerStyle(this.props.innerStyle, 'checkbox');
+		const { color, ...checkBoxStyles } = getInnerKey(this.props.innerStyle, 'checkbox');
 		return (
 			<View>
 				{
@@ -200,27 +201,33 @@ class MultiDropdownRange extends Component {
 								transparent={false}
 								visible={this.state.showModal}
 								onRequestClose={this.toggleModal}
+								{...getInnerKey(this.props.innerProps, 'modal')}
 							>
-								<Header>
-									<Left>
+								<Header {...getInnerKey(this.props.innerProps, 'header')}>
+									<Left style={getInnerKey(this.props.innerStyle, 'left')}>
 										<Button
 											transparent
 											onPress={this.toggleModal}
-											style={getInnerStyle(this.props.innerStyle, 'button')}
+											style={getInnerKey(this.props.innerStyle, 'button')}
+											{...getInnerKey(this.props.innerProps, 'button')}
 										>
 											<Icon
 												name="arrow-back"
 												color={this.props.theming.primaryColor}
-												style={getInnerStyle(this.props.innerStyle, 'icon')}
+												style={getInnerKey(this.props.innerStyle, 'icon')}
+												{...getInnerKey(this.props.innerProps, 'icon')}
 											/>
 										</Button>
 									</Left>
-									<Body>
-										<Title style={getInnerStyle(this.props.innerStyle, 'title')}>
+									<Body style={getInnerKey(this.props.innerStyle, 'body')}>
+										<Title
+											style={getInnerKey(this.props.innerStyle, 'title')}
+											{...getInnerKey(this.props.innerProps, 'title')}
+										>
 											{this.props.placeholder}
 										</Title>
 									</Body>
-									<Right />
+									<Right style={getInnerKey(this.props.innerStyle, 'right')} />
 								</Header>
 								<ListView
 									dataSource={this.ds.cloneWithRows(this.props.data)}
@@ -240,27 +247,36 @@ class MultiDropdownRange extends Component {
 													checked={!!this.selectedValues[item.label]}
 													color={color || this.props.theming.primaryColor}
 													style={checkBoxStyles}
+													{...getInnerKey(this.props.innerProps, 'checkbox')}
 												/>
 												<Text
 													style={{
 														color: this.props.theming.textColor,
 														marginLeft: 20,
-														...getInnerStyle(this.props.innerStyle, 'label'),
+														...getInnerKey(this.props.innerStyle, 'label'),
 													}}
+													{...getInnerKey(this.props.innerProps, 'text')}
 												>
 													{item.label}
 												</Text>
 											</View>
 										</TouchableWithoutFeedback>
 									)}
+									{...getInnerKey(this.props.innerProps, 'listView')}
 								/>
 							</Modal>)
 						: (
-							<Item regular style={{ marginLeft: 0 }}>
+							<Item
+								regular
+								style={{ marginLeft: 0 }}
+								{...getInnerKey(this.props.innerProps, 'text')}
+							>
 								<TouchableWithoutFeedback
 									onPress={this.toggleModal}
 								>
 									<Text
+										numberOfLines={1}
+										ellipsizeMode="tail"
 										style={{
 											flex: 1,
 											alignItems: 'center',
@@ -271,8 +287,9 @@ class MultiDropdownRange extends Component {
 											paddingLeft: 8,
 											paddingRight: 5,
 											paddingTop: 12,
-											...getInnerStyle(this.props.innerStyle, 'label'),
+											...getInnerKey(this.props.innerStyle, 'label'),
 										}}
+										{...getInnerKey(this.props.innerProps, 'text')}
 									>
 										{
 											Object.keys(this.state.currentValue).length
@@ -310,6 +327,7 @@ MultiDropdownRange.propTypes = {
 	style: types.style,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 MultiDropdownRange.defaultProps = {

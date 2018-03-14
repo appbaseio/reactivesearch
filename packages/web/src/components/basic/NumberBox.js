@@ -16,6 +16,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Button, { numberBoxContainer } from '../../styles/Button';
 import Flex from '../../styles/Flex';
+import Container from '../../styles/Container';
 import { connect } from '../../utils';
 
 class NumberBox extends Component {
@@ -153,7 +154,7 @@ class NumberBox extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
 					<Title className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
@@ -181,36 +182,39 @@ class NumberBox extends Component {
 						</Button>
 					</div>
 				</Flex>
-			</div>
+			</Container>
 		);
 	}
 }
 
 NumberBox.propTypes = {
 	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
-	defaultSelected: types.number,
-	dataField: types.stringRequired,
-	data: types.dataNumberBox,
-	react: types.react,
 	removeComponent: types.funcRequired,
-	title: types.title,
-	queryFormat: types.queryFormatNumberBox,
-	labelPosition: types.labelPosition,
-	URLParams: types.boolRequired,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	style: types.style,
+	// component props
 	className: types.string,
+	componentId: types.stringRequired,
+	data: types.dataNumberBox,
+	dataField: types.stringRequired,
+	defaultSelected: types.number,
 	innerClass: types.style,
+	labelPosition: types.labelPosition,
 	onQueryChange: types.func,
+	queryFormat: types.queryFormatNumberBox,
+	react: types.react,
+	style: types.style,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 NumberBox.defaultProps = {
-	queryFormat: 'gte',
-	labelPosition: 'left',
-	URLParams: false,
-	style: {},
 	className: null,
+	labelPosition: 'left',
+	queryFormat: 'gte',
+	style: {},
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -222,8 +226,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(NumberBox);

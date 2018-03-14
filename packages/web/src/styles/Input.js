@@ -2,7 +2,7 @@ import { css } from 'emotion';
 import styled from 'react-emotion';
 
 const alertBorder = ({ theme }) => css`
-	border: 1px solid ${theme.alertColor};
+	border: 1px solid ${theme.colors.alertColor};
 `;
 
 const input = css`
@@ -19,8 +19,23 @@ const input = css`
 	}
 `;
 
+const dark = theme => css`
+	border-color: ${theme.colors.borderColor};
+`;
+
+const darkInput = ({ theme }) => css`
+	background-color: ${theme.colors.backgroundColor};
+	color: ${theme.colors.textColor};
+	${dark(theme)};
+
+	&:focus {
+		background-color: ${theme.colors.backgroundColor};
+	}
+`;
+
 const Input = styled('input')`
 	${input};
+	${({ themePreset }) => themePreset === 'dark' && darkInput};
 
 	${props =>
 		props.showIcon
@@ -39,7 +54,7 @@ const Input = styled('input')`
 	${props => props.alert && alertBorder};
 `;
 
-const suggestions = css`
+const suggestions = (themePreset, theme) => css`
 	display: block;
 	width: 100%;
 	border: 1px solid #ccc;
@@ -53,6 +68,10 @@ const suggestions = css`
 	list-style: none;
 	max-height: 260px;
 	overflow-y: auto;
+
+	&.small {
+		top: 30px;
+	}
 
 	li {
 		display: flex;
@@ -78,6 +97,8 @@ const suggestions = css`
 			background-color: #eee;
 		}
 	}
+
+	${themePreset === 'dark' && dark(theme)}
 `;
 
 const suggestionsContainer = css`

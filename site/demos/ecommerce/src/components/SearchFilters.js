@@ -16,6 +16,9 @@ const SearchFilters = () => (
 				componentId="brand"
 				dataField="brand.raw"
 				title="Cars"
+				innerClass={{
+					list: 'list',
+				}}
 			/>
 		</FlexChild>
 		<FlexChild card margin="10px">
@@ -28,6 +31,9 @@ const SearchFilters = () => (
 					{ start: 3, end: 5, label: '3 stars and up' },
 					{ start: 2, end: 5, label: '2 stars and up' },
 				]}
+				innerClass={{
+					list: 'list',
+				}}
 			/>
 		</FlexChild>
 		<FlexChild card margin="10px">
@@ -36,6 +42,9 @@ const SearchFilters = () => (
 				dataField="vehicleType.raw"
 				title="Vehicle Type"
 				showSearch={false}
+				innerClass={{
+					list: 'list',
+				}}
 			/>
 		</FlexChild>
 		<FlexChild card margin="10px">

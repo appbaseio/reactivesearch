@@ -16,6 +16,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
+import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { connect } from '../../utils';
 
@@ -177,7 +178,7 @@ class MultiRange extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
 					{
@@ -202,43 +203,45 @@ class MultiRange extends Component {
 						))
 					}
 				</UL>
-			</div>
+			</Container>
 		);
 	}
 }
 
 MultiRange.propTypes = {
 	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
-	defaultSelected: types.stringArray,
-	react: types.react,
 	removeComponent: types.funcRequired,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
+	selectedValue: types.selectedValue,
+	// component props
+	beforeValueChange: types.func,
+	className: types.string,
+	componentId: types.stringRequired,
+	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
-	customQuery: types.func,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
+	defaultSelected: types.stringArray,
+	filterLabel: types.filterLabel,
+	innerClass: types.style,
 	onQueryChange: types.func,
-	updateQuery: types.funcRequired,
-	supportedOrientations: types.supportedOrientations,
+	onValueChange: types.func,
 	placeholder: types.string,
-	selectedValue: types.selectedValue,
+	react: types.react,
+	showCheckbox: types.boolRequired,
+	showFilter: types.bool,
+	style: types.style,
+	supportedOrientations: types.supportedOrientations,
 	title: types.title,
 	URLParams: types.boolRequired,
-	showFilter: types.bool,
-	showCheckbox: types.boolRequired,
-	filterLabel: types.filterLabel,
-	style: types.style,
-	className: types.string,
-	innerClass: types.style,
 };
 
 MultiRange.defaultProps = {
-	URLParams: false,
-	showFilter: true,
-	showCheckbox: true,
-	style: {},
 	className: null,
+	showCheckbox: true,
+	showFilter: true,
+	style: {},
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -250,8 +253,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(MultiRange);

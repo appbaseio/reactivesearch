@@ -2,6 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+
 import DateRange from './DateRangeView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
@@ -16,7 +17,7 @@ const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 });
 
 const RootDrawer = DrawerNavigator({
-	DrawerOption1: {
+	basic: {
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DateRange
@@ -25,17 +26,7 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// DrawerOption2: {
-	// 	navigationOptions: navigationOptionsBuilder('With title'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DateRange
-	// 			title="Choose a date range"
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	DrawerOption3: {
+	withPlaceholder: {
 		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DateRange
@@ -45,36 +36,7 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// DrawerOption4: {
-	// 	navigationOptions: navigationOptionsBuilder('Without showClear'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DateRange
-	// 			showClear={false}
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	// DrawerOption5: {
-	// 	navigationOptions: navigationOptionsBuilder('With filter'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DateRange
-	//             showFilter={true}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	// DrawerOption7: {
-	// 	navigationOptions: navigationOptionsBuilder('Show more than 1 month'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DateRange
-	//             numberOfMonths={2}
-	//             showFilter={false}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	DrawerOption8: {
+	withDefaultSelected: {
 		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DateRange
@@ -87,17 +49,78 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	DrawerOption9: {
-		navigationOptions: navigationOptionsBuilder('With queryFormat'),
+	withCustomStyles: {
+		navigationOptions: navigationOptionsBuilder('With custom styles'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DateRange
-				showFilter={false}
+				// title="Date Picker"
+				placeholder="Pick dates"
+				numberOfMonths={1}
 				queryFormat="date_time_no_millis"
+				defaultSelected={{
+					start: new Date('2017-01-01'),
+					end: new Date('2017-01-05'),
+				}}
+				showFilter={false}
+				filterLabel="Date Range"
+				innerProps={{
+					calendar: {
+						theme: {
+							backgroundColor: '#f2f2f2',
+							calendarBackground: '#f2f2f2',
+							textSectionTitleColor: '#b3b3ff',
+							selectedDayBackgroundColor: '#000066',
+							selectedDayTextColor: '#f2f2f2',
+							todayTextColor: '#000066',
+							dayTextColor: '#0000cc',
+							textDisabledColor: '#b3b3ff',
+							dotColor: '#000066',
+							selectedDotColor: '#f2f2f2',
+							arrowColor: '#000066',
+							monthTextColor: '#000066',
+						},
+					},
+				}}
 				navigation={navigation}
 			/>
 		),
 	},
-	DrawerOption10: {
+	withQueryFormat: {
+		navigationOptions: navigationOptionsBuilder('With queryFormat'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DateRange
+				innerStyle={{
+					button: {
+						backgroundColor: '#000066',
+					},
+					icon: {
+						color: '#f2f2f2',
+					},
+				}}
+				innerProps={{
+					calendar: {
+						color: '#000066',
+						theme: {
+							backgroundColor: '#f2f2f2',
+							calendarBackground: '#f2f2f2',
+							textSectionTitleColor: '#b3b3ff',
+							selectedDayBackgroundColor: '#000066',
+							selectedDayTextColor: '#f2f2f2',
+							todayTextColor: '#000066',
+							dayTextColor: '#0000cc',
+							textDisabledColor: '#b3b3ff',
+							dotColor: '#000066',
+							selectedDotColor: '#f2f2f2',
+							arrowColor: '#000066',
+							monthTextColor: '#000066',
+						},
+					},
+				}}
+				navigation={navigation}
+			/>
+		),
+	},
+	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DateRange
@@ -111,6 +134,24 @@ const RootDrawer = DrawerNavigator({
 				}}
 				showFilter={false}
 				filterLabel="Date Range"
+				innerProps={{
+					calendar: {
+						theme: {
+							backgroundColor: '#f2f2f2',
+							calendarBackground: '#f2f2f2',
+							textSectionTitleColor: '#b3b3ff',
+							selectedDayBackgroundColor: '#000066',
+							selectedDayTextColor: '#f2f2f2',
+							todayTextColor: '#000066',
+							dayTextColor: '#0000cc',
+							textDisabledColor: '#b3b3ff',
+							dotColor: '#000066',
+							selectedDotColor: '#f2f2f2',
+							arrowColor: '#000066',
+							monthTextColor: '#000066',
+						},
+					},
+				}}
 				navigation={navigation}
 			/>
 		),

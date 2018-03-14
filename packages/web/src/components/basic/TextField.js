@@ -16,6 +16,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Input from '../../styles/Input';
 import Title from '../../styles/Title';
+import Container from '../../styles/Container';
 import { connect } from '../../utils';
 
 class TextField extends Component {
@@ -139,7 +140,7 @@ class TextField extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<Input
 					type="text"
@@ -153,61 +154,69 @@ class TextField extends Component {
 					onKeyDown={this.props.onKeyDown}
 					onKeyUp={this.props.onKeyUp}
 					autoFocus={this.props.autoFocus}
+					innerRef={this.props.innerRef}
+					themePreset={this.props.themePreset}
 				/>
-			</div>
+			</Container>
 		);
 	}
 }
 
 TextField.propTypes = {
 	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
-	defaultSelected: types.string,
-	react: types.react,
 	removeComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	title: types.title,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
 	updateQuery: types.funcRequired,
-	placeholder: types.string,
+	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	filterLabel: types.string,
-	URLParams: types.boolRequired,
-	showFilter: types.bool,
-	style: types.style,
+	// component props
+	autoFocus: types.bool,
+	beforeValueChange: types.func,
 	className: types.string,
-	innerClass: types.style,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	dataField: types.stringRequired,
 	debounce: types.number,
+	defaultSelected: types.string,
+	filterLabel: types.string,
+	innerClass: types.style,
+	innerRef: types.func,
 	onBlur: types.func,
 	onFocus: types.func,
-	onKeyPress: types.func,
 	onKeyDown: types.func,
+	onKeyPress: types.func,
 	onKeyUp: types.func,
-	autoFocus: types.bool,
+	onQueryChange: types.func,
+	onValueChange: types.func,
+	placeholder: types.string,
+	react: types.react,
+	ref: types.func,
+	showFilter: types.bool,
+	style: types.style,
+	themePreset: types.themePreset,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 TextField.defaultProps = {
-	placeholder: 'Search',
-	URLParams: false,
-	showFilter: true,
-	style: {},
 	className: null,
 	debounce: 0,
+	placeholder: 'Search',
+	showFilter: true,
+	style: {},
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(TextField);

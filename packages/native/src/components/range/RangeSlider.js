@@ -15,12 +15,13 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	pushToAndClause,
+	getInnerKey,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Histogram from './addons/Histogram';
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect } from '../../utils';
 
 class RangeSlider extends Component {
 	constructor(props) {
@@ -243,7 +244,7 @@ class RangeSlider extends Component {
 									|| Math.ceil((this.props.range.end - this.props.range.start) / 10)
 								}
 								paddingHorizontal={Platform.OS === 'ios' ? 15 : 6}
-								barStyle={getInnerStyle(this.props.innerStyle, 'histogramBar')}
+								barStyle={getInnerKey(this.props.innerStyle, 'histogramBar')}
 							/>)
 							: null
 					}
@@ -262,6 +263,7 @@ class RangeSlider extends Component {
 								}}
 								sliderLength={this.state.width}
 								onValuesChangeFinish={this.handleChange}
+								{...getInnerKey(this.props.innerProps, 'slider')}
 							/>)
 							: null
 					}
@@ -296,6 +298,7 @@ RangeSlider.propTypes = {
 	style: types.style,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 RangeSlider.defaultProps = {

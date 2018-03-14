@@ -8,14 +8,12 @@ import {
 	StatusBar,
 	TouchableOpacity,
 	View,
-	Linking,
 } from 'react-native';
 import {
 	Body,
 	Button,
 	Header,
 	Left,
-	Right,
 	Spinner,
 	Text,
 	Title,
@@ -27,7 +25,7 @@ import {
 	MultiDropdownList,
 	ReactiveBase,
 	ReactiveList,
-} from '@appbaseio/reactivebase-native';
+} from '@appbaseio/reactivesearch-native';
 
 import { GOOD_BOOKS as APPBASE_CONFIG } from './../../common/credentials';
 
@@ -63,8 +61,8 @@ export default class Main extends Component {
 		}
 
 		const header = (
-			<Header style={styles.header}>
-				<Left>
+			<Header style={{ alignSelf: 'center' }}>
+				<Left style={{ flex: 0 }}>
 					<Button
 						transparent
 						onPress={() => navigation.navigate('DrawerToggle')}
@@ -76,27 +74,18 @@ export default class Main extends Component {
 						/>
 					</Button>
 				</Left>
-				<Body>
+				<Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 					<Title
-						style={{ color: headerColor, fontSize: 18 }}
+						style={{
+							color: headerColor,
+							fontSize: 18,
+							textAlign: 'center',
+							left: -5,
+						}}
 					>
 						{ COMPONENT_DEMO }
 					</Title>
 				</Body>
-				{isIOS && (
-					<Right>
-						<Button
-							transparent
-							onPress={() => Linking.openURL('exp://+')}
-						>
-							<Ionicons
-								name="ios-arrow-back"
-								size={25}
-								color={headerColor}
-							/>
-						</Button>
-					</Right>
-				)}
 			</Header>
 		);
 

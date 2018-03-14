@@ -11,10 +11,12 @@ import {
 	checkPropChange,
 	getClassName,
 	handleA11yAction,
+	isEqual,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
+import Container from '../../styles/Container';
 import StarRating from './addons/StarRating';
 import { ratingsList } from '../../styles/ratingsList';
 import { connect } from '../../utils';
@@ -37,7 +39,10 @@ class RatingsFilter extends Component {
 		if (this.props.selectedValue) {
 			this.setValue(this.props.selectedValue);
 		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+			this.setValue([
+				this.props.defaultSelected.start,
+				this.props.defaultSelected.end,
+			]);
 		}
 	}
 
@@ -50,10 +55,18 @@ class RatingsFilter extends Component {
 			this.updateQuery(this.state.currentValue, nextProps);
 		});
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected, nextProps);
-		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || '', nextProps);
+		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
+			this.setValue(
+				nextProps.defaultSelected
+					? [
+						nextProps.defaultSelected.start,
+						nextProps.defaultSelected.end,
+					]
+					: null,
+				nextProps,
+			);
+		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
+			this.setValue(nextProps.selectedValue || null, nextProps);
 		}
 	}
 
@@ -72,8 +85,8 @@ class RatingsFilter extends Component {
 			return {
 				range: {
 					[props.dataField]: {
-						gte: value.start,
-						lte: value.end,
+						gte: value[0],
+						lte: value[1],
 						boost: 2.0,
 					},
 				},
@@ -124,7 +137,7 @@ class RatingsFilter extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<ul className={ratingsList}>
 					{
@@ -134,13 +147,13 @@ class RatingsFilter extends Component {
 								tabIndex="0"
 								className={
 									this.state.currentValue
-									&& this.state.currentValue.start === item.start
+									&& this.state.currentValue[0] === item.start
 										? 'active'
 										: ''
 								}
-								onClick={() => this.setValue(item)}
-								onKeyPress={e => handleA11yAction(e, () => this.setValue(item))}
-								key={item.label}
+								onClick={() => this.setValue([item.start, item.end])}
+								onKeyPress={e => handleA11yAction(e, () => this.setValue([item.start, item.end]))}
+								key={`${this.props.componentId}-${item.start}-${item.end}`}
 							>
 								<StarRating stars={item.start} />
 								{
@@ -152,37 +165,39 @@ class RatingsFilter extends Component {
 						))
 					}
 				</ul>
-			</div>
+			</Container>
 		);
 	}
 }
 
 RatingsFilter.propTypes = {
 	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
-	defaultSelected: types.string,
-	react: types.react,
-	data: types.data,
 	removeComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	title: types.title,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
 	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	filterLabel: types.string,
-	URLParams: types.boolRequired,
-	style: types.style,
+	// component props
+	beforeValueChange: types.func,
 	className: types.string,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	data: types.data,
+	dataField: types.stringRequired,
+	defaultSelected: types.range,
+	filterLabel: types.string,
 	innerClass: types.style,
+	onQueryChange: types.func,
+	onValueChange: types.func,
+	react: types.react,
+	style: types.style,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 RatingsFilter.defaultProps = {
-	URLParams: false,
-	style: {},
 	className: null,
+	style: {},
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -193,8 +208,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(RatingsFilter);

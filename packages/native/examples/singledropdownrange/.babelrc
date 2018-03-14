@@ -5,7 +5,7 @@
 	"plugins": [
 		["module-resolver", {
 			"alias": {
-				"@appbaseio/reactivebase-native": "../../src",
+				"@appbaseio/reactivesearch-native": "../../src",
 				"@appbaseio/reactivecore": "../../../reactivecore"
 			}
 		}],

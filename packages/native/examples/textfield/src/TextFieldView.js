@@ -8,14 +8,12 @@ import {
 	StatusBar,
 	TouchableOpacity,
 	View,
-	Linking,
 } from 'react-native';
 import {
 	Body,
 	Button,
 	Header,
 	Left,
-	Right,
 	Spinner,
 	Text,
 	Title,
@@ -27,7 +25,7 @@ import {
 	TextField,
 	ReactiveBase,
 	ReactiveList,
-} from '@appbaseio/reactivebase-native';
+} from '@appbaseio/reactivesearch-native';
 
 import { GOOD_BOOKS as APPBASE_CONFIG } from './../../common/credentials';
 
@@ -63,8 +61,8 @@ export default class Main extends Component {
 		}
 
 		const header = (
-			<Header style={styles.header}>
-				<Left>
+			<Header style={{ alignSelf: 'center' }}>
+				<Left style={{ flex: 0 }}>
 					<Button
 						transparent
 						onPress={() => navigation.navigate('DrawerToggle')}
@@ -76,27 +74,18 @@ export default class Main extends Component {
 						/>
 					</Button>
 				</Left>
-				<Body>
+				<Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 					<Title
-						style={{ color: headerColor, fontSize: 18, marginLeft: 15 }}
+						style={{
+							color: headerColor,
+							fontSize: 18,
+							textAlign: 'center',
+							left: -5,
+						}}
 					>
-						{ COMPONENT_DEMO }
+						{COMPONENT_DEMO}
 					</Title>
 				</Body>
-				{isIOS && (
-					<Right>
-						<Button
-							transparent
-							onPress={() => Linking.openURL('exp://+')}
-						>
-							<Ionicons
-								name="ios-arrow-back"
-								size={25}
-								color={headerColor}
-							/>
-						</Button>
-					</Right>
-				)}
 			</Header>
 		);
 
@@ -184,15 +173,15 @@ export default class Main extends Component {
 				</View>
 				<View style={styles.bookInfoSection}>
 					<Text style={styles.bookTitle}>
-						{ bookData.title }
+						{bookData.title}
 					</Text>
 					<Text style={styles.bookAuthorSection}>
 						<Text style={styles.bookAuthor}>
-							{ bookData.authors }
+							{bookData.authors}
 						</Text>
 					</Text>
 					<Text style={styles.bookPublication}>
-									Pub {bookData.original_publication_year}
+						Pub {bookData.original_publication_year}
 					</Text>
 					<View style={styles.bookStars}>
 						{
@@ -207,7 +196,7 @@ export default class Main extends Component {
 								))
 						}
 						<Text style={styles.bookRatings}>
-										({bookData.average_rating})
+							({bookData.average_rating})
 						</Text>
 					</View>
 				</View>

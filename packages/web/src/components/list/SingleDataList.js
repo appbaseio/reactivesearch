@@ -16,6 +16,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
+import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
 import { connect } from '../../utils';
 
@@ -161,6 +162,7 @@ class SingleDataList extends Component {
 				style={{
 					margin: '0 0 8px',
 				}}
+				themePreset={this.props.themePreset}
 			/>);
 		}
 		return null;
@@ -178,17 +180,17 @@ class SingleDataList extends Component {
 		}
 
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{this.renderSearch()}
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
 					{
 						selectAllLabel
-							? (
+							&& (
 								<li key={selectAllLabel} className={`${this.state.currentValue === selectAllLabel ? 'active' : ''}`}>
 									<Radio
 										className={getClassName(this.props.innerClass, 'radio')}
-										id={selectAllLabel}
+										id={`${this.props.componentId}-${selectAllLabel}`}
 										name={this.props.componentId}
 										value={selectAllLabel}
 										onChange={this.handleClick}
@@ -203,7 +205,6 @@ class SingleDataList extends Component {
 									</label>
 								</li>
 							)
-							: null
 					}
 					{
 						this.props.data
@@ -234,58 +235,62 @@ class SingleDataList extends Component {
 							))
 					}
 				</UL>
-			</div>
+			</Container>
 		);
 	}
 }
 
 SingleDataList.propTypes = {
-	componentId: types.stringRequired,
 	addComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	updateQuery: types.funcRequired,
-	data: types.data,
-	defaultSelected: types.string,
-	react: types.react,
 	removeComponent: types.funcRequired,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
-	placeholder: types.string,
-	title: types.title,
-	showRadio: types.boolRequired,
-	filterLabel: types.string,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	URLParams: types.boolRequired,
-	showFilter: types.bool,
-	showSearch: types.bool,
-	selectAllLabel: types.string,
-	style: types.style,
+	// component props
+	beforeValueChange: types.func,
 	className: types.string,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	data: types.data,
+	dataField: types.stringRequired,
+	defaultSelected: types.string,
+	filterLabel: types.string,
 	innerClass: types.style,
+	onQueryChange: types.func,
+	onValueChange: types.func,
+	placeholder: types.string,
+	react: types.react,
+	selectAllLabel: types.string,
+	showFilter: types.bool,
+	showRadio: types.boolRequired,
+	showSearch: types.bool,
+	style: types.style,
+	themePreset: types.themePreset,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 SingleDataList.defaultProps = {
-	showRadio: true,
-	URLParams: false,
-	showFilter: true,
+	className: null,
 	placeholder: 'Search',
+	showFilter: true,
+	showRadio: true,
 	showSearch: true,
 	style: {},
-	className: null,
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(SingleDataList);

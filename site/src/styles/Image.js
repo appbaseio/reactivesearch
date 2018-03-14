@@ -29,7 +29,7 @@ const ImageCard = styled('div')`
 
 		a {
 			margin: 0;
-			width: 126px !important;
+			width: 140px !important;
 		}
 	}
 

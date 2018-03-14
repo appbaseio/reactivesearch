@@ -1,8 +1,8 @@
 import { css } from 'emotion';
 import styled from 'react-emotion';
 
-const primary = props => css`
-	background-color: ${props.theme.primaryColor};
+const primary = ({ theme }) => css`
+	background-color: ${theme.colors.primaryColor};
 `;
 
 const Slider = styled('div')`
@@ -51,6 +51,8 @@ const Slider = styled('div')`
 		margin-left: -12px;
 		top: -10px;
 	}
+
+	${({ theme }) => theme.component};
 `;
 
 export default Slider;

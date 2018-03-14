@@ -5,6 +5,7 @@ import { isEqual, checkValueChange } from '@appbaseio/reactivecore/lib/utils/hel
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import Container from '../../styles/Container';
 import { connect } from '../../utils';
 
 class DataController extends Component {
@@ -70,38 +71,39 @@ class DataController extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.children}
-			</div>
+			</Container>
 		);
 	}
 }
 
 DataController.defaultProps = {
-	URLParams: false,
+	className: null,
 	showFilter: true,
 	style: {},
-	className: null,
+	URLParams: false,
 };
 
 DataController.propTypes = {
-	componentId: types.stringRequired,
 	addComponent: types.funcRequired,
+	removeComponent: types.funcRequired,
+	updateQuery: types.funcRequired,
+	selectedValue: types.selectedValue,
+	// component props
+	componentId: types.stringRequired,
+	beforeValueChange: types.func,
+	children: types.children,
+	className: types.string,
+	customQuery: types.func,
 	// DataController can accept any defaultSelected depending on the query used
 	defaultSelected: types.any, // eslint-disable-line
-	selectedValue: types.selectedValue,
-	removeComponent: types.funcRequired,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
-	updateQuery: types.funcRequired,
 	filterLabel: types.string,
-	URLParams: types.boolRequired,
+	onQueryChange: types.func,
+	onValueChange: types.func,
 	showFilter: types.bool,
-	children: types.children,
 	style: types.style,
-	className: types.string,
+	URLParams: types.boolRequired,
 };
 
 const mapStateToProps = (state, props) => ({

@@ -9,7 +9,8 @@ import configureStore, { storeKey } from '@appbaseio/reactivecore';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import URLParamsProvider from './URLParamsProvider';
 
-import theme from '../../styles/theme';
+import getTheme from '../../styles/theme';
+import { composeThemeObject } from '../../utils';
 
 const URLSearchParams = require('url-search-params');
 
@@ -34,7 +35,14 @@ class ReactiveBase extends Component {
 			type: this.type,
 		};
 
-		this.params = new URLSearchParams(window.location.search);
+		let queryParams = '';
+		if (typeof window !== 'undefined') {
+			queryParams = window.location.search;
+		} else {
+			queryParams = this.props.queryParams || '';
+		}
+
+		this.params = new URLSearchParams(queryParams);
 		let selectedValues = {};
 
 		try {
@@ -45,11 +53,11 @@ class ReactiveBase extends Component {
 			selectedValues = {};
 		}
 
-		const { headers = {} } = props;
+		const { headers = {}, themePreset } = props;
 
 		const appbaseRef = new Appbase(config);
 		this.store = configureStore({
-			config,
+			config: { ...config, mapKey: props.mapKey, themePreset },
 			appbaseRef,
 			selectedValues,
 			headers,
@@ -67,8 +75,14 @@ class ReactiveBase extends Component {
 	}
 
 	render() {
+		const theme = composeThemeObject(
+			getTheme(this.props.themePreset),
+			this.props.theme,
+		);
 		return (
-			<ThemeProvider theme={{ ...theme, ...this.props.theme }}>
+			<ThemeProvider
+				theme={theme}
+			>
 				<Provider store={this.store}>
 					<URLParamsProvider params={this.params} headers={this.props.headers}>
 						{this.props.children}
@@ -81,16 +95,20 @@ class ReactiveBase extends Component {
 
 ReactiveBase.defaultProps = {
 	theme: {},
+	themePreset: 'light',
 };
 
 ReactiveBase.propTypes = {
-	type: types.string,
-	url: types.string,
-	credentials: types.string,
 	app: types.stringRequired,
 	children: types.children,
-	theme: types.style,
+	credentials: types.string,
 	headers: types.headers,
+	queryParams: types.string,
+	theme: types.style,
+	themePreset: types.themePreset,
+	type: types.string,
+	url: types.string,
+	mapKey: types.string,
 };
 
 export default ReactiveBase;

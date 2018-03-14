@@ -22,6 +22,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
+import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { connect } from '../../utils';
 
@@ -272,6 +273,7 @@ class MultiList extends Component {
 				style={{
 					margin: '0 0 8px',
 				}}
+				themePreset={this.props.themePreset}
 			/>);
 		}
 		return null;
@@ -282,14 +284,14 @@ class MultiList extends Component {
 	};
 
 	render() {
-		const { selectAllLabel } = this.props;
+		const { selectAllLabel, renderListItem } = this.props;
 
 		if (this.state.options.length === 0) {
 			return null;
 		}
 
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{this.renderSearch()}
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
@@ -343,77 +345,99 @@ class MultiList extends Component {
 										className={getClassName(this.props.innerClass, 'label') || null}
 										htmlFor={`${this.props.componentId}-${item.key}`}
 									>
-										{item.key}
 										{
-											this.props.showCount
-											&& ` (${item.doc_count})`
+											renderListItem
+												? renderListItem(item.key, item.doc_count)
+												: (
+													<span>
+														{item.key}
+														{
+															this.props.showCount
+															&& (
+																<span
+																	className={
+																		getClassName(this.props.innerClass, 'count')
+																		|| null
+																	}
+																>
+																	&nbsp;({item.doc_count})
+																</span>
+															)
+														}
+													</span>
+												)
 										}
 									</label>
 								</li>
 							))
 					}
 				</UL>
-			</div>
+			</Container>
 		);
 	}
 }
 
 MultiList.propTypes = {
-	componentId: types.stringRequired,
 	addComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	sortBy: types.sortByWithCount,
+	removeComponent: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	defaultSelected: types.stringArray,
-	react: types.react,
+	watchComponent: types.funcRequired,
 	options: types.options,
-	removeComponent: types.funcRequired,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
-	placeholder: types.string,
-	title: types.title,
-	showCheckbox: types.boolRequired,
-	filterLabel: types.string,
 	selectedValue: types.selectedValue,
-	queryFormat: types.queryFormatSearch,
-	URLParams: types.boolRequired,
-	showCount: types.bool,
-	size: types.number,
-	showSearch: types.bool,
-	selectAllLabel: types.string,
-	style: types.style,
+	// component props
+	beforeValueChange: types.func,
 	className: types.string,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	dataField: types.stringRequired,
+	defaultSelected: types.stringArray,
+	filterLabel: types.string,
 	innerClass: types.style,
+	onQueryChange: types.func,
+	onValueChange: types.func,
+	placeholder: types.string,
+	queryFormat: types.queryFormatSearch,
+	react: types.react,
+	renderListItem: types.func,
+	selectAllLabel: types.string,
+	showCheckbox: types.boolRequired,
+	showCount: types.bool,
+	showSearch: types.bool,
+	size: types.number,
+	sortBy: types.sortByWithCount,
+	style: types.style,
+	themePreset: types.themePreset,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 MultiList.defaultProps = {
+	className: null,
+	placeholder: 'Search',
+	queryFormat: 'or',
+	showCheckbox: true,
+	showCount: true,
+	showSearch: true,
 	size: 100,
 	sortBy: 'count',
-	showCheckbox: true,
-	queryFormat: 'or',
-	URLParams: false,
-	showCount: true,
-	placeholder: 'Search',
-	showSearch: true,
 	style: {},
-	className: null,
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(MultiList);

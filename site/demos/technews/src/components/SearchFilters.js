@@ -14,6 +14,17 @@ const SearchFilters = () => (
 				componentId="title"
 				dataField={['title', 'text']}
 				highlight
+				customHighlight={() => ({
+					highlight: {
+						pre_tags: ['<mark>'],
+						post_tags: ['</mark>'],
+						fields: {
+							text: {},
+							title: {},
+						},
+						number_of_fragments: 0,
+					},
+				})}
 			/>
 		</FlexChild>
 		<FlexChild flex={1}>

@@ -2,6 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+
 import SingleDropdownList from './SingleDropdownListView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
@@ -16,107 +17,107 @@ const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 });
 
 const RootDrawer = DrawerNavigator({
-	DrawerOption1: {
+	basic: {
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	// DrawerOption2: {
-	// 	navigationOptions: navigationOptionsBuilder('With title'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<SingleDropdownList
-	// 			title="Series List"
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	DrawerOption3: {
-		navigationOptions: navigationOptionsBuilder('With placeholder'),
+	withoutPlaceholder: {
+		navigationOptions: navigationOptionsBuilder('Without placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
-				placeholder="Select one"
+				placeholder=""
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	DrawerOption4: {
-		navigationOptions: navigationOptionsBuilder('With size'),
+	withSize: {
+		navigationOptions: navigationOptionsBuilder('With max size as 5'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
-				size={10}
-				showFilter={false}
+				size={6}
 				navigation={navigation}
 			/>
 		),
 	},
-	// DrawerOption5: {
-	// 	navigationOptions: navigationOptionsBuilder('With filter'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <SingleDropdownList
-	//             showFilter={true}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	DrawerOption6: {
-		navigationOptions: navigationOptionsBuilder('With custom sort'),
-		screen: ({ navigation }) => ( // eslint-disable-line
-			<SingleDropdownList
-				sortBy="asc"
-				showFilter={false}
-				navigation={navigation}
-			/>
-		),
-	},
-	DrawerOption7: {
+	withoutCount: {
 		navigationOptions: navigationOptionsBuilder('Without count'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
 				showCount={false}
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	DrawerOption8: {
-		navigationOptions: navigationOptionsBuilder('With Select All'),
+	withCustomStyles: {
+		navigationOptions: navigationOptionsBuilder('With custom styles'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<SingleDropdownList
+				// title="Series List"
+				innerStyle={{
+					title: {
+						color: 'purple',
+					},
+					label: {
+						color: 'purple',
+					},
+				}}
+				navigation={navigation}
+			/>
+		),
+	},
+	withCustomSort: {
+		navigationOptions: navigationOptionsBuilder('With sort Z->A'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<SingleDropdownList
+				sortBy="desc"
+				navigation={navigation}
+			/>
+		),
+	},
+	withSelectAll: {
+		navigationOptions: navigationOptionsBuilder('With SelectAll option'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
 				selectAllLabel="All Series"
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	DrawerOption9: {
+	withDefaultSelected: {
 		navigationOptions: navigationOptionsBuilder('With defaultSelected'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
 				defaultSelected="Discworld"
-				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	DrawerOption10: {
+	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<SingleDropdownList
 				// title="Series List"
 				size={100}
 				showCount
-				sortBy="asc"
+				sortBy="count"
 				selectAllLabel="All Series"
 				defaultSelected="Discworld"
 				placeholder="Select one"
 				showFilter={false}
 				filterLabel="Series filter"
+				innerStyle={{
+					title: {
+						color: 'purple',
+					},
+					label: {
+						color: 'purple',
+					},
+				}}
 				navigation={navigation}
 			/>
 		),

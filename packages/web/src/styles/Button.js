@@ -2,7 +2,7 @@ import { css } from 'emotion';
 import styled from 'react-emotion';
 import { shade } from './utils';
 
-const filters = css`
+const filters = ({ colors: { borderColor } }) => css`
 	margin: 0 -3px;
 	max-width: 100%;
 
@@ -27,7 +27,7 @@ const filters = css`
 			right: 8px;
 			position: absolute;
 			align-items: center;
-			border-left: 1px solid #fff;
+			border-left: 1px solid ${borderColor || '#fff'};
 			padding-left: 8px;
 			margin-left: 8px;
 		}
@@ -69,12 +69,12 @@ const numberBoxContainer = css`
 	}
 `;
 
-const primary = props => css`
-	background-color: ${props.theme.primaryColor};
-	color: ${props.theme.primaryTextColor};
+const primary = ({ theme }) => css`
+	background-color: ${theme.colors.primaryColor};
+	color: ${theme.colors.primaryTextColor};
 
 	&:hover, &:focus {
-		background-color: ${shade(props.theme.primaryColor, -0.1)};
+		background-color: ${shade(theme.colors.primaryColor, -0.1)};
 	}
 `;
 
@@ -83,13 +83,17 @@ const large = () => css`
 	padding: 10px 20px;
 `;
 
-const disabled = css`
-	background-color: #fafafa;
-	color: #ccc
+const disabled = ({ theme }) => css`
+	background-color: ${(theme.colors.backgroundColor
+		? shade(theme.colors.backgroundColor, 0.3)
+		: '#fafafa')};
+	color: #ccc;
 	cursor: not-allowed;
 
 	&:hover, &:focus {
-		background-color: #fafafa;
+		background-color: ${(theme.colors.backgroundColor
+		? shade(theme.colors.backgroundColor, 0.3)
+		: '#fafafa')};
 	}
 `;
 
@@ -102,14 +106,18 @@ const Button = styled('a')`
 	word-wrap: break-word;
 	padding: 5px 12px;
 	line-height: 1.2rem;
-	background-color: #eee;
-	color: #424242;
+	background-color: ${({ theme }) =>
+		theme.colors.backgroundColor || '#eee'};
+	color: ${({ theme }) => theme.colors.textColor};
 	cursor: pointer;
 	user-select: none;
 	transition: all 0.3s ease;
 
 	&:hover, &:focus {
-		background-color: #ccc;
+		background-color: ${({ theme }) =>
+		(theme.colors.backgroundColor
+			? shade(theme.colors.backgroundColor, 0.1)
+			: '#ccc')};
 	}
 
 	${props => (props.primary ? primary : null)};

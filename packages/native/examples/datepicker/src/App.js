@@ -2,6 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { DrawerNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+
 import DatePicker from './DatePickerView';
 
 const navigationOptionsBuilder = (drawerLabel, iconName) => ({
@@ -16,7 +17,7 @@ const navigationOptionsBuilder = (drawerLabel, iconName) => ({
 });
 
 const RootDrawer = DrawerNavigator({
-	DrawerOption1: {
+	basic: {
 		navigationOptions: navigationOptionsBuilder('Basic', 'ios-home'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DatePicker
@@ -25,17 +26,7 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// DrawerOption2: {
-	// 	navigationOptions: navigationOptionsBuilder('With title'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DatePicker
-	// 			title="Choose a date"
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	DrawerOption3: {
+	withPlaceholder: {
 		navigationOptions: navigationOptionsBuilder('With placeholder'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DatePicker
@@ -45,76 +36,51 @@ const RootDrawer = DrawerNavigator({
 			/>
 		),
 	},
-	// DrawerOption4: {
-	// 	navigationOptions: navigationOptionsBuilder('With filter'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DatePicker
-	//             showFilter={true}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	// DrawerOption5: {
-	// 	navigationOptions: navigationOptionsBuilder('With focus'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DatePicker
-	//             focused={true}
-	//             showFilter={false}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	// DrawerOption6: {
-	// 	navigationOptions: navigationOptionsBuilder('Show more than 1 month'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DatePicker
-	//             numberOfMonths={2}
-	//             showFilter={false}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	DrawerOption7: {
+	withInitialMonth: {
 		navigationOptions: navigationOptionsBuilder('With initialMonth'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DatePicker
-				initialMonth="05-05-2017"
+				initialMonth="2017-05-05"
 				showFilter={false}
 				navigation={navigation}
 			/>
 		),
 	},
-	// DrawerOption8: {
-	// 	navigationOptions: navigationOptionsBuilder('Without clear button'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DatePicker
-	//             showClear={false}
-	//             showFilter={false}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	// DrawerOption9: {
-	// 	navigationOptions: navigationOptionsBuilder('Without clickUnselectsDay'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	//         <DatePicker
-	//             clickUnselectsDay={fasle}
-	//             showFilter={false}
-	//             navigation={navigation}
-	//         />
-	// 	),
-	// },
-	// DrawerOption10: {
-	// 	navigationOptions: navigationOptionsBuilder('With queryFormat'),
-	// 	screen: ({ navigation }) => ( // eslint-disable-line
-	// 		<DatePicker
-	// 			queryFormat="date_time_no_millis"
-	// 			showFilter={false}
-	// 			navigation={navigation}
-	// 		/>
-	// 	),
-	// },
-	DrawerOption11: {
+	withCustomStyles: {
+		navigationOptions: navigationOptionsBuilder('With custom styles'),
+		screen: ({ navigation }) => ( // eslint-disable-line
+			<DatePicker
+				innerStyle={{
+					button: {
+						backgroundColor: '#000066',
+					},
+					icon: {
+						color: '#f2f2f2',
+					},
+				}}
+				innerProps={{
+					calendar: {
+						theme: {
+							backgroundColor: '#f2f2f2',
+							calendarBackground: '#f2f2f2',
+							textSectionTitleColor: '#b3b3ff',
+							selectedDayBackgroundColor: '#000066',
+							selectedDayTextColor: '#f2f2f2',
+							todayTextColor: '#000066',
+							dayTextColor: '#0000cc',
+							textDisabledColor: '#b3b3ff',
+							dotColor: '#000066',
+							selectedDotColor: '#f2f2f2',
+							arrowColor: '#000066',
+							monthTextColor: '#000066',
+						},
+					},
+				}}
+				navigation={navigation}
+			/>
+		),
+	},
+	playground: {
 		navigationOptions: navigationOptionsBuilder('Playground', 'ios-flask'),
 		screen: ({ navigation }) => ( // eslint-disable-line
 			<DatePicker
@@ -123,6 +89,24 @@ const RootDrawer = DrawerNavigator({
 				queryFormat="date_time_no_millis"
 				showFilter={false}
 				filterLabel="Date"
+				innerProps={{
+					calendar: {
+						theme: {
+							backgroundColor: '#f2f2f2',
+							calendarBackground: '#f2f2f2',
+							textSectionTitleColor: '#b3b3ff',
+							selectedDayBackgroundColor: '#000066',
+							selectedDayTextColor: '#f2f2f2',
+							todayTextColor: '#000066',
+							dayTextColor: '#0000cc',
+							textDisabledColor: '#b3b3ff',
+							dotColor: '#000066',
+							selectedDotColor: '#f2f2f2',
+							arrowColor: '#000066',
+							monthTextColor: '#000066',
+						},
+					},
+				}}
 				navigation={navigation}
 			/>
 		),

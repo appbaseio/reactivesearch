@@ -1,15 +1,15 @@
 import styled, { css } from 'react-emotion';
 
-import color from './theme';
+import theme from './theme';
 import { queries } from './mediaQueries';
 
 export const title = css`
-	color: ${color.primaryColor};
+	color: ${theme.colors.primaryColor};
 	font-family: Lato, sans-serif;
 	font-size: 1.2rem;
 	font-weight: bold;
 	text-align: center;
-	border: 1px solid ${color.primaryColor};
+	border: 1px solid ${theme.colors.primaryColor};
 	padding: 3px 12px;
 	border-left-width: 12px;
 

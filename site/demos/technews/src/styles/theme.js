@@ -1,6 +1,10 @@
 const theme = {
-	fontFamily: 'Lato, Helvetica, sans-serif',
-	primaryColor: 'coral',
+	typography: {
+		fontFamily: 'Lato, Helvetica, sans-serif',
+	},
+	colors: {
+		primaryColor: 'coral',
+	},
 };
 
 export default theme;

@@ -15,11 +15,12 @@ import {
 	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
+	getInnerKey,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect } from '../../utils';
 
 class SingleDropdownList extends Component {
 	constructor(props) {
@@ -199,11 +200,12 @@ class SingleDropdownList extends Component {
 				textStyle={{
 					color: this.props.theming.textColor,
 				}}
-				headerStyle={getInnerStyle(this.props.innerStyle, 'title')}
+				headerTitleStyle={getInnerKey(this.props.innerStyle, 'title')}
 				itemTextStyle={{
 					flexGrow: 1,
-					...getInnerStyle(this.props.innerStyle, 'label'),
+					...getInnerKey(this.props.innerStyle, 'label'),
 				}}
+				{...getInnerKey(this.props.innerProps, 'picker')}
 			>
 				{
 					[
@@ -218,6 +220,7 @@ class SingleDropdownList extends Component {
 							key={item.key}
 							label={label}
 							value={item.key}
+							{...getInnerKey(this.props.innerProps, 'pickerItem')}
 						/>);
 					})
 				}
@@ -251,6 +254,7 @@ SingleDropdownList.propTypes = {
 	size: types.number,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 SingleDropdownList.defaultProps = {

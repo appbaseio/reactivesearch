@@ -21,6 +21,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
+import Container from '../../styles/Container';
 import Dropdown from '../shared/Dropdown';
 import { connect } from '../../utils';
 
@@ -265,7 +266,7 @@ class MultiDropdownList extends Component {
 		}
 
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<Dropdown
 					innerClass={this.props.innerClass}
@@ -281,66 +282,73 @@ class MultiDropdownList extends Component {
 					labelField="key"
 					multi
 					showCount={this.props.showCount}
+					themePreset={this.props.themePreset}
+					renderListItem={this.props.renderListItem}
 				/>
-			</div>
+			</Container>
 		);
 	}
 }
 
 MultiDropdownList.propTypes = {
-	componentId: types.stringRequired,
 	addComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	sortBy: types.sortByWithCount,
+	removeComponent: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	defaultSelected: types.stringArray,
-	react: types.react,
+	watchComponent: types.funcRequired,
 	options: types.options,
-	removeComponent: types.funcRequired,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
-	placeholder: types.string,
-	title: types.title,
-	filterLabel: types.string,
 	selectedValue: types.selectedValue,
-	queryFormat: types.queryFormatSearch,
-	URLParams: types.boolRequired,
-	showCount: types.bool,
-	size: types.number,
-	showFilter: types.bool,
-	selectAllLabel: types.string,
-	style: types.style,
+	// component props
+	beforeValueChange: types.func,
 	className: types.string,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	dataField: types.stringRequired,
+	defaultSelected: types.stringArray,
+	filterLabel: types.string,
 	innerClass: types.style,
+	onQueryChange: types.func,
+	onValueChange: types.func,
+	placeholder: types.string,
+	queryFormat: types.queryFormatSearch,
+	react: types.react,
+	renderListItem: types.func,
+	selectAllLabel: types.string,
+	showCount: types.bool,
+	showFilter: types.bool,
+	size: types.number,
+	sortBy: types.sortByWithCount,
+	style: types.style,
+	themePreset: types.themePreset,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 MultiDropdownList.defaultProps = {
+	className: null,
+	placeholder: 'Select values',
+	queryFormat: 'or',
+	showCount: true,
+	showFilter: true,
 	size: 100,
 	sortBy: 'count',
-	queryFormat: 'or',
-	URLParams: false,
-	showCount: true,
-	placeholder: 'Select values',
-	showFilter: true,
 	style: {},
-	className: null,
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList);

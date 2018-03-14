@@ -15,8 +15,8 @@ const TagList = styled('div')`
 		padding: 2px 4px;
 
 		&.active {
-			background-color: ${props => props.theme.primaryColor};
-			color: ${props => props.theme.primaryTextColor};
+			background-color: ${({ theme }) => theme.colors.primaryColor};
+			color: ${({ theme }) => theme.colors.primaryTextColor};
 		}
     }
 `;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Modal, TouchableWithoutFeedback } from 'react-native';
+import { View, Modal, TouchableWithoutFeedback, Platform } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import {
 	Text,
@@ -23,12 +23,13 @@ import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
+	getInnerKey,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect } from '../../utils';
 
 const XDate = require('xdate');
 
@@ -174,15 +175,32 @@ class DatePicker extends Component {
 				[this.state.currentDate.dateString]: {
 					startingDay: true,
 					endingDay: true,
-					color: this.props.theming.primaryColor,
-					textColor: this.props.theming.primaryTextColor,
+					color: (this.props.innerProps && this.props.innerProps.calendar
+						&& this.props.innerProps.calendar.theme
+						&& this.props.innerProps.calendar.theme.selectedDayBackgroundColor)
+						? this.props.innerProps.calendar.theme.selectedDayBackgroundColor
+						: this.props.theming.primaryColor,
+					textColor: (this.props.innerProps && this.props.innerProps.calendar
+						&& this.props.innerProps.calendar.theme
+						&& this.props.innerProps.calendar.theme.selectedDayTextColor)
+						? this.props.innerProps.calendar.theme.selectedDayTextColor
+						: this.props.theming.primaryTextColor,
 				},
 			};
 		}
 
+		const resetButtonStyles = {};
+		if (Platform.OS === 'android') {
+			resetButtonStyles.color = this.props.theming.primaryTextColor;
+		}
+
 		return (
 			<View>
-				<Item regular style={{ marginLeft: 0, ...this.props.style }}>
+				<Item
+					regular
+					style={{ marginLeft: 0, ...this.props.style }}
+					{...getInnerKey(this.props.innerProps, 'item')}
+				>
 					<TouchableWithoutFeedback
 						onPress={this.toggleModal}
 					>
@@ -197,8 +215,9 @@ class DatePicker extends Component {
 								paddingLeft: 8,
 								paddingRight: 5,
 								paddingTop: 12,
-								...getInnerStyle(this.props.innerStyle, 'label'),
+								...getInnerKey(this.props.innerStyle, 'label'),
 							}}
+							{...getInnerKey(this.props.innerProps, 'text')}
 						>
 							{
 								this.state.currentDate
@@ -213,34 +232,39 @@ class DatePicker extends Component {
 					transparent={false}
 					visible={this.state.showModal}
 					onRequestClose={this.toggleModal}
+					{...getInnerKey(this.props.innerProps, 'modal')}
 				>
-					<Header>
-						<Left>
+					<Header {...getInnerKey(this.props.innerProps, 'header')}>
+						<Left style={getInnerKey(this.props.innerStyle, 'left')}>
 							<Button
 								transparent
 								onPress={this.toggleModal}
-								style={getInnerStyle(this.props.innerStyle, 'button')}
+								style={getInnerKey(this.props.innerStyle, 'button')}
 							>
 								<Icon
 									name="arrow-back"
 									color={this.props.theming.primaryColor}
-									style={getInnerStyle(this.props.innerStyle, 'icon')}
+									style={getInnerKey(this.props.innerStyle, 'icon')}
+									{...getInnerKey(this.props.innerProps, 'icon')}
 								/>
 							</Button>
 						</Left>
-						<Body>
-							<Title style={getInnerStyle(this.props.innerStyle, 'title')}>
+						<Body style={getInnerKey(this.props.innerStyle, 'body')}>
+							<Title
+								style={getInnerKey(this.props.innerStyle, 'title')}
+								{...getInnerKey(this.props.innerProps, 'title')}
+							>
 								{this.props.placeholder}
 							</Title>
 						</Body>
-						<Right>
+						<Right style={getInnerKey(this.props.innerStyle, 'right')}>
 							{
 								this.state.currentDate
 									? (
 										<Button
 											style={{
 												paddingRight: 0,
-												...getInnerStyle(this.props.innerStyle, 'button'),
+												...getInnerKey(this.props.innerStyle, 'button'),
 											}}
 											transparent
 											onPress={() => {
@@ -248,7 +272,13 @@ class DatePicker extends Component {
 												this.toggleModal();
 											}}
 										>
-											<Text style={getInnerStyle(this.props.innerStyle, 'label')}>
+											<Text
+												style={{
+													...resetButtonStyles,
+													...getInnerKey(this.props.innerStyle, 'label'),
+												}}
+												{...getInnerKey(this.props.innerProps, 'text')}
+											>
 												Reset
 											</Text>
 										</Button>
@@ -264,8 +294,9 @@ class DatePicker extends Component {
 						markingType="period"
 						style={{
 							marginTop: 10,
-							...getInnerStyle(this.props.innerStyle, 'calendar'),
+							...getInnerKey(this.props.innerStyle, 'calendar'),
 						}}
+						{...getInnerKey(this.props.innerProps, 'calendar')}
 					/>
 					{
 						this.state.currentDate
@@ -278,14 +309,16 @@ class DatePicker extends Component {
 										alignItems: 'center',
 										justifyContent: 'center',
 										backgroundColor: this.props.theming.primaryColor,
-										...getInnerStyle(this.props.innerStyle, 'button'),
+										...getInnerKey(this.props.innerStyle, 'button'),
 									}}
+									{...getInnerKey(this.props.innerProps, 'button')}
 								>
 									<Text
 										style={{
 											color: this.props.theming.primaryTextColor,
-											...getInnerStyle(this.props.innerStyle, 'label'),
+											...getInnerKey(this.props.innerStyle, 'label'),
 										}}
+										{...getInnerKey(this.props.innerProps, 'text')}
 									>
 										View Results
 									</Text>
@@ -316,6 +349,7 @@ DatePicker.propTypes = {
 	onQueryChange: types.func,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 DatePicker.defaultProps = {

@@ -15,6 +15,9 @@ const SearchFilters = () => (
 		URLParams
 		showSearch={false}
 		filterLabel="Categories"
+		innerClass={{
+			list: 'list',
+		}}
 	/>
 );
 

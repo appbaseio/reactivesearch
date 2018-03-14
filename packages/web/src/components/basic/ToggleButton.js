@@ -15,6 +15,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
+import Container from '../../styles/Container';
 import Button, { toggleButtons } from '../../styles/Button';
 import { connect } from '../../utils';
 
@@ -50,8 +51,19 @@ class ToggleButton extends Component {
 
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleToggle(nextProps.defaultSelected, true, nextProps);
-		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.handleToggle(nextProps.selectedValue || [], true, nextProps);
+		} else if (nextProps.multiSelect) {
+			// for multiselect selectedValue will be an array
+			if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
+				this.handleToggle(nextProps.selectedValue || [], true, nextProps);
+			}
+		} else {
+			// else multiselect will be a string
+			const currentValue = this.state.currentValue[0]
+				? this.state.currentValue[0].label
+				: null;
+			if (!isEqual(currentValue, nextProps.selectedValue)) {
+				this.handleToggle(nextProps.selectedValue || [], true, nextProps);
+			}
 		}
 	}
 
@@ -152,7 +164,7 @@ class ToggleButton extends Component {
 
 	render() {
 		return (
-			<div style={this.props.style} className={`${toggleButtons} ${this.props.className || ''}`}>
+			<Container style={this.props.style} className={`${toggleButtons} ${this.props.className || ''}`}>
 				{
 					this.props.title
 					&& <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>
@@ -171,38 +183,40 @@ class ToggleButton extends Component {
 						</Button>
 					);
 				})}
-			</div>
+			</Container>
 		);
 	}
 }
 
 ToggleButton.propTypes = {
 	addComponent: types.funcRequired,
+	removeComponent: types.funcRequired,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
+	selectedValue: types.selectedValue,
+	// component props
+	className: types.string,
 	componentId: types.stringRequired,
 	data: types.data,
 	dataField: types.stringRequired,
-	selectedValue: types.selectedValue,
-	defaultSelected: types.stringArray,
-	multiSelect: types.bool,
-	react: types.react,
-	removeComponent: types.funcRequired,
-	title: types.title,
-	updateQuery: types.funcRequired,
-	showFilter: types.bool,
+	defaultSelected: types.stringOrArray,
 	filterLabel: types.string,
-	style: types.style,
-	className: types.string,
 	innerClass: types.style,
-	URLParams: types.bool,
+	multiSelect: types.bool,
 	onQueryChange: types.func,
+	react: types.react,
+	showFilter: types.bool,
+	style: types.style,
+	title: types.title,
+	URLParams: types.bool,
 };
 
 ToggleButton.defaultProps = {
+	className: null,
 	multiSelect: true,
-	URLParams: false,
 	showFilter: true,
 	style: {},
-	className: null,
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -215,9 +229,9 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) =>
 		dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ToggleButton);

@@ -27,13 +27,14 @@ import {
 	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
+	getInnerKey,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import CheckboxItem from '../shared/CheckboxItem';
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect } from '../../utils';
 
 class MultiDropdownList extends Component {
 	constructor(props) {
@@ -293,27 +294,33 @@ class MultiDropdownList extends Component {
 								transparent={false}
 								visible={this.state.showModal}
 								onRequestClose={this.toggleModal}
+								{...getInnerKey(this.props.innerProps, 'modal')}
 							>
-								<Header>
-									<Left>
+								<Header {...getInnerKey(this.props.innerProps, 'header')}>
+									<Left style={getInnerKey(this.props.innerStyle, 'left')}>
 										<Button
 											transparent
 											onPress={this.toggleModal}
-											style={getInnerStyle(this.props.innerStyle, 'button')}
+											style={getInnerKey(this.props.innerStyle, 'button')}
+											{...getInnerKey(this.props.innerProps, 'button')}
 										>
 											<Icon
 												name="arrow-back"
 												color={this.props.theming.primaryColor}
-												style={getInnerStyle(this.props.innerStyle, 'icon')}
+												style={getInnerKey(this.props.innerStyle, 'icon')}
+												{...getInnerKey(this.props.innerProps, 'icon')}
 											/>
 										</Button>
 									</Left>
-									<Body>
-										<Title style={getInnerStyle(this.props.innerStyle, 'title')}>
+									<Body style={getInnerKey(this.props.innerStyle, 'body')}>
+										<Title
+											style={getInnerKey(this.props.innerStyle, 'title')}
+											{...getInnerKey(this.props.innerProps, 'title')}
+										>
 											{this.props.placeholder}
 										</Title>
 									</Body>
-									<Right />
+									<Right style={getInnerKey(this.props.innerStyle, 'right')} />
 								</Header>
 								<FlatList
 									data={[
@@ -333,17 +340,25 @@ class MultiDropdownList extends Component {
 												checked={Object.keys(this.state.currentValue).includes(item.key)}
 												innerStyle={this.props.innerStyle}
 												theming={this.props.theming}
+												innerProps={this.props.innerProps}
 											/>
 										);
 									}}
+									{...getInnerKey(this.props.innerProps, 'flatList')}
 								/>
 							</Modal>)
 						: (
-							<Item regular style={{ marginLeft: 0 }}>
+							<Item
+								regular
+								style={{ marginLeft: 0 }}
+								{...getInnerKey(this.props.innerProps, 'item')}
+							>
 								<TouchableWithoutFeedback
 									onPress={this.toggleModal}
 								>
 									<Text
+										numberOfLines={1}
+										ellipsizeMode="tail"
 										style={{
 											flex: 1,
 											alignItems: 'center',
@@ -354,8 +369,9 @@ class MultiDropdownList extends Component {
 											paddingLeft: 8,
 											paddingRight: 5,
 											paddingTop: 12,
-											...getInnerStyle(this.props.innerStyle, 'label'),
+											...getInnerKey(this.props.innerStyle, 'label'),
 										}}
+										{...getInnerKey(this.props.innerProps, 'text')}
 									>
 										{
 											Object.keys(this.state.currentValue).length
@@ -400,6 +416,7 @@ MultiDropdownList.propTypes = {
 	supportedOrientations: types.supportedOrientations,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 MultiDropdownList.defaultProps = {

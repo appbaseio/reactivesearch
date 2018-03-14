@@ -23,6 +23,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
 import TagList from '../../styles/TagList';
+import Container from '../../styles/Container';
 import { connect } from '../../utils';
 
 class TagCloud extends Component {
@@ -243,7 +244,7 @@ class TagCloud extends Component {
 		});
 
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				<TagList className={getClassName(this.props.innerClass, 'list') || null}>
 					{
@@ -275,49 +276,51 @@ class TagCloud extends Component {
 							})
 					}
 				</TagList>
-			</div>
+			</Container>
 		);
 	}
 }
 
 TagCloud.propTypes = {
-	componentId: types.stringRequired,
 	addComponent: types.funcRequired,
-	dataField: types.stringRequired,
-	sortBy: types.sortByWithCount,
+	removeComponent: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	defaultSelected: types.highlightField,
-	react: types.react,
+	watchComponent: types.funcRequired,
 	options: types.options,
-	removeComponent: types.funcRequired,
-	beforeValueChange: types.func,
-	onValueChange: types.func,
-	customQuery: types.func,
-	onQueryChange: types.func,
-	title: types.title,
-	filterLabel: types.string,
 	selectedValue: types.selectedValue,
-	URLParams: types.boolRequired,
+	// component props
+	beforeValueChange: types.func,
+	className: types.string,
+	componentId: types.stringRequired,
+	customQuery: types.func,
+	dataField: types.stringRequired,
+	defaultSelected: types.stringOrArray,
+	filterLabel: types.string,
+	innerClass: types.style,
+	multiSelect: types.bool,
+	onQueryChange: types.func,
+	onValueChange: types.func,
+	queryFormat: types.queryFormatSearch,
+	react: types.react,
+	showCount: types.bool,
 	showFilter: types.bool,
 	size: types.number,
+	sortBy: types.sortByWithCount,
 	style: types.style,
-	className: types.string,
-	innerClass: types.style,
-	showCount: types.bool,
-	queryFormat: types.queryFormatSearch,
-	multiSelect: types.bool,
+	title: types.title,
+	URLParams: types.boolRequired,
 };
 
 TagCloud.defaultProps = {
+	className: null,
+	multiSelect: false,
+	queryFormat: 'or',
+	showFilter: true,
 	size: 100,
 	sortBy: 'asc',
-	URLParams: false,
-	showFilter: true,
 	style: {},
-	className: null,
-	queryFormat: 'or',
-	multiSelect: false,
+	URLParams: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -329,9 +332,9 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(TagCloud);

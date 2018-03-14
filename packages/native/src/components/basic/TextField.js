@@ -11,11 +11,12 @@ import {
 	debounce,
 	checkValueChange,
 	checkPropChange,
+	getInnerKey,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import withTheme from '../../theme/withTheme';
-import { connect, getInnerStyle } from '../../utils';
+import { connect } from '../../utils';
 
 class TextField extends Component {
 	constructor(props) {
@@ -133,7 +134,11 @@ class TextField extends Component {
 		}
 
 		return (
-			<Item regular style={{ marginLeft: 0, ...this.props.style }}>
+			<Item
+				regular
+				style={{ marginLeft: 0, ...this.props.style }}
+				{...getInnerKey(this.props.innerProps, 'item')}
+			>
 				{
 					this.props.showIcon && this.props.iconPosition === 'left'
 						? (
@@ -142,8 +147,9 @@ class TextField extends Component {
 								style={{
 									fontSize: 22,
 									top: 2,
-									...getInnerStyle(this.props.innerStyle, 'icon'),
+									...getInnerKey(this.props.innerStyle, 'icon'),
 								}}
+								{...getInnerKey(this.props.innerProps, 'icon')}
 							/>
 						)
 						: null
@@ -152,12 +158,13 @@ class TextField extends Component {
 					style={{
 						color: this.props.theming.textColor,
 						...style,
-						...getInnerStyle(this.props.innerStyle, 'input'),
+						...getInnerKey(this.props.innerStyle, 'input'),
 					}}
 					placeholder={this.props.placeholder}
 					onChangeText={this.setValue}
 					value={this.state.currentValue}
 					autoFocus={this.props.autoFocus}
+					{...getInnerKey(this.props.innerProps, 'input')}
 				/>
 				{
 					this.state.currentValue && this.props.showClear
@@ -165,7 +172,8 @@ class TextField extends Component {
 							<Button
 								transparent
 								onPress={this.clearValue}
-								style={getInnerStyle(this.props.innerStyle, 'button')}
+								style={getInnerKey(this.props.innerStyle, 'button')}
+								{...getInnerKey(this.props.innerProps, 'button')}
 							>
 								<Icon
 									name="md-close"
@@ -179,8 +187,9 @@ class TextField extends Component {
 												? 0
 												: 10
 										),
-										...getInnerStyle(this.props.innerStyle, 'icon'),
+										...getInnerKey(this.props.innerStyle, 'icon'),
 									}}
+									{...getInnerKey(this.props.innerProps, 'icon')}
 								/>
 							</Button>
 						)
@@ -194,8 +203,9 @@ class TextField extends Component {
 								style={{
 									fontSize: 22,
 									top: 2,
-									...getInnerStyle(this.props.innerStyle, 'icon'),
+									...getInnerKey(this.props.innerStyle, 'icon'),
 								}}
+								{...getInnerKey(this.props.innerProps, 'icon')}
 							/>
 						)
 						: null
@@ -229,11 +239,12 @@ TextField.propTypes = {
 	showClear: types.bool,
 	theming: types.style,
 	innerStyle: types.style,
+	innerProps: types.props,
 };
 
 TextField.defaultProps = {
-	placeholder: 'Search',
-	showIcon: true,
+	placeholder: '',
+	showIcon: false,
 	iconPosition: 'left',
 	autoFocus: false,
 	showFilter: true,

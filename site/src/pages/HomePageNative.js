@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Flex, H1, H2, Title, Button, Text } from '@appbaseio/designkit';
 
 import Navbar, { logo } from '../styles/Navbar';
-import { SlopeWrapper, Slope } from '../styles/Slope';
+import { SlopeWrapper, Slope, WhiteBackdrop } from '../styles/Slope';
 import Bubble from '../styles/Bubble';
-import { Image, ImageCard } from '../styles/Image';
 import {
 	container,
 	boldHeading,
@@ -19,7 +18,6 @@ import {
 	footer,
 	tabPadding,
 	tabCol,
-	tabCenterHeading,
 	tabShow,
 	tabHide,
 	tabJustifyCenter,
@@ -28,7 +26,6 @@ import {
 	mobShow,
 	mobBottomMargin,
 	textCenter,
-	primaryBg,
 } from '../styles/base';
 import { mockDataSearch, mockDataSearchFull } from '../components/mock';
 
@@ -87,64 +84,67 @@ export default class HomePageNative extends Component {
 	render() {
 		return (
 			<div className={container}>
-				<Navbar>
-					<a className={`${boldHeading} ${logo}`} href="/reactivesearch/">Reactivesearch Native</a>
-					<ul className={mobHide}>
-						<li><a href="#examples">Examples</a></li>
-						<li><a href="https://opensource.appbase.io/reactive-manual">Documentation</a></li>
-						<li><a href="https://github.com/appbaseio/reactivesearch">GitHub</a></li>
-					</ul>
+				<Navbar small>
+					<a href="/reactivesearch/native" className="img-logo">
+						<img src="images/native/logo.png" alt="Reactivesearch" />
+						<span>Reactivesearch Native</span>
+					</a>
 				</Navbar>
-				<Flex
-					justifyContent="center"
-					padding="0 3rem"
-					className={primaryBg}
-				>
-					<div className="wrapper" />
-					<Flex
-						className={`${tabBanner}`}
-						flexDirection="column"
-						padding="0 0 0 3rem"
-					>
-						<H1
-							fontWeight="700"
-							fontSize="1.5rem"
-							lineHeight="2rem"
-							margin="0 0 10px"
-							className={boldHeading}
-							style={{ textAlign: 'center' }}
+				<SlopeWrapper>
+					<Flex justifyContent="space-between">
+						<Slope degree={5} border>
+							<Flex style={{ position: 'absolute', right: 0 }} className={tabHide}>
+								<img
+									src="images/native/landing.png"
+									alt="Reactivesearch"
+								/>
+							</Flex>
+						</Slope>
+						<Flex
+							className={`${col} ${tabBanner}`}
+							flexDirection="column"
+							padding="0 0 0 6rem"
+							justifyContent="center"
 						>
-							React Native UI components for ElasticSearch
-						</H1>
+							<H1
+								fontWeight="700"
+								fontSize="1.8rem"
+								lineHeight="2.4rem"
+								margin="30px 0 10px"
+								className={boldHeading}
+							>React Native UI components for Elasticsearch
+							</H1>
 
-						<Text
-							fontSize="1rem"
-							lineHeight="1.4rem"
-							margin="10px 0 30px"
-							light
-							style={{ textAlign: 'center' }}
-						>
-							<span className={`${boldHeading} ${logo} ${mobHide}`}>v0.5</span> TODO - Needs a sub-heading.&nbsp;
-							<a
-								className={`${decoratedLink} ${decoratedSecondaryLink}`}
-								target="_blank"
-								rel="noopener noreferrer"
-								href="https://github.com/appbaseio/reactivesearch"
+							<Text
+								fontSize="1rem"
+								lineHeight="1.4rem"
+								margin="10px 0 30px"
+								light
 							>
-								Open-source licensed.
-							</a>
-						</Text>
+								<span className={`${boldHeading} ${logo} ${mobHide}`}>v0.6</span>&nbsp;
+								Build data-driven mobile apps.&nbsp;
+								<a
+									className={`${decoratedLink} ${decoratedSecondaryLink}`}
+									target="_blank"
+									rel="noopener noreferrer"
+									href="https://github.com/appbaseio/reactivesearch"
+								>
+									Open-source licensed.
+								</a>
+							</Text>
 
-						<Flex className={tabJustifyCenter} justifyContent="center">
-							<Button light primary shadow className={button} href="https://opensource.appbase.io/native-reactive-manual/getting-started/reactivesearch.html">
-								Getting Started
-							</Button>
-							<Button shadow className={button} style={{ marginLeft: '10px' }} href="https://opensource.appbase.io/native-reactive-manual/components/textfield.html">
-								View Components
-							</Button>
+							<Flex className={tabJustifyCenter}>
+								<Button light primary shadow big className={button} href="https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html">
+									Get Started with React Native
+								</Button>
+								<Button shadow big className={button} style={{ marginLeft: '10px' }} href="/reactivesearch">
+									<span style={{ marginLeft: 5, position: 'relative', top: 1 }}>React UI components</span>
+								</Button>
+							</Flex>
 						</Flex>
+						<WhiteBackdrop degree={-15} />
 					</Flex>
-				</Flex>
+				</SlopeWrapper>
 
 				<Flex padding="0 3rem 3rem" className={tabCol}>
 					<div className={col}>
@@ -174,7 +174,7 @@ export default class HomePageNative extends Component {
 								className={button}
 								shadow
 								primary
-								href="https://opensource.appbase.io/native-reactive-manual/components/textfield.html"
+								href="https://opensource.appbase.io/reactive-manual/native/components/textfield.html"
 							>
 								View components
 							</Button>
@@ -188,15 +188,15 @@ export default class HomePageNative extends Component {
 							</Button>
 							<Button
 								className={`${button} ${mobBottomMargin}`}
-								href="https://opensource.appbase.io/native-reactive-manual/advanced/reactivecomponent.html"
+								href="https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html"
 							>
 								Create your own
 							</Button>
 						</Flex>
 
 						<Flex flexDirection="column" className={tabJustifyCenter}>
-							<Title>Get our designer templates for sketch.</Title>
-							<Button href="resources/ReactiveSearch_Playground.sketch" warning shadow className={button} style={{ maxWidth: 220 }}>
+							<Title>Get our iOS and Android specific designer templates for sketch.</Title>
+							<Button href="resources/ReactiveSearchNative_Playground.sketch" warning shadow className={button} style={{ maxWidth: 220 }}>
 								Download sketch file
 							</Button>
 						</Flex>
@@ -206,10 +206,12 @@ export default class HomePageNative extends Component {
 				<Flex
 					padding="3rem"
 					flexDirection="column"
-					backgroundColor="#fefefe"
 					justifyContent="center"
 					alignItems="center"
 					className={tabPadding}
+					style={{
+						backgroundImage: 'linear-gradient(to top, #dfe9f3 0%, white 100%)',
+					}}
 				>
 					<H2 className={textCenter}>Up To 10x Time Savings</H2>
 					<Text fontSize="1rem" lineHeight="1.6rem" className={textCenter}>
@@ -221,7 +223,7 @@ export default class HomePageNative extends Component {
 						style={{ width: '100%', flexWrap: 'wrap' }}
 					>
 
-						<Flex className={card} onClick={() => this.openLink('https://medium.com/@siddharthlatest/v2-ui-components-for-elasticsearch-23743d9a1070')}>
+						<Flex className={card} onClick={() => this.openLink('https://medium.appbase.io/build-your-next-react-native-app-with-reactivesearch-ce21829f3bf5')}>
 							<div>
 								<img src="images/rocket.png" alt="Data-driven UIs" />
 							</div>
@@ -237,7 +239,7 @@ export default class HomePageNative extends Component {
 							</div>
 						</Flex>
 
-						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html')}>
+						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html')}>
 							<div>
 								<img src="images/remix.png" alt="Data-driven UIs" />
 							</div>
@@ -245,14 +247,14 @@ export default class HomePageNative extends Component {
 								Works with existing UIs
 							</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								Already have your own components? Bring them to ReactiveSearch.
+								Already have your own design components? Bring them to Reactivesearch Native.
 							</Text>
 							<div className={mobShow}>
 								<Button className={button}>Read More</Button>
 							</div>
 						</Flex>
 
-						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/theming/themes.html')}>
+						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/native/advanced/style.html')}>
 							<div>
 								<img src="images/configurablestyles.png" alt="Data-driven UIs" />
 							</div>
@@ -269,18 +271,19 @@ export default class HomePageNative extends Component {
 
 						<Flex className={card} onClick={() => this.openLink('https://github.com/appbaseio/reactivesearch/tree/dev/packages/web')}>
 							<div>
-								<img src="images/native/components.png" alt="Data-driven UIs" />
+								<img src="images/devices.png" alt="Data-driven UIs" />
 							</div>
 							<Title margin="0" fontWeight="700" fontSize="1rem">Create cross-platform apps</Title>
 							<Text margin="12px 0 0" lineHeight="1.3rem">
-								Reactivesearch Native components can be ported to create web apps.
+								All Native components have equivalent React UI components,
+								allowing creation of consistent cross-platform apps.
 							</Text>
 							<div className={mobShow}>
 								<Button className={button}>Read More</Button>
 							</div>
 						</Flex>
 
-						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html')}>
+						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/getting-started/native/reactivebase.html')}>
 							<div>
 								<img src="images/elasticsearch.png" alt="Data-driven UIs" />
 							</div>
@@ -309,7 +312,7 @@ export default class HomePageNative extends Component {
 							</div>
 						</Flex>
 
-						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html#connect-to-elasticsearch')}>
+						<Flex className={card} onClick={() => this.openLink('https://opensource.appbase.io/reactive-manual/native/getting-started/reactivebase.html#connect-to-elasticsearch')}>
 							<div>
 								<img src="images/shield.png" alt="Data-driven UIs" />
 							</div>
@@ -323,7 +326,7 @@ export default class HomePageNative extends Component {
 							</div>
 						</Flex>
 
-						<Flex className={card} onClick={() => this.goToLink('./#examples')}>
+						<Flex className={card} onClick={() => this.goToLink('/native#examples')}>
 							<div>
 								<img src="images/blocks.png" alt="Data-driven UIs" />
 							</div>
@@ -339,7 +342,7 @@ export default class HomePageNative extends Component {
 				</Flex>
 
 				<SlopeWrapper small className={tabHide}>
-					<Slope style={{ backgroundImage: 'linear-gradient(to top, #dfe9f3 0%, white 100%)' }} />
+					<Slope style={{ background: '#fff' }} />
 					<Flex
 						padding="3rem 3rem 1rem"
 						flexDirection="column"
@@ -381,77 +384,82 @@ export default class HomePageNative extends Component {
 					backgroundColor="#fff"
 					boxShadow="0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07)"
 				>
-					<H2 margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
+					<H2 id="examples" margin="1rem 0 0.5rem">See Reactivesearch In Action</H2>
 					<Flex className={tabJustifyCenter}>
-						<Button shadow primary className={button} href="https://appbaseio-apps.github.io/booksearch-onboarding/">Build a live app in 5 mins</Button>
-						<Button className={button} style={{ marginLeft: '1rem' }} href="https://opensource.appbase.io/reactive-manual">Read the docs</Button>
+						<Button shadow primary className={button} href="https://snack.expo.io/@metagrover/booksearch">Interactive Demo</Button>
+						<Button className={button} style={{ marginLeft: '1rem' }} href="https://opensource.appbase.io/reactive-manual/native/">Read the docs</Button>
 					</Flex>
 				</Flex>
 
-				<Flex
-					flexDirection="column"
-					justifyContent="center"
-					alignItems="center"
-					padding="5rem 3rem 0"
-					className={tabPadding}
-				>
-					<H2 className={colored} id="examples">Checkout these starter apps</H2>
-
+				<SlopeWrapper small style={{ marginTop: '-20px' }} className="no-tab-padding">
+					<Slope style={{ backgroundImage: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' }} />
 					<Flex
+						flexDirection="column"
 						justifyContent="center"
-						style={{ width: '100%', maxWidth: '1200px' }}
-						margin="30px 0 0"
-						flexWrap="wrap"
+						alignItems="center"
+						padding="3rem 3rem 5rem"
+						className={tabPadding}
 					>
-						<ImageCard>
-							<Image src="images/apps/airbeds.png" />
-							<div className="info">
-								<Title>Airbeds</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/airbeds" primary shadow className={button}>Check Demo</Button>
-							</div>
-						</ImageCard>
+						<Flex
+							flexDirection="row"
+							justifyContent="space-around"
+							alignItems="center"
+							padding="3rem 0 0 0"
+							style={{
+								width: '95%',
+								maxWidth: '900px',
+							}}
+							className={tabJustifyCenter}
+						>
+							<Flex flexDirection="column" justifyContent="center" alignItems="center">
+								<a target="_blank" rel="noopener noreferrer" href="https://snack.expo.io/@metagrover/booksearch" className="demo">
+									<img width="240" src="images/native/booksearch.png" alt="Demo app" />
+								</a>
+								<Button
+									rel="noopener noreferrer"
+									style={{ width: 140, marginTop: 0, marginBottom: 50 }}
+									shadow
+									className={button}
+									href="https://snack.expo.io/@metagrover/booksearch"
+								>
+									Check Demo
+								</Button>
+							</Flex>
 
-						<ImageCard>
-							<Image src="images/apps/productsearch.png" />
-							<div className="info">
-								<Title>Product Search</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/producthunt" primary shadow className={button}>Check Demo</Button>
-							</div>
-						</ImageCard>
+							<Flex flexDirection="column" justifyContent="center" alignItems="center">
+								<a target="_blank" rel="noopener noreferrer" href="https://snack.expo.io/@dhruvdutt/gitxplore-native-app" className="demo">
+									<img width="240" src="images/native/gitxplore.png" alt="Demo app" />
+								</a>
+								<Button
+									rel="noopener noreferrer"
+									style={{ width: 140, marginTop: 0, marginBottom: 50 }}
+									shadow
+									className={button}
+									href="https://snack.expo.io/@dhruvdutt/gitxplore-native-app"
+								>
+									Check Demo
+								</Button>
+							</Flex>
 
-						<ImageCard>
-							<Image src="images/apps/gitxplore.png" />
-							<div className="info">
-								<Title>GitHub Search</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/gitxplore" primary shadow className={button}>Check Demo</Button>
-							</div>
-						</ImageCard>
+							<Flex flexDirection="column" justifyContent="center" alignItems="center">
+								<a target="_blank" rel="noopener noreferrer" href="https://snack.expo.io/@dhruvdutt/todo" className="demo">
+									<img width="240" src="images/native/todo.png" alt="Demo app" />
+								</a>
+								<Button
+									rel="noopener noreferrer"
+									style={{ width: 140, marginTop: 0, marginBottom: 50 }}
+									shadow
+									className={button}
+									href="https://snack.expo.io/@dhruvdutt/todo"
+								>
+									Check Demo
+								</Button>
+							</Flex>
 
-						<ImageCard>
-							<Image src="images/apps/carstore.png" />
-							<div className="info">
-								<Title>Car Store</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/ecommerce" primary shadow className={button}>Check Demo</Button>
-							</div>
-						</ImageCard>
 
-						<ImageCard>
-							<Image src="images/apps/goodbooks.png" />
-							<div className="info">
-								<Title>Book Search</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/goodbooks" primary shadow className={button}>Check Demo</Button>
-							</div>
-						</ImageCard>
-
-						<ImageCard>
-							<Image src="images/apps/technews.png" />
-							<div className="info">
-								<Title>Tech News Search</Title>
-								<Button target="_blank" rel="noopener noreferrer" href="demos/technews" primary shadow className={button}>Check Demo</Button>
-							</div>
-						</ImageCard>
+						</Flex>
 					</Flex>
-				</Flex>
+				</SlopeWrapper>
 
 				<Flex
 					flexDirection="column"
@@ -572,43 +580,36 @@ export default class HomePageNative extends Component {
 							width: '100%',
 							maxWidth: '950px',
 						}}
-						className={tabCol}
+						flexDirection="column"
+						alignItems="center"
 					>
-						<Flex className={col}>
-							<div style={{ textAlign: 'center', margin: '0 auto' }}>
-								<img style={{ maxWidth: '400px' }} width="100%" src="images/banner.png" alt="Signup on appbase.io" />
-							</div>
-						</Flex>
-
-						<Flex
-							className={col}
-							flexDirection="column"
+						<H2
+							fontWeight="700"
+							fontSize="1.8rem"
+							lineHeight="2.4rem"
+							margin="0 0 16px 0"
+							style={{
+								maxWidth: 500,
+								textAlign: 'center',
+							}}
 						>
-							<H2
-								fontWeight="700"
-								fontSize="1.8rem"
-								lineHeight="2.4rem"
-								margin="0 0 12px 0"
-								className={tabCenterHeading}
+							Hire us to build customized React and React Native apps
+						</H2>
+						<Text fontSize="1.2rem" lineHeight="1.5rem">
+							Ship quality apps cost effectively.
+						</Text>
+						<div>
+							<Button
+								primary
+								shadow
+								className={button}
+								href="mailto:info@appbase.io?subject=Custom+React/Native+App&body=Hi!+I+am+looking+to+build+a+custom+react+app+for+<an awesome idea>"
+								target="_blank"
+								rel="noopener noreferrer"
 							>
-								Build your Elasticsearch backend with appbase.io
-							</H2>
-							<Text fontSize="1.2rem" lineHeight="1.5rem">
-								Get a free account for up to 10,000 records.
-							</Text>
-							<div>
-								<Button
-									primary
-									shadow
-									className={button}
-									href="https://appbase.io"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									Signup for free
-								</Button>
-							</div>
-						</Flex>
+								Get in touch
+							</Button>
+						</div>
 					</Flex>
 				</Flex>
 
@@ -629,11 +630,10 @@ export default class HomePageNative extends Component {
 					<Flex className="column-wrapper">
 						<Flex className="column" flexDirection="column">
 							<Title className="heading">Documentation</Title>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html">Quick Start</a></Text>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/base-components/textfield.html">Base Components</a></Text>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/list-components/singlelist.html">List Components</a></Text>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/search-components/categorysearch.html">Search Components</a></Text>
-							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/result-components/resultlist.html">Result Components</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html">Quick Start</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/native/components/textfield.html">Components</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html">Create a custom component</a></Text>
+							<Text light margin="3px 0"><a href="https://opensource.appbase.io/reactive-manual/">Reactivesearch for web</a></Text>
 						</Flex>
 
 						<Flex className="column" flexDirection="column">

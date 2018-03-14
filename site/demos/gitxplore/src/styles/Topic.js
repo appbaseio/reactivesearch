@@ -1,9 +1,9 @@
 import styled from 'react-emotion';
 
-import color from './theme';
+import theme from './theme';
 
 const Topic = styled.div`
-	background: ${({ active }) => (active ? color.primaryColor : color.secondaryColor)};
+	background: ${({ active }) => (active ? theme.colors.primaryColor : theme.colors.secondaryColor)};
 	margin: 3px;
 	padding: 4px;
 	color: white;
@@ -12,7 +12,7 @@ const Topic = styled.div`
 	border-radius: 4px;
 
 	&:hover {
-		background: ${color.primaryColor};
+		background: ${theme.colors.primaryColor};
 	}
 `;
 

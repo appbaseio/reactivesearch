@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { withTheme } from 'emotion-theming';
 
 import { setValue, clearValues } from '@appbaseio/reactivecore/lib/actions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
 import Button, { filters } from '../../styles/Button';
+import Container from '../../styles/Container';
 import { connect } from '../../utils';
 
 class SelectedFilters extends Component {
@@ -17,20 +19,21 @@ class SelectedFilters extends Component {
 			return arrayToRender.join(', ');
 		} else if (value && typeof value === 'object') {
 			// TODO: support for NestedList
-			if (value.label || value.key) {
-				return value.label || value.key;
+			let label = value.label || value.key || value.distance || null;
+			if (value.location) {
+				label = `${value.location} - ${label}`;
 			}
-			return null;
+			return label;
 		}
 		return value;
 	}
 
 	render() {
-		const { selectedValues } = this.props;
+		const { selectedValues, theme } = this.props;
 		let hasValues = false;
 
 		return (
-			<div style={this.props.style} className={`${filters} ${this.props.className || ''}`}>
+			<Container style={this.props.style} className={`${filters(theme)} ${this.props.className || ''}`}>
 				{
 					Object.keys(selectedValues)
 						.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
@@ -68,38 +71,42 @@ class SelectedFilters extends Component {
 						)
 						: null
 				}
-			</div>
+			</Container>
 		);
 	}
 }
 
 SelectedFilters.propTypes = {
-	selectedValues: types.selectedValues,
-	setValue: types.func,
 	clearValues: types.func,
+	setValue: types.func,
 	components: types.components,
-	style: types.style,
+	selectedValues: types.selectedValues,
 	className: types.string,
+	clearAllLabel: types.title,
 	innerClass: types.style,
 	showClearAll: types.bool,
-	clearAllLabel: types.title,
+	style: types.style,
+	theme: types.style,
 };
 
 SelectedFilters.defaultProps = {
-	style: {},
 	className: null,
-	showClearAll: true,
 	clearAllLabel: 'Clear All',
+	showClearAll: true,
+	style: {},
 };
 
 const mapStateToProps = state => ({
-	selectedValues: state.selectedValues,
 	components: state.components,
+	selectedValues: state.selectedValues,
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setValue: (component, value) => dispatch(setValue(component, value)),
 	clearValues: () => (dispatch(clearValues())),
+	setValue: (component, value) => dispatch(setValue(component, value)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SelectedFilters);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(SelectedFilters));

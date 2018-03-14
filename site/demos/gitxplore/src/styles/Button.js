@@ -1,7 +1,7 @@
 import styled, { css } from 'react-emotion';
 
 import { queries } from './mediaQueries';
-import color from './theme';
+import theme from './theme';
 
 const button = css`
 	cursor: pointer;
@@ -24,7 +24,7 @@ export const ToggleButton = styled.div`
 
 	&:hover {
 		background: white;
-		color: ${color.secondaryColor};
+		color: ${theme.colors.secondaryColor};
 	}
 
 	${queries.xLarge`
@@ -34,7 +34,7 @@ export const ToggleButton = styled.div`
 
 const Button = styled.div`
 	${button};
-	background: ${color.lightGray};
+	background: ${theme.colors.lightGray};
 	min-width: 70px;
 
 	svg {
@@ -42,7 +42,7 @@ const Button = styled.div`
 	}
 
 	&:hover {
-		background: ${color.primaryColor};
+		background: ${theme.colors.primaryColor};
 		color: white;
 	}
 `;
