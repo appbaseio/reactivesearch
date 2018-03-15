@@ -471,7 +471,7 @@ const mapStateToProps = (state, props) => ({
 	currentPage: (
 		state.selectedValues[`${props.componentId}-page`]
 		&& state.selectedValues[`${props.componentId}-page`].value - 1
-	) || 0,
+	) || props.currentPage || 0,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	isLoading: state.isLoading[props.componentId] || false,
 	streamHits: state.streamHits[props.componentId] || [],
