@@ -43,6 +43,13 @@ class ReactiveList extends Component {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
 
+		if (this.props.providerRef) {
+			this.props.providerRef({
+				setPage: (page) => { this.setPage(page); },
+				getResultStats: () => this.getResultStats(),
+			});
+		}
+
 		if (this.props.stream) {
 			this.props.setStreaming(this.props.componentId, true);
 		}
@@ -213,6 +220,9 @@ class ReactiveList extends Component {
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
 		this.props.removeComponent(this.internalComponent);
+		if (this.props.providerRef) {
+			this.props.providerRef(null);
+		}
 	}
 
 	setReact = (props) => {
@@ -282,6 +292,15 @@ class ReactiveList extends Component {
 			);
 		}
 	};
+
+	getResultStats = () => ({
+		currentPage: this.state.currentPage,
+		totalPages: this.state.totalPages,
+		total: this.props.total,
+		totalHits: (this.props.hits || {}).length || 0,
+		pageSize: this.props.size,
+	});
+
 
 	renderResultStats = () => {
 		if (this.props.onResultStats && this.props.total) {
@@ -454,6 +473,7 @@ ReactiveList.propTypes = {
 	style: types.style,
 	URLParams: types.bool,
 	onPageChange: types.func,
+	providerRef: types.func,
 };
 
 ReactiveList.defaultProps = {
