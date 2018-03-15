@@ -107,13 +107,25 @@ class SingleDropdownList extends Component {
 	};
 
 	defaultQuery = (value, props) => {
-		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
+		if (props.selectAllLabel && props.selectAllLabel === value) {
+			if (props.showMissing === true) {
+				return { match_all: {} };
+			}
 			return {
 				exists: {
 					field: props.dataField,
 				},
 			};
 		} else if (value) {
+			if (props.showMissing && value === props.missingLabel) {
+				return {
+					bool: {
+						must_not: {
+							exists: { field: props.dataField },
+						},
+					},
+				};
+			}
 			return {
 				[this.type]: {
 					[props.dataField]: value,
@@ -172,6 +184,7 @@ class SingleDropdownList extends Component {
 					field: props.dataField,
 					size: props.size,
 					order: getAggsOrder(props.sortBy),
+					...(props.showMissing ? { missing: props.missingLabel } : {}),
 				},
 			},
 		};
@@ -246,6 +259,8 @@ SingleDropdownList.propTypes = {
 	title: types.title,
 	themePreset: types.themePreset,
 	URLParams: types.boolRequired,
+	showMissing: types.bool,
+	missingLabel: types.string,
 };
 
 SingleDropdownList.defaultProps = {
@@ -257,6 +272,8 @@ SingleDropdownList.defaultProps = {
 	sortBy: 'count',
 	style: {},
 	URLParams: false,
+	showMissing: false,
+	missingLabel: 'N/A',
 };
 
 const mapStateToProps = (state, props) => ({

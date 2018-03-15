@@ -109,13 +109,25 @@ class SingleList extends Component {
 	};
 
 	defaultQuery = (value, props) => {
-		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
+		if (props.selectAllLabel && props.selectAllLabel === value) {
+			if (props.showMissing) {
+				return { match_all: {} };
+			}
 			return {
 				exists: {
 					field: props.dataField,
 				},
 			};
 		} else if (value) {
+			if (props.showMissing && value === props.missingLabel) {
+				return {
+					bool: {
+						must_not: {
+							exists: { field: props.dataField },
+						},
+					},
+				};
+			}
 			return {
 				[this.type]: {
 					[props.dataField]: value,
@@ -179,6 +191,7 @@ class SingleList extends Component {
 					field: props.dataField,
 					size: props.size,
 					order: getAggsOrder(props.sortBy),
+					...(props.showMissing ? { missing: props.missingLabel } : {}),
 				},
 			},
 		};
@@ -341,6 +354,8 @@ SingleList.propTypes = {
 	themePreset: types.themePreset,
 	title: types.title,
 	URLParams: types.boolRequired,
+	showMissing: types.bool,
+	missingLabel: types.string,
 };
 
 SingleList.defaultProps = {
@@ -354,6 +369,8 @@ SingleList.defaultProps = {
 	sortBy: 'count',
 	style: {},
 	URLParams: false,
+	showMissing: false,
+	missingLabel: 'N/A',
 };
 
 const mapStateToProps = (state, props) => ({
