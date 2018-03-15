@@ -117,7 +117,7 @@ class SingleDropdownList extends Component {
 				},
 			};
 		} else if (value) {
-			if (props.showMissing && value === props.missingLabel) {
+			if (props.showMissing && props.missingLabel === value) {
 				return {
 					bool: {
 						must_not: {
