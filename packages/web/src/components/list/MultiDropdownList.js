@@ -120,19 +120,48 @@ class MultiDropdownList extends Component {
 		let query = null;
 		const type = props.queryFormat === 'or' ? 'terms' : 'term';
 		if (this.props.selectAllLabel && value.includes(this.props.selectAllLabel)) {
-			query = {
-				exists: {
-					field: props.dataField,
-				},
-			};
+			if (props.showMissing) {
+				query = { match_all: {} };
+			} else {
+				query = {
+					exists: {
+						field: props.dataField,
+					},
+				};
+			}
 		} else if (value) {
 			let listQuery;
 			if (props.queryFormat === 'or') {
-				listQuery = {
-					[type]: {
-						[props.dataField]: value,
-					},
-				};
+				if (props.showMissing) {
+					const should = [
+						{
+							[type]: {
+								[props.dataField]: value.filter(item => item !== props.missingLabel),
+							},
+						},
+					];
+					const hasMissingTerm = value.indexOf(props.missingLabel) > -1;
+					if (hasMissingTerm) {
+						should.push({
+							bool: {
+								must_not: {
+									exists: { field: props.dataField },
+								},
+							},
+						});
+					}
+					listQuery = {
+						bool: {
+							should,
+						},
+					};
+				} else {
+					listQuery = {
+						[type]: {
+							[props.dataField]: value,
+						},
+					};
+				}
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
 				const queryArray = value.map(item => (
@@ -246,6 +275,7 @@ class MultiDropdownList extends Component {
 					field: props.dataField,
 					size: props.size,
 					order: getAggsOrder(props.sortBy),
+					...(props.showMissing ? { missing: props.missingLabel } : {}),
 				},
 			},
 		};
@@ -322,6 +352,8 @@ MultiDropdownList.propTypes = {
 	themePreset: types.themePreset,
 	title: types.title,
 	URLParams: types.boolRequired,
+	showMissing: types.bool,
+	missingLabel: types.string,
 };
 
 MultiDropdownList.defaultProps = {
@@ -334,6 +366,8 @@ MultiDropdownList.defaultProps = {
 	sortBy: 'count',
 	style: {},
 	URLParams: false,
+	showMissing: false,
+	missingLabel: 'N/A',
 };
 
 const mapStateToProps = (state, props) => ({
