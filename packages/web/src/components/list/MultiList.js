@@ -135,16 +135,16 @@ class MultiList extends Component {
 			let listQuery;
 			if (props.queryFormat === 'or') {
 				if (props.showMissing) {
-					const should = [
+					const hasMissingTerm = value.includes(props.missingLabel);
+					let should = [
 						{
 							[type]: {
 								[props.dataField]: value.filter(item => item !== props.missingLabel),
 							},
 						},
 					];
-					const hasMissingTerm = value.indexOf(props.missingLabel) > -1;
 					if (hasMissingTerm) {
-						should.push({
+						should = should.concat({
 							bool: {
 								must_not: {
 									exists: { field: props.dataField },
