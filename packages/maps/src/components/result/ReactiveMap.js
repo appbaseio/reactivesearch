@@ -709,8 +709,10 @@ class ReactiveMap extends Component {
 					mapElement={<div style={{ height: '100%' }} />}
 					onMapMounted={(ref) => {
 						this.mapRef = ref;
-						if (this.props.innerRef) {
-							this.props.innerRef(ref);
+						if (this.props.innerRef && ref) {
+							const data = Object.values(ref.context)[0].data;
+							const map = { ...ref, data };
+							this.props.innerRef(map);
 						}
 					}}
 					zoom={this.state.zoom}
