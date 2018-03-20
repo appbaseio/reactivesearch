@@ -168,7 +168,10 @@ class ResultList extends Component {
 		if (this.props.pagination) {
 			if (this.state.isLoading) {
 				if (nextProps.onPageChange) {
-					nextProps.onPageChange();
+					nextProps.onPageChange({
+						currentPage: this.state.currentPage + 1,
+						totalPages: this.state.totalPages,
+					});
 				} else {
 					window.scrollTo(0, 0);
 				}
@@ -199,7 +202,10 @@ class ResultList extends Component {
 			&& nextProps.hits.length < this.props.hits.length
 		) {
 			if (nextProps.onPageChange) {
-				nextProps.onPageChange();
+				nextProps.onPageChange({
+					currentPage: this.state.currentPage + 1,
+					totalPages: this.state.totalPages,
+				});
 			} else {
 				window.scrollTo(0, 0);
 			}
