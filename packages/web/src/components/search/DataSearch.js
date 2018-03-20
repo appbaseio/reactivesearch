@@ -385,7 +385,7 @@ class DataSearch extends Component {
 
 	renderCancelIcon = () => {
 		if (this.props.showClear) {
-			return <CancelSvg />;
+			return this.props.clearIcon || <CancelSvg />;
 		}
 		return null;
 	}
@@ -440,9 +440,10 @@ class DataSearch extends Component {
 										themePreset={themePreset}
 									/>
 									{
-										this.state.currentValue && this.props.showClear ? (
+										this.state.currentValue && this.props.showClear
+										&& (
 											<InputIcon onClick={this.clearValue} iconPosition="right">{this.renderCancelIcon()}</InputIcon>
-										) : null
+										)
 									}
 									<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
 
@@ -525,6 +526,7 @@ DataSearch.propTypes = {
 	autosuggest: types.bool,
 	beforeValueChange: types.func,
 	className: types.string,
+	clearIcon: types.children,
 	componentId: types.stringRequired,
 	customHighlight: types.func,
 	customQuery: types.func,
