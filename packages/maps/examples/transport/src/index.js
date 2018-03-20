@@ -16,13 +16,27 @@ const Main = () => (
 			componentId="map"
 			dataField="location"
 			title="Reactive Maps"
-			defaultZoom={13}
+			defaultZoom={11}
 			defaultPin="https://i.imgur.com/ajzfeYT.png"
 			stream
 			defaultQuery={() => ({
 				match_all: {},
 			})}
+			onData={(res) => {
+				if (res._id === 'bus-1') {
+					return ({
+						icon: 'https://i.imgur.com/ajzfeYT.png',
+					});
+				}
+				return ({
+					icon: 'https://i.imgur.com/EQkhDre.png',
+				});
+			}}
+			defaultMapStyle="Light Monochrome"
 			defaultCenter={{ lat: 37.74, lng: -122.45 }}
+			showMarkerClusters={false}
+			streamAutoCenter={false}
+			showSearchAsMove={false}
 		/>
 	</ReactiveBase>
 );
