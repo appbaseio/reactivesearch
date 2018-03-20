@@ -218,9 +218,18 @@ class ResultList extends Component {
 		}
 
 		if (nextProps.pagination && nextProps.total !== this.props.total) {
+			const totalPages = Math.ceil(nextProps.total / nextProps.size);
+			const currentPage = this.props.total ? 0 : this.state.currentPage;
 			this.setState({
-				currentPage: this.props.total ? 0 : this.state.currentPage,
+				currentPage,
 			});
+
+			if (this.props.onPageChange) {
+				this.props.onPageChange({
+					currentPage: currentPage + 1,
+					totalPages,
+				});
+			}
 		}
 
 		if (nextProps.pagination !== this.props.pagination) {
