@@ -101,6 +101,10 @@ const mapContainer = css`
 	height: 100%;
 	position: absolute;
 	right: 0;
+
+	.checkbox-label {
+		font-size: 15px;
+	}
 `;
 
 export {

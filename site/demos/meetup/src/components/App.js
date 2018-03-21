@@ -65,6 +65,7 @@ export default () => (
 				style={{
 					height: 'calc(100vh - 168px)',
 				}}
+				showMarkerClusters={false}
 				onAllData={(hits, streamHits, loadMore, renderMap, renderPagination) => (
 					<div
 						style={{
@@ -97,8 +98,8 @@ export default () => (
 						<span
 							style={{
 								width: `${
-									data.venue_name_ngrams
-										? data.venue_name_ngrams.length * 8
+									data.member.member_name
+										? data.member.member_name.length * 8
 										: 40
 								}px`,
 								minWidth: 60,
@@ -106,12 +107,15 @@ export default () => (
 								textAlign: 'center',
 							}}
 						>
-							{data.venue_name_ngrams}
+							{data.member.member_name}
 						</span>
 					),
 				})}
 				react={{
 					and: ['search', 'distance'],
+				}}
+				innerClass={{
+					label: 'checkbox-label',
 				}}
 			/>
 		</ReactiveBase>
