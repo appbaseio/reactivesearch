@@ -11,6 +11,9 @@ const Main = () => (
 		credentials="dmgyKySw5:162202d3-43f7-4e01-95f2-f9f3e1b02bb5"
 		type="city"
 		mapKey="AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q"
+		style={{
+			position: 'relative',
+		}}
 	>
 		<h2>Weather updates on ReactiveMap</h2>
 		<ReactiveMap
@@ -55,7 +58,7 @@ const Main = () => (
 
 					const heatMapData = hits.map((markerData) => {
 						const location = markerData.coord;
-						const temp = markerData.main.temp || 0;
+						const temp = Math.max(markerData.main.temp, 0);
 						return ({
 							location: new window.google.maps.LatLng(location.lat, location.lon),
 							weight: temp,
