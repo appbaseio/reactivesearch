@@ -468,6 +468,10 @@ class ReactiveMap extends Component {
 	};
 
 	getCenter = (hits) => {
+		if (this.props.center) {
+			return this.parseLocation(this.props.center);
+		}
+
 		if (
 			(!!this.mapRef && this.state.preserveCenter)
 			|| (this.props.stream && this.props.streamHits.length && !this.props.streamAutoCenter)
