@@ -18,7 +18,7 @@ const Main = () => (
 			componentId="map"
 			dataField="location"
 			title="Reactive Maps"
-			defaultZoom={11}
+			defaultZoom={14}
 			defaultPin="https://i.imgur.com/ajzfeYT.png"
 			stream
 			defaultQuery={() => ({
