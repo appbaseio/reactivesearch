@@ -41,6 +41,8 @@ export default () => (
 					height: 'calc(100vh - 52px)',
 				}}
 				className={rightCol}
+				showMarkerClusters={false}
+				showSearchAsMove={false}
 				onAllData={(hits, streamHits, loadMore, renderMap, renderPagination) => (
 					<div style={{ display: 'flex' }}>
 						<div className="card-container">
