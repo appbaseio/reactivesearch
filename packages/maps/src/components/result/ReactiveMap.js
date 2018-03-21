@@ -552,6 +552,7 @@ class ReactiveMap extends Component {
 						boxShadow: 'rgba(0,0,0,0.3) 0px 1px 4px -1px',
 						borderRadius: 2,
 					}}
+					className={getClassName(this.props.innerClass, 'checkboxContainer') || null}
 				>
 					<Checkbox
 						className={getClassName(this.props.innerClass, 'checkbox') || null}
