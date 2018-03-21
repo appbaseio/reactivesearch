@@ -265,6 +265,7 @@ class ReactiveMap extends Component {
 			|| this.state.markerOnTop !== nextState.markerOnTop
 			|| this.props.showMapStyles !== nextProps.showMapStyles
 			|| this.props.autoCenter !== nextProps.autoCenter
+			|| this.props.streamAutoCenter !== nextProps.streamAutoCenter
 			|| this.props.defaultZoom !== nextProps.defaultZoom
 			|| this.props.showMarkerClusters !== nextProps.showMarkerClusters
 			|| !isEqual(this.state.currentMapStyle, nextState.currentMapStyle)
@@ -467,7 +468,14 @@ class ReactiveMap extends Component {
 	};
 
 	getCenter = (hits) => {
-		if (!!this.mapRef && this.state.preserveCenter) {
+		if (this.props.center) {
+			return this.parseLocation(this.props.center);
+		}
+
+		if (
+			(!!this.mapRef && this.state.preserveCenter)
+			|| (this.props.stream && this.props.streamHits.length && !this.props.streamAutoCenter)
+		) {
 			const currentCenter = this.mapRef.getCenter();
 			setTimeout(() => {
 				this.setState({
@@ -481,7 +489,7 @@ class ReactiveMap extends Component {
 		}
 
 		if (hits && hits.length) {
-			if (this.props.autoCenter) {
+			if (this.props.autoCenter || this.props.streamAutoCenter) {
 				return this.getHitsCenter(hits) || this.parseLocation(this.props.defaultCenter);
 			}
 			return hits[0] && hits[0][this.props.dataField]
@@ -544,6 +552,7 @@ class ReactiveMap extends Component {
 						boxShadow: 'rgba(0,0,0,0.3) 0px 1px 4px -1px',
 						borderRadius: 2,
 					}}
+					className={getClassName(this.props.innerClass, 'checkboxContainer') || null}
 				>
 					<Checkbox
 						className={getClassName(this.props.innerClass, 'checkbox') || null}
@@ -618,10 +627,11 @@ class ReactiveMap extends Component {
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 		}
 
+		const resultsToRender = [...streamResults, ...filteredResults];
 		let markers = [];
 
 		if (this.props.showMarkers) {
-			markers = [...streamResults, ...filteredResults].map((item) => {
+			markers = resultsToRender.map((item) => {
 				const markerProps = {
 					position: this.getPosition(item),
 				};
@@ -670,6 +680,8 @@ class ReactiveMap extends Component {
 							</MarkerWithLabel>
 						);
 					}
+				} else if (this.props.defaultPin) {
+					markerProps.icon = this.props.defaultPin;
 				}
 
 				return (
@@ -702,12 +714,14 @@ class ReactiveMap extends Component {
 					mapElement={<div style={{ height: '100%' }} />}
 					onMapMounted={(ref) => {
 						this.mapRef = ref;
-						if (this.props.innerRef) {
-							this.props.innerRef(ref);
+						if (this.props.innerRef && ref) {
+							const map = Object.values(ref.context)[0];
+							const mapRef = { ...ref, map };
+							this.props.innerRef(mapRef);
 						}
 					}}
 					zoom={this.state.zoom}
-					center={this.getCenter(filteredResults)}
+					center={this.getCenter(resultsToRender)}
 					{...this.props.mapProps}
 					onIdle={this.handleOnIdle}
 					onZoomChanged={this.handleZoomChange}
@@ -831,6 +845,7 @@ ReactiveMap.propTypes = {
 	center: types.location,
 	showMapStyles: types.bool,
 	autoCenter: types.bool,
+	streamAutoCenter: types.bool,
 	defaultZoom: types.number,
 	mapProps: types.props,
 	markerProps: types.props,
@@ -857,6 +872,7 @@ ReactiveMap.defaultProps = {
 		lng: 150.644,
 	},
 	autoCenter: false,
+	streamAutoCenter: false,
 	defaultZoom: 8,
 	mapProps: {},
 	markerProps: {},
