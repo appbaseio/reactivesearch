@@ -18,14 +18,14 @@ const Main = () => (
 			dataField="location"
 			title="Reactive Maps"
 			innerRef={(ref) => {
-				this.map = ref;
+				this.mapRef = ref;
 			}}
 			defaultZoom={4}
 			onAllData={(hits, streamHits, loadMore, renderMap) => {
-				if (this.map) {
+				if (this.mapRef) {
 					// renders data layer on the map
 					// refer: https://developers.google.com/maps/documentation/javascript/datalayer
-					this.map.data.loadGeoJson('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json');
+					this.mapRef.map.data.loadGeoJson('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json');
 				}
 				return renderMap();
 			}}
