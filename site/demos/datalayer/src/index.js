@@ -12,6 +12,7 @@ const Main = () => (
 		type="places"
 		mapKey="AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q"
 	>
+		<h2>Data Layer on ReactiveMap</h2>
 		<ReactiveMap
 			componentId="map"
 			dataField="location"

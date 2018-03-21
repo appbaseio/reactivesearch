@@ -12,6 +12,8 @@ const Main = () => (
 		type="location"
 		mapKey="AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q"
 	>
+		<h2>Realtime bus streaming on ReactiveMap</h2>
+		<p>Tip: You may need to zoom out to see the second bus</p>
 		<ReactiveMap
 			componentId="map"
 			dataField="location"
