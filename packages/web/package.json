@@ -27,7 +27,7 @@
   "author": "metagrover",
   "license": "Apache-2.0",
   "dependencies": {
-    "@appbaseio/reactivecore": "^1.4.1",
+    "@appbaseio/reactivecore": "^1.4.2",
     "appbase-js": "^2.2.11",
     "downshift": "^1.22.1",
     "emotion": "^9.0.0",
