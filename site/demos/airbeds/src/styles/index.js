@@ -138,6 +138,7 @@ const rightCol = css`
 
 	.map-container {
 		width: 480px;
+		height: calc(100% - 52px);
 		position: fixed;
 		right: 0;
 	}

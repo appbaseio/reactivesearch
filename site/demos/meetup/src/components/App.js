@@ -63,19 +63,14 @@ export default () => (
 					document.getElementById('list').scrollTo(0, 0);
 				}}
 				style={{
+					position: 'fixed',
+					width: '100%',
 					height: 'calc(100vh - 168px)',
+					top: '168px',
 				}}
 				showMarkerClusters={false}
 				onAllData={(hits, streamHits, loadMore, renderMap, renderPagination) => (
-					<div
-						style={{
-							display: 'flex',
-							position: 'fixed',
-							width: '100%',
-							height: 'calc(100vh - 168px)',
-							top: '168px',
-						}}
-					>
+					<div style={{ display: 'flex' }}>
 						<div id="list" className={listContainer}>
 							{hits.map(data => (
 								<div key={data._id} className="user">
