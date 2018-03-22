@@ -69,7 +69,7 @@ class URLParamsProvider extends Component {
 
 	render() {
 		return (
-			<Base>
+			<Base style={this.props.style} className={this.props.className}>
 				{this.props.children}
 			</Base>
 		);
@@ -83,6 +83,13 @@ URLParamsProvider.propTypes = {
 	children: types.children,
 	headers: types.headers,
 	params: types.params,
+	style: types.style,
+	className: types.string,
+};
+
+URLParamsProvider.defaultProps = {
+	style: {},
+	className: null,
 };
 
 const mapStateToProps = state => ({
