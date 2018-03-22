@@ -194,11 +194,19 @@ class ReactiveList extends Component {
 			});
 		}
 
-		if (nextProps.pagination && nextProps.total !== this.props.total) {
-			this.setState({
-				totalPages: Math.ceil(nextProps.total / nextProps.size),
-				currentPage: this.props.total ? 0 : this.state.currentPage,
-			});
+		if (nextProps.pagination) {
+			if (this.props.size !== nextProps.size) {
+				this.setState({
+					totalPages: Math.ceil(nextProps.total / nextProps.size),
+					currentPage: Math.ceil(this.state.from / nextProps.size),
+				});
+				// recaculate page
+			} else if (nextProps.total !== this.props.total) {
+				this.setState({
+					totalPages: Math.ceil(nextProps.total / nextProps.size),
+					currentPage: this.props.total ? 0 : this.state.currentPage,
+				});
+			}
 		}
 
 		if (nextProps.pagination !== this.props.pagination) {
