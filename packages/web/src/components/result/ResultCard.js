@@ -168,10 +168,7 @@ class ResultCard extends Component {
 		if (this.props.pagination) {
 			if (this.state.isLoading) {
 				if (nextProps.onPageChange) {
-					nextProps.onPageChange({
-						currentPage: this.state.currentPage + 1,
-						totalPages: this.state.totalPages,
-					});
+					nextProps.onPageChange(this.state.currentPage + 1, this.state.totalPages);
 				} else {
 					window.scrollTo(0, 0);
 				}
@@ -204,10 +201,7 @@ class ResultCard extends Component {
 			&& nextProps.hits.length < this.props.hits.length
 		) {
 			if (nextProps.onPageChange) {
-				nextProps.onPageChange({
-					currentPage: this.state.currentPage + 1,
-					totalPages: this.state.totalPages,
-				});
+				nextProps.onPageChange(this.state.currentPage + 1, this.state.totalPages);
 			} else {
 				window.scrollTo(0, 0);
 			}
@@ -225,10 +219,7 @@ class ResultCard extends Component {
 			});
 
 			if (this.props.onPageChange) {
-				this.props.onPageChange({
-					currentPage: currentPage + 1,
-					totalPages,
-				});
+				nextProps.onPageChange(currentPage + 1, this.state.totalPages);
 			}
 		}
 
