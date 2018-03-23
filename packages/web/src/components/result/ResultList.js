@@ -213,7 +213,7 @@ class ResultList extends Component {
 				currentPage,
 			});
 
-			if (this.props.onPageChange) {
+			if (nextProps.onPageChange) {
 				nextProps.onPageChange(currentPage + 1, this.state.totalPages);
 			}
 		}
