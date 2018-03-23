@@ -217,15 +217,11 @@ class DynamicRangeSlider extends Component {
 			currentValue[0] < props.range.start ? props.range.start : currentValue[0],
 			currentValue[1] > props.range.end ? props.range.end : currentValue[1],
 		];
-
 		this.locked = true;
 		const performUpdate = () => {
 			this.setState({
 				currentValue: normalizedValue,
 			}, () => {
-				if (this.props.currentValues) {
-					this.getSliderValues([normalizedValue[0], normalizedValue[1]], props);
-				}
 				this.updateQuery([normalizedValue[0], normalizedValue[1]], props);
 				this.locked = false;
 			});
@@ -246,8 +242,10 @@ class DynamicRangeSlider extends Component {
 		this.handleChange(values);
 	};
 
-	getSliderValues = (value) => {
-		this.props.currentValues(value);
+	getSliderValues = (values) => {
+		if (this.props.onDrag) {
+			this.props.onDrag(values);
+		}
 	}
 
 	updateQuery = (value, props) => {
@@ -340,6 +338,7 @@ class DynamicRangeSlider extends Component {
 					max={this.state.range.end}
 					values={this.state.currentValue}
 					onChange={this.handleSlider}
+					onValuesUpdated={this.getSliderValues}
 					snap={this.props.snap}
 					snapPoints={this.props.snap ? this.getSnapPoints() : null}
 					className={getClassName(this.props.innerClass, 'slider')}
@@ -376,13 +375,13 @@ DynamicRangeSlider.propTypes = {
 	beforeValueChange: types.func,
 	className: types.string,
 	componentId: types.stringRequired,
-	currentValues: types.func,
 	customQuery: types.func,
 	dataField: types.stringRequired,
 	defaultSelected: types.func,
 	filterLabel: types.string,
 	innerClass: types.style,
 	interval: types.number,
+	onDrag: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	rangeLabels: types.func,
