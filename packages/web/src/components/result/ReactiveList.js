@@ -168,7 +168,8 @@ class ReactiveList extends Component {
 				this.setState({
 					isLoading: false,
 				});
-			} else if (this.props.currentPage !== nextProps.currentPage
+			}
+			if (this.props.currentPage !== nextProps.currentPage
 					&& nextProps.currentPage > 0
 					&& nextProps.currentPage <= this.state.totalPages) {
 				this.setPage(nextProps.currentPage - 1);
