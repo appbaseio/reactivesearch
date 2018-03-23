@@ -32,24 +32,19 @@ class ResultList extends Component {
 	constructor(props) {
 		super(props);
 
+		let currentPage = 0;
+		if (this.props.defaultPage) {
+			currentPage = this.props.defaultPage - 1;
+		} else if (this.props.currentPage) {
+			currentPage = Math.max(this.props.currentPage - 1, 0);
+		}
+
 		this.state = {
 			from: props.currentPage * props.size,
 			isLoading: false,
-			currentPage: props.currentPage,
+			currentPage,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
-	}
-
-	componentWillMount() {
-		if (this.props.defaultPage !== undefined) {
-			this.setState({
-				currentPage: this.props.defaultPage,
-			});
-		} else if (this.props.currentPage) {
-			this.setState({
-				currentPage: Math.max(this.props.currentPage - 1, 0),
-			});
-		}
 	}
 
 	componentDidMount() {
@@ -535,8 +530,8 @@ ResultList.defaultProps = {
 const mapStateToProps = (state, props) => ({
 	defaultPage: (
 		state.selectedValues[`${props.componentId}-page`]
-		&& state.selectedValues[`${props.componentId}-page`].value - 1
-	),
+		&& state.selectedValues[`${props.componentId}-page`].value
+	) || 0,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	isLoading: state.isLoading[props.componentId] || false,
 	streamHits: state.streamHits[props.componentId] || [],
