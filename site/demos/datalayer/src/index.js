@@ -85,9 +85,8 @@ class Main extends React.Component {
 
 							// renders data layer on the map
 							// refer: https://developers.google.com/maps/documentation/javascript/datalayer
-							map.data.loadGeoJson('../src/us-states.json');
+							map.data.loadGeoJson('https://raw.githubusercontent.com/appbaseio/reactivesearch/dev/site/demos/datalayer/src/us-states.json');
 							map.data.addListener('click', (event) => {
-								// map.data.overrideStyle(event.feature, { fillColor: 'red' });
 								this.setState({
 									title: `${event.feature.f.name}: ${count[event.feature.f.name]} meetups`,
 								});

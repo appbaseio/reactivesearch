@@ -33,7 +33,6 @@ class ReactiveList extends Component {
 		this.state = {
 			from: props.currentPage * props.size,
 			isLoading: false,
-			totalPages: 0,
 			currentPage: props.currentPage,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
@@ -196,7 +195,6 @@ class ReactiveList extends Component {
 
 		if (nextProps.pagination && nextProps.total !== this.props.total) {
 			this.setState({
-				totalPages: Math.ceil(nextProps.total / nextProps.size),
 				currentPage: this.props.total ? 0 : this.state.currentPage,
 			});
 		}
@@ -358,7 +356,7 @@ class ReactiveList extends Component {
 					)
 						? (<Pagination
 							pages={this.props.pages}
-							totalPages={this.state.totalPages}
+							totalPages={Math.ceil(this.props.total / this.props.size)}
 							currentPage={this.state.currentPage}
 							setPage={this.setPage}
 							innerClass={this.props.innerClass}
@@ -392,7 +390,7 @@ class ReactiveList extends Component {
 					)
 						? (<Pagination
 							pages={this.props.pages}
-							totalPages={this.state.totalPages}
+							totalPages={Math.ceil(this.props.total / this.props.size)}
 							currentPage={this.state.currentPage}
 							setPage={this.setPage}
 							innerClass={this.props.innerClass}

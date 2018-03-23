@@ -203,6 +203,13 @@ class RangeSlider extends Component {
 		}
 	};
 
+	handleDrag = (values) => {
+		if (this.props.onDrag) {
+			const { min, max, values: currentValue } = values;
+			this.props.onDrag(currentValue, [min, max]);
+		}
+	};
+
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
 
@@ -260,6 +267,7 @@ class RangeSlider extends Component {
 						max={this.props.range.end}
 						values={this.state.currentValue}
 						onChange={this.handleSlider}
+						onValuesUpdated={this.handleDrag}
 						snap={this.props.snap}
 						snapPoints={this.props.snap ? this.getSnapPoints() : null}
 						className={getClassName(this.props.innerClass, 'slider')}
@@ -304,6 +312,7 @@ RangeSlider.propTypes = {
 	filterLabel: types.string,
 	innerClass: types.style,
 	interval: types.number,
+	onDrag: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	range: types.range,

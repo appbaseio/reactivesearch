@@ -84,7 +84,12 @@ class ReactiveBase extends Component {
 				theme={theme}
 			>
 				<Provider store={this.store}>
-					<URLParamsProvider params={this.params} headers={this.props.headers}>
+					<URLParamsProvider
+						params={this.params}
+						headers={this.props.headers}
+						style={this.props.style}
+						className={this.props.className}
+					>
 						{this.props.children}
 					</URLParamsProvider>
 				</Provider>
@@ -109,6 +114,8 @@ ReactiveBase.propTypes = {
 	type: types.string,
 	url: types.string,
 	mapKey: types.string,
+	style: types.style,
+	className: types.string,
 };
 
 export default ReactiveBase;

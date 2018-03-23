@@ -98,8 +98,8 @@ const listContainer = css`
 
 const mapContainer = css`
 	width: 50%;
-	height: 100%;
-	position: absolute;
+	height: calc(100% - 168px);
+	position: fixed;
 	right: 0;
 
 	.checkbox-label {

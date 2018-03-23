@@ -38,6 +38,7 @@ export default () => (
 				pagination
 				onPageChange={() => { window.scrollTo(0, 0); }}
 				style={{
+					width: 'calc(100% - 280px)',
 					height: 'calc(100vh - 52px)',
 				}}
 				className={rightCol}

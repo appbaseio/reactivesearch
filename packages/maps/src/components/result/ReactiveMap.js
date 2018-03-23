@@ -703,14 +703,14 @@ class ReactiveMap extends Component {
 
 		const style = {
 			width: '100%',
-			height: '100vh',
+			height: '100%',
 			position: 'relative',
 		};
 
 		return (
-			<div style={{ ...style, ...this.props.style }}>
+			<div style={style}>
 				<MapComponent
-					containerElement={<div style={{ ...style, ...this.props.style }} />}
+					containerElement={<div style={style} />}
 					mapElement={<div style={{ height: '100%' }} />}
 					onMapMounted={(ref) => {
 						this.mapRef = ref;
@@ -787,8 +787,14 @@ class ReactiveMap extends Component {
 	);
 
 	render() {
+		const style = {
+			width: '100%',
+			height: '100vh',
+			position: 'relative',
+		};
+
 		return (
-			<div style={this.props.style} className={this.props.className}>
+			<div style={{ ...style, ...this.props.style }} className={this.props.className}>
 				{
 					this.props.onAllData
 						? this.props.onAllData(
