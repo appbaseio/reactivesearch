@@ -387,7 +387,7 @@ class ReactiveList extends Component {
 					this.props.onAllData
 						? (this.props.onAllData(results, streamResults, this.loadMore))
 						: (
-							<div className={getClassName(this.props.innerClass, 'list')}>
+							<div className={`${this.props.listClass} ${getClassName(this.props.innerClass, 'list')}`}>
 								{
 									[...streamResults, ...filteredResults].map(this.props.onData)
 								}
@@ -473,6 +473,7 @@ ReactiveList.propTypes = {
 	URLParams: types.bool,
 	onPageChange: types.func,
 	defaultPage: types.number,
+	listClass: types.string,
 };
 
 ReactiveList.defaultProps = {
