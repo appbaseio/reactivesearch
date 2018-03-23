@@ -217,7 +217,6 @@ class DynamicRangeSlider extends Component {
 			currentValue[0] < props.range.start ? props.range.start : currentValue[0],
 			currentValue[1] > props.range.end ? props.range.end : currentValue[1],
 		];
-
 		this.locked = true;
 		const performUpdate = () => {
 			this.setState({
@@ -241,6 +240,13 @@ class DynamicRangeSlider extends Component {
 
 	handleSlider = ({ values }) => {
 		this.handleChange(values);
+	};
+
+	handleDrag = (values) => {
+		if (this.props.onDrag) {
+			const { min, max, values: currentValue } = values;
+			this.props.onDrag(currentValue, [min, max]);
+		}
 	};
 
 	updateQuery = (value, props) => {
@@ -333,6 +339,7 @@ class DynamicRangeSlider extends Component {
 					max={this.state.range.end}
 					values={this.state.currentValue}
 					onChange={this.handleSlider}
+					onValuesUpdated={this.handleDrag}
 					snap={this.props.snap}
 					snapPoints={this.props.snap ? this.getSnapPoints() : null}
 					className={getClassName(this.props.innerClass, 'slider')}
@@ -375,6 +382,7 @@ DynamicRangeSlider.propTypes = {
 	filterLabel: types.string,
 	innerClass: types.style,
 	interval: types.number,
+	onDrag: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	rangeLabels: types.func,
