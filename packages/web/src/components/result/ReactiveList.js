@@ -31,8 +31,8 @@ class ReactiveList extends Component {
 		super(props);
 
 		let currentPage = 0;
-		if (this.props.defaultPage) {
-			currentPage = this.props.defaultPage - 1;
+		if (this.props.defaultPage >= 0) {
+			currentPage = this.props.defaultPage;
 		} else if (this.props.currentPage) {
 			currentPage = Math.max(this.props.currentPage - 1, 0);
 		}
@@ -490,8 +490,8 @@ ReactiveList.defaultProps = {
 const mapStateToProps = (state, props) => ({
 	defaultPage: (
 		state.selectedValues[`${props.componentId}-page`]
-		&& state.selectedValues[`${props.componentId}-page`].value
-	) || 0,
+		&& state.selectedValues[`${props.componentId}-page`].value - 1
+	) || -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	isLoading: state.isLoading[props.componentId] || false,
 	streamHits: state.streamHits[props.componentId] || [],
