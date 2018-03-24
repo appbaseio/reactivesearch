@@ -32,10 +32,17 @@ class ResultList extends Component {
 	constructor(props) {
 		super(props);
 
+		let currentPage = 0;
+		if (this.props.defaultPage >= 0) {
+			currentPage = this.props.defaultPage;
+		} else if (this.props.currentPage) {
+			currentPage = Math.max(this.props.currentPage - 1, 0);
+		}
+
 		this.state = {
 			from: props.currentPage * props.size,
 			isLoading: false,
-			currentPage: props.currentPage,
+			currentPage,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 	}
@@ -153,15 +160,22 @@ class ResultList extends Component {
 		}
 
 		// called when page is changed
-		if (this.props.pagination && this.state.isLoading) {
-			if (nextProps.onPageChange) {
-				nextProps.onPageChange();
-			} else {
-				window.scrollTo(0, 0);
+		if (this.props.pagination) {
+			if (this.state.isLoading) {
+				if (nextProps.onPageChange) {
+					nextProps.onPageChange(this.state.currentPage + 1, this.state.totalPages);
+				} else {
+					window.scrollTo(0, 0);
+				}
+				this.setState({
+					isLoading: false,
+				});
 			}
-			this.setState({
-				isLoading: false,
-			});
+			if (this.props.currentPage !== nextProps.currentPage
+					&& nextProps.currentPage > 0
+					&& nextProps.currentPage <= this.state.totalPages) {
+				this.setPage(nextProps.currentPage - 1);
+			}
 		}
 
 		if (
@@ -183,7 +197,7 @@ class ResultList extends Component {
 			&& nextProps.hits.length < this.props.hits.length
 		) {
 			if (nextProps.onPageChange) {
-				nextProps.onPageChange();
+				nextProps.onPageChange(this.state.currentPage + 1, this.state.totalPages);
 			} else {
 				window.scrollTo(0, 0);
 			}
@@ -194,9 +208,15 @@ class ResultList extends Component {
 		}
 
 		if (nextProps.pagination && nextProps.total !== this.props.total) {
+			const totalPages = Math.ceil(nextProps.total / nextProps.size);
+			const currentPage = this.props.total ? 0 : this.state.currentPage;
 			this.setState({
-				currentPage: this.props.total ? 0 : this.state.currentPage,
+				currentPage,
 			});
+
+			if (nextProps.onPageChange) {
+				nextProps.onPageChange(currentPage + 1, this.state.totalPages);
+			}
 		}
 
 		if (nextProps.pagination !== this.props.pagination) {
@@ -492,6 +512,7 @@ ResultList.propTypes = {
 	target: types.stringRequired,
 	URLParams: types.bool,
 	onPageChange: types.func,
+	defaultPage: types.number,
 };
 
 ResultList.defaultProps = {
@@ -504,13 +525,14 @@ ResultList.defaultProps = {
 	style: {},
 	target: '_blank',
 	URLParams: false,
+	currentPage: 0,
 };
 
 const mapStateToProps = (state, props) => ({
-	currentPage: (
+	defaultPage: (
 		state.selectedValues[`${props.componentId}-page`]
 		&& state.selectedValues[`${props.componentId}-page`].value - 1
-	) || 0,
+	) || -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	isLoading: state.isLoading[props.componentId] || false,
 	streamHits: state.streamHits[props.componentId] || [],
