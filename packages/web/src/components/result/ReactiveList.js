@@ -104,6 +104,8 @@ class ReactiveList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		const totalPages = Math.ceil(nextProps.total / nextProps.size) || 0;
+
 		if (
 			!isEqual(this.props.sortOptions, nextProps.sortOptions)
 			|| this.props.sortBy !== nextProps.sortBy
@@ -157,11 +159,11 @@ class ReactiveList extends Component {
 			this.setReact(nextProps);
 		}
 
-		// called when page is changed
 		if (this.props.pagination) {
+			// called when page is changed
 			if (this.state.isLoading) {
 				if (nextProps.onPageChange) {
-					nextProps.onPageChange(this.state.currentPage + 1, this.state.totalPages);
+					nextProps.onPageChange(this.state.currentPage + 1, totalPages);
 				} else {
 					window.scrollTo(0, 0);
 				}
@@ -169,9 +171,12 @@ class ReactiveList extends Component {
 					isLoading: false,
 				});
 			}
-			if (this.props.currentPage !== nextProps.currentPage
-					&& nextProps.currentPage > 0
-					&& nextProps.currentPage <= this.state.totalPages) {
+
+			if (
+				this.props.currentPage !== nextProps.currentPage
+				&& nextProps.currentPage > 0
+				&& nextProps.currentPage <= totalPages
+			) {
 				this.setPage(nextProps.currentPage - 1);
 			}
 		}
@@ -196,11 +201,7 @@ class ReactiveList extends Component {
 			&& this.props.hits
 			&& nextProps.hits.length < this.props.hits.length
 		) {
-			if (nextProps.onPageChange) {
-				nextProps.onPageChange(this.state.currentPage + 1, this.state.totalPages);
-			} else {
-				window.scrollTo(0, 0);
-			}
+			window.scrollTo(0, 0);
 			this.setState({
 				from: 0,
 				isLoading: false,
@@ -208,7 +209,6 @@ class ReactiveList extends Component {
 		}
 
 		if (nextProps.pagination && nextProps.total !== this.props.total) {
-			const totalPages = Math.ceil(nextProps.total / nextProps.size);
 			const currentPage = this.props.total ? 0 : this.state.currentPage;
 			this.setState({
 				currentPage,
