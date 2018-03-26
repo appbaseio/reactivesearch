@@ -7,9 +7,6 @@ import Title from '../../styles/Title';
 import Card, { container, Image } from '../../styles/Card';
 
 class ResultCard extends Component {
-	render() {
-		return <ReactiveList {...this.props} onData={this.renderAsCard} listClass={container} />;
-	}
 	renderAsCard = (item) => {
 		const result = this.props.onData(item);
 
@@ -49,6 +46,18 @@ class ResultCard extends Component {
 
 		return null;
 	};
+
+	render() {
+		const { onData, ...props } = this.props;
+
+		return (
+			<ReactiveList
+				{...props}
+				onData={this.renderAsCard}
+				listClass={container}
+			/>
+		);
+	}
 }
 
 ResultCard.propTypes = {

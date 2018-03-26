@@ -7,10 +7,6 @@ import ListItem, { container, Image } from '../../styles/ListItem';
 import ReactiveList from './ReactiveList';
 
 class ResultList extends Component {
-	render() {
-		return <ReactiveList {...this.props} onData={this.renderAsListItem} listClass={container} />;
-	}
-
 	renderAsListItem = (item) => {
 		const result = this.props.onData(item);
 
@@ -59,6 +55,18 @@ class ResultList extends Component {
 
 		return null;
 	};
+
+	render() {
+		const { onData, ...props } = this.props;
+
+		return (
+			<ReactiveList
+				{...props}
+				onData={this.renderAsListItem}
+				listClass={container}
+			/>
+		);
+	}
 }
 
 ResultList.propTypes = {
