@@ -60,7 +60,7 @@ class NumberBox extends Component {
 		this.props.removeComponent(this.props.componentId);
 	}
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		switch (props.queryFormat) {
 			case 'exact':
 				return {
@@ -138,7 +138,7 @@ class NumberBox extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || NumberBox.defaultQuery;
 
 		const { onQueryChange = null } = props;
 

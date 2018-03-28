@@ -264,7 +264,7 @@ class MultiDropdownList extends Component {
 				terms: {
 					field: props.dataField,
 					size: props.size,
-					order: getAggsOrder(props.sortBy),
+					order: getAggsOrder(props.sortBy || 'count'),
 				},
 			},
 		};

@@ -54,14 +54,16 @@ class ReactiveBase extends Component {
 		}
 
 		const { headers = {}, themePreset } = props;
-
 		const appbaseRef = new Appbase(config);
-		this.store = configureStore({
+
+		const initialState = {
 			config: { ...config, mapKey: props.mapKey, themePreset },
 			appbaseRef,
 			selectedValues,
 			headers,
-		});
+			...this.props.initialState,
+		};
+		this.store = configureStore(initialState);
 	}
 
 	componentDidCatch() {
@@ -101,6 +103,7 @@ class ReactiveBase extends Component {
 ReactiveBase.defaultProps = {
 	theme: {},
 	themePreset: 'light',
+	initialState: {},
 };
 
 ReactiveBase.propTypes = {
@@ -116,6 +119,7 @@ ReactiveBase.propTypes = {
 	mapKey: types.string,
 	style: types.style,
 	className: types.string,
+	initialState: types.children,
 };
 
 export default ReactiveBase;

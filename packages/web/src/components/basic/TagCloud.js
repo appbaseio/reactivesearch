@@ -114,7 +114,7 @@ class TagCloud extends Component {
 		}
 	};
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		let query = null;
 		let type = props.queryFormat === 'or' ? 'terms' : 'term';
 		type = props.multiSelect ? type : 'term';
@@ -201,7 +201,7 @@ class TagCloud extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || TagCloud.defaultQuery;
 
 		const { onQueryChange = null } = props;
 
@@ -216,17 +216,23 @@ class TagCloud extends Component {
 		});
 	};
 
-	updateQueryOptions = (props) => {
+	static generateQueryOptions(props) {
 		const queryOptions = getQueryOptions(props);
 		queryOptions.aggs = {
 			[props.dataField]: {
 				terms: {
 					field: props.dataField,
 					size: props.size,
-					order: getAggsOrder(props.sortBy),
+					order: getAggsOrder(props.sortBy || 'count'),
 				},
 			},
 		};
+
+		return queryOptions;
+	}
+
+	updateQueryOptions = (props) => {
+		const queryOptions = TagCloud.generateQueryOptions(props);
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 

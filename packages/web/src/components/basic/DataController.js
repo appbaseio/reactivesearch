@@ -34,7 +34,7 @@ class DataController extends Component {
 		this.props.removeComponent(this.props.componentId);
 	}
 
-	defaultQuery() {
+	static defaultQuery() {
 		return {
 			match_all: {},
 		};
@@ -43,7 +43,7 @@ class DataController extends Component {
 	updateQuery = (defaultSelected = null, props) => {
 		this.locked = true;
 
-		const query = props.customQuery ? props.customQuery : this.defaultQuery;
+		const query = props.customQuery || DataController.defaultQuery;
 
 		const { onQueryChange = null } = props;
 

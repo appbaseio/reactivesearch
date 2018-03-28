@@ -183,7 +183,7 @@ class SingleDropdownList extends Component {
 				terms: {
 					field: props.dataField,
 					size: props.size,
-					order: getAggsOrder(props.sortBy),
+					order: getAggsOrder(props.sortBy || 'count'),
 					...(props.showMissing ? { missing: props.missingLabel } : {}),
 				},
 			},

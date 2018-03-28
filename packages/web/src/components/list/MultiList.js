@@ -118,10 +118,10 @@ class MultiList extends Component {
 		}
 	};
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		let query = null;
 		const type = props.queryFormat === 'or' ? 'terms' : 'term';
-		if (this.props.selectAllLabel && value.includes(this.props.selectAllLabel)) {
+		if (props.selectAllLabel && value.includes(props.selectAllLabel)) {
 			if (props.showMissing) {
 				query = { match_all: {} };
 			} else {
@@ -256,7 +256,7 @@ class MultiList extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || MultiList.defaultQuery;
 
 		const { onQueryChange = null } = props;
 
@@ -271,18 +271,24 @@ class MultiList extends Component {
 		});
 	};
 
-	updateQueryOptions = (props) => {
+	static generateQueryOptions(props) {
 		const queryOptions = getQueryOptions(props);
 		queryOptions.aggs = {
 			[props.dataField]: {
 				terms: {
 					field: props.dataField,
 					size: props.size,
-					order: getAggsOrder(props.sortBy),
+					order: getAggsOrder(props.sortBy || 'count'),
 					...(props.showMissing ? { missing: props.missingLabel } : {}),
 				},
 			},
 		};
+
+		return queryOptions;
+	}
+
+	updateQueryOptions = (props) => {
+		const queryOptions = MultiList.generateQueryOptions(props);
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
