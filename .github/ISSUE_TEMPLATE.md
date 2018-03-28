@@ -1,5 +1,5 @@
 **Issue Type:**
-<!-- Please specify if this is a 'bug' or an 'enhancement' issue. -->
+<!-- Please specify if this is a 'bug' or an 'enhancement' issue. If you've any programming related questions, its best to ask them on StackOverflow under the topic reactivesearch -->
 
 **Platform:**
 <!-- Are you using ReactiveSearch for Web or Native? -->

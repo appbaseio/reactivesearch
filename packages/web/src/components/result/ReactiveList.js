@@ -30,10 +30,17 @@ class ReactiveList extends Component {
 	constructor(props) {
 		super(props);
 
+		let currentPage = 0;
+		if (this.props.defaultPage >= 0) {
+			currentPage = this.props.defaultPage;
+		} else if (this.props.currentPage) {
+			currentPage = Math.max(this.props.currentPage - 1, 0);
+		}
+
 		this.state = {
 			from: props.currentPage * props.size,
 			isLoading: false,
-			currentPage: props.currentPage,
+			currentPage,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 	}
@@ -97,6 +104,8 @@ class ReactiveList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		const totalPages = Math.ceil(nextProps.total / nextProps.size) || 0;
+
 		if (
 			!isEqual(this.props.sortOptions, nextProps.sortOptions)
 			|| this.props.sortBy !== nextProps.sortBy
@@ -150,16 +159,26 @@ class ReactiveList extends Component {
 			this.setReact(nextProps);
 		}
 
-		// called when page is changed
-		if (this.props.pagination && this.state.isLoading) {
-			if (nextProps.onPageChange) {
-				nextProps.onPageChange();
-			} else {
-				window.scrollTo(0, 0);
+		if (this.props.pagination) {
+			// called when page is changed
+			if (this.state.isLoading) {
+				if (nextProps.onPageChange) {
+					nextProps.onPageChange(this.state.currentPage + 1, totalPages);
+				} else {
+					window.scrollTo(0, 0);
+				}
+				this.setState({
+					isLoading: false,
+				});
 			}
-			this.setState({
-				isLoading: false,
-			});
+
+			if (
+				this.props.currentPage !== nextProps.currentPage
+				&& nextProps.currentPage > 0
+				&& nextProps.currentPage <= totalPages
+			) {
+				this.setPage(nextProps.currentPage - 1);
+			}
 		}
 
 		if (
@@ -182,11 +201,7 @@ class ReactiveList extends Component {
 			&& this.props.hits
 			&& nextProps.hits.length < this.props.hits.length
 		) {
-			if (nextProps.onPageChange) {
-				nextProps.onPageChange();
-			} else {
-				window.scrollTo(0, 0);
-			}
+			window.scrollTo(0, 0);
 			this.setState({
 				from: 0,
 				isLoading: false,
@@ -194,9 +209,14 @@ class ReactiveList extends Component {
 		}
 
 		if (nextProps.pagination && nextProps.total !== this.props.total) {
+			const currentPage = this.props.total ? 0 : this.state.currentPage;
 			this.setState({
-				currentPage: this.props.total ? 0 : this.state.currentPage,
+				currentPage,
 			});
+
+			if (nextProps.onPageChange) {
+				nextProps.onPageChange(currentPage + 1, totalPages);
+			}
 		}
 
 		if (nextProps.pagination !== this.props.pagination) {
@@ -367,7 +387,7 @@ class ReactiveList extends Component {
 					this.props.onAllData
 						? (this.props.onAllData(results, streamResults, this.loadMore))
 						: (
-							<div className={getClassName(this.props.innerClass, 'list')}>
+							<div className={`${this.props.listClass} ${getClassName(this.props.innerClass, 'list')}`}>
 								{
 									[...streamResults, ...filteredResults].map(this.props.onData)
 								}
@@ -452,6 +472,8 @@ ReactiveList.propTypes = {
 	style: types.style,
 	URLParams: types.bool,
 	onPageChange: types.func,
+	defaultPage: types.number,
+	listClass: types.string,
 };
 
 ReactiveList.defaultProps = {
@@ -463,13 +485,14 @@ ReactiveList.defaultProps = {
 	size: 10,
 	style: {},
 	URLParams: false,
+	currentPage: 0,
 };
 
 const mapStateToProps = (state, props) => ({
-	currentPage: (
+	defaultPage: (
 		state.selectedValues[`${props.componentId}-page`]
 		&& state.selectedValues[`${props.componentId}-page`].value - 1
-	) || 0,
+	) || -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	isLoading: state.isLoading[props.componentId] || false,
 	streamHits: state.streamHits[props.componentId] || [],

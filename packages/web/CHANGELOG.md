@@ -4,13 +4,18 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-    - Use commonjs module for `rheostat` [#289](https://github.com/appbaseio/reactivesearch/issues/289)
-    - Adds support for aggregations on missing values for list components via `showMissing` and `missingLabel` prop [#291](https://github.com/appbaseio/reactivesearch/issues/291)
-    - Adds `onDrag` support for RangeSlider components [#284](https://github.com/appbaseio/reactivesearch/issues/284)
-    - Fixes dynamic size and pagination updates [#298](https://github.com/appbaseio/reactivesearch/issues/298)
+    - None so far
 
 
 </details>
+
+## v2.3.3
+
+- Use commonjs module for `rheostat` [#289](https://github.com/appbaseio/reactivesearch/issues/289)
+- Adds support for aggregations on missing values for list components via `showMissing` and `missingLabel` prop [#291](https://github.com/appbaseio/reactivesearch/issues/291)
+- Adds `onDrag` support for RangeSlider components [#284](https://github.com/appbaseio/reactivesearch/issues/284)
+- Fixes dynamic size and pagination updates [#298](https://github.com/appbaseio/reactivesearch/issues/298)
+- Refactor Result Components [#303](https://github.com/appbaseio/reactivesearch/issues/303)
 
 ## v2.3.2
 
