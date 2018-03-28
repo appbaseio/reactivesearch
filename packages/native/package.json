@@ -46,7 +46,7 @@
 	"dependencies": {
 		"@appbaseio/reactivecore": "^1.4.2",
 		"@ptomasroos/react-native-multi-slider": "^0.0.11",
-		"appbase-js": "^2.2.11",
+		"appbase-js": "^2.3.0",
 		"hoist-non-react-statics": "^2.3.1",
 		"native-base": "^2.3.7",
 		"prop-types": "^15.6.0",

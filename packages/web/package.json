@@ -28,7 +28,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@appbaseio/reactivecore": "^1.4.2",
-    "appbase-js": "^2.2.11",
+    "appbase-js": "^2.3.0",
     "downshift": "^1.22.1",
     "emotion": "^9.0.0",
     "emotion-theming": "^9.0.0",
