@@ -320,8 +320,8 @@ class DateRange extends Component {
 						{this.props.showClear
 							&& this.state.currentDate
 							&& this.state.currentDate.start && (
-								<CancelSvg onClick={this.clearDayPickerStart} />
-							)}
+							<CancelSvg onClick={this.clearDayPickerStart} />
+						)}
 					</Flex>
 					<Flex justifyContent="center" alignItems="center" basis="20px">
 						-
@@ -369,8 +369,8 @@ class DateRange extends Component {
 						{this.props.showClear
 							&& this.state.currentDate
 							&& this.state.currentDate.end && (
-								<CancelSvg onClick={this.clearDayPickerEnd} />
-							)}
+							<CancelSvg onClick={this.clearDayPickerEnd} />
+						)}
 					</Flex>
 				</Flex>
 			</DateContainer>

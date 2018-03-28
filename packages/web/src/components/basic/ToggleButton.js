@@ -71,7 +71,7 @@ class ToggleButton extends Component {
 		this.props.removeComponent(this.props.componentId);
 	}
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		let query = null;
 		if (value && value.length) {
 			query = {
@@ -143,7 +143,7 @@ class ToggleButton extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || ToggleButton.defaultQuery;
 
 		const { onQueryChange = null } = props;
 

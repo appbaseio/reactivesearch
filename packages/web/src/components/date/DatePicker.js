@@ -94,7 +94,7 @@ class DatePicker extends Component {
 
 	formatInputDate = date => new XDate(date).toString('yyyy-MM-dd');
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		let query = null;
 		if (value && props.queryFormat) {
 			query = {
@@ -158,7 +158,7 @@ class DatePicker extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || DatePicker.defaultQuery;
 
 		const { onQueryChange = null } = props;
 

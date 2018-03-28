@@ -31,10 +31,11 @@ class SingleList extends Component {
 
 		this.state = {
 			currentValue: '',
-			options: [],
+			options: props.options[props.dataField]
+				? props.options[props.dataField].buckets
+				: [],
 			searchTerm: '',
 		};
-		this.type = 'term';
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 	}
@@ -108,7 +109,7 @@ class SingleList extends Component {
 		}
 	};
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		if (props.selectAllLabel && props.selectAllLabel === value) {
 			if (props.showMissing) {
 				return { match_all: {} };
@@ -129,7 +130,7 @@ class SingleList extends Component {
 				};
 			}
 			return {
-				[this.type]: {
+				term: {
 					[props.dataField]: value,
 				},
 			};
@@ -168,7 +169,7 @@ class SingleList extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || SingleList.defaultQuery;
 
 		const { onQueryChange = null } = props;
 
@@ -183,18 +184,23 @@ class SingleList extends Component {
 		});
 	};
 
-	updateQueryOptions = (props) => {
+	static generateQueryOptions(props) {
 		const queryOptions = getQueryOptions(props);
 		queryOptions.aggs = {
 			[props.dataField]: {
 				terms: {
 					field: props.dataField,
 					size: props.size,
-					order: getAggsOrder(props.sortBy),
+					order: getAggsOrder(props.sortBy || 'count'),
 					...(props.showMissing ? { missing: props.missingLabel } : {}),
 				},
 			},
 		};
+		return queryOptions;
+	}
+
+	updateQueryOptions = (props) => {
+		const queryOptions = SingleList.generateQueryOptions(props);
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 

@@ -23,7 +23,6 @@ class TextField extends Component {
 	constructor(props) {
 		super(props);
 
-		this.type = 'match';
 		this.state = {
 			currentValue: '',
 		};
@@ -74,10 +73,10 @@ class TextField extends Component {
 		}
 	}
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		if (value && value.trim() !== '') {
 			return {
-				[this.type]: {
+				match: {
 					[props.dataField]: value,
 				},
 			};
@@ -119,7 +118,7 @@ class TextField extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || TextField.defaultQuery;
 
 		const { onQueryChange = null } = props;
 
