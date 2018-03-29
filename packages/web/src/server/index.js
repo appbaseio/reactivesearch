@@ -67,7 +67,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				component: component.componentId,
 				label,
 				value,
-				showFilter: component.showFilter || false,
+				showFilter: component.showFilter || true,
 				URLParams: component.URLParams || false,
 			});
 
