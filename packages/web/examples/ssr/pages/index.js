@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
 	ReactiveBase,
 	SingleList,
+	NumberBox,
 	ReactiveList,
 	SelectedFilters,
 } from '@appbaseio/reactivesearch';
@@ -49,6 +50,17 @@ const singleListProps = {
 	size: 100,
 };
 
+const numberBoxProps = {
+	componentId: 'RatingSensor',
+	dataField: 'average_rating_rounded',
+	data: {
+		label: 'Book Rating',
+		start: 2,
+		end: 5
+	},
+	labelPosition: 'left',
+};
+
 const reactiveListProps = {
 	componentId: 'SearchResult',
 	dataField: 'original_title.raw',
@@ -57,7 +69,7 @@ const reactiveListProps = {
 	size: 5,
 	onData: renderBooks,
 	react: {
-		and: ['BookSensor'],
+		and: ['BookSensor', 'RatingSensor'],
 	},
 };
 
@@ -74,6 +86,11 @@ export default class Main extends Component {
 						...singleListProps,
 						type: 'SingleList',
 						source: SingleList,
+					},
+					{
+						...numberBoxProps,
+						type: 'NumberBox',
+						source: NumberBox,
 					},
 					{
 						...reactiveListProps,
@@ -94,6 +111,10 @@ export default class Main extends Component {
 					<div className="col">
 						<SingleList
 							{...singleListProps}
+						/>
+
+						<NumberBox
+							{...numberBoxProps}
 						/>
 					</div>
 
