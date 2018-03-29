@@ -26,7 +26,7 @@ class TextField extends Component {
 		super(props);
 
 		this.state = {
-			currentValue: '',
+			currentValue: props.selectedValue || '',
 		};
 		this.locked = false;
 	}
