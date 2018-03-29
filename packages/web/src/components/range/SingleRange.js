@@ -70,7 +70,10 @@ class SingleRange extends Component {
 		}
 	}
 
-	defaultQuery = (value, props) => {
+	// parses range label to get start and end
+	static parseValue = (value, props) => props.data.find(item => item.label === value) || null
+
+	static defaultQuery = (value, props) => {
 		if (value) {
 			return {
 				range: {
@@ -92,7 +95,7 @@ class SingleRange extends Component {
 		}
 
 		this.locked = true;
-		const currentValue = props.data.find(item => item.label === value) || null;
+		const currentValue = SingleRange.parseValue(value, props);
 
 		const performUpdate = () => {
 			this.setState({
@@ -113,7 +116,7 @@ class SingleRange extends Component {
 	}
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || SingleRange.defaultQuery;
 
 		const { onQueryChange = null } = props;
 
