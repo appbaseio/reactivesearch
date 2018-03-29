@@ -31,7 +31,7 @@ class SingleList extends Component {
 
 		this.state = {
 			currentValue: '',
-			options: props.options[props.dataField]
+			options: (props.options && props.options[props.dataField])
 				? props.options[props.dataField].buckets
 				: [],
 			searchTerm: '',
