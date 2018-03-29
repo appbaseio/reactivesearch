@@ -39,10 +39,20 @@ class DateRange extends Component {
 
 		if (this.props.selectedValue) {
 			// parsing string values from selectedValue to date objects for DayPicker
-			this.handleDateChange({
-				start: new Date(this.props.selectedValue[0]),
-				end: new Date(this.props.selectedValue[1]),
-			}, false);
+			// for value as an array from URL
+			if (Array.isArray(this.props.selectedValue)) {
+				this.handleDateChange({
+					start: new Date(this.props.selectedValue[0]),
+					end: new Date(this.props.selectedValue[1]),
+				}, false);
+			} else {
+				// for value as an object for SSR
+				const { start, end } = this.props.selectedValue;
+				this.handleDateChange({
+					start: new Date(start),
+					end: new Date(end),
+				}, false);
+			}
 		} else if (this.props.defaultSelected) {
 			this.handleDateChange(this.props.defaultSelected, false);
 		}
