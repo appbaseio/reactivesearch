@@ -18,8 +18,14 @@ const componentsWithOptions = [
 
 const resultComponents = ['ResultCard', 'ResultList', 'ReactiveList', 'ReactiveMap'];
 
-function getValue(state, id, defaultValue) {
-	return state ? state[id] : defaultValue;
+function getValue(state, id, component) {
+	if (component.source && component.source.parseValue) {
+		const { parseValue } = component.source;
+		return state
+			? parseValue(state[id], component)
+			: parseValue(component.defaultSelected, component);
+	}
+	return state ? state[id] : component.defaultSelected;
 }
 
 function getQuery(component, value) {
@@ -61,7 +67,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			let isInternalComponentPresent = false;
 			const internalComponent = `${component.componentId}__internal`;
 			const label = component.filterLabel || component.componentId;
-			const value = getValue(searchState, label, component.defaultSelected);
+			const value = getValue(searchState, label, component);
 
 			// [1] set selected values
 			selectedValues = valueReducer(selectedValues, {
