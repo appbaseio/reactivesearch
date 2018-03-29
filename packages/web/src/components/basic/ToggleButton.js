@@ -71,6 +71,13 @@ class ToggleButton extends Component {
 		this.props.removeComponent(this.props.componentId);
 	}
 
+	static parseValue = (value, props) => {
+		if (Array.isArray(value)) {
+			return props.data.filter(item => value.includes(item.label));
+		}
+		return props.data.filter(item => item.label === value);
+	};
+
 	static defaultQuery = (value, props) => {
 		let query = null;
 		if (value && value.length) {
@@ -91,24 +98,21 @@ class ToggleButton extends Component {
 
 	handleToggle = (value, isDefaultValue = false, props = this.props) => {
 		const { currentValue } = this.state;
-		let toggleValue = value;
+		const toggleValue = value;
 		let finalValue = [];
+
 		if (isDefaultValue) {
-			if (!Array.isArray(toggleValue)) {
-				toggleValue = [toggleValue];
-			}
-			finalValue = toggleValue.reduce((fin, next) => {
-				const match = props.data.find(item => item.label === next);
-				return match ? fin.concat(match) : fin;
-			}, []);
+			finalValue = ToggleButton.parseValue(toggleValue, props);
 		} else if (this.props.multiSelect) {
 			finalValue = currentValue.some(item => item.label === toggleValue.label)
 				? currentValue.filter(item => item.label !== toggleValue.label)
 				: currentValue.concat(toggleValue);
 		} else {
 			finalValue = currentValue.some(item => item.label === toggleValue.label)
-				? [] : [toggleValue];
+				? []
+				: [toggleValue];
 		}
+
 		this.setValue(finalValue);
 	}
 
