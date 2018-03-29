@@ -7,6 +7,8 @@ import ListItem, { container, Image } from '../../styles/ListItem';
 import ReactiveList from './ReactiveList';
 
 class ResultList extends Component {
+	static generateQueryOptions = props => ReactiveList.generateQueryOptions(props);
+
 	renderAsListItem = (item) => {
 		const result = this.props.onData(item);
 

@@ -7,6 +7,8 @@ import Title from '../../styles/Title';
 import Card, { container, Image } from '../../styles/Card';
 
 class ResultCard extends Component {
+	static generateQueryOptions = props => ReactiveList.generateQueryOptions(props);
+
 	renderAsCard = (item) => {
 		const result = this.props.onData(item);
 
