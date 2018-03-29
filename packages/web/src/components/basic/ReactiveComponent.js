@@ -11,6 +11,7 @@ import {
 	pushToAndClause,
 	parseHits,
 	isEqual,
+	getQueryOptions,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -72,6 +73,27 @@ class ReactiveComponent extends Component {
 			)
 		) {
 			nextProps.onAllData(parseHits(nextProps.hits), nextProps.aggregations);
+		}
+
+		if (
+			nextProps.defaultQuery
+			&& !isEqual(nextProps.defaultQuery(), this.defaultQuery)
+		) {
+			const options = getQueryOptions(nextProps);
+			options.from = this.state.from;
+			this.defaultQuery = nextProps.defaultQuery();
+
+			const { sort, ...query } = this.defaultQuery;
+
+			if (sort) {
+				options.sort = this.defaultQuery.sort;
+				nextProps.setQueryOptions(nextProps.componentId, options, !query);
+			}
+
+			this.props.updateQuery({
+				componentId: this.internalComponent,
+				query,
+			});
 		}
 	}
 
