@@ -77,7 +77,7 @@ class NumberBox extends Component {
 						},
 					},
 				};
-			case 'gte':
+			default:
 				return {
 					range: {
 						[props.dataField]: {
@@ -86,8 +86,6 @@ class NumberBox extends Component {
 						},
 					},
 				};
-			default:
-				return null;
 		}
 	};
 
