@@ -243,6 +243,29 @@ class ReactiveList extends Component {
 		}
 	};
 
+	// only used for SSR
+	static generateQueryOptions = (props) => {
+		const options = {};
+		options.from = props.currentPage ? (props.currentPage - 1) * (props.size || 10) : 0;
+		options.size = props.size || 10;
+
+		if (props.sortOptions) {
+			options.sort = [{
+				[props.sortOptions[0].dataField]: {
+					order: props.sortOptions[0].sortBy,
+				},
+			}];
+		} else if (props.sortBy) {
+			options.sort = [{
+				[props.dataField]: {
+					order: props.sortBy,
+				},
+			}];
+		}
+
+		return options;
+	};
+
 	scrollHandler = () => {
 		if (
 			!this.state.isLoading

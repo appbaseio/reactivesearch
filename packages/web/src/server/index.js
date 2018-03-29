@@ -23,22 +23,12 @@ function getValue(state, id, defaultValue) {
 }
 
 function getQuery(component, value) {
-	let query = {};
 	if (component.customQuery) {
-		query = component.customQuery(value, component);
-	} else {
-		query = component.source.defaultQuery
-			? component.source.defaultQuery(value, component)
-			: {};
+		return component.customQuery(value, component);
 	}
-	if (resultComponents.includes(component.type)) {
-		query = {
-			from: 0,
-			size: 10,
-			...query,
-		};
-	}
-	return (query && Object.keys(query).length) ? query : null;
+	return component.source.defaultQuery
+		? component.source.defaultQuery(value, component)
+		: {};
 }
 
 export default function initReactivesearch(componentCollection, searchState, settings) {
@@ -110,6 +100,13 @@ export default function initReactivesearch(componentCollection, searchState, set
 						if (isInternalComponentPresent) {
 							mainQueryOptions = { ...otherQueryOptions };
 						}
+						if (resultComponents.includes(component.type)) {
+							mainQueryOptions = {
+								from: 0,
+								size: component.size || 10,
+								...mainQueryOptions,
+							};
+						}
 						queryOptions = queryOptionsReducer(queryOptions, {
 							type: 'SET_QUERY_OPTIONS',
 							component: component.componentId,
@@ -143,7 +140,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 		// [5] Generate finalQuery for search
 		componentCollection.forEach((component) => {
-			const { queryObj, options } = buildQuery(
+			let { queryObj, options } = buildQuery( // eslint-disable-line
 				component.componentId,
 				dependencyTree,
 				queryList,
@@ -152,15 +149,24 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 			if (
 				(queryObj && Object.keys(queryObj).length)
-			|| (options && Object.keys(options).length)
+				|| (options && Object.keys(options).length)
+				|| (queryOptions[component.componentId])
 			) {
+				if (!queryObj || (queryObj && Object.keys(queryObj).length)) {
+					queryObj = { match_all: {} };
+				}
+
 				orderOfQueries = [...orderOfQueries, component.componentId];
+
 				finalQuery = [
 					...finalQuery,
-					{},
+					{
+						preference: component.componentId,
+					},
 					{
 						query: { ...queryObj },
 						...options,
+						...queryOptions[component.componentId],
 					},
 				];
 			}
