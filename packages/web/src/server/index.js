@@ -16,17 +16,29 @@ const componentsWithOptions = [
 	'TagCloud',
 ];
 
+const resultComponents = ['ResultCard', 'ResultList', 'ReactiveList', 'ReactiveMap'];
+
 function getValue(state, id, defaultValue) {
 	return state ? state[id] : defaultValue;
 }
 
 function getQuery(component, value) {
+	let query = {};
 	if (component.customQuery) {
-		return component.customQuery(value, component);
+		query = component.customQuery(value, component);
+	} else {
+		query = component.source.defaultQuery
+			? component.source.defaultQuery(value, component)
+			: {};
 	}
-	return component.source.defaultQuery
-		? component.source.defaultQuery(value, component)
-		: null;
+	if (resultComponents.includes(component.type)) {
+		query = {
+			from: 0,
+			size: 10,
+			...query,
+		};
+	}
+	return (query && Object.keys(query).length) ? query : null;
 }
 
 export default function initReactivesearch(componentCollection, searchState, settings) {
@@ -67,7 +79,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				component: component.componentId,
 				label,
 				value,
-				showFilter: component.showFilter || true,
+				showFilter: component.showFilter !== undefined ? component.showFilter : true,
 				URLParams: component.URLParams || false,
 			});
 
