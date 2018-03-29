@@ -32,7 +32,9 @@ class TagCloud extends Component {
 
 		this.state = {
 			currentValue: {},
-			options: [],
+			options: (props.options && props.options[props.dataField])
+				? props.options[props.dataField].buckets
+				: [],
 		};
 		this.locked = false;
 		this.type = 'term';
@@ -223,7 +225,7 @@ class TagCloud extends Component {
 				terms: {
 					field: props.dataField,
 					size: props.size,
-					order: getAggsOrder(props.sortBy || 'count'),
+					order: getAggsOrder(props.sortBy || 'asc'),
 				},
 			},
 		};
