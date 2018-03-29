@@ -8,3 +8,4 @@ stats.json
 .expo/
 .vscode/
 *.swp
+.next/
