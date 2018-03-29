@@ -152,7 +152,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				|| (options && Object.keys(options).length)
 				|| (queryOptions[component.componentId])
 			) {
-				if (!queryObj || (queryObj && Object.keys(queryObj).length)) {
+				if (!queryObj || (queryObj && !Object.keys(queryObj).length)) {
 					queryObj = { match_all: {} };
 				}
 
