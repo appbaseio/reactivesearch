@@ -18,7 +18,7 @@
     "build:umd": "BABEL_ENV=commonjs webpack --progress -p --config webpack.config.umd.js",
     "stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
     "prepublish": "yarn run build",
-    "test": "../../node_modules/jest/bin/jest.js --watch"
+    "test": "jest --watch"
   },
   "repository": {
     "type": "git",
