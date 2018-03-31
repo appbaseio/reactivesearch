@@ -32,7 +32,6 @@ class SingleDropdownList extends Component {
 			currentValue: '',
 			options: [],
 		};
-		this.type = 'term';
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 	}
@@ -106,9 +105,9 @@ class SingleDropdownList extends Component {
 		}
 	};
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		if (props.selectAllLabel && props.selectAllLabel === value) {
-			if (props.showMissing === true) {
+			if (props.showMissing) {
 				return { match_all: {} };
 			}
 			return {
@@ -127,7 +126,7 @@ class SingleDropdownList extends Component {
 				};
 			}
 			return {
-				[this.type]: {
+				term: {
 					[props.dataField]: value,
 				},
 			};
@@ -161,7 +160,7 @@ class SingleDropdownList extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || SingleDropdownList.defaultQuery;
 
 		const { onQueryChange = null } = props;
 
@@ -176,7 +175,7 @@ class SingleDropdownList extends Component {
 		});
 	};
 
-	updateQueryOptions = (props) => {
+	static generateQueryOptions(props) {
 		const queryOptions = getQueryOptions(props);
 		queryOptions.aggs = {
 			[props.dataField]: {
@@ -188,8 +187,13 @@ class SingleDropdownList extends Component {
 				},
 			},
 		};
-		props.setQueryOptions(this.internalComponent, queryOptions);
+		return queryOptions;
 	}
+
+	updateQueryOptions = (props) => {
+		const queryOptions = SingleDropdownList.generateQueryOptions(props);
+		props.setQueryOptions(this.internalComponent, queryOptions);
+	};
 
 	render() {
 		let selectAll = [];
