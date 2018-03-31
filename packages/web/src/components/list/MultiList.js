@@ -32,7 +32,9 @@ class MultiList extends Component {
 
 		this.state = {
 			currentValue: {},
-			options: [],
+			options: (props.options && props.options[props.dataField])
+				? props.options[props.dataField].buckets
+				: [],
 			searchTerm: '',
 		};
 		this.locked = false;
@@ -121,6 +123,11 @@ class MultiList extends Component {
 	static defaultQuery = (value, props) => {
 		let query = null;
 		const type = props.queryFormat === 'or' ? 'terms' : 'term';
+
+		if (!Array.isArray(value) || value.length === 0) {
+			return null;
+		}
+
 		if (props.selectAllLabel && value.includes(props.selectAllLabel)) {
 			if (props.showMissing) {
 				query = { match_all: {} };
