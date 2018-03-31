@@ -25,7 +25,7 @@ class SingleDataList extends Component {
 		super(props);
 
 		this.state = {
-			currentValue: props.selectedValue || null,
+			currentValue: null,
 			searchTerm: '',
 		};
 		this.locked = false;
@@ -101,7 +101,7 @@ class SingleDataList extends Component {
 		this.locked = true;
 		let value = nextValue;
 		if (nextValue === this.state.currentValue) {
-			value = '';
+			value = null;
 		}
 
 		const performUpdate = () => {
@@ -220,7 +220,8 @@ class SingleDataList extends Component {
 										id={`${this.props.componentId}-${item.label}`}
 										name={this.props.componentId}
 										value={item.label}
-										onChange={this.handleClick}
+										onClick={this.handleClick}
+										readOnly
 										checked={this.state.currentValue === item.label}
 										show={this.props.showRadio}
 									/>
