@@ -116,10 +116,15 @@ class MultiDropdownList extends Component {
 		}
 	};
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		let query = null;
 		const type = props.queryFormat === 'or' ? 'terms' : 'term';
-		if (this.props.selectAllLabel && value.includes(this.props.selectAllLabel)) {
+
+		if (!Array.isArray(value) || value.length === 0) {
+			return null;
+		}
+
+		if (props.selectAllLabel && value.includes(props.selectAllLabel)) {
 			if (props.showMissing) {
 				query = { match_all: {} };
 			} else {
@@ -252,7 +257,7 @@ class MultiDropdownList extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || MultiDropdownList.defaultQuery;
 
 		const { onQueryChange = null } = props;
 
@@ -267,7 +272,7 @@ class MultiDropdownList extends Component {
 		});
 	};
 
-	updateQueryOptions = (props) => {
+	static generateQueryOptions(props) {
 		const queryOptions = getQueryOptions(props);
 		queryOptions.aggs = {
 			[props.dataField]: {
@@ -279,6 +284,12 @@ class MultiDropdownList extends Component {
 				},
 			},
 		};
+
+		return queryOptions;
+	}
+
+	updateQueryOptions = (props) => {
+		const queryOptions = MultiDropdownList.generateQueryOptions(props);
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
