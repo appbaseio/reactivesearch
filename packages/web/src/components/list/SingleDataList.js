@@ -25,10 +25,9 @@ class SingleDataList extends Component {
 		super(props);
 
 		this.state = {
-			currentValue: null,
+			currentValue: props.selectedValue || null,
 			searchTerm: '',
 		};
-		this.type = 'term';
 		this.locked = false;
 	}
 
@@ -76,8 +75,8 @@ class SingleDataList extends Component {
 		}
 	}
 
-	defaultQuery = (value, props) => {
-		if (this.props.selectAllLabel && this.props.selectAllLabel === value) {
+	static defaultQuery = (value, props) => {
+		if (props.selectAllLabel && props.selectAllLabel === value) {
 			return {
 				exists: {
 					field: props.dataField,
@@ -85,7 +84,7 @@ class SingleDataList extends Component {
 			};
 		} else if (value) {
 			return {
-				[this.type]: {
+				term: {
 					[props.dataField]: value,
 				},
 			};
@@ -124,7 +123,7 @@ class SingleDataList extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || SingleDataList.defaultQuery;
 
 		const { onQueryChange = null } = props;
 
