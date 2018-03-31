@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import {
 	ReactiveBase,
-	ToggleButton,
+	SingleDataList,
 	SelectedFilters,
 	ResultList,
 } from '@appbaseio/reactivesearch';
@@ -18,15 +18,15 @@ const settings = {
 	type: 'meetupdata1',
 };
 
-const toggleButtonProps = {
+const singleDataListProps = {
 	componentId: 'CitySensor',
 	dataField: 'group.group_topics.topic_name_raw.raw',
 	data: [
+		{ label: 'Open Source', value: 'Open Source' },
 		{ label: 'Social', value: 'Social' },
 		{ label: 'Adventure', value: 'Adventure' },
 		{ label: 'Music', value: 'Music' },
 	],
-	defaultSelected: 'Social',
 };
 
 const resultListProps = {
@@ -50,9 +50,9 @@ export default class Main extends Component {
 			store: await initReactivesearch(
 				[
 					{
-						...toggleButtonProps,
-						type: 'ToggleButton',
-						source: ToggleButton,
+						...singleDataListProps,
+						type: 'SingleDataList',
+						source: SingleDataList,
 					},
 					{
 						...resultListProps,
@@ -68,14 +68,15 @@ export default class Main extends Component {
 
 	render() {
 		return (
-			<Layout title="SSR | ToggleButton">
+			<Layout title="SSR | SingleDataList">
 				<ReactiveBase {...settings} initialState={this.props.store}>
 					<div className="row">
 						<div className="col">
-							<ToggleButton
-								{...toggleButtonProps}
+							<SingleDataList
+								{...singleDataListProps}
 							/>
 						</div>
+
 						<div className="col">
 							<SelectedFilters />
 							<ResultList
