@@ -27,6 +27,7 @@ const singleDataListProps = {
 		{ label: 'Adventure', value: 'Adventure' },
 		{ label: 'Music', value: 'Music' },
 	],
+	defaultSelected: 'Social',
 };
 
 const resultListProps = {
