@@ -156,7 +156,7 @@ class DataSearch extends Component {
 		};
 	};
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		let finalQuery = null;
 		let fields;
 
@@ -168,7 +168,7 @@ class DataSearch extends Component {
 			}
 			finalQuery = {
 				bool: {
-					should: this.shouldQuery(value, fields, props),
+					should: DataSearch.shouldQuery(value, fields, props),
 					minimum_should_match: '1',
 				},
 			};
@@ -183,7 +183,7 @@ class DataSearch extends Component {
 		return finalQuery;
 	};
 
-	shouldQuery = (value, dataFields, props) => {
+	static shouldQuery = (value, dataFields, props) => {
 		const fields = dataFields.map((field, index) =>
 			`${field}${
 				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
@@ -292,7 +292,7 @@ class DataSearch extends Component {
 	}, this.props.debounce);
 
 	updateQuery = (componentId, value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || DataSearch.defaultQuery;
 		let onQueryChange = null;
 		if (componentId === props.componentId && props.onQueryChange) {
 			onQueryChange = props.onQueryChange;
@@ -317,9 +317,12 @@ class DataSearch extends Component {
 		}
 	};
 
-	// only works if there's a change in downshift's value
-	handleOuterClick = () => {
+	handleOuterClick = (event) => {
 		this.setValue(this.state.currentValue, true);
+
+		if (this.props.onBlur) {
+			this.props.onBlur(event);
+		}
 	};
 
 	handleKeyDown = (event) => {
@@ -420,7 +423,7 @@ class DataSearch extends Component {
 											placeholder: this.props.placeholder,
 											value: this.state.currentValue === null ? '' : this.state.currentValue,
 											onChange: this.onInputChange,
-											onBlur: this.props.onBlur,
+											onBlur: this.handleOuterClick,
 											onFocus: this.handleFocus,
 											onKeyPress: this.props.onKeyPress,
 											onKeyDown: this.handleKeyDown,
