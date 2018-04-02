@@ -30,6 +30,12 @@ function parseValue(value, component) {
 }
 
 function getQuery(component, value) {
+	// get default query of result components
+	if (resultComponents.includes(component.type)) {
+		return component.defaultQuery ? component.defaultQuery() : {};
+	}
+
+	// get custom or default query of sensor components
 	const currentValue = parseValue(value, component);
 	if (component.customQuery) {
 		return component.customQuery(currentValue, component);
@@ -67,6 +73,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			components = [...components, component.componentId];
 
 			let isInternalComponentPresent = false;
+			const isResultComponent = resultComponents.includes(component.type);
 			const internalComponent = `${component.componentId}__internal`;
 			const label = component.filterLabel || component.componentId;
 			const value = getValue(searchState, label, component.defaultSelected);
@@ -108,7 +115,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 						if (isInternalComponentPresent) {
 							mainQueryOptions = { ...otherQueryOptions };
 						}
-						if (resultComponents.includes(component.type)) {
+						if (isResultComponent) {
 							mainQueryOptions = {
 								from: 0,
 								size: component.size || 10,
@@ -125,9 +132,9 @@ export default function initReactivesearch(componentCollection, searchState, set
 			}
 
 			// [3] set dependency tree
-			if (component.react || isInternalComponentPresent) {
+			if (component.react || isInternalComponentPresent || isResultComponent) {
 				let { react } = component;
-				if (isInternalComponentPresent) {
+				if (isInternalComponentPresent || isResultComponent) {
 					react = pushToAndClause(react, internalComponent);
 				}
 
@@ -139,11 +146,20 @@ export default function initReactivesearch(componentCollection, searchState, set
 			}
 
 			// [4] set query list
-			queryList = queryReducer(queryList, {
-				type: 'SET_QUERY',
-				component: component.componentId,
-				query: getQuery(component, value),
-			});
+			if (isResultComponent) {
+				const { query } = getQuery(component);
+				queryList = queryReducer(queryList, {
+					type: 'SET_QUERY',
+					component: internalComponent,
+					query,
+				});
+			} else {
+				queryList = queryReducer(queryList, {
+					type: 'SET_QUERY',
+					component: component.componentId,
+					query: getQuery(component, value),
+				});
+			}
 		});
 
 		// [5] Generate finalQuery for search
