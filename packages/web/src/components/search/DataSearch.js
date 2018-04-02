@@ -402,6 +402,7 @@ class DataSearch extends Component {
 				{
 					this.props.autosuggest
 						? (<Downshift
+							id={`${this.props.componentId}-downshift`}
 							onChange={this.onSuggestionSelected}
 							onOuterClick={this.handleOuterClick}
 							onStateChange={this.handleStateChange}
@@ -415,6 +416,7 @@ class DataSearch extends Component {
 							}) => (
 								<div className={suggestionsContainer}>
 									<Input
+										id={`${this.props.componentId}-input`}
 										showIcon={this.props.showIcon}
 										iconPosition={this.props.iconPosition}
 										innerRef={this.props.innerRef}
