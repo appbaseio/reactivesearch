@@ -186,7 +186,7 @@ class CategorySearch extends Component {
 		};
 	};
 
-	defaultQuery = (value, category, props) => {
+	static defaultQuery = (value, props, category) => {
 		let finalQuery = null;
 		let fields;
 
@@ -198,7 +198,7 @@ class CategorySearch extends Component {
 			}
 			finalQuery = {
 				bool: {
-					should: this.shouldQuery(value, fields, props),
+					should: CategorySearch.shouldQuery(value, fields, props),
 					minimum_should_match: '1',
 				},
 			};
@@ -224,7 +224,7 @@ class CategorySearch extends Component {
 		return finalQuery;
 	};
 
-	shouldQuery = (value, dataFields, props) => {
+	static shouldQuery = (value, dataFields, props) => {
 		const fields = dataFields.map((field, index) =>
 			`${field}${
 				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
@@ -334,14 +334,14 @@ class CategorySearch extends Component {
 	}, this.props.debounce);
 
 	updateQuery = (componentId, value, props, category) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || CategorySearch.defaultQuery;
 		let onQueryChange = null;
 		if (componentId === props.componentId && props.onQueryChange) {
 			onQueryChange = props.onQueryChange;
 		}
 		props.updateQuery({
 			componentId,
-			query: query(value, category, props),
+			query: query(value, props, category),
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
@@ -510,6 +510,7 @@ class CategorySearch extends Component {
 				)}
 				{this.props.autosuggest ? (
 					<Downshift
+						id={`${this.props.componentId}-downshift`}
 						onChange={this.onSuggestionSelected}
 						onOuterClick={this.handleOuterClick}
 						onStateChange={this.handleStateChange}
@@ -524,6 +525,7 @@ class CategorySearch extends Component {
 							<div className={suggestionsContainer}>
 								<Input
 									showClear={this.props.showClear}
+									id={`${this.props.componentId}-input`}
 									showIcon={this.props.showIcon}
 									iconPosition={this.props.iconPosition}
 									innerRef={this.props.innerRef}
