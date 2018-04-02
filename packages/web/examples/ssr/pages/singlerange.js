@@ -3,13 +3,14 @@ import {
 	ReactiveBase,
 	SingleRange,
 	SelectedFilters,
-	ResultCard,
+	ReactiveList,
 } from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
 
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
 
 import Layout from '../components/Layout';
+import BookCard from '../components/BookCard';
 
 const settings = {
 	app: 'good-books-ds',
@@ -27,32 +28,12 @@ const singleRangeProps = {
 	defaultSelected: 'Rating 3 to 4',
 };
 
-const resultCardProps = {
+const reactiveListProps = {
 	componentId: 'SearchResult',
 	dataField: 'original_title.raw',
 	from: 0,
 	size: 10,
-	onData: data => ({
-		title: <div className="book-title-card text-center" dangerouslySetInnerHTML={{ __html: data.original_title }} />,
-		description: (
-			<div className="flex column justify-space-between text-center">
-				<div>
-					<div>by <span className="authors-list">{data.authors}</span></div>
-					<div className="ratings-list flex align-center justify-center">
-						<span className="stars">
-							{
-								Array(data.average_rating_rounded).fill('x')
-									.map((item, index) => <span key={index}>👽</span>) // eslint-disable-line
-							}
-						</span>
-						<span className="avg-rating">({data.average_rating} avg)</span>
-					</div>
-				</div>
-				<span className="pub-year">Pub {data.original_publication_year}</span>
-			</div>
-		),
-		image: data.image,
-	}),
+	onData: data => (<BookCard key={data._id} data={data} />),
 	react: {
 		and: ['BookSensor'],
 	},
@@ -69,9 +50,9 @@ export default class Main extends Component {
 						source: SingleRange,
 					},
 					{
-						...resultCardProps,
-						type: 'ResultCard',
-						source: ResultCard,
+						...reactiveListProps,
+						type: 'ReactiveList',
+						source: ReactiveList,
 					},
 				],
 				null,
@@ -93,8 +74,8 @@ export default class Main extends Component {
 
 						<div className="col">
 							<SelectedFilters />
-							<ResultCard
-								{...resultCardProps}
+							<ReactiveList
+								{...reactiveListProps}
 							/>
 						</div>
 					</div>
