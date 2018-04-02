@@ -21,7 +21,7 @@
   "author": "Deepak Grover <deepakgrover333@gmail.com> (https://github.com/metagrover)",
   "license": "Apache-2.0",
   "dependencies": {
-    "downshift": "^1.22.1",
+    "downshift": "^1.31.2",
     "emotion": "^9.0.0",
     "emotion-theming": "^9.0.0",
     "prop-types": "^15.6.0",
