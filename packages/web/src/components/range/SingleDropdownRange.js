@@ -70,7 +70,10 @@ class SingleDropdownRange extends Component {
 		}
 	}
 
-	defaultQuery = (value, props) => {
+	// parses range label to get start and end
+	static parseValue = (value, props) => props.data.find(item => item.label === value) || null
+
+	static defaultQuery = (value, props) => {
 		if (value) {
 			return {
 				range: {
@@ -95,6 +98,7 @@ class SingleDropdownRange extends Component {
 		let currentValue = value;
 		if (isDefaultValue) {
 			currentValue = props.data.find(item => item.label === value) || null;
+			currentValue = SingleDropdownRange.parseValue(value, props);
 		}
 
 		const performUpdate = () => {
@@ -116,7 +120,7 @@ class SingleDropdownRange extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || SingleDropdownRange.defaultQuery;
 
 		const { onQueryChange = null } = props;
 
