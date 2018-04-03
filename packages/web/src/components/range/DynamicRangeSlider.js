@@ -147,7 +147,13 @@ class DynamicRangeSlider extends Component {
 		}
 	};
 
-	defaultQuery = (value, props) => {
+	// value parser for SSR
+	static parseValue = value => (value
+		? [value().start, value().end]
+		: null
+	)
+
+	static defaultQuery = (value, props) => {
 		if (Array.isArray(value) && value.length) {
 			return {
 				range: {
@@ -250,7 +256,7 @@ class DynamicRangeSlider extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || DynamicRangeSlider.defaultQuery;
 
 		const { onQueryChange = null } = props;
 
@@ -273,7 +279,7 @@ class DynamicRangeSlider extends Component {
 
 			props.setQueryOptions(this.internalHistogramComponent, queryOptions, false);
 
-			const query = props.customQuery || this.defaultQuery;
+			const query = props.customQuery || DynamicRangeSlider.defaultQuery;
 
 			props.updateQuery({
 				componentId: this.internalHistogramComponent,
