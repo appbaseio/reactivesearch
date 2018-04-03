@@ -69,6 +69,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 		let components = [];
 		let selectedValues = {};
 		let queryList = {};
+		let queryLog = {};
 		let queryOptions = {};
 		let dependencyTree = {};
 		let finalQuery = [];
@@ -194,16 +195,23 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 				orderOfQueries = [...orderOfQueries, component.componentId];
 
+				const currentQuery = {
+					query: { ...queryObj },
+					...options,
+					...queryOptions[component.componentId],
+				};
+
+				queryLog = {
+					...queryLog,
+					[component.componentId]: currentQuery,
+				};
+
 				finalQuery = [
 					...finalQuery,
 					{
 						preference: component.componentId,
 					},
-					{
-						query: { ...queryObj },
-						...options,
-						...queryOptions[component.componentId],
-					},
+					currentQuery,
 				];
 			}
 		});
@@ -214,6 +222,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			queryList,
 			queryOptions,
 			selectedValues,
+			queryLog,
 		};
 
 		appbaseRef.msearch({
