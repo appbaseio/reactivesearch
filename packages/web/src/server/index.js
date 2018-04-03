@@ -16,6 +16,13 @@ const componentsWithOptions = [
 	'TagCloud',
 ];
 
+const componentsWithoutFilters = [
+	'NumberBox',
+	'RangeSlider',
+	'DynamicRangeSlider',
+	'RangeInput',
+];
+
 const resultComponents = ['ResultCard', 'ResultList', 'ReactiveList', 'ReactiveMap'];
 
 function getValue(state, id, defaultValue) {
@@ -79,12 +86,16 @@ export default function initReactivesearch(componentCollection, searchState, set
 			const value = getValue(searchState, label, component.defaultSelected);
 
 			// [1] set selected values
+			let showFilter = component.showFilter !== undefined ? component.showFilter : true;
+			if (componentsWithoutFilters.includes(component.type)) {
+				showFilter = false;
+			}
 			selectedValues = valueReducer(selectedValues, {
 				type: 'SET_VALUE',
 				component: component.componentId,
 				label,
 				value,
-				showFilter: component.showFilter !== undefined ? component.showFilter : true,
+				showFilter,
 				URLParams: component.URLParams || false,
 			});
 
