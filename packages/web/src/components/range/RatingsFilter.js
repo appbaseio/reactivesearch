@@ -36,13 +36,16 @@ class RatingsFilter extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.setReact(this.props);
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue);
-		} else if (this.props.defaultSelected) {
-			this.setValue([
-				this.props.defaultSelected.start,
-				this.props.defaultSelected.end,
-			]);
+		const { selectedValue, defaultSelected } = this.props;
+		if (selectedValue) {
+			if (Array.isArray(selectedValue)) {
+				this.setValue(selectedValue);
+			} else {
+				// for SSR
+				this.setValue(RatingsFilter.parseValue(selectedValue));
+			}
+		} else if (defaultSelected) {
+			this.setValue(RatingsFilter.parseValue(defaultSelected));
 		}
 	}
 
@@ -80,7 +83,13 @@ class RatingsFilter extends Component {
 		}
 	}
 
-	defaultQuery = (value, props) => {
+	// parses range label to get start and end
+	static parseValue = value => (value
+		? [value.start, value.end]
+		: null
+	)
+
+	static defaultQuery = (value, props) => {
 		if (value) {
 			return {
 				range: {
@@ -120,7 +129,7 @@ class RatingsFilter extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || RatingsFilter.defaultQuery;
 
 		const { onQueryChange = null } = props;
 

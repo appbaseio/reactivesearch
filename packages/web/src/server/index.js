@@ -21,6 +21,7 @@ const componentsWithoutFilters = [
 	'RangeSlider',
 	'DynamicRangeSlider',
 	'RangeInput',
+	'RatingsFilter',
 ];
 
 const resultComponents = ['ResultCard', 'ResultList', 'ReactiveList', 'ReactiveMap'];
