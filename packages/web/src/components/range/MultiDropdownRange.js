@@ -74,7 +74,12 @@ class MultiDropdownRange extends Component {
 		}
 	}
 
-	defaultQuery = (values, props) => {
+	// parses range label to get start and end
+	static parseValue = (value, props) => (value
+		? props.data.filter(item => value.includes(item.label))
+		: null)
+
+	static defaultQuery = (values, props) => {
 		const generateRangeQuery = (dataField, items) => {
 			if (items.length > 0) {
 				return items.map(value => ({
@@ -117,7 +122,7 @@ class MultiDropdownRange extends Component {
 			this.selectedValues = {};
 		} else if (isDefaultValue) {
 			// checking if the items in defaultSeleted exist in the data prop
-			currentValue = props.data.filter(value => item.includes(value.label));
+			currentValue = MultiDropdownRange.parseValue(item, props);
 			currentValue.forEach((value) => {
 				this.selectedValues = { ...this.selectedValues, [value.label]: true };
 			});
@@ -148,7 +153,7 @@ class MultiDropdownRange extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || MultiDropdownRange.defaultQuery;
 
 		const { onQueryChange = null } = props;
 
