@@ -44,13 +44,14 @@ class RangeSlider extends Component {
 		this.updateQueryOptions(this.props);
 		this.setReact(this.props);
 
-		if (this.props.selectedValue) {
-			this.handleChange(this.props.selectedValue);
-		} else if (this.props.defaultSelected) {
-			this.handleChange([
-				this.props.defaultSelected.start,
-				this.props.defaultSelected.end,
-			]);
+		const { selectedValue, defaultSelected } = this.props;
+		if (Array.isArray(selectedValue)) {
+			this.handleChange(selectedValue);
+		} else if (selectedValue) {
+			// for value as an object for SSR
+			this.handleChange(RangeSlider.parseValue(selectedValue, this.props));
+		} else if (defaultSelected) {
+			this.handleChange(RangeSlider.parseValue(defaultSelected, this.props));
 		}
 	}
 
@@ -116,7 +117,12 @@ class RangeSlider extends Component {
 		}
 	};
 
-	defaultQuery = (value, props) => {
+	static parseValue = (value, props) => (value
+		? [value.start, value.end]
+		: [props.range.start, props.range.end]
+	)
+
+	static defaultQuery = (value, props) => {
 		if (Array.isArray(value) && value.length) {
 			return {
 				range: {
@@ -211,7 +217,7 @@ class RangeSlider extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || RangeSlider.defaultQuery;
 
 		const { onQueryChange = null } = props;
 
@@ -234,7 +240,7 @@ class RangeSlider extends Component {
 
 			props.setQueryOptions(this.internalComponent, queryOptions, false);
 
-			const query = props.customQuery || this.defaultQuery;
+			const query = props.customQuery || RangeSlider.defaultQuery;
 
 			props.updateQuery({
 				componentId: this.internalComponent,
