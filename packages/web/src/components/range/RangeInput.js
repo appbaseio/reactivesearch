@@ -30,6 +30,11 @@ class RangeInput extends Component {
 		}
 	}
 
+	// for SSR
+	static defaultQuery = RangeSlider.defaultQuery
+
+	static parseValue = RangeSlider.parseValue
+
 	handleInputChange = (e) => {
 		const { name, value } = e.target;
 		if (Number.isNaN(value)) {
