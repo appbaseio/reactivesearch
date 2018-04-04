@@ -1,0 +1,34 @@
+{
+  "name": "ssr-with-react-dom-server",
+  "version": "1.0.0",
+  "description": "SSR example for ReactiveSearch",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@appbaseio/reactivesearch": "^2.3.3",
+    "express": "^4.16.3",
+    "prop-types": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "babel-polyfill": "^6.3.14",
+    "babel-register": "^6.24.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^6.24.0",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-runtime": "^6.3.13",
+    "css-loader": "^0.28.7",
+    "style-loader": "^0.20.3",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.5"
+  },
+  "scripts": {
+    "start:server": "babel-node --plugins transform-object-rest-spread server/index.js",
+    "start:client": "webpack-dev-server --hot --inline --progress --colors --port 8001",
+    "build:client": "webpack"
+  }
+}
