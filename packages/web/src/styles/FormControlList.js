@@ -80,7 +80,7 @@ const formItem = ({ theme }) => css`
 		&::before {
 			background-color: #fff;
 			border: 2px solid ${theme.colors.borderColor
-				|| shade(theme.colors.textColor, 0.2)};
+				|| shade(theme.colors.textColor, 0.5)};
 			box-sizing: content-box;
 			content: "";
 			color: ${theme.colors.primaryColor};

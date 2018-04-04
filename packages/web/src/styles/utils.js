@@ -1,21 +1,27 @@
 /* eslint-disable */
-export function shade(color, percent) {
-	const f = parseInt(color.slice(1), 16);
-	const t = percent < 0 ? 0 : 255;
-	const p = percent < 0 ? percent * -1 : percent;
-	const R = f >> 16;
-	const G = (f >> 8) & 0x00ff;
-	const B = f & 0x0000ff;
 
-	return (
-		'#' +
-		(
-			0x1000000 +
-			(Math.round((t - R) * p) + R) * 0x10000 +
-			(Math.round((t - G) * p) + G) * 0x100 +
-			(Math.round((t - B) * p) + B)
-		)
-			.toString(16)
-			.slice(1)
-	);
+/*
+	USAGE: (also accepts hexcodes without '#')
+
+	shade("#6699CC", 0.2);		// "#7ab8f5" - 20% lighter
+	shade("#69C", -0.5);		// "#334d66" - 50% darker
+*/
+
+export function shade(color, percent) {
+	// validate hex string
+	let hex = String(color).replace(/[^0-9a-f]/gi, '');
+	if (hex.length < 6) {
+		hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+	}
+	let lum = percent || 0;
+
+	// convert to decimal and change luminosity
+	let rgb = "#", c, i;
+	for (i = 0; i < 3; i++) {
+		c = parseInt(hex.substr(i*2,2), 16);
+		c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+		rgb += ("00"+c).substr(c.length);
+	}
+
+	return rgb;
 }

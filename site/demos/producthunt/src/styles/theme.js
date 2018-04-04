@@ -7,8 +7,7 @@ const theme = {
 		secondaryColor: 'orangered',
 		titleColor: 'tomato',
 		lightGray: '#eff3f6',
-		textColor: '#777',
-		borderColor: '#424242',
+		textColor: '#666',
 	},
 };
 
