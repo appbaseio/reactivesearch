@@ -22,6 +22,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
+import CancelSvg from '../shared/CancelSvg';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
@@ -358,6 +359,10 @@ class CategorySearch extends Component {
 		}
 	};
 
+	clearValue = () => {
+		this.setValue('', true);
+	};
+
 	// only works if there's a change in downshift's value
 	handleOuterClick = () => {
 		this.setValue(this.state.currentValue, true);
@@ -418,6 +423,31 @@ class CategorySearch extends Component {
 		}
 		return null;
 	};
+
+	renderCancelIcon = () => {
+		if (this.props.showClear) {
+			return this.props.clearIcon || <CancelSvg />;
+		}
+		return null;
+	}
+
+	renderIcons = () => (
+		<div>
+			{
+				this.state.currentValue && this.props.showClear
+				&& (
+					<InputIcon
+						onClick={this.clearValue}
+						iconPosition="right"
+						clearIcon={this.props.iconPosition === 'right'}
+					>
+						{this.renderCancelIcon()}
+					</InputIcon>
+				)
+			}
+			<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
+		</div>
+	);
 
 	render() {
 		let suggestionsList = [];
@@ -493,6 +523,7 @@ class CategorySearch extends Component {
 						}) => (
 							<div className={suggestionsContainer}>
 								<Input
+									showClear={this.props.showClear}
 									showIcon={this.props.showIcon}
 									iconPosition={this.props.iconPosition}
 									innerRef={this.props.innerRef}
@@ -512,9 +543,7 @@ class CategorySearch extends Component {
 									})}
 									themePreset={themePreset}
 								/>
-								<InputIcon iconPosition={this.props.iconPosition}>
-									{this.renderIcon()}
-								</InputIcon>
+								{this.renderIcons()}
 								{isOpen && suggestionsList.length ? (
 									<ul
 										className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}
@@ -552,13 +581,12 @@ class CategorySearch extends Component {
 							onKeyUp={this.props.onKeyUp}
 							autoFocus={this.props.autoFocus}
 							iconPosition={this.props.iconPosition}
+							showClear={this.props.showClear}
 							showIcon={this.props.showIcon}
 							innerRef={this.props.innerRef}
 							themePreset={themePreset}
 						/>
-						<InputIcon iconPosition={this.props.iconPosition}>
-							{this.renderIcon()}
-						</InputIcon>
+						{this.renderIcons()}
 					</div>
 				)}
 			</Container>
@@ -582,6 +610,7 @@ CategorySearch.propTypes = {
 	beforeValueChange: types.func,
 	categoryField: types.string,
 	className: types.string,
+	clearIcon: types.children,
 	componentId: types.stringRequired,
 	customHighlight: types.func,
 	customQuery: types.func,
@@ -609,6 +638,7 @@ CategorySearch.propTypes = {
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
+	showClear: types.bool,
 	showFilter: types.bool,
 	showIcon: types.bool,
 	style: types.style,
@@ -625,6 +655,7 @@ CategorySearch.defaultProps = {
 	iconPosition: 'left',
 	placeholder: 'Search',
 	queryFormat: 'or',
+	showClear: false,
 	showFilter: true,
 	showIcon: true,
 	style: {},
