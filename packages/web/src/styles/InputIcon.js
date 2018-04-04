@@ -10,6 +10,12 @@ const right = css`
 	right: 0;
 `;
 
+const clear = css`
+	padding-right: 32px;
+	right: 0;
+	top: calc(50% - 9px);
+`;
+
 const InputIcon = styled.div`
 	position: absolute;
 	top: calc(50% - 8px);
@@ -20,10 +26,15 @@ const InputIcon = styled.div`
 			return right;
 		}
 		return null;
-	}}
+	}};
+	${({ clearIcon }) => clearIcon && clear}};
 
 	svg.search-icon {
 		fill: ${({ theme }) => theme.colors.primaryColor};
+	}
+
+	svg.cancel-icon {
+		fill: ${({ theme }) => theme.colors.borderColor};
 	}
 `;
 

@@ -51,6 +51,22 @@ const Input = styled('input')`
 			padding-right: 32px;
 		`};
 
+	${props =>
+		// for clear icon
+		props.showClear
+		&& css`
+			padding-right: 32px;
+		`};
+
+	${props =>
+		// for clear icon with search icon
+		props.showClear
+		&& props.showIcon
+		&& props.iconPosition === 'right'
+		&& css`
+			padding-right: 48px;
+		`};
+
 	${props => props.alert && alertBorder};
 `;
 
@@ -103,6 +119,9 @@ const suggestions = (themePreset, theme) => css`
 
 const suggestionsContainer = css`
 	position: relative;
+	.cancel-icon {
+		cursor: pointer;
+	}
 `;
 
 export default Input;

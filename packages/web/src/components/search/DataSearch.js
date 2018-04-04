@@ -389,6 +389,25 @@ class DataSearch extends Component {
 		}
 		return null;
 	}
+
+	renderIcons = () => (
+		<div>
+			{
+				this.state.currentValue && this.props.showClear
+				&& (
+					<InputIcon
+						onClick={this.clearValue}
+						iconPosition="right"
+						clearIcon={this.props.iconPosition === 'right'}
+					>
+						{this.renderCancelIcon()}
+					</InputIcon>
+				)
+			}
+			<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
+		</div>
+	);
+
 	render() {
 		let suggestionsList = [];
 
@@ -424,6 +443,7 @@ class DataSearch extends Component {
 								<div className={suggestionsContainer}>
 									<Input
 										showIcon={this.props.showIcon}
+										showClear={this.props.showClear}
 										iconPosition={this.props.iconPosition}
 										innerRef={this.props.innerRef}
 										{...getInputProps({
@@ -439,13 +459,7 @@ class DataSearch extends Component {
 										})}
 										themePreset={themePreset}
 									/>
-									{
-										this.state.currentValue && this.props.showClear
-										&& (
-											<InputIcon onClick={this.clearValue} iconPosition="right">{this.renderCancelIcon()}</InputIcon>
-										)
-									}
-									<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
+									{this.renderIcons()}
 
 									{
 										isOpen && suggestionsList.length
@@ -500,10 +514,11 @@ class DataSearch extends Component {
 									autoFocus={this.props.autoFocus}
 									iconPosition={this.props.iconPosition}
 									showIcon={this.props.showIcon}
+									showClear={this.props.showClear}
 									innerRef={this.props.innerRef}
 									themePreset={themePreset}
 								/>
-								<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
+								{this.renderIcons()}
 							</div>
 						)
 				}
@@ -575,7 +590,7 @@ DataSearch.defaultProps = {
 	showIcon: true,
 	style: {},
 	URLParams: false,
-	showClear: true,
+	showClear: false,
 };
 
 const mapStateToProps = (state, props) => ({
