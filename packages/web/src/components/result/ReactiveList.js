@@ -231,6 +231,7 @@ class ReactiveList extends Component {
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
 		this.props.removeComponent(this.internalComponent);
+		window.removeEventListener('scroll', this.scrollHandler);
 	}
 
 	setReact = (props) => {
