@@ -32,6 +32,9 @@ const SearchFilters = () => (
 				componentId="category"
 				dataField="p_type"
 				placeholder="Select Category"
+				react={{
+					and: 'title',
+				}}
 			/>
 		</FlexChild>
 		<FlexChild flex={1}>

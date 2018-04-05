@@ -177,7 +177,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 		// [5] Generate finalQuery for search
 		componentCollection.forEach((component) => {
-			let { queryObj, options } = buildQuery( // eslint-disable-line
+			// eslint-disable-next-line
+			let { queryObj, options } = buildQuery(
 				component.componentId,
 				dependencyTree,
 				queryList,
