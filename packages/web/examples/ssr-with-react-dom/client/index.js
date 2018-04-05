@@ -1,9 +1,11 @@
 import 'babel-polyfill';
 import React from 'react';
-import { render } from 'react-dom';
+import { hydrate } from 'react-dom';
 
 import App from '../common/App';
 import BookCard from '../common/BookCard';
+
+import './index.css';
 
 // Grab the state from a global variable injected into the server-generated HTML
 const store = window.__PRELOADED_STATE__;
@@ -38,7 +40,7 @@ const reactiveListProps = {
 	},
 };
 
-render(<App
+hydrate(<App
 	store={store}
 	settings={settings}
 	singleRangeProps={singleRangeProps}
