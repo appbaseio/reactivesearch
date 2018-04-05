@@ -1,6 +1,7 @@
 import Express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import { renderStylesToString } from 'emotion-server';
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
 import { SingleRange, ReactiveList } from '@appbaseio/reactivesearch';
 
@@ -76,6 +77,7 @@ const port = 3000;
 // Serve static files
 // Since we're passing all requests to same handleRenderer
 // We need to serve the bundle.js as it is
+// Alternatively you can define your own set of routes
 app.use('/static', Express.static('dist'));
 
 function renderFullPage(html, preloadedState) {
@@ -96,9 +98,9 @@ function renderFullPage(html, preloadedState) {
     `;
 }
 
-function handleRender(req, res) {
-	// Create a new store instance
-	initReactivesearch(
+async function handleRender(req, res) {
+	// Create a new store instance and wait for results
+	const store = await initReactivesearch(
 		[
 			{
 				...singleRangeProps,
@@ -115,30 +117,32 @@ function handleRender(req, res) {
 		],
 		null,
 		settings,
-	)
-		.then((store) => {
-			// Render the component to a string
-			const html = renderToString(<App
-				store={
-					store
-				}
-				settings={
-					settings
-				}
-				singleRangeProps={
-					singleRangeProps
-				}
-				reactiveListProps={
-					reactiveListProps
-				}
-			/>);
+	);
+	// Render the component to a string
+	// renderStylesToString is from emotion
+	// ReactiveSearch uses emotion and this will inline the styles
+	// so you can get the correct styles for ReactiveSearch's components
+	// on the first load
+	const html = renderStylesToString(renderToString(<App
+		store={
+			store
+		}
+		settings={
+			settings
+		}
+		singleRangeProps={
+			singleRangeProps
+		}
+		reactiveListProps={
+			reactiveListProps
+		}
+	/>));
 
-			// Send the rendered page back to the client
-			res.send(renderFullPage(
-				html,
-				store,
-			));
-		});
+	// Send the rendered page back to the client
+	res.send(renderFullPage(
+		html,
+		store,
+	));
 }
 
 // This is fired every time the server side receives a request
