@@ -86,7 +86,6 @@ class ReactiveMap extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
-		this.props.setMapData(this.props.componentId, null, !!this.props.center);
 
 		if (this.props.stream) {
 			this.props.setStreaming(this.props.componentId, true);
@@ -109,6 +108,13 @@ class ReactiveMap extends Component {
 			if (this.defaultQuery.sort) {
 				options.sort = this.defaultQuery.sort;
 			}
+			this.props.setMapData(
+				this.props.componentId,
+				this.defaultQuery.query,
+				!!this.defaultQuery.query,
+			);
+		} else {
+			this.props.setMapData(this.props.componentId, null, !!this.props.center);
 		}
 
 		this.props.setQueryOptions(
@@ -117,19 +123,6 @@ class ReactiveMap extends Component {
 			!(this.defaultQuery && this.defaultQuery.query),
 		);
 		this.setReact(this.props);
-
-		if (this.defaultQuery) {
-			const { sort, ...query } = this.defaultQuery;
-			this.props.updateQuery({
-				componentId: this.internalComponent,
-				query,
-			});
-		} else {
-			this.props.updateQuery({
-				componentId: this.internalComponent,
-				query: null,
-			});
-		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -172,17 +165,18 @@ class ReactiveMap extends Component {
 			options.from = this.state.from;
 			this.defaultQuery = nextProps.defaultQuery();
 
-			const { sort, ...query } = this.defaultQuery;
+			const { sort, query } = this.defaultQuery;
 
 			if (sort) {
 				options.sort = this.defaultQuery.sort;
 				nextProps.setQueryOptions(nextProps.componentId, options, !query);
 			}
 
-			this.props.updateQuery({
-				componentId: this.internalComponent,
+			this.props.setMapData(
+				this.props.componentId,
 				query,
-			});
+				!!query,
+			);
 		}
 
 		if (this.props.stream !== nextProps.stream) {
