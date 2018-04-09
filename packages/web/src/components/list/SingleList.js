@@ -6,6 +6,7 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	getQueryOptions,
@@ -38,6 +39,7 @@ class SingleList extends Component {
 		};
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
 	componentWillMount() {
@@ -171,15 +173,12 @@ class SingleList extends Component {
 	updateQuery = (value, props) => {
 		const query = props.customQuery || SingleList.defaultQuery;
 
-		const { onQueryChange = null } = props;
-
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
-			onQueryChange,
 			URLParams: props.URLParams,
 		});
 	};
@@ -330,6 +329,7 @@ class SingleList extends Component {
 SingleList.propTypes = {
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
@@ -390,6 +390,8 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });

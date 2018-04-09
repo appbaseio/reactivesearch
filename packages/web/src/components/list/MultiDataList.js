@@ -200,8 +200,6 @@ class MultiDataList extends Component {
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
 
-		const { onQueryChange = null } = props;
-
 		// find the corresponding value of the label for running the query
 		const queryValue = value.reduce((acc, item) => {
 			if (item === props.selectAllLabel) {
@@ -217,7 +215,6 @@ class MultiDataList extends Component {
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
-			onQueryChange,
 			URLParams: props.URLParams,
 		});
 	};
@@ -321,6 +318,7 @@ class MultiDataList extends Component {
 MultiDataList.propTypes = {
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
