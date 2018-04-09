@@ -8,6 +8,7 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -35,6 +36,7 @@ class RangeSlider extends Component {
 
 		this.locked = false;
 		this.internalComponent = `${this.props.componentId}__internal`;
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
 	componentDidMount() {
@@ -189,8 +191,6 @@ class RangeSlider extends Component {
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
 
-		const { onQueryChange = null } = props;
-
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
@@ -198,7 +198,6 @@ class RangeSlider extends Component {
 			label: props.filterLabel,
 			showFilter: false,
 			URLParams: false,
-			onQueryChange,
 		});
 	};
 
@@ -283,6 +282,7 @@ RangeSlider.propTypes = {
 	react: types.react,
 	options: types.options,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
 	dataField: types.stringRequired,
 	interval: types.number,
 	beforeValueChange: types.func,
@@ -323,11 +323,12 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) =>
-		dispatch(watchComponent(component, react)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(RangeSlider));
