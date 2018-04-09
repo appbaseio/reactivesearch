@@ -5,6 +5,7 @@ import {
 	removeComponent,
 	watchComponent,
 	updateQuery,
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -27,6 +28,7 @@ class ToggleButton extends Component {
 			currentValue: [],
 		};
 		this.locked = false;
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
 	componentWillMount() {
@@ -149,8 +151,6 @@ class ToggleButton extends Component {
 	updateQuery = (value, props) => {
 		const query = props.customQuery || ToggleButton.defaultQuery;
 
-		const { onQueryChange = null } = props;
-
 		let filterValue = value;
 		if (!props.multiSelect) {
 			filterValue = value[0] ? value[0].label : null;
@@ -161,7 +161,6 @@ class ToggleButton extends Component {
 			value: filterValue,	// sets a string in URL not array
 			label: props.filterLabel,
 			showFilter: props.showFilter,
-			onQueryChange,
 			URLParams: props.URLParams,
 		});
 	};
@@ -195,6 +194,7 @@ class ToggleButton extends Component {
 ToggleButton.propTypes = {
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
@@ -234,8 +234,9 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) =>
-		dispatch(watchComponent(component, react)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ToggleButton);

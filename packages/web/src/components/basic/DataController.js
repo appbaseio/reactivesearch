@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 
-import { addComponent, removeComponent, updateQuery } from '@appbaseio/reactivecore/lib/actions';
+import {
+	addComponent,
+	removeComponent,
+	updateQuery,
+	setQueryListener
+} from '@appbaseio/reactivecore/lib/actions';
 import { isEqual, checkValueChange } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -12,6 +17,7 @@ class DataController extends Component {
 	componentDidMount() {
 		this.locked = false;
 		this.props.addComponent(this.props.componentId);
+		this.props.setQueryListener(this.props.componentId, this.props.onQueryChange, null);
 
 		if (this.props.defaultSelected) {
 			this.updateQuery(this.props.defaultSelected, this.props);
@@ -42,10 +48,7 @@ class DataController extends Component {
 
 	updateQuery = (defaultSelected = null, props) => {
 		this.locked = true;
-
 		const query = props.customQuery || DataController.defaultQuery;
-
-		const { onQueryChange = null } = props;
 
 		const performUpdate = () => {
 			props.updateQuery({
@@ -54,7 +57,6 @@ class DataController extends Component {
 				value: defaultSelected,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
-				onQueryChange,
 				URLParams: props.URLParams,
 			});
 			this.locked = false;
@@ -88,6 +90,7 @@ DataController.defaultProps = {
 DataController.propTypes = {
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
 	updateQuery: types.funcRequired,
 	selectedValue: types.selectedValue,
 	// component props
@@ -117,6 +120,8 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DataController);
