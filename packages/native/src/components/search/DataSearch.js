@@ -19,6 +19,7 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	debounce,
@@ -45,6 +46,7 @@ class DataSearch extends Component {
 			showModal: false,
 		};
 		this.internalComponent = `${this.props.componentId}__internal`;
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
 	componentDidMount() {
@@ -299,17 +301,13 @@ class DataSearch extends Component {
 
 	updateQuery = (componentId, value, props) => {
 		const query = props.customQuery || this.defaultQuery;
-		let onQueryChange = null;
-		if (componentId === props.componentId && props.onQueryChange) {
-			onQueryChange = props.onQueryChange;
-		}
+
 		props.updateQuery({
 			componentId,
 			query: query(value, props),
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
-			onQueryChange,
 			URLParams: false,
 		});
 	};
@@ -661,6 +659,7 @@ DataSearch.propTypes = {
 	suggestions: types.suggestions,
 	defaultSuggestions: types.suggestions,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
 	fieldWeights: types.fieldWeights,
 	queryFormat: types.queryFormatSearch,
 	fuzziness: types.fuzziness,
@@ -711,6 +710,8 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(DataSearch));
