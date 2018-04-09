@@ -5,6 +5,7 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -37,6 +38,7 @@ class DynamicRangeSlider extends Component {
 		this.internalRangeComponent = `${this.props.componentId}__range__internal`;
 		this.internalMatchAllComponent = `${this.props.componentId}__match_all__internal`;
 		this.locked = false;
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
 	componentWillMount() {
@@ -258,8 +260,6 @@ class DynamicRangeSlider extends Component {
 	updateQuery = (value, props) => {
 		const query = props.customQuery || DynamicRangeSlider.defaultQuery;
 
-		const { onQueryChange = null } = props;
-
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
@@ -267,7 +267,6 @@ class DynamicRangeSlider extends Component {
 			label: props.filterLabel,
 			showFilter: false, // disable filters for DynamicRangeSlider
 			URLParams: props.URLParams,
-			onQueryChange,
 		});
 	};
 
@@ -372,6 +371,7 @@ class DynamicRangeSlider extends Component {
 DynamicRangeSlider.propTypes = {
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
@@ -434,9 +434,10 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) =>
-		dispatch(watchComponent(component, react)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider);
