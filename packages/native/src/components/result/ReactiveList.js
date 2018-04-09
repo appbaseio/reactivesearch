@@ -10,6 +10,7 @@ import {
 	setQueryOptions,
 	updateQuery,
 	loadMore,
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -38,6 +39,7 @@ class ReactiveList extends Component {
 		};
 		this.listRef = null;
 		this.internalComponent = `${props.componentId}__internal`;
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
 	componentDidMount() {
@@ -479,6 +481,8 @@ ReactiveList.propTypes = {
 	setStreaming: types.func,
 	total: types.number,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
+	onQueryChange: types.func,
 	loadMore: types.funcRequired,
 	pages: types.number,
 	onAllData: types.func,
@@ -524,6 +528,8 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
 });
