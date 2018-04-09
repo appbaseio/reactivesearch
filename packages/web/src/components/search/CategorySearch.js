@@ -8,6 +8,7 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	debounce,
@@ -49,6 +50,7 @@ class CategorySearch extends Component {
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
 	componentWillMount() {
@@ -334,17 +336,13 @@ class CategorySearch extends Component {
 
 	updateQuery = (componentId, value, props, category) => {
 		const query = props.customQuery || CategorySearch.defaultQuery;
-		let onQueryChange = null;
-		if (componentId === props.componentId && props.onQueryChange) {
-			onQueryChange = props.onQueryChange;
-		}
+
 		props.updateQuery({
 			componentId,
 			query: query(value, props, category),
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
-			onQueryChange,
 			URLParams: props.URLParams,
 		});
 	};
@@ -570,6 +568,7 @@ class CategorySearch extends Component {
 CategorySearch.propTypes = {
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
@@ -638,12 +637,9 @@ const mapStateToProps = (state, props) => ({
 		&& state.aggregations[props.componentId][props.categoryField]
 		&& state.aggregations[props.componentId][props.categoryField].buckets
 	) || [],
-	selectedValue:
-	(state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value)
-		|| null,
-	suggestions:
-			(state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	selectedValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value) || null,
+	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	themePreset: state.config.themePreset,
 });
 
@@ -652,6 +648,8 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });

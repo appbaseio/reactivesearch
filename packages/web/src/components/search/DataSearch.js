@@ -8,6 +8,7 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	debounce,
@@ -39,6 +40,7 @@ class DataSearch extends Component {
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
 	componentWillMount() {
@@ -293,17 +295,13 @@ class DataSearch extends Component {
 
 	updateQuery = (componentId, value, props) => {
 		const query = props.customQuery || DataSearch.defaultQuery;
-		let onQueryChange = null;
-		if (componentId === props.componentId && props.onQueryChange) {
-			onQueryChange = props.onQueryChange;
-		}
+
 		props.updateQuery({
 			componentId,
 			query: query(value, props),
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
-			onQueryChange,
 			URLParams: props.URLParams,
 		});
 	};
@@ -502,6 +500,7 @@ class DataSearch extends Component {
 DataSearch.propTypes = {
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
@@ -575,6 +574,8 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
 export default connect(
