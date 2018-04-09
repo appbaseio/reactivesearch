@@ -18,6 +18,7 @@ import {
 	removeComponent,
 	watchComponent,
 	updateQuery,
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -244,15 +245,12 @@ class DateRange extends Component {
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
 
-		const { onQueryChange = null } = props;
-
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
 			value: value ? [value.start, value.end] : null,
 			showFilter: props.showFilter,
 			label: props.filterLabel,
-			onQueryChange,
 			URLParams: props.URLParams,
 		});
 	};
@@ -481,6 +479,7 @@ DateRange.propTypes = {
 	react: types.react,
 	startDate: types.date,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
 	queryFormat: types.queryFormatDate,
 	selectedValue: types.selectedValue,
 	placeholder: types.string,
@@ -512,9 +511,10 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) =>
-		dispatch(watchComponent(component, react)),
+	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(DateRange));
