@@ -18,6 +18,7 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -48,6 +49,7 @@ class MultiDropdownList extends Component {
 
 		this.locked = false;
 		this.internalComponent = `${this.props.componentId}__internal`;
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
 	componentDidMount() {
@@ -238,15 +240,12 @@ class MultiDropdownList extends Component {
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
 
-		const { onQueryChange = null } = props;
-
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
-			onQueryChange,
 			URLParams: false,
 		});
 	};
@@ -399,6 +398,7 @@ MultiDropdownList.propTypes = {
 	react: types.react,
 	options: types.options,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
 	beforeValueChange: types.func,
 	onValueChange: types.func,
 	customQuery: types.func,
@@ -440,6 +440,8 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(MultiDropdownList));
