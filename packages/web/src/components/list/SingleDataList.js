@@ -5,6 +5,7 @@ import {
 	removeComponent,
 	watchComponent,
 	updateQuery,
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	checkValueChange,
@@ -29,6 +30,7 @@ class SingleDataList extends Component {
 			searchTerm: '',
 		};
 		this.locked = false;
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
 	componentWillMount() {
@@ -125,8 +127,6 @@ class SingleDataList extends Component {
 	updateQuery = (value, props) => {
 		const query = props.customQuery || SingleDataList.defaultQuery;
 
-		const { onQueryChange = null } = props;
-
 		let currentValue = value;
 		if (value !== props.selectAllLabel) {
 			currentValue = props.data.find(item => item.label === value);
@@ -139,7 +139,6 @@ class SingleDataList extends Component {
 			value: currentValue ? value : null,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
-			onQueryChange,
 			URLParams: props.URLParams,
 		});
 	};
@@ -243,6 +242,7 @@ class SingleDataList extends Component {
 SingleDataList.propTypes = {
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
@@ -291,6 +291,8 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(SingleDataList);
