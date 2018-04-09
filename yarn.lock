@@ -2341,7 +2341,7 @@ babel-plugin-transform-undefined-to-void@^6.8.2, babel-plugin-transform-undefine
   version "6.9.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-undefined-to-void/-/babel-plugin-transform-undefined-to-void-6.9.1.tgz#d7df9c1dd0ec12e0ffe895ed1445f61f1bf5e221"
 
-babel-polyfill@^6.26.0, babel-polyfill@^6.3.14:
+babel-polyfill@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.26.0.tgz#379937abc67d7895970adc621f284cd966cf2153"
   dependencies:
@@ -2663,7 +2663,7 @@ babel-preset-stage-3@^6.24.1:
     babel-plugin-transform-exponentiation-operator "^6.24.1"
     babel-plugin-transform-object-rest-spread "^6.22.0"
 
-babel-register@^6.24.0, babel-register@^6.24.1, babel-register@^6.26.0:
+babel-register@^6.24.1, babel-register@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-register/-/babel-register-6.26.0.tgz#6ed021173e2fcb486d7acb45c6009a856f647071"
   dependencies:
@@ -3815,35 +3815,12 @@ create-emotion-server@^9.1.1:
     multipipe "^1.0.2"
     through "^2.3.8"
 
-<<<<<<< HEAD
 create-emotion-styled@^9.1.1:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/create-emotion-styled/-/create-emotion-styled-9.1.1.tgz#872911dde3d38871703be632580becd05e636f10"
-=======
-create-emotion-server@^9.1.1:
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/create-emotion-server/-/create-emotion-server-9.1.1.tgz#28054753c1124efcb6b9655aa6d141c5e892eb3b"
-  dependencies:
-    emotion-utils "^9.1.0"
-    html-tokenize "^2.0.0"
-    multipipe "^1.0.2"
-    through "^2.3.8"
-
-create-emotion-styled@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/create-emotion-styled/-/create-emotion-styled-9.1.0.tgz#ad6ee63e9be342e9d6339e4e4ee758028e9b967f"
->>>>>>> web: cleanup SSR with react-dom/server
   dependencies:
     "@emotion/is-prop-valid" "^0.5.2"
     emotion-utils "^9.1.0"
-
-create-emotion@^9.1.1:
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/create-emotion/-/create-emotion-9.1.1.tgz#530bd14ea0a8ac4a4d79b6d8b82b88a48b0270a6"
-  dependencies:
-    emotion-utils "^9.1.0"
-    stylis "^3.5.0"
-    stylis-rule-sheet "^0.0.10"
 
 create-emotion@^9.1.1:
   version "9.1.1"
@@ -4512,13 +4489,7 @@ emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
 
-emotion-server@^9.1.0:
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/emotion-server/-/emotion-server-9.1.1.tgz#c2b16bc186cf6e10ef4c68843c27f9db0a8965b2"
-  dependencies:
-    create-emotion-server "^9.1.1"
-
-emotion-server@^9.1.1:
+emotion-server@^9.1.0, emotion-server@^9.1.1:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/emotion-server/-/emotion-server-9.1.1.tgz#c2b16bc186cf6e10ef4c68843c27f9db0a8965b2"
   dependencies:
@@ -4538,14 +4509,7 @@ emotion-utils@^9.1.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-9.1.0.tgz#7484dbf18f3b1dc1de68559d1ff35a74caa998dc"
 
-emotion@*, emotion@^9.0.0:
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/emotion/-/emotion-9.1.1.tgz#ee9dd8d5553954ceea9cd0e62402e0afd6802890"
-  dependencies:
-    babel-plugin-emotion "^9.1.0"
-    create-emotion "^9.1.1"
-
-emotion@^9.1.1:
+emotion@*, emotion@^9.0.0, emotion@^9.1.1:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/emotion/-/emotion-9.1.1.tgz#ee9dd8d5553954ceea9cd0e62402e0afd6802890"
   dependencies:
