@@ -7,6 +7,7 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import { pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -16,10 +17,7 @@ import { connect } from '../../utils';
 class ReactiveComponent extends Component {
 	constructor(props) {
 		super(props);
-
 		this.internalComponent = null;
-
-		const { onQueryChange = null } = props;
 
 		this.setQuery = (obj) => {
 			this.props.updateQuery({
@@ -27,7 +25,6 @@ class ReactiveComponent extends Component {
 				componentId: props.componentId,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
-				onQueryChange,
 				URLParams: false,
 			});
 		};
@@ -35,6 +32,7 @@ class ReactiveComponent extends Component {
 		if (props.defaultQuery) {
 			this.internalComponent = `${props.componentId}__internal`;
 		}
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
 	componentWillMount() {
@@ -115,6 +113,7 @@ ReactiveComponent.propTypes = {
 	selectedValue: types.selectedValue,
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
 	watchComponent: types.funcRequired,
 	updateQuery: types.funcRequired,
 	setQueryOptions: types.funcRequired,
@@ -145,6 +144,8 @@ const mapDispatchtoProps = dispatch => ({
 		props,
 		execute,
 	)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveComponent);
