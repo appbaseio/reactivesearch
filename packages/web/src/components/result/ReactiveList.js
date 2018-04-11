@@ -340,15 +340,11 @@ class ReactiveList extends Component {
 		return null;
 	};
 
-	renderNoResults = () => {
-		const type = typeof this.props.onNoResults;
-		if (type === 'function') {
-			return this.props.onNoResults();
-		}
-		return (
-			<p>{ type === 'string' ? this.props.onNoResults : 'No results found.'}</p>
-		);
-	};
+	renderNoResults = () => (
+		<p className={getClassName(this.props.innerClass, 'error') || null}>
+			{ this.props.onNoResults }
+		</p>
+	);
 
 	handleSortChange = (e) => {
 		const index = e.target.value;
@@ -406,8 +402,12 @@ class ReactiveList extends Component {
 					}
 				</Flex>
 				{
-					((!this.state.isLoading) && (results.length === 0 && streamResults.length === 0))
-						? this.renderNoResults() : null
+					(
+						!this.state.isLoading
+						&& (results.length === 0 && streamResults.length === 0)
+					)
+						? this.renderNoResults()
+						: null
 				}
 				{
 					this.props.pagination && (
@@ -503,7 +503,7 @@ ReactiveList.propTypes = {
 	loader: types.title,
 	onAllData: types.func,
 	onData: types.func,
-	onNoResults: types.func,
+	onNoResults: types.title,
 	onPageChange: types.func,
 	onResultStats: types.func,
 	pages: types.number,
@@ -529,6 +529,7 @@ ReactiveList.defaultProps = {
 	size: 10,
 	style: {},
 	URLParams: false,
+	onNoResults: 'No Results found.',
 };
 
 const mapStateToProps = (state, props) => ({
