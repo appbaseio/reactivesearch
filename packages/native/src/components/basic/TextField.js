@@ -83,19 +83,20 @@ class TextField extends Component {
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value,
+			}, () => {
+				if (isDefaultValue) {
+					this.updateQuery(value, props);
+				} else {
+					// debounce for handling text while typing
+					this.handleTextChange(value);
+				}
+				if (props.onValueChange) props.onValueChange(value);
 			});
-			if (isDefaultValue) {
-				this.updateQuery(value, props);
-			} else {
-				// debounce for handling text while typing
-				this.handleTextChange(value);
-			}
 		};
 		checkValueChange(
 			props.componentId,
 			value,
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};

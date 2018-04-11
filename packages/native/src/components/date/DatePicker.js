@@ -132,14 +132,15 @@ class DatePicker extends Component {
 		const performUpdate = () => {
 			this.setState({
 				currentDate,
+			}, () => {
+				this.updateQuery(value, props);
+				if (props.onValueChange) props.onValueChange(value);
 			});
-			this.updateQuery(value, props);
 		};
 		checkValueChange(
 			props.componentId,
 			date,
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};

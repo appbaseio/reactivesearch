@@ -193,9 +193,10 @@ class DateRange extends Component {
 			this.setState({
 				currentDate,
 			}, () => {
+				this.updateQuery(value, props);
+				if (props.onValueChange) props.onValueChange(value);
 				if (cb) cb();
 			});
-			this.updateQuery(value, props);
 		};
 
 		if (selectedDate) {
@@ -217,7 +218,6 @@ class DateRange extends Component {
 					props.componentId,
 					date,
 					props.beforeValueChange,
-					props.onValueChange,
 					performUpdate,
 				);
 			} else {

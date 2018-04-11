@@ -209,6 +209,7 @@ class GeoDistanceSlider extends Component {
 					if (this.state.currentDistance) {
 						this.updateQuery(this.state.currentDistance);
 					}
+					if (props.onValueChange) props.onValueChange(this.state.currentDistance);
 					this.locked = false;
 				});
 			});
@@ -218,7 +219,6 @@ class GeoDistanceSlider extends Component {
 			props.componentId,
 			{ distance: this.state.currentDistance, location: currentValue.value },
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};

@@ -157,6 +157,7 @@ class MultiDropdownRange extends Component {
 			}, () => {
 				this.updateQuery(currentValue, props);
 				this.locked = false;
+				if (props.onValueChange) props.onValueChange(currentValue);
 			});
 		};
 
@@ -164,7 +165,6 @@ class MultiDropdownRange extends Component {
 			props.componentId,
 			currentValue,
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};
