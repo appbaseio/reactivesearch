@@ -158,6 +158,7 @@ class SingleList extends Component {
 			}, () => {
 				this.updateQuery(value, props);
 				this.locked = false;
+				if (props.onValueChange) props.onValueChange(value);
 			});
 		};
 
@@ -165,7 +166,6 @@ class SingleList extends Component {
 			props.componentId,
 			value,
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};

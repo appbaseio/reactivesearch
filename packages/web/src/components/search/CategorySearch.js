@@ -316,13 +316,13 @@ class CategorySearch extends Component {
 					this.handleTextChange(value);
 				}
 				this.locked = false;
+				if (props.onValueChange) props.onValueChange(value);
 			});
 		};
 		checkValueChange(
 			props.componentId,
 			value,
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};

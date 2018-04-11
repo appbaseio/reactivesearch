@@ -119,13 +119,13 @@ class RatingsFilter extends Component {
 			}, () => {
 				this.updateQuery(value, props);
 				this.locked = false;
+				if (props.onValueChange) props.onValueChange(value);
 			});
 		};
 		checkValueChange(
 			props.componentId,
 			value,
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};
