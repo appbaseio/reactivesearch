@@ -3,6 +3,7 @@
   "version": "2.5.1",
   "description": "A React UI components library for building search experiences",
   "main": "lib/index.js",
+  "typings": "./src/index.d.ts",
   "module": "lib/index.es.js",
   "js:next": "lib/index.es.js",
   "sideEffects": false,
@@ -18,7 +19,8 @@
     "build:umd": "BABEL_ENV=commonjs webpack --progress -p --config webpack.config.umd.js",
     "stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
     "prepublish": "yarn run build",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "typescript": "tsc -p tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -46,6 +48,7 @@
     "react-dom": ">=15"
   },
   "devDependencies": {
+    "@types/react": "^16.3.8",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -61,6 +64,11 @@
     "jest": "^22.4.2",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
+    "tslint": "^5.9.1",
+    "typescript": "^2.8.1",
     "webpack": "^3.2.0"
+  },
+  "resolutions": {
+    "@types/react": "16.3.7"
   }
 }
