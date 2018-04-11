@@ -341,7 +341,7 @@ class ReactiveList extends Component {
 	};
 
 	renderNoResults = () => (
-		<p className={getClassName(this.props.innerClass, 'error') || null}>
+		<p className={getClassName(this.props.innerClass, 'noResults') || null}>
 			{ this.props.onNoResults }
 		</p>
 	);
