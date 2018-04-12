@@ -24,6 +24,7 @@ import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
+import CancelSvg from '../shared/CancelSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
 import { connect } from '../../utils';
@@ -274,13 +275,13 @@ class DataSearch extends Component {
 					this.handleTextChange(value);
 				}
 				this.locked = false;
+				if (props.onValueChange) props.onValueChange(value);
 			});
 		};
 		checkValueChange(
 			props.componentId,
 			value,
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};
@@ -315,6 +316,11 @@ class DataSearch extends Component {
 		}
 	};
 
+	clearValue = () => {
+		this.setValue('', true);
+	};
+
+	// only works if there's a change in downshift's value
 	handleOuterClick = (event) => {
 		this.setValue(this.state.currentValue, true);
 
@@ -379,6 +385,31 @@ class DataSearch extends Component {
 		return null;
 	}
 
+	renderCancelIcon = () => {
+		if (this.props.showClear) {
+			return this.props.clearIcon || <CancelSvg />;
+		}
+		return null;
+	}
+
+	renderIcons = () => (
+		<div>
+			{
+				this.state.currentValue && this.props.showClear
+				&& (
+					<InputIcon
+						onClick={this.clearValue}
+						iconPosition="right"
+						clearIcon={this.props.iconPosition === 'right'}
+					>
+						{this.renderCancelIcon()}
+					</InputIcon>
+				)
+			}
+			<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
+		</div>
+	);
+
 	render() {
 		let suggestionsList = [];
 
@@ -416,6 +447,7 @@ class DataSearch extends Component {
 									<Input
 										id={`${this.props.componentId}-input`}
 										showIcon={this.props.showIcon}
+										showClear={this.props.showClear}
 										iconPosition={this.props.iconPosition}
 										innerRef={this.props.innerRef}
 										{...getInputProps({
@@ -431,7 +463,8 @@ class DataSearch extends Component {
 										})}
 										themePreset={themePreset}
 									/>
-									<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
+									{this.renderIcons()}
+
 									{
 										isOpen && suggestionsList.length
 											? (
@@ -485,10 +518,11 @@ class DataSearch extends Component {
 									autoFocus={this.props.autoFocus}
 									iconPosition={this.props.iconPosition}
 									showIcon={this.props.showIcon}
+									showClear={this.props.showClear}
 									innerRef={this.props.innerRef}
 									themePreset={themePreset}
 								/>
-								<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
+								{this.renderIcons()}
 							</div>
 						)
 				}
@@ -512,6 +546,7 @@ DataSearch.propTypes = {
 	autosuggest: types.bool,
 	beforeValueChange: types.func,
 	className: types.string,
+	clearIcon: types.children,
 	componentId: types.stringRequired,
 	customHighlight: types.func,
 	customQuery: types.func,
@@ -539,6 +574,7 @@ DataSearch.propTypes = {
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
+	showClear: types.bool,
 	showFilter: types.bool,
 	showIcon: types.bool,
 	style: types.style,
@@ -559,6 +595,7 @@ DataSearch.defaultProps = {
 	showIcon: true,
 	style: {},
 	URLParams: false,
+	showClear: false,
 };
 
 const mapStateToProps = (state, props) => ({

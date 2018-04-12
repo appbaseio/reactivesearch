@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
 
-import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+import { isEqual, getInnerKey } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-
-import { getInnerKey } from '../../../utils';
 
 class List extends Component {
 	shouldComponentUpdate(nextProps) {

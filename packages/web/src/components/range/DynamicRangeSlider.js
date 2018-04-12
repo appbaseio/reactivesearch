@@ -230,8 +230,10 @@ class DynamicRangeSlider extends Component {
 			this.setState({
 				currentValue: normalizedValue,
 			}, () => {
-				this.updateQuery([normalizedValue[0], normalizedValue[1]], props);
+				const normalizedValues = [normalizedValue[0], normalizedValue[1]];
+				this.updateQuery(normalizedValues, props);
 				this.locked = false;
+				if (props.onValueChange) props.onValueChange(normalizedValues);
 			});
 		};
 		checkValueChange(
@@ -241,7 +243,6 @@ class DynamicRangeSlider extends Component {
 				end: normalizedValue[1],
 			},
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};

@@ -21,6 +21,7 @@ class ReactiveComponent extends Component {
 	constructor(props) {
 		super(props);
 		this.internalComponent = null;
+		this.defaultQuery = null;
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		this.setQuery = (obj) => {
@@ -48,7 +49,8 @@ class ReactiveComponent extends Component {
 
 		// set query for internal component
 		if (this.internalComponent && this.props.defaultQuery) {
-			const { query, ...queryOptions } = this.props.defaultQuery();
+			this.defaultQuery = this.props.defaultQuery();
+			const { query, ...queryOptions } = this.defaultQuery || {};
 
 			if (queryOptions) {
 				this.props.setQueryOptions(this.internalComponent, queryOptions, false);
@@ -70,6 +72,25 @@ class ReactiveComponent extends Component {
 			)
 		) {
 			nextProps.onAllData(parseHits(nextProps.hits), nextProps.aggregations);
+		}
+
+		if (
+			!isEqual(
+				nextProps.defaultQuery(),
+				this.defaultQuery,
+			)
+		) {
+			this.defaultQuery = nextProps.defaultQuery();
+			const { query, ...queryOptions } = this.defaultQuery || {};
+
+			if (queryOptions) {
+				nextProps.setQueryOptions(this.internalComponent, queryOptions, false);
+			}
+
+			nextProps.updateQuery({
+				componentId: this.internalComponent,
+				query: query || null,
+			});
 		}
 	}
 

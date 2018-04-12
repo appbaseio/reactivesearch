@@ -112,6 +112,7 @@ class SingleDataList extends Component {
 			}, () => {
 				this.updateQuery(value, props);
 				this.locked = false;
+				if (props.onValueChange) props.onValueChange(value);
 			});
 		};
 
@@ -119,7 +120,6 @@ class SingleDataList extends Component {
 			props.componentId,
 			value,
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};
