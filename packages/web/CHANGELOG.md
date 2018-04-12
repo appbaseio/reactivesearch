@@ -6,7 +6,7 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
-## v2.4.0
+## v2.5.0
 
 - Add dynamic defaultQuery support in ReactiveComponent [#313](https://github.com/appbaseio/reactivesearch/issues/313)
 - Fix an edge case with SingleDropdownList which threw React into an infinite update loop [#317](https://github.com/appbaseio/reactivesearch/issues/317)
