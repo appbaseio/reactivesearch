@@ -2331,7 +2331,7 @@ babel-plugin-transform-undefined-to-void@^6.8.2, babel-plugin-transform-undefine
   version "6.9.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-undefined-to-void/-/babel-plugin-transform-undefined-to-void-6.9.1.tgz#d7df9c1dd0ec12e0ffe895ed1445f61f1bf5e221"
 
-babel-polyfill@^6.26.0, babel-polyfill@^6.3.14:
+babel-polyfill@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.26.0.tgz#379937abc67d7895970adc621f284cd966cf2153"
   dependencies:
@@ -2653,7 +2653,7 @@ babel-preset-stage-3@^6.24.1:
     babel-plugin-transform-exponentiation-operator "^6.24.1"
     babel-plugin-transform-object-rest-spread "^6.22.0"
 
-babel-register@^6.24.0, babel-register@^6.24.1, babel-register@^6.26.0:
+babel-register@^6.24.1, babel-register@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-register/-/babel-register-6.26.0.tgz#6ed021173e2fcb486d7acb45c6009a856f647071"
   dependencies:
@@ -3361,10 +3361,6 @@ cli-boxes@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/cli-boxes/-/cli-boxes-1.0.0.tgz#4fa917c3e59c94a004cd61f8ee509da651687143"
 
-cli-command-parser@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/cli-command-parser/-/cli-command-parser-1.0.3.tgz#377af3ce60ad2d8a34a7e5eae4b395d491b0d652"
-
 cli-cursor@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/cli-cursor/-/cli-cursor-1.0.2.tgz#64da3f7d56a54412e59794bd62dc35295e8f2987"
@@ -3815,14 +3811,6 @@ create-emotion-styled@^9.1.1:
   dependencies:
     "@emotion/is-prop-valid" "^0.5.2"
     emotion-utils "^9.1.0"
-
-create-emotion@^9.1.1:
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/create-emotion/-/create-emotion-9.1.1.tgz#530bd14ea0a8ac4a4d79b6d8b82b88a48b0270a6"
-  dependencies:
-    emotion-utils "^9.1.0"
-    stylis "^3.5.0"
-    stylis-rule-sheet "^0.0.10"
 
 create-emotion@^9.1.1:
   version "9.1.1"
@@ -4498,12 +4486,6 @@ emotion-server@^9.1.0, emotion-server@^9.1.1:
   dependencies:
     create-emotion-server "^9.1.1"
 
-emotion-server@^9.1.1:
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/emotion-server/-/emotion-server-9.1.1.tgz#c2b16bc186cf6e10ef4c68843c27f9db0a8965b2"
-  dependencies:
-    create-emotion-server "^9.1.1"
-
 emotion-theming@^9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/emotion-theming/-/emotion-theming-9.0.0.tgz#3b7dd07ceae70aab98280e81df8bfd7f9254d5c3"
@@ -4519,13 +4501,6 @@ emotion-utils@^9.1.0:
   resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-9.1.0.tgz#7484dbf18f3b1dc1de68559d1ff35a74caa998dc"
 
 emotion@*, emotion@^9.0.0, emotion@^9.1.1:
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/emotion/-/emotion-9.1.1.tgz#ee9dd8d5553954ceea9cd0e62402e0afd6802890"
-  dependencies:
-    babel-plugin-emotion "^9.1.0"
-    create-emotion "^9.1.1"
-
-emotion@^9.1.1:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/emotion/-/emotion-9.1.1.tgz#ee9dd8d5553954ceea9cd0e62402e0afd6802890"
   dependencies:
@@ -7411,7 +7386,6 @@ lint-staged@^7.0.0:
   dependencies:
     app-root-path "^2.0.1"
     chalk "^2.3.1"
-    cli-command-parser "^1.0.3"
     commander "^2.14.1"
     cosmiconfig "^4.0.0"
     debug "^3.1.0"
@@ -11710,8 +11684,8 @@ uglify-js@2.7.5:
     yargs "~3.10.0"
 
 uglify-js@3.3.x:
-  version "3.3.20"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.3.20.tgz#dc8bdee7d454c7d31dddc36f922d170bfcee3a0a"
+  version "3.3.21"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.3.21.tgz#851a34cbb31840ecb881968ed07dd3a61e7264a0"
   dependencies:
     commander "~2.15.0"
     source-map "~0.6.1"
