@@ -211,6 +211,12 @@ class GeoDistanceDropdown extends Component {
 				this.getCoordinates(currentValue.value, () => {
 					if (this.state.currentDistance) {
 						this.updateQuery(this.state.currentDistance);
+						if (props.onValueChange) {
+							props.onValueChange({
+								label: this.getSelectedLabel(this.state.currentDistance),
+								location: currentValue.value,
+							});
+						}
 					}
 					this.locked = false;
 				});
@@ -221,7 +227,6 @@ class GeoDistanceDropdown extends Component {
 			props.componentId,
 			{ label: this.getSelectedLabel(this.state.currentDistance), location: currentValue.value },
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};

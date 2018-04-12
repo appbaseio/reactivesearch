@@ -174,6 +174,12 @@ class RangeSlider extends Component {
 			}, () => {
 				this.updateQuery([currentValue[0], currentValue[1]], props);
 				this.locked = false;
+				if (props.onValueChange) {
+					props.onValueChange({
+						start: currentValue[0],
+						end: currentValue[1],
+					});
+				}
 			});
 		};
 		checkValueChange(
@@ -183,7 +189,6 @@ class RangeSlider extends Component {
 				end: currentValue[1],
 			},
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};

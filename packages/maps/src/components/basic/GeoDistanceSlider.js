@@ -208,6 +208,12 @@ class GeoDistanceSlider extends Component {
 				this.getCoordinates(currentValue.value, () => {
 					if (this.state.currentDistance) {
 						this.updateQuery(this.state.currentDistance);
+						if (props.onValueChange) {
+							props.onValueChange({
+								distance: this.state.currentDistance,
+								location: currentValue.value,
+							});
+						}
 					}
 					this.locked = false;
 				});
@@ -218,7 +224,6 @@ class GeoDistanceSlider extends Component {
 			props.componentId,
 			{ distance: this.state.currentDistance, location: currentValue.value },
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};

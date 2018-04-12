@@ -256,12 +256,12 @@ class DataSearch extends Component {
 				// debounce for handling text while typing
 				this.handleTextChange(value);
 			}
+			if (props.onValueChange) props.onValueChange(value);
 		};
 		checkValueChange(
 			props.componentId,
 			value,
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};

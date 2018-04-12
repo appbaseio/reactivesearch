@@ -96,6 +96,7 @@ class SingleDropdownRange extends Component {
 				currentValue,
 			}, () => {
 				this.updateQuery(currentValue, props);
+				if (props.onValueChange) props.onValueChange(currentValue);
 			});
 		};
 
@@ -103,7 +104,6 @@ class SingleDropdownRange extends Component {
 			props.componentId,
 			currentValue,
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};

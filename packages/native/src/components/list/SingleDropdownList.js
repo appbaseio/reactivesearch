@@ -128,6 +128,7 @@ class SingleDropdownList extends Component {
 				currentValue: value,
 			}, () => {
 				this.updateQuery(value, props);
+				if (props.onValueChange) props.onValueChange(value);
 			});
 		};
 
@@ -135,7 +136,6 @@ class SingleDropdownList extends Component {
 			props.componentId,
 			value,
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};
