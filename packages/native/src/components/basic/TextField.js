@@ -75,8 +75,9 @@ class TextField extends Component {
 		return null;
 	}
 
-	handleTextChange = debounce((value) => {
+	handleTextChange = debounce((value, props) => {
 		this.updateQuery(value, this.props);
+		if (props.onValueChange) props.onValueChange(value);
 	}, this.props.debounce);
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
@@ -86,11 +87,11 @@ class TextField extends Component {
 			}, () => {
 				if (isDefaultValue) {
 					this.updateQuery(value, props);
+					if (props.onValueChange) props.onValueChange(value);
 				} else {
 					// debounce for handling text while typing
-					this.handleTextChange(value);
+					this.handleTextChange(value, props);
 				}
-				if (props.onValueChange) props.onValueChange(value);
 			});
 		};
 		checkValueChange(
