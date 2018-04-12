@@ -185,10 +185,13 @@ export default function initReactivesearch(componentCollection, searchState, set
 				queryOptions,
 			);
 
+			const validOptions = ['aggs', 'from', 'sort'];
+			// check if query or options are valid - non-empty
 			if (
-				(queryObj && Object.keys(queryObj).length)
-				|| (options && Object.keys(options).length)
-				|| (queryOptions[component.componentId])
+				(queryObj && !!Object.keys(queryObj).length)
+				|| (options && (
+					Object.keys(options).some(item => validOptions.includes(item)))
+				)
 			) {
 				if (!queryObj || (queryObj && !Object.keys(queryObj).length)) {
 					queryObj = { match_all: {} };
