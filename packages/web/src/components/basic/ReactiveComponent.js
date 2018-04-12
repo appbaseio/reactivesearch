@@ -75,7 +75,8 @@ class ReactiveComponent extends Component {
 		}
 
 		if (
-			!isEqual(
+			nextProps.defaultQuery
+			&& !isEqual(
 				nextProps.defaultQuery(),
 				this.defaultQuery,
 			)
