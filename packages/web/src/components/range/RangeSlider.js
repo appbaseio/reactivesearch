@@ -189,10 +189,14 @@ class RangeSlider extends Component {
 			this.setState({
 				currentValue,
 			}, () => {
-				const currentValues = [currentValue[0], currentValue[1]];
-				this.updateQuery(currentValues, props);
+				this.updateQuery([currentValue[0], currentValue[1]], props);
 				this.locked = false;
-				if (props.onValueChange) props.onValueChange(currentValues);
+				if (props.onValueChange) {
+					props.onValueChange({
+						start: currentValue[0],
+						end: currentValue[1],
+					});
+				}
 			});
 		};
 		checkValueChange(
