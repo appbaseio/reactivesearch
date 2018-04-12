@@ -4,7 +4,7 @@ import {
 	addComponent,
 	removeComponent,
 	updateQuery,
-	setQueryListener
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import { isEqual, checkValueChange } from '@appbaseio/reactivecore/lib/utils/helper';
 
