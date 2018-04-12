@@ -137,13 +137,13 @@ class ToggleButton extends Component {
 			}, () => {
 				this.updateQuery(value, props);
 				this.locked = false;
+				if (props.onValueChange) props.onValueChange(value);
 			});
 		};
 		checkValueChange(
 			props.componentId,
 			props.multiSelect ? value : value[0],
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};

@@ -192,6 +192,7 @@ class TagCloud extends Component {
 			}, () => {
 				this.updateQuery(finalValues, props);
 				this.locked = false;
+				if (props.onValueChange) props.onValueChange(finalValues);
 			});
 		};
 
@@ -199,7 +200,6 @@ class TagCloud extends Component {
 			props.componentId,
 			finalValues,
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};

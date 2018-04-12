@@ -60,13 +60,13 @@ class DataController extends Component {
 				URLParams: props.URLParams,
 			});
 			this.locked = false;
+			if (props.onValueChange) props.onValueChange(defaultSelected);
 		};
 
 		checkValueChange(
 			props.componentId,
 			defaultSelected,
 			props.beforeValueChange,
-			props.onValueChange,
 			performUpdate,
 		);
 	};
