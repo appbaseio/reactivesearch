@@ -859,7 +859,7 @@
     "@types/node" "*"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.3.10":
+"@types/react@*", "@types/react@^16.3.10", "@types/react@^16.3.8":
   version "16.3.10"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.10.tgz#2f25eef83f7c7f6c51cea4c02660f727c75d3b33"
   dependencies:
