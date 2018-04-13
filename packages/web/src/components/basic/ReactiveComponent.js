@@ -162,7 +162,7 @@ ReactiveComponent.propTypes = {
 	onQueryChange: types.func,
 	react: types.react,
 	showFilter: types.bool,
-	URLParams: types.boolRequired,
+	URLParams: types.bool,
 	onAllData: types.func,
 };
 

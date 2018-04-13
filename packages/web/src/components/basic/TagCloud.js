@@ -317,7 +317,7 @@ TagCloud.propTypes = {
 	sortBy: types.sortByWithCount,
 	style: types.style,
 	title: types.title,
-	URLParams: types.boolRequired,
+	URLParams: types.bool,
 };
 
 TagCloud.defaultProps = {

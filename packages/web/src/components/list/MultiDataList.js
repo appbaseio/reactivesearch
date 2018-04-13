@@ -344,7 +344,7 @@ MultiDataList.propTypes = {
 	style: types.style,
 	themePreset: types.themePreset,
 	title: types.title,
-	URLParams: types.boolRequired,
+	URLParams: types.bool,
 };
 
 MultiDataList.defaultProps = {

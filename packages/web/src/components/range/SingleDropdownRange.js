@@ -178,7 +178,7 @@ SingleDropdownRange.propTypes = {
 	style: types.style,
 	title: types.title,
 	themePreset: types.themePreset,
-	URLParams: types.boolRequired,
+	URLParams: types.bool,
 };
 
 SingleDropdownRange.defaultProps = {

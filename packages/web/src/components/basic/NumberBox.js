@@ -204,7 +204,7 @@ NumberBox.propTypes = {
 	react: types.react,
 	style: types.style,
 	title: types.title,
-	URLParams: types.boolRequired,
+	URLParams: types.bool,
 };
 
 NumberBox.defaultProps = {

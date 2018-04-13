@@ -106,7 +106,7 @@ DataController.propTypes = {
 	onValueChange: types.func,
 	showFilter: types.bool,
 	style: types.style,
-	URLParams: types.boolRequired,
+	URLParams: types.bool,
 };
 
 const mapStateToProps = (state, props) => ({

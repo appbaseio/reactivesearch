@@ -262,7 +262,7 @@ SingleDropdownList.propTypes = {
 	style: types.style,
 	title: types.title,
 	themePreset: types.themePreset,
-	URLParams: types.boolRequired,
+	URLParams: types.bool,
 	showMissing: types.bool,
 	missingLabel: types.string,
 };

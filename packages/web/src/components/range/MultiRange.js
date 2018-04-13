@@ -238,7 +238,7 @@ MultiRange.propTypes = {
 	style: types.style,
 	supportedOrientations: types.supportedOrientations,
 	title: types.title,
-	URLParams: types.boolRequired,
+	URLParams: types.bool,
 };
 
 MultiRange.defaultProps = {

@@ -359,7 +359,7 @@ SingleList.propTypes = {
 	style: types.style,
 	themePreset: types.themePreset,
 	title: types.title,
-	URLParams: types.boolRequired,
+	URLParams: types.bool,
 	showMissing: types.bool,
 	missingLabel: types.string,
 };

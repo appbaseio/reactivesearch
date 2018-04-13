@@ -335,7 +335,7 @@ RangeSlider.propTypes = {
 	stepValue: types.number,
 	style: types.style,
 	title: types.title,
-	URLParams: types.boolRequired,
+	URLParams: types.bool,
 };
 
 RangeSlider.defaultProps = {

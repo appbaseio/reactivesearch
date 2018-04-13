@@ -194,7 +194,7 @@ SingleRange.propTypes = {
 	showRadio: types.boolRequired,
 	style: types.style,
 	title: types.title,
-	URLParams: types.boolRequired,
+	URLParams: types.bool,
 };
 
 SingleRange.defaultProps = {

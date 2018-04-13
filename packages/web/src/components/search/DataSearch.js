@@ -581,7 +581,7 @@ DataSearch.propTypes = {
 	title: types.title,
 	theme: types.style,
 	themePreset: types.themePreset,
-	URLParams: types.boolRequired,
+	URLParams: types.bool,
 };
 
 DataSearch.defaultProps = {
