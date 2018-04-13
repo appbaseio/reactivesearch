@@ -30,7 +30,7 @@ class Main extends Component {
 					</div>
 
 					<div className="col">
-						<SelectedFilters componentId="DateSensor" />
+						<SelectedFilters />
 						<ResultCard
 							componentId="SearchResult"
 							dataField="name"

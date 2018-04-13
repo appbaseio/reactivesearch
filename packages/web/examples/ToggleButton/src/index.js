@@ -31,7 +31,7 @@ class Main extends Component {
 						/>
 					</div>
 					<div className="col">
-						<SelectedFilters componentId="CitySensor" />
+						<SelectedFilters />
 						<ResultList
 							componentId="SearchResult"
 							dataField="group.group_topics.topic_name_raw"

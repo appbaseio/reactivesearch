@@ -39,7 +39,7 @@ class Main extends Component {
 						</div>
 
 						<div className="col">
-							<SelectedFilters componentId="BookSensor" />
+							<SelectedFilters />
 							<ResultList
 								componentId="SearchResult"
 								dataField="original_title"
