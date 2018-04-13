@@ -7,6 +7,8 @@ import {
 import * as React from "react";
 import { render } from "react-dom";
 
+import "./index.css";
+
 class App extends React.Component<any, any> {
 	public render() {
 		return (
@@ -31,6 +33,9 @@ class App extends React.Component<any, any> {
 							onData={this.booksList}
 							className="result-list-container"
 							pagination
+							react={{
+								and: "BookSensor",
+							}}
 						/>
 					</div>
 				</div>
