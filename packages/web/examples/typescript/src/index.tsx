@@ -23,11 +23,10 @@ class App extends React.Component<any, any> {
 					</div>
 
 					<div className="col">
-						<SelectedFilters componentId="BookSensor" />
+						<SelectedFilters />
 						<ResultList
 							componentId="SearchResult"
 							dataField="original_title"
-							from={0}
 							size={3}
 							onData={this.booksList}
 							className="result-list-container"
@@ -39,9 +38,8 @@ class App extends React.Component<any, any> {
 		);
 	}
 
-	booksList(data) {
+	public booksList(data) {
 		return {
-			title: <div className="book-title" dangerouslySetInnerHTML={{ __html: data.original_title }} />,
 			description: (
 				<div className="flex column justify-space-between">
 					<div>
@@ -49,7 +47,7 @@ class App extends React.Component<any, any> {
 						<div className="ratings-list flex align-center">
 							<span className="stars">
 								{
-									Array(data.average_rating_rounded).fill('x')
+									Array(data.average_rating_rounded).fill("x")
 										.map((item, index) => <i className="fas fa-star" key={index} />) // eslint-disable-line
 								}
 							</span>
@@ -60,6 +58,7 @@ class App extends React.Component<any, any> {
 				</div>
 			),
 			image: data.image,
+			title: <div className="book-title" dangerouslySetInnerHTML={{ __html: data.original_title }} />,
 		};
 	}
 }
