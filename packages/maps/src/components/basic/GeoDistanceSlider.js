@@ -467,7 +467,7 @@ GeoDistanceSlider.propTypes = {
 	showFilter: types.bool,
 	style: types.style,
 	title: types.title,
-	URLParams: types.boolRequired,
+	URLParams: types.bool,
 	unit: types.string,
 	showIcon: types.bool,
 	onBlur: types.func,
