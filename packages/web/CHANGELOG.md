@@ -6,6 +6,13 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v2.5.1
+
+- Fix defaultQuery behavior in ReactiveComponent
+- fix [#329](https://github.com/appbaseio/reactivesearch/issues/329) - highlightQuery issue with SSR
+- update query logic for SSR
+- update URLParams prop type to bool
+
 ## v2.5.0
 
 - Add dynamic defaultQuery support in ReactiveComponent [#313](https://github.com/appbaseio/reactivesearch/issues/313)
