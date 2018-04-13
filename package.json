@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev:web": "concurrently --kill-others -n \"CORE\",\"WEB\",\"MAPS\", -c \"cyan\",\"yellow\",\"green\", \"npm start --prefix packages/reactivecore\" \"npm run watch --prefix packages/web\" \"npm run watch --prefix packages/maps\"",
 		"lint": "eslint .",
-		"lint:typescript": "tslint -c tslint.json 'packages/web/src/**/*.ts'",
+		"lint:ts": "tslint -c tslint.json 'packages/web/src/**/*.ts'",
 		"precommit": "lint-staged",
 		"deploy-site": "scripts/deploy-site.sh",
 		"native:publish-stories": "cd packages/native/examples/datasearch/ && exp publish && cd .. && cd datepicker/ && exp publish && cd .. && cd daterange/ && exp publish && cd .. && cd multidropdownlist/ && exp publish && cd .. && cd multidropdownrange/ && exp publish && cd .. && cd singledropdownlist/ && exp publish && cd .. && cd singledropdownrange/ && exp publish && cd .. && cd textfield/ && exp publish && cd ../../../../"
