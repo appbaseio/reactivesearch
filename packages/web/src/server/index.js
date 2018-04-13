@@ -6,6 +6,11 @@ import queryOptionsReducer from '@appbaseio/reactivecore/lib/reducers/queryOptio
 import dependencyTreeReducer from '@appbaseio/reactivecore/lib/reducers/dependencyTreeReducer';
 import { buildQuery, pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
 
+const componentsWithHighlightQuery = [
+	'DataSearch',
+	'CategorySearch',
+];
+
 const componentsWithOptions = [
 	'ResultList',
 	'ResultCard',
@@ -14,6 +19,7 @@ const componentsWithOptions = [
 	'SingleList',
 	'MultiList',
 	'TagCloud',
+	...componentsWithHighlightQuery,
 ];
 
 const componentsWithoutFilters = [
@@ -106,9 +112,21 @@ export default function initReactivesearch(componentCollection, searchState, set
 				const options = component.source.generateQueryOptions
 					? component.source.generateQueryOptions(component)
 					: null;
+				let highlightQuery = {};
 
-				if (options && Object.keys(options).length) {
-					const { aggs, size, ...otherQueryOptions } = options;
+				if (
+					componentsWithHighlightQuery.includes(component.type)
+					&& component.highlight
+				) {
+					highlightQuery = component.source.highlightQuery(component);
+				}
+
+				if (
+					(options && Object.keys(options).length)
+					|| (highlightQuery && Object.keys(highlightQuery).length)
+				) {
+					// eslint-disable-next-line
+					let { aggs, size, ...otherQueryOptions } = options || {};
 
 					if (aggs && Object.keys(aggs).length) {
 						isInternalComponentPresent = true;
@@ -122,17 +140,24 @@ export default function initReactivesearch(componentCollection, searchState, set
 						});
 					}
 
-					// sort, size, from - query should be applied on the main component
-					if (otherQueryOptions && Object.keys(otherQueryOptions).length) {
-						let mainQueryOptions = { ...otherQueryOptions, size };
+					// sort, highlight, size, from - query should be applied on the main component
+					if (
+						(otherQueryOptions && Object.keys(otherQueryOptions).length)
+						|| (highlightQuery && Object.keys(highlightQuery).length)
+					) {
+						if (!otherQueryOptions) otherQueryOptions = {};
+						if (!highlightQuery) highlightQuery = {};
+
+						let mainQueryOptions = { ...otherQueryOptions, ...highlightQuery, size };
 						if (isInternalComponentPresent) {
-							mainQueryOptions = { ...otherQueryOptions };
+							mainQueryOptions = { ...otherQueryOptions, ...highlightQuery };
 						}
 						if (isResultComponent) {
 							mainQueryOptions = {
 								from: 0,
 								size: component.size || 10,
 								...mainQueryOptions,
+								...highlightQuery,
 							};
 						}
 						queryOptions = queryOptionsReducer(queryOptions, {

@@ -59,7 +59,7 @@ class CategorySearch extends Component {
 		this.props.addComponent(this.internalComponent);
 
 		if (this.props.highlight) {
-			const queryOptions = this.highlightQuery(this.props);
+			const queryOptions = CategorySearch.highlightQuery(this.props);
 			queryOptions.size = 20;
 			this.props.setQueryOptions(this.props.componentId, queryOptions);
 		} else {
@@ -85,7 +85,7 @@ class CategorySearch extends Component {
 			nextProps,
 			['highlight', 'dataField', 'highlightField'],
 			() => {
-				const queryOptions = this.highlightQuery(nextProps);
+				const queryOptions = CategorySearch.highlightQuery(nextProps);
 				queryOptions.size = 20;
 				this.props.setQueryOptions(nextProps.componentId, queryOptions);
 			},
@@ -159,7 +159,7 @@ class CategorySearch extends Component {
 		}
 	};
 
-	highlightQuery = (props) => {
+	static highlightQuery = (props) => {
 		if (props.customHighlight) {
 			return props.customHighlight(props);
 		}

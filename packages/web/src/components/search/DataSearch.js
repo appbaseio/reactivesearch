@@ -49,7 +49,7 @@ class DataSearch extends Component {
 		this.props.addComponent(this.internalComponent);
 
 		if (this.props.highlight) {
-			const queryOptions = this.highlightQuery(this.props);
+			const queryOptions = DataSearch.highlightQuery(this.props);
 			queryOptions.size = 20;
 			this.props.setQueryOptions(this.props.componentId, queryOptions);
 		} else {
@@ -72,7 +72,7 @@ class DataSearch extends Component {
 			nextProps,
 			['highlight', 'dataField', 'highlightField'],
 			() => {
-				const queryOptions = this.highlightQuery(nextProps);
+				const queryOptions = DataSearch.highlightQuery(nextProps);
 				queryOptions.size = 20;
 				this.props.setQueryOptions(nextProps.componentId, queryOptions);
 			},
@@ -132,7 +132,7 @@ class DataSearch extends Component {
 		}
 	};
 
-	highlightQuery = (props) => {
+	static highlightQuery = (props) => {
 		if (props.customHighlight) {
 			return props.customHighlight(props);
 		}
