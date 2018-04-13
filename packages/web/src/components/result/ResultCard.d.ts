@@ -6,7 +6,7 @@ import { ReactiveListProps } from './ReactiveList';
 export interface ResultCardProps extends ReactiveListProps {
 	innerClass?: types.style;
 	target: string;
-	onData?: () => any;
+	onData?: (...args: any[]) => any;
 }
 
 declare const ResultCard: React.ComponentType<ResultCardProps>;

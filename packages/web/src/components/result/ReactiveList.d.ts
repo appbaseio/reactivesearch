@@ -9,12 +9,12 @@ export interface ReactiveListProps extends CommonProps {
 	style?: types.style;
 	// non-common props
 	dataField: string;
-	defaultQuery?: () => any;
+	defaultQuery?: (...args: any[]) => any;
 	innerClass?: types.style;
 	loader?: types.title;
 	onAllData?: (data: any) => any;
 	onData?: (data: any) => any;
-	onResultStats?: () => any;
+	onResultStats?: (...args: any[]) => any;
 	pages?: number;
 	pagination?: boolean;
 	paginationAt?: types.paginationAt;
@@ -24,7 +24,7 @@ export interface ReactiveListProps extends CommonProps {
 	sortBy?: types.sortBy;
 	sortOptions?: types.sortOptions;
 	stream?: boolean;
-	onPageChange?: () => any;
+	onPageChange?: (...args: any[]) => any;
 	defaultPage?: number;
 	listClass?: string;
 }

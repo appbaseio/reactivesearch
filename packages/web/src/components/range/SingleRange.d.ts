@@ -3,14 +3,14 @@ import { CommonProps } from "../../";
 import * as types from "../../types";
 
 export interface SingleRangeProps extends CommonProps {
-	beforeValueChange?: () => any;
-	customQuery?: () => any;
+	beforeValueChange?: (...args: any[]) => any;
+	customQuery?: (...args: any[]) => any;
 	data?: types.data;
 	dataField: string;
 	defaultSelected?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
-	onValueChange?: () => any;
+	onValueChange?: (...args: any[]) => any;
 	react?: types.react;
 	showFilter?: boolean;
 	showRadio: boolean;

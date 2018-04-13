@@ -3,14 +3,14 @@ import { CommonProps } from "../../";
 import * as types from "../../types";
 
 export interface TagCloudProps extends CommonProps {
-	beforeValueChange?: () => any;
-	customQuery?: () => any;
+	beforeValueChange?: (...args: any[]) => any;
+	customQuery?: (...args: any[]) => any;
 	dataField: string;
 	defaultSelected?: types.stringOrArray;
 	filterLabel?: string;
 	innerClass?: types.style;
 	multiSelect?: boolean;
-	onValueChange?: () => any;
+	onValueChange?: (...args: any[]) => any;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	showCount?: boolean;

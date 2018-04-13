@@ -5,7 +5,7 @@ export interface CommonProps {
 	componentId: string;
 	URLParams?: boolean;
 	className?: string;
-	onQueryChange?: () => any;
+	onQueryChange?: (...args: any[]) => any;
 	style?: types.style;
 }
 

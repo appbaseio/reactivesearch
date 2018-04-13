@@ -3,17 +3,17 @@ import { CommonProps } from "../../";
 import * as types from "../../types";
 
 export interface DynamicRangeSliderProps extends CommonProps {
-	beforeValueChange?: () => any;
+	beforeValueChange?: (...args: any[]) => any;
 	className?: string;
-	customQuery?: () => any;
+	customQuery?: (...args: any[]) => any;
 	dataField: string;
-	defaultSelected?: () => any;
+	defaultSelected?: (...args: any[]) => any;
 	filterLabel?: string;
 	innerClass?: types.style;
 	interval?: number;
-	onDrag?: () => any;
-	onValueChange?: () => any;
-	rangeLabels?: () => any;
+	onDrag?: (...args: any[]) => any;
+	onValueChange?: (...args: any[]) => any;
+	rangeLabels?: (...args: any[]) => any;
 	react?: types.react;
 	showHistogram?: boolean;
 	snap?: boolean;

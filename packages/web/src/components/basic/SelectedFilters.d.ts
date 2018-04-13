@@ -3,8 +3,8 @@ import { CommonProps } from "../../";
 import * as types from "../../types";
 
 export interface SelectedFiltersProps {
-	clearValues?: () => any;
-	setValue?: () => any;
+	clearValues?: (...args: any[]) => any;
+	setValue?: (...args: any[]) => any;
 	components?: types.components;
 	selectedValues?: types.selectedValues;
 	className?: string;

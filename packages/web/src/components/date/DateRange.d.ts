@@ -5,7 +5,7 @@ import * as types from "../../types";
 export interface DateRangeProps extends CommonProps {
 	componentId: string;
 	className?: string;
-	onQueryChange?: () => any;
+	onQueryChange?: (...args: any[]) => any;
 	style?: types.style;
 	// non-common props
 	autoFocusEnd?: boolean;

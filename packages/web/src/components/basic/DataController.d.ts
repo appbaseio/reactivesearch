@@ -3,12 +3,12 @@ import { CommonProps } from "../../";
 import * as types from "../../types";
 
 export interface DataControllerProps extends CommonProps {
-	beforeValueChange?: () => any;
+	beforeValueChange?: (...args: any[]) => any;
 	children?: types.children;
-	customQuery?: () => any;
+	customQuery?: (...args: any[]) => any;
 	defaultSelected?: any;
 	filterLabel?: string;
-	onValueChange?: () => any;
+	onValueChange?: (...args: any[]) => any;
 	showFilter?: boolean;
 }
 

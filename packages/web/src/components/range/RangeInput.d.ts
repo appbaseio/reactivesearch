@@ -6,7 +6,7 @@ export interface RangeInputProps extends CommonProps {
 	className: string;
 	defaultSelected: types.range;
 	innerClass: types.style;
-	onValueChange: () => any;
+	onValueChange: (...args: any[]) => any;
 	range: types.range;
 	stepValue: number;
 	style: types.style;

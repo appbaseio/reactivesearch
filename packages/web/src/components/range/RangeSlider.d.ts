@@ -3,15 +3,15 @@ import { CommonProps } from "../../";
 import * as types from "../../types";
 
 export interface RangeSliderProps extends CommonProps {
-	beforeValueChange?: () => any;
-	customQuery?: () => any;
+	beforeValueChange?: (...args: any[]) => any;
+	customQuery?: (...args: any[]) => any;
 	dataField: string;
 	defaultSelected?: types.range;
 	filterLabel?: string;
 	innerClass?: types.style;
 	interval?: number;
-	onDrag?: () => any;
-	onValueChange?: () => any;
+	onDrag?: (...args: any[]) => any;
+	onValueChange?: (...args: any[]) => any;
 	range?: types.range;
 	rangeLabels?: types.rangeLabels;
 	react?: types.react;

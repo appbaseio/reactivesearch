@@ -5,12 +5,12 @@ import * as types from "../../types";
 export interface ReactiveComponentProps {
 	children?: types.children;
 	componentId: string;
-	defaultQuery?: () => any;
+	defaultQuery?: (...args: any[]) => any;
 	filterLabel?: string;
-	onAllData?: () => any;
+	onAllData?: (...args: any[]) => any;
 	react?: types.react;
 	showFilter?: boolean;
-	onQueryChange?: () => any;
+	onQueryChange?: (...args: any[]) => any;
 	URLParams?: boolean;
 }
 

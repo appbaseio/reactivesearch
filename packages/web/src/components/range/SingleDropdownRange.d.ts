@@ -3,14 +3,14 @@ import { CommonProps } from "../../";
 import * as types from "../../types";
 
 export interface SingleDropdownRangeProps extends CommonProps {
-	beforeValueChange?: () => any;
-	customQuery?: () => any;
+	beforeValueChange?: (...args: any[]) => any;
+	customQuery?: (...args: any[]) => any;
 	data?: types.data;
 	dataField: string;
 	defaultSelected?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
-	onValueChange?: () => any;
+	onValueChange?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;
 	showFilter?: boolean;
