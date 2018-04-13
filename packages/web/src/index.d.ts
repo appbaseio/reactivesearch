@@ -3,7 +3,7 @@ import * as types from "./types";
 
 export interface CommonProps {
 	componentId: string;
-	URLParams: boolean;
+	URLParams?: boolean;
 	className?: string;
 	onQueryChange?: () => any;
 	style?: types.style;

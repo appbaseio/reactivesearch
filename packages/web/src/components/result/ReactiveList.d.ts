@@ -4,7 +4,7 @@ import * as types from "../../types";
 
 export interface ReactiveListProps extends CommonProps {
 	componentId: string;
-	URLParams: boolean;
+	URLParams?: boolean;
 	className?: string;
 	style?: types.style;
 	// non-common props
@@ -12,8 +12,8 @@ export interface ReactiveListProps extends CommonProps {
 	defaultQuery?: () => any;
 	innerClass?: types.style;
 	loader?: types.title;
-	onAllData?: () => any;
-	onData?: () => any;
+	onAllData?: (data: any) => any;
+	onData?: (data: any) => any;
 	onResultStats?: () => any;
 	pages?: number;
 	pagination?: boolean;

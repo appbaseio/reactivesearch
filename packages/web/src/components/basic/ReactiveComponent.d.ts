@@ -11,7 +11,7 @@ export interface ReactiveComponentProps {
 	react?: types.react;
 	showFilter?: boolean;
 	onQueryChange?: () => any;
-	URLParams: boolean;
+	URLParams?: boolean;
 }
 
 declare const ReactiveComponent: React.ComponentType<ReactiveComponentProps>;
