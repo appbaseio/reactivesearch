@@ -28,30 +28,30 @@ export type fuzziness =
 	| 0
 	| 1
 	| 2
-	| "AUTO";
+	| 'AUTO';
 
 export type headers = object;
 
 export type hits = object[];
 
 export type iconPosition =
-	| "left"
-	| "right";
+	| 'left'
+	| 'right';
 
 export type labelPosition =
-	| "left"
-	| "right"
-	| "top"
-	| "bottom";
+	| 'left'
+	| 'right'
+	| 'top'
+	| 'bottom';
 
 export type options =
 	| object
 	| object[];
 
 export type paginationAt =
-	| "top"
-	| "bottom"
-	| "both";
+	| 'top'
+	| 'bottom'
+	| 'both';
 
 export interface range {
 	start: number;
@@ -87,15 +87,15 @@ export type selectedValue =
 export type suggestions = object[];
 
 export type supportedOrientations =
-	| "portrait"
-	| "portrait-upside-down"
-	| "landscape"
-	| "landscape-left"
-	| "landscape-right";
+	| 'portrait'
+	| 'portrait-upside-down'
+	| 'landscape'
+	| 'landscape-left'
+	| 'landscape-right';
 
 export type sortBy =
-	| "asc"
-	| "desc";
+	| 'asc'
+	| 'desc';
 
 export interface sortOptions {
 	label: string;
@@ -104,9 +104,9 @@ export interface sortOptions {
 }
 
 export type sortByWithCount =
-	| "asc"
-	| "desc"
-	| "count";
+	| 'asc'
+	| 'desc'
+	| 'count';
 
 export type stats = object[];
 
@@ -119,36 +119,36 @@ export type stringOrArray =
 export type style = object;
 
 export type themePreset =
-	| "light"
-	| "dark";
+	| 'light'
+	| 'dark';
 
 export type queryFormatDate =
-	| "date"
-	| "basic_date"
-	| "basic_date_time"
-	| "basic_date_time_no_millis"
-	| "date_time_no_millis"
-	| "basic_time"
-	| "basic_time_no_millis"
-	| "epoch_millis"
-	| "epoch_second";
+	| 'date'
+	| 'basic_date'
+	| 'basic_date_time'
+	| 'basic_date_time_no_millis'
+	| 'date_time_no_millis'
+	| 'basic_time'
+	| 'basic_time_no_millis'
+	| 'epoch_millis'
+	| 'epoch_second';
 
 export type queryFormatSearch =
-	| "and"
-	| "or";
+	| 'and'
+	| 'or';
 
 export type queryFormatNumberBox =
-	| "exact"
-	| "lte"
-	| "gte";
+	| 'exact'
+	| 'lte'
+	| 'gte';
 
 export type params = object;
 
 export type props = object;
 
 export type rangeLabelsAlign =
-	| "left"
-	| "right";
+	| 'left'
+	| 'right';
 
 export type title =
 	| string
@@ -160,22 +160,22 @@ export interface location {
 }
 
 export type unit =
-	| "mi"
-	| "miles"
-	| "yd"
-	| "yards"
-	| "ft"
-	| "feet"
-	| "in"
-	| "inch"
-	| "km"
-	| "kilometers"
-	| "m"
-	| "meters"
-	| "cm"
-	| "centimeters"
-	| "mm"
-	| "millimeters"
-	| "NM"
-	| "nmi"
-	| "nauticalmiles";
+	| 'mi'
+	| 'miles'
+	| 'yd'
+	| 'yards'
+	| 'ft'
+	| 'feet'
+	| 'in'
+	| 'inch'
+	| 'km'
+	| 'kilometers'
+	| 'm'
+	| 'meters'
+	| 'cm'
+	| 'centimeters'
+	| 'mm'
+	| 'millimeters'
+	| 'NM'
+	| 'nmi'
+	| 'nauticalmiles';
