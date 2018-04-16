@@ -21,7 +21,7 @@ class ReactiveBase extends Component {
 		this.type = props.type ? props.type : '*';
 
 		const credentials = props.url && props.url.trim() !== '' && !props.credentials
-			? 'user:pass'
+			? null
 			: props.credentials;
 
 		const config = {
