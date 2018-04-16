@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch-native",
-	"version": "0.6.4",
+	"version": "0.7.0",
 	"description": "Native data components for building reactive UIs with Elasticsearch",
 	"main": "src/index.js",
 	"files": [
