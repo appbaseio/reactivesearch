@@ -20,15 +20,6 @@ export type date =
 
 export type dateObject = object;
 
-export interface dateRange {
-	start?:
-	| string
-	| string[];
-	end?:
-	| string
-	| string[];
-}
-
 export type fieldWeights = number[];
 
 export type filterLabel = string;
@@ -63,13 +54,13 @@ export type paginationAt =
 	| "both";
 
 export interface range {
-	start?: number;
-	end?: number;
+	start: number;
+	end: number;
 }
 
 export interface rangeLabels {
-	start?: string;
-	end?: string;
+	start: string;
+	end: string;
 }
 
 type reactKeyType =

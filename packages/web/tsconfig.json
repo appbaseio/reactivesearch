@@ -6,13 +6,6 @@
       "sourceMap": true,
       "jsx": "react",
       "moduleResolution": "node",
-    //   "noImplicitAny": true,
-    //   "strictNullChecks": true,
-    //   "strictFunctionTypes": true,
-    //   "forceConsistentCasingInFileNames": true,
-    //   "suppressImplicitAnyIndexErrors": true,
-    //   "noEmit": true,
-    //   "experimentalDecorators": true
     },
     "include": ["src/**/**/*"]
   }
