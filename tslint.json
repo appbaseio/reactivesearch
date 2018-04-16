@@ -7,7 +7,8 @@
     "rules": {
         "interface-name": false,
         "class-name": false,
-        "indent": [true, "tabs"]
+        "indent": [true, "tabs"],
+        "quotemark": [true, "single", "jsx-double"]
     },
     "rulesDirectory": []
 }
