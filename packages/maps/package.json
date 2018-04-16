@@ -29,7 +29,7 @@
     "react-google-maps": "^9.4.5"
   },
   "peerDependencies": {
-    "@appbaseio/reactivesearch": "*",
+    "@appbaseio/reactivesearch": ">=2.0.0",
     "react": ">=15",
     "react-dom": ">=15"
   },
