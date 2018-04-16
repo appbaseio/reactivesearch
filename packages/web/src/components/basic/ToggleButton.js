@@ -61,7 +61,7 @@ class ToggleButton extends Component {
 		} else {
 			// else multiselect will be a string
 			const currentValue = this.state.currentValue[0]
-				? this.state.currentValue[0].label
+				? this.state.currentValue[0].value
 				: null;
 			if (!isEqual(currentValue, nextProps.selectedValue)) {
 				this.handleToggle(nextProps.selectedValue || [], true, nextProps);
@@ -75,9 +75,9 @@ class ToggleButton extends Component {
 
 	static parseValue = (value, props) => {
 		if (Array.isArray(value)) {
-			return props.data.filter(item => value.includes(item.label));
+			return props.data.filter(item => value.includes(item.value));
 		}
-		return props.data.filter(item => item.label === value);
+		return props.data.filter(item => item.value === value);
 	};
 
 	static defaultQuery = (value, props) => {
@@ -106,11 +106,11 @@ class ToggleButton extends Component {
 		if (isDefaultValue) {
 			finalValue = ToggleButton.parseValue(toggleValue, props);
 		} else if (this.props.multiSelect) {
-			finalValue = currentValue.some(item => item.label === toggleValue.label)
-				? currentValue.filter(item => item.label !== toggleValue.label)
+			finalValue = currentValue.some(item => item.value === toggleValue.value)
+				? currentValue.filter(item => item.value !== toggleValue.value)
 				: currentValue.concat(toggleValue);
 		} else {
-			finalValue = currentValue.some(item => item.label === toggleValue.label)
+			finalValue = currentValue.some(item => item.value === toggleValue.value)
 				? []
 				: [toggleValue];
 		}
@@ -153,7 +153,7 @@ class ToggleButton extends Component {
 
 		let filterValue = value;
 		if (!props.multiSelect) {
-			filterValue = value[0] ? value[0].label : null;
+			filterValue = value[0] ? value[0].value : null;
 		}
 		props.updateQuery({
 			componentId: props.componentId,
@@ -173,12 +173,12 @@ class ToggleButton extends Component {
 					&& <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>
 				}
 				{this.props.data.map((item) => {
-					const isSelected = this.state.currentValue.some(value => value.label === item.label);
+					const isSelected = this.state.currentValue.some(value => value.value === item.value);
 					return (
 						<Button
 							className={`${getClassName(this.props.innerClass, 'button')} ${isSelected ? 'active' : ''}`}
 							onClick={() => this.handleToggle(item)}
-							key={item.label}
+							key={item.value}
 							primary={isSelected}
 							large
 						>
