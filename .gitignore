@@ -9,3 +9,4 @@ stats.json
 .vscode/
 *.swp
 .next/
+packages/web/src/types.js.map
