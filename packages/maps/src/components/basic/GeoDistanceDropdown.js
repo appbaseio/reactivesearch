@@ -565,6 +565,7 @@ GeoDistanceDropdown.propTypes = {
 	dataField: types.stringRequired,
 	defaultSelected: types.selectedValue,
 	filterLabel: types.string,
+	fuzziness: types.fuzziness,
 	icon: types.children,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
@@ -578,6 +579,7 @@ GeoDistanceDropdown.propTypes = {
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	placeholder: types.string,
+	queryFormat: types.queryFormatSearch,
 	react: types.react,
 	showFilter: types.bool,
 	showIcon: types.bool,
@@ -589,12 +591,13 @@ GeoDistanceDropdown.propTypes = {
 };
 
 GeoDistanceDropdown.defaultProps = {
+	autoLocation: true,
 	className: null,
 	placeholder: 'Select a value',
 	showFilter: true,
 	style: {},
+	suggestions: [],
 	URLParams: false,
-	autoLocation: true,
 };
 
 const mapStateToProps = (state, props) => ({
