@@ -21,6 +21,7 @@ const Main = () => (
 		<div className="row">
 			<div className="col">
 				<GeoDistanceSlider
+					title="Location"
 					componentId="GeoDistanceSlider"
 					placeholder="Search Location"
 					dataField="location"
