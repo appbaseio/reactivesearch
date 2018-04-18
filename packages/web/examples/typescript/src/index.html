@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% for (var chunk in htmlWebpackPlugin.files.css) { %>
+        <link rel="preload" href="<%= htmlWebpackPlugin.files.css[chunk] %>"  as="style">
+    <% } %>
+    <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+        <link rel="preload" href="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>" as="script">
+    <% } %>
+    <meta charset="utf-8">
+    <title>TypeScript Example with ReactiveSearch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>

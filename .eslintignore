@@ -6,4 +6,5 @@ playground
 packages/web/webpack.config.js
 packages/web/webpack.config.umd.js
 packages/maps/webpack.config.umd.js
+packages/web/src/types.js
 .expo/
