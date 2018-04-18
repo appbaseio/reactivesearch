@@ -425,6 +425,7 @@ class GeoDistanceDropdown extends Component {
 
 GeoDistanceDropdown.propTypes = {
 	addComponent: types.funcRequired,
+	mapKey: types.stringRequired,
 	removeComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
 	setQueryListener: types.funcRequired,
@@ -432,7 +433,7 @@ GeoDistanceDropdown.propTypes = {
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	// component props
-	autoLocation: types.boolRequired,
+	autoLocation: types.bool,
 	beforeValueChange: types.func,
 	className: types.string,
 	componentId: types.stringRequired,
@@ -445,7 +446,6 @@ GeoDistanceDropdown.propTypes = {
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
 	innerRef: types.func,
-	mapKey: types.stringRequired,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
