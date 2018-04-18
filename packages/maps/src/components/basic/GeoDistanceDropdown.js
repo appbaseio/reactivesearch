@@ -596,7 +596,6 @@ GeoDistanceDropdown.defaultProps = {
 	placeholder: 'Select a value',
 	showFilter: true,
 	style: {},
-	suggestions: [],
 	URLParams: false,
 };
 
@@ -606,7 +605,7 @@ const mapStateToProps = (state, props) => ({
 		state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value
 	) || null,
-	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	themePreset: state.config.themePreset,
 });
 
