@@ -97,7 +97,7 @@ class GeoDistanceDropdown extends Component {
 			this.updateQuery(this.state.currentDistance, nextProps);
 		});
 
-		if (Array.isArray(nextProps.suggestions)) {
+		if (nextProps.locationField && Array.isArray(nextProps.suggestions)) {
 			checkPropChange(this.props.suggestions, nextProps.suggestions, () => {
 				this.setState({
 					suggestions: this.onSuggestions(nextProps.suggestions),
@@ -248,7 +248,7 @@ class GeoDistanceDropdown extends Component {
 		});
 	}
 
-	defaultQuery = (coordinates, distance, props) => {
+	static defaultQuery = (coordinates, distance, props) => {
 		if (coordinates && distance) {
 			return {
 				[this.type]: {
@@ -354,7 +354,7 @@ class GeoDistanceDropdown extends Component {
 	};
 
 	updateQuery = (distance, props = this.props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || GeoDistanceDropdown.defaultQuery;
 		const selectedDistance = this.getSelectedLabel(distance);
 		let value = null;
 		if (selectedDistance) {
