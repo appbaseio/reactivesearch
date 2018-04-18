@@ -3,11 +3,11 @@ import {
 	ResultList,
 	SelectedFilters,
 	TextField,
-} from "@appbaseio/reactivesearch";
-import * as React from "react";
-import { render } from "react-dom";
+} from '@appbaseio/reactivesearch';
+import * as React from 'react';
+import { render } from 'react-dom';
 
-import "./index.css";
+import './index.css';
 
 class App extends React.Component<any, any> {
 	public render() {
@@ -34,7 +34,7 @@ class App extends React.Component<any, any> {
 							className="result-list-container"
 							pagination
 							react={{
-								and: "BookSensor",
+								and: 'BookSensor',
 							}}
 						/>
 					</div>
@@ -52,7 +52,7 @@ class App extends React.Component<any, any> {
 						<div className="ratings-list flex align-center">
 							<span className="stars">
 								{
-									Array(data.average_rating_rounded).fill("x")
+									Array(data.average_rating_rounded).fill('x')
 										.map((item, index) => <i className="fas fa-star" key={index} />) // eslint-disable-line
 								}
 							</span>
@@ -69,7 +69,7 @@ class App extends React.Component<any, any> {
 }
 
 function init() {
-	render(<App />, document.getElementById("root"));
+	render(<App />, document.getElementById('root'));
 }
 
 init();
