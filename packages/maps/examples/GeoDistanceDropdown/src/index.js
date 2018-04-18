@@ -21,6 +21,7 @@ const Main = () => (
 		<div className="row">
 			<div className="col">
 				<GeoDistanceDropdown
+					title="Location"
 					componentId="GeoDistanceDropdown"
 					placeholder="Search Location"
 					dataField="location"
