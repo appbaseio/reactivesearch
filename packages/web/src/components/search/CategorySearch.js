@@ -278,7 +278,7 @@ class CategorySearch extends Component {
 
 	onSuggestions = (searchSuggestions) => {
 		if (this.props.onSuggestion) {
-			return this.props.onSuggestion(searchSuggestions);
+			return searchSuggestions.map(suggestion => this.props.onSuggestion(suggestion));
 		}
 
 		const fields = Array.isArray(this.props.dataField)
@@ -551,7 +551,7 @@ class CategorySearch extends Component {
 										{suggestionsList.slice(0, 10).map((item, index) => (
 											<li
 												{...getItemProps({ item })}
-												key={item.label}
+												key={`${index}-${item.value}`} // eslint-disable-line
 												style={{
 													backgroundColor: this.getBackgroundColor(
 														highlightedIndex,
