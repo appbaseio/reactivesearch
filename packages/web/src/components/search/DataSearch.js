@@ -475,7 +475,7 @@ class DataSearch extends Component {
 															.map((item, index) => (
 																<li
 																	{...getItemProps({ item })}
-																	key={`${index}-${item.value}`} // eslint-disable-line
+																	key={`${index + 1}-${item.value}`}
 																	style={{
 																		backgroundColor: this.getBackgroundColor(
 																			highlightedIndex,
