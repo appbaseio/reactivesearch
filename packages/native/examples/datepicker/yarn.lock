@@ -185,9 +185,9 @@ anymatch@^1.3.0:
     micromatch "^2.1.5"
     normalize-path "^2.0.0"
 
-appbase-js@^2.2.10:
-  version "2.2.10"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-2.2.10.tgz#277af94ad0077ab17b92e591712764e52a10c289"
+appbase-js@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-2.3.0.tgz#b647d98fb794c7a3c14c1d8a6adbf8b47d47a674"
   dependencies:
     babel-polyfill "^6.26.0"
     cross-fetch "^1.1.1"
@@ -4233,9 +4233,9 @@ react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.0.0-beta.3.tgz#2167af86bbc9f964bd45bd5f37684e5b54965e32"
 
-react-native-calendars@^1.16.1:
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.17.0.tgz#dae3e988422390f6beca690689ace0f5b14398c3"
+react-native-calendars@^1.17.0:
+  version "1.18.2"
+  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.18.2.tgz#772106cc02559529e9032e7ea72431a442f8bcd9"
   dependencies:
     prop-types "^15.5.10"
     xdate "^0.8.0"
