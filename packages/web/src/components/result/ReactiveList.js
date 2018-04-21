@@ -183,31 +183,29 @@ class ReactiveList extends Component {
 			}
 		}
 
-		if (
-			!nextProps.pagination
-			&& this.props.hits
-			&& nextProps.hits
-			&& (
-				this.props.hits.length < nextProps.hits.length
-				|| nextProps.hits.length === nextProps.total
-			)
-		) {
-			this.setState({
-				isLoading: false,
-			});
-		}
+		if (!nextProps.pagination) {
+			if (this.props.hits && nextProps.hits) {
+				if (
+					this.props.hits.length !== nextProps.hits.length
+					|| nextProps.hits.length === nextProps.total
+				) {
+					this.setState({
+						isLoading: false,
+					});
 
-		if (
-			!nextProps.pagination
-			&& nextProps.hits
-			&& this.props.hits
-			&& nextProps.hits.length < this.props.hits.length
-		) {
-			window.scrollTo(0, 0);
-			this.setState({
-				from: 0,
-				isLoading: false,
-			});
+					if (nextProps.hits.length < this.props.hits.length) {
+						// query has changed
+						window.scrollTo(0, 0);
+						this.setState({
+							from: 0,
+						});
+					}
+				}
+			} else if (!this.props.hits && nextProps.hits) {
+				this.setState({
+					isLoading: false,
+				});
+			}
 		}
 
 		if (nextProps.pagination && nextProps.total !== this.props.total) {
