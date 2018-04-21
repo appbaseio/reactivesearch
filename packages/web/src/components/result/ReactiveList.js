@@ -201,7 +201,7 @@ class ReactiveList extends Component {
 						});
 					}
 				}
-			} else if (!this.props.hits && nextProps.hits) {
+			} else if ((!this.props.hits || !this.props.hits.length) && nextProps.hits) {
 				this.setState({
 					isLoading: false,
 				});
