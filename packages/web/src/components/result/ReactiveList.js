@@ -44,7 +44,7 @@ class ReactiveList extends Component {
 			currentPage,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
 
 	componentDidMount() {
@@ -478,6 +478,7 @@ ReactiveList.propTypes = {
 	removeComponent: types.funcRequired,
 	setQueryListener: types.funcRequired,
 	onQueryChange: types.func,
+	onError: types.func,
 	setPageURL: types.func,
 	setQueryOptions: types.funcRequired,
 	setStreaming: types.func,
