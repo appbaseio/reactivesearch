@@ -4,8 +4,18 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-    - Fix `onSuggestion` rendering logic in search components [here](https://github.com/appbaseio/reactivesearch/commit/a2fa590710a77c9298b88a501074d08e326eb76e)
 </details>
+
+## v2.6.0
+
+- Fix `onSuggestion` rendering logic in search components [here](https://github.com/appbaseio/reactivesearch/commit/a2fa590710a77c9298b88a501074d08e326eb76e)
+- Add `onError` support in result components [here](https://github.com/appbaseio/reactivesearch/commit/6c01c872e9211339ad972b69296f2b1da1e4fa12)
+- Support toggling on integer based dropdown lists [#337](https://github.com/appbaseio/reactivesearch/commit/c10b5f222cd21e01b0208351f8d64c56e6eda148)
+- Fix and cleanup infinte loading logic in Result components [#336](https://github.com/appbaseio/reactivesearch/commit/b4835ea2d623667852fdd466690cf0d66ecba5cd)
+- Fix queryOptions generation logic in search components [here](https://github.com/appbaseio/reactivesearch/commit/88c850a8cc90060373a520ed73f01afc8ef05dce)
+- Better query generation support in core.
+- Fix complex react prop based query generation logic in core.
+
 
 ## v2.5.1
 
