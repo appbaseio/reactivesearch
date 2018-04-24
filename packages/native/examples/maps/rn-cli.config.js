@@ -14,6 +14,7 @@ module.exports = {
 		return [
 			'react-native',
 			'react',
+			'expo',
 			'redux',
 			'react-redux',
 			'redux-thunk',

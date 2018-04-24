@@ -1,4 +1,4 @@
-import Expo from 'expo';
+import Expo, { MapView } from 'expo';
 import React, { Component } from 'react';
 // import { Text, Header, Body, Title } from 'native-base';
 

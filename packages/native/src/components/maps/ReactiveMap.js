@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { MapView } from 'expo';
+import Expo, { MapView } from 'expo';
 
 export default class ReactiveMap extends React.Component {
 	state = {}
 	render() {
+		console.log('expo: ', Expo);
 		console.log('MapView: ', MapView);
 		return (
 			<View>
