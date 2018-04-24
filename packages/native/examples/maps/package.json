@@ -1,0 +1,35 @@
+{
+  "name": "maps-example",
+  "version": "0.0.1",
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "scripts": {
+    "start": "exp start -c --lan",
+    "postinstall": "rm -rf node_modules/native-base-shoutem-theme/node_modules/hoist-non-react-statics"
+  },
+  "dependencies": {
+    "@ptomasroos/react-native-multi-slider": "^0.0.13",
+    "appbase-js": "^3.0.0",
+    "escape-string-regexp": "^1.0.5",
+    "expo": "^26.0.0",
+    "hoist-non-react-statics": "^2.5.0",
+    "metro": "^0.34.0",
+    "metro-core": "^0.34.0",
+    "native-base": "^2.4.2",
+    "react": "16.3.0-alpha.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-26.0.0.tar.gz",
+    "react-native-calendars": "^1.18.2",
+    "react-native-gesture-handler": "^1.0.0-alpha.43",
+    "react-redux": "^5.0.7",
+    "redux": "3.7.2",
+    "redux-thunk": "^2.2.0",
+    "xdate": "^0.8.2"
+  },
+  "devDependencies": {
+    "babel-plugin-module-resolver": "^3.1.1",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.0",
+    "babel-preset-expo": "^4.0.0",
+    "prop-types": "^15.6.1",
+    "react-dom": "^16.3.2"
+  }
+}
