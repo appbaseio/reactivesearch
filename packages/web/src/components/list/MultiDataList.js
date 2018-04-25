@@ -5,6 +5,7 @@ import {
 	removeComponent,
 	watchComponent,
 	updateQuery,
+	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -31,6 +32,7 @@ class MultiDataList extends Component {
 		};
 		this.type = 'term';
 		this.locked = false;
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
 	componentWillMount() {
@@ -369,6 +371,8 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(MultiDataList);
