@@ -1,22 +1,43 @@
 {
-	"expo": {
-		"name": "Reactivebase Native Demo",
+  "expo": {
+    "name": "Reactivebase Native Demo",
 		"description": "Demo for Reactivebase Native components",
 		"slug": "reactivebase-native-demos",
-		"sdkVersion": "22.0.0",
-		"version": "1.0.0",
-		"orientation": "portrait",
-		"primaryColor": "#2196f3",
-		"packagerOpts": {
+    "privacy": "public",
+    "sdkVersion": "26.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "packagerOpts": {
 			"config": "./rn-cli.config.js",
-			"assetExts": ["ttf", "otf"],
+			"assetExts": [
+				"ttf",
+				"otf"
+			],
 			"projectRoots": ""
 		},
-		"ios": {
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
 			"bundleIdentifier": "com.appbaseio.reactivebasenativedemos"
 		},
 		"android": {
-			"package": "com.appbaseio.reactivebasenativedemos"
+      "package": "com.appbaseio.reactivebasenativedemos",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyApin_jORcTsknjwBKCEsJsR07q0Hn9J-s"
+        }
+      }
 		}
-	}
+  }
 }

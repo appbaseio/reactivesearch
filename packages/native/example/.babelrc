@@ -1,14 +1,19 @@
 {
-	"presets": [
-		"expo"
-	],
-	"plugins": [
-		["module-resolver", {
-			"alias": {
-				"@appbaseio/reactivesearch-native": "../src",
-				"@appbaseio/reactivecore": "../../reactivecore"
-			}
-		}],
-		"transform-inline-environment-variables"
-	]
+  "presets": [
+    "babel-preset-expo"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "transform-react-jsx-source",
+        ["module-resolver", {
+          "alias": {
+            "@appbaseio/reactivesearch-native": "../src",
+            "@appbaseio/reactivecore": "../../reactivecore"
+          }
+        }],
+        "transform-inline-environment-variables"
+      ]
+    }
+  }
 }
