@@ -80,25 +80,34 @@ class ReactiveList extends Component {
 			}
 		}
 
+		const { sort, ...query } = this.defaultQuery || {};
+
+		// execute is set to false at the time of mount
+		// to avoid firing (multiple) partial queries.
+		// Hence we are building the query in parts here
+		// and only executing it with setReact() at core
+		const execute = false;
+
 		this.props.setQueryOptions(
 			this.props.componentId,
 			options,
-			!(this.defaultQuery && this.defaultQuery.query),
+			execute,
 		);
-		this.setReact(this.props);
 
 		if (this.defaultQuery) {
-			const { sort, ...query } = this.defaultQuery;
 			this.props.updateQuery({
 				componentId: this.internalComponent,
 				query,
-			});
+			}, execute);
 		} else {
 			this.props.updateQuery({
 				componentId: this.internalComponent,
 				query: null,
-			});
+			}, execute);
 		}
+
+		// query will be executed here
+		this.setReact(this.props);
 
 		if (!this.props.pagination) {
 			window.addEventListener('scroll', this.scrollHandler);
@@ -150,7 +159,7 @@ class ReactiveList extends Component {
 			this.props.updateQuery({
 				componentId: this.internalComponent,
 				query,
-			});
+			}, true);
 		}
 
 		if (this.props.stream !== nextProps.stream) {
@@ -555,7 +564,7 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
