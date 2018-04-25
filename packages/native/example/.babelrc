@@ -11,8 +11,7 @@
             "@appbaseio/reactivesearch-native": "../src",
             "@appbaseio/reactivecore": "../../reactivecore"
           }
-        }],
-        "transform-inline-environment-variables"
+        }]
       ]
     }
   }

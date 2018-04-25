@@ -19,7 +19,6 @@
     "react": "16.3.0-alpha.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-26.0.0.tar.gz",
     "react-native-calendars": "^1.18.2",
-    "react-native-gesture-handler": "^1.0.0-alpha.43",
     "react-redux": "^5.0.7",
     "redux": "3.7.2",
     "redux-thunk": "^2.2.0",
@@ -27,9 +26,7 @@
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.1.1",
-    "babel-plugin-transform-inline-environment-variables": "^0.4.0",
     "babel-preset-expo": "^4.0.0",
-    "prop-types": "^15.6.1",
-    "react-dom": "^16.3.2"
+    "prop-types": "^15.6.1"
   }
 }
