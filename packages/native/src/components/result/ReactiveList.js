@@ -39,7 +39,7 @@ class ReactiveList extends Component {
 		};
 		this.listRef = null;
 		this.internalComponent = `${props.componentId}__internal`;
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
 
 	componentDidMount() {
@@ -501,6 +501,7 @@ ReactiveList.propTypes = {
 	onData: types.func,
 	onNoResults: types.title,
 	onQueryChange: types.func,
+	onError: types.func,
 	onResultStats: types.func,
 	pages: types.number,
 	pagination: types.bool,
