@@ -9,7 +9,10 @@ import {
 	setQueryOptions,
 	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
-import { pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	pushToAndClause,
+	isEqual,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import { connect } from '../../utils';
@@ -18,6 +21,7 @@ class ReactiveComponent extends Component {
 	constructor(props) {
 		super(props);
 		this.internalComponent = null;
+		this.defaultQuery = null;
 
 		this.setQuery = (obj) => {
 			this.props.updateQuery({
@@ -45,13 +49,36 @@ class ReactiveComponent extends Component {
 
 		// set query for internal component
 		if (this.internalComponent && this.props.defaultQuery) {
-			const { query, ...queryOptions } = this.props.defaultQuery();
+			this.defaultQuery = this.props.defaultQuery();
+			const { query, ...queryOptions } = this.defaultQuery || {};
 
 			if (queryOptions) {
 				this.props.setQueryOptions(this.internalComponent, queryOptions, false);
 			}
 
 			this.props.updateQuery({
+				componentId: this.internalComponent,
+				query: query || null,
+			});
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (
+			nextProps.defaultQuery
+			&& !isEqual(
+				nextProps.defaultQuery(),
+				this.defaultQuery,
+			)
+		) {
+			this.defaultQuery = nextProps.defaultQuery();
+			const { query, ...queryOptions } = this.defaultQuery || {};
+
+			if (queryOptions) {
+				nextProps.setQueryOptions(this.internalComponent, queryOptions, false);
+			}
+
+			nextProps.updateQuery({
 				componentId: this.internalComponent,
 				query: query || null,
 			});
@@ -107,22 +134,23 @@ ReactiveComponent.defaultProps = {
 };
 
 ReactiveComponent.propTypes = {
-	componentId: types.stringRequired,
-	hits: types.data,
-	aggregations: types.selectedValues,
-	selectedValue: types.selectedValue,
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	watchComponent: types.funcRequired,
 	updateQuery: types.funcRequired,
 	setQueryOptions: types.funcRequired,
-	onQueryChange: types.func,
-	showFilter: types.bool,
-	filterLabel: types.string,
-	defaultQuery: types.func,
-	react: types.react,
+	setQueryListener: types.funcRequired,
+	// component props
+	aggregations: types.selectedValues,
 	children: types.children,
+	componentId: types.stringRequired,
+	defaultQuery: types.func,
+	filterLabel: types.string,
+	hits: types.data,
+	onQueryChange: types.func,
+	react: types.react,
+	selectedValue: types.selectedValue,
+	showFilter: types.bool,
 };
 
 const mapStateToProps = (state, props) => ({
