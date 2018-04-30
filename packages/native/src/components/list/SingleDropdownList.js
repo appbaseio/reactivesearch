@@ -209,7 +209,9 @@ class SingleDropdownList extends Component {
 				{
 					[
 						...selectAll,
-						...this.state.options.filter(item => String(item.key).trim().length),
+						...this.state.options
+							.filter(item => String(item.key).trim().length)
+							.map(item => ({ ...item, key: String(item.key) })),
 					].map((item) => {
 						const label = this.props.showCount && item.doc_count
 							? `${item.key} (${item.doc_count})`

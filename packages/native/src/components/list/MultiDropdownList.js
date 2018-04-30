@@ -324,7 +324,9 @@ class MultiDropdownList extends Component {
 								<FlatList
 									data={[
 										...selectAll,
-										...this.state.options.filter(item => String(item.key).trim().length),
+										...this.state.options
+											.filter(item => String(item.key).trim().length)
+											.map(item => ({ ...item, key: String(item.key) })),
 									]}
 									renderItem={({ item }) => {
 										const label = this.props.showCount && item.doc_count
