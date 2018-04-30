@@ -33,7 +33,7 @@ class ReactiveList extends Component {
 
 		this.state = {
 			from: 0,
-			isLoading: false,
+			isLoading: true,
 			totalPages: 0,
 			currentPage: 0,
 		};
@@ -407,6 +407,16 @@ class ReactiveList extends Component {
 		return null;
 	};
 
+	renderNoResults = () => {
+		const type = typeof this.props.onNoResults;
+		if (type === 'function') {
+			return this.props.onNoResults();
+		}
+		return (
+			<Text {...getInnerKey(this.props.innerProps, 'noResults')}>{ type === 'string' ? this.props.onNoResults : 'No results found.'}</Text>
+		);
+	};
+
 	render() {
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
@@ -427,6 +437,14 @@ class ReactiveList extends Component {
 				{
 					this.props.pagination && this.props.paginationAt === 'top'
 						? this.renderPagination()
+						: null
+				}
+				{
+					(
+						!this.state.isLoading
+						&& (results.length === 0 && streamResults.length === 0)
+					)
+						? this.renderNoResults()
 						: null
 				}
 				{
@@ -465,36 +483,38 @@ class ReactiveList extends Component {
 
 ReactiveList.propTypes = {
 	addComponent: types.funcRequired,
-	componentId: types.stringRequired,
-	sortBy: types.sortBy,
-	dataField: types.stringRequired,
-	setQueryOptions: types.funcRequired,
-	defaultQuery: types.func,
-	updateQuery: types.funcRequired,
-	size: types.number,
-	react: types.react,
-	pagination: types.bool,
-	paginationAt: types.paginationAt,
-	hits: types.hits,
-	streamHits: types.hits,
-	stream: types.bool,
-	setStreaming: types.func,
-	total: types.number,
 	removeComponent: types.funcRequired,
+	setStreaming: types.func,
+	setQueryOptions: types.funcRequired,
 	setQueryListener: types.funcRequired,
-	onQueryChange: types.func,
+	updateQuery: types.funcRequired,
 	loadMore: types.funcRequired,
-	pages: types.number,
+	// component props
+	componentId: types.stringRequired,
+	dataField: types.stringRequired,
+	defaultQuery: types.func,
+	hits: types.hits,
+	innerProps: types.props,
+	innerStyle: types.style,
+	isLoading: types.bool,
 	onAllData: types.func,
 	onData: types.func,
-	time: types.number,
-	showResultStats: types.bool,
+	onNoResults: types.title,
+	onQueryChange: types.func,
 	onResultStats: types.func,
-	isLoading: types.bool,
+	pages: types.number,
+	pagination: types.bool,
+	paginationAt: types.paginationAt,
+	react: types.react,
+	showResultStats: types.bool,
+	size: types.number,
+	sortBy: types.sortBy,
+	stream: types.bool,
+	streamHits: types.hits,
 	style: types.style,
 	theming: types.style,
-	innerStyle: types.style,
-	innerProps: types.props,
+	time: types.number,
+	total: types.number,
 };
 
 ReactiveList.defaultProps = {
@@ -504,11 +524,12 @@ ReactiveList.defaultProps = {
 };
 
 ReactiveList.defaultProps = {
+	onNoResults: 'No Results found.',
+	pages: 5,
 	pagination: false,
 	paginationAt: 'bottom',
-	pages: 5,
-	size: 10,
 	showResultStats: true,
+	size: 10,
 	style: {},
 };
 
