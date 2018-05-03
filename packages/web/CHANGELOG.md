@@ -6,6 +6,15 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v2.6.2
+
+- Fixed query timestamp logic in core - should prevent stale results from getting rendered
+
+## v2.6.1
+
+- Fixed (multiple) partial queries firing issues with result component [here](https://github.com/appbaseio/reactivesearch/commit/254598be037c44a31a5aeed941176007bd1ca722)
+- Fixed MultiDataList missing queryListener handlers [here](https://github.com/appbaseio/reactivesearch/commit/89d3ffb278e20233b84abd1f2df89441d9a17664)
+
 ## v2.6.0
 
 - Fix `onSuggestion` rendering logic in search components [here](https://github.com/appbaseio/reactivesearch/commit/a2fa590710a77c9298b88a501074d08e326eb76e)
