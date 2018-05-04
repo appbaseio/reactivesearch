@@ -496,7 +496,10 @@ class ReactiveMap extends Component {
 	};
 
 	handleOnIdle = () => {
-		this.setGeoQuery();
+		if (this.props.hits.length) {
+			// only make the geo_bounding query if we have hits data
+			this.setGeoQuery();
+		}
 		if (this.props.mapProps.onIdle) this.props.mapProps.onIdle();
 	};
 
