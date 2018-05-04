@@ -1,6 +1,6 @@
 {
   "name": "@appbaseio/reactivemaps",
-  "version": "2.0.0-alpha-05",
+  "version": "2.0.0-alpha-06",
   "description": "React Components for building map UIs",
   "main": "lib/index.js",
   "files": [
@@ -34,7 +34,7 @@
     "react-dom": ">=15"
   },
   "devDependencies": {
-    "@appbaseio/reactivesearch": "^2.5.1",
+    "@appbaseio/reactivesearch": "^2.6.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
