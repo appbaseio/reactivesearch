@@ -587,13 +587,26 @@ class ReactiveMap extends Component {
 		});
 	}
 
-	renderPopover = (item) => {
+	renderPopover = (item, includeExternalSettings = false) => {
+		let additionalProps = {};
+
+		if (includeExternalSettings) {
+			// to render pop-over correctly with MarkerWithLabel
+			additionalProps = {
+				position: this.getPosition(item),
+				defaultOptions: {
+					pixelOffset: new window.google.maps.Size(0, -30),
+				},
+			};
+		}
+
 		if (item._id in this.state.openMarkers) {
 			return (
 				<InfoWindow
 					zIndex={500}
 					key={`${item._id}-InfoWindow`}
 					onCloseClick={() => this.closeMarkerInfo(item._id)}
+					{...additionalProps}
 				>
 					{this.props.onPopoverClick(item)}
 				</InfoWindow>
@@ -648,6 +661,7 @@ class ReactiveMap extends Component {
 								key={item._id}
 								labelAnchor={new window.google.maps.Point(0, 30)}
 								icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
+								onClick={() => this.openMarkerInfo(item._id)}
 								onMouseOver={() => this.increaseMarkerZIndex(item._id)}
 								onFocus={() => this.increaseMarkerZIndex(item._id)}
 								onMouseOut={this.removeMarkerZIndex}
@@ -658,6 +672,11 @@ class ReactiveMap extends Component {
 								<div className={mapPinWrapper}>
 									<MapPin>{data.label}</MapPin>
 									<MapPinArrow />
+									{
+										this.props.onPopoverClick
+											? this.renderPopover(item, true)
+											: null
+									}
 								</div>
 							</MarkerWithLabel>
 						);
@@ -875,8 +894,8 @@ ReactiveMap.defaultProps = {
 	pagination: false,
 	defaultMapStyle: 'Standard',
 	defaultCenter: {
-		lat: -34.397,
-		lng: 150.644,
+		lat: 37.7749,
+		lng: 122.4194,
 	},
 	autoCenter: false,
 	streamAutoCenter: false,
