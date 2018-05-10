@@ -1,6 +1,6 @@
 {
   "name": "@appbaseio/reactivemaps",
-  "version": "2.0.0-alpha-06",
+  "version": "2.0.0-alpha-07",
   "description": "React Components for building map UIs",
   "main": "lib/index.js",
   "files": [
