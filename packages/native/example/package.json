@@ -4,8 +4,11 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "start": "exp start -c --lan",
-    "postinstall": "rm -rf node_modules/native-base-shoutem-theme/node_modules/hoist-non-react-statics"
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
+    "postinstall": "rm -rf node_modules/native-base-shoutem-theme/node_modules/hoist-non-react-statics node_modules/xdl/node_modules/react"
   },
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "^0.0.13",
@@ -27,6 +30,7 @@
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-preset-expo": "^4.0.0",
-    "prop-types": "^15.6.1"
+    "prop-types": "^15.6.1",
+    "react-native-scripts": "^1.14.0"
   }
 }
