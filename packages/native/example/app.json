@@ -4,7 +4,7 @@
 		"description": "Demo for Reactivebase Native components",
 		"slug": "reactivebase-native-demos",
     "privacy": "public",
-    "sdkVersion": "26.0.0",
+    "sdkVersion": "27.0.0",
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
