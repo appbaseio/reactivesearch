@@ -108,6 +108,11 @@ class DateRange extends Component {
 					});
 				}
 			});
+		} else if (
+			(this.props.selectedValue !== nextProps.selectedValue)
+			&& !nextProps.selectedValue
+		) {
+			this.handleDateChange(null);
 		}
 	}
 
