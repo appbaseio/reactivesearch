@@ -78,9 +78,12 @@ class DatePicker extends Component {
 				timestamp: new XDate(nextProps.defaultSelected).getTime(),
 			};
 			this.handleDateChange(currentDate, nextProps);
+		} else if (
+			(this.props.selectedValue !== nextProps.selectedValue)
+			&& !nextProps.selectedValue
+		) {
+			this.handleDateChange(null, nextProps);
 		}
-
-		// TODO: add dynamic selected value logic here
 	}
 
 	componentWillUnmount() {
@@ -134,7 +137,7 @@ class DatePicker extends Component {
 				currentDate,
 			}, () => {
 				this.updateQuery(value, props);
-				if (props.onValueChange) props.onValueChange(value);
+				if (props.onValueChange) props.onValueChange(date);
 			});
 		};
 		checkValueChange(
@@ -147,11 +150,12 @@ class DatePicker extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
+		const date = value ? this.formatDate(new XDate(value)) : null;
 
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
-			value,
+			value: date,
 			showFilter: props.showFilter,
 			label: props.filterLabel,
 			URLParams: false,

@@ -234,7 +234,6 @@ class DateRange extends Component {
 
 			checkValueChange(
 				props.componentId,
-				null,
 				props.beforeValueChange,
 				props.onValueChange,
 				performUpdate,
