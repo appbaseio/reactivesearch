@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { Spinner, Button, Icon } from 'native-base';
+import { Button, Icon } from 'native-base';
 import { MapView } from 'expo';
 
 import {
@@ -65,12 +65,7 @@ class ReactiveMap extends Component {
 			currentPage: props.currentPage,
 			mapBoxBounds: null,
 			searchAsMove: props.searchAsMove,
-			zoom: props.defaultZoom,
-			openMarkers: {},
-			preserveCenter: false,
-			markerOnTop: null,
 		};
-		this.mapRef = null;
 		this.internalComponent = `${props.componentId}__internal`;
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
@@ -141,12 +136,6 @@ class ReactiveMap extends Component {
 				this.getGeoQuery(),
 				!!nextProps.center,
 			);
-		}
-
-		if (!isEqual(this.props.hits, nextProps.hits)) {
-			this.setState({
-				openMarkers: {},
-			});
 		}
 
 		if (
@@ -231,11 +220,11 @@ class ReactiveMap extends Component {
 			});
 		}
 
-		if (this.props.defaultZoom !== nextProps.defaultZoom) {
-			this.setState({
-				zoom: nextProps.defaultZoom,
-			});
-		}
+		// if (this.props.defaultZoom !== nextProps.defaultZoom) {
+		// 	this.setState({
+		// 		zoom: nextProps.defaultZoom,
+		// 	});
+		// }
 
 		if (this.props.defaultMapStyle !== nextProps.defaultMapStyle) {
 			this.setState({
@@ -245,29 +234,29 @@ class ReactiveMap extends Component {
 		}
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
-		if (
-			this.state.searchAsMove !== nextState.searchAsMove
-			|| this.state.markerOnTop !== nextState.markerOnTop
-			|| this.props.showMapStyles !== nextProps.showMapStyles
-			|| this.props.autoCenter !== nextProps.autoCenter
-			|| this.props.streamAutoCenter !== nextProps.streamAutoCenter
-			|| this.props.defaultZoom !== nextProps.defaultZoom
-			|| this.props.showMarkerClusters !== nextProps.showMarkerClusters
-			|| !isEqual(this.state.currentMapStyle, nextState.currentMapStyle)
-			|| !isEqual(this.state.openMarkers, nextState.openMarkers)
-		) {
-			return true;
-		}
+	// shouldComponentUpdate(nextProps, nextState) {
+	// 	if (
+	// 		this.state.searchAsMove !== nextState.searchAsMove
+	// 		|| this.state.markerOnTop !== nextState.markerOnTop
+	// 		|| this.props.showMapStyles !== nextProps.showMapStyles
+	// 		|| this.props.autoCenter !== nextProps.autoCenter
+	// 		|| this.props.streamAutoCenter !== nextProps.streamAutoCenter
+	// 		|| this.props.defaultZoom !== nextProps.defaultZoom
+	// 		|| this.props.showMarkerClusters !== nextProps.showMarkerClusters
+	// 		|| !isEqual(this.state.currentMapStyle, nextState.currentMapStyle)
+	// 		|| !isEqual(this.state.openMarkers, nextState.openMarkers)
+	// 	) {
+	// 		return true;
+	// 	}
 
-		if (
-			isEqual(this.props.hits, nextProps.hits)
-			&& isEqual(this.props.streamHits, nextProps.streamHits)
-		) {
-			return false;
-		}
-		return true;
-	}
+	// 	if (
+	// 		isEqual(this.props.hits, nextProps.hits)
+	// 		&& isEqual(this.props.streamHits, nextProps.streamHits)
+	// 	) {
+	// 		return false;
+	// 	}
+	// 	return true;
+	// }
 
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
@@ -336,13 +325,13 @@ class ReactiveMap extends Component {
 		return false;
 	}
 
-	getGeoQuery = () => {
-		if (this.mapRef) {
-			const mapBounds = this.mapRef.getBounds();
-			const north = mapBounds.getNorthEast().lat();
-			const south = mapBounds.getSouthWest().lat();
-			const east = mapBounds.getNorthEast().lng();
-			const west = mapBounds.getSouthWest().lng();
+	getGeoQuery = (region) => {
+		if (region && Object.keys(region).length) {
+			const west = region.longitude - region.longitudeDelta;
+			const south = region.latitude - region.latitudeDelta;
+			const east = region.longitude + region.longitudeDelta;
+			const north = region.latitude + region.latitudeDelta;
+
 			const boundingBoxCoordinates = {
 				top_left: [west, north],
 				bottom_right: [east, south],
@@ -361,10 +350,10 @@ class ReactiveMap extends Component {
 		return null;
 	};
 
-	setGeoQuery = (executeUpdate = false) => {
-		// execute a new query on initial mount
-		if (executeUpdate || (!this.props.defaultQuery && !this.state.mapBoxBounds)) {
-			this.defaultQuery = this.getGeoQuery();
+	setGeoQuery = (region) => {
+		// set new geobound query on initial mount
+		if (!this.props.defaultQuery && (!this.state.mapBoxBounds || this.state.searchAsMove)) {
+			this.defaultQuery = this.getGeoQuery(region);
 
 			this.props.setMapData(
 				this.props.componentId,
@@ -458,22 +447,6 @@ class ReactiveMap extends Component {
 			return this.parseLocation(this.props.center);
 		}
 
-		if (
-			(!!this.mapRef && this.state.preserveCenter)
-			|| (this.props.stream && this.props.streamHits.length && !this.props.streamAutoCenter)
-		) {
-			const currentCenter = this.mapRef.getCenter();
-			setTimeout(() => {
-				this.setState({
-					preserveCenter: false,
-				});
-			}, 100);
-			return this.parseLocation({
-				lat: currentCenter.lat(),
-				lng: currentCenter.lng(),
-			});
-		}
-
 		if (hits && hits.length) {
 			if (this.props.autoCenter || this.props.streamAutoCenter) {
 				return this.getHitsCenter(hits) || this.parseLocation(this.props.defaultCenter);
@@ -482,6 +455,7 @@ class ReactiveMap extends Component {
 				? this.getPosition(hits[0])
 				: this.parseLocation(this.props.defaultCenter);
 		}
+
 		return this.parseLocation(this.props.defaultCenter);
 	};
 
@@ -489,6 +463,30 @@ class ReactiveMap extends Component {
 		this.setState({
 			searchAsMove: !this.state.searchAsMove,
 		});
+	}
+
+	getRegion = (hitsToRender) => {
+		if (this.dragged && this.currentRegion) {
+			this.dragged = false;
+			return this.currentRegion;
+		}
+
+		const center = this.getCenter(hitsToRender);
+		return ({
+			latitude: center.lat,
+			longitude: center.lng,
+			latitudeDelta: 0.0922,
+			longitudeDelta: 0.0421,
+		});
+	};
+
+	handleDrag = () => {
+		this.dragged = true;
+	}
+
+	handleRegionComplete = (region) => {
+		this.setGeoQuery(region);
+		this.currentRegion = region;
 	}
 
 	renderMap = () => {
@@ -502,14 +500,6 @@ class ReactiveMap extends Component {
 		}
 
 		const resultsToRender = [...streamResults, ...filteredResults];
-
-		if (resultsToRender.length === 0) {
-			return (
-				<Spinner color="blue" />
-			);
-		}
-
-		const center = this.getCenter(resultsToRender);
 		let markers = [];
 
 		if (this.props.showMarkers) {
@@ -575,13 +565,14 @@ class ReactiveMap extends Component {
 			<View style={{ flex: 1 }}>
 				<MapView
 					style={[styles.map, ...this.props.style]}
-					region={{
-						latitude: center.lat,
-						longitude: center.lng,
-						latitudeDelta: this.state.zoom,
-						longitudeDelta: this.state.zoom,
-					}}
+					region={this.getRegion(resultsToRender)}
+					onPanDrag={this.handleDrag}
+					onRegionChangeComplete={this.handleRegionComplete}
 					customMapStyle={this.state.currentMapStyle.value}
+					showsScale
+					zoomEnabled
+					scrollEnabled={false}
+					zoomControlEnabled
 				>
 					{markers}
 				</MapView>
@@ -846,8 +837,8 @@ ReactiveMap.defaultProps = {
 	pagination: false,
 	defaultMapStyle: 'Standard',
 	defaultCenter: {
-		lat: -34.397,
-		lng: 150.644,
+		lat: 37.773972,
+		lng: -122.431297,
 	},
 	autoCenter: false,
 	streamAutoCenter: false,

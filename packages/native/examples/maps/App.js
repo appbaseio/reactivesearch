@@ -44,7 +44,6 @@ class Main extends Component {
 							componentId="places"
 							dataField="place.raw"
 							size={10}
-							defaultSelected="Chile"
 						/>
 					</View>
 					<View style={{ flex: 1 }}>
@@ -57,6 +56,8 @@ class Main extends Component {
 							onPopoverClick={item => (
 								<Text>Run before it exceeds {item.mag}</Text>
 							)}
+							searchAsMove
+							zoom={6}
 							// onData={item => ({
 							// 	label: item.mag,
 							// })}

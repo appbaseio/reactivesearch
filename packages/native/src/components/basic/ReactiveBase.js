@@ -14,6 +14,9 @@ import theme from '../../theme';
    with a different redux store in a nested context */
 const Provider = createProvider(storeKey);
 
+// for network debugging while development
+GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest;
+
 class ReactiveBase extends Component {
 	constructor(props) {
 		super(props);
