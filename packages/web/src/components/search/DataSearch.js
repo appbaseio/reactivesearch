@@ -318,7 +318,7 @@ class DataSearch extends Component {
 
 	clearValue = () => {
 		this.setValue('', true);
-		this.onValueSelected('');
+		this.onValueSelected(null);
 	};
 
 	// only works if there's a change in downshift's value
