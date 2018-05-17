@@ -30,7 +30,7 @@ class URLParamsProvider extends Component {
 					this.pushToHistory();
 				});
 
-			if (!Object.keys(nextProps.selectedValues).length) {
+			if (!currentComponents.length) {
 				Array.from(this.props.params.keys()).forEach((item) => {
 					this.props.params.delete(item);
 				});
