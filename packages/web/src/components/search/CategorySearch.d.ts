@@ -29,6 +29,7 @@ export interface CategorySearchProps extends CommonProps {
 	onKeyUp?: (...args: any[]) => any;
 	onSuggestion?: (...args: any[]) => any;
 	onValueChange?: (...args: any[]) => any;
+	onValueSelected?: (...args: any[]) => any;
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;

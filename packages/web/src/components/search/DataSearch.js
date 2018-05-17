@@ -318,21 +318,23 @@ class DataSearch extends Component {
 
 	clearValue = () => {
 		this.setValue('', true);
+		this.onValueSelected(null);
 	};
 
 	// only works if there's a change in downshift's value
 	handleOuterClick = (event) => {
 		this.setValue(this.state.currentValue, true);
-
+		this.onValueSelected();
 		if (this.props.onBlur) {
 			this.props.onBlur(event);
 		}
 	};
 
-	handleKeyDown = (event) => {
-		if (event.key === 'Enter') {
-			event.target.blur();
+	handleKeyDown = (event, highlightedIndex) => {
+		// if a suggestion was selected, delegate the handling to suggestion handler
+		if (event.key === 'Enter' && highlightedIndex === null) {
 			this.setValue(event.target.value, true);
+			this.onValueSelected(event.target.value);
 		}
 		if (this.props.onKeyDown) {
 			this.props.onKeyDown(event);
@@ -341,6 +343,11 @@ class DataSearch extends Component {
 
 	onInputChange = (e) => {
 		const { value } = e.target;
+		if (!this.state.isOpen) {
+			this.setState({
+				isOpen: true,
+			});
+		}
 		if (value.trim() !== this.state.currentValue.trim()) {
 			this.setState({
 				suggestions: [],
@@ -352,12 +359,17 @@ class DataSearch extends Component {
 		}
 	};
 
-	onSuggestionSelected = (suggestion, event) => {
+	onSuggestionSelected = (suggestion) => {
 		this.setValue(suggestion.value, true);
-		if (this.props.onBlur) {
-			this.props.onBlur(event);
-		}
+		this.onValueSelected(suggestion.value);
 	};
+
+	onValueSelected = (currentValue = this.state.currentValue) => {
+		const { onValueSelected } = this.props;
+		if (onValueSelected) {
+			onValueSelected(currentValue);
+		}
+	}
 
 	handleStateChange = (changes) => {
 		const { isOpen, type } = changes;
@@ -433,7 +445,6 @@ class DataSearch extends Component {
 						? (<Downshift
 							id={`${this.props.componentId}-downshift`}
 							onChange={this.onSuggestionSelected}
-							onOuterClick={this.handleOuterClick}
 							onStateChange={this.handleStateChange}
 							isOpen={this.state.isOpen}
 							itemToString={i => i}
@@ -458,7 +469,7 @@ class DataSearch extends Component {
 											onBlur: this.handleOuterClick,
 											onFocus: this.handleFocus,
 											onKeyPress: this.props.onKeyPress,
-											onKeyDown: this.handleKeyDown,
+											onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
 											onKeyUp: this.props.onKeyUp,
 										})}
 										themePreset={themePreset}
@@ -571,6 +582,7 @@ DataSearch.propTypes = {
 	onQueryChange: types.func,
 	onSuggestion: types.func,
 	onValueChange: types.func,
+	onValueSelected: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,

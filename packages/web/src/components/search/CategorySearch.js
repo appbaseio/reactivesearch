@@ -359,17 +359,20 @@ class CategorySearch extends Component {
 
 	clearValue = () => {
 		this.setValue('', true);
+		this.onValueSelected(null);
 	};
 
 	// only works if there's a change in downshift's value
 	handleOuterClick = () => {
 		this.setValue(this.state.currentValue, true);
+		this.onValueSelected();
 	};
 
-	handleKeyDown = (event) => {
-		if (event.key === 'Enter') {
-			event.target.blur();
+	handleKeyDown = (event, highlightedIndex) => {
+		// if a suggestion was selected, delegate the handling to suggestion handler
+		if (event.key === 'Enter' && highlightedIndex === null) {
 			this.setValue(event.target.value, true);
+			this.onValueSelected(event.target.value);
 		}
 		if (this.props.onKeyDown) {
 			this.props.onKeyDown(event);
@@ -378,6 +381,11 @@ class CategorySearch extends Component {
 
 	onInputChange = (e) => {
 		const { value } = e.target;
+		if (!this.state.isOpen) {
+			this.setState({
+				isOpen: true,
+			});
+		}
 		if (value.trim() !== this.state.currentValue.trim()) {
 			this.setState({
 				suggestions: [],
@@ -391,10 +399,18 @@ class CategorySearch extends Component {
 
 	onSuggestionSelected = (suggestion, event) => {
 		this.setValue(suggestion.value, true, this.props, suggestion.category);
+		this.onValueSelected(suggestion.value, suggestion.category);
 		if (this.props.onBlur) {
 			this.props.onBlur(event);
 		}
 	};
+
+	onValueSelected = (currentValue = this.state.currentValue, category = null) => {
+		const { onValueSelected } = this.props;
+		if (onValueSelected) {
+			onValueSelected(currentValue, category);
+		}
+	}
 
 	handleStateChange = (changes) => {
 		const { isOpen, type } = changes;
@@ -538,7 +554,7 @@ class CategorySearch extends Component {
 										onBlur: this.props.onBlur,
 										onFocus: this.handleFocus,
 										onKeyPress: this.props.onKeyPress,
-										onKeyDown: this.handleKeyDown,
+										onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
 										onKeyUp: this.props.onKeyUp,
 									})}
 									themePreset={themePreset}
@@ -636,6 +652,7 @@ CategorySearch.propTypes = {
 	onQueryChange: types.func,
 	onSuggestion: types.func,
 	onValueChange: types.func,
+	onValueSelected: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
