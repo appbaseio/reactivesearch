@@ -365,6 +365,11 @@ class ReactiveList extends Component {
 			},
 		}];
 		this.props.setQueryOptions(this.props.componentId, options, true);
+
+		this.setState({
+			currentPage: 0,
+			from: 0,
+		});
 	};
 
 	renderSortOptions = () => (
