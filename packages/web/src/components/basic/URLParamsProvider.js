@@ -9,8 +9,10 @@ import { connect } from '../../utils';
 class URLParamsProvider extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (!isEqual(this.props.selectedValues, nextProps.selectedValues)) {
-			Object.keys(nextProps.selectedValues)
-				.filter(item => nextProps.selectedValues[item].URLParams)
+			const currentComponents = Object.keys(nextProps.selectedValues);
+
+			currentComponents
+				.filter(component => nextProps.selectedValues[component].URLParams)
 				.forEach((component) => {
 					if (nextProps.selectedValues[component].URLParams) {
 						this.setURL(component, this.getValue(nextProps.selectedValues[component].value));
@@ -20,7 +22,15 @@ class URLParamsProvider extends Component {
 					}
 				});
 
-			if (!Object.keys(nextProps.selectedValues).length) {
+			// remove unmounted components
+			Object.keys(this.props.selectedValues)
+				.filter(component => !currentComponents.includes(component))
+				.forEach((component) => {
+					this.props.params.delete(component);
+					this.pushToHistory();
+				});
+
+			if (!currentComponents.length) {
 				Array.from(this.props.params.keys()).forEach((item) => {
 					this.props.params.delete(item);
 				});
