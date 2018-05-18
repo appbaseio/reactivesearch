@@ -4,6 +4,7 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
+    - Add `onValueSelected` in search components [#254](https://github.com/appbaseio/reactivesearch/issues/254)
 </details>
 
 ## v2.6.2
