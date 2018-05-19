@@ -50,6 +50,24 @@ const MapComponent = withGoogleMap((props) => {
 	);
 });
 
+function getPrecision(a) {
+	if (isNaN(a)) return 0; // eslint-disable-line
+	let e = 1;
+	let p = 0;
+	while (Math.round(a * e) / e !== a) { e *= 10; p += 1; }
+	return p;
+}
+
+function withDistinctLat(loc, count) {
+	const length = getPrecision(loc.lat);
+	const suffix = (1 / (10 ** (length - 2))) * count;
+	const location = {
+		...loc,
+		lat: parseFloat((loc.lat + suffix).toFixed(length)),
+	};
+	return location;
+}
+
 class ReactiveMap extends Component {
 	constructor(props) {
 		super(props);
@@ -629,17 +647,35 @@ class ReactiveMap extends Component {
 		});
 	}
 
+	addNoise = (hits) => {
+		const hitMap = {};
+		let updatedHits = [];
+
+		hits.forEach((item) => {
+			const updatedItem = { ...item };
+			const location = item[this.props.dataField];
+			const key = JSON.stringify(location);
+			const count = hitMap[key] || 0;
+
+			updatedItem[this.props.dataField] = count ? withDistinctLat(location, count) : location;
+			updatedHits = [...updatedHits, updatedItem];
+
+			hitMap[key] = count + 1;
+		});
+		return updatedHits;
+	}
+
 	renderMap = () => {
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
-		let filteredResults = results;
+		let filteredResults = results.filter(item => !!item[this.props.dataField]);
 
 		if (streamResults.length) {
 			const ids = streamResults.map(item => item._id);
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 		}
 
-		const resultsToRender = [...streamResults, ...filteredResults];
+		const resultsToRender = this.addNoise([...streamResults, ...filteredResults]);
 		let markers = [];
 
 		if (this.props.showMarkers) {
