@@ -128,13 +128,15 @@ class ReactiveMap extends Component {
 			if (this.defaultQuery.sort) {
 				options.sort = this.defaultQuery.sort;
 			}
+			const mustExecute = this.state.searchAsMove || !!this.defaultQuery.query;
 			this.props.setMapData(
 				this.props.componentId,
 				this.defaultQuery.query,
-				!!this.defaultQuery.query,
+				mustExecute,
 			);
 		} else {
-			this.props.setMapData(this.props.componentId, null, !!this.props.center);
+			const mustExecute = this.state.searchAsMove || !!this.props.center;
+			this.props.setMapData(this.props.componentId, null, mustExecute);
 		}
 
 		this.props.setQueryOptions(
@@ -164,10 +166,11 @@ class ReactiveMap extends Component {
 		}
 
 		if (!isEqual(this.props.center, nextProps.center)) {
+			const mustExecute = this.state.searchAsMove || !!nextProps.center;
 			this.props.setMapData(
 				this.props.componentId,
 				this.getGeoQuery(),
-				!!nextProps.center,
+				mustExecute,
 			);
 		}
 
@@ -192,10 +195,11 @@ class ReactiveMap extends Component {
 				nextProps.setQueryOptions(nextProps.componentId, options, !query);
 			}
 
+			const mustExecute = this.state.searchAsMove || !!query;
 			this.props.setMapData(
 				this.props.componentId,
 				query,
-				!!query,
+				mustExecute,
 			);
 		}
 
@@ -394,10 +398,11 @@ class ReactiveMap extends Component {
 		if (executeUpdate || (!this.props.defaultQuery && !this.state.mapBoxBounds)) {
 			this.defaultQuery = this.getGeoQuery();
 
+			const mustExecute = this.state.searchAsMove || !!this.props.center;
 			this.props.setMapData(
 				this.props.componentId,
 				this.defaultQuery,
-				!!this.props.center,
+				mustExecute,
 			);
 		}
 	}
