@@ -263,7 +263,11 @@ class ReactiveMap extends Component {
 			});
 		}
 
-		if (this.props.defaultZoom !== nextProps.defaultZoom) {
+		if (
+			(this.props.defaultZoom !== nextProps.defaultZoom)
+			&& (!isNaN(nextProps.defaultZoom)) // eslint-disable-line
+			&& nextProps.defaultZoom
+		) {
 			this.setState({
 				zoom: nextProps.defaultZoom,
 			});
