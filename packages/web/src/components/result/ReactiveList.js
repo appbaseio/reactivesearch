@@ -356,7 +356,8 @@ class ReactiveList extends Component {
 	handleSortChange = (e) => {
 		const index = e.target.value;
 		const options = getQueryOptions(this.props);
-		options.from = this.state.from;
+		// This fixes issue #371 (where sorting a multi-result page with infinite loader breaks)
+		options.from = 0;
 
 		options.sort = [{
 			[this.props.sortOptions[index].dataField]: {
@@ -364,6 +365,11 @@ class ReactiveList extends Component {
 			},
 		}];
 		this.props.setQueryOptions(this.props.componentId, options, true);
+
+		this.setState({
+			currentPage: 0,
+			from: 0,
+		});
 	};
 
 	renderSortOptions = () => (
