@@ -670,19 +670,8 @@ class ReactiveMap extends Component {
 		return updatedHits;
 	}
 
-	renderMap = () => {
-		const results = parseHits(this.props.hits) || [];
-		const streamResults = parseHits(this.props.streamHits) || [];
-		let filteredResults = results.filter(item => !!item[this.props.dataField]);
-
-		if (streamResults.length) {
-			const ids = streamResults.map(item => item._id);
-			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-		}
-
-		const resultsToRender = this.addNoise([...streamResults, ...filteredResults]);
+	getMarkers = (resultsToRender) => {
 		let markers = [];
-
 		if (this.props.showMarkers) {
 			markers = resultsToRender.map((item) => {
 				const markerProps = {
@@ -759,6 +748,21 @@ class ReactiveMap extends Component {
 				);
 			});
 		}
+		return markers;
+	}
+
+	renderMap = () => {
+		const results = parseHits(this.props.hits) || [];
+		const streamResults = parseHits(this.props.streamHits) || [];
+		let filteredResults = results.filter(item => !!item[this.props.dataField]);
+
+		if (streamResults.length) {
+			const ids = streamResults.map(item => item._id);
+			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+		}
+
+		const resultsToRender = this.addNoise([...streamResults, ...filteredResults]);
+		const markers = this.getMarkers(resultsToRender);
 
 		const style = {
 			width: '100%',
