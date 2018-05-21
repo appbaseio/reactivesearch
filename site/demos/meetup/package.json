@@ -12,7 +12,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@appbaseio/reactivemaps": "^2.0.0-alpha-02",
+    "@appbaseio/reactivemaps": "^2.0.0-beta-01",
     "@appbaseio/reactivesearch": "^2.6.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
