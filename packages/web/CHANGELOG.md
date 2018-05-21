@@ -6,6 +6,9 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v2.6.4
+- Architectural fixes to persist the watchman state in case of component unmount - This helps in keeping the component subscription active incase the component gets remounted.
+
 ## v2.6.3
 - Add `onValueSelected` in search components [#254](https://github.com/appbaseio/reactivesearch/issues/254)
 - Fix issue #371 resetting page number on sort change [#372](https://github.com/appbaseio/reactivesearch/pull/372)
