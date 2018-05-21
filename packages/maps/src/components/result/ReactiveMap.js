@@ -154,7 +154,7 @@ class ReactiveMap extends Component {
 			|| !isEqual(this.props.dataField, nextProps.dataField)
 		) {
 			const options = getQueryOptions(nextProps);
-			options.from = this.state.from;
+			options.from = 0;
 			if (nextProps.sortBy) {
 				options.sort = [{
 					[nextProps.dataField]: {
@@ -162,6 +162,10 @@ class ReactiveMap extends Component {
 					},
 				}];
 			}
+			this.setState({
+				from: 0,
+				currentPage: 0,
+			});
 			this.props.setQueryOptions(this.props.componentId, options, true);
 		}
 
@@ -928,7 +932,6 @@ ReactiveMap.propTypes = {
 	showSearchAsMove: types.bool,
 	size: types.number,
 	sortBy: types.sortBy,
-	sortOptions: types.sortOptions,
 	stream: types.bool,
 	streamAutoCenter: types.bool,
 	style: types.style,
