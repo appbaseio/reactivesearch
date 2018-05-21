@@ -54,7 +54,7 @@ A set of live demos inspired by real world apps, built with ReactiveSearch.
 - [demos/booksearch](https://opensource.appbase.io/reactivesearch/demos/goodbooks/) - An book search app based on a goodbooks dataset.
 - [demos/ecommerce](https://opensource.appbase.io/reactivesearch/demos/ecommerce/) - An e-commerce car store app.
 
-## Documentaion
+## Documentation
 
 The official docs for the library are at [https://opensource.appbase.io/reactive-manual](https://opensource.appbase.io/reactive-manual).
 
