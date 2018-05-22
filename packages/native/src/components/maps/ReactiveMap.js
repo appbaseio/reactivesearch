@@ -63,8 +63,6 @@ class ReactiveMap extends Component {
 			isLoading: false,
 			totalPages: 0,
 			currentPage: props.currentPage,
-			mapBoxBounds: null,
-			searchAsMove: props.searchAsMove,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
@@ -100,8 +98,6 @@ class ReactiveMap extends Component {
 				this.defaultQuery.query,
 				!!this.defaultQuery.query,
 			);
-		} else {
-			this.props.setMapData(this.props.componentId, null, !!this.props.center);
 		}
 
 		this.props.setQueryOptions(
@@ -128,14 +124,6 @@ class ReactiveMap extends Component {
 				}];
 			}
 			this.props.setQueryOptions(this.props.componentId, options, true);
-		}
-
-		if (!isEqual(this.props.center, nextProps.center)) {
-			this.props.setMapData(
-				this.props.componentId,
-				this.getGeoQuery(),
-				!!nextProps.center,
-			);
 		}
 
 		if (
@@ -214,18 +202,6 @@ class ReactiveMap extends Component {
 			});
 		}
 
-		if (this.props.searchAsMove !== nextProps.searchAsMove) {
-			this.setState({
-				searchAsMove: nextProps.searchAsMove,
-			});
-		}
-
-		// if (this.props.defaultZoom !== nextProps.defaultZoom) {
-		// 	this.setState({
-		// 		zoom: nextProps.defaultZoom,
-		// 	});
-		// }
-
 		if (this.props.defaultMapStyle !== nextProps.defaultMapStyle) {
 			this.setState({
 				currentMapStyle: this.mapStyles.find(style =>
@@ -233,30 +209,6 @@ class ReactiveMap extends Component {
 			});
 		}
 	}
-
-	// shouldComponentUpdate(nextProps, nextState) {
-	// 	if (
-	// 		this.state.searchAsMove !== nextState.searchAsMove
-	// 		|| this.state.markerOnTop !== nextState.markerOnTop
-	// 		|| this.props.showMapStyles !== nextProps.showMapStyles
-	// 		|| this.props.autoCenter !== nextProps.autoCenter
-	// 		|| this.props.streamAutoCenter !== nextProps.streamAutoCenter
-	// 		|| this.props.defaultZoom !== nextProps.defaultZoom
-	// 		|| this.props.showMarkerClusters !== nextProps.showMarkerClusters
-	// 		|| !isEqual(this.state.currentMapStyle, nextState.currentMapStyle)
-	// 		|| !isEqual(this.state.openMarkers, nextState.openMarkers)
-	// 	) {
-	// 		return true;
-	// 	}
-
-	// 	if (
-	// 		isEqual(this.props.hits, nextProps.hits)
-	// 		&& isEqual(this.props.streamHits, nextProps.streamHits)
-	// 	) {
-	// 		return false;
-	// 	}
-	// 	return true;
-	// }
 
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
@@ -323,44 +275,6 @@ class ReactiveMap extends Component {
 			};
 		}
 		return false;
-	}
-
-	getGeoQuery = (region) => {
-		if (region && Object.keys(region).length) {
-			const west = region.longitude - region.longitudeDelta;
-			const south = region.latitude - region.latitudeDelta;
-			const east = region.longitude + region.longitudeDelta;
-			const north = region.latitude + region.latitudeDelta;
-
-			const boundingBoxCoordinates = {
-				top_left: [west, north],
-				bottom_right: [east, south],
-			};
-
-			this.setState({
-				mapBoxBounds: boundingBoxCoordinates,
-			});
-
-			return {
-				geo_bounding_box: {
-					[this.props.dataField]: boundingBoxCoordinates,
-				},
-			};
-		}
-		return null;
-	};
-
-	setGeoQuery = (region) => {
-		// set new geobound query on initial mount
-		if (!this.props.defaultQuery && (!this.state.mapBoxBounds || this.state.searchAsMove)) {
-			this.defaultQuery = this.getGeoQuery(region);
-
-			this.props.setMapData(
-				this.props.componentId,
-				this.defaultQuery,
-				!!this.props.center,
-			);
-		}
 	}
 
 	loadMore = () => {
@@ -459,35 +373,15 @@ class ReactiveMap extends Component {
 		return this.parseLocation(this.props.defaultCenter);
 	};
 
-	toggleSearchAsMove = () => {
-		this.setState({
-			searchAsMove: !this.state.searchAsMove,
-		});
-	}
-
 	getRegion = (hitsToRender) => {
-		if (this.dragged && this.currentRegion) {
-			this.dragged = false;
-			return this.currentRegion;
-		}
-
 		const center = this.getCenter(hitsToRender);
 		return ({
 			latitude: center.lat,
 			longitude: center.lng,
-			latitudeDelta: 0.0922,
-			longitudeDelta: 0.0421,
+			latitudeDelta: this.props.defaultZoom,
+			longitudeDelta: this.props.defaultZoom,
 		});
 	};
-
-	handleDrag = () => {
-		this.dragged = true;
-	}
-
-	handleRegionComplete = (region) => {
-		this.setGeoQuery(region);
-		this.currentRegion = region;
-	}
 
 	renderMap = () => {
 		const results = parseHits(this.props.hits) || [];
@@ -504,11 +398,12 @@ class ReactiveMap extends Component {
 
 		if (this.props.showMarkers) {
 			markers = resultsToRender.map((item) => {
+				const { lat, lng } = this.getPosition(item);
 				const markerProps = {
 					key: item._id,
 					coordinate: {
-						latitude: this.getPosition(item).lat,
-						longitude: this.getPosition(item).lng,
+						latitude: lat,
+						longitude: lng,
 					},
 				};
 
@@ -566,12 +461,9 @@ class ReactiveMap extends Component {
 				<MapView
 					style={[styles.map, ...this.props.style]}
 					region={this.getRegion(resultsToRender)}
-					onPanDrag={this.handleDrag}
-					onRegionChangeComplete={this.handleRegionComplete}
 					customMapStyle={this.state.currentMapStyle.value}
 					showsScale
 					zoomEnabled
-					scrollEnabled={false}
 					zoomControlEnabled
 				>
 					{markers}
@@ -816,11 +708,9 @@ ReactiveMap.propTypes = {
 	pages: types.number,
 	pagination: types.bool,
 	react: types.react,
-	searchAsMove: types.bool,
 	showMapStyles: types.bool,
 	showMarkerClusters: types.bool,
 	showMarkers: types.bool,
-	showSearchAsMove: types.bool,
 	size: types.number,
 	sortBy: types.sortBy,
 	sortOptions: types.sortOptions,
@@ -834,7 +724,7 @@ ReactiveMap.defaultProps = {
 	size: 10,
 	style: {},
 	pages: 5,
-	pagination: false,
+	pagination: true,
 	defaultMapStyle: 'Standard',
 	defaultCenter: {
 		lat: 37.773972,
@@ -847,8 +737,6 @@ ReactiveMap.defaultProps = {
 	markerProps: {},
 	markers: null,
 	showMapStyles: false,
-	showSearchAsMove: true,
-	searchAsMove: false,
 	showMarkers: true,
 	showMarkerClusters: true,
 };

@@ -44,6 +44,7 @@ class Main extends Component {
 							componentId="places"
 							dataField="place.raw"
 							size={10}
+							defaultSelected="Japan"
 						/>
 					</View>
 					<View style={{ flex: 1 }}>
@@ -56,8 +57,6 @@ class Main extends Component {
 							onPopoverClick={item => (
 								<Text>Run before it exceeds {item.mag}</Text>
 							)}
-							searchAsMove
-							zoom={6}
 							// onData={item => ({
 							// 	label: item.mag,
 							// })}
@@ -74,7 +73,6 @@ class Main extends Component {
 							// 		</ScrollView>
 							// 	</View>
 							// )}
-							// pagination
 						/>
 					</View>
 				</ReactiveBase>
