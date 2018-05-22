@@ -16,6 +16,7 @@ module.exports = {
 			'react',
 			// 'expo',
 			'redux',
+			'expo',
 			'react-redux',
 			'redux-thunk',
 			'native-base',

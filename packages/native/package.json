@@ -21,7 +21,11 @@
 		"react-native",
 		"reactivesearch"
 	],
-	"peerDependencies": {},
+	"peerDependencies": {
+		"expo": "*",
+		"react": "*",
+		"react-native": "*"
+	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
 		"babel-eslint": "^8.2.3",
@@ -35,6 +39,7 @@
 		"eslint-plugin-prettier": "^2.6.0",
 		"eslint-plugin-react": "^7.7.0",
 		"eslint-plugin-react-native": "^3.2.1",
+		"expo": "^27.0.2",
 		"husky": "^0.14.3",
 		"prettier": "^1.12.1",
 		"react": "^16.3.2",

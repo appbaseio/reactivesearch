@@ -18,6 +18,8 @@ import DataSearch from './components/search/DataSearch';
 
 import ReactiveList from './components/result/ReactiveList';
 
+import ReactiveMap from './components/maps/ReactiveMap';
+
 export {
 	// basic
 	ReactiveBase,
@@ -44,4 +46,7 @@ export {
 
 	// result
 	ReactiveList,
+
+	// maps
+	ReactiveMap,
 };
