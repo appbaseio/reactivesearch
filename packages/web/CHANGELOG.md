@@ -4,10 +4,12 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-    - Upgrades reactivecore: Fix an edge case with generating suggestions with numeric splits [#8](appbaseio/reactivecore/issues/8)
-    - Add `_index` key to hits - to help segregate the hits handling based incase of multiple indexes [#9](https://github.com/appbaseio/reactivecore/pull/9/)
-    - Fix onQueryChange behavior [#335](https://github.com/appbaseio/reactivesearch/issues/335) [#362](https://github.com/appbaseio/reactivesearch/issues/362) 
 </details>
+
+## v2.6.5
+- core: Fix an edge case with generating suggestions with numeric splits [#8](appbaseio/reactivecore/issues/8)
+- core: Add `_index` key to hits - to help segregate the hits handling based incase of multiple indexes [#9](https://github.com/appbaseio/reactivecore/pull/9/)
+- core: Fix onQueryChange behavior [#335](https://github.com/appbaseio/reactivesearch/issues/335) [#362](https://github.com/appbaseio/reactivesearch/issues/362)
 
 ## v2.6.4
 - Architectural fixes to persist the watchman state in case of component unmount - This helps in keeping the component subscription active incase the component gets remounted.
