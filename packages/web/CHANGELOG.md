@@ -7,7 +7,7 @@
 </details>
 
 ## v2.6.5
-- core: Fix an edge case with generating suggestions with numeric splits [#8](appbaseio/reactivecore/issues/8)
+- core: Fix an edge case with generating suggestions with numeric splits [#8](https://github.com/appbaseio/reactivecore/issues/8)
 - core: Add `_index` key to hits - to help segregate the hits handling based incase of multiple indexes [#9](https://github.com/appbaseio/reactivecore/pull/9/)
 - core: Fix onQueryChange behavior [#335](https://github.com/appbaseio/reactivesearch/issues/335) [#362](https://github.com/appbaseio/reactivesearch/issues/362)
 
