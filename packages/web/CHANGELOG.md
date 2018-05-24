@@ -4,7 +4,8 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-    - Upgrades reactivecore: Fix an edge case with generating suggestions with numeric splits [#8](appbaseio/reactivecore/issues/8) 
+    - Upgrades reactivecore: Fix an edge case with generating suggestions with numeric splits [#8](appbaseio/reactivecore/issues/8)
+    - Add `_index` key to hits - to help segregate the hits handling based incase of multiple indexes [#9](https://github.com/appbaseio/reactivecore/pull/9/) 
 </details>
 
 ## v2.6.4
