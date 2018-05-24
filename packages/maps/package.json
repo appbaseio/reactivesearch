@@ -1,6 +1,6 @@
 {
   "name": "@appbaseio/reactivemaps",
-  "version": "2.0.0-beta-01",
+  "version": "2.0.0-beta-02",
   "description": "React Components for building map UIs",
   "main": "lib/index.js",
   "files": [
@@ -29,7 +29,7 @@
     "react-google-maps": "^9.4.5"
   },
   "peerDependencies": {
-    "@appbaseio/reactivesearch": ">=2.6.3",
+    "@appbaseio/reactivesearch": ">=2.6.5",
     "react": ">=15",
     "react-dom": ">=15"
   },
