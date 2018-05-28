@@ -41,6 +41,7 @@ class DataSearch extends Component {
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
+		this.prevValue = '';
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
@@ -366,8 +367,10 @@ class DataSearch extends Component {
 
 	onValueSelected = (currentValue = this.state.currentValue) => {
 		const { onValueSelected } = this.props;
-		if (onValueSelected) {
+		// if the user clicked outside with the same value, we would ignore it
+		if (onValueSelected && this.prevValue !== currentValue) {
 			onValueSelected(currentValue);
+			this.prevValue = currentValue;
 		}
 	}
 
