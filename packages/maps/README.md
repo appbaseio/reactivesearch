@@ -31,6 +31,12 @@ ReactiveMaps is a complimentary library to ReactiveSearch. Map components requir
 yarn add @appbaseio/reactivemaps @appbaseio/reactivesearch
 ```
 
+## Introduction
+
+Reactivemaps allow you to connect your google-map component with your Elasticsearch cluster and also enables it to talk to other **reactive** components. Not just that, it enhances the development experience by efficiently integrating the streaming enhancements on the map component allowing you to build realtime apps with maps seamlessly. 
+
+Reactivemap efficiently evaluates the map centers dynamically as the map updates and it also allows you to search on the map as it is moved. All and all, Reactivemap offers a rich bundled experience of realtime maps with a simple-to-use API.
+
 ## Concepts
 
 **1. Map component**
