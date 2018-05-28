@@ -4,6 +4,7 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
+    - Fix issue with `onValueSelected` getting called twice [here](https://github.com/appbaseio/reactivesearch/commit/dc60b2e46a8b6d923224e4fd6f017f535a35f79f)
 </details>
 
 ## v2.6.5
