@@ -5,7 +5,7 @@
   <br />
 </h2>
 
-<p align="center">Elasticsearch UI components for reactive Map UIs. <a href="https://opensource.appbase.io/reactivemaps/">Website 🌐</a></p>
+<p align="center">Elasticsearch UI components for building data-driven Map UIs. <a href="https://opensource.appbase.io/reactivemaps/">Website 🌐</a></p>
 <p align="center" style="font-size: 1.2rem"><a href="https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html">Quickstart with Reactivemaps</a>.</p>
 
 <hr />
@@ -16,9 +16,9 @@
 [![npm](https://img.shields.io/npm/dt/@appbaseio/reactivemaps.svg)](https://www.npmjs.com/package/@appbaseio/reactivemaps)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/appbaseio/reactivesearch/blob/dev/.github/CONTRIBUTING.md)
 
-Elasticsearch UI components for reactive Map UIs.
+Elasticsearch UI components for building data-driven Map UIs.
 
--- Add Banner Image --
+![](https://i.imgur.com/Dwz8pX4.png)
 
 [Get our designer templates for sketch](https://opensource.appbase.io/reactivesearch/resources/ReactiveSearch_Playground.sketch).
 
