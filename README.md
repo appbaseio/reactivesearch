@@ -204,3 +204,5 @@ Please check the [contribution guide](.github/CONTRIBUTING.md).
 - [**appbase-js**](https://github.com/appbaseio/appbase-js) While building search UIs is dandy with Reactive Search, you might also need to add some input forms. **appbase-js** comes in handy there.
 
 [⬆ Back to Top](#reactive-search)
+
+<a href="https://new.appbase.io/support/"><img src="https://i.imgur.com/UL6B0uE.png" width="100%" /></a>
