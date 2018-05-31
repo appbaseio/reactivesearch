@@ -99,3 +99,5 @@ If you are having trouble running your react native app and are seeing any depen
 ```
 yarn start --reset-cache
 ```
+
+<a href="https://new.appbase.io/support/"><img src="https://i.imgur.com/UL6B0uE.png" width="100%" /></a>
