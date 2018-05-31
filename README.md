@@ -14,6 +14,7 @@ a.) <a href="https://codeburst.io/how-to-build-an-e-commerce-search-ui-with-reac
 <p align="center">
   <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/web" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/Uo97x64.png" alt="web" title="web" /></a>
   <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/native" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/jgZp3W2.png" alt="native" title="native" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/maps" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/bNPG50x.png" alt="native" title="native" /></a>
 </p>
 
 <hr />
