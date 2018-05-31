@@ -20,7 +20,7 @@ Elasticsearch UI components for building data-driven Map UIs.
 
 ![](https://i.imgur.com/Dwz8pX4.png)
 
-[Get our designer templates for sketch](https://opensource.appbase.io/reactivesearch/resources/ReactiveSearch_Playground.sketch).
+[Get our designer templates for sketch](https://opensource.appbase.io/resources/ReactiveMaps_Playground.sketch).
 
 
 ## Installation
