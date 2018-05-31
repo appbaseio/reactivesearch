@@ -70,3 +70,5 @@ The official docs for the library are at [https://opensource.appbase.io/reactive
 - [**dejavu**](https://github.com/appbaseio/dejavu) allows viewing raw data within an appbase.io (or Elasticsearch) app. **Soon to be released feature:** An ability to import custom data from CSV and JSON files, along with a guided walkthrough on applying data mappings.
 
 - [**mirage**](https://github.com/appbaseio/mirage) ReactiveSearch components can be extended using custom Elasticsearch queries. For those new to Elasticsearch, Mirage provides an intuitive GUI for composing queries.
+
+<a href="https://new.appbase.io/support/"><img src="https://i.imgur.com/UL6B0uE.png" width="100%" /></a>
