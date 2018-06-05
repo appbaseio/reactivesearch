@@ -4,8 +4,12 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-    - Fix issue with `onValueSelected` getting called twice [here](https://github.com/appbaseio/reactivesearch/commit/dc60b2e46a8b6d923224e4fd6f017f535a35f79f)
 </details>
+
+## v2.6.6
+- Fix issue with `onValueSelected` getting called twice [here](https://github.com/appbaseio/reactivesearch/commit/dc60b2e46a8b6d923224e4fd6f017f535a35f79f)
+- Support dyanmic props on ReactiveBase component [#373](https://github.com/appbaseio/reactivesearch/issues/373)
+- Handle pagination updates on defaultQuery change in result components - [here](https://github.com/appbaseio/reactivesearch/commit/b7543e2f73828fc4bd846bc00ac1d2aa2b35e2ca)
 
 ## v2.6.5
 - core: Fix an edge case with generating suggestions with numeric splits [#8](https://github.com/appbaseio/reactivecore/issues/8)
