@@ -146,7 +146,7 @@ class ReactiveList extends Component {
 			&& !isEqual(nextProps.defaultQuery(), this.defaultQuery)
 		) {
 			const options = getQueryOptions(nextProps);
-			options.from = this.state.from;
+			options.from = 0;
 			this.defaultQuery = nextProps.defaultQuery();
 
 			const { sort, ...query } = this.defaultQuery;
@@ -160,6 +160,12 @@ class ReactiveList extends Component {
 				componentId: this.internalComponent,
 				query,
 			}, true);
+
+			// reset page because of query change
+			this.setState({
+				currentPage: 0,
+				from: 0,
+			});
 		}
 
 		if (this.props.stream !== nextProps.stream) {
