@@ -6,6 +6,7 @@ import Appbase from 'appbase-js';
 import { ThemeProvider } from 'emotion-theming';
 
 import configureStore, { storeKey } from '@appbaseio/reactivecore';
+import { checkSomePropChange } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import URLParamsProvider from './URLParamsProvider';
 
@@ -22,6 +23,38 @@ class ReactiveBase extends Component {
 	constructor(props) {
 		super(props);
 
+		this.state = {
+			key: '__REACTIVE_BASE__',
+		};
+
+		this.setStore(props);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			['app', 'url', 'type', 'credentials', 'mapKey', 'headers'],
+			() => {
+				this.setStore(nextProps);
+				this.setState((state => ({
+					key: `${state.key}-0`,
+				})));
+			},
+		);
+	}
+
+	componentDidCatch() {
+		console.error(
+			'An error has occured. You\'re using Reactivesearch Version:',
+			`${process.env.VERSION || require('../../../package.json').version}.`,
+			'If you think this is a problem with Reactivesearch, please try updating',
+			'to the latest version. If you\'re already at the latest version, please open',
+			'an issue at https://github.com/appbaseio/reactivesearch/issues',
+		);
+	}
+
+	setStore = (props) => {
 		this.type = props.type ? props.type : '*';
 
 		const credentials = props.url && props.url.trim() !== '' && !props.credentials
@@ -39,7 +72,7 @@ class ReactiveBase extends Component {
 		if (typeof window !== 'undefined') {
 			queryParams = window.location.search;
 		} else {
-			queryParams = this.props.queryParams || '';
+			queryParams = props.queryParams || '';
 		}
 
 		this.params = new URLSearchParams(queryParams);
@@ -47,7 +80,10 @@ class ReactiveBase extends Component {
 
 		try {
 			Array.from(this.params.keys()).forEach((key) => {
-				selectedValues = { ...selectedValues, [key]: { value: JSON.parse(this.params.get(key)) } };
+				selectedValues = {
+					...selectedValues,
+					[key]: { value: JSON.parse(this.params.get(key)) },
+				};
 			});
 		} catch (e) {
 			selectedValues = {};
@@ -64,26 +100,18 @@ class ReactiveBase extends Component {
 			...this.props.initialState,
 		};
 		this.store = configureStore(initialState);
-	}
-
-	componentDidCatch() {
-		console.error(
-			'An error has occured. You\'re using Reactivesearch Version:',
-			`${process.env.VERSION || require('../../../package.json').version}.`,
-			'If you think this is a problem with Reactivesearch, please try updating',
-			'to the latest version. If you\'re already at the latest version, please open',
-			'an issue at https://github.com/appbaseio/reactivesearch/issues',
-		);
-	}
+	};
 
 	render() {
 		const theme = composeThemeObject(
 			getTheme(this.props.themePreset),
 			this.props.theme,
 		);
+
 		return (
 			<ThemeProvider
 				theme={theme}
+				key={this.state.key}
 			>
 				<Provider store={this.store}>
 					<URLParamsProvider
