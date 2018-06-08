@@ -404,7 +404,7 @@ class ReactiveList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.isLoading && this.props.pagination && this.props.loader}
+				{this.state.isLoading && this.props.pagination && this.props.loader}
 				<Flex
 					labelPosition={this.props.sortOptions ? 'right' : 'left'}
 					className={getClassName(this.props.innerClass, 'resultsInfo')}
