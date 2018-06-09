@@ -34,8 +34,9 @@ class ReactiveBase extends Component {
 			type: this.type,
 		};
 
+		const { headers = {} } = props;
 		const appbaseRef = new Appbase(config);
-		this.store = configureStore({ config, appbaseRef });
+		this.store = configureStore({ config, appbaseRef, headers });
 	}
 
 	render() {
@@ -55,6 +56,7 @@ ReactiveBase.propTypes = {
 	type: types.string,
 	url: types.string,
 	credentials: types.string,
+	headers: types.headers,
 	app: types.stringRequired,
 	theme: types.style,
 	children: types.children,
