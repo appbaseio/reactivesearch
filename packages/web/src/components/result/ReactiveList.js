@@ -285,7 +285,7 @@ class ReactiveList extends Component {
 	scrollHandler = () => {
 		if (
 			!this.state.isLoading
-			&& (window.innerHeight + window.scrollY + 300) >= document.body.offsetHeight
+			&& (window.innerHeight + window.pageYOffset + 300) >= document.body.offsetHeight
 		) {
 			this.loadMore();
 		}
