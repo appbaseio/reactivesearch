@@ -27,6 +27,7 @@ export interface ReactiveListProps extends CommonProps {
 	sortOptions?: types.sortOptions;
 	stream?: boolean;
 	onPageChange?: (...args: any[]) => any;
+	onPageClick?: (...args: any[]) => any;
 	defaultPage?: number;
 	listClass?: string;
 }

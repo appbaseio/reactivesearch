@@ -316,6 +316,11 @@ class ReactiveList extends Component {
 	};
 
 	setPage = (page) => {
+		// onPageClick will be called everytime a pagination button is clicked
+		const { onPageClick } = this.props;
+		if (onPageClick) {
+			onPageClick(page + 1);
+		}
 		const value = this.props.size * page;
 		const options = getQueryOptions(this.props);
 		options.from = this.state.from;
@@ -525,6 +530,7 @@ ReactiveList.propTypes = {
 	onData: types.func,
 	onNoResults: types.title,
 	onPageChange: types.func,
+	onPageClick: types.func,
 	onResultStats: types.func,
 	pages: types.number,
 	pagination: types.bool,
