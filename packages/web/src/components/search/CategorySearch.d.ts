@@ -13,6 +13,7 @@ export interface CategorySearchProps extends CommonProps {
 	debounce?: number;
 	defaultSelected?: string;
 	defaultSuggestions?: types.suggestions;
+	defaultQuery?: (...args: any[]) => any;
 	fieldWeights?: types.fieldWeights;
 	filterLabel?: string;
 	fuzziness?: types.fuzziness;
