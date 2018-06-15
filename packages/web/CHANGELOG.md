@@ -6,6 +6,7 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
     - Add `defaultQuery` in search components [#353](https://github.com/appbaseio/reactivesearch/issues/353) (Support will be added in other components in coming releases)
     - Add `onPageClick` in result components [#396](https://github.com/appbaseio/reactivesearch/issues/396)
+    - Add `containerProps` in `ResultCard` and `ResultList` [#376](https://github.com/appbaseio/reactivesearch/issues/376)
 </details>
 
 ## v2.6.6
