@@ -20,6 +20,7 @@ class ResultCard extends Component {
 					className={getClassName(this.props.innerClass, 'listItem')}
 					target={this.props.target}
 					rel={this.props.target === '_blank' ? 'noopener noreferrer' : null}
+					{...result.containerProps}
 				>
 					<Image
 						style={{ backgroundImage: `url(${result.image})` }}
