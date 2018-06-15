@@ -201,10 +201,12 @@ class CategorySearch extends Component {
 				fields = [props.dataField];
 			}
 			finalQuery = {
-				bool: {
+				bool: Object.assign({
 					should: CategorySearch.shouldQuery(value, fields, props),
 					minimum_should_match: '1',
-				},
+				}, props.defaultQuery && ({
+					must: props.defaultQuery(value, props),
+				})),
 			};
 
 			if (category && category !== '*') {

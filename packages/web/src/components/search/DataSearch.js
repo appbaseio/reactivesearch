@@ -171,10 +171,12 @@ class DataSearch extends Component {
 				fields = [props.dataField];
 			}
 			finalQuery = {
-				bool: {
+				bool: Object.assign({
 					should: DataSearch.shouldQuery(value, fields, props),
 					minimum_should_match: '1',
-				},
+				}, props.defaultQuery && ({
+					must: props.defaultQuery(value, props),
+				})),
 			};
 		}
 
