@@ -205,4 +205,4 @@ Please check the [contribution guide](.github/CONTRIBUTING.md).
 
 [⬆ Back to Top](#reactive-search)
 
-<a href="https://new.appbase.io/support/"><img src="https://i.imgur.com/UL6B0uE.png" width="100%" /></a>
+<a href="https://appbase.io/support/"><img src="https://i.imgur.com/UL6B0uE.png" width="100%" /></a>
