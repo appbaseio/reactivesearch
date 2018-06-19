@@ -80,4 +80,4 @@ Check out the [changelog](./CHANGELOG.md) for more info.
 
 - [**mirage**](https://github.com/appbaseio/mirage) ReactiveSearch components can be extended using custom Elasticsearch queries. For those new to Elasticsearch, Mirage provides an intuitive GUI for composing queries.
 
-<a href="https://new.appbase.io/support/"><img src="https://i.imgur.com/UL6B0uE.png" width="100%" /></a>
+<a href="https://appbase.io/support/"><img src="https://i.imgur.com/UL6B0uE.png" width="100%" /></a>
