@@ -29,7 +29,7 @@
   "author": "metagrover",
   "license": "Apache-2.0",
   "dependencies": {
-    "@appbaseio/reactivecore": "^3.2.0",
+    "@appbaseio/reactivecore": "^3.3.0",
     "appbase-js": "^3.0.0",
     "downshift": "^1.31.2",
     "emotion": "^9.0.0",
@@ -37,8 +37,7 @@
     "prop-types": "^15.6.0",
     "react-day-picker": "^7.0.5",
     "react-emotion": "^9.0.0",
-    "react-redux": "^5.0.6",
-    "redux": "^3.7.2",
+    "react-redux": "^5.0.7",
     "rheostat": "^2.1.1",
     "url-search-params": "^0.10.0",
     "xdate": "^0.8.2"

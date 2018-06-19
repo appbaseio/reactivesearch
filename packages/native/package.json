@@ -46,7 +46,7 @@
 		"react-native": "^0.55.4"
 	},
 	"dependencies": {
-		"@appbaseio/reactivecore": "^3.2.0",
+		"@appbaseio/reactivecore": "^3.3.0",
 		"@ptomasroos/react-native-multi-slider": "^0.0.13",
 		"appbase-js": "^3.0.0",
 		"hoist-non-react-statics": "^2.5.0",
@@ -54,8 +54,6 @@
 		"prop-types": "^15.6.1",
 		"react-native-calendars": "^1.18.2",
 		"react-redux": "^5.0.7",
-		"redux": "3.7.2",
-		"redux-thunk": "^2.2.0",
 		"xdate": "^0.8.2"
 	}
 }

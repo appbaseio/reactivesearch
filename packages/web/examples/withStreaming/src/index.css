@@ -1,0 +1,36 @@
+header {
+	width: 100%;
+	margin: 0;
+	padding: 3rem 6rem;
+	background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+}
+
+header h2 {
+	color: #424242;
+	text-align: center;
+	letter-spacing: 0.06rem;
+	margin-bottom: 12px;
+}
+
+header input {
+	border: 0;
+	height: 60px;
+	padding: 0 28px;
+	font-size: 18px;
+	border-radius: 999em;
+	box-shadow: 0 20px 30px 0 rgba(16, 36, 94, 0.2),
+		inset 0 -8px 0 0 rgba(103, 117, 161, 0.08);
+}
+
+h2 {
+	font-size: 18px;
+	line-height: 28px;
+}
+
+p {
+	font-size: 16px;
+}
+
+a:hover, a:focus {
+	text-decoration: none;
+}
