@@ -548,6 +548,7 @@ ReactiveList.propTypes = {
 ReactiveList.defaultProps = {
 	className: null,
 	currentPage: 0,
+	listClass: '',
 	pages: 5,
 	pagination: false,
 	paginationAt: 'bottom',
