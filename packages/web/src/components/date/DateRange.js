@@ -398,7 +398,7 @@ DateRange.propTypes = {
 	autoFocusEnd: types.bool,
 	className: types.string,
 	componentId: types.stringRequired,
-	dataField: types.stringRequired,
+	dataField: types.dataFieldArray,
 	dayPickerInputProps: types.props,
 	defaultSelected: types.dateObject,
 	filterLabel: types.string,
