@@ -49,7 +49,7 @@ class SelectedFilters extends Component {
 
 							if (label && ((isArray && value.length) || (!isArray && value))) {
 								hasValues = true;
-								let valueToRender = this.renderValue(value, isArray);
+								const valueToRender = this.renderValue(value, isArray);
 								return (
 									<Button
 										className={getClassName(this.props.innerClass, 'button') || null}
