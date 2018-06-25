@@ -9,9 +9,15 @@ import Container from '../../styles/Container';
 import { connect } from '../../utils';
 
 class SelectedFilters extends Component {
-	remove = (component) => {
+	remove = (component, value = null) => {
 		this.props.setValue(component, null);
+		this.props.onClear && this.props.onClear(component, value);
 	};
+
+	clearValues = () => {
+		this.props.clearValues();
+		this.props.onClear && this.props.onClear(null);
+	}
 
 	renderValue = (value, isArray) => {
 		if (isArray && value.length) {
@@ -43,14 +49,15 @@ class SelectedFilters extends Component {
 
 							if (label && ((isArray && value.length) || (!isArray && value))) {
 								hasValues = true;
+								let valueToRender = this.renderValue(value, isArray);
 								return (
 									<Button
 										className={getClassName(this.props.innerClass, 'button') || null}
 										key={`${component}-${index}`} // eslint-disable-line
-										onClick={() => this.remove(component)}
+										onClick={() => this.remove(component, value)}
 									>
 										<span>
-											{selectedValues[component].label}: {this.renderValue(value, isArray)}
+											{selectedValues[component].label}: {valueToRender}
 										</span>
 										<span>&#x2715;</span>
 									</Button>
@@ -64,7 +71,7 @@ class SelectedFilters extends Component {
 						? (
 							<Button
 								className={getClassName(this.props.innerClass, 'button') || null}
-								onClick={this.props.clearValues}
+								onClick={this.clearValues}
 							>
 								{this.props.clearAllLabel}
 							</Button>
@@ -87,6 +94,7 @@ SelectedFilters.propTypes = {
 	showClearAll: types.bool,
 	style: types.style,
 	theme: types.style,
+	onClear: types.func
 };
 
 SelectedFilters.defaultProps = {
