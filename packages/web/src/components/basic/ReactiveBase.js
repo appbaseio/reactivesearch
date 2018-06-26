@@ -66,6 +66,7 @@ class ReactiveBase extends Component {
 			app: props.app,
 			credentials,
 			type: this.type,
+		  	beforeSend: props.beforeSend
 		};
 
 		let queryParams = '';
