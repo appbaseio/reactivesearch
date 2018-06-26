@@ -305,7 +305,7 @@ class CategorySearch extends Component {
 		this.locked = true;
 		const performUpdate = () => {
 			this.setState({
-				currentValue: value,
+				suggestions: [],
 			}, () => {
 				if (isDefaultValue) {
 					if (this.props.autosuggest) {
@@ -392,7 +392,7 @@ class CategorySearch extends Component {
 		}
 		if (value.trim() !== this.state.currentValue.trim()) {
 			this.setState({
-				suggestions: [],
+				currentValue: value,
 			}, () => {
 				this.setValue(value);
 			});
