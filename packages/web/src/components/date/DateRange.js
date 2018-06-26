@@ -304,6 +304,7 @@ class DateRange extends Component {
 							dayPickerProps={{
 								numberOfMonths: this.props.numberOfMonths,
 								initialMonth: this.props.initialMonth,
+								disabledDays: { after: this.state.currentDate ? this.state.currentDate.end : '' },
 								selectedDays,
 								modifiers,
 							}}

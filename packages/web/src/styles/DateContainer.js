@@ -222,6 +222,10 @@ const DateContainer = styled.div`
 		z-index: 4;
 	}
 
+	.DayPickerInput-OverlayWrapper .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside){
+		background-color:${({ theme }) => shade(theme.colors.primaryColor, 0.6) || '#f0f8ff'};
+	}
+
 	.DayPickerInput-Overlay {
 		left: 0;
 		top: 1px;
