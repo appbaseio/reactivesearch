@@ -199,7 +199,7 @@ const DateContainer = styled.div`
 		border-bottom-right-radius: 50%;
 	}
 
-	.DayPicker-Day.DayPicker-Day--end{
+	.DayPicker-Day.DayPicker-Day--end:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside){
 		border-top-right-radius: 50%;
 		border-bottom-right-radius: 50%;
 		background-color: ${({ theme }) => theme.colors.primaryColor || '#fff'};
