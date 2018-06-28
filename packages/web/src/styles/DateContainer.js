@@ -199,6 +199,13 @@ const DateContainer = styled.div`
 		border-bottom-right-radius: 50%;
 	}
 
+	.DayPicker-Day.DayPicker-Day--end:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside){
+		border-top-right-radius: 50%;
+		border-bottom-right-radius: 50%;
+		background-color: ${({ theme }) => theme.colors.primaryColor || '#fff'};
+		color: #fff;
+	}
+
 	.DayPickerInput {
 		flex: 1;
 	}
@@ -220,6 +227,10 @@ const DateContainer = styled.div`
 		width: 100%;
 		left: 0;
 		z-index: 4;
+	}
+
+	.DayPickerInput-OverlayWrapper .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside){
+		background-color:${({ theme }) => shade(theme.colors.primaryColor, 0.8) || '#f0f8ff'};
 	}
 
 	.DayPickerInput-Overlay {
