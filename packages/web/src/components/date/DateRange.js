@@ -30,7 +30,7 @@ class DateRange extends Component {
 		super(props);
 		this.state = {
 			currentDate: null,
-			dateHovered:null
+			dateHovered: null,
 		};
 		this.locked = false;
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
@@ -215,7 +215,7 @@ class DateRange extends Component {
 
 	handleDayMouseEnter = (day) => {
 		this.setState({
-			enteredTo: day,
+			dateHovered: day,
 		});
 	}
 
@@ -273,14 +273,14 @@ class DateRange extends Component {
 	};
 
 	render() {
-		const { currentDate,dateHovered } = this.state;
+		const { currentDate, dateHovered } = this.state;
 		const start = currentDate ? currentDate.start : '';
 		const end = currentDate ? currentDate.end : '';
-		const dateHovered = dateHovered || '';
+		const endDay = dateHovered || '';
 		const selectedDays = [
-			start, { from: start, to: dateHovered },
+			start, { from: start, to: endDay },
 		];
-		const modifiers = { start, end:dateHovered };
+		const modifiers = { start, end: endDay };
 		return (
 			<DateContainer
 				range
