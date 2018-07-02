@@ -13,7 +13,7 @@ const filters = ({ colors: { borderColor } }) => css`
 		position: relative;
 
 		span:first-child {
-			max-width: 360px;
+			max-width: 260px;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
