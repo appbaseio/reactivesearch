@@ -12,6 +12,7 @@ import {
 	pushToAndClause,
 	parseHits,
 	isEqual,
+	checkPropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -93,6 +94,10 @@ class ReactiveComponent extends Component {
 				query: query || null,
 			});
 		}
+
+		checkPropChange(this.props.react, nextProps.react, () => {
+			this.setReact(nextProps);
+		});
 	}
 
 	componentWillUnmount() {
