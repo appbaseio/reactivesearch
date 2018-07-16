@@ -60,7 +60,8 @@ function getPrecision(a) {
 
 function withDistinctLat(loc, count) {
 	const length = getPrecision(loc.lat);
-	const suffix = (1 / (10 ** (length - 2))) * count;
+	const noiseFactor = (length >= 6) ? 4 : (length - 2);
+	const suffix = (1 / (10 ** noiseFactor)) * count;
 	const location = {
 		...loc,
 		lat: parseFloat((loc.lat + suffix).toFixed(length)),
@@ -666,7 +667,7 @@ class ReactiveMap extends Component {
 
 		hits.forEach((item) => {
 			const updatedItem = { ...item };
-			const location = item[this.props.dataField];
+			const location = this.parseLocation(item[this.props.dataField]);
 			const key = JSON.stringify(location);
 			const count = hitMap[key] || 0;
 
