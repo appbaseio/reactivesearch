@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "maps",
+    "description": "This project is really great.",
+    "slug": "maps",
+    "privacy": "public",
+    "sdkVersion": "27.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "packagerOpts": {
+			"config": "./rn-cli.config.js",
+			"assetExts": [
+				"ttf",
+				"otf"
+			],
+			"projectRoots": ""
+		},
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+			"bundleIdentifier": "com.appbaseio.maps"
+		},
+		"android": {
+      "package": "com.appbaseio.maps",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyApin_jORcTsknjwBKCEsJsR07q0Hn9J-s"
+        }
+      }
+		}
+  }
+}

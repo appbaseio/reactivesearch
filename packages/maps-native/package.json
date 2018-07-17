@@ -1,0 +1,57 @@
+{
+	"name": "@appbaseio/reactivemaps-native",
+	"version": "0.1.0",
+	"description": "Native map components for building reactive UIs with Elasticsearch",
+	"main": "src/index.js",
+	"files": [
+		"src/"
+	],
+	"scripts": {
+		"lint": "eslint .",
+		"precommit": "eslint ."
+	},
+	"author": "Appbase Inc. <info@appbase.io> (https://github.com/appbaseio)",
+	"license": "Apache-2.0",
+	"homepage": "https://github.com/appbaseio/reactivesearch",
+	"keywords": [
+		"appbaseio",
+		"appbase",
+		"search",
+		"UI components",
+		"react-native",
+		"reactivesearch",
+		"maps"
+	],
+	"peerDependencies": {
+		"expo": "*",
+		"react": "*",
+		"react-native": "*"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-eslint": "^8.2.3",
+		"babel-preset-react-native": "^4.0.0",
+		"eslint": "^4.19.1",
+		"eslint-config-airbnb": "^16.1.0",
+		"eslint-config-prettier": "^2.9.0",
+		"eslint-plugin-babel": "^5.1.0",
+		"eslint-plugin-import": "^2.11.0",
+		"eslint-plugin-jsx-a11y": "^6.0.3",
+		"eslint-plugin-prettier": "^2.6.0",
+		"eslint-plugin-react": "^7.7.0",
+		"eslint-plugin-react-native": "^3.2.1",
+		"expo": "^27.0.2",
+		"husky": "^0.14.3",
+		"prettier": "^1.12.1",
+		"react": "^16.3.2",
+		"react-native": "^0.55.4"
+	},
+	"dependencies": {
+		"@appbaseio/reactivecore": "^3.3.0",
+		"@ptomasroos/react-native-multi-slider": "^0.0.13",
+		"appbase-js": "^3.0.0",
+		"hoist-non-react-statics": "^2.5.0",
+		"native-base": "^2.4.2",
+		"prop-types": "^15.6.1"
+	}
+}
