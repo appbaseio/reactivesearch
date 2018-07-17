@@ -1,7 +1,7 @@
 <h2 align="center">
   <img src="https://i.imgur.com/iiR9wAs.png" alt="reactivesearch" title="reactivesearch" width="200" />
   <br />
-  ReactiveSearch Native
+  ReactiveMaps Native
   <br />
 </h2>
 
@@ -22,12 +22,15 @@
 
 <br />
 
-#### :rocket: Jumpstart your app development with
+#### :rocket: Installation
+
+ReactiveMaps is a complimentary library to ReactiveSearch. Map components require ReactiveSearch architecture and its root component to begin with. If you wish to build anything on reactivemaps, you’ll need to install reactivesearch along with it.
+
 ```
-npm install @appbaseio/reactivesearch-native
+npm install @appbaseio/reactivemaps-native
 ```
 
-and the [quickstart guide](https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html).
+and the [quickstart guide](https://opensource.appbase.io/reactive-manual/native/getting-started/reactivemaps.html).
 
 ![](https://ph-files.imgix.net/2d1eab6b-c836-4255-89df-0553841d7c33?auto=format&auto=compress&codec=mozjpeg&cs=strip)
 
@@ -36,7 +39,7 @@ and the [quickstart guide](https://opensource.appbase.io/reactive-manual/native/
 
 Building a meaningful data-driven mobile app with React Native today takes anywhere between weeks to months.
 
-ReactiveSearch is built with the aim of bringing down the development lifecycle of a data-driven app to days.
+ReactiveSearch and Reactivemaps are built with the aim of bringing down the development lifecycle of a data-driven app to days. Reactivemaps allow you to connect your native google-map component with your Elasticsearch cluster and also enables it to talk to other **reactive** components. Not just that, it enhances the development experience by efficiently integrating the streaming enhancements on the map component allowing you to build realtime apps with maps seamlessly. 
 
 #### Learn once, write anywhere!
 
@@ -97,6 +100,7 @@ The simplest way to debug the app is using [React Native Debugger](https://githu
 If you are having trouble running your react native app and are seeing any dependency warnings, reset cache via
 
 ```
+watchman watch-del-all
 yarn start --reset-cache
 ```
 

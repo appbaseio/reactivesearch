@@ -97,6 +97,7 @@ The simplest way to debug the app is using [React Native Debugger](https://githu
 If you are having trouble running your react native app and are seeing any dependency warnings, reset cache via
 
 ```
+watchman watch-del-all
 yarn start --reset-cache
 ```
 
