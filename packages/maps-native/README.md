@@ -30,7 +30,7 @@ ReactiveMaps is a complimentary library to ReactiveSearch. Map components requir
 npm install @appbaseio/reactivemaps-native
 ```
 
-and the [quickstart guide](https://opensource.appbase.io/reactive-manual/native/getting-started/reactivemaps.html).
+Start with the [quickstart guide here](https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch-native-maps.html).
 
 ![](https://ph-files.imgix.net/2d1eab6b-c836-4255-89df-0553841d7c33?auto=format&auto=compress&codec=mozjpeg&cs=strip)
 
