@@ -4,10 +4,14 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-    - Fix an issue with `ReactiveList` rendering 'undefined' as class [#416](https://github.com/appbaseio/reactivesearch/issues/416)
-    - Fix an issue with `DateRange` field to accept both string and array [#421](https://github.com/appbaseio/reactivesearch/issues/421)
-    - Fix some edge cases in `DateRange` and add hover effect when selecting a date range [PR #428](https://github.com/appbaseio/reactivesearch/pull/428)
 </details>
+
+## v2.6.9
+- Fix an issue with `ReactiveList` rendering 'undefined' as class [#416](https://github.com/appbaseio/reactivesearch/issues/416)
+- Fix an issue with `DateRange` field to accept both string and array [#421](https://github.com/appbaseio/reactivesearch/issues/421)
+- Fix some edge cases in `DateRange` and add hover effect when selecting a date range [PR #428](https://github.com/appbaseio/reactivesearch/pull/428)
+- Fix `react` prop update in `ReactiveComponent` [PR #451](https://github.com/appbaseio/reactivesearch/pull/451)
+-  Add onFilterCleared prop to SelectedFilters [#401](https://github.com/appbaseio/reactivesearch/issues/401)
 
 ## v2.6.8
 - Update core dependencies to fix streaming issues
