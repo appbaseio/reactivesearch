@@ -37,6 +37,11 @@ const LightMonochrome = require('./addons/styles/LightMonochrome');
 const MidnightCommander = require('./addons/styles/MidnightCommander');
 const UnsaturatedBrowns = require('./addons/styles/UnsaturatedBrowns');
 
+const MAP_CENTER = {
+	lat: 37.7749,
+	lng: 122.4194,
+};
+
 const MapComponent = withGoogleMap((props) => {
 	const { children, onMapMounted, ...allProps } = props;
 
@@ -129,15 +134,42 @@ class ReactiveMap extends Component {
 			if (this.defaultQuery.sort) {
 				options.sort = this.defaultQuery.sort;
 			}
-			const mustExecute = this.state.searchAsMove || !!this.defaultQuery.query;
+
+			// since we want defaultQuery to be executed anytime
+			// map component's query is being executed
+			const persistMapQuery = true;
+			// no need to forceExecute because setReact() will capture the main query
+			// and execute the defaultQuery along with it
+			const forceExecute = false;
+
 			this.props.setMapData(
 				this.props.componentId,
 				this.defaultQuery.query,
-				mustExecute,
+				persistMapQuery,
+				forceExecute,
 			);
 		} else {
-			const mustExecute = this.state.searchAsMove || !!this.props.center;
-			this.props.setMapData(this.props.componentId, null, mustExecute);
+			// only apply geo-distance when defaultQuery prop is not set
+			const query = this.getGeoDistanceQuery();
+			if (query) {
+				// - only persist the map query if center prop is set
+				// - ideally, persist the map query if you want to keep executing it
+				//   whenever there is a change (due to subscription) in the component query
+				const persistMapQuery = !!this.props.center;
+
+				// - forceExecute will make sure that the component query + Map query gets executed
+				//   irrespective of the changes in the component query
+				// - forceExecute will only come into play when searchAsMove is true
+				// - kindly note that forceExecute may result in one additional network request
+				//   since it bypasses the gatekeeping
+				const forceExecute = this.state.searchAsMove;
+				this.props.setMapData(
+					this.props.componentId,
+					query,
+					persistMapQuery,
+					forceExecute,
+				);
+			}
 		}
 
 		this.props.setQueryOptions(
@@ -171,11 +203,15 @@ class ReactiveMap extends Component {
 		}
 
 		if (!isEqual(this.props.center, nextProps.center)) {
-			const mustExecute = this.state.searchAsMove || !!nextProps.center;
+			const persistMapQuery = !!nextProps.center;
+			// we need to forceExecute the query because the center has changed
+			const forceExecute = true;
+
 			this.props.setMapData(
 				this.props.componentId,
-				this.getGeoQuery(),
-				mustExecute,
+				this.getGeoQuery(nextProps),
+				persistMapQuery,
+				forceExecute,
 			);
 		}
 
@@ -200,11 +236,14 @@ class ReactiveMap extends Component {
 				nextProps.setQueryOptions(nextProps.componentId, options, !query);
 			}
 
-			const mustExecute = this.state.searchAsMove || !!query;
+			const persistMapQuery = true;
+			const forceExecute = true;
+
 			this.props.setMapData(
 				this.props.componentId,
 				query,
-				mustExecute,
+				persistMapQuery,
+				forceExecute,
 			);
 		}
 
@@ -266,6 +305,8 @@ class ReactiveMap extends Component {
 			this.setState({
 				searchAsMove: nextProps.searchAsMove,
 			});
+			// no need to execute the map query since the component will
+			// get re-rendered and the new query will be automatically evaluated
 		}
 
 		if (
@@ -377,7 +418,27 @@ class ReactiveMap extends Component {
 		return false;
 	}
 
-	getGeoQuery = () => {
+	// getArrPosition = location => [location.lat, location.lon || location.lng];
+	getArrPosition = location => ({ lat: location.lat, lon: location.lon || location.lng });
+
+	getGeoDistanceQuery = () => {
+		const center = this.props.center || this.props.defaultCenter;
+		if (center && this.props.defaultRadius) {
+			// skips geo bounding box query on initial load
+			this.skipBoundingBox = true;
+			return {
+				geo_distance: {
+					distance: `${this.props.defaultRadius}${this.props.unit}`,
+					[this.props.dataField]: this.getArrPosition(center),
+				},
+			};
+		}
+		return null;
+	}
+
+	getGeoQuery = (props = this.props) => {
+		this.defaultQuery = props.defaultQuery ? props.defaultQuery() : null;
+
 		if (this.mapRef) {
 			const mapBounds = this.mapRef.getBounds();
 			const north = mapBounds.getNorthEast().lat();
@@ -393,27 +454,55 @@ class ReactiveMap extends Component {
 				mapBoxBounds: boundingBoxCoordinates,
 			});
 
-			return {
+			const geoQuery = {
 				geo_bounding_box: {
 					[this.props.dataField]: boundingBoxCoordinates,
 				},
 			};
+
+			if (this.defaultQuery) {
+				const { query } = this.defaultQuery;
+
+				if (query) {
+					// adds defaultQuery's query to geo-query
+					// to generate a map query
+
+					return {
+						must: [
+							geoQuery,
+							query,
+						],
+					};
+				}
+			}
+
+			return geoQuery;
 		}
-		return null;
+
+		// return the defaultQuery (if set) or null when map query not available
+		return this.defaultQuery ? this.defaultQuery.query : null;
 	};
 
 	setGeoQuery = (executeUpdate = false) => {
-		// execute a new query on initial mount
-		if (executeUpdate || (!this.props.defaultQuery && !this.state.mapBoxBounds)) {
+		// execute a new query on theinitial mount
+		// or whenever searchAsMove is true and the map is dragged
+		if (
+			executeUpdate
+			|| (!this.skipBoundingBox && !this.state.mapBoxBounds)
+		) {
 			this.defaultQuery = this.getGeoQuery();
 
-			const mustExecute = this.state.searchAsMove || !!this.props.center;
+			const persistMapQuery = !!this.props.center;
+			const forceExecute = this.state.searchAsMove;
+
 			this.props.setMapData(
 				this.props.componentId,
 				this.defaultQuery,
-				mustExecute,
+				persistMapQuery,
+				forceExecute,
 			);
 		}
+		this.skipBoundingBox = false;
 	}
 
 	loadMore = () => {
@@ -518,19 +607,27 @@ class ReactiveMap extends Component {
 
 		if (hits && hits.length) {
 			if (this.props.autoCenter || this.props.streamAutoCenter) {
-				return this.getHitsCenter(hits) || this.parseLocation(this.props.defaultCenter);
+				return this.getHitsCenter(hits) || this.getDefaultCenter();
 			}
 			return hits[0] && hits[0][this.props.dataField]
 				? this.getPosition(hits[0])
-				: this.parseLocation(this.props.defaultCenter);
+				: this.getDefaultCenter();
 		}
-		return this.parseLocation(this.props.defaultCenter);
+		return this.getDefaultCenter();
 	};
 
+	getDefaultCenter = () => {
+		if (this.props.defaultCenter) return this.parseLocation(this.props.defaultCenter);
+		return this.parseLocation(MAP_CENTER);
+	}
+
 	handleOnIdle = () => {
-		if (this.props.hits.length) {
-			// only make the geo_bounding query if we have hits data
-			this.setGeoQuery();
+		// only make the geo_bounding query if we have hits data
+		if (this.props.hits.length && this.state.searchAsMove) {
+			// always execute geo-bounds query when center is set
+			// to improve the specificity of search results
+			const executeUpdate = !!this.props.center;
+			this.setGeoQuery(executeUpdate);
 		}
 		if (this.props.mapProps.onIdle) this.props.mapProps.onIdle();
 	};
@@ -937,6 +1034,8 @@ ReactiveMap.propTypes = {
 	streamAutoCenter: types.bool,
 	style: types.style,
 	URLParams: types.bool,
+	defaultRadius: types.number,
+	unit: types.string,
 };
 
 ReactiveMap.defaultProps = {
@@ -946,10 +1045,6 @@ ReactiveMap.defaultProps = {
 	pages: 5,
 	pagination: false,
 	defaultMapStyle: 'Standard',
-	defaultCenter: {
-		lat: 37.7749,
-		lng: 122.4194,
-	},
 	autoCenter: false,
 	streamAutoCenter: false,
 	defaultZoom: 8,
@@ -961,6 +1056,8 @@ ReactiveMap.defaultProps = {
 	searchAsMove: false,
 	showMarkers: true,
 	showMarkerClusters: true,
+	unit: 'mi',
+	defaultRadius: 100,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -986,8 +1083,8 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
-	setMapData: (component, geoQuery, mustExecute) =>
-		dispatch(setMapData(component, geoQuery, mustExecute)),
+	setMapData: (component, geoQuery, persistMapQuery, forceExecute = false) =>
+		dispatch(setMapData(component, geoQuery, persistMapQuery, forceExecute)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveMap);
