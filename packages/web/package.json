@@ -1,6 +1,6 @@
 {
   "name": "@appbaseio/reactivesearch",
-  "version": "2.6.8",
+  "version": "2.6.9",
   "description": "A React UI components library for building search experiences",
   "main": "lib/index.js",
   "typings": "./src/index.d.ts",
