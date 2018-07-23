@@ -1354,7 +1354,7 @@ app-root-path@^2.0.1:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/app-root-path/-/app-root-path-2.1.0.tgz#98bf6599327ecea199309866e8140368fd2e646a"
 
-appbase-js@^3.0.0, appbase-js@^3.0.1:
+appbase-js@^3.0.1, appbase-js@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-3.2.0.tgz#e59c7a104a1aa84262904a9be560019baf62171b"
   dependencies:
