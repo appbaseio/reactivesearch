@@ -5,6 +5,7 @@ import * as types from '../../types';
 export interface RangeSliderProps extends CommonProps {
 	beforeValueChange?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
+	histogramQuery?: (props: RangeSliderProps) => any;
 	dataField: string;
 	defaultSelected?: types.range;
 	filterLabel?: string;

@@ -239,7 +239,7 @@ class RangeSlider extends Component {
 	updateQueryOptions = (props) => {
 		if (props.showHistogram) {
 			const queryOptions = {
-				aggs: this.histogramQuery(props),
+				aggs: (props.histogramQuery || this.histogramQuery)(props),
 			};
 
 			props.setQueryOptions(this.internalComponent, queryOptions, false);
@@ -330,6 +330,7 @@ RangeSlider.propTypes = {
 	rangeLabels: types.rangeLabels,
 	react: types.react,
 	showHistogram: types.bool,
+	histogramQuery: types.func,
 	showSlider: types.bool,
 	snap: types.bool,
 	stepValue: types.number,
