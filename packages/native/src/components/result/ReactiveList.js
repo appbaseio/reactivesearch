@@ -130,7 +130,10 @@ class ReactiveList extends Component {
 		if (this.props.stream !== nextProps.stream) {
 			this.props.setStreaming(nextProps.componentId, nextProps.stream);
 		}
-
+		// called when results are updated
+		if (nextProps.hits !== this.props.hits && this.props.onResultStats) {
+			this.props.onResultStats(nextProps.total, nextProps.time);
+		}
 		checkPropChange(
 			this.props.react,
 			nextProps.react,
@@ -393,10 +396,9 @@ class ReactiveList extends Component {
 	setRef = (node) => {
 		this.listRef = node;
 	};
-
 	renderResultStats = () => {
-		if (this.props.onResultStats && this.props.total) {
-			return this.props.onResultStats(this.props.total, this.props.time);
+		if (this.props.renderResultStats && this.props.total) {
+			return this.props.renderResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
 			return (
 				<Text {...getInnerKey(this.props.innerProps, 'text')}>
@@ -501,6 +503,7 @@ ReactiveList.propTypes = {
 	onData: types.func,
 	onNoResults: types.title,
 	onQueryChange: types.func,
+	renderResultStats: types.func,
 	onError: types.func,
 	onResultStats: types.func,
 	pages: types.number,

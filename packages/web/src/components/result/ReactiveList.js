@@ -175,7 +175,10 @@ class ReactiveList extends Component {
 		if (!isEqual(nextProps.react, this.props.react)) {
 			this.setReact(nextProps);
 		}
-
+		// called when results are updated
+		if (nextProps.hits !== this.props.hits && this.props.onResultStats) {
+			this.props.onResultStats(nextProps.total, nextProps.time);
+		}
 		if (this.props.pagination) {
 			// called when page is changed
 			if (this.state.isLoading && (this.props.hits || nextProps.hits)) {
@@ -344,10 +347,9 @@ class ReactiveList extends Component {
 			);
 		}
 	};
-
 	renderResultStats = () => {
-		if (this.props.onResultStats && this.props.total) {
-			return this.props.onResultStats(this.props.total, this.props.time);
+		if (this.props.renderResultStats && this.props.total) {
+			return this.props.renderResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
 			return (
 				<p className={`${resultStats} ${getClassName(this.props.innerClass, 'resultStats')}`}>
@@ -532,6 +534,7 @@ ReactiveList.propTypes = {
 	onPageChange: types.func,
 	onPageClick: types.func,
 	onResultStats: types.func,
+	renderResultStats: types.func,
 	pages: types.number,
 	pagination: types.bool,
 	paginationAt: types.paginationAt,
