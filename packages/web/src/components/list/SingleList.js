@@ -185,6 +185,7 @@ class SingleList extends Component {
 
 	static generateQueryOptions(props) {
 		const queryOptions = getQueryOptions(props);
+		queryOptions.size = 0;
 		queryOptions.aggs = {
 			[props.dataField]: {
 				terms: {
