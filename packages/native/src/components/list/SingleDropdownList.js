@@ -159,6 +159,7 @@ class SingleDropdownList extends Component {
 
 	updateQueryOptions = (props) => {
 		const queryOptions = getQueryOptions(props);
+		queryOptions.size = 0;
 		queryOptions.aggs = {
 			[props.dataField]: {
 				terms: {

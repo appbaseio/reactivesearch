@@ -209,6 +209,7 @@ class RangeSlider extends Component {
 	updateQueryOptions = (props) => {
 		if (props.showHistogram) {
 			const queryOptions = {
+				size: 0,
 				aggs: (props.histogramQuery || this.histogramQuery)(props),
 			};
 
