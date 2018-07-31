@@ -1476,9 +1476,9 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-appbase-js@^3.0.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-3.1.0.tgz#74d90c38cd3194e9f25ded70e358c30121f8ad87"
+appbase-js@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-3.2.0.tgz#e59c7a104a1aa84262904a9be560019baf62171b"
   dependencies:
     babel-polyfill "^6.26.0"
     cross-fetch "^1.1.1"
