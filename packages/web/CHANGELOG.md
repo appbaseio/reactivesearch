@@ -4,6 +4,7 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
+    - Added `onResultStats` for reading purposes and `renderResultStats` for rendering purposes - [#454]
     - Add support for `histogramQuery` prop in RangeSlider component - [#459](https://github.com/appbaseio/reactivesearch/pull/459)
     - Add support for aggs with query size 0 for hits removal - [#459](https://github.com/appbaseio/reactivesearch/pull/459) and [here](https://github.com/appbaseio/reactivesearch/commit/5d88dbd0b0f1d3291f3de3571f5a85a9f2a4f2d5)
 </details>
