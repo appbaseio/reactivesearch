@@ -176,7 +176,7 @@ class ReactiveList extends Component {
 			this.setReact(nextProps);
 		}
 		// called when results are updated
-		if (nextProps.hits !== this.props.hits && this.props.onResultStats) {
+		if (this.props.onResultStats && nextProps.hits !== this.props.hits) {
 			this.props.onResultStats(nextProps.total, nextProps.time);
 		}
 		if (this.props.pagination) {
