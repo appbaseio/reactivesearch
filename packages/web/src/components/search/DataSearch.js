@@ -440,7 +440,8 @@ class DataSearch extends Component {
 			suggestionsList = this.state.suggestions;
 		}
 
-		const { theme, themePreset, renderNoSuggestion } = this.props;
+		const { theme, themePreset } = this.props;
+
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
@@ -481,7 +482,7 @@ class DataSearch extends Component {
 									{this.renderIcons()}
 
 									{
-										isOpen && (suggestionsList.length
+										isOpen && suggestionsList.length
 											? (
 												<ul className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}>
 													{
@@ -513,8 +514,7 @@ class DataSearch extends Component {
 													}
 												</ul>
 											)
-											: renderNoSuggestion && renderNoSuggestion(this.state.currentValue)
-										)
+											: null
 									}
 								</div>
 							)}
@@ -591,7 +591,6 @@ DataSearch.propTypes = {
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
-	renderNoSuggestion: types.func,
 	showClear: types.bool,
 	showFilter: types.bool,
 	showIcon: types.bool,
