@@ -11,7 +11,7 @@ function typescriptCopy(from, to) {
 
 async function run() {
 	const from = path.resolve(__dirname, '../src');
-	await Promise.all([typescriptCopy(from, path.resolve(__dirname, '../lib'))]);
+	await typescriptCopy(from, path.resolve(__dirname, '../lib'));
 }
 
 run();
