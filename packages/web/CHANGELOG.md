@@ -4,6 +4,7 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
+    - Show default suggestions even if `autoSuggest` is set to `false`. - [#463](https://github.com/appbaseio/reactivesearch/pull/463)
     - Add support for `histogramQuery` prop in RangeSlider component - [#459](https://github.com/appbaseio/reactivesearch/pull/459)
     - Add support for aggs with query size 0 for hits removal - [#459](https://github.com/appbaseio/reactivesearch/pull/459) and [here](https://github.com/appbaseio/reactivesearch/commit/5d88dbd0b0f1d3291f3de3571f5a85a9f2a4f2d5)
     - Adds typings to npm package [#466](https://github.com/appbaseio/reactivesearch/issues/466)

@@ -446,7 +446,7 @@ class DataSearch extends Component {
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{
-					this.props.autosuggest
+					this.props.defaultSuggestions || this.props.autosuggest
 						? (<Downshift
 							id={`${this.props.componentId}-downshift`}
 							onChange={this.onSuggestionSelected}
