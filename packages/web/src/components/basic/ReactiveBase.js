@@ -66,7 +66,7 @@ class ReactiveBase extends Component {
 			app: props.app,
 			credentials,
 			type: this.type,
-		  	beforeSend: props.beforeSend
+			beforeSend: props.beforeSend,
 		};
 
 		let queryParams = '';
@@ -145,7 +145,7 @@ ReactiveBase.propTypes = {
 	themePreset: types.themePreset,
 	type: types.string,
 	url: types.string,
-  	beforeSend: types.func,
+	beforeSend: types.func,
 	mapKey: types.string,
 	style: types.style,
 	className: types.string,

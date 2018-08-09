@@ -39,7 +39,7 @@ class ReactiveList extends Component {
 		}
 
 		this.state = {
-			from: props.currentPage * props.size,
+			from: currentPage * props.size,
 			isLoading: true,
 			currentPage,
 		};
@@ -336,9 +336,9 @@ class ReactiveList extends Component {
 
 		if (this.props.URLParams) {
 			this.props.setPageURL(
-				`${this.props.componentId}-page`,
+				this.props.componentId,
 				page + 1,
-				`${this.props.componentId}-page`,
+				this.props.componentId,
 				false,
 				true,
 			);
@@ -561,8 +561,8 @@ ReactiveList.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	defaultPage: (
-		state.selectedValues[`${props.componentId}-page`]
-		&& state.selectedValues[`${props.componentId}-page`].value - 1
+		state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value - 1
 	) || -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	isLoading: state.isLoading[props.componentId] || false,

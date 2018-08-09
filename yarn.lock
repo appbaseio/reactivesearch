@@ -1099,11 +1099,17 @@
     "@types/node" "*"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.3.7", "@types/react@^16.3.10", "@types/react@^16.3.8":
+"@types/react@*":
   version "16.3.7"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.7.tgz#3b90fc4c8382fc55f4d18a8d487dbd314eb6ec4c"
   dependencies:
     csstype "^2.0.0"
+
+"@types/react@^16.3.10", "@types/react@^16.3.8":
+  version "16.4.7"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.7.tgz#f33f6d759a7e1833befa15224d68942d178a5a3f"
+  dependencies:
+    csstype "^2.2.0"
 
 "@zeit/check-updates@1.1.1":
   version "1.1.1"
