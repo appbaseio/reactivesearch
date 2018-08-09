@@ -9,6 +9,8 @@
     - Adds typings to npm package [#466](https://github.com/appbaseio/reactivesearch/issues/466)
     - Extend `SelectedFilters` support for range slider components i.e. `RangeInput`, `RangeSlider` and `DynamicRangeSlider`. The usage is similar to other components, with the `showFilter` prop. [#442](https://github.com/appbaseio/reactivesearch/issues/442)
     - Update `defaultQuery` prop append logic for search components [here](https://github.com/appbaseio/reactivesearch/commit/46177528d5ed0b00a4a0cc5d7e8d5dec0adfaa69). `defaultQuery` is now always appended regardless of the `customQuery`
+    - Adds pagination support in SSR [#441](https://github.com/appbaseio/reactivesearch/issues/441) - This is a `Breaking Change`. Your app will be affected if you have `pagination` and `URLParams` enabled on the result component.
+    - Addresses [#460](https://github.com/appbaseio/reactivesearch/issues/460) - Instead of adding a new prop to customise the url params, we have removed `-page` string from the result component. Hence, you can now set `p` or `page` as the componentId and expected results can be achieved.
 </details>
 
 ## v2.6.12
