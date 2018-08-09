@@ -171,12 +171,10 @@ class DataSearch extends Component {
 				fields = [props.dataField];
 			}
 			finalQuery = {
-				bool: Object.assign({
+				bool: {
 					should: DataSearch.shouldQuery(value, fields, props),
 					minimum_should_match: '1',
-				}, props.defaultQuery && ({
-					must: props.defaultQuery(value, props),
-				})),
+				},
 			};
 		}
 
@@ -298,15 +296,34 @@ class DataSearch extends Component {
 	}, this.props.debounce);
 
 	updateQuery = (componentId, value, props) => {
-		const query = props.customQuery || DataSearch.defaultQuery;
+		const {
+			customQuery,
+			defaultQuery,
+			filterLabel,
+			showFilter,
+			URLParams,
+		} = props;
+
+		// defaultQuery from props is always appended regardless of a customQuery
+		const query = customQuery || DataSearch.defaultQuery;
+		const queryObject = defaultQuery
+			? {
+				bool: {
+					must: [
+						...query(value, props),
+						...defaultQuery(value, props),
+					],
+				},
+			}
+			: query(value, props);
 
 		props.updateQuery({
 			componentId,
-			query: query(value, props),
+			query: queryObject,
 			value,
-			label: props.filterLabel,
-			showFilter: props.showFilter,
-			URLParams: props.URLParams,
+			label: filterLabel,
+			showFilter,
+			URLParams,
 		});
 	};
 

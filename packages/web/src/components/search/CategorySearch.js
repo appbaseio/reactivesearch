@@ -201,12 +201,10 @@ class CategorySearch extends Component {
 				fields = [props.dataField];
 			}
 			finalQuery = {
-				bool: Object.assign({
+				bool: {
 					should: CategorySearch.shouldQuery(value, fields, props),
 					minimum_should_match: '1',
-				}, props.defaultQuery && ({
-					must: props.defaultQuery(value, props),
-				})),
+				},
 			};
 
 			if (category && category !== '*') {
@@ -340,15 +338,34 @@ class CategorySearch extends Component {
 	}, this.props.debounce);
 
 	updateQuery = (componentId, value, props, category) => {
-		const query = props.customQuery || CategorySearch.defaultQuery;
+		const {
+			customQuery,
+			defaultQuery,
+			filterLabel,
+			showFilter,
+			URLParams,
+		} = props;
+
+		// defaultQuery from props is always appended regardless of a customQuery
+		const query = customQuery || CategorySearch.defaultQuery;
+		const queryObject = defaultQuery
+			? {
+				bool: {
+					must: [
+						...query(value, props, category),
+						...defaultQuery(value, props, category),
+					],
+				},
+			}
+			: query(value, props);
 
 		props.updateQuery({
 			componentId,
-			query: query(value, props, category),
+			query: queryObject,
 			value,
-			label: props.filterLabel,
-			showFilter: props.showFilter,
-			URLParams: props.URLParams,
+			label: filterLabel,
+			showFilter,
+			URLParams,
 		});
 	};
 
