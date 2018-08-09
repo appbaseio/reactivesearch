@@ -225,13 +225,16 @@ class RangeSlider extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || RangeSlider.defaultQuery;
-
+		const { showFilter, range: { start, end } } = props;
+		const [currentStart, currentEnd] = value;
+		// check if the slider is at its initial position
+		const isInitialValue = currentStart === start && currentEnd === end;
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
 			value,
 			label: props.filterLabel,
-			showFilter: false, // disable filters for RangeSlider
+			showFilter: showFilter && !isInitialValue,
 			URLParams: props.URLParams,
 		});
 	};
@@ -332,6 +335,7 @@ RangeSlider.propTypes = {
 	react: types.react,
 	showHistogram: types.bool,
 	histogramQuery: types.func,
+	showFilter: types.bool,
 	showSlider: types.bool,
 	snap: types.bool,
 	stepValue: types.number,
@@ -350,6 +354,7 @@ RangeSlider.defaultProps = {
 	showSlider: true,
 	snap: true,
 	stepValue: 1,
+	showFilter: true,
 	style: {},
 	URLParams: false,
 };

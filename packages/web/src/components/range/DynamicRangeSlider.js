@@ -83,6 +83,12 @@ class DynamicRangeSlider extends Component {
 				[start, end],
 				nextProps,
 			);
+		} else if (nextProps.range && nextProps.selectedValue === null) {
+			// when the filter is reset
+			this.handleChange(
+				[nextProps.range.start, nextProps.range.end],
+				nextProps,
+			);
 		}
 
 		checkPropChange(this.props.react, nextProps.react, () => {
@@ -260,13 +266,17 @@ class DynamicRangeSlider extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || DynamicRangeSlider.defaultQuery;
+		const { showFilter, range: { start, end } } = props;
+		const [currentStart, currentEnd] = value;
+		// check if the slider is at its initial position
+		const isInitialValue = currentStart === start && currentEnd === end;
 
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
 			value,
 			label: props.filterLabel,
-			showFilter: false, // disable filters for DynamicRangeSlider
+			showFilter: showFilter && !isInitialValue,
 			URLParams: props.URLParams,
 		});
 	};
@@ -395,6 +405,7 @@ DynamicRangeSlider.propTypes = {
 	rangeLabels: types.func,
 	react: types.react,
 	showHistogram: types.bool,
+	showFilter: types.bool,
 	snap: types.bool,
 	stepValue: types.number,
 	style: types.style,
@@ -409,6 +420,7 @@ DynamicRangeSlider.defaultProps = {
 	stepValue: 1,
 	style: {},
 	URLParams: false,
+	showFilter: true,
 };
 
 const mapStateToProps = (state, props) => ({

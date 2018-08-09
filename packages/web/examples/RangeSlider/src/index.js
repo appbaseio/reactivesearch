@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import {
 	ReactiveBase,
 	RangeSlider,
+	SelectedFilters,
 	ResultList,
 } from '@appbaseio/reactivesearch';
 
@@ -33,6 +34,7 @@ class Main extends Component {
 					</div>
 
 					<div className="col">
+						<SelectedFilters />
 						<ResultList
 							componentId="SearchResult"
 							dataField="original_title"
