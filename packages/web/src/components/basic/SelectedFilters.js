@@ -10,13 +10,19 @@ import { connect } from '../../utils';
 
 class SelectedFilters extends Component {
 	remove = (component, value = null) => {
+		const { onClear } = this.props;
 		this.props.setValue(component, null);
-		this.props.onClear && this.props.onClear(component, value);
+		if (onClear) {
+			onClear(component, value);
+		}
 	};
 
 	clearValues = () => {
+		const { onClear } = this.props;
 		this.props.clearValues();
-		this.props.onClear && this.props.onClear(null);
+		if (onClear) {
+			onClear(null);
+		}
 	}
 
 	renderValue = (value, isArray) => {
@@ -94,7 +100,7 @@ SelectedFilters.propTypes = {
 	showClearAll: types.bool,
 	style: types.style,
 	theme: types.style,
-	onClear: types.func
+	onClear: types.func,
 };
 
 SelectedFilters.defaultProps = {
