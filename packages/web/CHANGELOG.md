@@ -14,6 +14,7 @@
     - Search components `DataSearch` and `CategorySearch` now don't fire a query when the input was blurred ([commit1](https://github.com/appbaseio/reactivesearch/commit/b9f88e3969fe22fab72d452d38c6dbf002047f94) [commit2](https://github.com/appbaseio/reactivesearch/commit/d2b6b8f065af0a425bae1cc8c9a7ac9c3193488e)). This is a critical UX change and will also affect when `onValueSelected` was called.
     - Add `strictSelection` support in `DataSearch` and `CategorySearch` [#381](https://github.com/appbaseio/reactivesearch/issues/381)
     - Include `cause` and `source` object (if the cause was `'SUGGESTION_SELECT'`) in `onValueSelected` [#387](https://github.com/appbaseio/reactivesearch/issues/387)
+    - Fix unnecessary renders in `ReactiveList` [#444](https://github.com/appbaseio/reactivesearch/issues/444)
 </details>
 
 ## v2.6.12

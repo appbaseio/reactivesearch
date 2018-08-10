@@ -574,7 +574,7 @@ const mapStateToProps = (state, props) => ({
 	) || -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	isLoading: state.isLoading[props.componentId] || false,
-	streamHits: state.streamHits[props.componentId] || [],
+	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	url: state.config.url,
