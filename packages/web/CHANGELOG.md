@@ -11,6 +11,7 @@
     - Update `defaultQuery` prop append logic for search components [here](https://github.com/appbaseio/reactivesearch/commit/46177528d5ed0b00a4a0cc5d7e8d5dec0adfaa69). `defaultQuery` is now always appended regardless of the `customQuery`
     - Adds pagination support in SSR [#441](https://github.com/appbaseio/reactivesearch/issues/441) - This is a `Breaking Change`. Your app will be affected if you have `pagination` and `URLParams` enabled on the result component.
     - Addresses [#460](https://github.com/appbaseio/reactivesearch/issues/460) - Instead of adding a new prop to customise the url params, we have removed `-page` string from the result component. Hence, you can now set `p` or `page` as the componentId and expected results can be achieved.
+    - Search components `DataSearch` and `CategorySearch` now don't fire a query when the input was blurred ([commit1](https://github.com/appbaseio/reactivesearch/commit/b9f88e3969fe22fab72d452d38c6dbf002047f94) [commit2](https://github.com/appbaseio/reactivesearch/commit/d2b6b8f065af0a425bae1cc8c9a7ac9c3193488e)). This is a critical UX change and will also affect when `onValueSelected` was called.
 </details>
 
 ## v2.6.12
