@@ -21,6 +21,7 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
+import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import CancelSvg from '../shared/CancelSvg';
@@ -292,7 +293,7 @@ class CategorySearch extends Component {
 		);
 	};
 
-	setValue = (value, isDefaultValue = false, props = this.props, category) => {
+	setValue = (value, isDefaultValue = false, props = this.props, category, cause) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -310,7 +311,17 @@ class CategorySearch extends Component {
 						});
 						this.updateQuery(this.internalComponent, value, props);
 					}
-					this.updateQuery(props.componentId, value, props, category);
+					// in case of strict selection only SUGGESTION_SELECT should be able
+					// to set the query otherwise the value should reset
+					if (props.strictSelection) {
+						if (cause === causes.SUGGESTION_SELECT || value === '') {
+							this.updateQuery(props.componentId, value, props, category);
+						} else {
+							this.setValue('', true);
+						}
+					} else {
+						this.updateQuery(props.componentId, value, props, category);
+					}
 				} else {
 					// debounce for handling text while typing
 					this.handleTextChange(value);
@@ -411,7 +422,13 @@ class CategorySearch extends Component {
 	};
 
 	onSuggestionSelected = (suggestion, event) => {
-		this.setValue(suggestion.value, true, this.props, suggestion.category);
+		this.setValue(
+			suggestion.value,
+			true,
+			this.props,
+			suggestion.category,
+			causes.SUGGESTION_SELECT,
+		);
 		this.onValueSelected(suggestion.value, suggestion.category);
 		if (this.props.onBlur) {
 			this.props.onBlur(event);
@@ -676,6 +693,7 @@ CategorySearch.propTypes = {
 	theme: types.style,
 	themePreset: types.themePreset,
 	URLParams: types.bool,
+	strictSelection: types.bool,
 };
 
 CategorySearch.defaultProps = {
@@ -690,6 +708,7 @@ CategorySearch.defaultProps = {
 	showIcon: true,
 	style: {},
 	URLParams: false,
+	strictSelection: false,
 };
 
 const mapStateToProps = (state, props) => ({

@@ -21,6 +21,7 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
+import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
@@ -251,7 +252,7 @@ class DataSearch extends Component {
 		);
 	};
 
-	setValue = (value, isDefaultValue = false, props = this.props) => {
+	setValue = (value, isDefaultValue = false, props = this.props, cause) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -269,7 +270,17 @@ class DataSearch extends Component {
 						});
 						this.updateQuery(this.internalComponent, value, props);
 					}
-					this.updateQuery(props.componentId, value, props);
+					// in case of strict selection only SUGGESTION_SELECT should be able
+					// to set the query otherwise the value should reset
+					if (props.strictSelection) {
+						if (cause === causes.SUGGESTION_SELECT || value === '') {
+							this.updateQuery(props.componentId, value, props);
+						} else {
+							this.setValue('', true);
+						}
+					} else {
+						this.updateQuery(props.componentId, value, props);
+					}
 				} else {
 					// debounce for handling text while typing
 					this.handleTextChange(value);
@@ -370,7 +381,7 @@ class DataSearch extends Component {
 	};
 
 	onSuggestionSelected = (suggestion) => {
-		this.setValue(suggestion.value, true);
+		this.setValue(suggestion.value, true, this.props, causes.SUGGESTION_SELECT);
 		this.onValueSelected(suggestion.value);
 	};
 
@@ -604,6 +615,7 @@ DataSearch.propTypes = {
 	theme: types.style,
 	themePreset: types.themePreset,
 	URLParams: types.bool,
+	strictSelection: types.bool,
 };
 
 DataSearch.defaultProps = {
@@ -618,6 +630,7 @@ DataSearch.defaultProps = {
 	style: {},
 	URLParams: false,
 	showClear: false,
+	strictSelection: false,
 };
 
 const mapStateToProps = (state, props) => ({
