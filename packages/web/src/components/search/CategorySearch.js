@@ -51,8 +51,6 @@ class CategorySearch extends Component {
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
-		this.prevValue = '';
-		this.prevCategory = null;
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
@@ -422,10 +420,8 @@ class CategorySearch extends Component {
 
 	onValueSelected = (currentValue = this.state.currentValue, category = null) => {
 		const { onValueSelected } = this.props;
-		// check if either the previous value or the category has changed when the user clicks outside
-		if (onValueSelected && (this.prevValue !== currentValue || this.prevCategory !== category)) {
+		if (onValueSelected) {
 			onValueSelected(currentValue, category);
-			this.prevValue = currentValue;
 		}
 	}
 
