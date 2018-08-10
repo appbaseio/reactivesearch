@@ -15,6 +15,7 @@
     - Add `strictSelection` support in `DataSearch` and `CategorySearch` [#381](https://github.com/appbaseio/reactivesearch/issues/381)
     - Include `cause` and `source` object (if the cause was `'SUGGESTION_SELECT'`) in `onValueSelected` [#387](https://github.com/appbaseio/reactivesearch/issues/387)
     - Fix unnecessary renders in `ReactiveList` [#444](https://github.com/appbaseio/reactivesearch/issues/444)
+    - Add support for store updates on url change [#360](https://github.com/appbaseio/reactivesearch/issues/360)
 </details>
 
 ## v2.6.12
