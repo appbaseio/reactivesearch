@@ -241,6 +241,14 @@ class ReactiveList extends Component {
 				window.removeEventListener('scroll', this.scrollHandler);
 			}
 		}
+
+		// handle window url history change (on native back and forth interactions)
+		if (
+			this.state.currentPage !== nextProps.defaultPage
+			&& this.props.defaultPage !== nextProps.defaultPage
+		) {
+			this.setPage(nextProps.defaultPage >= 0 ? nextProps.defaultPage : 0);
+		}
 	}
 
 	componentWillUnmount() {

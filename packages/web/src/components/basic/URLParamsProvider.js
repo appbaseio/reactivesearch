@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { setHeaders } from '@appbaseio/reactivecore/lib/actions';
+import { setHeaders, setValue } from '@appbaseio/reactivecore/lib/actions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 
@@ -7,18 +7,52 @@ import Base from '../../styles/Base';
 import { connect } from '../../utils';
 
 class URLParamsProvider extends Component {
+	componentDidMount() {
+		this.currentSelectedState = this.props.selectedValues || {};
+		if (window) {
+			window.onpopstate = () => {
+				let queryParams = window.location.search;
+				queryParams = new URLSearchParams(queryParams);
+
+				const activeComponents = Array.from(queryParams.keys());
+
+				// remove inactive components from selectedValues
+				Object.keys(this.currentSelectedState)
+					.filter(item => !activeComponents.includes(item))
+					.forEach((component) => {
+						this.props.setValue(component, null);
+					});
+
+				// update active components in selectedValues
+				Array.from(queryParams.entries()).forEach((item) => {
+					this.props.setValue(
+						item[0],
+						JSON.parse(item[1]),
+					);
+				});
+			};
+		}
+	}
+
 	componentWillReceiveProps(nextProps) {
+		this.currentSelectedState = nextProps.selectedValues;
 		if (!isEqual(this.props.selectedValues, nextProps.selectedValues)) {
 			const currentComponents = Object.keys(nextProps.selectedValues);
 
 			currentComponents
 				.filter(component => nextProps.selectedValues[component].URLParams)
 				.forEach((component) => {
-					if (nextProps.selectedValues[component].URLParams) {
-						this.setURL(component, this.getValue(nextProps.selectedValues[component].value));
-					} else {
-						this.props.params.delete(component);
-						this.pushToHistory();
+					// prevents empty history pollution on initial load
+					if (
+						this.hasValidValue(this.props.selectedValues[component])
+						|| this.hasValidValue(nextProps.selectedValues[component])
+					) {
+						if (nextProps.selectedValues[component].URLParams) {
+							this.setURL(component, this.getValue(nextProps.selectedValues[component].value));
+						} else {
+							this.props.params.delete(component);
+							this.pushToHistory();
+						}
 					}
 				});
 
@@ -41,6 +75,12 @@ class URLParamsProvider extends Component {
 		if (!isEqual(this.props.headers, nextProps.headers)) {
 			nextProps.setHeaders(nextProps.headers);
 		}
+	}
+
+	hasValidValue(component) {
+		if (!component) return false;
+		if (Array.isArray(component.value)) return !!component.value.length;
+		return !!component.value;
 	}
 
 	getValue(value) {
@@ -88,6 +128,7 @@ class URLParamsProvider extends Component {
 
 URLParamsProvider.propTypes = {
 	setHeaders: types.func,
+	setValue: types.func,
 	selectedValues: types.selectedValues,
 	// component props
 	children: types.children,
@@ -108,6 +149,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchtoProps = dispatch => ({
 	setHeaders: headers => dispatch(setHeaders(headers)),
+	setValue: (component, value, label, showFilter, URLParams) =>
+		dispatch(setValue(component, value, label, showFilter, URLParams)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(URLParamsProvider);
