@@ -341,15 +341,6 @@ class DataSearch extends Component {
 		this.onValueSelected(null);
 	};
 
-	// only works if there's a change in downshift's value
-	handleOuterClick = (event) => {
-		this.setValue(this.state.currentValue, true);
-		this.onValueSelected();
-		if (this.props.onBlur) {
-			this.props.onBlur(event);
-		}
-	};
-
 	handleKeyDown = (event, highlightedIndex) => {
 		// if a suggestion was selected, delegate the handling to suggestion handler
 		if (event.key === 'Enter' && highlightedIndex === null) {
@@ -488,7 +479,7 @@ class DataSearch extends Component {
 											placeholder: this.props.placeholder,
 											value: this.state.currentValue === null ? '' : this.state.currentValue,
 											onChange: this.onInputChange,
-											onBlur: this.handleOuterClick,
+											onBlur: this.props.onBlur,
 											onFocus: this.handleFocus,
 											onKeyPress: this.props.onKeyPress,
 											onKeyDown: e => this.handleKeyDown(e, highlightedIndex),

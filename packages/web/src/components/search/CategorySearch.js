@@ -383,12 +383,6 @@ class CategorySearch extends Component {
 		this.onValueSelected(null);
 	};
 
-	// only works if there's a change in downshift's value
-	handleOuterClick = () => {
-		this.setValue(this.state.currentValue, true);
-		this.onValueSelected();
-	};
-
 	handleKeyDown = (event, highlightedIndex) => {
 		// if a suggestion was selected, delegate the handling to suggestion handler
 		if (event.key === 'Enter' && highlightedIndex === null) {
@@ -549,7 +543,6 @@ class CategorySearch extends Component {
 					<Downshift
 						id={`${this.props.componentId}-downshift`}
 						onChange={this.onSuggestionSelected}
-						onOuterClick={this.handleOuterClick}
 						onStateChange={this.handleStateChange}
 						isOpen={this.state.isOpen}
 						itemToString={i => i}
