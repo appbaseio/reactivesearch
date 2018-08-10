@@ -389,14 +389,14 @@ class CategorySearch extends Component {
 
 	clearValue = () => {
 		this.setValue('', true);
-		this.onValueSelected(null);
+		this.onValueSelected(null, causes.CLEAR_VALUE);
 	};
 
 	handleKeyDown = (event, highlightedIndex) => {
 		// if a suggestion was selected, delegate the handling to suggestion handler
 		if (event.key === 'Enter' && highlightedIndex === null) {
 			this.setValue(event.target.value, true);
-			this.onValueSelected(event.target.value);
+			this.onValueSelected(event.target.value, causes.ENTER_PRESS);
 		}
 		if (this.props.onKeyDown) {
 			this.props.onKeyDown(event);
@@ -421,7 +421,7 @@ class CategorySearch extends Component {
 		}
 	};
 
-	onSuggestionSelected = (suggestion, event) => {
+	onSuggestionSelected = (suggestion) => {
 		this.setValue(
 			suggestion.value,
 			true,
@@ -429,16 +429,18 @@ class CategorySearch extends Component {
 			suggestion.category,
 			causes.SUGGESTION_SELECT,
 		);
-		this.onValueSelected(suggestion.value, suggestion.category);
-		if (this.props.onBlur) {
-			this.props.onBlur(event);
-		}
+		this.onValueSelected(
+			suggestion.value,
+			suggestion.category,
+			causes.SUGGESTION_SELECT,
+			suggestion.source,
+		);
 	};
 
-	onValueSelected = (currentValue = this.state.currentValue, category = null) => {
+	onValueSelected = (currentValue = this.state.currentValue, category = null, ...cause) => {
 		const { onValueSelected } = this.props;
 		if (onValueSelected) {
-			onValueSelected(currentValue, category);
+			onValueSelected(currentValue, category, ...cause);
 		}
 	}
 
@@ -518,6 +520,8 @@ class CategorySearch extends Component {
 					label: `${this.state.currentValue} in all categories`,
 					value: this.state.currentValue,
 					category: '*',
+					// no source object exists for category based suggestions
+					source: null,
 				},
 				{
 					label: `${this.state.currentValue} in ${
@@ -525,6 +529,7 @@ class CategorySearch extends Component {
 					}`,
 					value: this.state.currentValue,
 					category: this.props.categories[0].key,
+					source: null,
 				},
 			];
 
@@ -537,6 +542,7 @@ class CategorySearch extends Component {
 						}`,
 						value: this.state.currentValue,
 						category: this.props.categories[1].key,
+						source: null,
 					},
 				];
 			}

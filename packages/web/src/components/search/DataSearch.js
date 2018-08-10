@@ -348,14 +348,14 @@ class DataSearch extends Component {
 
 	clearValue = () => {
 		this.setValue('', true);
-		this.onValueSelected(null);
+		this.onValueSelected(null, causes.CLEAR_VALUE);
 	};
 
 	handleKeyDown = (event, highlightedIndex) => {
 		// if a suggestion was selected, delegate the handling to suggestion handler
 		if (event.key === 'Enter' && highlightedIndex === null) {
 			this.setValue(event.target.value, true);
-			this.onValueSelected(event.target.value);
+			this.onValueSelected(event.target.value, causes.ENTER_PRESS);
 		}
 		if (this.props.onKeyDown) {
 			this.props.onKeyDown(event);
@@ -382,13 +382,13 @@ class DataSearch extends Component {
 
 	onSuggestionSelected = (suggestion) => {
 		this.setValue(suggestion.value, true, this.props, causes.SUGGESTION_SELECT);
-		this.onValueSelected(suggestion.value);
+		this.onValueSelected(suggestion.value, causes.SUGGESTION_SELECT, suggestion.source);
 	};
 
-	onValueSelected = (currentValue = this.state.currentValue) => {
+	onValueSelected = (currentValue = this.state.currentValue, ...cause) => {
 		const { onValueSelected } = this.props;
 		if (onValueSelected) {
-			onValueSelected(currentValue);
+			onValueSelected(currentValue, ...cause);
 		}
 	}
 
