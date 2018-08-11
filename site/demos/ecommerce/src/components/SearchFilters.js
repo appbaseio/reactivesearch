@@ -19,6 +19,7 @@ const SearchFilters = () => (
 				innerClass={{
 					list: 'list',
 				}}
+				URLParams
 			/>
 		</FlexChild>
 		<FlexChild card margin="10px">
@@ -34,6 +35,7 @@ const SearchFilters = () => (
 				innerClass={{
 					list: 'list',
 				}}
+				URLParams
 			/>
 		</FlexChild>
 		<FlexChild card margin="10px">
@@ -45,6 +47,7 @@ const SearchFilters = () => (
 				innerClass={{
 					list: 'list',
 				}}
+				URLParams
 			/>
 		</FlexChild>
 		<FlexChild card margin="10px">
