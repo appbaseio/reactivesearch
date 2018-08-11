@@ -4,20 +4,22 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-    - Add support for `histogramQuery` prop in RangeSlider component - [#459](https://github.com/appbaseio/reactivesearch/pull/459)
-    - Add support for aggs with query size 0 for hits removal - [#459](https://github.com/appbaseio/reactivesearch/pull/459) and [here](https://github.com/appbaseio/reactivesearch/commit/5d88dbd0b0f1d3291f3de3571f5a85a9f2a4f2d5)
-    - Adds typings to npm package [#466](https://github.com/appbaseio/reactivesearch/issues/466)
-    - Extend `SelectedFilters` support for range slider components i.e. `RangeInput`, `RangeSlider` and `DynamicRangeSlider`. The usage is similar to other components, with the `showFilter` prop. [#442](https://github.com/appbaseio/reactivesearch/issues/442)
-    - Update `defaultQuery` prop append logic for search components [here](https://github.com/appbaseio/reactivesearch/commit/46177528d5ed0b00a4a0cc5d7e8d5dec0adfaa69). `defaultQuery` is now always appended regardless of the `customQuery`
-    - Adds pagination support in SSR [#441](https://github.com/appbaseio/reactivesearch/issues/441) - This is a `Breaking Change`. Your app will be affected if you have `pagination` and `URLParams` enabled on the result component.
-    - Addresses [#460](https://github.com/appbaseio/reactivesearch/issues/460) - Instead of adding a new prop to customise the url params, we have removed `-page` string from the result component. Hence, you can now set `p` or `page` as the componentId and expected results can be achieved.
-    - Search components `DataSearch` and `CategorySearch` now don't fire a query when the input was blurred ([commit1](https://github.com/appbaseio/reactivesearch/commit/b9f88e3969fe22fab72d452d38c6dbf002047f94) [commit2](https://github.com/appbaseio/reactivesearch/commit/d2b6b8f065af0a425bae1cc8c9a7ac9c3193488e)). This is a critical UX change and will also affect when `onValueSelected` was called.
-    - Add `strictSelection` support in `DataSearch` and `CategorySearch` [#381](https://github.com/appbaseio/reactivesearch/issues/381)
-    - Include `cause` and `source` object (if the cause was `'SUGGESTION_SELECT'`) in `onValueSelected` [#387](https://github.com/appbaseio/reactivesearch/issues/387)
-    - Fix unnecessary renders in `ReactiveList` [#444](https://github.com/appbaseio/reactivesearch/issues/444)
-    - Add support for store updates on url change [#360](https://github.com/appbaseio/reactivesearch/issues/360)
-    - Added include & exclude Fields as query options in Result Components = [#417](https://github.com/appbaseio/reactivesearch/issues/417)
 </details>
+
+## v2.7.0
+- Add support for `histogramQuery` prop in RangeSlider component - [#459](https://github.com/appbaseio/reactivesearch/pull/459)
+- Add support for aggs with query size 0 for hits removal - [#459](https://github.com/appbaseio/reactivesearch/pull/459) and [here](https://github.com/appbaseio/reactivesearch/commit/5d88dbd0b0f1d3291f3de3571f5a85a9f2a4f2d5)
+- Adds typings to npm package [#466](https://github.com/appbaseio/reactivesearch/issues/466)
+- Extend `SelectedFilters` support for range slider components i.e. `RangeInput`, `RangeSlider` and `DynamicRangeSlider`. The usage is similar to other components, with the `showFilter` prop. [#442](https://github.com/appbaseio/reactivesearch/issues/442)
+- Update `defaultQuery` prop append logic for search components [here](https://github.com/appbaseio/reactivesearch/commit/46177528d5ed0b00a4a0cc5d7e8d5dec0adfaa69). `defaultQuery` is now always appended regardless of the `customQuery`
+- Adds pagination support in SSR [#441](https://github.com/appbaseio/reactivesearch/issues/441) - This is a `Breaking Change`. Your app will be affected if you have `pagination` and `URLParams` enabled on the result component.
+- Addresses [#460](https://github.com/appbaseio/reactivesearch/issues/460) - Instead of adding a new prop to customise the url params, we have removed `-page` string from the result component. Hence, you can now set `p` or `page` as the componentId and expected results can be achieved.
+- Search components `DataSearch` and `CategorySearch` now don't fire a query when the input was blurred ([commit1](https://github.com/appbaseio/reactivesearch/commit/b9f88e3969fe22fab72d452d38c6dbf002047f94) [commit2](https://github.com/appbaseio/reactivesearch/commit/d2b6b8f065af0a425bae1cc8c9a7ac9c3193488e)). This is a critical UX change and will also affect when `onValueSelected` was called.
+- Add `strictSelection` support in `DataSearch` and `CategorySearch` [#381](https://github.com/appbaseio/reactivesearch/issues/381)
+- Include `cause` and `source` object (if the cause was `'SUGGESTION_SELECT'`) in `onValueSelected` [#387](https://github.com/appbaseio/reactivesearch/issues/387)
+- Fix unnecessary renders in `ReactiveList` [#444](https://github.com/appbaseio/reactivesearch/issues/444)
+- Add support for store updates on url change [#360](https://github.com/appbaseio/reactivesearch/issues/360)
+- Added include & exclude Fields as query options in Result Components = [#417](https://github.com/appbaseio/reactivesearch/issues/417)
 
 ## v2.6.12
 - Upgrade reactivecore and appbase-js
