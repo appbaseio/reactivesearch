@@ -5,8 +5,8 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "dependencies": {
-    "@appbaseio/reactivemaps": "^2.0.0-beta-01",
-    "@appbaseio/reactivesearch": "^2.6.10",
+    "@appbaseio/reactivemaps": "^2.0.0-beta-03",
+    "@appbaseio/reactivesearch": "^2.7.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
