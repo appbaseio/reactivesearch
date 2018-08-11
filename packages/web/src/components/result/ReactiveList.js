@@ -538,7 +538,6 @@ ReactiveList.propTypes = {
 	pagination: types.bool,
 	paginationAt: types.paginationAt,
 	react: types.react,
-	renderNoResults: types.func,
 	showResultStats: types.bool,
 	size: types.number,
 	sortBy: types.sortBy,
