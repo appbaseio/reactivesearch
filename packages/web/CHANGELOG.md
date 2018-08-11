@@ -16,6 +16,7 @@
     - Include `cause` and `source` object (if the cause was `'SUGGESTION_SELECT'`) in `onValueSelected` [#387](https://github.com/appbaseio/reactivesearch/issues/387)
     - Fix unnecessary renders in `ReactiveList` [#444](https://github.com/appbaseio/reactivesearch/issues/444)
     - Add support for store updates on url change [#360](https://github.com/appbaseio/reactivesearch/issues/360)
+    - Added include & exclude Fields as query options in Result Components = [#417](https://github.com/appbaseio/reactivesearch/issues/417)
 </details>
 
 ## v2.6.12
