@@ -277,7 +277,12 @@ class GeoDistanceSlider extends Component {
 				this.autocompleteService = new window.google.maps.places.AutocompleteService();
 			}
 
-			this.autocompleteService.getPlacePredictions({ input: value }, (res) => {
+			const restrictedCountries = this.props.countries || [];
+
+			this.autocompleteService.getPlacePredictions({
+				input: value,
+				componentRestrictions: { country: restrictedCountries },
+			}, (res) => {
 				const suggestionsList = (res && res.map(place => ({
 					label: place.description,
 					value: place.description,
@@ -456,6 +461,7 @@ GeoDistanceSlider.propTypes = {
 	beforeValueChange: types.func,
 	className: types.string,
 	componentId: types.stringRequired,
+	countries: types.stringOrArray,
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
@@ -497,6 +503,7 @@ GeoDistanceSlider.defaultProps = {
 	URLParams: false,
 	autoLocation: true,
 	unit: 'mi',
+	countries: [],
 };
 
 const mapStateToProps = (state, props) => ({
