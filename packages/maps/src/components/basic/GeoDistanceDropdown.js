@@ -478,6 +478,7 @@ GeoDistanceDropdown.defaultProps = {
 	URLParams: false,
 	countries: [],
 	autoLocation: true,
+	unit: 'mi',
 };
 
 const mapStateToProps = (state, props) => ({
