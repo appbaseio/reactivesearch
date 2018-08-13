@@ -461,7 +461,7 @@ GeoDistanceSlider.propTypes = {
 	beforeValueChange: types.func,
 	className: types.string,
 	componentId: types.stringRequired,
-	countries: types.stringOrArray,
+	countries: types.stringArray,
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
