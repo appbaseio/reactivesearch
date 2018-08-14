@@ -9,20 +9,16 @@ const boldFont = css`
 `;
 
 const transition = css`
-	transition: all
-		0.3s
-		ease;
+	transition: all 0.3s ease;
 `;
 
 const Base = styled('div')`
-	font-family: 'Open Sans',
-		sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 	-moz-osx-font-smoothing: grayscale;
-	-moz-font-feature-settings: 'liga'
-		on;
+	-moz-font-feature-settings: 'liga' on;
 
 	*,
 	*:after,
@@ -35,24 +31,19 @@ const Base = styled('div')`
 
 		a {
 			text-decoration: none;
-			border-bottom: 1px
-				dashed
-				#74767e;
+			border-bottom: 1px dashed #74767e;
 			color: inherit;
 			line-height: 38px;
 
 			&:hover {
-				border-bottom: 1px
-					solid
-					#74767e;
+				border-bottom: 1px solid #74767e;
 			}
 		}
 	}
 
 	.button-row {
 		display: flex;
-		margin: 30px
-			0px;
+		margin: 30px 0px;
 		flex-direction: row;
 		align-items: center;
 
@@ -67,25 +58,20 @@ const Base = styled('div')`
 		}
 
 		@media all and (max-width: 768px) {
-			margin: 40px
-				auto
-				20px;
+			margin: 40px auto 20px;
 			text-align: center;
 			justify-content: center;
 		}
 
 		@media all and (max-width: 480px) {
-			margin: 40px
-				auto
-				20px;
+			margin: 40px auto 20px;
 			flex-direction: column;
 			align-items: center;
 			text-align: center;
 			justify-content: center;
 
 			a {
-				margin: 10px
-					auto;
+				margin: 10px auto;
 				width: 240px;
 			}
 		}
@@ -95,10 +81,8 @@ const Base = styled('div')`
 const Layout = styled('div')`
 	width: 100%;
 	max-width: 1200px;
-	padding: 0
-		15px;
-	margin: 0
-		auto;
+	padding: 0 15px;
+	margin: 0 auto;
 `;
 
 const Row = styled('div')`
@@ -113,16 +97,14 @@ const Row = styled('div')`
 		font-size: 20px;
 	}
 
-	&
-		> div {
+	& > div {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		position: relative;
 		height: 100%;
 
-		&
-			> div {
+		& > div {
 			width: 50%;
 			height: 100%;
 			position: relative;
@@ -131,11 +113,9 @@ const Row = styled('div')`
 		@media all and (max-width: 768px) {
 			flex-direction: column;
 			text-align: center;
-			padding: 3rem
-				20px;
+			padding: 3rem 20px;
 
-			&
-				> div {
+			& > div {
 				width: 100%;
 			}
 		}
@@ -158,26 +138,17 @@ const banner = (image, bgColor) => css`
 		top: 100px;
 		right: 0;
 		width: 50%;
-		height: calc(
-			100% -
-				100px
-		);
+		height: calc(100% - 100px);
 		background-image: url(${image});
 		background-size: cover;
-		background-position: top
-			center;
+		background-position: top center;
 		background-repeat: no-repeat;
 
 		.pulsating-circle {
 			position: absolute;
 			left: 20%;
 			bottom: 60px;
-			transform: translateX(
-					-50%
-				)
-				translateY(
-					-50%
-				);
+			transform: translateX(-50%) translateY(-50%);
 			width: 20px;
 			height: 20px;
 
@@ -192,15 +163,7 @@ const banner = (image, bgColor) => css`
 				margin-top: -100%;
 				border-radius: 45px;
 				background-color: #01a4e9;
-				animation: pulse-ring
-					1.25s
-					cubic-bezier(
-						0.215,
-						0.61,
-						0.355,
-						1
-					)
-					infinite;
+				animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
 			}
 
 			&:after {
@@ -213,32 +176,14 @@ const banner = (image, bgColor) => css`
 				height: 100%;
 				background-color: white;
 				border-radius: 15px;
-				box-shadow: 0
-					0
-					8px
-					rgba(
-						0,
-						0,
-						0,
-						0.3
-					);
-				animation: pulse-dot
-					1.25s
-					cubic-bezier(
-						0.455,
-						0.03,
-						0.515,
-						0.955
-					) -0.4s
-					infinite;
+				box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+				animation: pulse-dot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
 			}
 		}
 
 		@keyframes pulse-ring {
 			0% {
-				transform: scale(
-					0.33
-				);
+				transform: scale(0.33);
 			}
 			80%,
 			100% {
@@ -248,19 +193,13 @@ const banner = (image, bgColor) => css`
 
 		@keyframes pulse-dot {
 			0% {
-				transform: scale(
-					0.8
-				);
+				transform: scale(0.8);
 			}
 			50% {
-				transform: scale(
-					1
-				);
+				transform: scale(1);
 			}
 			100% {
-				transform: scale(
-					0.8
-				);
+				transform: scale(0.8);
 			}
 		}
 	}
@@ -288,9 +227,7 @@ const banner = (image, bgColor) => css`
 		}
 
 		p {
-			margin: 30px
-				auto
-				50px;
+			margin: 30px auto 50px;
 		}
 
 		.bg-image {
@@ -310,18 +247,11 @@ const banner = (image, bgColor) => css`
 `;
 
 const SecondaryLink = styled('a')`
-	color: ${props =>
-		(props.primary
-			? props
-				.theme
-				.primaryColor
-			: '#fff')};
+	color: ${props => (props.primary ? props.theme.primaryColor : '#fff')};
 	cursor: pointer;
 	text-transform: uppercase;
 	font-size: 0.95rem;
-	border-bottom: 1px
-		solid
-		transparent;
+	border-bottom: 1px solid transparent;
 	text-decoration: none;
 	${boldFont};
 	${transition};
@@ -329,21 +259,13 @@ const SecondaryLink = styled('a')`
 	&:hover,
 	&:focus {
 		text-decoration: none;
-		border-bottom: 1px
-			solid
-			${props =>
-		(props.primary
-			? props
-				.theme
-				.primaryColor
-			: '#fff')};
+		border-bottom: 1px solid ${props => (props.primary ? props.theme.primaryColor : '#fff')};
 	}
 `;
 
 const Section = styled('div')`
 	width: 100%;
-	padding: 80px
-		0;
+	padding: 80px 0;
 	background-color: #f8f8f9;
 	text-align: center;
 
@@ -360,8 +282,7 @@ const vcenter = css`
 
 const hcenter = css`
 	display: block;
-	margin: 0
-		auto;
+	margin: 0 auto;
 	max-width: 700px;
 	text-align: center;
 
@@ -380,8 +301,7 @@ const titleRow = css`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	margin: 20px
-		0;
+	margin: 20px 0;
 
 	h3 {
 		margin: 0;
@@ -392,8 +312,7 @@ const titleText = css`
 	max-width: 700px;
 	font-size: 1.4rem !important;
 	line-height: 2.2rem;
-	margin: 20px
-		auto;
+	margin: 20px auto;
 
 	@media all and (max-width: 640px) {
 		font-size: 1.2rem !important;
@@ -403,37 +322,23 @@ const titleText = css`
 
 const stepCard = css`
 	border-radius: 2px;
-	box-shadow: 0
-		2px
-		4px
-		0
-		rgba(
-			0,
-			0,
-			0,
-			0.05
-		);
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
 	background-color: #fff;
 	text-align: center;
 	color: #424242;
 	text-align: left;
 	position: relative;
-	padding: 30px
-		30px
-		40px
-		60px;
+	padding: 30px 30px 40px 60px;
 	min-height: 340px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 
-	&
-		> div:last-child {
+	& > div:last-child {
 		margin-top: 20px;
 	}
 
-	&
-		> div:last-child {
+	& > div:last-child {
 		margin-top: 0px;
 	}
 
@@ -448,23 +353,12 @@ const stepCard = css`
 	}
 
 	code {
-		color: rgba(
-			0,
-			0,
-			32,
-			0.8
-		);
+		color: rgba(0, 0, 32, 0.8);
 		display: inline-block;
 		font-size: 14px;
 		line-height: 24px;
-		background-color: rgba(
-			0,
-			1,
-			31,
-			0.03
-		);
-		padding: 4px
-			6px;
+		background-color: rgba(0, 1, 31, 0.03);
+		padding: 4px 6px;
 		white-space: pre-wrap;
 		word-wrap: break-word;
 	}
@@ -496,9 +390,7 @@ const brand = css`
 	color: #fff !important;
 	font-size: 24px !important;
 	max-width: 180px;
-	margin: 20px
-		auto
-		0;
+	margin: 20px auto 0;
 `;
 
 const showMobile = css`
@@ -538,40 +430,29 @@ const tabCenter = css`
 	@media all and (max-width: 768px) {
 		text-align: center;
 
-		&
-			div {
+		& div {
 			overflow: hidden;
 		}
 	}
 `;
 
 const featureList = css`
-	margin: 20px
-		0
-		0
-		0;
+	margin: 20px 0 0 0;
 
 	li {
-		margin: 0
-			0
-			20px
-			0;
+		margin: 0 0 20px 0;
 		color: #fff;
 		line-height: 28px;
 		font-size: 18px;
 		text-align: left;
 		a {
 			text-decoration: none;
-			border-bottom: 1px
-				dashed
-				#74767e;
+			border-bottom: 1px dashed #74767e;
 			color: inherit;
 			line-height: 38px;
 
 			&:hover {
-				border-bottom: 1px
-					solid
-					#74767e;
+				border-bottom: 1px solid #74767e;
 			}
 		}
 	}

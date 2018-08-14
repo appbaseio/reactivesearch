@@ -23,19 +23,17 @@ import Footer from '../components/Footer';
 
 class Tools extends Component {
 	componentDidMount() {
-		window.scrollTo(
-			0,
-			0,
-		);
+		window.scrollTo(0, 0);
 	}
 
 	render() {
-		const { config, theme: { secondary, primaryDark } } = this.props;
+		const {
+			config,
+			theme: { secondary, primaryDark },
+		} = this.props;
 		return (
-			<ThemeProvider
-				theme={this.props.theme}
-			>
-				<Base >
+			<ThemeProvider theme={this.props.theme}>
+				<Base>
 					<Navbar style={{ backgroundColor: primaryDark, color: '#fff' }} bold dark>
 						<Navbar.Logo>
 							<Logo light href={config.header.logo.href}>
@@ -47,15 +45,18 @@ class Tools extends Component {
 							</Logo>
 						</Navbar.Logo>
 						<Navbar.List>
-							{
-								config.header.links.map((l, i) => (
+							{config.header.links.map((l, i) => (
+								<li
+									className={
+										l.href === '/tools' || l.href === '/native/tools' ? 'active' : undefined
+									}
 									/* eslint-disable-next-line */
-									<li className={l.href === '/tools' || l.href === '/native/tools'  ? "active" : undefined} key={i}>
-										{/* eslint-disable-next-line */}
-										<Link to={l.href}>{l.description.toUpperCase()}</Link>
-									</li>
-								))
-							}
+									key={i}
+								>
+									{/* eslint-disable-next-line */}
+									<Link to={l.href}>{l.description.toUpperCase()}</Link>
+								</li>
+							))}
 							<li className={showMobileFlex}>
 								<a href={config.urls.github}>GITHUB</a>
 							</li>
@@ -66,12 +67,7 @@ class Tools extends Component {
 									bold
 									uppercase
 								>
-									<img
-										src="/images/support.svg"
-										style={{ marginRight: 8 }}
-										alt="support"
-									/>{' '}
-									SUPPORT
+									<img src="/images/support.svg" style={{ marginRight: 8 }} alt="support" /> SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>
@@ -81,124 +77,48 @@ class Tools extends Component {
 							backgroundColor: config.banner1.backgroundColor,
 						}}
 					>
-						<Layout >
-							<H1
-								light
-							>
-								Reactive{' '}
-								<span
-									className={
-										boldFont
-									}
-								>
-									X
-								</span>
+						<Layout>
+							<H1 light>
+								Reactive <span className={boldFont}>X</span>
 							</H1>
 							<p
 								style={{
-									color:
-										'#F5F8FF',
+									color: '#F5F8FF',
 									marginBottom: 40,
 								}}
-								className={
-									titleText
-								}
+								className={titleText}
 							>
-								All
-								of
-								our
-								companion
-								Reactive
-								UI
-								component
-								kits.
+								All of our companion Reactive UI component kits.
 							</p>
 
-							<GithubButton
-								count={config.githubCount}
-								href={config.urls.github}
-							/>
+							<GithubButton count={config.githubCount} href={config.urls.github} />
 
 							<Grid
-								size={
-									3
-								}
-								smSize={
-									1
-								}
+								size={3}
+								smSize={1}
 								gutter="30px"
 								smGutter="30px"
 								style={{
 									marginTop: 72,
 								}}
-								className={
-									hideMobile
-								}
+								className={hideMobile}
 							>
-								<div >
-									<img
-										src="/images/tools/Search.svg"
-										alt="Reactivesearch for web"
-									/>
-									<p
-										className={
-											brand
-										}
-									>
-										Reactive{' '}
-										<span
-											className={
-												boldFont
-											}
-										>
-											Search
-										</span>{' '}
-										for
-										web
+								<div>
+									<img src="/images/tools/Search.svg" alt="Reactivesearch for web" />
+									<p className={brand}>
+										Reactive <span className={boldFont}>Search</span> for web
 									</p>
 								</div>
-								<div >
-									<img
-										src="/images/tools/ReactiveMaps.svg"
-										alt="Reactivemaps"
-									/>
-									<p
-										className={
-											brand
-										}
-									>
-										Reactive{' '}
-										<span
-											className={
-												boldFont
-											}
-										>
-											Maps
-										</span>{' '}
-										for
-										web
+								<div>
+									<img src="/images/tools/ReactiveMaps.svg" alt="Reactivemaps" />
+									<p className={brand}>
+										Reactive <span className={boldFont}>Maps</span> for web
 									</p>
 								</div>
-								<div >
-									<img
-										src="/images/tools/ReactiveNative.svg"
-										alt="Reactivesearch for mobile"
-									/>
-									<p
-										className={
-											brand
-										}
-									>
-										Reactive{' '}
-										<span
-											className={
-												boldFont
-											}
-										>
-											X
-										</span>{' '}
-										for
-										mobile
+								<div>
+									<img src="/images/tools/ReactiveNative.svg" alt="Reactivesearch for mobile" />
+									<p className={brand}>
+										Reactive <span className={boldFont}>X</span> for mobile
 									</p>
 								</div>
 							</Grid>
@@ -207,34 +127,17 @@ class Tools extends Component {
 
 					<Section
 						style={{
-							backgroundColor:
-							config.banner2.backgroundColor,
-							overflow:
-								'hidden',
+							backgroundColor: config.banner2.backgroundColor,
+							overflow: 'hidden',
 						}}
 					>
-						<Layout >
-							<Grid
-								size={
-									2
-								}
-								mdSize={
-									1
-								}
-								gutter="30px"
-								smGutter="0px"
-								className={
-									tabCenter
-								}
-							>
+						<Layout>
+							<Grid size={2} mdSize={1} gutter="30px" smGutter="0px" className={tabCenter}>
 								<div
-									className={
-										vcenter
-									}
+									className={vcenter}
 									style={{
 										margin: 0,
-										padding:
-											'0 20px',
+										padding: '0 20px',
 									}}
 								>
 									<H2 light>
@@ -242,71 +145,22 @@ class Tools extends Component {
 											src="/images/tools/Search.svg"
 											alt="Reactivesearch for web"
 											style={{
-												height:
-													'44px',
-												marginRight:
-													'15px',
-												top:
-													'2px',
-												position:
-													'relative',
+												height: '44px',
+												marginRight: '15px',
+												top: '2px',
+												position: 'relative',
 											}}
 										/>
-										Reactive{' '}
-										<span
-											className={
-												boldFont
-											}
-										>
-											Search
-										</span>
+										Reactive <span className={boldFont}>Search</span>
 									</H2>
 									<p style={{ color: '#fff' }}>
-										An
-										Elasticsearch
-										components
-										library
-										for
-										building
-										search
-										UIs.
+										An Elasticsearch components library for building search UIs.
 									</p>
 
-									<ul
-										className={
-											featureList
-										}
-									>
-										<li >
-											20+
-											pre-built
-											React
-											UI
-											components
-											with
-											configurable
-											styles
-											and
-											queries.
-										</li>
-										<li >
-											Bring
-											your
-											own
-											UI
-											components.
-										</li>
-										<li >
-											Used
-											in
-											production
-											for
-											B2B,
-											e-commerce,
-											and
-											SaaS
-											search.
-										</li>
+									<ul className={featureList}>
+										<li>20+ pre-built React UI components with configurable styles and queries.</li>
+										<li>Bring your own UI components.</li>
+										<li>Used in production for B2B, e-commerce, and SaaS search.</li>
 									</ul>
 
 									<div className="button-row">
@@ -322,8 +176,7 @@ class Tools extends Component {
 												backgroundColor: secondary,
 											}}
 										>
-											Get
-											Started
+											Get Started
 										</Button>
 										<SecondaryLink
 											href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/web"
@@ -334,8 +187,7 @@ class Tools extends Component {
 												color: '#fff',
 											}}
 										>
-											Learn
-											More
+											Learn More
 										</SecondaryLink>
 									</div>
 								</div>
@@ -343,9 +195,7 @@ class Tools extends Component {
 									style={{
 										margin: 0,
 									}}
-									className={
-										hideTab
-									}
+									className={hideTab}
 								>
 									<img
 										src="/images/tools/Devices.png"
@@ -359,148 +209,69 @@ class Tools extends Component {
 
 					<Section
 						style={{
-							backgroundColor:
-							config.banner3.backgroundColor,
+							backgroundColor: config.banner3.backgroundColor,
 						}}
 					>
-						<Layout >
-							<Grid
-								size={
-									2
-								}
-								mdSize={
-									1
-								}
-								gutter="30px"
-								smGutter="0px"
-								className={
-									tabCenter
-								}
-							>
+						<Layout>
+							<Grid size={2} mdSize={1} gutter="30px" smGutter="0px" className={tabCenter}>
 								<div
 									style={{
 										margin: 0,
 									}}
-									className={
-										hideTab
-									}
+									className={hideTab}
 								>
-									<img
-										width="100%"
-										src="/images/tools/ReactiveMaps.png"
-										alt="Reactivemaps"
-									/>
+									<img width="100%" src="/images/tools/ReactiveMaps.png" alt="Reactivemaps" />
 								</div>
 								<div
-									className={
-										vcenter
-									}
+									className={vcenter}
 									style={{
 										margin: 0,
-										padding:
-											'0 20px',
+										padding: '0 20px',
 									}}
 								>
-									<H2
-										light
-									>
+									<H2 light>
 										<img
 											src="/images/tools/ReactiveMaps.svg"
 											alt="Reactivesearch for web"
 											style={{
-												height:
-													'44px',
-												marginRight:
-													'15px',
-												top:
-													'2px',
-												position:
-													'relative',
+												height: '44px',
+												marginRight: '15px',
+												top: '2px',
+												position: 'relative',
 											}}
 										/>
-										Reactive{' '}
-										<span
-											className={
-												boldFont
-											}
-										>
-											Maps
-										</span>
+										Reactive <span className={boldFont}>Maps</span>
 									</H2>
 									<p
 										style={{
-											color:
-												'#fff',
+											color: '#fff',
 										}}
 									>
-										An
-										Elasticsearch
-										components
-										library
-										for
-										building
-										geolocation
-										apps.
+										An Elasticsearch components library for building geolocation apps.
 									</p>
 
-									<ul
-										className={
-											featureList
-										}
-									>
+									<ul className={featureList}>
 										<li
 											style={{
-												color:
-													'#fff',
+												color: '#fff',
 											}}
 										>
-											Works
-											with
-											ReactiveSearch
-											components,
-											and
-											adds
-											geospatial
-											components
-											for
-											Maps.
+											Works with ReactiveSearch components, and adds geospatial components for Maps.
 										</li>
 										<li
 											style={{
-												color:
-													'#fff',
+												color: '#fff',
 											}}
 										>
-											Bring
-											your
-											own
-											UI
-											components.
+											Bring your own UI components.
 										</li>
 										<li
 											style={{
-												color:
-													'#fff',
+												color: '#fff',
 											}}
 										>
-											Built
-											on
-											top
-											of
-											Google
-											Maps.
-											It
-											can
-											be
-											extended
-											to
-											build
-											routes,
-											places
-											and
-											location
-											streaming
-											apps.
+											Built on top of Google Maps. It can be extended to build routes, places and
+											location streaming apps.
 										</li>
 									</ul>
 
@@ -517,16 +288,14 @@ class Tools extends Component {
 												backgroundColor: secondary,
 											}}
 										>
-											Get
-											Started
+											Get Started
 										</Button>
 										<SecondaryLink
 											href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/maps"
 											target="_blank"
 											rel="noopener noreferrer"
 										>
-											Learn
-											More
+											Learn More
 										</SecondaryLink>
 									</div>
 								</div>
@@ -536,32 +305,16 @@ class Tools extends Component {
 
 					<Section
 						style={{
-							backgroundColor:
-							config.banner4.backgroundColor,
+							backgroundColor: config.banner4.backgroundColor,
 						}}
 					>
-						<Layout >
-							<Grid
-								size={
-									2
-								}
-								mdSize={
-									1
-								}
-								gutter="30px"
-								smGutter="0px"
-								className={
-									tabCenter
-								}
-							>
+						<Layout>
+							<Grid size={2} mdSize={1} gutter="30px" smGutter="0px" className={tabCenter}>
 								<div
-									className={
-										vcenter
-									}
+									className={vcenter}
 									style={{
 										margin: 0,
-										padding:
-											'0 20px',
+										padding: '0 20px',
 									}}
 								>
 									<H2 light>
@@ -569,73 +322,27 @@ class Tools extends Component {
 											src="/images/tools/ReactiveNative.svg"
 											alt="Reactivesearch for web"
 											style={{
-												height:
-													'44px',
-												marginRight:
-													'15px',
-												top:
-													'2px',
-												position:
-													'relative',
+												height: '44px',
+												marginRight: '15px',
+												top: '2px',
+												position: 'relative',
 											}}
 										/>
 										Reactive
-										<span
-											className={
-												boldFont
-											}
-										>
-											Search
-											Native
-										</span>
+										<span className={boldFont}>Search Native</span>
 									</H2>
 									<p style={{ color: '#fff' }}>
-										Elasticsearch
-										UI
-										components
-										for
-										React
-										Native
-										targeting
-										Android
-										and
-										iOS
-										apps.
+										Elasticsearch UI components for React Native targeting Android and iOS apps.
 									</p>
 
-									<ul
-										className={
-											featureList
-										}
-									>
-										<li >
-											Over
-											10
-											pre-built
-											UI
-											components
-											that
-											maintain
-											design
-											parity
-											with
-											web
+									<ul className={featureList}>
+										<li>
+											Over 10 pre-built UI components that maintain design parity with web
 											components.
 										</li>
-										<li >
-											Bring
-											your
-											own
-											UI
-											components.
-										</li>
-										<li >
-											Currently
-											in
-											preview.
-											Hit
-											us
-											at{' '}
+										<li>Bring your own UI components.</li>
+										<li>
+											Currently in preview. Hit us at{' '}
 											<a
 												href="https://gitter.com/appbaseio/reactivesearch"
 												rel="noopener noreferrer"
@@ -651,8 +358,7 @@ class Tools extends Component {
 											>
 												Github
 											</a>{' '}
-											for
-											issues.
+											for issues.
 										</li>
 									</ul>
 
@@ -669,8 +375,7 @@ class Tools extends Component {
 												backgroundColor: secondary,
 											}}
 										>
-											Get
-											Started
+											Get Started
 										</Button>
 										<SecondaryLink
 											href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/native"
@@ -681,8 +386,7 @@ class Tools extends Component {
 												color: '#fff',
 											}}
 										>
-											Learn
-											More
+											Learn More
 										</SecondaryLink>
 									</div>
 								</div>
@@ -690,9 +394,7 @@ class Tools extends Component {
 									style={{
 										margin: 0,
 									}}
-									className={
-										hideTab
-									}
+									className={hideTab}
 								>
 									<img
 										width="100%"
@@ -707,67 +409,30 @@ class Tools extends Component {
 
 					<Section
 						style={{
-							backgroundColor:
-							config.banner5.backgroundColor,
+							backgroundColor: config.banner5.backgroundColor,
 						}}
 					>
-						<Layout >
-							<H2>
-								Build
-								better
-								reactive
-								apps
-								with
-								appbase.io
-							</H2>
+						<Layout>
+							<H2>Build better reactive apps with appbase.io</H2>
 							<img
 								style={{
-									margin:
-										'60px auto 0',
-									width:
-										'80%',
+									margin: '60px auto 0',
+									width: '80%',
 								}}
 								src="/images/tools/ToolsIllustration.png"
 								srcSet="//images/tools/ToolsIllustration@2x.png 2x"
 								alt="appbase.io"
 							/>
-							<H2>
-								Work
-								with
-								us
-								to
-								build
-								your
-								app
-							</H2>
-							<div
-								className={
-									hcenter
-								}
-							>
+							<H2>Work with us to build your app</H2>
+							<div className={hcenter}>
 								<p
 									style={{
 										maxWidth: 450,
-										margin:
-											'20px auto 40px',
+										margin: '20px auto 40px',
 									}}
 								>
-									We
-									offer
-									production
-									support
-									for
-									ReactiveMaps.
-									Work
-									with
-									us
-									to
-									bring
-									your
-									dream
-									project
-									to
-									life.
+									We offer production support for ReactiveMaps. Work with us to bring your dream
+									project to life.
 								</p>
 								<div className="button-row">
 									<Button
@@ -799,8 +464,7 @@ class Tools extends Component {
 											}}
 											alt="support"
 										/>
-										SUPPORT
-										PLANS
+										SUPPORT PLANS
 									</Button>
 								</div>
 							</div>
@@ -815,8 +479,8 @@ class Tools extends Component {
 }
 Tools.propTypes = {
 	// eslint-disable-next-line
-		config: PropTypes.object,
+	config: PropTypes.object,
 	// eslint-disable-next-line
-		theme: PropTypes.object,
+	theme: PropTypes.object,
 };
 export default Tools;

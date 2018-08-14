@@ -14,27 +14,47 @@ export default () => (
 			<Footer.List>
 				<Title>Documentation</Title>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html">
+					<a
+						target="_blank"
+						rel="noopener noreferrer"
+						href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html"
+					>
 						Quick Start Guide
 					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://opensource.appbase.io/reactive-manual/base-components/textfield.html">
+					<a
+						target="_blank"
+						rel="noopener noreferrer"
+						href="https://opensource.appbase.io/reactive-manual/base-components/textfield.html"
+					>
 						Base Components
 					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://opensource.appbase.io/reactive-manual/map-components/geodistanceslider.html">
+					<a
+						target="_blank"
+						rel="noopener noreferrer"
+						href="https://opensource.appbase.io/reactive-manual/map-components/geodistanceslider.html"
+					>
 						Map Components
 					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://opensource.appbase.io/reactive-manual/search-components/datasearch.html">
+					<a
+						target="_blank"
+						rel="noopener noreferrer"
+						href="https://opensource.appbase.io/reactive-manual/search-components/datasearch.html"
+					>
 						Search Components
 					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://opensource.appbase.io/reactive-manual/result-components/resultlist.html">
+					<a
+						target="_blank"
+						rel="noopener noreferrer"
+						href="https://opensource.appbase.io/reactive-manual/result-components/resultlist.html"
+					>
 						Result Components
 					</a>
 				</li>
@@ -43,39 +63,69 @@ export default () => (
 			<Footer.List>
 				<Title>Community</Title>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://github.com/appbaseio/reactivesearch/">GitHub</a>
+					<a
+						target="_blank"
+						rel="noopener noreferrer"
+						href="https://github.com/appbaseio/reactivesearch/"
+					>
+						GitHub
+					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://gitter.im/appbaseio/reactivesearch">Gitter</a>
+					<a
+						target="_blank"
+						rel="noopener noreferrer"
+						href="https://gitter.im/appbaseio/reactivesearch"
+					>
+						Gitter
+					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://stackoverflow.com/questions/tagged/reactivesearch">Stackoverflow</a>
+					<a
+						target="_blank"
+						rel="noopener noreferrer"
+						href="https://stackoverflow.com/questions/tagged/reactivesearch"
+					>
+						Stackoverflow
+					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://twitter.com/appbaseio">Twitter</a>
+					<a target="_blank" rel="noopener noreferrer" href="https://twitter.com/appbaseio">
+						Twitter
+					</a>
 				</li>
 			</Footer.List>
 
 			<Footer.List>
 				<Title>Helpful Tools</Title>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://opensource.appbase.io/dejavu/">Data Browser</a>
+					<a target="_blank" rel="noopener noreferrer" href="https://opensource.appbase.io/dejavu/">
+						Data Browser
+					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://opensource.appbase.io/mirage/">GUI Query Builder</a>
+					<a target="_blank" rel="noopener noreferrer" href="https://opensource.appbase.io/mirage/">
+						GUI Query Builder
+					</a>
 				</li>
 			</Footer.List>
 
 			<Footer.List>
 				<Title className="heading">More</Title>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://medium.appbase.io/">Medium Publication</a>
+					<a target="_blank" rel="noopener noreferrer" href="https://medium.appbase.io/">
+						Medium Publication
+					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="http://docs.appbase.io/">Appbase.io Docs</a>
+					<a target="_blank" rel="noopener noreferrer" href="http://docs.appbase.io/">
+						Appbase.io Docs
+					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="mailto:support@appbase.io">Support Email</a>
+					<a target="_blank" rel="noopener noreferrer" href="mailto:support@appbase.io">
+						Support Email
+					</a>
 				</li>
 			</Footer.List>
 		</Footer.Links>

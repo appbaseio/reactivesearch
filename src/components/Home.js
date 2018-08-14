@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
-import { Navbar, Logo, Button, H1, H2, H3, Title, Flex, Text, GithubButton, Grid } from '@appbaseio/designkit';
+import {
+	Navbar,
+	Logo,
+	Button,
+	H1,
+	H2,
+	H3,
+	Title,
+	Flex,
+	Text,
+	GithubButton,
+	Grid,
+} from '@appbaseio/designkit';
 import { ThemeProvider } from 'emotion-theming';
 import PropTypes from 'prop-types';
 import {
@@ -29,8 +41,8 @@ function isScrolledIntoView(el) {
 	const Ti = rect.top;
 	const elemBottom = rect.bottom;
 
-	const isVisible = Ti <= (window.innerHeight / 2) && elemBottom >= 0;
-	return ({ isVisible, Ti });
+	const isVisible = Ti <= window.innerHeight / 2 && elemBottom >= 0;
+	return { isVisible, Ti };
 }
 
 class HomePage extends Component {
@@ -56,7 +68,7 @@ class HomePage extends Component {
 
 			if (isVisible) {
 				this.setState({
-					origin: (scroll * -1),
+					origin: scroll * -1,
 				});
 			} else if (Tc < Ti) {
 				this.setState({
@@ -68,22 +80,13 @@ class HomePage extends Component {
 		window.scrollTo(0, 0);
 	}
 
-	openLink(link) {
-		window.open(link);
-	}
-
-	goToLink(link) {
-		window.location = link;
-	}
-
 	render() {
 		const {
-			config, theme: { secondary, primary },
+			config,
+			theme: { secondary, primary },
 		} = this.props;
 		return (
-			<ThemeProvider
-				theme={this.props.theme}
-			>
+			<ThemeProvider theme={this.props.theme}>
 				<Base>
 					<Navbar style={{ backgroundColor: primary, color: '#fff' }} bold dark>
 						<Navbar.Logo>
@@ -96,15 +99,13 @@ class HomePage extends Component {
 							</Logo>
 						</Navbar.Logo>
 						<Navbar.List>
-							{
-								config.header.links.map((l, i) => (
-									/* eslint-disable-next-line */
-									<li key={i}>
-										{/* eslint-disable-next-line */}
-										<a href={l.href}>{l.description.toUpperCase()}</a>
-									</li>
-								))
-							}
+							{config.header.links.map((l, i) => (
+								/* eslint-disable-next-line */
+								<li key={i}>
+									{/* eslint-disable-next-line */}
+									<a href={l.href}>{l.description.toUpperCase()}</a>
+								</li>
+							))}
 							<li className={showMobileFlex}>
 								<a href={config.urls.github}>GITHUB</a>
 							</li>
@@ -115,12 +116,7 @@ class HomePage extends Component {
 									bold
 									uppercase
 								>
-									<img
-										src="images/support.svg"
-										style={{ marginRight: 8 }}
-										alt="support"
-									/>{' '}
-									SUPPORT
+									<img src="images/support.svg" style={{ marginRight: 8 }} alt="support" /> SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>
@@ -132,10 +128,7 @@ class HomePage extends Component {
 								<p>{config.banner1.description}</p>
 
 								<div className="button-row">
-									<GithubButton
-										count={config.githubCount}
-										href={config.urls.github}
-									/>
+									<GithubButton count={config.githubCount} href={config.urls.github} />
 									<Button
 										href={config.banner1.button.href}
 										bold
@@ -169,9 +162,7 @@ class HomePage extends Component {
 									alt="Components"
 									style={{ marginTop: 30 }}
 								/>
-								<p>
-									{config.banner2.description}
-								</p>
+								<p>{config.banner2.description}</p>
 								<div className="button-row">
 									<Button
 										href={config.banner2.button.href}
@@ -196,11 +187,7 @@ class HomePage extends Component {
 									</SecondaryLink>
 								</div>
 								<p>
-									Get{' '}
-									<a href={config.banner2.sketch.href}>
-										our designer templates
-									</a>{' '}
-									for sketch.
+									Get <a href={config.banner2.sketch.href}>our designer templates</a> for sketch.
 								</p>
 							</div>
 						</Layout>
@@ -209,36 +196,26 @@ class HomePage extends Component {
 						<Layout>
 							<H2>{config.banner3.title}</H2>
 							<p>{config.banner3.description}</p>
-							<Grid
-								size={3}
-								mdSize={2}
-								smSize={1}
-								gutter="50px"
-								style={{ marginTop: '60px' }}
-							>
-								{
-									config.banner3.cards.map((cardI, i) => (
-										// eslint-disable-next-line
-										<ActionCard key={i}>
-											<ActionCard.Icon>
-												<img src={cardI.image.src} alt={cardI.image.alt} />
-											</ActionCard.Icon>
-											<Title>{cardI.title}</Title>
-											<p>
-												{cardI.description}
-											</p>
-											<SecondaryLink
-												primary
-												href={cardI.href}
-												style={{
-													color: primary,
-												}}
-											>
-												Read More
-											</SecondaryLink>
-										</ActionCard>
-									))
-								}
+							<Grid size={3} mdSize={2} smSize={1} gutter="50px" style={{ marginTop: '60px' }}>
+								{config.banner3.cards.map((cardI, i) => (
+									// eslint-disable-next-line
+									<ActionCard key={i}>
+										<ActionCard.Icon>
+											<img src={cardI.image.src} alt={cardI.image.alt} />
+										</ActionCard.Icon>
+										<Title>{cardI.title}</Title>
+										<p>{cardI.description}</p>
+										<SecondaryLink
+											primary
+											href={cardI.href}
+											style={{
+												color: primary,
+											}}
+										>
+											Read More
+										</SecondaryLink>
+									</ActionCard>
+								))}
 							</Grid>
 						</Layout>
 					</Section>
@@ -296,28 +273,26 @@ class HomePage extends Component {
 								smGutter="0px"
 								style={{ marginBottom: '50px' }}
 							>
-								{
-									config.banner6.demos.map((d, index) => (
-										// eslint-disable-next-line
-										<ImageCard key={index} src={d.src}>
-											<div>
-												<Title>{d.title}</Title>
-												<p>{d.description}</p>
-											</div>
-											<div>
-												<SecondaryLink
-													primary
-													href={d.href}
-													style={{
-														color: primary,
-													}}
-												>
-													Check Demo
-												</SecondaryLink>
-											</div>
-										</ImageCard>
-									))
-								}
+								{config.banner6.demos.map((d, index) => (
+									// eslint-disable-next-line
+									<ImageCard key={index} src={d.src}>
+										<div>
+											<Title>{d.title}</Title>
+											<p>{d.description}</p>
+										</div>
+										<div>
+											<SecondaryLink
+												primary
+												href={d.href}
+												style={{
+													color: primary,
+												}}
+											>
+												Check Demo
+											</SecondaryLink>
+										</div>
+									</ImageCard>
+								))}
 							</Grid>
 						</Layout>
 					</Section>
@@ -357,9 +332,7 @@ class HomePage extends Component {
 	}
 }
 HomePage.propTypes = {
-	// eslint-disable-next-line
-		config: PropTypes.object,
-	// eslint-disable-next-line
-		theme: PropTypes.object,
+	config: PropTypes.object,
+	theme: PropTypes.object,
 };
 export default HomePage;
