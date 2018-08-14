@@ -9,19 +9,15 @@ export default {
 		backgroundColor: primaryDark,
 	},
 	banner2: {
-		backgroundColor:
-			'#4D009B',
+		backgroundColor: '#4D009B',
 	},
 	banner3: {
-		backgroundColor:
-			'#133146',
+		backgroundColor: '#133146',
 	},
 	banner4: {
-		backgroundColor:
-			'#3D84FF',
+		backgroundColor: '#3D84FF',
 	},
 	banner5: {
-		backgroundColor:
-			'#DDEBFF',
+		backgroundColor: '#DDEBFF',
 	},
 };

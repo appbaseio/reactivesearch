@@ -3,8 +3,8 @@ import { css } from 'emotion';
 import queries from './mediaQueries';
 
 const solid = css`
-	background-color: #1573FF;
-	box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.05);
+	background-color: #1573ff;
+	box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.05);
 `;
 
 const Navbar = styled('nav')`
@@ -41,9 +41,10 @@ const Navbar = styled('nav')`
 				padding: 5px 0;
 				text-decoration: none;
 				border-bottom: 1px solid transparent;
-				transition: all .3s ease;
+				transition: all 0.3s ease;
 
-				&:hover, &:focus {
+				&:hover,
+				&:focus {
 					border-bottom: 1px solid #fff;
 				}
 			}
@@ -67,7 +68,7 @@ const Navbar = styled('nav')`
 `;
 
 const logo = css`
-	background-image: linear-gradient(to top,#327ab7 0%,#1e4b9c 1%,#1356cc 100%);
+	background-image: linear-gradient(to top, #327ab7 0%, #1e4b9c 1%, #1356cc 100%);
 	padding: 5px 15px;
 	border-radius: 999em;
 	text-decoration: none;

@@ -19,26 +19,19 @@ import Footer from '../components/Footer';
 
 class Learn extends Component {
 	componentDidMount() {
-		window.scrollTo(
-			0,
-			0,
-		);
+		window.scrollTo(0, 0);
 	}
 
 	render() {
-		const {
-			config,
-			theme,
-		} = this.props;
+		const { config, theme } = this.props;
 		return (
 			<ThemeProvider
 				theme={{
-					primaryColor:
-						'#0033FF',
+					primaryColor: '#0033FF',
 				}}
 			>
-				<Base >
-					<Navbar bold >
+				<Base>
+					<Navbar bold>
 						<Navbar.Logo>
 							<Logo href={config.header.logo.href}>
 								<Logo.Icon css="color: #fff;">
@@ -49,15 +42,20 @@ class Learn extends Component {
 							</Logo>
 						</Navbar.Logo>
 						<Navbar.List>
-							{
-								config.header.links.map((l, i) => (
+							{config.header.links.map((l, i) => (
+								<li
+									className={
+										l.href === '/learn' || l.href === '/native/learn' ? 'active' : undefined
+									}
 									/* eslint-disable-next-line */
-									<li className={l.href === '/learn' || l.href === '/native/learn' ? "active" : undefined} key={i}>
-										{/* eslint-disable-next-line */}
-										<Link style={{ color: '#424242' }} to={l.href}>{l.description.toUpperCase()}</Link>
-									</li>
-								))
-							}
+									key={i}
+								>
+									{/* eslint-disable-next-line */}
+									<Link style={{ color: '#424242' }} to={l.href}>
+										{l.description.toUpperCase()}
+									</Link>
+								</li>
+							))}
 							<li className={showMobileFlex}>
 								<a href={config.urls.github}>GITHUB</a>
 							</li>
@@ -68,12 +66,7 @@ class Learn extends Component {
 									bold
 									uppercase
 								>
-									<img
-										src="/images/support.svg"
-										style={{ marginRight: 8 }}
-										alt="support"
-									/>{' '}
-									SUPPORT
+									<img src="/images/support.svg" style={{ marginRight: 8 }} alt="support" /> SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>
@@ -81,32 +74,9 @@ class Learn extends Component {
 
 					<Section>
 						<Layout style={{ marginTop: '50px' }}>
-							<H1 >
-								Get
-								Started
-								with
-								Reactive
-								Search
-							</H1>
-							<p
-								className={
-									titleText
-								}
-							>
-								Use
-								our
-								step-by-step
-								guide
-								to
-								learn
-								all
-								about
-								Reactive
-								Maps,
-								or
-								check
-								out
-								our{' '}
+							<H1>Get Started with Reactive Search</H1>
+							<p className={titleText}>
+								Use our step-by-step guide to learn all about Reactive Maps, or check out our{' '}
 								<a
 									rel="noopener noreferrer"
 									href="https://opensource.appbase.io/reactive-manual/"
@@ -114,150 +84,67 @@ class Learn extends Component {
 								>
 									docs
 								</a>
-
 								.
 							</p>
 
 							<Grid
-								size={
-									3
-								}
-								mdSize={
-									2
-								}
-								smSize={
-									1
-								}
+								size={3}
+								mdSize={2}
+								smSize={1}
 								gutter="12px"
 								smGutter="0px"
 								style={{
 									marginTop: 60,
 								}}
 							>
-								<div
-									className={
-										stepCard
-									}
-								>
+								<div className={stepCard}>
 									<span className="count" style={{ color: theme.primaryDark }}>
 										1
 									</span>
-									<div >
-										<Title >
-											Install
-											Reactive
-											X
-										</Title>
-										<p >
-											ReactiveSearch
-											is
-											a
-											set
-											of
-											Elasticsearch
-											components
-											for
-											building
-											data-driven
+									<div>
+										<Title>Install Reactive X</Title>
+										<p>
+											ReactiveSearch is a set of Elasticsearch components for building data-driven
 											UIs.
 										</p>
-										<p >
-											ReactiveMaps
-											is
-											an
-											extension
-											of
-											ReactiveSearch
-											that
-											provides
-											map
-											focused
-											UI
+										<p>
+											ReactiveMaps is an extension of ReactiveSearch that provides map focused UI
 											components.
 										</p>
 									</div>
 									<div className="full">
-										<pre >
-											<code >
-												npm
-												install
-												@appbaseio/reactivesearch
-											</code>
+										<pre>
+											<code>npm install @appbaseio/reactivesearch</code>
 										</pre>
-										<pre >
-											<code >
-												npm
-												install
-												@appbaseio/reactivemaps
-											</code>
+										<pre>
+											<code>npm install @appbaseio/reactivemaps</code>
 										</pre>
 									</div>
 								</div>
 
-								<div
-									className={
-										stepCard
-									}
-								>
+								<div className={stepCard}>
 									<span className="count" style={{ color: theme.primaryDark }}>
 										2
 									</span>
-									<div >
-										<Title >
-											Add
-											Google
-											Maps
-											JS
-										</Title>
-										<p >
-											ReactiveMaps
-											use
-											Google
-											Maps
-											to
-											render
-											the
-											map
-											component.
-											You
-											can
-											add
-											the
-											following
-											script
-											in
-											the
-											&lt;head&gt;
-											element
-											of
-											your
-											main
-											.html
-											file.
+									<div>
+										<Title>Add Google Maps JS</Title>
+										<p>
+											ReactiveMaps use Google Maps to render the map component. You can add the
+											following script in the &lt;head&gt; element of your main .html file.
 										</p>
-										<p >
-											Get
-											the{' '}
+										<p>
+											Get the{' '}
 											<a
 												rel="noopener noreferrer"
 												href="https://developers.google.com/maps/documentation/javascript/get-api-key"
 												target="_blank"
 											>
-												API
-												Key
+												API Key
 											</a>{' '}
-											and
-											info
-											on
-											how
-											to
-											add
-											the
-											Maps
-											script.
+											and info on how to add the Maps script.
 										</p>
 									</div>
-									<div >
+									<div>
 										<SecondaryLink
 											primary
 											rel="noopener noreferrer"
@@ -265,117 +152,51 @@ class Learn extends Component {
 											target="_blank"
 											style={{ color: theme.primaryDark }}
 										>
-											Step-by-step
-											installation
-											guide
+											Step-by-step installation guide
 										</SecondaryLink>
 									</div>
 								</div>
 
-								<div
-									className={
-										stepCard
-									}
-								>
+								<div className={stepCard}>
 									<span className="count" style={{ color: theme.primaryDark }}>
 										3
 									</span>
-									<div >
-										<Title >
-											Connect
-											to
-											your
-											ES
-											index
-										</Title>
-										<p >
-											ReactiveMaps
-											components
-											can
-											connect
-											to
-											an
-											Elasticsearch
-											index
-											(hosted
-											anywhere)
-											for
-											performing
-											geospatial
-											queries.
+									<div>
+										<Title>Connect to your ES index</Title>
+										<p>
+											ReactiveMaps components can connect to an Elasticsearch index (hosted
+											anywhere) for performing geospatial queries.
 										</p>
-										<p >
-											Create
-											a
-											free
-											app
-											with{' '}
-											<a
-												rel="noopener noreferrer"
-												href="https://appbase.io"
-												target="_blank"
-											>
+										<p>
+											Create a free app with{' '}
+											<a rel="noopener noreferrer" href="https://appbase.io" target="_blank">
 												appbase.io
 											</a>
-
-											,
-											or{' '}
+											, or{' '}
 											<a
 												rel="noopener noreferrer"
 												href="https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html#connect-to-elasticsearch"
 												target="_blank"
 											>
-												learn
-												more
+												learn more
 											</a>{' '}
-											on
-											how
-											to
-											connect
-											with
-											your
-											Elasticsearch.
+											on how to connect with your Elasticsearch.
 										</p>
 									</div>
 								</div>
 
-								<div
-									className={
-										stepCard
-									}
-								>
+								<div className={stepCard}>
 									<span className="count" style={{ color: theme.primaryDark }}>
 										4
 									</span>
-									<div >
-										<Title >
-											Create
-											or
-											import
-											dataset
-										</Title>
-										<p >
-											Use
-											Dejavu,
-											an
-											open-source
-											databrowser
-											from
-											appbase.io
-											to
-											create,
-											view,
-											edit
-											and
-											import
-											dataset
-											into
-											your
-											Elasticsearch
-											index.
+									<div>
+										<Title>Create or import dataset</Title>
+										<p>
+											Use Dejavu, an open-source databrowser from appbase.io to create, view, edit
+											and import dataset into your Elasticsearch index.
 										</p>
 									</div>
-									<div >
+									<div>
 										<SecondaryLink
 											primary
 											rel="noopener noreferrer"
@@ -391,35 +212,23 @@ class Learn extends Component {
 											href="https://opensource.appbase.io/reactive-manual/getting-started/data.html"
 											target="_blank"
 											style={{
-												marginLeft:
-													'1rem',
+												marginLeft: '1rem',
 												color: theme.primaryDark,
 											}}
 										>
-											Import
-											data
+											Import data
 										</SecondaryLink>
 									</div>
 								</div>
 
-								<div
-									className={
-										stepCard
-									}
-								>
+								<div className={stepCard}>
 									<span className="count" style={{ color: theme.primaryDark }}>
 										5
 									</span>
-									<div >
-										<Title >
-											UI
-											Components
-										</Title>
-										<p >
-											Add
-											UI
-											components
-											for{' '}
+									<div>
+										<Title>UI Components</Title>
+										<p>
+											Add UI components for{' '}
 											<a
 												rel="noopener noreferrer"
 												href="https://opensource.appbase.io/reactive-manual/map-components/geodistanceslider.html"
@@ -427,7 +236,6 @@ class Learn extends Component {
 											>
 												Maps
 											</a>
-
 											,{' '}
 											<a
 												rel="noopener noreferrer"
@@ -436,7 +244,6 @@ class Learn extends Component {
 											>
 												List
 											</a>
-
 											,{' '}
 											<a
 												rel="noopener noreferrer"
@@ -445,7 +252,6 @@ class Learn extends Component {
 											>
 												Range
 											</a>
-
 											,{' '}
 											<a
 												rel="noopener noreferrer"
@@ -454,7 +260,6 @@ class Learn extends Component {
 											>
 												Search
 											</a>
-
 											,{' '}
 											<a
 												rel="noopener noreferrer"
@@ -463,11 +268,10 @@ class Learn extends Component {
 											>
 												Results
 											</a>
-
 											.
 										</p>
 									</div>
-									<div >
+									<div>
 										<SecondaryLink
 											style={{ color: theme.primaryDark }}
 											primary
@@ -475,48 +279,22 @@ class Learn extends Component {
 											href="https://opensource.appbase.io/reactive-manual/getting-started/componentsindex.html"
 											target="_blank"
 										>
-											Component
-											Docs
+											Component Docs
 										</SecondaryLink>
 									</div>
 								</div>
 
-								<div
-									className={
-										stepCard
-									}
-								>
+								<div className={stepCard}>
 									<span className="count" style={{ color: theme.primaryDark }}>
 										6
 									</span>
-									<div >
-										<Title >
-											Maps
-											for
-											React
-											Native
-										</Title>
-										<p >
-											ReactiveMaps
-											is
-											also
-											available
-											in
-											preview
-											for
-											React
-											Native.
-										</p>
+									<div>
+										<Title>Maps for React Native</Title>
+										<p>ReactiveMaps is also available in preview for React Native.</p>
 									</div>
-									<div >
-										<SecondaryLink
-											primary
-											style={{ color: theme.primaryDark }}
-										>
-											Quickstart
-											with
-											React
-											Native
+									<div>
+										<SecondaryLink primary style={{ color: theme.primaryDark }}>
+											Quickstart with React Native
 										</SecondaryLink>
 									</div>
 								</div>
@@ -524,30 +302,12 @@ class Learn extends Component {
 						</Layout>
 					</Section>
 
-					<BannerRow
-						config={
-							config.banner
-						}
-						theme={
-							theme
-						}
-					/>
+					<BannerRow config={config.banner} theme={theme} />
 
-					<Section >
-						<Layout >
-							<H2 >
-								Need
-								Help?
-							</H2>
-							<p >
-								Resources
-								to
-								get
-								help
-								with
-								Reactive
-								Maps.
-							</p>
+					<Section>
+						<Layout>
+							<H2>Need Help?</H2>
+							<p>Resources to get help with Reactive Maps.</p>
 
 							<SupportGrid />
 						</Layout>
@@ -561,10 +321,7 @@ class Learn extends Component {
 }
 
 Learn.propTypes = {
-	// eslint-disable-next-line
-		config: PropTypes.object,
-	// eslint-disable-next-line
-		theme: PropTypes.object,
+	config: PropTypes.object,
+	theme: PropTypes.object,
 };
 export default Learn;
-

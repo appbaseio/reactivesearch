@@ -4,69 +4,34 @@ import PropTypes from 'prop-types';
 import { SecondaryLink } from '../styles';
 
 const Banner = ({ config, theme }) => (
-	<BannerRow >
-		{config.map((
-			b,
-			i,
-		) => (
+	<BannerRow>
+		{config.map((b, i) => (
 			<BannerRow.Column
 				key={
 					// eslint-disable-next-line
-						i
+					i
 				}
 				style={{
-					backgroundColor:
-							b.backgroundColor,
+					backgroundColor: b.backgroundColor,
 				}}
 			>
-				<div >
-					<H2
-						light
-					>
-						{
-							b.title
-						}
-					</H2>
-					<p >
-						{
-							b.description
-						}
-					</p>
+				<div>
+					<H2 light>{b.title}</H2>
+					<p>{b.description}</p>
 					<div className="button-row center">
 						<Button
-							href={
-								b
-									.button
-									.href
-							}
+							href={b.button.href}
 							bold
 							uppercase
 							big
 							primary
 							style={{
-								backgroundColor:
-										theme.secondary,
+								backgroundColor: theme.secondary,
 							}}
 						>
-							{
-								b
-									.button
-									.title
-							}
+							{b.button.title}
 						</Button>
-						<SecondaryLink
-							href={
-								b
-									.link
-									.href
-							}
-						>
-							{
-								b
-									.link
-									.title
-							}
-						</SecondaryLink>
+						<SecondaryLink href={b.link.href}>{b.link.title}</SecondaryLink>
 					</div>
 				</div>
 			</BannerRow.Column>
@@ -76,27 +41,19 @@ const Banner = ({ config, theme }) => (
 
 Banner.propTypes = {
 	// eslint-disable-next-line
-	theme:
-		PropTypes.object,
+	theme: PropTypes.object,
 	config: PropTypes.arrayOf(PropTypes.shape({
-		backgroundColor:
-					PropTypes.string,
-		title:
-					PropTypes.string,
-		description:
-					PropTypes.string,
-		button: PropTypes.shape({
-			title:
-							PropTypes.string,
-			href:
-							PropTypes.string,
-		}),
-		link: PropTypes.shape({
-			title:
-							PropTypes.string,
-			href:
-							PropTypes.string,
-		}),
-	})),
+			backgroundColor: PropTypes.string,
+			title: PropTypes.string,
+			description: PropTypes.string,
+			button: PropTypes.shape({
+				title: PropTypes.string,
+				href: PropTypes.string,
+			}),
+			link: PropTypes.shape({
+				title: PropTypes.string,
+				href: PropTypes.string,
+			}),
+		})),
 };
 export default Banner;
