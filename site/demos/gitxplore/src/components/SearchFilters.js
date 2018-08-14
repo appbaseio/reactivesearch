@@ -17,6 +17,8 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 				dataField="language.raw"
 				title="Language"
 				placeholder="Select languages"
+				URLParams
+				react={{ and: ['topics', 'pushed', 'created', 'forks', 'stars'] }}
 			/>
 		</FlexChild>
 		<FlexChild margin="10px">
@@ -27,14 +29,17 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 				placeholder="Select topics"
 				size={1000}
 				queryFormat="and"
+				URLParams
 				defaultSelected={currentTopics}
 				onValueChange={setTopics}
+				react={{ and: ['language', 'pushed', 'created', 'forks', 'stars'] }}
 			/>
 		</FlexChild>
 		<FlexChild margin="10px">
 			<SingleDropdownRange
 				componentId="pushed"
 				dataField="pushed"
+				URLParams
 				title="Last Active"
 				placeholder="Repo last active"
 				data={[
@@ -50,6 +55,7 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 				dataField="created"
 				title="Created"
 				placeholder="Repo created"
+				URLParams
 				data={[
 					{
 						start: '2017-01-01T00:00:00Z',
