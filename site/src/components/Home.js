@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Navbar, Logo, Button, H1, H2, H3, Title, Flex, Text, GithubButton, Grid } from '@appbaseio/designkit';
-import { Link } from 'react-router-dom';
 import { ThemeProvider } from 'emotion-theming';
-import webConfig from './../constants/config/web';
-import { secondary, primary } from './../constants';
+import PropTypes from 'prop-types';
 import {
 	Base,
 	Layout,
@@ -35,7 +33,7 @@ function isScrolledIntoView(el) {
 	return ({ isVisible, Ti });
 }
 
-export default class HomePage extends Component {
+class HomePage extends Component {
 	constructor(props) {
 		super(props);
 
@@ -79,40 +77,41 @@ export default class HomePage extends Component {
 	}
 
 	render() {
+		const {
+			config, theme: { secondary, primary },
+		} = this.props;
 		return (
 			<ThemeProvider
-				theme={{
-					primaryColor: '#0033FF',
-				}}
+				theme={this.props.theme}
 			>
 				<Base>
 					<Navbar style={{ backgroundColor: primary, color: '#fff' }} bold dark>
 						<Navbar.Logo>
-							<Logo light href={webConfig.header.logo.href}>
+							<Logo light href={config.header.logo.href}>
 								<Logo.Icon css="color: #fff;">
-									<img src={webConfig.header.logo.src} alt="Icon" />
+									<img src={config.header.logo.src} alt="Icon" />
 								</Logo.Icon>
-								<Logo.Light>{webConfig.header.logo.title.light}</Logo.Light>
-								<Logo.Dark>{webConfig.header.logo.title.dark}</Logo.Dark>
+								<Logo.Light>{config.header.logo.title.light}</Logo.Light>
+								<Logo.Dark>{config.header.logo.title.dark}</Logo.Dark>
 							</Logo>
 						</Navbar.Logo>
 						<Navbar.List>
 							{
-								webConfig.header.links.map((l, i) => (
+								config.header.links.map((l, i) => (
 									/* eslint-disable-next-line */
 									<li key={i}>
 										{/* eslint-disable-next-line */}
-										<Link to={l.href}>{l.description.toUpperCase()}</Link>
+										<a href={l.href}>{l.description.toUpperCase()}</a>
 									</li>
 								))
 							}
 							<li className={showMobileFlex}>
-								<a href={webConfig.urls.github}>GITHUB</a>
+								<a href={config.urls.github}>GITHUB</a>
 							</li>
 							<li className="button">
 								<Button
 									style={{ backgroundColor: secondary }}
-									href={webConfig.urls.support}
+									href={config.urls.support}
 									bold
 									uppercase
 								>
@@ -126,29 +125,29 @@ export default class HomePage extends Component {
 							</li>
 						</Navbar.List>
 					</Navbar>
-					<div className={banner}>
+					<div className={banner(config.banner1.image.src, primary)}>
 						<Layout>
 							<div className="content">
-								<H1 light>{webConfig.banner1.title}</H1>
-								<p>{webConfig.banner1.description}</p>
+								<H1 light>{config.banner1.title}</H1>
+								<p>{config.banner1.description}</p>
 
 								<div className="button-row">
 									<GithubButton
-										count={webConfig.githubCount}
-										href={webConfig.urls.github}
+										count={config.githubCount}
+										href={config.urls.github}
 									/>
 									<Button
-										href={webConfig.banner1.button.href}
+										href={config.banner1.button.href}
 										bold
 										uppercase
 										big
 										primary
 										style={{ backgroundColor: secondary }}
 									>
-										{webConfig.banner1.button.title}
+										{config.banner1.button.title}
 									</Button>
-									<SecondaryLink href={webConfig.banner1.link.href}>
-										{webConfig.banner1.link.title}
+									<SecondaryLink href={config.banner1.link.href}>
+										{config.banner1.link.title}
 									</SecondaryLink>
 								</div>
 							</div>
@@ -158,24 +157,24 @@ export default class HomePage extends Component {
 					<Row>
 						<Layout>
 							<div className={hideMobile}>
-								<img src={webConfig.banner2.image.src} width="100%" alt={webConfig.banner2.image.alt} />
+								<img src={config.banner2.image.src} width="100%" alt={config.banner2.image.alt} />
 							</div>
 							<div className={vcenter}>
-								<H2>{webConfig.banner2.title}</H2>
+								<H2>{config.banner2.title}</H2>
 								<img
 									className={showMobile}
-									src={webConfig.banner2.image.mobile.src}
-									srcSet={webConfig.banner2.image.mobile.srcSet}
+									src={config.banner2.image.mobile.src}
+									srcSet={config.banner2.image.mobile.srcSet}
 									width="100%"
 									alt="Components"
 									style={{ marginTop: 30 }}
 								/>
 								<p>
-									{webConfig.banner2.description}
+									{config.banner2.description}
 								</p>
 								<div className="button-row">
 									<Button
-										href={webConfig.banner2.button.href}
+										href={config.banner2.button.href}
 										bold
 										uppercase
 										big
@@ -184,21 +183,21 @@ export default class HomePage extends Component {
 											backgroundColor: secondary,
 										}}
 									>
-										{webConfig.banner2.button.title}
+										{config.banner2.button.title}
 									</Button>
 									<SecondaryLink
-										href={webConfig.banner2.link.href}
+										href={config.banner2.link.href}
 										primary
 										style={{
 											color: primary,
 										}}
 									>
-										{webConfig.banner2.link.title}
+										{config.banner2.link.title}
 									</SecondaryLink>
 								</div>
 								<p>
 									Get{' '}
-									<a href={webConfig.banner2.sketch.href}>
+									<a href={config.banner2.sketch.href}>
 										our designer templates
 									</a>{' '}
 									for sketch.
@@ -208,8 +207,8 @@ export default class HomePage extends Component {
 					</Row>
 					<Section>
 						<Layout>
-							<H2>{webConfig.banner3.title}</H2>
-							<p>{webConfig.banner3.description}</p>
+							<H2>{config.banner3.title}</H2>
+							<p>{config.banner3.description}</p>
 							<Grid
 								size={3}
 								mdSize={2}
@@ -218,7 +217,7 @@ export default class HomePage extends Component {
 								style={{ marginTop: '60px' }}
 							>
 								{
-									webConfig.banner3.cards.map((cardI, i) => (
+									config.banner3.cards.map((cardI, i) => (
 										// eslint-disable-next-line
 										<ActionCard key={i}>
 											<ActionCard.Icon>
@@ -249,13 +248,13 @@ export default class HomePage extends Component {
 						justifyContent="center"
 						alignItems="center"
 					>
-						<H2>{webConfig.banner4.title}</H2>
+						<H2>{config.banner4.title}</H2>
 						<Text
 							fontSize="1rem"
 							lineHeight="1.5rem"
 							style={{ maxWidth: '600px', textAlign: 'center' }}
 						>
-							{webConfig.banner4.description}
+							{config.banner4.description}
 						</Text>
 
 						<Flex padding="0 30px" justifyContent="center" margin="30px 0 0">
@@ -274,19 +273,19 @@ export default class HomePage extends Component {
 							</Flex>
 						</Flex>
 					</Flex>
-					<BannerRow config={webConfig.banner5} />
-					<Section>
+					<BannerRow config={config.banner5} theme={this.props.theme} />
+					<Section id="examples">
 						<Layout>
 							<div className={titleRow}>
-								<H3>{webConfig.banner6.title}</H3>
+								<H3>{config.banner6.title}</H3>
 								<Button
 									style={{ backgroundColor: secondary }}
 									bold
 									uppercase
 									primary
-									href={webConfig.banner6.button.href}
+									href={config.banner6.button.href}
 								>
-									{webConfig.banner6.button.title}
+									{config.banner6.button.title}
 								</Button>
 							</div>
 							<Grid
@@ -298,7 +297,7 @@ export default class HomePage extends Component {
 								style={{ marginBottom: '50px' }}
 							>
 								{
-									webConfig.banner6.demos.map((d, index) => (
+									config.banner6.demos.map((d, index) => (
 										// eslint-disable-next-line
 										<ImageCard key={index} src={d.src}>
 											<div>
@@ -357,3 +356,10 @@ export default class HomePage extends Component {
 		);
 	}
 }
+HomePage.propTypes = {
+	// eslint-disable-next-line
+		config: PropTypes.object,
+	// eslint-disable-next-line
+		theme: PropTypes.object,
+};
+export default HomePage;

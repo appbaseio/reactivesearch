@@ -141,8 +141,7 @@ const Row = styled('div')`
 		}
 	}
 `;
-
-const banner = css`
+const banner = (image, bgColor) => css`
 	width: 100%;
 	min-height: 100vh;
 	display: flex;
@@ -150,7 +149,7 @@ const banner = css`
 	color: #fff;
 	position: relative;
 	flex-direction: column;
-	background-color: #7107d8;
+	background-color: ${bgColor};
 	.content {
 		width: 50%;
 	}
@@ -163,7 +162,7 @@ const banner = css`
 			100% -
 				100px
 		);
-		background-image: url('./../images/browser.png');
+		background-image: url(${image});
 		background-size: cover;
 		background-position: top
 			center;
@@ -557,7 +556,7 @@ const featureList = css`
 			0
 			20px
 			0;
-		color: #74767e;
+		color: #fff;
 		line-height: 28px;
 		font-size: 18px;
 		text-align: left;

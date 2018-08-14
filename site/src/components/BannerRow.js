@@ -1,10 +1,9 @@
 import React from 'react';
 import { BannerRow, H2, Button } from '@appbaseio/designkit';
 import PropTypes from 'prop-types';
-import { secondary } from './../constants';
 import { SecondaryLink } from '../styles';
 
-const Banner = ({ config }) => (
+const Banner = ({ config, theme }) => (
 	<BannerRow >
 		{config.map((
 			b,
@@ -45,7 +44,8 @@ const Banner = ({ config }) => (
 							big
 							primary
 							style={{
-								backgroundColor: secondary,
+								backgroundColor:
+										theme.secondary,
 							}}
 						>
 							{
@@ -75,6 +75,9 @@ const Banner = ({ config }) => (
 );
 
 Banner.propTypes = {
+	// eslint-disable-next-line
+	theme:
+		PropTypes.object,
 	config: PropTypes.arrayOf(PropTypes.shape({
 		backgroundColor:
 					PropTypes.string,
