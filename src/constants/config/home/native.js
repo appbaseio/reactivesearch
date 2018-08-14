@@ -1,53 +1,36 @@
-import { primary, primaryDark } from '../';
+import theme from './../../theme/native';
+import baseConfig from './../base/native';
 
-export default {
-	githubCount:
-		'2000',
-	urls: {
-		github:
-			'https://github.com/appbaseio/reactivesearch',
-		support:
-			'https://appbase.io/support',
-	},
-	header: {
-		logo: {
-			src:
-				'images/logo.svg',
-			title: {
-				light:
-					'Reactive',
-				dark:
-					'Search',
-			},
+const { primary, primaryDark } = theme;
+
+const baseConfigHeader = {
+	...baseConfig.header,
+	links: [
+		{
+			description:
+				'examples',
 			href:
-				'/reactivesearch',
+				'#examples',
 		},
-		links: [
-			{
-				description:
-					'examples',
-				href:
-					'/examples',
-			},
-			{
-				description:
-					'tools',
-				href:
-					'/tools',
-			},
-			{
-				description:
-					'learn',
-				href:
-					'/learn',
-			},
-		],
-	},
+		...baseConfig
+			.header
+			.links,
+	],
+};
+export default {
+	...baseConfig,
+	header: baseConfigHeader,
 	banner1: {
 		title:
 			'React UI components for Elasticsearch',
 		description:
 			'Now more configurable, lighter and performant.Open source licensed.',
+		image: {
+			src:
+				'/images/native/landing.png',
+			alt:
+				'Native Components',
+		},
 		button: {
 			title:
 				'Get Started',
@@ -64,14 +47,14 @@ export default {
 	banner2: {
 		image: {
 			src:
-				'images/components.png',
+				'/images/native/components.png',
 			alt:
 				'Components',
 			mobile: {
 				src:
-					'images/components-mobile.png',
+					'/images/native/components-mobile.png',
 				srcSet:
-					'images/components-mobile@2x.png 2x',
+					'/images/native/components-mobile@2x.png 2x',
 			},
 		},
 		title:
@@ -246,7 +229,7 @@ export default {
 		demos: [
 			{
 				src:
-					'images/apps/airbeds.png',
+					'/images/apps/airbeds.png',
 				title:
 					'Airbeds',
 				href:
@@ -256,7 +239,7 @@ export default {
 			},
 			{
 				src:
-					'images/apps/airbeds.png',
+					'/images/apps/airbeds.png',
 				title:
 					'Airbeds',
 				href:
@@ -266,7 +249,7 @@ export default {
 			},
 			{
 				src:
-					'images/apps/airbeds.png',
+					'/images/apps/airbeds.png',
 				title:
 					'Airbeds',
 				href:
@@ -276,7 +259,7 @@ export default {
 			},
 			{
 				src:
-					'images/apps/airbeds.png',
+					'/images/apps/airbeds.png',
 				title:
 					'Airbeds',
 				href:

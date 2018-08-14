@@ -25,7 +25,7 @@ export default () => (
 			href="https://opensource.appbase.io/reactive-manual"
 		>
 			<img
-				src="images/support/Documentation.svg"
+				src="/images/support/Documentation.svg"
 				alt="Documentation"
 			/>
 			<Title >
@@ -58,7 +58,7 @@ export default () => (
 			href="https://medium.appbase.io"
 		>
 			<img
-				src="images/support/Tutorials.svg"
+				src="/images/support/Tutorials.svg"
 				alt="Tutorials"
 			/>
 			<Title >
@@ -83,8 +83,8 @@ export default () => (
 			href="https://appbase.io/support"
 		>
 			<img
-				src="images/support/Support.png"
-				srcSet="images/support/Support@2x.png 2x"
+				src="/images/support/Support.png"
+				srcSet="/images/support/Support@2x.png 2x"
 				alt="Support"
 			/>
 			<Title >
@@ -115,7 +115,7 @@ export default () => (
 			href="https://gitter.im/appbaseio/reactivesearch"
 		>
 			<img
-				src="images/support/Gitter.svg"
+				src="/images/support/Gitter.svg"
 				alt="Gitter"
 			/>
 			<Title >
