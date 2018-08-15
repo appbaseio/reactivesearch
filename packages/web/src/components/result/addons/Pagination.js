@@ -42,6 +42,8 @@ export default function Pagination(props) {
 					className={className}
 					primary={primary}
 					key={i - 1}
+					tabIndex="0"
+					onKeyPress={event => (event.key === 'Enter' ? props.setPage(i - 1) : null)}
 					onClick={() => props.setPage(i - 1)}
 				>
 					{i}
@@ -68,7 +70,9 @@ export default function Pagination(props) {
 			<Button
 				className={getClassName(props.innerClass, 'button') || null}
 				disabled={props.currentPage === 0}
+				onKeyPress={event => (event.key === 'Enter' ? onPrevPage : null)}
 				onClick={onPrevPage}
+				tabIndex="0"
 			>
 				Prev
 			</Button>
@@ -76,7 +80,9 @@ export default function Pagination(props) {
 				<Button
 					className={className}
 					primary={primary}
+					onKeyPress={event => (event.key === 'Enter' ? props.setPage(0) : null)}
 					onClick={() => props.setPage(0)}
+					tabIndex="0"
 				>
 					1
 				</Button>
@@ -92,7 +98,9 @@ export default function Pagination(props) {
 			<Button
 				className={getClassName(props.innerClass, 'button') || null}
 				disabled={props.currentPage >= props.totalPages - 1}
+				onKeyPress={event => (event.key === 'Enter' ? onNextPage : null)}
 				onClick={onNextPage}
+				tabIndex="0"
 			>
 				Next
 			</Button>
