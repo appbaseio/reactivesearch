@@ -1,6 +1,9 @@
 import React from 'react';
 import { Footer, Title } from '@appbaseio/designkit';
 
+const titleStyle = {
+	margin: '0.9rem 0px',
+};
 export default () => (
 	<Footer>
 		<Footer.Brand>
@@ -12,7 +15,7 @@ export default () => (
 		</Footer.Brand>
 		<Footer.Links>
 			<Footer.List>
-				<Title>Documentation</Title>
+				<Title style={titleStyle}>Documentation</Title>
 				<li>
 					<a
 						target="_blank"
@@ -61,7 +64,7 @@ export default () => (
 			</Footer.List>
 
 			<Footer.List>
-				<Title>Community</Title>
+				<Title style={titleStyle}>Community</Title>
 				<li>
 					<a
 						target="_blank"
@@ -97,7 +100,7 @@ export default () => (
 			</Footer.List>
 
 			<Footer.List>
-				<Title>Helpful Tools</Title>
+				<Title style={titleStyle}>Helpful Tools</Title>
 				<li>
 					<a target="_blank" rel="noopener noreferrer" href="https://opensource.appbase.io/dejavu/">
 						Data Browser
@@ -111,7 +114,9 @@ export default () => (
 			</Footer.List>
 
 			<Footer.List>
-				<Title className="heading">More</Title>
+				<Title style={titleStyle} className="heading">
+					More
+				</Title>
 				<li>
 					<a target="_blank" rel="noopener noreferrer" href="https://medium.appbase.io/">
 						Medium Publication

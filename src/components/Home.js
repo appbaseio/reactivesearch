@@ -44,18 +44,32 @@ function isScrolledIntoView(el) {
 	const isVisible = Ti <= window.innerHeight / 2 && elemBottom >= 0;
 	return { isVisible, Ti };
 }
-
+const button = {
+	fontSize: '14px',
+	lineHeight: '19px',
+	fontWeight: 'bold',
+};
 class HomePage extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			origin: 0,
+			githubStarCount: undefined,
 		};
 	}
 
 	componentDidMount() {
 		const el = document.getElementById('code');
+		// To fetch reactive search github stars
+		fetch('https://api.github.com/repos/appbaseio/reactivesearch')
+			.then(res => res.json())
+			.then((res) => {
+				this.setState({
+					githubStarCount: res.stargazers_count,
+				});
+			})
+			.catch(e => console.log(e));
 
 		window.addEventListener('scroll', () => {
 			const { isVisible, Ti } = isScrolledIntoView(el);
@@ -110,12 +124,7 @@ class HomePage extends Component {
 								<a href={config.urls.github}>GITHUB</a>
 							</li>
 							<li className="button">
-								<Button
-									style={{ backgroundColor: secondary }}
-									href={config.urls.support}
-									bold
-									uppercase
-								>
+								<Button style={{ backgroundColor: secondary }} href={config.urls.support} uppercase>
 									<img src="images/support.svg" style={{ marginRight: 8 }} alt="support" /> SUPPORT
 								</Button>
 							</li>
@@ -126,16 +135,22 @@ class HomePage extends Component {
 							<div className="content">
 								<H1 light>{config.banner1.title}</H1>
 								<p>{config.banner1.description}</p>
-
 								<div className="button-row">
-									<GithubButton count={config.githubCount} href={config.urls.github} />
+									<GithubButton
+										style={button}
+										count={(this.state.githubStarCount || config.githubCount).toString()}
+										href={config.urls.github}
+									/>
 									<Button
 										href={config.banner1.button.href}
-										bold
 										uppercase
 										big
 										primary
-										style={{ backgroundColor: secondary }}
+										style={{
+											backgroundColor: secondary,
+											...button,
+										}}
+										bold
 									>
 										{config.banner1.button.title}
 									</Button>
@@ -147,7 +162,7 @@ class HomePage extends Component {
 							<div className="bg-image" />
 						</Layout>
 					</div>
-					<Row>
+					<Row style={{ backgroundColor: '#FEFEFE', marginTop: '50px' }}>
 						<Layout>
 							<div className={hideMobile}>
 								<img src={config.banner2.image.src} width="100%" alt={config.banner2.image.alt} />
@@ -165,13 +180,14 @@ class HomePage extends Component {
 								<p>{config.banner2.description}</p>
 								<div className="button-row">
 									<Button
-										href={config.banner2.button.href}
 										bold
+										href={config.banner2.button.href}
 										uppercase
 										big
 										primary
 										style={{
 											backgroundColor: secondary,
+											...button,
 										}}
 									>
 										{config.banner2.button.title}
@@ -196,7 +212,13 @@ class HomePage extends Component {
 						<Layout>
 							<H2>{config.banner3.title}</H2>
 							<p>{config.banner3.description}</p>
-							<Grid size={3} mdSize={2} smSize={1} gutter="50px" style={{ marginTop: '60px' }}>
+							<Grid
+								size={Math.ceil(config.banner3.cards.length / 2)}
+								mdSize={2}
+								smSize={1}
+								gutter="50px"
+								style={{ marginTop: '60px' }}
+							>
 								{config.banner3.cards.map((cardI, i) => (
 									// eslint-disable-next-line
 									<ActionCard key={i}>
@@ -224,6 +246,7 @@ class HomePage extends Component {
 						flexDirection="column"
 						justifyContent="center"
 						alignItems="center"
+						className={hideMobile}
 					>
 						<H2>{config.banner4.title}</H2>
 						<Text
@@ -256,8 +279,10 @@ class HomePage extends Component {
 							<div className={titleRow}>
 								<H3>{config.banner6.title}</H3>
 								<Button
-									style={{ backgroundColor: secondary }}
-									bold
+									style={{
+										backgroundColor: secondary,
+										...button,
+									}}
 									uppercase
 									primary
 									href={config.banner6.button.href}
@@ -266,7 +291,7 @@ class HomePage extends Component {
 								</Button>
 							</div>
 							<Grid
-								size={4}
+								size={3}
 								mdSize={2}
 								smSize={1}
 								gutter="15px"
@@ -306,14 +331,14 @@ class HomePage extends Component {
 						<Layout>
 							<H2>Get started in minutes</H2>
 							<Button
-								href="https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html"
-								bold
+								href={config.gettingStart}
 								uppercase
 								big
 								primary
 								style={{
 									backgroundColor: secondary,
 									margin: '25px 0 30px',
+									...button,
 								}}
 							>
 								BUILD MY FIRST APP

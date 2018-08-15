@@ -206,7 +206,7 @@ const banner = (image, bgColor) => css`
 
 	p {
 		${lightFont};
-		color: #c1c2c3 !important;
+		color: #ffffff !important;
 		font-size: 1.6rem;
 		max-width: 700px;
 		margin-top: 20px;

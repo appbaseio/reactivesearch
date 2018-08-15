@@ -21,8 +21,28 @@ import {
 } from '../styles';
 import Footer from '../components/Footer';
 
+const button = {
+	fontSize: '14px',
+	lineHeight: '19px',
+	fontWeight: 'bold',
+};
 class Tools extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			githubStarCount: undefined,
+		};
+	}
 	componentDidMount() {
+		// To fetch reactive search github stars
+		fetch('https://api.github.com/repos/appbaseio/reactivesearch')
+			.then(res => res.json())
+			.then((res) => {
+				this.setState({
+					githubStarCount: res.stargazers_count,
+				});
+			})
+			.catch(e => console.log(e));
 		window.scrollTo(0, 0);
 	}
 
@@ -62,7 +82,7 @@ class Tools extends Component {
 							</li>
 							<li className="button">
 								<Button
-									style={{ backgroundColor: secondary }}
+									style={{ backgroundColor: secondary, ...button }}
 									href={config.urls.support}
 									bold
 									uppercase
@@ -91,7 +111,10 @@ class Tools extends Component {
 								All of our companion Reactive UI component kits.
 							</p>
 
-							<GithubButton count={config.githubCount} href={config.urls.github} />
+							<GithubButton
+								count={this.state.githubStarCount || config.githubCount}
+								href={config.urls.github}
+							/>
 
 							<Grid
 								size={3}
@@ -174,6 +197,7 @@ class Tools extends Component {
 											primary
 											style={{
 												backgroundColor: secondary,
+												...button,
 											}}
 										>
 											Get Started
@@ -286,6 +310,7 @@ class Tools extends Component {
 											primary
 											style={{
 												backgroundColor: secondary,
+												...button,
 											}}
 										>
 											Get Started
@@ -373,6 +398,7 @@ class Tools extends Component {
 											primary
 											style={{
 												backgroundColor: secondary,
+												...button,
 											}}
 										>
 											Get Started
@@ -420,7 +446,7 @@ class Tools extends Component {
 									width: '80%',
 								}}
 								src="/images/tools/ToolsIllustration.png"
-								srcSet="//images/tools/ToolsIllustration@2x.png 2x"
+								srcSet="/images/tools/ToolsIllustration@2x.png 2x"
 								alt="appbase.io"
 							/>
 							<H2>Work with us to build your app</H2>
@@ -443,6 +469,7 @@ class Tools extends Component {
 										dark
 										style={{
 											backgroundColor: secondary,
+											...button,
 										}}
 									>
 										Host with appbase.io
@@ -455,6 +482,7 @@ class Tools extends Component {
 										dark
 										style={{
 											backgroundColor: secondary,
+											...button,
 										}}
 									>
 										<img

@@ -1,5 +1,7 @@
 export default {
-	githubCount: '2000',
+	githubCount: '2180',
+	gettingStart:
+		'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
 	urls: {
 		github: 'https://github.com/appbaseio/reactivesearch',
 		support: 'https://appbase.io/support',
@@ -11,9 +13,13 @@ export default {
 				light: 'ReactiveSearch',
 				dark: 'Native',
 			},
-			href: '/reactivesearch',
+			href: '/native',
 		},
 		links: [
+			{
+				description: 'web',
+				href: '/reactivesearch',
+			},
 			{
 				description: 'tools',
 				href: '/native/tools',
