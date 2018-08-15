@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ThemeProvider } from 'emotion-theming';
 import { Router, Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import ToolsPageNative from './pages/native/Tools';
@@ -32,25 +31,16 @@ const history = createHistory({
 });
 
 ReactDOM.render(
-	<ThemeProvider
-		theme={{
-			fontFamily: 'Rubik',
-			primaryColor: '#7107D8',
-			secondaryColor: '#FF2A6F',
-			textLight: '#fefefe',
-		}}
-	>
-		<Router history={history}>
-			<Switch>
-				<Route exact path="/" component={HomePage} />
-				<Route exact path="/tools" component={ToolsPage} />
-				<Route exact path="/learn" component={LearnPage} />
-				<Route exact path="/native/tools" component={ToolsPageNative} />
-				<Route exact path="/native/learn" component={LearnPageNative} />
-				<Route path="/native" component={HomePageNative} />
-				<Route path="*" component={HomePage} />
-			</Switch>
-		</Router>
-	</ThemeProvider>,
+	<Router history={history}>
+		<Switch>
+			<Route exact path="/" component={HomePage} />
+			<Route exact path="/tools" component={ToolsPage} />
+			<Route exact path="/learn" component={LearnPage} />
+			<Route exact path="/native/tools" component={ToolsPageNative} />
+			<Route exact path="/native/learn" component={LearnPageNative} />
+			<Route path="/native" component={HomePageNative} />
+			<Route path="*" component={HomePage} />
+		</Switch>
+	</Router>,
 	document.getElementById('root'),
 );

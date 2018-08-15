@@ -17,15 +17,16 @@ export default {
 	...baseConfig,
 	header: baseConfigHeader,
 	banner1: {
-		title: 'React UI components for Elasticsearch',
-		description: 'Now more configurable, lighter and performant.Open source licensed.',
+		title: 'React Native UI components for Elasticsearch',
+		description: 'Build data-driven mobile apps. Open-source licensed.',
 		image: {
 			src: '/images/native/landing.png',
 			alt: 'Native Components',
 		},
 		button: {
 			title: 'Get Started',
-			href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+			href:
+				'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
 		},
 		link: {
 			title: 'LEARN MORE',
@@ -43,17 +44,17 @@ export default {
 		},
 		title: 'UI Components for every occasion',
 		description:
-			'Build the perfect geolocation experience with 30+ prebuilt components. Or bring your own UI components into the fold.',
+			'Build the perfect search experience using our UI components or by creating your own. Over 10 prebuilt components with customizable queries and configurable styles.',
 		button: {
 			title: 'View Components',
-			href: 'https://opensource.appbase.io/reactive-manual/map-components/reactivemap.html',
+			href: 'https://opensource.appbase.io/reactive-manual/native/components/textfield.html',
 		},
 		link: {
-			title: 'Bring your components',
-			href: 'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html',
+			title: 'Create your own',
+			href: 'https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html',
 		},
 		sketch: {
-			href: '/reactivemaps/resources/ReactiveMaps_Playground.sketch',
+			href: 'resources/ReactiveSearchNative_Playground.sketch',
 		},
 	},
 	banner3: {
@@ -62,57 +63,83 @@ export default {
 		cards: [
 			{
 				image: {
+					src: 'images/rocket.png',
+					alt: 'Data-driven UIs',
+				},
+				title: 'Launch and iterate faster',
+				description:
+					'Well-designed and performance optimized UI components.Ship faster and solve fewer edge cases.',
+				href:
+					'https://medium.appbase.io/build-your-next-react-native-app-with-reactivesearch-ce21829f3bf5',
+			},
+			{
+				image: {
 					src: 'icons/1.png',
 					alt: 'Icon',
 				},
 				title: 'Works with existing UIs',
-				description: 'Already have your own components? Bring them to Reactive Maps.',
-				href: 'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html',
+				description: 'Already have your own components? Bring them to Reactivesearch Native.',
+				href:
+					'https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html',
 			},
 			{
 				image: {
 					src: 'icons/2.png',
 					alt: 'Icon',
 				},
-				title: 'Works with existing UIs',
-				description: 'Already have your own components? Bring them to Reactive Maps.',
-				href: 'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html',
+				title: 'Configurable styles',
+				description: 'Styled components with rich theming and style injection support.',
+				href: 'https://opensource.appbase.io/reactive-manual/native/advanced/style.html',
 			},
 			{
 				image: {
 					src: 'icons/3.png',
 					alt: 'Icon',
 				},
-				title: 'Works with existing UIs',
-				description: 'Already have your own components? Bring them to Reactive Maps.',
-				href: 'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html',
+				title: 'Create cross-platform apps',
+				description:
+					'All Native components have equivalent React UI components, allowing creation of consistent cross-platform apps.',
+				href: 'https://github.com/appbaseio/reactivesearch/tree/dev/packages/web',
 			},
 			{
 				image: {
 					src: 'icons/4.png',
 					alt: 'Icon',
 				},
-				title: 'Works with existing UIs',
-				description: 'Already have your own components? Bring them to Reactive Maps.',
-				href: 'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html',
+				title: 'Elasticsearch compatible',
+				description: 'Connect to an ES index hosted anywhere. Supports v2, v5 and v6.',
+				href:
+					'https://opensource.appbase.io/reactive-manual/getting-started/native/reactivebase.html',
 			},
 			{
 				image: {
 					src: 'icons/5.png',
 					alt: 'Icon',
 				},
-				title: 'Works with existing UIs',
-				description: 'Already have your own components? Bring them to Reactive Maps.',
-				href: 'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html',
+				title: 'Customizable queries',
+				description:
+					'Components come with good query defaults, that can be customized with Elasticsearch query DSL.',
+				href: 'https://opensource.appbase.io/reactive-manual/advanced/customquery.html',
 			},
 			{
 				image: {
-					src: 'icons/6.png',
+					src: 'images/shield.png',
 					alt: 'Icon',
 				},
-				title: 'Works with existing UIs',
-				description: 'Already have your own components? Bring them to Reactive Maps.',
-				href: 'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html',
+				title: 'Easy to secure',
+				description:
+					'Use appbase.io to get read-only credentials, or set up a middleware proxy with authorization rules.',
+				href:
+					'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivebase.html#connect-to-elasticsearch',
+			},
+			{
+				image: {
+					src: 'images/blocks.png',
+					alt: 'Icon',
+				},
+				title: 'Starter apps',
+				description: 'Get started quickly by using any of our pre-configured starter apps.',
+				href: '/native#examples',
 			},
 		],
 	},
@@ -160,28 +187,22 @@ export default {
 		},
 		demos: [
 			{
-				src: '/images/apps/airbeds.png',
-				title: 'Airbeds',
-				href: 'https://opensource.appbase.io/reactivesearch/demos/airbeds/',
-				description: 'An airbnb inspired app for browsing housing areas in Seattle',
+				src: 'images/native/booksearch.png',
+				title: 'Book Search',
+				href: 'https://snack.expo.io/@metagrover/booksearch',
+				description: '',
 			},
 			{
-				src: '/images/apps/airbeds.png',
-				title: 'Airbeds',
-				href: 'https://opensource.appbase.io/reactivesearch/demos/airbeds/',
-				description: 'An airbnb inspired app for browsing housing areas in Seattle',
+				src: 'images/native/gitSearch.png',
+				title: 'GitHub Search',
+				href: 'https://snack.expo.io/@dhruvdutt/gitxplore-native-app',
+				description: '',
 			},
 			{
-				src: '/images/apps/airbeds.png',
-				title: 'Airbeds',
-				href: 'https://opensource.appbase.io/reactivesearch/demos/airbeds/',
-				description: 'An airbnb inspired app for browsing housing areas in Seattle',
-			},
-			{
-				src: '/images/apps/airbeds.png',
-				title: 'Airbeds',
-				href: 'https://opensource.appbase.io/reactivesearch/demos/airbeds/',
-				description: 'An airbnb inspired app for browsing housing areas in Seattle',
+				src: 'images/native/todo.png',
+				title: 'Todo',
+				href: 'https://snack.expo.io/@dhruvdutt/todo',
+				description: '',
 			},
 		],
 	},

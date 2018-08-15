@@ -1,8 +1,20 @@
 import React from 'react';
 import { BannerRow, H2, Button } from '@appbaseio/designkit';
 import PropTypes from 'prop-types';
+import { css } from 'react-emotion';
 import { SecondaryLink } from '../styles';
 
+const style = css`
+	p {
+		color: #ffffff;
+		font-weight: 300;
+	}
+`;
+const button = {
+	fontSize: '14px',
+	lineHeight: '19px',
+	fontWeight: 'bold',
+};
 const Banner = ({ config, theme }) => (
 	<BannerRow>
 		{config.map((b, i) => (
@@ -11,6 +23,7 @@ const Banner = ({ config, theme }) => (
 					// eslint-disable-next-line
 					i
 				}
+				className={style}
 				style={{
 					backgroundColor: b.backgroundColor,
 				}}
@@ -21,12 +34,13 @@ const Banner = ({ config, theme }) => (
 					<div className="button-row center">
 						<Button
 							href={b.button.href}
-							bold
 							uppercase
 							big
 							primary
+							bold
 							style={{
 								backgroundColor: theme.secondary,
+								...button,
 							}}
 						>
 							{b.button.title}
