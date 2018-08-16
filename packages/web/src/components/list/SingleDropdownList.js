@@ -228,6 +228,7 @@ class SingleDropdownList extends Component {
 					showCount={this.props.showCount}
 					themePreset={this.props.themePreset}
 					renderListItem={this.props.renderListItem}
+					showSearch={this.props.showSearch}
 				/>
 			</Container>
 		);
@@ -268,6 +269,7 @@ SingleDropdownList.propTypes = {
 	URLParams: types.bool,
 	showMissing: types.bool,
 	missingLabel: types.string,
+	showSearch: types.bool,
 };
 
 SingleDropdownList.defaultProps = {
@@ -281,6 +283,7 @@ SingleDropdownList.defaultProps = {
 	URLParams: false,
 	showMissing: false,
 	missingLabel: 'N/A',
+	showSearch: false,
 };
 
 const mapStateToProps = (state, props) => ({
