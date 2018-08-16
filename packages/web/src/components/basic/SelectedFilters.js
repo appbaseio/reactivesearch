@@ -44,6 +44,10 @@ class SelectedFilters extends Component {
 		const { selectedValues, theme } = this.props;
 		let hasValues = false;
 
+		if (this.props.render) {
+			return this.props.render(this.props);
+		}
+
 		return (
 			<Container style={this.props.style} className={`${filters(theme)} ${this.props.className || ''}`}>
 				{
@@ -59,7 +63,7 @@ class SelectedFilters extends Component {
 								return (
 									<Button
 										className={getClassName(this.props.innerClass, 'button') || null}
-										key={`${component}-${index}`} // eslint-disable-line
+										key={`${component}-${index + 1}`}
 										onClick={() => this.remove(component, value)}
 									>
 										<span>
@@ -101,6 +105,7 @@ SelectedFilters.propTypes = {
 	style: types.style,
 	theme: types.style,
 	onClear: types.func,
+	render: types.func,
 };
 
 SelectedFilters.defaultProps = {
