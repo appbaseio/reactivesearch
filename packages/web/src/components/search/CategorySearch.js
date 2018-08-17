@@ -558,7 +558,7 @@ class CategorySearch extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				{this.props.autosuggest ? (
+				{this.props.defaultSuggestions || this.props.autosuggest ? (
 					<Downshift
 						id={`${this.props.componentId}-downshift`}
 						onChange={this.onSuggestionSelected}
