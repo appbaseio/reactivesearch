@@ -102,6 +102,7 @@ const Button = styled('a')`
 	justify-content: center;
 	align-items: center;
 	border-radius: 3px;
+	border: 1px solid transparent;
 	min-height: 30px;
 	word-wrap: break-word;
 	padding: 5px 12px;
@@ -118,6 +119,12 @@ const Button = styled('a')`
 		(theme.colors.backgroundColor
 			? darken(0.1, theme.colors.backgroundColor)
 			: '#ccc')};
+	}
+
+	&:focus {
+		outline: 0;
+		border-color: rgba(24, 144, 255,.8);
+		box-shadow: 0 0 0 2px rgba(24, 144, 255,.3);
 	}
 
 	${props => (props.primary ? primary : null)};
