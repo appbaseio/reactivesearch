@@ -80,7 +80,7 @@ export default function Pagination(props) {
 				<Button
 					className={className}
 					primary={primary}
-					onKeyPress={event => handleA11yAction(event, props.setPage(0))}
+					onKeyPress={event => handleA11yAction(event, () => props.setPage(0))}
 					onClick={() => props.setPage(0)}
 					tabIndex="0"
 				>

@@ -8,6 +8,7 @@
     - Add `showSearch` support for DropdownList components [#468](https://github.com/appbaseio/reactivesearch/issues/468)
     - Show defaultSuggestions in search components even when autosuggest is false [#359](https://github.com/appbaseio/reactivesearch/issues/359)
     - Replace internal `shade` function with `polished`. This should give more expected results for different theme colors [#420](https://github.com/appbaseio/reactivesearch/issues/420)
+    - Improve pagination a11y [#448](https://github.com/appbaseio/reactivesearch/issues/448)
 </details>
 
 ## v2.7.0
