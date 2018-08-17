@@ -1,6 +1,6 @@
 import { css } from 'emotion';
 import styled from 'react-emotion';
-import { darken, lighten } from 'polished';
+import { darken, lighten, rgba } from 'polished';
 
 const filters = ({ colors: { borderColor } }) => css`
 	margin: 0 -3px;
@@ -102,6 +102,7 @@ const Button = styled('a')`
 	justify-content: center;
 	align-items: center;
 	border-radius: 3px;
+	border: 1px solid transparent;
 	min-height: 30px;
 	word-wrap: break-word;
 	padding: 5px 12px;
@@ -118,6 +119,12 @@ const Button = styled('a')`
 		(theme.colors.backgroundColor
 			? darken(0.1, theme.colors.backgroundColor)
 			: '#ccc')};
+	}
+
+	&:focus {
+		outline: 0;
+		border-color: ${({ theme }) => rgba(theme.colors.primaryColor, 0.6)};
+		box-shadow: ${({ theme }) => `0 0 0 2px ${rgba(theme.colors.primaryColor, 0.3)}`};
 	}
 
 	${props => (props.primary ? primary : null)};

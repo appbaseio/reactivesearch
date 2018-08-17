@@ -1,5 +1,5 @@
 import React from 'react';
-import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
+import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Button, { pagination } from '../../../styles/Button';
@@ -42,6 +42,8 @@ export default function Pagination(props) {
 					className={className}
 					primary={primary}
 					key={i - 1}
+					tabIndex="0"
+					onKeyPress={event => handleA11yAction(event, () => props.setPage(i - 1))}
 					onClick={() => props.setPage(i - 1)}
 				>
 					{i}
@@ -68,7 +70,9 @@ export default function Pagination(props) {
 			<Button
 				className={getClassName(props.innerClass, 'button') || null}
 				disabled={props.currentPage === 0}
+				onKeyPress={event => handleA11yAction(event, onPrevPage)}
 				onClick={onPrevPage}
+				tabIndex="0"
 			>
 				Prev
 			</Button>
@@ -76,7 +80,9 @@ export default function Pagination(props) {
 				<Button
 					className={className}
 					primary={primary}
+					onKeyPress={event => handleA11yAction(event, props.setPage(0))}
 					onClick={() => props.setPage(0)}
+					tabIndex="0"
 				>
 					1
 				</Button>
@@ -92,7 +98,9 @@ export default function Pagination(props) {
 			<Button
 				className={getClassName(props.innerClass, 'button') || null}
 				disabled={props.currentPage >= props.totalPages - 1}
+				onKeyPress={event => handleA11yAction(event, onNextPage)}
 				onClick={onNextPage}
+				tabIndex="0"
 			>
 				Next
 			</Button>
