@@ -1,6 +1,6 @@
 import { css } from 'emotion';
 import styled from 'react-emotion';
-import { shade } from './utils';
+import { darken, lighten } from 'polished';
 
 const filters = ({ colors: { borderColor } }) => css`
 	margin: 0 -3px;
@@ -74,7 +74,7 @@ const primary = ({ theme }) => css`
 	color: ${theme.colors.primaryTextColor};
 
 	&:hover, &:focus {
-		background-color: ${shade(theme.colors.primaryColor, -0.1)};
+		background-color: ${darken(0.1, theme.colors.primaryColor)};
 	}
 `;
 
@@ -85,14 +85,14 @@ const large = () => css`
 
 const disabled = ({ theme }) => css`
 	background-color: ${(theme.colors.backgroundColor
-		? shade(theme.colors.backgroundColor, 0.3)
+		? lighten(0.1, theme.colors.backgroundColor)
 		: '#fafafa')};
 	color: #ccc;
 	cursor: not-allowed;
 
 	&:hover, &:focus {
 		background-color: ${(theme.colors.backgroundColor
-		? shade(theme.colors.backgroundColor, 0.3)
+		? lighten(0.2, theme.colors.backgroundColor)
 		: '#fafafa')};
 	}
 `;
@@ -116,7 +116,7 @@ const Button = styled('a')`
 	&:hover, &:focus {
 		background-color: ${({ theme }) =>
 		(theme.colors.backgroundColor
-			? shade(theme.colors.backgroundColor, 0.1)
+			? darken(0.1, theme.colors.backgroundColor)
 			: '#ccc')};
 	}
 

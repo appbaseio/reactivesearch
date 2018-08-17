@@ -1,6 +1,6 @@
 import { css } from 'emotion';
 import styled from 'react-emotion';
-import { shade } from './utils';
+import { lighten } from 'polished';
 
 const item = {
 	width: '16px',
@@ -47,7 +47,7 @@ const formItem = ({ theme }) => css`
 	&:focus {
 		+ label {
 			&::before {
-				box-shadow: 0 0 0 2px ${shade(theme.colors.primaryColor, 0.4)};
+				box-shadow: 0 0 0 2px ${lighten(0.4, theme.colors.primaryColor)};
 			}
 		}
 	}
@@ -80,7 +80,7 @@ const formItem = ({ theme }) => css`
 		&::before {
 			background-color: #fff;
 			border: 2px solid ${theme.colors.borderColor
-				|| shade(theme.colors.textColor, 0.5)};
+				|| lighten(0.1, theme.colors.textColor)};
 			box-sizing: content-box;
 			content: "";
 			color: ${theme.colors.primaryColor};

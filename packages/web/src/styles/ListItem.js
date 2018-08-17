@@ -1,7 +1,6 @@
-/* eslint-disable */
 import { css } from 'emotion';
 import styled from 'react-emotion';
-import { shade } from './utils';
+import { lighten } from 'polished';
 
 import Title from './Title';
 
@@ -36,28 +35,25 @@ const ListItem = styled('a')`
 	text-decoration: none;
 	border-radius: 0;
 	background-color: ${({ theme }) =>
-		theme.colors.backgroundColor
-			? shade(theme.colors.backgroundColor, 0.2)
-			: '#fff'
-	};
+		(theme.colors.backgroundColor
+			? lighten(0.1, theme.colors.backgroundColor)
+			: '#fff')};
 	display: flex;
 	flex-direction: row;
 	margin: 0;
 	padding: 10px;
 	border-bottom: 1px solid ${({ theme }) =>
-		theme.colors.backgroundColor
-			? shade(theme.colors.backgroundColor, 0.68)
-			: shade(theme.colors.textColor, 0.68)
-	};
+		(theme.colors.backgroundColor
+			? lighten(0.3, theme.colors.backgroundColor)
+			: lighten(0.68, theme.colors.textColor))};
 	color: ${({ theme }) => theme.colors.textColor};
 	${props => (props.href ? 'cursor: pointer' : null)}; all 0.3s ease;
 
 	&:hover, &:focus {
 		background-color: ${({ theme }) =>
-		theme.colors.backgroundColor
-			? shade(theme.colors.backgroundColor, 0.3)
-			: '#fdfefd'
-	};
+		(theme.colors.backgroundColor
+			? lighten(0.2, theme.colors.backgroundColor)
+			: '#fdfefd')};
 	}
 
 	&:last-child {
@@ -80,11 +76,11 @@ const ListItem = styled('a')`
 
 	article {
 		width: ${(props) => {
-			if (props.image) {
-				return props.small ? 'calc(100% - 100px)' : 'calc(100% - 160px)';
-			}
-			return '100%';
-		}};
+		if (props.image) {
+			return props.small ? 'calc(100% - 100px)' : 'calc(100% - 160px)';
+		}
+		return '100%';
+	}};
 		padding-left: ${props => (props.image ? '10px' : 0)};
 		font-size: 0.9rem;
 	}
