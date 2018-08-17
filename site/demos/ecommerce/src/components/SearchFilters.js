@@ -19,6 +19,7 @@ const SearchFilters = () => (
 				innerClass={{
 					list: 'list',
 				}}
+				react={{ and: ['price', 'type', 'rating'] }}
 				URLParams
 			/>
 		</FlexChild>
@@ -35,6 +36,7 @@ const SearchFilters = () => (
 				innerClass={{
 					list: 'list',
 				}}
+				react={{ and: ['price', 'brand', 'type'] }}
 				URLParams
 			/>
 		</FlexChild>
@@ -48,6 +50,7 @@ const SearchFilters = () => (
 					list: 'list',
 				}}
 				URLParams
+				react={{ and: ['brand', 'price', 'rating'] }}
 			/>
 		</FlexChild>
 		<FlexChild card margin="10px">
@@ -55,6 +58,7 @@ const SearchFilters = () => (
 				componentId="price"
 				dataField="price"
 				title="Price Range"
+				react={{ and: ['brand', 'type', 'rating'] }}
 				range={{
 					start: 0,
 					end: 10000,

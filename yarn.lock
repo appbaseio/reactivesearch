@@ -1089,8 +1089,13 @@
     react-treebeard "^2.1.0"
 
 "@types/node@*":
+<<<<<<< HEAD
   version "10.7.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.7.1.tgz#b704d7c259aa40ee052eec678758a68d07132a2e"
+=======
+  version "10.7.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.7.0.tgz#d384b2c8625414ab2aa18fdf989c288d6a7a8202"
+>>>>>>> site-updates
 
 "@types/prop-types@*":
   version "15.5.5"
