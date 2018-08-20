@@ -56,7 +56,7 @@ class CategorySearch extends Component {
 	}
 
 	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
+		this.props.addComponent(this.props.componentId, 'CATEGORYSEARCH');
 		this.props.addComponent(this.internalComponent);
 
 		if (this.props.highlight) {
@@ -730,7 +730,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	addComponent: component => dispatch(addComponent(component)),
+	addComponent: (component, name) => dispatch(addComponent(component, name)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
