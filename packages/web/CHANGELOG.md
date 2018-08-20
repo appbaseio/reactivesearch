@@ -4,14 +4,16 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-    - Add custom rendering support in SelectedFilters - [#121](https://github.com/appbaseio/reactivesearch/issues/121) [#415](https://github.com/appbaseio/reactivesearch/issues/415)
-    - Add `showSearch` support for DropdownList components [#468](https://github.com/appbaseio/reactivesearch/issues/468)
-    - Show defaultSuggestions in search components even when autosuggest is false [#359](https://github.com/appbaseio/reactivesearch/issues/359)
-    - Replace internal `shade` function with `polished`. This should give more expected results for different theme colors [#420](https://github.com/appbaseio/reactivesearch/issues/420)
-    - Improve pagination a11y [#448](https://github.com/appbaseio/reactivesearch/issues/448)
-    - Fix suggestion selection in `CategorySearch` when the value remains same but the category changes [here](https://github.com/appbaseio/reactivesearch/commit/0565af3b20e025e88a9a3034a9ce1f69310f5640)
-    - Add beta support for analytics
 </details>
+
+## v2.8.0
+- Add custom rendering support in SelectedFilters - [#121](https://github.com/appbaseio/reactivesearch/issues/121) [#415](https://github.com/appbaseio/reactivesearch/issues/415)
+- Add `showSearch` support for DropdownList components [#468](https://github.com/appbaseio/reactivesearch/issues/468)
+- Show defaultSuggestions in search components even when autosuggest is false [#359](https://github.com/appbaseio/reactivesearch/issues/359)
+- Replace internal `shade` function with `polished`. This should give more expected results for different theme colors [#420](https://github.com/appbaseio/reactivesearch/issues/420)
+- Improve pagination a11y [#448](https://github.com/appbaseio/reactivesearch/issues/448)
+- Fix suggestion selection in `CategorySearch` when the value remains same but the category changes [here](https://github.com/appbaseio/reactivesearch/commit/0565af3b20e025e88a9a3034a9ce1f69310f5640)
+- Add beta support for analytics
 
 ## v2.7.0
 - Add support for `histogramQuery` prop in RangeSlider component - [#459](https://github.com/appbaseio/reactivesearch/pull/459)
