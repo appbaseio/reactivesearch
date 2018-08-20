@@ -366,8 +366,7 @@ class CategorySearch extends Component {
 					],
 				},
 			}
-			: query(value, props);
-
+			: query(value, props, category);
 		props.updateQuery({
 			componentId,
 			query: queryObject,
