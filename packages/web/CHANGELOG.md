@@ -9,6 +9,7 @@
     - Show defaultSuggestions in search components even when autosuggest is false [#359](https://github.com/appbaseio/reactivesearch/issues/359)
     - Replace internal `shade` function with `polished`. This should give more expected results for different theme colors [#420](https://github.com/appbaseio/reactivesearch/issues/420)
     - Improve pagination a11y [#448](https://github.com/appbaseio/reactivesearch/issues/448)
+    - Fix suggestion selection in `CategorySearch` when the value remains same but the category changes [here](https://github.com/appbaseio/reactivesearch/commit/0565af3b20e025e88a9a3034a9ce1f69310f5640)
 </details>
 
 ## v2.7.0
