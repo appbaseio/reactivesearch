@@ -456,7 +456,7 @@ class DataSearch extends Component {
 			suggestionsList = this.state.suggestions;
 		}
 
-		const { theme, themePreset } = this.props;
+		const { theme, themePreset, renderSuggestions } = this.props;
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
@@ -496,9 +496,18 @@ class DataSearch extends Component {
 										themePreset={themePreset}
 									/>
 									{this.renderIcons()}
+									{renderSuggestions
+										&& renderSuggestions({
+											currentValue: this.state.currentValue,
+											isOpen,
+											getItemProps,
+											highlightedIndex,
+											suggestions: this.props.suggestions,
+											parsedSuggestions: suggestionsList,
+										})}
 
 									{
-										isOpen && suggestionsList.length
+										!renderSuggestions && isOpen && suggestionsList.length
 											? (
 												<ul className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}>
 													{

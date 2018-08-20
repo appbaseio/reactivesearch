@@ -496,7 +496,8 @@ class CategorySearch extends Component {
 
 	render() {
 		let suggestionsList = [];
-		const { theme, themePreset } = this.props;
+		let finalSuggestionsList = [];
+		const { theme, themePreset, renderSuggestions } = this.props;
 
 		if (
 			!this.state.currentValue
@@ -545,7 +546,7 @@ class CategorySearch extends Component {
 					},
 				];
 			}
-			suggestionsList = [...categorySuggestions, ...suggestionsList];
+			finalSuggestionsList = [...categorySuggestions, ...suggestionsList];
 		}
 
 		return (
@@ -594,11 +595,21 @@ class CategorySearch extends Component {
 									themePreset={themePreset}
 								/>
 								{this.renderIcons()}
-								{isOpen && suggestionsList.length ? (
+								{renderSuggestions
+									&& renderSuggestions({
+										currentValue: this.state.currentValue,
+										isOpen,
+										getItemProps,
+										highlightedIndex,
+										suggestions: this.props.suggestions,
+										categories: this.props.categories,
+										parsedSuggestions: suggestionsList,
+									})}
+								{!renderSuggestions && isOpen && finalSuggestionsList.length ? (
 									<ul
 										className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}
 									>
-										{suggestionsList.slice(0, 10).map((item, index) => (
+										{finalSuggestionsList.slice(0, 10).map((item, index) => (
 											<li
 												{...getItemProps({ item })}
 												key={`${index + 1}-${item.value}`}

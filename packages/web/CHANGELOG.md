@@ -5,6 +5,7 @@
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
     - Fix suggestion parsing where some suggestions were missed due to case sensitive checks [#480](https://github.com/appbaseio/reactivesearch/issues/480)
+    - Add `renderSuggestions` support in `DataSearch` and `CategorySearch` [#354](https://github.com/appbaseio/reactivesearch/issues/354)
 </details>
 
 ## v2.8.0
