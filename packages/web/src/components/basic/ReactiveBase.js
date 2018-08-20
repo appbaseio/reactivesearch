@@ -67,6 +67,7 @@ class ReactiveBase extends Component {
 			credentials,
 			type: this.type,
 			beforeSend: props.beforeSend,
+			analytics: props.analytics,
 		};
 
 		let queryParams = '';
@@ -133,6 +134,7 @@ ReactiveBase.defaultProps = {
 	theme: {},
 	themePreset: 'light',
 	initialState: {},
+	analytics: false,
 };
 
 ReactiveBase.propTypes = {
@@ -150,6 +152,7 @@ ReactiveBase.propTypes = {
 	style: types.style,
 	className: types.string,
 	initialState: types.children,
+	analytics: types.bool,
 };
 
 export default ReactiveBase;
