@@ -11,6 +11,7 @@
     - Improve pagination a11y [#448](https://github.com/appbaseio/reactivesearch/issues/448)
     - Fix suggestion selection in `CategorySearch` when the value remains same but the category changes [here](https://github.com/appbaseio/reactivesearch/commit/0565af3b20e025e88a9a3034a9ce1f69310f5640)
 </details>
+    - Add beta support for analytics
 
 ## v2.7.0
 - Add support for `histogramQuery` prop in RangeSlider component - [#459](https://github.com/appbaseio/reactivesearch/pull/459)
