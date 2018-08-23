@@ -371,6 +371,7 @@ class DataSearch extends Component {
 		}
 		if (value.trim() !== this.state.currentValue.trim()) {
 			this.setState({
+				currentValue: value,
 				suggestions: [],
 			}, () => {
 				this.setValue(value);
