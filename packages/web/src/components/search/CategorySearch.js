@@ -303,6 +303,7 @@ class CategorySearch extends Component {
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value,
+				suggestions: [],
 			}, () => {
 				if (isDefaultValue) {
 					if (this.props.autosuggest) {
@@ -409,16 +410,7 @@ class CategorySearch extends Component {
 				isOpen: true,
 			});
 		}
-		if (value.trim() !== this.state.currentValue.trim()) {
-			this.setState({
-				currentValue: value,
-				suggestions: [],
-			}, () => {
-				this.setValue(value);
-			});
-		} else {
-			this.setValue(value);
-		}
+		this.setValue(value);
 	};
 
 	onSuggestionSelected = (suggestion) => {
