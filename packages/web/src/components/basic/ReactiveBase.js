@@ -92,7 +92,7 @@ class ReactiveBase extends Component {
 		}
 
 		const { headers = {}, themePreset } = props;
-		const appbaseRef = new Appbase(config);
+		const appbaseRef = Appbase(config);
 
 		const initialState = {
 			config: { ...config, mapKey: props.mapKey, themePreset },

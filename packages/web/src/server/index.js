@@ -71,7 +71,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			credentials,
 			type: settings.type ? settings.type : '*',
 		};
-		const appbaseRef = new Appbase(config);
+		const appbaseRef = Appbase(config);
 
 		let components = [];
 		let selectedValues = {};
@@ -269,32 +269,30 @@ export default function initReactivesearch(componentCollection, searchState, set
 		appbaseRef.msearch({
 			type: config.type === '*' ? '' : config.type,
 			body: finalQuery,
-		})
-			.on('data', (res) => {
-				orderOfQueries.forEach((component, index) => {
-					const response = res.responses[index];
-					if (response.aggregations) {
-						aggregations = {
-							...aggregations,
-							[component]: response.aggregations,
-						};
-					}
-					hits = {
-						...hits,
-						[component]: {
-							hits: response.hits.hits,
-							total: response.hits.total,
-							time: response.took,
-						},
+		}).then((res) => {
+			orderOfQueries.forEach((component, index) => {
+				const response = res.responses[index];
+				if (response.aggregations) {
+					aggregations = {
+						...aggregations,
+						[component]: response.aggregations,
 					};
-				});
-				state = {
-					...state,
-					hits,
-					aggregations,
+				}
+				hits = {
+					...hits,
+					[component]: {
+						hits: response.hits.hits,
+						total: response.hits.total,
+						time: response.took,
+					},
 				};
-				resolve(state);
-			})
-			.on('error', err => reject(err));
+			});
+			state = {
+				...state,
+				hits,
+				aggregations,
+			};
+			resolve(state);
+		}).catch(err => reject(err));
 	});
 }

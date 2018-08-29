@@ -15,7 +15,7 @@ import theme from '../../theme';
 const Provider = createProvider(storeKey);
 
 // for network debugging while development
-GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest;
+// GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest;
 
 class ReactiveBase extends Component {
 	constructor(props) {
@@ -35,7 +35,7 @@ class ReactiveBase extends Component {
 		};
 
 		const { headers = {} } = props;
-		const appbaseRef = new Appbase(config);
+		const appbaseRef = Appbase(config);
 		this.store = configureStore({ config, appbaseRef, headers });
 	}
 

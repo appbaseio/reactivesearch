@@ -25,6 +25,7 @@ module.exports = {
 			'xdate',
 			'prop-types',
 			'hoist-non-react-statics',
+			'@babel/polyfill',
 		];
 	},
 	getBlacklistRE() {
