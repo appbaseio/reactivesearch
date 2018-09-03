@@ -47,7 +47,7 @@
 		"@appbaseio/reactivecore": "^4.2.0",
 		"@babel/polyfill": "^7.0.0-rc.3",
 		"@ptomasroos/react-native-multi-slider": "^0.0.13",
-		"appbase-js": "^3.2.0",
+		"appbase-js": "^4.0.0-beta",
 		"hoist-non-react-statics": "^2.5.0",
 		"native-base": "^2.4.2",
 		"prop-types": "^15.6.1",
