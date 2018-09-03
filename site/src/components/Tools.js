@@ -112,7 +112,7 @@ class Tools extends Component {
 							</p>
 
 							<GithubButton
-								count={this.state.githubStarCount || config.githubCount}
+								count={(this.state.githubStarCount || config.githubCount || '').toString()}
 								href={config.urls.github}
 							/>
 
