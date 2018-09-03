@@ -4,8 +4,11 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-    - Fixes issue with cursor jumping in search componentes [#394](https://github.com/appbaseio/reactivesearch/issues/394)
 </details>
+
+## v2.8.2
+- Fixes issue with cursor jumping in search componentes [#394](https://github.com/appbaseio/reactivesearch/issues/394)
+- Upgrades reactivecore to v4.3.0
 
 ## v2.8.1
 - Fix suggestion parsing where some suggestions were missed due to case sensitive checks [#480](https://github.com/appbaseio/reactivesearch/issues/480)
