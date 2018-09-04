@@ -122,6 +122,8 @@ class ReactiveList extends Component {
 			|| this.props.sortBy !== nextProps.sortBy
 			|| this.props.size !== nextProps.size
 			|| !isEqual(this.props.dataField, nextProps.dataField)
+			|| !isEqual(this.props.includeFields, nextProps.includeFields)
+			|| !isEqual(this.props.excludeFields, nextProps.excludeFields)
 		) {
 			const options = getQueryOptions(nextProps);
 			options.from = this.state.from;
@@ -562,6 +564,8 @@ ReactiveList.defaultProps = {
 	pages: 5,
 	pagination: false,
 	paginationAt: 'bottom',
+	includeFields: ['*'],
+	excludeFields: [],
 	showResultStats: true,
 	size: 10,
 	style: {},
