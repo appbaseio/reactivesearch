@@ -93,7 +93,7 @@ class ReactiveList extends Component {
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			['sortBy', 'size', 'dataField'],
+			['sortBy', 'size', 'dataField', 'includeFields', 'excludeFields'],
 			() => {
 				const options = getQueryOptions(nextProps);
 				if (nextProps.sortBy) {
@@ -534,6 +534,8 @@ ReactiveList.defaultProps = {
 	showResultStats: true,
 	size: 10,
 	style: {},
+	includeFields: ['*'],
+	excludeFields: [],
 };
 
 const mapStateToProps = (state, props) => ({
