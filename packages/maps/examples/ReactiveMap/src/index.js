@@ -37,6 +37,8 @@ const Main = () => (
 					onData={result => ({
 						label: result.mag,
 					})}
+					onPopoverClick={() => <div>wasssssssaaaa</div>}
+					autoClosePopover
 				/>
 			</div>
 		</div>

@@ -702,16 +702,23 @@ class ReactiveMap extends Component {
 	};
 
 	openMarkerInfo = (id) => {
+		const openMarkers = this.props.autoClosePopover
+			? { [id]: true }
+			: { ...this.state.openMarkers, [id]: true };
 		this.setState({
-			openMarkers: { ...this.state.openMarkers, ...{ [id]: true } },
+			openMarkers,
 			preserveCenter: true,
 		});
 	}
 
 	closeMarkerInfo = (id) => {
 		const { [id]: del, ...activeMarkers } = this.state.openMarkers;
+		const openMarkers = this.props.autoClosePopover
+			? {}
+			: activeMarkers;
+
 		this.setState({
-			openMarkers: activeMarkers,
+			openMarkers,
 			preserveCenter: true,
 		});
 	}
@@ -1036,6 +1043,7 @@ ReactiveMap.propTypes = {
 	URLParams: types.bool,
 	defaultRadius: types.number,
 	unit: types.string,
+	autoClosePopover: types.bool,
 };
 
 ReactiveMap.defaultProps = {
@@ -1058,6 +1066,7 @@ ReactiveMap.defaultProps = {
 	showMarkerClusters: true,
 	unit: 'mi',
 	defaultRadius: 100,
+	autoClosePopover: false,
 };
 
 const mapStateToProps = (state, props) => ({
