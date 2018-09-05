@@ -4,10 +4,11 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-</details>
 
 - Update appbase-js version to latest [#506](https://github.com/appbaseio/reactivesearch/issues/506)
 - Dynamically change include/exclude Fields [#417](https://github.com/appbaseio/reactivesearch/issues/417)
+
+</details>
 
 ## v2.8.2
 - Fixes issue with cursor jumping in search componentes [#394](https://github.com/appbaseio/reactivesearch/issues/394)
