@@ -7,6 +7,8 @@
 
 - Update appbase-js version to latest [#506](https://github.com/appbaseio/reactivesearch/issues/506)
 - Dynamically change include/exclude Fields [#417](https://github.com/appbaseio/reactivesearch/issues/417)
+- Fix empty categories in suggestions for `CategorySearch` [#502](https://github.com/appbaseio/reactivesearch/issues/502)
+- Fix `defaultSuggestions` not appearing in `CategorySearch` [commit](https://github.com/appbaseio/reactivesearch/commit/776074f766d5e4c14759ed36e1531d234df35e91)
 
 </details>
 
