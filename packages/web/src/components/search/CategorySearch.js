@@ -504,7 +504,7 @@ class CategorySearch extends Component {
 			&& this.props.defaultSuggestions
 			&& this.props.defaultSuggestions.length
 		) {
-			suggestionsList = this.props.defaultSuggestions;
+			finalSuggestionsList = this.props.defaultSuggestions;
 		} else if (this.state.currentValue) {
 			suggestionsList = this.state.suggestions;
 		}
