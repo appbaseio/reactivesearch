@@ -490,7 +490,14 @@ class CategorySearch extends Component {
 	render() {
 		let suggestionsList = [];
 		let finalSuggestionsList = [];
-		const { theme, themePreset, renderSuggestions } = this.props;
+		const {
+			theme,
+			themePreset,
+			renderSuggestions,
+			categories,	// defaults to empty array
+		} = this.props;
+		const filteredCategories = categories
+			.filter(category => Boolean(category.key));	// filter out empty categories
 
 		if (
 			!this.state.currentValue
@@ -505,8 +512,7 @@ class CategorySearch extends Component {
 		if (
 			this.state.currentValue
 			&& this.state.suggestions.length
-			&& this.props.categories
-			&& this.props.categories.length
+			&& filteredCategories.length
 		) {
 			let categorySuggestions = [
 				{
@@ -518,23 +524,23 @@ class CategorySearch extends Component {
 				},
 				{
 					label: `${this.state.currentValue} in ${
-						this.props.categories[0].key
+						filteredCategories[0].key
 					}`,
 					value: this.state.currentValue,
-					category: this.props.categories[0].key,
+					category: filteredCategories[0].key,
 					source: null,
 				},
 			];
 
-			if (this.props.categories.length > 1) {
+			if (filteredCategories.length > 1) {
 				categorySuggestions = [
 					...categorySuggestions,
 					{
 						label: `${this.state.currentValue} in ${
-							this.props.categories[1].key
+							filteredCategories[1].key
 						}`,
 						value: this.state.currentValue,
-						category: this.props.categories[1].key,
+						category: filteredCategories[1].key,
 						source: null,
 					},
 				];
@@ -595,7 +601,7 @@ class CategorySearch extends Component {
 										getItemProps,
 										highlightedIndex,
 										suggestions: this.props.suggestions,
-										categories: this.props.categories,
+										categories: filteredCategories,
 										parsedSuggestions: suggestionsList,
 									})}
 								{!renderSuggestions && isOpen && finalSuggestionsList.length ? (
