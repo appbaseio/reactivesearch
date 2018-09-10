@@ -96,7 +96,14 @@ class Dropdown extends Component {
 			themePreset,
 			theme,
 			renderListItem,
+			transformData,
 		} = this.props;
+
+		let itemsToRender = items;
+
+		if (transformData) {
+			itemsToRender = transformData(itemsToRender);
+		}
 
 		return (<Downshift
 			selectedItem={selectedItem}
@@ -124,7 +131,7 @@ class Dropdown extends Component {
 						<Chevron open={isOpen} />
 					</Select>
 					{
-						isOpen && items.length
+						isOpen && itemsToRender.length
 							? (
 								<ul className={`${suggestions(themePreset, theme)} ${this.props.small ? 'small' : ''} ${getClassName(this.props.innerClass, 'list')}`}>
 									{
@@ -147,7 +154,7 @@ class Dropdown extends Component {
 											: null
 									}
 									{
-										items
+										itemsToRender
 											.filter((item) => {
 												if (String(item[labelField]).length) {
 													if (this.props.showSearch && this.state.searchTerm) {
@@ -252,6 +259,7 @@ Dropdown.propTypes = {
 	placeholder: types.string,
 	returnsObject: types.bool,
 	renderListItem: types.func,
+	transformData: types.func,
 	selectedItem: types.selectedValue,
 	showCount: types.bool,
 	single: types.bool,

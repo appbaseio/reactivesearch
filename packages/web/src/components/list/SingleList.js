@@ -238,6 +238,12 @@ class SingleList extends Component {
 			return null;
 		}
 
+		let { options: itemsToRender } = this.state;
+
+		if (this.props.transformData) {
+			itemsToRender = this.props.transformData(itemsToRender);
+		}
+
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
@@ -268,7 +274,7 @@ class SingleList extends Component {
 							: null
 					}
 					{
-						this.state.options
+						itemsToRender
 							.filter((item) => {
 								if (String(item.key).length) {
 									if (this.props.showSearch && this.state.searchTerm) {
@@ -350,6 +356,7 @@ SingleList.propTypes = {
 	placeholder: types.string,
 	react: types.react,
 	renderListItem: types.func,
+	transformData: types.func,
 	selectAllLabel: types.string,
 	showCount: types.bool,
 	showFilter: types.bool,

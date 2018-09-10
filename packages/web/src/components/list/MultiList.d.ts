@@ -14,6 +14,7 @@ export interface MultiList extends CommonProps {
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	renderListItem?: (...args: any[]) => any;
+	transformData?: (...args: any[]) => any;
 	selectAllLabel?: string;
 	showCheckbox: boolean;
 	showCount?: boolean;

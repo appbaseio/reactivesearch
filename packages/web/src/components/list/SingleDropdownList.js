@@ -229,6 +229,7 @@ class SingleDropdownList extends Component {
 					themePreset={this.props.themePreset}
 					renderListItem={this.props.renderListItem}
 					showSearch={this.props.showSearch}
+					transformData={this.props.transformData}
 				/>
 			</Container>
 		);
@@ -258,6 +259,7 @@ SingleDropdownList.propTypes = {
 	placeholder: types.string,
 	react: types.react,
 	renderListItem: types.func,
+	transformData: types.func,
 	selectAllLabel: types.string,
 	showCount: types.bool,
 	showFilter: types.bool,
