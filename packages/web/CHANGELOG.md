@@ -9,6 +9,7 @@
 - Dynamically change include/exclude Fields [#417](https://github.com/appbaseio/reactivesearch/issues/417)
 - Fix empty categories in suggestions for `CategorySearch` [#502](https://github.com/appbaseio/reactivesearch/issues/502)
 - Fix `defaultSuggestions` not appearing in `CategorySearch` [commit](https://github.com/appbaseio/reactivesearch/commit/776074f766d5e4c14759ed36e1531d234df35e91)
+- Add support for `transformData` on list components - [commit](https://github.com/appbaseio/reactivesearch/commit/a00ae14c92ced1c0778f4e3f7bbdebaabd1e90bb)
 
 </details>
 
