@@ -327,31 +327,33 @@ class ReactiveList extends Component {
 
 	setPage = (page) => {
 		// onPageClick will be called everytime a pagination button is clicked
-		const { onPageClick } = this.props;
-		if (onPageClick) {
-			onPageClick(page + 1);
-		}
-		const value = this.props.size * page;
-		const options = getQueryOptions(this.props);
-		options.from = this.state.from;
-		this.setState({
-			from: value,
-			isLoading: true,
-			currentPage: page,
-		});
-		this.props.loadMore(this.props.componentId, {
-			...options,
-			from: value,
-		}, false);
+		if (page !== this.state.currentPage) {
+			const { onPageClick } = this.props;
+			if (onPageClick) {
+				onPageClick(page + 1);
+			}
+			const value = this.props.size * page;
+			const options = getQueryOptions(this.props);
+			options.from = this.state.from;
+			this.setState({
+				from: value,
+				isLoading: true,
+				currentPage: page,
+			});
+			this.props.loadMore(this.props.componentId, {
+				...options,
+				from: value,
+			}, false);
 
-		if (this.props.URLParams) {
-			this.props.setPageURL(
-				this.props.componentId,
-				page + 1,
-				this.props.componentId,
-				false,
-				true,
-			);
+			if (this.props.URLParams) {
+				this.props.setPageURL(
+					this.props.componentId,
+					page + 1,
+					this.props.componentId,
+					false,
+					true,
+				);
+			}
 		}
 	};
 
