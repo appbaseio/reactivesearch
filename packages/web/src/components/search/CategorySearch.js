@@ -375,6 +375,7 @@ class CategorySearch extends Component {
 			label: filterLabel,
 			showFilter,
 			URLParams,
+			componentType: 'CATEGORYSEARCH',
 		});
 	};
 
