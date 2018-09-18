@@ -77,7 +77,7 @@ class DynamicRangeSlider extends Component {
 					Math.ceil(nextProps.range.end),
 				], nextProps);
 			}
-		} else if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected) && nextProps.range) {
+		} else if ((this.props.defaultSelected !== nextProps.defaultSelected) && nextProps.range) {
 			const { start, end } = nextProps.defaultSelected(nextProps.range.start, nextProps.range.end);
 			this.handleChange(
 				[start, end],
