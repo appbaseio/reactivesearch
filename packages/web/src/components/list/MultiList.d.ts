@@ -18,6 +18,7 @@ export interface MultiList extends CommonProps {
 	selectAllLabel?: string;
 	showCheckbox: boolean;
 	showCount?: boolean;
+	showFilter?: boolean;
 	showSearch?: boolean;
 	size?: number;
 	sortBy?: types.sortByWithCount;
