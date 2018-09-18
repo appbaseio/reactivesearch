@@ -140,6 +140,7 @@ class RatingsFilter extends Component {
 			label: props.filterLabel,
 			showFilter: false,
 			URLParams: props.URLParams,
+			componentType: 'RATINGSFILTER',
 		});
 	};
 
