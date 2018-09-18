@@ -236,6 +236,7 @@ class RangeSlider extends Component {
 			label: props.filterLabel,
 			showFilter: showFilter && !isInitialValue,
 			URLParams: props.URLParams,
+			componentType: 'RANGESLIDER',
 		});
 	};
 

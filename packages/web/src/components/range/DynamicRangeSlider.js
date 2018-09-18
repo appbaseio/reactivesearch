@@ -284,6 +284,7 @@ class DynamicRangeSlider extends Component {
 			label: props.filterLabel,
 			showFilter: showFilter && !isInitialValue,
 			URLParams: props.URLParams,
+			componentType: 'DYNAMICRANGESLIDER',
 		});
 	};
 

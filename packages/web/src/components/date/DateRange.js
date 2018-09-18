@@ -268,6 +268,7 @@ class DateRange extends Component {
 				showFilter: props.showFilter,
 				label: props.filterLabel,
 				URLParams: props.URLParams,
+				componentType: 'DATERANGE',
 			});
 		}
 	};

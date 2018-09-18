@@ -335,6 +335,7 @@ class DataSearch extends Component {
 			label: filterLabel,
 			showFilter,
 			URLParams,
+			componentType: 'DATASEARCH',
 		});
 	};
 

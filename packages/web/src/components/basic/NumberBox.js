@@ -146,6 +146,7 @@ class NumberBox extends Component {
 			value,
 			showFilter: false, // we don't need filters for NumberBox
 			URLParams: props.URLParams,
+			componentType: 'NUMBERBOX',
 		});
 	};
 

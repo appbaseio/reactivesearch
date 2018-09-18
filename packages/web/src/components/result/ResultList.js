@@ -9,7 +9,7 @@ import ReactiveList from './ReactiveList';
 class ResultList extends Component {
 	static generateQueryOptions = props => ReactiveList.generateQueryOptions(props);
 
-	renderAsListItem = (item) => {
+	renderAsListItem = (item, triggerClickAnalytics) => {
 		const result = this.props.onData(item);
 
 		if (result) {
@@ -22,6 +22,7 @@ class ResultList extends Component {
 					className={getClassName(this.props.innerClass, 'listItem')}
 					target={this.props.target}
 					rel={this.props.target === '_blank' ? 'noopener noreferrer' : null}
+					onClick={triggerClickAnalytics}
 					{...result.containerProps}
 				>
 					{
