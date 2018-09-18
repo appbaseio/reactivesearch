@@ -395,6 +395,24 @@ class ReactiveList extends Component {
 		});
 	};
 
+	triggerClickAnalytics = (searchPosition) => {
+		// click analytics would only work client side and after javascript loads
+		const { config, analytics: { searchId } } = this.props;
+		const { url, app, credentials } = config;
+		if (config.analytics && url.endsWith('scalr.api.appbase.io') && searchId) {
+			fetch(`${url}/${app}/analytics`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Basic ${btoa(credentials)}`,
+					'X-Search-Id': searchId,
+					'X-Search-Click': true,
+					'X-Search-Click-Position': searchPosition + 1,
+				},
+			});
+		}
+	}
+
 	renderSortOptions = () => (
 		<select
 			className={`${sortOptions} ${getClassName(this.props.innerClass, 'sortOptions')}`}
@@ -410,6 +428,8 @@ class ReactiveList extends Component {
 	);
 
 	render() {
+		const { onData, size } = this.props;
+		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
 		let filteredResults = results;
@@ -461,11 +481,18 @@ class ReactiveList extends Component {
 				}
 				{
 					this.props.onAllData
-						? (this.props.onAllData(results, streamResults, this.loadMore))
+						? (this.props.onAllData(
+							results,
+							streamResults,
+							this.loadMore,
+							{ base: (currentPage * size), triggerClickAnalytics: this.triggerClickAnalytics },
+						))
 						: (
 							<div className={`${this.props.listClass} ${getClassName(this.props.innerClass, 'list')}`}>
 								{
-									[...streamResults, ...filteredResults].map(this.props.onData)
+									[...streamResults, ...filteredResults]
+										.map((item, index) =>
+											onData(item, () => this.triggerClickAnalytics((currentPage * size) + index)))
 								}
 							</div>
 						)
@@ -494,7 +521,7 @@ class ReactiveList extends Component {
 						: null
 				}
 				{
-					this.props.url.endsWith('appbase.io') && results.length
+					this.props.config.url.endsWith('appbase.io') && results.length
 						? (
 							<Flex
 								direction="row-reverse"
@@ -529,7 +556,8 @@ ReactiveList.propTypes = {
 	streamHits: types.hits,
 	time: types.number,
 	total: types.number,
-	url: types.string,
+	config: types.props,
+	analytics: types.props,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -585,7 +613,8 @@ const mapStateToProps = (state, props) => ({
 	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
-	url: state.config.url,
+	analytics: state.analytics,
+	config: state.config,
 });
 
 const mapDispatchtoProps = dispatch => ({
