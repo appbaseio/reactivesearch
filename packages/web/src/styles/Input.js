@@ -96,16 +96,10 @@ const suggestions = (themePreset, theme) => css`
 		padding: 10px;
 		user-select: none;
 
-		& > .trim {
-			display: block;
-			display: -webkit-box;
-			width: 100%;
-			max-height: 2.3rem;
-			line-height: 1.2rem;
-			-webkit-line-clamp: 2;
-			-webkit-box-orient: vertical;
+		.trim {
 			overflow: hidden;
 			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 
 		&:hover,

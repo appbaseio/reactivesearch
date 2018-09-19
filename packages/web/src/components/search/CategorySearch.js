@@ -29,6 +29,7 @@ import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
 import { connect } from '../../utils';
+import SuggestionItem from './addons/SuggestionItem';
 
 const Text = withTheme(props => (
 	<span
@@ -278,19 +279,29 @@ class CategorySearch extends Component {
 	};
 
 	onSuggestions = (searchSuggestions) => {
-		if (this.props.onSuggestion) {
-			return searchSuggestions.map(suggestion => this.props.onSuggestion(suggestion));
+		const { onSuggestion, renderSuggestion } = this.props;
+		if (onSuggestion) {
+			if (process.env.NODE_ENV !== 'production') {
+				console.warn('onSuggestion prop is deprecated please use renderSuggestion');
+			}
+			return searchSuggestions.map(suggestion => onSuggestion(suggestion));
 		}
 
 		const fields = Array.isArray(this.props.dataField)
 			? this.props.dataField
 			: [this.props.dataField];
 
-		return getSuggestions(
+		const parsedSuggestions = getSuggestions(
 			fields,
 			searchSuggestions,
 			this.state.currentValue.toLowerCase(),
 		);
+
+		if (renderSuggestion) {
+			return parsedSuggestions.map(suggestion => renderSuggestion(suggestion));
+		}
+
+		return parsedSuggestions;
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, category, cause) => {
@@ -491,6 +502,7 @@ class CategorySearch extends Component {
 	render() {
 		let suggestionsList = [];
 		let finalSuggestionsList = [];
+		const { currentValue } = this.state;
 		const {
 			theme,
 			themePreset,
@@ -620,7 +632,9 @@ class CategorySearch extends Component {
 													),
 												}}
 											>
-												<Text primary={!!item.category}>{item.label}</Text>
+												<Text primary={!!item.category}>
+													<SuggestionItem currentValue={currentValue} suggestion={item} />
+												</Text>
 											</li>
 										))}
 									</ul>

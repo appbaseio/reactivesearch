@@ -29,7 +29,7 @@ import CancelSvg from '../shared/CancelSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
 import { connect } from '../../utils';
-
+import SuggestionItem from './addons/SuggestionItem';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -238,18 +238,28 @@ class DataSearch extends Component {
 	};
 
 	onSuggestions = (results) => {
-		if (this.props.onSuggestion) {
-			return results.map(suggestion => this.props.onSuggestion(suggestion));
+		const { onSuggestion, renderSuggestion } = this.props;
+		if (onSuggestion) {
+			if (process.env.NODE_ENV !== 'production') {
+				console.warn('onSuggestion prop is deprecated please use renderSuggestion');
+			}
+			return results.map(suggestion => onSuggestion(suggestion));
 		}
 
 		const fields = Array.isArray(this.props.dataField)
 			? this.props.dataField : [this.props.dataField];
 
-		return getSuggestions(
+		const parsedSuggestions = getSuggestions(
 			fields,
 			results,
 			this.state.currentValue.toLowerCase(),
 		);
+
+		if (renderSuggestion) {
+			return parsedSuggestions.map(suggestion => renderSuggestion(suggestion));
+		}
+
+		return parsedSuggestions;
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, cause) => {
@@ -438,6 +448,7 @@ class DataSearch extends Component {
 	);
 
 	render() {
+		const { currentValue } = this.state;
 		let suggestionsList = [];
 
 		if (
@@ -451,7 +462,6 @@ class DataSearch extends Component {
 		}
 
 		const { theme, themePreset, renderSuggestions } = this.props;
-
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
@@ -518,16 +528,7 @@ class DataSearch extends Component {
 																		),
 																	}}
 																>
-																	{
-																		typeof item.label === 'string'
-																			? <div
-																				className="trim"
-																				dangerouslySetInnerHTML={{
-																					__html: item.label,
-																				}}
-																			/>
-																			: item.label
-																	}
+																	<SuggestionItem currentValue={currentValue} suggestion={item} />
 																</li>
 															))
 													}
