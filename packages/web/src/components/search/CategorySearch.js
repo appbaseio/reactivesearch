@@ -29,6 +29,7 @@ import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
 import { connect } from '../../utils';
+import SuggestionItem from './addons/SuggestionItem';
 
 const Text = withTheme(props => (
 	<span
@@ -98,6 +99,9 @@ class CategorySearch extends Component {
 			// shallow check allows us to set suggestions even if the next set
 			// of suggestions are same as the current one
 			if (this.props.suggestions !== nextProps.suggestions) {
+				if (this.props.onSuggestions) {
+					this.props.onSuggestions(nextProps.suggestions);
+				}
 				this.setState({
 					suggestions: this.onSuggestions(nextProps.suggestions),
 				});
@@ -220,8 +224,8 @@ class CategorySearch extends Component {
 	};
 
 	static shouldQuery = (value, dataFields, props) => {
-		const fields = dataFields.map((field, index) =>
-			`${field}${
+		const fields = dataFields.map(
+			(field, index) => `${field}${
 				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
 					? `^${props.fieldWeights[index]}`
 					: ''
@@ -270,15 +274,20 @@ class CategorySearch extends Component {
 	};
 
 	onSuggestions = (searchSuggestions) => {
-		if (this.props.onSuggestion) {
-			return searchSuggestions.map(suggestion => this.props.onSuggestion(suggestion));
-		}
-
+		const { renderSuggestion } = this.props;
 		const fields = Array.isArray(this.props.dataField)
 			? this.props.dataField
 			: [this.props.dataField];
 
-		return getSuggestions(fields, searchSuggestions, this.state.currentValue.toLowerCase());
+		const parsedSuggestions = getSuggestions(
+			fields,
+			searchSuggestions,
+			this.state.currentValue.toLowerCase(),
+		);
+		if (renderSuggestion) {
+			return parsedSuggestions.map(suggestion => renderSuggestion(suggestion));
+		}
+		return parsedSuggestions;
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, category, cause) => {
@@ -513,10 +522,11 @@ class CategorySearch extends Component {
 	render() {
 		let suggestionsList = [];
 		let finalSuggestionsList = [];
+		const { currentValue } = this.state;
 		const {
 			theme,
 			themePreset,
-			renderSuggestions,
+			renderAllSuggestion,
 			categories, // defaults to empty array
 		} = this.props;
 
@@ -564,7 +574,6 @@ class CategorySearch extends Component {
 			}
 			finalSuggestionsList = [...categorySuggestions, ...suggestionsList];
 		}
-
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -607,8 +616,8 @@ class CategorySearch extends Component {
 								/>
 								{this.renderIcons()}
 								{this.renderLoader()}
-								{renderSuggestions
-									&& renderSuggestions({
+								{renderAllSuggestion
+									&& renderAllSuggestion({
 										currentValue: this.state.currentValue,
 										isOpen,
 										getItemProps,
@@ -617,7 +626,7 @@ class CategorySearch extends Component {
 										categories: filteredCategories,
 										parsedSuggestions: suggestionsList,
 									})}
-								{!renderSuggestions && isOpen && finalSuggestionsList.length ? (
+								{!renderAllSuggestion && isOpen && finalSuggestionsList.length ? (
 									<ul
 										className={`${suggestions(
 											themePreset,
@@ -635,7 +644,9 @@ class CategorySearch extends Component {
 													),
 												}}
 											>
-												<Text primary={!!item.category}>{item.label}</Text>
+												<Text primary={!!item.category}>
+													<SuggestionItem currentValue={currentValue} suggestion={item} />
+												</Text>
 											</li>
 										))}
 									</ul>
@@ -714,13 +725,14 @@ CategorySearch.propTypes = {
 	onKeyPress: types.func,
 	onKeyUp: types.func,
 	onQueryChange: types.func,
-	onSuggestion: types.func,
+	onSuggestions: types.func,
 	onValueChange: types.func,
 	onValueSelected: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
-	renderSuggestions: types.func,
+	renderSuggestion: types.func,
+	renderAllSuggestion: types.func,
 	renderNoSuggestion: types.children,
 	showClear: types.bool,
 	showFilter: types.bool,
@@ -767,10 +779,11 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: (component, name) => dispatch(addComponent(component, name)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	setQueryOptions: (component, props, execute) =>
-		dispatch(setQueryOptions(component, props, execute)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryOptions:
+		(component, props, execute) => dispatch(setQueryOptions(component, props, execute)),
+	setQueryListener: (
+		component, onQueryChange, beforeQueryChange,
+	) => dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
