@@ -2065,6 +2065,17 @@ babel-eslint@^8.2.2, babel-eslint@^8.2.3:
     eslint-scope "3.7.1"
     eslint-visitor-keys "^1.0.0"
 
+babel-eslint@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-9.0.0.tgz#7d9445f81ed9f60aff38115f838970df9f2b6220"
+  dependencies:
+    "@babel/code-frame" "^7.0.0"
+    "@babel/parser" "^7.0.0"
+    "@babel/traverse" "^7.0.0"
+    "@babel/types" "^7.0.0"
+    eslint-scope "3.7.1"
+    eslint-visitor-keys "^1.0.0"
+
 babel-generator@^6.18.0, babel-generator@^6.26.0:
   version "6.26.1"
   resolved "https://registry.yarnpkg.com/babel-generator/-/babel-generator-6.26.1.tgz#1844408d3b8f0d35a404ea7ac180f087a601bd90"
@@ -5634,7 +5645,7 @@ eslint-plugin-babel@^5.1.0:
   dependencies:
     eslint-rule-composer "^0.3.0"
 
-eslint-plugin-import@^2.11.0, eslint-plugin-import@^2.8.0:
+eslint-plugin-import@^2.11.0, eslint-plugin-import@^2.14.0, eslint-plugin-import@^2.8.0:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.14.0.tgz#6b17626d2e3e6ad52cfce8807a845d15e22111a8"
   dependencies:
@@ -5652,6 +5663,10 @@ eslint-plugin-import@^2.11.0, eslint-plugin-import@^2.8.0:
 eslint-plugin-jest@^21.12.2:
   version "21.22.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-21.22.0.tgz#1b9e49b3e5ce9a3d0a51af4579991d517f33726e"
+
+eslint-plugin-jest@^21.22.0:
+  version "21.22.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-21.22.1.tgz#bc805e9b1c75c3bc92e47c44dd41370c1af7ebcc"
 
 eslint-plugin-jsx-a11y@^6.0.3:
   version "6.1.1"

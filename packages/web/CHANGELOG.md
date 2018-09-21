@@ -4,7 +4,9 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
+</details>
 
+## v2.9.0
 - Update appbase-js version to latest [#506](https://github.com/appbaseio/reactivesearch/issues/506)
 - Dynamically change include/exclude Fields [#417](https://github.com/appbaseio/reactivesearch/issues/417)
 - Fix empty categories in suggestions for `CategorySearch` [#502](https://github.com/appbaseio/reactivesearch/issues/502)
@@ -12,8 +14,6 @@
 - Add analytics support [#484](https://github.com/appbaseio/reactivesearch/issues/484)
 - Fix result of `defaultSelected` function not evaluated by `isEqual` [#407](https://github.com/appbaseio/reactivesearch/issues/407)
 Add support for `transformData` on list components - [commit](https://github.com/appbaseio/reactivesearch/commit/a00ae14c92ced1c0778f4e3f7bbdebaabd1e90bb)
-
-</details>
 
 ## v2.8.2
 - Fixes issue with cursor jumping in search componentes [#394](https://github.com/appbaseio/reactivesearch/issues/394)
