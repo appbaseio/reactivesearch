@@ -6,6 +6,10 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v2.9.1
+- Appbase-js build fixes
+- No restriction on API endpoint for analytics
+
 ## v2.9.0
 - Update appbase-js version to latest [#506](https://github.com/appbaseio/reactivesearch/issues/506)
 - Dynamically change include/exclude Fields [#417](https://github.com/appbaseio/reactivesearch/issues/417)
