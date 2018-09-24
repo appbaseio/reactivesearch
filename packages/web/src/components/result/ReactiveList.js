@@ -210,7 +210,7 @@ class ReactiveList extends Component {
 						isLoading: false,
 					});
 
-					if (nextProps.hits.length < this.props.hits.length) {
+					if (nextProps.hits === this.props.hits) {
 						// query has changed
 						if (this.props.scrollOnChange) {
 							window.scrollTo(0, 0);
