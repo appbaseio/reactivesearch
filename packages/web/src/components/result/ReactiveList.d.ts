@@ -32,6 +32,7 @@ export interface ReactiveListProps extends CommonProps {
 	onPageClick?: (...args: any[]) => any;
 	defaultPage?: number;
 	listClass?: string;
+	scrollOnChange?: boolean;
 }
 
 declare const ReactiveList: React.ComponentType<ReactiveListProps>;
