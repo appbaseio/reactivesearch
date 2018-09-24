@@ -110,7 +110,9 @@ class ReactiveList extends Component {
 		this.setReact(this.props);
 
 		if (!this.props.pagination) {
-			window.addEventListener('scroll', this.scrollHandler);
+			const { scrollTarget } = this.props;
+			this.domNode = scrollTarget ? document.getElementById(scrollTarget) : window;
+			this.domNode.addEventListener('scroll', this.scrollHandler);
 		}
 	}
 
@@ -184,7 +186,7 @@ class ReactiveList extends Component {
 				if (nextProps.onPageChange) {
 					nextProps.onPageChange(this.state.currentPage + 1, totalPages);
 				} else {
-					window.scrollTo(0, 0);
+					this.domNode.scrollTo(0, 0);
 				}
 				this.setState({
 					isLoading: false,
@@ -212,7 +214,7 @@ class ReactiveList extends Component {
 
 					if (nextProps.hits.length < this.props.hits.length) {
 						// query has changed
-						window.scrollTo(0, 0);
+						this.domNode.scrollTo(0, 0);
 						this.setState({
 							from: 0,
 						});
@@ -238,9 +240,9 @@ class ReactiveList extends Component {
 
 		if (nextProps.pagination !== this.props.pagination) {
 			if (nextProps.pagination) {
-				window.addEventListener('scroll', this.scrollHandler);
+				this.domNode.addEventListener('scroll', this.scrollHandler);
 			} else {
-				window.removeEventListener('scroll', this.scrollHandler);
+				this.domNode.removeEventListener('scroll', this.scrollHandler);
 			}
 		}
 
@@ -256,7 +258,7 @@ class ReactiveList extends Component {
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
 		this.props.removeComponent(this.internalComponent);
-		window.removeEventListener('scroll', this.scrollHandler);
+		this.domNode.removeEventListener('scroll', this.scrollHandler);
 	}
 
 	setReact = (props) => {
@@ -293,9 +295,17 @@ class ReactiveList extends Component {
 	};
 
 	scrollHandler = () => {
+		let renderLoader = (
+			window.innerHeight + window.pageYOffset + 300
+		) >= document.body.offsetHeight;
+		if (this.props.scrollTarget) {
+			renderLoader = (
+				this.domNode.clientHeight + this.domNode.scrollTop + 300
+			) >= this.domNode.scrollHeight;
+		}
 		if (
 			!this.state.isLoading
-			&& (window.innerHeight + window.pageYOffset + 300) >= document.body.offsetHeight
+			&& renderLoader
 		) {
 			this.loadMore();
 		}
@@ -578,6 +588,7 @@ ReactiveList.propTypes = {
 	pagination: types.bool,
 	paginationAt: types.paginationAt,
 	react: types.react,
+	scrollTarget: types.string,
 	showResultStats: types.bool,
 	size: types.number,
 	sortBy: types.sortBy,
