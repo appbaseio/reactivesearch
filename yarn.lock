@@ -1606,13 +1606,14 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-appbase-js@^4.0.0-beta:
-  version "4.0.0-beta"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.0-beta.tgz#e8c7d194ab1b52e87d09d70c4568c04d9ebdb0a6"
+appbase-js@^4.0.2-beta.02:
+  version "4.0.2-beta.2"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.2-beta.2.tgz#a01155ced48c9359be04e45df6c40a312483e5b8"
   dependencies:
     cross-fetch "^2.2.2"
     json-stable-stringify "^1.0.1"
     querystring "^0.2.0"
+    stream "^0.0.2"
     url-parser-lite "^0.1.0"
     ws "^2.2.0"
 
@@ -5333,6 +5334,10 @@ elliptic@^6.0.0:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
+
+emitter-component@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/emitter-component/-/emitter-component-1.1.1.tgz#065e2dbed6959bf470679edabeaf7981d1003ab6"
 
 emitter-mixin@0.0.3:
   version "0.0.3"
@@ -13283,6 +13288,12 @@ stream-http@^2.7.2:
 stream-shift@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/stream-shift/-/stream-shift-1.0.0.tgz#d5c752825e5367e786f78e18e445ea223a155952"
+
+stream@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/stream/-/stream-0.0.2.tgz#7f5363f057f6592c5595f00bc80a27f5cec1f0ef"
+  dependencies:
+    emitter-component "^1.1.1"
 
 strict-uri-encode@^1.0.0:
   version "1.1.0"

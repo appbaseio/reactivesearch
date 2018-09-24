@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "^0.0.13",
-    "appbase-js": "^4.0.0-beta",
+    "appbase-js": "^4.0.2-beta.02",
     "escape-string-regexp": "^1.0.5",
     "expo": "^27.0.1",
     "hoist-non-react-statics": "^2.5.0",
