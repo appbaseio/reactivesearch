@@ -23,6 +23,7 @@ export interface SingleDropdownList extends CommonProps {
 	themePreset?: types.themePreset;
 	showMissing?: boolean;
 	missingLabel?: string;
+	showLoadMore?: boolean;
 }
 
 declare const SingleDropdownList: React.ComponentType<SingleDropdownList>;
