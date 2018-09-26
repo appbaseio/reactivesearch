@@ -13,7 +13,6 @@ import {
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
-	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
@@ -21,6 +20,7 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import { getAggsQuery } from './utils';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
@@ -279,19 +279,7 @@ class MultiList extends Component {
 
 	static generateQueryOptions(props) {
 		const queryOptions = getQueryOptions(props);
-		queryOptions.size = 0;
-		queryOptions.aggs = {
-			[props.dataField]: {
-				terms: {
-					field: props.dataField,
-					size: props.size,
-					order: getAggsOrder(props.sortBy || 'count'),
-					...(props.showMissing ? { missing: props.missingLabel } : {}),
-				},
-			},
-		};
-
-		return queryOptions;
+		return getAggsQuery(queryOptions, props);
 	}
 
 	updateQueryOptions = (props) => {
