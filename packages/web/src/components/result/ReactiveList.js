@@ -37,9 +37,9 @@ class ReactiveList extends Component {
 		} else if (this.props.currentPage) {
 			currentPage = Math.max(this.props.currentPage - 1, 0);
 		}
-
+		this.initialFrom = currentPage * props.size; // used for page resetting on query change
 		this.state = {
-			from: currentPage * props.size,
+			from: this.initialFrom,
 			isLoading: true,
 			currentPage,
 		};
@@ -167,6 +167,8 @@ class ReactiveList extends Component {
 			this.setState({
 				currentPage: 0,
 				from: 0,
+			}, () => {
+				this.updatePageURL(0);
 			});
 		}
 
@@ -225,14 +227,51 @@ class ReactiveList extends Component {
 			}
 		}
 
-		if (nextProps.pagination && nextProps.total !== this.props.total) {
-			const currentPage = this.props.total ? 0 : this.state.currentPage;
-			this.setState({
-				currentPage,
-			});
+		if (this.props.queryLog && nextProps.queryLog !== this.props.queryLog) {
+			// usecase:
+			// - query has changed from non-null prev query
 
-			if (nextProps.onPageChange) {
-				nextProps.onPageChange(currentPage + 1, totalPages);
+			if (nextProps.queryLog.from !== this.state.from) {
+				// query's 'from' key doesn't match the state's 'from' key,
+				// i.e. this query change was not triggered by the page change (loadMore)
+				this.setState({
+					currentPage: 0,
+				}, () => {
+					this.updatePageURL(0);
+				});
+
+				if (nextProps.onPageChange) {
+					nextProps.onPageChange(1, totalPages);
+				}
+			} else if (
+				this.initialFrom
+				&& this.initialFrom === nextProps.queryLog.from
+			) {
+				// [non-zero] initialFrom matches the current query's from
+				// but the query has changed
+
+				// we need to update the query options in this case
+				// because the initial load had set the query 'from' in the store
+				// which is not valid anymore because the query has changed
+				const options = getQueryOptions(nextProps);
+				options.from = 0;
+				this.initialFrom = 0;
+
+				if (nextProps.sortOptions) {
+					options.sort = [{
+						[nextProps.sortOptions[0].dataField]: {
+							order: nextProps.sortOptions[0].sortBy,
+						},
+					}];
+				} else if (nextProps.sortBy) {
+					options.sort = [{
+						[nextProps.dataField]: {
+							order: nextProps.sortBy,
+						},
+					}];
+				}
+
+				this.props.setQueryOptions(this.props.componentId, options, true);
 			}
 		}
 
@@ -339,21 +378,14 @@ class ReactiveList extends Component {
 				from: value,
 				isLoading: true,
 				currentPage: page,
-			});
-			this.props.loadMore(this.props.componentId, {
-				...options,
-				from: value,
-			}, false);
+			}, () => {
+				this.props.loadMore(this.props.componentId, {
+					...options,
+					from: value,
+				}, false);
 
-			if (this.props.URLParams) {
-				this.props.setPageURL(
-					this.props.componentId,
-					page + 1,
-					this.props.componentId,
-					false,
-					true,
-				);
-			}
+				this.updatePageURL(page);
+			});
 		}
 	};
 
@@ -392,8 +424,22 @@ class ReactiveList extends Component {
 		this.setState({
 			currentPage: 0,
 			from: 0,
+		}, () => {
+			this.updatePageURL(0);
 		});
 	};
+
+	updatePageURL = (page) => {
+		if (this.props.URLParams) {
+			this.props.setPageURL(
+				this.props.componentId,
+				page + 1,
+				this.props.componentId,
+				false,
+				true,
+			);
+		}
+	}
 
 	triggerClickAnalytics = (searchPosition) => {
 		// click analytics would only work client side and after javascript loads
@@ -558,6 +604,7 @@ ReactiveList.propTypes = {
 	total: types.number,
 	config: types.props,
 	analytics: types.props,
+	queryLog: types.props,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -615,6 +662,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	analytics: state.analytics,
 	config: state.config,
+	queryLog: state.queryLog[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
