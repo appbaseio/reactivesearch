@@ -14,13 +14,15 @@ export default function Pagination(props) {
 	const start = getStartPage(props.pages, props.currentPage);
 	const pages = [];
 
-	const onPrevPage = () => {
+	const onPrevPage = (e) => {
+		e.preventDefault();
 		if (props.currentPage) {
 			props.setPage(props.currentPage - 1);
 		}
 	};
 
-	const onNextPage = () => {
+	const onNextPage = (e) => {
+		e.preventDefault();
 		if (props.currentPage < props.totalPages - 1) {
 			props.setPage(props.currentPage + 1);
 		}
@@ -44,7 +46,11 @@ export default function Pagination(props) {
 					key={i - 1}
 					tabIndex="0"
 					onKeyPress={event => handleA11yAction(event, () => props.setPage(i - 1))}
-					onClick={() => props.setPage(i - 1)}
+					onClick={(e) => {
+						e.preventDefault();
+						props.setPage(i - 1);
+					}}
+					href={`?${props.fragmentName}=${i}`}
 				>
 					{i}
 				</Button>
@@ -64,7 +70,6 @@ export default function Pagination(props) {
 	const className = innerClassName || primary
 		? `${innerClassName} ${primary ? 'active' : ''}`
 		: null;
-
 	return (
 		<div className={`${pagination} ${getClassName(props.innerClass, 'pagination')}`}>
 			<Button
@@ -73,6 +78,8 @@ export default function Pagination(props) {
 				onKeyPress={event => handleA11yAction(event, onPrevPage)}
 				onClick={onPrevPage}
 				tabIndex="0"
+				href={`?${props.fragmentName}=${props.currentPage}`}
+				rel="prev"
 			>
 				Prev
 			</Button>
@@ -81,8 +88,12 @@ export default function Pagination(props) {
 					className={className}
 					primary={primary}
 					onKeyPress={event => handleA11yAction(event, () => props.setPage(0))}
-					onClick={() => props.setPage(0)}
+					onClick={(e) => {
+						e.preventDefault();
+						props.setPage(0);
+					}}
 					tabIndex="0"
+					href={`?${props.fragmentName}=1`}
 				>
 					1
 				</Button>
@@ -101,6 +112,8 @@ export default function Pagination(props) {
 				onKeyPress={event => handleA11yAction(event, onNextPage)}
 				onClick={onNextPage}
 				tabIndex="0"
+				href={`?${props.fragmentName}=${props.currentPage + 2}`}
+				rel="next"
 			>
 				Next
 			</Button>
@@ -114,4 +127,5 @@ Pagination.propTypes = {
 	pages: types.number,
 	setPage: types.func,
 	totalPages: types.number,
+	fragmentName: types.String,
 };

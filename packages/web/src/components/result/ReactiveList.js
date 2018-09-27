@@ -522,6 +522,7 @@ class ReactiveList extends Component {
 							currentPage={this.state.currentPage}
 							setPage={this.setPage}
 							innerClass={this.props.innerClass}
+							fragmentName={this.props.componentId}
 						/>)
 						: null
 				}
@@ -563,6 +564,7 @@ class ReactiveList extends Component {
 							currentPage={this.state.currentPage}
 							setPage={this.setPage}
 							innerClass={this.props.innerClass}
+							fragmentName={this.props.componentId}
 						/>)
 						: null
 				}
