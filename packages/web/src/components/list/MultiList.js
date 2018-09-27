@@ -453,7 +453,7 @@ class MultiList extends Component {
 					{
 						showLoadMore && !isLastBucket && (
 							<div css={loadMoreContainer}>
-								<Button onClick={this.handleLoadMore}>Load More</Button>
+								<Button onClick={this.handleLoadMore}>{this.loadMoreLabel}</Button>
 							</div>
 						)
 					}
@@ -501,6 +501,7 @@ MultiList.propTypes = {
 	showMissing: types.bool,
 	missingLabel: types.string,
 	showLoadMore: types.bool,
+	loadMoreLabel: types.string,
 };
 
 MultiList.defaultProps = {
@@ -517,6 +518,7 @@ MultiList.defaultProps = {
 	showMissing: false,
 	missingLabel: 'N/A',
 	showLoadMore: false,
+	loadMoreLabel: 'Load More',
 };
 
 const mapStateToProps = (state, props) => ({
