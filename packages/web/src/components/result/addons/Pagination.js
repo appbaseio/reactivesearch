@@ -70,6 +70,24 @@ export default function Pagination(props) {
 	const className = innerClassName || primary
 		? `${innerClassName} ${primary ? 'active' : ''}`
 		: null;
+
+	let prevHrefProp = {};
+	let nextHrefProp = {};
+
+	if (props.currentPage >= 1) {
+		prevHrefProp = {
+			href: `?${props.fragmentName}=${props.currentPage}`,
+			rel: 'prev',
+		};
+	}
+
+	if (props.currentPage < props.totalPages - 1) {
+		nextHrefProp = {
+			href: `?${props.fragmentName}=${props.currentPage + 2}`,
+			rel: 'next',
+		};
+	}
+
 	return (
 		<div className={`${pagination} ${getClassName(props.innerClass, 'pagination')}`}>
 			<Button
@@ -78,8 +96,7 @@ export default function Pagination(props) {
 				onKeyPress={event => handleA11yAction(event, onPrevPage)}
 				onClick={onPrevPage}
 				tabIndex="0"
-				href={`?${props.fragmentName}=${props.currentPage}`}
-				rel="prev"
+				{...prevHrefProp}
 			>
 				Prev
 			</Button>
@@ -112,8 +129,7 @@ export default function Pagination(props) {
 				onKeyPress={event => handleA11yAction(event, onNextPage)}
 				onClick={onNextPage}
 				tabIndex="0"
-				href={`?${props.fragmentName}=${props.currentPage + 2}`}
-				rel="next"
+				{...nextHrefProp}
 			>
 				Next
 			</Button>
@@ -127,5 +143,5 @@ Pagination.propTypes = {
 	pages: types.number,
 	setPage: types.func,
 	totalPages: types.number,
-	fragmentName: types.String,
+	fragmentName: types.string,
 };
