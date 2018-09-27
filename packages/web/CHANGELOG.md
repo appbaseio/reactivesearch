@@ -6,6 +6,14 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v2.10.0
+
+- Support array of (conjunction) objects in react prop - [commit](https://github.com/appbaseio/reactivesearch/commit/b812d7b5239b2aac6bb93018a4e8c305a644f1aa)
+- Fix page change behavior on query change - [commit](https://github.com/appbaseio/reactivesearch/commit/07f80914b03ef4c80e572960fe4e152312137de6)
+- Adds on demand loading in list components for [#515](https://github.com/appbaseio/reactivesearch/issues/515)
+- Support Pagination with JS disabled in browser (helpful in crawling) [#477](https://github.com/appbaseio/reactivesearch/issues/477)
+- Add support for scrollTarget [#369](https://github.com/appbaseio/reactivesearch/issues/369)
+
 ## v2.9.1
 - Appbase-js build fixes
 - No restriction on API endpoint for analytics
