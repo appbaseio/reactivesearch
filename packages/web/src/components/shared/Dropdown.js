@@ -97,6 +97,7 @@ class Dropdown extends Component {
 			theme,
 			renderListItem,
 			transformData,
+			footer,
 		} = this.props;
 
 		let itemsToRender = items;
@@ -233,6 +234,7 @@ class Dropdown extends Component {
 												);
 											})
 									}
+									{footer}
 								</ul>
 							)
 							: null

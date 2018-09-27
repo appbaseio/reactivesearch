@@ -12,7 +12,6 @@ import {
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
-	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
@@ -20,8 +19,10 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import { getAggsQuery, getCompositeAggsQuery } from './utils';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
+import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/Dropdown';
 import { connect } from '../../utils';
 
@@ -32,6 +33,8 @@ class SingleDropdownList extends Component {
 		this.state = {
 			currentValue: '',
 			options: [],
+			after: {},	// for composite aggs
+			isLastBucket: false,
 		};
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -62,11 +65,35 @@ class SingleDropdownList extends Component {
 			this.props.options,
 			nextProps.options,
 			() => {
-				this.setState({
-					options: nextProps.options[nextProps.dataField]
-						? nextProps.options[nextProps.dataField].buckets
-						: [],
-				});
+				const { showLoadMore, dataField } = nextProps;
+				const { options } = this.state;
+				if (showLoadMore) {
+					// append options with showLoadMore
+					const { buckets } = nextProps.options[dataField];
+					const nextOptions = [
+						...options,
+						...buckets.map(bucket => ({
+							key: bucket.key[dataField],
+							doc_count: bucket.doc_count,
+						})),
+					];
+					const after = nextProps.options[dataField].after_key;
+					// detect the last bucket by checking if the next set of buckets were empty
+					const isLastBucket = !buckets.length;
+					this.setState({
+						after: {
+							after,
+						},
+						isLastBucket,
+						options: nextOptions,
+					});
+				} else {
+					this.setState({
+						options: nextProps.options[nextProps.dataField]
+							? nextProps.options[nextProps.dataField].buckets
+							: [],
+					});
+				}
 			},
 		);
 		checkSomePropChange(
@@ -175,28 +202,33 @@ class SingleDropdownList extends Component {
 		});
 	};
 
-	static generateQueryOptions(props) {
+	static generateQueryOptions(props, after) {
 		const queryOptions = getQueryOptions(props);
-		queryOptions.size = 0;
-		queryOptions.aggs = {
-			[props.dataField]: {
-				terms: {
-					field: props.dataField,
-					size: props.size,
-					order: getAggsOrder(props.sortBy || 'count'),
-					...(props.showMissing ? { missing: props.missingLabel } : {}),
-				},
-			},
-		};
-		return queryOptions;
+		return props.showLoadMore
+			? getCompositeAggsQuery(queryOptions, props, after)
+			: getAggsQuery(queryOptions, props);
 	}
 
-	updateQueryOptions = (props) => {
-		const queryOptions = SingleDropdownList.generateQueryOptions(props);
+	updateQueryOptions = (props, addAfterKey = false) => {
+		// when using composite aggs flush the current options for a fresh query
+		if (props.showLoadMore && !addAfterKey) {
+			this.setState({
+				options: [],
+			});
+		}
+		// for a new query due to other changes don't append after to get fresh results
+		const queryOptions = SingleDropdownList
+			.generateQueryOptions(props, addAfterKey ? this.state.after : {});
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
+	handleLoadMore = () => {
+		this.updateQueryOptions(this.props, true);
+	}
+
 	render() {
+		const { showLoadMore } = this.props;
+		const { isLastBucket } = this.state;
 		let selectAll = [];
 
 		if (this.state.options.length === 0) {
@@ -231,6 +263,13 @@ class SingleDropdownList extends Component {
 					renderListItem={this.props.renderListItem}
 					showSearch={this.props.showSearch}
 					transformData={this.props.transformData}
+					footer={
+						showLoadMore && !isLastBucket && (
+							<div css={loadMoreContainer}>
+								<Button onClick={this.handleLoadMore}>Load More</Button>
+							</div>
+						)
+					}
 				/>
 			</Container>
 		);
@@ -273,6 +312,7 @@ SingleDropdownList.propTypes = {
 	showMissing: types.bool,
 	missingLabel: types.string,
 	showSearch: types.bool,
+	showLoadMore: types.bool,
 };
 
 SingleDropdownList.defaultProps = {
@@ -287,6 +327,7 @@ SingleDropdownList.defaultProps = {
 	showMissing: false,
 	missingLabel: 'N/A',
 	showSearch: false,
+	showLoadMore: false,
 };
 
 const mapStateToProps = (state, props) => ({

@@ -69,6 +69,12 @@ const numberBoxContainer = css`
 	}
 `;
 
+const loadMoreContainer = css({
+	margin: '5px 0',
+	display: 'flex',
+	justifyContent: 'center',
+});
+
 const primary = ({ theme }) => css`
 	background-color: ${theme.colors.primaryColor};
 	color: ${theme.colors.primaryTextColor};
@@ -132,5 +138,5 @@ const Button = styled('a')`
 	${props => props.large && large};
 `;
 
-export { pagination, filters, toggleButtons, numberBoxContainer };
+export { pagination, filters, toggleButtons, numberBoxContainer, loadMoreContainer };
 export default Button;

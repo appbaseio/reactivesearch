@@ -25,6 +25,7 @@ export interface SingleList extends CommonProps {
 	title?: types.title;
 	showMissing?: boolean;
 	missingLabel?: string;
+	showLoadMore?: boolean;
 }
 
 declare const SingleList: React.ComponentType<SingleList>;

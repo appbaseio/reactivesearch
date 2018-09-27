@@ -12,7 +12,6 @@ import {
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
-	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
@@ -20,12 +19,15 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import { getAggsQuery, getCompositeAggsQuery } from './utils';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
+import Button, { loadMoreContainer } from '../../styles/Button';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
 import { connect } from '../../utils';
 
+// showLoadMore is experimental API and works only with ES6
 class SingleList extends Component {
 	constructor(props) {
 		super(props);
@@ -36,6 +38,8 @@ class SingleList extends Component {
 				? props.options[props.dataField].buckets
 				: [],
 			searchTerm: '',
+			after: {},	// for composite aggs
+			isLastBucket: false,
 		};
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -66,11 +70,35 @@ class SingleList extends Component {
 			this.props.options,
 			nextProps.options,
 			() => {
-				this.setState({
-					options: nextProps.options[nextProps.dataField]
-						? nextProps.options[nextProps.dataField].buckets
-						: [],
-				});
+				const { showLoadMore, dataField } = nextProps;
+				const { options } = this.state;
+				if (showLoadMore) {
+					// append options with showLoadMore
+					const { buckets } = nextProps.options[dataField];
+					const nextOptions = [
+						...options,
+						...buckets.map(bucket => ({
+							key: bucket.key[dataField],
+							doc_count: bucket.doc_count,
+						})),
+					];
+					const after = nextProps.options[dataField].after_key;
+					// detect the last bucket by checking if the next set of buckets were empty
+					const isLastBucket = !buckets.length;
+					this.setState({
+						after: {
+							after,
+						},
+						isLastBucket,
+						options: nextOptions,
+					});
+				} else {
+					this.setState({
+						options: nextProps.options[nextProps.dataField]
+							? nextProps.options[nextProps.dataField].buckets
+							: [],
+					});
+				}
 			},
 		);
 		checkSomePropChange(
@@ -184,24 +212,23 @@ class SingleList extends Component {
 		});
 	};
 
-	static generateQueryOptions(props) {
+	static generateQueryOptions(props, after) {
 		const queryOptions = getQueryOptions(props);
-		queryOptions.size = 0;
-		queryOptions.aggs = {
-			[props.dataField]: {
-				terms: {
-					field: props.dataField,
-					size: props.size,
-					order: getAggsOrder(props.sortBy || 'count'),
-					...(props.showMissing ? { missing: props.missingLabel } : {}),
-				},
-			},
-		};
-		return queryOptions;
+		return props.showLoadMore
+			? getCompositeAggsQuery(queryOptions, props, after)
+			: getAggsQuery(queryOptions, props);
 	}
 
-	updateQueryOptions = (props) => {
-		const queryOptions = SingleList.generateQueryOptions(props);
+	updateQueryOptions = (props, addAfterKey = false) => {
+		// when using composite aggs flush the current options for a fresh query
+		if (props.showLoadMore && !addAfterKey) {
+			this.setState({
+				options: [],
+			});
+		}
+		// for a new query due to other changes don't append after to get fresh results
+		const queryOptions = SingleList
+			.generateQueryOptions(props, addAfterKey ? this.state.after : {});
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
@@ -211,6 +238,10 @@ class SingleList extends Component {
 			searchTerm: value,
 		});
 	};
+
+	handleLoadMore = () => {
+		this.updateQueryOptions(this.props, true);
+	}
 
 	renderSearch = () => {
 		if (this.props.showSearch) {
@@ -233,7 +264,8 @@ class SingleList extends Component {
 	};
 
 	render() {
-		const { selectAllLabel, renderListItem } = this.props;
+		const { selectAllLabel, renderListItem, showLoadMore } = this.props;
+		const { isLastBucket } = this.state;
 
 		if (this.state.options.length === 0) {
 			return null;
@@ -328,6 +360,13 @@ class SingleList extends Component {
 								</li>
 							))
 					}
+					{
+						showLoadMore && !isLastBucket && (
+							<div css={loadMoreContainer}>
+								<Button onClick={this.handleLoadMore}>Load More</Button>
+							</div>
+						)
+					}
 				</UL>
 			</Container>
 		);
@@ -371,6 +410,7 @@ SingleList.propTypes = {
 	URLParams: types.bool,
 	showMissing: types.bool,
 	missingLabel: types.string,
+	showLoadMore: types.bool,
 };
 
 SingleList.defaultProps = {
@@ -386,6 +426,7 @@ SingleList.defaultProps = {
 	URLParams: false,
 	showMissing: false,
 	missingLabel: 'N/A',
+	showLoadMore: false,
 };
 
 const mapStateToProps = (state, props) => ({
