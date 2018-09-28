@@ -43,7 +43,6 @@ class ReactiveList extends Component {
 			isLoading: true,
 			currentPage,
 		};
-		this.domNode = window;
 		this.internalComponent = `${props.componentId}__internal`;
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
@@ -110,9 +109,12 @@ class ReactiveList extends Component {
 		// query will be executed here
 		this.setReact(this.props);
 
+		this.domNode = window;
 		if (!this.props.pagination) {
 			const { scrollTarget } = this.props;
-			this.domNode = scrollTarget ? document.getElementById(scrollTarget) : window;
+			if (scrollTarget) {
+				this.domNode = document.getElementById(scrollTarget);
+			}
 			this.domNode.addEventListener('scroll', this.scrollHandler);
 		}
 	}
