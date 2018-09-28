@@ -6,6 +6,9 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v2.10.1
+- Fix dom-node initialisation for `scrollTarget` - [#543](https://github.com/appbaseio/reactivesearch/pull/543)
+
 ## v2.10.0
 
 - Support array of (conjunction) objects in react prop - [commit](https://github.com/appbaseio/reactivesearch/commit/b812d7b5239b2aac6bb93018a4e8c305a644f1aa)
