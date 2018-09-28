@@ -227,7 +227,7 @@ class SingleDropdownList extends Component {
 	}
 
 	render() {
-		const { showLoadMore } = this.props;
+		const { showLoadMore, loadMoreLabel } = this.props;
 		const { isLastBucket } = this.state;
 		let selectAll = [];
 
@@ -266,7 +266,7 @@ class SingleDropdownList extends Component {
 					footer={
 						showLoadMore && !isLastBucket && (
 							<div css={loadMoreContainer}>
-								<Button onClick={this.handleLoadMore}>Load More</Button>
+								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
 							</div>
 						)
 					}
@@ -313,6 +313,7 @@ SingleDropdownList.propTypes = {
 	missingLabel: types.string,
 	showSearch: types.bool,
 	showLoadMore: types.bool,
+	loadMoreLabel: types.title,
 };
 
 SingleDropdownList.defaultProps = {
@@ -328,6 +329,7 @@ SingleDropdownList.defaultProps = {
 	missingLabel: 'N/A',
 	showSearch: false,
 	showLoadMore: false,
+	loadMoreLabel: 'Load More',
 };
 
 const mapStateToProps = (state, props) => ({
