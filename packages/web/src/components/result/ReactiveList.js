@@ -43,6 +43,7 @@ class ReactiveList extends Component {
 			isLoading: true,
 			currentPage,
 		};
+		this.domNode = window;
 		this.internalComponent = `${props.componentId}__internal`;
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
