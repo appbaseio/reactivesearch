@@ -501,7 +501,7 @@ MultiList.propTypes = {
 	showMissing: types.bool,
 	missingLabel: types.string,
 	showLoadMore: types.bool,
-	loadMoreLabel: types.string,
+	loadMoreLabel: types.title,
 };
 
 MultiList.defaultProps = {
