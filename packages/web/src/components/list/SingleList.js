@@ -199,15 +199,34 @@ class SingleList extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || SingleList.defaultQuery;
+		const {
+			customQuery,
+			defaultQuery,
+			filterLabel,
+			showFilter,
+			URLParams,
+		} = props;
+
+		// defaultQuery from props is always appended regardless of a customQuery
+		const query = customQuery || SingleList.defaultQuery;
+		const queryObject = defaultQuery
+			? {
+				bool: {
+					must: [
+						...query(value, props),
+						...defaultQuery(value, props),
+					],
+				},
+			}
+			: query(value, props);
 
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query: queryObject,
 			value,
-			label: props.filterLabel,
-			showFilter: props.showFilter,
-			URLParams: props.URLParams,
+			label: filterLabel,
+			showFilter,
+			URLParams,
 			componentType: 'SINGLELIST',
 		});
 	};
@@ -264,7 +283,9 @@ class SingleList extends Component {
 	};
 
 	render() {
-		const { selectAllLabel, renderListItem, showLoadMore, loadMoreLabel } = this.props;
+		const {
+			selectAllLabel, renderListItem, showLoadMore, loadMoreLabel,
+		} = this.props;
 		const { isLastBucket } = this.state;
 
 		if (this.state.options.length === 0) {

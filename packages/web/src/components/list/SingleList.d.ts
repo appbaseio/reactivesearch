@@ -7,6 +7,7 @@ export interface SingleList extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	dataField?: string;
 	defaultSelected?: string;
+	defaultQuery?: (...args: any[]) => any;
 	filterLabel?: string;
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
