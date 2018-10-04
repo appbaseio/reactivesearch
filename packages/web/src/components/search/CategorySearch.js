@@ -627,6 +627,7 @@ class CategorySearch extends Component {
 								) : null}
 							</div>
 						)}
+						{...this.props.downShiftProps}
 					/>
 				) : (
 					<div className={suggestionsContainer}>
@@ -680,6 +681,7 @@ CategorySearch.propTypes = {
 	debounce: types.number,
 	defaultSelected: types.string,
 	defaultSuggestions: types.suggestions,
+	downShiftProps: types.props,
 	fieldWeights: types.fieldWeights,
 	filterLabel: types.string,
 	fuzziness: types.fuzziness,
@@ -716,6 +718,7 @@ CategorySearch.defaultProps = {
 	autosuggest: true,
 	className: null,
 	debounce: 0,
+	downShiftProps: {},
 	iconPosition: 'left',
 	placeholder: 'Search',
 	queryFormat: 'or',
