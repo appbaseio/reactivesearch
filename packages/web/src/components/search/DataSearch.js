@@ -537,6 +537,7 @@ class DataSearch extends Component {
 									}
 								</div>
 							)}
+							{...this.props.downShiftProps}
 						/>)
 						: (
 							<div className={suggestionsContainer}>
@@ -589,6 +590,7 @@ DataSearch.propTypes = {
 	debounce: types.number,
 	defaultSelected: types.string,
 	defaultSuggestions: types.suggestions,
+	downShiftProps: types.props,
 	fieldWeights: types.fieldWeights,
 	filterLabel: types.string,
 	fuzziness: types.fuzziness,
@@ -625,6 +627,7 @@ DataSearch.defaultProps = {
 	autosuggest: true,
 	className: null,
 	debounce: 0,
+	downShiftProps: {},
 	iconPosition: 'left',
 	placeholder: 'Search',
 	queryFormat: 'or',

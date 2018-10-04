@@ -13,6 +13,7 @@ export interface DataSearchProps extends CommonProps {
 	defaultSelected?: string;
 	defaultSuggestions?: types.suggestions;
 	defaultQuery?: (...args: any[]) => any;
+	downShiftProps?: types.props;
 	fieldWeights?: types.fieldWeights;
 	filterLabel?: string;
 	fuzziness?: types.fuzziness;
