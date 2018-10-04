@@ -50,6 +50,7 @@ class SelectedFilters extends Component {
 
 		return (
 			<Container style={this.props.style} className={`${filters(theme)} ${this.props.className || ''}`}>
+				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{
 					Object.keys(selectedValues)
 						.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
@@ -106,6 +107,7 @@ SelectedFilters.propTypes = {
 	theme: types.style,
 	onClear: types.func,
 	render: types.func,
+	title: types.title
 };
 
 SelectedFilters.defaultProps = {
