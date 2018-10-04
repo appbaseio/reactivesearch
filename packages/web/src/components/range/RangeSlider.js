@@ -25,6 +25,9 @@ import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
 import { connect } from '../../utils';
 
+const Handle = ({ className, style, ...passProps }) =>
+	<button style={style} className={className} {...passProps} />;
+
 class RangeSlider extends Component {
 	constructor(props) {
 		super(props);
@@ -286,6 +289,10 @@ class RangeSlider extends Component {
 						snap={this.props.snap}
 						snapPoints={this.props.snap ? this.getSnapPoints() : null}
 						className={getClassName(this.props.innerClass, 'slider')}
+						handle={({ className, style, ...passProps }) => (this.props.handleTooltip
+							? this.props.handleTooltip(<Handle style={style} className={className} {...passProps} />, passProps['aria-valuenow'])
+							: <Handle style={style} className={className} {...passProps} />)
+						}
 					/>
 				}
 				{this.props.rangeLabels && this.props.showSlider && (
@@ -325,6 +332,7 @@ RangeSlider.propTypes = {
 	customQuery: types.func,
 	dataField: types.stringRequired,
 	defaultSelected: types.range,
+	handleTooltip: types.func,
 	filterLabel: types.string,
 	innerClass: types.style,
 	interval: types.number,

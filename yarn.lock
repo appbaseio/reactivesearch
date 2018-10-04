@@ -1342,6 +1342,12 @@
     "@webassemblyjs/wast-parser" "1.7.6"
     "@xtuc/long" "4.2.1"
 
+"@wtjs/tooltip@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@wtjs/tooltip/-/tooltip-1.0.0.tgz#53ee166fa1f48d426d03882092f800b87f081c5b"
+  dependencies:
+    prop-types "^15.6.2"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"

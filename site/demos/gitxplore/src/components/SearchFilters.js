@@ -6,6 +6,8 @@ import {
 	RangeSlider,
 } from '@appbaseio/reactivesearch';
 
+import Tooltip from '@wtjs/tooltip';
+
 import Flex, { FlexChild } from '../styles/Flex';
 import { filtersContainer } from '../styles/Container';
 
@@ -145,6 +147,11 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 				innerClass={{
 					label: 'range-label',
 				}}
+				handleTooltip={(children, value) => (
+					<Tooltip render={value}>
+						{children}
+					</Tooltip>)
+				}
 			/>
 		</FlexChild>
 	</Flex>
