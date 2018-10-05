@@ -66,6 +66,7 @@ class RatingsFilter extends Component {
 					? [
 						nextProps.defaultSelected.start,
 						nextProps.defaultSelected.end,
+						nextProps.defaultSelected.includeUnrated,
 					]
 					: null,
 				nextProps,
@@ -87,13 +88,13 @@ class RatingsFilter extends Component {
 
 	// parses range label to get start and end
 	static parseValue = value => (value
-		? [value.start, value.end]
+		? [value.start, value.end, value.includeUnrated]
 		: null
 	)
 
 	static defaultQuery = (value, props) => {
 		if (value) {
-			return {
+			const rangeQuery = {
 				range: {
 					[props.dataField]: {
 						gte: value[0],
@@ -102,6 +103,28 @@ class RatingsFilter extends Component {
 					},
 				},
 			};
+
+			const mustNotQuery = {
+				bool: {
+					must_not: {
+						exists: {
+							field: props.dataField,
+						},
+					},
+				},
+			};
+
+			if (value[2]) {
+				return {
+					bool: {
+						should: [
+							rangeQuery,
+							mustNotQuery,
+						],
+					},
+				};
+			}
+			return rangeQuery;
 		}
 		return null;
 	}
@@ -160,8 +183,11 @@ class RatingsFilter extends Component {
 										? 'active'
 										: ''
 								}
-								onClick={() => this.setValue([item.start, item.end])}
-								onKeyPress={e => handleA11yAction(e, () => this.setValue([item.start, item.end]))}
+								onClick={() => this.setValue([item.start, item.end, item.includeUnrated])}
+								onKeyPress={e => handleA11yAction(
+									e,
+									() => this.setValue([item.start, item.end, item.includeUnrated]),
+								)}
 								key={`${this.props.componentId}-${item.start}-${item.end}`}
 							>
 								<StarRating stars={item.start} />
