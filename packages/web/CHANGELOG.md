@@ -10,6 +10,8 @@
 - update core - cleanup
 - Add `downShiftProps` prop for the Downshift component in search components [#516](https://github.com/appbaseio/reactivesearch/issues/516)
 - Fix SelectedFilters and URLParams behavior - [#497](https://github.com/appbaseio/reactivesearch/issues/497)
+- Fix re-rendering issues with queryLog - causing ReactiveList breakage - [info](https://github.com/appbaseio/reactivesearch/commit/19e757bcc9c10b999ac815a5fe53bbe6a29512ed)
+- Remove ReactiveList event listener on unmount conditionally - [info](https://github.com/appbaseio/reactivesearch/commit/6cd0333a5c29362603bb70a1c76dbdc02279e99d)
 
 ## v2.10.3
 - Fixes react prop behavior for array of (conjunction) objects.
