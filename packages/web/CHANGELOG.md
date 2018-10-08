@@ -4,9 +4,12 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-    - Add `downShiftProps` prop for the Downshift component in search components [#516](https://github.com/appbaseio/reactivesearch/issues/516)
-    - Fix SelectedFilters and URLParams behavior - [#497](https://github.com/appbaseio/reactivesearch/issues/497)
 </details>
+
+## v2.11.0
+- update core - cleanup
+- Add `downShiftProps` prop for the Downshift component in search components [#516](https://github.com/appbaseio/reactivesearch/issues/516)
+- Fix SelectedFilters and URLParams behavior - [#497](https://github.com/appbaseio/reactivesearch/issues/497)
 
 ## v2.10.3
 - Fixes react prop behavior for array of (conjunction) objects.
