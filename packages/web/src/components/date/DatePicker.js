@@ -94,7 +94,7 @@ class DatePicker extends Component {
 		}
 	};
 
-	formatInputDate = date => new XDate(date).toString('yyyy-MM-dd');
+	formatInputDate = date => new XDate(date).toString('yyyy-M-d');
 
 	static defaultQuery = (value, props) => {
 		let query = null;
@@ -205,9 +205,6 @@ class DatePicker extends Component {
 						}}
 						clickUnselectsDay={this.props.clickUnselectsDay}
 						onDayChange={this.handleDayPicker}
-						inputProps={{
-							readOnly: true,
-						}}
 						classNames={{
 							container:
 								getClassName(this.props.innerClass, 'daypicker-container')
