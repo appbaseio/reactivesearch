@@ -7,7 +7,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@appbaseio/reactivesearch": "^2.10.3",
-    "@wtjs/tooltip": "^1.0.0",
     "emotion": "*",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",

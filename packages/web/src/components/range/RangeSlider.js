@@ -25,8 +25,18 @@ import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
 import { connect } from '../../utils';
 
-const Handle = ({ className, style, ...passProps }) =>
-	<button style={style} className={className} {...passProps} />;
+const Handle = ({
+	className, style, showTooltip, ...passProps
+}) => {
+	if (showTooltip) {
+		return (
+			<button style={style} className={className} {...passProps} >
+				<span className="slider-tooltip">{passProps['aria-valuenow']}</span>
+			</button>
+		);
+	}
+	return <button style={style} className={className} {...passProps} />;
+};
 
 class RangeSlider extends Component {
 	constructor(props) {
@@ -289,9 +299,15 @@ class RangeSlider extends Component {
 						snap={this.props.snap}
 						snapPoints={this.props.snap ? this.getSnapPoints() : null}
 						className={getClassName(this.props.innerClass, 'slider')}
-						handle={({ className, style, ...passProps }) => (this.props.handleTooltip
-							? this.props.handleTooltip(<Handle style={style} className={className} {...passProps} />, passProps['aria-valuenow'])
-							: <Handle style={style} className={className} {...passProps} />)
+						handle={({ className, style, ...passProps }) =>
+							(
+								<Handle
+									style={style}
+									className={className}
+									{...passProps}
+									showTooltip={this.props.showTooltip}
+								/>
+							)
 						}
 					/>
 				}
@@ -332,7 +348,6 @@ RangeSlider.propTypes = {
 	customQuery: types.func,
 	dataField: types.stringRequired,
 	defaultSelected: types.range,
-	handleTooltip: types.func,
 	filterLabel: types.string,
 	innerClass: types.style,
 	interval: types.number,
@@ -346,6 +361,7 @@ RangeSlider.propTypes = {
 	histogramQuery: types.func,
 	showFilter: types.bool,
 	showSlider: types.bool,
+	showTooltip: types.bool,
 	snap: types.bool,
 	stepValue: types.number,
 	style: types.style,
@@ -361,6 +377,7 @@ RangeSlider.defaultProps = {
 	},
 	showHistogram: true,
 	showSlider: true,
+	showTooltip: false,
 	snap: true,
 	stepValue: 1,
 	showFilter: true,

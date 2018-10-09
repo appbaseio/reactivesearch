@@ -52,6 +52,35 @@ const Slider = styled('div')`
 		top: -10px;
 	}
 
+	.slider-tooltip {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 6px 8px;
+    position: absolute;
+    z-index: 1;
+		transform: translate(-50%,-150%);
+	}
+
+	.slider-tooltip:after{
+		content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+	}
+
+	.rheostat-handle:hover .slider-tooltip,
+	.rheostat-handle:focus .slider-tooltip,
+	.rheostat-handle:active .slider-tooltip {
+    visibility: visible;
+	}
+
 	${({ theme }) => theme.component};
 `;
 
