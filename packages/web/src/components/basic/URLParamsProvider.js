@@ -6,32 +6,32 @@ import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import Base from '../../styles/Base';
 import { connect } from '../../utils';
 
+const URLSearchParams = require('url-search-params');
+
 class URLParamsProvider extends Component {
 	componentDidMount() {
 		this.currentSelectedState = this.props.selectedValues || {};
-		if (window) {
-			window.onpopstate = () => {
-				let queryParams = window.location.search;
-				queryParams = new URLSearchParams(queryParams);
+		window.onpopstate = () => {
+			let queryParams = window.location.search;
+			queryParams = new URLSearchParams(queryParams);
 
-				const activeComponents = Array.from(queryParams.keys());
+			const activeComponents = Array.from(queryParams.keys());
 
-				// remove inactive components from selectedValues
-				Object.keys(this.currentSelectedState)
-					.filter(item => !activeComponents.includes(item))
-					.forEach((component) => {
-						this.props.setValue(component, null);
-					});
-
-				// update active components in selectedValues
-				Array.from(queryParams.entries()).forEach((item) => {
-					this.props.setValue(
-						item[0],
-						JSON.parse(item[1]),
-					);
+			// remove inactive components from selectedValues
+			Object.keys(this.currentSelectedState)
+				.filter(item => !activeComponents.includes(item))
+				.forEach((component) => {
+					this.props.setValue(component, null);
 				});
-			};
-		}
+
+			// update active components in selectedValues
+			Array.from(queryParams.entries()).forEach((item) => {
+				this.props.setValue(
+					item[0],
+					JSON.parse(item[1]),
+				);
+			});
+		};
 	}
 
 	componentWillReceiveProps(nextProps) {
