@@ -6,6 +6,11 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v2.11.1
+- sync url params before updating or deleting - [#566](https://github.com/appbaseio/reactivesearch/issues/566)
+- Add error log for url state parsing - [info](https://github.com/appbaseio/reactivesearch/commit/1ffecdf95b68acbb1f0a220eed129c4fba809e07)
+- Add redux dev tools support [#565](https://github.com/appbaseio/reactivesearch/issues/565)
+
 ## v2.11.0
 - update core - cleanup
 - Add `downShiftProps` prop for the Downshift component in search components [#516](https://github.com/appbaseio/reactivesearch/issues/516)
