@@ -12,7 +12,6 @@ import {
 	checkPropChange,
 	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import XDate from 'xdate';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
@@ -22,6 +21,7 @@ import DateContainer from '../../styles/DateContainer';
 import Title from '../../styles/Title';
 import Flex from '../../styles/Flex';
 import { connect } from '../../utils';
+import formatDate from './utils';
 
 import CancelSvg from '../shared/CancelSvg';
 
@@ -111,21 +111,6 @@ class DateRange extends Component {
 		}
 	}
 
-	formatDate = (date, props = this.props) => {
-		switch (props.queryFormat) {
-			case 'epoch_millis':
-				return date.getTime();
-			case 'epoch_seconds':
-				return Math.floor(date.getTime() / 1000);
-			default: {
-				if (dateFormats[props.queryFormat]) {
-					return date.toString(dateFormats[props.queryFormat]);
-				}
-				return date;
-			}
-		}
-	};
-
 	formatInputDate = (date) => {
 		const xdate = new XDate(date);
 		return xdate.valid() ? xdate.toString('yyyy-MM-dd') : '';
@@ -140,13 +125,13 @@ class DateRange extends Component {
 						must: [{
 							range: {
 								[props.dataField[0]]: {
-									lte: this.formatDate(new XDate(value.start), props),
+									lte: formatDate(new XDate(value.start), props),
 								},
 							},
 						}, {
 							range: {
 								[props.dataField[1]]: {
-									gte: this.formatDate(new XDate(value.end), props),
+									gte: formatDate(new XDate(value.end), props),
 								},
 							},
 						}],
