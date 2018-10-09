@@ -20,6 +20,7 @@ import Rheostat from 'rheostat/lib/Slider';
 
 import HistogramContainer from './addons/HistogramContainer';
 import RangeLabel from './addons/RangeLabel';
+import SliderHandle from './addons/SliderHandle';
 import Slider from '../../styles/Slider';
 import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
@@ -366,6 +367,16 @@ class DynamicRangeSlider extends Component {
 					snap={this.props.snap}
 					snapPoints={this.props.snap ? this.getSnapPoints() : null}
 					className={getClassName(this.props.innerClass, 'slider')}
+					handle={({ className, style, ...passProps }) =>
+						(
+							<SliderHandle
+								style={style}
+								className={className}
+								{...passProps}
+								showTooltip={this.props.showTooltip}
+							/>
+						)
+					}
 				/>
 				<div className={rangeLabelsContainer}>
 					<RangeLabel
@@ -413,6 +424,7 @@ DynamicRangeSlider.propTypes = {
 	react: types.react,
 	showHistogram: types.bool,
 	showFilter: types.bool,
+	showTooltip: types.bool,
 	snap: types.bool,
 	stepValue: types.number,
 	style: types.style,
@@ -423,6 +435,7 @@ DynamicRangeSlider.propTypes = {
 DynamicRangeSlider.defaultProps = {
 	className: null,
 	showHistogram: true,
+	showTooltip: false,
 	snap: true,
 	stepValue: 1,
 	style: {},

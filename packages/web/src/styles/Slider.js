@@ -61,13 +61,13 @@ const Slider = styled('div')`
     padding: 6px 8px;
     position: absolute;
     z-index: 1;
-		transform: translate(-50%,-150%);
+		transform: translate(-50%,-170%); /* Positions Tooltip Container */
 	}
 
 	.slider-tooltip:after{
 		content: '';
     position: absolute;
-    top: 100%;
+    top: 98%; /* Positions Tooltip Arrow */
     left: 50%;
     margin-left: -5px;
     border-width: 5px;

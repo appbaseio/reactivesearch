@@ -20,23 +20,11 @@ import Rheostat from 'rheostat/lib/Slider';
 
 import HistogramContainer from './addons/HistogramContainer';
 import RangeLabel from './addons/RangeLabel';
+import SliderHandle from './addons/SliderHandle';
 import Slider from '../../styles/Slider';
 import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
 import { connect } from '../../utils';
-
-const Handle = ({
-	className, style, showTooltip, ...passProps
-}) => {
-	if (showTooltip) {
-		return (
-			<button style={style} className={className} {...passProps} >
-				<span className="slider-tooltip">{passProps['aria-valuenow']}</span>
-			</button>
-		);
-	}
-	return <button style={style} className={className} {...passProps} />;
-};
 
 class RangeSlider extends Component {
 	constructor(props) {
@@ -301,7 +289,7 @@ class RangeSlider extends Component {
 						className={getClassName(this.props.innerClass, 'slider')}
 						handle={({ className, style, ...passProps }) =>
 							(
-								<Handle
+								<SliderHandle
 									style={style}
 									className={className}
 									{...passProps}

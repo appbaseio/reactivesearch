@@ -28,6 +28,7 @@ import InputIcon from '@appbaseio/reactivesearch/lib/styles/InputIcon';
 import SearchSvg from '@appbaseio/reactivesearch/lib/components/shared/SearchSvg';
 import Slider from '@appbaseio/reactivesearch/lib/styles/Slider';
 import RangeLabel from '@appbaseio/reactivesearch/lib/components/range/addons/RangeLabel';
+import SliderHandle from '@appbaseio/reactivesearch/lib/components/range/addons/SliderHandle';
 import { rangeLabelsContainer } from '@appbaseio/reactivesearch/lib/styles/Label';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
 
@@ -421,6 +422,16 @@ class GeoDistanceSlider extends Component {
 					values={[this.state.currentDistance]}
 					onChange={this.handleSlider}
 					className={getClassName(this.props.innerClass, 'slider')}
+					handle={({ className, style, ...passProps }) =>
+						(
+							<SliderHandle
+								style={style}
+								className={className}
+								{...passProps}
+								showTooltip={this.props.showTooltip}
+							/>
+						)
+					}
 				/>
 				{
 					this.props.rangeLabels
@@ -484,6 +495,7 @@ GeoDistanceSlider.propTypes = {
 	react: types.react,
 	showFilter: types.bool,
 	showIcon: types.bool,
+	showTooltip: types.bool,
 	style: types.style,
 	theme: types.style,
 	title: types.title,
@@ -499,6 +511,7 @@ GeoDistanceSlider.defaultProps = {
 		end: 200,
 	},
 	showFilter: true,
+	showTooltip: false,
 	style: {},
 	URLParams: false,
 	autoLocation: true,
