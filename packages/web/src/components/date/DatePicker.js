@@ -11,6 +11,7 @@ import {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	formatDate,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import XDate from 'xdate';
@@ -22,7 +23,7 @@ import Title from '../../styles/Title';
 import Flex from '../../styles/Flex';
 import CancelSvg from '../shared/CancelSvg';
 import { connect } from '../../utils';
-import formatDate from './utils';
+
 
 class DatePicker extends Component {
 	constructor(props) {

@@ -11,6 +11,7 @@ import {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	formatDate,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import XDate from 'xdate';
@@ -21,7 +22,6 @@ import DateContainer from '../../styles/DateContainer';
 import Title from '../../styles/Title';
 import Flex from '../../styles/Flex';
 import { connect } from '../../utils';
-import formatDate from './utils';
 
 import CancelSvg from '../shared/CancelSvg';
 
@@ -92,8 +92,8 @@ class DateRange extends Component {
 			() => this.updateQuery(
 				this.state.currentDate
 					? { // we need the date in correct queryFormat
-						start: this.formatDate(this.state.currentDate.start),
-						end: this.formatDate(this.state.currentDate.end),
+						start: formatDate(this.state.currentDate.start),
+						end: formatDate(this.state.currentDate.end),
 					}
 					: this.state.currentDate,
 				nextProps,
@@ -141,8 +141,8 @@ class DateRange extends Component {
 				query = {
 					range: {
 						[props.dataField[0]]: {
-							gte: this.formatDate(new XDate(value.start), props),
-							lte: this.formatDate(new XDate(value.end), props),
+							gte: formatDate(new XDate(value.start), props),
+							lte: formatDate(new XDate(value.end), props),
 						},
 					},
 				};
@@ -150,8 +150,8 @@ class DateRange extends Component {
 				query = {
 					range: {
 						[props.dataField]: {
-							gte: this.formatDate(new XDate(value.start), props),
-							lte: this.formatDate(new XDate(value.end), props),
+							gte: formatDate(new XDate(value.start), props),
+							lte: formatDate(new XDate(value.end), props),
 						},
 					},
 				};
