@@ -232,7 +232,11 @@ class ReactiveList extends Component {
 			}
 		}
 
-		if (this.props.queryLog && nextProps.queryLog !== this.props.queryLog) {
+		if (
+			nextProps.queryLog
+			&& this.props.queryLog
+			&& nextProps.queryLog !== this.props.queryLog
+		) {
 			// usecase:
 			// - query has changed from non-null prev query
 
@@ -300,7 +304,10 @@ class ReactiveList extends Component {
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
 		this.props.removeComponent(this.internalComponent);
-		this.domNode.removeEventListener('scroll', this.scrollHandler);
+
+		if (this.domNode) {
+			this.domNode.removeEventListener('scroll', this.scrollHandler);
+		}
 	}
 
 	setReact = (props) => {

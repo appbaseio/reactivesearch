@@ -38,6 +38,7 @@ class URLParamsProvider extends Component {
 		this.currentSelectedState = nextProps.selectedValues;
 		if (!isEqual(this.props.selectedValues, nextProps.selectedValues)) {
 			const currentComponents = Object.keys(nextProps.selectedValues);
+			const urlComponents = Array.from(this.props.params.keys());
 
 			currentComponents
 				.filter(component => nextProps.selectedValues[component].URLParams)
@@ -53,6 +54,13 @@ class URLParamsProvider extends Component {
 							this.props.params.delete(component);
 							this.pushToHistory();
 						}
+					} else if (
+						!this.hasValidValue(nextProps.selectedValues[component])
+						&& urlComponents.includes(component)
+					) {
+						// doesn't have a valid value, but the url has a (stale) valid value set
+						this.props.params.delete(component);
+						this.pushToHistory();
 					}
 				});
 
