@@ -52,7 +52,7 @@ const Slider = styled('div')`
 		top: -10px;
 	}
 
-	.slider-tooltip {
+	.slider-tooltip,.slider-tooltip-focus,.slider-tooltip-visible {
     visibility: hidden;
     background-color: black;
     color: #fff;
@@ -64,7 +64,11 @@ const Slider = styled('div')`
 		transform: translate(-50%,-170%); /* Positions Tooltip Container */
 	}
 
-	.slider-tooltip:after{
+	.slider-tooltip-visible {
+		visibility: visible;
+	}
+
+	.slider-tooltip:after,.slider-tooltip-focus:after,.slider-tooltip-visible:after{
 		content: '';
     position: absolute;
     top: 98%; /* Positions Tooltip Arrow */
@@ -79,6 +83,15 @@ const Slider = styled('div')`
 	.rheostat-handle:focus .slider-tooltip,
 	.rheostat-handle:active .slider-tooltip {
     visibility: visible;
+	}
+
+	.rheostat-handle:hover .slider-tooltip-focus,{
+    visibility: hidden;
+	}
+
+	.rheostat-handle:focus .slider-tooltip-focus,
+	.rheostat-handle:active .slider-tooltip-focus {
+		visibility: visible;
 	}
 
 	${({ theme }) => theme.component};

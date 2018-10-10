@@ -293,7 +293,7 @@ class RangeSlider extends Component {
 									style={style}
 									className={className}
 									{...passProps}
-									showTooltip={this.props.showTooltip}
+									tooltipTrigger={this.props.tooltipTrigger}
 								/>
 							)
 						}
@@ -349,7 +349,7 @@ RangeSlider.propTypes = {
 	histogramQuery: types.func,
 	showFilter: types.bool,
 	showSlider: types.bool,
-	showTooltip: types.bool,
+	tooltipTrigger: types.string,
 	snap: types.bool,
 	stepValue: types.number,
 	style: types.style,
@@ -365,7 +365,7 @@ RangeSlider.defaultProps = {
 	},
 	showHistogram: true,
 	showSlider: true,
-	showTooltip: false,
+	tooltipTrigger: 'none',
 	snap: true,
 	stepValue: 1,
 	showFilter: true,

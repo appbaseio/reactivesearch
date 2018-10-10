@@ -1,12 +1,27 @@
 import React from 'react';
 
 const SliderHandle = ({
-	className, style, showTooltip, ...passProps
+	className, style, tooltipTrigger, ...passProps
 }) => {
-	if (showTooltip) {
+	if (tooltipTrigger) {
+		let tooltipClassname = '';
+		switch (tooltipTrigger) {
+			case 'hover':
+				tooltipClassname = 'slider-tooltip';
+				break;
+			case 'focus':
+				tooltipClassname = 'slider-tooltip-focus';
+				break;
+			case 'always':
+				tooltipClassname = 'slider-tooltip-visible';
+				break;
+			case 'none':
+			default:
+				return <button style={style} className={className} {...passProps} />;
+		}
 		return (
 			<button style={style} className={className} {...passProps} >
-				<span className="slider-tooltip">{passProps['aria-valuenow']}</span>
+				<span className={tooltipClassname}>{passProps['aria-valuenow']}</span>
 			</button>
 		);
 	}
