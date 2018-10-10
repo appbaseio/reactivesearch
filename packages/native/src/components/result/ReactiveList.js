@@ -16,8 +16,6 @@ import {
 	isEqual,
 	getQueryOptions,
 	pushToAndClause,
-	checkPropChange,
-	checkSomePropChange,
 	parseHits,
 	getInnerKey,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -31,11 +29,18 @@ class ReactiveList extends Component {
 	constructor(props) {
 		super(props);
 
+		let currentPage = 0;
+		if (this.props.defaultPage >= 0) {
+			currentPage = this.props.defaultPage;
+		} else if (this.props.currentPage) {
+			currentPage = Math.max(this.props.currentPage - 1, 0);
+		}
+		this.initialFrom = currentPage * props.size; // used for page resetting on query change
 		this.state = {
-			from: 0,
+			from: this.initialFrom,
 			isLoading: true,
+			currentPage,
 			totalPages: 0,
-			currentPage: 0,
 		};
 		this.listRef = null;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -51,7 +56,14 @@ class ReactiveList extends Component {
 		}
 
 		const options = getQueryOptions(this.props);
-		if (this.props.sortBy) {
+		options.from = this.state.from;
+		if (this.props.sortOptions) {
+			options.sort = [{
+				[this.props.sortOptions[0].dataField]: {
+					order: this.props.sortOptions[0].sortBy,
+				},
+			}];
+		} else if (this.props.sortBy) {
 			options.sort = [{
 				[this.props.dataField]: {
 					order: this.props.sortBy,
@@ -68,50 +80,69 @@ class ReactiveList extends Component {
 			}
 		}
 
+		const { sort, ...query } = this.defaultQuery || {};
+
+		// execute is set to false at the time of mount
+		// to avoid firing (multiple) partial queries.
+		// Hence we are building the query in parts here
+		// and only executing it with setReact() at core
+		const execute = false;
+
 		this.props.setQueryOptions(
 			this.props.componentId,
 			options,
-			!(this.defaultQuery && this.defaultQuery.query),
+			execute,
 		);
-		this.setReact(this.props);
 
 		if (this.defaultQuery) {
-			const { sort, ...query } = this.defaultQuery;
 			this.props.updateQuery({
 				componentId: this.internalComponent,
 				query,
-			});
+			}, execute);
 		} else {
 			this.props.updateQuery({
 				componentId: this.internalComponent,
 				query: null,
-			});
+			}, execute);
 		}
+
+		// query will be executed here
+		this.setReact(this.props);
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkSomePropChange(
-			this.props,
-			nextProps,
-			['sortBy', 'size', 'dataField', 'includeFields', 'excludeFields'],
-			() => {
-				const options = getQueryOptions(nextProps);
-				if (nextProps.sortBy) {
-					options.sort = [{
-						[nextProps.dataField]: {
-							order: nextProps.sortBy,
-						},
-					}];
-				}
-				this.props.setQueryOptions(this.props.componentId, options, true);
-			},
-		);
+		if (
+			!isEqual(this.props.sortOptions, nextProps.sortOptions)
+			|| this.props.sortBy !== nextProps.sortBy
+			|| this.props.size !== nextProps.size
+			|| !isEqual(this.props.dataField, nextProps.dataField)
+			|| !isEqual(this.props.includeFields, nextProps.includeFields)
+			|| !isEqual(this.props.excludeFields, nextProps.excludeFields)
+		) {
+			const options = getQueryOptions(nextProps);
+			options.from = this.state.from;
+			if (nextProps.sortOptions) {
+				options.sort = [{
+					[nextProps.sortOptions[0].dataField]: {
+						order: nextProps.sortOptions[0].sortBy,
+					},
+				}];
+			} else if (nextProps.sortBy) {
+				options.sort = [{
+					[nextProps.dataField]: {
+						order: nextProps.sortBy,
+					},
+				}];
+			}
+			this.props.setQueryOptions(this.props.componentId, options, true);
+		}
 
 		if (
 			nextProps.defaultQuery
 			&& !isEqual(nextProps.defaultQuery(), this.defaultQuery)
 		) {
 			const options = getQueryOptions(nextProps);
+			options.from = 0;
 			this.defaultQuery = nextProps.defaultQuery();
 
 			const { sort, ...query } = this.defaultQuery;
@@ -124,6 +155,14 @@ class ReactiveList extends Component {
 			this.props.updateQuery({
 				componentId: this.internalComponent,
 				query,
+			}, true);
+
+			// reset page because of query change
+			this.setState({
+				currentPage: 0,
+				from: 0,
+			}, () => {
+				this.updatePageURL(0);
 			});
 		}
 
@@ -131,11 +170,9 @@ class ReactiveList extends Component {
 			this.props.setStreaming(nextProps.componentId, nextProps.stream);
 		}
 
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+		if (!isEqual(nextProps.react, this.props.react)) {
+			this.setReact(nextProps);
+		}
 
 		if (
 			!nextProps.pagination
@@ -176,6 +213,18 @@ class ReactiveList extends Component {
 
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
+	}
+
+	updatePageURL = (page) => {
+		if (this.props.URLParams) {
+			this.props.setPageURL(
+				this.props.componentId,
+				page + 1,
+				this.props.componentId,
+				false,
+				true,
+			);
+		}
 	}
 
 	setReact = (props) => {
