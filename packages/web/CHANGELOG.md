@@ -4,6 +4,7 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
+    - Rename `beforeSend` to `transformRequest` as in appbase-js version 4 [#568](https://github.com/appbaseio/reactivesearch/issues/568)
 </details>
 
 ## v2.11.1
@@ -87,7 +88,7 @@
 - Upgrade reactivecore and fix an import with maps
 
 ## v2.6.10
-- Upgraded reactivecore to improve reactive-maps behavior and experience 
+- Upgraded reactivecore to improve reactive-maps behavior and experience
 
 ## v2.6.9
 - Fix an issue with `ReactiveList` rendering 'undefined' as class [#416](https://github.com/appbaseio/reactivesearch/issues/416)
