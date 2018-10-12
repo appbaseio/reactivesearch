@@ -117,10 +117,12 @@ class URLParamsProvider extends Component {
 	}
 
 	pushToHistory() {
-		if (window.history.pushState) {
-			const paramsSting = this.params.toString() ? `?${this.params.toString()}` : '';
-			const base = window.location.href.split('?')[0];
-			const newurl = `${base}${paramsSting}`;
+		const paramsSting = this.props.params.toString() ? `?${this.props.params.toString()}` : '';
+		const base = window.location.href.split('?')[0];
+		const newurl = `${base}${paramsSting}`;
+		if (this.props.pushRoute) {
+			this.props.pushRoute(this.props.params);
+		} else if (window.history.pushState) {
 			window.history.pushState({ path: newurl }, '', newurl);
 		}
 	}
@@ -143,6 +145,7 @@ URLParamsProvider.propTypes = {
 	headers: types.headers,
 	style: types.style,
 	className: types.string,
+	pushRoute: types.func,
 };
 
 URLParamsProvider.defaultProps = {
