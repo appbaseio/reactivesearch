@@ -78,13 +78,14 @@ class SingleList extends Component {
 				if (showLoadMore) {
 					const { buckets } = nextProps.options[dataField];
 					const after = nextProps.options[dataField].after_key;
-					// detect the last bucket by checking if the next set of buckets were empty
-					const isLastBucket = !buckets.length;
-					this.setState({
-						after: { after },
+					// detect the last bucket by checking if the after key is absent
+					const isLastBucket = !after;
+					this.setState(state => ({
+						...state,
+						after: after ? { after } : state.after,
 						isLastBucket,
 						options: this.getOptions(buckets, nextProps),
-					});
+					}));
 				} else {
 					this.setState({
 						options: nextProps.options[nextProps.dataField]
@@ -144,7 +145,7 @@ class SingleList extends Component {
 		}
 
 		return buckets;
-	}
+	};
 
 	static defaultQuery = (value, props) => {
 		if (props.selectAllLabel && props.selectAllLabel === value) {

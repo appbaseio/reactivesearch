@@ -7,6 +7,7 @@ import {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	loadMore,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -35,7 +36,10 @@ class MultiList extends Component {
 		this.state = {
 			currentValue: {},
 			options: (props.options && props.options[props.dataField])
-				? props.options[props.dataField].buckets
+				? this.getOptions(
+					props.options[props.dataField].buckets,
+					props,
+				)
 				: [],
 			searchTerm: '',
 			after: {},	// for composite aggs
@@ -71,31 +75,24 @@ class MultiList extends Component {
 			nextProps.options,
 			() => {
 				const { showLoadMore, dataField } = nextProps;
-				const { options } = this.state;
 				if (showLoadMore) {
-					// append options with showLoadMore
 					const { buckets } = nextProps.options[dataField];
-					const nextOptions = [
-						...options,
-						...buckets.map(bucket => ({
-							key: bucket.key[dataField],
-							doc_count: bucket.doc_count,
-						})),
-					];
 					const after = nextProps.options[dataField].after_key;
-					// detect the last bucket by checking if the next set of buckets were empty
-					const isLastBucket = !buckets.length;
-					this.setState({
-						after: {
-							after,
-						},
+					// detect the last bucket by checking if the after key is absent
+					const isLastBucket = !after;
+					this.setState(state => ({
+						...state,
+						after: after ? { after } : state.after,
 						isLastBucket,
-						options: nextOptions,
-					});
+						options: this.getOptions(buckets, nextProps),
+					}));
 				} else {
 					this.setState({
 						options: nextProps.options[nextProps.dataField]
-							? nextProps.options[nextProps.dataField].buckets
+							? this.getOptions(
+								nextProps.options[nextProps.dataField].buckets,
+								nextProps,
+							)
 							: [],
 					});
 				}
@@ -146,6 +143,17 @@ class MultiList extends Component {
 		} else {
 			props.watchComponent(props.componentId, { and: this.internalComponent });
 		}
+	};
+
+	getOptions = (buckets, props) => {
+		if (props.showLoadMore) {
+			return buckets.map(bucket => ({
+				key: bucket.key[props.dataField],
+				doc_count: bucket.doc_count,
+			}));
+		}
+
+		return buckets;
 	};
 
 	static defaultQuery = (value, props) => {
@@ -332,7 +340,8 @@ class MultiList extends Component {
 	};
 
 	handleLoadMore = () => {
-		this.updateQueryOptions(this.props, true);
+		const queryOptions = MultiList.generateQueryOptions(this.props, this.state.after);
+		this.props.loadMore(this.props.componentId, queryOptions);
 	}
 
 	renderSearch = () => {
@@ -356,7 +365,9 @@ class MultiList extends Component {
 	};
 
 	render() {
-		const { selectAllLabel, renderListItem, showLoadMore, loadMoreLabel } = this.props;
+		const {
+			selectAllLabel, renderListItem, showLoadMore, loadMoreLabel,
+		} = this.props;
 		const { isLastBucket } = this.state;
 
 		if (this.state.options.length === 0) {
@@ -468,6 +479,7 @@ MultiList.propTypes = {
 	removeComponent: types.funcRequired,
 	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
+	loadMore: types.funcRequired,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	options: types.options,
@@ -532,6 +544,8 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	loadMore: (component, aggsQuery) =>
+		dispatch(loadMore(component, aggsQuery, true, true)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
