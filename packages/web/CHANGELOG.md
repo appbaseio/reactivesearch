@@ -4,8 +4,12 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-    - Rename `beforeSend` to `transformRequest` as in appbase-js version 4 [#568](https://github.com/appbaseio/reactivesearch/issues/568)
 </details>
+
+## v2.12.0
+- Rename `beforeSend` to `transformRequest` as in appbase-js version 4 [#568](https://github.com/appbaseio/reactivesearch/issues/568)
+- Add better support for consecutive loading in aggs [#515](https://github.com/appbaseio/reactivesearch/issues/515)
+- Fix showLoadMore usage which led to duplicate keys errors [#549](https://github.com/appbaseio/reactivesearch/issues/549)
 
 ## v2.11.1
 - sync url params before updating or deleting - [#566](https://github.com/appbaseio/reactivesearch/issues/566)
