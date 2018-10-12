@@ -121,6 +121,7 @@ class ReactiveBase extends Component {
 						headers={this.props.headers}
 						style={this.props.style}
 						className={this.props.className}
+						pushRoute={this.props.pushRoute}
 					>
 						{this.props.children}
 					</URLParamsProvider>
@@ -153,6 +154,7 @@ ReactiveBase.propTypes = {
 	className: types.string,
 	initialState: types.children,
 	analytics: types.bool,
+	pushRoute: types.func,
 };
 
 export default ReactiveBase;
