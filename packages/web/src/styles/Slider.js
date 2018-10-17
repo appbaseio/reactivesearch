@@ -68,7 +68,7 @@ const Slider = styled('div')`
 		visibility: visible;
 	}
 
-	.slider-tooltip:after, .slider-tooltip-focus:after, .slider-tooltip-visible:after{
+	.slider-tooltip:after, .slider-tooltip-focus:after, .slider-tooltip-visible:after {
 		content: '';
 		position: absolute;
 		top: 98%; /* Positions Tooltip Arrow */
@@ -85,7 +85,7 @@ const Slider = styled('div')`
     	visibility: visible;
 	}
 
-	.rheostat-handle:hover .slider-tooltip-focus,{
+	.rheostat-handle:hover .slider-tooltip-focus {
    		visibility: hidden;
 	}
 
