@@ -52,15 +52,15 @@ const Slider = styled('div')`
 		top: -10px;
 	}
 
-	.slider-tooltip,.slider-tooltip-focus,.slider-tooltip-visible {
-    visibility: hidden;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 6px 8px;
-    position: absolute;
-    z-index: 1;
+	.slider-tooltip, .slider-tooltip-focus, .slider-tooltip-visible {
+		visibility: hidden;
+		background-color: black;
+		color: #fff;
+		text-align: center;
+		border-radius: 6px;
+		padding: 6px 8px;
+		position: absolute;
+		z-index: 1;
 		transform: translate(-50%,-170%); /* Positions Tooltip Container */
 	}
 
@@ -68,25 +68,25 @@ const Slider = styled('div')`
 		visibility: visible;
 	}
 
-	.slider-tooltip:after,.slider-tooltip-focus:after,.slider-tooltip-visible:after{
+	.slider-tooltip:after, .slider-tooltip-focus:after, .slider-tooltip-visible:after{
 		content: '';
-    position: absolute;
-    top: 98%; /* Positions Tooltip Arrow */
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: black transparent transparent transparent;
+		position: absolute;
+		top: 98%; /* Positions Tooltip Arrow */
+		left: 50%;
+		margin-left: -5px;
+		border-width: 5px;
+		border-style: solid;
+		border-color: black transparent transparent transparent;
 	}
 
 	.rheostat-handle:hover .slider-tooltip,
 	.rheostat-handle:focus .slider-tooltip,
 	.rheostat-handle:active .slider-tooltip {
-    visibility: visible;
+    	visibility: visible;
 	}
 
 	.rheostat-handle:hover .slider-tooltip-focus,{
-    visibility: hidden;
+   		visibility: hidden;
 	}
 
 	.rheostat-handle:focus .slider-tooltip-focus,

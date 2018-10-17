@@ -495,7 +495,7 @@ GeoDistanceSlider.propTypes = {
 	react: types.react,
 	showFilter: types.bool,
 	showIcon: types.bool,
-	tooltipTrigger: types.string,
+	tooltipTrigger: types.tooltipTrigger,
 	style: types.style,
 	theme: types.style,
 	title: types.title,

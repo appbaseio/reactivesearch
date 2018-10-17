@@ -7,6 +7,21 @@
     - Add `tooltipTrigger` in slider components [#284](https://github.com/appbaseio/reactivesearch/issues/284)
 </details>
 
+## v2.12.1
+- Add `Title` prop support in `SelectedFilters` - [info](https://github.com/appbaseio/reactivesearch/commits/dev)
+- Fix use of `this` in static method in Date component [#567](https://github.com/appbaseio/reactivesearch/pull/567)
+- Add `_type` meta data in parsed-hits - [info](https://github.com/appbaseio/reactivecore/commit/18c3f5f29fb5d398d83e8e574208470a2c0069de)
+
+## v2.12.0
+- Rename `beforeSend` to `transformRequest` as in appbase-js version 4 [#568](https://github.com/appbaseio/reactivesearch/issues/568)
+- Add better support for consecutive loading in aggs [#515](https://github.com/appbaseio/reactivesearch/issues/515)
+- Fix showLoadMore usage which led to duplicate keys errors [#549](https://github.com/appbaseio/reactivesearch/issues/549)
+
+## v2.11.1
+- sync url params before updating or deleting - [#566](https://github.com/appbaseio/reactivesearch/issues/566)
+- Add error log for url state parsing - [info](https://github.com/appbaseio/reactivesearch/commit/1ffecdf95b68acbb1f0a220eed129c4fba809e07)
+- Add redux dev tools support [#565](https://github.com/appbaseio/reactivesearch/issues/565)
+
 ## v2.11.0
 - update core - cleanup
 - Add `downShiftProps` prop for the Downshift component in search components [#516](https://github.com/appbaseio/reactivesearch/issues/516)

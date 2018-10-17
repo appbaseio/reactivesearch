@@ -349,7 +349,7 @@ RangeSlider.propTypes = {
 	histogramQuery: types.func,
 	showFilter: types.bool,
 	showSlider: types.bool,
-	tooltipTrigger: types.string,
+	tooltipTrigger: types.tooltipTrigger,
 	snap: types.bool,
 	stepValue: types.number,
 	style: types.style,

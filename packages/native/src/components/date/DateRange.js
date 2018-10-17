@@ -25,8 +25,8 @@ import {
 	checkValueChange,
 	checkPropChange,
 	getInnerKey,
+	formatDate,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import withTheme from '../../theme/withTheme';
@@ -126,19 +126,6 @@ class DateRange extends Component {
 		}
 	}
 
-	formatDate = (date) => {
-		switch (this.props.queryFormat) {
-			case 'epoch_millis': return date.getTime();
-			case 'epoch_seconds': return Math.floor(date.getTime() / 1000);
-			default: {
-				if (dateFormats[this.props.queryFormat]) {
-					return date.toString(dateFormats[this.props.queryFormat]);
-				}
-				return date;
-			}
-		}
-	};
-
 	defaultQuery = (value, props) => {
 		let query = null;
 		if (value && value.start && value.end) {
@@ -155,13 +142,13 @@ class DateRange extends Component {
 					must: [{
 						range: {
 							[props.dataField[0]]: {
-								lte: this.formatDate(new XDate(value.start)),
+								lte: formatDate(new XDate(value.start)),
 							},
 						},
 					}, {
 						range: {
 							[props.dataField[1]]: {
-								gte: this.formatDate(new XDate(value.end)),
+								gte: formatDate(new XDate(value.end)),
 							},
 						},
 					}],
@@ -171,8 +158,8 @@ class DateRange extends Component {
 			query = {
 				range: {
 					[props.dataField[0]]: {
-						gte: this.formatDate(new XDate(value.start)),
-						lte: this.formatDate(new XDate(value.end)),
+						gte: formatDate(new XDate(value.start)),
+						lte: formatDate(new XDate(value.end)),
 					},
 				},
 			};
@@ -180,8 +167,8 @@ class DateRange extends Component {
 			query = {
 				range: {
 					[props.dataField]: {
-						gte: this.formatDate(new XDate(value.start)),
-						lte: this.formatDate(new XDate(value.end)),
+						gte: formatDate(new XDate(value.start)),
+						lte: formatDate(new XDate(value.end)),
 					},
 				},
 			};
@@ -215,8 +202,8 @@ class DateRange extends Component {
 				};
 
 				date = {
-					start: this.formatDate(new XDate(value.start)),
-					end: this.formatDate(new XDate(value.end)),
+					start: formatDate(new XDate(value.start)),
+					end: formatDate(new XDate(value.end)),
 				};
 
 				checkValueChange(

@@ -424,7 +424,7 @@ DynamicRangeSlider.propTypes = {
 	react: types.react,
 	showHistogram: types.bool,
 	showFilter: types.bool,
-	tooltipTrigger: types.string,
+	tooltipTrigger: types.tooltipTrigger,
 	snap: types.bool,
 	stepValue: types.number,
 	style: types.style,

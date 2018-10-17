@@ -13,6 +13,7 @@ export interface SelectedFiltersProps {
 	showClearAll?: boolean;
 	style?: types.style;
 	theme?: types.style;
+	title?: types.title;
 }
 
 declare const SelectedFilters: React.ComponentType<SelectedFiltersProps>;
