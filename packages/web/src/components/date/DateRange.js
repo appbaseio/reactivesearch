@@ -11,8 +11,8 @@ import {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	formatDate,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import XDate from 'xdate';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
@@ -92,8 +92,8 @@ class DateRange extends Component {
 			() => this.updateQuery(
 				this.state.currentDate
 					? { // we need the date in correct queryFormat
-						start: this.formatDate(this.state.currentDate.start),
-						end: this.formatDate(this.state.currentDate.end),
+						start: formatDate(this.state.currentDate.start),
+						end: formatDate(this.state.currentDate.end),
 					}
 					: this.state.currentDate,
 				nextProps,
@@ -111,21 +111,6 @@ class DateRange extends Component {
 		}
 	}
 
-	formatDate = (date, props = this.props) => {
-		switch (props.queryFormat) {
-			case 'epoch_millis':
-				return date.getTime();
-			case 'epoch_seconds':
-				return Math.floor(date.getTime() / 1000);
-			default: {
-				if (dateFormats[props.queryFormat]) {
-					return date.toString(dateFormats[props.queryFormat]);
-				}
-				return date;
-			}
-		}
-	};
-
 	formatInputDate = (date) => {
 		const xdate = new XDate(date);
 		return xdate.valid() ? xdate.toString('yyyy-MM-dd') : '';
@@ -140,13 +125,13 @@ class DateRange extends Component {
 						must: [{
 							range: {
 								[props.dataField[0]]: {
-									lte: this.formatDate(new XDate(value.start), props),
+									lte: formatDate(new XDate(value.start), props),
 								},
 							},
 						}, {
 							range: {
 								[props.dataField[1]]: {
-									gte: this.formatDate(new XDate(value.end), props),
+									gte: formatDate(new XDate(value.end), props),
 								},
 							},
 						}],
@@ -156,8 +141,8 @@ class DateRange extends Component {
 				query = {
 					range: {
 						[props.dataField[0]]: {
-							gte: this.formatDate(new XDate(value.start), props),
-							lte: this.formatDate(new XDate(value.end), props),
+							gte: formatDate(new XDate(value.start), props),
+							lte: formatDate(new XDate(value.end), props),
 						},
 					},
 				};
@@ -165,8 +150,8 @@ class DateRange extends Component {
 				query = {
 					range: {
 						[props.dataField]: {
-							gte: this.formatDate(new XDate(value.start), props),
-							lte: this.formatDate(new XDate(value.end), props),
+							gte: formatDate(new XDate(value.start), props),
+							lte: formatDate(new XDate(value.end), props),
 						},
 					},
 				};
