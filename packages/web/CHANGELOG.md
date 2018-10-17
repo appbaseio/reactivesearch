@@ -6,6 +6,11 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v2.12.1
+- Add `Title` prop support in `SelectedFilters` - [info](https://github.com/appbaseio/reactivesearch/commits/dev)
+- Fix use of `this` in static method in Date component [#567](https://github.com/appbaseio/reactivesearch/pull/567)
+- Add `_type` meta data in parsed-hits - [info](https://github.com/appbaseio/reactivecore/commit/18c3f5f29fb5d398d83e8e574208470a2c0069de)
+
 ## v2.12.0
 - Rename `beforeSend` to `transformRequest` as in appbase-js version 4 [#568](https://github.com/appbaseio/reactivesearch/issues/568)
 - Add better support for consecutive loading in aggs [#515](https://github.com/appbaseio/reactivesearch/issues/515)
