@@ -121,6 +121,7 @@ class RatingsFilter extends Component {
 							rangeQuery,
 							mustNotQuery,
 						],
+						minimum_should_match: 1,
 					},
 				};
 			}
