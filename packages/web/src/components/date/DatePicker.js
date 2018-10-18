@@ -11,8 +11,8 @@ import {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	formatDate,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import XDate from 'xdate';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
@@ -23,6 +23,7 @@ import Title from '../../styles/Title';
 import Flex from '../../styles/Flex';
 import CancelSvg from '../shared/CancelSvg';
 import { connect } from '../../utils';
+
 
 class DatePicker extends Component {
 	constructor(props) {
@@ -79,22 +80,8 @@ class DatePicker extends Component {
 		}
 	}
 
-	formatDate = (date, props = this.props) => {
-		switch (props.queryFormat) {
-			case 'epoch_millis':
-				return date.getTime();
-			case 'epoch_seconds':
-				return Math.floor(date.getTime() / 1000);
-			default: {
-				if (dateFormats[props.queryFormat]) {
-					return date.toString(dateFormats[props.queryFormat]);
-				}
-				return date;
-			}
-		}
-	};
-
 	formatInputDate = date => new XDate(date).toString('yyyy-M-d');
+	
 
 	static defaultQuery = (value, props) => {
 		let query = null;
@@ -102,8 +89,8 @@ class DatePicker extends Component {
 			query = {
 				range: {
 					[props.dataField]: {
-						gte: this.formatDate(new XDate(value).addHours(-24), props),
-						lte: this.formatDate(new XDate(value), props),
+						gte: formatDate(new XDate(value).addHours(-24), props),
+						lte: formatDate(new XDate(value), props),
 					},
 				},
 			};

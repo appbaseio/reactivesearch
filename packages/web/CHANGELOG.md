@@ -4,8 +4,30 @@
 
 <details>
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-    - Add `downShiftProps` prop for the Downshift component in search components [#516](https://github.com/appbaseio/reactivesearch/issues/516)
+    - Add `tooltipTrigger` in slider components [#284](https://github.com/appbaseio/reactivesearch/issues/284)
 </details>
+
+## v2.12.1
+- Add `Title` prop support in `SelectedFilters` - [info](https://github.com/appbaseio/reactivesearch/commits/dev)
+- Fix use of `this` in static method in Date component [#567](https://github.com/appbaseio/reactivesearch/pull/567)
+- Add `_type` meta data in parsed-hits - [info](https://github.com/appbaseio/reactivecore/commit/18c3f5f29fb5d398d83e8e574208470a2c0069de)
+
+## v2.12.0
+- Rename `beforeSend` to `transformRequest` as in appbase-js version 4 [#568](https://github.com/appbaseio/reactivesearch/issues/568)
+- Add better support for consecutive loading in aggs [#515](https://github.com/appbaseio/reactivesearch/issues/515)
+- Fix showLoadMore usage which led to duplicate keys errors [#549](https://github.com/appbaseio/reactivesearch/issues/549)
+
+## v2.11.1
+- sync url params before updating or deleting - [#566](https://github.com/appbaseio/reactivesearch/issues/566)
+- Add error log for url state parsing - [info](https://github.com/appbaseio/reactivesearch/commit/1ffecdf95b68acbb1f0a220eed129c4fba809e07)
+- Add redux dev tools support [#565](https://github.com/appbaseio/reactivesearch/issues/565)
+
+## v2.11.0
+- update core - cleanup
+- Add `downShiftProps` prop for the Downshift component in search components [#516](https://github.com/appbaseio/reactivesearch/issues/516)
+- Fix SelectedFilters and URLParams behavior - [#497](https://github.com/appbaseio/reactivesearch/issues/497)
+- Fix re-rendering issues with queryLog - causing ReactiveList breakage - [info](https://github.com/appbaseio/reactivesearch/commit/19e757bcc9c10b999ac815a5fe53bbe6a29512ed)
+- Remove ReactiveList event listener on unmount conditionally - [info](https://github.com/appbaseio/reactivesearch/commit/6cd0333a5c29362603bb70a1c76dbdc02279e99d)
 
 ## v2.10.3
 - Fixes react prop behavior for array of (conjunction) objects.
@@ -76,7 +98,7 @@
 - Upgrade reactivecore and fix an import with maps
 
 ## v2.6.10
-- Upgraded reactivecore to improve reactive-maps behavior and experience 
+- Upgraded reactivecore to improve reactive-maps behavior and experience
 
 ## v2.6.9
 - Fix an issue with `ReactiveList` rendering 'undefined' as class [#416](https://github.com/appbaseio/reactivesearch/issues/416)

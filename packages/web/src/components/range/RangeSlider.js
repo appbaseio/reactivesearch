@@ -20,6 +20,7 @@ import Rheostat from 'rheostat/lib/Slider';
 
 import HistogramContainer from './addons/HistogramContainer';
 import RangeLabel from './addons/RangeLabel';
+import SliderHandle from './addons/SliderHandle';
 import Slider from '../../styles/Slider';
 import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
@@ -286,6 +287,16 @@ class RangeSlider extends Component {
 						snap={this.props.snap}
 						snapPoints={this.props.snap ? this.getSnapPoints() : null}
 						className={getClassName(this.props.innerClass, 'slider')}
+						handle={({ className, style, ...passProps }) =>
+							(
+								<SliderHandle
+									style={style}
+									className={className}
+									{...passProps}
+									tooltipTrigger={this.props.tooltipTrigger}
+								/>
+							)
+						}
 					/>
 				}
 				{this.props.rangeLabels && this.props.showSlider && (
@@ -338,6 +349,7 @@ RangeSlider.propTypes = {
 	histogramQuery: types.func,
 	showFilter: types.bool,
 	showSlider: types.bool,
+	tooltipTrigger: types.tooltipTrigger,
 	snap: types.bool,
 	stepValue: types.number,
 	style: types.style,
@@ -353,6 +365,7 @@ RangeSlider.defaultProps = {
 	},
 	showHistogram: true,
 	showSlider: true,
+	tooltipTrigger: 'none',
 	snap: true,
 	stepValue: 1,
 	showFilter: true,

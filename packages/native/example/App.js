@@ -191,14 +191,6 @@ class Main extends Component {
 							onAllData={this.onAllData}
 							pagination
 							stream
-							defaultQuery={() => ({
-								query: {
-									match_all: {},
-								},
-								sort: {
-									price: { order: 'asc' },
-								},
-							})}
 							react={{
 								and: [
 									'DataSearchComponent',

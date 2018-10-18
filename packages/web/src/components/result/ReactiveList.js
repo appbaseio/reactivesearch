@@ -232,7 +232,11 @@ class ReactiveList extends Component {
 			}
 		}
 
-		if (this.props.queryLog && nextProps.queryLog !== this.props.queryLog) {
+		if (
+			nextProps.queryLog
+			&& this.props.queryLog
+			&& nextProps.queryLog !== this.props.queryLog
+		) {
 			// usecase:
 			// - query has changed from non-null prev query
 

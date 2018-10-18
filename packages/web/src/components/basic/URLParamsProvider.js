@@ -6,38 +6,38 @@ import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import Base from '../../styles/Base';
 import { connect } from '../../utils';
 
+const URLSearchParams = require('url-search-params');
+
 class URLParamsProvider extends Component {
 	componentDidMount() {
+		this.params = new URLSearchParams(window.location.search);
 		this.currentSelectedState = this.props.selectedValues || {};
-		if (window) {
-			window.onpopstate = () => {
-				let queryParams = window.location.search;
-				queryParams = new URLSearchParams(queryParams);
+		window.onpopstate = () => {
+			const activeComponents = Array.from(this.params.keys());
 
-				const activeComponents = Array.from(queryParams.keys());
-
-				// remove inactive components from selectedValues
-				Object.keys(this.currentSelectedState)
-					.filter(item => !activeComponents.includes(item))
-					.forEach((component) => {
-						this.props.setValue(component, null);
-					});
-
-				// update active components in selectedValues
-				Array.from(queryParams.entries()).forEach((item) => {
-					this.props.setValue(
-						item[0],
-						JSON.parse(item[1]),
-					);
+			// remove inactive components from selectedValues
+			Object.keys(this.currentSelectedState)
+				.filter(item => !activeComponents.includes(item))
+				.forEach((component) => {
+					this.props.setValue(component, null);
 				});
-			};
-		}
+
+			// update active components in selectedValues
+			Array.from(this.params.entries()).forEach((item) => {
+				this.props.setValue(
+					item[0],
+					JSON.parse(item[1]),
+				);
+			});
+		};
 	}
 
 	componentWillReceiveProps(nextProps) {
 		this.currentSelectedState = nextProps.selectedValues;
 		if (!isEqual(this.props.selectedValues, nextProps.selectedValues)) {
+			this.params = new URLSearchParams(window.location.search);
 			const currentComponents = Object.keys(nextProps.selectedValues);
+			const urlComponents = Array.from(this.params.keys());
 
 			currentComponents
 				.filter(component => nextProps.selectedValues[component].URLParams)
@@ -50,9 +50,16 @@ class URLParamsProvider extends Component {
 						if (nextProps.selectedValues[component].URLParams) {
 							this.setURL(component, this.getValue(nextProps.selectedValues[component].value));
 						} else {
-							this.props.params.delete(component);
+							this.params.delete(component);
 							this.pushToHistory();
 						}
+					} else if (
+						!this.hasValidValue(nextProps.selectedValues[component])
+						&& urlComponents.includes(component)
+					) {
+						// doesn't have a valid value, but the url has a (stale) valid value set
+						this.params.delete(component);
+						this.pushToHistory();
 					}
 				});
 
@@ -60,13 +67,13 @@ class URLParamsProvider extends Component {
 			Object.keys(this.props.selectedValues)
 				.filter(component => !currentComponents.includes(component))
 				.forEach((component) => {
-					this.props.params.delete(component);
+					this.params.delete(component);
 					this.pushToHistory();
 				});
 
 			if (!currentComponents.length) {
-				Array.from(this.props.params.keys()).forEach((item) => {
-					this.props.params.delete(item);
+				Array.from(this.params.keys()).forEach((item) => {
+					this.params.delete(item);
 				});
 				this.pushToHistory();
 			}
@@ -95,14 +102,15 @@ class URLParamsProvider extends Component {
 	}
 
 	setURL(component, value) {
+		this.params = new URLSearchParams(window.location.search);
 		if (!value || (typeof value === 'string' && value.trim() === '')
 			|| (Array.isArray(value) && value.length === 0)) {
-			this.props.params.delete(component);
+			this.params.delete(component);
 			this.pushToHistory();
 		} else {
 			const data = JSON.stringify(this.getValue(value));
-			if (data !== this.props.params.get(component)) {
-				this.props.params.set(component, data);
+			if (data !== this.params.get(component)) {
+				this.params.set(component, data);
 				this.pushToHistory();
 			}
 		}
@@ -110,7 +118,7 @@ class URLParamsProvider extends Component {
 
 	pushToHistory() {
 		if (window.history.pushState) {
-			const paramsSting = this.props.params.toString() ? `?${this.props.params.toString()}` : '';
+			const paramsSting = this.params.toString() ? `?${this.params.toString()}` : '';
 			const base = window.location.href.split('?')[0];
 			const newurl = `${base}${paramsSting}`;
 			window.history.pushState({ path: newurl }, '', newurl);
@@ -133,7 +141,6 @@ URLParamsProvider.propTypes = {
 	// component props
 	children: types.children,
 	headers: types.headers,
-	params: types.params,
 	style: types.style,
 	className: types.string,
 };
