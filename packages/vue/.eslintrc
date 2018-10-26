@@ -1,0 +1,21 @@
+{
+    "env": {
+      "browser": true,
+      "es6": true,
+      "node": true
+    },
+    "extends": ["airbnb-base", "plugin:vue/recommended"],
+    "parserOptions": {
+      "parser": "babel-eslint",
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    },
+    "rules": {
+      "indent": 0,
+      "no-tabs": 0,
+      "eol-last": ["error", "always"],
+      "no-underscore-dangle": 0,
+      "func-names": [0]
+    }
+  }
+  

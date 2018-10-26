@@ -3,6 +3,7 @@
 	"name": "reactivesearch-packages",
 	"scripts": {
 		"dev:web": "concurrently --kill-others -n \"CORE\",\"WEB\",\"MAPS\", -c \"cyan\",\"yellow\",\"green\", \"npm start --prefix packages/reactivecore\" \"npm run watch --prefix packages/web\" \"npm run watch --prefix packages/maps\"",
+		"dev:vue": "concurrently --kill-others -n \"CORE\",\"WEB\", -c \"cyan\",\"yellow\",\"green\", \"npm start --prefix packages/reactivecore\" \"npm run watch --prefix packages/vue\"",
 		"lint": "eslint .",
 		"lint:ts": "tslint -c tslint.json 'packages/web/**/**/*.{ts,tsx}'",
 		"lint:ts-fix": "tslint -c tslint.json --fix 'packages/web/**/**/*.{ts,tsx}'",
