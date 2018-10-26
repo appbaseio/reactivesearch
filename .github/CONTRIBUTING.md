@@ -2,7 +2,7 @@
 
 Welcome to the contribution guide! We welcome all contributions. A list of issues is present [here](https://github.com/appbaseio/reactivesearch/issues). If you're interested in picking up something, feel free to start a discussion 😺
 
-The reactivesearch monorepo contains the code for both the [web](../packages/web) and [native](../packages/native) libraries. Both uses a common [core](https://github.com/appbaseio/reactivecore/) architecture. Project specific readme files are available inside each package.
+The reactivesearch monorepo contains the code for [web](../packages/web), [vue](../packages/vue) and [native](../packages/native) libraries. Both uses a common [core](https://github.com/appbaseio/reactivecore/) architecture. Project specific readme files are available inside each package.
 
 ## Initial setup
 
@@ -24,7 +24,7 @@ git submodule sync
 git submodule update --remote
 ```
 
-6. The submodules will be fetched into `/packages`. Defaults to `dev` in `/packages/playground` and `master` in `/packages/reactivecore`.
+6. The submodules will be fetched into `/packages`. Defaults to `dev` in `/packages/playground` and `master` in `/packages/reactivecore` & `/packages/vue-playground`.
 
 7. You can then install the dependencies, we recommend `yarn`. Run this from the project root:
 
