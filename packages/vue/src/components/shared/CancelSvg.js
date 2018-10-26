@@ -1,4 +1,4 @@
-import { vueTypes as types } from '@appbaseio/reactivecore';
+import types from '../../utils/vueTypes';
 
 const CancelSvg = {
   name: 'CancelSvg',

@@ -1,9 +1,10 @@
-import { Actions, helper, vueTypes as types } from '@appbaseio/reactivecore';
+import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
 import { connect } from '../../utils/index';
 import Flex from '../../styles/Flex';
+import types from '../../utils/vueTypes';
 import { resultStats, sortOptions } from '../../styles/results';
 
 const {

@@ -1,6 +1,7 @@
-import { Actions, vueTypes as types, helper } from '@appbaseio/reactivecore';
+import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { connect } from '../utils/index';
+import types from '../utils/vueTypes';
 import Base from '../styles/Base';
 
 const URLSearchParams = require('url-search-params');

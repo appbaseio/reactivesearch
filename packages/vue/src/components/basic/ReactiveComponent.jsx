@@ -1,6 +1,7 @@
-import { Actions, helper, vueTypes as types } from '@appbaseio/reactivecore';
+import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { connect } from '../../utils/index';
+import types from '../../utils/vueTypes';
 
 const {
   addComponent,

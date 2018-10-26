@@ -1,5 +1,6 @@
-import { vueTypes as types, helper } from '@appbaseio/reactivecore';
+import { helper } from '@appbaseio/reactivecore';
 import Button, { pagination } from '../../../styles/Button';
+import types from '../../../utils/vueTypes';
 
 const { getClassName, handleA11yAction } = helper;
 function getStartPage(totalPages, currentPage) {
