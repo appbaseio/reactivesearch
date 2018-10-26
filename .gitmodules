@@ -6,3 +6,7 @@
 	path = packages/playground
 	url = git@github.com:appbaseio/playground.git
 	branch = dev
+[submodule "packages/vue-playground"]
+	path = packages/vue-playground
+	url = git@github.com:appbaseio/vue-playground.git
+	branch = master
