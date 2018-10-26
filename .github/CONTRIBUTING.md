@@ -52,6 +52,27 @@ yarn storybook
 
 **Note:** If you see any errors about missing dependencies, please try running `yarn` inside the sub-directory you're at.
 
+## Vue
+
+1. You can run the following command from `reactivesearch` root which will start the babel watchers inside `/reactivecore` and `/vue`. This will let you make changes to these projects on the fly and the files will be transpiled and updated instantly:
+
+```bash
+yarn dev:vue
+```
+
+Alternatively the manual approach would be to open the sub-projects for `/vue` and `/reactivecore` and start the watchers inside their respective directories.
+
+2. You can try the examples for any of the `vue` components inside `/packages/vue/examples` which will also pick the updated code as and when you make changes to the `/packages/vue/src` files.
+
+3. Another way to try out the components is by checking into `/packages/vue-playground` and running the storybook which also updates itself from the components inside `/packages/vue/src`.
+
+```bash
+yarn storybook
+```
+
+**Note:** If you see any errors about missing dependencies, please try running `yarn` inside the sub-directory you're at.
+
+
 ## Native
 
 1. `cd` into the `/packages/native` directory and install dependencies if not done already by running `yarn`.
