@@ -1,8 +1,9 @@
-import configureStore, { vueTypes as types } from '@appbaseio/reactivecore';
+import configureStore from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import Appbase from 'appbase-js';
 import Provider from '../Provider';
 import { composeThemeObject } from '../../utils/index';
+import types from '../../utils/vueTypes';
 import URLParamsProvider from '../URLParamsProvider.jsx';
 import getTheme from '../../styles/theme';
 

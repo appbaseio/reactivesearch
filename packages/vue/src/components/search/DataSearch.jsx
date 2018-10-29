@@ -1,7 +1,6 @@
 import {
   Actions,
   helper,
-  vueTypes as types,
   suggestions as getSuggestions,
   causes,
 } from '@appbaseio/reactivecore';
@@ -11,6 +10,7 @@ import Title from '../../styles/Title';
 import Input, { suggestionsContainer /* suggestions */ } from '../../styles/Input';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
+import types from '../../utils/vueTypes';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 

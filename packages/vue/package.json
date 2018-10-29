@@ -1,6 +1,6 @@
 {
   "name": "@appbaseio/reactivesearch-vue",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "private": false,
   "main": "dist/@appbaseio/reactivesearch-vue.cjs.js",
   "jsnext:main": "dist/@appbaseio/reactivesearch-vue.es.js",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/appbaseio/reactivesearch-vue.git"
+    "url": "https://github.com/appbaseio/reactivesearch.git"
   },
   "author": "Kuldeep Saxena <kuldepsaxena155@gmail.com>",
   "license": "Apache-2.0",
@@ -28,7 +28,7 @@
     "prepare": "npm start validate"
   },
   "dependencies": {
-    "@appbaseio/reactivecore": "^6.0.2",
+    "@appbaseio/reactivecore": "^6.0.3",
     "appbase-js": "^4.0.2-beta.2",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "emotion": "^9.2.12",

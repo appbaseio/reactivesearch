@@ -1,9 +1,10 @@
-import { Actions, helper, vueTypes as types } from '@appbaseio/reactivecore';
+import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
 import { connect } from '../../utils/index';
+import types from '../../utils/vueTypes';
 import { UL, Radio } from '../../styles/FormControlList';
 
 const {
