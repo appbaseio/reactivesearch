@@ -33,6 +33,8 @@ import ReactiveList from './components/result/ReactiveList';
 import ResultCard from './components/result/ResultCard';
 import ResultList from './components/result/ResultList';
 
+import './polyfills';
+
 export {
 	// basic
 	ReactiveBase,
