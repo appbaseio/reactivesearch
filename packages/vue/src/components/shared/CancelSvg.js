@@ -13,7 +13,7 @@ const CancelSvg = {
         alt="Clear"
         class="cancel-icon"
         height="10"
-        onClick={props.onClick}
+        onclick={props.onClick}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 212.982 212.982"
       >

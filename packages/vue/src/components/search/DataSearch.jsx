@@ -80,7 +80,7 @@ const DataSearch = {
     queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
     react: types.react,
     // renderSuggestions: types.func,
-    showClear: VueTypes.bool.def(false),
+    showClear: VueTypes.bool.def(true),
     showFilter: VueTypes.bool.def(true),
     showIcon: VueTypes.bool.def(true),
     title: types.title,
@@ -104,8 +104,8 @@ const DataSearch = {
 
     this.setReact(this.$props);
 
-    if (this.$props.selectedValue) {
-      this.setValue(this.$props.selectedValue, true);
+    if (this.selectedValue) {
+      this.setValue(this.selectedValue, true);
     } else if (this.$props.defaultSelected) {
       this.setValue(this.$props.defaultSelected, true);
     }
@@ -120,7 +120,7 @@ const DataSearch = {
     },
     dataField() {
       this.updateQueryOptions();
-      this.updateQuery(this.$props.componentId, this.$data.currentValue, this.$props);
+      this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
     },
     highlightField() {
       this.updateQueryOptions();
@@ -129,13 +129,13 @@ const DataSearch = {
       this.setReact(this.$props);
     },
     fieldWeights() {
-      this.updateQuery(this.$props.componentId, this.$data.currentValue, this.$props);
+      this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
     },
     fuzziness() {
-      this.updateQuery(this.$props.componentId, this.$data.currentValue, this.$props);
+      this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
     },
     queryFormat() {
-      this.updateQuery(this.$props.componentId, this.$data.currentValue, this.$props);
+      this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
     },
     defaultSelected(newVal) {
       this.setValue(newVal, true, this.$props);
@@ -445,7 +445,6 @@ const DataSearch = {
             <Input
               class={getClassName(this.$props.innerClass, 'input') || ''}
               placeholder={this.$props.placeholder}
-              value={this.$data.currentValue ? this.$data.currentValue : ''}
               {...{
                 on: {
                   blur: (e) => {
@@ -454,7 +453,7 @@ const DataSearch = {
                   keypress: (e) => {
                     this.$emit('keyPress', e);
                   },
-                  change: this.onInputChange,
+                  input: this.onInputChange,
                   focus: (e) => {
                     this.$emit('focus', e);
                   },
@@ -469,6 +468,7 @@ const DataSearch = {
               {...{
                 domProps: {
                   autofocus: this.$props.autoFocus,
+                  value: this.$data.currentValue ? this.$data.currentValue : ''
                 },
               }}
               iconPosition={this.$props.iconPosition}
