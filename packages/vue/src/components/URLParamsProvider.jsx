@@ -1,18 +1,18 @@
-import { Actions, helper } from '@appbaseio/reactivecore';
-import { connect } from '../utils/index';
-import types from '../utils/vueTypes';
-import Base from '../styles/Base';
+import { Actions, helper } from "@appbaseio/reactivecore";
+import { connect } from "../utils/index";
+import types from "../utils/vueTypes";
+import Base from "../styles/Base";
 
 const { setHeaders, setValue } = Actions;
 const { isEqual } = helper;
 
-const URLSearchParams = require('url-search-params');
+const URLSearchParams = require("url-search-params");
 
 const URLParamsProvider = {
-	name: 'URLParamsProvider',
+	name: "URLParamsProvider",
 	props: {
 		headers: types.headers,
-		className: types.string,
+		className: types.string
 	},
 	mounted() {
 		window.onpopstate = () => {
@@ -22,11 +22,11 @@ const URLParamsProvider = {
 			const activeComponents = Array.from(this.$params.keys());
 			Object.keys(this.currentSelectedState)
 				.filter(item => !activeComponents.includes(item))
-				.forEach((component) => {
+				.forEach(component => {
 					this.setValue(component, null);
 				}); // update active components in selectedValues
 
-			Array.from(this.$params.entries()).forEach((item) => {
+			Array.from(this.$params.entries()).forEach(item => {
 				this.setValue(item[0], JSON.parse(item[1]));
 			});
 		};
@@ -39,29 +39,37 @@ const URLParamsProvider = {
 				this.$params = new URLSearchParams(window.location.search);
 				const currentComponents = Object.keys(newVal);
 				const urlComponents = Array.from(this.$params.keys());
-				currentComponents.filter(component => newVal[component].URLParams).forEach((component) => {
-					// prevents empty history pollution on initial load
-					if (this.hasValidValue(oldVal[component]) || this.hasValidValue(newVal[component])) {
-						if (newVal[component].URLParams) {
-							this.setURL(component, this.getValue(newVal[component].value));
-						} else {
+				currentComponents
+					.filter(component => newVal[component].URLParams)
+					.forEach(component => {
+						// prevents empty history pollution on initial load
+						if (
+							this.hasValidValue(oldVal[component])
+							|| this.hasValidValue(newVal[component])
+						) {
+							if (newVal[component].URLParams) {
+								this.setURL(component, this.getValue(newVal[component].value));
+							} else {
+								this.$params.delete(component);
+								this.pushToHistory();
+							}
+						} else if (
+							!this.hasValidValue(newVal[component])
+							&& urlComponents.includes(component)
+						) {
+							// doesn't have a valid value, but the url has a (stale) valid value set
 							this.$params.delete(component);
 							this.pushToHistory();
 						}
-					} else if (!this.hasValidValue(newVal[component]) && urlComponents.includes(component)) {
-						// doesn't have a valid value, but the url has a (stale) valid value set
-						this.$params.delete(component);
-						this.pushToHistory();
-					}
-				}); // remove unmounted components
+					}); // remove unmounted components
 				Object.keys(oldVal)
 					.filter(component => !currentComponents.includes(component))
-					.forEach((component) => {
+					.forEach(component => {
 						this.$params.delete(component);
 						this.pushToHistory();
 					});
 				if (!currentComponents.length) {
-					Array.from(this.$params.keys()).forEach((item) => {
+					Array.from(this.$params.keys()).forEach(item => {
 						this.$params.delete(item);
 					});
 					this.pushToHistory();
@@ -72,7 +80,7 @@ const URLParamsProvider = {
 			if (!isEqual(oldVal, newVal)) {
 				this.setHeaders(newVal);
 			}
-		},
+		}
 	},
 
 	render() {
@@ -88,7 +96,7 @@ const URLParamsProvider = {
 		getValue(value) {
 			if (Array.isArray(value) && value.length) {
 				return value.map(item => this.getValue(item));
-			} else if (value && typeof value === 'object') {
+			} else if (value && typeof value === "object") {
 				// TODO: support for NestedList
 				if (value.location) return value;
 				return value.label || value.key || null;
@@ -100,9 +108,9 @@ const URLParamsProvider = {
 			this.$params = new URLSearchParams(window.location.search);
 
 			if (
-				!value ||
-				(typeof value === 'string' && value.trim() === '') ||
-				(Array.isArray(value) && value.length === 0)
+				!value
+				|| (typeof value === "string" && value.trim() === "")
+				|| (Array.isArray(value) && value.length === 0)
 			) {
 				this.$params.delete(component);
 				this.pushToHistory();
@@ -117,34 +125,36 @@ const URLParamsProvider = {
 		},
 		pushToHistory() {
 			if (window.history.pushState) {
-				const paramsSting = this.$params.toString() ? `?${this.$params.toString()}` : '';
-				const base = window.location.href.split('?')[0];
+				const paramsSting = this.$params.toString()
+					? `?${this.$params.toString()}`
+					: "";
+				const base = window.location.href.split("?")[0];
 				const newurl = `${base}${paramsSting}`;
 				window.history.pushState(
 					{
-						path: newurl,
+						path: newurl
 					},
-					'',
-					newurl,
+					"",
+					newurl
 				);
 			}
-		},
-	},
+		}
+	}
 };
 
 const mapStateToProps = state => ({
-	selectedValues: state.selectedValues,
+	selectedValues: state.selectedValues
 });
 
 const mapDispatchtoProps = {
 	setHeaders,
-	setValue,
+	setValue
 };
 
-URLParamsProvider.install = function (Vue) {
+URLParamsProvider.install = function(Vue) {
 	Vue.component(URLParamsProvider.name, URLParamsProvider);
 };
 export default connect(
 	mapStateToProps,
-	mapDispatchtoProps,
+	mapDispatchtoProps
 )(URLParamsProvider);
