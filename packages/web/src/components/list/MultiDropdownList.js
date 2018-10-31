@@ -214,6 +214,17 @@ class MultiDropdownList extends Component {
 
 			query = value.length ? listQuery : null;
 		}
+
+		if (props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
 		return query;
 	};
 
@@ -413,6 +424,7 @@ MultiDropdownList.propTypes = {
 	showSearch: types.bool,
 	showLoadMore: types.bool,
 	loadMoreLabel: types.title,
+	nestedField: types.string,
 };
 
 MultiDropdownList.defaultProps = {
@@ -433,7 +445,9 @@ MultiDropdownList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId],
+	options: props.nestedField && state.aggregations[props.componentId]
+		? state.aggregations[props.componentId].reactivesearch_nested
+		: state.aggregations[props.componentId],
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
 	themePreset: state.config.themePreset,

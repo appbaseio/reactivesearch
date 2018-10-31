@@ -26,6 +26,7 @@ export interface MultiDropdownList extends CommonProps {
 	missingLabel?: string;
 	showLoadMore?: boolean;
 	loadMoreLabel?: types.title;
+	nestedField?: string;
 }
 
 declare const MultiDropdownList: React.ComponentType<MultiDropdownList>;
