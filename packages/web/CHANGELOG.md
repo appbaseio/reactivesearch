@@ -8,8 +8,8 @@
 
 ## v2.13.0
 - Add `tooltipTrigger` in slider components [#284](https://github.com/appbaseio/reactivesearch/issues/284)
-- Support nested object mapping in DropdownList comps [#595]((https://github.com/appbaseio/reactivesearch/issues/595)
-- [TS] add renderSuggestions as props on DataSearch and CategorySearch[591](https://github.com/appbaseio/reactivesearch/issues/591)
+- Support nested object mapping in DropdownList comps - Add `nestedField` prop [#595](https://github.com/appbaseio/reactivesearch/issues/595)
+- [TS] add renderSuggestions as props on DataSearch and CategorySearch [#591](https://github.com/appbaseio/reactivesearch/issues/591)
 - Add polyfill for `Array.find` [#590](https://github.com/appbaseio/reactivesearch/issues/590)
 - Add showFilter prop value to selected-filters [#589](https://github.com/appbaseio/reactivesearch/issues/589)
 - Handle transformRequest initialization in ReactiveBase [#574](https://github.com/appbaseio/reactivesearch/pull/574)
