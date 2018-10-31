@@ -215,7 +215,7 @@ class MultiDropdownList extends Component {
 			query = value.length ? listQuery : null;
 		}
 
-		if (props.nestedField) {
+		if (query && props.nestedField) {
 			return {
 				query: {
 					nested: {

@@ -162,7 +162,7 @@ class SingleDropdownList extends Component {
 			};
 		}
 
-		if (props.nestedField) {
+		if (query && props.nestedField) {
 			return {
 				query: {
 					nested: {
