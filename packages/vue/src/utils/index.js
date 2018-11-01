@@ -1,4 +1,4 @@
-import connectToStore from "./connector";
+import connectToStore from './connector';
 
 // TODO
 // import { storeKey } from '@appbaseio/reactivecore';
@@ -11,14 +11,14 @@ export const connect = (...args) => connectToStore(...args);
 export const composeThemeObject = (ownTheme = {}, userTheme = {}) => ({
 	typography: {
 		...ownTheme.typography,
-		...userTheme.typography
+		...userTheme.typography,
 	},
 	colors: {
 		...ownTheme.colors,
-		...userTheme.colors
+		...userTheme.colors,
 	},
 	component: {
 		...ownTheme.component,
-		...userTheme.component
-	}
+		...userTheme.component,
+	},
 });

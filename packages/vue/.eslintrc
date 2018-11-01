@@ -17,6 +17,8 @@
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "no-underscore-dangle": 0,
     "operator-linebreak": ["error", "before"],
-    "func-names": [0]
+    "func-names": [0],
+    "comma-dangle": ["error", "always"],
+    "quotes": [2, "single", { "avoidEscape": true }]
   }
 }

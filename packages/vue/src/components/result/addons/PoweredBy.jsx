@@ -1,4 +1,4 @@
-import PoweredByImage from "../../../styles/PoweredByImage";
+import PoweredByImage from '../../../styles/PoweredByImage';
 
 const PoweredBy = () => (
 	<a href="https://appbase.io/" target="_blank" rel="noopener noreferrer">

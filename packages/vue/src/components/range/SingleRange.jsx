@@ -1,33 +1,33 @@
-import { Actions, helper } from "@appbaseio/reactivecore";
-import VueTypes from "vue-types";
-import Title from "../../styles/Title";
-import Container from "../../styles/Container";
-import { UL, Radio } from "../../styles/FormControlList";
-import { connect } from "../../utils/index";
-import types from "../../utils/vueTypes";
+import { Actions, helper, } from '@appbaseio/reactivecore';
+import VueTypes from 'vue-types';
+import Title from '../../styles/Title';
+import Container from '../../styles/Container';
+import { UL, Radio, } from '../../styles/FormControlList';
+import { connect, } from '../../utils/index';
+import types from '../../utils/vueTypes';
 
 const {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryListener
+	setQueryListener,
 } = Actions;
-const { isEqual, checkValueChange, getClassName } = helper;
+const { isEqual, checkValueChange, getClassName, } = helper;
 
 const SingleRange = {
-	name: "SingleRange",
+	name: 'SingleRange',
 	data() {
 		this.__state = {
-			currentValue: null
+			currentValue: null,
 		};
-		this.type = "range";
+		this.type = 'range';
 		this.locked = false;
 		return this.__state;
 	},
 	props: {
 		beforeValueChange: types.func,
-		className: VueTypes.string.def(""),
+		className: VueTypes.string.def(''),
 		componentId: types.stringRequired,
 		customQuery: types.func,
 		data: types.data,
@@ -39,11 +39,11 @@ const SingleRange = {
 		showFilter: VueTypes.bool.def(true),
 		showRadio: VueTypes.bool.def(true),
 		title: types.title,
-		URLParams: VueTypes.bool.def(false)
+		URLParams: VueTypes.bool.def(false),
 	},
 	created() {
 		const onQueryChange = (...args) => {
-			this.$emit("queryChange", ...args);
+			this.$emit('queryChange', ...args);
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, null);
 	},
@@ -75,26 +75,26 @@ const SingleRange = {
 			if (!isEqual(this.$data.currentValue, newVal)) {
 				this.setValue(newVal);
 			}
-		}
+		},
 	},
 
 	render() {
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
-					<Title class={getClassName(this.$props.innerClass, "title")}>
+					<Title class={getClassName(this.$props.innerClass, 'title')}>
 						{this.$props.title}
 					</Title>
 				)}
-				<UL class={getClassName(this.$props.innerClass, "list")}>
+				<UL class={getClassName(this.$props.innerClass, 'list')}>
 					{this.$props.data.map(item => {
 						const selected
 							= !!this.$data.currentValue
 							&& this.$data.currentValue.label === item.label;
 						return (
-							<li key={item.label} class={`${selected ? "active" : ""}`}>
+							<li key={item.label} class={`${selected ? 'active' : ''}`}>
 								<Radio
-									class={getClassName(this.$props.innerClass, "radio")}
+									class={getClassName(this.$props.innerClass, 'radio')}
 									id={`${this.$props.componentId}-${item.label}`}
 									name={this.$props.componentId}
 									value={item.label}
@@ -104,7 +104,7 @@ const SingleRange = {
 									show={this.$props.showRadio}
 								/>
 								<label
-									class={getClassName(this.$props.innerClass, "label")}
+									class={getClassName(this.$props.innerClass, 'label')}
 									for={`${this.$props.componentId}-${item.label}`}
 								>
 									{item.label}
@@ -137,7 +137,7 @@ const SingleRange = {
 				this.currentValue = currentValue;
 				this.updateQueryHandler(currentValue, props);
 				this.locked = false;
-				this.$emit("valueChange", currentValue);
+				this.$emit('valueChange', currentValue);
 			};
 
 			checkValueChange(
@@ -157,14 +157,14 @@ const SingleRange = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: "SINGLERANGE"
+				componentType: 'SINGLERANGE',
 			});
 		},
 
 		handleClick(e) {
 			this.setValue(e.target.value);
-		}
-	}
+		},
+	},
 };
 
 SingleRange.parseValue = (value, props) =>
@@ -177,9 +177,9 @@ SingleRange.defaultQuery = (value, props) => {
 				[props.dataField]: {
 					gte: value.start,
 					lte: value.end,
-					boost: 2.0
-				}
-			}
+					boost: 2.0,
+				},
+			},
 		};
 	}
 	return null;
@@ -189,7 +189,7 @@ const mapStateToProps = (state, props) => ({
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
-		|| null
+		|| null,
 });
 
 const mapDispatchtoProps = {
@@ -197,7 +197,7 @@ const mapDispatchtoProps = {
 	removeComponent,
 	updateQuery,
 	watchComponent,
-	setQueryListener
+	setQueryListener,
 };
 
 const RangeConnected = connect(

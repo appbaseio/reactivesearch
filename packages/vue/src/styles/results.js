@@ -1,4 +1,4 @@
-import { css } from "emotion";
+import { css, } from 'emotion';
 
 const resultStats = css`
 	flex-grow: 1;
@@ -23,4 +23,4 @@ const sortOptions = css`
 	outline-offset: -1px;
 `;
 
-export { resultStats, sortOptions };
+export { resultStats, sortOptions, };

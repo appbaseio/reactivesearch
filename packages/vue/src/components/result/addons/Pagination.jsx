@@ -1,25 +1,25 @@
-import { helper } from "@appbaseio/reactivecore";
-import Button, { pagination } from "../../../styles/Button";
-import types from "../../../utils/vueTypes";
+import { helper, } from '@appbaseio/reactivecore';
+import Button, { pagination, } from '../../../styles/Button';
+import types from '../../../utils/vueTypes';
 
-const { getClassName, handleA11yAction } = helper;
+const { getClassName, handleA11yAction, } = helper;
 function getStartPage(totalPages, currentPage) {
 	const midValue = parseInt(totalPages / 2, 10);
 	const start = currentPage - midValue;
 	return start > 1 ? start : 2;
 }
 const Pagination = {
-	name: "Pagination",
+	name: 'Pagination',
 	functional: true,
 	props: {
 		currentPage: types.number,
 		innerClass: types.style,
 		pages: types.number,
 		setPage: types.func,
-		totalPages: types.number
+		totalPages: types.number,
 	},
 	render(createElement, context) {
-		const { props } = context;
+		const { props, } = context;
 		const start = getStartPage(props.pages, props.currentPage);
 		const pages = [];
 
@@ -42,11 +42,11 @@ const Pagination = {
 				props.pages < props.totalPages ? calcPages - 1 : props.totalPages + 1;
 			for (let i = start; i < totalPagesToShow; i += 1) {
 				const primary = props.currentPage === i - 1;
-				const innerClassName = getClassName(props.innerClass, "button");
+				const innerClassName = getClassName(props.innerClass, 'button');
 				const className
 					= innerClassName || primary
-						? `${innerClassName} ${primary ? "active" : ""}`
-						: "";
+						? `${innerClassName} ${primary ? 'active' : ''}`
+						: '';
 				const pageBtn = (
 					<Button
 						class={className}
@@ -72,18 +72,18 @@ const Pagination = {
 			return null;
 		}
 
-		const innerClassName = getClassName(props.innerClass, "button");
+		const innerClassName = getClassName(props.innerClass, 'button');
 		const primary = props.currentPage === 0;
 		const className
 			= innerClassName || primary
-				? `${innerClassName} ${primary ? "active" : ""}`
-				: "";
+				? `${innerClassName} ${primary ? 'active' : ''}`
+				: '';
 		return (
 			<div
-				class={`${pagination} ${getClassName(props.innerClass, "pagination")}`}
+				class={`${pagination} ${getClassName(props.innerClass, 'pagination')}`}
 			>
 				<Button
-					class={getClassName(props.innerClass, "button") || ""}
+					class={getClassName(props.innerClass, 'button') || ''}
 					disabled={props.currentPage === 0}
 					onKeyPress={event => handleA11yAction(event, onPrevPage)}
 					onClick={onPrevPage}
@@ -107,7 +107,7 @@ const Pagination = {
 				{props.currentPage >= props.pages ? <span>...</span> : null}
 				{pages}
 				<Button
-					class={getClassName(props.innerClass, "button") || ""}
+					class={getClassName(props.innerClass, 'button') || ''}
 					disabled={props.currentPage >= props.totalPages - 1}
 					onKeyPress={event => handleA11yAction(event, onNextPage)}
 					onClick={onNextPage}
@@ -117,7 +117,7 @@ const Pagination = {
 				</Button>
 			</div>
 		);
-	}
+	},
 };
 Pagination.install = function(Vue) {
 	Vue.component(Pagination.name, Pagination);

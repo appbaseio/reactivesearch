@@ -1,18 +1,18 @@
-import { Actions, helper } from "@appbaseio/reactivecore";
-import { connect } from "../utils/index";
-import types from "../utils/vueTypes";
-import Base from "../styles/Base";
+import { Actions, helper, } from '@appbaseio/reactivecore';
+import { connect, } from '../utils/index';
+import types from '../utils/vueTypes';
+import Base from '../styles/Base';
 
-const { setHeaders, setValue } = Actions;
-const { isEqual } = helper;
+const { setHeaders, setValue, } = Actions;
+const { isEqual, } = helper;
 
-const URLSearchParams = require("url-search-params");
+const URLSearchParams = require('url-search-params');
 
 const URLParamsProvider = {
-	name: "URLParamsProvider",
+	name: 'URLParamsProvider',
 	props: {
 		headers: types.headers,
-		className: types.string
+		className: types.string,
 	},
 	mounted() {
 		window.onpopstate = () => {
@@ -80,7 +80,7 @@ const URLParamsProvider = {
 			if (!isEqual(oldVal, newVal)) {
 				this.setHeaders(newVal);
 			}
-		}
+		},
 	},
 
 	render() {
@@ -96,7 +96,7 @@ const URLParamsProvider = {
 		getValue(value) {
 			if (Array.isArray(value) && value.length) {
 				return value.map(item => this.getValue(item));
-			} else if (value && typeof value === "object") {
+			} if (value && typeof value === 'object') {
 				// TODO: support for NestedList
 				if (value.location) return value;
 				return value.label || value.key || null;
@@ -109,7 +109,7 @@ const URLParamsProvider = {
 
 			if (
 				!value
-				|| (typeof value === "string" && value.trim() === "")
+				|| (typeof value === 'string' && value.trim() === '')
 				|| (Array.isArray(value) && value.length === 0)
 			) {
 				this.$params.delete(component);
@@ -127,28 +127,28 @@ const URLParamsProvider = {
 			if (window.history.pushState) {
 				const paramsSting = this.$params.toString()
 					? `?${this.$params.toString()}`
-					: "";
-				const base = window.location.href.split("?")[0];
+					: '';
+				const base = window.location.href.split('?')[0];
 				const newurl = `${base}${paramsSting}`;
 				window.history.pushState(
 					{
-						path: newurl
+						path: newurl,
 					},
-					"",
+					'',
 					newurl
 				);
 			}
-		}
-	}
+		},
+	},
 };
 
 const mapStateToProps = state => ({
-	selectedValues: state.selectedValues
+	selectedValues: state.selectedValues,
 });
 
 const mapDispatchtoProps = {
 	setHeaders,
-	setValue
+	setValue,
 };
 
 URLParamsProvider.install = function(Vue) {

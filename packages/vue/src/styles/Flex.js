@@ -1,6 +1,6 @@
-import styled from "vue-emotion";
-import { css } from "emotion";
-import { lighten } from "polished";
+import styled from 'vue-emotion';
+import { css, } from 'emotion';
+import { lighten, } from 'polished';
 
 const leftLabel = css`
 	flex-direction: row;
@@ -20,20 +20,20 @@ const bottomLabel = css`
 	flex-direction: column-reverse;
 `;
 
-const border = ({ theme: { colors } }) => css`
-	border: 1px solid ${colors.borderColor || "#ccc"};
+const border = ({ theme: { colors, }, }) => css`
+	border: 1px solid ${colors.borderColor || '#ccc'};
 `;
 
-const Flex = styled("div")`
-	display: ${props => (props.inline ? "inline-flex" : "flex")};
+const Flex = styled('div')`
+	display: ${props => (props.inline ? 'inline-flex' : 'flex')};
 	${props =>
-		(props.labelPosition === "left" || props.iconPosition === "right")
+		(props.labelPosition === 'left' || props.iconPosition === 'right')
 		&& leftLabel};
 	${props =>
-		(props.labelPosition === "right" || props.iconPosition === "left")
+		(props.labelPosition === 'right' || props.iconPosition === 'left')
 		&& rightLabel};
-	${props => props.labelPosition === "top" && topLabel};
-	${props => props.labelPosition === "bottom" && bottomLabel};
+	${props => props.labelPosition === 'top' && topLabel};
+	${props => props.labelPosition === 'bottom' && bottomLabel};
 	${props => props.showBorder && border};
 
 	${props =>
@@ -65,12 +65,12 @@ const Flex = styled("div")`
 
 	svg.cancel-icon {
 		cursor: pointer;
-		fill: ${({ theme: { colors } }) =>
+		fill: ${({ theme: { colors, }, }) =>
 		colors.borderColor || lighten(0.3, colors.textColor)};
 		flex-basis: 30px;
 
 		&:hover {
-			fill: ${({ theme }) => theme.colors.textColor};
+			fill: ${({ theme, }) => theme.colors.textColor};
 		}
 	}
 `;

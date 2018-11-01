@@ -1,23 +1,23 @@
-import { bindActionCreators } from "redux";
-import shallowEqual from "./shallowEqual";
+import { bindActionCreators, } from 'redux';
+import shallowEqual from './shallowEqual';
 
 const defaultMapState = () => ({});
 const defaultMapDispatch = {};
 
 const normalizeMapState = mapState => {
-	if (typeof mapState === "function") return mapState;
+	if (typeof mapState === 'function') return mapState;
 
 	if (mapState === Object(mapState)) {
 		return (state, ownProps) =>
 			Object.keys(mapState)
-				.filter(key => typeof mapState[key] === "function")
+				.filter(key => typeof mapState[key] === 'function')
 				.reduce(
-					(map, key) => ({ ...map, [key]: mapState[key](state, ownProps) }),
+					(map, key) => ({ ...map, [key]: mapState[key](state, ownProps), }),
 					{}
 				);
 	}
 
-	throw new Error("[revux] - mapState provided to connect is invalid");
+	throw new Error('[revux] - mapState provided to connect is invalid');
 };
 
 // eslint-disable-next-line
@@ -29,17 +29,17 @@ const connector = (
 
 	return {
 		name: `connect-${component.name}`,
-		mixins: [component],
-		inject: ["$$store"],
+		mixins: [component,],
+		inject: ['$$store',],
 
 		data() {
 			const merged = {
 				...mapState(this.$$store.getState(), this.$props || {}),
-				...bindActionCreators(mapDispatch, this.$$store.dispatch)
+				...bindActionCreators(mapDispatch, this.$$store.dispatch),
 			};
 
 			return Object.keys(merged).reduce(
-				(data, key) => ({ ...data, [key]: merged[key] }),
+				(data, key) => ({ ...data, [key]: merged[key], }),
 				{}
 			);
 		},
@@ -73,7 +73,7 @@ const connector = (
 
 		beforeDestroy() {
 			this._unsubscribe();
-		}
+		},
 	};
 };
 

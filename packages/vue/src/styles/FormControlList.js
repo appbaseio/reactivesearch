@@ -1,11 +1,11 @@
-import { css } from "emotion";
-import styled from "vue-emotion";
-import { lighten } from "polished";
+import { css, } from 'emotion';
+import styled from 'vue-emotion';
+import { lighten, } from 'polished';
 
 const item = {
-	width: "16px",
-	height: "16px",
-	scale: "4px"
+	width: '16px',
+	height: '16px',
+	scale: '4px',
 };
 
 const vh = css`
@@ -41,7 +41,7 @@ const hideInputControl = css`
 	}
 `;
 
-const formItem = ({ theme }) => css`
+const formItem = ({ theme, }) => css`
 	${vh};
 
 	&:focus {
@@ -82,7 +82,7 @@ const formItem = ({ theme }) => css`
 			border: 2px solid
 				${theme.colors.borderColor || lighten(0.1, theme.colors.textColor)};
 			box-sizing: content-box;
-			content: "";
+			content: '';
 			color: ${theme.colors.primaryColor};
 			margin-right: calc(${item.width} * 0.5);
 			top: 50%;
@@ -95,7 +95,7 @@ const formItem = ({ theme }) => css`
 
 		&::after {
 			box-sizing: content-box;
-			content: "";
+			content: '';
 			background-color: ${theme.colors.primaryColor};
 			position: absolute;
 			top: 50%;
@@ -110,7 +110,7 @@ const formItem = ({ theme }) => css`
 	}
 `;
 
-const Radio = styled("input")`
+const Radio = styled('input')`
 	${formItem};
 	${props => (props.show ? null : hideInputControl)};
 
@@ -125,7 +125,7 @@ const Radio = styled("input")`
 		&:active,
 		&:focus {
 			+ label {
-				color: ${({ theme }) => theme.colors.primaryColor};
+				color: ${({ theme, }) => theme.colors.primaryColor};
 
 				&::before {
 					animation: none;
@@ -139,7 +139,7 @@ const Radio = styled("input")`
 			&::before {
 				animation: none;
 				background-color: #fff;
-				border-color: ${({ theme }) => theme.colors.primaryColor};
+				border-color: ${({ theme, }) => theme.colors.primaryColor};
 		}
 
 		&::after {
@@ -148,7 +148,7 @@ const Radio = styled("input")`
 	}
 `;
 
-const Checkbox = styled("input")`
+const Checkbox = styled('input')`
 	${formItem};
 	${props => (props.show ? null : hideInputControl)};
 
@@ -166,7 +166,7 @@ const Checkbox = styled("input")`
 			height: calc(${item.width} / 5);
 			margin-top: calc(${item.height} / -2 / 2 * 0.8);
 			border-style: solid;
-			border-color: ${({ theme }) => theme.colors.primaryColor};
+			border-color: ${({ theme, }) => theme.colors.primaryColor};
 			border-width: 0 0 2px 2px;
 			border-radius: 0;
 			border-image: none;
@@ -178,11 +178,11 @@ const Checkbox = styled("input")`
 	&:checked {
 		+ label {
 			&::before {
-				border-color: ${({ theme }) => theme.colors.primaryColor};
+				border-color: ${({ theme, }) => theme.colors.primaryColor};
 			}
 
 			&::after {
-				content: "";
+				content: '';
 				transform: rotate(-45deg) scale(1);
 				transition: transform 200ms ease-out;
 			}
@@ -190,7 +190,7 @@ const Checkbox = styled("input")`
 	}
 `;
 
-const UL = styled("ul")`
+const UL = styled('ul')`
 	list-style: none;
 	padding: 0;
 	margin: 0;
@@ -208,4 +208,4 @@ const UL = styled("ul")`
 	}
 `;
 
-export { UL, Radio, Checkbox };
+export { UL, Radio, Checkbox, };

@@ -1,6 +1,6 @@
-import styled from "vue-emotion";
+import styled from 'vue-emotion';
 
-const PoweredByImage = styled("img")`
+const PoweredByImage = styled('img')`
 	width: 110px;
 `;
 

@@ -1,7 +1,7 @@
-import { Actions, helper } from "@appbaseio/reactivecore";
-import VueTypes from "vue-types";
-import { connect } from "../../utils/index";
-import types from "../../utils/vueTypes";
+import { Actions, helper, } from '@appbaseio/reactivecore';
+import VueTypes from 'vue-types';
+import { connect, } from '../../utils/index';
+import types from '../../utils/vueTypes';
 
 const {
 	addComponent,
@@ -9,25 +9,25 @@ const {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener
+	setQueryListener,
 } = Actions;
-const { pushToAndClause, parseHits, isEqual } = helper;
+const { pushToAndClause, parseHits, isEqual, } = helper;
 const ReactiveComponent = {
-	name: "ReactiveComponent",
+	name: 'ReactiveComponent',
 	props: {
 		componentId: types.stringRequired,
 		defaultQuery: types.func,
 		filterLabel: types.string,
 		react: types.react,
 		showFilter: VueTypes.bool.def(true),
-		URLParams: VueTypes.bool.def(false)
+		URLParams: VueTypes.bool.def(false),
 	},
 	created() {
 		const props = this.$props;
 		this.internalComponent = null;
 		this.$defaultQuery = null;
 		const onQueryChange = (...args) => {
-			this.$emit("queryChange", ...args);
+			this.$emit('queryChange', ...args);
 		};
 		this.setQueryListener(props.componentId, onQueryChange, null);
 
@@ -37,7 +37,7 @@ const ReactiveComponent = {
 				componentId: props.componentId,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
-				URLParams: props.URLParams
+				URLParams: props.URLParams,
 			});
 		};
 
@@ -65,7 +65,7 @@ const ReactiveComponent = {
 
 			this.updateQuery({
 				componentId: this.internalComponent,
-				query: query || null
+				query: query || null,
 			});
 		}
 	},
@@ -81,12 +81,12 @@ const ReactiveComponent = {
 	watch: {
 		hits(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
-				this.$emit("allData", parseHits(newVal), oldVal);
+				this.$emit('allData', parseHits(newVal), oldVal);
 			}
 		},
 		aggregations(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
-				this.$emit("allData", parseHits(newVal), oldVal);
+				this.$emit('allData', parseHits(newVal), oldVal);
 			}
 		},
 		defaultQuery(newVal, oldVal) {
@@ -100,13 +100,13 @@ const ReactiveComponent = {
 
 				this.updateQuery({
 					componentId: this.internalComponent,
-					query: query || null
+					query: query || null,
 				});
 			}
 		},
 		react() {
 			this.setReact(this.$props);
-		}
+		},
 	},
 
 	render() {
@@ -117,7 +117,7 @@ const ReactiveComponent = {
 				hits: this.hits,
 				selectedValue: this.selectedValue,
 				setQuery: this.setQuery,
-				...this.$props
+				...this.$props,
 			};
 			return <div>{dom(propsToBePassed)}</div>;
 		} catch (e) {
@@ -127,7 +127,7 @@ const ReactiveComponent = {
 
 	methods: {
 		setReact(props) {
-			const { react } = props;
+			const { react, } = props;
 
 			if (react) {
 				if (this.internalComponent) {
@@ -138,11 +138,11 @@ const ReactiveComponent = {
 				}
 			} else if (this.internalComponent) {
 				this.watchComponent(props.componentId, {
-					and: this.internalComponent
+					and: this.internalComponent,
 				});
 			}
-		}
-	}
+		},
+	},
 };
 
 const mapStateToProps = (state, props) => ({
@@ -155,7 +155,7 @@ const mapStateToProps = (state, props) => ({
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
-		|| null
+		|| null,
 });
 
 const mapDispatchtoProps = {
@@ -164,7 +164,7 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 	setQueryListener,
 	updateQuery,
-	watchComponent
+	watchComponent,
 };
 const RcConnected = connect(
 	mapStateToProps,
