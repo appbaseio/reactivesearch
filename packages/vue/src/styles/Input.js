@@ -1,7 +1,7 @@
-import { css, } from 'emotion';
+import { css } from 'emotion';
 import styled from 'vue-emotion';
 
-const alertBorder = ({ theme, }) => css`
+const alertBorder = ({ theme }) => css`
 	border: 1px solid ${theme.colors.alertColor};
 `;
 
@@ -23,7 +23,7 @@ const dark = theme => css`
 	border-color: ${theme.colors.borderColor};
 `;
 
-const darkInput = ({ theme, }) => css`
+const darkInput = ({ theme }) => css`
 	background-color: ${theme.colors.backgroundColor};
 	color: ${theme.colors.textColor};
 	${dark(theme)};
@@ -35,7 +35,7 @@ const darkInput = ({ theme, }) => css`
 
 const Input = styled('input')`
 	${input};
-	${({ themePreset, }) => themePreset === 'dark' && darkInput};
+	${({ themePreset }) => themePreset === 'dark' && darkInput};
 
 	${props =>
 		props.showIcon
@@ -125,4 +125,4 @@ const suggestionsContainer = css`
 `;
 
 export default Input;
-export { suggestionsContainer, suggestions, input, };
+export { suggestionsContainer, suggestions, input };

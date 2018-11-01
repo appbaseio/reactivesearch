@@ -11,12 +11,12 @@ export default {
 					);
 				}
 				return true;
-			},
-		},
+			}
+		}
 	},
 	provide() {
 		return {
-			$$store: this.store,
+			$$store: this.store
 		};
 	},
 	render(h) {
@@ -24,5 +24,5 @@ export default {
 			return h('div', this.$slots.default);
 		}
 		return this.$slots.default[0];
-	},
+	}
 };

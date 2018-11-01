@@ -1,8 +1,8 @@
-import { helper, } from '@appbaseio/reactivecore';
-import Button, { pagination, } from '../../../styles/Button';
+import { helper } from '@appbaseio/reactivecore';
+import Button, { pagination } from '../../../styles/Button';
 import types from '../../../utils/vueTypes';
 
-const { getClassName, handleA11yAction, } = helper;
+const { getClassName, handleA11yAction } = helper;
 function getStartPage(totalPages, currentPage) {
 	const midValue = parseInt(totalPages / 2, 10);
 	const start = currentPage - midValue;
@@ -16,10 +16,10 @@ const Pagination = {
 		innerClass: types.style,
 		pages: types.number,
 		setPage: types.func,
-		totalPages: types.number,
+		totalPages: types.number
 	},
 	render(createElement, context) {
-		const { props, } = context;
+		const { props } = context;
 		const start = getStartPage(props.pages, props.currentPage);
 		const pages = [];
 
@@ -117,7 +117,7 @@ const Pagination = {
 				</Button>
 			</div>
 		);
-	},
+	}
 };
 Pagination.install = function(Vue) {
 	Vue.component(Pagination.name, Pagination);

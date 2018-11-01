@@ -1,4 +1,4 @@
-import styled, { css, } from 'vue-emotion';
+import styled, { css } from 'vue-emotion';
 
 const left = css`
 	padding-left: 12px;
@@ -19,7 +19,7 @@ const clear = css`
 const InputIcon = styled('div')`
 	position: absolute;
 	top: calc(50% - 8px);
-	${({ iconPosition, }) => {
+	${({ iconPosition }) => {
 		if (iconPosition === 'left') {
 			return left;
 		}
@@ -28,14 +28,14 @@ const InputIcon = styled('div')`
 		}
 		return null;
 	}};
-	${({ clearIcon, }) => clearIcon && clear}};
+	${({ clearIcon }) => clearIcon && clear}};
 
 	svg.search-icon {
-		fill: ${({ theme, }) => theme.colors.primaryColor};
+		fill: ${({ theme }) => theme.colors.primaryColor};
 	}
 
 	svg.cancel-icon {
-		fill: ${({ theme, }) => theme.colors.borderColor};
+		fill: ${({ theme }) => theme.colors.borderColor};
 	}
 `;
 

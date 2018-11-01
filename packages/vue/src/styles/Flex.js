@@ -1,6 +1,6 @@
 import styled from 'vue-emotion';
-import { css, } from 'emotion';
-import { lighten, } from 'polished';
+import { css } from 'emotion';
+import { lighten } from 'polished';
 
 const leftLabel = css`
 	flex-direction: row;
@@ -20,7 +20,7 @@ const bottomLabel = css`
 	flex-direction: column-reverse;
 `;
 
-const border = ({ theme: { colors, }, }) => css`
+const border = ({ theme: { colors } }) => css`
 	border: 1px solid ${colors.borderColor || '#ccc'};
 `;
 
@@ -65,12 +65,12 @@ const Flex = styled('div')`
 
 	svg.cancel-icon {
 		cursor: pointer;
-		fill: ${({ theme: { colors, }, }) =>
+		fill: ${({ theme: { colors } }) =>
 		colors.borderColor || lighten(0.3, colors.textColor)};
 		flex-basis: 30px;
 
 		&:hover {
-			fill: ${({ theme, }) => theme.colors.textColor};
+			fill: ${({ theme }) => theme.colors.textColor};
 		}
 	}
 `;

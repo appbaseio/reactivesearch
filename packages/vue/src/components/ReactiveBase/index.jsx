@@ -2,7 +2,7 @@ import configureStore from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import Appbase from 'appbase-js';
 import Provider from '../Provider';
-import { composeThemeObject, } from '../../utils/index';
+import { composeThemeObject } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import URLParamsProvider from '../URLParamsProvider.jsx';
 import getTheme from '../../styles/theme';
@@ -13,7 +13,7 @@ const ReactiveBase = {
 	name: 'ReactiveBase',
 	data() {
 		this.state = {
-			key: '__REACTIVE_BASE__',
+			key: '__REACTIVE_BASE__'
 		};
 		return this.state;
 	},
@@ -33,7 +33,7 @@ const ReactiveBase = {
 		mapKey: types.string,
 		className: types.string,
 		initialState: VueTypes.object.def({}),
-		transformRequest: types.func,
+		transformRequest: types.func
 	},
 	provide() {
 		return {
@@ -41,7 +41,7 @@ const ReactiveBase = {
 				getTheme(this.$props.themePreset),
 				this.$props.theme
 			),
-			store: this.store,
+			store: this.store
 		};
 	},
 	watch: {
@@ -62,13 +62,13 @@ const ReactiveBase = {
 		},
 		headers() {
 			this.updateState(this.$props);
-		},
+		}
 	},
 	methods: {
 		updateState(props) {
 			this.setStore(props);
 			this.setState(state => ({
-				key: `${state.key}-0`,
+				key: `${state.key}-0`
 			}));
 		},
 		setStore(props) {
@@ -85,7 +85,7 @@ const ReactiveBase = {
 				credentials,
 				type: props.type ? props.type : '*',
 				transformRequest: props.transformRequest,
-				analytics: props.analytics,
+				analytics: props.analytics
 			};
 			let queryParams = '';
 
@@ -103,8 +103,8 @@ const ReactiveBase = {
 					selectedValues = {
 						...selectedValues,
 						[key]: {
-							value: JSON.parse(params.get(key)),
-						},
+							value: JSON.parse(params.get(key))
+						}
 					};
 				});
 			} catch (e) {
@@ -115,7 +115,7 @@ const ReactiveBase = {
 				selectedValues = {};
 			}
 
-			const { headers = {}, themePreset, } = props;
+			const { headers = {}, themePreset } = props;
 			const appbaseRef = Appbase(config);
 
 			if (this.$props.transformRequest) {
@@ -126,19 +126,19 @@ const ReactiveBase = {
 				config: {
 					...config,
 					mapKey: props.mapKey,
-					themePreset,
+					themePreset
 				},
 				appbaseRef,
 				selectedValues,
 				headers,
-				...this.$props.initialState,
+				...this.$props.initialState
 			};
 			this.store = configureStore(initialState);
-		},
+		}
 	},
 	render() {
 		const children = this.$slots.default;
-		const { headers, style, className, } = this.$props;
+		const { headers, style, className } = this.$props;
 		return (
 			<Provider store={this.store}>
 				<URLParamsProvider
@@ -150,7 +150,7 @@ const ReactiveBase = {
 				</URLParamsProvider>
 			</Provider>
 		);
-	},
+	}
 };
 ReactiveBase.install = function(Vue) {
 	Vue.component(ReactiveBase.name, ReactiveBase);

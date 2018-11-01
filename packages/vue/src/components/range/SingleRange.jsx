@@ -1,9 +1,9 @@
-import { Actions, helper, } from '@appbaseio/reactivecore';
+import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
-import { UL, Radio, } from '../../styles/FormControlList';
-import { connect, } from '../../utils/index';
+import { UL, Radio } from '../../styles/FormControlList';
+import { connect } from '../../utils/index';
 import types from '../../utils/vueTypes';
 
 const {
@@ -11,15 +11,15 @@ const {
 	removeComponent,
 	watchComponent,
 	updateQuery,
-	setQueryListener,
+	setQueryListener
 } = Actions;
-const { isEqual, checkValueChange, getClassName, } = helper;
+const { isEqual, checkValueChange, getClassName } = helper;
 
 const SingleRange = {
 	name: 'SingleRange',
 	data() {
 		this.__state = {
-			currentValue: null,
+			currentValue: null
 		};
 		this.type = 'range';
 		this.locked = false;
@@ -39,7 +39,7 @@ const SingleRange = {
 		showFilter: VueTypes.bool.def(true),
 		showRadio: VueTypes.bool.def(true),
 		title: types.title,
-		URLParams: VueTypes.bool.def(false),
+		URLParams: VueTypes.bool.def(false)
 	},
 	created() {
 		const onQueryChange = (...args) => {
@@ -75,7 +75,7 @@ const SingleRange = {
 			if (!isEqual(this.$data.currentValue, newVal)) {
 				this.setValue(newVal);
 			}
-		},
+		}
 	},
 
 	render() {
@@ -157,14 +157,14 @@ const SingleRange = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'SINGLERANGE',
+				componentType: 'SINGLERANGE'
 			});
 		},
 
 		handleClick(e) {
 			this.setValue(e.target.value);
-		},
-	},
+		}
+	}
 };
 
 SingleRange.parseValue = (value, props) =>
@@ -177,9 +177,9 @@ SingleRange.defaultQuery = (value, props) => {
 				[props.dataField]: {
 					gte: value.start,
 					lte: value.end,
-					boost: 2.0,
-				},
-			},
+					boost: 2.0
+				}
+			}
 		};
 	}
 	return null;
@@ -189,7 +189,7 @@ const mapStateToProps = (state, props) => ({
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
-		|| null,
+		|| null
 });
 
 const mapDispatchtoProps = {
@@ -197,7 +197,7 @@ const mapDispatchtoProps = {
 	removeComponent,
 	updateQuery,
 	watchComponent,
-	setQueryListener,
+	setQueryListener
 };
 
 const RangeConnected = connect(

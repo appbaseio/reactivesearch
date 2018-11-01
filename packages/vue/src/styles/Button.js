@@ -1,8 +1,8 @@
-import { css, } from 'emotion';
+import { css } from 'emotion';
 import styled from 'vue-emotion';
-import { darken, lighten, rgba, } from 'polished';
+import { darken, lighten, rgba } from 'polished';
 
-const filters = ({ colors: { borderColor, }, }) => css`
+const filters = ({ colors: { borderColor } }) => css`
 	margin: 0 -3px;
 	max-width: 100%;
 
@@ -70,7 +70,7 @@ const numberBoxContainer = css`
 	}
 `;
 
-const primary = ({ theme, }) => css`
+const primary = ({ theme }) => css`
 	background-color: ${theme.colors.primaryColor};
 	color: ${theme.colors.primaryTextColor};
 
@@ -85,7 +85,7 @@ const large = () => css`
 	padding: 10px 20px;
 `;
 
-const disabled = ({ theme, }) => css`
+const disabled = ({ theme }) => css`
 	background-color: ${theme.colors.backgroundColor
 		? lighten(0.1, theme.colors.backgroundColor)
 		: '#fafafa'};
@@ -110,15 +110,15 @@ const Button = styled('a')`
 	word-wrap: break-word;
 	padding: 5px 12px;
 	line-height: 1.2rem;
-	background-color: ${({ theme, }) => theme.colors.backgroundColor || '#eee'};
-	color: ${({ theme, }) => theme.colors.textColor};
+	background-color: ${({ theme }) => theme.colors.backgroundColor || '#eee'};
+	color: ${({ theme }) => theme.colors.textColor};
 	cursor: pointer;
 	user-select: none;
 	transition: all 0.3s ease;
 
 	&:hover,
 	&:focus {
-		background-color: ${({ theme, }) =>
+		background-color: ${({ theme }) =>
 		theme.colors.backgroundColor
 			? darken(0.1, theme.colors.backgroundColor)
 			: '#ccc'};
@@ -126,8 +126,8 @@ const Button = styled('a')`
 
 	&:focus {
 		outline: 0;
-		border-color: ${({ theme, }) => rgba(theme.colors.primaryColor, 0.6)};
-		box-shadow: ${({ theme, }) =>
+		border-color: ${({ theme }) => rgba(theme.colors.primaryColor, 0.6)};
+		box-shadow: ${({ theme }) =>
 		`0 0 0 2px ${rgba(theme.colors.primaryColor, 0.3)}`};
 	}
 
@@ -136,5 +136,5 @@ const Button = styled('a')`
 	${props => props.large && large};
 `;
 
-export { pagination, filters, toggleButtons, numberBoxContainer, };
+export { pagination, filters, toggleButtons, numberBoxContainer };
 export default Button;

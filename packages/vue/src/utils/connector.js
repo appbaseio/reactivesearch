@@ -1,4 +1,4 @@
-import { bindActionCreators, } from 'redux';
+import { bindActionCreators } from 'redux';
 import shallowEqual from './shallowEqual';
 
 const defaultMapState = () => ({});
@@ -12,7 +12,7 @@ const normalizeMapState = mapState => {
 			Object.keys(mapState)
 				.filter(key => typeof mapState[key] === 'function')
 				.reduce(
-					(map, key) => ({ ...map, [key]: mapState[key](state, ownProps), }),
+					(map, key) => ({ ...map, [key]: mapState[key](state, ownProps) }),
 					{}
 				);
 	}
@@ -29,17 +29,17 @@ const connector = (
 
 	return {
 		name: `connect-${component.name}`,
-		mixins: [component,],
-		inject: ['$$store',],
+		mixins: [component],
+		inject: ['$$store'],
 
 		data() {
 			const merged = {
 				...mapState(this.$$store.getState(), this.$props || {}),
-				...bindActionCreators(mapDispatch, this.$$store.dispatch),
+				...bindActionCreators(mapDispatch, this.$$store.dispatch)
 			};
 
 			return Object.keys(merged).reduce(
-				(data, key) => ({ ...data, [key]: merged[key], }),
+				(data, key) => ({ ...data, [key]: merged[key] }),
 				{}
 			);
 		},
@@ -73,7 +73,7 @@ const connector = (
 
 		beforeDestroy() {
 			this._unsubscribe();
-		},
+		}
 	};
 };
 

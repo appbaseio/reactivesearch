@@ -1,11 +1,11 @@
-import { Actions, helper, } from '@appbaseio/reactivecore';
+import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
-import { connect, } from '../../utils/index';
+import { connect } from '../../utils/index';
 import types from '../../utils/vueTypes';
-import { UL, Radio, } from '../../styles/FormControlList';
+import { UL, Radio } from '../../styles/FormControlList';
 
 const {
 	addComponent,
@@ -13,14 +13,14 @@ const {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener,
+	setQueryListener
 } = Actions;
 const {
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
 	getAggsOrder,
-	getClassName,
+	getClassName
 } = helper;
 
 const SingleList = {
@@ -44,11 +44,11 @@ const SingleList = {
 		showRadio: VueTypes.bool.def(true),
 		showSearch: VueTypes.bool.def(true),
 		size: VueTypes.number.def(100),
-		sortBy: VueTypes.oneOf(['asc', 'desc', 'count',]).def('count'),
+		sortBy: VueTypes.oneOf(['asc', 'desc', 'count']).def('count'),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
 		showMissing: VueTypes.bool.def(false),
-		missingLabel: VueTypes.string.def('N/A'),
+		missingLabel: VueTypes.string.def('N/A')
 	},
 	data() {
 		const props = this.$props;
@@ -58,7 +58,7 @@ const SingleList = {
 				props.options && props.options[props.dataField]
 					? props.options[props.dataField].buckets
 					: [],
-			searchTerm: '',
+			searchTerm: ''
 		};
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -113,10 +113,10 @@ const SingleList = {
 			if (this.$data.currentValue !== newVal) {
 				this.setValue(newVal || '');
 			}
-		},
+		}
 	},
 	render() {
-		const { selectAllLabel, renderListItem, } = this.$props;
+		const { selectAllLabel, renderListItem } = this.$props;
 		const renderListItemCalc
 			= this.$scopedSlots.renderListItem || renderListItem;
 		if (this.modifiedOptions.length === 0) {
@@ -154,8 +154,8 @@ const SingleList = {
 								show={this.$props.showRadio}
 								{...{
 									domProps: {
-										checked: this.$data.currentValue === selectAllLabel,
-									},
+										checked: this.$data.currentValue === selectAllLabel
+									}
 								}}
 							/>
 							<label
@@ -198,8 +198,8 @@ const SingleList = {
 									show={this.$props.showRadio}
 									{...{
 										domProps: {
-											checked: this.$data.currentValue === String(item.key),
-										},
+											checked: this.$data.currentValue === String(item.key)
+										}
 									}}
 								/>
 								<label
@@ -234,14 +234,14 @@ const SingleList = {
 
 	methods: {
 		setReact(props) {
-			const { react, } = props;
+			const { react } = props;
 
 			if (react) {
 				const newReact = pushToAndClause(react, this.internalComponent);
 				this.watchComponent(props.componentId, newReact);
 			} else {
 				this.watchComponent(props.componentId, {
-					and: this.internalComponent,
+					and: this.internalComponent
 				});
 			}
 		},
@@ -283,7 +283,7 @@ const SingleList = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'SINGLELIST',
+				componentType: 'SINGLELIST'
 			});
 		},
 
@@ -298,11 +298,11 @@ const SingleList = {
 						order: getAggsOrder(props.sortBy || 'count'),
 						...(props.showMissing
 							? {
-								missing: props.missingLabel,
+								missing: props.missingLabel
 							  }
-							: {}),
-					},
-				},
+							: {})
+					}
+				}
 			};
 			return queryOptions;
 		},
@@ -313,7 +313,7 @@ const SingleList = {
 		},
 
 		handleInputChange(e) {
-			const { value, } = e.target;
+			const { value } = e.target;
 			this.searchTerm = value;
 		},
 
@@ -326,7 +326,7 @@ const SingleList = {
 						value={this.$data.searchTerm}
 						placeholder={this.$props.placeholder}
 						style={{
-							margin: '0 0 8px',
+							margin: '0 0 8px'
 						}}
 						themePreset={this.$props.themePreset}
 					/>
@@ -338,8 +338,8 @@ const SingleList = {
 
 		handleClick(e) {
 			this.setValue(e.target.value);
-		},
-	},
+		}
+	}
 };
 
 SingleList.generateQueryOptions = props => {
@@ -351,21 +351,21 @@ SingleList.generateQueryOptions = props => {
 				field: props.dataField,
 				size: props.size,
 				order: getAggsOrder(props.sortBy || 'count'),
-				...(props.showMissing ? { missing: props.missingLabel, } : {}),
-			},
-		},
+				...(props.showMissing ? { missing: props.missingLabel } : {})
+			}
+		}
 	};
 	return queryOptions;
 };
 SingleList.defaultQuery = (value, props) => {
 	if (props.selectAllLabel && props.selectAllLabel === value) {
 		if (props.showMissing) {
-			return { match_all: {}, };
+			return { match_all: {} };
 		}
 		return {
 			exists: {
-				field: props.dataField,
-			},
+				field: props.dataField
+			}
 		};
 	}
 	if (value) {
@@ -373,15 +373,15 @@ SingleList.defaultQuery = (value, props) => {
 			return {
 				bool: {
 					must_not: {
-						exists: { field: props.dataField, },
-					},
-				},
+						exists: { field: props.dataField }
+					}
+				}
 			};
 		}
 		return {
 			term: {
-				[props.dataField]: value,
-			},
+				[props.dataField]: value
+			}
 		};
 	}
 	return null;
@@ -392,7 +392,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| '',
-	themePreset: state.config.themePreset,
+	themePreset: state.config.themePreset
 });
 
 const mapDispatchtoProps = {
@@ -401,7 +401,7 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 	setQueryListener,
 	updateQuery,
-	watchComponent,
+	watchComponent
 };
 
 const ListConnected = connect(

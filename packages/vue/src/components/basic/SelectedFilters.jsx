@@ -1,13 +1,13 @@
-import { Actions, helper, } from '@appbaseio/reactivecore';
+import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import types from '../../utils/vueTypes';
-import Button, { filters, } from '../../styles/Button';
+import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { connect, } from '../../utils/index';
+import { connect } from '../../utils/index';
 
-const { setValue, clearValues, } = Actions;
-const { getClassName, } = helper;
+const { setValue, clearValues } = Actions;
+const { getClassName } = helper;
 
 const SelectedFilters = {
 	name: 'SelectedFilters',
@@ -16,9 +16,9 @@ const SelectedFilters = {
 		clearAllLabel: VueTypes.string.def('Clear All'),
 		innerClass: types.style,
 		showClearAll: VueTypes.bool.def(true),
-		title: types.title,
+		title: types.title
 	},
-	inject: ['theme',],
+	inject: ['theme'],
 	render() {
 		if (this.$scopedSlots.default) {
 			return this.$scopedSlots.default(this.$props);
@@ -41,8 +41,8 @@ const SelectedFilters = {
 						class={getClassName(this.$props.innerClass, 'button') || ''}
 						{...{
 							on: {
-								click: this.clearValues,
-							},
+								click: this.clearValues
+							}
 						}}
 					>
 						{this.$props.clearAllLabel}
@@ -66,7 +66,8 @@ const SelectedFilters = {
 			if (isArray && value.length) {
 				const arrayToRender = value.map(item => this.renderValue(item));
 				return arrayToRender.join(', ');
-			} if (value && typeof value === 'object') {
+			}
+			if (value && typeof value === 'object') {
 				// TODO: support for NestedList
 				let label
 					= (typeof value.label === 'string' ? value.label : value.value)
@@ -85,13 +86,13 @@ const SelectedFilters = {
 		},
 
 		renderFilters() {
-			const { selectedValues, } = this;
+			const { selectedValues } = this;
 			return Object.keys(selectedValues)
 				.filter(
 					id => this.components.includes(id) && selectedValues[id].showFilter
 				)
 				.map((component, index) => {
-					const { label, value, } = selectedValues[component];
+					const { label, value } = selectedValues[component];
 					const isArray = Array.isArray(value);
 
 					if (label && ((isArray && value.length) || (!isArray && value))) {
@@ -102,8 +103,8 @@ const SelectedFilters = {
 								key={`${component}-${index + 1}`}
 								{...{
 									on: {
-										click: () => this.remove(component, value),
-									},
+										click: () => this.remove(component, value)
+									}
 								}}
 							>
 								<span>
@@ -117,18 +118,18 @@ const SelectedFilters = {
 					return null;
 				})
 				.filter(Boolean);
-		},
-	},
+		}
+	}
 };
 
 const mapStateToProps = state => ({
 	components: state.components,
-	selectedValues: state.selectedValues,
+	selectedValues: state.selectedValues
 });
 
 const mapDispatchtoProps = {
 	clearValuesAction: clearValues,
-	setValue,
+	setValue
 };
 
 const RcConnected = connect(

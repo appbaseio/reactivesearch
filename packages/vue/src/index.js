@@ -16,7 +16,7 @@ const components = [
 	MultiList,
 	SingleRange,
 	ReactiveComponent,
-	SelectedFilters,
+	SelectedFilters
 ];
 
 const install = function(Vue) {
@@ -40,10 +40,10 @@ export {
 	MultiList,
 	SingleRange,
 	ReactiveComponent,
-	SelectedFilters,
+	SelectedFilters
 };
 
 export default {
 	version,
-	install,
+	install
 };

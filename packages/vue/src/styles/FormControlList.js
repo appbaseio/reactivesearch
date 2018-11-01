@@ -1,11 +1,11 @@
-import { css, } from 'emotion';
+import { css } from 'emotion';
 import styled from 'vue-emotion';
-import { lighten, } from 'polished';
+import { lighten } from 'polished';
 
 const item = {
 	width: '16px',
 	height: '16px',
-	scale: '4px',
+	scale: '4px'
 };
 
 const vh = css`
@@ -41,7 +41,7 @@ const hideInputControl = css`
 	}
 `;
 
-const formItem = ({ theme, }) => css`
+const formItem = ({ theme }) => css`
 	${vh};
 
 	&:focus {
@@ -125,7 +125,7 @@ const Radio = styled('input')`
 		&:active,
 		&:focus {
 			+ label {
-				color: ${({ theme, }) => theme.colors.primaryColor};
+				color: ${({ theme }) => theme.colors.primaryColor};
 
 				&::before {
 					animation: none;
@@ -139,7 +139,7 @@ const Radio = styled('input')`
 			&::before {
 				animation: none;
 				background-color: #fff;
-				border-color: ${({ theme, }) => theme.colors.primaryColor};
+				border-color: ${({ theme }) => theme.colors.primaryColor};
 		}
 
 		&::after {
@@ -166,7 +166,7 @@ const Checkbox = styled('input')`
 			height: calc(${item.width} / 5);
 			margin-top: calc(${item.height} / -2 / 2 * 0.8);
 			border-style: solid;
-			border-color: ${({ theme, }) => theme.colors.primaryColor};
+			border-color: ${({ theme }) => theme.colors.primaryColor};
 			border-width: 0 0 2px 2px;
 			border-radius: 0;
 			border-image: none;
@@ -178,7 +178,7 @@ const Checkbox = styled('input')`
 	&:checked {
 		+ label {
 			&::before {
-				border-color: ${({ theme, }) => theme.colors.primaryColor};
+				border-color: ${({ theme }) => theme.colors.primaryColor};
 			}
 
 			&::after {
@@ -208,4 +208,4 @@ const UL = styled('ul')`
 	}
 `;
 
-export { UL, Radio, Checkbox, };
+export { UL, Radio, Checkbox };

@@ -1,11 +1,11 @@
-import { Actions, helper, } from '@appbaseio/reactivecore';
+import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
-import { connect, } from '../../utils/index';
+import { connect } from '../../utils/index';
 import Flex from '../../styles/Flex';
 import types from '../../utils/vueTypes';
-import { resultStats, sortOptions, } from '../../styles/results';
+import { resultStats, sortOptions } from '../../styles/results';
 
 const {
 	addComponent,
@@ -16,7 +16,7 @@ const {
 	updateQuery,
 	loadMore,
 	setValue,
-	setQueryListener,
+	setQueryListener
 } = Actions;
 
 const {
@@ -24,7 +24,7 @@ const {
 	getQueryOptions,
 	pushToAndClause,
 	getClassName,
-	parseHits,
+	parseHits
 } = helper;
 
 const ReactiveList = {
@@ -42,7 +42,7 @@ const ReactiveList = {
 		this.__state = {
 			from: $currentPage * props.size,
 			isLoading: true,
-			$currentPage,
+			$currentPage
 		};
 		return this.__state;
 	},
@@ -59,7 +59,7 @@ const ReactiveList = {
 	},
 	props: {
 		currentPage: VueTypes.number.def(0),
-		includeFields: types.includeFields.def(['*',]),
+		includeFields: types.includeFields.def(['*']),
 		// component props
 		className: types.string,
 		componentId: types.stringRequired,
@@ -82,7 +82,7 @@ const ReactiveList = {
 		sortBy: types.sortBy,
 		sortOptions: types.sortOptions,
 		stream: types.bool,
-		URLParams: VueTypes.bool.def(false),
+		URLParams: VueTypes.bool.def(false)
 	},
 	computed: {
 		totalPages() {
@@ -93,7 +93,7 @@ const ReactiveList = {
 		},
 		hasResultStatsListener() {
 			return this.$listeners && this.$listeners.resultStats;
-		},
+		}
 	},
 	watch: {
 		sortOptions(newVal, oldVal) {
@@ -141,7 +141,7 @@ const ReactiveList = {
 				this.updateQuery(
 					{
 						componentId: this.internalComponent,
-						query,
+						query
 					},
 					true
 				); // reset page because of query change
@@ -213,7 +213,7 @@ const ReactiveList = {
 			if (this.$currentPage !== newVal && this.defaultPage !== newVal) {
 				this.setPage(newVal >= 0 ? newVal : 0);
 			}
-		},
+		}
 	},
 	mounted() {
 		this.addComponent(this.internalComponent);
@@ -230,17 +230,17 @@ const ReactiveList = {
 			options.sort = [
 				{
 					[this.$props.sortOptions[0].dataField]: {
-						order: this.$props.sortOptions[0].sortBy,
-					},
-				},
+						order: this.$props.sortOptions[0].sortBy
+					}
+				}
 			];
 		} else if (this.$props.sortBy) {
 			options.sort = [
 				{
 					[this.$props.dataField]: {
-						order: this.$props.sortBy,
-					},
-				},
+						order: this.$props.sortBy
+					}
+				}
 			];
 		} // Override sort query with defaultQuery's sort if defined
 
@@ -266,7 +266,7 @@ const ReactiveList = {
 			this.updateQuery(
 				{
 					componentId: this.internalComponent,
-					query,
+					query
 				},
 				execute
 			);
@@ -274,7 +274,7 @@ const ReactiveList = {
 			this.updateQuery(
 				{
 					componentId: this.internalComponent,
-					query: null,
+					query: null
 				},
 				execute
 			);
@@ -294,8 +294,8 @@ const ReactiveList = {
 	},
 
 	render() {
-		const { size, } = this.$props;
-		const { hits, } = this.$data;
+		const { size } = this.$props;
+		const { hits } = this.$data;
 		const results = parseHits(hits) || [];
 		const streamResults = parseHits(this.$data.streamHits) || [];
 		let filteredResults = results;
@@ -337,8 +337,8 @@ const ReactiveList = {
 						loadMore: this.loadMore,
 						analytics: {
 							base: this.$currentPage * size,
-							triggerClickAnalytics: this.triggerClickAnalytics,
-						},
+							triggerClickAnalytics: this.triggerClickAnalytics
+						}
 					})
 				) : (
 					<div
@@ -347,11 +347,11 @@ const ReactiveList = {
 							'list'
 						)}`}
 					>
-						{[...streamResults, ...filteredResults,].map((item, index) =>
+						{[...streamResults, ...filteredResults].map((item, index) =>
 							this.$scopedSlots.onData({
 								item,
 								triggerClickAnalytics: () =>
-									this.triggerClickAnalytics(this.$currentPage * size + index),
+									this.triggerClickAnalytics(this.$currentPage * size + index)
 							})
 						)}
 					</div>
@@ -362,7 +362,7 @@ const ReactiveList = {
 							style={{
 								textAlign: 'center',
 								margin: '20px 0',
-								color: '#666',
+								color: '#666'
 							}}
 						>
 								Loading...
@@ -401,30 +401,30 @@ const ReactiveList = {
 				options.sort = [
 					{
 						[props.sortOptions[0].dataField]: {
-							order: props.sortOptions[0].sortBy,
-						},
-					},
+							order: props.sortOptions[0].sortBy
+						}
+					}
 				];
 			} else if (props.sortBy) {
 				options.sort = [
 					{
 						[props.dataField]: {
-							order: props.sortBy,
-						},
-					},
+							order: props.sortBy
+						}
+					}
 				];
 			}
 			this.setQueryOptions(this.$props.componentId, options, true);
 		},
 		setReact(props) {
-			const { react, } = props;
+			const { react } = props;
 
 			if (react) {
 				const newReact = pushToAndClause(react, this.internalComponent);
 				this.watchComponent(props.componentId, newReact);
 			} else {
 				this.watchComponent(props.componentId, {
-					and: this.internalComponent,
+					and: this.internalComponent
 				});
 			}
 		},
@@ -453,7 +453,7 @@ const ReactiveList = {
 					this.$props.componentId,
 					{
 						...options,
-						from: value,
+						from: value
 					},
 					true
 				);
@@ -475,7 +475,7 @@ const ReactiveList = {
 					this.$props.componentId,
 					{
 						...options,
-						from: value,
+						from: value
 					},
 					false
 				);
@@ -498,7 +498,7 @@ const ReactiveList = {
 			if (onResultStats) {
 				return onResultStats({
 					total: this.$data.total,
-					time: this.$data.time,
+					time: this.$data.time
 				});
 			}
 			if (this.$data.total) {
@@ -534,9 +534,9 @@ const ReactiveList = {
 			options.sort = [
 				{
 					[this.$props.sortOptions[index].dataField]: {
-						order: this.$props.sortOptions[index].sortBy,
-					},
-				},
+						order: this.$props.sortOptions[index].sortBy
+					}
+				}
 			];
 			this.$props.setQueryOptions(this.$props.componentId, options, true);
 			this.$currentPage = 0;
@@ -546,9 +546,9 @@ const ReactiveList = {
 			// click analytics would only work client side and after javascript loads
 			const {
 				config,
-				analytics: { searchId, },
+				analytics: { searchId }
 			} = this;
-			const { url, app, credentials, } = config;
+			const { url, app, credentials } = config;
 			if (
 				config.analytics
 				&& url.endsWith('scalr.api.appbase.io')
@@ -561,8 +561,8 @@ const ReactiveList = {
 						Authorization: `Basic ${btoa(credentials)}`,
 						'X-Search-Id': searchId,
 						'X-Search-Click': true,
-						'X-Search-Click-Position': searchPosition + 1,
-					},
+						'X-Search-Click-Position': searchPosition + 1
+					}
 				});
 			}
 		},
@@ -584,8 +584,8 @@ const ReactiveList = {
 					))}
 				</select>
 			);
-		},
-	},
+		}
+	}
 };
 const mapStateToProps = (state, props) => ({
 	defaultPage:
@@ -598,7 +598,7 @@ const mapStateToProps = (state, props) => ({
 		(state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	analytics: state.analytics,
-	config: state.config,
+	config: state.config
 });
 const mapDispatchtoProps = {
 	addComponent,
@@ -609,7 +609,7 @@ const mapDispatchtoProps = {
 	setQueryListener,
 	setStreaming,
 	updateQuery,
-	watchComponent,
+	watchComponent
 };
 const RLConnected = connect(
 	mapStateToProps,

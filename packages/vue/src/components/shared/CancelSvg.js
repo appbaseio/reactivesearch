@@ -4,10 +4,10 @@ const CancelSvg = {
 	name: 'CancelSvg',
 	functional: true,
 	props: {
-		onClick: types.func,
+		onClick: types.func
 	},
 	render(createElement, context) {
-		const { props, } = context;
+		const { props } = context;
 		return (
 			<svg
 				alt="Clear"
@@ -26,7 +26,7 @@ const CancelSvg = {
 				/>
 			</svg>
 		);
-	},
+	}
 };
 CancelSvg.install = function(Vue) {
 	Vue.component(CancelSvg.name, CancelSvg);
