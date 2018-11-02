@@ -25,6 +25,7 @@ export interface SingleDropdownList extends CommonProps {
 	missingLabel?: string;
 	showLoadMore?: boolean;
 	loadMoreLabel?: types.title;
+	nestedField?: string;
 }
 
 declare const SingleDropdownList: React.ComponentType<SingleDropdownList>;

@@ -612,6 +612,7 @@ DataSearch.propTypes = {
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
+	renderSuggestions: types.func,
 	showClear: types.bool,
 	showFilter: types.bool,
 	showIcon: types.bool,
