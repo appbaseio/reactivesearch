@@ -7,10 +7,9 @@ import {
 import VueTypes from 'vue-types';
 import { connect } from '../../utils/index';
 import Title from '../../styles/Title';
-import Input, {
-	suggestionsContainer /* suggestions */
-} from '../../styles/Input';
+import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import InputIcon from '../../styles/InputIcon';
+import Downshift from '../basic/DownShift.jsx';
 import Container from '../../styles/Container';
 import types from '../../utils/vueTypes';
 import SearchSvg from '../shared/SearchSvg';
@@ -32,7 +31,8 @@ const DataSearch = {
 		const props = this.$props;
 		this.__state = {
 			currentValue: '',
-			isOpen: false
+			isOpen: false,
+			normalizedSuggestions: [],
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
@@ -51,10 +51,25 @@ const DataSearch = {
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, null);
 	},
+	computed: {
+		suggestionsList() {
+			let suggestionsList = [];
+			if (
+				!this.$data.currentValue
+				&& this.$props.defaultSuggestions
+				&& this.$props.defaultSuggestions.length
+			) {
+				suggestionsList = this.$props.defaultSuggestions;
+			} else if (this.$data.currentValue) {
+				suggestionsList = this.normalizedSuggestions;
+			}
+			return suggestionsList;
+		}
+	},
 	props: {
 		options: types.options,
 		autoFocus: types.bool,
-		// autosuggest: VueTypes.bool.def(false),
+		autosuggest: VueTypes.bool.def(true),
 		beforeValueChange: types.func,
 		className: VueTypes.string.def(''),
 		clearIcon: types.children,
@@ -64,7 +79,7 @@ const DataSearch = {
 		dataField: types.dataFieldArray,
 		debounce: VueTypes.number.def(0),
 		defaultSelected: types.string,
-		// defaultSuggestions: types.suggestions,
+		defaultSuggestions: types.suggestions,
 		fieldWeights: types.fieldWeights,
 		filterLabel: types.string,
 		fuzziness: types.fuzziness,
@@ -74,12 +89,10 @@ const DataSearch = {
 		iconPosition: VueTypes.oneOf(['left', 'right']).def('left'),
 		innerClass: types.style,
 		innerRef: types.func,
-		// onSuggestion: types.func, // add event handler
-		// onValueSelected: types.func, // add event handler
+		onSuggestion: types.func,
 		placeholder: VueTypes.string.def('Search'),
 		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		react: types.react,
-		// renderSuggestions: types.func,
 		showClear: VueTypes.bool.def(true),
 		showFilter: VueTypes.bool.def(true),
 		showIcon: VueTypes.bool.def(true),
@@ -156,14 +169,13 @@ const DataSearch = {
 		defaultSelected(newVal) {
 			this.setValue(newVal, true, this.$props);
 		},
-		// TODO
-		// suggestions(newVal) {
-		//     if (Array.isArray(newVal) && this.$data.currentValue.trim().length) {
-		//       // shallow check allows us to set suggestions even if the next set
-		//       // of suggestions are same as the current one
-		//         this.suggestions = this.onSuggestions(newVal);
-		//     }
-		// },
+		suggestions(newVal) {
+		    if (Array.isArray(newVal) && this.$data.currentValue.trim().length) {
+		      // shallow check allows us to set suggestions even if the next set
+			  // of suggestions are same as the current one
+				this.normalizedSuggestions = this.onSuggestions(newVal);
+		    }
+		},
 		selectedValue(newVal) {
 			if (
 				this.$attrs.selectedValue !== newVal
@@ -191,7 +203,6 @@ const DataSearch = {
 				});
 			}
 		},
-		// need to review
 		onSuggestions(results) {
 			if (this.$props.onSuggestion) {
 				return results.map(suggestion => this.$props.onSuggestion(suggestion));
@@ -216,7 +227,7 @@ const DataSearch = {
 
 			const performUpdate = () => {
 				this.currentValue = value;
-				this.suggestions = [];
+				this.normalizedSuggestions = [];
 				if (isDefaultValue) {
 					if (this.$props.autosuggest) {
 						this.isOpen = false;
@@ -320,7 +331,7 @@ const DataSearch = {
 				this.$props,
 				causes.SUGGESTION_SELECT
 			);
-			this.onValueSelected(
+			this.onValueSelectedHandler(
 				suggestion.value,
 				causes.SUGGESTION_SELECT,
 				suggestion.source
@@ -328,10 +339,7 @@ const DataSearch = {
 		},
 
 		onValueSelectedHandler(currentValue = this.state.currentValue, ...cause) {
-			const { onValueSelected } = this.$props;
-			if (onValueSelected) {
-				this.$emit('valueSelected', currentValue, ...cause);
-			}
+			this.$emit('valueSelected', currentValue, ...cause);
 		},
 
 		// handleStateChange(changes) {
@@ -389,18 +397,8 @@ const DataSearch = {
 		}
 	},
 	render() {
-		// let suggestionsList = [];
-		// if (
-		//   !this.$data.currentValue &&
-		//   this.$props.defaultSuggestions &&
-		//   this.$props.defaultSuggestions.length
-		// ) {
-		//   suggestionsList = this.$props.defaultSuggestions;
-		// } else if (this.$data.currentValue) {
-		//   suggestionsList = this.suggestions;
-		// }
-
-		// const { theme, renderSuggestions } = this.$props;
+		const { theme } = this.$props;
+		const renderSuggestions = this.$scopedSlots.suggestions;
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -409,81 +407,99 @@ const DataSearch = {
 					</Title>
 				)}
 				{this.$props.defaultSuggestions || this.$props.autosuggest ? (
-					//           <Downshift
-					//             id={`${this.$props.componentId}-downshift`}
-					//             onChange={this.onSuggestionSelected}
-					//             onStateChange={this.handleStateChange}
-					//             isOpen={this.$data.isOpen}
-					//             itemToString={i => i}
-					//             render={({
-					//  getInputProps, getItemProps, isOpen, highlightedIndex,
-					// }) => (
-					<div class={suggestionsContainer}>
-						<Input
-							id={`${this.$props.componentId}-input`}
-							showIcon={this.$props.showIcon}
-							showClear={this.$props.showClear}
-							iconPosition={this.$props.iconPosition}
-							innerRef={this.$props.innerRef}
-							// {...getInputProps({
-							//   className: getClassName(this.$props.innerClass, 'input'),
-							//   placeholder: this.$props.placeholder,
-							//   value: this.$data.currentValue === null ? '' : this.$data.currentValue,
-							//   onChange: this.onInputChange,
-							//   onBlur: this.$props.onBlur,
-							//   onFocus: this.handleFocus,
-							//   onKeyPress: this.$props.onKeyPress,
-							//   onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
-							//   onKeyUp: this.$props.onKeyUp,
-							// })}
-							themePreset={this.themePreset}
-						/>
-						{this.renderIcons()}
-						{/* {renderSuggestions &&
-                  renderSuggestions({
-                    currentValue: this.$data.currentValue,
-                    isOpen,
-                    getItemProps,
-                    highlightedIndex,
-                    suggestions: this.suggestions,
-                    parsedSuggestions: suggestionsList,
-                  })} */}
+					<Downshift
+						id={`${this.$props.componentId}-downshift`}
+						handleChange={this.onSuggestionSelected}
+						// onStateChange={this.handleStateChange}
+						isOpen={this.$data.isOpen}
+						// itemToString={i => i}
+						scopedSlots={{
+							default: ({
+								getInputEvents,
+								getInputProps,
 
-						{/* {!renderSuggestions && isOpen && suggestionsList.length ? (
-                  <ul
-                    class={`${suggestions(this.themePreset, theme)} ${getClassName(
-                      this.$props.innerClass,
-                      'list',
-                    )}`}
-                  >
-                    {suggestionsList.slice(0, 10).map((item, index) => (
-                      <li
-                        {...getItemProps({
-                          item,
-                        })}
-                        key={`${index + 1}-${item.value}`}
-                        style={{
-                          backgroundColor: this.getBackgroundColor(highlightedIndex, index),
-                        }}
-                      >
-                        {typeof item.label === 'string' ? (
-                          <div
-                            class="trim"
-                            dangerouslySetInnerHTML={{
-                              __html: item.label,
-                            }}
-                          />
-                        ) : (
-                          item.label
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                ) : null} */}
-					</div>
+								getItemProps,
+								getItemEvents,
+
+								isOpen,
+								highlightedIndex,
+							}) => (
+								<div class={suggestionsContainer}>
+									<Input
+										id={`${this.$props.componentId}-input`}
+										showIcon={this.$props.showIcon}
+										showClear={this.$props.showClear}
+										iconPosition={this.$props.iconPosition}
+										innerRef={this.$props.innerRef}
+										className={getClassName(this.$props.innerClass, 'input')}
+										placeholder={this.$props.placeholder}
+										{...{
+											on: getInputEvents({
+												onInput: this.onInputChange,
+												onBlur: (e) => {
+													this.isOpen = false;
+													this.$emit('blur', e);
+												},
+												onFocus: this.handleFocus,
+												onKeyPress: e => {
+													this.$emit('keyPress', e);
+												},
+												onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
+												onKeyUp: e => {
+													this.$emit('keyUp', e);
+												},
+											})
+										}}
+										{...{
+											domProps: getInputProps({
+												value:
+													this.$data.currentValue === null
+														? ''
+														: this.$data.currentValue
+											})
+										}}
+										themePreset={this.themePreset}
+									/>
+									{this.renderIcons()}
+									{!renderSuggestions && isOpen && this.suggestionsList.length ? (
+										<ul
+											class={`${suggestions(
+												this.themePreset,
+												theme
+											)} ${getClassName(this.$props.innerClass, 'list')}`}
+										>
+											{this.suggestionsList.slice(0, 10).map((item, index) => (
+												<li
+													{...{
+														domProps: getItemProps({ item })
+													}}
+													{...{
+														on: getItemEvents({
+															item
+														})
+													}}
+													key={`${index + 1}-${item.value}`}
+													style={{
+														backgroundColor: this.getBackgroundColor(
+															highlightedIndex,
+															index
+														)
+													}}
+												>
+													{typeof item.label === 'string' ? (
+														<div class="trim" domPropsInnerHTML={ item.label }/>
+													) : (
+														item.label
+													)}
+												</li>
+											))}
+										</ul>
+									) : null}{' '}
+								</div>
+							)
+						}}
+					/>
 				) : (
-					//   )}
-					// />
 					<div class={suggestionsContainer}>
 						<Input
 							class={getClassName(this.$props.innerClass, 'input') || ''}
