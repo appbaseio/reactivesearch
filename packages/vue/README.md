@@ -17,7 +17,6 @@ Vue UI components for Elasticsearch.
 
 ![Banner Image showing all the UI components we offer](https://i.imgur.com/bJ1QKZS.png)
 
-
 ## Installation
 
 ```
@@ -29,10 +28,11 @@ yarn add @appbaseio/reactivesearch-vue
 The official docs for the library are at [https://opensource.appbase.io/reactive-manual/vue-web/getting-started/reactivesearch.html](https://opensource.appbase.io/reactive-manual).
 
 The components are divided into four sections:
-* List based UI components are at [reactive-manual/list-components](https://opensource.appbase.io/reactive-manual/vue-web/list-components/singlelist.html).
-* Range based UI components are at [reactive-manual/range-components](https://opensource.appbase.io/reactive-manual/vue-web/range-components/singlerange.html).
-* Search UI components are at [reactive-manual/search-components](https://opensource.appbase.io/reactive-manual/vue-web/search-components/datasearch.html).
-* Result components are at [reactive-manual/result-components](https://opensource.appbase.io/reactive-manual/vue-web/result-components/resultlist.html).
+
+- List based UI components are at [reactive-manual/list-components](https://opensource.appbase.io/reactive-manual/vue-web/list-components/singlelist.html).
+- Range based UI components are at [reactive-manual/range-components](https://opensource.appbase.io/reactive-manual/vue-web/range-components/singlerange.html).
+- Search UI components are at [reactive-manual/search-components](https://opensource.appbase.io/reactive-manual/vue-web/search-components/datasearch.html).
+- Result components are at [reactive-manual/result-components](https://opensource.appbase.io/reactive-manual/vue-web/result-components/resultlist.html).
 
 ## Related tooling and projects
 

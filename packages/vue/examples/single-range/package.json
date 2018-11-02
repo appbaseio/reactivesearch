@@ -1,5 +1,5 @@
 {
-  "name": "reactive-list",
+  "name": "single-range",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "vue": "^2.5.17",
-    "@appbaseio/reactivesearch-vue": "^1.0.0-alpha.1"
+    "@appbaseio/reactivesearch-vue": "^1.0.0-alpha.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.4",

@@ -16,6 +16,7 @@
 	"workspaces": [
 		"packages/*",
 		"packages/web/examples/*",
+		"packages/vue/examples/*",
 		"packages/maps/examples/*",
 		"site",
 		"site/demos/*"
