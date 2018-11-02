@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { CommonProps } from '../../';
 import * as types from '../../types';
 
@@ -34,6 +35,7 @@ export interface DataSearchProps extends CommonProps {
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
+	renderSuggestions?: (...args: any[]) => any;
 	showFilter?: boolean;
 	showIcon?: boolean;
 	title?: types.title;

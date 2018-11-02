@@ -17,6 +17,17 @@ const getAggsQuery = (query, props) => {
 		},
 	};
 
+	if (props.nestedField) {
+		clonedQuery.aggs = {
+			reactivesearch_nested: {
+				nested: {
+					path: props.nestedField,
+				},
+				aggs: clonedQuery.aggs,
+			},
+		};
+	}
+
 	return clonedQuery;
 };
 
@@ -26,7 +37,10 @@ const getCompositeAggsQuery = (query, props, after) => {
 	const {
 		dataField, size, sortBy, showMissing,
 	} = props;
-	const order = sortBy === 'count' ? {} : { order: sortBy };	// composite aggs only allows asc and desc
+
+	// composite aggs only allows asc and desc
+	const order = sortBy === 'count' ? {} : { order: sortBy };
+
 	clonedQuery.aggs = {
 		[dataField]: {
 			composite: {
@@ -44,6 +58,17 @@ const getCompositeAggsQuery = (query, props, after) => {
 			},
 		},
 	};
+
+	if (props.nestedField) {
+		clonedQuery.aggs = {
+			reactivesearch_nested: {
+				nested: {
+					path: props.nestedField,
+				},
+				aggs: clonedQuery.aggs,
+			},
+		};
+	}
 
 	return clonedQuery;
 };
