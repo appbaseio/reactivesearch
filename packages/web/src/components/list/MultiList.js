@@ -105,9 +105,10 @@ class MultiList extends Component {
 			() => this.updateQueryOptions(nextProps),
 		);
 
-		checkPropChange(
-			this.props.dataField,
-			nextProps.dataField,
+		checkSomePropChange(
+			this.props,
+			nextProps,
+			['dataField', 'nestedField'],
 			() => {
 				this.updateQueryOptions(nextProps);
 				this.updateQuery(Object.keys(this.state.currentValue), nextProps);
@@ -225,6 +226,18 @@ class MultiList extends Component {
 
 			query = value.length ? listQuery : null;
 		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
 		return query;
 	};
 
@@ -490,6 +503,7 @@ MultiList.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	dataField: types.stringRequired,
+	nestedField: types.string,
 	defaultSelected: types.stringArray,
 	filterLabel: types.string,
 	innerClass: types.style,
@@ -534,7 +548,9 @@ MultiList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId],
+	options: props.nestedField && state.aggregations[props.componentId]
+		? state.aggregations[props.componentId].reactivesearch_nested
+		: state.aggregations[props.componentId],
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || null,
 	themePreset: state.config.themePreset,
