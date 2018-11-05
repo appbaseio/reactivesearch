@@ -20,8 +20,8 @@ const onData = res => ({
 	),
 });
 
-const onResultStats = (results, time) =>
-	<div style={{ margin: '10px 0' }}>{`Found ${results} results in ${time} milliseconds`}</div>;
+const onResultStats = stats =>
+	<div style={{ margin: '10px 0' }}>{`Found ${stats.totalResults} results in ${stats.time} milliseconds`}</div>;
 
 const Results = () => (
 	<div>
