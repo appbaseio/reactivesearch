@@ -411,7 +411,21 @@ class ReactiveList extends Component {
 
 	renderResultStats = () => {
 		if (this.props.onResultStats && this.props.total) {
-			return this.props.onResultStats(this.props.total, this.props.time);
+			const results = parseHits(this.props.hits) || [];
+			const streamResults = parseHits(this.props.streamHits) || [];
+			let filteredResults = results;
+
+			if (streamResults.length) {
+				const ids = streamResults.map(item => item._id);
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+			}
+
+			return this.props.onResultStats(
+				this.props.total,
+				this.props.time,
+				this.state.currentPage,
+				[...streamResults, ...filteredResults].length,
+			);
 		} else if (this.props.total) {
 			return (
 				<p className={`${resultStats} ${getClassName(this.props.innerClass, 'resultStats')}`}>
