@@ -136,5 +136,17 @@ const Button = styled('a')`
 	${props => props.large && large};
 `;
 
-export { pagination, filters, toggleButtons, numberBoxContainer };
+const loadMoreContainer = css({
+	margin: '5px 0',
+	display: 'flex',
+	justifyContent: 'center'
+});
+
+export {
+	pagination,
+	filters,
+	toggleButtons,
+	numberBoxContainer,
+	loadMoreContainer
+};
 export default Button;
