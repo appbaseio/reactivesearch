@@ -31,6 +31,7 @@
     "@appbaseio/reactivecore": "^6.0.3",
     "appbase-js": "^4.0.2-beta.2",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "compute-scroll-into-view": "^1.0.11",
     "emotion": "^9.2.12",
     "polished": "^2.2.0",
     "redux": "^4.0.0",
