@@ -422,6 +422,7 @@ class ReactiveList extends Component {
 
 			const stats = {
 				totalResults: this.props.total,
+				totalPages: Math.ceil(this.props.total / this.props.size),
 				displayedResults: [...streamResults, ...filteredResults].length,
 				time: this.props.time,
 				currentPage: this.state.currentPage,
