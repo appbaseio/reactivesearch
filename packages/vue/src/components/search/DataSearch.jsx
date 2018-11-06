@@ -55,9 +55,9 @@ const DataSearch = {
 		suggestionsList() {
 			let suggestionsList = [];
 			if (
-				!this.$data.currentValue &&
-				this.$props.defaultSuggestions &&
-				this.$props.defaultSuggestions.length
+				!this.$data.currentValue
+				&& this.$props.defaultSuggestions
+				&& this.$props.defaultSuggestions.length
 			) {
 				suggestionsList = this.$props.defaultSuggestions;
 			} else if (this.$data.currentValue) {
@@ -270,9 +270,9 @@ const DataSearch = {
 			const query = customQuery || DataSearch.defaultQuery;
 			const queryObject = defaultQuery
 				? {
-						bool: {
-							must: [...query(value, props), ...defaultQuery(value, props)]
-						}
+					bool: {
+						must: [...query(value, props), ...defaultQuery(value, props)]
+					}
 				  }
 				: query(value, props);
 			this.updateQuery({
@@ -376,16 +376,16 @@ const DataSearch = {
 		renderIcons() {
 			return (
 				<div>
-					{this.$data.currentValue &&
-						this.$props.showClear && (
-							<InputIcon
-								onClick={this.clearValue}
-								iconPosition="right"
-								clearIcon={this.$props.iconPosition === 'right'}
-							>
-								{this.renderCancelIcon()}
-							</InputIcon>
-						)}
+					{this.$data.currentValue
+						&& this.$props.showClear && (
+						<InputIcon
+							onClick={this.clearValue}
+							iconPosition="right"
+							clearIcon={this.$props.iconPosition === 'right'}
+						>
+							{this.renderCancelIcon()}
+						</InputIcon>
+					)}
 					<InputIcon iconPosition={this.$props.iconPosition}>
 						{this.renderIcon()}
 					</InputIcon>
@@ -458,42 +458,42 @@ const DataSearch = {
 										themePreset={this.themePreset}
 									/>
 									{this.renderIcons()}
-									{!renderSuggestions &&
-									isOpen &&
-									this.suggestionsList.length ? (
-										<ul
-											class={`${suggestions(
-												this.themePreset,
-												theme
-											)} ${getClassName(this.$props.innerClass, 'list')}`}
-										>
-											{this.suggestionsList.slice(0, 10).map((item, index) => (
-												<li
-													{...{
-														domProps: getItemProps({ item })
-													}}
-													{...{
-														on: getItemEvents({
-															item
-														})
-													}}
-													key={`${index + 1}-${item.value}`}
-													style={{
-														backgroundColor: this.getBackgroundColor(
-															highlightedIndex,
-															index
-														)
-													}}
-												>
-													{typeof item.label === 'string' ? (
-														<div class="trim" domPropsInnerHTML={item.label} />
-													) : (
-														item.label
-													)}
-												</li>
-											))}
-										</ul>
-									) : null}{' '}
+									{!renderSuggestions
+									&& isOpen
+									&& this.suggestionsList.length ? (
+											<ul
+												class={`${suggestions(
+													this.themePreset,
+													theme
+												)} ${getClassName(this.$props.innerClass, 'list')}`}
+											>
+												{this.suggestionsList.slice(0, 10).map((item, index) => (
+													<li
+														{...{
+															domProps: getItemProps({ item })
+														}}
+														{...{
+															on: getItemEvents({
+																item
+															})
+														}}
+														key={`${index + 1}-${item.value}`}
+														style={{
+															backgroundColor: this.getBackgroundColor(
+																highlightedIndex,
+																index
+															)
+														}}
+													>
+														{typeof item.label === 'string' ? (
+															<div class="trim" domPropsInnerHTML={item.label} />
+														) : (
+															item.label
+														)}
+													</li>
+												))}
+											</ul>
+										) : null}{' '}
 								</div>
 							)
 						}}
@@ -651,9 +651,9 @@ DataSearch.highlightQuery = props => {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	suggestions:
 		state.hits[props.componentId] && state.hits[props.componentId].hits,
 	themePreset: state.config.themePreset
