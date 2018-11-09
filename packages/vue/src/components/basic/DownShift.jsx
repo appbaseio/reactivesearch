@@ -7,7 +7,8 @@ export default {
 		'inputValue',
 		'selectedItem',
 		'highlightedIndex',
-		'handleChange'
+		'handleChange',
+		'itemToString'
 	],
 	data: () => ({
 		isMouseDown: false,
@@ -178,7 +179,11 @@ export default {
 		getItemProps({ index, item }) {
 			let newIndex = index;
 			if (index === undefined) {
-				this.items.push(item);
+				if (this.$props.itemToString) {
+					this.items.push(this.$props.itemToString(item));
+				} else {
+					this.items.push(item);
+				}
 				newIndex = this.items.indexOf(item);
 			} else {
 				this.items[newIndex] = item;
@@ -218,6 +223,35 @@ export default {
 			}
 			return {
 				value: inputValue
+			};
+		},
+
+		getButtonProps({ onKeyDown, onKeyUp, onBlur }) {
+			return {
+				click: event => {
+					this.setState({
+						isOpen: true,
+						inputValue: event.target.value
+					});
+				},
+				keydown: event => {
+					if (event.key && this[`keyDown${event.key}`]) {
+						this[`keyDown${event.key}`].call(this, event);
+					}
+					if (onKeyDown) {
+						onKeyDown(event);
+					}
+				},
+				keyup: event => {
+					if (onKeyUp) {
+						onKeyUp(event);
+					}
+				},
+				blur: event => {
+					if (onBlur) {
+						onBlur(event);
+					}
+				}
 			};
 		},
 
@@ -278,7 +312,9 @@ export default {
 				getItemEvents,
 
 				getInputProps,
-				getInputEvents
+				getInputEvents,
+
+				getButtonProps
 			} = this;
 
 			return {
@@ -287,6 +323,8 @@ export default {
 
 				getInputProps,
 				getInputEvents,
+
+				getButtonProps,
 
 				...this.mergedState
 			};
