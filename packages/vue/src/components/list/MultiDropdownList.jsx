@@ -17,18 +17,19 @@ const {
 	setQueryListener
 } = Actions;
 const {
+	isEqual,
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
 	checkPropChange,
 	getClassName
 } = helper;
-const SingleDropdownList = {
-	name: 'SingleDropdownList',
+const MultiDropdownList = {
+	name: 'MultiDropdownList',
 	data() {
 		const props = this.$props;
 		this.__state = {
-			currentValue: '',
+			currentValue: {},
 			modifiedOptions: [],
 			after: {},
 			// for composite aggs
@@ -44,10 +45,11 @@ const SingleDropdownList = {
 		componentId: types.stringRequired,
 		customQuery: types.func,
 		dataField: types.stringRequired,
-		defaultSelected: types.string,
+		defaultSelected: types.stringArray,
 		filterLabel: types.string,
 		innerClass: types.style,
-		placeholder: VueTypes.string.def('Select a value'),
+		placeholder: VueTypes.string.def('Select values'),
+		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		react: types.react,
 		renderListItem: types.func,
 		transformData: types.func,
@@ -73,6 +75,7 @@ const SingleDropdownList = {
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, null);
 	},
+
 	beforeMount() {
 		this.addComponent(this.internalComponent);
 		this.addComponent(this.$props.componentId);
@@ -80,9 +83,9 @@ const SingleDropdownList = {
 		this.setReact(this.$props);
 
 		if (this.selectedValue) {
-			this.setValue(this.selectedValue);
+			this.setValue(this.selectedValue, true);
 		} else if (this.$props.defaultSelected) {
-			this.setValue(this.$props.defaultSelected);
+			this.setValue(this.$props.defaultSelected, true);
 		}
 	},
 
@@ -90,9 +93,24 @@ const SingleDropdownList = {
 		this.removeComponent(this.$props.componentId);
 		this.removeComponent(this.internalComponent);
 	},
+
 	watch: {
 		react() {
 			this.setReact(this.$props);
+		},
+		selectedValue(newVal) {
+			let selectedValue = Object.keys(this.$data.currentValue);
+			if (this.$props.selectAllLabel) {
+				selectedValue = selectedValue.filter(
+					val => val !== this.$props.selectAllLabel
+				);
+				if (this.$data.currentValue[this.$props.selectAllLabel]) {
+					selectedValue = [this.$props.selectAllLabel];
+				}
+			}
+			if (!isEqual(selectedValue, newVal)) {
+				this.setValue(newVal || [], true);
+			}
 		},
 		options(newVal, oldVal) {
 			checkPropChange(oldVal, newVal, () => {
@@ -131,11 +149,6 @@ const SingleDropdownList = {
 		},
 		defaultSelected(newVal) {
 			this.setValue(newVal);
-		},
-		selectedValue(newVal) {
-			if (this.$data.currentValue !== newVal) {
-				this.setValue(newVal || '');
-			}
 		}
 	},
 
@@ -178,6 +191,7 @@ const SingleDropdownList = {
 					selectedItem={this.$data.currentValue}
 					placeholder={this.$props.placeholder}
 					labelField="key"
+					multi
 					showCount={this.$props.showCount}
 					themePreset={this.themePreset}
 					renderListItem={this.$props.renderListItem}
@@ -210,31 +224,81 @@ const SingleDropdownList = {
 			}
 		},
 
-		setValue(value, props = this.$props) {
+		setValue(value, isDefaultValue = false, props = this.$props) {
 			// ignore state updates when component is locked
 			if (props.beforeValueChange && this.locked) {
 				return;
 			}
 
 			this.locked = true;
+			const { selectAllLabel } = this.$props;
+			let { currentValue } = this.$data;
+			let finalValues = null;
+
+			if (selectAllLabel && value.includes(selectAllLabel)) {
+				if (currentValue[selectAllLabel]) {
+					currentValue = {};
+					finalValues = [];
+				} else {
+					this.$data.modifiedOptions.forEach(item => {
+						currentValue[item.key] = true;
+					});
+					currentValue[selectAllLabel] = true;
+					finalValues = [selectAllLabel];
+				}
+			} else if (isDefaultValue) {
+				finalValues = value;
+				currentValue = {};
+
+				if (value) {
+					value.forEach(item => {
+						currentValue[item] = true;
+					});
+				}
+
+				if (selectAllLabel && selectAllLabel in currentValue) {
+					const { [selectAllLabel]: del, ...obj } = currentValue;
+					currentValue = {
+						...obj
+					};
+				}
+			} else {
+				if (currentValue[value]) {
+					const { [value]: del, ...rest } = currentValue;
+					currentValue = {
+						...rest
+					};
+				} else {
+					currentValue[value] = true;
+				}
+
+				if (selectAllLabel && selectAllLabel in currentValue) {
+					const { [selectAllLabel]: del, ...obj } = currentValue;
+					currentValue = {
+						...obj
+					};
+				}
+
+				finalValues = Object.keys(currentValue);
+			}
 
 			const performUpdate = () => {
-				this.currentValue = value;
-				this.updateQueryHandler(value, props);
+				this.currentValue = currentValue;
+				this.updateQueryHandler(finalValues, props);
 				this.locked = false;
 				this.$emit('valueChange', value);
 			};
 
 			checkValueChange(
 				props.componentId,
-				value,
+				finalValues,
 				props.beforeValueChange,
 				performUpdate
 			);
 		},
 
 		updateQueryHandler(value, props) {
-			const query = props.customQuery || SingleDropdownList.defaultQuery;
+			const query = props.customQuery || MultiDropdownList.defaultQuery;
 			this.updateQuery({
 				componentId: props.componentId,
 				query: query(value, props),
@@ -242,7 +306,7 @@ const SingleDropdownList = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'SINGLEDROPDOWNLIST'
+				componentType: 'MULTIDROPDOWNLIST'
 			});
 		},
 
@@ -259,7 +323,7 @@ const SingleDropdownList = {
 				this.modifiedOptions = [];
 			} // for a new query due to other changes don't append after to get fresh results
 
-			const queryOptions = SingleDropdownList.generateQueryOptions(
+			const queryOptions = MultiDropdownList.generateQueryOptions(
 				props,
 				addAfterKey ? this.$data.after : {}
 			);
@@ -271,32 +335,75 @@ const SingleDropdownList = {
 		}
 	}
 };
-SingleDropdownList.defaultQuery = (value, props) => {
+
+MultiDropdownList.defaultQuery = (value, props) => {
 	let query = null;
-	if (props.selectAllLabel && props.selectAllLabel === value) {
+	const type = props.queryFormat === 'or' ? 'terms' : 'term';
+
+	if (!Array.isArray(value) || value.length === 0) {
+		return null;
+	}
+
+	if (props.selectAllLabel && value.includes(props.selectAllLabel)) {
 		if (props.showMissing) {
 			query = { match_all: {} };
-		}
-		query = {
-			exists: {
-				field: props.dataField
-			}
-		};
-	} else if (value) {
-		if (props.showMissing && props.missingLabel === value) {
+		} else {
 			query = {
-				bool: {
-					must_not: {
-						exists: { field: props.dataField }
-					}
+				exists: {
+					field: props.dataField
 				}
 			};
 		}
-		query = {
-			term: {
-				[props.dataField]: value
+	} else if (value) {
+		let listQuery;
+		if (props.queryFormat === 'or') {
+			if (props.showMissing) {
+				const hasMissingTerm = value.includes(props.missingLabel);
+				let should = [
+					{
+						[type]: {
+							[props.dataField]: value.filter(
+								item => item !== props.missingLabel
+							)
+						}
+					}
+				];
+				if (hasMissingTerm) {
+					should = should.concat({
+						bool: {
+							must_not: {
+								exists: { field: props.dataField }
+							}
+						}
+					});
+				}
+				listQuery = {
+					bool: {
+						should
+					}
+				};
+			} else {
+				listQuery = {
+					[type]: {
+						[props.dataField]: value
+					}
+				};
 			}
-		};
+		} else {
+			// adds a sub-query with must as an array of objects for each term/value
+			const queryArray = value.map(item => ({
+				[type]: {
+					[props.dataField]: item
+				}
+			}));
+			listQuery = {
+				bool: {
+					must: queryArray
+				}
+			};
+		}
+
+		query = value.length ? listQuery : null;
 	}
 
 	if (query && props.nestedField) {
@@ -309,16 +416,15 @@ SingleDropdownList.defaultQuery = (value, props) => {
 			}
 		};
 	}
-
 	return query;
 };
-SingleDropdownList.generateQueryOptions = (props, after) => {
+
+MultiDropdownList.generateQueryOptions = (props, after) => {
 	const queryOptions = getQueryOptions(props);
 	return props.showLoadMore
 		? getCompositeAggsQuery(queryOptions, props, after)
 		: getAggsQuery(queryOptions, props);
 };
-
 const mapStateToProps = (state, props) => ({
 	options:
 		props.nestedField && state.aggregations[props.componentId]
@@ -327,7 +433,7 @@ const mapStateToProps = (state, props) => ({
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
-		|| '',
+		|| null,
 	themePreset: state.config.themePreset
 });
 
@@ -343,9 +449,9 @@ const mapDispatchtoProps = {
 const ListConnected = connect(
 	mapStateToProps,
 	mapDispatchtoProps
-)(SingleDropdownList);
+)(MultiDropdownList);
 
-SingleDropdownList.install = function(Vue) {
-	Vue.component(SingleDropdownList.name, ListConnected);
+MultiDropdownList.install = function(Vue) {
+	Vue.component(MultiDropdownList.name, ListConnected);
 };
-export default SingleDropdownList;
+export default MultiDropdownList;

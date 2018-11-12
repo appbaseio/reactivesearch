@@ -54,8 +54,10 @@ const Dropdown = {
 		}
 		return (
 			<Downshift
+				isOpen={this.$data.isOpen}
 				selectedItem={selectedItem}
 				handleChange={this.onChange}
+				handleMouseup={this.handleStateChange}
 				scopedSlots={{
 					default: ({
 						getItemProps,
@@ -68,8 +70,9 @@ const Dropdown = {
 							<Select
 								{...{
 									on: {
-										click: this.toggle,
-										...getButtonProps({})
+										...getButtonProps({
+											onClick: this.toggle
+										})
 									}
 								}}
 								class={getClassName(this.$props.innerClass, 'select') || ''}
@@ -179,7 +182,7 @@ const Dropdown = {
 														<Tick
 															class={
 																getClassName(this.$props.innerClass, 'icon')
-																|| null
+																|| ''
 															}
 														/>
 													) : null}
@@ -216,13 +219,9 @@ const Dropdown = {
 				this.isOpen = false;
 			}
 		},
-		// Review it
-		// handleStateChange(changes) {
-		// 	const { isOpen, type } = changes;
-		// 	// if (type === Downshift.stateChangeTypes.mouseUp) {
-		// 	// 	this.isOpen = isOpen;
-		// 	// }
-		// },
+		handleStateChange({ isOpen }) {
+			this.isOpen = isOpen;
+		},
 
 		getBackgroundColor(highlighted, selected) {
 			const isDark = this.$props.themePreset === 'dark';
