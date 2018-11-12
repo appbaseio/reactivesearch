@@ -207,7 +207,10 @@ const SingleList = {
 									for={`${this.$props.componentId}-${item.key}`}
 								>
 									{renderListItemCalc ? (
-										renderListItemCalc(item.key, item.doc_count)
+										renderListItemCalc({
+											item: item.key,
+											count: item.doc_count
+										})
 									) : (
 										<span>
 											{item.key}

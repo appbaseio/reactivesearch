@@ -153,7 +153,9 @@ const MultiDropdownList = {
 	},
 
 	render() {
-		const { showLoadMore, loadMoreLabel } = this.$props;
+		const { showLoadMore, loadMoreLabel, renderListItem } = this.$props;
+		const renderListItemCalc
+			= this.$scopedSlots.renderListItem || renderListItem;
 		const { isLastBucket } = this.$data;
 		let selectAll = [];
 
@@ -194,7 +196,7 @@ const MultiDropdownList = {
 					multi
 					showCount={this.$props.showCount}
 					themePreset={this.themePreset}
-					renderListItem={this.$props.renderListItem}
+					renderListItem={renderListItemCalc}
 					showSearch={this.$props.showSearch}
 					transformData={this.$props.transformData}
 					footer={

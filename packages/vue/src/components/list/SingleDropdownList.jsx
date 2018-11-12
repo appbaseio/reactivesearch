@@ -140,9 +140,11 @@ const SingleDropdownList = {
 	},
 
 	render() {
-		const { showLoadMore, loadMoreLabel } = this.$props;
+		const { showLoadMore, loadMoreLabel, renderListItem } = this.$props;
 		const { isLastBucket } = this.$data;
 		let selectAll = [];
+		const renderListItemCalc
+			= this.$scopedSlots.renderListItem || renderListItem;
 
 		if (this.$data.modifiedOptions.length === 0) {
 			return null;
@@ -179,6 +181,7 @@ const SingleDropdownList = {
 					placeholder={this.$props.placeholder}
 					labelField="key"
 					showCount={this.$props.showCount}
+					renderListItem={renderListItemCalc}
 					themePreset={this.themePreset}
 					renderListItem={this.$props.renderListItem}
 					showSearch={this.$props.showSearch}
