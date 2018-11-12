@@ -8,7 +8,8 @@ export default {
 		'selectedItem',
 		'highlightedIndex',
 		'handleChange',
-		'itemToString'
+		'itemToString',
+		'handleMouseup'
 	],
 	data: () => ({
 		isMouseDown: false,
@@ -61,6 +62,11 @@ export default {
 				// TODO: handle on outer click here
 				if (!this.isMouseDown) {
 					this.reset();
+					if (this.$props.handleMouseup) {
+						this.$props.handleMouseup({
+							isOpen: false
+						});
+					}
 				}
 			}
 		},
@@ -226,13 +232,16 @@ export default {
 			};
 		},
 
-		getButtonProps({ onKeyDown, onKeyUp, onBlur }) {
+		getButtonProps({ onClick, onKeyDown, onKeyUp, onBlur }) {
 			return {
 				click: event => {
 					this.setState({
 						isOpen: true,
 						inputValue: event.target.value
 					});
+					if (onClick) {
+						onClick(event);
+					}
 				},
 				keydown: event => {
 					if (event.key && this[`keyDown${event.key}`]) {
