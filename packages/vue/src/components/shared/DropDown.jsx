@@ -154,7 +154,10 @@ const Dropdown = {
 													}}
 												>
 													{renderListItem ? (
-														renderListItem({ item: item[labelField], count: item.doc_count })
+														renderListItem({
+															label: item[labelField],
+															count: item.doc_count
+														})
 													) : (
 														<div>
 															{typeof item[labelField] === 'string' ? (

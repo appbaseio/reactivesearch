@@ -208,7 +208,7 @@ const SingleList = {
 								>
 									{renderListItemCalc ? (
 										renderListItemCalc({
-											item: item.key,
+											label: item.key,
 											count: item.doc_count
 										})
 									) : (
