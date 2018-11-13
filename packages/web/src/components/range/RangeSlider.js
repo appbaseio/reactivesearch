@@ -293,6 +293,7 @@ class RangeSlider extends Component {
 									style={style}
 									className={className}
 									{...passProps}
+									renderTooltipData={this.props.renderTooltipData}
 									tooltipTrigger={this.props.tooltipTrigger}
 								/>
 							)
@@ -350,6 +351,7 @@ RangeSlider.propTypes = {
 	showFilter: types.bool,
 	showSlider: types.bool,
 	tooltipTrigger: types.tooltipTrigger,
+	renderTooltipData: types.func,
 	snap: types.bool,
 	stepValue: types.number,
 	style: types.style,
