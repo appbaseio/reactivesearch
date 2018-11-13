@@ -428,6 +428,7 @@ class GeoDistanceSlider extends Component {
 								style={style}
 								className={className}
 								{...passProps}
+								renderTooltipData={this.props.renderTooltipData}
 								tooltipTrigger={this.props.tooltipTrigger}
 							/>
 						)
@@ -496,6 +497,7 @@ GeoDistanceSlider.propTypes = {
 	showFilter: types.bool,
 	showIcon: types.bool,
 	tooltipTrigger: types.tooltipTrigger,
+	renderTooltipData: types.func,
 	style: types.style,
 	theme: types.style,
 	title: types.title,
