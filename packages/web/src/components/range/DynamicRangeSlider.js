@@ -373,6 +373,7 @@ class DynamicRangeSlider extends Component {
 								style={style}
 								className={className}
 								{...passProps}
+								renderTooltipData={this.props.renderTooltipData}
 								tooltipTrigger={this.props.tooltipTrigger}
 							/>
 						)
@@ -425,6 +426,7 @@ DynamicRangeSlider.propTypes = {
 	showHistogram: types.bool,
 	showFilter: types.bool,
 	tooltipTrigger: types.tooltipTrigger,
+	renderTooltipData: types.func,
 	snap: types.bool,
 	stepValue: types.number,
 	style: types.style,
