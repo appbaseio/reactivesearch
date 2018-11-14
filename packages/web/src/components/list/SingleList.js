@@ -148,18 +148,19 @@ class SingleList extends Component {
 	};
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (props.selectAllLabel && props.selectAllLabel === value) {
 			if (props.showMissing) {
-				return { match_all: {} };
+				query = { match_all: {} };
 			}
-			return {
+			query = {
 				exists: {
 					field: props.dataField,
 				},
 			};
 		} else if (value) {
 			if (props.showMissing && props.missingLabel === value) {
-				return {
+				query = {
 					bool: {
 						must_not: {
 							exists: { field: props.dataField },
@@ -167,13 +168,23 @@ class SingleList extends Component {
 					},
 				};
 			}
-			return {
+			query = {
 				term: {
 					[props.dataField]: value,
 				},
 			};
 		}
-		return null;
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+		return query;
 	};
 
 	setValue = (nextValue, props = this.props) => {
@@ -424,6 +435,7 @@ SingleList.propTypes = {
 	missingLabel: types.string,
 	showLoadMore: types.bool,
 	loadMoreLabel: types.title,
+	nestedField: types.string,
 };
 
 SingleList.defaultProps = {
@@ -444,7 +456,9 @@ SingleList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId],
+	options: props.nestedField && state.aggregations[props.componentId]
+		? state.aggregations[props.componentId].reactivesearch_nested
+		: state.aggregations[props.componentId],
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || '',
 	themePreset: state.config.themePreset,

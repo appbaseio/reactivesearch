@@ -1,11 +1,12 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
-import Title from '../../styles/Title';
-import Input from '../../styles/Input';
-import Container from '../../styles/Container';
-import { connect } from '../../utils/index';
 import types from '../../utils/vueTypes';
-import { UL, Checkbox } from '../../styles/FormControlList';
+import { getAggsQuery, getCompositeAggsQuery } from './utils';
+import Title from '../../styles/Title';
+import Container from '../../styles/Container';
+import Button, { loadMoreContainer } from '../../styles/Button';
+import Dropdown from '../shared/DropDown.jsx';
+import { connect } from '../../utils/index';
 
 const {
 	addComponent,
@@ -20,51 +21,53 @@ const {
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
-	getAggsOrder,
+	checkPropChange,
 	getClassName
 } = helper;
-
-const MultiList = {
-	name: 'MultiList',
+const MultiDropdownList = {
+	name: 'MultiDropdownList',
+	data() {
+		const props = this.$props;
+		this.__state = {
+			currentValue: {},
+			modifiedOptions: [],
+			after: {},
+			// for composite aggs
+			isLastBucket: false
+		};
+		this.locked = false;
+		this.internalComponent = `${props.componentId}__internal`;
+		return this.__state;
+	},
 	props: {
-		defaultSelected: types.stringArray,
-		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
-		showCheckbox: VueTypes.bool.def(true),
 		beforeValueChange: types.func,
-		className: types.string.def(''),
+		className: VueTypes.string.def(''),
 		componentId: types.stringRequired,
 		customQuery: types.func,
 		dataField: types.stringRequired,
+		defaultSelected: types.stringArray,
 		filterLabel: types.string,
 		innerClass: types.style,
-		placeholder: VueTypes.string.def('Search'),
+		placeholder: VueTypes.string.def('Select values'),
+		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		react: types.react,
 		renderListItem: types.func,
 		transformData: types.func,
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
 		showFilter: VueTypes.bool.def(true),
-		showSearch: VueTypes.bool.def(true),
 		size: VueTypes.number.def(100),
 		sortBy: VueTypes.oneOf(['asc', 'desc', 'count']).def('count'),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
 		showMissing: VueTypes.bool.def(false),
-		missingLabel: VueTypes.string.def('N/A')
-	},
-	data() {
-		const props = this.$props;
-		this.__state = {
-			currentValue: {},
-			modifiedOptions:
-				props.options && props.options[props.dataField]
-					? props.options[props.dataField].buckets
-					: [],
-			searchTerm: ''
-		};
-		this.locked = false;
-		this.internalComponent = `${props.componentId}__internal`;
-		return this.__state;
+		missingLabel: VueTypes.string.def('N/A'),
+		showSearch: VueTypes.bool.def(false),
+		showLoadMore: VueTypes.bool.def(false),
+		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def(
+			'Load More'
+		),
+		nestedField: types.string
 	},
 	created() {
 		const onQueryChange = (...args) => {
@@ -72,54 +75,35 @@ const MultiList = {
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, null);
 	},
+
 	beforeMount() {
 		this.addComponent(this.internalComponent);
 		this.addComponent(this.$props.componentId);
-		this.updateQueryHandlerOptions(this.$props);
+		this.updateQueryOptions(this.$props);
 		this.setReact(this.$props);
 
 		if (this.selectedValue) {
-			this.setValue(this.selectedValue);
+			this.setValue(this.selectedValue, true);
 		} else if (this.$props.defaultSelected) {
-			this.setValue(this.$props.defaultSelected);
+			this.setValue(this.$props.defaultSelected, true);
 		}
 	},
+
 	beforeDestroy() {
 		this.removeComponent(this.$props.componentId);
 		this.removeComponent(this.internalComponent);
 	},
+
 	watch: {
 		react() {
 			this.setReact(this.$props);
 		},
-		options(newVal) {
-			this.modifiedOptions = newVal[this.$props.dataField]
-				? newVal[this.$props.dataField].buckets
-				: [];
-		},
-		size() {
-			this.updateQueryHandlerOptions(this.$props);
-		},
-		sortBy() {
-			this.updateQueryHandlerOptions(this.$props);
-		},
-		dataField() {
-			this.updateQueryHandlerOptions(this.$props);
-			this.updateQueryHandler(this.$data.currentValue, this.$props);
-		},
-		defaultSelected(newVal, oldVal) {
-			if (!isEqual(oldVal, newVal)) {
-				this.setValue(newVal, true);
-			}
-		},
 		selectedValue(newVal) {
 			let selectedValue = Object.keys(this.$data.currentValue);
-
 			if (this.$props.selectAllLabel) {
 				selectedValue = selectedValue.filter(
 					val => val !== this.$props.selectAllLabel
 				);
-
 				if (this.$data.currentValue[this.$props.selectAllLabel]) {
 					selectedValue = [this.$props.selectAllLabel];
 				}
@@ -127,118 +111,103 @@ const MultiList = {
 			if (!isEqual(selectedValue, newVal)) {
 				this.setValue(newVal || [], true);
 			}
+		},
+		options(newVal, oldVal) {
+			checkPropChange(oldVal, newVal, () => {
+				const { showLoadMore, dataField } = this.$props;
+				const { modifiedOptions } = this.$data;
+				if (showLoadMore) {
+					// append options with showLoadMore
+					const { buckets } = newVal[dataField];
+					const nextOptions = [
+						...modifiedOptions,
+						...buckets.map(bucket => ({
+							key: bucket.key[dataField],
+							doc_count: bucket.doc_count
+						}))
+					];
+					const after = newVal[dataField].after_key; // detect the last bucket by checking if the next set of buckets were empty
+					const isLastBucket = !buckets.length;
+					this.after = {
+						after
+					};
+					this.isLastBucket = isLastBucket;
+					this.modifiedOptions = nextOptions;
+				} else {
+					this.modifiedOptions = newVal[this.$props.dataField]
+						? newVal[this.$props.dataField].buckets
+						: [];
+				}
+			});
+		},
+		size() {
+			this.updateQueryOptions(this.$props);
+		},
+		dataField() {
+			this.updateQueryOptions(this.$props);
+			this.updateQueryHandler(this.$data.currentValue, this.$props);
+		},
+		defaultSelected(newVal) {
+			this.setValue(newVal);
 		}
 	},
-	render() {
-		const { selectAllLabel, renderListItem } = this.$props;
 
+	render() {
+		const { showLoadMore, loadMoreLabel, renderListItem } = this.$props;
 		const renderListItemCalc
 			= this.$scopedSlots.renderListItem || renderListItem;
-		if (this.modifiedOptions.length === 0) {
+		const { isLastBucket } = this.$data;
+		let selectAll = [];
+
+		if (this.$data.modifiedOptions.length === 0) {
 			return null;
 		}
 
-		let itemsToRender = this.$data.modifiedOptions;
-
-		if (this.$props.transformData) {
-			itemsToRender = this.$props.transformData(itemsToRender);
+		if (this.$props.selectAllLabel) {
+			selectAll = [
+				{
+					key: this.$props.selectAllLabel
+				}
+			];
 		}
 
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
-					<Title class={getClassName(this.$props.innerClass, 'title')}>
+					<Title class={getClassName(this.$props.innerClass, 'title') || ''}>
 						{this.$props.title}
 					</Title>
 				)}
-				{this.renderSearch()}
-				<UL class={getClassName(this.$props.innerClass, 'list')}>
-					{selectAllLabel ? (
-						<li
-							key={selectAllLabel}
-							class={`${this.currentValue[selectAllLabel] ? 'active' : ''}`}
-						>
-							<Checkbox
-								type="checkbox"
-								class={getClassName(this.$props.innerClass, 'checkbox')}
-								id={`${this.$props.componentId}-${selectAllLabel}`}
-								name={selectAllLabel}
-								value={selectAllLabel}
-								onClick={this.handleClick}
-								{...{
-									domProps: {
-										checked: !!this.currentValue[selectAllLabel]
-									}
-								}}
-								show={this.$props.showCheckbox}
-							/>
-							<label
-								class={getClassName(this.$props.innerClass, 'label')}
-								for={`${this.$props.componentId}-${selectAllLabel}`}
-							>
-								{selectAllLabel}
-							</label>
-						</li>
-					) : null}
-					{itemsToRender
-						.filter(item => {
-							if (String(item.key).length) {
-								if (this.$props.showSearch && this.$data.searchTerm) {
-									return String(item.key)
-										.toLowerCase()
-										.includes(this.$data.searchTerm.toLowerCase());
-								}
-
-								return true;
-							}
-
-							return false;
-						})
-						.map(item => (
-							<li
-								key={item.key}
-								class={`${this.$data.currentValue[item.key] ? 'active' : ''}`}
-							>
-								<Checkbox
-									type="checkbox"
-									class={getClassName(this.$props.innerClass, 'checkbox')}
-									id={`${this.$props.componentId}-${item.key}`}
-									name={this.$props.componentId}
-									value={item.key}
-									onClick={this.handleClick}
-									show={this.$props.showCheckbox}
-									{...{
-										domProps: {
-											checked: !!this.$data.currentValue[item.key]
-										}
-									}}
-								/>
-								<label
-									class={getClassName(this.$props.innerClass, 'label')}
-									for={`${this.$props.componentId}-${item.key}`}
-								>
-									{renderListItemCalc ? (
-										renderListItemCalc({
-											label: item.key,
-											count: item.doc_count
-										})
-									) : (
-										<span>
-											{item.key}
-											{this.$props.showCount && (
-												<span
-													class={getClassName(this.$props.innerClass, 'count')}
-												>
-													&nbsp;(
-													{item.doc_count})
-												</span>
-											)}
-										</span>
-									)}
-								</label>
-							</li>
-						))}
-				</UL>
+				<Dropdown
+					innerClass={this.$props.innerClass}
+					items={[
+						...selectAll,
+						...this.$data.modifiedOptions
+							.filter(item => String(item.key).trim().length)
+							.map(item => ({
+								...item,
+								key: String(item.key)
+							}))
+					]}
+					handleChange={this.setValue}
+					selectedItem={this.$data.currentValue}
+					placeholder={this.$props.placeholder}
+					labelField="key"
+					multi
+					showCount={this.$props.showCount}
+					themePreset={this.themePreset}
+					renderListItem={renderListItemCalc}
+					showSearch={this.$props.showSearch}
+					transformData={this.$props.transformData}
+					footer={
+						showLoadMore
+						&& !isLastBucket && (
+							<div css={loadMoreContainer}>
+								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
+							</div>
+						)
+					}
+				/>
 			</Container>
 		);
 	},
@@ -256,6 +225,7 @@ const MultiList = {
 				});
 			}
 		},
+
 		setValue(value, isDefaultValue = false, props = this.$props) {
 			// ignore state updates when component is locked
 			if (props.beforeValueChange && this.locked) {
@@ -266,11 +236,8 @@ const MultiList = {
 			const { selectAllLabel } = this.$props;
 			let { currentValue } = this.$data;
 			let finalValues = null;
-			if (
-				selectAllLabel
-				&& ((Array.isArray(value) && value.includes(selectAllLabel))
-					|| (typeof value === 'string' && value === selectAllLabel))
-			) {
+
+			if (selectAllLabel && value.includes(selectAllLabel)) {
 				if (currentValue[selectAllLabel]) {
 					currentValue = {};
 					finalValues = [];
@@ -306,6 +273,7 @@ const MultiList = {
 				} else {
 					currentValue[value] = true;
 				}
+
 				if (selectAllLabel && selectAllLabel in currentValue) {
 					const { [selectAllLabel]: del, ...obj } = currentValue;
 					currentValue = {
@@ -317,11 +285,12 @@ const MultiList = {
 			}
 
 			const performUpdate = () => {
-				this.currentValue = Object.assign({}, currentValue);
+				this.currentValue = currentValue;
 				this.updateQueryHandler(finalValues, props);
 				this.locked = false;
-				this.$emit('valueChange', finalValues);
+				this.$emit('valueChange', value);
 			};
+
 			checkValueChange(
 				props.componentId,
 				finalValues,
@@ -331,7 +300,7 @@ const MultiList = {
 		},
 
 		updateQueryHandler(value, props) {
-			const query = props.customQuery || MultiList.defaultQuery;
+			const query = props.customQuery || MultiDropdownList.defaultQuery;
 			this.updateQuery({
 				componentId: props.componentId,
 				query: query(value, props),
@@ -339,65 +308,37 @@ const MultiList = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'MULTILIST'
+				componentType: 'MULTIDROPDOWNLIST'
 			});
 		},
 
-		generateQueryOptions(props) {
+		generateQueryOptions(props, after) {
 			const queryOptions = getQueryOptions(props);
-			queryOptions.size = 0;
-			queryOptions.aggs = {
-				[props.dataField]: {
-					terms: {
-						field: props.dataField,
-						size: props.size,
-						order: getAggsOrder(props.sortBy || 'count'),
-						...(props.showMissing
-							? {
-								missing: props.missingLabel
-							  }
-							: {})
-					}
-				}
-			};
-			return queryOptions;
+			return props.showLoadMore
+				? getCompositeAggsQuery(queryOptions, props, after)
+				: getAggsQuery(queryOptions, props);
 		},
 
-		updateQueryHandlerOptions(props) {
-			const queryOptions = MultiList.generateQueryOptions(props);
+		updateQueryOptions(props, addAfterKey = false) {
+			// when using composite aggs flush the current options for a fresh query
+			if (props.showLoadMore && !addAfterKey) {
+				this.modifiedOptions = [];
+			} // for a new query due to other changes don't append after to get fresh results
+
+			const queryOptions = MultiDropdownList.generateQueryOptions(
+				props,
+				addAfterKey ? this.$data.after : {}
+			);
 			this.setQueryOptions(this.internalComponent, queryOptions);
 		},
 
-		handleInputChange(e) {
-			const { value } = e.target;
-			this.searchTerm = value;
-		},
-
-		renderSearch() {
-			if (this.$props.showSearch) {
-				return (
-					<Input
-						class={getClassName(this.$props.innerClass, 'input') || ''}
-						onInput={this.handleInputChange}
-						value={this.$data.searchTerm}
-						placeholder={this.$props.placeholder}
-						style={{
-							margin: '0 0 8px'
-						}}
-						themePreset={this.$props.themePreset}
-					/>
-				);
-			}
-
-			return null;
-		},
-
-		handleClick(e) {
-			this.setValue(e.target.value);
+		handleLoadMore() {
+			this.updateQueryOptions(this.$props, true);
 		}
 	}
 };
-MultiList.defaultQuery = (value, props) => {
+
+MultiDropdownList.defaultQuery = (value, props) => {
 	let query = null;
 	const type = props.queryFormat === 'or' ? 'terms' : 'term';
 
@@ -466,26 +407,31 @@ MultiList.defaultQuery = (value, props) => {
 
 		query = value.length ? listQuery : null;
 	}
+
+	if (query && props.nestedField) {
+		return {
+			query: {
+				nested: {
+					path: props.nestedField,
+					query
+				}
+			}
+		};
+	}
 	return query;
 };
-MultiList.generateQueryOptions = props => {
-	const queryOptions = getQueryOptions(props);
-	queryOptions.size = 0;
-	queryOptions.aggs = {
-		[props.dataField]: {
-			terms: {
-				field: props.dataField,
-				size: props.size,
-				order: getAggsOrder(props.sortBy || 'count'),
-				...(props.showMissing ? { missing: props.missingLabel } : {})
-			}
-		}
-	};
 
-	return queryOptions;
+MultiDropdownList.generateQueryOptions = (props, after) => {
+	const queryOptions = getQueryOptions(props);
+	return props.showLoadMore
+		? getCompositeAggsQuery(queryOptions, props, after)
+		: getAggsQuery(queryOptions, props);
 };
 const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId],
+	options:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
@@ -505,9 +451,9 @@ const mapDispatchtoProps = {
 const ListConnected = connect(
 	mapStateToProps,
 	mapDispatchtoProps
-)(MultiList);
+)(MultiDropdownList);
 
-MultiList.install = function(Vue) {
-	Vue.component(MultiList.name, ListConnected);
+MultiDropdownList.install = function(Vue) {
+	Vue.component(MultiDropdownList.name, ListConnected);
 };
-export default MultiList;
+export default MultiDropdownList;

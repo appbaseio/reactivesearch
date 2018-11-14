@@ -40,7 +40,6 @@ class ReactiveList extends Component {
 		this.initialFrom = currentPage * props.size; // used for page resetting on query change
 		this.state = {
 			from: this.initialFrom,
-			isLoading: true,
 			currentPage,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
@@ -187,15 +186,12 @@ class ReactiveList extends Component {
 
 		if (this.props.pagination) {
 			// called when page is changed
-			if (this.state.isLoading && (this.props.hits || nextProps.hits)) {
+			if (this.props.isLoading && (this.props.hits || nextProps.hits)) {
 				if (nextProps.onPageChange) {
 					nextProps.onPageChange(this.state.currentPage + 1, totalPages);
 				} else {
 					this.domNode.scrollTo(0, 0);
 				}
-				this.setState({
-					isLoading: false,
-				});
 			}
 
 			if (
@@ -213,10 +209,6 @@ class ReactiveList extends Component {
 					this.props.hits.length !== nextProps.hits.length
 					|| nextProps.hits.length === nextProps.total
 				) {
-					this.setState({
-						isLoading: false,
-					});
-
 					if (nextProps.hits.length < this.props.hits.length) {
 						// query has changed
 						this.domNode.scrollTo(0, 0);
@@ -225,10 +217,6 @@ class ReactiveList extends Component {
 						});
 					}
 				}
-			} else if ((!this.props.hits || !this.props.hits.length) && nextProps.hits) {
-				this.setState({
-					isLoading: false,
-				});
 			}
 		}
 
@@ -353,7 +341,7 @@ class ReactiveList extends Component {
 			) >= this.domNode.scrollHeight;
 		}
 		if (
-			!this.state.isLoading
+			!this.props.isLoading
 			&& renderLoader
 		) {
 			this.loadMore();
@@ -371,16 +359,11 @@ class ReactiveList extends Component {
 
 			this.setState({
 				from: value,
-				isLoading: true,
 			});
 			this.props.loadMore(this.props.componentId, {
 				...options,
 				from: value,
 			}, true);
-		} else if (this.state.isLoading) {
-			this.setState({
-				isLoading: false,
-			});
 		}
 	};
 
@@ -396,7 +379,6 @@ class ReactiveList extends Component {
 			options.from = this.state.from;
 			this.setState({
 				from: value,
-				isLoading: true,
 				currentPage: page,
 			}, () => {
 				this.props.loadMore(this.props.componentId, {
@@ -507,7 +489,7 @@ class ReactiveList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.state.isLoading && this.props.pagination && this.props.loader}
+				{this.props.isLoading && this.props.pagination && this.props.loader}
 				<Flex
 					labelPosition={this.props.sortOptions ? 'right' : 'left'}
 					className={getClassName(this.props.innerClass, 'resultsInfo')}
@@ -525,7 +507,7 @@ class ReactiveList extends Component {
 				</Flex>
 				{
 					(
-						!this.state.isLoading
+						!this.props.isLoading
 						&& (results.length === 0 && streamResults.length === 0)
 					)
 						? this.renderNoResults()
@@ -565,7 +547,7 @@ class ReactiveList extends Component {
 						)
 				}
 				{
-					this.state.isLoading && !this.props.pagination
+					this.props.isLoading && !this.props.pagination
 						? this.props.loader || (
 							<div style={{ textAlign: 'center', margin: '20px 0', color: '#666' }}>
 								Loading...
