@@ -1,12 +1,12 @@
 [submodule "packages/reactivecore"]
 	path = packages/reactivecore
-	url = https://github.com/appbaseio/reactivecore.git
+	url = git@github.com:appbaseio/reactivecore.git
 	branch = master
 [submodule "packages/playground"]
 	path = packages/playground
-	url = https://github.com/appbaseio/playground.git
+	url = git@github.com:appbaseio/playground.git
 	branch = dev
 [submodule "packages/vue-playground"]
 	path = packages/vue-playground
-	url = https://github.com/appbaseio/vue-playground.git
+	url = git@github.com:appbaseio/vue-playground.git
 	branch = master
