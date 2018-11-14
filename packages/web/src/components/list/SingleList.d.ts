@@ -9,6 +9,7 @@ export interface SingleList extends CommonProps {
 	defaultSelected?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
+	nestedField?: string;
 	onValueChange?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;
