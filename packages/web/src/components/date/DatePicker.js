@@ -84,7 +84,7 @@ class DatePicker extends Component {
 
 	static defaultQuery = (value, props) => {
 		let query = null;
-		if (value && props.queryFormat) {
+		if (value) {
 			query = {
 				range: {
 					[props.dataField]: {
@@ -239,6 +239,7 @@ DatePicker.propTypes = {
 	innerClass: types.style,
 	numberOfMonths: types.number,
 	onQueryChange: types.func,
+	parseDate: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatDate,
 	react: types.react,
