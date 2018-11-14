@@ -138,8 +138,9 @@ class RatingsFilter extends Component {
 			query: query(value, props),
 			value,
 			label: props.filterLabel,
-			showFilter: false,
+			showFilter: props.showFilter,
 			URLParams: props.URLParams,
+			componentType: 'RATINGSFILTER',
 		});
 	};
 

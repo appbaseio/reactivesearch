@@ -14,6 +14,7 @@ export interface MultiDropdownList extends CommonProps {
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	renderListItem?: (...args: any[]) => any;
+	transformData?: (...args: any[]) => any;
 	selectAllLabel?: string;
 	showCount?: boolean;
 	showFilter?: boolean;
@@ -23,6 +24,9 @@ export interface MultiDropdownList extends CommonProps {
 	title?: types.title;
 	showMissing?: boolean;
 	missingLabel?: string;
+	showLoadMore?: boolean;
+	loadMoreLabel?: types.title;
+	nestedField?: string;
 }
 
 declare const MultiDropdownList: React.ComponentType<MultiDropdownList>;

@@ -1,7 +1,7 @@
 import { css } from 'emotion';
 import styled from 'react-emotion';
+import { lighten } from 'polished';
 
-import { shade } from './utils';
 import Title from './Title';
 
 const container = css`
@@ -37,7 +37,7 @@ const Card = styled('a')`
 	border-radius: 0.25rem;
 	background-color: ${({ theme }) =>
 		(theme.colors.backgroundColor
-			? shade(theme.colors.backgroundColor, 0.2)
+			? lighten(0.1, theme.colors.backgroundColor)
 			: '#fff')};
 	height: 300px;
 	display: flex;

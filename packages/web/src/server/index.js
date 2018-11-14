@@ -33,7 +33,8 @@ const componentsWithoutFilters = [
 const resultComponents = ['ResultCard', 'ResultList', 'ReactiveList', 'ReactiveMap'];
 
 function getValue(state, id, defaultValue) {
-	return state ? state[id] : defaultValue;
+	if (!state) return defaultValue;
+	return state[id] || defaultValue;
 }
 
 function parseValue(value, component) {
@@ -70,7 +71,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			credentials,
 			type: settings.type ? settings.type : '*',
 		};
-		const appbaseRef = new Appbase(config);
+		const appbaseRef = Appbase(config);
 
 		let components = [];
 		let selectedValues = {};
@@ -98,6 +99,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			if (componentsWithoutFilters.includes(component.type)) {
 				showFilter = false;
 			}
+
 			selectedValues = valueReducer(selectedValues, {
 				type: 'SET_VALUE',
 				component: component.componentId,
@@ -153,11 +155,21 @@ export default function initReactivesearch(componentCollection, searchState, set
 							mainQueryOptions = { ...otherQueryOptions, ...highlightQuery };
 						}
 						if (isResultComponent) {
+							let currentPage = component.currentPage
+								? component.currentPage - 1
+								: 0;
+							if (
+								selectedValues[component.componentId]
+								&& selectedValues[component.componentId].value
+							) {
+								currentPage = selectedValues[component.componentId].value - 1 || 0;
+							}
+							const resultSize = component.size || 10;
 							mainQueryOptions = {
-								from: 0,
-								size: component.size || 10,
 								...mainQueryOptions,
 								...highlightQuery,
+								size: resultSize,
+								from: currentPage * resultSize,
 							};
 						}
 						queryOptions = queryOptionsReducer(queryOptions, {
@@ -257,32 +269,30 @@ export default function initReactivesearch(componentCollection, searchState, set
 		appbaseRef.msearch({
 			type: config.type === '*' ? '' : config.type,
 			body: finalQuery,
-		})
-			.on('data', (res) => {
-				orderOfQueries.forEach((component, index) => {
-					const response = res.responses[index];
-					if (response.aggregations) {
-						aggregations = {
-							...aggregations,
-							[component]: response.aggregations,
-						};
-					}
-					hits = {
-						...hits,
-						[component]: {
-							hits: response.hits.hits,
-							total: response.hits.total,
-							time: response.took,
-						},
+		}).then((res) => {
+			orderOfQueries.forEach((component, index) => {
+				const response = res.responses[index];
+				if (response.aggregations) {
+					aggregations = {
+						...aggregations,
+						[component]: response.aggregations,
 					};
-				});
-				state = {
-					...state,
-					hits,
-					aggregations,
+				}
+				hits = {
+					...hits,
+					[component]: {
+						hits: response.hits.hits,
+						total: response.hits.total,
+						time: response.took,
+					},
 				};
-				resolve(state);
-			})
-			.on('error', err => reject(err));
+			});
+			state = {
+				...state,
+				hits,
+				aggregations,
+			};
+			resolve(state);
+		}).catch(err => reject(err));
 	});
 }

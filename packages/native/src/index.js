@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import ReactiveBase from './components/basic/ReactiveBase';
 import TextField from './components/basic/TextField';
 import DataController from './components/basic/DataController';

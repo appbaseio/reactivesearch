@@ -7,12 +7,12 @@ import {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	loadMore,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
-	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
@@ -20,12 +20,15 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import { getAggsQuery, getCompositeAggsQuery } from './utils';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
+import Button, { loadMoreContainer } from '../../styles/Button';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
 import { connect } from '../../utils';
 
+// showLoadMore is experimental API and works only with ES6
 class SingleList extends Component {
 	constructor(props) {
 		super(props);
@@ -33,9 +36,14 @@ class SingleList extends Component {
 		this.state = {
 			currentValue: '',
 			options: (props.options && props.options[props.dataField])
-				? props.options[props.dataField].buckets
+				? this.getOptions(
+					props.options[props.dataField].buckets,
+					props,
+				)
 				: [],
 			searchTerm: '',
+			after: {},	// for composite aggs
+			isLastBucket: false,
 		};
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -66,11 +74,28 @@ class SingleList extends Component {
 			this.props.options,
 			nextProps.options,
 			() => {
-				this.setState({
-					options: nextProps.options[nextProps.dataField]
-						? nextProps.options[nextProps.dataField].buckets
-						: [],
-				});
+				const { showLoadMore, dataField } = nextProps;
+				if (showLoadMore) {
+					const { buckets } = nextProps.options[dataField];
+					const after = nextProps.options[dataField].after_key;
+					// detect the last bucket by checking if the after key is absent
+					const isLastBucket = !after;
+					this.setState(state => ({
+						...state,
+						after: after ? { after } : state.after,
+						isLastBucket,
+						options: this.getOptions(buckets, nextProps),
+					}));
+				} else {
+					this.setState({
+						options: nextProps.options[nextProps.dataField]
+							? this.getOptions(
+								nextProps.options[nextProps.dataField].buckets,
+								nextProps,
+							)
+							: [],
+					});
+				}
 			},
 		);
 		checkSomePropChange(
@@ -111,19 +136,31 @@ class SingleList extends Component {
 		}
 	};
 
+	getOptions = (buckets, props) => {
+		if (props.showLoadMore) {
+			return buckets.map(bucket => ({
+				key: bucket.key[props.dataField],
+				doc_count: bucket.doc_count,
+			}));
+		}
+
+		return buckets;
+	};
+
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (props.selectAllLabel && props.selectAllLabel === value) {
 			if (props.showMissing) {
-				return { match_all: {} };
+				query = { match_all: {} };
 			}
-			return {
+			query = {
 				exists: {
 					field: props.dataField,
 				},
 			};
 		} else if (value) {
 			if (props.showMissing && props.missingLabel === value) {
-				return {
+				query = {
 					bool: {
 						must_not: {
 							exists: { field: props.dataField },
@@ -131,13 +168,23 @@ class SingleList extends Component {
 					},
 				};
 			}
-			return {
+			query = {
 				term: {
 					[props.dataField]: value,
 				},
 			};
 		}
-		return null;
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+		return query;
 	};
 
 	setValue = (nextValue, props = this.props) => {
@@ -180,27 +227,27 @@ class SingleList extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
+			componentType: 'SINGLELIST',
 		});
 	};
 
-	static generateQueryOptions(props) {
+	static generateQueryOptions(props, after) {
 		const queryOptions = getQueryOptions(props);
-		queryOptions.size = 0;
-		queryOptions.aggs = {
-			[props.dataField]: {
-				terms: {
-					field: props.dataField,
-					size: props.size,
-					order: getAggsOrder(props.sortBy || 'count'),
-					...(props.showMissing ? { missing: props.missingLabel } : {}),
-				},
-			},
-		};
-		return queryOptions;
+		return props.showLoadMore
+			? getCompositeAggsQuery(queryOptions, props, after)
+			: getAggsQuery(queryOptions, props);
 	}
 
-	updateQueryOptions = (props) => {
-		const queryOptions = SingleList.generateQueryOptions(props);
+	updateQueryOptions = (props, addAfterKey = false) => {
+		// when using composite aggs flush the current options for a fresh query
+		if (props.showLoadMore && !addAfterKey) {
+			this.setState({
+				options: [],
+			});
+		}
+		// for a new query due to other changes don't append after to get fresh results
+		const queryOptions = SingleList
+			.generateQueryOptions(props, addAfterKey ? this.state.after : {});
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
@@ -210,6 +257,11 @@ class SingleList extends Component {
 			searchTerm: value,
 		});
 	};
+
+	handleLoadMore = () => {
+		const queryOptions = SingleList.generateQueryOptions(this.props, this.state.after);
+		this.props.loadMore(this.props.componentId, queryOptions);
+	}
 
 	renderSearch = () => {
 		if (this.props.showSearch) {
@@ -232,10 +284,19 @@ class SingleList extends Component {
 	};
 
 	render() {
-		const { selectAllLabel, renderListItem } = this.props;
+		const {
+			selectAllLabel, renderListItem, showLoadMore, loadMoreLabel,
+		} = this.props;
+		const { isLastBucket } = this.state;
 
 		if (this.state.options.length === 0) {
 			return null;
+		}
+
+		let { options: itemsToRender } = this.state;
+
+		if (this.props.transformData) {
+			itemsToRender = this.props.transformData(itemsToRender);
 		}
 
 		return (
@@ -268,7 +329,7 @@ class SingleList extends Component {
 							: null
 					}
 					{
-						this.state.options
+						itemsToRender
 							.filter((item) => {
 								if (String(item.key).length) {
 									if (this.props.showSearch && this.state.searchTerm) {
@@ -321,6 +382,13 @@ class SingleList extends Component {
 								</li>
 							))
 					}
+					{
+						showLoadMore && !isLastBucket && (
+							<div css={loadMoreContainer}>
+								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
+							</div>
+						)
+					}
 				</UL>
 			</Container>
 		);
@@ -332,6 +400,7 @@ SingleList.propTypes = {
 	removeComponent: types.funcRequired,
 	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
+	loadMore: types.funcRequired,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	options: types.options,
@@ -350,6 +419,7 @@ SingleList.propTypes = {
 	placeholder: types.string,
 	react: types.react,
 	renderListItem: types.func,
+	transformData: types.func,
 	selectAllLabel: types.string,
 	showCount: types.bool,
 	showFilter: types.bool,
@@ -363,6 +433,9 @@ SingleList.propTypes = {
 	URLParams: types.bool,
 	showMissing: types.bool,
 	missingLabel: types.string,
+	showLoadMore: types.bool,
+	loadMoreLabel: types.title,
+	nestedField: types.string,
 };
 
 SingleList.defaultProps = {
@@ -378,10 +451,14 @@ SingleList.defaultProps = {
 	URLParams: false,
 	showMissing: false,
 	missingLabel: 'N/A',
+	showLoadMore: false,
+	loadMoreLabel: 'Load More',
 };
 
 const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId],
+	options: props.nestedField && state.aggregations[props.componentId]
+		? state.aggregations[props.componentId].reactivesearch_nested
+		: state.aggregations[props.componentId],
 	selectedValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value) || '',
 	themePreset: state.config.themePreset,
@@ -391,6 +468,8 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	loadMore: (component, aggsQuery) =>
+		dispatch(loadMore(component, aggsQuery, true, true)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),

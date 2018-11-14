@@ -21,6 +21,7 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
+import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
@@ -41,12 +42,11 @@ class DataSearch extends Component {
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
-		this.prevValue = '';
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
 
 	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
+		this.props.addComponent(this.props.componentId, 'DATASEARCH');
 		this.props.addComponent(this.internalComponent);
 
 		if (this.props.highlight) {
@@ -171,12 +171,10 @@ class DataSearch extends Component {
 				fields = [props.dataField];
 			}
 			finalQuery = {
-				bool: Object.assign({
+				bool: {
 					should: DataSearch.shouldQuery(value, fields, props),
 					minimum_should_match: '1',
-				}, props.defaultQuery && ({
-					must: props.defaultQuery(value, props),
-				})),
+				},
 			};
 		}
 
@@ -254,7 +252,7 @@ class DataSearch extends Component {
 		);
 	};
 
-	setValue = (value, isDefaultValue = false, props = this.props) => {
+	setValue = (value, isDefaultValue = false, props = this.props, cause) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -264,6 +262,7 @@ class DataSearch extends Component {
 		const performUpdate = () => {
 			this.setState({
 				currentValue: value,
+				suggestions: [],
 			}, () => {
 				if (isDefaultValue) {
 					if (this.props.autosuggest) {
@@ -272,7 +271,17 @@ class DataSearch extends Component {
 						});
 						this.updateQuery(this.internalComponent, value, props);
 					}
-					this.updateQuery(props.componentId, value, props);
+					// in case of strict selection only SUGGESTION_SELECT should be able
+					// to set the query otherwise the value should reset
+					if (props.strictSelection) {
+						if (cause === causes.SUGGESTION_SELECT || value === '') {
+							this.updateQuery(props.componentId, value, props);
+						} else {
+							this.setValue('', true);
+						}
+					} else {
+						this.updateQuery(props.componentId, value, props);
+					}
 				} else {
 					// debounce for handling text while typing
 					this.handleTextChange(value);
@@ -298,15 +307,35 @@ class DataSearch extends Component {
 	}, this.props.debounce);
 
 	updateQuery = (componentId, value, props) => {
-		const query = props.customQuery || DataSearch.defaultQuery;
+		const {
+			customQuery,
+			defaultQuery,
+			filterLabel,
+			showFilter,
+			URLParams,
+		} = props;
+
+		// defaultQuery from props is always appended regardless of a customQuery
+		const query = customQuery || DataSearch.defaultQuery;
+		const queryObject = defaultQuery
+			? {
+				bool: {
+					must: [
+						...query(value, props),
+						...defaultQuery(value, props),
+					],
+				},
+			}
+			: query(value, props);
 
 		props.updateQuery({
 			componentId,
-			query: query(value, props),
+			query: queryObject,
 			value,
-			label: props.filterLabel,
-			showFilter: props.showFilter,
-			URLParams: props.URLParams,
+			label: filterLabel,
+			showFilter,
+			URLParams,
+			componentType: 'DATASEARCH',
 		});
 	};
 
@@ -321,23 +350,14 @@ class DataSearch extends Component {
 
 	clearValue = () => {
 		this.setValue('', true);
-		this.onValueSelected(null);
-	};
-
-	// only works if there's a change in downshift's value
-	handleOuterClick = (event) => {
-		this.setValue(this.state.currentValue, true);
-		this.onValueSelected();
-		if (this.props.onBlur) {
-			this.props.onBlur(event);
-		}
+		this.onValueSelected(null, causes.CLEAR_VALUE);
 	};
 
 	handleKeyDown = (event, highlightedIndex) => {
 		// if a suggestion was selected, delegate the handling to suggestion handler
 		if (event.key === 'Enter' && highlightedIndex === null) {
 			this.setValue(event.target.value, true);
-			this.onValueSelected(event.target.value);
+			this.onValueSelected(event.target.value, causes.ENTER_PRESS);
 		}
 		if (this.props.onKeyDown) {
 			this.props.onKeyDown(event);
@@ -351,28 +371,18 @@ class DataSearch extends Component {
 				isOpen: true,
 			});
 		}
-		if (value.trim() !== this.state.currentValue.trim()) {
-			this.setState({
-				suggestions: [],
-			}, () => {
-				this.setValue(value);
-			});
-		} else {
-			this.setValue(value);
-		}
+		this.setValue(value);
 	};
 
 	onSuggestionSelected = (suggestion) => {
-		this.setValue(suggestion.value, true);
-		this.onValueSelected(suggestion.value);
+		this.setValue(suggestion.value, true, this.props, causes.SUGGESTION_SELECT);
+		this.onValueSelected(suggestion.value, causes.SUGGESTION_SELECT, suggestion.source);
 	};
 
-	onValueSelected = (currentValue = this.state.currentValue) => {
+	onValueSelected = (currentValue = this.state.currentValue, ...cause) => {
 		const { onValueSelected } = this.props;
-		// if the user clicked outside with the same value, we would ignore it
-		if (onValueSelected && this.prevValue !== currentValue) {
-			onValueSelected(currentValue);
-			this.prevValue = currentValue;
+		if (onValueSelected) {
+			onValueSelected(currentValue, ...cause);
 		}
 	}
 
@@ -440,13 +450,13 @@ class DataSearch extends Component {
 			suggestionsList = this.state.suggestions;
 		}
 
-		const { theme, themePreset } = this.props;
+		const { theme, themePreset, renderSuggestions } = this.props;
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
 				{
-					this.props.autosuggest
+					this.props.defaultSuggestions || this.props.autosuggest
 						? (<Downshift
 							id={`${this.props.componentId}-downshift`}
 							onChange={this.onSuggestionSelected}
@@ -471,7 +481,7 @@ class DataSearch extends Component {
 											placeholder: this.props.placeholder,
 											value: this.state.currentValue === null ? '' : this.state.currentValue,
 											onChange: this.onInputChange,
-											onBlur: this.handleOuterClick,
+											onBlur: this.props.onBlur,
 											onFocus: this.handleFocus,
 											onKeyPress: this.props.onKeyPress,
 											onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
@@ -480,9 +490,18 @@ class DataSearch extends Component {
 										themePreset={themePreset}
 									/>
 									{this.renderIcons()}
+									{renderSuggestions
+										&& renderSuggestions({
+											currentValue: this.state.currentValue,
+											isOpen,
+											getItemProps,
+											highlightedIndex,
+											suggestions: this.props.suggestions,
+											parsedSuggestions: suggestionsList,
+										})}
 
 									{
-										isOpen && suggestionsList.length
+										!renderSuggestions && isOpen && suggestionsList.length
 											? (
 												<ul className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}>
 													{
@@ -518,6 +537,7 @@ class DataSearch extends Component {
 									}
 								</div>
 							)}
+							{...this.props.downShiftProps}
 						/>)
 						: (
 							<div className={suggestionsContainer}>
@@ -570,6 +590,7 @@ DataSearch.propTypes = {
 	debounce: types.number,
 	defaultSelected: types.string,
 	defaultSuggestions: types.suggestions,
+	downShiftProps: types.props,
 	fieldWeights: types.fieldWeights,
 	filterLabel: types.string,
 	fuzziness: types.fuzziness,
@@ -591,6 +612,7 @@ DataSearch.propTypes = {
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
+	renderSuggestions: types.func,
 	showClear: types.bool,
 	showFilter: types.bool,
 	showIcon: types.bool,
@@ -599,12 +621,14 @@ DataSearch.propTypes = {
 	theme: types.style,
 	themePreset: types.themePreset,
 	URLParams: types.bool,
+	strictSelection: types.bool,
 };
 
 DataSearch.defaultProps = {
 	autosuggest: true,
 	className: null,
 	debounce: 0,
+	downShiftProps: {},
 	iconPosition: 'left',
 	placeholder: 'Search',
 	queryFormat: 'or',
@@ -613,6 +637,7 @@ DataSearch.defaultProps = {
 	style: {},
 	URLParams: false,
 	showClear: false,
+	strictSelection: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -623,7 +648,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	addComponent: component => dispatch(addComponent(component)),
+	addComponent: (component, name) => dispatch(addComponent(component, name)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),

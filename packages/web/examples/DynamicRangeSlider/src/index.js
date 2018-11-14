@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import {
 	ReactiveBase,
 	DynamicRangeSlider,
+	SelectedFilters,
 	ResultList,
 } from '@appbaseio/reactivesearch';
 
@@ -31,6 +32,7 @@ export default class Main extends Component {
 					</div>
 
 					<div className="col">
+						<SelectedFilters />
 						<ResultList
 							componentId="SearchResult"
 							dataField="original_title"

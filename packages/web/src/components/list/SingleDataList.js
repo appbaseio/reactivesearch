@@ -140,6 +140,7 @@ class SingleDataList extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
+			componentType: 'SINGLEDATALIST',
 		});
 	};
 

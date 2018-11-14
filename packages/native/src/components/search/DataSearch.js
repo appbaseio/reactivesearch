@@ -77,7 +77,7 @@ class DataSearch extends Component {
 			nextProps,
 			['highlight', 'dataField', 'highlightField'],
 			() => {
-				const queryOptions = this.highlightQuery(nextProps) || {};;
+				const queryOptions = this.highlightQuery(nextProps) || {};
 				queryOptions.size = 20;
 				this.props.setQueryOptions(nextProps.componentId, queryOptions);
 			},
@@ -560,7 +560,7 @@ class DataSearch extends Component {
 		return (
 			<View style={this.props.style}>
 				{
-					this.props.autosuggest
+					this.props.defaultSuggestions || this.props.autosuggest
 						? this.renderDataSearch(style)
 						: (
 							<Item

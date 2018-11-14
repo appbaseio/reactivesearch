@@ -281,7 +281,12 @@ class GeoDistanceDropdown extends Component {
 				this.autocompleteService = new window.google.maps.places.AutocompleteService();
 			}
 
-			this.autocompleteService.getPlacePredictions({ input: value }, (res) => {
+			const restrictedCountries = this.props.countries || [];
+
+			this.autocompleteService.getPlacePredictions({
+				input: value,
+				componentRestrictions: { country: restrictedCountries },
+			}, (res) => {
 				const suggestionsList = (res && res.map(place => ({
 					label: place.description,
 					value: place.description,
@@ -437,6 +442,7 @@ GeoDistanceDropdown.propTypes = {
 	beforeValueChange: types.func,
 	className: types.string,
 	componentId: types.stringRequired,
+	countries: types.stringArray,
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
@@ -470,6 +476,7 @@ GeoDistanceDropdown.defaultProps = {
 	showFilter: true,
 	style: {},
 	URLParams: false,
+	countries: [],
 	autoLocation: true,
 	unit: 'mi',
 };

@@ -19,7 +19,7 @@ const streamingData = {
 	tagline: 'Episode VIII - The Last Jedi',
 };
 
-const appbaseRef = new Appbase({
+const appbaseRef = Appbase({
 	url: 'https://scalr.api.appbase.io',
 	app: 'streaming-demo',
 	credentials: 'MpdmF7Z7C:f61f9b71-a3d0-4c8d-97a8-88b8106b553a',
@@ -31,11 +31,9 @@ const indexNewData = () =>
 			.index({
 				type: 'movies',
 				body: streamingData,
-			})
-			.on('data', () => {
+			}).then(() => {
 				resolve();
-			})
-			.on('error', (e) => {
+			}).catch((e) => {
 				reject(e);
 			});
 	});

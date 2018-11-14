@@ -1,9 +1,9 @@
 {
   "name": "@appbaseio/reactivesearch",
-  "version": "2.6.12",
+  "version": "2.13.0",
   "description": "A React UI components library for building search experiences",
   "main": "lib/index.js",
-  "typings": "./src/index.d.ts",
+  "types": "lib/index.d.ts",
   "module": "lib/index.es.js",
   "js:next": "lib/index.es.js",
   "sideEffects": false,
@@ -13,9 +13,10 @@
   ],
   "scripts": {
     "watch": "yarn build:commonjs -w && yarn build:es -w",
-    "build": "yarn build:commonjs && yarn build:es",
+    "build": "yarn build:commonjs && yarn build:es && yarn build:copy-types",
     "build:commonjs": "BABEL_ENV=commonjs babel --ignore __tests__ src --out-dir lib",
     "build:es": "BABEL_ENV=es babel src/index.js --out-file lib/index.es.js",
+    "build:copy-types": "npx babel-node ./scripts/copy-types.js",
     "build:umd": "BABEL_ENV=commonjs webpack --progress -p --config webpack.config.umd.js",
     "stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
     "prepublish": "yarn run build",
@@ -29,11 +30,12 @@
   "author": "metagrover",
   "license": "Apache-2.0",
   "dependencies": {
-    "@appbaseio/reactivecore": "^4.0.1",
-    "appbase-js": "^3.2.0",
+    "@appbaseio/reactivecore": "^6.0.4",
+    "appbase-js": "^4.0.2-beta.02",
     "downshift": "^1.31.2",
     "emotion": "^9.0.0",
     "emotion-theming": "^9.0.0",
+    "polished": "^1.9.3",
     "prop-types": "^15.6.0",
     "react-day-picker": "^7.0.5",
     "react-emotion": "^9.0.0",
@@ -60,12 +62,16 @@
     "brotli-webpack-plugin": "^0.5.0",
     "compression-webpack-plugin": "^1.0.1",
     "eslint-plugin-jest": "^21.12.2",
+    "fs-extra": "^7.0.0",
+    "glob": "^7.1.2",
     "jest": "^22.4.2",
+    "path": "^0.12.7",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "tslint": "^5.9.1",
     "typescript": "^2.8.1",
-    "webpack": "^3.2.0"
+    "webpack": "^4.18.0",
+    "webpack-cli": "^3.1.0"
   },
   "resolutions": {
     "@types/react": "16.3.7"

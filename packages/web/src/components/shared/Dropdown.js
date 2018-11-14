@@ -5,7 +5,7 @@ import { withTheme } from 'emotion-theming';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
 
-import { suggestionsContainer, suggestions } from '../../styles/Input';
+import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import Select, { Tick } from '../../styles/Select';
 import Chevron from '../../styles/Chevron';
 
@@ -15,6 +15,7 @@ class Dropdown extends Component {
 
 		this.state = {
 			isOpen: false,
+			searchTerm: '',
 		};
 	}
 
@@ -63,6 +64,13 @@ class Dropdown extends Component {
 		return isDark ? '#424242' : '#fff';
 	};
 
+	handleInputChange = (e) => {
+		const { value } = e.target;
+		this.setState({
+			searchTerm: value,
+		});
+	};
+
 	renderToString = (value) => {
 		if (Array.isArray(value) && value.length) {
 			const arrayToRender = value.map(item => this.renderToString(item));
@@ -88,7 +96,15 @@ class Dropdown extends Component {
 			themePreset,
 			theme,
 			renderListItem,
+			transformData,
+			footer,
 		} = this.props;
+
+		let itemsToRender = items;
+
+		if (transformData) {
+			itemsToRender = transformData(itemsToRender);
+		}
 
 		return (<Downshift
 			selectedItem={selectedItem}
@@ -116,11 +132,40 @@ class Dropdown extends Component {
 						<Chevron open={isOpen} />
 					</Select>
 					{
-						isOpen && items.length
+						isOpen && itemsToRender.length
 							? (
 								<ul className={`${suggestions(themePreset, theme)} ${this.props.small ? 'small' : ''} ${getClassName(this.props.innerClass, 'list')}`}>
 									{
-										items
+										this.props.showSearch
+											? (
+												<Input
+													id={`${this.props.componentId}-input`}
+													style={{
+														border: 0,
+														borderBottom: '1px solid #ddd',
+													}}
+													showIcon={false}
+													className={getClassName(this.props.innerClass, 'input')}
+													placeholder="Type here to search..."
+													value={this.state.searchTerm}
+													onChange={this.handleInputChange}
+													themePreset={themePreset}
+												/>
+											)
+											: null
+									}
+									{
+										itemsToRender
+											.filter((item) => {
+												if (String(item[labelField]).length) {
+													if (this.props.showSearch && this.state.searchTerm) {
+														return String(item[labelField]).toLowerCase()
+															.includes(this.state.searchTerm.toLowerCase());
+													}
+													return true;
+												}
+												return false;
+											})
 											.map((item, index) => {
 												let selected = this.props.multi && (
 													// MultiDropdownList
@@ -189,6 +234,7 @@ class Dropdown extends Component {
 												);
 											})
 									}
+									{footer}
 								</ul>
 							)
 							: null
@@ -215,12 +261,14 @@ Dropdown.propTypes = {
 	placeholder: types.string,
 	returnsObject: types.bool,
 	renderListItem: types.func,
+	transformData: types.func,
 	selectedItem: types.selectedValue,
 	showCount: types.bool,
 	single: types.bool,
 	small: types.bool,
 	theme: types.style,
 	themePreset: types.themePreset,
+	showSearch: types.bool,
 };
 
 export default withTheme(Dropdown);

@@ -1,6 +1,6 @@
 import styled, { css } from 'react-emotion';
 import { withTheme } from 'emotion-theming';
-import { shade } from './utils';
+import { lighten } from 'polished';
 
 import { input } from './Input';
 
@@ -180,12 +180,12 @@ const DateContainer = styled.div`
 	}
 
 	.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover {
-		background-color: ${({ theme }) => shade(theme.colors.primaryColor, 0.1)};
+		background-color: ${({ theme }) => lighten(0.1, theme.colors.primaryColor)};
 	}
 
 	.DayPicker:not(.DayPicker--interactionDisabled)
 		.DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
-		background-color: ${({ theme }) => shade(theme.colors.primaryColor, 0.1)};
+		background-color: ${({ theme }) => lighten(0.1, theme.colors.primaryColor)};
 		border-radius: 50%;
 	}
 
@@ -230,7 +230,7 @@ const DateContainer = styled.div`
 	}
 
 	.DayPickerInput-OverlayWrapper .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside){
-		background-color:${({ theme }) => shade(theme.colors.primaryColor, 0.8) || '#f0f8ff'};
+		background-color:${({ theme }) => lighten(0.1, theme.colors.primaryColor) || '#f0f8ff'};
 	}
 
 	.DayPickerInput-Overlay {
@@ -240,7 +240,7 @@ const DateContainer = styled.div`
 		position: absolute;
 		background: ${({ theme: { colors } }) =>
 		(colors.backgroundColor
-			? shade(colors.backgroundColor, 0.15)
+			? lighten(0.15, colors.backgroundColor)
 			: '#fff')};
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 	}

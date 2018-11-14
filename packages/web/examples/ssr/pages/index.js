@@ -78,6 +78,7 @@ const components = {
 			url: data.listing_url,
 		}),
 		pagination: true,
+		URLParams: true,
 		react: {
 			and: ['SearchSensor', 'GuestSensor'],
 		},
@@ -91,7 +92,7 @@ const components = {
 };
 
 export default class Main extends Component {
-	static async getInitialProps() {
+	static async getInitialProps({ pathname, query }) {
 		return {
 			store: await initReactivesearch(
 				[
@@ -116,7 +117,7 @@ export default class Main extends Component {
 						source: ResultCard,
 					},
 				],
-				null,
+				query,
 				components.settings,
 			),
 		};

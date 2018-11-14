@@ -20,6 +20,7 @@ import Rheostat from 'rheostat/lib/Slider';
 
 import HistogramContainer from './addons/HistogramContainer';
 import RangeLabel from './addons/RangeLabel';
+import SliderHandle from './addons/SliderHandle';
 import Slider from '../../styles/Slider';
 import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
@@ -225,14 +226,18 @@ class RangeSlider extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || RangeSlider.defaultQuery;
-
+		const { showFilter, range: { start, end } } = props;
+		const [currentStart, currentEnd] = value;
+		// check if the slider is at its initial position
+		const isInitialValue = currentStart === start && currentEnd === end;
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
 			value,
 			label: props.filterLabel,
-			showFilter: false, // disable filters for RangeSlider
+			showFilter: showFilter && !isInitialValue,
 			URLParams: props.URLParams,
+			componentType: 'RANGESLIDER',
 		});
 	};
 
@@ -282,6 +287,17 @@ class RangeSlider extends Component {
 						snap={this.props.snap}
 						snapPoints={this.props.snap ? this.getSnapPoints() : null}
 						className={getClassName(this.props.innerClass, 'slider')}
+						handle={({ className, style, ...passProps }) =>
+							(
+								<SliderHandle
+									style={style}
+									className={className}
+									{...passProps}
+									renderTooltipData={this.props.renderTooltipData}
+									tooltipTrigger={this.props.tooltipTrigger}
+								/>
+							)
+						}
 					/>
 				}
 				{this.props.rangeLabels && this.props.showSlider && (
@@ -332,7 +348,10 @@ RangeSlider.propTypes = {
 	react: types.react,
 	showHistogram: types.bool,
 	histogramQuery: types.func,
+	showFilter: types.bool,
 	showSlider: types.bool,
+	tooltipTrigger: types.tooltipTrigger,
+	renderTooltipData: types.func,
 	snap: types.bool,
 	stepValue: types.number,
 	style: types.style,
@@ -348,8 +367,10 @@ RangeSlider.defaultProps = {
 	},
 	showHistogram: true,
 	showSlider: true,
+	tooltipTrigger: 'none',
 	snap: true,
 	stepValue: 1,
+	showFilter: true,
 	style: {},
 	URLParams: false,
 };

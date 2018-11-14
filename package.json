@@ -3,6 +3,7 @@
 	"name": "reactivesearch-packages",
 	"scripts": {
 		"dev:web": "concurrently --kill-others -n \"CORE\",\"WEB\",\"MAPS\", -c \"cyan\",\"yellow\",\"green\", \"npm start --prefix packages/reactivecore\" \"npm run watch --prefix packages/web\" \"npm run watch --prefix packages/maps\"",
+		"dev:vue": "concurrently --kill-others -n \"CORE\",\"WEB\", -c \"cyan\",\"yellow\",\"green\", \"npm start --prefix packages/reactivecore\" \"npm run watch --prefix packages/vue\"",
 		"lint": "eslint .",
 		"lint:ts": "tslint -c tslint.json 'packages/web/**/**/*.{ts,tsx}'",
 		"lint:ts-fix": "tslint -c tslint.json --fix 'packages/web/**/**/*.{ts,tsx}'",
@@ -15,6 +16,7 @@
 	"workspaces": [
 		"packages/*",
 		"packages/web/examples/*",
+		"packages/vue/examples/*",
 		"packages/maps/examples/*",
 		"site",
 		"site/demos/*"
@@ -25,10 +27,13 @@
 		]
 	},
 	"devDependencies": {
+		"babel-eslint": "^9.0.0",
 		"concurrently": "^3.5.1",
 		"eslint": "^4.10.0",
 		"eslint-config-airbnb": "^16.1.0",
 		"eslint-plugin-babel": "^4.1.2",
+		"eslint-plugin-import": "^2.14.0",
+		"eslint-plugin-jest": "^21.22.0",
 		"eslint-plugin-jsx-a11y": "^6.0.3",
 		"eslint-plugin-react": "^7.5.1",
 		"husky": "^0.14.3",

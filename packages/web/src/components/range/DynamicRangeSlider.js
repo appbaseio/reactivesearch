@@ -20,6 +20,7 @@ import Rheostat from 'rheostat/lib/Slider';
 
 import HistogramContainer from './addons/HistogramContainer';
 import RangeLabel from './addons/RangeLabel';
+import SliderHandle from './addons/SliderHandle';
 import Slider from '../../styles/Slider';
 import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
@@ -77,10 +78,22 @@ class DynamicRangeSlider extends Component {
 					Math.ceil(nextProps.range.end),
 				], nextProps);
 			}
-		} else if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected) && nextProps.range) {
+		} else if (nextProps.range
+			&& !isEqual(
+				this.props.defaultSelected
+				&& this.props.defaultSelected(nextProps.range.start, nextProps.range.end),
+				nextProps.defaultSelected
+				&& nextProps.defaultSelected(nextProps.range.start, nextProps.range.end),
+			)) {
 			const { start, end } = nextProps.defaultSelected(nextProps.range.start, nextProps.range.end);
 			this.handleChange(
 				[start, end],
+				nextProps,
+			);
+		} else if (nextProps.range && nextProps.selectedValue === null) {
+			// when the filter is reset
+			this.handleChange(
+				[nextProps.range.start, nextProps.range.end],
 				nextProps,
 			);
 		}
@@ -260,14 +273,19 @@ class DynamicRangeSlider extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || DynamicRangeSlider.defaultQuery;
+		const { showFilter, range: { start, end } } = props;
+		const [currentStart, currentEnd] = value;
+		// check if the slider is at its initial position
+		const isInitialValue = currentStart === start && currentEnd === end;
 
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
 			value,
 			label: props.filterLabel,
-			showFilter: false, // disable filters for DynamicRangeSlider
+			showFilter: showFilter && !isInitialValue,
 			URLParams: props.URLParams,
+			componentType: 'DYNAMICRANGESLIDER',
 		});
 	};
 
@@ -349,6 +367,17 @@ class DynamicRangeSlider extends Component {
 					snap={this.props.snap}
 					snapPoints={this.props.snap ? this.getSnapPoints() : null}
 					className={getClassName(this.props.innerClass, 'slider')}
+					handle={({ className, style, ...passProps }) =>
+						(
+							<SliderHandle
+								style={style}
+								className={className}
+								{...passProps}
+								renderTooltipData={this.props.renderTooltipData}
+								tooltipTrigger={this.props.tooltipTrigger}
+							/>
+						)
+					}
 				/>
 				<div className={rangeLabelsContainer}>
 					<RangeLabel
@@ -395,6 +424,9 @@ DynamicRangeSlider.propTypes = {
 	rangeLabels: types.func,
 	react: types.react,
 	showHistogram: types.bool,
+	showFilter: types.bool,
+	tooltipTrigger: types.tooltipTrigger,
+	renderTooltipData: types.func,
 	snap: types.bool,
 	stepValue: types.number,
 	style: types.style,
@@ -405,10 +437,12 @@ DynamicRangeSlider.propTypes = {
 DynamicRangeSlider.defaultProps = {
 	className: null,
 	showHistogram: true,
+	tooltipTrigger: 'none',
 	snap: true,
 	stepValue: 1,
 	style: {},
 	URLParams: false,
+	showFilter: true,
 };
 
 const mapStateToProps = (state, props) => ({

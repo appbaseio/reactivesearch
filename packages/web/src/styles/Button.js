@@ -1,6 +1,6 @@
 import { css } from 'emotion';
 import styled from 'react-emotion';
-import { shade } from './utils';
+import { darken, lighten, rgba } from 'polished';
 
 const filters = ({ colors: { borderColor } }) => css`
 	margin: 0 -3px;
@@ -69,12 +69,18 @@ const numberBoxContainer = css`
 	}
 `;
 
+const loadMoreContainer = css({
+	margin: '5px 0',
+	display: 'flex',
+	justifyContent: 'center',
+});
+
 const primary = ({ theme }) => css`
 	background-color: ${theme.colors.primaryColor};
 	color: ${theme.colors.primaryTextColor};
 
 	&:hover, &:focus {
-		background-color: ${shade(theme.colors.primaryColor, -0.1)};
+		background-color: ${darken(0.1, theme.colors.primaryColor)};
 	}
 `;
 
@@ -85,14 +91,14 @@ const large = () => css`
 
 const disabled = ({ theme }) => css`
 	background-color: ${(theme.colors.backgroundColor
-		? shade(theme.colors.backgroundColor, 0.3)
+		? lighten(0.1, theme.colors.backgroundColor)
 		: '#fafafa')};
 	color: #ccc;
 	cursor: not-allowed;
 
 	&:hover, &:focus {
 		background-color: ${(theme.colors.backgroundColor
-		? shade(theme.colors.backgroundColor, 0.3)
+		? lighten(0.2, theme.colors.backgroundColor)
 		: '#fafafa')};
 	}
 `;
@@ -102,6 +108,7 @@ const Button = styled('a')`
 	justify-content: center;
 	align-items: center;
 	border-radius: 3px;
+	border: 1px solid transparent;
 	min-height: 30px;
 	word-wrap: break-word;
 	padding: 5px 12px;
@@ -116,8 +123,14 @@ const Button = styled('a')`
 	&:hover, &:focus {
 		background-color: ${({ theme }) =>
 		(theme.colors.backgroundColor
-			? shade(theme.colors.backgroundColor, 0.1)
+			? darken(0.1, theme.colors.backgroundColor)
 			: '#ccc')};
+	}
+
+	&:focus {
+		outline: 0;
+		border-color: ${({ theme }) => rgba(theme.colors.primaryColor, 0.6)};
+		box-shadow: ${({ theme }) => `0 0 0 2px ${rgba(theme.colors.primaryColor, 0.3)}`};
 	}
 
 	${props => (props.primary ? primary : null)};
@@ -125,5 +138,5 @@ const Button = styled('a')`
 	${props => props.large && large};
 `;
 
-export { pagination, filters, toggleButtons, numberBoxContainer };
+export { pagination, filters, toggleButtons, numberBoxContainer, loadMoreContainer };
 export default Button;
