@@ -1745,9 +1745,22 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-appbase-js@^4.0.2-beta.02, appbase-js@^4.0.2-beta.2:
+appbase-js@^4.0.2-beta.2:
   version "4.0.2-beta.2"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.2-beta.2.tgz#a01155ced48c9359be04e45df6c40a312483e5b8"
+  resolved "https://registry.npmjs.org/appbase-js/-/appbase-js-4.0.2-beta.2.tgz#a01155ced48c9359be04e45df6c40a312483e5b8"
+  integrity sha512-tYr2Giu5IrhqFwEvWGPut6fSnnMZfcNOMC0UMG/U7Xg5nH0MY3pnHGcBJO195KnmAAWuF0w55B+B0zdUyIR3gg==
+  dependencies:
+    cross-fetch "^2.2.2"
+    json-stable-stringify "^1.0.1"
+    querystring "^0.2.0"
+    stream "^0.0.2"
+    url-parser-lite "^0.1.0"
+    ws "^2.2.0"
+
+appbase-js@^4.0.2-beta.3:
+  version "4.0.2-beta.3"
+  resolved "https://registry.npmjs.org/appbase-js/-/appbase-js-4.0.2-beta.3.tgz#10c20ab03a8d66d732c0a2cd529923b6e579dddc"
+  integrity sha512-RvnETkjjRuevsixB8INNZxpzHP/pGq5xm9F+zJ5lMwaR0TqHtMkH7guEF4qnD11uPfKsalf9uqJk3qMTenLemw==
   dependencies:
     cross-fetch "^2.2.2"
     json-stable-stringify "^1.0.1"
