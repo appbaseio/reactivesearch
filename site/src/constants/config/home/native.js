@@ -30,7 +30,7 @@ export default {
 		},
 		link: {
 			title: 'LEARN MORE',
-			href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+			href: '/native/learn',
 		},
 	},
 	banner2: {
@@ -161,7 +161,7 @@ export default {
 			},
 			link: {
 				title: 'Learn More',
-				href: 'https://opensource.appbase.io/reactive-manual',
+				href: '/native/learn',
 			},
 		},
 		{
@@ -175,7 +175,7 @@ export default {
 			},
 			link: {
 				title: 'Get in touch',
-				href: 'https://appbase.io/contactus',
+				href: 'https://appbase.io/contact',
 			},
 		},
 	],
