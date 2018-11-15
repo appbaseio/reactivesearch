@@ -37,8 +37,8 @@ export default {
 			src: 'images/components.png',
 			alt: 'Components',
 			mobile: {
-				src: 'images/components-mobile.png',
-				srcSet: 'images/components-mobile@2x.png 2x',
+				src: 'images/components.png',
+				srcSet: 'images/components.png',
 			},
 		},
 		title: 'UI Components for every occasion',

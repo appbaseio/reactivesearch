@@ -20,15 +20,6 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivecore@^6.0.4":
-  version "6.0.4"
-  resolved "https://registry.npmjs.org/@appbaseio/reactivecore/-/reactivecore-6.0.4.tgz#52a7a54efba2000ecce71fb650d2a4062d8a0189"
-  integrity sha512-c3yoAkVq6GseHrIy3K2u83hNBHsShMwWWfHHbltMfXHFHnYVD+Qtsgvl+Pk6DDVm4sTTRFQxSIc4pRkeOMaxXA==
-  dependencies:
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
 "@babel/code-frame@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "http://registry.npmjs.org/@babel/code-frame/-/code-frame-7.0.0-beta.44.tgz#2a02643368de80916162be70865c97774f3adbd9"
