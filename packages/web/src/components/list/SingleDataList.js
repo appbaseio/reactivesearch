@@ -296,4 +296,10 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SingleDataList);
+const ConnectedMyComponent = connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(props => <SingleDataList ref={props.myForwardedRef} {...props} />);
+
+export default React.forwardRef((props, ref) =>
+	<ConnectedMyComponent {...props} myForwardedRef={ref} />);

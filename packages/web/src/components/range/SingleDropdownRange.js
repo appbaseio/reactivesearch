@@ -207,4 +207,11 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownRange);
+const ConnectedMyComponent = connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(props => <SingleDropdownRange ref={props.myForwardedRef} {...props} />);
+
+export default React.forwardRef((props, ref) =>
+	<ConnectedMyComponent {...props} myForwardedRef={ref} />);
+

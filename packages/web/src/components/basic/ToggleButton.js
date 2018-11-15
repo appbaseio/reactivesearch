@@ -240,4 +240,10 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(ToggleButton);
+const ConnectedMyComponent = connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(props => <ToggleButton ref={props.myForwardedRef} {...props} />);
+
+export default React.forwardRef((props, ref) =>
+	<ConnectedMyComponent {...props} myForwardedRef={ref} />);

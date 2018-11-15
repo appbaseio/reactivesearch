@@ -463,4 +463,10 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList);
+const ConnectedMyComponent = connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(props => <MultiDropdownList ref={props.myForwardedRef} {...props} />);
+
+export default React.forwardRef((props, ref) =>
+	<ConnectedMyComponent {...props} myForwardedRef={ref} />);

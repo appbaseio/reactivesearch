@@ -272,7 +272,10 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(
+const ConnectedMyComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(withTheme(DatePicker));
+)(withTheme(props => <DatePicker ref={props.myForwardedRef} {...props} />));
+
+export default React.forwardRef((props, ref) =>
+	<ConnectedMyComponent {...props} myForwardedRef={ref} />);

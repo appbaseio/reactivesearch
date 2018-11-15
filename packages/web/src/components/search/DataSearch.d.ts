@@ -23,7 +23,6 @@ export interface DataSearchProps extends CommonProps {
 	icon?: types.children;
 	iconPosition?: types.iconPosition;
 	innerClass?: types.style;
-	innerRef?: (...args: any[]) => any;
 	onBlur?: (...args: any[]) => any;
 	onFocus?: (...args: any[]) => any;
 	onKeyDown?: (...args: any[]) => any;

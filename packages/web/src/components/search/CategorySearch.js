@@ -573,11 +573,13 @@ class CategorySearch extends Component {
 						}) => (
 							<div className={suggestionsContainer}>
 								<Input
+									innerRef={(c) => {
+										this._inputRef = c;
+									}}
 									showClear={this.props.showClear}
 									id={`${this.props.componentId}-input`}
 									showIcon={this.props.showIcon}
 									iconPosition={this.props.iconPosition}
-									innerRef={this.props.innerRef}
 									{...getInputProps({
 										className: getClassName(this.props.innerClass, 'input'),
 										placeholder: this.props.placeholder,
@@ -632,6 +634,9 @@ class CategorySearch extends Component {
 				) : (
 					<div className={suggestionsContainer}>
 						<Input
+							innerRef={(c) => {
+								this._inputRef = c;
+							}}
 							className={getClassName(this.props.innerClass, 'input')}
 							placeholder={this.props.placeholder}
 							value={this.state.currentValue ? this.state.currentValue : ''}
@@ -645,7 +650,6 @@ class CategorySearch extends Component {
 							iconPosition={this.props.iconPosition}
 							showClear={this.props.showClear}
 							showIcon={this.props.showIcon}
-							innerRef={this.props.innerRef}
 							themePreset={themePreset}
 						/>
 						{this.renderIcons()}
@@ -690,7 +694,6 @@ CategorySearch.propTypes = {
 	icon: types.children,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
-	innerRef: types.func,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
@@ -754,7 +757,10 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(
+const ConnectedMyComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(withTheme(CategorySearch));
+)(props => <CategorySearch ref={props.myForwardedRef} {...props} />);
+
+export default React.forwardRef((props, ref) =>
+	<ConnectedMyComponent {...props} myForwardedRef={ref} />);

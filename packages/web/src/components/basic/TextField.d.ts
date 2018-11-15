@@ -11,7 +11,6 @@ export interface TextFieldProps extends CommonProps {
 	defaultSelected?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
-	innerRef?: (...args: any[]) => any;
 	onBlur?: (...args: any[]) => any;
 	onFocus?: (...args: any[]) => any;
 	onKeyDown?: (...args: any[]) => any;
