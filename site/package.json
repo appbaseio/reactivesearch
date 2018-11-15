@@ -7,7 +7,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "webpack-dev-server --content-base . --history-api-fallback --hot --inline --progress --colors --port 0",
-    "build": "NODE_ENV=production webpack -p"
+    "build": "NODE_ENV=production webpack -p && cp index.html dist/index.html"
   },
   "dependencies": {
     "@appbaseio/designkit": "^0.9.0",
