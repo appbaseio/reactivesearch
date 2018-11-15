@@ -9,20 +9,20 @@ import createHistory from 'history/createBrowserHistory'; // eslint-disable-line
 const Loading = () => <div />;
 
 const HomePage = Loadable({
-	loader: () => import('./pages/web/home'),
+	loader: () => import('./pages/web/Home'),
 	loading: Loading,
 });
 const ToolsPage = Loadable({
-	loader: () => import('./pages/web/tools'),
+	loader: () => import('./pages/web/Tools'),
 	loading: Loading,
 });
 const LearnPage = Loadable({
-	loader: () => import('./pages/web/learn'),
+	loader: () => import('./pages/web/Learn'),
 	loading: Loading,
 });
 
 const HomePageNative = Loadable({
-	loader: () => import('./pages/native/home'),
+	loader: () => import('./pages/native/Home'),
 	loading: Loading,
 });
 
