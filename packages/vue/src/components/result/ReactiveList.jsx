@@ -135,7 +135,7 @@ const ReactiveList = {
 
 				if (sort) {
 					options.sort = this.$defaultQuery.sort;
-					this.$props.setQueryOptions(this.$props.componentId, options, !query);
+					this.setQueryOptions(this.$props.componentId, options, !query);
 				}
 
 				this.updateQuery(
@@ -538,7 +538,7 @@ const ReactiveList = {
 					}
 				}
 			];
-			this.$props.setQueryOptions(this.$props.componentId, options, true);
+			this.setQueryOptions(this.$props.componentId, options, true);
 			this.$currentPage = 0;
 			this.from = 0;
 		},
