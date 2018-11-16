@@ -19,7 +19,7 @@ export default {
 		links: [
 			{
 				description: 'web',
-				href: '/reactivesearch',
+				href: '/',
 			},
 			{
 				description: 'tools',
