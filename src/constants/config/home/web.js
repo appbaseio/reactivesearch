@@ -159,7 +159,7 @@ export default {
 		title: 'Check our demos',
 		button: {
 			title: 'See more',
-			href: '/reactivemaps/demos',
+			href: '/demo',
 		},
 		demos: [
 			{
