@@ -140,7 +140,7 @@ const banner = (image, bgColor) => css`
 		width: 50%;
 		height: calc(100% - 100px);
 		background-image: url(${image});
-		background-size: cover;
+		background-size: contain;
 		background-position: top center;
 		background-repeat: no-repeat;
 
