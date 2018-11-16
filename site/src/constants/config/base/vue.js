@@ -1,32 +1,29 @@
 export default {
-	name: 'web',
-	githubCount: '2180',
-	gettingStart: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+	name: 'vue',
+	githubCount: '2410',
+	gettingStart: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
 	urls: {
 		github: 'https://github.com/appbaseio/reactivesearch',
 		support: 'https://appbase.io/support',
 	},
 	header: {
 		logo: {
-			src: '/images/logo.svg',
+			src: '/images/vueLogo.svg',
 			title: {
 				light: 'Reactive',
 				dark: 'Search',
+				description: 'for Vue',
 			},
-			href: '/reactivesearch',
+			href: '/vue',
 		},
 		links: [
 			{
-				description: 'native',
-				href: '/native',
-			},
-			{
 				description: 'tools',
-				href: '/tools',
+				href: '/vue/tools',
 			},
 			{
 				description: 'learn',
-				href: '/learn',
+				href: '/vue/learn',
 			},
 		],
 	},

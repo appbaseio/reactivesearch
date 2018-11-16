@@ -11,6 +11,7 @@ import {
 	GithubButton,
 	Grid,
 } from '@appbaseio/designkit';
+import { css } from 'emotion';
 import { ThemeProvider } from 'emotion-theming';
 import PropTypes from 'prop-types';
 import {
@@ -34,6 +35,8 @@ import Testimonials from '../components/Testimonials';
 import SupportGrid from '../components/SupportGrid';
 import { code, tabPadding, tabJustifyCenter } from '../styles/base';
 import H2 from '../styles/H2';
+import queries from '../styles/mediaQueries';
+import { getButtonStyle, getLinkStyle } from '../styles/utils';
 import { mockDataSearch, mockDataSearchFull } from '../components/mock';
 
 function isScrolledIntoView(el) {
@@ -49,6 +52,11 @@ const button = {
 	lineHeight: '19px',
 	fontWeight: 'bold',
 };
+const navTitle = css`
+	${queries.small`
+		font-size: 20px;
+	`};
+`;
 class HomePage extends Component {
 	constructor(props) {
 		super(props);
@@ -99,17 +107,23 @@ class HomePage extends Component {
 			config,
 			theme: { secondary, primary },
 		} = this.props;
+		const isVue = config.name === 'vue';
 		return (
 			<ThemeProvider theme={this.props.theme}>
 				<Base>
 					<Navbar style={{ backgroundColor: primary, color: '#fff' }} bold dark>
 						<Navbar.Logo>
-							<Logo light href={config.header.logo.href}>
+							<Logo css={navTitle} light href={config.header.logo.href}>
 								<Logo.Icon css="color: #fff;">
 									<img src={config.header.logo.src} alt="Icon" />
 								</Logo.Icon>
 								<Logo.Light>{config.header.logo.title.light}</Logo.Light>
 								<Logo.Dark>{config.header.logo.title.dark}</Logo.Dark>
+								{config.header.logo.title.description && (
+									<span css="margin-left: 7px !important">
+										<Logo.Light>{config.header.logo.title.description}</Logo.Light>
+									</span>)
+								}
 							</Logo>
 						</Navbar.Logo>
 						<Navbar.List>
@@ -117,14 +131,22 @@ class HomePage extends Component {
 								/* eslint-disable-next-line */
 								<li key={i}>
 									{/* eslint-disable-next-line */}
-									<a href={l.href}>{l.description.toUpperCase()}</a>
+									<a style={getLinkStyle(config.name)} href={l.href}>{l.description.toUpperCase()}</a>
 								</li>
 							))}
 							<li className={showMobileFlex}>
 								<a href={config.urls.github}>GITHUB</a>
 							</li>
 							<li className="button">
-								<Button style={{ backgroundColor: secondary }} href={config.urls.support} uppercase>
+								<Button
+									style={{
+										backgroundColor: secondary,
+										...getLinkStyle(config.name),
+										...getButtonStyle(config.name),
+									}}
+									href={config.urls.support}
+									uppercase
+								>
 									<img src="images/support.svg" style={{ marginRight: 8 }} alt="support" /> SUPPORT
 								</Button>
 							</li>
@@ -134,7 +156,7 @@ class HomePage extends Component {
 						<Layout>
 							<div className="content">
 								<H1 light>{config.banner1.title}</H1>
-								<p>{config.banner1.description}</p>
+								<p style={getLinkStyle(config.name)}>{config.banner1.description}</p>
 								<div className="button-row">
 									<GithubButton
 										style={button}
@@ -145,7 +167,7 @@ class HomePage extends Component {
 										href={config.banner1.button.href}
 										uppercase
 										big
-										primary
+										primary={!isVue}
 										style={{
 											backgroundColor: secondary,
 											...button,
@@ -154,7 +176,7 @@ class HomePage extends Component {
 									>
 										{config.banner1.button.title}
 									</Button>
-									<SecondaryLink href={config.banner1.link.href}>
+									<SecondaryLink href={config.banner1.link.href} style={getLinkStyle(config.name)}>
 										{config.banner1.link.title}
 									</SecondaryLink>
 								</div>
@@ -184,7 +206,7 @@ class HomePage extends Component {
 										href={config.banner2.button.href}
 										uppercase
 										big
-										primary
+										primary={!isVue}
 										style={{
 											backgroundColor: secondary,
 											...button,
@@ -202,9 +224,11 @@ class HomePage extends Component {
 										{config.banner2.link.title}
 									</SecondaryLink>
 								</div>
-								<p>
-									Get <a href={config.banner2.sketch.href}>our designer templates</a> for sketch.
-								</p>
+								{config.banner2.sketch &&
+									<p>
+										Get <a href={config.banner2.sketch.href}>our designer templates</a> for sketch.
+									</p>
+								}
 							</div>
 						</Layout>
 					</Row>
@@ -273,8 +297,9 @@ class HomePage extends Component {
 							</Flex>
 						</Flex>
 					</Flex>
-					<BannerRow config={config.banner5} theme={this.props.theme} />
+					<BannerRow configName={config.name} config={config.banner5} theme={this.props.theme} />
 					{/** Demos Section */}
+					{config.banner6 &&
 					<Section id="examples">
 						<Layout>
 							<div className={titleRow}>
@@ -296,7 +321,7 @@ class HomePage extends Component {
 											...button,
 										}}
 										uppercase
-										primary
+										primary={!isVue}
 										href={config.banner6.button.href}
 									>
 										{config.banner6.button.title}
@@ -378,7 +403,7 @@ class HomePage extends Component {
 								</Grid>
 							}
 						</Layout>
-					</Section>
+					</Section>}
 					<Section style={{ backgroundColor: '#fff' }}>
 						<Layout>
 							<H2>See what our users say</H2>
@@ -392,7 +417,7 @@ class HomePage extends Component {
 								href={config.gettingStart}
 								uppercase
 								big
-								primary
+								primary={!isVue}
 								style={{
 									backgroundColor: secondary,
 									margin: '25px 0 30px',
@@ -405,17 +430,17 @@ class HomePage extends Component {
 							<H2 style={{ margin: '1.4rem 0px 0.5rem' }}>Need Help?</H2>
 							<p>Resources to get help with Reactive Maps.</p>
 
-							<SupportGrid />
+							<SupportGrid configName={config.name} />
 						</Layout>
 					</Section>
-					<Footer />
+					<Footer configName={config.name} />
 				</Base>
 			</ThemeProvider>
 		);
 	}
 }
 HomePage.propTypes = {
-	config: PropTypes.object,
-	theme: PropTypes.object,
+	config: PropTypes.object.isRequired,
+	theme: PropTypes.object.isRequired,
 };
 export default HomePage;

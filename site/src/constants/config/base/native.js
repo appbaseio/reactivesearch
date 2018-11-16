@@ -1,4 +1,5 @@
 export default {
+	name: 'native',
 	githubCount: '2180',
 	gettingStart:
 		'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',

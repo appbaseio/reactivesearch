@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ThemeProvider } from 'emotion-theming';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { css } from 'emotion';
 import { Navbar, Logo, Button, H1, GithubButton, Grid } from '@appbaseio/designkit';
 import {
 	Base,
@@ -19,9 +20,16 @@ import {
 	boldFont,
 	showMobileFlex,
 } from '../styles';
+import queries from '../styles/mediaQueries';
+import { getLinkStyle } from '../styles/utils';
 import Footer from '../components/Footer';
 import H2 from '../styles/H2';
 
+const navTitle = css`
+	${queries.small`
+		font-size: 20px;
+	`};
+`;
 
 const button = {
 	fontSize: '14px',
@@ -51,32 +59,38 @@ class Tools extends Component {
 	render() {
 		const {
 			config,
-			theme: { secondary, primaryDark },
+			theme: { secondary, primaryDark, textDark },
 		} = this.props;
+		const isVue = config.name === 'vue';
 		return (
 			<ThemeProvider theme={this.props.theme}>
 				<Base>
 					<Navbar style={{ backgroundColor: primaryDark, color: '#fff' }} bold dark>
 						<Navbar.Logo>
-							<Logo light href={config.header.logo.href}>
+							<Logo css={navTitle} light href={config.header.logo.href}>
 								<Logo.Icon css="color: #fff;">
 									<img src={config.header.logo.src} alt="Icon" />
 								</Logo.Icon>
 								<Logo.Light>{config.header.logo.title.light}</Logo.Light>
 								<Logo.Dark>{config.header.logo.title.dark}</Logo.Dark>
+								{config.header.logo.title.description && (
+									<span css="margin-left: 7px !important">
+										<Logo.Light>{config.header.logo.title.description}</Logo.Light>
+									</span>)
+								}
 							</Logo>
 						</Navbar.Logo>
 						<Navbar.List>
 							{config.header.links.map((l, i) => (
 								<li
 									className={
-										l.href === '/tools' || l.href === '/native/tools' ? 'active' : undefined
+										l.href.endsWith('/tools') ? 'active' : undefined
 									}
 									/* eslint-disable-next-line */
 									key={i}
 								>
 									{/* eslint-disable-next-line */}
-									<Link to={l.href}>{l.description.toUpperCase()}</Link>
+									<Link style={getLinkStyle(config.name)} to={l.href}>{l.description.toUpperCase()}</Link>
 								</li>
 							))}
 							<li className={showMobileFlex}>
@@ -84,12 +98,12 @@ class Tools extends Component {
 							</li>
 							<li className="button">
 								<Button
-									style={{ backgroundColor: secondary, ...button }}
+									style={{ backgroundColor: secondary, ...button, color: isVue ? textDark : undefined }}
 									href={config.urls.support}
 									bold
 									uppercase
 								>
-									<img src="/images/support.svg" style={{ marginRight: 8 }} alt="support" /> SUPPORT
+									<img src={isVue ? '/images/supportDark.svg' : '/images/support.svg'} style={{ marginRight: 8 }} alt="support" /> SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>
@@ -196,7 +210,7 @@ class Tools extends Component {
 											bold
 											uppercase
 											big
-											primary
+											primary={!isVue}
 											style={{
 												backgroundColor: secondary,
 												...button,
@@ -309,7 +323,7 @@ class Tools extends Component {
 											bold
 											uppercase
 											big
-											primary
+											primary={!isVue}
 											style={{
 												backgroundColor: secondary,
 												...button,
@@ -397,7 +411,7 @@ class Tools extends Component {
 											bold
 											uppercase
 											big
-											primary
+											primary={!isVue}
 											style={{
 												backgroundColor: secondary,
 												...button,
@@ -471,6 +485,7 @@ class Tools extends Component {
 										dark
 										style={{
 											backgroundColor: secondary,
+											color: isVue ? textDark : undefined,
 											...button,
 										}}
 									>
@@ -484,11 +499,12 @@ class Tools extends Component {
 										dark
 										style={{
 											backgroundColor: secondary,
+											color: isVue ? textDark : undefined,
 											...button,
 										}}
 									>
 										<img
-											src="/images/support.svg"
+											src={isVue ? '/images/supportDark.svg' : '/images/support.svg'}
 											style={{
 												marginRight: 10,
 											}}
@@ -501,7 +517,7 @@ class Tools extends Component {
 						</Layout>
 					</Section>
 
-					<Footer />
+					<Footer configName={config.name} />
 				</Base>
 			</ThemeProvider>
 		);

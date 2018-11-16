@@ -1,18 +1,19 @@
 import React from 'react';
-import theme from './../../theme/web';
-import baseConfig from './../base/web';
+import theme from './../../theme/vue';
+import baseConfig from './../base/vue';
 
 const { primary, primaryDark } = theme;
 
 export default {
 	...baseConfig,
-	title: 'Get Started with Reactive Search',
+	name: 'vue',
+	title: 'Get Started with Reactive Search Vue',
 	description: (
 		<React.Fragment>
-			Use our step-by-step guide to learn all about Reactive Maps, or check out our{' '}
+			Use our step-by-step guide to learn all about Reactive Search Vue, or check out our{' '}
 			<a
 				rel="noopener noreferrer"
-				href="https://opensource.appbase.io/reactive-manual/"
+				href="https://opensource.appbase.io/reactive-manual/vue"
 				target="_blank"
 			>
 				docs
@@ -25,9 +26,8 @@ export default {
 			title: 'Install Reactive X',
 			descriptions: [
 				'ReactiveSearch is a set of Elasticsearch components for building data-driven UIs.',
-				'ReactiveMaps is an extension of ReactiveSearch that provides map focused UI components.',
 			],
-			codes: ['npm install @appbaseio/reactivesearch', 'npm install @appbaseio/reactivemaps'],
+			codes: ['npm install @appbaseio/reactivesearch-vue'],
 		},
 		{
 			title: 'Add Google Maps JS',
@@ -107,11 +107,11 @@ export default {
 				'Go from scratch to creating a data-driven Maps application with our quickstart guide for beginners.',
 			button: {
 				title: 'Get Started',
-				href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+				href: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
 			},
 			link: {
 				title: 'Learn More',
-				href: 'https://opensource.appbase.io/reactive-manual',
+				href: 'https://opensource.appbase.io/reactive-manual/vue',
 			},
 		},
 		{

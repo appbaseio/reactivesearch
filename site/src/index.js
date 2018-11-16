@@ -4,6 +4,8 @@ import { Router, Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import ToolsPageNative from './pages/native/Tools';
 import LearnPageNative from './pages/native/Learn';
+import ToolsPageVue from './pages/vue/Tools';
+import LearnPageVue from './pages/vue/Learn';
 import createHistory from 'history/createBrowserHistory'; // eslint-disable-line
 
 const Loading = () => <div />;
@@ -29,6 +31,10 @@ const HomePageNative = Loadable({
 	loader: () => import('./pages/native/Home'),
 	loading: Loading,
 });
+const HomePageVue = Loadable({
+	loader: () => import('./pages/vue/Home'),
+	loading: Loading,
+});
 // const DemoPageNative = Loadable({
 // 	loader: () => import('./pages/native/Demo'),
 // 	loading: Loading,
@@ -49,6 +55,9 @@ ReactDOM.render(
 			<Route exact path="/native/learn" component={LearnPageNative} />
 			{/* <Route exact path="/native/demo" component={DemoPageNative} /> */}
 			<Route path="/native" component={HomePageNative} />
+			<Route exact path="/vue/tools" component={ToolsPageVue} />
+			<Route exact path="/vue/learn" component={LearnPageVue} />
+			<Route path="/vue" component={HomePageVue} />
 			<Route path="*" component={HomePage} />
 		</Switch>
 	</Router>,
