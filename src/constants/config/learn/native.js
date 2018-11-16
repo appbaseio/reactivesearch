@@ -125,7 +125,7 @@ export default {
 			},
 			link: {
 				title: 'Get in touch',
-				href: 'https://appbase.io/contactus',
+				href: 'https://appbase.io/contact',
 			},
 		},
 	],

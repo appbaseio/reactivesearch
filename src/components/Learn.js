@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ThemeProvider } from 'emotion-theming';
 import { Link } from 'react-router-dom';
+import { css } from 'emotion';
 import PropTypes from 'prop-types';
 import { Navbar, Logo, Button, H1, Title, Grid } from '@appbaseio/designkit';
 
@@ -17,7 +18,13 @@ import H2 from '../styles/H2';
 import SupportGrid from '../components/SupportGrid';
 import BannerRow from '../components/BannerRow';
 import Footer from '../components/Footer';
+import queries from '../styles/mediaQueries';
 
+const navTitle = css`
+	${queries.small`
+		font-size: 20px;
+	`};
+`;
 const title = {
 	marginTop: '10px',
 };
@@ -28,6 +35,7 @@ class Learn extends Component {
 
 	render() {
 		const { config, theme } = this.props;
+		const isVue = config.name === 'vue';
 		return (
 			<ThemeProvider
 				theme={{
@@ -37,19 +45,24 @@ class Learn extends Component {
 				<Base>
 					<Navbar bold>
 						<Navbar.Logo>
-							<Logo href={config.header.logo.href}>
+							<Logo css={navTitle} href={config.header.logo.href}>
 								<Logo.Icon css="color: #fff;">
 									<img src={config.header.logo.src} alt="Icon" />
 								</Logo.Icon>
 								<Logo.Light>{config.header.logo.title.light}</Logo.Light>
 								<Logo.Dark>{config.header.logo.title.dark}</Logo.Dark>
+								{config.header.logo.title.description && (
+									<span css="margin-left: 7px !important">
+										<Logo.Light>{config.header.logo.title.description}</Logo.Light>
+									</span>)
+								}
 							</Logo>
 						</Navbar.Logo>
 						<Navbar.List>
 							{config.header.links.map((l, i) => (
 								<li
 									className={
-										l.href === '/learn' || l.href === '/native/learn' ? 'active' : undefined
+										l.href.endsWith('/learn') ? 'active' : undefined
 									}
 									/* eslint-disable-next-line */
 									key={i}
@@ -65,12 +78,12 @@ class Learn extends Component {
 							</li>
 							<li className="button">
 								<Button
-									style={{ backgroundColor: theme.secondary }}
+									style={{ backgroundColor: theme.secondary, color: isVue ? theme.textDark : undefined }}
 									href={config.urls.support}
 									bold
 									uppercase
 								>
-									<img src="/images/support.svg" style={{ marginRight: 8 }} alt="support" /> SUPPORT
+									<img src={isVue ? '/images/supportDark.svg' : '/images/support.svg'} style={{ marginRight: 8 }} alt="support" /> SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>
@@ -138,18 +151,18 @@ class Learn extends Component {
 						</Layout>
 					</Section>
 
-					<BannerRow config={config.banner} theme={theme} />
+					<BannerRow configName={config.name} config={config.banner} theme={theme} />
 
 					<Section>
 						<Layout>
 							<H2>Need Help?</H2>
 							<p>Resources to get help with Reactive Search.</p>
 
-							<SupportGrid />
+							<SupportGrid configName={config.name} />
 						</Layout>
 					</Section>
 
-					<Footer />
+					<Footer configName={config.name} />
 				</Base>
 			</ThemeProvider>
 		);

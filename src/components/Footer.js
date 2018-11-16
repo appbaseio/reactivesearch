@@ -1,10 +1,29 @@
 import React from 'react';
 import { Footer, Title } from '@appbaseio/designkit';
 
+const getTitleStyle = (configName) => {
+	if (configName === 'vue') {
+		return {
+			opacity: 0.5,
+			color: '#ffffff',
+		};
+	}
+	return {};
+};
+const getLinkStyle = (configName) => {
+	if (configName === 'vue') {
+		return {
+			color: '#ffffff',
+		};
+	}
+	return {};
+};
+
 const titleStyle = {
 	margin: '0.9rem 0px',
 };
-export default () => (
+// eslint-disable-next-line
+export default ({ configName }) => (
 	<Footer>
 		<Footer.Brand>
 			<img
@@ -15,10 +34,11 @@ export default () => (
 		</Footer.Brand>
 		<Footer.Links>
 			<Footer.List>
-				<Title style={titleStyle}>Documentation</Title>
+				<Title style={{ ...titleStyle, ...getTitleStyle(configName) }}>Documentation</Title>
 				<li>
 					<a
 						target="_blank"
+						style={getLinkStyle(configName)}
 						rel="noopener noreferrer"
 						href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html"
 					>
@@ -28,6 +48,7 @@ export default () => (
 				<li>
 					<a
 						target="_blank"
+						style={getLinkStyle(configName)}
 						rel="noopener noreferrer"
 						href="https://opensource.appbase.io/reactive-manual/base-components/textfield.html"
 					>
@@ -37,6 +58,7 @@ export default () => (
 				<li>
 					<a
 						target="_blank"
+						style={getLinkStyle(configName)}
 						rel="noopener noreferrer"
 						href="https://opensource.appbase.io/reactive-manual/map-components/geodistanceslider.html"
 					>
@@ -46,6 +68,7 @@ export default () => (
 				<li>
 					<a
 						target="_blank"
+						style={getLinkStyle(configName)}
 						rel="noopener noreferrer"
 						href="https://opensource.appbase.io/reactive-manual/search-components/datasearch.html"
 					>
@@ -55,6 +78,7 @@ export default () => (
 				<li>
 					<a
 						target="_blank"
+						style={getLinkStyle(configName)}
 						rel="noopener noreferrer"
 						href="https://opensource.appbase.io/reactive-manual/result-components/resultlist.html"
 					>
@@ -64,10 +88,11 @@ export default () => (
 			</Footer.List>
 
 			<Footer.List>
-				<Title style={titleStyle}>Community</Title>
+				<Title style={{ ...titleStyle, ...getTitleStyle(configName) }}>Community</Title>
 				<li>
 					<a
 						target="_blank"
+						style={getLinkStyle(configName)}
 						rel="noopener noreferrer"
 						href="https://github.com/appbaseio/reactivesearch/"
 					>
@@ -77,6 +102,7 @@ export default () => (
 				<li>
 					<a
 						target="_blank"
+						style={getLinkStyle(configName)}
 						rel="noopener noreferrer"
 						href="https://gitter.im/appbaseio/reactivesearch"
 					>
@@ -86,6 +112,7 @@ export default () => (
 				<li>
 					<a
 						target="_blank"
+						style={getLinkStyle(configName)}
 						rel="noopener noreferrer"
 						href="https://stackoverflow.com/questions/tagged/reactivesearch"
 					>
@@ -93,42 +120,42 @@ export default () => (
 					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://twitter.com/appbaseio">
+					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://twitter.com/appbaseio">
 						Twitter
 					</a>
 				</li>
 			</Footer.List>
 
 			<Footer.List>
-				<Title style={titleStyle}>Helpful Tools</Title>
+				<Title style={{ ...titleStyle, ...getTitleStyle(configName) }}>Helpful Tools</Title>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://opensource.appbase.io/dejavu/">
+					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/dejavu/">
 						Data Browser
 					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://opensource.appbase.io/mirage/">
+					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/mirage/">
 						GUI Query Builder
 					</a>
 				</li>
 			</Footer.List>
 
 			<Footer.List>
-				<Title style={titleStyle} className="heading">
+				<Title style={{ ...titleStyle, ...getTitleStyle(configName) }} className="heading">
 					More
 				</Title>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="https://medium.appbase.io/">
+					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://medium.appbase.io/">
 						Medium Publication
 					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="http://docs.appbase.io/">
+					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="http://docs.appbase.io/">
 						Appbase.io Docs
 					</a>
 				</li>
 				<li>
-					<a target="_blank" rel="noopener noreferrer" href="mailto:support@appbase.io">
+					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="mailto:support@appbase.io">
 						Support Email
 					</a>
 				</li>

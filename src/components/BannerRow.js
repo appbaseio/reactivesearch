@@ -15,7 +15,7 @@ const button = {
 	lineHeight: '19px',
 	fontWeight: 'bold',
 };
-const Banner = ({ config, theme }) => (
+const Banner = ({ config, theme, configName }) => (
 	<BannerRow>
 		{config.map((b, i) => (
 			<BannerRow.Column
@@ -36,7 +36,7 @@ const Banner = ({ config, theme }) => (
 							href={b.button.href}
 							uppercase
 							big
-							primary
+							primary={configName !== 'vue'}
 							bold
 							style={{
 								backgroundColor: theme.secondary,
@@ -52,10 +52,13 @@ const Banner = ({ config, theme }) => (
 		))}
 	</BannerRow>
 );
-
+Banner.defaultProps = {
+	configName: 'web',
+};
 Banner.propTypes = {
 	// eslint-disable-next-line
 	theme: PropTypes.object,
+	configName: PropTypes.string,
 	config: PropTypes.arrayOf(PropTypes.shape({
 			backgroundColor: PropTypes.string,
 			title: PropTypes.string,
@@ -68,6 +71,6 @@ Banner.propTypes = {
 				title: PropTypes.string,
 				href: PropTypes.string,
 			}),
-		})),
+		})).isRequired,
 };
 export default Banner;

@@ -7,8 +7,8 @@ const baseConfigHeader = {
 	...baseConfig.header,
 	links: [
 		{
-			description: 'examples',
-			href: '#examples',
+			description: 'vue',
+			href: '/vue',
 		},
 		...baseConfig.header.links,
 	],
