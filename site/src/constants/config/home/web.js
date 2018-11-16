@@ -186,18 +186,18 @@ export default {
 				href: 'https://opensource.appbase.io/reactivesearch/demos/ecommerce/',
 				description: '',
 			},
-			{
-				src: 'images/apps/goodbooks.png',
-				title: 'Book Search',
-				href: 'https://opensource.appbase.io/reactivesearch/demos/goodbooks/',
-				description: '',
-			},
-			{
-				src: 'images/apps/technews.png',
-				title: 'Tech News Search',
-				href: 'https://opensource.appbase.io/reactivesearch/demos/technews/',
-				description: '',
-			},
+			// {
+			// 	src: 'images/apps/goodbooks.png',
+			// 	title: 'Book Search',
+			// 	href: 'https://opensource.appbase.io/reactivesearch/demos/goodbooks/',
+			// 	description: '',
+			// },
+			// {
+			// 	src: 'images/apps/technews.png',
+			// 	title: 'Tech News Search',
+			// 	href: 'https://opensource.appbase.io/reactivesearch/demos/technews/',
+			// 	description: '',
+			// },
 		],
 	},
 };

@@ -38,8 +38,8 @@ export default {
 			src: '/images/native/components.png',
 			alt: 'Components',
 			mobile: {
-				src: '/images/native/components-mobile.png',
-				srcSet: '/images/native/components-mobile@2x.png 2x',
+				src: '/images/native/components.png',
+				srcSet: '/images/native/components.png',
 			},
 		},
 		title: 'UI Components for every occasion',
@@ -55,6 +55,9 @@ export default {
 		},
 		sketch: {
 			href: 'resources/ReactiveSearchNative_Playground.sketch',
+		},
+		style: {
+			paddingLeft: '20px',
 		},
 	},
 	banner3: {

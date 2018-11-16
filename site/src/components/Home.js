@@ -4,7 +4,6 @@ import {
 	Logo,
 	Button,
 	H1,
-	H2,
 	H3,
 	Title,
 	Flex,
@@ -34,6 +33,7 @@ import Footer from '../components/Footer';
 import Testimonials from '../components/Testimonials';
 import SupportGrid from '../components/SupportGrid';
 import { code } from '../styles/base';
+import H2 from '../styles/H2';
 import { mockDataSearch, mockDataSearchFull } from '../components/mock';
 
 function isScrolledIntoView(el) {
@@ -167,7 +167,7 @@ class HomePage extends Component {
 							<div className={hideMobile}>
 								<img src={config.banner2.image.src} width="100%" alt={config.banner2.image.alt} />
 							</div>
-							<div className={vcenter}>
+							<div style={config.banner2.style} className={vcenter}>
 								<H2>{config.banner2.title}</H2>
 								<img
 									className={showMobile}
@@ -223,7 +223,7 @@ class HomePage extends Component {
 									// eslint-disable-next-line
 									<ActionCard key={i}>
 										<ActionCard.Icon>
-											<img src={cardI.image.src} alt={cardI.image.alt} />
+											<img style={{ maxHeight: 40 }} src={cardI.image.src} alt={cardI.image.alt} />
 										</ActionCard.Icon>
 										<Title>{cardI.title}</Title>
 										<p>{cardI.description}</p>
@@ -291,7 +291,7 @@ class HomePage extends Component {
 								</Button>
 							</div>
 							<Grid
-								size={3}
+								size={4}
 								mdSize={2}
 								smSize={1}
 								gutter="15px"
@@ -344,7 +344,7 @@ class HomePage extends Component {
 								BUILD MY FIRST APP
 							</Button>
 
-							<H2>Need Help?</H2>
+							<H2 style={{ margin: '1.4rem 0px 0.5rem' }}>Need Help?</H2>
 							<p>Resources to get help with Reactive Maps.</p>
 
 							<SupportGrid />
