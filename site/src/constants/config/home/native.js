@@ -15,6 +15,7 @@ const baseConfigHeader = {
 };
 export default {
 	...baseConfig,
+	name: 'native',
 	header: baseConfigHeader,
 	banner1: {
 		title: 'React Native UI components for Elasticsearch',
@@ -184,28 +185,21 @@ export default {
 	],
 	banner6: {
 		title: 'Check our demos',
-		button: {
-			title: 'See more',
-			href: '/reactivemaps/demos',
-		},
 		demos: [
 			{
 				src: 'images/native/booksearch.png',
 				title: 'Book Search',
 				href: 'https://snack.expo.io/@metagrover/booksearch',
-				description: '',
 			},
 			{
-				src: 'images/native/gitSearch.png',
+				src: 'images/native/gitxplore.png',
 				title: 'GitHub Search',
 				href: 'https://snack.expo.io/@dhruvdutt/gitxplore-native-app',
-				description: '',
 			},
 			{
 				src: 'images/native/todo.png',
 				title: 'Todo',
 				href: 'https://snack.expo.io/@dhruvdutt/todo',
-				description: '',
 			},
 		],
 	},

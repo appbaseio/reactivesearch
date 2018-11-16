@@ -32,7 +32,7 @@ import BannerRow from '../components/BannerRow';
 import Footer from '../components/Footer';
 import Testimonials from '../components/Testimonials';
 import SupportGrid from '../components/SupportGrid';
-import { code } from '../styles/base';
+import { code, tabPadding, tabJustifyCenter } from '../styles/base';
 import H2 from '../styles/H2';
 import { mockDataSearch, mockDataSearchFull } from '../components/mock';
 
@@ -274,51 +274,109 @@ class HomePage extends Component {
 						</Flex>
 					</Flex>
 					<BannerRow config={config.banner5} theme={this.props.theme} />
+					{/** Demos Section */}
 					<Section id="examples">
 						<Layout>
 							<div className={titleRow}>
-								<H3>{config.banner6.title}</H3>
-								<Button
-									style={{
-										backgroundColor: secondary,
-										...button,
-									}}
-									uppercase
-									primary
-									href={config.banner6.button.href}
+							{
+								config.banner6.button ? (<H3>{config.banner6.title}</H3>)
+								: (
+								<H2 style={{
+									margin: '0 auto',
+								}}
 								>
-									{config.banner6.button.title}
-								</Button>
+									{config.banner6.title}
+								</H2>)
+							}
+								{
+									config.banner6.button &&
+									<Button
+										style={{
+											backgroundColor: secondary,
+											...button,
+										}}
+										uppercase
+										primary
+										href={config.banner6.button.href}
+									>
+										{config.banner6.button.title}
+									</Button>
+								}
 							</div>
-							<Grid
-								size={4}
-								mdSize={2}
-								smSize={1}
-								gutter="15px"
-								smGutter="0px"
-								style={{ marginBottom: '50px' }}
-							>
-								{config.banner6.demos.map((d, index) => (
-									// eslint-disable-next-line
-									<ImageCard key={index} src={d.src}>
-										<div>
-											<Title>{d.title}</Title>
-											<p>{d.description}</p>
-										</div>
-										<div>
-											<SecondaryLink
-												primary
-												href={d.href}
-												style={{
-													color: primary,
-												}}
-											>
-												Check Demo
-											</SecondaryLink>
-										</div>
-									</ImageCard>
-								))}
-							</Grid>
+							{config.name === 'native' ?
+								<Flex
+									flexDirection="column"
+									justifyContent="center"
+									alignItems="center"
+									className={tabPadding}
+								>
+									<Flex
+										flexDirection="row"
+										justifyContent="space-around"
+										alignItems="center"
+										padding="3rem 0 0 0"
+										style={{
+											width: '95%',
+										}}
+										className={tabJustifyCenter}
+									>
+									{
+										config.banner6.demos.map((d, index) => (
+											// eslint-disable-next-line
+											<Flex key={index} flexDirection="column" justifyContent="center" alignItems="center">
+												<a target="_blank" rel="noopener noreferrer" href={d.href} className="demo">
+													<img width="240" src={d.src} alt="Demo app" />
+												</a>
+												<Button
+													rel="noopener noreferrer"
+													shadow
+													primary
+													style={{
+														width: 140,
+														marginTop: 0,
+														marginBottom: 50,
+														backgroundColor: secondary,
+														...button,
+													}}
+													href={d.href}
+												>
+													CHECK DEMO
+												</Button>
+											</Flex>
+										))
+									}
+									</Flex>
+								</Flex> :
+								<Grid
+									size={4}
+									mdSize={2}
+									smSize={1}
+									gutter="15px"
+									smGutter="0px"
+									style={{ marginBottom: '50px' }}
+								>
+									{config.banner6.demos.map((d, index) => (
+										// eslint-disable-next-line
+										<ImageCard key={index} src={d.src}>
+											<div>
+												<Title>{d.title}</Title>
+												<p>{d.description}</p>
+											</div>
+											<div>
+												<SecondaryLink
+													primary
+													href={d.href}
+													style={{
+														color: primary,
+													}}
+												>
+													Check Demo
+												</SecondaryLink>
+											</div>
+										</ImageCard>
+									))}
+								</Grid>
+							}
 						</Layout>
 					</Section>
 					<Section style={{ backgroundColor: '#fff' }}>

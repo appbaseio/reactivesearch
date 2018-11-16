@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { ThemeProvider } from 'emotion-theming';
 import { Link } from 'react-router-dom';
-import { Navbar, Logo, Button, H1, H2, GithubButton, Grid } from '@appbaseio/designkit';
 import PropTypes from 'prop-types';
+import { Navbar, Logo, Button, H1, GithubButton, Grid } from '@appbaseio/designkit';
 import {
 	Base,
 	Layout,
@@ -20,6 +20,8 @@ import {
 	showMobileFlex,
 } from '../styles';
 import Footer from '../components/Footer';
+import H2 from '../styles/H2';
+
 
 const button = {
 	fontSize: '14px',

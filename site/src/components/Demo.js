@@ -10,24 +10,20 @@ import {
 	SecondaryLink,
 	Section,
 	titleText,
-	stepCard,
 	showMobileFlex,
 } from '../styles';
-import H2 from '../styles/H2';
-import SupportGrid from '../components/SupportGrid';
-import BannerRow from '../components/BannerRow';
 import Footer from '../components/Footer';
+import ImageCard from '../styles/ImageCard';
 
-const title = {
-	marginTop: '10px',
-};
-class Learn extends Component {
+
+class Demo extends Component {
 	componentDidMount() {
 		window.scrollTo(0, 0);
 	}
 
 	render() {
 		const { config, theme } = this.props;
+		const { primary } = theme;
 		return (
 			<ThemeProvider
 				theme={{
@@ -49,7 +45,7 @@ class Learn extends Component {
 							{config.header.links.map((l, i) => (
 								<li
 									className={
-										l.href === '/learn' || l.href === '/native/learn' ? 'active' : undefined
+										l.href === '/demo' || l.href === '/native/demo' ? 'active' : undefined
 									}
 									/* eslint-disable-next-line */
 									key={i}
@@ -80,75 +76,37 @@ class Learn extends Component {
 						<Layout style={{ marginTop: '50px' }}>
 							<H1>{config.title}</H1>
 							<p className={titleText}>{config.description}</p>
-
 							<Grid
-								size={3}
+								size={config.demos.length / 2}
 								mdSize={2}
 								smSize={1}
-								gutter="12px"
+								gutter="15px"
 								smGutter="0px"
-								style={{
-									marginTop: 60,
-								}}
+								style={{ margin: '50px 0px' }}
 							>
-								{config.installationSteps.map((step, i) => (
+								{config.demos.map((d, index) => (
 									// eslint-disable-next-line
-									<div key={i} className={stepCard}>
-										<span className="count" style={{ color: theme.primaryDark }}>
-											{i + 1}
-										</span>
+									<ImageCard key={index} src={d.src}>
 										<div>
-											<Title style={title}>{step.title}</Title>
-											{/* eslint-disable-next-line */}
-											{step.descriptions && step.descriptions.map((d, i) => <p key={i}>{d}</p>)}
+											<Title>{d.title}</Title>
+											<p>{d.description}</p>
 										</div>
-										{/* eslint-disable-next-line */}
-										{step.codes && (
-											<div className="full">
-												{step.codes.map((code, index) => (
-													// eslint-disable-next-line
-													<pre key={index}>
-														<code>{code}</code>
-													</pre>
-												))}
-											</div>
-										)}
 										<div>
-											{step.links &&
-												step.links.map((link, index2) => (
-													<SecondaryLink
-														// eslint-disable-next-line
-														key={index2}
-														primary
-														rel="noopener noreferrer"
-														href={link.href}
-														target="_blank"
-														style={{
-															color: theme.primaryDark,
-															marginLeft: index2 > 0 ? '1rem' : undefined,
-														}}
-													>
-														{link.title}
-													</SecondaryLink>
-												))}
+											<SecondaryLink
+												primary
+												href={d.href}
+												style={{
+													color: primary,
+												}}
+											>
+												Check Demo
+											</SecondaryLink>
 										</div>
-									</div>
+									</ImageCard>
 								))}
 							</Grid>
 						</Layout>
 					</Section>
-
-					<BannerRow config={config.banner} theme={theme} />
-
-					<Section>
-						<Layout>
-							<H2>Need Help?</H2>
-							<p>Resources to get help with Reactive Search.</p>
-
-							<SupportGrid />
-						</Layout>
-					</Section>
-
 					<Footer />
 				</Base>
 			</ThemeProvider>
@@ -156,8 +114,8 @@ class Learn extends Component {
 	}
 }
 
-Learn.propTypes = {
+Demo.propTypes = {
 	config: PropTypes.object.isRequired,
 	theme: PropTypes.object.isRequired,
 };
-export default Learn;
+export default Demo;
