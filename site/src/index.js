@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import { Router, Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import ToolsPageNative from './pages/native/Tools';
-import LearnPageNative from './pages/native/Learn';
+import LearnPageNative from './pages/native/QuickStart';
 import ToolsPageVue from './pages/vue/Tools';
-import LearnPageVue from './pages/vue/Learn';
+import LearnPageVue from './pages/vue/QuickStart';
 import createHistory from 'history/createBrowserHistory'; // eslint-disable-line
 
 const Loading = () => <div />;
@@ -19,7 +19,7 @@ const ToolsPage = Loadable({
 	loading: Loading,
 });
 const LearnPage = Loadable({
-	loader: () => import('./pages/web/Learn'),
+	loader: () => import('./pages/web/QuickStart'),
 	loading: Loading,
 });
 const DemoPage = Loadable({
@@ -49,14 +49,14 @@ ReactDOM.render(
 		<Switch>
 			<Route exact path="/" component={HomePage} />
 			<Route exact path="/tools" component={ToolsPage} />
-			<Route exact path="/learn" component={LearnPage} />
+			<Route exact path="/quickstart" component={LearnPage} />
 			<Route exact path="/demo" component={DemoPage} />
 			<Route exact path="/native/tools" component={ToolsPageNative} />
-			<Route exact path="/native/learn" component={LearnPageNative} />
+			<Route exact path="/native/quickstart" component={LearnPageNative} />
 			{/* <Route exact path="/native/demo" component={DemoPageNative} /> */}
 			<Route path="/native" component={HomePageNative} />
 			<Route exact path="/vue/tools" component={ToolsPageVue} />
-			<Route exact path="/vue/learn" component={LearnPageVue} />
+			<Route exact path="/vue/quickstart" component={LearnPageVue} />
 			<Route path="/vue" component={HomePageVue} />
 			<Route path="*" component={HomePage} />
 		</Switch>
