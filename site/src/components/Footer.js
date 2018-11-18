@@ -88,6 +88,25 @@ export default ({ configName }) => (
 			</Footer.List>
 
 			<Footer.List>
+				<Title style={{ ...titleStyle, ...getTitleStyle(configName) }}>Reactive &lt;x></Title>
+				<li>
+					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivesearch/native">
+						React Native
+					</a>
+				</li>
+				<li>
+					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivesearch/vue">
+						Vue.JS
+					</a>
+				</li>
+				<li>
+					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivemaps">
+						ReactiveMaps
+					</a>
+				</li>
+			</Footer.List>
+
+			<Footer.List>
 				<Title style={{ ...titleStyle, ...getTitleStyle(configName) }}>Community</Title>
 				<li>
 					<a
@@ -122,20 +141,6 @@ export default ({ configName }) => (
 				<li>
 					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://twitter.com/appbaseio">
 						Twitter
-					</a>
-				</li>
-			</Footer.List>
-
-			<Footer.List>
-				<Title style={{ ...titleStyle, ...getTitleStyle(configName) }}>Helpful Tools</Title>
-				<li>
-					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/dejavu/">
-						Data Browser
-					</a>
-				</li>
-				<li>
-					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/mirage/">
-						GUI Query Builder
 					</a>
 				</li>
 			</Footer.List>

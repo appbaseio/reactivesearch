@@ -1,10 +1,10 @@
 export default {
 	name: 'web',
-	githubCount: '2180',
+	githubCount: '2432',
 	gettingStart: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
 	urls: {
 		github: 'https://github.com/appbaseio/reactivesearch',
-		support: 'https://appbase.io/support',
+		support: 'https://appbase.io/pricing#support',
 	},
 	header: {
 		logo: {
@@ -17,16 +17,12 @@ export default {
 		},
 		links: [
 			{
-				description: 'native',
-				href: '/native',
-			},
-			{
 				description: 'tools',
-				href: '/tools',
+				href: './tools',
 			},
 			{
 				description: 'learn',
-				href: '/learn',
+				href: './learn',
 			},
 		],
 	},
