@@ -21,8 +21,8 @@ export default {
 				href: './tools',
 			},
 			{
-				description: 'learn',
-				href: './learn',
+				description: 'quick start',
+				href: './quickstart',
 			},
 		],
 	},

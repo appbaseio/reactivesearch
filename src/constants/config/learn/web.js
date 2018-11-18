@@ -1,18 +1,19 @@
-import React from 'react';
-import theme from './../../theme/web';
-import baseConfig from './../base/web';
+import React from "react";
+import theme from "./../../theme/web";
+import baseConfig from "./../base/web";
 
 const { primary, primaryDark } = theme;
 
 export default {
 	...baseConfig,
-	title: 'Get Started with Reactive Search',
+	title: "Get Started with Reactive Search",
 	description: (
 		<React.Fragment>
-			Use our step-by-step guide to learn all about Reactive Maps, or check out our{' '}
+			Use our step-by-step guide to learn all about Reactive Search, or check
+			out our{" "}
 			<a
 				rel="noopener noreferrer"
-				href="https://opensource.appbase.io/reactive-manual/"
+				href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html"
 				target="_blank"
 			>
 				docs
@@ -22,111 +23,218 @@ export default {
 	),
 	installationSteps: [
 		{
-			title: 'Install Reactive X',
+			title: "Install ReactiveSearch",
 			descriptions: [
-				'ReactiveSearch is a set of Elasticsearch components for building data-driven UIs.',
-				'ReactiveMaps is an extension of ReactiveSearch that provides map focused UI components.',
+				"ReactiveSearch is a set of React UI components for building data-driven UIs with ElasticSearch."
 			],
-			codes: ['npm install @appbaseio/reactivesearch', 'npm install @appbaseio/reactivemaps'],
+			codes: ["npm install @appbaseio/reactivesearch"]
 		},
 		{
-			title: 'Add Google Maps JS',
+			title: "Connect to your ES index",
 			descriptions: [
-				'ReactiveMaps use Google Maps to render the map component. You can add the following script in the <head> element of your main .html file.',
+				"ReactiveSearch components can connect to an Elasticsearch index (hosted anywhere) for performing geospatial queries.",
 				<React.Fragment>
-					Get the{' '}
+					Create a free app (aka index) with{" "}
 					<a
 						rel="noopener noreferrer"
-						href="https://developers.google.com/maps/documentation/javascript/get-api-key"
+						href="https://appbase.io"
 						target="_blank"
 					>
-						API Key
-					</a>{' '}
-					and info on how to add the Maps script.
+						appbase.io
+					</a>
+					.
+				</React.Fragment>
+			],
+			links: [
+				{
+					title: "READ MORE",
+					href:
+						"https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html"
+				}
+			]
+		},
+		{
+			title: "Create or Import dataset",
+			descriptions: [
+				"Use Dejavu, an open-source databrowser from appbase.io to create, view, edit and import dataset into your Elasticsearch index."
+			],
+			links: [
+				{
+					title: "Dejavu",
+					href: "https://opensource.appbase.io/dejavu"
+				},
+				{
+					title: "Read more",
+					href:
+						"https://opensource.appbase.io/reactive-manual/getting-started/data.html#importing-custom-data"
+				}
+			]
+		},
+		{
+			title: "UI Components",
+			descriptions: [
+				<React.Fragment>
+					Add UI components for{" "}
+					<a
+						rel="noopener noreferrer"
+						href="https://opensource.appbase.io/reactive-manual/search-components/datasearch.html"
+						target="_blank"
+					>
+						Search
+					</a>
+					,{" "}
+					<a
+						rel="noopener noreferrer"
+						href="https://opensource.appbase.io/reactive-manual/list-components/singlelist.html"
+						target="_blank"
+					>
+						Lists
+					</a>
+					,{" "}
+					<a
+						rel="noopener noreferrer"
+						href="https://opensource.appbase.io/reactive-manual/range-components/singlerange.html"
+						target="_blank"
+					>
+						Ranges
+					</a>
+					, and{" "}
+					<a
+						rel="noopener noreferrer"
+						href="https://opensource.appbase.io/reactive-manual/result-components/resultlist.html"
+						target="_blank"
+					>
+						Results
+					</a>
+					.
 				</React.Fragment>,
+				<React.Fragment>
+					Or add in your own{" "}
+					<a
+						rel="noopener noreferrer"
+						href="https://appbase.io"
+						target="_blank"
+					>
+						UI components
+					</a>.
+				</React.Fragment>
 			],
 			links: [
 				{
-					title: 'Step-by-step installation guide',
-					href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html',
-				},
-			],
+					title: "COMPONENTS OVERVIEW",
+					href:
+						"https://opensource.appbase.io/reactive-manual/getting-started/componentsindex.html"
+				}
+			]
 		},
 		{
-			title: 'Connect to your ES index',
+			title: "Tutorials",
 			descriptions: [
-				'ReactiveMaps use Google Maps to render the map component. You can add the following script in the <head> element of your main .html file.',
-			],
-		},
-		{
-			title: 'Create or import dataset',
-			descriptions: [
-				'ReactiveMaps use Google Maps to render the map component. You can add the following script in the <head> element of your main .html file.',
+				"Get a leg up by checking out these tutorials.",
+				<React.Fragment>
+					<li>
+						<a
+							rel="noopener noreferrer"
+							href="https://codeburst.io/how-to-build-an-e-commerce-search-ui-with-react-and-elasticsearch-a581c823b2c3"
+							target="_blank"
+						>
+							Building e-commerce search
+						</a>
+					</li>
+					<li>
+						<a
+							rel="noopener noreferrer"
+							href="https://medium.appbase.io/how-to-build-a-movie-search-app-with-react-and-elasticsearch-2470f202291c"
+							target="_blank"
+						>
+							Building Movie Search 
+						</a>
+					</li>
+					<li>
+						<a
+							rel="noopener noreferrer"
+							href="https://medium.appbase.io/how-to-build-a-github-search-ui-in-60-minutes-295109211c70"
+							target="_blank"
+						>
+							Building a Github Explorer
+						</a>
+					</li>
+				</React.Fragment>
 			],
 			links: [
 				{
-					title: 'DEJAVU',
-					href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html',
-				},
-				{
-					title: 'IMPORT DATA',
-					href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html',
-				},
-			],
+					title: "Read more tutorials",
+					href:
+						"https://medium.appbase.io/tagged/appbase"
+				}
+			]
+
 		},
 		{
-			title: 'UI Components',
+			title: "ReactiveSearch for <X>",
 			descriptions: [
-				'ReactiveMaps use Google Maps to render the map component. You can add the following script in the <head> element of your main .html file.',
-			],
-			links: [
-				{
-					title: 'COMPONENT DOCS',
-					href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html',
-				},
-			],
-		},
-		{
-			title: 'Maps for React Native',
-			descriptions: [
-				'ReactiveMaps use Google Maps to render the map component. You can add the following script in the <head> element of your main .html file.',
-			],
-			links: [
-				{
-					title: 'QUICK START WITH REACT NATIVE',
-					href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html',
-				},
-			],
-		},
+				"ReactiveSearch is also available for:",
+				<React.Fragment>
+					<li>
+						<a
+							rel="noopener noreferrer"
+							href="https://opensource.appbase.io/reactivesearch/native"
+							target="_blank"
+						>
+							React Native
+						</a>
+					</li>
+					<li>
+						<a
+							rel="noopener noreferrer"
+							href="https://opensource.appbase.io/reactivesearch/vue"
+							target="_blank"
+						>
+							Vue.JS
+						</a>
+					</li>
+					<li>
+						<a
+							rel="noopener noreferrer"
+							href="https://opensource.appbase.io/reactivemaps"
+							target="_blank"
+						>
+							Google Maps
+						</a>
+					</li>
+				</React.Fragment>
+			]
+		}
 	],
 	banner: [
 		{
 			backgroundColor: primary,
-			title: 'Build a live app in 5 easy steps',
+			title: "Build a live app in 5 easy steps",
 			description:
-				'Go from scratch to creating a data-driven Maps application with our quickstart guide for beginners.',
+				"Go from scratch to creating a data-driven search app with our beginner friendly quick start guide.",
 			button: {
-				title: 'Get Started',
-				href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+				title: "Get Started",
+				href:
+					"#"
 			},
 			link: {
-				title: 'Learn More',
-				href: 'https://opensource.appbase.io/reactive-manual',
-			},
+				title: "Docs",
+				href: "https://opensource.appbase.io/reactive-manual"
+			}
 		},
 		{
 			backgroundColor: primaryDark,
-			title: 'Get dedicated support',
+			title: "Get dedicated support",
 			description:
-				'We offer production support for ReactiveMaps. Work with us to bring your dream project to life.',
+				"We offer production support for ReactiveMaps. Work with us to bring your dream project to life.",
 			button: {
-				title: 'SUPPORT PLANS',
-				href: 'https://appbase.io/support',
+				title: "SUPPORT PLANS",
+				href: "https://appbase.io/support"
 			},
 			link: {
-				title: 'Get in touch',
-				href: 'https://appbase.io/contact',
-			},
-		},
-	],
+				title: "Get in touch",
+				href: "https://appbase.io/contact"
+			}
+		}
+	]
 };

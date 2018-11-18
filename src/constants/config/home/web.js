@@ -127,10 +127,10 @@ export default {
 				'Go from scratch to creating a data-driven search app with our beginner friendly quick start guide.',
 			button: {
 				title: 'Get Started',
-				href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+				href: './quickstart',
 			},
 			link: {
-				title: 'Learn More',
+				title: 'Docs',
 				href: 'https://opensource.appbase.io/reactive-manual/',
 			},
 		},
