@@ -95,6 +95,7 @@ const Row = styled('div')`
 
 	p {
 		font-size: 20px;
+		line-height: 1.3;
 	}
 
 	& > div {
@@ -207,7 +208,7 @@ const banner = (image, bgColor) => css`
 	p {
 		${lightFont};
 		color: #ffffff !important;
-		font-size: 1.6rem;
+		font-size: 1.2rem;
 		max-width: 700px;
 		margin-top: 20px;
 	}

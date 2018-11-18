@@ -1,6 +1,6 @@
 export default {
 	name: 'vue',
-	githubCount: '2410',
+	githubCount: '2432',
 	gettingStart: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
 	urls: {
 		github: 'https://github.com/appbaseio/reactivesearch',
@@ -14,16 +14,16 @@ export default {
 				dark: 'Search',
 				description: 'for Vue',
 			},
-			href: '/vue',
+			href: '/reactivesearch/vue',
 		},
 		links: [
 			{
 				description: 'tools',
-				href: '/vue/tools',
+				href: '/reactivesearch/vue/tools',
 			},
 			{
 				description: 'learn',
-				href: '/vue/learn',
+				href: '/reactivesearch/vue/learn',
 			},
 		],
 	},

@@ -3,7 +3,6 @@ import {
 	Navbar,
 	Logo,
 	Button,
-	H1,
 	H3,
 	Title,
 	Flex,
@@ -34,6 +33,7 @@ import Footer from '../components/Footer';
 import Testimonials from '../components/Testimonials';
 import SupportGrid from '../components/SupportGrid';
 import { code, tabPadding, tabJustifyCenter } from '../styles/base';
+import H1 from '../styles/H1';
 import H2 from '../styles/H2';
 import queries from '../styles/mediaQueries';
 import { getButtonStyle, getLinkStyle } from '../styles/utils';
@@ -56,6 +56,9 @@ const navTitle = css`
 	${queries.small`
 		font-size: 20px;
 	`};
+`;
+const p = css`
+	lineHeight: 1.3
 `;
 class HomePage extends Component {
 	constructor(props) {
@@ -265,38 +268,6 @@ class HomePage extends Component {
 							</Grid>
 						</Layout>
 					</Section>
-					<Flex
-						padding="3rem 3rem 1rem"
-						flexDirection="column"
-						justifyContent="center"
-						alignItems="center"
-						className={hideMobile}
-					>
-						<H2>{config.banner4.title}</H2>
-						<Text
-							fontSize="1rem"
-							lineHeight="1.5rem"
-							style={{ maxWidth: '600px', textAlign: 'center' }}
-						>
-							{config.banner4.description}
-						</Text>
-
-						<Flex padding="0 30px" justifyContent="center" margin="30px 0 0">
-							<Flex id="code" className={code}>
-								<div
-									style={{
-										transform: `translateY(${this.state.origin}px)`,
-										transition: 'all .3s ease-out',
-										willChange: 'transform',
-									}}
-									dangerouslySetInnerHTML={{ __html: mockDataSearchFull }}
-								/>
-							</Flex>
-							<Flex className={code}>
-								<div dangerouslySetInnerHTML={{ __html: mockDataSearch }} />
-							</Flex>
-						</Flex>
-					</Flex>
 					<BannerRow configName={config.name} config={config.banner5} theme={this.props.theme} />
 					{/** Demos Section */}
 					{config.banner6 &&
@@ -428,7 +399,7 @@ class HomePage extends Component {
 							</Button>
 
 							<H2 style={{ margin: '1.4rem 0px 0.5rem' }}>Need Help?</H2>
-							<p>Resources to get help with Reactive Maps.</p>
+							<p>Resources to get help with Reactive Search.</p>
 
 							<SupportGrid configName={config.name} />
 						</Layout>

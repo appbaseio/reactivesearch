@@ -8,7 +8,7 @@ const baseConfigHeader = {
 	links: [
 		{
 			description: 'vue',
-			href: '/vue',
+			href: '/reactivesearch/vue',
 		},
 		...baseConfig.header.links,
 	],

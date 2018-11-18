@@ -7,8 +7,8 @@ const baseConfigHeader = {
 	...baseConfig.header,
 	links: [
 		{
-			description: 'vue',
-			href: '/vue',
+			description: 'examples',
+			href: '#examples',
 		},
 		...baseConfig.header.links,
 	],
@@ -17,8 +17,8 @@ export default {
 	...baseConfig,
 	header: baseConfigHeader,
 	banner1: {
-		title: 'React UI components for Elasticsearch',
-		description: 'Now more configurable, lighter and performant.Open source licensed.',
+		title: 'React + ElasticSearch = ❤️',
+		description: 'UI components for building data-driven search experiences.',
 		image: {
 			src: './../images/browser.png',
 			alt: 'Reactive Search Components',
@@ -29,7 +29,7 @@ export default {
 		},
 		link: {
 			title: 'LEARN MORE',
-			href: '/learn',
+			href: './learn',
 		},
 	},
 	banner2: {
@@ -41,25 +41,25 @@ export default {
 				srcSet: 'images/components.png',
 			},
 		},
-		title: 'UI Components for every occasion',
+		title: 'Components for every occasion',
 		description:
-			'Build the perfect search experience using our UI components or by creating your own.30+ prebuilt components with customizable queries and configurable styles.',
+			'Build the perfect search experience using our UI components or by creating your own. 30+ pre-built components with customizable queries and configurable styles.',
 		button: {
 			title: 'View Components',
-			href: 'https://opensource.appbase.io/reactive-manual/base-components/textfield',
+			href: 'https://opensource.appbase.io/reactive-manual/getting-started/componentsindex.html',
 		},
 		link: {
-			title: 'Create your own',
+			title: 'Creating your components',
 			href: 'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent',
 		},
 		sketch: {
 			href:
-				'https://opensource.appbase.io/reactivesearch/resources/ReactiveSearchNative_Playground.sketch',
+				'https://opensource.appbase.io/reactivesearch/resources/ReactiveSearch_Playground.sketch',
 		},
 	},
 	banner3: {
 		title: 'Up to 10x Time Savings',
-		description: 'Focus on design and user experience, let us handle the details.',
+		description: 'Focus on design and user experience as ReactiveSearch handles the details.',
 		cards: [
 			{
 				image: {
@@ -68,7 +68,7 @@ export default {
 				},
 				title: 'Launch and iterate faster',
 				description:
-					'30+ well-designed and performance optimized UI components.Ship faster and solve fewer edge cases.',
+					'30+ well-designed and performance optimized UI components. Ship faster and solve fewer edge cases.',
 				href: 'https://medium.com/@siddharthlatest/v2-ui-components-for-elasticsearch-23743d9a1070',
 			},
 			{
@@ -86,7 +86,7 @@ export default {
 					alt: 'Data-driven UIs',
 				},
 				title: 'Configurable styles',
-				description: 'Styled components with rich theming and css class-injection support.',
+				description: 'Styled components with rich theming and CSS class-injection support.',
 				href: 'https://opensource.appbase.io/reactive-manual/theming/themes.html',
 			},
 			{
@@ -119,25 +119,19 @@ export default {
 			},
 		],
 	},
-	banner4: {
-		title: 'Write Less Code',
-		description: `Reactivesearch handles UI rendering, query requests and manages
-		response state so you can focus on the product experience,
-		ship faster and iterate quicker.`,
-	},
 	banner5: [
 		{
 			backgroundColor: primary,
 			title: 'Build a live app in 5 easy steps',
 			description:
-				'Go from scratch to creating a data-driven Maps application with our quick start guide for beginners.',
+				'Go from scratch to creating a data-driven search app with our beginner friendly quick start guide.',
 			button: {
 				title: 'Get Started',
 				href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
 			},
 			link: {
 				title: 'Learn More',
-				href: '/learn',
+				href: 'https://opensource.appbase.io/reactive-manual/',
 			},
 		},
 		{
@@ -147,7 +141,7 @@ export default {
 				'We offer production support for ReactiveSearch. Work with us to bring your dream project to life.',
 			button: {
 				title: 'SUPPORT PLANS',
-				href: 'https://appbase.io/support',
+				href: 'https://appbase.io/pricing#support',
 			},
 			link: {
 				title: 'Get in touch',
@@ -156,7 +150,7 @@ export default {
 		},
 	],
 	banner6: {
-		title: 'Check our demos',
+		title: 'Check starter apps',
 		button: {
 			title: 'See more',
 			href: '/demo',
@@ -166,32 +160,32 @@ export default {
 				src: 'images/apps/airbeds.png',
 				title: 'Airbeds',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/airbeds/',
-				description: 'An airbnb inspired app for browsing housing areas in Seattle',
+				description: 'An airbnb inspired app for browsing housing areas in Seattle.',
 			},
 			{
 				src: 'images/apps/productsearch.png',
 				title: 'Product Search',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/producthunt/',
-				description: '',
+				description: 'A Product Hunt inspired search experience.',
 			},
 			{
 				src: 'images/apps/gitxplore.png',
 				title: 'GitHub Search',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/gitxplore/',
-				description: '',
-			},
-			{
-				src: 'images/apps/carstore.png',
-				title: 'Car Store',
-				href: 'https://opensource.appbase.io/reactivesearch/demos/ecommerce/',
-				description: '',
+				description: 'Explore top 30K Github repositories by various filters like stars, forks, topics.',
 			},
 			// {
-			// 	src: 'images/apps/goodbooks.png',
-			// 	title: 'Book Search',
-			// 	href: 'https://opensource.appbase.io/reactivesearch/demos/goodbooks/',
-			// 	description: '',
+			// 	src: 'images/apps/carstore.png',
+			// 	title: 'Car Store',
+			// 	href: 'https://opensource.appbase.io/reactivesearch/demos/ecommerce/',
+			// 	description: 'An e-commerce search experience for a car store.',
 			// },
+			{
+				src: 'images/apps/goodbooks.png',
+				title: 'Book Search',
+				href: 'https://opensource.appbase.io/reactivesearch/demos/goodbooks/',
+				description: 'An e-commerce search experience for a books dataset.',
+			},
 			// {
 			// 	src: 'images/apps/technews.png',
 			// 	title: 'Tech News Search',
