@@ -6,7 +6,6 @@ import {
 	H3,
 	Title,
 	Flex,
-	Text,
 	GithubButton,
 	Grid,
 } from '@appbaseio/designkit';
@@ -32,12 +31,11 @@ import BannerRow from '../components/BannerRow';
 import Footer from '../components/Footer';
 import Testimonials from '../components/Testimonials';
 import SupportGrid from '../components/SupportGrid';
-import { code, tabPadding, tabJustifyCenter } from '../styles/base';
+import { tabPadding, tabJustifyCenter } from '../styles/base';
 import H1 from '../styles/H1';
 import H2 from '../styles/H2';
 import queries from '../styles/mediaQueries';
 import { getButtonStyle, getLinkStyle } from '../styles/utils';
-import { mockDataSearch, mockDataSearchFull } from '../components/mock';
 
 function isScrolledIntoView(el) {
 	const rect = el.getBoundingClientRect();
@@ -65,13 +63,11 @@ class HomePage extends Component {
 		super(props);
 
 		this.state = {
-			origin: 0,
 			githubStarCount: undefined,
 		};
 	}
 
 	componentDidMount() {
-		const el = document.getElementById('code');
 		// To fetch reactive search github stars
 		fetch('https://api.github.com/repos/appbaseio/reactivesearch')
 			.then(res => res.json())
@@ -81,26 +77,6 @@ class HomePage extends Component {
 				});
 			})
 			.catch(e => console.log(e));
-
-		window.addEventListener('scroll', () => {
-			const { isVisible, Ti } = isScrolledIntoView(el);
-
-			const L = 1850;
-			const K = 500;
-			const Tc = window.innerHeight / 2;
-			const delta = Tc - Ti;
-			const scroll = Math.min((delta * L) / K, L - K);
-
-			if (isVisible) {
-				this.setState({
-					origin: scroll * -1,
-				});
-			} else if (Tc < Ti) {
-				this.setState({
-					origin: 0,
-				});
-			}
-		});
 
 		window.scrollTo(0, 0);
 	}
@@ -150,9 +126,12 @@ class HomePage extends Component {
 									href={config.urls.support}
 									uppercase
 								>
-									<img src="/reactivesearch/images/support.svg"
-										onError={e => e.target.src='/images/support.svg'}
-										style={{ marginRight: 8 }} alt="support" /> SUPPORT
+									<img
+										src="/reactivesearch/images/support.svg"
+										onError={e => e.target.src = '/images/support.svg'}
+										style={{ marginRight: 8 }}
+										alt="support"
+									/> SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>
