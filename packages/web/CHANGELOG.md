@@ -7,7 +7,6 @@
 </details>
 
 ## v2.14.0
-
 - Fixes loading for result component - [info](https://github.com/appbaseio/reactivesearch/commit/786851c89e17f6c93fec11d6e7a9580bb0065eae)
 - Adds support for `renderTooltipData` for custom tooltip content [#611](https://github.com/appbaseio/reactivesearch/pull/611)
 - Adds nested object mapping support for MultiList [#595](https://github.com/appbaseio/reactivesearch/issues/595)
