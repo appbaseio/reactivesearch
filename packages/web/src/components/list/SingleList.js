@@ -56,68 +56,77 @@ class SingleList extends Component {
 		this.updateQueryOptions(this.props);
 
 		this.setReact(this.props);
+		const defaultValue = this.props.defaultValue || this.props.value;
 
 		if (this.props.selectedValue) {
 			this.setValue(this.props.selectedValue);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+		} else if (defaultValue) {
+			this.setValue(defaultValue);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		checkPropChange(
+			prevProps.react,
 			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
+			() => this.setReact(this.props),
 		);
+
 		checkPropChange(
+			prevProps.options,
 			this.props.options,
-			nextProps.options,
 			() => {
-				const { showLoadMore, dataField } = nextProps;
+				const { showLoadMore, dataField, options } = this.props;
+
 				if (showLoadMore) {
-					const { buckets } = nextProps.options[dataField];
-					const after = nextProps.options[dataField].after_key;
-					// detect the last bucket by checking if the after key is absent
+					const { buckets } = options[dataField];
+					const after = options[dataField].after_key;
+
+					// detect the last bucket by checking if the
+					// after key is absent
 					const isLastBucket = !after;
 					this.setState(state => ({
 						...state,
 						after: after ? { after } : state.after,
 						isLastBucket,
-						options: this.getOptions(buckets, nextProps),
+						options: this.getOptions(buckets, this.props),
 					}));
 				} else {
 					this.setState({
-						options: nextProps.options[nextProps.dataField]
+						options: options[dataField]
 							? this.getOptions(
-								nextProps.options[nextProps.dataField].buckets,
-								nextProps,
+								options[dataField].buckets,
+								this.props,
 							)
 							: [],
 					});
 				}
 			},
 		);
+
 		checkSomePropChange(
+			prevProps,
 			this.props,
-			nextProps,
 			['size', 'sortBy'],
-			() => this.updateQueryOptions(nextProps),
+			() => this.updateQueryOptions(this.props),
 		);
 
 		checkPropChange(
+			prevProps.dataField,
 			this.props.dataField,
-			nextProps.dataField,
 			() => {
-				this.updateQueryOptions(nextProps);
-				this.updateQuery(this.state.currentValue, nextProps);
+				this.updateQueryOptions(this.props);
+				this.updateQuery(this.state.currentValue, this.props);
 			},
 		);
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected);
-		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || '');
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value);
+		} else if (
+			this.state.currentValue !== this.props.selectedValue
+			&& this.props.selectedValue !== prevProps.selectedValue
+		) {
+			this.setValue(this.props.selectedValue || '');
 		}
 	}
 
@@ -280,7 +289,12 @@ class SingleList extends Component {
 	};
 
 	handleClick = (e) => {
-		this.setValue(e.target.value);
+		const { value, onChange } = this.props;
+		if (value) {
+			onChange(e);
+		} else {
+			this.setValue(e.target.value);
+		}
 	};
 
 	render() {
@@ -411,11 +425,13 @@ SingleList.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	dataField: types.stringRequired,
-	defaultSelected: types.string,
+	defaultValue: types.string,
+	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	react: types.react,
 	renderListItem: types.func,

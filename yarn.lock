@@ -903,7 +903,7 @@
     react-addons-create-fragment "^15.5.3"
     util-deprecate "^1.0.2"
 
-"@storybook/addon-knobs@^3.1.8":
+"@storybook/addon-knobs@^3.1.8", "@storybook/addon-knobs@^3.4.11":
   version "3.4.11"
   resolved "https://registry.yarnpkg.com/@storybook/addon-knobs/-/addon-knobs-3.4.11.tgz#13ca0c73f19c0a3fda1a1d1ff07ef00fa3a914b3"
   dependencies:
@@ -1748,7 +1748,6 @@ anymatch@^2.0.0:
 appbase-js@^4.0.2-beta.2:
   version "4.0.2-beta.2"
   resolved "https://registry.npmjs.org/appbase-js/-/appbase-js-4.0.2-beta.2.tgz#a01155ced48c9359be04e45df6c40a312483e5b8"
-  integrity sha512-tYr2Giu5IrhqFwEvWGPut6fSnnMZfcNOMC0UMG/U7Xg5nH0MY3pnHGcBJO195KnmAAWuF0w55B+B0zdUyIR3gg==
   dependencies:
     cross-fetch "^2.2.2"
     json-stable-stringify "^1.0.1"
@@ -1760,7 +1759,6 @@ appbase-js@^4.0.2-beta.2:
 appbase-js@^4.0.2-beta.3:
   version "4.0.2-beta.3"
   resolved "https://registry.npmjs.org/appbase-js/-/appbase-js-4.0.2-beta.3.tgz#10c20ab03a8d66d732c0a2cd529923b6e579dddc"
-  integrity sha512-RvnETkjjRuevsixB8INNZxpzHP/pGq5xm9F+zJ5lMwaR0TqHtMkH7guEF4qnD11uPfKsalf9uqJk3qMTenLemw==
   dependencies:
     cross-fetch "^2.2.2"
     json-stable-stringify "^1.0.1"
@@ -12901,6 +12899,15 @@ react-dom@^16.0.0, react-dom@^16.1.1, react-dom@^16.2.0, react-dom@^16.3.1:
     prop-types "^15.6.2"
     scheduler "^0.10.0"
 
+react-dom@^16.7.0-alpha.2:
+  version "16.7.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.7.0-alpha.2.tgz#16632880ed43676315991d8b412cce6975a30282"
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.12.0-alpha.2"
+
 react-emotion@*, react-emotion@^9.0.0:
   version "9.2.12"
   resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-9.2.12.tgz#74d1494f89e22d0b9442e92a33ca052461955c83"
@@ -13292,6 +13299,15 @@ react@^16.0.0, react@^16.1.1, react@^16.2.0, react@^16.3.1, react@^16.3.2:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.10.0"
+
+react@^16.7.0-alpha.2:
+  version "16.7.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.7.0-alpha.2.tgz#924f2ae843a46ea82d104a8def7a599fbf2c78ce"
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.12.0-alpha.2"
 
 reactcss@^1.2.0:
   version "1.2.3"
@@ -14005,6 +14021,13 @@ sax@~1.1.1:
 scheduler@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.10.0.tgz#7988de90fe7edccc774ea175a783e69c40c521e1"
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+scheduler@^0.12.0-alpha.2:
+  version "0.12.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.12.0-alpha.2.tgz#2a8bc8dc6ecdb75fa6480ceeedc1f187c9539970"
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
