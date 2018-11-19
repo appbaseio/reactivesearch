@@ -8,7 +8,7 @@ export default {
 	},
 	header: {
 		logo: {
-			src: '/images/vueLogo.svg',
+			src: 'images/vueLogo.svg',
 			title: {
 				light: 'Reactive',
 				dark: 'Search',
@@ -22,8 +22,8 @@ export default {
 				href: '/reactivesearch/vue/tools',
 			},
 			{
-				description: 'learn',
-				href: '/reactivesearch/vue/learn',
+				description: 'quick start',
+				href: '/reactivesearch/vue/quickstart',
 			},
 		],
 	},
