@@ -218,7 +218,10 @@ const MultiList = {
 									for={`${this.$props.componentId}-${item.key}`}
 								>
 									{renderListItemCalc ? (
-										renderListItemCalc(item.key, item.doc_count)
+										renderListItemCalc({
+											label: item.key,
+											count: item.doc_count
+										})
 									) : (
 										<span>
 											{item.key}

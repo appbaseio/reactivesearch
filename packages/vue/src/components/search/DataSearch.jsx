@@ -339,13 +339,10 @@ const DataSearch = {
 			this.$emit('valueSelected', currentValue, ...cause);
 		},
 
-		// handleStateChange(changes) {
-		//   const { isOpen, type } = changes;
-
-		//   // if (type === Downshift.stateChangeTypes.mouseUp) {
-		//   //   this.isOpen = isOpen;
-		//   // }
-		// },
+		handleStateChange(changes) {
+			const { isOpen } = changes;
+			this.isOpen = isOpen;
+		},
 
 		getBackgroundColor(highlightedIndex, index) {
 			const isDark = this.themePreset === 'dark';
@@ -407,9 +404,8 @@ const DataSearch = {
 					<Downshift
 						id={`${this.$props.componentId}-downshift`}
 						handleChange={this.onSuggestionSelected}
-						// onStateChange={this.handleStateChange}
+						handleMouseup={this.handleStateChange}
 						isOpen={this.$data.isOpen}
-						// itemToString={i => i}
 						scopedSlots={{
 							default: ({
 								getInputEvents,
@@ -434,7 +430,6 @@ const DataSearch = {
 											on: getInputEvents({
 												onInput: this.onInputChange,
 												onBlur: e => {
-													this.isOpen = false;
 													this.$emit('blur', e);
 												},
 												onFocus: this.handleFocus,
