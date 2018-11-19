@@ -62,7 +62,7 @@ class Learn extends Component {
 							{config.header.links.map((l, i) => (
 								<li
 									className={
-										l.href.endsWith('/learn') ? 'active' : undefined
+										l.href.endsWith('/quickstart') ? 'active' : undefined
 									}
 									/* eslint-disable-next-line */
 									key={i}

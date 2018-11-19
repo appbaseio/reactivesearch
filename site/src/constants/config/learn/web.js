@@ -32,7 +32,7 @@ export default {
 		{
 			title: "Connect to your ES index",
 			descriptions: [
-				"ReactiveSearch components can connect to an Elasticsearch index (hosted anywhere) for performing geospatial queries.",
+				"ReactiveSearch components can connect to an Elasticsearch index hosted anywhere.",
 				<React.Fragment>
 					Create a free app (aka index) with{" "}
 					<a
@@ -112,7 +112,7 @@ export default {
 					Or add in your own{" "}
 					<a
 						rel="noopener noreferrer"
-						href="https://appbase.io"
+						href="https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html"
 						target="_blank"
 					>
 						UI components
@@ -178,10 +178,10 @@ export default {
 					<li>
 						<a
 							rel="noopener noreferrer"
-							href="https://opensource.appbase.io/reactivesearch/native"
+							href="https://opensource.appbase.io/reactivesearch"
 							target="_blank"
 						>
-							React Native
+							React
 						</a>
 					</li>
 					<li>
@@ -199,7 +199,7 @@ export default {
 							href="https://opensource.appbase.io/reactivemaps"
 							target="_blank"
 						>
-							Google Maps
+							Maps
 						</a>
 					</li>
 				</React.Fragment>
