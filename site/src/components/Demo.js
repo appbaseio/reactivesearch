@@ -66,7 +66,7 @@ class Demo extends Component {
 									bold
 									uppercase
 								>
-									<img src="/images/support.svg" style={{ marginRight: 8 }} alt="support" /> SUPPORT
+									<img src="images/support.svg" style={{ marginRight: 8 }} alt="support" /> SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>

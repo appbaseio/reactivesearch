@@ -8,7 +8,7 @@ export default {
 	},
 	header: {
 		logo: {
-			src: '/images/vueLogo.svg',
+			src: 'images/vueLogo.svg',
 			title: {
 				light: 'Reactive',
 				dark: 'Search',

@@ -9,7 +9,7 @@ export default {
 	},
 	header: {
 		logo: {
-			src: '/images/logo.svg',
+			src: 'images/logo.svg',
 			title: {
 				light: 'ReactiveSearch',
 				dark: 'Native',
