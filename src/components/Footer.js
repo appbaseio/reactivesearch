@@ -34,6 +34,30 @@ export default ({ configName }) => (
 		</Footer.Brand>
 		<Footer.Links>
 			<Footer.List>
+				<Title style={{ ...titleStyle, ...getTitleStyle(configName) }}>Reactive &lt;x></Title>
+				<li>
+					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivesearch">
+						React
+					</a>
+				</li>
+				<li>
+					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivesearch/native">
+						React Native
+					</a>
+				</li>
+				<li>
+					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivesearch/vue">
+						Vue.JS
+					</a>
+				</li>
+				<li>
+					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivemaps">
+						ReactiveMaps
+					</a>
+				</li>
+			</Footer.List>
+
+			<Footer.List>
 				<Title style={{ ...titleStyle, ...getTitleStyle(configName) }}>Documentation</Title>
 				<li>
 					<a
@@ -83,25 +107,6 @@ export default ({ configName }) => (
 						href="https://opensource.appbase.io/reactive-manual/result-components/resultlist.html"
 					>
 						Result Components
-					</a>
-				</li>
-			</Footer.List>
-
-			<Footer.List>
-				<Title style={{ ...titleStyle, ...getTitleStyle(configName) }}>Reactive &lt;x></Title>
-				<li>
-					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivesearch/native">
-						React Native
-					</a>
-				</li>
-				<li>
-					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivesearch/vue">
-						Vue.JS
-					</a>
-				</li>
-				<li>
-					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivemaps">
-						ReactiveMaps
 					</a>
 				</li>
 			</Footer.List>

@@ -7,8 +7,8 @@ const baseConfigHeader = {
 	...baseConfig.header,
 	links: [
 		{
-			description: 'vue',
-			href: '/reactivesearch/vue',
+			description: 'examples',
+			href: '#examples',
 		},
 		...baseConfig.header.links,
 	],
@@ -18,8 +18,8 @@ export default {
 	name: 'native',
 	header: baseConfigHeader,
 	banner1: {
-		title: 'React Native UI components for Elasticsearch',
-		description: 'Build data-driven mobile apps. Open-source licensed.',
+		title: 'React Native UI Components for ElasticSearch',
+		description: 'Build data-driven search experiences for iOS and Android apps.',
 		image: {
 			src: '/images/native/landing.png',
 			alt: 'Native Components',
@@ -27,11 +27,11 @@ export default {
 		button: {
 			title: 'Get Started',
 			href:
-				'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
+				'./quickstart',
 		},
 		link: {
-			title: 'LEARN MORE',
-			href: '/native/learn',
+			title: 'Docs',
+			href: 'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
 		},
 	},
 	banner2: {
@@ -51,11 +51,11 @@ export default {
 			href: 'https://opensource.appbase.io/reactive-manual/native/components/textfield.html',
 		},
 		link: {
-			title: 'Create your own',
+			title: 'Creating your components',
 			href: 'https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html',
 		},
 		sketch: {
-			href: 'resources/ReactiveSearchNative_Playground.sketch',
+			href: '../../resources/ReactiveSearchNative_Playground.sketch',
 		},
 		style: {
 			paddingLeft: '20px',
@@ -63,22 +63,22 @@ export default {
 	},
 	banner3: {
 		title: 'Up to 10x Time Savings',
-		description: 'Focus on design and user experience, let us handle the details.',
+		description: 'Focus on design and user experience as ReactiveSearch handles the details.',
 		cards: [
 			{
 				image: {
-					src: 'images/rocket.png',
+					src: '../../images/rocket.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Launch and iterate faster',
 				description:
-					'Well-designed and performance optimized UI components.Ship faster and solve fewer edge cases.',
+					'Well-designed and performance optimized UI components. Ship faster and solve fewer edge cases.',
 				href:
 					'https://medium.appbase.io/build-your-next-react-native-app-with-reactivesearch-ce21829f3bf5',
 			},
 			{
 				image: {
-					src: 'icons/1.png',
+					src: '../../icons/1.png',
 					alt: 'Icon',
 				},
 				title: 'Works with existing UIs',
@@ -88,7 +88,7 @@ export default {
 			},
 			{
 				image: {
-					src: 'icons/2.png',
+					src: '../../icons/2.png',
 					alt: 'Icon',
 				},
 				title: 'Configurable styles',
@@ -97,7 +97,7 @@ export default {
 			},
 			{
 				image: {
-					src: 'icons/3.png',
+					src: '../../icons/3.png',
 					alt: 'Icon',
 				},
 				title: 'Create cross-platform apps',
@@ -107,7 +107,7 @@ export default {
 			},
 			{
 				image: {
-					src: 'icons/4.png',
+					src: '../../icons/4.png',
 					alt: 'Icon',
 				},
 				title: 'Elasticsearch compatible',
@@ -117,65 +117,39 @@ export default {
 			},
 			{
 				image: {
-					src: 'icons/5.png',
+					src: '../../icons/5.png',
 					alt: 'Icon',
 				},
 				title: 'Customizable queries',
 				description:
 					'Components come with good query defaults, that can be customized with Elasticsearch query DSL.',
-				href: 'https://opensource.appbase.io/reactive-manual/advanced/customquery.html',
-			},
-			{
-				image: {
-					src: 'images/shield.png',
-					alt: 'Icon',
-				},
-				title: 'Easy to secure',
-				description:
-					'Use appbase.io to get read-only credentials, or set up a middleware proxy with authorization rules.',
-				href:
-					'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivebase.html#connect-to-elasticsearch',
-			},
-			{
-				image: {
-					src: 'images/blocks.png',
-					alt: 'Icon',
-				},
-				title: 'Starter apps',
-				description: 'Get started quickly by using any of our pre-configured starter apps.',
-				href: '/native#examples',
+				href: 'https://opensource.appbase.io/reactive-manual/native/advanced/customquery.html',
 			},
 		],
-	},
-	banner4: {
-		title: 'Write Less Code',
-		description: `Reactivesearch handles UI rendering, query requests and manages
-		response state so you can focus on the product experience,
-		ship faster and iterate quicker.`,
 	},
 	banner5: [
 		{
 			backgroundColor: primary,
-			title: 'Build a live app in 5 esay steps',
+			title: 'Build a live app in 5 easy steps',
 			description:
-				'Go from scratch to creating a data-driven Maps application with our quickstart guide for beginners.',
+				'Go from scratch to creating a data-driven search app with our beginner friendly quick start guide.',
 			button: {
 				title: 'Get Started',
-				href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+				href: '../../reactivesearch/native/quickstart',
 			},
 			link: {
 				title: 'Learn More',
-				href: '/native/learn',
+				href: 'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
 			},
 		},
 		{
 			backgroundColor: primaryDark,
 			title: 'Get dedicated support',
 			description:
-				'We offer production support for ReactiveMaps. Work with us to bring your dream project to life.',
+				'We offer production support for ReactiveSearch. Work with us to bring your dream project to life.',
 			button: {
 				title: 'SUPPORT PLANS',
-				href: 'https://appbase.io/support',
+				href: 'https://appbase.io/pricing#support',
 			},
 			link: {
 				title: 'Get in touch',
@@ -187,17 +161,17 @@ export default {
 		title: 'Check our demos',
 		demos: [
 			{
-				src: 'images/native/booksearch.png',
+				src: '../../images/native/booksearch.png',
 				title: 'Book Search',
 				href: 'https://snack.expo.io/@metagrover/booksearch',
 			},
 			{
-				src: 'images/native/gitxplore.png',
+				src: '../../images/native/gitxplore.png',
 				title: 'GitHub Search',
 				href: 'https://snack.expo.io/@dhruvdutt/gitxplore-native-app',
 			},
 			{
-				src: 'images/native/todo.png',
+				src: '../../images/native/todo.png',
 				title: 'Todo',
 				href: 'https://snack.expo.io/@dhruvdutt/todo',
 			},

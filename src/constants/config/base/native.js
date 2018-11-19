@@ -18,16 +18,12 @@ export default {
 		},
 		links: [
 			{
-				description: 'web',
-				href: '/reactivesearch',
-			},
-			{
 				description: 'tools',
 				href: '/reactivesearch/native/tools',
 			},
 			{
-				description: 'learn',
-				href: '/reactivesearch/native/learn',
+				description: 'quick start',
+				href: '/reactivesearch/native/quickstart',
 			},
 		],
 	},
