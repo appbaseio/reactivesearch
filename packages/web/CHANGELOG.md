@@ -6,6 +6,12 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v2.14.0
+
+- Fixes loading for result component - [info](https://github.com/appbaseio/reactivesearch/commit/786851c89e17f6c93fec11d6e7a9580bb0065eae)
+- Adds support for `renderTooltipData` for custom tooltip content [#611](https://github.com/appbaseio/reactivesearch/pull/611)
+- Adds nested object mapping support for MultiList [#595](https://github.com/appbaseio/reactivesearch/issues/595)
+
 ## v2.13.0
 - Add `tooltipTrigger` in slider components [#284](https://github.com/appbaseio/reactivesearch/issues/284)
 - Support nested object mapping in DropdownList comps - Add `nestedField` prop [#595](https://github.com/appbaseio/reactivesearch/issues/595)
