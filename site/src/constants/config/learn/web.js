@@ -178,10 +178,10 @@ export default {
 					<li>
 						<a
 							rel="noopener noreferrer"
-							href="https://opensource.appbase.io/reactivesearch"
+							href="https://opensource.appbase.io/reactivesearch/native"
 							target="_blank"
 						>
-							React
+							React Native
 						</a>
 					</li>
 					<li>
