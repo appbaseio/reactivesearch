@@ -10,7 +10,7 @@ const config = {
 		path: path.resolve(__dirname, 'dist'),
 		filename: '[name].js',
 		chunkFilename: '[name].bundle.js',
-		publicPath: '/dist/',
+		publicPath: '/reactivesearch/dist/',
 	},
 	module: {
 		rules: [
