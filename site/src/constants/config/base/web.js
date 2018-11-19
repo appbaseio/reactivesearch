@@ -8,7 +8,7 @@ export default {
 	},
 	header: {
 		logo: {
-			src: '/images/logo.svg',
+			src: 'images/logo.svg',
 			title: {
 				light: 'Reactive',
 				dark: 'Search',

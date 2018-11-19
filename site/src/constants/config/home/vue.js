@@ -21,7 +21,7 @@ export default {
 		title: 'Vue.js UI components for Elasticsearch',
 		description: 'Now more configurable, lighter and performant.Open source licensed.',
 		image: {
-			src: '/images/vue/Hero.png',
+			src: 'images/vue/Hero.png',
 			alt: 'Reactive Search Components',
 		},
 		button: {
@@ -35,10 +35,10 @@ export default {
 	},
 	banner2: {
 		image: {
-			src: '/images/vue/components.png',
+			src: 'images/vue/components.png',
 			alt: 'Components',
 			mobile: {
-				src: '/images/vue/components.png',
+				src: 'images/vue/components.png',
 			},
 		},
 		title: 'UI Components for every occasion',
@@ -63,7 +63,7 @@ export default {
 		cards: [
 			{
 				image: {
-					src: '/images/rocket.png',
+					src: 'images/rocket.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Launch and iterate faster',
@@ -73,7 +73,7 @@ export default {
 			},
 			{
 				image: {
-					src: '/images/remix.png',
+					src: 'images/remix.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Works with existing UIs',
@@ -82,7 +82,7 @@ export default {
 			},
 			{
 				image: {
-					src: '/icons/2.png',
+					src: 'icons/2.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Configurable styles',
@@ -91,7 +91,7 @@ export default {
 			},
 			{
 				image: {
-					src: '/icons/4.png',
+					src: 'icons/4.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Elasticsearch compatible',
@@ -100,7 +100,7 @@ export default {
 			},
 			{
 				image: {
-					src: '/icons/5.png',
+					src: 'icons/5.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Customizable queries',
@@ -110,7 +110,7 @@ export default {
 			},
 			{
 				image: {
-					src: '/images/shield.png',
+					src: 'images/shield.png',
 					alt: 'Easy to secure',
 				},
 				title: 'Easy to secure',
@@ -164,25 +164,25 @@ export default {
 	// 	},
 	// 	demos: [
 	// 		{
-	// 			src: '/images/apps/airbeds.png',
+	// 			src: 'images/apps/airbeds.png',
 	// 			title: 'Airbeds',
 	// 			href: 'https://opensource.appbase.io/reactivesearch/demos/airbeds/',
 	// 			description: 'An airbnb inspired app for browsing housing areas in Seattle',
 	// 		},
 	// 		{
-	// 			src: '/images/apps/productsearch.png',
+	// 			src: 'images/apps/productsearch.png',
 	// 			title: 'Product Search',
 	// 			href: 'https://opensource.appbase.io/reactivesearch/demos/producthunt/',
 	// 			description: '',
 	// 		},
 	// 		{
-	// 			src: '/images/apps/gitxplore.png',
+	// 			src: 'images/apps/gitxplore.png',
 	// 			title: 'GitHub Search',
 	// 			href: 'https://opensource.appbase.io/reactivesearch/demos/gitxplore/',
 	// 			description: '',
 	// 		},
 	// 		{
-	// 			src: '/images/apps/carstore.png',
+	// 			src: 'images/apps/carstore.png',
 	// 			title: 'Car Store',
 	// 			href: 'https://opensource.appbase.io/reactivesearch/demos/ecommerce/',
 	// 			description: '',
