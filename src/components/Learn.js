@@ -83,7 +83,7 @@ class Learn extends Component {
 									bold
 									uppercase
 								>
-									<img src={isVue ? '/images/supportDark.svg' : '/images/support.svg'} style={{ marginRight: 8 }} alt="support" /> SUPPORT
+									<img src={isVue ? 'images/supportDark.svg' : 'images/support.svg'} style={{ marginRight: 8 }} alt="support" /> SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>

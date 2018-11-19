@@ -21,7 +21,7 @@ export default {
 		title: 'Vue.js UI components for Elasticsearch',
 		description: 'Now more configurable, lighter and performant.Open source licensed.',
 		image: {
-			src: '/images/vue/Hero.png',
+			src: 'images/vue/Hero.png',
 			alt: 'Reactive Search Components',
 		},
 		button: {
@@ -30,7 +30,7 @@ export default {
 		},
 		link: {
 			title: 'LEARN MORE',
-			href: '/vue/learn',
+			href: '../../reactivesearch/vue/quickstart',
 		},
 	},
 	banner2: {

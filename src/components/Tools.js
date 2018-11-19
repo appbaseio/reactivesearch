@@ -103,7 +103,7 @@ class Tools extends Component {
 									bold
 									uppercase
 								>
-									<img src={isVue ? '/images/supportDark.svg' : '/images/support.svg'} style={{ marginRight: 8 }} alt="support" /> SUPPORT
+									<img src={isVue ? 'images/supportDark.svg' : 'images/support.svg'} style={{ marginRight: 8 }} alt="support" /> SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>
@@ -143,19 +143,19 @@ class Tools extends Component {
 								className={hideMobile}
 							>
 								<div>
-									<img src="/images/tools/Search.svg" alt="Reactivesearch for web" />
+									<img src="images/tools/Search.svg" alt="Reactivesearch for web" />
 									<p className={brand}>
 										Reactive <span className={boldFont}>Search</span> for web
 									</p>
 								</div>
 								<div>
-									<img src="/images/tools/ReactiveMaps.svg" alt="Reactivemaps" />
+									<img src="images/tools/ReactiveMaps.svg" alt="Reactivemaps" />
 									<p className={brand}>
 										Reactive <span className={boldFont}>Maps</span> for web
 									</p>
 								</div>
 								<div>
-									<img src="/images/tools/ReactiveNative.svg" alt="Reactivesearch for mobile" />
+									<img src="images/tools/ReactiveNative.svg" alt="Reactivesearch for mobile" />
 									<p className={brand}>
 										Reactive <span className={boldFont}>X</span> for mobile
 									</p>
@@ -181,7 +181,7 @@ class Tools extends Component {
 								>
 									<H2 light>
 										<img
-											src="/images/tools/Search.svg"
+											src="images/tools/Search.svg"
 											alt="Reactivesearch for web"
 											style={{
 												height: '44px',
@@ -238,8 +238,8 @@ class Tools extends Component {
 									className={hideTab}
 								>
 									<img
-										src="/images/tools/Devices.png"
-										srcSet="/images/tools/Devices@2x.png 2x"
+										src="images/tools/Devices.png"
+										srcSet="images/tools/Devices@2x.png 2x"
 										alt="Reactivesearch"
 									/>
 								</div>
@@ -260,7 +260,7 @@ class Tools extends Component {
 									}}
 									className={hideTab}
 								>
-									<img width="100%" src="/images/tools/ReactiveMaps.png" alt="Reactivemaps" />
+									<img width="100%" src="images/tools/ReactiveMaps.png" alt="Reactivemaps" />
 								</div>
 								<div
 									className={vcenter}
@@ -271,7 +271,7 @@ class Tools extends Component {
 								>
 									<H2 light>
 										<img
-											src="/images/tools/ReactiveMaps.svg"
+											src="images/tools/ReactiveMaps.svg"
 											alt="Reactivesearch for web"
 											style={{
 												height: '44px',
@@ -360,7 +360,7 @@ class Tools extends Component {
 								>
 									<H2 light>
 										<img
-											src="/images/tools/ReactiveNative.svg"
+											src="images/tools/ReactiveNative.svg"
 											alt="Reactivesearch for web"
 											style={{
 												height: '44px',
@@ -440,8 +440,8 @@ class Tools extends Component {
 								>
 									<img
 										width="100%"
-										src="/images/tools/Native.png"
-										srcSet="/images/tools/Native@2x.png 2x"
+										src="images/tools/Native.png"
+										srcSet="images/tools/Native@2x.png 2x"
 										alt="Reactivesearch Native"
 									/>
 								</div>
@@ -461,8 +461,8 @@ class Tools extends Component {
 									margin: '60px auto 0',
 									width: '80%',
 								}}
-								src="/images/tools/ToolsIllustration.png"
-								srcSet="/images/tools/ToolsIllustration@2x.png 2x"
+								src="images/tools/ToolsIllustration.png"
+								srcSet="images/tools/ToolsIllustration@2x.png 2x"
 								alt="appbase.io"
 							/>
 							<H2>Work with us to build your app</H2>
@@ -504,7 +504,7 @@ class Tools extends Component {
 										}}
 									>
 										<img
-											src={isVue ? '/images/supportDark.svg' : '/images/support.svg'}
+											src={isVue ? 'images/supportDark.svg' : 'images/support.svg'}
 											style={{
 												marginRight: 10,
 											}}
