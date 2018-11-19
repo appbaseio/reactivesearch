@@ -41,7 +41,7 @@ const HomePageVue = Loadable({
 // });
 
 const history = createHistory({
-	basename: process.env.NODE_ENV === 'production' ? '/reactivesearch' : '/',
+	basename: '/reactivesearch',
 });
 
 ReactDOM.render(
