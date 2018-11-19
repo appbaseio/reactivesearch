@@ -22,8 +22,8 @@ export default {
 				href: '/reactivesearch/vue/tools',
 			},
 			{
-				description: 'learn',
-				href: '/reactivesearch/vue/learn',
+				description: 'quick start',
+				href: '/reactivesearch/vue/quickstart',
 			},
 		],
 	},

@@ -30,7 +30,7 @@ export default {
 		},
 		link: {
 			title: 'LEARN MORE',
-			href: '/vue/learn',
+			href: '../../reactivesearch/vue/quickstart',
 		},
 	},
 	banner2: {
