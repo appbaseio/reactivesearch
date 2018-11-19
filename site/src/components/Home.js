@@ -128,7 +128,7 @@ class HomePage extends Component {
 								>
 									<img
 										src="/reactivesearch/images/support.svg"
-										onError={e => e.target.src = '/images/support.svg'}
+										onError={(e) => { e.target.src = '/images/support.svg'; }}
 										style={{ marginRight: 8 }}
 										alt="support"
 									/> SUPPORT

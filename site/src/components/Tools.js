@@ -441,7 +441,7 @@ class Tools extends Component {
 									<img
 										width="100%"
 										src="/images/tools/Native.png"
-										srcSet="//images/tools/Native@2x.png 2x"
+										srcSet="/images/tools/Native@2x.png 2x"
 										alt="Reactivesearch Native"
 									/>
 								</div>

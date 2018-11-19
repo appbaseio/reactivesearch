@@ -20,7 +20,7 @@ export default {
 		title: 'React + ElasticSearch = ❤️',
 		description: 'UI components for building data-driven search experiences.',
 		image: {
-			src: './../images/browser.png',
+			src: '/images/browser.png',
 			alt: 'Reactive Search Components',
 		},
 		button: {
@@ -34,11 +34,11 @@ export default {
 	},
 	banner2: {
 		image: {
-			src: '../../images/components.png',
+			src: '/images/components.png',
 			alt: 'Components',
 			mobile: {
-				src: '../../images/components.png',
-				srcSet: '../../images/components.png',
+				src: '/images/components.png',
+				srcSet: '/images/components.png',
 			},
 		},
 		title: 'Components for every occasion',
@@ -63,7 +63,7 @@ export default {
 		cards: [
 			{
 				image: {
-					src: '../../images/rocket.png',
+					src: '/images/rocket.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Launch and iterate faster',
@@ -73,7 +73,7 @@ export default {
 			},
 			{
 				image: {
-					src: '../../icons/1.png',
+					src: '/icons/1.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Works with existing UIs',
@@ -82,7 +82,7 @@ export default {
 			},
 			{
 				image: {
-					src: '../../icons/2.png',
+					src: '/icons/2.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Configurable styles',
@@ -91,7 +91,7 @@ export default {
 			},
 			{
 				image: {
-					src: '../../icons/3.png',
+					src: '/icons/3.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Create cross-platform apps',
@@ -100,7 +100,7 @@ export default {
 			},
 			{
 				image: {
-					src: '../../icons/4.png',
+					src: '/icons/4.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Elasticsearch compatible',
@@ -109,7 +109,7 @@ export default {
 			},
 			{
 				image: {
-					src: '../../icons/5.png',
+					src: '/icons/5.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Customizable queries',
@@ -157,37 +157,37 @@ export default {
 		},
 		demos: [
 			{
-				src: 'images/apps/airbeds.png',
+				src: '/images/apps/airbeds.png',
 				title: 'Airbeds',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/airbeds/',
 				description: 'An airbnb inspired app for browsing housing areas in Seattle.',
 			},
 			{
-				src: 'images/apps/productsearch.png',
+				src: '/images/apps/productsearch.png',
 				title: 'Product Search',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/producthunt/',
 				description: 'A Product Hunt inspired search experience.',
 			},
 			{
-				src: 'images/apps/gitxplore.png',
+				src: '/images/apps/gitxplore.png',
 				title: 'GitHub Search',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/gitxplore/',
 				description: 'Explore top 30K Github repositories by various filters like stars, forks, topics.',
 			},
 			// {
-			// 	src: 'images/apps/carstore.png',
+			// 	src: '/images/apps/carstore.png',
 			// 	title: 'Car Store',
 			// 	href: 'https://opensource.appbase.io/reactivesearch/demos/ecommerce/',
 			// 	description: 'An e-commerce search experience for a car store.',
 			// },
 			{
-				src: 'images/apps/goodbooks.png',
+				src: '/images/apps/goodbooks.png',
 				title: 'Book Search',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/goodbooks/',
 				description: 'An e-commerce search experience for a books dataset.',
 			},
 			// {
-			// 	src: 'images/apps/technews.png',
+			// 	src: '/images/apps/technews.png',
 			// 	title: 'Tech News Search',
 			// 	href: 'https://opensource.appbase.io/reactivesearch/demos/technews/',
 			// 	description: '',

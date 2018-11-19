@@ -24,7 +24,7 @@ pre {
   -moz-osx-font-smoothing: grayscale;
   -moz-font-feature-settings: "liga" on;
   font-family: "Rubik", sans-serif;
-  margin: 0;
+  margin: 0 !important;
   padding: 0;
 }
 
