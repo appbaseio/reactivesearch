@@ -6,6 +6,9 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v2.14.1
+- Updates reactivecore to include result components loading fixes
+
 ## v2.14.0
 - Fixes loading for result component - [info](https://github.com/appbaseio/reactivesearch/commit/786851c89e17f6c93fec11d6e7a9580bb0065eae)
 - Adds support for `renderTooltipData` for custom tooltip content [#611](https://github.com/appbaseio/reactivesearch/pull/611)
