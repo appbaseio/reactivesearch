@@ -67,7 +67,7 @@ export default {
 		cards: [
 			{
 				image: {
-					src: '../../images/rocket.png',
+					src: '/images/rocket.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Launch and iterate faster',
@@ -78,7 +78,7 @@ export default {
 			},
 			{
 				image: {
-					src: '../../icons/1.png',
+					src: '/icons/1.png',
 					alt: 'Icon',
 				},
 				title: 'Works with existing UIs',
@@ -88,7 +88,7 @@ export default {
 			},
 			{
 				image: {
-					src: '../../icons/2.png',
+					src: '/icons/2.png',
 					alt: 'Icon',
 				},
 				title: 'Configurable styles',
@@ -97,7 +97,7 @@ export default {
 			},
 			{
 				image: {
-					src: '../../icons/3.png',
+					src: '/icons/3.png',
 					alt: 'Icon',
 				},
 				title: 'Create cross-platform apps',
@@ -107,7 +107,7 @@ export default {
 			},
 			{
 				image: {
-					src: '../../icons/4.png',
+					src: '/icons/4.png',
 					alt: 'Icon',
 				},
 				title: 'Elasticsearch compatible',
@@ -117,7 +117,7 @@ export default {
 			},
 			{
 				image: {
-					src: '../../icons/5.png',
+					src: '/icons/5.png',
 					alt: 'Icon',
 				},
 				title: 'Customizable queries',
@@ -161,17 +161,17 @@ export default {
 		title: 'Check our demos',
 		demos: [
 			{
-				src: '../../images/native/booksearch.png',
+				src: '/images/native/booksearch.png',
 				title: 'Book Search',
 				href: 'https://snack.expo.io/@metagrover/booksearch',
 			},
 			{
-				src: '../../images/native/gitxplore.png',
+				src: '/images/native/gitxplore.png',
 				title: 'GitHub Search',
 				href: 'https://snack.expo.io/@dhruvdutt/gitxplore-native-app',
 			},
 			{
-				src: '../../images/native/todo.png',
+				src: '/images/native/todo.png',
 				title: 'Todo',
 				href: 'https://snack.expo.io/@dhruvdutt/todo',
 			},
