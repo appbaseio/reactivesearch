@@ -4,7 +4,7 @@ export default {
 	gettingStart:
 		'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
 	urls: {
-		github: 'https://github.com/appbaseio/reactivesearch',
+		github: 'https://github.com/appbaseio/reactivesearch/tree/dev/packages/native',
 		support: 'https://appbase.io/pricing#support',
 	},
 	header: {
