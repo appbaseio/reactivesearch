@@ -6,10 +6,10 @@ const { primary, primaryDark } = theme;
 const baseConfigHeader = {
 	...baseConfig.header,
 	links: [
-		// {
-		// 	description: 'examples',
-		// 	href: '#examples',
-		// },
+		{
+			description: 'examples',
+			href: '#examples',
+		},
 		...baseConfig.header.links,
 	],
 };
@@ -18,19 +18,19 @@ export default {
 	...baseConfig,
 	header: baseConfigHeader,
 	banner1: {
-		title: 'Vue.js UI components for Elasticsearch',
-		description: 'Now more configurable, lighter and performant.Open source licensed.',
+		title: 'Vue + ElasticSearch = ❤️',
+		description: 'UI components for building data-driven search experiences.',
 		image: {
 			src: 'images/vue/Hero.png',
 			alt: 'Reactive Search Components',
 		},
 		button: {
 			title: 'Get Started',
-			href: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
+			href: './quickstart',
 		},
 		link: {
 			title: 'LEARN MORE',
-			href: '../../reactivesearch/vue/quickstart',
+			href: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
 		},
 	},
 	banner2: {
@@ -43,23 +43,23 @@ export default {
 		},
 		title: 'UI Components for every occasion',
 		description:
-			'Build the perfect search experience using our UI components or by creating your own.30+ prebuilt components with customizable queries and configurable styles.',
+			'Build the perfect search experience using our UI components or by creating your own. Over 10 prebuilt components with customizable queries and configurable styles.',
 		button: {
 			title: 'View Components',
-			href: 'https://opensource.appbase.io/reactive-manual/vue/base-components/selectedfilters.html',
+			href: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/componentsindex.html',
 		},
 		link: {
-			title: 'Create your own',
-			href: 'https://opensource.appbase.io/reactive-manual/vue/advanced/reactivecomponent.html',
+			title: 'Creating your components',
+			href: 'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent',
 		},
-		// sketch: {
-		// 	href:
-		// 		'https://opensource.appbase.io/reactivesearch/resources/ReactiveSearchNative_Playground.sketch',
-		// },
+		sketch: {
+			href:
+				'https://opensource.appbase.io/reactivesearch/resources/ReactiveSearch_Playground.sketch',
+		},
 	},
 	banner3: {
 		title: 'Up to 10x Time Savings',
-		description: 'Focus on design and user experience, let us handle the details.',
+		description: 'Focus on design and user experience as ReactiveSearch handles the details.',
 		cards: [
 			{
 				image: {
@@ -68,7 +68,7 @@ export default {
 				},
 				title: 'Launch and iterate faster',
 				description:
-					'10+ well-designed and performance optimized UI components.Ship faster and solve fewer edge cases.',
+					'10+ well-designed and performance optimized UI components. Ship faster and solve fewer edge cases.',
 				href: 'https://opensource.appbase.io/reactive-manual/vue/',
 			},
 			{
@@ -115,40 +115,34 @@ export default {
 				},
 				title: 'Easy to secure',
 				description:
-					'Use appbase.io to get read-only credentials, or set up a middleware proxy with authorization rules.',
-				href: 'https://appbase.io',
+					'Use appbase.io to get security out of the box, or set up a middleware proxy with authorization rules.',
+				href: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivebase.html#connect-to-elasticsearch',
 			},
 		],
-	},
-	banner4: {
-		title: 'Write Less Code',
-		description: `Reactivesearch handles UI rendering, query requests and manages
-		response state so you can focus on the product experience,
-		ship faster and iterate quicker.`,
 	},
 	banner5: [
 		{
 			backgroundColor: primary,
 			title: 'Build a live app in 5 minutes',
 			description:
-				'Go from scratch to creating a data-driven Maps application with our quick start guide for beginners.',
+				'Go from scratch to creating a data-driven search app with our beginner friendly quick start guide.',
 			button: {
 				title: 'Get Started',
-				href: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
+				href: './quickstart',
 			},
 			link: {
-				title: 'Learn More',
+				title: 'Docs',
 				href: 'https://opensource.appbase.io/reactive-manual/vue',
 			},
 		},
 		{
 			backgroundColor: primaryDark,
-			title: 'Work with us to build your app.',
+			title: 'Get dedicated support',
 			description:
-				"We work with teams of all sizes to set up Apollo and GraphQL to fit their specific needs. Let us know what you're building and we'll see how we can help.",
+				"We offer production support for ReactiveSearch. Work with us to bring your dream project to life.",
 			button: {
 				title: 'SUPPORT PLANS',
-				href: 'https://appbase.io/support',
+				href: 'https://appbase.io/pricing#support',
 			},
 			link: {
 				title: 'Get in touch',

@@ -64,7 +64,7 @@ export default {
 			{
 				image: {
 					src: 'images/rocket.png',
-					alt: 'Data-driven UIs',
+					alt: 'Launch and iterate faster',
 				},
 				title: 'Launch and iterate faster',
 				description:
@@ -74,7 +74,7 @@ export default {
 			{
 				image: {
 					src: 'icons/1.png',
-					alt: 'Data-driven UIs',
+					alt: 'Works with existing UIs',
 				},
 				title: 'Works with existing UIs',
 				description: 'Already have your own components? Bring them to ReactiveSearch.',
@@ -83,7 +83,7 @@ export default {
 			{
 				image: {
 					src: 'icons/2.png',
-					alt: 'Data-driven UIs',
+					alt: 'Configurable styles',
 				},
 				title: 'Configurable styles',
 				description: 'Styled components with rich theming and CSS class-injection support.',
@@ -92,7 +92,7 @@ export default {
 			{
 				image: {
 					src: 'icons/3.png',
-					alt: 'Data-driven UIs',
+					alt: 'Create cross-platform apps',
 				},
 				title: 'Create cross-platform apps',
 				description: 'Reactivesearch components can be ported to create native mobile UIs.',
@@ -101,7 +101,7 @@ export default {
 			{
 				image: {
 					src: 'icons/4.png',
-					alt: 'Data-driven UIs',
+					alt: 'Elasticsearch compatible',
 				},
 				title: 'Elasticsearch compatible',
 				description: 'Connect to an ES index hosted anywhere. Supports v2, v5 and v6.',
@@ -110,7 +110,7 @@ export default {
 			{
 				image: {
 					src: 'icons/5.png',
-					alt: 'Data-driven UIs',
+					alt: 'Customizable queries',
 				},
 				title: 'Customizable queries',
 				description:
