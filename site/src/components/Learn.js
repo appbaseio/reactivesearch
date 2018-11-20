@@ -105,47 +105,48 @@ class Learn extends Component {
 								}}
 							>
 								{config.installationSteps.map((step, i) => (
-									// eslint-disable-next-line
-									<div key={i} className={stepCard}>
-										<span className="count" style={{ color: theme.primaryDark }}>
-											{i + 1}
-										</span>
-										<div>
-											<Title style={title}>{step.title}</Title>
-											{/* eslint-disable-next-line */}
-											{step.descriptions && step.descriptions.map((d, i) => <p key={i}>{d}</p>)}
-										</div>
-										{/* eslint-disable-next-line */}
-										{step.codes && (
-											<div className="full">
-												{step.codes.map((code, index) => (
-													// eslint-disable-next-line
-													<pre key={index}>
-														<code>{code}</code>
-													</pre>
-												))}
+									Object.keys(step).length ? (
+										// eslint-disable-next-line
+										<div key={i} className={stepCard}>
+											<span className="count" style={{ color: theme.primaryDark }}>
+												{i + 1}
+											</span>
+											<div>
+												<Title style={title}>{step.title}</Title>
+												{/* eslint-disable-next-line */}
+												{step.descriptions && step.descriptions.map((d, i) => <p key={i}>{d}</p>)}
 											</div>
-										)}
-										<div>
-											{step.links &&
-												step.links.map((link, index2) => (
-													<SecondaryLink
+											{/* eslint-disable-next-line */}
+											{step.codes && (
+												<div className="full">
+													{step.codes.map((code, index) => (
 														// eslint-disable-next-line
-														key={index2}
-														primary
-														rel="noopener noreferrer"
-														href={link.href}
-														target="_blank"
-														style={{
-															color: theme.primaryDark,
-															marginLeft: index2 > 0 ? '1rem' : undefined,
-														}}
-													>
-														{link.title}
-													</SecondaryLink>
-												))}
-										</div>
-									</div>
+														<pre key={index}>
+															<code>{code}</code>
+														</pre>
+													))}
+												</div>
+											)}
+											<div>
+												{step.links &&
+													step.links.map((link, index2) => (
+														<SecondaryLink
+															// eslint-disable-next-line
+															key={index2}
+															primary
+															rel="noopener noreferrer"
+															href={link.href}
+															target="_blank"
+															style={{
+																color: theme.primaryDark,
+																marginLeft: index2 > 0 ? '1rem' : undefined,
+															}}
+														>
+															{link.title}
+														</SecondaryLink>
+													))}
+											</div>
+										</div>) : <div />
 								))}
 							</Grid>
 						</Layout>

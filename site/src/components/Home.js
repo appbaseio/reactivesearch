@@ -36,15 +36,8 @@ import H1 from '../styles/H1';
 import H2 from '../styles/H2';
 import queries from '../styles/mediaQueries';
 import { getButtonStyle, getLinkStyle } from '../styles/utils';
+import DiscoverRS from './DiscoverRS';
 
-function isScrolledIntoView(el) {
-	const rect = el.getBoundingClientRect();
-	const Ti = rect.top;
-	const elemBottom = rect.bottom;
-
-	const isVisible = Ti <= window.innerHeight / 2 && elemBottom >= 0;
-	return { isVisible, Ti };
-}
 const button = {
 	fontSize: '14px',
 	lineHeight: '19px',
@@ -250,6 +243,7 @@ class HomePage extends Component {
 						</Layout>
 					</Section>
 					<BannerRow configName={config.name} config={config.banner5} theme={this.props.theme} />
+					<DiscoverRS />
 					{/** Demos Section */}
 					{config.banner6 &&
 					<Section id="examples">

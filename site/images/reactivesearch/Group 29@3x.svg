@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="85px" height="85px" viewBox="0 0 85 85" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>75851CC3-A753-42E4-80DC-28A3592305D5@3x</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="60" height="60" rx="2"></rect>
+        <filter x="-11.7%" y="-8.3%" width="123.3%" height="123.3%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.202190897 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="97.1324061%" id="linearGradient-3">
+            <stop stop-color="#00FF99" offset="0%"></stop>
+            <stop stop-color="#06B439" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-4" cx="17.5" cy="17.5" r="17.5"></circle>
+        <filter x="-20.0%" y="-14.3%" width="140.0%" height="140.0%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.302055027 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Vue.Search" transform="translate(-766.000000, -3063.000000)">
+            <g id="Group-29" transform="translate(770.000000, 3065.000000)">
+                <g id="Reactive-Icon-Copy-3" transform="translate(0.000000, 17.000000)">
+                    <g id="Rectangle-25">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                        <use fill="#0132F7" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    </g>
+                    <g id="log" transform="translate(12.000000, 12.000000)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.5">
+                        <path d="M10.669165,-0.000229007634 L10.669165,2.28984733 L11.9946889,2.28984733 L11.9946889,14.0001527 L0,37.44 L37.44,37.44 L25.7038263,14.010458 L25.7038263,2.28984733 L27.1060752,2.28984733 L27.1060752,-0.000229007634 L10.669165,-0.000229007634 Z M14.2987456,14.549084 L14.2987456,2.28984733 L23.3997696,2.28984733 L23.3997696,5.03816794 L21.4982316,5.03816794 L21.4982316,6.41198473 L23.3997696,6.41198473 L23.3997696,9.16030534 L21.4982316,9.16030534 L21.4982316,10.5341221 L23.3997696,10.5341221 L23.3997696,13.2824427 L21.4982316,13.2824427 L21.4982316,14.6562595 L23.4534541,14.6562595 L24.830128,17.4045802 L21.4927019,17.4045802 L21.4927019,18.7783969 L25.5183497,18.7783969 L33.718718,35.1499237 L3.75676447,35.1499237 L14.2987456,14.549084 Z" id="Page-1"></path>
+                    </g>
+                    <polygon id="Path-5" fill="#FFFFFF" points="20.1137787 34.7732146 39.4290525 32 47 47 14 47"></polygon>
+                </g>
+                <g id="Group-27" transform="translate(42.000000, 0.000000)">
+                    <g id="Maps" fill-rule="nonzero">
+                        <g id="Group-Copy">
+                            <g id="Oval">
+                                <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                                <use fill="url(#linearGradient-3)" xlink:href="#path-4"></use>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="Group-25" transform="translate(9.000000, 7.000000)" fill="#FFFFFF">
+                        <g id="Group-26">
+                            <path d="M9,21 C3.33333333,15.1753527 0.5,10.8086817 0.5,7.89998684 C0.5,3.53694458 4.30557963,0 9,0 C13.6944204,0 17.5,3.53694458 17.5,7.89998684 C17.5,10.8086817 14.6666667,15.1753527 9,21 Z M9,10 C10.3807119,10 11.5,8.88071187 11.5,7.5 C11.5,6.11928813 10.3807119,5 9,5 C7.61928813,5 6.5,6.11928813 6.5,7.5 C6.5,8.88071187 7.61928813,10 9,10 Z" id="Combined-Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
