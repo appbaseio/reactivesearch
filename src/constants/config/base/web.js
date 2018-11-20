@@ -3,7 +3,7 @@ export default {
 	githubCount: '2432',
 	gettingStart: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
 	urls: {
-		github: 'https://github.com/appbaseio/reactivesearch',
+		github: 'https://github.com/appbaseio/reactivesearch/tree/dev/packages/web',
 		support: 'https://appbase.io/pricing#support',
 	},
 	header: {
