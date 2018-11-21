@@ -18,11 +18,11 @@ export default {
 		links: [
 			{
 				description: 'tools',
-				href: './tools',
+				href: '/tools',
 			},
 			{
 				description: 'quick start',
-				href: './quickstart',
+				href: '/quickstart',
 			},
 		],
 	},

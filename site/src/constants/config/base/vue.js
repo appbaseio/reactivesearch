@@ -15,16 +15,16 @@ export default {
 				dark: 'Search',
 				description: 'for Vue',
 			},
-			href: '/reactivesearch/vue',
+			href: '/vue',
 		},
 		links: [
 			{
 				description: 'tools',
-				href: '/reactivesearch/vue/tools',
+				href: '/vue/tools',
 			},
 			{
 				description: 'quick start',
-				href: '/reactivesearch/vue/quickstart',
+				href: '/vue/quickstart',
 			},
 		],
 	},

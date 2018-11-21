@@ -3,20 +3,10 @@ import baseConfig from './../base/vue';
 
 const { primary, primaryDark } = theme;
 
-const baseConfigHeader = {
-	...baseConfig.header,
-	links: [
-		{
-			description: 'examples',
-			href: '#examples',
-		},
-		...baseConfig.header.links,
-	],
-};
 export default {
 	name: 'vue',
 	...baseConfig,
-	header: baseConfigHeader,
+	header: baseConfig.header,
 	banner1: {
 		title: 'Vue + ElasticSearch = ❤️',
 		description: 'UI components for building data-driven search experiences.',

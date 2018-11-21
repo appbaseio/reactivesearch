@@ -19,11 +19,11 @@ export default {
 		links: [
 			{
 				description: 'tools',
-				href: '/reactivesearch/native/tools',
+				href: '/native/tools',
 			},
 			{
 				description: 'quick start',
-				href: '/reactivesearch/native/quickstart',
+				href: '/native/quickstart',
 			},
 		],
 	},

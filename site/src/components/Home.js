@@ -9,6 +9,7 @@ import {
 	GithubButton,
 	Grid,
 } from '@appbaseio/designkit';
+import { Link } from 'react-router-dom';
 import { css } from 'emotion';
 import { ThemeProvider } from 'emotion-theming';
 import PropTypes from 'prop-types';
@@ -103,7 +104,10 @@ class HomePage extends Component {
 								/* eslint-disable-next-line */
 								<li key={i}>
 									{/* eslint-disable-next-line */}
-									<a style={getLinkStyle(config.name)} href={l.href}>{l.description.toUpperCase()}</a>
+									<Link style={getLinkStyle(config.name)} to={l.href}>
+										{l.description.toUpperCase()}
+									</Link>
+									{/* <a style={getLinkStyle(config.name)} href={l.href}>{l.description.toUpperCase()}</a> */}
 								</li>
 							))}
 							<li className={showMobileFlex}>
