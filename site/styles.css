@@ -1,7 +1,5 @@
 @font-face {
-  font-family: "flowcircular";
-  src: url("fonts/flow-circular-webfont.woff2") format("woff2"),
-    url("fonts/flow-circular-webfont.woff") format("woff");
+  font-family: "Open Sans", sans-serif;
   font-weight: normal;
   font-style: normal;
 }
@@ -12,7 +10,7 @@
 
 pre {
   white-space: pre-wrap;
-  font-family: "flowcircular";
+  font-family: "Open Sans", sans-serif;
   font-size: 13px;
   line-height: 10px;
   margin: 0;
@@ -23,7 +21,7 @@ pre {
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   -moz-font-feature-settings: "liga" on;
-  font-family: "Rubik", sans-serif;
+  font-family: "Open Sans", sans-serif;
   margin: 0 !important;
   padding: 0;
 }

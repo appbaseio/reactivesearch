@@ -1,14 +1,5 @@
 import React, { Component } from 'react';
-import {
-	Navbar,
-	Logo,
-	Button,
-	H3,
-	Title,
-	Flex,
-	GithubButton,
-	Grid,
-} from '@appbaseio/designkit';
+import { Navbar, Logo, Button, H3, Title, Flex, GithubButton, Grid } from '@appbaseio/designkit';
 import { Link } from 'react-router-dom';
 import { css } from 'emotion';
 import { ThemeProvider } from 'emotion-theming';
@@ -50,7 +41,7 @@ const navTitle = css`
 	`};
 `;
 const p = css`
-	lineHeight: 1.3
+	lineheight: 1.3;
 `;
 class HomePage extends Component {
 	constructor(props) {
@@ -95,8 +86,8 @@ class HomePage extends Component {
 								{config.header.logo.title.description && (
 									<span css="margin-left: 7px !important">
 										<Logo.Light>{config.header.logo.title.description}</Logo.Light>
-									</span>)
-								}
+									</span>
+								)}
 							</Logo>
 						</Navbar.Logo>
 						<Navbar.List>
@@ -125,10 +116,13 @@ class HomePage extends Component {
 								>
 									<img
 										src="images/support.svg"
-										onError={(e) => { e.target.src = '/images/support.svg'; }}
+										onError={(e) => {
+											e.target.src = '/images/support.svg';
+										}}
 										style={{ marginRight: 8 }}
 										alt="support"
-									/> SUPPORT
+									/>{' '}
+									SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>
@@ -205,11 +199,11 @@ class HomePage extends Component {
 										{config.banner2.link.title}
 									</SecondaryLink>
 								</div>
-								{config.banner2.sketch &&
+								{config.banner2.sketch && (
 									<p>
 										Get <a href={config.banner2.sketch.href}>our designer templates</a> for sketch.
 									</p>
-								}
+								)}
 							</div>
 						</Layout>
 					</Row>
@@ -249,111 +243,122 @@ class HomePage extends Component {
 					<BannerRow configName={config.name} config={config.banner5} theme={this.props.theme} />
 					<DiscoverRS />
 					{/** Demos Section */}
-					{config.banner6 &&
-					<Section id="examples">
-						<Layout>
-							<div className={titleRow}>
-							{
-								config.banner6.button ? (<H3>{config.banner6.title}</H3>)
-								: (
-								<H2 style={{
-									margin: '0 auto',
-								}}
-								>
-									{config.banner6.title}
-								</H2>)
-							}
-								{
-									config.banner6.button &&
-									<Button
-										style={{
-											backgroundColor: secondary,
-											...button,
-										}}
-										uppercase
-										primary={!isVue}
-										href={config.banner6.button.href}
-									>
-										{config.banner6.button.title}
-									</Button>
-								}
-							</div>
-							{config.name === 'native' ?
-								<Flex
-									flexDirection="column"
-									justifyContent="center"
-									alignItems="center"
-									className={tabPadding}
-								>
+					{config.banner6 && (
+						<Section id="examples">
+							<Layout>
+								<div className={titleRow}>
+									{config.banner6.button ? (
+										<H3>{config.banner6.title}</H3>
+									) : (
+										<H2
+											style={{
+												margin: '0 auto',
+											}}
+										>
+											{config.banner6.title}
+										</H2>
+									)}
+									{config.banner6.button && (
+										<Button
+											style={{
+												backgroundColor: secondary,
+												...button,
+											}}
+											uppercase
+											primary={!isVue}
+											href={config.banner6.button.href}
+										>
+											{config.banner6.button.title}
+										</Button>
+									)}
+								</div>
+								{config.name === 'native' ? (
 									<Flex
-										flexDirection="row"
-										justifyContent="space-around"
+										flexDirection="column"
+										justifyContent="center"
 										alignItems="center"
-										padding="3rem 0 0 0"
-										style={{
-											width: '95%',
-										}}
-										className={tabJustifyCenter}
+										className={tabPadding}
 									>
-									{
-										config.banner6.demos.map((d, index) => (
-											// eslint-disable-next-line
-											<Flex key={index} flexDirection="column" justifyContent="center" alignItems="center">
-												<a target="_blank" rel="noopener noreferrer" href={d.href} className="demo">
-													<img width="240" src={d.src} alt="Demo app" />
-												</a>
-												<Button
-													rel="noopener noreferrer"
-													shadow
-													primary
-													style={{
-														width: 140,
-														marginTop: 0,
-														marginBottom: 50,
-														backgroundColor: secondary,
-														...button,
-													}}
-													href={d.href}
+										<Flex
+											flexDirection="row"
+											justifyContent="space-around"
+											alignItems="center"
+											padding="3rem 0 0 0"
+											style={{
+												width: '95%',
+											}}
+											className={tabJustifyCenter}
+										>
+											{config.banner6.demos.map((d, index) => (
+
+												<Flex
+												// eslint-disable-next-line
+													key={index}
+													flexDirection="column"
+													justifyContent="center"
+													alignItems="center"
 												>
-													CHECK DEMO
-												</Button>
-											</Flex>
-										))
-									}
+													<a
+														target="_blank"
+														rel="noopener noreferrer"
+														href={d.href}
+														className="demo"
+													>
+														<img width="240" src={d.src} alt="Demo app" />
+													</a>
+													<Button
+														rel="noopener noreferrer"
+														shadow
+														primary
+														style={{
+															width: 140,
+															marginTop: 0,
+															marginBottom: 50,
+															backgroundColor: secondary,
+															...button,
+														}}
+														href={d.href}
+													>
+														CHECK DEMO
+													</Button>
+												</Flex>
+											))}
+										</Flex>
 									</Flex>
-								</Flex> :
-								<Grid
-									size={4}
-									mdSize={2}
-									smSize={1}
-									gutter="15px"
-									smGutter="0px"
-									style={{ marginBottom: '50px' }}
-								>
-									{config.banner6.demos.map((d, index) => (
-										// eslint-disable-next-line
-										<ImageCard key={index} src={d.src}>
-											<div>
-												<Title>{d.title}</Title>
-												<p>{d.description}</p>
-											</div>
-											<div>
-												<SecondaryLink
-													primary
-													href={d.href}
-													style={{
-														color: primary,
-													}}
-												>
-													Check Demo
-												</SecondaryLink>
-											</div>
-										</ImageCard>
-									))}
-								</Grid>
-							}
-						</Layout>
-					</Section>}
+								) : (
+									<Grid
+										size={4}
+										mdSize={2}
+										smSize={1}
+										gutter="15px"
+										smGutter="0px"
+										style={{ marginBottom: '50px' }}
+									>
+										{config.banner6.demos.map((d, index) => (
+											// eslint-disable-next-line
+											<ImageCard key={index} src={d.src}>
+												<div>
+													<Title>{d.title}</Title>
+													<p>{d.description}</p>
+												</div>
+												<div>
+													<SecondaryLink
+														primary
+														href={d.href}
+														style={{
+															color: primary,
+														}}
+													>
+														Check Demo
+													</SecondaryLink>
+												</div>
+											</ImageCard>
+										))}
+									</Grid>
+								)}
+							</Layout>
+						</Section>
+					)}
 					<Section style={{ backgroundColor: '#fff' }}>
 						<Layout>
 							<H2>See what our users say</H2>
@@ -377,7 +382,7 @@ class HomePage extends Component {
 								BUILD MY FIRST APP
 							</Button>
 
-							<H2 style={{ margin: '1.4rem 0px 0.5rem' }}>Need Help?</H2>
+							<H2>Need Help?</H2>
 							<p>Resources to get help with Reactive Search.</p>
 
 							<SupportGrid configName={config.name} />
