@@ -84,7 +84,7 @@ const FooterBrand = ({ configName }) => (
 				<div className={mask}>
 					<img
 						alt="Github"
-						srcSet="/images/footer/Github@3x.svg 3x, /images/footer/Github@2x.png 2x, /images/footer/Github@1x.png"
+						srcSet="images/footer/Github@3x.svg 3x, images/footer/Github@2x.png 2x, images/footer/Github@1x.png"
 					/>
 				</div>
 			</a>
@@ -92,7 +92,7 @@ const FooterBrand = ({ configName }) => (
 				<div className={mask}>
 					<img
 						alt="Medium"
-						srcSet="/images/footer/Medium@3x.svg 3x, /images/footer/Medium@2x.png 2x, /images/footer/Medium@1x.png"
+						srcSet="images/footer/Medium@3x.svg 3x, images/footer/Medium@2x.png 2x, images/footer/Medium@1x.png"
 					/>
 				</div>
 			</a>
@@ -100,7 +100,7 @@ const FooterBrand = ({ configName }) => (
 				<div className={mask}>
 					<img
 						alt="Twitter"
-						srcSet="/images/footer/Twitter%20Copy@3x.svg 3x, /images/footer/Twitter%20Copy@2x.png 2x, /images/footer/Twitter%20Copy@1x.png"
+						srcSet="images/footer/Twitter%20Copy@3x.svg 3x, images/footer/Twitter%20Copy@2x.png 2x, images/footer/Twitter%20Copy@1x.png"
 					/>
 				</div>
 			</a>
