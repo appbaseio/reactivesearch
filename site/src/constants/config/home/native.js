@@ -26,12 +26,12 @@ export default {
 		},
 		button: {
 			title: 'Get Started',
-			href:
-				'./quickstart',
+			href: './quickstart',
 		},
 		link: {
 			title: 'Docs',
-			href: 'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
+			href:
+				'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
 		},
 	},
 	banner2: {
@@ -139,7 +139,8 @@ export default {
 			},
 			link: {
 				title: 'Learn More',
-				href: 'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
+				href:
+					'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
 			},
 		},
 		{

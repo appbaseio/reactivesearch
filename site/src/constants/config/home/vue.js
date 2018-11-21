@@ -46,7 +46,8 @@ export default {
 			'Build the perfect search experience using our UI components or by creating your own. Over 10 prebuilt components with customizable queries and configurable styles.',
 		button: {
 			title: 'View Components',
-			href: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/componentsindex.html',
+			href:
+				'https://opensource.appbase.io/reactive-manual/vue/getting-started/componentsindex.html',
 		},
 		link: {
 			title: 'Creating your components',
@@ -96,7 +97,8 @@ export default {
 				},
 				title: 'Elasticsearch compatible',
 				description: 'Connect to an ES index hosted anywhere. Supports v2, v5 and v6.',
-				href: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
+				href:
+					'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
 			},
 			{
 				image: {
@@ -116,7 +118,8 @@ export default {
 				title: 'Easy to secure',
 				description:
 					'Use appbase.io to get security out of the box, or set up a middleware proxy with authorization rules.',
-				href: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivebase.html#connect-to-elasticsearch',
+				href:
+					'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivebase.html#connect-to-elasticsearch',
 			},
 		],
 	},

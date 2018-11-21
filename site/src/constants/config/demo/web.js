@@ -4,11 +4,7 @@ import baseConfig from './../base/web';
 export default {
 	...baseConfig,
 	title: 'Built with Reactive Search',
-	description: (
-		<React.Fragment>
-			Check out our demo apps powered by Reactivesearch.
-		</React.Fragment>
-	),
+	description: <React.Fragment>Check out our demo apps powered by Reactivesearch.</React.Fragment>,
 	demos: [
 		{
 			src: '/images/apps/airbeds.png',

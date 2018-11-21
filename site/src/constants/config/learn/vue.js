@@ -9,8 +9,7 @@ export default {
 	title: 'Get Started with Reactive Search Vue',
 	description: (
 		<React.Fragment>
-			Use our step-by-step guide to learn all about Reactive Search Vue, or check
-			out our{' '}
+			Use our step-by-step guide to learn all about Reactive Search Vue, or check out our{' '}
 			<a
 				rel="noopener noreferrer"
 				href="https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html"
@@ -35,11 +34,7 @@ export default {
 				'ReactiveSearch components can connect to an Elasticsearch index hosted anywhere.',
 				<React.Fragment>
 					Create a free app (aka index) with{' '}
-					<a
-						rel="noopener noreferrer"
-						href="https://appbase.io"
-						target="_blank"
-					>
+					<a rel="noopener noreferrer" href="https://appbase.io" target="_blank">
 						appbase.io
 					</a>
 					.
@@ -116,7 +111,8 @@ export default {
 						target="_blank"
 					>
 						UI components
-					</a>.
+					</a>
+					.
 				</React.Fragment>,
 			],
 			links: [
@@ -215,8 +211,7 @@ export default {
 				'Go from scratch to creating a data-driven search app with our beginner friendly quick start guide.',
 			button: {
 				title: 'Get Started',
-				href:
-					'#',
+				href: '#',
 			},
 			link: {
 				title: 'Docs',

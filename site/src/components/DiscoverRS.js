@@ -31,52 +31,44 @@ const titleCls = css`
 `;
 
 const DiscoverRS = ({ cardConfig }) => (
-    <Section css="max-width: 950px;margin: 0 auto;background-color: #fff">
-        <H2 css="margin-bottom: 20px;">
-            {' '}
-            Discover the ReactiveSearch{' '}
-        </H2>{' '}
-        <p css="max-width: 700px;margin: 0 auto 64px auto">
-            Libraries built to unleash the full potential of Appbase’s search
-            infrastructure.
-        </p>
-        <FlexGrid
-            size={2}
-            mdSize={2}
-            gutter="20px"
-            smSize={1}
-            style={{ marginTop: '38px' }}
-            css={{
-                [mediaKey.medium]: {
-                    justifyContent: 'center',
-                },
-            }}
-        >
-            {cardConfig.map((card, index) => (
-                <Card
-                    target="_blank"
-                    href={card.href}
-                    // eslint-disable-next-line
-                    key={index}
-                    className={cardCls}
-                >
-                    <Flex>
-                        <div>
-                            <img
-                                className={imgCls}
-                                srcSet={card.srcSet}
-                                alt={card.title}
-                            />
-                        </div>
+	<Section css="max-width: 950px;margin: 0 auto;background-color: #fff">
+		<H2 css="margin-bottom: 20px;"> Discover the ReactiveSearch </H2>{' '}
+		<p css="max-width: 700px;margin: 0 auto 64px auto">
+			Libraries built to unleash the full potential of Appbase’s search infrastructure.
+		</p>
+		<FlexGrid
+			size={2}
+			mdSize={2}
+			gutter="20px"
+			smSize={1}
+			style={{ marginTop: '38px' }}
+			css={{
+				[mediaKey.medium]: {
+					justifyContent: 'center',
+				},
+			}}
+		>
+			{cardConfig.map((card, index) => (
+				<Card
+					target="_blank"
+					href={card.href}
+					// eslint-disable-next-line
+					key={index}
+					className={cardCls}
+				>
+					<Flex>
+						<div>
+							<img className={imgCls} srcSet={card.srcSet} alt={card.title} />
+						</div>
 
-                        <Flex justifyContent="center" alignItems="center">
-                            <h4 css={titleCls}>{card.title}</h4>
-                        </Flex>
-                    </Flex>
-                </Card>
-            ))}
-        </FlexGrid>
-    </Section>
+						<Flex justifyContent="center" alignItems="center">
+							<h4 css={titleCls}>{card.title}</h4>
+						</Flex>
+					</Flex>
+				</Card>
+			))}
+		</FlexGrid>
+	</Section>
 );
 
 DiscoverRS.propTypes = {
@@ -84,8 +76,7 @@ DiscoverRS.propTypes = {
 			title: PropTypes.string,
 			srcSet: PropTypes.string,
 			href: PropTypes.string,
-		}),
-	),
+		})),
 };
 
 DiscoverRS.defaultProps = {

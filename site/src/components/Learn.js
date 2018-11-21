@@ -54,16 +54,14 @@ class Learn extends Component {
 								{config.header.logo.title.description && (
 									<span css="margin-left: 7px !important">
 										<Logo.Light>{config.header.logo.title.description}</Logo.Light>
-									</span>)
-								}
+									</span>
+								)}
 							</Logo>
 						</Navbar.Logo>
 						<Navbar.List>
 							{config.header.links.map((l, i) => (
 								<li
-									className={
-										l.href.endsWith('/quickstart') ? 'active' : undefined
-									}
+									className={l.href.endsWith('/quickstart') ? 'active' : undefined}
 									/* eslint-disable-next-line */
 									key={i}
 								>
@@ -78,12 +76,20 @@ class Learn extends Component {
 							</li>
 							<li className="button">
 								<Button
-									style={{ backgroundColor: theme.secondary, color: isVue ? theme.textDark : undefined }}
+									style={{
+										backgroundColor: theme.secondary,
+										color: isVue ? theme.textDark : undefined,
+									}}
 									href={config.urls.support}
 									bold
 									uppercase
 								>
-									<img src={isVue ? 'images/supportDark.svg' : 'images/support.svg'} style={{ marginRight: 8 }} alt="support" /> SUPPORT
+									<img
+										src={isVue ? 'images/supportDark.svg' : 'images/support.svg'}
+										style={{ marginRight: 8 }}
+										alt="support"
+									/>{' '}
+									SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>
@@ -104,8 +110,8 @@ class Learn extends Component {
 									marginTop: 60,
 								}}
 							>
-								{config.installationSteps.map((step, i) => (
-									Object.keys(step).length ? (
+								{config.installationSteps.map((step, i) =>
+									(Object.keys(step).length ? (
 										// eslint-disable-next-line
 										<div key={i} className={stepCard}>
 											<span className="count" style={{ color: theme.primaryDark }}>
@@ -146,8 +152,10 @@ class Learn extends Component {
 														</SecondaryLink>
 													))}
 											</div>
-										</div>) : <div />
-								))}
+										</div>
+									) : (
+										<div />
+									)))}
 							</Grid>
 						</Layout>
 					</Section>
@@ -163,7 +171,7 @@ class Learn extends Component {
 						</Layout>
 					</Section>
 
-					<Footer configName={config.name} />
+					<Footer configName={config.name} footerConfig={config.footer} />
 				</Base>
 			</ThemeProvider>
 		);

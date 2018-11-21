@@ -379,7 +379,7 @@ class HomePage extends Component {
 							<SupportGrid configName={config.name} />
 						</Layout>
 					</Section>
-					<Footer configName={config.name} />
+					<Footer configName={config.name} footerConfig={config.footer} />
 				</Base>
 			</ThemeProvider>
 		);

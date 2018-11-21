@@ -172,7 +172,8 @@ export default {
 				src: '/images/apps/gitxplore.png',
 				title: 'GitHub Search',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/gitxplore/',
-				description: 'Explore top 30K Github repositories by various filters like stars, forks, topics.',
+				description:
+					'Explore top 30K Github repositories by various filters like stars, forks, topics.',
 			},
 			// {
 			// 	src: '/images/apps/carstore.png',

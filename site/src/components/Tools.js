@@ -76,21 +76,21 @@ class Tools extends Component {
 								{config.header.logo.title.description && (
 									<span css="margin-left: 7px !important">
 										<Logo.Light>{config.header.logo.title.description}</Logo.Light>
-									</span>)
-								}
+									</span>
+								)}
 							</Logo>
 						</Navbar.Logo>
 						<Navbar.List>
 							{config.header.links.map((l, i) => (
 								<li
-									className={
-										l.href.endsWith('/tools') ? 'active' : undefined
-									}
+									className={l.href.endsWith('/tools') ? 'active' : undefined}
 									/* eslint-disable-next-line */
 									key={i}
 								>
 									{/* eslint-disable-next-line */}
-									<Link style={getLinkStyle(config.name)} to={l.href}>{l.description.toUpperCase()}</Link>
+									<Link style={getLinkStyle(config.name)} to={l.href}>
+										{l.description.toUpperCase()}
+									</Link>
 								</li>
 							))}
 							<li className={showMobileFlex}>
@@ -98,12 +98,21 @@ class Tools extends Component {
 							</li>
 							<li className="button">
 								<Button
-									style={{ backgroundColor: secondary, ...button, color: isVue ? textDark : undefined }}
+									style={{
+										backgroundColor: secondary,
+										...button,
+										color: isVue ? textDark : undefined,
+									}}
 									href={config.urls.support}
 									bold
 									uppercase
 								>
-									<img src={isVue ? 'images/supportDark.svg' : 'images/support.svg'} style={{ marginRight: 8 }} alt="support" /> SUPPORT
+									<img
+										src={isVue ? 'images/supportDark.svg' : 'images/support.svg'}
+										style={{ marginRight: 8 }}
+										alt="support"
+									/>{' '}
+									SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>
@@ -517,7 +526,7 @@ class Tools extends Component {
 						</Layout>
 					</Section>
 
-					<Footer configName={config.name} />
+					<Footer configName={config.name} footerConfig={config.footer} />
 				</Base>
 			</ThemeProvider>
 		);
