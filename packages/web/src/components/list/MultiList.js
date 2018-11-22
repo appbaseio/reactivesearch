@@ -56,42 +56,43 @@ class MultiList extends Component {
 		this.updateQueryOptions(this.props);
 
 		this.setReact(this.props);
+		const defaultValue = this.props.defaultValue || this.props.value;
 
 		if (this.props.selectedValue) {
 			this.setValue(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected, true);
+		} else if (defaultValue) {
+			this.setValue(defaultValue, true);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		checkPropChange(
 			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
+			prevProps.react,
+			() => this.setReact(this.props),
 		);
 		checkPropChange(
 			this.props.options,
-			nextProps.options,
+			prevProps.options,
 			() => {
-				const { showLoadMore, dataField } = nextProps;
+				const { showLoadMore, dataField, options } = this.props;
 				if (showLoadMore) {
-					const { buckets } = nextProps.options[dataField];
-					const after = nextProps.options[dataField].after_key;
+					const { buckets } = options[dataField];
+					const after = options[dataField].after_key;
 					// detect the last bucket by checking if the after key is absent
 					const isLastBucket = !after;
 					this.setState(state => ({
 						...state,
 						after: after ? { after } : state.after,
 						isLastBucket,
-						options: this.getOptions(buckets, nextProps),
+						options: this.getOptions(buckets, this.props),
 					}));
 				} else {
 					this.setState({
-						options: nextProps.options[nextProps.dataField]
+						options: options[dataField]
 							? this.getOptions(
-								nextProps.options[nextProps.dataField].buckets,
-								nextProps,
+								options[dataField].buckets,
+								this.props,
 							)
 							: [],
 					});
@@ -100,34 +101,38 @@ class MultiList extends Component {
 		);
 		checkSomePropChange(
 			this.props,
-			nextProps,
+			prevProps,
 			['size', 'sortBy'],
-			() => this.updateQueryOptions(nextProps),
+			() => this.updateQueryOptions(this.props),
 		);
 
 		checkSomePropChange(
 			this.props,
-			nextProps,
+			prevProps,
 			['dataField', 'nestedField'],
 			() => {
-				this.updateQueryOptions(nextProps);
-				this.updateQuery(Object.keys(this.state.currentValue), nextProps);
+				this.updateQueryOptions(this.props);
+				this.updateQuery(Object.keys(this.state.currentValue), this.props);
 			},
 		);
 
 		let selectedValue = Object.keys(this.state.currentValue);
+		const { selectAllLabel } = this.props;
 
-		if (this.props.selectAllLabel) {
-			selectedValue = selectedValue.filter(val => val !== this.props.selectAllLabel);
-
-			if (this.state.currentValue[this.props.selectAllLabel]) {
-				selectedValue = [this.props.selectAllLabel];
+		if (selectAllLabel) {
+			selectedValue = selectedValue.filter(val => val !== selectAllLabel);
+			if (this.state.currentValue[selectAllLabel]) {
+				selectedValue = [selectAllLabel];
 			}
 		}
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.setValue(nextProps.defaultSelected, true);
-		} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
-			this.setValue(nextProps.selectedValue || [], true);
+
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value, true);
+		} else if (
+			!isEqual(selectedValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
+		) {
+			this.setValue(this.props.selectedValue || [], true);
 		}
 	}
 
@@ -374,7 +379,12 @@ class MultiList extends Component {
 	};
 
 	handleClick = (e) => {
-		this.setValue(e.target.value);
+		const { value, onChange } = this.props;
+		if (value) {
+			onChange(e);
+		} else {
+			this.setValue(e.target.value);
+		}
 	};
 
 	render() {
@@ -504,11 +514,13 @@ MultiList.propTypes = {
 	customQuery: types.func,
 	dataField: types.stringRequired,
 	nestedField: types.string,
-	defaultSelected: types.stringArray,
+	defaultValue: types.stringArray,
+	value: types.stringArray,
 	filterLabel: types.string,
 	innerClass: types.style,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
