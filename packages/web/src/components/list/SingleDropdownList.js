@@ -33,7 +33,7 @@ class SingleDropdownList extends Component {
 		this.state = {
 			currentValue: '',
 			options: [],
-			after: {},	// for composite aggs
+			after: {}, // for composite aggs
 			isLastBucket: false,
 		};
 		this.locked = false;

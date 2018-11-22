@@ -42,7 +42,7 @@ class SingleList extends Component {
 				)
 				: [],
 			searchTerm: '',
-			after: {},	// for composite aggs
+			after: {}, // for composite aggs
 			isLastBucket: false,
 		};
 		this.locked = false;
@@ -111,9 +111,10 @@ class SingleList extends Component {
 			() => this.updateQueryOptions(this.props),
 		);
 
-		checkPropChange(
-			prevProps.dataField,
-			this.props.dataField,
+		checkSomePropChange(
+			this.props,
+			prevProps,
+			['dataField', 'nestedField'],
 			() => {
 				this.updateQueryOptions(this.props);
 				this.updateQuery(this.state.currentValue, this.props);

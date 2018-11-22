@@ -42,7 +42,7 @@ class MultiList extends Component {
 				)
 				: [],
 			searchTerm: '',
-			after: {},	// for composite aggs
+			after: {}, // for composite aggs
 			isLastBucket: false,
 		};
 		this.locked = false;
