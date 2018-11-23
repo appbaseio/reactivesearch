@@ -25,10 +25,10 @@ export default {
 	},
 	banner2: {
 		image: {
-			src: '/images/vue/components.png',
+			src: 'images/vue/components.png',
 			alt: 'Components',
 			mobile: {
-				src: '/images/vue/components.png',
+				src: 'images/vue/components.png',
 			},
 		},
 		title: 'UI Components for every occasion',
@@ -54,7 +54,7 @@ export default {
 		cards: [
 			{
 				image: {
-					src: '/images/rocket.png',
+					src: 'images/rocket.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Launch and iterate faster',
@@ -64,7 +64,7 @@ export default {
 			},
 			{
 				image: {
-					src: '/images/remix.png',
+					src: 'images/remix.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Works with existing UIs',
@@ -73,7 +73,7 @@ export default {
 			},
 			{
 				image: {
-					src: '/icons/2.png',
+					src: 'icons/2.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Configurable styles',
@@ -82,7 +82,7 @@ export default {
 			},
 			{
 				image: {
-					src: '/icons/4.png',
+					src: 'icons/4.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Elasticsearch compatible',
@@ -92,7 +92,7 @@ export default {
 			},
 			{
 				image: {
-					src: '/icons/5.png',
+					src: 'icons/5.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Customizable queries',
@@ -102,7 +102,7 @@ export default {
 			},
 			{
 				image: {
-					src: '/images/shield.png',
+					src: 'images/shield.png',
 					alt: 'Easy to secure',
 				},
 				title: 'Easy to secure',

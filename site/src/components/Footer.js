@@ -88,7 +88,7 @@ const FooterBrand = ({ configName }) => (
 					/>
 				</div>
 			</a>
-			<a target="_blank" rel="noopener noreferrer" href="https://github.com/appbaseio/">
+			<a target="_blank" rel="noopener noreferrer" href="https://medium.appbase.io/">
 				<div className={mask}>
 					<img
 						alt="Medium"
@@ -96,7 +96,7 @@ const FooterBrand = ({ configName }) => (
 					/>
 				</div>
 			</a>
-			<a target="_blank" rel="noopener noreferrer" href="https://github.com/appbaseio/">
+			<a target="_blank" rel="noopener noreferrer" href="https://twitter.com/appbaseio">
 				<div className={mask}>
 					<img
 						alt="Twitter"
