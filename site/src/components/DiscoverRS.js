@@ -8,7 +8,6 @@ import H2 from '../styles/H2';
 
 const cardCls = css`
 	max-width: 450px;
-	min-width: 350px;
 	padding: 17px 33px !important;
 	text-align: left;
 	box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.05) !important;
