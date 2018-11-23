@@ -292,7 +292,7 @@ class SingleList extends Component {
 	handleClick = (e) => {
 		const { value, onChange } = this.props;
 		if (value) {
-			onChange(e);
+			if (onChange) onChange(e);
 		} else {
 			this.setValue(e.target.value);
 		}
