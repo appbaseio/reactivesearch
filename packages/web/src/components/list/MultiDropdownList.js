@@ -48,29 +48,30 @@ class MultiDropdownList extends Component {
 		this.updateQueryOptions(this.props);
 
 		this.setReact(this.props);
+		const defaultValue = this.props.defaultValue || this.props.value;
 
 		if (this.props.selectedValue) {
 			this.setValue(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected, true);
+		} else if (defaultValue) {
+			this.setValue(defaultValue, true);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		checkPropChange(
 			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
+			prevProps.react,
+			() => this.setReact(this.props),
 		);
 		checkPropChange(
 			this.props.options,
-			nextProps.options,
+			prevProps.options,
 			() => {
-				const { showLoadMore, dataField } = nextProps;
+				const { showLoadMore, dataField } = this.props;
 				const { options } = this.state;
 				if (showLoadMore) {
 					// append options with showLoadMore
-					const { buckets } = nextProps.options[dataField];
+					const { buckets } = this.props.options[dataField];
 					const nextOptions = [
 						...options,
 						...buckets.map(bucket => ({
@@ -78,7 +79,7 @@ class MultiDropdownList extends Component {
 							doc_count: bucket.doc_count,
 						})),
 					];
-					const after = nextProps.options[dataField].after_key;
+					const after = this.props.options[dataField].after_key;
 					// detect the last bucket by checking if the next set of buckets were empty
 					const isLastBucket = !buckets.length;
 					this.setState({
@@ -90,8 +91,8 @@ class MultiDropdownList extends Component {
 					});
 				} else {
 					this.setState({
-						options: nextProps.options[nextProps.dataField]
-							? nextProps.options[nextProps.dataField].buckets
+						options: this.props.options[dataField]
+							? this.props.options[dataField].buckets
 							: [],
 					});
 				}
@@ -99,34 +100,37 @@ class MultiDropdownList extends Component {
 		);
 		checkSomePropChange(
 			this.props,
-			nextProps,
+			prevProps,
 			['size', 'sortBy'],
-			() => this.updateQueryOptions(nextProps),
+			() => this.updateQueryOptions(this.props),
 		);
 
 		checkPropChange(
 			this.props.dataField,
-			nextProps.dataField,
+			prevProps.dataField,
 			() => {
-				this.updateQueryOptions(nextProps);
-				this.updateQuery(Object.keys(this.state.currentValue), nextProps);
+				this.updateQueryOptions(this.props);
+				this.updateQuery(Object.keys(this.state.currentValue), this.props);
 			},
 		);
 
 		let selectedValue = Object.keys(this.state.currentValue);
+		const { selectAllLabel } = this.props;
 
-		if (this.props.selectAllLabel) {
-			selectedValue = selectedValue.filter(val => val !== this.props.selectAllLabel);
-
-			if (this.state.currentValue[this.props.selectAllLabel]) {
-				selectedValue = [this.props.selectAllLabel];
+		if (selectAllLabel) {
+			selectedValue = selectedValue.filter(val => val !== selectAllLabel);
+			if (this.state.currentValue[selectAllLabel]) {
+				selectedValue = [selectAllLabel];
 			}
 		}
 
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.setValue(nextProps.defaultSelected, true);
-		} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
-			this.setValue(nextProps.selectedValue || [], true);
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value, true);
+		} else if (
+			!isEqual(selectedValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
+		) {
+			this.setValue(this.props.selectedValue || [], true);
 		}
 	}
 
@@ -332,7 +336,16 @@ class MultiDropdownList extends Component {
 
 	handleLoadMore = () => {
 		this.updateQueryOptions(this.props, true);
-	}
+	};
+
+	handleChange = (item) => {
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(item);
+		} else {
+			this.setValue(item);
+		}
+	};
 
 	render() {
 		const { showLoadMore, loadMoreLabel } = this.props;
@@ -362,7 +375,7 @@ class MultiDropdownList extends Component {
 								.map(item => ({ ...item, key: String(item.key) })),
 						]
 					}
-					onChange={this.setValue}
+					onChange={this.handleChange}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
 					labelField="key"
@@ -400,11 +413,13 @@ MultiDropdownList.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	dataField: types.stringRequired,
-	defaultSelected: types.stringArray,
+	defaultValue: types.stringArray,
+	value: types.stringArray,
 	filterLabel: types.string,
 	innerClass: types.style,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
