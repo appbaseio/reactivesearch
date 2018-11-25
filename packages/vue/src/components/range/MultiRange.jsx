@@ -1,10 +1,10 @@
-import { Actions, helper } from '@appbaseio/reactivecore';
-import VueTypes from 'vue-types';
-import Title from '../../styles/Title';
-import Container from '../../styles/Container';
-import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect } from '../../utils/index';
-import types from '../../utils/vueTypes';
+import { Actions, helper } from "@appbaseio/reactivecore";
+import VueTypes from "vue-types";
+import Title from "../../styles/Title";
+import Container from "../../styles/Container";
+import { UL, Checkbox } from "../../styles/FormControlList";
+import { connect } from "../../utils/index";
+import types from "../../utils/vueTypes";
 
 const {
   addComponent,
@@ -16,23 +16,20 @@ const {
 
 const { isEqual, checkValueChange, getClassName } = helper;
 const MultiRange = {
-  name: 'MultiRange',
+  name: "MultiRange",
   data() {
-
     this.state = {
       currentValue: [],
       showModal: false,
-      // selectedValues hold the selected items as keys for O(1) complexity
       selectedValues: {},
     };
-    this.type = 'range';
+    this.type = "range";
     this.locked = false;
     return this.state;
   },
   props: {
-
     beforeValueChange: types.func,
-    className: VueTypes.string.def(''),
+    className: VueTypes.string.def(""),
     componentId: types.stringRequired,
     customQuery: types.func,
     data: types.data,
@@ -49,10 +46,10 @@ const MultiRange = {
   methods: {
     setReact(props) {
       if (props.react) {
-        props.watchComponent(props.componentId, props.react);
+        this.watchComponent(props.componentId, props.react);
       }
     },
-    handleChange(e) {
+    handleClick(e) {
       this.selectItem(e.target.value);
     },
     selectItem(item, isDefaultValue = false, props = this.$props) {
@@ -60,37 +57,33 @@ const MultiRange = {
       if (props.beforeValueChange && this.locked) {
         return;
       }
-
       this.locked = true;
-      let { currentValue, selectedValues } = this.state;
+      let { currentValue, selectedValues } = this;
 
       if (!item) {
         currentValue = [];
         selectedValues = {};
       } else if (isDefaultValue) {
-
-        // checking if the items in defaultSeleted exist in the data prop
         currentValue = MultiRange.parseValue(item, props);
-        currentValue.forEach((value) => {
+        currentValue.forEach(value => {
           selectedValues = { ...selectedValues, [value.label]: true };
         });
       } else if (selectedValues[item]) {
-
         currentValue = currentValue.filter(value => value.label !== item);
         const { [item]: del, ...selected } = selectedValues;
         selectedValues = selected;
       } else {
-
         const currentItem = props.data.find(value => item === value.label);
         currentValue = [...currentValue, currentItem];
         selectedValues = { ...selectedValues, [item]: true };
       }
+
       const performUpdate = () => {
-        this.state.currentValue = currentValue;
-        this.state.selectedValues = selectedValues;
+        this.currentValue = currentValue;
+        this.selectedValues = selectedValues;
         this.updateQueryHandler(currentValue, props);
         this.locked = false;
-        this.$emit('valueChange', 'divyanshu');
+        this.$emit('valueChange', Object.keys(selectedValues));
       };
 
       checkValueChange(
@@ -110,31 +103,32 @@ const MultiRange = {
         label: props.filterLabel,
         showFilter: props.showFilter,
         URLParams: props.URLParams,
-        componentType: 'MULTIRANGE'
+        componentType: "MULTIRANGE"
       });
-    },
-
+    }
   },
 
   watch: {
     react() {
       this.setReact(this.$props);
-
     },
     dataField() {
       this.updateQueryHandler(this.$data.currentValue, this.$props);
     },
     defaultSelected(newVal) {
       this.selectItem(newVal);
-
     },
+    selectedValue(newVal) {
+      if (!isEqual(this.$data.currentValue, newVal)) {
+        this.selectItem(newVal);
+      }
+    }
   },
 
   created() {
     const onQueryChange = (...args) => {
-      this.$emit('queryChange', ...args);
+      this.$emit("queryChange", ...args);
     };
-
     this.setQueryListener(this.$props.componentId, onQueryChange, null);
   },
 
@@ -156,29 +150,37 @@ const MultiRange = {
     return (
       <Container class={this.$props.className}>
         {this.$props.title && (
-          <Title class={getClassName(this.$props.innerClass, 'title')}>
+          <Title class={getClassName(this.$props.innerClass, "title")}>
             {this.$props.title}
           </Title>
         )}
-        <UL class={getClassName(this.$props.innerClass, 'list')}>
+        <UL class={getClassName(this.$props.innerClass, "list")}>
           {this.$props.data.map(item => {
-            const selected
-              = !!this.$data.currentValue
-              && this.$data.currentValue.label === item.label;
+            const selected =
+              !!this.$data.currentValue &&
+              this.$data.currentValue.label === item.label;
             return (
-              <li key={item.label} class={`${selected ? 'active' : ''}`}>
+              <li key={item.label} class={`${selected ? "active" : ""}`}>
                 <Checkbox
-                  class={getClassName(this.$props.innerClass, 'checkbox')}
+                  class={getClassName(this.$props.innerClass, "checkbox")}
                   id={`${this.$props.componentId}-${item.label}`}
                   name={this.$props.componentId}
                   value={item.label}
-                  onChange={this.handleChange}
                   type="Checkbox"
-                  checked={this.state.selectedValues[item.label]}
                   show={this.$props.showCheckbox}
+                  {...{
+                    domProps: {
+                      checked: this.selectedValues[item.label]
+                    }
+                  }}
+                  {...{
+                    on: {
+                      click: this.handleClick
+                    }
+                  }}
                 />
                 <label
-                  class={getClassName(this.$props.innerClass, 'label')}
+                  class={getClassName(this.$props.innerClass, "label")}
                   for={`${this.$props.componentId}-${item.label}`}
                 >
                   {item.label}
@@ -190,24 +192,22 @@ const MultiRange = {
       </Container>
     );
   }
-}
+};
 
-MultiRange.parseValue = (value, props) => (value
-  ? props.data.filter(item => value.includes(item.label))
-  : null)
+MultiRange.parseValue = (value, props) =>
+  value ? props.data.filter(item => value.includes(item.label)) : null;
 
 MultiRange.defaultQuery = (values, props) => {
   const generateRangeQuery = (dataField, items) => {
-
     if (items.length > 0) {
       return items.map(value => ({
         range: {
           [dataField]: {
             gte: value.start,
             lte: value.end,
-            boost: 2.0,
-          },
-        },
+            boost: 2.0
+          }
+        }
       }));
     }
     return null;
@@ -218,19 +218,19 @@ MultiRange.defaultQuery = (values, props) => {
       bool: {
         should: generateRangeQuery(props.dataField, values),
         minimum_should_match: 1,
-        boost: 1.0,
-      },
+        boost: 1.0
+      }
     };
     return query;
   }
   return null;
-}
+};
 
 const mapStateToProps = (state, props) => ({
   selectedValue:
-    (state.selectedValues[props.componentId]
-      && state.selectedValues[props.componentId].value)
-    || null
+    (state.selectedValues[props.componentId] &&
+      state.selectedValues[props.componentId].value) ||
+    null
 });
 
 const mapDispatchtoProps = {
@@ -246,7 +246,7 @@ const RangeConnected = connect(
   mapDispatchtoProps
 )(MultiRange);
 
-MultiRange.install = function (Vue) {
+MultiRange.install = function(Vue) {
   Vue.component(MultiRange.name, RangeConnected);
 };
 export default MultiRange;
