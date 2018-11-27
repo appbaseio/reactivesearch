@@ -23,7 +23,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
-import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
+import Input, { suggestionsContainer, suggestions, noSuggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import InputIcon from '../../styles/InputIcon';
@@ -423,6 +423,29 @@ class DataSearch extends Component {
 		</div>
 	);
 
+	renderNoSuggestion = (finalSuggestionsList = []) => {
+		const {
+			themePreset,
+			theme,
+			loading,
+			renderNoSuggestion,
+		} = this.props;
+		const { isOpen, currentValue } = this.state;
+		if (renderNoSuggestion && isOpen && !finalSuggestionsList.length && !loading && currentValue) {
+			return (
+				<ul
+					className={`${noSuggestions(
+						themePreset,
+						theme,
+					)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
+				>
+					<li>{typeof renderNoSuggestion === 'function' ? renderNoSuggestion(currentValue) : renderNoSuggestion}</li>
+				</ul>
+			);
+		}
+		return null;
+	}
+
 	render() {
 		let suggestionsList = [];
 
@@ -520,7 +543,7 @@ class DataSearch extends Component {
 											</li>
 										))}
 									</ul>
-								) : null}
+								) : this.renderNoSuggestion(suggestionsList)}
 							</div>
 						)}
 						{...this.props.downShiftProps}
@@ -585,6 +608,7 @@ DataSearch.propTypes = {
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
 	innerRef: types.func,
+	loading: types.bool,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
@@ -598,6 +622,7 @@ DataSearch.propTypes = {
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
 	renderSuggestions: types.func,
+	renderNoSuggestion: types.children,
 	showClear: types.bool,
 	showFilter: types.bool,
 	showIcon: types.bool,
