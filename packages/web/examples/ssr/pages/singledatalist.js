@@ -41,7 +41,7 @@ const resultListProps = {
 	onData: ListItemView,
 	pagination: true,
 	react: {
-		and: ['CitySensor']
+		and: ['CitySensor'],
 	},
 };
 
@@ -73,16 +73,12 @@ export default class Main extends Component {
 				<ReactiveBase {...settings} initialState={this.props.store}>
 					<div className="row">
 						<div className="col">
-							<SingleDataList
-								{...singleDataListProps}
-							/>
+							<SingleDataList {...singleDataListProps} />
 						</div>
 
 						<div className="col">
 							<SelectedFilters />
-							<ResultList
-								{...resultListProps}
-							/>
+							<ResultList {...resultListProps} />
 						</div>
 					</div>
 				</ReactiveBase>

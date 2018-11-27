@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-	ReactiveBase,
-	DateRange,
-	SelectedFilters,
-	ResultCard,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, DateRange, SelectedFilters, ResultCard } from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
 
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
@@ -65,7 +60,9 @@ const resultCardProps = {
 			<div>
 				<div>${res.price}</div>
 				<span style={{ backgroundImage: `url(${res.host_image})` }} />
-				<p>{res.room_type} · {res.accommodates} guests</p>
+				<p>
+					{res.room_type} · {res.accommodates} guests
+				</p>
 			</div>
 		),
 		url: res.listing_url,
@@ -104,16 +101,12 @@ export default class Main extends Component {
 				<ReactiveBase {...settings} initialState={this.props.store}>
 					<div className="row">
 						<div className="col">
-							<DateRange
-								{...dateRangeProps}
-							/>
+							<DateRange {...dateRangeProps} />
 						</div>
 
 						<div className="col">
 							<SelectedFilters />
-							<ResultCard
-								{...resultCardProps}
-							/>
+							<ResultCard {...resultCardProps} />
 						</div>
 					</div>
 				</ReactiveBase>

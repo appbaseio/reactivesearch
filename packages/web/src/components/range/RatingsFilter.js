@@ -63,10 +63,7 @@ class RatingsFilter extends Component {
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.setValue(
 				nextProps.defaultSelected
-					? [
-						nextProps.defaultSelected.start,
-						nextProps.defaultSelected.end,
-					]
+					? [nextProps.defaultSelected.start, nextProps.defaultSelected.end]
 					: null,
 				nextProps,
 			);
@@ -86,10 +83,7 @@ class RatingsFilter extends Component {
 	}
 
 	// parses range label to get start and end
-	static parseValue = value => (value
-		? [value.start, value.end]
-		: null
-	)
+	static parseValue = value => (value ? [value.start, value.end] : null);
 
 	static defaultQuery = (value, props) => {
 		if (value) {
@@ -104,7 +98,7 @@ class RatingsFilter extends Component {
 			};
 		}
 		return null;
-	}
+	};
 
 	setValue = (value, props = this.props) => {
 		// ignore state updates when component is locked
@@ -114,20 +108,18 @@ class RatingsFilter extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState({
-				currentValue: value,
-			}, () => {
-				this.updateQuery(value, props);
-				this.locked = false;
-				if (props.onValueChange) props.onValueChange(value);
-			});
+			this.setState(
+				{
+					currentValue: value,
+				},
+				() => {
+					this.updateQuery(value, props);
+					this.locked = false;
+					if (props.onValueChange) props.onValueChange(value);
+				},
+			);
 		};
-		checkValueChange(
-			props.componentId,
-			value,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -147,32 +139,31 @@ class RatingsFilter extends Component {
 	render() {
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<ul className={ratingsList}>
-					{
-						this.props.data.map(item => (
-							<li
-								role="menuitem"
-								tabIndex="0"
-								className={
-									this.state.currentValue
-									&& this.state.currentValue[0] === item.start
-										? 'active'
-										: ''
-								}
-								onClick={() => this.setValue([item.start, item.end])}
-								onKeyPress={e => handleA11yAction(e, () => this.setValue([item.start, item.end]))}
-								key={`${this.props.componentId}-${item.start}-${item.end}`}
-							>
-								<StarRating stars={item.start} />
-								{
-									item.label
-										? (<span>{item.label}</span>)
-										: null
-								}
-							</li>
-						))
-					}
+					{this.props.data.map(item => (
+						<li
+							role="menuitem"
+							tabIndex="0"
+							className={
+								this.state.currentValue && this.state.currentValue[0] === item.start
+									? 'active'
+									: ''
+							}
+							onClick={() => this.setValue([item.start, item.end])}
+							onKeyPress={e =>
+								handleA11yAction(e, () => this.setValue([item.start, item.end]))
+							}
+							key={`${this.props.componentId}-${item.start}-${item.end}`}
+						>
+							<StarRating stars={item.start} />
+							{item.label ? <span>{item.label}</span> : null}
+						</li>
+					))}
 				</ul>
 			</Container>
 		);
@@ -211,8 +202,10 @@ RatingsFilter.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -224,4 +217,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(RatingsFilter);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(RatingsFilter);

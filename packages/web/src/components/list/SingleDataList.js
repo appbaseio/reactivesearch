@@ -46,19 +46,11 @@ class SingleDataList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
-		checkPropChange(
-			this.props.dataField,
-			nextProps.dataField,
-			() => {
-				this.updateQuery(this.state.currentValue, nextProps);
-			},
-		);
+		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+			this.updateQuery(this.state.currentValue, nextProps);
+		});
 
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected);
@@ -107,21 +99,19 @@ class SingleDataList extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue: value,
-			}, () => {
-				this.updateQuery(value, props);
-				this.locked = false;
-				if (props.onValueChange) props.onValueChange(value);
-			});
+			this.setState(
+				{
+					currentValue: value,
+				},
+				() => {
+					this.updateQuery(value, props);
+					this.locked = false;
+					if (props.onValueChange) props.onValueChange(value);
+				},
+			);
 		};
 
-		checkValueChange(
-			props.componentId,
-			value,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -153,16 +143,18 @@ class SingleDataList extends Component {
 
 	renderSearch = () => {
 		if (this.props.showSearch) {
-			return (<Input
-				className={getClassName(this.props.innerClass, 'input') || null}
-				onChange={this.handleInputChange}
-				value={this.state.searchTerm}
-				placeholder={this.props.placeholder}
-				style={{
-					margin: '0 0 8px',
-				}}
-				themePreset={this.props.themePreset}
-			/>);
+			return (
+				<Input
+					className={getClassName(this.props.innerClass, 'input') || null}
+					onChange={this.handleInputChange}
+					value={this.state.searchTerm}
+					placeholder={this.props.placeholder}
+					style={{
+						margin: '0 0 8px',
+					}}
+					themePreset={this.props.themePreset}
+				/>
+			);
 		}
 		return null;
 	};
@@ -180,60 +172,71 @@ class SingleDataList extends Component {
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				{this.renderSearch()}
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
-					{
-						selectAllLabel
-							&& (
-								<li key={selectAllLabel} className={`${this.state.currentValue === selectAllLabel ? 'active' : ''}`}>
-									<Radio
-										className={getClassName(this.props.innerClass, 'radio')}
-										id={`${this.props.componentId}-${selectAllLabel}`}
-										name={this.props.componentId}
-										value={selectAllLabel}
-										onChange={this.handleClick}
-										checked={this.state.currentValue === selectAllLabel}
-										show={this.props.showRadio}
-									/>
-									<label
-										className={getClassName(this.props.innerClass, 'label') || null}
-										htmlFor={`${this.props.componentId}-${selectAllLabel}`}
-									>
-										{selectAllLabel}
-									</label>
-								</li>
-							)
-					}
-					{
-						this.props.data
-							.filter((item) => {
-								if (this.props.showSearch && this.state.searchTerm) {
-									return item.label.toLowerCase().includes(this.state.searchTerm.toLowerCase());
-								}
-								return true;
-							})
-							.map(item => (
-								<li key={item.label} className={`${this.state.currentValue === item.label ? 'active' : ''}`}>
-									<Radio
-										className={getClassName(this.props.innerClass, 'radio')}
-										id={`${this.props.componentId}-${item.label}`}
-										name={this.props.componentId}
-										value={item.label}
-										onClick={this.handleClick}
-										readOnly
-										checked={this.state.currentValue === item.label}
-										show={this.props.showRadio}
-									/>
-									<label
-										className={getClassName(this.props.innerClass, 'label') || null}
-										htmlFor={`${this.props.componentId}-${item.label}`}
-									>
-										{item.label}
-									</label>
-								</li>
-							))
-					}
+					{selectAllLabel && (
+						<li
+							key={selectAllLabel}
+							className={`${
+								this.state.currentValue === selectAllLabel ? 'active' : ''
+							}`}
+						>
+							<Radio
+								className={getClassName(this.props.innerClass, 'radio')}
+								id={`${this.props.componentId}-${selectAllLabel}`}
+								name={this.props.componentId}
+								value={selectAllLabel}
+								onChange={this.handleClick}
+								checked={this.state.currentValue === selectAllLabel}
+								show={this.props.showRadio}
+							/>
+							<label
+								className={getClassName(this.props.innerClass, 'label') || null}
+								htmlFor={`${this.props.componentId}-${selectAllLabel}`}
+							>
+								{selectAllLabel}
+							</label>
+						</li>
+					)}
+					{this.props.data
+						.filter((item) => {
+							if (this.props.showSearch && this.state.searchTerm) {
+								return item.label
+									.toLowerCase()
+									.includes(this.state.searchTerm.toLowerCase());
+							}
+							return true;
+						})
+						.map(item => (
+							<li
+								key={item.label}
+								className={`${
+									this.state.currentValue === item.label ? 'active' : ''
+								}`}
+							>
+								<Radio
+									className={getClassName(this.props.innerClass, 'radio')}
+									id={`${this.props.componentId}-${item.label}`}
+									name={this.props.componentId}
+									value={item.label}
+									onClick={this.handleClick}
+									readOnly
+									checked={this.state.currentValue === item.label}
+									show={this.props.showRadio}
+								/>
+								<label
+									className={getClassName(this.props.innerClass, 'label') || null}
+									htmlFor={`${this.props.componentId}-${item.label}`}
+								>
+									{item.label}
+								</label>
+							</li>
+						))}
 				</UL>
 			</Container>
 		);
@@ -282,8 +285,10 @@ SingleDataList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	themePreset: state.config.themePreset,
 });
 
@@ -296,4 +301,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SingleDataList);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(SingleDataList);

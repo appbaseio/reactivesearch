@@ -66,36 +66,34 @@ class DynamicRangeSlider extends Component {
 			if (nextProps.selectedValue && !this.state.currentValue) {
 				this.handleChange(nextProps.selectedValue, nextProps);
 			} else if (nextProps.defaultSelected) {
-				const { start, end }
-					= nextProps.defaultSelected(nextProps.range.start, nextProps.range.end);
-				this.handleChange([
-					start,
-					end,
-				], nextProps);
+				const { start, end } = nextProps.defaultSelected(
+					nextProps.range.start,
+					nextProps.range.end,
+				);
+				this.handleChange([start, end], nextProps);
 			} else {
-				this.handleChange([
-					Math.floor(nextProps.range.start),
-					Math.ceil(nextProps.range.end),
-				], nextProps);
+				this.handleChange(
+					[Math.floor(nextProps.range.start), Math.ceil(nextProps.range.end)],
+					nextProps,
+				);
 			}
-		} else if (nextProps.range
+		} else if (
+			nextProps.range
 			&& !isEqual(
 				this.props.defaultSelected
-				&& this.props.defaultSelected(nextProps.range.start, nextProps.range.end),
+					&& this.props.defaultSelected(nextProps.range.start, nextProps.range.end),
 				nextProps.defaultSelected
-				&& nextProps.defaultSelected(nextProps.range.start, nextProps.range.end),
-			)) {
-			const { start, end } = nextProps.defaultSelected(nextProps.range.start, nextProps.range.end);
-			this.handleChange(
-				[start, end],
-				nextProps,
+					&& nextProps.defaultSelected(nextProps.range.start, nextProps.range.end),
+			)
+		) {
+			const { start, end } = nextProps.defaultSelected(
+				nextProps.range.start,
+				nextProps.range.end,
 			);
+			this.handleChange([start, end], nextProps);
 		} else if (nextProps.range && nextProps.selectedValue === null) {
 			// when the filter is reset
-			this.handleChange(
-				[nextProps.range.start, nextProps.range.end],
-				nextProps,
-			);
+			this.handleChange([nextProps.range.start, nextProps.range.end], nextProps);
 		}
 
 		checkPropChange(this.props.react, nextProps.react, () => {
@@ -105,12 +103,8 @@ class DynamicRangeSlider extends Component {
 		checkPropChange(this.props.dataField, nextProps.dataField, () => {
 			this.updateRangeQueryOptions(nextProps);
 		});
-		checkSomePropChange(
-			this.props,
-			nextProps,
-			['showHistogram', 'interval'],
-			() => this.updateQueryOptions(nextProps, nextProps.range || this.state.range),
-		);
+		checkSomePropChange(this.props, nextProps, ['showHistogram', 'interval'], () =>
+			this.updateQueryOptions(nextProps, nextProps.range || this.state.range));
 		checkPropChange(this.props.options, nextProps.options, () => {
 			const { options } = nextProps;
 			options.sort((a, b) => {
@@ -128,7 +122,9 @@ class DynamicRangeSlider extends Component {
 		if (nextState.range) {
 			const upperLimit = Math.floor((nextState.range.end - nextState.range.start) / 2);
 			if (nextProps.stepValue < 1 || nextProps.stepValue > upperLimit) {
-				console.warn(`stepValue for DynamicRangeSlider ${nextProps.componentId} should be greater than 0 and less than or equal to ${upperLimit}`);
+				console.warn(`stepValue for DynamicRangeSlider ${
+					nextProps.componentId
+				} should be greater than 0 and less than or equal to ${upperLimit}`);
 				return false;
 			}
 			return true;
@@ -147,26 +143,28 @@ class DynamicRangeSlider extends Component {
 		const { react } = props;
 		if (react) {
 			props.watchComponent(this.internalRangeComponent, props.react);
-			const newReact = pushToAndClause(
-				react,
-				this.internalHistogramComponent,
-			);
+			const newReact = pushToAndClause(react, this.internalHistogramComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
 			// internalRangeComponent watches internalMatchAll component allowing execution of query
 			// in case of no react prop
 			this.props.addComponent(this.internalMatchAllComponent);
-			props.setQueryOptions(this.internalMatchAllComponent, { aggs: { match_all: {} } }, false);
-			props.watchComponent(this.internalRangeComponent, { and: this.internalMatchAllComponent });
-			props.watchComponent(props.componentId, { and: this.internalHistogramComponent });
+			props.setQueryOptions(
+				this.internalMatchAllComponent,
+				{ aggs: { match_all: {} } },
+				false,
+			);
+			props.watchComponent(this.internalRangeComponent, {
+				and: this.internalMatchAllComponent,
+			});
+			props.watchComponent(props.componentId, {
+				and: this.internalHistogramComponent,
+			});
 		}
 	};
 
 	// value parser for SSR
-	static parseValue = value => (value
-		? [value().start, value().end]
-		: null
-	)
+	static parseValue = value => (value ? [value().start, value().end] : null);
 
 	static defaultQuery = (value, props) => {
 		if (Array.isArray(value) && value.length) {
@@ -207,7 +205,9 @@ class DynamicRangeSlider extends Component {
 		if (!props.interval) {
 			return min;
 		} else if (props.interval < min) {
-			console.error(`${props.componentId}: interval prop's value should be greater than or equal to ${min}`);
+			console.error(`${
+				props.componentId
+			}: interval prop's value should be greater than or equal to ${min}`);
 			return min;
 		}
 		return props.interval;
@@ -240,14 +240,17 @@ class DynamicRangeSlider extends Component {
 		];
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState({
-				currentValue: normalizedValue,
-			}, () => {
-				const normalizedValues = [normalizedValue[0], normalizedValue[1]];
-				this.updateQuery(normalizedValues, props);
-				this.locked = false;
-				if (props.onValueChange) props.onValueChange(normalizedValues);
-			});
+			this.setState(
+				{
+					currentValue: normalizedValue,
+				},
+				() => {
+					const normalizedValues = [normalizedValue[0], normalizedValue[1]];
+					this.updateQuery(normalizedValues, props);
+					this.locked = false;
+					if (props.onValueChange) props.onValueChange(normalizedValues);
+				},
+			);
 		};
 		checkValueChange(
 			props.componentId,
@@ -273,7 +276,10 @@ class DynamicRangeSlider extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || DynamicRangeSlider.defaultQuery;
-		const { showFilter, range: { start, end } } = props;
+		const {
+			showFilter,
+			range: { start, end },
+		} = props;
 		const [currentStart, currentEnd] = value;
 		// check if the slider is at its initial position
 		const isInitialValue = currentStart === start && currentEnd === end;
@@ -310,7 +316,7 @@ class DynamicRangeSlider extends Component {
 		this.setState({
 			range,
 		});
-	}
+	};
 
 	updateRangeQueryOptions = (props) => {
 		const queryOptions = {
@@ -324,7 +330,10 @@ class DynamicRangeSlider extends Component {
 		let { start: startLabel, end: endLabel } = this.state.range;
 
 		if (this.props.rangeLabels) {
-			const rangeLabels = this.props.rangeLabels(this.props.range.start, this.props.range.end);
+			const rangeLabels = this.props.rangeLabels(
+				this.props.range.start,
+				this.props.range.end,
+			);
 			startLabel = rangeLabels.start;
 			endLabel = rangeLabels.end;
 		}
@@ -333,7 +342,7 @@ class DynamicRangeSlider extends Component {
 			startLabel,
 			endLabel,
 		};
-	}
+	};
 
 	render() {
 		if (!this.state.currentValue || !this.state.range) {
@@ -345,9 +354,7 @@ class DynamicRangeSlider extends Component {
 		return (
 			<Slider primary style={this.props.style} className={this.props.className}>
 				{this.props.title && (
-					<Title
-						className={getClassName(this.props.innerClass, 'title') || null}
-					>
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
 					</Title>
 				)}
@@ -367,17 +374,15 @@ class DynamicRangeSlider extends Component {
 					snap={this.props.snap}
 					snapPoints={this.props.snap ? this.getSnapPoints() : null}
 					className={getClassName(this.props.innerClass, 'slider')}
-					handle={({ className, style, ...passProps }) =>
-						(
-							<SliderHandle
-								style={style}
-								className={className}
-								{...passProps}
-								renderTooltipData={this.props.renderTooltipData}
-								tooltipTrigger={this.props.tooltipTrigger}
-							/>
-						)
-					}
+					handle={({ className, style, ...passProps }) => (
+						<SliderHandle
+							style={style}
+							className={className}
+							{...passProps}
+							renderTooltipData={this.props.renderTooltipData}
+							tooltipTrigger={this.props.tooltipTrigger}
+						/>
+					)}
 				/>
 				<div className={rangeLabelsContainer}>
 					<RangeLabel
@@ -447,18 +452,19 @@ DynamicRangeSlider.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options:
-		(state.aggregations[props.componentId]
+		state.aggregations[props.componentId]
 		&& state.aggregations[props.componentId][props.dataField]
-		&& state.aggregations[props.componentId][props.dataField].buckets)
+		&& state.aggregations[props.componentId][props.dataField].buckets
 			? state.aggregations[props.componentId][props.dataField].buckets
 			: [],
-	range: state.aggregations[`${props.componentId}__range__internal`]
+	range:
+		state.aggregations[`${props.componentId}__range__internal`]
 		&& state.aggregations[`${props.componentId}__range__internal`].min
-		? {
-			start: state.aggregations[`${props.componentId}__range__internal`].min.value,
-			end: state.aggregations[`${props.componentId}__range__internal`].max.value,
-		}
-		: null,
+			? {
+				start: state.aggregations[`${props.componentId}__range__internal`].min.value,
+				end: state.aggregations[`${props.componentId}__range__internal`].max.value,
+			} // prettier-ignore
+			: null,
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
@@ -475,4 +481,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(DynamicRangeSlider);

@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import {
-	ReactiveBase,
-	ToggleButton,
-	ResultList,
-	SelectedFilters,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, ToggleButton, ResultList, SelectedFilters } from '@appbaseio/reactivesearch';
 
 import './index.css';
 
@@ -59,7 +54,9 @@ class Main extends Component {
 		return {
 			title: (
 				<div className="meetup-title">
-					{data.member ? data.member.member_name : ''} is going to ${data.event ? data.event.event_name : ''}
+					{data.member ? data.member.member_name : ''} is going to ${data.event
+						? data.event.event_name
+						: ''}
 				</div>
 			),
 			image: data.member.photo,
@@ -67,15 +64,17 @@ class Main extends Component {
 			description: (
 				<div className="flex column">
 					<div className="meetup-location">
-						<span className="location"><i className="fas fa-map-marker-alt" /></span>
+						<span className="location">
+							<i className="fas fa-map-marker-alt" />
+						</span>
 						{data.group ? data.group.group_city : ''}
 					</div>
 					<div className="flex wrap meetup-topics">
-						{
-							data.group.group_topics.slice(0, 4).map(tag => (
-								<div className="meetup-topic" key={tag.topic_name}>{tag.topic_name}</div>
-							))
-						}
+						{data.group.group_topics.slice(0, 4).map(tag => (
+							<div className="meetup-topic" key={tag.topic_name}>
+								{tag.topic_name}
+							</div>
+						))}
 					</div>
 				</div>
 			),
