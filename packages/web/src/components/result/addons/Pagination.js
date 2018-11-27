@@ -29,16 +29,14 @@ export default function Pagination(props) {
 	};
 
 	if (start <= props.totalPages) {
-		const totalPagesToShow = props.pages < props.totalPages
-			? (start + props.pages) - 1
-			: props.totalPages + 1;
+		const totalPagesToShow
+			= props.pages < props.totalPages ? start + (props.pages - 1) : props.totalPages + 1;
 
 		for (let i = start; i < totalPagesToShow; i += 1) {
 			const primary = props.currentPage === i - 1;
 			const innerClassName = getClassName(props.innerClass, 'button');
-			const className = innerClassName || primary
-				? `${innerClassName} ${primary ? 'active' : ''}`
-				: null;
+			const className
+				= innerClassName || primary ? `${innerClassName} ${primary ? 'active' : ''}` : null;
 			const pageBtn = (
 				<Button
 					className={className}
@@ -67,9 +65,8 @@ export default function Pagination(props) {
 
 	const innerClassName = getClassName(props.innerClass, 'button');
 	const primary = props.currentPage === 0;
-	const className = innerClassName || primary
-		? `${innerClassName} ${primary ? 'active' : ''}`
-		: null;
+	const className
+		= innerClassName || primary ? `${innerClassName} ${primary ? 'active' : ''}` : null;
 
 	let prevHrefProp = {};
 	let nextHrefProp = {};
@@ -115,14 +112,8 @@ export default function Pagination(props) {
 					1
 				</Button>
 			}
-			{
-				props.currentPage >= props.pages
-					? <span>...</span>
-					: null
-			}
-			{
-				pages
-			}
+			{props.currentPage >= props.pages ? <span>...</span> : null}
+			{pages}
 			<Button
 				className={getClassName(props.innerClass, 'button') || null}
 				disabled={props.currentPage >= props.totalPages - 1}

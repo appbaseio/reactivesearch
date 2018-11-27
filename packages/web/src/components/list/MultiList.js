@@ -35,12 +35,10 @@ class MultiList extends Component {
 
 		this.state = {
 			currentValue: {},
-			options: (props.options && props.options[props.dataField])
-				? this.getOptions(
-					props.options[props.dataField].buckets,
-					props,
-				)
-				: [],
+			options:
+				props.options && props.options[props.dataField]
+					? this.getOptions(props.options[props.dataField].buckets, props)
+					: [],
 			searchTerm: '',
 			after: {}, // for composite aggs
 			isLastBucket: false,
@@ -147,7 +145,9 @@ class MultiList extends Component {
 			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
@@ -215,13 +215,11 @@ class MultiList extends Component {
 				}
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
-				const queryArray = value.map(item => (
-					{
-						[type]: {
-							[props.dataField]: item,
-						},
-					}
-				));
+				const queryArray = value.map(item => ({
+					[type]: {
+						[props.dataField]: item,
+					},
+				}));
 				listQuery = {
 					bool: {
 						must: queryArray,
@@ -257,9 +255,11 @@ class MultiList extends Component {
 		let { currentValue } = this.state;
 		let finalValues = null;
 
-		if (selectAllLabel
+		if (
+			selectAllLabel
 			&& ((Array.isArray(value) && value.includes(selectAllLabel))
-			|| (typeof value === 'string' && value === selectAllLabel))) {
+				|| (typeof value === 'string' && value === selectAllLabel))
+		) {
 			if (currentValue[selectAllLabel]) {
 				currentValue = {};
 				finalValues = [];
@@ -299,21 +299,19 @@ class MultiList extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-			}, () => {
-				this.updateQuery(finalValues, props);
-				this.locked = false;
-				if (props.onValueChange) props.onValueChange(finalValues);
-			});
+			this.setState(
+				{
+					currentValue,
+				},
+				() => {
+					this.updateQuery(finalValues, props);
+					this.locked = false;
+					if (props.onValueChange) props.onValueChange(finalValues);
+				},
+			);
 		};
 
-		checkValueChange(
-			props.componentId,
-			finalValues,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, finalValues, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -345,8 +343,10 @@ class MultiList extends Component {
 			});
 		}
 		// for a new query due to other changes don't append after to get fresh results
-		const queryOptions = MultiList
-			.generateQueryOptions(props, addAfterKey ? this.state.after : {});
+		const queryOptions = MultiList.generateQueryOptions(
+			props,
+			addAfterKey ? this.state.after : {},
+		);
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
@@ -360,20 +360,22 @@ class MultiList extends Component {
 	handleLoadMore = () => {
 		const queryOptions = MultiList.generateQueryOptions(this.props, this.state.after);
 		this.props.loadMore(this.props.componentId, queryOptions);
-	}
+	};
 
 	renderSearch = () => {
 		if (this.props.showSearch) {
-			return (<Input
-				className={getClassName(this.props.innerClass, 'input') || null}
-				onChange={this.handleInputChange}
-				value={this.state.searchTerm}
-				placeholder={this.props.placeholder}
-				style={{
-					margin: '0 0 8px',
-				}}
-				themePreset={this.props.themePreset}
-			/>);
+			return (
+				<Input
+					className={getClassName(this.props.innerClass, 'input') || null}
+					onChange={this.handleInputChange}
+					value={this.state.searchTerm}
+					placeholder={this.props.placeholder}
+					style={{
+						margin: '0 0 8px',
+					}}
+					themePreset={this.props.themePreset}
+				/>
+			);
 		}
 		return null;
 	};
@@ -405,92 +407,95 @@ class MultiList extends Component {
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				{this.renderSearch()}
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
-					{
-						selectAllLabel
-							? (
-								<li key={selectAllLabel} className={`${this.state.currentValue[selectAllLabel] ? 'active' : ''}`}>
-									<Checkbox
-										className={getClassName(this.props.innerClass, 'checkbox') || null}
-										id={`${this.props.componentId}-${selectAllLabel}`}
-										name={selectAllLabel}
-										value={selectAllLabel}
-										onChange={this.handleClick}
-										checked={!!this.state.currentValue[selectAllLabel]}
-										show={this.props.showCheckbox}
-									/>
-									<label
-										className={getClassName(this.props.innerClass, 'label') || null}
-										htmlFor={`${this.props.componentId}-${selectAllLabel}`}
-									>
-										{selectAllLabel}
-									</label>
-								</li>
-							)
-							: null
-					}
-					{
-						itemsToRender
-							.filter((item) => {
-								if (String(item.key).length) {
-									if (this.props.showSearch && this.state.searchTerm) {
-										return String(item.key).toLowerCase()
-											.includes(this.state.searchTerm.toLowerCase());
-									}
-									return true;
+					{selectAllLabel ? (
+						<li
+							key={selectAllLabel}
+							className={`${this.state.currentValue[selectAllLabel] ? 'active' : ''}`}
+						>
+							<Checkbox
+								className={getClassName(this.props.innerClass, 'checkbox') || null}
+								id={`${this.props.componentId}-${selectAllLabel}`}
+								name={selectAllLabel}
+								value={selectAllLabel}
+								onChange={this.handleClick}
+								checked={!!this.state.currentValue[selectAllLabel]}
+								show={this.props.showCheckbox}
+							/>
+							<label
+								className={getClassName(this.props.innerClass, 'label') || null}
+								htmlFor={`${this.props.componentId}-${selectAllLabel}`}
+							>
+								{selectAllLabel}
+							</label>
+						</li>
+					) : null}
+					{itemsToRender
+						.filter((item) => {
+							if (String(item.key).length) {
+								if (this.props.showSearch && this.state.searchTerm) {
+									return String(item.key)
+										.toLowerCase()
+										.includes(this.state.searchTerm.toLowerCase());
 								}
-								return false;
-							})
-							.map(item => (
-								<li key={item.key} className={`${this.state.currentValue[item.key] ? 'active' : ''}`}>
-									<Checkbox
-										className={getClassName(this.props.innerClass, 'checkbox') || null}
-										id={`${this.props.componentId}-${item.key}`}
-										name={this.props.componentId}
-										value={item.key}
-										onChange={this.handleClick}
-										checked={!!this.state.currentValue[item.key]}
-										show={this.props.showCheckbox}
-									/>
-									<label
-										className={getClassName(this.props.innerClass, 'label') || null}
-										htmlFor={`${this.props.componentId}-${item.key}`}
-									>
-										{
-											renderListItem
-												? renderListItem(item.key, item.doc_count)
-												: (
-													<span>
-														{item.key}
-														{
-															this.props.showCount
-															&& (
-																<span
-																	className={
-																		getClassName(this.props.innerClass, 'count')
-																		|| null
-																	}
-																>
-																	&nbsp;({item.doc_count})
-																</span>
-															)
-														}
-													</span>
-												)
-										}
-									</label>
-								</li>
-							))
-					}
-					{
-						showLoadMore && !isLastBucket && (
-							<div css={loadMoreContainer}>
-								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
-							</div>
-						)
-					}
+								return true;
+							}
+							return false;
+						})
+						.map(item => (
+							<li
+								key={item.key}
+								className={`${this.state.currentValue[item.key] ? 'active' : ''}`}
+							>
+								<Checkbox
+									className={
+										getClassName(this.props.innerClass, 'checkbox') || null
+									}
+									id={`${this.props.componentId}-${item.key}`}
+									name={this.props.componentId}
+									value={item.key}
+									onChange={this.handleClick}
+									checked={!!this.state.currentValue[item.key]}
+									show={this.props.showCheckbox}
+								/>
+								<label
+									className={getClassName(this.props.innerClass, 'label') || null}
+									htmlFor={`${this.props.componentId}-${item.key}`}
+								>
+									{renderListItem ? (
+										renderListItem(item.key, item.doc_count)
+									) : (
+										<span>
+											{item.key}
+											{this.props.showCount && (
+												<span
+													className={
+														getClassName(
+															this.props.innerClass,
+															'count',
+														) || null
+													}
+												>
+													&nbsp;({item.doc_count})
+												</span>
+											)}
+										</span>
+									)}
+								</label>
+							</li>
+						))}
+					{showLoadMore
+						&& !isLastBucket && (
+						<div css={loadMoreContainer}>
+							<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
+						</div>
+					)}
 				</UL>
 			</Container>
 		);
@@ -560,11 +565,14 @@ MultiList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	options: props.nestedField && state.aggregations[props.componentId]
-		? state.aggregations[props.componentId].reactivesearch_nested
-		: state.aggregations[props.componentId],
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	options:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId],
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	themePreset: state.config.themePreset,
 });
 
@@ -572,12 +580,14 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
-	loadMore: (component, aggsQuery) =>
-		dispatch(loadMore(component, aggsQuery, true, true)),
+	loadMore: (component, aggsQuery) => dispatch(loadMore(component, aggsQuery, true, true)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(MultiList);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(MultiList);

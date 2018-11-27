@@ -24,7 +24,6 @@ import Flex from '../../styles/Flex';
 import CancelSvg from '../shared/CancelSvg';
 import { connect } from '../../utils';
 
-
 class DatePicker extends Component {
 	constructor(props) {
 		super(props);
@@ -47,19 +46,12 @@ class DatePicker extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
-		checkPropChange(
-			this.props.dataField,
-			nextProps.dataField,
-			() => this.updateQuery(
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkPropChange(this.props.dataField, nextProps.dataField, () =>
+			this.updateQuery(
 				this.state.currentDate ? this.formatInputDate(this.state.currentDate) : null,
 				nextProps,
-			),
-		);
+			));
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleDateChange(nextProps.defaultSelected, true, nextProps);
 		} else if (
@@ -99,19 +91,15 @@ class DatePicker extends Component {
 
 	clearDayPicker = () => {
 		if (this.state.currentDate !== '') {
-			this.handleDateChange('');	// resets the day picker component
+			this.handleDateChange(''); // resets the day picker component
 		}
-	}
+	};
 
 	handleDayPicker = (date) => {
 		this.handleDateChange(date || '');
-	}
+	};
 
-	handleDateChange = (
-		currentDate,
-		isDefaultValue = false,
-		props = this.props,
-	) => {
+	handleDateChange = (currentDate, isDefaultValue = false, props = this.props) => {
 		// currentDate should be valid or empty string for resetting the query
 		if (isDefaultValue && !new XDate(currentDate).valid() && currentDate.length) {
 			console.error(`DatePicker: ${props.componentId} invalid value passed for date`);
@@ -128,20 +116,18 @@ class DatePicker extends Component {
 			}
 
 			const performUpdate = () => {
-				this.setState({
-					currentDate,
-				}, () => {
-					this.updateQuery(value, props);
-					this.locked = false;
-					if (props.onValueChange) props.onValueChange(value);
-				});
+				this.setState(
+					{
+						currentDate,
+					},
+					() => {
+						this.updateQuery(value, props);
+						this.locked = false;
+						if (props.onValueChange) props.onValueChange(value);
+					},
+				);
 			};
-			checkValueChange(
-				props.componentId,
-				value,
-				props.beforeValueChange,
-				performUpdate,
-			);
+			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		}
 	};
 
@@ -167,9 +153,7 @@ class DatePicker extends Component {
 				className={this.props.className}
 			>
 				{this.props.title && (
-					<Title
-						className={getClassName(this.props.innerClass, 'title') || null}
-					>
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
 					</Title>
 				)}
@@ -199,20 +183,16 @@ class DatePicker extends Component {
 								getClassName(this.props.innerClass, 'daypicker-container')
 								|| 'DayPickerInput',
 							overlayWrapper:
-								getClassName(
-									this.props.innerClass,
-									'daypicker-overlay-wrapper',
-								) || 'DayPickerInput-OverlayWrapper',
+								getClassName(this.props.innerClass, 'daypicker-overlay-wrapper')
+								|| 'DayPickerInput-OverlayWrapper',
 							overlay:
 								getClassName(this.props.innerClass, 'daypicker-overlay')
 								|| 'DayPickerInput-Overlay',
 						}}
 						{...this.props.dayPickerInputProps}
 					/>
-					{
-						this.props.showClear && this.state.currentDate
-						&& <CancelSvg onClick={this.clearDayPicker} />
-					}
+					{this.props.showClear
+						&& this.state.currentDate && <CancelSvg onClick={this.clearDayPicker} />}
 				</Flex>
 			</DateContainer>
 		);

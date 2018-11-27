@@ -1,17 +1,16 @@
 {
-	"presets": [
-		[
-			"env", {
-				"targets": {
-					"browsers": ["last 2 versions", "safari >= 7"],
-				},
-				"loose": true
-			}
-		],
-		"react",
-		"stage-0"
-	],
-	"plugins": [
-		["emotion", { "sourceMap": true }]
-	]
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": ["last 2 versions", "safari >= 7"]
+        },
+        "loose": true
+      }
+    ],
+    "react",
+    "stage-0"
+  ],
+  "plugins": [["emotion", { "sourceMap": true }]]
 }

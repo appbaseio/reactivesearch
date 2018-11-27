@@ -48,11 +48,7 @@ class MultiDropdownRange extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
 		checkPropChange(this.props.dataField, nextProps.dataField, () => {
 			this.updateQuery(this.state.currentValue, nextProps);
@@ -60,8 +56,10 @@ class MultiDropdownRange extends Component {
 
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.selectItem(nextProps.defaultSelected, true);
-		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)
-			&& (nextProps.selectedValue || nextProps.selectedValue === null)) {
+		} else if (
+			!isEqual(this.state.currentValue, nextProps.selectedValue)
+			&& (nextProps.selectedValue || nextProps.selectedValue === null)
+		) {
 			this.selectItem(nextProps.selectedValue, true);
 		}
 	}
@@ -77,9 +75,8 @@ class MultiDropdownRange extends Component {
 	}
 
 	// parses range label to get start and end
-	static parseValue = (value, props) => (value
-		? props.data.filter(item => value.includes(item.label))
-		: null)
+	static parseValue = (value, props) =>
+		(value ? props.data.filter(item => value.includes(item.label)) : null);
 
 	static defaultQuery = (values, props) => {
 		const generateRangeQuery = (dataField, items) => {
@@ -126,7 +123,10 @@ class MultiDropdownRange extends Component {
 			// checking if the items in defaultSeleted exist in the data prop
 			currentValue = MultiDropdownRange.parseValue(item, props);
 			currentValue.forEach((value) => {
-				this.selectedValues = { ...this.selectedValues, [value.label]: true };
+				this.selectedValues = {
+					...this.selectedValues,
+					[value.label]: true,
+				};
 			});
 		} else if (this.selectedValues[item.label]) {
 			currentValue = currentValue.filter(value => value.label !== item.label);
@@ -134,24 +134,25 @@ class MultiDropdownRange extends Component {
 			this.selectedValues = selectedValues;
 		} else {
 			currentValue = [...currentValue, item];
-			this.selectedValues = { ...this.selectedValues, [item.label]: true };
+			this.selectedValues = {
+				...this.selectedValues,
+				[item.label]: true,
+			};
 		}
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-			}, () => {
-				this.updateQuery(currentValue, props);
-				this.locked = false;
-				if (props.onValueChange) props.onValueChange(currentValue);
-			});
+			this.setState(
+				{
+					currentValue,
+				},
+				() => {
+					this.updateQuery(currentValue, props);
+					this.locked = false;
+					if (props.onValueChange) props.onValueChange(currentValue);
+				},
+			);
 		};
 
-		checkValueChange(
-			props.componentId,
-			currentValue,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, currentValue, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -171,7 +172,11 @@ class MultiDropdownRange extends Component {
 	render() {
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<Dropdown
 					innerClass={this.props.innerClass}
 					items={this.props.data}
@@ -240,4 +245,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownRange);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(MultiDropdownRange);

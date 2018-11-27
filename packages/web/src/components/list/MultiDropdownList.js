@@ -34,7 +34,7 @@ class MultiDropdownList extends Component {
 		this.state = {
 			currentValue: {},
 			options: [],
-			after: {},	// for composite aggs
+			after: {}, // for composite aggs
 			isLastBucket: false,
 		};
 		this.locked = false;
@@ -145,7 +145,9 @@ class MultiDropdownList extends Component {
 			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
@@ -202,13 +204,11 @@ class MultiDropdownList extends Component {
 				}
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
-				const queryArray = value.map(item => (
-					{
-						[type]: {
-							[props.dataField]: item,
-						},
-					}
-				));
+				const queryArray = value.map(item => ({
+					[type]: {
+						[props.dataField]: item,
+					},
+				}));
 				listQuery = {
 					bool: {
 						must: queryArray,
@@ -283,21 +283,19 @@ class MultiDropdownList extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-			}, () => {
-				this.updateQuery(finalValues, props);
-				this.locked = false;
-				if (props.onValueChange) props.onValueChange(finalValues);
-			});
+			this.setState(
+				{
+					currentValue,
+				},
+				() => {
+					this.updateQuery(finalValues, props);
+					this.locked = false;
+					if (props.onValueChange) props.onValueChange(finalValues);
+				},
+			);
 		};
 
-		checkValueChange(
-			props.componentId,
-			finalValues,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, finalValues, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -329,8 +327,10 @@ class MultiDropdownList extends Component {
 			});
 		}
 		// for a new query due to other changes don't append after to get fresh results
-		const queryOptions = MultiDropdownList
-			.generateQueryOptions(props, addAfterKey ? this.state.after : {});
+		const queryOptions = MultiDropdownList.generateQueryOptions(
+			props,
+			addAfterKey ? this.state.after : {},
+		);
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
@@ -357,24 +357,28 @@ class MultiDropdownList extends Component {
 		}
 
 		if (this.props.selectAllLabel) {
-			selectAll = [{
-				key: this.props.selectAllLabel,
-			}];
+			selectAll = [
+				{
+					key: this.props.selectAllLabel,
+				},
+			];
 		}
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<Dropdown
 					innerClass={this.props.innerClass}
-					items={
-						[
-							...selectAll,
-							...this.state.options
-								.filter(item => String(item.key).trim().length)
-								.map(item => ({ ...item, key: String(item.key) })),
-						]
-					}
+					items={[
+						...selectAll,
+						...this.state.options
+							.filter(item => String(item.key).trim().length)
+							.map(item => ({ ...item, key: String(item.key) })),
+					]}
 					onChange={this.handleChange}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
@@ -386,7 +390,8 @@ class MultiDropdownList extends Component {
 					showSearch={this.props.showSearch}
 					transformData={this.props.transformData}
 					footer={
-						showLoadMore && !isLastBucket && (
+						showLoadMore
+						&& !isLastBucket && (
 							<div css={loadMoreContainer}>
 								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
 							</div>
@@ -460,11 +465,14 @@ MultiDropdownList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	options: props.nestedField && state.aggregations[props.componentId]
-		? state.aggregations[props.componentId].reactivesearch_nested
-		: state.aggregations[props.componentId],
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	options:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId],
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	themePreset: state.config.themePreset,
 });
 
@@ -478,4 +486,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(MultiDropdownList);

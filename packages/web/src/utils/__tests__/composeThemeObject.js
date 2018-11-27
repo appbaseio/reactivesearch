@@ -10,23 +10,26 @@ test('returns base object if nothing is passed', () => {
 });
 
 test('overrides existing keys', () => {
-	const result = composeThemeObject({
-		colors: {
-			primaryTextColor: '#fff',
+	const result = composeThemeObject(
+		{
+			colors: {
+				primaryTextColor: '#fff',
+			},
+			typography: {
+				fontSize: '16px',
+			},
+			component: {},
 		},
-		typography: {
-			fontSize: '16px',
+		{
+			colors: {},
+			typography: {
+				fontSize: '24px',
+			},
+			component: {
+				padding: 20,
+			},
 		},
-		component: {},
-	}, {
-		colors: {},
-		typography: {
-			fontSize: '24px',
-		},
-		component: {
-			padding: 20,
-		},
-	});
+	);
 	expect(result).toEqual({
 		colors: {
 			primaryTextColor: '#fff',

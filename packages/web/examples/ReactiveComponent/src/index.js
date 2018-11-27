@@ -64,7 +64,9 @@ class Main extends Component {
 		return (
 			<div key={data._id}>
 				<h2>{data.name}</h2>
-				<p>{data.price} - {data.rating} stars rated</p>
+				<p>
+					{data.price} - {data.rating} stars rated
+				</p>
 			</div>
 		);
 	}
@@ -86,7 +88,9 @@ class CustomComponent extends Component {
 	render() {
 		if (this.props.aggregations) {
 			return this.props.aggregations['brand.raw'].buckets.map(item => (
-				<div key={item.key} onClick={() => this.setValue(item.key)}>{item.key}</div> // eslint-disable-line
+				<div key={item.key} onClick={() => this.setValue(item.key)}>
+					{item.key}
+				</div> // eslint-disable-line
 			));
 		}
 

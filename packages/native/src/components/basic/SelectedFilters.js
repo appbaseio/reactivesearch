@@ -23,7 +23,7 @@ class SelectedFilters extends Component {
 			return null;
 		}
 		return value;
-	}
+	};
 
 	render() {
 		const { selectedValues } = this.props;
@@ -31,75 +31,72 @@ class SelectedFilters extends Component {
 
 		return (
 			<View style={this.props.style}>
-				{
-					Object.keys(selectedValues)
-						.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
-						.map((component, index) => {
-							const { label, value } = selectedValues[component];
-							const isArray = Array.isArray(value);
+				{Object.keys(selectedValues)
+					.filter(
+						id => this.props.components.includes(id) && selectedValues[id].showFilter,
+					)
+					.map((component, index) => {
+						const { label, value } = selectedValues[component];
+						const isArray = Array.isArray(value);
 
-							if (label && ((isArray && value.length) || (!isArray && value))) {
-								hasValues = true;
-								return (
-									<Button
-										light
-										style={{
-											height: 28,
-											paddingVertical: 4,
-											marginVertical: 2,
-										}}
-										key={`${component}-${index}`} // eslint-disable-line
-										onPress={() => this.remove(component)}
-									>
-										<Text
-											style={{
-												paddingLeft: 8,
-												paddingRight: 4,
-												fontSize: 14,
-											}}
-										>
-											{selectedValues[component].label}: {this.renderValue(value, isArray)}
-										</Text>
-										<Text
-											style={{
-												paddingLeft: 4,
-												paddingRight: 8,
-												fontSize: 14,
-											}}
-										>
-											&#x2715;
-										</Text>
-									</Button>
-								);
-							}
-							return null;
-						})
-				}
-				{
-					this.props.showClearAll && hasValues
-						? (
-							<Button
-								light
-								style={{
-									height: 28,
-									paddingVertical: 4,
-									marginVertical: 2,
-								}}
-								onPress={this.props.clearValues}
-							>
-								<Text
+						if (label && ((isArray && value.length) || (!isArray && value))) {
+							hasValues = true;
+							return (
+								<Button
+									light
 									style={{
-										paddingLeft: 8,
-										paddingRight: 8,
-										fontSize: 14,
+										height: 28,
+										paddingVertical: 4,
+										marginVertical: 2,
 									}}
+									key={`${component}-${index}`} // eslint-disable-line
+									onPress={() => this.remove(component)}
 								>
-									{this.props.clearAllLabel}
-								</Text>
-							</Button>
-						)
-						: null
-				}
+									<Text
+										style={{
+											paddingLeft: 8,
+											paddingRight: 4,
+											fontSize: 14,
+										}}
+									>
+										{selectedValues[component].label}:{' '}
+										{this.renderValue(value, isArray)}
+									</Text>
+									<Text
+										style={{
+											paddingLeft: 4,
+											paddingRight: 8,
+											fontSize: 14,
+										}}
+									>
+										&#x2715;
+									</Text>
+								</Button>
+							);
+						}
+						return null;
+					})}
+				{this.props.showClearAll && hasValues ? (
+					<Button
+						light
+						style={{
+							height: 28,
+							paddingVertical: 4,
+							marginVertical: 2,
+						}}
+						onPress={this.props.clearValues}
+					>
+						<Text
+							style={{
+								paddingLeft: 8,
+								paddingRight: 8,
+								fontSize: 14,
+							}}
+						>
+							{this.props.clearAllLabel}
+						</Text>
+					</Button>
+				) : null}
 			</View>
 		);
 	}
@@ -128,7 +125,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchtoProps = dispatch => ({
 	setValue: (component, value) => dispatch(setValue(component, value)),
-	clearValues: () => (dispatch(clearValues())),
+	clearValues: () => dispatch(clearValues()),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SelectedFilters);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(SelectedFilters);
