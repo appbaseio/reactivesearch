@@ -10,6 +10,7 @@ export interface MultiRangeProps extends CommonProps {
 	defaultSelected?: types.stringArray;
 	filterLabel?: types.filterLabel;
 	innerClass?: types.style;
+	nestedField?: string;
 	onValueChange?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;

@@ -94,18 +94,29 @@ class MultiRange extends Component {
 			}
 			return null;
 		};
-
+		let query = null;
 		if (values && values.length) {
-			const query = {
+			query = {
 				bool: {
 					should: generateRangeQuery(props.dataField, values),
 					minimum_should_match: 1,
 					boost: 1.0,
 				},
 			};
-			return query;
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	selectItem = (item, isDefaultValue = false, props = this.props) => {
@@ -230,6 +241,7 @@ MultiRange.propTypes = {
 	defaultSelected: types.stringArray,
 	filterLabel: types.filterLabel,
 	innerClass: types.style,
+	nestedField: types.string,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	placeholder: types.string,
