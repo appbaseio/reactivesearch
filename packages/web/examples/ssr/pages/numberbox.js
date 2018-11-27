@@ -1,11 +1,6 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import {
-	ReactiveBase,
-	NumberBox,
-	SelectedFilters,
-	ReactiveList,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, NumberBox, SelectedFilters, ReactiveList } from '@appbaseio/reactivesearch';
 
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
 
@@ -35,7 +30,7 @@ const reactiveListProps = {
 	className: 'result-list-container',
 	from: 0,
 	size: 5,
-	onData: data => (<BookCard key={data._id} data={data} />),
+	onData: data => <BookCard key={data._id} data={data} />,
 	react: {
 		and: ['BookSensor'],
 	},
@@ -69,16 +64,12 @@ export default class Main extends Component {
 				<ReactiveBase {...settings} initialState={this.props.store}>
 					<div className="row">
 						<div className="col">
-							<NumberBox
-								{...numberBoxProps}
-							/>
+							<NumberBox {...numberBoxProps} />
 						</div>
 
 						<div className="col">
 							<SelectedFilters />
-							<ReactiveList
-								{...reactiveListProps}
-							/>
+							<ReactiveList {...reactiveListProps} />
 						</div>
 					</div>
 				</ReactiveBase>

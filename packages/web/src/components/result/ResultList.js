@@ -25,33 +25,35 @@ class ResultList extends Component {
 					onClick={triggerClickAnalytics}
 					{...result.containerProps}
 				>
-					{
-						result.image
-							? <Image
-								src={result.image}
-								small={result.image_size === 'small'}
-								className={getClassName(this.props.innerClass, 'image')}
-							/>
-							: null
-					}
+					{result.image ? (
+						<Image
+							src={result.image}
+							small={result.image_size === 'small'}
+							className={getClassName(this.props.innerClass, 'image')}
+						/>
+					) : null}
 					<article>
-						{
-							typeof result.title === 'string'
-								? <Title
-									dangerouslySetInnerHTML={{ __html: result.title }}
-									className={getClassName(this.props.innerClass, 'title')}
-								/>
-								: (
-									<Title className={getClassName(this.props.innerClass, 'title')}>
-										{result.title}
-									</Title>
-								)
-						}
-						{
-							typeof result.description === 'string'
-								? <div dangerouslySetInnerHTML={{ __html: result.description }} />
-								: <div>{result.description}</div>
-						}
+						{typeof result.title === 'string' ? (
+							<Title
+								dangerouslySetInnerHTML={{
+									__html: result.title,
+								}}
+								className={getClassName(this.props.innerClass, 'title')}
+							/>
+						) : (
+							<Title className={getClassName(this.props.innerClass, 'title')}>
+								{result.title}
+							</Title>
+						)}
+						{typeof result.description === 'string' ? (
+							<div
+								dangerouslySetInnerHTML={{
+									__html: result.description,
+								}}
+							/>
+						) : (
+							<div>{result.description}</div>
+						)}
 					</article>
 				</ListItem>
 			);
@@ -63,13 +65,7 @@ class ResultList extends Component {
 	render() {
 		const { onData, ...props } = this.props;
 
-		return (
-			<ReactiveList
-				{...props}
-				onData={this.renderAsListItem}
-				listClass={container}
-			/>
-		);
+		return <ReactiveList {...props} onData={this.renderAsListItem} listClass={container} />;
 	}
 }
 
@@ -84,4 +80,3 @@ ResultList.defaultProps = {
 };
 
 export default ResultList;
-

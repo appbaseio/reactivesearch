@@ -56,8 +56,8 @@ ReactDOM.render(
 			<Route exact path="/reactivesearch/demo" component={DemoPage} />
 			<Route exact path="/native/tools" component={ToolsPageNative} />
 			<Route exact path="/reactivesearch/native/tools" component={ToolsPageNative} />
-			<Route exact path="/native/quickstart" component={LearnPageNative} />}
-			<Route exact path="/reactivesearch/native/quickstart" component={LearnPageNative} />}
+			<Route exact path="/native/quickstart" component={LearnPageNative} />
+			<Route exact path="/reactivesearch/native/quickstart" component={LearnPageNative} />
 			<Route path="/native" component={HomePageNative} />
 			<Route path="/reactivesearch/native" component={HomePageNative} />
 			<Route exact path="/vue/tools" component={ToolsPageVue} />

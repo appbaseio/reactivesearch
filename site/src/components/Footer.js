@@ -34,24 +34,46 @@ export default ({ configName }) => (
 		</Footer.Brand>
 		<Footer.Links>
 			<Footer.List>
-				<Title style={{ ...titleStyle, ...getTitleStyle(configName) }}>Reactive &lt;x></Title>
+				<Title style={{ ...titleStyle, ...getTitleStyle(configName) }}>
+					Reactive &lt;x
+				</Title>
 				<li>
-					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivesearch">
+					<a
+						target="_blank"
+						style={getLinkStyle(configName)}
+						rel="noopener noreferrer"
+						href="https://opensource.appbase.io/reactivesearch"
+					>
 						React
 					</a>
 				</li>
 				<li>
-					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivesearch/native">
+					<a
+						target="_blank"
+						style={getLinkStyle(configName)}
+						rel="noopener noreferrer"
+						href="https://opensource.appbase.io/reactivesearch/native"
+					>
 						React Native
 					</a>
 				</li>
 				<li>
-					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivesearch/vue">
+					<a
+						target="_blank"
+						style={getLinkStyle(configName)}
+						rel="noopener noreferrer"
+						href="https://opensource.appbase.io/reactivesearch/vue"
+					>
 						Vue.JS
 					</a>
 				</li>
 				<li>
-					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://opensource.appbase.io/reactivemaps">
+					<a
+						target="_blank"
+						style={getLinkStyle(configName)}
+						rel="noopener noreferrer"
+						href="https://opensource.appbase.io/reactivemaps"
+					>
 						ReactiveMaps
 					</a>
 				</li>
@@ -144,7 +166,12 @@ export default ({ configName }) => (
 					</a>
 				</li>
 				<li>
-					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://twitter.com/appbaseio">
+					<a
+						target="_blank"
+						style={getLinkStyle(configName)}
+						rel="noopener noreferrer"
+						href="https://twitter.com/appbaseio"
+					>
 						Twitter
 					</a>
 				</li>
@@ -155,17 +182,32 @@ export default ({ configName }) => (
 					More
 				</Title>
 				<li>
-					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="https://medium.appbase.io/">
+					<a
+						target="_blank"
+						style={getLinkStyle(configName)}
+						rel="noopener noreferrer"
+						href="https://medium.appbase.io/"
+					>
 						Medium Publication
 					</a>
 				</li>
 				<li>
-					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="http://docs.appbase.io/">
+					<a
+						target="_blank"
+						style={getLinkStyle(configName)}
+						rel="noopener noreferrer"
+						href="http://docs.appbase.io/"
+					>
 						Appbase.io Docs
 					</a>
 				</li>
 				<li>
-					<a target="_blank" style={getLinkStyle(configName)} rel="noopener noreferrer" href="mailto:support@appbase.io">
+					<a
+						target="_blank"
+						style={getLinkStyle(configName)}
+						rel="noopener noreferrer"
+						href="mailto:support@appbase.io"
+					>
 						Support Email
 					</a>
 				</li>

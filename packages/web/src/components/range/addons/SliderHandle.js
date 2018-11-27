@@ -21,7 +21,7 @@ const SliderHandle = ({
 		}
 		const tooltipContent = passProps['aria-valuenow'];
 		return (
-			<button style={style} className={className} {...passProps} >
+			<button style={style} className={className} {...passProps}>
 				<span className={tooltipClassname}>
 					{renderTooltipData ? renderTooltipData(tooltipContent) : tooltipContent}
 				</span>

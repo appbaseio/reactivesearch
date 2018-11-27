@@ -23,13 +23,18 @@ class Main extends Component {
 							title="DataController"
 							componentId="BookSensor"
 							dataField="original_series.raw"
-							customQuery={
-								(book, props) =>
-									(book ? { match: { [props.dataField]: book } } : { match_all: {} })
+							customQuery={(book, props) =>
+								(book ? { match: { [props.dataField]: book } } : { match_all: {} })
 							}
 							size={100}
 						>
-							<div>A custom <span role="img" aria-label="img">💪</span> UI component</div>
+							<div>
+								A custom{' '}
+								<span role="img" aria-label="img">
+									💪
+								</span>{' '}
+								UI component
+							</div>
 						</DataController>
 					</div>
 
@@ -60,12 +65,16 @@ class Main extends Component {
 					<div className="book-header">{data.original_title}</div>
 					<div className="flex column justify-space-between">
 						<div>
-							<div>by <span className="authors-list">{data.authors}</span></div>
+							<div>
+								by <span className="authors-list">{data.authors}</span>
+							</div>
 							<div className="ratings-list flex align-center">
 								<span className="stars">
-									{
-										Array(data.average_rating_rounded).fill('x')
-											.map((item, index) => <i className="fas fa-star" key={index} />) // eslint-disable-line
+									{Array(data.average_rating_rounded)
+										.fill('x')
+										.map((item, index) => (
+											<i className="fas fa-star" key={index} />
+										)) // eslint-disable-line
 									}
 								</span>
 								<span className="avg-rating">({data.average_rating} avg)</span>

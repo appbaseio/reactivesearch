@@ -35,16 +35,14 @@ const HistogramContainer = (props) => {
 
 	return (
 		<div className={histogramContainer}>
-			{
-				range.map((item, index) => (
-					<Histogram
-						key={item.key}
-						width={getWidth(index, range, item, props)}
-						height={`${(100 * item.doc_count) / max || 0}%`}
-						title={item.doc_count}
-					/>
-				))
-			}
+			{range.map((item, index) => (
+				<Histogram
+					key={item.key}
+					width={getWidth(index, range, item, props)}
+					height={`${(100 * item.doc_count) / max || 0}%`}
+					title={item.doc_count}
+				/>
+			))}
 		</div>
 	);
 };

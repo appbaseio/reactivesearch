@@ -86,7 +86,7 @@ class TextField extends Component {
 			};
 		}
 		return null;
-	}
+	};
 
 	handleTextChange = debounce((value) => {
 		this.updateQuery(value, this.props);
@@ -100,25 +100,23 @@ class TextField extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState({
-				currentValue: value,
-			}, () => {
-				if (isDefaultValue) {
-					this.updateQuery(value, props);
-				} else {
-					// debounce for handling text while typing
-					this.handleTextChange(value);
-				}
-				this.locked = false;
-				if (props.onValueChange) props.onValueChange(value);
-			});
+			this.setState(
+				{
+					currentValue: value,
+				},
+				() => {
+					if (isDefaultValue) {
+						this.updateQuery(value, props);
+					} else {
+						// debounce for handling text while typing
+						this.handleTextChange(value);
+					}
+					this.locked = false;
+					if (props.onValueChange) props.onValueChange(value);
+				},
+			);
 		};
-		checkValueChange(
-			props.componentId,
-			value,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -147,28 +145,27 @@ class TextField extends Component {
 			return this.props.clearIcon || <CancelSvg />;
 		}
 		return null;
-	}
+	};
 
 	renderIcons = () => (
 		<div>
-			{
-				this.state.currentValue && this.props.showClear
-				&& (
-					<InputIcon
-						onClick={this.clearValue}
-						iconPosition="right"
-					>
-						{this.renderCancelIcon()}
-					</InputIcon>
-				)
-			}
+			{this.state.currentValue
+				&& this.props.showClear && (
+				<InputIcon onClick={this.clearValue} iconPosition="right">
+					{this.renderCancelIcon()}
+				</InputIcon>
+			)}
 		</div>
 	);
 
 	render() {
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<div className={suggestionsContainer}>
 					<Input
 						type="text"
@@ -242,8 +239,10 @@ TextField.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	themePreset: state.config.themePreset,
 });
 
@@ -256,4 +255,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(TextField);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(TextField);

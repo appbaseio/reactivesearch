@@ -139,7 +139,7 @@ export default {
 			backgroundColor: primaryDark,
 			title: 'Get dedicated support',
 			description:
-				"We offer production support for ReactiveSearch. Work with us to bring your dream project to life.",
+				'We offer production support for ReactiveSearch. Work with us to bring your dream project to life.',
 			button: {
 				title: 'SUPPORT PLANS',
 				href: 'https://appbase.io/pricing#support',

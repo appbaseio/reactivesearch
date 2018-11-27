@@ -1,7 +1,7 @@
 let nextTodoId = 0;
 export const addTodo = text => ({
 	type: 'ADD_TODO',
-	id: nextTodoId++,	// eslint-disable-line
+	id: nextTodoId++, // eslint-disable-line
 	text,
 });
 
