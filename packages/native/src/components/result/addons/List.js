@@ -13,16 +13,18 @@ class List extends Component {
 	}
 
 	render() {
-		return (<FlatList
-			ref={node => this.props.setRef(node)}
-			style={{ width: '100%' }}
-			data={this.props.data || []}
-			keyExtractor={item => item._id}
-			renderItem={({ item }) => this.props.onData(item)}
-			onEndReachedThreshold={0.5}
-			onEndReached={this.props.onEndReached}
-			{...getInnerKey(this.props.innerProps, 'flatList')}
-		/>);
+		return (
+			<FlatList
+				ref={node => this.props.setRef(node)}
+				style={{ width: '100%' }}
+				data={this.props.data || []}
+				keyExtractor={item => item._id}
+				renderItem={({ item }) => this.props.onData(item)}
+				onEndReachedThreshold={0.5}
+				onEndReached={this.props.onEndReached}
+				{...getInnerKey(this.props.innerProps, 'flatList')}
+			/>
+		);
 	}
 }
 

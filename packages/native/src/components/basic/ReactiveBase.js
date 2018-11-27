@@ -23,9 +23,8 @@ class ReactiveBase extends Component {
 
 		this.type = props.type ? props.type : '*';
 
-		const credentials = props.url && props.url.trim() !== '' && !props.credentials
-			? null
-			: props.credentials;
+		const credentials
+			= props.url && props.url.trim() !== '' && !props.credentials ? null : props.credentials;
 
 		const config = {
 			url: props.url && props.url.trim() !== '' ? props.url : 'https://scalr.api.appbase.io',
@@ -43,9 +42,7 @@ class ReactiveBase extends Component {
 		return (
 			<ThemeProvider theming={{ ...theme, ...this.props.theme }}>
 				<Provider store={this.store}>
-					<Container>
-						{this.props.children}
-					</Container>
+					<Container>{this.props.children}</Container>
 				</Provider>
 			</ThemeProvider>
 		);

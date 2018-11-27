@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
 import { View, Modal, FlatList, TouchableWithoutFeedback } from 'react-native';
-import {
-	Text,
-	Body,
-	Item,
-	Header,
-	Left,
-	Button,
-	Icon,
-	Title,
-	Right,
-} from 'native-base';
+import { Text, Body, Item, Header, Left, Button, Icon, Title, Right } from 'native-base';
 
 import {
 	addComponent,
@@ -67,37 +57,22 @@ class MultiDropdownList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
-		checkPropChange(
-			this.props.options,
-			nextProps.options,
-			() => {
-				this.setState({
-					options: nextProps.options[nextProps.dataField]
-						? nextProps.options[nextProps.dataField].buckets
-						: [],
-				});
-			},
-		);
-		checkSomePropChange(
-			this.props,
-			nextProps,
-			['size', 'sortBy'],
-			() => this.updateQueryOptions(nextProps),
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkPropChange(this.props.options, nextProps.options, () => {
+			this.setState({
+				options: nextProps.options[nextProps.dataField]
+					? nextProps.options[nextProps.dataField].buckets
+					: [],
+			});
+		});
+		checkSomePropChange(this.props, nextProps, ['size', 'sortBy'], () =>
+			this.updateQueryOptions(nextProps),
 		);
 
-		checkPropChange(
-			this.props.dataField,
-			nextProps.dataField,
-			() => {
-				this.updateQueryOptions(nextProps);
-				this.updateQuery(Object.keys(this.state.currentValue), nextProps);
-			},
-		);
+		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+			this.updateQueryOptions(nextProps);
+			this.updateQuery(Object.keys(this.state.currentValue), nextProps);
+		});
 
 		let selectedValue = Object.keys(this.state.currentValue);
 
@@ -150,13 +125,11 @@ class MultiDropdownList extends Component {
 				};
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
-				const queryArray = value.map(item => (
-					{
-						[type]: {
-							[props.dataField]: item,
-						},
-					}
-				));
+				const queryArray = value.map(item => ({
+					[type]: {
+						[props.dataField]: item,
+					},
+				}));
 				listQuery = {
 					bool: {
 						must: queryArray,
@@ -220,21 +193,19 @@ class MultiDropdownList extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-			}, () => {
-				this.updateQuery(finalValues, props);
-				this.locked = false;
-				if (props.onValueChange) props.onValueChange(finalValues);
-			});
+			this.setState(
+				{
+					currentValue,
+				},
+				() => {
+					this.updateQuery(finalValues, props);
+					this.locked = false;
+					if (props.onValueChange) props.onValueChange(finalValues);
+				},
+			);
 		};
 
-		checkValueChange(
-			props.componentId,
-			finalValues,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, finalValues, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -279,112 +250,112 @@ class MultiDropdownList extends Component {
 		}
 
 		if (this.props.selectAllLabel) {
-			selectAll = [{
-				key: this.props.selectAllLabel,
-			}];
+			selectAll = [
+				{
+					key: this.props.selectAllLabel,
+				},
+			];
 		}
 
 		return (
 			<View style={this.props.style}>
-				{
-					this.state.showModal
-						? (
-							<Modal
-								supportedOrientations={this.props.supportedOrientations || null}
-								transparent={false}
-								visible={this.state.showModal}
-								onRequestClose={this.toggleModal}
-								{...getInnerKey(this.props.innerProps, 'modal')}
-							>
-								<Header {...getInnerKey(this.props.innerProps, 'header')}>
-									<Left style={getInnerKey(this.props.innerStyle, 'left')}>
-										<Button
-											transparent
-											onPress={this.toggleModal}
-											style={getInnerKey(this.props.innerStyle, 'button')}
-											{...getInnerKey(this.props.innerProps, 'button')}
-										>
-											<Icon
-												name="arrow-back"
-												color={this.props.theming.primaryColor}
-												style={getInnerKey(this.props.innerStyle, 'icon')}
-												{...getInnerKey(this.props.innerProps, 'icon')}
-											/>
-										</Button>
-									</Left>
-									<Body style={getInnerKey(this.props.innerStyle, 'body')}>
-										<Title
-											style={getInnerKey(this.props.innerStyle, 'title')}
-											{...getInnerKey(this.props.innerProps, 'title')}
-										>
-											{this.props.placeholder}
-										</Title>
-									</Body>
-									<Right style={getInnerKey(this.props.innerStyle, 'right')} />
-								</Header>
-								<FlatList
-									data={[
-										...selectAll,
-										...this.state.options
-											.filter(item => String(item.key).trim().length)
-											.map(item => ({ ...item, key: String(item.key) })),
-									]}
-									renderItem={({ item }) => {
-										const label = this.props.showCount && item.doc_count
-											? `${item.key} (${item.doc_count})`
-											: item.key;
-
-										return (
-											<CheckboxItem
-												label={label}
-												value={item.key}
-												onPress={this.setValue}
-												checked={Object.keys(this.state.currentValue).includes(item.key)}
-												innerStyle={this.props.innerStyle}
-												theming={this.props.theming}
-												innerProps={this.props.innerProps}
-											/>
-										);
-									}}
-									{...getInnerKey(this.props.innerProps, 'flatList')}
-								/>
-							</Modal>)
-						: (
-							<Item
-								regular
-								style={{ marginLeft: 0 }}
-								{...getInnerKey(this.props.innerProps, 'item')}
-							>
-								<TouchableWithoutFeedback
+				{this.state.showModal ? (
+					<Modal
+						supportedOrientations={this.props.supportedOrientations || null}
+						transparent={false}
+						visible={this.state.showModal}
+						onRequestClose={this.toggleModal}
+						{...getInnerKey(this.props.innerProps, 'modal')}
+					>
+						<Header {...getInnerKey(this.props.innerProps, 'header')}>
+							<Left style={getInnerKey(this.props.innerStyle, 'left')}>
+								<Button
+									transparent
 									onPress={this.toggleModal}
+									style={getInnerKey(this.props.innerStyle, 'button')}
+									{...getInnerKey(this.props.innerProps, 'button')}
 								>
-									<Text
-										numberOfLines={1}
-										ellipsizeMode="tail"
-										style={{
-											flex: 1,
-											alignItems: 'center',
-											color: this.state.currentDate ? this.props.theming.textColor : '#555',
-											fontSize: 17,
-											height: 50,
-											lineHeight: 24,
-											paddingLeft: 8,
-											paddingRight: 5,
-											paddingTop: 12,
-											...getInnerKey(this.props.innerStyle, 'label'),
-										}}
-										{...getInnerKey(this.props.innerProps, 'text')}
-									>
-										{
-											Object.keys(this.state.currentValue).length
-												? Object.keys(this.state.currentValue).join(', ')
-												: this.props.placeholder
-										}
-									</Text>
-								</TouchableWithoutFeedback>
-							</Item>
-						)
-				}
+									<Icon
+										name="arrow-back"
+										color={this.props.theming.primaryColor}
+										style={getInnerKey(this.props.innerStyle, 'icon')}
+										{...getInnerKey(this.props.innerProps, 'icon')}
+									/>
+								</Button>
+							</Left>
+							<Body style={getInnerKey(this.props.innerStyle, 'body')}>
+								<Title
+									style={getInnerKey(this.props.innerStyle, 'title')}
+									{...getInnerKey(this.props.innerProps, 'title')}
+								>
+									{this.props.placeholder}
+								</Title>
+							</Body>
+							<Right style={getInnerKey(this.props.innerStyle, 'right')} />
+						</Header>
+						<FlatList
+							data={[
+								...selectAll,
+								...this.state.options
+									.filter(item => String(item.key).trim().length)
+									.map(item => ({ ...item, key: String(item.key) })),
+							]}
+							renderItem={({ item }) => {
+								const label
+									= this.props.showCount && item.doc_count
+										? `${item.key} (${item.doc_count})`
+										: item.key;
+
+								return (
+									<CheckboxItem
+										label={label}
+										value={item.key}
+										onPress={this.setValue}
+										checked={Object.keys(this.state.currentValue).includes(
+											item.key,
+										)}
+										innerStyle={this.props.innerStyle}
+										theming={this.props.theming}
+										innerProps={this.props.innerProps}
+									/>
+								);
+							}}
+							{...getInnerKey(this.props.innerProps, 'flatList')}
+						/>
+					</Modal>
+				) : (
+					<Item
+						regular
+						style={{ marginLeft: 0 }}
+						{...getInnerKey(this.props.innerProps, 'item')}
+					>
+						<TouchableWithoutFeedback onPress={this.toggleModal}>
+							<Text
+								numberOfLines={1}
+								ellipsizeMode="tail"
+								style={{
+									flex: 1,
+									alignItems: 'center',
+									color: this.state.currentDate
+										? this.props.theming.textColor
+										: '#555',
+									fontSize: 17,
+									height: 50,
+									lineHeight: 24,
+									paddingLeft: 8,
+									paddingRight: 5,
+									paddingTop: 12,
+									...getInnerKey(this.props.innerStyle, 'label'),
+								}}
+								{...getInnerKey(this.props.innerProps, 'text')}
+							>
+								{Object.keys(this.state.currentValue).length
+									? Object.keys(this.state.currentValue).join(', ')
+									: this.props.placeholder}
+							</Text>
+						</TouchableWithoutFeedback>
+					</Item>
+				)}
 			</View>
 		);
 	}
@@ -433,8 +404,10 @@ MultiDropdownList.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -447,4 +420,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(MultiDropdownList));
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(MultiDropdownList));
