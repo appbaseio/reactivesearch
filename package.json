@@ -9,7 +9,6 @@
 		"lint:ts-fix": "tslint -c tslint.json --fix 'packages/web/**/**/*.{ts,tsx}'",
 		"precommit": "lint-staged",
 		"deploy-site": "scripts/deploy-site.sh",
-		"prettier": "prettier --config ./.prettierrc.js --write packages/web/**/**/**/**/*.js",
 		"native:publish-stories": "cd packages/native/examples/datasearch/ && exp publish && cd .. && cd datepicker/ && exp publish && cd .. && cd daterange/ && exp publish && cd .. && cd multidropdownlist/ && exp publish && cd .. && cd multidropdownrange/ && exp publish && cd .. && cd singledropdownlist/ && exp publish && cd .. && cd singledropdownrange/ && exp publish && cd .. && cd textfield/ && exp publish && cd ../../../../"
 	},
 	"author": "metagrover",
