@@ -52,7 +52,7 @@ class Tools extends Component {
 					githubStarCount: res.stargazers_count,
 				});
 			})
-			.catch(e => console.log(e));
+			.catch(e => console.log(e)); // eslint-disable-line
 		window.scrollTo(0, 0);
 	}
 
@@ -75,22 +75,24 @@ class Tools extends Component {
 								<Logo.Dark>{config.header.logo.title.dark}</Logo.Dark>
 								{config.header.logo.title.description && (
 									<span css="margin-left: 7px !important">
-										<Logo.Light>{config.header.logo.title.description}</Logo.Light>
-									</span>)
-								}
+										<Logo.Light>
+											{config.header.logo.title.description}
+										</Logo.Light>
+									</span>
+								)}
 							</Logo>
 						</Navbar.Logo>
 						<Navbar.List>
 							{config.header.links.map((l, i) => (
 								<li
-									className={
-										l.href.endsWith('/tools') ? 'active' : undefined
-									}
+									className={l.href.endsWith('/tools') ? 'active' : undefined}
 									/* eslint-disable-next-line */
 									key={i}
 								>
 									{/* eslint-disable-next-line */}
-									<Link style={getLinkStyle(config.name)} to={l.href}>{l.description.toUpperCase()}</Link>
+									<Link style={getLinkStyle(config.name)} to={l.href}>
+										{l.description.toUpperCase()}
+									</Link>
 								</li>
 							))}
 							<li className={showMobileFlex}>
@@ -98,12 +100,23 @@ class Tools extends Component {
 							</li>
 							<li className="button">
 								<Button
-									style={{ backgroundColor: secondary, ...button, color: isVue ? textDark : undefined }}
+									style={{
+										backgroundColor: secondary,
+										...button,
+										color: isVue ? textDark : undefined,
+									}}
 									href={config.urls.support}
 									bold
 									uppercase
 								>
-									<img src={isVue ? 'images/supportDark.svg' : 'images/support.svg'} style={{ marginRight: 8 }} alt="support" /> SUPPORT
+									<img
+										src={
+											isVue ? 'images/supportDark.svg' : 'images/support.svg'
+										}
+										style={{ marginRight: 8 }}
+										alt="support"
+									/>{' '}
+									SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>
@@ -128,7 +141,11 @@ class Tools extends Component {
 							</p>
 
 							<GithubButton
-								count={(this.state.githubStarCount || config.githubCount || '').toString()}
+								count={(
+									this.state.githubStarCount ||
+									config.githubCount ||
+									''
+								).toString()}
 								href={config.urls.github}
 							/>
 
@@ -143,7 +160,10 @@ class Tools extends Component {
 								className={hideMobile}
 							>
 								<div>
-									<img src="images/tools/Search.svg" alt="Reactivesearch for web" />
+									<img
+										src="images/tools/Search.svg"
+										alt="Reactivesearch for web"
+									/>
 									<p className={brand}>
 										Reactive <span className={boldFont}>Search</span> for web
 									</p>
@@ -155,7 +175,10 @@ class Tools extends Component {
 									</p>
 								</div>
 								<div>
-									<img src="images/tools/ReactiveNative.svg" alt="Reactivesearch for mobile" />
+									<img
+										src="images/tools/ReactiveNative.svg"
+										alt="Reactivesearch for mobile"
+									/>
 									<p className={brand}>
 										Reactive <span className={boldFont}>X</span> for mobile
 									</p>
@@ -171,7 +194,13 @@ class Tools extends Component {
 						}}
 					>
 						<Layout>
-							<Grid size={2} mdSize={1} gutter="30px" smGutter="0px" className={tabCenter}>
+							<Grid
+								size={2}
+								mdSize={1}
+								gutter="30px"
+								smGutter="0px"
+								className={tabCenter}
+							>
 								<div
 									className={vcenter}
 									style={{
@@ -197,9 +226,14 @@ class Tools extends Component {
 									</p>
 
 									<ul className={featureList}>
-										<li>20+ pre-built React UI components with configurable styles and queries.</li>
+										<li>
+											20+ pre-built React UI components with configurable
+											styles and queries.
+										</li>
 										<li>Bring your own UI components.</li>
-										<li>Used in production for B2B, e-commerce, and SaaS search.</li>
+										<li>
+											Used in production for B2B, e-commerce, and SaaS search.
+										</li>
 									</ul>
 
 									<div className="button-row">
@@ -253,14 +287,24 @@ class Tools extends Component {
 						}}
 					>
 						<Layout>
-							<Grid size={2} mdSize={1} gutter="30px" smGutter="0px" className={tabCenter}>
+							<Grid
+								size={2}
+								mdSize={1}
+								gutter="30px"
+								smGutter="0px"
+								className={tabCenter}
+							>
 								<div
 									style={{
 										margin: 0,
 									}}
 									className={hideTab}
 								>
-									<img width="100%" src="images/tools/ReactiveMaps.png" alt="Reactivemaps" />
+									<img
+										width="100%"
+										src="images/tools/ReactiveMaps.png"
+										alt="Reactivemaps"
+									/>
 								</div>
 								<div
 									className={vcenter}
@@ -287,7 +331,8 @@ class Tools extends Component {
 											color: '#fff',
 										}}
 									>
-										An Elasticsearch components library for building geolocation apps.
+										An Elasticsearch components library for building geolocation
+										apps.
 									</p>
 
 									<ul className={featureList}>
@@ -296,7 +341,8 @@ class Tools extends Component {
 												color: '#fff',
 											}}
 										>
-											Works with ReactiveSearch components, and adds geospatial components for Maps.
+											Works with ReactiveSearch components, and adds
+											geospatial components for Maps.
 										</li>
 										<li
 											style={{
@@ -310,8 +356,8 @@ class Tools extends Component {
 												color: '#fff',
 											}}
 										>
-											Built on top of Google Maps. It can be extended to build routes, places and
-											location streaming apps.
+											Built on top of Google Maps. It can be extended to build
+											routes, places and location streaming apps.
 										</li>
 									</ul>
 
@@ -350,7 +396,13 @@ class Tools extends Component {
 						}}
 					>
 						<Layout>
-							<Grid size={2} mdSize={1} gutter="30px" smGutter="0px" className={tabCenter}>
+							<Grid
+								size={2}
+								mdSize={1}
+								gutter="30px"
+								smGutter="0px"
+								className={tabCenter}
+							>
 								<div
 									className={vcenter}
 									style={{
@@ -373,13 +425,14 @@ class Tools extends Component {
 										<span className={boldFont}>Search Native</span>
 									</H2>
 									<p style={{ color: '#fff' }}>
-										Elasticsearch UI components for React Native targeting Android and iOS apps.
+										Elasticsearch UI components for React Native targeting
+										Android and iOS apps.
 									</p>
 
 									<ul className={featureList}>
 										<li>
-											Over 10 pre-built UI components that maintain design parity with web
-											components.
+											Over 10 pre-built UI components that maintain design
+											parity with web components.
 										</li>
 										<li>Bring your own UI components.</li>
 										<li>
@@ -473,8 +526,8 @@ class Tools extends Component {
 										margin: '20px auto 40px',
 									}}
 								>
-									We offer production support for ReactiveMaps. Work with us to bring your dream
-									project to life.
+									We offer production support for ReactiveMaps. Work with us to
+									bring your dream project to life.
 								</p>
 								<div className="button-row">
 									<Button
@@ -504,7 +557,11 @@ class Tools extends Component {
 										}}
 									>
 										<img
-											src={isVue ? 'images/supportDark.svg' : 'images/support.svg'}
+											src={
+												isVue
+													? 'images/supportDark.svg'
+													: 'images/support.svg'
+											}
 											style={{
 												marginRight: 10,
 											}}

@@ -22,18 +22,18 @@ export default {
 	),
 	installationSteps: [
 		{
-			title: "Install ReactiveSearch Native",
+			title: 'Install ReactiveSearch Native',
 			descriptions: [
-				"ReactiveSearch Native is a set of React Native UI components for building data-driven UIs with ElasticSearch."
+				'ReactiveSearch Native is a set of React Native UI components for building data-driven UIs with ElasticSearch.',
 			],
-			codes: ["npm install @appbaseio/reactivesearch-native"]
+			codes: ['npm install @appbaseio/reactivesearch-native'],
 		},
 		{
-			title: "Connect to your ES index",
+			title: 'Connect to your ES index',
 			descriptions: [
-				"ReactiveSearch components can connect to an Elasticsearch index hosted anywhere.",
+				'ReactiveSearch components can connect to an Elasticsearch index hosted anywhere.',
 				<React.Fragment>
-					Create a free app (aka index) with{" "}
+					Create a free app (aka index) with{' '}
 					<a
 						rel="noopener noreferrer"
 						href="https://appbase.io"
@@ -42,38 +42,38 @@ export default {
 						appbase.io
 					</a>
 					.
-				</React.Fragment>
+				</React.Fragment>,
 			],
 			links: [
 				{
-					title: "READ MORE",
+					title: 'READ MORE',
 					href:
-						"https://opensource.appbase.io/reactive-manual/native/getting-started/reactivebase.html"
-				}
-			]
+						'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivebase.html',
+				},
+			],
 		},
 		{
-			title: "Create or Import dataset",
+			title: 'Create or Import dataset',
 			descriptions: [
-				"Use Dejavu, an open-source databrowser from appbase.io to create, view, edit and import dataset into your Elasticsearch index."
+				'Use Dejavu, an open-source databrowser from appbase.io to create, view, edit and import dataset into your Elasticsearch index.',
 			],
 			links: [
 				{
-					title: "Dejavu",
-					href: "https://opensource.appbase.io/dejavu"
+					title: 'Dejavu',
+					href: 'https://opensource.appbase.io/dejavu',
 				},
 				{
-					title: "Read more",
+					title: 'Read more',
 					href:
-						"https://opensource.appbase.io/reactive-manual/native/getting-started/data.html#importing-custom-data"
-				}
-			]
+						'https://opensource.appbase.io/reactive-manual/native/getting-started/data.html#importing-custom-data',
+				},
+			],
 		},
 		{
-			title: "UI Components",
+			title: 'UI Components',
 			descriptions: [
 				<React.Fragment>
-					Add UI components for{" "}
+					Add UI components for{' '}
 					<a
 						rel="noopener noreferrer"
 						href="https://opensource.appbase.io/reactive-manual/native/components/datasearch.html"
@@ -81,7 +81,7 @@ export default {
 					>
 						Search
 					</a>
-					,{" "}
+					,{' '}
 					<a
 						rel="noopener noreferrer"
 						href="https://opensource.appbase.io/reactive-manual/native/components/singledropdownlist.html"
@@ -89,7 +89,7 @@ export default {
 					>
 						Lists
 					</a>
-					,{" "}
+					,{' '}
 					<a
 						rel="noopener noreferrer"
 						href="https://opensource.appbase.io/reactive-manual/native/components/singledropdownrange.html"
@@ -97,7 +97,7 @@ export default {
 					>
 						Ranges
 					</a>
-					, and{" "}
+					, and{' '}
 					<a
 						rel="noopener noreferrer"
 						href="https://opensource.appbase.io/reactive-manual/native/components/reactivelist.html"
@@ -108,7 +108,7 @@ export default {
 					.
 				</React.Fragment>,
 				<React.Fragment>
-					Or add in your own{" "}
+					Or add in your own{' '}
 					<a
 						rel="noopener noreferrer"
 						href="https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html"
@@ -116,20 +116,20 @@ export default {
 					>
 						UI components
 					</a>.
-				</React.Fragment>
+				</React.Fragment>,
 			],
 			links: [
 				{
-					title: "COMPONENTS OVERVIEW",
+					title: 'COMPONENTS OVERVIEW',
 					href:
-						"https://opensource.appbase.io/reactive-manual/native/getting-started/componentsindex.html"
-				}
-			]
+						'https://opensource.appbase.io/reactive-manual/native/getting-started/componentsindex.html',
+				},
+			],
 		},
 		{
-			title: "Tutorials",
+			title: 'Tutorials',
 			descriptions: [
-				"Get a leg up by checking out these tutorials.",
+				'Get a leg up by checking out these tutorials.',
 				<React.Fragment>
 					<li>
 						<a
@@ -158,21 +158,21 @@ export default {
 							Kitchen Sink App
 						</a>
 					</li>
-				</React.Fragment>
+				</React.Fragment>,
 			],
 			links: [
 				{
-					title: "Read more tutorials",
+					title: 'Read more tutorials',
 					href:
-						"https://medium.appbase.io/tagged/appbase"
-				}
-			]
+						'https://medium.appbase.io/tagged/appbase',
+				},
+			],
 
 		},
 		{
-			title: "ReactiveSearch for <X>",
+			title: 'ReactiveSearch for <X>',
 			descriptions: [
-				"ReactiveSearch is also available for:",
+				'ReactiveSearch is also available for:',
 				<React.Fragment>
 					<li>
 						<a
@@ -201,9 +201,9 @@ export default {
 							Maps
 						</a>
 					</li>
-				</React.Fragment>
-			]
-		}
+				</React.Fragment>,
+			],
+		},
 	],
 	banner: [
 		{
