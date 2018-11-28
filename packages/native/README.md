@@ -101,4 +101,4 @@ watchman watch-del-all
 yarn start --reset-cache
 ```
 
-<a href="https://appbase.io/support/"><img src="https://i.imgur.com/UL6B0uE.png" width="100%" /></a>
+<a href="https://appbase.io/pricing#support/"><img src="https://i.imgur.com/UL6B0uE.png" width="100%" /></a>
