@@ -40,12 +40,13 @@ class MultiList extends Component {
 			currentValue[item] = true;
 		});
 
+		const options = props.options && props.options[props.dataField]
+			? this.getOptions(props.options[props.dataField].buckets, props)
+			: [];
+
 		this.state = {
 			currentValue,
-			options:
-				props.options && props.options[props.dataField]
-					? this.getOptions(props.options[props.dataField].buckets, props)
-					: [],
+			options,
 			searchTerm: '',
 			after: {}, // for composite aggs
 			isLastBucket: false,
@@ -87,7 +88,15 @@ class MultiList extends Component {
 						after: after ? { after } : state.after,
 						isLastBucket,
 						options: this.getOptions(buckets, this.props),
-					}));
+					}), () => {
+						// this will ensure that the Select-All (or any)
+						// valuegets handled on the initial load and
+						// consecutive loads
+						const { currentValue } = this.state;
+						const value = Object.keys(currentValue)
+							.filter(item => currentValue[item]);
+						if (value.length) this.setValue(value, true);
+					});
 				} else {
 					this.setState({
 						options: options[dataField]
@@ -96,6 +105,14 @@ class MultiList extends Component {
 								this.props,
 							)
 							: [],
+					}, () => {
+						// this will ensure that the Select-All (or any)
+						// valuegets handled on the initial load and
+						// consecutive loads
+						const { currentValue } = this.state;
+						const value = Object.keys(currentValue)
+							.filter(item => currentValue[item]);
+						if (value.length) this.setValue(value, true);
 					});
 				}
 			},
@@ -254,7 +271,7 @@ class MultiList extends Component {
 		}
 
 		this.locked = true;
-		const { selectAllLabel } = this.props;
+		const { selectAllLabel } = props;
 		let { currentValue } = this.state;
 		let finalValues = null;
 
@@ -263,7 +280,7 @@ class MultiList extends Component {
 			&& ((Array.isArray(value) && value.includes(selectAllLabel))
 				|| (typeof value === 'string' && value === selectAllLabel))
 		) {
-			if (currentValue[selectAllLabel]) {
+			if (currentValue[selectAllLabel] && hasMounted && !isDefaultValue) {
 				currentValue = {};
 				finalValues = [];
 			} else {
