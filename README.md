@@ -5,7 +5,7 @@
   <br />
 </h2>
 
-<p align="center" style="font-size: 1.2rem">A React and React Native UI components library for Elasticsearch</p>
+<p align="center" style="font-size: 1.2rem">A React, React Native and Vue.JS UI components library for Elasticsearch</p>
 <p align="center">
 Read how to build an e-commerce search UI</p>
 <p align="center">
