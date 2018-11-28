@@ -33,8 +33,11 @@ class SingleList extends Component {
 	constructor(props) {
 		super(props);
 
+		const defaultValue = props.defaultValue || props.value;
+		const currentValue = props.selectedValue || defaultValue;
+
 		this.state = {
-			currentValue: '',
+			currentValue: currentValue || '',
 			options:
 				props.options && props.options[props.dataField]
 					? this.getOptions(props.options[props.dataField].buckets, props)
@@ -46,20 +49,17 @@ class SingleList extends Component {
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
 		this.props.addComponent(this.internalComponent);
-		this.props.addComponent(this.props.componentId);
-		this.updateQueryOptions(this.props);
+		this.props.addComponent(props.componentId);
+		this.updateQueryOptions(props);
 
-		this.setReact(this.props);
-		const defaultValue = this.props.defaultValue || this.props.value;
+		this.setReact(props);
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue);
+		if (props.selectedValue) {
+			this.setValue(props.selectedValue, props, true);
 		} else if (defaultValue) {
-			this.setValue(defaultValue);
+			this.setValue(defaultValue, props, true);
 		}
 	}
 
@@ -197,29 +197,31 @@ class SingleList extends Component {
 		return query;
 	};
 
-	setValue = (nextValue, props = this.props) => {
+	setValue = (value, props = this.props, beforeMount = false) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
 		}
 
 		this.locked = true;
-		let value = nextValue;
-		if (nextValue === this.state.currentValue) {
-			value = '';
-		}
 
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentValue: value,
-				},
-				() => {
-					this.updateQuery(value, props);
-					this.locked = false;
-					if (props.onValueChange) props.onValueChange(value);
-				},
-			);
+			if (beforeMount) {
+				this.updateQuery(value, props);
+				this.locked = false;
+				if (props.onValueChange) props.onValueChange(value);
+			} else {
+				this.setState(
+					{
+						currentValue: value,
+					},
+					() => {
+						this.updateQuery(value, props);
+						this.locked = false;
+						if (props.onValueChange) props.onValueChange(value);
+					},
+				);
+			}
 		};
 
 		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
