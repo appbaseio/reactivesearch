@@ -55,11 +55,12 @@ class SingleList extends Component {
 		this.updateQueryOptions(props);
 
 		this.setReact(props);
+		const hasMounted = false;
 
 		if (props.selectedValue) {
-			this.setValue(props.selectedValue, props, true);
+			this.setValue(props.selectedValue, props, hasMounted);
 		} else if (defaultValue) {
-			this.setValue(defaultValue, props, true);
+			this.setValue(defaultValue, props, hasMounted);
 		}
 	}
 
@@ -197,7 +198,7 @@ class SingleList extends Component {
 		return query;
 	};
 
-	setValue = (value, props = this.props, beforeMount = false) => {
+	setValue = (value, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -206,11 +207,7 @@ class SingleList extends Component {
 		this.locked = true;
 
 		const performUpdate = () => {
-			if (beforeMount) {
-				this.updateQuery(value, props);
-				this.locked = false;
-				if (props.onValueChange) props.onValueChange(value);
-			} else {
+			if (hasMounted) {
 				this.setState(
 					{
 						currentValue: value,
@@ -221,6 +218,10 @@ class SingleList extends Component {
 						if (props.onValueChange) props.onValueChange(value);
 					},
 				);
+			} else {
+				this.updateQuery(value, props);
+				this.locked = false;
+				if (props.onValueChange) props.onValueChange(value);
 			}
 		};
 
