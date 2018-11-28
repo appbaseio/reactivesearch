@@ -61,7 +61,7 @@ class HomePage extends Component {
 					githubStarCount: res.stargazers_count,
 				});
 			})
-			.catch(e => console.log(e));
+			.catch(e => console.log(e)); // eslint-disable-line
 
 		window.scrollTo(0, 0);
 	}
@@ -85,7 +85,9 @@ class HomePage extends Component {
 								<Logo.Dark>{config.header.logo.title.dark}</Logo.Dark>
 								{config.header.logo.title.description && (
 									<span css="margin-left: 7px !important">
-										<Logo.Light>{config.header.logo.title.description}</Logo.Light>
+										<Logo.Light>
+											{config.header.logo.title.description}
+										</Logo.Light>
 									</span>
 								)}
 							</Logo>
@@ -131,11 +133,15 @@ class HomePage extends Component {
 						<Layout>
 							<div className="content">
 								<H1 light>{config.banner1.title}</H1>
-								<p style={getLinkStyle(config.name)}>{config.banner1.description}</p>
+								<p style={getLinkStyle(config.name)}>
+									{config.banner1.description}
+								</p>
 								<div className="button-row">
 									<GithubButton
 										style={button}
-										count={(this.state.githubStarCount || config.githubCount).toString()}
+										count={(
+											this.state.githubStarCount || config.githubCount
+										).toString()}
 										href={config.urls.github}
 									/>
 									<Button
@@ -151,7 +157,10 @@ class HomePage extends Component {
 									>
 										{config.banner1.button.title}
 									</Button>
-									<SecondaryLink href={config.banner1.link.href} style={getLinkStyle(config.name)}>
+									<SecondaryLink
+										href={config.banner1.link.href}
+										style={getLinkStyle(config.name)}
+									>
 										{config.banner1.link.title}
 									</SecondaryLink>
 								</div>
@@ -162,7 +171,11 @@ class HomePage extends Component {
 					<Row style={{ backgroundColor: '#FEFEFE', marginTop: '50px' }}>
 						<Layout>
 							<div className={hideMobile}>
-								<img src={config.banner2.image.src} width="100%" alt={config.banner2.image.alt} />
+								<img
+									src={config.banner2.image.src}
+									width="100%"
+									alt={config.banner2.image.alt}
+								/>
 							</div>
 							<div style={config.banner2.style} className={vcenter}>
 								<H2>{config.banner2.title}</H2>
@@ -201,7 +214,11 @@ class HomePage extends Component {
 								</div>
 								{config.banner2.sketch && (
 									<p>
-										Get <a href={config.banner2.sketch.href}>our designer templates</a> for sketch.
+										Get{' '}
+										<a href={config.banner2.sketch.href}>
+											our designer templates
+										</a>{' '}
+										for sketch.
 									</p>
 								)}
 							</div>
@@ -222,7 +239,11 @@ class HomePage extends Component {
 									// eslint-disable-next-line
 									<ActionCard key={i}>
 										<ActionCard.Icon>
-											<img style={{ maxHeight: 40 }} src={cardI.image.src} alt={cardI.image.alt} />
+											<img
+												style={{ maxHeight: 40 }}
+												src={cardI.image.src}
+												alt={cardI.image.alt}
+											/>
 										</ActionCard.Icon>
 										<Title>{cardI.title}</Title>
 										<p>{cardI.description}</p>
@@ -240,7 +261,11 @@ class HomePage extends Component {
 							</Grid>
 						</Layout>
 					</Section>
-					<BannerRow configName={config.name} config={config.banner5} theme={this.props.theme} />
+					<BannerRow
+						configName={config.name}
+						config={config.banner5}
+						theme={this.props.theme}
+					/>
 					<DiscoverRS />
 					{/** Demos Section */}
 					{config.banner6 && (
@@ -290,9 +315,8 @@ class HomePage extends Component {
 											className={tabJustifyCenter}
 										>
 											{config.banner6.demos.map((d, index) => (
-
 												<Flex
-												// eslint-disable-next-line
+													// eslint-disable-next-line
 													key={index}
 													flexDirection="column"
 													justifyContent="center"
@@ -304,7 +328,11 @@ class HomePage extends Component {
 														href={d.href}
 														className="demo"
 													>
-														<img width="240" src={d.src} alt="Demo app" />
+														<img
+															width="240"
+															src={d.src}
+															alt="Demo app"
+														/>
 													</a>
 													<Button
 														rel="noopener noreferrer"

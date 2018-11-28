@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 
-import {
-	ReactiveBase,
-	DatePicker,
-	ResultCard,
-	SelectedFilters,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, DatePicker, ResultCard, SelectedFilters } from '@appbaseio/reactivesearch';
 
 import './index.css';
 
@@ -72,7 +67,9 @@ class Main extends Component {
 				<div>
 					<div>${res.price}</div>
 					<span style={{ backgroundImage: `url(${res.host_image})` }} />
-					<p>{res.room_type} · {res.accommodates} guests</p>
+					<p>
+						{res.room_type} · {res.accommodates} guests
+					</p>
 				</div>
 			),
 			url: res.listing_url,

@@ -57,17 +57,21 @@ class ReactiveList extends Component {
 		const options = getQueryOptions(this.props);
 		options.from = this.state.from;
 		if (this.props.sortOptions) {
-			options.sort = [{
-				[this.props.sortOptions[0].dataField]: {
-					order: this.props.sortOptions[0].sortBy,
+			options.sort = [
+				{
+					[this.props.sortOptions[0].dataField]: {
+						order: this.props.sortOptions[0].sortBy,
+					},
 				},
-			}];
+			];
 		} else if (this.props.sortBy) {
-			options.sort = [{
-				[this.props.dataField]: {
-					order: this.props.sortBy,
+			options.sort = [
+				{
+					[this.props.dataField]: {
+						order: this.props.sortBy,
+					},
 				},
-			}];
+			];
 		}
 
 		// Override sort query with defaultQuery's sort if defined
@@ -87,22 +91,24 @@ class ReactiveList extends Component {
 		// and only executing it with setReact() at core
 		const execute = false;
 
-		this.props.setQueryOptions(
-			this.props.componentId,
-			options,
-			execute,
-		);
+		this.props.setQueryOptions(this.props.componentId, options, execute);
 
 		if (this.defaultQuery) {
-			this.props.updateQuery({
-				componentId: this.internalComponent,
-				query,
-			}, execute);
+			this.props.updateQuery(
+				{
+					componentId: this.internalComponent,
+					query,
+				},
+				execute,
+			);
 		} else {
-			this.props.updateQuery({
-				componentId: this.internalComponent,
-				query: null,
-			}, execute);
+			this.props.updateQuery(
+				{
+					componentId: this.internalComponent,
+					query: null,
+				},
+				execute,
+			);
 		}
 
 		// query will be executed here
@@ -132,25 +138,26 @@ class ReactiveList extends Component {
 			const options = getQueryOptions(nextProps);
 			options.from = this.state.from;
 			if (nextProps.sortOptions) {
-				options.sort = [{
-					[nextProps.sortOptions[0].dataField]: {
-						order: nextProps.sortOptions[0].sortBy,
+				options.sort = [
+					{
+						[nextProps.sortOptions[0].dataField]: {
+							order: nextProps.sortOptions[0].sortBy,
+						},
 					},
-				}];
+				];
 			} else if (nextProps.sortBy) {
-				options.sort = [{
-					[nextProps.dataField]: {
-						order: nextProps.sortBy,
+				options.sort = [
+					{
+						[nextProps.dataField]: {
+							order: nextProps.sortBy,
+						},
 					},
-				}];
+				];
 			}
 			this.props.setQueryOptions(this.props.componentId, options, true);
 		}
 
-		if (
-			nextProps.defaultQuery
-			&& !isEqual(nextProps.defaultQuery(), this.defaultQuery)
-		) {
+		if (nextProps.defaultQuery && !isEqual(nextProps.defaultQuery(), this.defaultQuery)) {
 			const options = getQueryOptions(nextProps);
 			options.from = 0;
 			this.defaultQuery = nextProps.defaultQuery();
@@ -162,18 +169,24 @@ class ReactiveList extends Component {
 				nextProps.setQueryOptions(nextProps.componentId, options, !query);
 			}
 
-			this.props.updateQuery({
-				componentId: this.internalComponent,
-				query,
-			}, true);
+			this.props.updateQuery(
+				{
+					componentId: this.internalComponent,
+					query,
+				},
+				true,
+			);
 
 			// reset page because of query change
-			this.setState({
-				currentPage: 0,
-				from: 0,
-			}, () => {
-				this.updatePageURL(0);
-			});
+			this.setState(
+				{
+					currentPage: 0,
+					from: 0,
+				},
+				() => {
+					this.updatePageURL(0);
+				},
+			);
 		}
 
 		if (this.props.stream !== nextProps.stream) {
@@ -231,19 +244,19 @@ class ReactiveList extends Component {
 			if (nextProps.queryLog.from !== this.state.from) {
 				// query's 'from' key doesn't match the state's 'from' key,
 				// i.e. this query change was not triggered by the page change (loadMore)
-				this.setState({
-					currentPage: 0,
-				}, () => {
-					this.updatePageURL(0);
-				});
+				this.setState(
+					{
+						currentPage: 0,
+					},
+					() => {
+						this.updatePageURL(0);
+					},
+				);
 
 				if (nextProps.onPageChange) {
 					nextProps.onPageChange(1, totalPages);
 				}
-			} else if (
-				this.initialFrom
-				&& this.initialFrom === nextProps.queryLog.from
-			) {
+			} else if (this.initialFrom && this.initialFrom === nextProps.queryLog.from) {
 				// [non-zero] initialFrom matches the current query's from
 				// but the query has changed
 
@@ -255,17 +268,21 @@ class ReactiveList extends Component {
 				this.initialFrom = 0;
 
 				if (nextProps.sortOptions) {
-					options.sort = [{
-						[nextProps.sortOptions[0].dataField]: {
-							order: nextProps.sortOptions[0].sortBy,
+					options.sort = [
+						{
+							[nextProps.sortOptions[0].dataField]: {
+								order: nextProps.sortOptions[0].sortBy,
+							},
 						},
-					}];
+					];
 				} else if (nextProps.sortBy) {
-					options.sort = [{
-						[nextProps.dataField]: {
-							order: nextProps.sortBy,
+					options.sort = [
+						{
+							[nextProps.dataField]: {
+								order: nextProps.sortBy,
+							},
 						},
-					}];
+					];
 				}
 
 				this.props.setQueryOptions(this.props.componentId, options, true);
@@ -304,7 +321,9 @@ class ReactiveList extends Component {
 			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
@@ -315,35 +334,35 @@ class ReactiveList extends Component {
 		options.size = props.size || 10;
 
 		if (props.sortOptions) {
-			options.sort = [{
-				[props.sortOptions[0].dataField]: {
-					order: props.sortOptions[0].sortBy,
+			options.sort = [
+				{
+					[props.sortOptions[0].dataField]: {
+						order: props.sortOptions[0].sortBy,
+					},
 				},
-			}];
+			];
 		} else if (props.sortBy) {
-			options.sort = [{
-				[props.dataField]: {
-					order: props.sortBy,
+			options.sort = [
+				{
+					[props.dataField]: {
+						order: props.sortBy,
+					},
 				},
-			}];
+			];
 		}
 
 		return options;
 	};
 
 	scrollHandler = () => {
-		let renderLoader = (
-			window.innerHeight + window.pageYOffset + 300
-		) >= document.body.offsetHeight;
+		let renderLoader
+			= window.innerHeight + window.pageYOffset + 300 >= document.body.offsetHeight;
 		if (this.props.scrollTarget) {
-			renderLoader = (
-				this.domNode.clientHeight + this.domNode.scrollTop + 300
-			) >= this.domNode.scrollHeight;
+			renderLoader
+				= this.domNode.clientHeight + this.domNode.scrollTop + 300
+				>= this.domNode.scrollHeight;
 		}
-		if (
-			!this.props.isLoading
-			&& renderLoader
-		) {
+		if (!this.props.isLoading && renderLoader) {
 			this.loadMore();
 		}
 	};
@@ -360,10 +379,14 @@ class ReactiveList extends Component {
 			this.setState({
 				from: value,
 			});
-			this.props.loadMore(this.props.componentId, {
-				...options,
-				from: value,
-			}, true);
+			this.props.loadMore(
+				this.props.componentId,
+				{
+					...options,
+					from: value,
+				},
+				true,
+			);
 		}
 	};
 
@@ -377,17 +400,24 @@ class ReactiveList extends Component {
 			const value = this.props.size * page;
 			const options = getQueryOptions(this.props);
 			options.from = this.state.from;
-			this.setState({
-				from: value,
-				currentPage: page,
-			}, () => {
-				this.props.loadMore(this.props.componentId, {
-					...options,
+			this.setState(
+				{
 					from: value,
-				}, false);
+					currentPage: page,
+				},
+				() => {
+					this.props.loadMore(
+						this.props.componentId,
+						{
+							...options,
+							from: value,
+						},
+						false,
+					);
 
-				this.updatePageURL(page);
-			});
+					this.updatePageURL(page);
+				},
+			);
 		}
 	};
 
@@ -396,7 +426,12 @@ class ReactiveList extends Component {
 			return this.props.onResultStats(this.props.total, this.props.time);
 		} else if (this.props.total) {
 			return (
-				<p className={`${resultStats} ${getClassName(this.props.innerClass, 'resultStats')}`}>
+				<p
+					className={`${resultStats} ${getClassName(
+						this.props.innerClass,
+						'resultStats',
+					)}`}
+				>
 					{this.props.total} results found in {this.props.time}ms
 				</p>
 			);
@@ -406,7 +441,7 @@ class ReactiveList extends Component {
 
 	renderNoResults = () => (
 		<p className={getClassName(this.props.innerClass, 'noResults') || null}>
-			{ this.props.onNoResults }
+			{this.props.onNoResults}
 		</p>
 	);
 
@@ -416,19 +451,24 @@ class ReactiveList extends Component {
 		// This fixes issue #371 (where sorting a multi-result page with infinite loader breaks)
 		options.from = 0;
 
-		options.sort = [{
-			[this.props.sortOptions[index].dataField]: {
-				order: this.props.sortOptions[index].sortBy,
+		options.sort = [
+			{
+				[this.props.sortOptions[index].dataField]: {
+					order: this.props.sortOptions[index].sortBy,
+				},
 			},
-		}];
+		];
 		this.props.setQueryOptions(this.props.componentId, options, true);
 
-		this.setState({
-			currentPage: 0,
-			from: 0,
-		}, () => {
-			this.updatePageURL(0);
-		});
+		this.setState(
+			{
+				currentPage: 0,
+				from: 0,
+			},
+			() => {
+				this.updatePageURL(0);
+			},
+		);
 	};
 
 	updatePageURL = (page) => {
@@ -441,11 +481,14 @@ class ReactiveList extends Component {
 				true,
 			);
 		}
-	}
+	};
 
 	triggerClickAnalytics = (searchPosition) => {
 		// click analytics would only work client side and after javascript loads
-		const { config, analytics: { searchId } } = this.props;
+		const {
+			config,
+			analytics: { searchId },
+		} = this.props;
 		const { url, app, credentials } = config;
 		if (config.analytics && url.endsWith('scalr.api.appbase.io') && searchId) {
 			fetch(`${url}/${app}/analytics`, {
@@ -459,7 +502,7 @@ class ReactiveList extends Component {
 				},
 			});
 		}
-	}
+	};
 
 	renderSortOptions = () => (
 		<select
@@ -467,11 +510,11 @@ class ReactiveList extends Component {
 			name="sort-options"
 			onChange={this.handleSortChange}
 		>
-			{
-				this.props.sortOptions.map((sort, index) => (
-					<option key={sort.label} value={index}>{sort.label}</option>
-				))
-			}
+			{this.props.sortOptions.map((sort, index) => (
+				<option key={sort.label} value={index}>
+					{sort.label}
+				</option>
+			))}
 		</select>
 	);
 
@@ -494,94 +537,74 @@ class ReactiveList extends Component {
 					labelPosition={this.props.sortOptions ? 'right' : 'left'}
 					className={getClassName(this.props.innerClass, 'resultsInfo')}
 				>
-					{
-						this.props.sortOptions
-							? this.renderSortOptions()
-							: null
-					}
-					{
-						this.props.showResultStats
-							? this.renderResultStats()
-							: null
-					}
+					{this.props.sortOptions ? this.renderSortOptions() : null}
+					{this.props.showResultStats ? this.renderResultStats() : null}
 				</Flex>
-				{
-					(
-						!this.props.isLoading
-						&& (results.length === 0 && streamResults.length === 0)
-					)
-						? this.renderNoResults()
-						: null
-				}
-				{
-					this.props.pagination && (
-						this.props.paginationAt === 'top'
-						|| this.props.paginationAt === 'both'
-					)
-						? (<Pagination
+				{!this.props.isLoading && (results.length === 0 && streamResults.length === 0)
+					? this.renderNoResults()
+					: null}
+				{this.props.pagination
+				&& (this.props.paginationAt === 'top' || this.props.paginationAt === 'both')
+					? (
+						<Pagination
 							pages={this.props.pages}
 							totalPages={Math.ceil(this.props.total / this.props.size)}
 							currentPage={this.state.currentPage}
 							setPage={this.setPage}
 							innerClass={this.props.innerClass}
 							fragmentName={this.props.componentId}
-						/>)
-						: null
-				}
-				{
-					this.props.onAllData
-						? (this.props.onAllData(
-							results,
-							streamResults,
-							this.loadMore,
-							{ base: (currentPage * size), triggerClickAnalytics: this.triggerClickAnalytics },
-						))
-						: (
-							<div className={`${this.props.listClass} ${getClassName(this.props.innerClass, 'list')}`}>
-								{
-									[...streamResults, ...filteredResults]
-										.map((item, index) =>
-											onData(item, () => this.triggerClickAnalytics((currentPage * size) + index)))
-								}
-							</div>
-						)
-				}
-				{
-					this.props.isLoading && !this.props.pagination
-						? this.props.loader || (
-							<div style={{ textAlign: 'center', margin: '20px 0', color: '#666' }}>
+						/>
+					) : null}
+				{this.props.onAllData ? (
+					this.props.onAllData(results, streamResults, this.loadMore, {
+						base: currentPage * size,
+						triggerClickAnalytics: this.triggerClickAnalytics,
+					})
+				) : (
+					<div
+						className={`${this.props.listClass} ${getClassName(
+							this.props.innerClass,
+							'list',
+						)}`}
+					>
+						{[...streamResults, ...filteredResults].map((item, index) =>
+							onData(item, () =>
+								this.triggerClickAnalytics((currentPage * size) + index)))}
+					</div>
+				)}
+				{this.props.isLoading && !this.props.pagination
+					? this.props.loader || (
+						<div
+							style={{
+								textAlign: 'center',
+								margin: '20px 0',
+								color: '#666',
+							}}
+						>
 								Loading...
-							</div>
-						)
-						: null
-				}
-				{
-					this.props.pagination && (
-						this.props.paginationAt === 'bottom'
-						|| this.props.paginationAt === 'both'
-					)
-						? (<Pagination
+						</div>
+					) // prettier-ignore
+					: null}
+				{this.props.pagination
+				&& (this.props.paginationAt === 'bottom' || this.props.paginationAt === 'both')
+					? (
+						<Pagination
 							pages={this.props.pages}
 							totalPages={Math.ceil(this.props.total / this.props.size)}
 							currentPage={this.state.currentPage}
 							setPage={this.setPage}
 							innerClass={this.props.innerClass}
 							fragmentName={this.props.componentId}
-						/>)
-						: null
-				}
-				{
-					this.props.config.url.endsWith('appbase.io') && results.length
-						? (
-							<Flex
-								direction="row-reverse"
-								className={getClassName(this.props.innerClass, 'poweredBy')}
-							>
-								<PoweredBy />
-							</Flex>
-						)
-						: null
-				}
+						/>
+					) : null}
+				{this.props.config.url.endsWith('appbase.io') && results.length ? (
+					<Flex
+						direction="row-reverse"
+						className={getClassName(this.props.innerClass, 'poweredBy')}
+					>
+						<PoweredBy />
+					</Flex>
+				) : null}
 			</div>
 		);
 	}
@@ -656,10 +679,10 @@ ReactiveList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	defaultPage: (
-		state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value - 1
-	) || -1,
+	defaultPage:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value - 1)
+		|| -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	isLoading: state.isLoading[props.componentId] || false,
 	streamHits: state.streamHits[props.componentId],
@@ -685,4 +708,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveList);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(ReactiveList);

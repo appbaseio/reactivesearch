@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import {
-	isEqual,
-	getClassName,
-} from '@appbaseio/reactivecore/lib/utils/helper';
+import { isEqual, getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import RangeSlider from './RangeSlider';
 import Input from '../../styles/Input';
@@ -17,7 +14,9 @@ class RangeInput extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			start: this.props.defaultSelected ? this.props.defaultSelected.start : props.range.start,
+			start: this.props.defaultSelected
+				? this.props.defaultSelected.start
+				: props.range.start,
 			end: this.props.defaultSelected ? this.props.defaultSelected.end : props.range.end,
 			isStartValid: true,
 			isEndValid: true,
@@ -31,9 +30,9 @@ class RangeInput extends Component {
 	}
 
 	// for SSR
-	static defaultQuery = RangeSlider.defaultQuery
+	static defaultQuery = RangeSlider.defaultQuery;
 
-	static parseValue = RangeSlider.parseValue
+	static parseValue = RangeSlider.parseValue;
 
 	handleInputChange = (e) => {
 		const { name, value } = e.target;
@@ -77,7 +76,7 @@ class RangeInput extends Component {
 				end,
 			});
 		}
-	}
+	};
 
 	render() {
 		const {
@@ -88,7 +87,9 @@ class RangeInput extends Component {
 				<RangeSlider
 					{...rest}
 					defaultSelected={{
-						start: this.state.isStartValid ? Number(this.state.start) : this.props.range.start,
+						start: this.state.isStartValid
+							? Number(this.state.start)
+							: this.props.range.start,
 						end: this.state.isEndValid ? Number(this.state.end) : this.props.range.end,
 					}}
 					onValueChange={this.handleSlider}
@@ -106,12 +107,13 @@ class RangeInput extends Component {
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
 						/>
-						{
-							!this.state.isStartValid
-							&& <Content alert>Input range is invalid</Content>
-						}
+						{!this.state.isStartValid && (
+							<Content alert>Input range is invalid</Content>
+						)}
 					</Flex>
-					<Flex justifyContent="center" alignItems="center" flex={1}>-</Flex>
+					<Flex justifyContent="center" alignItems="center" flex={1}>
+						-
+					</Flex>
 					<Flex direction="column" flex={2}>
 						<Input
 							name="end"
@@ -123,10 +125,7 @@ class RangeInput extends Component {
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
 						/>
-						{
-							!this.state.isEndValid
-							&& <Content alert>Input range is invalid</Content>
-						}
+						{!this.state.isEndValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
 				</Flex>
 			</Container>
@@ -157,4 +156,7 @@ const mapStateToProps = state => ({
 	themePreset: state.config.themePreset,
 });
 
-export default connect(mapStateToProps, null)(RangeInput);
+export default connect(
+	mapStateToProps,
+	null,
+)(RangeInput);

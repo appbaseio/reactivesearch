@@ -139,7 +139,10 @@ const AppFooter = ({ configName, footerConfig }) => (
 			>
 				{footerConfig.map(footerList => (
 					<Footer.List key={footerList.title}>
-						<Title style={{ ...titleStyle, ...getTitleStyle(configName) }} className="heading">
+						<Title
+							style={{ ...titleStyle, ...getTitleStyle(configName) }}
+							className="heading"
+						>
 							{footerList.title}
 						</Title>
 						{footerList.list.map((list, index) => (

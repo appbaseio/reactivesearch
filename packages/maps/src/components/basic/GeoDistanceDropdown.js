@@ -60,9 +60,9 @@ class GeoDistanceDropdown extends Component {
 				currentLocation: this.props.selectedValue.location,
 			});
 			this.getCoordinates(this.props.selectedValue.location, () => {
-				const selected = this.props.data.find(item => (
-					item.label === this.props.selectedValue.label
-				));
+				const selected = this.props.data.find(
+					item => item.label === this.props.selectedValue.label,
+				);
 				this.setDistance(selected.distance);
 			});
 		} else if (this.props.defaultSelected) {
@@ -70,9 +70,9 @@ class GeoDistanceDropdown extends Component {
 				currentLocation: this.props.defaultSelected.location,
 			});
 			this.getCoordinates(this.props.defaultSelected.location, () => {
-				const selected = this.props.data.find(item => (
-					item.label === this.props.defaultSelected.label
-				));
+				const selected = this.props.data.find(
+					item => item.label === this.props.defaultSelected.label,
+				);
 				this.setDistance(selected.distance);
 			});
 		}
@@ -83,11 +83,7 @@ class GeoDistanceDropdown extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
 		checkPropChange(this.props.dataField, nextProps.dataField, () => {
 			this.updateQuery(this.state.currentDistance, nextProps);
@@ -111,12 +107,15 @@ class GeoDistanceDropdown extends Component {
 			!isEqual(this.props.selectedValue, nextProps.selectedValue)
 			&& !nextProps.selectedValue
 		) {
-			this.setState({
-				currentLocation: null,
-				currentDistance: null,
-			}, () => {
-				this.updateQuery(null);
-			});
+			this.setState(
+				{
+					currentLocation: null,
+					currentDistance: null,
+				},
+				() => {
+					this.updateQuery(null);
+				},
+			);
 		}
 	}
 
@@ -135,12 +134,10 @@ class GeoDistanceDropdown extends Component {
 			currentLocation: selected.location,
 		});
 		this.getCoordinates(selected.location, () => {
-			const selectedDistance = props.data.find(item => (
-				item.label === selected.label
-			));
+			const selectedDistance = props.data.find(item => item.label === selected.label);
 			this.setDistance(selectedDistance.distance);
 		});
-	}
+	};
 
 	defaultQuery = (coordinates, distance, props) => {
 		if (coordinates && distance) {
@@ -158,7 +155,11 @@ class GeoDistanceDropdown extends Component {
 		navigator.geolocation.getCurrentPosition((location) => {
 			const coordinates = `${location.coords.latitude}, ${location.coords.longitude}`;
 
-			fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${this.props.mapKey}&v=3.31&latlng=${coordinates}`)
+			fetch(
+				`https://maps.googleapis.com/maps/api/geocode/json?key=${
+					this.props.mapKey
+				}&v=3.31&latlng=${coordinates}`,
+			)
 				.then(res => res.json())
 				.then((res) => {
 					if (Array.isArray(res.results) && res.results.length) {
@@ -176,7 +177,11 @@ class GeoDistanceDropdown extends Component {
 
 	getCoordinates(value, cb) {
 		if (value) {
-			fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${this.props.mapKey}&v=3.31&address=${value}`)
+			fetch(
+				`https://maps.googleapis.com/maps/api/geocode/json?key=${
+					this.props.mapKey
+				}&v=3.31&address=${value}`,
+			)
 				.then(res => res.json())
 				.then((res) => {
 					if (Array.isArray(res.results) && res.results.length) {
@@ -204,39 +209,48 @@ class GeoDistanceDropdown extends Component {
 		this.locked = true;
 
 		const performUpdate = () => {
-			this.setState({
-				currentLocation: currentValue.value,
-				isOpen: false,
-			}, () => {
-				this.getCoordinates(currentValue.value, () => {
-					if (this.state.currentDistance) {
-						this.updateQuery(this.state.currentDistance);
-						if (props.onValueChange) {
-							props.onValueChange({
-								label: this.getSelectedLabel(this.state.currentDistance),
-								location: currentValue.value,
-							});
+			this.setState(
+				{
+					currentLocation: currentValue.value,
+					isOpen: false,
+				},
+				() => {
+					this.getCoordinates(currentValue.value, () => {
+						if (this.state.currentDistance) {
+							this.updateQuery(this.state.currentDistance);
+							if (props.onValueChange) {
+								props.onValueChange({
+									label: this.getSelectedLabel(this.state.currentDistance),
+									location: currentValue.value,
+								});
+							}
 						}
-					}
-					this.locked = false;
-				});
-			});
+						this.locked = false;
+					});
+				},
+			);
 		};
 
 		checkValueChange(
 			props.componentId,
-			{ label: this.getSelectedLabel(this.state.currentDistance), location: currentValue.value },
+			{
+				label: this.getSelectedLabel(this.state.currentDistance),
+				location: currentValue.value,
+			},
 			props.beforeValueChange,
 			performUpdate,
 		);
 	};
 
 	setDistance = (currentDistance) => {
-		this.setState({
-			currentDistance,
-		}, () => {
-			this.updateQuery(currentDistance, this.props);
-		});
+		this.setState(
+			{
+				currentDistance,
+			},
+			() => {
+				this.updateQuery(currentDistance, this.props);
+			},
+		);
 	};
 
 	updateQuery = (distance, props = this.props) => {
@@ -269,7 +283,7 @@ class GeoDistanceDropdown extends Component {
 
 	onDistanceChange = (value) => {
 		this.setDistance(value.distance);
-	}
+	};
 
 	onInputChange = (e) => {
 		const { value } = e.target;
@@ -283,19 +297,25 @@ class GeoDistanceDropdown extends Component {
 
 			const restrictedCountries = this.props.countries || [];
 
-			this.autocompleteService.getPlacePredictions({
-				input: value,
-				componentRestrictions: { country: restrictedCountries },
-			}, (res) => {
-				const suggestionsList = (res && res.map(place => ({
-					label: place.description,
-					value: place.description,
-				}))) || [];
+			this.autocompleteService.getPlacePredictions(
+				{
+					input: value,
+					componentRestrictions: { country: restrictedCountries },
+				},
+				(res) => {
+					const suggestionsList
+						= (res
+							&& res.map(place => ({
+								label: place.description,
+								value: place.description,
+							})))
+						|| [];
 
-				this.setState({
-					suggestions: suggestionsList,
-				});
-			});
+					this.setState({
+						suggestions: suggestionsList,
+					});
+				},
+			);
 		} else {
 			this.setState({
 				suggestions: [],
@@ -339,79 +359,81 @@ class GeoDistanceDropdown extends Component {
 			];
 		}
 
-		return (<Downshift
-			onChange={this.setLocation}
-			onOuterClick={this.handleOuterClick}
-			onStateChange={this.handleStateChange}
-			isOpen={this.state.isOpen}
-			itemToString={i => i}
-			render={({
-				getInputProps,
-				getItemProps,
-				isOpen,
-				highlightedIndex,
-			}) => (
-				<div className={suggestionsContainer}>
-					<Input
-						showIcon={this.props.showIcon}
-						iconPosition={this.props.iconPosition}
-						innerRef={this.props.innerRef}
-						{...getInputProps({
-							className: getClassName(this.props.innerClass, 'input'),
-							placeholder: this.props.placeholder,
-							value: this.state.currentLocation || '',
-							onChange: this.onInputChange,
-							onBlur: this.props.onBlur,
-							onFocus: this.handleFocus,
-							onKeyPress: this.props.onKeyPress,
-							onKeyDown: this.handleKeyDown,
-							onKeyUp: this.props.onKeyUp,
-						})}
-						themePreset={themePreset}
-					/>
-					<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
-					{
-						isOpen && this.state.suggestions.length
-							? (
-								<ul className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}>
-									{
-										suggestionsList
-											.slice(0, 11)
-											.map((item, index) => (
-												<li
-													{...getItemProps({ item })}
-													key={item.label}
-													style={{
-														backgroundColor: highlightedIndex === index
-															? '#eee' : '#fff',
-													}}
-												>
-													{
-														typeof item.label === 'string'
-															? <div
-																className="trim"
-																dangerouslySetInnerHTML={{
-																	__html: item.label,
-																}}
-															/>
-															: item.label
-													}
-												</li>
-											))
-									}
-								</ul>
-							)
-							: null
-					}
-				</div>
-			)}
-		/>);
+		return (
+			<Downshift
+				onChange={this.setLocation}
+				onOuterClick={this.handleOuterClick}
+				onStateChange={this.handleStateChange}
+				isOpen={this.state.isOpen}
+				itemToString={i => i}
+				render={({
+					getInputProps, getItemProps, isOpen, highlightedIndex,
+				}) => (
+					<div className={suggestionsContainer}>
+						<Input
+							showIcon={this.props.showIcon}
+							iconPosition={this.props.iconPosition}
+							innerRef={this.props.innerRef}
+							{...getInputProps({
+								className: getClassName(this.props.innerClass, 'input'),
+								placeholder: this.props.placeholder,
+								value: this.state.currentLocation || '',
+								onChange: this.onInputChange,
+								onBlur: this.props.onBlur,
+								onFocus: this.handleFocus,
+								onKeyPress: this.props.onKeyPress,
+								onKeyDown: this.handleKeyDown,
+								onKeyUp: this.props.onKeyUp,
+							})}
+							themePreset={themePreset}
+						/>
+						<InputIcon iconPosition={this.props.iconPosition}>
+							{this.renderIcon()}
+						</InputIcon>
+						{isOpen && this.state.suggestions.length ? (
+							<ul
+								className={`${suggestions(themePreset, theme)} ${getClassName(
+									this.props.innerClass,
+									'list',
+								)}`}
+							>
+								{suggestionsList.slice(0, 11).map((item, index) => (
+									<li
+										{...getItemProps({ item })}
+										key={item.label}
+										style={{
+											backgroundColor:
+												highlightedIndex === index ? '#eee' : '#fff',
+										}}
+									>
+										{typeof item.label === 'string' ? (
+											<div
+												className="trim"
+												dangerouslySetInnerHTML={{
+													__html: item.label,
+												}}
+											/>
+										) : (
+											item.label
+										)}
+									</li>
+								))}
+							</ul>
+						) : null}
+					</div>
+				)}
+			/>
+		);
 	};
 
 	render() {
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				{this.renderSearchBox()}
 				<Dropdown
 					innerClass={this.props.innerClass}
@@ -483,10 +505,10 @@ GeoDistanceDropdown.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	mapKey: state.config.mapKey,
-	selectedValue: (
-		state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value
-	) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	themePreset: state.config.themePreset,
 });
 

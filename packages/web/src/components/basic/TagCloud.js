@@ -33,9 +33,10 @@ class TagCloud extends Component {
 
 		this.state = {
 			currentValue: {},
-			options: (props.options && props.options[props.dataField])
-				? props.options[props.dataField].buckets
-				: [],
+			options:
+				props.options && props.options[props.dataField]
+					? props.options[props.dataField].buckets
+					: [],
 		};
 		this.locked = false;
 		this.type = 'term';
@@ -58,37 +59,21 @@ class TagCloud extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
-		checkPropChange(
-			this.props.options,
-			nextProps.options,
-			() => {
-				this.setState({
-					options: nextProps.options[nextProps.dataField]
-						? nextProps.options[nextProps.dataField].buckets
-						: [],
-				});
-			},
-		);
-		checkSomePropChange(
-			this.props,
-			nextProps,
-			['size', 'sortBy'],
-			() => this.updateQueryOptions(nextProps),
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkPropChange(this.props.options, nextProps.options, () => {
+			this.setState({
+				options: nextProps.options[nextProps.dataField]
+					? nextProps.options[nextProps.dataField].buckets
+					: [],
+			});
+		});
+		checkSomePropChange(this.props, nextProps, ['size', 'sortBy'], () =>
+			this.updateQueryOptions(nextProps));
 
-		checkPropChange(
-			this.props.dataField,
-			nextProps.dataField,
-			() => {
-				this.updateQueryOptions(nextProps);
-				this.updateQuery(Object.keys(this.state.currentValue), nextProps);
-			},
-		);
+		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+			this.updateQueryOptions(nextProps);
+			this.updateQuery(Object.keys(this.state.currentValue), nextProps);
+		});
 
 		let selectedValue = Object.keys(this.state.currentValue);
 
@@ -114,7 +99,9 @@ class TagCloud extends Component {
 			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
@@ -132,13 +119,11 @@ class TagCloud extends Component {
 				};
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
-				const queryArray = value.map(item => (
-					{
-						[type]: {
-							[props.dataField]: item,
-						},
-					}
-				));
+				const queryArray = value.map(item => ({
+					[type]: {
+						[props.dataField]: item,
+					},
+				}));
 				listQuery = {
 					bool: {
 						must: queryArray,
@@ -187,21 +172,19 @@ class TagCloud extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-			}, () => {
-				this.updateQuery(finalValues, props);
-				this.locked = false;
-				if (props.onValueChange) props.onValueChange(finalValues);
-			});
+			this.setState(
+				{
+					currentValue,
+				},
+				() => {
+					this.updateQuery(finalValues, props);
+					this.locked = false;
+					if (props.onValueChange) props.onValueChange(finalValues);
+				},
+			);
 		};
 
-		checkValueChange(
-			props.componentId,
-			finalValues,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, finalValues, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -254,36 +237,35 @@ class TagCloud extends Component {
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<TagList className={getClassName(this.props.innerClass, 'list') || null}>
-					{
-						this.state.options
-							.map((item) => {
-								const size = ((item.doc_count / highestCount) * (max - min)) + min;
+					{this.state.options.map((item) => {
+						const size = ((item.doc_count / highestCount) * (max - min)) + min;
 
-								return (
-									<span
-										key={item.key}
-										onClick={() => this.setValue(item.key)}
-										onKeyPress={e => handleA11yAction(e, () => this.setValue(item.key))}
-										style={{ fontSize: `${size}em` }}
-										className={
-											this.state.currentValue[item.key]
-												? `${getClassName(this.props.innerClass, 'input') || ''} active`
-												: getClassName(this.props.innerClass, 'input')
-										}
-										role="menuitem"
-										tabIndex="0"
-									>
-										{item.key}
-										{
-											this.props.showCount
-											&& ` (${item.doc_count})`
-										}
-									</span>
-								);
-							})
-					}
+						return (
+							<span
+								key={item.key}
+								onClick={() => this.setValue(item.key)}
+								onKeyPress={e => handleA11yAction(e, () => this.setValue(item.key))}
+								style={{ fontSize: `${size}em` }}
+								className={
+									this.state.currentValue[item.key]
+										? `${getClassName(this.props.innerClass, 'input')
+												|| ''} active`
+										: getClassName(this.props.innerClass, 'input')
+								}
+								role="menuitem"
+								tabIndex="0"
+							>
+								{item.key}
+								{this.props.showCount && ` (${item.doc_count})`}
+							</span>
+						);
+					})}
 				</TagList>
 			</Container>
 		);
@@ -335,8 +317,10 @@ TagCloud.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -349,4 +333,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(TagCloud);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(TagCloud);

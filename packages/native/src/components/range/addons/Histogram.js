@@ -17,27 +17,30 @@ const Histogram = (props) => {
 	}
 
 	return (
-		<View style={{
-			flex: 1, flexDirection: 'row', height: 50, alignItems: 'flex-end', paddingHorizontal: props.paddingHorizontal,
-		}}
+		<View
+			style={{
+				flex: 1,
+				flexDirection: 'row',
+				height: 50,
+				alignItems: 'flex-end',
+				paddingHorizontal: props.paddingHorizontal,
+			}}
 		>
-			{
-				range.map((item) => {
-					const value = props.stats.find(stat => stat.key === item) || 0;
+			{range.map((item) => {
+				const value = props.stats.find(stat => stat.key === item) || 0;
 
-					return (
-						<View
-							key={item}
-							style={{
-								backgroundColor: '#efefef',
-								width: `${100 / range.length}%`,
-								height: `${(100 * value.doc_count) / max || 0}%`,
-								...props.barStyle,
-							}}
-						/>
-					);
-				})
-			}
+				return (
+					<View
+						key={item}
+						style={{
+							backgroundColor: '#efefef',
+							width: `${100 / range.length}%`,
+							height: `${(100 * value.doc_count) / max || 0}%`,
+							...props.barStyle,
+						}}
+					/>
+				);
+			})}
 		</View>
 	);
 };

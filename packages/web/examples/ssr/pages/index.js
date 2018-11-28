@@ -72,7 +72,9 @@ const components = {
 			description: (
 				<div>
 					<div className="price">${data.price}</div>
-					<p className="info">{data.room_type} · {data.accommodates} guests</p>
+					<p className="info">
+						{data.room_type} · {data.accommodates} guests
+					</p>
 				</div>
 			),
 			url: data.listing_url,

@@ -9,8 +9,8 @@ export default {
 	title: 'Get Started with Reactive Search',
 	description: (
 		<React.Fragment>
-			Use our step-by-step guide to learn all about ReactiveSearch for React Native, or check out
-			our{' '}
+			Use our step-by-step guide to learn all about ReactiveSearch for React Native, or check
+			out our{' '}
 			<a
 				rel="noopener noreferrer"
 				href="https://opensource.appbase.io/reactive-manual/native"
