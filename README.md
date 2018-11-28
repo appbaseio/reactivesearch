@@ -12,9 +12,10 @@ Read how to build an e-commerce search UI</p>
 a.) <a href="https://codeburst.io/how-to-build-an-e-commerce-search-ui-with-react-and-elasticsearch-a581c823b2c3"> with React</a>, or b.) <a href="https://hackernoon.com/building-an-e-commerce-search-app-with-react-native-2c87760a2315">with React Native</a>.</p>
 <br/>
 <p align="center">
-  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/web" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/Uo97x64.png" alt="web" title="web" /></a>
-  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/native" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/jgZp3W2.png" alt="native" title="native" /></a>
-  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/maps" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/bNPG50x.png" alt="native" title="native" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/web" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/7Ax3vpI.png" alt="web" title="web" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/vue" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/tIyjPOa.png" alt="vue" title="vue" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/native" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/O5XvNXN.png" alt="native" title="native" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/maps" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/ze2wvCa.png" alt="maps" title="maps" /></a>
 </p>
 
 <hr />
