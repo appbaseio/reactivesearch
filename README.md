@@ -139,7 +139,7 @@ Here, we share how `ReactiveSearch` compares with other projects that have simil
 |  **Onboarding Experience** | Starter apps, Live interactive tutorial, getting started guide, component playground, every component has a live working demo with codesandbox. | Getting started tutorial, no live component demos, sparse reference spec for many components. | Starter apps, getting started guide, component playground. |
 |  **Styling Support** | Styled and scoped components. No external CSS import required. Rich theming supported as React props. | CSS based styles with BEM, not scoped to components. Theming supported with SCSS. | CSS based styles, requires external style import. Theming supported by manipulating CSS. |
 |  **Types of Components** | Lists, Ranges, Search, Dates, Maps, Result Displays. Can use your own UI components. | Lists, Ranges, Search*, Result*. Can't use your own UI components. (Only one component for Search and Result, resulting in more code to be written for customizability) | Lists, Range, Search, Result. Can use your own UI components. |
-|  **Supported Distribution Platforms** | React for Web, React Native for mobile. | React for Web. | React, Vue, Angular, vanilla JS for Web, React Native for mobile but latter has no UI components. |
+|  **Supported Distribution Platforms** | React, Vue for Web, React Native for mobile. | React for Web. | React, Vue, Angular, vanilla JS for Web, React Native for mobile but latter has no UI components. |
 
 We welcome contributions to this section. If you are building a project or you know of another project that is in the similar space, let us know and we will update the comparisons.
 
