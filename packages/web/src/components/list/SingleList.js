@@ -57,10 +57,8 @@ class SingleList extends Component {
 		this.setReact(props);
 		const hasMounted = false;
 
-		if (props.selectedValue) {
-			this.setValue(props.selectedValue, props, hasMounted);
-		} else if (defaultValue) {
-			this.setValue(defaultValue, props, hasMounted);
+		if (currentValue) {
+			this.setValue(currentValue, props, hasMounted);
 		}
 	}
 
