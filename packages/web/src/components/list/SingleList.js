@@ -205,21 +205,18 @@ class SingleList extends Component {
 		this.locked = true;
 
 		const performUpdate = () => {
-			if (hasMounted) {
-				this.setState(
-					{
-						currentValue: value,
-					},
-					() => {
-						this.updateQuery(value, props);
-						this.locked = false;
-						if (props.onValueChange) props.onValueChange(value);
-					},
-				);
-			} else {
+			const handleUpdates = () => {
 				this.updateQuery(value, props);
 				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);
+			};
+
+			if (hasMounted) {
+				this.setState({
+					currentValue: value,
+				}, handleUpdates);
+			} else {
+				handleUpdates();
 			}
 		};
 
