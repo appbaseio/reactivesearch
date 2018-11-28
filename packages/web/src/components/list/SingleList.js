@@ -50,8 +50,8 @@ class SingleList extends Component {
 		this.internalComponent = `${props.componentId}__internal`;
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
-		this.props.addComponent(this.internalComponent);
-		this.props.addComponent(props.componentId);
+		props.addComponent(this.internalComponent);
+		props.addComponent(props.componentId);
 		this.updateQueryOptions(props);
 
 		this.setReact(props);
