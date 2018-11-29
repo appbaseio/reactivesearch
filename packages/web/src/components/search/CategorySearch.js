@@ -23,7 +23,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
-import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
+import Input, { suggestionsContainer, suggestions, noSuggestions } from '../../styles/Input';
 import CancelSvg from '../shared/CancelSvg';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
@@ -466,6 +466,29 @@ class CategorySearch extends Component {
 		</div>
 	);
 
+	renderNoSuggestion = (finalSuggestionsList = []) => {
+		const {
+			themePreset,
+			theme,
+			loading,
+			renderNoSuggestion,
+		} = this.props;
+		const { isOpen, currentValue } = this.state;
+		if (renderNoSuggestion && isOpen && !finalSuggestionsList.length && !loading && currentValue) {
+			return (
+				<ul
+					className={`${noSuggestions(
+						themePreset,
+						theme,
+					)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
+				>
+					<li>{typeof renderNoSuggestion === 'function' ? renderNoSuggestion(currentValue) : renderNoSuggestion}</li>
+				</ul>
+			);
+		}
+		return null;
+	}
+
 	render() {
 		let suggestionsList = [];
 		let finalSuggestionsList = [];
@@ -594,7 +617,7 @@ class CategorySearch extends Component {
 											</li>
 										))}
 									</ul>
-								) : null}
+								) : this.renderNoSuggestion(finalSuggestionsList)}
 							</div>
 						)}
 						{...this.props.downShiftProps}
@@ -661,6 +684,7 @@ CategorySearch.propTypes = {
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
 	innerRef: types.func,
+	loading: types.bool,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
@@ -674,6 +698,7 @@ CategorySearch.propTypes = {
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
 	renderSuggestions: types.func,
+	renderNoSuggestion: types.children,
 	showClear: types.bool,
 	showFilter: types.bool,
 	showIcon: types.bool,
@@ -711,6 +736,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	loading: state.isLoading[props.componentId],
 	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	themePreset: state.config.themePreset,
 });
