@@ -25,37 +25,38 @@ class SingleDataList extends Component {
 	constructor(props) {
 		super(props);
 
+		const currentValue = props.selectedValue || props.defaultValue || '';
 		this.state = {
-			currentValue: null,
+			currentValue,
 			searchTerm: '',
 		};
 		this.locked = false;
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
+		props.addComponent(props.componentId);
 
-		this.setReact(this.props);
+		this.setReact(props);
+		const hasMounted = false;
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+		if (currentValue) {
+			this.setValue(currentValue, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
-			this.updateQuery(this.state.currentValue, nextProps);
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateQuery(this.state.currentValue, this.props);
 		});
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected);
-		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || '');
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.defaultValue);
+		} else if (
+			this.state.currentValue !== this.props.selectedValue
+			&& this.props.selectedValue !== prevProps.selectedValue
+		) {
+			this.setValue(this.props.selectedValue || '');
 		}
 	}
 
@@ -86,7 +87,7 @@ class SingleDataList extends Component {
 		return null;
 	};
 
-	setValue = (nextValue, props = this.props) => {
+	setValue = (nextValue, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -94,21 +95,27 @@ class SingleDataList extends Component {
 
 		this.locked = true;
 		let value = nextValue;
-		if (nextValue === this.state.currentValue) {
-			value = null;
+		if (nextValue === this.state.currentValue && hasMounted) {
+			value = '';
 		}
 
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentValue: value,
-				},
-				() => {
-					this.updateQuery(value, props);
-					this.locked = false;
-					if (props.onValueChange) props.onValueChange(value);
-				},
-			);
+			const handleUpdates = () => {
+				this.updateQuery(value, props);
+				this.locked = false;
+				if (props.onValueChange) props.onValueChange(value);
+			};
+
+			if (hasMounted) {
+				this.setState(
+					{
+						currentValue: value,
+					},
+					handleUpdates,
+				);
+			} else {
+				handleUpdates();
+			}
 		};
 
 		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
@@ -160,7 +167,12 @@ class SingleDataList extends Component {
 	};
 
 	handleClick = (e) => {
-		this.setValue(e.target.value);
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(e);
+		} else {
+			this.setValue(e.target.value);
+		}
 	};
 
 	render() {
@@ -257,11 +269,13 @@ SingleDataList.propTypes = {
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
-	defaultSelected: types.string,
+	defaultValue: types.string,
+	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	react: types.react,
 	selectAllLabel: types.string,
