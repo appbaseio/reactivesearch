@@ -36,6 +36,7 @@ export interface DataSearchProps extends CommonProps {
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	renderSuggestions?: (...args: any[]) => any;
+	renderNoSuggestion?: types.title;
 	showFilter?: boolean;
 	showIcon?: boolean;
 	title?: types.title;
