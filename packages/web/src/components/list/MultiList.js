@@ -33,12 +33,20 @@ class MultiList extends Component {
 	constructor(props) {
 		super(props);
 
+		const defaultValue = props.defaultValue || props.value;
+		const currentValueArray = props.selectedValue || defaultValue || [];
+		const currentValue = {};
+		currentValueArray.forEach((item) => {
+			currentValue[item] = true;
+		});
+
+		const options = props.options && props.options[props.dataField]
+			? this.getOptions(props.options[props.dataField].buckets, props)
+			: [];
+
 		this.state = {
-			currentValue: {},
-			options:
-				props.options && props.options[props.dataField]
-					? this.getOptions(props.options[props.dataField].buckets, props)
-					: [],
+			currentValue,
+			options,
 			searchTerm: '',
 			after: {}, // for composite aggs
 			isLastBucket: false,
@@ -46,66 +54,103 @@ class MultiList extends Component {
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.internalComponent);
-		this.props.addComponent(this.props.componentId);
-		this.updateQueryOptions(this.props);
+		props.addComponent(this.internalComponent);
+		props.addComponent(props.componentId);
+		this.updateQueryOptions(props);
 
-		this.setReact(this.props);
+		this.setReact(props);
+		const hasMounted = false;
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected, true);
+		if (currentValueArray.length) {
+			this.setValue(currentValueArray, true, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
-		checkPropChange(this.props.options, nextProps.options, () => {
-			const { showLoadMore, dataField } = nextProps;
-			if (showLoadMore) {
-				const { buckets } = nextProps.options[dataField];
-				const after = nextProps.options[dataField].after_key;
-				// detect the last bucket by checking if the after key is absent
-				const isLastBucket = !after;
-				this.setState(state => ({
-					...state,
-					after: after ? { after } : state.after,
-					isLastBucket,
-					options: this.getOptions(buckets, nextProps),
-				}));
-			} else {
-				this.setState({
-					options: nextProps.options[nextProps.dataField]
-						? this.getOptions(nextProps.options[nextProps.dataField].buckets, nextProps)
-						: [],
-				});
-			}
-		});
-		checkSomePropChange(this.props, nextProps, ['size', 'sortBy'], () =>
-			this.updateQueryOptions(nextProps));
+	componentDidUpdate(prevProps) {
+		checkPropChange(
+			this.props.react,
+			prevProps.react,
+			() => this.setReact(this.props),
+		);
+		checkPropChange(
+			this.props.options,
+			prevProps.options,
+			() => {
+				const { showLoadMore, dataField, options } = this.props;
+				if (showLoadMore) {
+					const { buckets } = options[dataField];
+					const after = options[dataField].after_key;
+					// detect the last bucket by checking if the after key is absent
+					const isLastBucket = !after;
+					this.setState(state => ({
+						...state,
+						after: after ? { after } : state.after,
+						isLastBucket,
+						options: this.getOptions(buckets, this.props),
+					}), () => {
+						// this will ensure that the Select-All (or any)
+						// valuegets handled on the initial load and
+						// consecutive loads
+						const { currentValue } = this.state;
+						const value = Object.keys(currentValue)
+							.filter(item => currentValue[item]);
+						if (value.length) this.setValue(value, true);
+					});
+				} else {
+					this.setState({
+						options: options[dataField]
+							? this.getOptions(
+								options[dataField].buckets,
+								this.props,
+							)
+							: [],
+					}, () => {
+						// this will ensure that the Select-All (or any)
+						// valuegets handled on the initial load and
+						// consecutive loads
+						const { currentValue } = this.state;
+						const value = Object.keys(currentValue)
+							.filter(item => currentValue[item]);
+						if (value.length) this.setValue(value, true);
+					});
+				}
+			},
+		);
+		checkSomePropChange(
+			this.props,
+			prevProps,
+			['size', 'sortBy'],
+			() => this.updateQueryOptions(this.props),
+		);
 
-		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
-			this.updateQueryOptions(nextProps);
-			this.updateQuery(Object.keys(this.state.currentValue), nextProps);
-		});
+		checkSomePropChange(
+			this.props,
+			prevProps,
+			['dataField', 'nestedField'],
+			() => {
+				this.updateQueryOptions(this.props);
+				this.updateQuery(Object.keys(this.state.currentValue), this.props);
+			},
+		);
 
 		let selectedValue = Object.keys(this.state.currentValue);
+		const { selectAllLabel } = this.props;
 
-		if (this.props.selectAllLabel) {
-			selectedValue = selectedValue.filter(val => val !== this.props.selectAllLabel);
-
-			if (this.state.currentValue[this.props.selectAllLabel]) {
-				selectedValue = [this.props.selectAllLabel];
+		if (selectAllLabel) {
+			selectedValue = selectedValue.filter(val => val !== selectAllLabel);
+			if (this.state.currentValue[selectAllLabel]) {
+				selectedValue = [selectAllLabel];
 			}
 		}
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.setValue(nextProps.defaultSelected, true);
-		} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
-			this.setValue(nextProps.selectedValue || [], true);
+
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value, true);
+		} else if (
+			!isEqual(selectedValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
+		) {
+			this.setValue(this.props.selectedValue || [], true);
 		}
 	}
 
@@ -219,14 +264,14 @@ class MultiList extends Component {
 		return query;
 	};
 
-	setValue = (value, isDefaultValue = false, props = this.props) => {
+	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
 		}
 
 		this.locked = true;
-		const { selectAllLabel } = this.props;
+		const { selectAllLabel } = props;
 		let { currentValue } = this.state;
 		let finalValues = null;
 
@@ -235,7 +280,7 @@ class MultiList extends Component {
 			&& ((Array.isArray(value) && value.includes(selectAllLabel))
 				|| (typeof value === 'string' && value === selectAllLabel))
 		) {
-			if (currentValue[selectAllLabel]) {
+			if (currentValue[selectAllLabel] && hasMounted && !isDefaultValue) {
 				currentValue = {};
 				finalValues = [];
 			} else {
@@ -274,16 +319,19 @@ class MultiList extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState(
-				{
+			const handleUpdates = () => {
+				this.updateQuery(finalValues, props);
+				this.locked = false;
+				if (props.onValueChange) props.onValueChange(finalValues);
+			};
+
+			if (hasMounted) {
+				this.setState({
 					currentValue,
-				},
-				() => {
-					this.updateQuery(finalValues, props);
-					this.locked = false;
-					if (props.onValueChange) props.onValueChange(finalValues);
-				},
-			);
+				}, handleUpdates);
+			} else {
+				handleUpdates();
+			}
 		};
 
 		checkValueChange(props.componentId, finalValues, props.beforeValueChange, performUpdate);
@@ -356,7 +404,12 @@ class MultiList extends Component {
 	};
 
 	handleClick = (e) => {
-		this.setValue(e.target.value);
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(e);
+		} else {
+			this.setValue(e.target.value);
+		}
 	};
 
 	render() {
@@ -489,11 +542,13 @@ MultiList.propTypes = {
 	customQuery: types.func,
 	dataField: types.stringRequired,
 	nestedField: types.string,
-	defaultSelected: types.stringArray,
+	defaultValue: types.stringArray,
+	value: types.stringArray,
 	filterLabel: types.string,
 	innerClass: types.style,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,

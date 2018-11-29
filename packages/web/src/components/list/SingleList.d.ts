@@ -6,11 +6,13 @@ export interface SingleList extends CommonProps {
 	beforeValueChange?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
 	dataField?: string;
-	defaultSelected?: string;
+	defaultValue?: string;
+	value?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
 	nestedField?: string;
 	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;
 	renderListItem?: (...args: any[]) => any;

@@ -86,10 +86,10 @@ class SelectedFilters extends Component {
 		return (
 			<Container
 				style={this.props.style}
-				className={`${filters(theme)} ${this.props.className || ''}`}
+				className={`${filters(theme)}
+				${this.props.className || ''}`}
 			>
-				{this.props.title
-					&& hasValues && (
+				{this.props.title && hasValues && (
 					<Title className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
 					</Title>

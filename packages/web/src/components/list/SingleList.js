@@ -33,8 +33,11 @@ class SingleList extends Component {
 	constructor(props) {
 		super(props);
 
+		const defaultValue = props.defaultValue || props.value;
+		const currentValue = props.selectedValue || defaultValue;
+
 		this.state = {
-			currentValue: '',
+			currentValue: currentValue || '',
 			options:
 				props.options && props.options[props.dataField]
 					? this.getOptions(props.options[props.dataField].buckets, props)
@@ -46,57 +49,82 @@ class SingleList extends Component {
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.internalComponent);
-		this.props.addComponent(this.props.componentId);
-		this.updateQueryOptions(this.props);
+		props.addComponent(this.internalComponent);
+		props.addComponent(props.componentId);
+		this.updateQueryOptions(props);
 
-		this.setReact(this.props);
+		this.setReact(props);
+		const hasMounted = false;
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+		if (currentValue) {
+			this.setValue(currentValue, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
-		checkPropChange(this.props.options, nextProps.options, () => {
-			const { showLoadMore, dataField } = nextProps;
-			if (showLoadMore) {
-				const { buckets } = nextProps.options[dataField];
-				const after = nextProps.options[dataField].after_key;
-				// detect the last bucket by checking if the after key is absent
-				const isLastBucket = !after;
-				this.setState(state => ({
-					...state,
-					after: after ? { after } : state.after,
-					isLastBucket,
-					options: this.getOptions(buckets, nextProps),
-				}));
-			} else {
-				this.setState({
-					options: nextProps.options[nextProps.dataField]
-						? this.getOptions(nextProps.options[nextProps.dataField].buckets, nextProps)
-						: [],
-				});
-			}
-		});
-		checkSomePropChange(this.props, nextProps, ['size', 'sortBy'], () =>
-			this.updateQueryOptions(nextProps));
+	componentDidUpdate(prevProps) {
+		checkPropChange(
+			prevProps.react,
+			this.props.react,
+			() => this.setReact(this.props),
+		);
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
-			this.updateQueryOptions(nextProps);
-			this.updateQuery(this.state.currentValue, nextProps);
-		});
+		checkPropChange(
+			prevProps.options,
+			this.props.options,
+			() => {
+				const { showLoadMore, dataField, options } = this.props;
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected);
-		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || '');
+				if (showLoadMore) {
+					const { buckets } = options[dataField];
+					const after = options[dataField].after_key;
+
+					// detect the last bucket by checking if the
+					// after key is absent
+					const isLastBucket = !after;
+					this.setState(state => ({
+						...state,
+						after: after ? { after } : state.after,
+						isLastBucket,
+						options: this.getOptions(buckets, this.props),
+					}));
+				} else {
+					this.setState({
+						options: options[dataField]
+							? this.getOptions(
+								options[dataField].buckets,
+								this.props,
+							)
+							: [],
+					});
+				}
+			},
+		);
+
+		checkSomePropChange(
+			prevProps,
+			this.props,
+			['size', 'sortBy'],
+			() => this.updateQueryOptions(this.props),
+		);
+
+		checkSomePropChange(
+			this.props,
+			prevProps,
+			['dataField', 'nestedField'],
+			() => {
+				this.updateQueryOptions(this.props);
+				this.updateQuery(this.state.currentValue, this.props);
+			},
+		);
+
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value);
+		} else if (
+			this.state.currentValue !== this.props.selectedValue
+			&& this.props.selectedValue !== prevProps.selectedValue
+		) {
+			this.setValue(this.props.selectedValue || '');
 		}
 	}
 
@@ -168,29 +196,33 @@ class SingleList extends Component {
 		return query;
 	};
 
-	setValue = (nextValue, props = this.props) => {
+	setValue = (nextValue, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
 		}
 
-		this.locked = true;
 		let value = nextValue;
-		if (nextValue === this.state.currentValue) {
+		if (this.state.currentValue === nextValue && hasMounted) {
 			value = '';
 		}
 
+		this.locked = true;
+
 		const performUpdate = () => {
-			this.setState(
-				{
+			const handleUpdates = () => {
+				this.updateQuery(value, props);
+				this.locked = false;
+				if (props.onValueChange) props.onValueChange(value);
+			};
+
+			if (hasMounted) {
+				this.setState({
 					currentValue: value,
-				},
-				() => {
-					this.updateQuery(value, props);
-					this.locked = false;
-					if (props.onValueChange) props.onValueChange(value);
-				},
-			);
+				}, handleUpdates);
+			} else {
+				handleUpdates();
+			}
 		};
 
 		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
@@ -263,7 +295,12 @@ class SingleList extends Component {
 	};
 
 	handleClick = (e) => {
-		this.setValue(e.target.value);
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(e);
+		} else {
+			this.setValue(e.target.value);
+		}
 	};
 
 	render() {
@@ -399,11 +436,13 @@ SingleList.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	dataField: types.stringRequired,
-	defaultSelected: types.string,
+	defaultValue: types.string,
+	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	react: types.react,
 	renderListItem: types.func,
