@@ -45,6 +45,7 @@ export {
 	SingleList,
 	MultiList,
 	SingleRange,
+	MultiRange,
 	ReactiveComponent,
 	SelectedFilters,
 	SingleDropdownList,
