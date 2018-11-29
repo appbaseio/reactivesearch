@@ -35,7 +35,7 @@ const RangeSlider = {
   props:{
     beforeValueChange: types.func,
     className: VueTypes.string.def(""),
-  range: VueTypes.shape({
+    range: VueTypes.shape({
       start: VueTypes.integer.def(0),
       end: VueTypes.integer.def(10),
     }),
@@ -54,39 +54,118 @@ const RangeSlider = {
   },
 
   methods:{
-    setReact(){},
-    onCallback(value){ 
-      // console.log('value',value);
+
+    setReact(props) {
+      if (props.react) {
+        this.watchComponent(props.componentId, props.react);
+      }
     },
-    end(x){
-      console.log('x',x.currentValue)
+    handleSlider(values){ 
+      if (!isEqual(values.currentValue, this.state.currentValue)) {
+        this.handleChange(values.currentValue);
+      }
+    },
+
+    handleChange(currentValue, props = this.$props){
+      if(props.beforeValueChange && this.locked) {
+        return;
+      }
+      this.locked = true;
+
+      const performUpdate = () => {
+        this.updateQueryHandler([currentValue[0], currentValue[1]], props);
+        this.locked = false;
+        this.$emit('valueChange',{ start: currentValue[0], end: currentValue[1] });
+      };
+
+      checkValueChange(
+        props.componentId,
+        {
+          start: currentValue[0],
+          end: currentValue[1],
+        },
+        props.beforeValueChange,
+        performUpdate
+      );
+    },
+
+    updateQueryHandler(value, props){
+
+      const query = props.customQuery || RangeSlider.defaultQuery;
+      const {
+        showFilter,
+        range: { start, end },
+      } = props;
+
+      const [currentStart, currentEnd] = value;
+      const isInitialValue = currentStart === start && currentEnd === end;
+
+      this.updateQuery({
+        componentId: props.componentId,
+        query: query(value, props),
+        value,
+        label: props.filterLabel,
+        showFilter: showFilter && !isInitialValue,
+        URLParams: props.URLParams,
+        componentType: 'RANGESLIDER',
+      });
     }
-    
+
   },
   watch:{
+    react() {
+      this.setReact(this.$props);
+    },
+    defaultSelected(newVal) {
+      this.selectItem(newVal);
+    }
   },
 
   created(){
-
+    const onQueryChange = (...args) => {
+      this.$emit("queryChange", ...args);
+    };
+    this.setQueryListener(this.$props.componentId, onQueryChange, null);
   },
   beforeMount(){
-
+    this.addComponent(this.$props.componentId);
+    this.setReact(this.$props);
+    if (this.selectedValue) {
+      this.handleChange(this.selectedValue);
+    } else if (this.$props.defaultSelected) {
+      this.handleChange(this.$props.defaultSelected);
+    }
   },
   beforeDestroy(){
-
+    this.removeComponent(this.$props.componentId);
   },
 
   render(){
     return(
-    <Container class={this.$props.className}>
-        {this.$props.title && (
-          <Title class={getClassName(this.$props.innerClass, "title")}>
-          </Title>
-        )}
-        <vue-slider ref="slider" value={this.state.currentValue} min={this.$props.range.start} max={this.$props.range.end} onCallback={this.onCallback} onDrag-end={this.end}></vue-slider>
-    </Container>
+      <Container class={this.$props.className}>
+          {this.$props.title && (
+            <Title class={getClassName(this.$props.innerClass, "title")}>
+            </Title>
+          )}
+          <vue-slider ref="slider" value={this.state.currentValue} min={this.$props.range.start} max={this.$props.range.end} onDrag-end={this.handleSlider}></vue-slider>
+      </Container>
     )
   }
+}
+
+RangeSlider.defaultQuery = (values, props) => {
+  if (Array.isArray(values) && values.length) {
+      return {
+        range: {
+          [props.dataField]: {
+            gte: values[0],
+            lte: values[1],
+            boost: 2.0,
+          },
+        },
+      };
+    }
+    return null;
 }
 
 const mapStateToProps = (state, props) => ({

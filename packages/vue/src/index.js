@@ -47,7 +47,6 @@ export {
 	SingleList,
 	MultiList,
 	SingleRange,
-	MultiRange,
 	RangeSlider,
 	ReactiveComponent,
 	SelectedFilters,
