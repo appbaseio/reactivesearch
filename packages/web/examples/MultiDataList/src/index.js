@@ -61,9 +61,8 @@ class Main extends Component {
 		return {
 			title: (
 				<div className="meetup-title">
-					{data.member ? data.member.member_name : ''} is going to ${data.event
-						? data.event.event_name
-						: ''}
+					{data.member ? data.member.member_name : ''} is going to $
+					{data.event ? data.event.event_name : ''}
 				</div>
 			),
 			image: data.member.photo,
