@@ -24,19 +24,18 @@ const RangeSlider = {
     vueSlider
   },
   data(){
-  	this.state = {
-		currentValue: [this.$props.range.start, this.$props.range.end],
-		stats:[],
-		value: 1
-	}
-	this.locked = false;
+    this.state = {
+    currentValue: [this.$props.range.start, this.$props.range.end],
+    stats:[]
+  }
+  this.locked = false;
     return this.state;
   },
 
   props:{
-  	beforeValueChange: types.func,
+    beforeValueChange: types.func,
     className: VueTypes.string.def(""),
-	range: VueTypes.shape({
+  range: VueTypes.shape({
       start: VueTypes.integer.def(0),
       end: VueTypes.integer.def(10),
     }),
@@ -55,11 +54,16 @@ const RangeSlider = {
   },
 
   methods:{
-  	setReact(){},
-  	handleChange(){}
+    setReact(){},
+    onCallback(value){ 
+      // console.log('value',value);
+    },
+    end(x){
+      console.log('x',x.currentValue)
+    }
+    
   },
   watch:{
-
   },
 
   created(){
@@ -73,27 +77,26 @@ const RangeSlider = {
   },
 
   render(){
-  	return(
-		<Container class={this.$props.className}>
+    return(
+    <Container class={this.$props.className}>
         {this.$props.title && (
           <Title class={getClassName(this.$props.innerClass, "title")}>
           </Title>
         )}
-        {this.value}
-        <vue-slider ref="slider" v-model="value"></vue-slider>
-		</Container>
-  	)
+        <vue-slider ref="slider" value={this.state.currentValue} min={this.$props.range.start} max={this.$props.range.end} onCallback={this.onCallback} onDrag-end={this.end}></vue-slider>
+    </Container>
+    )
   }
 }
 
 const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId]
-		? state.aggregations[props.componentId][props.dataField]
-		  && state.aggregations[props.componentId][props.dataField].buckets // eslint-disable-line
-		: [],
-	selectedValue: state.selectedValues[props.componentId]
-		? state.selectedValues[props.componentId].value
-		: null,
+  options: state.aggregations[props.componentId]
+    ? state.aggregations[props.componentId][props.dataField]
+      && state.aggregations[props.componentId][props.dataField].buckets // eslint-disable-line
+    : [],
+  selectedValue: state.selectedValues[props.componentId]
+    ? state.selectedValues[props.componentId].value
+    : null,
 });
 
 const mapDispatchtoProps = {
