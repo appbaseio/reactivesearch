@@ -70,7 +70,7 @@ Alternatively the manual approach would be to open the sub-projects for `/vue` a
 yarn storybook
 ```
 
-**Note:** If you see any errors about missing dependencies, please try running `yarn` inside the sub-directory you're at.
+**Note:** We are writing vue components in jsx, [babel-plugin-transform-vue-jsx](https://github.com/vuejs/babel-plugin-transform-vue-jsx) compiles the `.jsx` files in to `.vue`.
 
 
 ## Native
