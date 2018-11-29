@@ -31,9 +31,9 @@ class SingleDataList extends Component {
 			searchTerm: '',
 		};
 		this.locked = false;
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		props.addComponent(props.componentId);
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		this.setReact(props);
 		const hasMounted = false;
