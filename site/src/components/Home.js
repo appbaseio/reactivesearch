@@ -40,8 +40,11 @@ const navTitle = css`
 		font-size: 20px;
 	`};
 `;
-const p = css`
-	lineheight: 1.3;
+const description = css`
+	margin-left: 7px !important;
+	${queries.small`
+		font-size: 12px;
+	`};
 `;
 class HomePage extends Component {
 	constructor(props) {
@@ -84,7 +87,7 @@ class HomePage extends Component {
 								<Logo.Light>{config.header.logo.title.light}</Logo.Light>
 								<Logo.Dark>{config.header.logo.title.dark}</Logo.Dark>
 								{config.header.logo.title.description && (
-									<span css="margin-left: 7px !important">
+									<span css={description}>
 										<Logo.Light>
 											{config.header.logo.title.description}
 										</Logo.Light>

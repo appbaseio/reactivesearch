@@ -43,6 +43,9 @@ const mask = css`
 	border-radius: 3px;
 	background-color: rgba(255, 255, 255, 0.1);
 	margin: 20px 10px 0 0;
+	img {
+		width: 100%;
+	}
 `;
 
 const FooterBrand = ({ configName }) => (
@@ -170,7 +173,7 @@ const AppFooter = ({ configName, footerConfig }) => (
 			className={css({
 				width: 200,
 				margin: '0 auto',
-				paddingBottom: 50,
+				paddingBottom: 100,
 				display: 'none',
 				[mediaKey.large]: {
 					display: 'block',
