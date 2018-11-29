@@ -90,7 +90,7 @@ class MultiList extends Component {
 						options: this.getOptions(buckets, this.props),
 					}), () => {
 						// this will ensure that the Select-All (or any)
-						// valuegets handled on the initial load and
+						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
 						const value = Object.keys(currentValue)
@@ -107,7 +107,7 @@ class MultiList extends Component {
 							: [],
 					}, () => {
 						// this will ensure that the Select-All (or any)
-						// valuegets handled on the initial load and
+						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
 						const value = Object.keys(currentValue)
