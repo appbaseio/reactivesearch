@@ -58,12 +58,14 @@ export default {
 			list: [
 				{
 					title: 'Search Preview',
-					href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+					href:
+						'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
 					openWithTab: true,
 				},
 				{
 					title: 'Base Components',
-					href: 'https://opensource.appbase.io/reactive-manual/base-components/textfield.html',
+					href:
+						'https://opensource.appbase.io/reactive-manual/native/base-components/textfield.html',
 					openWithTab: true,
 				},
 				{
@@ -74,12 +76,14 @@ export default {
 				},
 				{
 					title: 'Search Components',
-					href: 'https://opensource.appbase.io/reactive-manual/search-components/datasearch.html',
+					href:
+						'https://opensource.appbase.io/reactive-manual/native/search-components/datasearch.html',
 					openWithTab: true,
 				},
 				{
 					title: 'Result Components',
-					href: 'https://opensource.appbase.io/reactive-manual/result-components/resultlist.html',
+					href:
+						'https://opensource.appbase.io/reactive-manual/native/result-components/resultlist.html',
 					openWithTab: true,
 				},
 			],
