@@ -9,6 +9,7 @@ import ReactiveComponent from './components/basic/ReactiveComponent.jsx';
 import SelectedFilters from './components/basic/SelectedFilters.jsx';
 import SingleRange from './components/range/SingleRange.jsx';
 import MultiRange from './components/range/MultiRange.jsx';
+import ResultCard from './components/result/ResultCard.jsx';
 import version from './components/Version/index';
 
 const components = [
@@ -23,6 +24,7 @@ const components = [
 	SelectedFilters,
 	SingleDropdownList,
 	MultiDropdownList,
+	ResultCard,
 ];
 
 const install = function(Vue) {
@@ -40,6 +42,7 @@ export {
 	version,
 	install,
 	ReactiveList,
+	ResultCard,
 	ReactiveBase,
 	DataSearch,
 	SingleList,
