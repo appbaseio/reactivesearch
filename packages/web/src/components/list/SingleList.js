@@ -196,10 +196,15 @@ class SingleList extends Component {
 		return query;
 	};
 
-	setValue = (value, props = this.props, hasMounted = true) => {
+	setValue = (nextValue, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
+		}
+
+		let value = nextValue;
+		if (this.state.currentValue === nextValue && hasMounted) {
+			value = '';
 		}
 
 		this.locked = true;
