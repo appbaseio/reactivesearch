@@ -18,8 +18,8 @@ const {
 
 const { isEqual, checkValueChange, getClassName, pushToAndClause } = helper;
 
-const RangeSlider = { 
- 
+const RangeSlider = {
+
   name: "RangeSlider",
   components: {
     vueSlider
@@ -51,7 +51,9 @@ const RangeSlider = {
     showFilter: VueTypes.bool.def(true),
     showCheckbox: VueTypes.bool.def(true),
     title: types.title,
-    URLParams: VueTypes.bool.def(false)
+		URLParams: VueTypes.bool.def(false),
+		tooltipTrigger: types.tooltipTrigger,
+		mergeTooltip: VueTypes.bool.def(true)
   },
 
   methods:{
@@ -150,6 +152,7 @@ const RangeSlider = {
   },
 
   render(){
+		const tooltipTrigger = this.$props.tooltipTrigger === 'none' ? false : this.$props.tooltipTrigger;
     return(
       <Container class={this.$props.className}>
           {this.$props.title && (
@@ -159,7 +162,15 @@ const RangeSlider = {
           )}
 
         <Slider class={getClassName(this.$props.innerClass, "slider")}>
-          <vue-slider ref="slider" value={this.state.currentValue} min={this.$props.range.start} max={this.$props.range.end} onDrag-end={this.handleSlider}></vue-slider>
+          <vue-slider
+						ref="slider"
+						value={this.state.currentValue}
+						min={this.$props.range.start}
+						max={this.$props.range.end}
+						onDrag-end={this.handleSlider}
+						tooltip-merge={this.$props.mergeTooltip}
+						tooltip={tooltipTrigger}
+					/>
         </Slider>
       </Container>
     )
@@ -211,6 +222,3 @@ RangeSlider.install = function(Vue) {
   Vue.component(RangeSlider.name, RangeConnected);
 };
 export default RangeSlider;
-
-
-
