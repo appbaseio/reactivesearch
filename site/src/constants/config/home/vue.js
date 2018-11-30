@@ -20,7 +20,8 @@ export default {
 		},
 		link: {
 			title: 'LEARN MORE',
-			href: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
+			href:
+				'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
 		},
 	},
 	banner2: {
@@ -69,7 +70,8 @@ export default {
 				},
 				title: 'Works with existing UIs',
 				description: 'Already have your own components? Bring them to ReactiveSearch.',
-				href: 'https://opensource.appbase.io/reactive-manual/vue/advanced/reactivecomponent.html',
+				href:
+					'https://opensource.appbase.io/reactive-manual/vue/advanced/reactivecomponent.html',
 			},
 			{
 				image: {
@@ -143,37 +145,28 @@ export default {
 			},
 		},
 	],
-	// banner6: {
-	// 	title: 'Check our demos',
-	// 	button: {
-	// 		title: 'See more',
-	// 		href: '/reactivemaps/demos',
-	// 	},
-	// 	demos: [
-	// 		{
-	// 			src: '/images/apps/airbeds.png',
-	// 			title: 'Airbeds',
-	// 			href: 'https://opensource.appbase.io/reactivesearch/demos/airbeds/',
-	// 			description: 'An airbnb inspired app for browsing housing areas in Seattle',
-	// 		},
-	// 		{
-	// 			src: '/images/apps/productsearch.png',
-	// 			title: 'Product Search',
-	// 			href: 'https://opensource.appbase.io/reactivesearch/demos/producthunt/',
-	// 			description: '',
-	// 		},
-	// 		{
-	// 			src: '/images/apps/gitxplore.png',
-	// 			title: 'GitHub Search',
-	// 			href: 'https://opensource.appbase.io/reactivesearch/demos/gitxplore/',
-	// 			description: '',
-	// 		},
-	// 		{
-	// 			src: '/images/apps/carstore.png',
-	// 			title: 'Car Store',
-	// 			href: 'https://opensource.appbase.io/reactivesearch/demos/ecommerce/',
-	// 			description: '',
-	// 		},
-	// 	],
-	// },
+	banner6: {
+		title: 'Check our demos',
+		demos: [
+			{
+				src: 'images/apps/gitxplore.png',
+				title: 'GitHub Search',
+				href: 'https://codesandbox.io/s/54l2m5rqxl',
+				description:
+					'Explore top 30K Github repositories by various filters like stars, forks, topics.',
+			},
+		],
+	},
+	banner7: {
+		title: 'Featured',
+		articles: [
+			{
+				src: 'https://cdn-images-1.medium.com/max/2000/1*o4yRyTm2pKfa_Flr3W2TPw.png',
+				title: 'Vue.JS Components for building Search UIs',
+				href:
+					'https://medium.appbase.io/vue-js-components-for-building-search-uis-7b2a1b6fe159',
+				description: 'Introductory article for reactivesearch-vue',
+			},
+		],
+	},
 };
