@@ -2,6 +2,7 @@ import { Actions, helper } from "@appbaseio/reactivecore";
 import Container from "../../styles/Container";
 import { connect } from "../../utils/index";
 import Title from "../../styles/Title";
+import Slider from "../../styles/Slider";
 import types from "../../utils/vueTypes";
 import VueTypes from "vue-types";
 import vueSlider from 'vue-slider-component'
@@ -145,9 +146,13 @@ const RangeSlider = {
       <Container class={this.$props.className}>
           {this.$props.title && (
             <Title class={getClassName(this.$props.innerClass, "title")}>
+              {this.$props.title}
             </Title>
           )}
+
+        <Slider class={getClassName(this.$props.innerClass, "slider")}>
           <vue-slider ref="slider" value={this.state.currentValue} min={this.$props.range.start} max={this.$props.range.end} onDrag-end={this.handleSlider}></vue-slider>
+        </Slider>
       </Container>
     )
   }
