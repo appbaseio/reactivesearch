@@ -420,6 +420,14 @@ class HomePage extends Component {
 						</Layout>
 					</Section>
 					<Footer configName={config.name} footerConfig={config.footer} />
+					<a
+						href={config.producthunt}
+						// eslint-disable-next-line
+						target="_blank"
+						className="featured-post-link"
+					>
+						<span>Featured on Producthunt</span>🎉
+					</a>
 				</Base>
 			</ThemeProvider>
 		);
