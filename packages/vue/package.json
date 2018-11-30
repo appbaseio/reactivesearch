@@ -1,6 +1,6 @@
 {
   "name": "@appbaseio/reactivesearch-vue",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-beta",
   "private": false,
   "main": "dist/@appbaseio/reactivesearch-vue.cjs.js",
   "jsnext:main": "dist/@appbaseio/reactivesearch-vue.es.js",
@@ -38,6 +38,7 @@
     "url-search-params": "^1.1.0",
     "vue": "^2.5.17",
     "vue-emotion": "^0.4.2",
+    "vue-slider-component": "^2.8.2",
     "vue-types": "^1.3.3"
   },
   "devDependencies": {

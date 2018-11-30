@@ -157,7 +157,7 @@ const AppFooter = ({ configName, footerConfig }) => (
 										? {
 												target: '_blank',
 												rel: 'noopener noreferrer',
-										  }
+										} // prettier-ignore
 										: {})}
 									href={list.href}
 								>
