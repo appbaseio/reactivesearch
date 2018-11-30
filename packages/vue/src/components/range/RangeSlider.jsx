@@ -135,7 +135,8 @@ const RangeSlider = {
     this.addComponent(this.internalComponent);
     this.setReact(this.$props);
 
-    const { selectedValue, defaultSelected } = this.$props;
+    const { defaultSelected } = this.$props;
+    const { selectedValue } = this;
     if (Array.isArray(selectedValue)) {
       this.handleChange(selectedValue);
     } else if (selectedValue) {
