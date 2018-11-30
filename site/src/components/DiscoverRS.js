@@ -83,25 +83,25 @@ DiscoverRS.defaultProps = {
 		{
 			title: 'ReactiveSearch',
 			srcSet:
-				'../../images/reactivesearch/Reactive%20Search@3x.svg 3x, ../../images/reactivesearch/Reactive%20Search@2x.png 2x, ../../images/reactivesearch/Reactive%20Search@1x.png',
+				'images/reactivesearch/Reactive%20Search@3x.svg 3x, images/reactivesearch/Reactive%20Search@2x.png 2x, images/reactivesearch/Reactive%20Search@1x.png',
 			href: '../../reactivesearch/',
 		},
 		{
 			title: 'ReactiveSearch for Vue',
 			srcSet:
-				'../../images/reactivesearch/Reactive%20Search%20for%20vue@3x.svg 3x, ../../images/reactivesearch/Reactive%20Search%20for%20vue@2x.png 2x, ../../images/reactivesearch/Reactive%20Search%20for%20vue@1x.png',
+				'images/reactivesearch/Reactive%20Search%20for%20vue@3x.svg 3x, images/reactivesearch/Reactive%20Search%20for%20vue@2x.png 2x, images/reactivesearch/Reactive%20Search%20for%20vue@1x.png',
 			href: '../../reactivesearch/vue',
 		},
 		{
 			title: 'ReactiveSearch Native',
 			srcSet:
-				'../../images/reactivesearch/Reactive%20Search%20Native@3x.svg 3x, ../../images/reactivesearch/Reactive%20Search%20Native@2x.png 2x, ../../images/reactivesearch/Reactive%20Search%20Native@1x.png',
+				'images/reactivesearch/Reactive%20Search%20Native@3x.svg 3x, images/reactivesearch/Reactive%20Search%20Native@2x.png 2x, images/reactivesearch/Reactive%20Search%20Native@1x.png',
 			href: '../../reactivesearch/native',
 		},
 		{
 			title: 'Reactive Maps',
 			srcSet:
-				'../../images/reactivesearch/Group%2029@3x.svg 3x, ../../images/reactivesearch/Group%2029@2x.png 2x, ../../images/reactivesearch/Group%2029@1x.png',
+				'images/reactivesearch/Group%2029@3x.svg 3x, images/reactivesearch/Group%2029@2x.png 2x, images/reactivesearch/Group%2029@1x.png',
 			href: 'https://opensource.appbase.io/reactivemaps/',
 		},
 	],
