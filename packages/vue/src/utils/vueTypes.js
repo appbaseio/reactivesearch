@@ -118,6 +118,7 @@ const types = {
 	props: VueTypes.object,
 	rangeLabelsAlign: VueTypes.oneOf(['left', 'right']),
 	title: VueTypes.oneOfType([VueTypes.string, VueTypes.any]),
+	tooltipTrigger: VueTypes.oneOf(['always', 'none', 'hover']),
 	location: VueTypes.shape({
 		lat: validateLocation,
 		lng: validateLocation
