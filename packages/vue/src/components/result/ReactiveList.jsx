@@ -16,16 +16,10 @@ const {
 	updateQuery,
 	loadMore,
 	setValue,
-	setQueryListener
+	setQueryListener,
 } = Actions;
 
-const {
-	isEqual,
-	getQueryOptions,
-	pushToAndClause,
-	getClassName,
-	parseHits
-} = helper;
+const { isEqual, getQueryOptions, pushToAndClause, getClassName, parseHits } = helper;
 
 const ReactiveList = {
 	name: 'ReactiveList',
@@ -42,7 +36,7 @@ const ReactiveList = {
 		this.__state = {
 			from: $currentPage * props.size,
 			isLoading: true,
-			$currentPage
+			$currentPage,
 		};
 		return this.__state;
 	},
@@ -82,7 +76,7 @@ const ReactiveList = {
 		sortBy: types.sortBy,
 		sortOptions: types.sortOptions,
 		stream: types.bool,
-		URLParams: VueTypes.bool.def(false)
+		URLParams: VueTypes.bool.def(false),
 	},
 	computed: {
 		totalPages() {
@@ -93,7 +87,7 @@ const ReactiveList = {
 		},
 		hasResultStatsListener() {
 			return this.$listeners && this.$listeners.resultStats;
-		}
+		},
 	},
 	watch: {
 		sortOptions(newVal, oldVal) {
@@ -135,15 +129,15 @@ const ReactiveList = {
 
 				if (sort) {
 					options.sort = this.$defaultQuery.sort;
-					this.$props.setQueryOptions(this.$props.componentId, options, !query);
+					this.setQueryOptions(this.$props.componentId, options, !query);
 				}
 
 				this.updateQuery(
 					{
 						componentId: this.internalComponent,
-						query
+						query,
 					},
-					true
+					true,
 				); // reset page because of query change
 
 				this.$currentPage = 0;
@@ -172,10 +166,7 @@ const ReactiveList = {
 					this.isLoading = false;
 				}
 			} else if (oldVal && newVal) {
-				if (
-					oldVal.length !== newVal.length
-					|| newVal.length === this.$props.total
-				) {
+				if (oldVal.length !== newVal.length || newVal.length === this.$props.total) {
 					this.isLoading = false;
 
 					if (newVal.length < oldVal.length) {
@@ -213,7 +204,7 @@ const ReactiveList = {
 			if (this.$currentPage !== newVal && this.defaultPage !== newVal) {
 				this.setPage(newVal >= 0 ? newVal : 0);
 			}
-		}
+		},
 	},
 	mounted() {
 		this.addComponent(this.internalComponent);
@@ -230,17 +221,17 @@ const ReactiveList = {
 			options.sort = [
 				{
 					[this.$props.sortOptions[0].dataField]: {
-						order: this.$props.sortOptions[0].sortBy
-					}
-				}
+						order: this.$props.sortOptions[0].sortBy,
+					},
+				},
 			];
 		} else if (this.$props.sortBy) {
 			options.sort = [
 				{
 					[this.$props.dataField]: {
-						order: this.$props.sortBy
-					}
-				}
+						order: this.$props.sortBy,
+					},
+				},
 			];
 		} // Override sort query with defaultQuery's sort if defined
 
@@ -266,17 +257,17 @@ const ReactiveList = {
 			this.updateQuery(
 				{
 					componentId: this.internalComponent,
-					query
+					query,
 				},
-				execute
+				execute,
 			);
 		} else {
 			this.updateQuery(
 				{
 					componentId: this.internalComponent,
-					query: null
+					query: null,
 				},
-				execute
+				execute,
 			);
 		} // query will be executed here
 
@@ -307,7 +298,6 @@ const ReactiveList = {
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 		}
 
-		const onData = this.$scopedSlots.onData || this.$props.onData;
 		return (
 			<div style={this.$props.style} class={this.$props.className}>
 				{this.isLoading
@@ -324,8 +314,7 @@ const ReactiveList = {
 					? this.renderNoResults()
 					: null}
 				{this.$props.pagination
-				&& (this.$props.paginationAt === 'top'
-					|| this.$props.paginationAt === 'both') ? (
+				&& (this.$props.paginationAt === 'top' || this.$props.paginationAt === 'both') ? (
 						<Pagination
 							pages={this.$props.pages}
 							totalPages={this.totalPages}
@@ -341,22 +330,22 @@ const ReactiveList = {
 						loadMore: this.loadMore,
 						analytics: {
 							base: this.$currentPage * size,
-							triggerClickAnalytics: this.triggerClickAnalytics
-						}
+							triggerClickAnalytics: this.triggerClickAnalytics,
+						},
 					})
 				) : (
 					<div
 						class={`${this.$props.listClass} ${getClassName(
 							this.$props.innerClass,
-							'list'
+							'list',
 						)}`}
 					>
 						{[...streamResults, ...filteredResults].map((item, index) =>
 							onData({
 								item,
 								triggerClickAnalytics: () =>
-									this.triggerClickAnalytics(this.$currentPage * size + index)
-							})
+									this.triggerClickAnalytics(this.$currentPage * size + index),
+							}),
 						)}
 					</div>
 				)}
@@ -366,7 +355,7 @@ const ReactiveList = {
 							style={{
 								textAlign: 'center',
 								margin: '20px 0',
-								color: '#666'
+								color: '#666',
 							}}
 						>
 								Loading...
@@ -374,8 +363,7 @@ const ReactiveList = {
 					  )
 					: null}
 				{this.$props.pagination
-				&& (this.$props.paginationAt === 'bottom'
-					|| this.$props.paginationAt === 'both') ? (
+				&& (this.$props.paginationAt === 'bottom' || this.$props.paginationAt === 'both') ? (
 						<Pagination
 							pages={this.$props.pages}
 							totalPages={Math.ceil(this.$data.total / this.$props.size)}
@@ -405,17 +393,17 @@ const ReactiveList = {
 				options.sort = [
 					{
 						[props.sortOptions[0].dataField]: {
-							order: props.sortOptions[0].sortBy
-						}
-					}
+							order: props.sortOptions[0].sortBy,
+						},
+					},
 				];
 			} else if (props.sortBy) {
 				options.sort = [
 					{
 						[props.dataField]: {
-							order: props.sortBy
-						}
-					}
+							order: props.sortBy,
+						},
+					},
 				];
 			}
 			this.setQueryOptions(this.$props.componentId, options, true);
@@ -428,7 +416,7 @@ const ReactiveList = {
 				this.watchComponent(props.componentId, newReact);
 			} else {
 				this.watchComponent(props.componentId, {
-					and: this.internalComponent
+					and: this.internalComponent,
 				});
 			}
 		},
@@ -436,19 +424,14 @@ const ReactiveList = {
 		scrollHandler() {
 			if (
 				!this.isLoading
-				&& window.innerHeight + window.pageYOffset + 300
-					>= document.body.offsetHeight
+				&& window.innerHeight + window.pageYOffset + 300 >= document.body.offsetHeight
 			) {
 				this.loadMore();
 			}
 		},
 
 		loadMore() {
-			if (
-				this.hits
-				&& !this.$props.pagination
-				&& this.total !== this.hits.length
-			) {
+			if (this.hits && !this.$props.pagination && this.total !== this.hits.length) {
 				const value = this.$data.from + this.$props.size;
 				const options = getQueryOptions(this.$props);
 				this.from = value;
@@ -457,9 +440,9 @@ const ReactiveList = {
 					this.$props.componentId,
 					{
 						...options,
-						from: value
+						from: value,
 					},
-					true
+					true,
 				);
 			} else if (this.isLoading) {
 				this.isLoading = false;
@@ -479,9 +462,9 @@ const ReactiveList = {
 					this.$props.componentId,
 					{
 						...options,
-						from: value
+						from: value,
 					},
-					false
+					false,
 				);
 
 				if (this.$props.URLParams) {
@@ -490,19 +473,18 @@ const ReactiveList = {
 						page + 1,
 						this.$props.componentId,
 						false,
-						true
+						true,
 					);
 				}
 			}
 		},
 
 		renderResultStats() {
-			const onResultStats
-				= this.$props.onResultStats || this.$scopedSlots.onResultStats;
+			const onResultStats = this.$props.onResultStats || this.$scopedSlots.onResultStats;
 			if (onResultStats) {
 				return onResultStats({
 					total: this.$data.total,
-					time: this.$data.time
+					time: this.$data.time,
 				});
 			}
 			if (this.$data.total) {
@@ -510,7 +492,7 @@ const ReactiveList = {
 					<p
 						class={`${resultStats} ${getClassName(
 							this.$props.innerClass,
-							'resultStats'
+							'resultStats',
 						)}`}
 					>
 						{this.$data.total} results found in {this.$data.time}
@@ -538,11 +520,11 @@ const ReactiveList = {
 			options.sort = [
 				{
 					[this.$props.sortOptions[index].dataField]: {
-						order: this.$props.sortOptions[index].sortBy
-					}
-				}
+						order: this.$props.sortOptions[index].sortBy,
+					},
+				},
 			];
-			this.$props.setQueryOptions(this.$props.componentId, options, true);
+			this.setQueryOptions(this.$props.componentId, options, true);
 			this.$currentPage = 0;
 			this.from = 0;
 		},
@@ -550,14 +532,10 @@ const ReactiveList = {
 			// click analytics would only work client side and after javascript loads
 			const {
 				config,
-				analytics: { searchId }
+				analytics: { searchId },
 			} = this;
 			const { url, app, credentials } = config;
-			if (
-				config.analytics
-				&& url.endsWith('scalr.api.appbase.io')
-				&& searchId
-			) {
+			if (config.analytics && url.endsWith('scalr.api.appbase.io') && searchId) {
 				fetch(`${url}/${app}/analytics`, {
 					method: 'POST',
 					headers: {
@@ -565,8 +543,8 @@ const ReactiveList = {
 						Authorization: `Basic ${btoa(credentials)}`,
 						'X-Search-Id': searchId,
 						'X-Search-Click': true,
-						'X-Search-Click-Position': searchPosition + 1
-					}
+						'X-Search-Click-Position': searchPosition + 1,
+					},
 				});
 			}
 		},
@@ -574,10 +552,7 @@ const ReactiveList = {
 		renderSortOptions() {
 			return (
 				<select
-					class={`${sortOptions} ${getClassName(
-						this.$props.innerClass,
-						'sortOptions'
-					)}`}
+					class={`${sortOptions} ${getClassName(this.$props.innerClass, 'sortOptions')}`}
 					name="sort-options"
 					onChange={this.handleSortChange}
 				>
@@ -588,8 +563,8 @@ const ReactiveList = {
 					))}
 				</select>
 			);
-		}
-	}
+		},
+	},
 };
 const mapStateToProps = (state, props) => ({
 	defaultPage:
@@ -598,11 +573,10 @@ const mapStateToProps = (state, props) => ({
 		|| -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	streamHits: state.streamHits[props.componentId],
-	time:
-		(state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	analytics: state.analytics,
-	config: state.config
+	config: state.config,
 });
 const mapDispatchtoProps = {
 	addComponent,
@@ -613,11 +587,11 @@ const mapDispatchtoProps = {
 	setQueryListener,
 	setStreaming,
 	updateQuery,
-	watchComponent
+	watchComponent,
 };
 export const RLConnected = connect(
 	mapStateToProps,
-	mapDispatchtoProps
+	mapDispatchtoProps,
 )(ReactiveList);
 
 ReactiveList.install = function(Vue) {

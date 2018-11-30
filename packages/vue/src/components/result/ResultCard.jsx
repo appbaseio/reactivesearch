@@ -1,11 +1,11 @@
-import {RLConnected} from './ReactiveList.jsx';
-import Title from '../../styles/Title';
 import VueTypes from 'vue-types';
+import { helper } from '@appbaseio/reactivecore';
+import { RLConnected } from './ReactiveList.jsx';
+import Title from '../../styles/Title';
+import types from '../../utils/vueTypes';
 import Card, { container, Image } from '../../styles/Card';
-import types from '../../utils/vueTypes.js';
-import {helper} from '@appbaseio/reactivecore';
 
-const {getClassName}= helper;
+const { getClassName } = helper;
 
 const ResultCard = {
 	name: 'ResultCard',
@@ -35,25 +35,26 @@ const ResultCard = {
 		sortOptions: types.sortOptions,
 		stream: types.bool,
 		URLParams: VueTypes.bool.def(false),
-		target: VueTypes.string.def('_blank')
+		target: VueTypes.string.def('_blank'),
 	},
-	render(){
-		const {onData, ...props} = this.$props;
-		const onResultStats
-			= this.$props.onResultStats || this.$scopedSlots.onResultStats;
-		return(
+	render() {
+		const { onData, ...props } = this.$props;
+		const onResultStats = this.$props.onResultStats || this.$scopedSlots.onResultStats;
+		return (
 			<RLConnected
-				{...{props:{
-					...props,
-					onData: this.renderAsCard,
-					onResultStats,
-					listClass: container,
-				}}}
+				{...{
+					props: {
+						...props,
+						onData: this.renderAsCard,
+						onResultStats,
+						listClass: container,
+					},
+				}}
 			/>
 		);
 	},
-	methods:{
-		renderAsCard({item, triggerClickAnalytics}){
+	methods: {
+		renderAsCard({ item, triggerClickAnalytics }) {
 			const onData = this.$props.onData || this.$scopedSlots.onData;
 			const result = onData(item);
 			if (result) {
@@ -64,9 +65,11 @@ const ResultCard = {
 						className={getClassName(this.$props.innerClass, 'listItem')}
 						target={this.$props.target}
 						rel={this.$props.target === '_blank' ? 'noopener noreferrer' : null}
-						{...{on:{
-							click: triggerClickAnalytics
-						}}}
+						{...{
+							on: {
+								click: triggerClickAnalytics,
+							},
+						}}
 						{...result.containerProps}
 					>
 						<Image
@@ -75,29 +78,27 @@ const ResultCard = {
 						/>
 						{typeof result.title === 'string' ? (
 							<Title
-								{...{domProps: {innerHTML: result.title}}}
+								{...{ domProps: { innerHTML: result.title } }}
 								className={getClassName(this.$props.innerClass, 'title')}
 							/>
 						) : (
-								<Title className={getClassName(this.$props.innerClass, 'title')}>
-									{result.title}
-								</Title>
-							)}
+							<Title className={getClassName(this.$props.innerClass, 'title')}>
+								{result.title}
+							</Title>
+						)}
 						{typeof result.description === 'string' ? (
-							<article
-								{...{ domProps: { innerHTML: result.description } }}
-							/>
+							<article {...{ domProps: { innerHTML: result.description } }} />
 						) : (
-								<article>{result.description}</article>
-							)}
+							<article>{result.description}</article>
+						)}
 					</Card>
 				);
 			}
 
 			return null;
-		}
-	}
-}
+		},
+	},
+};
 
 ResultCard.install = function(Vue) {
 	Vue.component(ResultCard.name, ResultCard);
