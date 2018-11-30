@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Logo, Button, H3, Title, Flex, GithubButton, Grid } from '@appbaseio/designkit';
+import { Link } from 'react-router-dom';
 import { css } from 'emotion';
 import { ThemeProvider } from 'emotion-theming';
 import PropTypes from 'prop-types';
@@ -27,6 +28,7 @@ import H1 from '../styles/H1';
 import H2 from '../styles/H2';
 import queries from '../styles/mediaQueries';
 import { getButtonStyle, getLinkStyle } from '../styles/utils';
+import DiscoverRS from './DiscoverRS';
 
 const button = {
 	fontSize: '14px',
@@ -38,8 +40,11 @@ const navTitle = css`
 		font-size: 20px;
 	`};
 `;
-const p = css`
-	lineheight: 1.3;
+const description = css`
+	margin-left: 7px !important;
+	${queries.small`
+		font-size: 12px;
+	`};
 `;
 class HomePage extends Component {
 	constructor(props) {
@@ -82,7 +87,7 @@ class HomePage extends Component {
 								<Logo.Light>{config.header.logo.title.light}</Logo.Light>
 								<Logo.Dark>{config.header.logo.title.dark}</Logo.Dark>
 								{config.header.logo.title.description && (
-									<span css="margin-left: 7px !important">
+									<span css={description}>
 										<Logo.Light>
 											{config.header.logo.title.description}
 										</Logo.Light>
@@ -95,9 +100,10 @@ class HomePage extends Component {
 								/* eslint-disable-next-line */
 								<li key={i}>
 									{/* eslint-disable-next-line */}
-									<a style={getLinkStyle(config.name)} href={l.href}>
+									<Link style={getLinkStyle(config.name)} to={l.href}>
 										{l.description.toUpperCase()}
-									</a>
+									</Link>
+									{/* <a style={getLinkStyle(config.name)} href={l.href}>{l.description.toUpperCase()}</a> */}
 								</li>
 							))}
 							<li className={showMobileFlex}>
@@ -263,6 +269,7 @@ class HomePage extends Component {
 						config={config.banner5}
 						theme={this.props.theme}
 					/>
+					<DiscoverRS />
 					{/** Demos Section */}
 					{config.banner6 && (
 						<Section id="examples">
@@ -311,8 +318,8 @@ class HomePage extends Component {
 											className={tabJustifyCenter}
 										>
 											{config.banner6.demos.map((d, index) => (
-												// eslint-disable-next-line
 												<Flex
+													// eslint-disable-next-line
 													key={index}
 													flexDirection="column"
 													justifyContent="center"
@@ -406,13 +413,13 @@ class HomePage extends Component {
 								BUILD MY FIRST APP
 							</Button>
 
-							<H2 style={{ margin: '1.4rem 0px 0.5rem' }}>Need Help?</H2>
+							<H2>Need Help?</H2>
 							<p>Resources to get help with Reactive Search.</p>
 
 							<SupportGrid configName={config.name} />
 						</Layout>
 					</Section>
-					<Footer configName={config.name} />
+					<Footer configName={config.name} footerConfig={config.footer} />
 				</Base>
 			</ThemeProvider>
 		);
