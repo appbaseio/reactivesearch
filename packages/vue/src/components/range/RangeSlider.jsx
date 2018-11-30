@@ -119,8 +119,7 @@ const RangeSlider = {
       this.setReact(this.$props);
     },
     defaultSelected(newVal) {
-      console.log('calld')
-      this.handleChange(newVal);
+       this.handleChange(RangeSlider.parseValue(newVal, this.$props));
     }
   },
 
