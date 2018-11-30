@@ -300,10 +300,13 @@ const ReactiveList = {
 		const streamResults = parseHits(this.$data.streamHits) || [];
 		let filteredResults = results;
 
+		const onData = this.$scopedSlots.onData || this.$props.onData;
+
 		if (streamResults.length) {
 			const ids = streamResults.map(item => item._id);
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 		}
+
 		return (
 			<div style={this.$props.style} class={this.$props.className}>
 				{this.isLoading
@@ -348,7 +351,7 @@ const ReactiveList = {
 						)}`}
 					>
 						{[...streamResults, ...filteredResults].map((item, index) =>
-							this.$scopedSlots.onData({
+							onData({
 								item,
 								triggerClickAnalytics: () =>
 									this.triggerClickAnalytics(this.$currentPage * size + index)
@@ -611,7 +614,7 @@ const mapDispatchtoProps = {
 	updateQuery,
 	watchComponent
 };
-const RLConnected = connect(
+export const RLConnected = connect(
 	mapStateToProps,
 	mapDispatchtoProps
 )(ReactiveList);

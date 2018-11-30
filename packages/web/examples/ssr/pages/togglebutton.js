@@ -1,11 +1,6 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import {
-	ReactiveBase,
-	ToggleButton,
-	SelectedFilters,
-	ResultList,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, ToggleButton, SelectedFilters, ResultList } from '@appbaseio/reactivesearch';
 
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
 
@@ -40,7 +35,7 @@ const resultListProps = {
 	onData: ListItemView,
 	pagination: true,
 	react: {
-		and: ['CitySensor']
+		and: ['CitySensor'],
 	},
 };
 
@@ -72,15 +67,11 @@ export default class Main extends Component {
 				<ReactiveBase {...settings} initialState={this.props.store}>
 					<div className="row">
 						<div className="col">
-							<ToggleButton
-								{...toggleButtonProps}
-							/>
+							<ToggleButton {...toggleButtonProps} />
 						</div>
 						<div className="col">
 							<SelectedFilters />
-							<ResultList
-								{...resultListProps}
-							/>
+							<ResultList {...resultListProps} />
 						</div>
 					</div>
 				</ReactiveBase>

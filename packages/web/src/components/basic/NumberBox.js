@@ -121,20 +121,18 @@ class NumberBox extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState({
-				currentValue: value,
-			}, () => {
-				this.updateQuery(value, props);
-				this.locked = false;
-				if (props.onValueChange) props.onValueChange(value);
-			});
+			this.setState(
+				{
+					currentValue: value,
+				},
+				() => {
+					this.updateQuery(value, props);
+					this.locked = false;
+					if (props.onValueChange) props.onValueChange(value);
+				},
+			);
 		};
-		checkValueChange(
-			props.componentId,
-			value,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -158,7 +156,11 @@ class NumberBox extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				<Flex labelPosition={this.props.labelPosition} justifyContent="space-between" className={numberBoxContainer}>
+				<Flex
+					labelPosition={this.props.labelPosition}
+					justifyContent="space-between"
+					className={numberBoxContainer}
+				>
 					<span className={getClassName(this.props.innerClass, 'label') || null}>
 						{this.props.data.label}
 					</span>
@@ -231,4 +233,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(NumberBox);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(NumberBox);

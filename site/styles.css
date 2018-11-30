@@ -1,111 +1,114 @@
 @font-face {
-	font-family: "flowcircular";
-	src: url("fonts/flow-circular-webfont.woff2") format("woff2"),
-		 url("fonts/flow-circular-webfont.woff") format("woff");
-	font-weight: normal;
-	font-style: normal;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 pre {
-	white-space: pre-wrap;
-    font-family: "flowcircular";
-    font-size: 13px;
-    line-height: 10px;
-    margin: 0;
+  white-space: pre-wrap;
+  font-family: "Open Sans", sans-serif;
+  font-size: 13px;
+  line-height: 10px;
+  margin: 0;
 }
 
 .reset {
-	-webkit-font-smoothing: antialiased;
-	text-rendering: optimizeLegibility;
-	-moz-osx-font-smoothing: grayscale;
-	-moz-font-feature-settings: "liga" on;
-	font-family: "Rubik", sans-serif;
-	margin: 0;
-	padding: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-feature-settings: "liga" on;
+  font-family: "Open Sans", sans-serif;
+  margin: 0 !important;
+  padding: 0;
 }
 
 .zz-border {
-	position: relative;
+  position: relative;
 }
 
 .zz-border:after {
-	background-image: url(images/pattern.svg);
-	content: " ";
-	display: block;
-	height: 6px;
-	width: 100%;
-	position: absolute;
-	bottom: 0px;
-	left: 0;
-	z-index: 2;
+  background-image: url(images/pattern.svg);
+  content: " ";
+  display: block;
+  height: 6px;
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  z-index: 2;
 }
 
 .zz-border--reverse:after {
-	bottom: -6px;
-	transform: rotate(180deg);
+  bottom: -6px;
+  transform: rotate(180deg);
 }
 
 .text {
-	font: 2.5em/1 Rubik;
-	fill: none;
-	stroke-width: 2;
-	stroke-linejoin: round;
-	stroke-dasharray: 70 330;
-	stroke-dashoffset: 0;
-	-webkit-animation: stroke 6s infinite linear;
-	animation: stroke 6s infinite linear;
+  font: 2.5em/1 Rubik;
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-dasharray: 70 330;
+  stroke-dashoffset: 0;
+  -webkit-animation: stroke 6s infinite linear;
+  animation: stroke 6s infinite linear;
 }
 
 .text:nth-child(5n + 1) {
-	stroke: #5438f2;
-	-webkit-animation-delay: -1.2s;
-	animation-delay: -1.2s;
+  stroke: #5438f2;
+  -webkit-animation-delay: -1.2s;
+  animation-delay: -1.2s;
 }
 
 .text:nth-child(5n + 2) {
-	stroke: #03b2f5;
-	-webkit-animation-delay: -2.4s;
-	animation-delay: -2.4s;
+  stroke: #03b2f5;
+  -webkit-animation-delay: -2.4s;
+  animation-delay: -2.4s;
 }
 
 .text:nth-child(5n + 3) {
-	stroke: #4100FE;
-	-webkit-animation-delay: -3.6s;
-	animation-delay: -3.6s;
+  stroke: #4100fe;
+  -webkit-animation-delay: -3.6s;
+  animation-delay: -3.6s;
 }
 
 .text:nth-child(5n + 4) {
-	stroke: #34a99e;
-	-webkit-animation-delay: -4.8s;
-	animation-delay: -4.8s;
+  stroke: #34a99e;
+  -webkit-animation-delay: -4.8s;
+  animation-delay: -4.8s;
 }
 
 .text:nth-child(5n + 5) {
-	stroke: #3AA1BF;
-	-webkit-animation-delay: -6s;
-	animation-delay: -6s;
+  stroke: #3aa1bf;
+  -webkit-animation-delay: -6s;
+  animation-delay: -6s;
 }
 
 @-webkit-keyframes stroke {
-	100% {
-		stroke-dashoffset: -400;
-	}
+  100% {
+    stroke-dashoffset: -400;
+  }
 }
 @keyframes stroke {
-	100% {
-		stroke-dashoffset: -400;
-	}
+  100% {
+    stroke-dashoffset: -400;
+  }
 }
 
 .logo svg {
-	width: 500px;
-	height: 150px;
+  width: 500px;
+  height: 150px;
 }
 
 #code {
-	-webkit-mask-image: linear-gradient(180deg,#000 30px,#000 calc(100% - 200px),transparent calc(100% - 50px));
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    #000 30px,
+    #000 calc(100% - 200px),
+    transparent calc(100% - 50px)
+  );
 }

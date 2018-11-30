@@ -33,7 +33,7 @@ const reactiveListProps = {
 	dataField: 'original_title.raw',
 	from: 0,
 	size: 10,
-	onData: data => (<BookCard key={data._id} data={data} />),
+	onData: data => <BookCard key={data._id} data={data} />,
 	react: {
 		and: ['BookSensor'],
 	},
@@ -67,16 +67,12 @@ export default class Main extends Component {
 				<ReactiveBase {...settings} initialState={this.props.store}>
 					<div className="row">
 						<div className="col">
-							<SingleRange
-								{...singleRangeProps}
-							/>
+							<SingleRange {...singleRangeProps} />
 						</div>
 
 						<div className="col">
 							<SelectedFilters />
-							<ReactiveList
-								{...reactiveListProps}
-							/>
+							<ReactiveList {...reactiveListProps} />
 						</div>
 					</div>
 				</ReactiveBase>

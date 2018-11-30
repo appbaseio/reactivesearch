@@ -27,23 +27,25 @@ class ResultCard extends Component {
 						style={{ backgroundImage: `url(${result.image})` }}
 						className={getClassName(this.props.innerClass, 'image')}
 					/>
-					{
-						typeof result.title === 'string'
-							? <Title
-								dangerouslySetInnerHTML={{ __html: result.title }}
-								className={getClassName(this.props.innerClass, 'title')}
-							/>
-							: (
-								<Title className={getClassName(this.props.innerClass, 'title')}>
-									{result.title}
-								</Title>
-							)
-					}
-					{
-						typeof result.description === 'string'
-							? <article dangerouslySetInnerHTML={{ __html: result.description }} />
-							: <article>{result.description}</article>
-					}
+					{typeof result.title === 'string' ? (
+						<Title
+							dangerouslySetInnerHTML={{ __html: result.title }}
+							className={getClassName(this.props.innerClass, 'title')}
+						/>
+					) : (
+						<Title className={getClassName(this.props.innerClass, 'title')}>
+							{result.title}
+						</Title>
+					)}
+					{typeof result.description === 'string' ? (
+						<article
+							dangerouslySetInnerHTML={{
+								__html: result.description,
+							}}
+						/>
+					) : (
+						<article>{result.description}</article>
+					)}
 				</Card>
 			);
 		}
@@ -54,13 +56,7 @@ class ResultCard extends Component {
 	render() {
 		const { onData, ...props } = this.props;
 
-		return (
-			<ReactiveList
-				{...props}
-				onData={this.renderAsCard}
-				listClass={container}
-			/>
-		);
+		return <ReactiveList {...props} onData={this.renderAsCard} listClass={container} />;
 	}
 }
 

@@ -24,10 +24,7 @@ class URLParamsProvider extends Component {
 
 			// update active components in selectedValues
 			Array.from(this.params.entries()).forEach((item) => {
-				this.props.setValue(
-					item[0],
-					JSON.parse(item[1]),
-				);
+				this.props.setValue(item[0], JSON.parse(item[1]));
 			});
 		};
 	}
@@ -48,7 +45,10 @@ class URLParamsProvider extends Component {
 						|| this.hasValidValue(nextProps.selectedValues[component])
 					) {
 						if (nextProps.selectedValues[component].URLParams) {
-							this.setURL(component, this.getValue(nextProps.selectedValues[component].value));
+							this.setURL(
+								component,
+								this.getValue(nextProps.selectedValues[component].value),
+							);
 						} else {
 							this.params.delete(component);
 							this.pushToHistory();
@@ -103,8 +103,11 @@ class URLParamsProvider extends Component {
 
 	setURL(component, value) {
 		this.params = new URLSearchParams(window.location.search);
-		if (!value || (typeof value === 'string' && value.trim() === '')
-			|| (Array.isArray(value) && value.length === 0)) {
+		if (
+			!value
+			|| (typeof value === 'string' && value.trim() === '')
+			|| (Array.isArray(value) && value.length === 0)
+		) {
 			this.params.delete(component);
 			this.pushToHistory();
 		} else {
@@ -160,4 +163,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setValue(component, value, label, showFilter, URLParams)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(URLParamsProvider);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(URLParamsProvider);

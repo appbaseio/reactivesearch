@@ -46,10 +46,7 @@ const MapComponent = withGoogleMap((props) => {
 	const { children, onMapMounted, ...allProps } = props;
 
 	return (
-		<GoogleMap
-			ref={onMapMounted}
-			{...allProps}
-		>
+		<GoogleMap ref={onMapMounted} {...allProps}>
 			{children}
 		</GoogleMap>
 	);
@@ -59,13 +56,16 @@ function getPrecision(a) {
 	if (isNaN(a)) return 0; // eslint-disable-line
 	let e = 1;
 	let p = 0;
-	while (Math.round(a * e) / e !== a) { e *= 10; p += 1; }
+	while (Math.round(a * e) / e !== a) {
+		e *= 10;
+		p += 1;
+	}
 	return p;
 }
 
 function withDistinctLat(loc, count) {
 	const length = getPrecision(loc.lat);
-	const noiseFactor = (length >= 6) ? 4 : (length - 2);
+	const noiseFactor = length >= 6 ? 4 : length - 2;
 	const suffix = (1 / (10 ** noiseFactor)) * count;
 	const location = {
 		...loc,
@@ -88,8 +88,9 @@ class ReactiveMap extends Component {
 			{ label: 'Unsaturated Browns', value: UnsaturatedBrowns },
 		];
 
-		const currentMapStyle = this.mapStyles
-			.find(style => style.label === props.defaultMapStyle) || this.mapStyles[0];
+		const currentMapStyle
+			= this.mapStyles.find(style => style.label === props.defaultMapStyle)
+			|| this.mapStyles[0];
 
 		this.state = {
 			currentMapStyle,
@@ -120,11 +121,13 @@ class ReactiveMap extends Component {
 		const options = getQueryOptions(this.props);
 		options.from = this.state.from;
 		if (this.props.sortBy) {
-			options.sort = [{
-				[this.props.dataField]: {
-					order: this.props.sortBy,
+			options.sort = [
+				{
+					[this.props.dataField]: {
+						order: this.props.sortBy,
+					},
 				},
-			}];
+			];
 		}
 
 		this.defaultQuery = null;
@@ -163,12 +166,7 @@ class ReactiveMap extends Component {
 				// - kindly note that forceExecute may result in one additional network request
 				//   since it bypasses the gatekeeping
 				const forceExecute = this.state.searchAsMove;
-				this.props.setMapData(
-					this.props.componentId,
-					query,
-					persistMapQuery,
-					forceExecute,
-				);
+				this.props.setMapData(this.props.componentId, query, persistMapQuery, forceExecute);
 			}
 		}
 
@@ -189,11 +187,13 @@ class ReactiveMap extends Component {
 			const options = getQueryOptions(nextProps);
 			options.from = 0;
 			if (nextProps.sortBy) {
-				options.sort = [{
-					[nextProps.dataField]: {
-						order: nextProps.sortBy,
+				options.sort = [
+					{
+						[nextProps.dataField]: {
+							order: nextProps.sortBy,
+						},
 					},
-				}];
+				];
 			}
 			this.setState({
 				from: 0,
@@ -221,10 +221,7 @@ class ReactiveMap extends Component {
 			});
 		}
 
-		if (
-			nextProps.defaultQuery
-			&& !isEqual(nextProps.defaultQuery(), this.defaultQuery)
-		) {
+		if (nextProps.defaultQuery && !isEqual(nextProps.defaultQuery(), this.defaultQuery)) {
 			const options = getQueryOptions(nextProps);
 			options.from = this.state.from;
 			this.defaultQuery = nextProps.defaultQuery();
@@ -239,12 +236,7 @@ class ReactiveMap extends Component {
 			const persistMapQuery = true;
 			const forceExecute = true;
 
-			this.props.setMapData(
-				this.props.componentId,
-				query,
-				persistMapQuery,
-				forceExecute,
-			);
+			this.props.setMapData(this.props.componentId, query, persistMapQuery, forceExecute);
 		}
 
 		if (this.props.stream !== nextProps.stream) {
@@ -269,10 +261,8 @@ class ReactiveMap extends Component {
 			!nextProps.pagination
 			&& this.props.hits
 			&& nextProps.hits
-			&& (
-				this.props.hits.length < nextProps.hits.length
-				|| nextProps.hits.length === nextProps.total
-			)
+			&& (this.props.hits.length < nextProps.hits.length
+				|| nextProps.hits.length === nextProps.total)
 		) {
 			this.setState({
 				isLoading: false,
@@ -310,9 +300,9 @@ class ReactiveMap extends Component {
 		}
 
 		if (
-			(this.props.defaultZoom !== nextProps.defaultZoom)
-			&& (!isNaN(nextProps.defaultZoom)) // eslint-disable-line
-			&& nextProps.defaultZoom
+			this.props.defaultZoom !== nextProps.defaultZoom
+			&& !isNaN(nextProps.defaultZoom) && // eslint-disable-line
+			nextProps.defaultZoom
 		) {
 			this.setState({
 				zoom: nextProps.defaultZoom,
@@ -321,8 +311,9 @@ class ReactiveMap extends Component {
 
 		if (this.props.defaultMapStyle !== nextProps.defaultMapStyle) {
 			this.setState({
-				currentMapStyle: this.mapStyles.find(style =>
-					style.label === nextProps.defaultMapStyle) || this.mapStyles[0],
+				currentMapStyle:
+					this.mapStyles.find(style => style.label === nextProps.defaultMapStyle)
+					|| this.mapStyles[0],
 			});
 		}
 	}
@@ -386,7 +377,9 @@ class ReactiveMap extends Component {
 						lng = (location[1] * Math.PI) / 180;
 					} else {
 						lat = (location.lat * Math.PI) / 180;
-						lng = ((location.lng !== undefined ? location.lng : location.lon) * Math.PI) / 180;
+						lng
+							= ((location.lng !== undefined ? location.lng : location.lon) * Math.PI)
+							/ 180;
 					}
 
 					const a = Math.cos(lat) * Math.cos(lng);
@@ -416,7 +409,7 @@ class ReactiveMap extends Component {
 			};
 		}
 		return false;
-	}
+	};
 
 	// getArrPosition = location => [location.lat, location.lon || location.lng];
 	getArrPosition = location => ({ lat: location.lat, lon: location.lon || location.lng });
@@ -434,7 +427,7 @@ class ReactiveMap extends Component {
 			};
 		}
 		return null;
-	}
+	};
 
 	getGeoQuery = (props = this.props) => {
 		this.defaultQuery = props.defaultQuery ? props.defaultQuery() : null;
@@ -468,10 +461,7 @@ class ReactiveMap extends Component {
 					// to generate a map query
 
 					return {
-						must: [
-							geoQuery,
-							query,
-						],
+						must: [geoQuery, query],
 					};
 				}
 			}
@@ -486,10 +476,7 @@ class ReactiveMap extends Component {
 	setGeoQuery = (executeUpdate = false) => {
 		// execute a new query on theinitial mount
 		// or whenever searchAsMove is true and the map is dragged
-		if (
-			executeUpdate
-			|| (!this.skipBoundingBox && !this.state.mapBoxBounds)
-		) {
+		if (executeUpdate || (!this.skipBoundingBox && !this.state.mapBoxBounds)) {
 			this.defaultQuery = this.getGeoQuery();
 
 			const persistMapQuery = !!this.props.center;
@@ -503,7 +490,7 @@ class ReactiveMap extends Component {
 			);
 		}
 		this.skipBoundingBox = false;
-	}
+	};
 
 	loadMore = () => {
 		if (
@@ -518,10 +505,14 @@ class ReactiveMap extends Component {
 				from: value,
 				isLoading: true,
 			});
-			this.props.loadMore(this.props.componentId, {
-				...options,
-				from: value,
-			}, true);
+			this.props.loadMore(
+				this.props.componentId,
+				{
+					...options,
+					from: value,
+				},
+				true,
+			);
 		} else if (this.state.isLoading) {
 			this.setState({
 				isLoading: false,
@@ -538,10 +529,14 @@ class ReactiveMap extends Component {
 			isLoading: true,
 			currentPage: page,
 		});
-		this.props.loadMore(this.props.componentId, {
-			...options,
-			from: value,
-		}, false);
+		this.props.loadMore(
+			this.props.componentId,
+			{
+				...options,
+				from: value,
+			},
+			false,
+		);
 
 		if (this.props.URLParams) {
 			this.props.setPageURL(
@@ -569,9 +564,7 @@ class ReactiveMap extends Component {
 			};
 		}
 		return {
-			lat: location
-				? Number(location.lat)
-				: this.props.defaultCenter.lat,
+			lat: location ? Number(location.lat) : this.props.defaultCenter.lat,
 			lng: location
 				? Number(location.lon === undefined ? location.lng : location.lon)
 				: this.props.defaultCenter.lng,
@@ -619,7 +612,7 @@ class ReactiveMap extends Component {
 	getDefaultCenter = () => {
 		if (this.props.defaultCenter) return this.parseLocation(this.props.defaultCenter);
 		return this.parseLocation(MAP_CENTER);
-	}
+	};
 
 	handleOnIdle = () => {
 		// only make the geo_bounding query if we have hits data
@@ -634,11 +627,14 @@ class ReactiveMap extends Component {
 
 	handleOnDragEnd = () => {
 		if (this.state.searchAsMove) {
-			this.setState({
-				preserveCenter: true,
-			}, () => {
-				this.setGeoQuery(true);
-			});
+			this.setState(
+				{
+					preserveCenter: true,
+				},
+				() => {
+					this.setGeoQuery(true);
+				},
+			);
 		}
 		if (this.props.mapProps.onDragEnd) this.props.mapProps.onDragEnd();
 	};
@@ -646,25 +642,28 @@ class ReactiveMap extends Component {
 	handleZoomChange = () => {
 		const zoom = this.mapRef.getZoom();
 		if (this.state.searchAsMove) {
-			this.setState({
-				zoom,
-				preserveCenter: true,
-			}, () => {
-				this.setGeoQuery(true);
-			});
+			this.setState(
+				{
+					zoom,
+					preserveCenter: true,
+				},
+				() => {
+					this.setGeoQuery(true);
+				},
+			);
 		} else {
 			this.setState({
 				zoom,
 			});
 		}
 		if (this.props.mapProps.onZoomChanged) this.props.mapProps.onZoomChanged();
-	}
+	};
 
 	toggleSearchAsMove = () => {
 		this.setState({
 			searchAsMove: !this.state.searchAsMove,
 		});
-	}
+	};
 
 	renderSearchAsMove = () => {
 		if (this.props.showSearchAsMove) {
@@ -709,19 +708,17 @@ class ReactiveMap extends Component {
 			openMarkers,
 			preserveCenter: true,
 		});
-	}
+	};
 
 	closeMarkerInfo = (id) => {
 		const { [id]: del, ...activeMarkers } = this.state.openMarkers;
-		const openMarkers = this.props.autoClosePopover
-			? {}
-			: activeMarkers;
+		const openMarkers = this.props.autoClosePopover ? {} : activeMarkers;
 
 		this.setState({
 			openMarkers,
 			preserveCenter: true,
 		});
-	}
+	};
 
 	renderPopover = (item, includeExternalSettings = false) => {
 		let additionalProps = {};
@@ -749,21 +746,21 @@ class ReactiveMap extends Component {
 			);
 		}
 		return null;
-	}
+	};
 
 	increaseMarkerZIndex = (id) => {
 		this.setState({
 			markerOnTop: id,
 			preserveCenter: true,
 		});
-	}
+	};
 
 	removeMarkerZIndex = () => {
 		this.setState({
 			markerOnTop: null,
 			preserveCenter: true,
 		});
-	}
+	};
 
 	addNoise = (hits) => {
 		const hitMap = {};
@@ -781,7 +778,7 @@ class ReactiveMap extends Component {
 			hitMap[key] = count + 1;
 		});
 		return updatedHits;
-	}
+	};
 
 	getMarkers = (resultsToRender) => {
 		let markers = [];
@@ -815,11 +812,9 @@ class ReactiveMap extends Component {
 								<div className={mapPinWrapper}>
 									<MapPin>{data.label}</MapPin>
 									<MapPinArrow />
-									{
-										this.props.onPopoverClick
-											? this.renderPopover(item, true)
-											: null
-									}
+									{this.props.onPopoverClick
+										? this.renderPopover(item, true)
+										: null}
 								</div>
 							</MarkerWithLabel>
 						);
@@ -852,17 +847,13 @@ class ReactiveMap extends Component {
 						{...markerProps}
 						{...this.props.markerProps}
 					>
-						{
-							this.props.onPopoverClick
-								? this.renderPopover(item)
-								: null
-						}
+						{this.props.onPopoverClick ? this.renderPopover(item) : null}
 					</Marker>
 				);
 			});
 		}
 		return markers;
-	}
+	};
 
 	renderMap = () => {
 		const results = parseHits(this.props.hits) || [];
@@ -907,47 +898,37 @@ class ReactiveMap extends Component {
 						...getInnerKey(this.props.mapProps, 'options'),
 					}}
 				>
-					{
-						this.props.showMarkers && this.props.showMarkerClusters
-							? (
-								<MarkerClusterer
-									averageCenter
-									enableRetinaIcons
-									gridSize={60}
-								>
-									{markers}
-								</MarkerClusterer>
-							)
-							: markers
-					}
+					{this.props.showMarkers && this.props.showMarkerClusters ? (
+						<MarkerClusterer averageCenter enableRetinaIcons gridSize={60}>
+							{markers}
+						</MarkerClusterer>
+					) : (
+						markers
+					)}
 					{this.props.showMarkers && this.props.markers}
 					{this.renderSearchAsMove()}
 				</MapComponent>
-				{
-					this.props.showMapStyles
-						? (
-							<div
-								style={{
-									position: 'absolute',
-									top: 10,
-									right: 46,
-									width: 120,
-									zIndex: window.google.maps.Marker.MAX_ZINDEX + 1,
-								}}
-							>
-								<Dropdown
-									innerClass={this.props.innerClass}
-									items={this.mapStyles}
-									onChange={this.setMapStyle}
-									selectedItem={this.state.currentMapStyle}
-									keyField="label"
-									returnsObject
-									small
-								/>
-							</div>
-						)
-						: null
-				}
+				{this.props.showMapStyles ? (
+					<div
+						style={{
+							position: 'absolute',
+							top: 10,
+							right: 46,
+							width: 120,
+							zIndex: window.google.maps.Marker.MAX_ZINDEX + 1,
+						}}
+					>
+						<Dropdown
+							innerClass={this.props.innerClass}
+							items={this.mapStyles}
+							onChange={this.setMapStyle}
+							selectedItem={this.state.currentMapStyle}
+							keyField="label"
+							returnsObject
+							small
+						/>
+					</div>
+				) : null}
 			</div>
 		);
 	};
@@ -971,17 +952,15 @@ class ReactiveMap extends Component {
 
 		return (
 			<div style={{ ...style, ...this.props.style }} className={this.props.className}>
-				{
-					this.props.onAllData
-						? this.props.onAllData(
-							parseHits(this.props.hits),
-							parseHits(this.props.streamHits),
-							this.loadMore,
-							this.renderMap,
-							this.renderPagination,
-						)
-						: this.renderMap()
-				}
+				{this.props.onAllData
+					? this.props.onAllData(
+						parseHits(this.props.hits),
+						parseHits(this.props.streamHits),
+						this.loadMore,
+						this.renderMap,
+						this.renderPagination,
+					) // prettier-ignore
+					: this.renderMap()}
 			</div>
 		);
 	}
@@ -1073,10 +1052,10 @@ const mapStateToProps = (state, props) => ({
 	mapKey: state.config.mapKey,
 	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	streamHits: state.streamHits[props.componentId] || [],
-	currentPage: (
-		state.selectedValues[`${props.componentId}-page`]
-		&& state.selectedValues[`${props.componentId}-page`].value - 1
-	) || 0,
+	currentPage:
+		(state.selectedValues[`${props.componentId}-page`]
+			&& state.selectedValues[`${props.componentId}-page`].value - 1)
+		|| 0,
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 });
@@ -1096,4 +1075,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setMapData(component, geoQuery, persistMapQuery, forceExecute)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveMap);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(ReactiveMap);

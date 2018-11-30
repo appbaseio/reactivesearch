@@ -44,15 +44,17 @@ const getCompositeAggsQuery = (query, props, after) => {
 	clonedQuery.aggs = {
 		[dataField]: {
 			composite: {
-				sources: [{
-					[dataField]: {
-						terms: {
-							field: dataField,
-							...order,
-							...(showMissing ? { missing_bucket: true } : {}),
+				sources: [
+					{
+						[dataField]: {
+							terms: {
+								field: dataField,
+								...order,
+								...(showMissing ? { missing_bucket: true } : {}),
+							},
 						},
 					},
-				}],
+				],
 				size,
 				...after,
 			},

@@ -43,11 +43,7 @@ class SingleDropdownRange extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
 		checkPropChange(this.props.dataField, nextProps.dataField, () => {
 			this.updateQuery(this.state.currentValue, nextProps);
@@ -92,20 +88,18 @@ class SingleDropdownRange extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-			}, () => {
-				this.updateQuery(currentValue, props);
-				if (props.onValueChange) props.onValueChange(currentValue);
-			});
+			this.setState(
+				{
+					currentValue,
+				},
+				() => {
+					this.updateQuery(currentValue, props);
+					if (props.onValueChange) props.onValueChange(currentValue);
+				},
+			);
 		};
 
-		checkValueChange(
-			props.componentId,
-			currentValue,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, currentValue, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -144,16 +138,14 @@ class SingleDropdownRange extends Component {
 				}}
 				{...getInnerKey(this.props.innerProps, 'picker')}
 			>
-				{
-					this.props.data.map(item => (
-						<Picker.Item
-							key={item.label}
-							label={item.label}
-							value={item}
-							{...getInnerKey(this.props.innerProps, 'pickerItem')}
-						/>
-					))
-				}
+				{this.props.data.map(item => (
+					<Picker.Item
+						key={item.label}
+						label={item.label}
+						value={item}
+						{...getInnerKey(this.props.innerProps, 'pickerItem')}
+					/>
+				))}
 			</Picker>
 		);
 	}
@@ -190,10 +182,10 @@ SingleDropdownRange.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: (
-		state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value
-	) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -205,4 +197,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(SingleDropdownRange));
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(SingleDropdownRange));
