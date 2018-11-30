@@ -44,7 +44,7 @@ const RangeSlider = {
     customQuery: types.func,
     data: types.data,
     dataField: types.stringRequired,
-    defaultSelected: types.string,
+    defaultSelected: types.range,
     filterLabel: types.string,
     innerClass: types.style,
     react: types.react,
@@ -63,19 +63,18 @@ const RangeSlider = {
         this.watchComponent(props.componentId, props.react);
       }
     },
-    handleSlider(values){
-      if (!isEqual(values.currentValue, this.state.currentValue)) {
-        this.handleChange(values.currentValue);
-      }
+    handleSlider(values){ 
+     this.handleChange(values.currentValue);
     },
 
     handleChange(currentValue, props = this.$props){
       if(props.beforeValueChange && this.locked) {
         return;
       }
-      this.locked = true;
 
+      this.locked = true;
       const performUpdate = () => {
+        this.state.currentValue = currentValue;
         this.updateQueryHandler([currentValue[0], currentValue[1]], props);
         this.locked = false;
         this.$emit('valueChange',{ start: currentValue[0], end: currentValue[1] });
@@ -120,7 +119,7 @@ const RangeSlider = {
       this.setReact(this.$props);
     },
     defaultSelected(newVal) {
-      this.selectItem(newVal);
+       this.handleChange(RangeSlider.parseValue(newVal, this.$props));
     }
   },
 
@@ -131,14 +130,23 @@ const RangeSlider = {
     this.setQueryListener(this.$props.componentId, onQueryChange, null);
   },
   beforeMount(){
+
     this.addComponent(this.$props.componentId);
+    this.addComponent(this.internalComponent);
     this.setReact(this.$props);
-    if (this.selectedValue) {
-      this.handleChange(this.selectedValue);
-    } else if (this.$props.defaultSelected) {
-      this.handleChange(this.$props.defaultSelected);
+
+    const { defaultSelected } = this.$props;
+    const { selectedValue } = this;
+    if (Array.isArray(selectedValue)) {
+      this.handleChange(selectedValue);
+    } else if (selectedValue) {
+      this.handleChange(RangeSlider.parseValue(selectedValue, this.$props));
+    } else if (defaultSelected) {
+      this.handleChange(RangeSlider.parseValue(defaultSelected, this.$props));
     }
+
   },
+  
   beforeDestroy(){
     this.removeComponent(this.$props.componentId);
   },
@@ -183,6 +191,9 @@ RangeSlider.defaultQuery = (values, props) => {
     }
     return null;
 }
+
+RangeSlider.parseValue = (value, props) =>
+    (value ? [value.start, value.end] : [props.range.start, props.range.end]);
 
 const mapStateToProps = (state, props) => ({
   options: state.aggregations[props.componentId]
