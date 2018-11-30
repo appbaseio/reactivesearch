@@ -1,9 +1,9 @@
+import VueTypes from 'vue-types';
+import { helper } from '@appbaseio/reactivecore';
 import { RLConnected } from './ReactiveList.jsx';
 import Title from '../../styles/Title';
-import VueTypes from 'vue-types';
 import ListItem, { container, Image } from '../../styles/ListItem';
-import types from '../../utils/vueTypes.js';
-import { helper } from '@appbaseio/reactivecore';
+import types from '../../utils/vueTypes';
 
 const { getClassName } = helper;
 
@@ -35,12 +35,11 @@ const ResultList = {
 		sortOptions: types.sortOptions,
 		stream: types.bool,
 		URLParams: VueTypes.bool.def(false),
-		target: VueTypes.string.def('_blank')
+		target: VueTypes.string.def('_blank'),
 	},
 	render() {
 		const { onData, ...props } = this.$props;
-		const onResultStats
-			= this.$props.onResultStats || this.$scopedSlots.onResultStats;
+		const onResultStats = this.$props.onResultStats || this.$scopedSlots.onResultStats;
 		return (
 			<RLConnected
 				{...{
@@ -49,7 +48,7 @@ const ResultList = {
 						onData: this.renderAsList,
 						onResultStats,
 						listClass: container,
-					}
+					},
 				}}
 			/>
 		);
@@ -68,8 +67,8 @@ const ResultList = {
 						rel={this.$props.target === '_blank' ? 'noopener noreferrer' : null}
 						{...{
 							on: {
-								click: triggerClickAnalytics
-							}
+								click: triggerClickAnalytics,
+							},
 						}}
 						{...result.containerProps}
 						image={!!result.image}
@@ -81,7 +80,7 @@ const ResultList = {
 								small={result.image_size === 'small'}
 								className={getClassName(this.$props.innerClass, 'image')}
 							/>
-						 ) : null}
+						) : null}
 						<article>
 							{typeof result.title === 'string' ? (
 								<Title
@@ -89,28 +88,26 @@ const ResultList = {
 									className={getClassName(this.$props.innerClass, 'title')}
 								/>
 							) : (
-									<Title className={getClassName(this.$props.innerClass, 'title')}>
-										{result.title}
-									</Title>
-								)}
+								<Title className={getClassName(this.$props.innerClass, 'title')}>
+									{result.title}
+								</Title>
+							)}
 							{typeof result.description === 'string' ? (
-								<div
-									{...{ domProps: { innerHTML: result.description } }}
-								/>
+								<div {...{ domProps: { innerHTML: result.description } }} />
 							) : (
-									<div>{result.description}</div>
-								)}
+								<div>{result.description}</div>
+							)}
 						</article>
 					</ListItem>
 				);
 			}
 
 			return null;
-		}
-	}
-}
+		},
+	},
+};
 
-ResultList.install = function (Vue) {
+ResultList.install = function(Vue) {
 	Vue.component(ResultList.name, ResultList);
 };
 
