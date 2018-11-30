@@ -62,9 +62,7 @@ const RangeSlider = {
       }
     },
     handleSlider(values){ 
-      if (!isEqual(values.currentValue, this.state.currentValue)) {
-        this.handleChange(values.currentValue);
-      }
+     this.handleChange(values.currentValue);
     },
 
     handleChange(currentValue, props = this.$props){
