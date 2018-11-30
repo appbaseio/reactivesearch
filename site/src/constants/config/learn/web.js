@@ -9,8 +9,7 @@ export default {
 	title: 'Get Started with Reactive Search',
 	description: (
 		<React.Fragment>
-			Use our step-by-step guide to learn all about Reactive Search, or check
-			out our{' '}
+			Use our step-by-step guide to learn all about Reactive Search, or check out our{' '}
 			<a
 				rel="noopener noreferrer"
 				href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html"
@@ -35,11 +34,7 @@ export default {
 				'ReactiveSearch components can connect to an Elasticsearch index hosted anywhere.',
 				<React.Fragment>
 					Create a free app (aka index) with{' '}
-					<a
-						rel="noopener noreferrer"
-						href="https://appbase.io"
-						target="_blank"
-					>
+					<a rel="noopener noreferrer" href="https://appbase.io" target="_blank">
 						appbase.io
 					</a>
 					.
@@ -48,8 +43,7 @@ export default {
 			links: [
 				{
 					title: 'READ MORE',
-					href:
-						'https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html',
+					href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html',
 				},
 			],
 		},
@@ -116,7 +110,8 @@ export default {
 						target="_blank"
 					>
 						UI components
-					</a>.
+					</a>
+					.
 				</React.Fragment>,
 			],
 			links: [
@@ -164,11 +159,9 @@ export default {
 			links: [
 				{
 					title: 'Read more tutorials',
-					href:
-						'https://medium.appbase.io/tagged/appbase',
+					href: 'https://medium.appbase.io/tagged/appbase',
 				},
 			],
-
 		},
 		{
 			title: 'ReactiveSearch for <X>',
@@ -214,8 +207,7 @@ export default {
 				'Go from scratch to creating a data-driven search app with our beginner friendly quick start guide.',
 			button: {
 				title: 'Get Started',
-				href:
-					'#',
+				href: '#',
 			},
 			link: {
 				title: 'Docs',

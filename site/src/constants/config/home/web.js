@@ -153,41 +153,42 @@ export default {
 		title: 'Check starter apps',
 		button: {
 			title: 'See more',
-			href: '/demo',
+			href: '/reactivesearch/demo',
 		},
 		demos: [
 			{
-				src: '/images/apps/airbeds.png',
+				src: 'images/apps/airbeds.png',
 				title: 'Airbeds',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/airbeds/',
 				description: 'An airbnb inspired app for browsing housing areas in Seattle.',
 			},
 			{
-				src: '/images/apps/productsearch.png',
+				src: 'images/apps/productsearch.png',
 				title: 'Product Search',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/producthunt/',
 				description: 'A Product Hunt inspired search experience.',
 			},
 			{
-				src: '/images/apps/gitxplore.png',
+				src: 'images/apps/gitxplore.png',
 				title: 'GitHub Search',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/gitxplore/',
-				description: 'Explore top 30K Github repositories by various filters like stars, forks, topics.',
+				description:
+					'Explore top 30K Github repositories by various filters like stars, forks, topics.',
 			},
 			// {
-			// 	src: '/images/apps/carstore.png',
+			// 	src: 'images/apps/carstore.png',
 			// 	title: 'Car Store',
 			// 	href: 'https://opensource.appbase.io/reactivesearch/demos/ecommerce/',
 			// 	description: 'An e-commerce search experience for a car store.',
 			// },
 			{
-				src: '/images/apps/goodbooks.png',
+				src: 'images/apps/goodbooks.png',
 				title: 'Book Search',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/goodbooks/',
 				description: 'An e-commerce search experience for a books dataset.',
 			},
 			// {
-			// 	src: '/images/apps/technews.png',
+			// 	src: 'images/apps/technews.png',
 			// 	title: 'Tech News Search',
 			// 	href: 'https://opensource.appbase.io/reactivesearch/demos/technews/',
 			// 	description: '',

@@ -7,7 +7,6 @@
 		"lint": "eslint .",
 		"lint:ts": "tslint -c tslint.json 'packages/web/**/**/*.{ts,tsx}'",
 		"lint:ts-fix": "tslint -c tslint.json --fix 'packages/web/**/**/*.{ts,tsx}'",
-		"precommit": "lint-staged",
 		"deploy-site": "scripts/deploy-site.sh",
 		"native:publish-stories": "cd packages/native/examples/datasearch/ && exp publish && cd .. && cd datepicker/ && exp publish && cd .. && cd daterange/ && exp publish && cd .. && cd multidropdownlist/ && exp publish && cd .. && cd multidropdownrange/ && exp publish && cd .. && cd singledropdownlist/ && exp publish && cd .. && cd singledropdownrange/ && exp publish && cd .. && cd textfield/ && exp publish && cd ../../../../"
 	},
@@ -21,10 +20,13 @@
 		"site",
 		"site/demos/*"
 	],
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
 	"lint-staged": {
-		"*.js": [
-			"eslint"
-		]
+		"*.js": "eslint"
 	},
 	"devDependencies": {
 		"babel-eslint": "^9.0.0",
@@ -36,7 +38,7 @@
 		"eslint-plugin-jest": "^21.22.0",
 		"eslint-plugin-jsx-a11y": "^6.0.3",
 		"eslint-plugin-react": "^7.5.1",
-		"husky": "^0.14.3",
+		"husky": "^1.2.0",
 		"lint-staged": "^7.0.0",
 		"prettier": "^1.15.2"
 	}

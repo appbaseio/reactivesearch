@@ -306,6 +306,8 @@ const ReactiveList = {
 			const ids = streamResults.map(item => item._id);
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 		}
+
+		const onData = this.$scopedSlots.onData || this.$props.onData;
 		return (
 			<div style={this.$props.style} class={this.$props.className}>
 				{this.isLoading
