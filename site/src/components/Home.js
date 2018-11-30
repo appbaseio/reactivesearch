@@ -103,7 +103,9 @@ class HomePage extends Component {
 									<Link style={getLinkStyle(config.name)} to={l.href}>
 										{l.description.toUpperCase()}
 									</Link>
-									{/* <a style={getLinkStyle(config.name)} href={l.href}>{l.description.toUpperCase()}</a> */}
+									{/* <a style={getLinkStyle(config.name)}
+										href={l.href}>{l.description.toUpperCase()}</a> */
+									}
 								</li>
 							))}
 							<li className={showMobileFlex}>

@@ -300,6 +300,8 @@ const ReactiveList = {
 		const streamResults = parseHits(this.$data.streamHits) || [];
 		let filteredResults = results;
 
+		const onData = this.$scopedSlots.onData || this.$props.onData;
+
 		if (streamResults.length) {
 			const ids = streamResults.map(item => item._id);
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
