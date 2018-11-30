@@ -8,7 +8,6 @@ import {
 	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
-	isEqual,
 	checkValueChange,
 	checkPropChange,
 	getClassName,
@@ -25,36 +24,40 @@ class SingleRange extends Component {
 	constructor(props) {
 		super(props);
 
+		const defaultValue = props.defaultValue || props.value;
+		const currentValue = props.selectedValue || defaultValue || null;
+
 		this.state = {
-			currentValue: null,
+			currentValue,
 		};
 		this.type = 'range';
 		this.locked = false;
+
+		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
+		this.setReact(props);
+		const hasMounted = false;
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+		if (currentValue) {
+			this.setValue(currentValue, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
-			this.updateQuery(this.state.currentValue, nextProps);
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateQuery(this.state.currentValue, this.props);
 		});
 
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.setValue(nextProps.defaultSelected);
-		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.setValue(nextProps.selectedValue);
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value);
+		} else if (
+			this.state.currentValue !== this.props.selectedValue
+			&& this.props.selectedValue !== prevProps.selectedValue
+		) {
+			this.setValue(this.props.selectedValue || '');
 		}
 	}
 
@@ -86,7 +89,7 @@ class SingleRange extends Component {
 		return null;
 	};
 
-	setValue = (value, props = this.props) => {
+	setValue = (value, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -96,16 +99,19 @@ class SingleRange extends Component {
 		const currentValue = SingleRange.parseValue(value, props);
 
 		const performUpdate = () => {
-			this.setState(
-				{
+			const handleUpdates = () => {
+				this.updateQuery(currentValue, props);
+				this.locked = false;
+				if (props.onValueChange) props.onValueChange(currentValue);
+			};
+
+			if (hasMounted) {
+				this.setState({
 					currentValue,
-				},
-				() => {
-					this.updateQuery(currentValue, props);
-					this.locked = false;
-					if (props.onValueChange) props.onValueChange(currentValue);
-				},
-			);
+				}, handleUpdates);
+			} else {
+				handleUpdates();
+			}
 		};
 
 		checkValueChange(props.componentId, currentValue, props.beforeValueChange, performUpdate);
@@ -126,7 +132,12 @@ class SingleRange extends Component {
 	};
 
 	handleClick = (e) => {
-		this.setValue(e.target.value);
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(e);
+		} else {
+			this.setValue(e.target.value);
+		}
 	};
 
 	render() {
@@ -182,11 +193,13 @@ SingleRange.propTypes = {
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
-	defaultSelected: types.string,
+	defaultValue: types.string,
+	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	react: types.react,
 	showFilter: types.bool,
 	showRadio: types.boolRequired,
