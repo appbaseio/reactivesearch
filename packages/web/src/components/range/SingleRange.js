@@ -8,6 +8,7 @@ import {
 	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
+	isEqual,
 	checkValueChange,
 	checkPropChange,
 	getClassName,
@@ -25,7 +26,8 @@ class SingleRange extends Component {
 		super(props);
 
 		const defaultValue = props.defaultValue || props.value;
-		const currentValue = props.selectedValue || defaultValue || null;
+		const value = props.selectedValue || defaultValue || null;
+		const currentValue = SingleRange.parseValue(value, props);
 
 		this.state = {
 			currentValue,
@@ -51,13 +53,13 @@ class SingleRange extends Component {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
 
-		if (this.props.value !== prevProps.value) {
+		if (!isEqual(this.props.value, prevProps.value)) {
 			this.setValue(this.props.value);
 		} else if (
-			this.state.currentValue !== this.props.selectedValue
-			&& this.props.selectedValue !== prevProps.selectedValue
+			!isEqual(this.state.currentValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
-			this.setValue(this.props.selectedValue || '');
+			this.setValue(this.props.selectedValue || null);
 		}
 	}
 
@@ -96,7 +98,9 @@ class SingleRange extends Component {
 		}
 
 		this.locked = true;
-		const currentValue = SingleRange.parseValue(value, props);
+		const currentValue = (typeof value === 'string')
+			? SingleRange.parseValue(value, props)
+			: value;
 
 		const performUpdate = () => {
 			const handleUpdates = () => {
@@ -106,9 +110,12 @@ class SingleRange extends Component {
 			};
 
 			if (hasMounted) {
-				this.setState({
-					currentValue,
-				}, handleUpdates);
+				this.setState(
+					{
+						currentValue,
+					},
+					handleUpdates,
+				);
 			} else {
 				handleUpdates();
 			}
