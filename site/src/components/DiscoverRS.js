@@ -31,9 +31,9 @@ const titleCls = css`
 
 const DiscoverRS = ({ cardConfig }) => (
 	<Section css="max-width: 950px;margin: 0 auto;background-color: #fff">
-		<H2 css="margin-bottom: 20px;"> Discover the ReactiveSearch </H2>{' '}
+		<H2 css="margin-bottom: 20px;"> Other Reactive&lt;X&gt; libraries</H2>{' '}
 		<p css="max-width: 700px;margin: 0 auto 64px auto">
-			Libraries built to unleash the full potential of Appbase’s search infrastructure.
+			Build consistent, cross-platform search UIs that delight your users.
 		</p>
 		<FlexGrid
 			size={2}

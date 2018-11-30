@@ -3,10 +3,20 @@ import baseConfig from './../base/vue';
 
 const { primary, primaryDark } = theme;
 
+const baseConfigHeader = {
+	...baseConfig.header,
+	links: [
+		{
+			description: 'examples',
+			href: '#examples',
+		},
+		...baseConfig.header.links,
+	],
+};
 export default {
 	name: 'vue',
 	...baseConfig,
-	header: baseConfig.header,
+	header: baseConfigHeader,
 	banner1: {
 		title: 'Vue + ElasticSearch = ❤️',
 		description: 'UI components for building data-driven search experiences.',
@@ -146,19 +156,25 @@ export default {
 		},
 	],
 	banner6: {
-		title: 'Check our demos',
+		title: 'Check starter apps',
 		demos: [
 			{
 				src: '../../images/apps/gitxplore.png',
 				title: 'GitHub Search',
 				href: 'https://codesandbox.io/s/54l2m5rqxl',
 				description:
-					'Explore top 30K Github repositories by various filters like stars, forks, topics.',
+					'Explore top 30K Github repositories by various filters like stars, forks, and topics.',
+			},
+			{
+				src: '../../images/apps/goodbooks.png',
+				title: 'Book Search',
+				href: 'https://9167mmkqlo.codesandbox.io/',
+				description: 'An e-commerce search experience for a books dataset.',
 			},
 		],
 	},
 	banner7: {
-		title: 'Featured',
+		title: 'Featured Posts',
 		articles: [
 			{
 				src: 'https://cdn-images-1.medium.com/max/2000/1*o4yRyTm2pKfa_Flr3W2TPw.png',
