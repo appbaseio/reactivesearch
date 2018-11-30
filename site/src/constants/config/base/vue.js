@@ -10,7 +10,7 @@ export default {
 	},
 	header: {
 		logo: {
-			src: '../../images/vueLogo.svg',
+			src: '../../reactivesearch/images/vueLogo.svg',
 			title: {
 				light: 'Reactive',
 				dark: 'Search',

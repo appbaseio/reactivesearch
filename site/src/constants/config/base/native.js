@@ -10,7 +10,7 @@ export default {
 	},
 	header: {
 		logo: {
-			src: '../../images/RSlogo.svg',
+			src: '../../reactivesearch/images/RSlogo.svg',
 			title: {
 				light: 'ReactiveSearch',
 				dark: 'Native',

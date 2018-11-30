@@ -111,7 +111,7 @@ class Tools extends Component {
 								>
 									<img
 										src={
-											isVue ? '../../images/supportDark.svg' : '../../images/support.svg'
+											isVue ? '../../reactivesearch/images/supportDark.svg' : '../../reactivesearch/images/support.svg'
 										}
 										style={{ marginRight: 8 }}
 										alt="support"
@@ -661,8 +661,8 @@ class Tools extends Component {
 										<img
 											src={
 												isVue
-													? '../../images/supportDark.svg'
-													: '../../images/support.svg'
+													? '../../reactivesearch/images/supportDark.svg'
+													: '../../reactivesearch/images/support.svg'
 											}
 											style={{
 												marginRight: 10,

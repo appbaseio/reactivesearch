@@ -85,7 +85,7 @@ class Learn extends Component {
 									uppercase
 								>
 									<img
-										src={isVue ? '../../images/supportDark.svg' : '../../images/support.svg'}
+										src={isVue ? '../../reactivesearch/images/supportDark.svg' : '../../reactivesearch/images/support.svg'}
 										style={{ marginRight: 8 }}
 										alt="support"
 									/>{' '}
