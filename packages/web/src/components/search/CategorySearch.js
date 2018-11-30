@@ -489,6 +489,25 @@ class CategorySearch extends Component {
 		return null;
 	}
 
+	renderLoader = () => {
+		const {
+			loader, loading, themePreset, theme,
+		} = this.props;
+		const { currentValue } = this.state;
+		if (!(loading && loader && currentValue)) {
+			return null;
+		}
+		return (
+			<div className={`${noSuggestions(
+				themePreset,
+				theme,
+			)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
+			>
+				<li>{loader}</li>
+			</div>
+		);
+	}
+
 	render() {
 		let suggestionsList = [];
 		let finalSuggestionsList = [];
@@ -585,6 +604,7 @@ class CategorySearch extends Component {
 									themePreset={themePreset}
 								/>
 								{this.renderIcons()}
+								{this.renderLoader()}
 								{renderSuggestions
 									&& renderSuggestions({
 										currentValue: this.state.currentValue,
@@ -685,6 +705,7 @@ CategorySearch.propTypes = {
 	innerClass: types.style,
 	innerRef: types.func,
 	loading: types.bool,
+	loader: types.title,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
