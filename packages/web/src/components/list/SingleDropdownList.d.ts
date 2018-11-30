@@ -11,7 +11,7 @@ export interface SingleDropdownList extends CommonProps {
 	filterLabel?: string;
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
-	onChange?: (...args: any) => any;
+	onChange?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;
 	renderListItem?: (...args: any[]) => any;

@@ -7,10 +7,12 @@ export interface SingleRangeProps extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	data?: types.data;
 	dataField: string;
-	defaultSelected?: string;
+	defaultValue?: string;
+	value?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 	react?: types.react;
 	showFilter?: boolean;
 	showRadio: boolean;
