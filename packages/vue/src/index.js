@@ -14,6 +14,7 @@ import version from './components/Version/index';
 
 const components = [
 	ReactiveList,
+	ResultCard,
 	ReactiveBase,
 	DataSearch,
 	SingleList,
@@ -24,7 +25,6 @@ const components = [
 	SelectedFilters,
 	SingleDropdownList,
 	MultiDropdownList,
-	ResultCard,
 ];
 
 const install = function(Vue) {

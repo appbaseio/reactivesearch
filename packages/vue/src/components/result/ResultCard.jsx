@@ -39,11 +39,14 @@ const ResultCard = {
 	},
 	render(){
 		const {onData, ...props} = this.$props;
+		const onResultStats
+			= this.$props.onResultStats || this.$scopedSlots.onResultStats;
 		return(
 			<RLConnected
 				{...{props:{
-					onData: this.renderAsCard,
 					...props,
+					onData: this.renderAsCard,
+					onResultStats,
 					listClass: container,
 				}}}
 			/>
@@ -51,7 +54,8 @@ const ResultCard = {
 	},
 	methods:{
 		renderAsCard({item, triggerClickAnalytics}){
-			const result = this.$props.onData(item);
+			const onData = this.$props.onData || this.$scopedSlots.onData;
+			const result = onData(item);
 			if (result) {
 				return (
 					<Card
@@ -96,7 +100,7 @@ const ResultCard = {
 }
 
 ResultCard.install = function(Vue) {
-	Vue.component(ResultCard.name);
+	Vue.component(ResultCard.name, ResultCard);
 };
 
 export default ResultCard;
