@@ -390,6 +390,73 @@ class HomePage extends Component {
 							</Layout>
 						</Section>
 					)}
+					{/** Article section */}
+					{config.banner7 && (
+						<Section
+							style={{
+								padding: '10px 0',
+							}}
+							id="articles"
+						>
+							<Layout>
+								<div className={titleRow}>
+									{config.banner7.button ? (
+										<H3>{config.banner7.title}</H3>
+									) : (
+										<H2
+											style={{
+												margin: '0 auto',
+											}}
+										>
+											{config.banner7.title}
+										</H2>
+									)}
+									{config.banner7.button && (
+										<Button
+											style={{
+												backgroundColor: secondary,
+												...button,
+											}}
+											uppercase
+											primary={!isVue}
+											href={config.banner7.button.href}
+										>
+											{config.banner7.button.title}
+										</Button>
+									)}
+								</div>
+								<Grid
+									size={4}
+									mdSize={2}
+									smSize={1}
+									gutter="15px"
+									smGutter="0px"
+									style={{ marginBottom: '50px' }}
+								>
+									{config.banner7.articles.map((d, index) => (
+										// eslint-disable-next-line
+										<ImageCard key={index} src={d.src}>
+											<div>
+												<Title>{d.title}</Title>
+												<p>{d.description}</p>
+											</div>
+											<div>
+												<SecondaryLink
+													primary
+													href={d.href}
+													style={{
+														color: primary,
+													}}
+												>
+													Read More
+												</SecondaryLink>
+											</div>
+										</ImageCard>
+									))}
+								</Grid>
+							</Layout>
+						</Section>
+					)}
 					<Section style={{ backgroundColor: '#fff' }}>
 						<Layout>
 							<H2>See what our users say</H2>
