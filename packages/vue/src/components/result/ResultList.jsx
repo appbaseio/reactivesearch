@@ -39,12 +39,15 @@ const ResultList = {
 	},
 	render() {
 		const { onData, ...props } = this.$props;
+		const onResultStats
+			= this.$props.onResultStats || this.$scopedSlots.onResultStats;
 		return (
 			<RLConnected
 				{...{
 					props: {
-						onData: this.renderAsList,
 						...props,
+						onData: this.renderAsList,
+						onResultStats,
 						listClass: container,
 					}
 				}}
@@ -53,7 +56,8 @@ const ResultList = {
 	},
 	methods: {
 		renderAsList({ item, triggerClickAnalytics }) {
-			const result = this.$props.onData(item);
+			const onData = this.$props.onData || this.$scopedSlots.onData;
+			const result = onData(item);
 			if (result) {
 				return (
 					<ListItem
@@ -107,7 +111,7 @@ const ResultList = {
 }
 
 ResultList.install = function (Vue) {
-	Vue.component(ResultList.name);
+	Vue.component(ResultList.name, ResultList);
 };
 
 export default ResultList;
