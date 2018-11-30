@@ -23,7 +23,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
-import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
+import Input, { suggestionsContainer, suggestions, noSuggestions } from '../../styles/Input';
 import CancelSvg from '../shared/CancelSvg';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
@@ -466,6 +466,25 @@ class CategorySearch extends Component {
 		</div>
 	);
 
+	renderLoader = () => {
+		const {
+			loader, loading, themePreset, theme,
+		} = this.props;
+		const { currentValue } = this.state;
+		if (!(loading && loader && currentValue)) {
+			return null;
+		}
+		return (
+			<div className={`${noSuggestions(
+				themePreset,
+				theme,
+			)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
+			>
+				<li>{loader}</li>
+			</div>
+		);
+	}
+
 	render() {
 		let suggestionsList = [];
 		let finalSuggestionsList = [];
@@ -562,6 +581,7 @@ class CategorySearch extends Component {
 									themePreset={themePreset}
 								/>
 								{this.renderIcons()}
+								{this.renderLoader()}
 								{renderSuggestions
 									&& renderSuggestions({
 										currentValue: this.state.currentValue,
