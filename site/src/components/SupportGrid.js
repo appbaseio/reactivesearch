@@ -3,7 +3,7 @@ import { Grid, Card, Title } from '@appbaseio/designkit';
 
 // eslint-disable-next-line
 export default ({ configName }) => {
-	const imagePrefix = configName === 'vue' ? 'images/vue' : 'images/support';
+	const imagePrefix = configName === 'vue' ? '../../images/vue' : '../../images/support';
 	return (
 		<Grid
 			size={4}
