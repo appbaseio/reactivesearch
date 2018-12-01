@@ -70,7 +70,7 @@ Alternatively the manual approach would be to open the sub-projects for `/vue` a
 yarn storybook
 ```
 
-**Note:** We are writing vue components in jsx, [babel-plugin-transform-vue-jsx](https://github.com/vuejs/babel-plugin-transform-vue-jsx) compiles the `.jsx` files in to `.vue`.
+**Note:** We have used jsx for building vue components using [babel-plugin-transform-vue-jsx](https://github.com/vuejs/babel-plugin-transform-vue-jsx) which compiles the .jsx files to .vue.
 
 
 ## Native
