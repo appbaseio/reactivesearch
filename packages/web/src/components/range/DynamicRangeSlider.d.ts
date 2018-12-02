@@ -17,6 +17,7 @@ export interface DynamicRangeSliderProps extends CommonProps {
 	react?: types.react;
 	showHistogram?: boolean;
 	snap?: boolean;
+	loader?: any;
 	stepValue?: number;
 	title?: types.title;
 }
