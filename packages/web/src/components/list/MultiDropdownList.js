@@ -61,77 +61,66 @@ class MultiDropdownList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkPropChange(
-			this.props.react,
-			prevProps.react,
-			() => this.setReact(this.props),
-		);
-		checkPropChange(
-			this.props.options,
-			prevProps.options,
-			() => {
-				const { showLoadMore, dataField } = this.props;
-				const { options } = this.state;
-				if (showLoadMore) {
-					// append options with showLoadMore
-					const { buckets } = this.props.options[dataField];
-					const nextOptions = [
-						...options,
-						...buckets.map(bucket => ({
-							key: bucket.key[dataField],
-							doc_count: bucket.doc_count,
-						})),
-					];
-					const after = this.props.options[dataField].after_key;
-					// detect the last bucket by checking if the next set of buckets were empty
-					const isLastBucket = !buckets.length;
-					this.setState({
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
+		checkPropChange(this.props.options, prevProps.options, () => {
+			const { showLoadMore, dataField } = this.props;
+			const { options } = this.state;
+			if (showLoadMore) {
+				// append options with showLoadMore
+				const { buckets } = this.props.options[dataField];
+				const nextOptions = [
+					...options,
+					...buckets.map(bucket => ({
+						key: bucket.key[dataField],
+						doc_count: bucket.doc_count,
+					})),
+				];
+				const after = this.props.options[dataField].after_key;
+				// detect the last bucket by checking if the next set of buckets were empty
+				const isLastBucket = !buckets.length;
+				this.setState(
+					{
 						after: {
 							after,
 						},
 						isLastBucket,
 						options: nextOptions,
-					}, () => {
+					},
+					() => {
 						// this will ensure that the Select-All (or any)
 						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
-						const value = Object.keys(currentValue)
-							.filter(item => currentValue[item]);
+						const value = Object.keys(currentValue).filter(item => currentValue[item]);
 						if (value.length) this.setValue(value, true);
-					});
-				} else {
-					this.setState({
+					},
+				);
+			} else {
+				this.setState(
+					{
 						options: this.props.options[dataField]
 							? this.props.options[dataField].buckets
 							: [],
-					}, () => {
+					},
+					() => {
 						// this will ensure that the Select-All (or any)
 						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
-						const value = Object.keys(currentValue)
-							.filter(item => currentValue[item]);
+						const value = Object.keys(currentValue).filter(item => currentValue[item]);
 						if (value.length) this.setValue(value, true);
-					});
-				}
-			},
-		);
-		checkSomePropChange(
-			this.props,
-			prevProps,
-			['size', 'sortBy'],
-			() => this.updateQueryOptions(this.props),
+					},
+				);
+			}
+		});
+		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
+			this.updateQueryOptions(this.props),
 		);
 
-		checkPropChange(
-			this.props.dataField,
-			prevProps.dataField,
-			() => {
-				this.updateQueryOptions(this.props);
-				this.updateQuery(Object.keys(this.state.currentValue), this.props);
-			},
-		);
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateQueryOptions(this.props);
+			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+		});
 
 		let selectedValue = Object.keys(this.state.currentValue);
 		const { selectAllLabel } = this.props;
@@ -196,7 +185,9 @@ class MultiDropdownList extends Component {
 					let should = [
 						{
 							[type]: {
-								[props.dataField]: value.filter(item => item !== props.missingLabel),
+								[props.dataField]: value.filter(
+									item => item !== props.missingLabel,
+								),
 							},
 						},
 					];
@@ -309,9 +300,12 @@ class MultiDropdownList extends Component {
 			};
 
 			if (hasMounted) {
-				this.setState({
-					currentValue,
-				}, handleUpdates);
+				this.setState(
+					{
+						currentValue,
+					},
+					handleUpdates,
+				);
 			} else {
 				handleUpdates();
 			}
@@ -374,6 +368,10 @@ class MultiDropdownList extends Component {
 		const { isLastBucket } = this.state;
 		let selectAll = [];
 
+		if (this.props.loading && this.props.loader) {
+			return this.props.loader;
+		}
+
 		if (this.state.options.length === 0) {
 			return null;
 		}
@@ -385,7 +383,6 @@ class MultiDropdownList extends Component {
 				},
 			];
 		}
-
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -444,6 +441,8 @@ MultiDropdownList.propTypes = {
 	value: types.stringArray,
 	filterLabel: types.string,
 	innerClass: types.style,
+	loading: types.bool,
+	loader: types.title,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
@@ -495,6 +494,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	loading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 });
 

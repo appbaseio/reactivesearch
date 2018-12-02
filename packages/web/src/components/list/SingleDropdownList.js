@@ -249,6 +249,10 @@ class SingleDropdownList extends Component {
 		const { isLastBucket } = this.state;
 		let selectAll = [];
 
+		if (this.props.loading && this.props.loader) {
+			return this.props.loader;
+		}
+
 		if (this.state.options.length === 0) {
 			return null;
 		}
@@ -318,6 +322,8 @@ SingleDropdownList.propTypes = {
 	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
+	loading: types.bool,
+	loader: types.title,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
@@ -367,6 +373,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| '',
+	loading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 });
 

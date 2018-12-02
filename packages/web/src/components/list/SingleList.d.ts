@@ -10,6 +10,7 @@ export interface SingleList extends CommonProps {
 	value?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
+	loader: any;
 	nestedField?: string;
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
