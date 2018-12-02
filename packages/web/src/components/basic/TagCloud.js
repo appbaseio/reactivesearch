@@ -226,6 +226,10 @@ class TagCloud extends Component {
 		const min = 0.8;
 		const max = 3;
 
+		if (this.props.loading && this.props.loader) {
+			return this.props.loader;
+		}
+
 		if (this.state.options.length === 0) {
 			return null;
 		}
@@ -290,6 +294,8 @@ TagCloud.propTypes = {
 	defaultSelected: types.stringOrArray,
 	filterLabel: types.string,
 	innerClass: types.style,
+	loading: types.bool,
+	loader: types.title,
 	multiSelect: types.bool,
 	onQueryChange: types.func,
 	onValueChange: types.func,
@@ -321,6 +327,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	loading: state.isLoading[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
