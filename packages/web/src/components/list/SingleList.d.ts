@@ -9,6 +9,7 @@ export interface SingleList extends CommonProps {
 	defaultSelected?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
+	loader: any;
 	nestedField?: string;
 	onValueChange?: (...args: any[]) => any;
 	placeholder?: string;
