@@ -130,7 +130,8 @@ class ReactiveComponent extends Component {
 
 		try {
 			const childrenWithProps = React.Children.map(children, child =>
-				React.cloneElement(child, { ...rest, setQuery: this.setQuery }));
+				React.cloneElement(child, { ...rest, setQuery: this.setQuery }),
+			);
 			return <div>{childrenWithProps}</div>;
 		} catch (e) {
 			return null;
@@ -152,6 +153,7 @@ ReactiveComponent.propTypes = {
 	watchComponent: types.funcRequired,
 	aggregations: types.selectedValues,
 	hits: types.data,
+	loading: types.bool,
 	selectedValue: types.selectedValue,
 	// component props
 	children: types.children,
@@ -173,6 +175,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	loading: state.isLoading[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
