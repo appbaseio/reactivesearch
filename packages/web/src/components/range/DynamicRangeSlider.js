@@ -35,78 +35,90 @@ class DynamicRangeSlider extends Component {
 			range: null,
 			stats: [],
 		};
+
 		this.internalHistogramComponent = `${this.props.componentId}__histogram__internal`;
 		this.internalRangeComponent = `${this.props.componentId}__range__internal`;
 		this.internalMatchAllComponent = `${this.props.componentId}__match_all__internal`;
 		this.locked = false;
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
-		this.props.addComponent(this.internalHistogramComponent);
-		this.props.addComponent(this.internalRangeComponent);
+		props.addComponent(props.componentId);
+		props.addComponent(this.internalHistogramComponent);
+		props.addComponent(this.internalRangeComponent);
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		// get range before executing other queries
-		this.updateRangeQueryOptions(this.props);
-		this.setReact(this.props);
+		this.updateRangeQueryOptions(props);
+		this.setReact(props);
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (!isEqual(this.props.range, nextProps.range) && nextProps.range) {
-			this.updateQueryOptions(nextProps, nextProps.range);
+	componentDidUpdate(prevProps) {
+		if (!isEqual(this.props.range, prevProps.range) && this.props.range) {
+			// when range prop is changed
+			// it will happen due to initial mount (or) due to subscription
+
+			this.updateQueryOptions(this.props, this.props.range);
 			// floor and ceil to take edge cases into account
 			this.updateRange({
-				start: Math.floor(nextProps.range.start),
-				end: Math.ceil(nextProps.range.end),
+				start: Math.floor(this.props.range.start),
+				end: Math.ceil(this.props.range.end),
 			});
+
+			const value = this.props.value || this.props.defaultValue;
 
 			// only listen to selectedValue initially, after the
 			// component has mounted and range is received
-			if (nextProps.selectedValue && !this.state.currentValue) {
-				this.handleChange(nextProps.selectedValue, nextProps);
-			} else if (nextProps.defaultSelected) {
-				const { start, end } = nextProps.defaultSelected(
-					nextProps.range.start,
-					nextProps.range.end,
+			if (this.props.selectedValue && !this.state.currentValue) {
+				this.handleChange(this.props.selectedValue);
+			} else if (value) {
+				const { start, end } = value(
+					this.props.range.start,
+					this.props.range.end,
 				);
-				this.handleChange([start, end], nextProps);
+				this.handleChange([start, end]);
 			} else {
-				this.handleChange(
-					[Math.floor(nextProps.range.start), Math.ceil(nextProps.range.end)],
-					nextProps,
-				);
+				this.handleChange([
+					Math.floor(this.props.range.start),
+					Math.ceil(this.props.range.end),
+				]);
 			}
 		} else if (
-			nextProps.range
+			this.props.range
 			&& !isEqual(
-				this.props.defaultSelected
-					&& this.props.defaultSelected(nextProps.range.start, nextProps.range.end),
-				nextProps.defaultSelected
-					&& nextProps.defaultSelected(nextProps.range.start, nextProps.range.end),
+				this.props.value
+					&& this.props.value(this.props.range.start, this.props.range.end),
+				prevProps.value
+					&& prevProps.value(this.props.range.start, this.props.range.end),
 			)
 		) {
-			const { start, end } = nextProps.defaultSelected(
-				nextProps.range.start,
-				nextProps.range.end,
+			// when value prop is changed
+			const { start, end } = this.props.value(
+				this.props.range.start,
+				this.props.range.end,
 			);
-			this.handleChange([start, end], nextProps);
-		} else if (nextProps.range && nextProps.selectedValue === null) {
+			this.handleChange([start, end]);
+		} else if (
+			this.props.range
+			&& this.props.selectedValue === null
+			&& prevProps.selectedValue
+		) {
 			// when the filter is reset
-			this.handleChange([nextProps.range.start, nextProps.range.end], nextProps);
+			this.handleChange([this.props.range.start, this.props.range.end]);
 		}
 
-		checkPropChange(this.props.react, nextProps.react, () => {
-			this.updateRangeQueryOptions(nextProps);
-			this.setReact(nextProps);
+		checkPropChange(this.props.react, prevProps.react, () => {
+			this.updateRangeQueryOptions(this.props);
+			this.setReact(this.props);
 		});
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
-			this.updateRangeQueryOptions(nextProps);
+
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateRangeQueryOptions(this.props);
 		});
-		checkSomePropChange(this.props, nextProps, ['showHistogram', 'interval'], () =>
-			this.updateQueryOptions(nextProps, nextProps.range || this.state.range));
-		checkPropChange(this.props.options, nextProps.options, () => {
-			const { options } = nextProps;
+
+		checkSomePropChange(this.props, prevProps, ['showHistogram', 'interval'], () =>
+			this.updateQueryOptions(this.props, this.props.range || this.state.range));
+
+		checkPropChange(this.props.options, prevProps.options, () => {
+			const { options } = this.props;
 			options.sort((a, b) => {
 				if (a.key < b.key) return -1;
 				if (a.key > b.key) return 1;
@@ -164,7 +176,10 @@ class DynamicRangeSlider extends Component {
 	};
 
 	// value parser for SSR
-	static parseValue = value => (value ? [value().start, value().end] : null);
+	static parseValue = (value) => {
+		if (Array.isArray(value)) return value;
+		return (value ? [value().start, value().end] : null);
+	};
 
 	static defaultQuery = (value, props) => {
 		if (Array.isArray(value) && value.length) {
@@ -264,7 +279,23 @@ class DynamicRangeSlider extends Component {
 	};
 
 	handleSlider = ({ values }) => {
-		this.handleChange(values);
+		if (!isEqual(values, this.state.currentValue)) {
+			const { value, onChange } = this.props;
+			if (value) {
+				if (onChange) {
+					onChange(values);
+				} else {
+					// since value prop is set & onChange is not defined
+					// we need to reset the slider position
+					// to the original 'value' prop
+					this.setState({
+						currentValue: this.state.currentValue,
+					});
+				}
+			} else {
+				this.handleChange(values);
+			}
+		}
 	};
 
 	handleDrag = (values) => {
@@ -419,13 +450,15 @@ DynamicRangeSlider.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	dataField: types.stringRequired,
-	defaultSelected: types.func,
+	defaultValue: types.func,
+	value: types.func,
 	filterLabel: types.string,
 	innerClass: types.style,
 	interval: types.number,
 	onDrag: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	rangeLabels: types.func,
 	react: types.react,
 	showHistogram: types.bool,
