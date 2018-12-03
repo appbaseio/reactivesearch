@@ -9,7 +9,7 @@ export interface SingleDropdownList extends CommonProps {
 	defaultSelected?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
-	loader: any;
+	loader?: types.title;
 	onValueChange?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;

@@ -90,7 +90,8 @@ class MultiDropdownList extends Component {
 			}
 		});
 		checkSomePropChange(this.props, nextProps, ['size', 'sortBy'], () =>
-			this.updateQueryOptions(nextProps));
+			this.updateQueryOptions(nextProps),
+		);
 
 		checkPropChange(this.props.dataField, nextProps.dataField, () => {
 			this.updateQueryOptions(nextProps);
@@ -325,7 +326,7 @@ class MultiDropdownList extends Component {
 		const { isLastBucket } = this.state;
 		let selectAll = [];
 
-		if (this.props.loading && this.props.loader) {
+		if (this.props.isLoading && this.props.loader) {
 			return this.props.loader;
 		}
 
@@ -397,7 +398,7 @@ MultiDropdownList.propTypes = {
 	defaultSelected: types.stringArray,
 	filterLabel: types.string,
 	innerClass: types.style,
-	loading: types.bool,
+	isLoading: types.bool,
 	loader: types.title,
 	onQueryChange: types.func,
 	onValueChange: types.func,
@@ -449,7 +450,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
-	loading: state.isLoading[props.componentId],
+	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 });
 

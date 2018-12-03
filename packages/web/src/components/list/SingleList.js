@@ -272,7 +272,7 @@ class SingleList extends Component {
 		} = this.props;
 		const { isLastBucket } = this.state;
 
-		if (this.props.loading && this.props.loader) {
+		if (this.props.isLoading && this.props.loader) {
 			return this.props.loader;
 		}
 
@@ -406,7 +406,7 @@ SingleList.propTypes = {
 	defaultSelected: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
-	loading: types.bool,
+	isLoading: types.bool,
 	loader: types.title,
 	onQueryChange: types.func,
 	onValueChange: types.func,
@@ -459,7 +459,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| '',
 	themePreset: state.config.themePreset,
-	loading: state.isLoading[props.componentId],
+	isLoading: state.isLoading[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({

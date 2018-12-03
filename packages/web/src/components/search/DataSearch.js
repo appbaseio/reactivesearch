@@ -425,21 +425,21 @@ class DataSearch extends Component {
 
 	renderLoader = () => {
 		const {
-			loader, loading, themePreset, theme,
+			loader, isLoading, themePreset, theme,
 		} = this.props;
 		const { currentValue } = this.state;
-		if (!(loading && loader && currentValue)) {
-			return null;
+		if (isLoading && loader && currentValue) {
+			return (
+				<div className={`${noSuggestions(
+					themePreset,
+					theme,
+				)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
+				>
+					<li>{loader}</li>
+				</div>
+			);
 		}
-		return (
-			<div className={`${noSuggestions(
-				themePreset,
-				theme,
-			)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
-			>
-				<li>{loader}</li>
-			</div>
-		);
+		return null;
 	}
 
 	render() {
@@ -603,7 +603,7 @@ DataSearch.propTypes = {
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
 	innerRef: types.func,
-	loading: types.bool,
+	isLoading: types.bool,
 	loader: types.title,
 	onBlur: types.func,
 	onFocus: types.func,
@@ -652,7 +652,7 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	themePreset: state.config.themePreset,
-	loading: state.isLoading[props.componentId],
+	isLoading: state.isLoading[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({

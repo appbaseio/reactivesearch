@@ -350,7 +350,7 @@ class DynamicRangeSlider extends Component {
 	};
 
 	renderHistogram() {
-		if (this.props.loading && this.props.loader) {
+		if (this.props.isLoading && this.props.loader) {
 			return this.props.loader;
 		}
 		if (this.state.stats.length && this.props.showHistogram) {
@@ -438,7 +438,7 @@ DynamicRangeSlider.propTypes = {
 	filterLabel: types.string,
 	innerClass: types.style,
 	interval: types.number,
-	loading: types.bool,
+	isLoading: types.bool,
 	loader: types.title,
 	onDrag: types.func,
 	onQueryChange: types.func,
@@ -474,7 +474,7 @@ const mapStateToProps = (state, props) => ({
 		&& state.aggregations[props.componentId][props.dataField].buckets
 			? state.aggregations[props.componentId][props.dataField].buckets
 			: [],
-	loading: state.isLoading[props.componentId],
+	isLoading: state.isLoading[props.componentId],
 	range:
 		state.aggregations[`${props.componentId}__range__internal`]
 		&& state.aggregations[`${props.componentId}__range__internal`].min
