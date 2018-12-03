@@ -134,9 +134,11 @@ class DynamicRangeSlider extends Component {
 		if (nextState.range) {
 			const upperLimit = Math.floor((nextState.range.end - nextState.range.start) / 2);
 			if (nextProps.stepValue < 1 || nextProps.stepValue > upperLimit) {
-				console.warn(`stepValue for DynamicRangeSlider ${
-					nextProps.componentId
-				} should be greater than 0 and less than or equal to ${upperLimit}`);
+				console.warn(
+					`stepValue for DynamicRangeSlider ${
+						nextProps.componentId
+					} should be greater than 0 and less than or equal to ${upperLimit}`,
+				);
 				return false;
 			}
 			return true;
@@ -220,9 +222,11 @@ class DynamicRangeSlider extends Component {
 		if (!props.interval) {
 			return min;
 		} else if (props.interval < min) {
-			console.error(`${
-				props.componentId
-			}: interval prop's value should be greater than or equal to ${min}`);
+			console.error(
+				`${
+					props.componentId
+				}: interval prop's value should be greater than or equal to ${min}`,
+			);
 			return min;
 		}
 		return props.interval;
@@ -375,6 +379,22 @@ class DynamicRangeSlider extends Component {
 		};
 	};
 
+	renderHistogram() {
+		if (this.props.isLoading && this.props.loader) {
+			return this.props.loader;
+		}
+		if (this.state.stats.length && this.props.showHistogram) {
+			return (
+				<HistogramContainer
+					stats={this.state.stats}
+					range={this.state.range}
+					interval={this.getValidInterval(this.props, this.state.range)}
+				/>
+			);
+		}
+		return null;
+	}
+
 	render() {
 		if (!this.state.currentValue || !this.state.range) {
 			return null;
@@ -389,13 +409,7 @@ class DynamicRangeSlider extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				{this.state.stats.length && this.props.showHistogram ? (
-					<HistogramContainer
-						stats={this.state.stats}
-						range={this.state.range}
-						interval={this.getValidInterval(this.props, this.state.range)}
-					/>
-				) : null}
+				{this.renderHistogram()}
 				<Rheostat
 					min={this.state.range.start}
 					max={this.state.range.end}
@@ -455,6 +469,8 @@ DynamicRangeSlider.propTypes = {
 	filterLabel: types.string,
 	innerClass: types.style,
 	interval: types.number,
+	isLoading: types.bool,
+	loader: types.title,
 	onDrag: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
@@ -490,6 +506,7 @@ const mapStateToProps = (state, props) => ({
 		&& state.aggregations[props.componentId][props.dataField].buckets
 			? state.aggregations[props.componentId][props.dataField].buckets
 			: [],
+	isLoading: state.isLoading[props.componentId],
 	range:
 		state.aggregations[`${props.componentId}__range__internal`]
 		&& state.aggregations[`${props.componentId}__range__internal`].min
