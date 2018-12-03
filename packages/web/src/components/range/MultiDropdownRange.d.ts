@@ -7,10 +7,12 @@ export interface MultiDropdownRangeProps extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	data?: types.data;
 	dataField: string;
-	defaultSelected?: types.stringArray;
+	defaultValue?: types.stringArray;
+	value?: types.stringArray;
 	filterLabel?: types.filterLabel;
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;
 	showFilter?: boolean;
