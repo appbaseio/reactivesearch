@@ -156,6 +156,9 @@ const RangeSlider = {
 						min={this.$props.range.start}
 						max={this.$props.range.end}
 						onDrag-end={this.handleSlider}
+						dotSize={20}
+						height={4}
+						enable-cross={false}
 						tooltip-merge={this.$props.mergeTooltip}
 						tooltip={tooltipTrigger}
 					/>
