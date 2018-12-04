@@ -32,10 +32,7 @@ const RangeSlider = {
 			start: VueTypes.integer.def(0),
 			end: VueTypes.integer.def(10),
 		}),
-		rangeLabels: VueTypes.shape({
-			start: types.string,
-			end: types.string,
-		}),
+		rangeLabels: types.rangeLabels,
 		componentId: types.stringRequired,
 		customQuery: types.func,
 		data: types.data,
