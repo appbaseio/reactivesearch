@@ -10,6 +10,7 @@ export interface MultiList extends CommonProps {
 	defaultSelected?: types.stringArray;
 	filterLabel?: string;
 	innerClass?: types.style;
+	loader?: types.title;
 	onValueChange?: (...args: any[]) => any;
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;

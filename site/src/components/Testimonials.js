@@ -1,8 +1,17 @@
 import React from 'react';
+import styled from 'react-emotion';
 import { Testimonial } from '@appbaseio/designkit';
 
+const Wrapper = styled('div')`
+	display: grid;
+	grid-template-rows: repeat(6, 60px);
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-gap: 30px;
+	margin-top: ${props => (props.small ? 0 : '50px')};
+`;
+
 export default () => (
-	<Testimonial>
+	<Wrapper>
 		<Testimonial.Card row={6} background="#66A1FF" color="#fff">
 			<Testimonial.Author>
 				<img
@@ -96,5 +105,5 @@ export default () => (
 				Appbase is fast, like Usain Bolt.
 			</p>
 		</Testimonial.Card>
-	</Testimonial>
+	</Wrapper>
 );

@@ -5,16 +5,17 @@
   <br />
 </h2>
 
-<p align="center" style="font-size: 1.2rem">A React and React Native UI components library for Elasticsearch</p>
+<p align="center" style="font-size: 1.2rem">A React, React Native and Vue.JS UI components library for Elasticsearch</p>
 <p align="center">
 Read how to build an e-commerce search UI</p>
 <p align="center">
 a.) <a href="https://codeburst.io/how-to-build-an-e-commerce-search-ui-with-react-and-elasticsearch-a581c823b2c3"> with React</a>, or b.) <a href="https://hackernoon.com/building-an-e-commerce-search-app-with-react-native-2c87760a2315">with React Native</a>.</p>
 <br/>
 <p align="center">
-  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/web" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/Uo97x64.png" alt="web" title="web" /></a>
-  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/native" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/jgZp3W2.png" alt="native" title="native" /></a>
-  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/maps" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/bNPG50x.png" alt="native" title="native" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/web" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/7Ax3vpI.png" alt="web" title="web" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/vue" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/tIyjPOa.png" alt="vue" title="vue" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/native" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/O5XvNXN.png" alt="native" title="native" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/maps" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/ze2wvCa.png" alt="maps" title="maps" /></a>
 </p>
 
 <hr />
@@ -138,7 +139,7 @@ Here, we share how `ReactiveSearch` compares with other projects that have simil
 |  **Onboarding Experience** | Starter apps, Live interactive tutorial, getting started guide, component playground, every component has a live working demo with codesandbox. | Getting started tutorial, no live component demos, sparse reference spec for many components. | Starter apps, getting started guide, component playground. |
 |  **Styling Support** | Styled and scoped components. No external CSS import required. Rich theming supported as React props. | CSS based styles with BEM, not scoped to components. Theming supported with SCSS. | CSS based styles, requires external style import. Theming supported by manipulating CSS. |
 |  **Types of Components** | Lists, Ranges, Search, Dates, Maps, Result Displays. Can use your own UI components. | Lists, Ranges, Search*, Result*. Can't use your own UI components. (Only one component for Search and Result, resulting in more code to be written for customizability) | Lists, Range, Search, Result. Can use your own UI components. |
-|  **Supported Distribution Platforms** | React for Web, React Native for mobile. | React for Web. | React, Vue, Angular, vanilla JS for Web, React Native for mobile but latter has no UI components. |
+|  **Supported Distribution Platforms** | React, Vue for Web, React Native for mobile. | React for Web. | React, Vue, Angular, vanilla JS for Web, React Native for mobile but latter has no UI components. |
 
 We welcome contributions to this section. If you are building a project or you know of another project that is in the similar space, let us know and we will update the comparisons.
 
@@ -205,4 +206,4 @@ Please check the [contribution guide](.github/CONTRIBUTING.md).
 
 [⬆ Back to Top](#reactive-search)
 
-<a href="https://appbase.io/support/"><img src="https://i.imgur.com/UL6B0uE.png" width="100%" /></a>
+<a href="https://appbase.io/pricing#support/"><img src="https://i.imgur.com/UL6B0uE.png" width="100%" /></a>

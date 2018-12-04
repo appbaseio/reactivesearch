@@ -111,7 +111,7 @@ class Tools extends Component {
 								>
 									<img
 										src={
-											isVue ? 'images/supportDark.svg' : 'images/support.svg'
+											isVue ? '../../reactivesearch/images/supportDark.svg' : '../../reactivesearch/images/support.svg'
 										}
 										style={{ marginRight: 8 }}
 										alt="support"
@@ -150,7 +150,7 @@ class Tools extends Component {
 							/>
 
 							<Grid
-								size={3}
+								size={4}
 								smSize={1}
 								gutter="30px"
 								smGutter="30px"
@@ -175,12 +175,18 @@ class Tools extends Component {
 									</p>
 								</div>
 								<div>
+									<img src="images/tools/Vue.svg" alt="Reactivesearch for vue" />
+									<p className={brand}>
+										Reactive <span className={boldFont}>Search</span> for vue
+									</p>
+								</div>
+								<div>
 									<img
 										src="images/tools/ReactiveNative.svg"
 										alt="Reactivesearch for mobile"
 									/>
 									<p className={brand}>
-										Reactive <span className={boldFont}>X</span> for mobile
+										Reactive <span className={boldFont}>Search</span> for mobile
 									</p>
 								</div>
 							</Grid>
@@ -392,6 +398,102 @@ class Tools extends Component {
 
 					<Section
 						style={{
+							backgroundColor: config.bannerVue.backgroundColor,
+							overflow: 'hidden',
+						}}
+					>
+						<Layout>
+							<Grid
+								size={2}
+								mdSize={1}
+								gutter="30px"
+								smGutter="0px"
+								className={tabCenter}
+							>
+								<div
+									className={vcenter}
+									style={{
+										margin: 0,
+										padding: '0 20px',
+									}}
+								>
+									<H2 light>
+										<img
+											src="images/tools/vueSmall.svg"
+											alt="Reactivesearch for vue"
+											style={{
+												height: '44px',
+												marginRight: '15px',
+												top: '2px',
+												position: 'relative',
+											}}
+										/>
+										Reactive Search for <span className={boldFont}>vue</span>
+									</H2>
+									<p style={{ color: '#fff' }}>
+										An Elasticsearch components library for building search UIs
+										in vue.
+									</p>
+
+									<ul className={featureList}>
+										<li>
+											Over 10 pre-built UI components that maintain design
+											parity with web components.
+										</li>
+										<li>Bring your own UI components.</li>
+										<li>
+											Currently in preview. Hit us at Gitter or Github for
+											issues.
+										</li>
+									</ul>
+
+									<div className="button-row">
+										<Button
+											href="https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html"
+											target="_blank"
+											rel="noopener noreferrer"
+											bold
+											uppercase
+											big
+											primary={!isVue}
+											style={{
+												backgroundColor: secondary,
+												...button,
+											}}
+										>
+											Get Started
+										</Button>
+										<SecondaryLink
+											href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/vue"
+											target="_blank"
+											rel="noopener noreferrer"
+											primary
+											style={{
+												color: '#fff',
+											}}
+										>
+											Learn More
+										</SecondaryLink>
+									</div>
+								</div>
+								<div
+									style={{
+										margin: 0,
+									}}
+									className={hideTab}
+								>
+									<img
+										width="100%"
+										src="images/tools/VueComponent.png"
+										alt="Reactivesearch"
+									/>
+								</div>
+							</Grid>
+						</Layout>
+					</Section>
+
+					<Section
+						style={{
 							backgroundColor: config.banner4.backgroundColor,
 						}}
 					>
@@ -403,6 +505,19 @@ class Tools extends Component {
 								smGutter="0px"
 								className={tabCenter}
 							>
+								<div
+									style={{
+										margin: 0,
+									}}
+									className={hideTab}
+								>
+									<img
+										width="100%"
+										src="images/tools/Native.png"
+										srcSet="images/tools/Native@2x.png 2x"
+										alt="Reactivesearch Native"
+									/>
+								</div>
 								<div
 									className={vcenter}
 									style={{
@@ -485,19 +600,6 @@ class Tools extends Component {
 										</SecondaryLink>
 									</div>
 								</div>
-								<div
-									style={{
-										margin: 0,
-									}}
-									className={hideTab}
-								>
-									<img
-										width="100%"
-										src="images/tools/Native.png"
-										srcSet="images/tools/Native@2x.png 2x"
-										alt="Reactivesearch Native"
-									/>
-								</div>
 							</Grid>
 						</Layout>
 					</Section>
@@ -559,8 +661,8 @@ class Tools extends Component {
 										<img
 											src={
 												isVue
-													? 'images/supportDark.svg'
-													: 'images/support.svg'
+													? '../../reactivesearch/images/supportDark.svg'
+													: '../../reactivesearch/images/support.svg'
 											}
 											style={{
 												marginRight: 10,
@@ -574,7 +676,7 @@ class Tools extends Component {
 						</Layout>
 					</Section>
 
-					<Footer configName={config.name} />
+					<Footer configName={config.name} footerConfig={config.footer} />
 				</Base>
 			</ThemeProvider>
 		);

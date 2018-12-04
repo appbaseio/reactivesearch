@@ -21,26 +21,26 @@ export default {
 		title: 'React Native UI Components for ElasticSearch',
 		description: 'Build data-driven search experiences for iOS and Android apps.',
 		image: {
-			src: 'images/native/landing.png',
+			src: '../../reactivesearch/images/native/landing.png',
 			alt: 'Native Components',
 		},
 		button: {
 			title: 'Get Started',
-			href:
-				'./quickstart',
+			href: './quickstart',
 		},
 		link: {
 			title: 'Docs',
-			href: 'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
+			href:
+				'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
 		},
 	},
 	banner2: {
 		image: {
-			src: 'images/native/components.png',
+			src: '../../reactivesearch/images/native/components.png',
 			alt: 'Components',
 			mobile: {
-				src: 'images/native/components.png',
-				srcSet: 'images/native/components.png',
+				src: '../../reactivesearch/images/native/components.png',
+				srcSet: '../../reactivesearch/images/native/components.png',
 			},
 		},
 		title: 'UI Components for every occasion',
@@ -52,7 +52,8 @@ export default {
 		},
 		link: {
 			title: 'Creating your components',
-			href: 'https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html',
+			href:
+				'https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html',
 		},
 		sketch: {
 			href: '../../resources/ReactiveSearchNative_Playground.sketch',
@@ -67,7 +68,7 @@ export default {
 		cards: [
 			{
 				image: {
-					src: 'images/rocket.png',
+					src: '../../reactivesearch/images/rocket.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Launch and iterate faster',
@@ -78,17 +79,18 @@ export default {
 			},
 			{
 				image: {
-					src: 'icons/1.png',
+					src: '../../reactivesearch/icons/1.png',
 					alt: 'Icon',
 				},
 				title: 'Works with existing UIs',
-				description: 'Already have your own components? Bring them to Reactivesearch Native.',
+				description:
+					'Already have your own components? Bring them to Reactivesearch Native.',
 				href:
 					'https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html',
 			},
 			{
 				image: {
-					src: 'icons/2.png',
+					src: '../../reactivesearch/icons/2.png',
 					alt: 'Icon',
 				},
 				title: 'Configurable styles',
@@ -97,7 +99,7 @@ export default {
 			},
 			{
 				image: {
-					src: 'icons/3.png',
+					src: '../../reactivesearch/icons/3.png',
 					alt: 'Icon',
 				},
 				title: 'Create cross-platform apps',
@@ -107,7 +109,7 @@ export default {
 			},
 			{
 				image: {
-					src: 'icons/4.png',
+					src: '../../reactivesearch/icons/4.png',
 					alt: 'Icon',
 				},
 				title: 'Elasticsearch compatible',
@@ -117,13 +119,14 @@ export default {
 			},
 			{
 				image: {
-					src: 'icons/5.png',
+					src: '../../reactivesearch/icons/5.png',
 					alt: 'Icon',
 				},
 				title: 'Customizable queries',
 				description:
 					'Components come with good query defaults, that can be customized with Elasticsearch query DSL.',
-				href: 'https://opensource.appbase.io/reactive-manual/native/advanced/customquery.html',
+				href:
+					'https://opensource.appbase.io/reactive-manual/native/advanced/customquery.html',
 			},
 		],
 	},
@@ -139,7 +142,8 @@ export default {
 			},
 			link: {
 				title: 'Learn More',
-				href: 'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
+				href:
+					'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
 			},
 		},
 		{
@@ -161,17 +165,17 @@ export default {
 		title: 'Check our demos',
 		demos: [
 			{
-				src: 'images/native/booksearch.png',
+				src: '../../reactivesearch/images/native/booksearch.png',
 				title: 'Book Search',
 				href: 'https://snack.expo.io/@metagrover/booksearch',
 			},
 			{
-				src: 'images/native/gitxplore.png',
+				src: '../../reactivesearch/images/native/gitxplore.png',
 				title: 'GitHub Search',
 				href: 'https://snack.expo.io/@dhruvdutt/gitxplore-native-app',
 			},
 			{
-				src: 'images/native/todo.png',
+				src: '../../reactivesearch/images/native/todo.png',
 				title: 'Todo',
 				href: 'https://snack.expo.io/@dhruvdutt/todo',
 			},
