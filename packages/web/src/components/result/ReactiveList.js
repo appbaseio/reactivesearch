@@ -17,6 +17,7 @@ import {
 	pushToAndClause,
 	getClassName,
 	parseHits,
+	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -44,6 +45,19 @@ class ReactiveList extends Component {
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.props.onData) {
+			checkSomePropChange(
+				this.props,
+				prevProps,
+				['hits', 'streamHits'],
+				() => {
+					this.props.onData(this.getAllData());
+				},
+			);
+		}
 	}
 
 	componentDidMount() {
@@ -314,6 +328,20 @@ class ReactiveList extends Component {
 			this.domNode.removeEventListener('scroll', this.scrollHandler);
 		}
 	}
+	// Shape of the object to be returned in onData & renderAllData
+	getAllData = () => {
+		const { size } = this.props;
+		const { currentPage } = this.state;
+		const results = parseHits(this.props.hits) || [];
+		const streamResults = parseHits(this.props.streamHits) || [];
+		return {
+			results,
+			streamResults,
+			loadMore: this.loadMore,
+			base: currentPage * size,
+			triggerClickAnalytics: this.triggerClickAnalytics,
+		};
+	}
 
 	setReact = (props) => {
 		const { react } = props;
@@ -521,8 +549,8 @@ class ReactiveList extends Component {
 	render() {
 		const { renderData, size } = this.props;
 		const { currentPage } = this.state;
-		const results = parseHits(this.props.hits) || [];
-		const streamResults = parseHits(this.props.streamHits) || [];
+		const allData = this.getAllData();
+		const { results, streamResults } = allData;
 		let filteredResults = results;
 
 		if (streamResults.length) {
@@ -556,10 +584,7 @@ class ReactiveList extends Component {
 						/>
 					) : null}
 				{this.props.renderAllData ? (
-					this.props.renderAllData(results, streamResults, this.loadMore, {
-						base: currentPage * size,
-						triggerClickAnalytics: this.triggerClickAnalytics,
-					})
+					this.props.renderAllData(allData)
 				) : (
 					<div
 						className={`${this.props.listClass} ${getClassName(
@@ -644,6 +669,7 @@ ReactiveList.propTypes = {
 	loader: types.title,
 	renderAllData: types.func,
 	renderData: types.func,
+	onData: types.func,
 	onNoResults: types.title,
 	onPageChange: types.func,
 	onPageClick: types.func,
