@@ -89,7 +89,8 @@ class SingleDropdownList extends Component {
 			}
 		});
 		checkSomePropChange(this.props, nextProps, ['size', 'sortBy'], () =>
-			this.updateQueryOptions(nextProps));
+			this.updateQueryOptions(nextProps),
+		);
 
 		checkPropChange(this.props.dataField, nextProps.dataField, () => {
 			this.updateQueryOptions(nextProps);
@@ -230,6 +231,10 @@ class SingleDropdownList extends Component {
 		const { isLastBucket } = this.state;
 		let selectAll = [];
 
+		if (this.props.isLoading && this.props.loader) {
+			return this.props.loader;
+		}
+
 		if (this.state.options.length === 0) {
 			return null;
 		}
@@ -298,6 +303,8 @@ SingleDropdownList.propTypes = {
 	defaultSelected: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
+	isLoading: types.bool,
+	loader: types.title,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	placeholder: types.string,
@@ -346,6 +353,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| '',
+	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 });
 

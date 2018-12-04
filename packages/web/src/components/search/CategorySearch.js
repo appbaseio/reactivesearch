@@ -23,7 +23,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
-import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
+import Input, { suggestionsContainer, suggestions, noSuggestions } from '../../styles/Input';
 import CancelSvg from '../shared/CancelSvg';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
@@ -466,6 +466,25 @@ class CategorySearch extends Component {
 		</div>
 	);
 
+	renderLoader = () => {
+		const {
+			loader, isLoading, themePreset, theme,
+		} = this.props;
+		const { currentValue } = this.state;
+		if (isLoading && loader && currentValue) {
+			return (
+				<div className={`${noSuggestions(
+					themePreset,
+					theme,
+				)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
+				>
+					<li>{loader}</li>
+				</div>
+			);
+		}
+		return null;
+	}
+
 	render() {
 		let suggestionsList = [];
 		let finalSuggestionsList = [];
@@ -562,6 +581,7 @@ class CategorySearch extends Component {
 									themePreset={themePreset}
 								/>
 								{this.renderIcons()}
+								{this.renderLoader()}
 								{renderSuggestions
 									&& renderSuggestions({
 										currentValue: this.state.currentValue,
@@ -661,6 +681,8 @@ CategorySearch.propTypes = {
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
 	innerRef: types.func,
+	isLoading: types.bool,
+	loader: types.title,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
@@ -713,6 +735,7 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	themePreset: state.config.themePreset,
+	isLoading: state.isLoading[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
