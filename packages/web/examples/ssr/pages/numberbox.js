@@ -30,7 +30,7 @@ const reactiveListProps = {
 	className: 'result-list-container',
 	from: 0,
 	size: 5,
-	onData: data => <BookCard key={data._id} data={data} />,
+	renderData: data => <BookCard key={data._id} data={data} />,
 	react: {
 		and: ['BookSensor'],
 	},

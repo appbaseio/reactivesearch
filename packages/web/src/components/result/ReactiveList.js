@@ -519,7 +519,7 @@ class ReactiveList extends Component {
 	);
 
 	render() {
-		const { onData, size } = this.props;
+		const { renderData, size } = this.props;
 		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
@@ -555,8 +555,8 @@ class ReactiveList extends Component {
 							fragmentName={this.props.componentId}
 						/>
 					) : null}
-				{this.props.onAllData ? (
-					this.props.onAllData(results, streamResults, this.loadMore, {
+				{this.props.renderAllData ? (
+					this.props.renderAllData(results, streamResults, this.loadMore, {
 						base: currentPage * size,
 						triggerClickAnalytics: this.triggerClickAnalytics,
 					})
@@ -568,7 +568,7 @@ class ReactiveList extends Component {
 						)}`}
 					>
 						{[...streamResults, ...filteredResults].map((item, index) =>
-							onData(item, () =>
+							renderData(item, () =>
 								this.triggerClickAnalytics((currentPage * size) + index)))}
 					</div>
 				)}
@@ -642,8 +642,8 @@ ReactiveList.propTypes = {
 	innerClass: types.style,
 	listClass: types.string,
 	loader: types.title,
-	onAllData: types.func,
-	onData: types.func,
+	renderAllData: types.func,
+	renderData: types.func,
 	onNoResults: types.title,
 	onPageChange: types.func,
 	onPageClick: types.func,

@@ -39,7 +39,7 @@ class Main extends Component {
 							title="Results"
 							from={0}
 							size={20}
-							onData={this.onData}
+							renderData={this.renderData}
 							react={{
 								and: 'RatingsSensor',
 							}}
@@ -50,7 +50,7 @@ class Main extends Component {
 		);
 	}
 
-	onData(res) {
+	renderData(res) {
 		const result = {
 			image:
 				'https://www.enterprise.com/content/dam/global-vehicle-images/cars/FORD_FOCU_2012-1.png',

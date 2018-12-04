@@ -35,7 +35,7 @@ const indexNewData = () =>
 			});
 	});
 
-const onData = res => ({
+const renderData = res => ({
 	image: `https://image.tmdb.org/t/p/w92${res.poster_path}`,
 	title: res.original_title,
 	description: (
@@ -130,7 +130,7 @@ class Main extends Component {
 							and: ['search', 'genres', 'original_language', 'release_year'],
 						}}
 						size={4}
-						onData={onData}
+						renderData={renderData}
 						className="right-col"
 						innerClass={{
 							listItem: 'list-item',

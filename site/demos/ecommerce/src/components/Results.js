@@ -37,7 +37,7 @@ const Results = () => (
 	<ResultCard
 		componentId="results"
 		dataField="name"
-		onData={onData}
+		renderData={onData}
 		onResultStats={onResultStats}
 		react={{
 			and: ['category', 'brand', 'rating', 'vehicle', 'price'],
@@ -53,7 +53,7 @@ const Results = () => (
 );
 
 onData.propTypes = {
-	_source: PropTypes.object // eslint-disable-line
+	_source: PropTypes.object, // eslint-disable-line
 };
 
 export default Results;

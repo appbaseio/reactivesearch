@@ -30,7 +30,7 @@ class Main extends Component {
 		return query;
 	}
 
-	onData(res) {
+	renderData(res) {
 		return {
 			image: res.image,
 			title: res.name,
@@ -71,7 +71,7 @@ class Main extends Component {
 							dataField="name"
 							from={0}
 							size={40}
-							onData={this.onData}
+							renderData={this.renderData}
 							showPagination
 							react={{
 								and: ['DateSensor'],

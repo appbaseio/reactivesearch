@@ -66,7 +66,7 @@ const components = {
 		componentId: 'SearchResult',
 		dataField: 'name',
 		size: 12,
-		onData: data => ({
+		renderData: data => ({
 			image: data.image,
 			title: data.name,
 			description: (

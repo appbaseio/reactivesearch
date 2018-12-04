@@ -38,7 +38,7 @@ class Main extends Component {
 								componentId="SearchResult"
 								dataField="original_title"
 								size={10}
-								onData={this.onData}
+								renderData={this.renderData}
 								className="result-list-container"
 								pagination
 								react={{
@@ -52,7 +52,7 @@ class Main extends Component {
 		);
 	}
 
-	onData(data) {
+	renderData(data) {
 		return {
 			title: (
 				<div

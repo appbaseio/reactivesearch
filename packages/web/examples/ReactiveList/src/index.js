@@ -28,7 +28,7 @@ class Main extends Component {
 							dataField="original_title.raw"
 							className="result-list-container"
 							size={5}
-							onData={this.booksReactiveList}
+							renderData={this.booksReactiveList}
 							pagination
 							URLParams
 							react={{
