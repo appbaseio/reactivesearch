@@ -23,6 +23,7 @@ export interface MultiDropdownList extends CommonProps {
 	size?: number;
 	sortBy?: types.sortByWithCount;
 	themePreset?: types.themePreset;
+	loader?: types.title;
 	title?: types.title;
 	showMissing?: boolean;
 	missingLabel?: string;

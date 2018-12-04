@@ -427,11 +427,12 @@ class DataSearch extends Component {
 		const {
 			themePreset,
 			theme,
-			loading,
+			isLoading,
 			renderNoSuggestion,
 		} = this.props;
 		const { isOpen, currentValue } = this.state;
-		if (renderNoSuggestion && isOpen && !finalSuggestionsList.length && !loading && currentValue) {
+		if (renderNoSuggestion
+				&& isOpen && !finalSuggestionsList.length && !isLoading && currentValue) {
 			return (
 				<ul
 					className={`${noSuggestions(
@@ -441,6 +442,25 @@ class DataSearch extends Component {
 				>
 					<li>{typeof renderNoSuggestion === 'function' ? renderNoSuggestion(currentValue) : renderNoSuggestion}</li>
 				</ul>
+			);
+		}
+		return null;
+	}
+
+	renderLoader = () => {
+		const {
+			loader, isLoading, themePreset, theme,
+		} = this.props;
+		const { currentValue } = this.state;
+		if (isLoading && loader && currentValue) {
+			return (
+				<div className={`${noSuggestions(
+					themePreset,
+					theme,
+				)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
+				>
+					<li>{loader}</li>
+				</div>
 			);
 		}
 		return null;
@@ -460,7 +480,6 @@ class DataSearch extends Component {
 		}
 
 		const { theme, themePreset, renderSuggestions } = this.props;
-
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -511,7 +530,7 @@ class DataSearch extends Component {
 										suggestions: this.props.suggestions,
 										parsedSuggestions: suggestionsList,
 									})}
-
+								{this.renderLoader()}
 								{!renderSuggestions && isOpen && suggestionsList.length ? (
 									<ul
 										className={`${suggestions(
@@ -608,7 +627,8 @@ DataSearch.propTypes = {
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
 	innerRef: types.func,
-	loading: types.bool,
+	isLoading: types.bool,
+	loader: types.title,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
@@ -657,6 +677,7 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	themePreset: state.config.themePreset,
+	isLoading: state.isLoading[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
