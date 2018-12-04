@@ -230,6 +230,10 @@ class RangeSlider extends Component {
 			const { value, onChange } = this.props;
 			if (value) {
 				if (onChange) {
+					// force re-rendering to avail the currentValue
+					// in rheostat component since it doesn't respect
+					// the controlled behavior properly
+					this.forceUpdate();
 					onChange(values);
 				} else {
 					// since value prop is set & onChange is not defined
