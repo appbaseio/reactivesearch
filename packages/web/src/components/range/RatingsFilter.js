@@ -86,8 +86,9 @@ class RatingsFilter extends Component {
 	static parseValue = value => (value ? [value.start, value.end] : null);
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (value) {
-			return {
+			query = {
 				range: {
 					[props.dataField]: {
 						gte: value[0],
@@ -97,7 +98,18 @@ class RatingsFilter extends Component {
 				},
 			};
 		}
-		return null;
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	setValue = (value, props = this.props) => {
@@ -193,6 +205,7 @@ RatingsFilter.propTypes = {
 	style: types.style,
 	title: types.title,
 	URLParams: types.bool,
+	nestedField: types.string,
 };
 
 RatingsFilter.defaultProps = {

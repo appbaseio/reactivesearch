@@ -170,8 +170,9 @@ class DynamicRangeSlider extends Component {
 	static parseValue = value => (value ? [value().start, value().end] : null);
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (Array.isArray(value) && value.length) {
-			return {
+			query = {
 				range: {
 					[props.dataField]: {
 						gte: value[0],
@@ -181,7 +182,18 @@ class DynamicRangeSlider extends Component {
 				},
 			};
 		}
-		return null;
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	getSnapPoints = () => {
@@ -438,6 +450,7 @@ DynamicRangeSlider.propTypes = {
 	filterLabel: types.string,
 	innerClass: types.style,
 	interval: types.number,
+	nestedField: types.string,
 	isLoading: types.bool,
 	loader: types.title,
 	onDrag: types.func,

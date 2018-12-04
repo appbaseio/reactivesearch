@@ -72,8 +72,9 @@ class SingleDropdownRange extends Component {
 	static parseValue = (value, props) => props.data.find(item => item.label === value) || null;
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (value) {
-			return {
+			query = {
 				range: {
 					[props.dataField]: {
 						gte: value.start,
@@ -83,7 +84,18 @@ class SingleDropdownRange extends Component {
 				},
 			};
 		}
-		return null;
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
@@ -178,6 +190,7 @@ SingleDropdownRange.propTypes = {
 	title: types.title,
 	themePreset: types.themePreset,
 	URLParams: types.bool,
+	nestedField: types.string,
 };
 
 SingleDropdownRange.defaultProps = {

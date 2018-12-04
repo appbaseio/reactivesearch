@@ -61,7 +61,8 @@ class RangeSlider extends Component {
 	componentWillReceiveProps(nextProps) {
 		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 		checkSomePropChange(this.props, nextProps, ['showHistogram', 'interval'], () =>
-			this.updateQueryOptions(nextProps));
+			this.updateQueryOptions(nextProps),
+		);
 		checkPropChange(this.props.options, nextProps.options, () => {
 			const { options } = nextProps;
 			if (Array.isArray(options)) {
@@ -87,16 +88,20 @@ class RangeSlider extends Component {
 				nextProps,
 			);
 		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.handleChange(nextProps.selectedValue || [nextProps.range.start, nextProps.range.end]);
+			this.handleChange(
+				nextProps.selectedValue || [nextProps.range.start, nextProps.range.end],
+			);
 		}
 	}
 
 	shouldComponentUpdate(nextProps) {
 		const upperLimit = Math.floor((nextProps.range.end - nextProps.range.start) / 2);
 		if (nextProps.stepValue < 1 || nextProps.stepValue > upperLimit) {
-			console.warn(`stepValue for RangeSlider ${
-				nextProps.componentId
-			} should be greater than 0 and less than or equal to ${upperLimit}`);
+			console.warn(
+				`stepValue for RangeSlider ${
+					nextProps.componentId
+				} should be greater than 0 and less than or equal to ${upperLimit}`,
+			);
 			return false;
 		}
 		return true;
@@ -123,8 +128,9 @@ class RangeSlider extends Component {
 		(value ? [value.start, value.end] : [props.range.start, props.range.end]);
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (Array.isArray(value) && value.length) {
-			return {
+			query = {
 				range: {
 					[props.dataField]: {
 						gte: value[0],
@@ -134,7 +140,18 @@ class RangeSlider extends Component {
 				},
 			};
 		}
-		return null;
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	getSnapPoints = () => {
@@ -160,9 +177,11 @@ class RangeSlider extends Component {
 		if (!props.interval) {
 			return min;
 		} else if (props.interval < min) {
-			console.error(`${
-				props.componentId
-			}: interval prop's value should be greater than or equal to ${min}`);
+			console.error(
+				`${
+					props.componentId
+				}: interval prop's value should be greater than or equal to ${min}`,
+			);
 			return min;
 		}
 		return props.interval;
@@ -300,8 +319,7 @@ class RangeSlider extends Component {
 						)}
 					/>
 				)}
-				{this.props.rangeLabels
-					&& this.props.showSlider && (
+				{this.props.rangeLabels && this.props.showSlider && (
 					<div className={rangeLabelsContainer}>
 						<RangeLabel
 							align="left"
@@ -357,6 +375,7 @@ RangeSlider.propTypes = {
 	stepValue: types.number,
 	style: types.style,
 	title: types.title,
+	nestedField: types.string,
 	URLParams: types.bool,
 };
 
