@@ -41,6 +41,7 @@ export interface CategorySearchProps extends CommonProps {
 	showFilter?: boolean;
 	showIcon?: boolean;
 	title?: types.title;
+	loader?: types.title;
 	theme?: types.style;
 	themePreset?: types.themePreset;
 }

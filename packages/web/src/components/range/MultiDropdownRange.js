@@ -25,42 +25,47 @@ class MultiDropdownRange extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			currentValue: [],
-		};
+		const defaultValue = props.defaultValue || props.value;
+		const value = props.selectedValue || defaultValue || [];
+		const currentValue = MultiDropdownRange.parseValue(value, props);
 
 		// selectedValues hold the selected items as keys for O(1) complexity
 		this.selectedValues = {};
+		currentValue.forEach((item) => {
+			this.selectedValues[item.label] = true;
+		});
+
+		this.state = {
+			currentValue,
+		};
+
 		this.type = 'range';
 		this.locked = false;
+
+		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
+		this.setReact(props);
+		const hasMounted = false;
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
-
-		if (this.props.selectedValue) {
-			this.selectItem(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.selectItem(this.props.defaultSelected, true);
+		if (value.length) {
+			this.selectItem(value, true, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
-			this.updateQuery(this.state.currentValue, nextProps);
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateQuery(this.state.currentValue, this.props);
 		});
 
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.selectItem(nextProps.defaultSelected, true);
+		if (!isEqual(this.props.value, prevProps.value)) {
+			this.selectItem(this.props.value);
 		} else if (
-			!isEqual(this.state.currentValue, nextProps.selectedValue)
-			&& (nextProps.selectedValue || nextProps.selectedValue === null)
+			!isEqual(this.state.currentValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
-			this.selectItem(nextProps.selectedValue, true);
+			this.selectItem(this.props.selectedValue || null);
 		}
 	}
 
@@ -107,7 +112,7 @@ class MultiDropdownRange extends Component {
 		return null;
 	};
 
-	selectItem = (item, isDefaultValue = false, props = this.props) => {
+	selectItem = (item, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -140,16 +145,22 @@ class MultiDropdownRange extends Component {
 			};
 		}
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentValue,
-				},
-				() => {
-					this.updateQuery(currentValue, props);
-					this.locked = false;
-					if (props.onValueChange) props.onValueChange(currentValue);
-				},
-			);
+			const handleUpdates = () => {
+				this.updateQuery(currentValue, props);
+				this.locked = false;
+				if (props.onValueChange) props.onValueChange(currentValue);
+			};
+
+			if (hasMounted) {
+				this.setState(
+					{
+						currentValue,
+					},
+					handleUpdates,
+				);
+			} else {
+				handleUpdates();
+			}
 		};
 
 		checkValueChange(props.componentId, currentValue, props.beforeValueChange, performUpdate);
@@ -169,6 +180,15 @@ class MultiDropdownRange extends Component {
 		});
 	};
 
+	handleChange = (items) => {
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(items);
+		} else {
+			this.selectItem(items);
+		}
+	};
+
 	render() {
 		return (
 			<Container style={this.props.style} className={this.props.className}>
@@ -180,7 +200,7 @@ class MultiDropdownRange extends Component {
 				<Dropdown
 					innerClass={this.props.innerClass}
 					items={this.props.data}
-					onChange={this.selectItem}
+					onChange={this.handleChange}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
 					keyField="label"
@@ -207,11 +227,13 @@ MultiDropdownRange.propTypes = {
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
-	defaultSelected: types.stringArray,
+	defaultValue: types.stringArray,
+	value: types.stringArray,
 	filterLabel: types.filterLabel,
 	innerClass: types.style,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	react: types.react,
 	showFilter: types.bool,

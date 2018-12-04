@@ -30,40 +30,37 @@ class RangeSlider extends Component {
 	constructor(props) {
 		super(props);
 
+		const { selectedValue, defaultValue, value } = props;
+		const valueToParse = selectedValue || value || defaultValue;
+		const currentValue = RangeSlider.parseValue(valueToParse, props);
 		this.state = {
-			currentValue: [props.range.start, props.range.end],
+			currentValue,
 			stats: [],
 		};
 
 		this.locked = false;
 		this.internalComponent = `${this.props.componentId}__internal`;
+
+		props.addComponent(props.componentId);
+		props.addComponent(this.internalComponent);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
-		this.props.addComponent(this.internalComponent);
+		this.updateQueryOptions(props);
+		this.setReact(props);
+		const hasMounted = false;
 
-		this.updateQueryOptions(this.props);
-		this.setReact(this.props);
-
-		const { selectedValue, defaultSelected } = this.props;
-		if (Array.isArray(selectedValue)) {
-			this.handleChange(selectedValue);
-		} else if (selectedValue) {
-			// for value as an object for SSR
-			this.handleChange(RangeSlider.parseValue(selectedValue, this.props));
-		} else if (defaultSelected) {
-			this.handleChange(RangeSlider.parseValue(defaultSelected, this.props));
+		if (currentValue) {
+			this.handleChange(currentValue, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
-		checkSomePropChange(this.props, nextProps, ['showHistogram', 'interval'], () =>
-			this.updateQueryOptions(nextProps));
-		checkPropChange(this.props.options, nextProps.options, () => {
-			const { options } = nextProps;
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
+		checkSomePropChange(this.props, prevProps, ['showHistogram', 'interval'], () =>
+			this.updateQueryOptions(this.props),
+		);
+		checkPropChange(this.props.options, prevProps.options, () => {
+			const { options } = this.props;
 			if (Array.isArray(options)) {
 				options.sort((a, b) => {
 					if (a.key < b.key) return -1;
@@ -76,27 +73,31 @@ class RangeSlider extends Component {
 			});
 		});
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
-			this.updateQueryOptions(nextProps);
-			this.handleChange(this.state.currentValue, nextProps);
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateQueryOptions(this.props);
+			this.handleChange(this.state.currentValue, this.props);
 		});
 
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.handleChange(
-				[nextProps.defaultSelected.start, nextProps.defaultSelected.end],
-				nextProps,
-			);
-		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.handleChange(nextProps.selectedValue || [nextProps.range.start, nextProps.range.end]);
+		if (!isEqual(this.props.value, prevProps.value)) {
+			const value = RangeSlider.parseValue(this.props.value, this.props);
+			this.handleChange(value, this.props);
+		} else if (
+			!isEqual(this.state.currentValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
+		) {
+			const value = RangeSlider.parseValue(this.props.selectedValue, this.props);
+			this.handleChange(value, this.props);
 		}
 	}
 
 	shouldComponentUpdate(nextProps) {
 		const upperLimit = Math.floor((nextProps.range.end - nextProps.range.start) / 2);
 		if (nextProps.stepValue < 1 || nextProps.stepValue > upperLimit) {
-			console.warn(`stepValue for RangeSlider ${
-				nextProps.componentId
-			} should be greater than 0 and less than or equal to ${upperLimit}`);
+			console.warn(
+				`stepValue for RangeSlider ${
+					nextProps.componentId
+				} should be greater than 0 and less than or equal to ${upperLimit}`,
+			);
 			return false;
 		}
 		return true;
@@ -119,8 +120,10 @@ class RangeSlider extends Component {
 		}
 	};
 
-	static parseValue = (value, props) =>
-		(value ? [value.start, value.end] : [props.range.start, props.range.end]);
+	static parseValue = (value, props) => {
+		if (Array.isArray(value)) return value;
+		return value ? [value.start, value.end] : [props.range.start, props.range.end];
+	};
 
 	static defaultQuery = (value, props) => {
 		if (Array.isArray(value) && value.length) {
@@ -160,9 +163,11 @@ class RangeSlider extends Component {
 		if (!props.interval) {
 			return min;
 		} else if (props.interval < min) {
-			console.error(`${
-				props.componentId
-			}: interval prop's value should be greater than or equal to ${min}`);
+			console.error(
+				`${
+					props.componentId
+				}: interval prop's value should be greater than or equal to ${min}`,
+			);
 			return min;
 		}
 		return props.interval;
@@ -178,7 +183,7 @@ class RangeSlider extends Component {
 		},
 	});
 
-	handleChange = (currentValue, props = this.props) => {
+	handleChange = (currentValue, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -186,21 +191,28 @@ class RangeSlider extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentValue,
-				},
-				() => {
-					this.updateQuery([currentValue[0], currentValue[1]], props);
-					this.locked = false;
-					if (props.onValueChange) {
-						props.onValueChange({
-							start: currentValue[0],
-							end: currentValue[1],
-						});
-					}
-				},
-			);
+			const handleUpdates = () => {
+				const [start, end] = currentValue;
+				this.updateQuery([start, end], props);
+				this.locked = false;
+				if (props.onValueChange) {
+					props.onValueChange({
+						start,
+						end,
+					});
+				}
+			};
+
+			if (hasMounted) {
+				this.setState(
+					{
+						currentValue,
+					},
+					handleUpdates,
+				);
+			} else {
+				handleUpdates();
+			}
 		};
 		checkValueChange(
 			props.componentId,
@@ -215,7 +227,25 @@ class RangeSlider extends Component {
 
 	handleSlider = ({ values }) => {
 		if (!isEqual(values, this.state.currentValue)) {
-			this.handleChange(values);
+			const { value, onChange } = this.props;
+			if (value) {
+				if (onChange) {
+					// force re-rendering to avail the currentValue
+					// in rheostat component since it doesn't respect
+					// the controlled behavior properly
+					this.forceUpdate();
+					onChange(values);
+				} else {
+					// since value prop is set & onChange is not defined
+					// we need to reset the slider position
+					// to the original 'value' prop
+					this.setState({
+						currentValue: this.state.currentValue,
+					});
+				}
+			} else {
+				this.handleChange(values);
+			}
 		}
 	};
 
@@ -300,8 +330,7 @@ class RangeSlider extends Component {
 						)}
 					/>
 				)}
-				{this.props.rangeLabels
-					&& this.props.showSlider && (
+				{this.props.rangeLabels && this.props.showSlider && (
 					<div className={rangeLabelsContainer}>
 						<RangeLabel
 							align="left"
@@ -337,13 +366,15 @@ RangeSlider.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	dataField: types.stringRequired,
-	defaultSelected: types.range,
+	defaultValue: types.range,
+	value: types.range,
 	filterLabel: types.string,
 	innerClass: types.style,
 	interval: types.number,
 	onDrag: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	range: types.range,
 	rangeLabels: types.rangeLabels,
 	react: types.react,
