@@ -305,7 +305,7 @@ class SingleList extends Component {
 
 	render() {
 		const {
-			selectAllLabel, renderListItem, showLoadMore, loadMoreLabel,
+			selectAllLabel, renderItem, showLoadMore, loadMoreLabel,
 		} = this.props;
 		const { isLastBucket } = this.state;
 
@@ -369,49 +369,52 @@ class SingleList extends Component {
 							}
 							return false;
 						})
-						.map(item => (
-							<li
-								key={item.key}
-								className={`${
-									this.state.currentValue === String(item.key) ? 'active' : ''
-								}`}
-							>
-								<Radio
-									className={getClassName(this.props.innerClass, 'radio')}
-									id={`${this.props.componentId}-${item.key}`}
-									name={this.props.componentId}
-									value={item.key}
-									readOnly
-									onClick={this.handleClick}
-									checked={this.state.currentValue === String(item.key)}
-									show={this.props.showRadio}
-								/>
-								<label
-									className={getClassName(this.props.innerClass, 'label') || null}
-									htmlFor={`${this.props.componentId}-${item.key}`}
+						.map((item) => {
+							const isChecked = this.state.currentValue === String(item.key);
+							return (
+								<li
+									key={item.key}
+									className={`${
+										isChecked ? 'active' : ''
+									}`}
 								>
-									{renderListItem ? (
-										renderListItem(item.key, item.doc_count)
-									) : (
-										<span>
-											{item.key}
-											{this.props.showCount && (
-												<span
-													className={
-														getClassName(
-															this.props.innerClass,
-															'count',
-														) || null
-													}
-												>
-													&nbsp;({item.doc_count})
-												</span>
-											)}
-										</span>
-									)}
-								</label>
-							</li>
-						))}
+									<Radio
+										className={getClassName(this.props.innerClass, 'radio')}
+										id={`${this.props.componentId}-${item.key}`}
+										name={this.props.componentId}
+										value={item.key}
+										readOnly
+										onClick={this.handleClick}
+										checked={isChecked}
+										show={this.props.showRadio}
+									/>
+									<label
+										className={getClassName(this.props.innerClass, 'label') || null}
+										htmlFor={`${this.props.componentId}-${item.key}`}
+									>
+										{renderItem ? (
+											renderItem(item.key, item.doc_count, isChecked)
+										) : (
+											<span>
+												{item.key}
+												{this.props.showCount && (
+													<span
+														className={
+															getClassName(
+																this.props.innerClass,
+																'count',
+															) || null
+														}
+													>
+														&nbsp;({item.doc_count})
+													</span>
+												)}
+											</span>
+										)}
+									</label>
+								</li>
+							);
+						})}
 					{showLoadMore
 						&& !isLastBucket && (
 						<div css={loadMoreContainer}>
@@ -451,7 +454,7 @@ SingleList.propTypes = {
 	onChange: types.func,
 	placeholder: types.string,
 	react: types.react,
-	renderListItem: types.func,
+	renderItem: types.func,
 	transformData: types.func,
 	selectAllLabel: types.string,
 	showCount: types.bool,
@@ -506,8 +509,9 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	loadMore: (component, aggsQuery) => dispatch(loadMore(component, aggsQuery, true, true)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryListener: (
+		component, onQueryChange, beforeQueryChange,
+	) => dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });

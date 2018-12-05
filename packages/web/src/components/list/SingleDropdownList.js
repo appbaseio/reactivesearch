@@ -286,7 +286,7 @@ class SingleDropdownList extends Component {
 					labelField="key"
 					showCount={this.props.showCount}
 					themePreset={this.props.themePreset}
-					renderListItem={this.props.renderListItem}
+					renderItem={this.props.renderItem}
 					showSearch={this.props.showSearch}
 					transformData={this.props.transformData}
 					footer={
@@ -329,7 +329,7 @@ SingleDropdownList.propTypes = {
 	onChange: types.func,
 	placeholder: types.string,
 	react: types.react,
-	renderListItem: types.func,
+	renderItem: types.func,
 	transformData: types.func,
 	selectAllLabel: types.string,
 	showCount: types.bool,

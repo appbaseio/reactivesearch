@@ -414,7 +414,7 @@ class MultiList extends Component {
 
 	render() {
 		const {
-			selectAllLabel, renderListItem, showLoadMore, loadMoreLabel,
+			selectAllLabel, renderItem, showLoadMore, loadMoreLabel,
 		} = this.props;
 		const { isLastBucket } = this.state;
 
@@ -495,8 +495,8 @@ class MultiList extends Component {
 									className={getClassName(this.props.innerClass, 'label') || null}
 									htmlFor={`${this.props.componentId}-${item.key}`}
 								>
-									{renderListItem ? (
-										renderListItem(item.key, item.doc_count)
+									{renderItem ? (
+										renderItem(item.key, item.doc_count, !!this.state.currentValue[item.key])
 									) : (
 										<span>
 											{item.key}
@@ -558,7 +558,7 @@ MultiList.propTypes = {
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
-	renderListItem: types.func,
+	renderItem: types.func,
 	transformData: types.func,
 	selectAllLabel: types.string,
 	showCheckbox: types.boolRequired,

@@ -16,7 +16,7 @@ export interface SingleList extends CommonProps {
 	onChange?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;
-	renderListItem?: (...args: any[]) => any;
+	renderItem?: (...args: any[]) => any;
 	transformData?: (...args: any[]) => any;
 	selectAllLabel?: string;
 	showCount?: boolean;
