@@ -179,20 +179,24 @@ class SingleDataList extends Component {
 
 	updateStateOptions = (bucket) => {
 		if (bucket) {
+			const bucketDictionary = bucket.reduce(
+				(obj, item) => ({
+					...obj,
+					[item.key]: item.doc_count,
+				}),
+				{},
+			);
+
 			const { options } = this.state;
-			const newOptions = [];
-
-			options.forEach((item) => {
-				const doc = bucket.find(bucketItem => bucketItem.key === item.value);
-
-				if (doc) {
-					newOptions.push({
+			const newOptions = options.map((item) => {
+				if (bucketDictionary[item.value]) {
+					return {
 						...item,
-						count: doc.doc_count,
-					});
-				} else {
-					newOptions.push(item);
+						count: bucketDictionary[item.value],
+					};
 				}
+
+				return item;
 			});
 
 			this.setState({
