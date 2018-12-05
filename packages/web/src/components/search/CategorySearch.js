@@ -470,11 +470,13 @@ class CategorySearch extends Component {
 		const {
 			themePreset,
 			theme,
-			loading,
+			isLoading,
 			renderNoSuggestion,
 		} = this.props;
 		const { isOpen, currentValue } = this.state;
-		if (renderNoSuggestion && isOpen && !finalSuggestionsList.length && !loading && currentValue) {
+		if (renderNoSuggestion
+			&& isOpen && !finalSuggestionsList.length
+			&& !isLoading && currentValue) {
 			return (
 				<ul
 					className={`${noSuggestions(
@@ -484,6 +486,25 @@ class CategorySearch extends Component {
 				>
 					<li>{typeof renderNoSuggestion === 'function' ? renderNoSuggestion(currentValue) : renderNoSuggestion}</li>
 				</ul>
+			);
+		}
+		return null;
+	}
+
+	renderLoader = () => {
+		const {
+			loader, isLoading, themePreset, theme,
+		} = this.props;
+		const { currentValue } = this.state;
+		if (isLoading && loader && currentValue) {
+			return (
+				<div className={`${noSuggestions(
+					themePreset,
+					theme,
+				)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
+				>
+					<li>{loader}</li>
+				</div>
 			);
 		}
 		return null;
@@ -585,6 +606,7 @@ class CategorySearch extends Component {
 									themePreset={themePreset}
 								/>
 								{this.renderIcons()}
+								{this.renderLoader()}
 								{renderSuggestions
 									&& renderSuggestions({
 										currentValue: this.state.currentValue,
@@ -684,7 +706,8 @@ CategorySearch.propTypes = {
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
 	innerRef: types.func,
-	loading: types.bool,
+	isLoading: types.bool,
+	loader: types.title,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
@@ -736,9 +759,9 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
-	loading: state.isLoading[props.componentId],
 	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	themePreset: state.config.themePreset,
+	isLoading: state.isLoading[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
