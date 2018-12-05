@@ -44,7 +44,7 @@ class DataSearch extends Component {
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
 
-		props.addComponent(props.componentId, 'DATASEARCH');
+		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
@@ -698,7 +698,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	addComponent: (component, name) => dispatch(addComponent(component, name)),
+	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
