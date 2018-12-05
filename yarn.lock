@@ -20,6 +20,24 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
+"@appbaseio/reactivesearch-vue@^1.0.0-beta":
+  version "1.0.0-beta"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.0.0-beta.tgz#c02e4da204638307044197f9a909cb384750465b"
+  integrity sha512-N8aRFW4GqhCNf02Fp3CCK8rg80VvwFHX0vNoJcBEGF7EHvbYZT2dSKVXXu0rjARkdItJ9Q0sPx316nqYkataUA==
+  dependencies:
+    "@appbaseio/reactivecore" "^7.0.0"
+    appbase-js "^4.0.2-beta.2"
+    babel-helper-vue-jsx-merge-props "^2.0.3"
+    compute-scroll-into-view "^1.0.11"
+    emotion "^9.2.12"
+    polished "^2.2.0"
+    redux "^4.0.0"
+    url-search-params "^1.1.0"
+    vue "^2.5.17"
+    vue-emotion "^0.4.2"
+    vue-slider-component "^2.8.2"
+    vue-types "^1.3.3"
+
 "@babel/code-frame@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "http://registry.npmjs.org/@babel/code-frame/-/code-frame-7.0.0-beta.44.tgz#2a02643368de80916162be70865c97774f3adbd9"
@@ -18469,6 +18487,11 @@ vue-loader@^15.4.2:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-slider-component@^2.8.2:
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/vue-slider-component/-/vue-slider-component-2.8.2.tgz#5bf9922f1d053ba1516026a3dbbf9b0e7fb3c151"
+  integrity sha512-asmA5KKGq1bdnJeAjzqBf4K5FRl1T4V9H57UizOFtPmTKOulKVGdQJCSDB8mS9mpmNUGXIs/i0wt+nUFvYVDLQ==
 
 vue-style-loader@^4.1.0:
   version "4.1.2"

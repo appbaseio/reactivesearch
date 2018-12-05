@@ -34,82 +34,84 @@ class DataSearch extends Component {
 	constructor(props) {
 		super(props);
 
+		const currentValue = props.selectedValue || props.value || props.defaultValue || '';
+
 		this.state = {
-			currentValue: '',
+			currentValue,
 			suggestions: [],
 			isOpen: false,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
+
+		props.addComponent(props.componentId, 'DATASEARCH');
+		props.addComponent(this.internalComponent);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId, 'DATASEARCH');
-		this.props.addComponent(this.internalComponent);
-
-		if (this.props.highlight) {
-			const queryOptions = DataSearch.highlightQuery(this.props) || {};
+		if (props.highlight) {
+			const queryOptions = DataSearch.highlightQuery(props) || {};
 			queryOptions.size = 20;
-			this.props.setQueryOptions(this.props.componentId, queryOptions);
+			props.setQueryOptions(props.componentId, queryOptions);
 		} else {
-			this.props.setQueryOptions(this.props.componentId, {
+			props.setQueryOptions(props.componentId, {
 				size: 20,
 			});
 		}
-		this.setReact(this.props);
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected, true);
+		this.setReact(props);
+		const hasMounted = false;
+		const cause = null;
+
+		if (currentValue) {
+			this.setValue(currentValue, true, props, cause, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		checkSomePropChange(
 			this.props,
-			nextProps,
+			prevProps,
 			['highlight', 'dataField', 'highlightField'],
 			() => {
-				const queryOptions = DataSearch.highlightQuery(nextProps) || {};
+				const queryOptions = DataSearch.highlightQuery(this.props) || {};
 				queryOptions.size = 20;
-				this.props.setQueryOptions(nextProps.componentId, queryOptions);
+				this.props.setQueryOptions(this.props.componentId, queryOptions);
 			},
 		);
 
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		if (Array.isArray(nextProps.suggestions) && this.state.currentValue.trim().length) {
+		if (Array.isArray(this.props.suggestions) && this.state.currentValue.trim().length) {
 			// shallow check allows us to set suggestions even if the next set
 			// of suggestions are same as the current one
-			if (this.props.suggestions !== nextProps.suggestions) {
+			if (this.props.suggestions !== prevProps.suggestions) {
+				// eslint-disable-next-line
 				this.setState({
-					suggestions: this.onSuggestions(nextProps.suggestions),
+					suggestions: this.onSuggestions(this.props.suggestions),
 				});
 			}
 		}
 
 		checkSomePropChange(
 			this.props,
-			nextProps,
+			prevProps,
 			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField'],
 			() => {
-				this.updateQuery(nextProps.componentId, this.state.currentValue, nextProps);
+				this.updateQuery(this.props.componentId, this.state.currentValue, this.props);
 			},
 		);
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected, true, nextProps);
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value);
 		} else if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
 			// clear action from SelectedFilters component in which case,
 			// the currentValue will never match the updated selectedValue
-			this.props.selectedValue !== nextProps.selectedValue
-			&& this.state.currentValue !== nextProps.selectedValue
+			this.props.selectedValue !== prevProps.selectedValue
+			&& this.state.currentValue !== this.props.selectedValue
 		) {
-			this.setValue(nextProps.selectedValue || '', true, nextProps);
+			this.setValue(this.props.selectedValue || '', true, this.props);
 		}
 	}
 
@@ -246,7 +248,7 @@ class DataSearch extends Component {
 		return getSuggestions(fields, results, this.state.currentValue.toLowerCase());
 	};
 
-	setValue = (value, isDefaultValue = false, props = this.props, cause) => {
+	setValue = (value, isDefaultValue = false, props = this.props, cause, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -254,38 +256,45 @@ class DataSearch extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentValue: value,
-					suggestions: [],
-				},
-				() => {
-					if (isDefaultValue) {
-						if (this.props.autosuggest) {
-							this.setState({
-								isOpen: false,
-							});
-							this.updateQuery(this.internalComponent, value, props);
-						}
-						// in case of strict selection only SUGGESTION_SELECT should be able
-						// to set the query otherwise the value should reset
-						if (props.strictSelection) {
-							if (cause === causes.SUGGESTION_SELECT || value === '') {
-								this.updateQuery(props.componentId, value, props);
+			if (hasMounted) {
+				this.setState(
+					{
+						currentValue: value,
+						suggestions: [],
+					},
+					() => {
+						if (isDefaultValue) {
+							if (this.props.autosuggest) {
+								this.setState({
+									isOpen: false,
+								});
+								this.updateQuery(this.internalComponent, value, props);
+							}
+							// in case of strict selection only SUGGESTION_SELECT should be able
+							// to set the query otherwise the value should reset
+							if (props.strictSelection) {
+								if (cause === causes.SUGGESTION_SELECT || value === '') {
+									this.updateQuery(props.componentId, value, props);
+								} else {
+									this.setValue('', true);
+								}
 							} else {
-								this.setValue('', true);
+								this.updateQuery(props.componentId, value, props);
 							}
 						} else {
-							this.updateQuery(props.componentId, value, props);
+							// debounce for handling text while typing
+							this.handleTextChange(value);
 						}
-					} else {
-						// debounce for handling text while typing
-						this.handleTextChange(value);
-					}
-					this.locked = false;
-					if (props.onValueChange) props.onValueChange(value);
-				},
-			);
+						this.locked = false;
+						if (props.onValueChange) props.onValueChange(value);
+					},
+				);
+			} else {
+				this.updateQuery(this.internalComponent, value, props);
+				this.updateQuery(props.componentId, value, props);
+				this.locked = false;
+				if (props.onValueChange) props.onValueChange(value);
+			}
 		};
 		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
@@ -355,13 +364,19 @@ class DataSearch extends Component {
 	};
 
 	onInputChange = (e) => {
-		const { value } = e.target;
+		const { value: inputValue } = e.target;
 		if (!this.state.isOpen) {
 			this.setState({
 				isOpen: true,
 			});
 		}
-		this.setValue(value);
+
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(inputValue);
+		} else {
+			this.setValue(inputValue);
+		}
 	};
 
 	onSuggestionSelected = (suggestion) => {
@@ -596,7 +611,8 @@ DataSearch.propTypes = {
 	customQuery: types.func,
 	dataField: types.dataFieldArray,
 	debounce: types.number,
-	defaultSelected: types.string,
+	defaultValue: types.string,
+	value: types.string,
 	defaultSuggestions: types.suggestions,
 	downShiftProps: types.props,
 	fieldWeights: types.fieldWeights,
@@ -617,6 +633,7 @@ DataSearch.propTypes = {
 	onQueryChange: types.func,
 	onSuggestion: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	onValueSelected: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
