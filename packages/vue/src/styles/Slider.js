@@ -32,6 +32,15 @@ const Slider = styled('div')`
 	.vue-slider-component .vue-slider-process{
 		background-color: #0b6aff;
 	}
+
+	.label-container{
+		margin: 10px 0;
+		width: 100%;
+	}
+
+	.range-label-right{
+		float: right;
+	}
 `;
 
 export default Slider;
