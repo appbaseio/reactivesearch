@@ -8,8 +8,8 @@ import Filters from './Filters';
 export default () => (
 	<div className={container}>
 		<ReactiveBase
-			app="housing"
-			credentials="0aL1X5Vts:1ee67be1-9195-4f4b-bd4f-a91cd1b5e4b5"
+			app="airbeds-test-app"
+			credentials="X8RsOu0Lp:9b4fe1a4-58c6-4089-a042-505d86d9da30"
 			type="listing"
 			theme={{
 				colors: {
@@ -36,7 +36,9 @@ export default () => (
 				dataField="location"
 				defaultZoom={13}
 				pagination
-				onPageChange={() => { window.scrollTo(0, 0); }}
+				onPageChange={() => {
+					window.scrollTo(0, 0);
+				}}
 				style={{
 					width: 'calc(100% - 280px)',
 					height: 'calc(100vh - 52px)',
@@ -49,23 +51,31 @@ export default () => (
 						<div className="card-container">
 							{hits.map(data => (
 								<div key={data._id} className="card">
-									<div className="card__image" style={{ backgroundImage: `url(${data.image})` }} alt={data.name} />
+									<div
+										className="card__image"
+										style={{ backgroundImage: `url(${data.image})` }}
+										alt={data.name}
+									/>
 									<div>
 										<h2>{data.name}</h2>
 										<div className="card__price">${data.price}</div>
-										<p className="card__info">{data.room_type} · {data.accommodates} guests</p>
+										<p className="card__info">
+											{data.room_type} · {data.accommodates} guests
+										</p>
 									</div>
 								</div>
 							))}
 							{renderPagination()}
 						</div>
-						<div className="map-container">
-							{renderMap()}
-						</div>
+						<div className="map-container">{renderMap()}</div>
 					</div>
 				)}
 				onData={data => ({
-					label: <span style={{ width: 40, display: 'block', textAlign: 'center' }}>${data.price}</span>,
+					label: (
+						<span style={{ width: 40, display: 'block', textAlign: 'center' }}>
+							${data.price}
+						</span>
+					),
 				})}
 				react={{
 					and: ['GuestSensor', 'PriceSensor', 'DateRangeSensor', 'search'],
