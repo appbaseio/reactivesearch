@@ -19,6 +19,8 @@ export interface SingleDataList extends CommonProps {
 	showSearch?: boolean;
 	themePreset?: types.themePreset;
 	title?: types.title;
+	showCount?: boolean,
+	renderListItem?: (...args: any[]) => any;
 }
 
 declare const SingleDataList: React.ComponentType<SingleDataList>;
