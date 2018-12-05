@@ -1,6 +1,7 @@
 import VueTypes from 'vue-types';
 import vueSlider from 'vue-slider-component';
 import { Actions, helper } from '@appbaseio/reactivecore';
+import NoSSR from 'vue-no-ssr'
 import Container from '../../styles/Container';
 import { connect } from '../../utils/index';
 import Title from '../../styles/Title';
@@ -15,6 +16,7 @@ const RangeSlider = {
 	name: 'RangeSlider',
 	components: {
 		vueSlider,
+		NoSSR
 	},
 	data() {
 		this.state = {
@@ -151,18 +153,20 @@ const RangeSlider = {
 				)}
 
 				<Slider class={getClassName(this.$props.innerClass, 'slider')}>
-					<vue-slider
-						ref="slider"
-						value={this.state.currentValue}
-						min={this.$props.range.start}
-						max={this.$props.range.end}
-						onDrag-end={this.handleSlider}
-						dotSize={20}
-						height={4}
-						enable-cross={false}
-						tooltip-merge={this.$props.mergeTooltip}
-						tooltip={tooltipTrigger}
-					/>
+					<NoSSR>
+						<vue-slider
+							ref="slider"
+							value={this.state.currentValue}
+							min={this.$props.range.start}
+							max={this.$props.range.end}
+							onDrag-end={this.handleSlider}
+							dotSize={20}
+							height={4}
+							enable-cross={false}
+							tooltip-merge={this.$props.mergeTooltip}
+							tooltip={tooltipTrigger}
+						/>
+					</NoSSR>
 					{this.$props.rangeLabels
 						&& (
 							<div class="label-container">
