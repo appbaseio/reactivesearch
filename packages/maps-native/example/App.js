@@ -2,16 +2,13 @@ import Expo from 'expo';
 import React, { Component } from 'react';
 import { ScrollView, View, Text } from 'react-native'; // eslint-disable-line
 
-import {
-	ReactiveBase,
-	SingleDropdownList,
-} from '@appbaseio/reactivesearch-native';
+import { ReactiveBase, SingleDropdownList } from '@appbaseio/reactivesearch-native';
 import ReactiveMap from '@appbaseio/reactivemaps-native';
 
 class Main extends Component {
 	state = {
 		isReady: false,
-	}
+	};
 
 	async componentWillMount() {
 		await Expo.Font.loadAsync({
@@ -23,9 +20,7 @@ class Main extends Component {
 		this.setState({ isReady: true });
 	}
 
-	onData = data => (
-		<Text>{data.title}</Text>
-	)
+	onData = data => <Text>{data.title}</Text>;
 
 	render() {
 		if (!this.state.isReady) {
@@ -35,9 +30,8 @@ class Main extends Component {
 		return (
 			<View style={{ flex: 1, marginTop: 25 }}>
 				<ReactiveBase
-					app="earthquake"
-					credentials="OrXIHcgHn:d539c6e7-ed14-4407-8214-c227b0600d8e"
-					type="places"
+					app="earthquakes"
+					credentials="dshr057Nz:e18bbbbe-5d55-4234-a17e-4d64fb2222c7"
 				>
 					<View style={{ backgroundColor: 'lightblue', marginBottom: 20 }}>
 						<SingleDropdownList
@@ -54,9 +48,7 @@ class Main extends Component {
 							react={{
 								and: 'places',
 							}}
-							onPopoverClick={item => (
-								<Text>Run before it exceeds {item.mag}</Text>
-							)}
+							onPopoverClick={item => <Text>Run before it exceeds {item.mag}</Text>}
 							// onData={item => ({
 							// 	label: item.mag,
 							// })}
