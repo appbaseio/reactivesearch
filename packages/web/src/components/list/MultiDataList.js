@@ -33,7 +33,7 @@ class MultiDataList extends Component {
 		this.state = {
 			currentValue: {},
 			searchTerm: '',
-			options: this.props.data || [],
+			options: props.data || [],
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.type = 'term';

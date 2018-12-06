@@ -32,7 +32,7 @@ class SingleDataList extends Component {
 		this.state = {
 			currentValue: null,
 			searchTerm: '',
-			options: this.props.data || [],
+			options: props.data || [],
 		};
 
 		this.internalComponent = `${props.componentId}__internal`;
