@@ -69,7 +69,6 @@ class MultiDataList extends Component {
 
 		checkPropChange(this.props.dataField, prevProps.dataField, () => {
 			this.updateQuery(Object.keys(this.state.currentValue), this.props);
-			this.updateQuery(Object.keys(this.state.currentValue), this.props);
 
 			if (this.props.showCount) {
 				this.updateQueryOptions(this.props);

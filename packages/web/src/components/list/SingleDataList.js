@@ -62,7 +62,6 @@ class SingleDataList extends Component {
 
 		checkPropChange(this.props.dataField, prevProps.dataField, () => {
 			this.updateQuery(this.state.currentValue, this.props);
-			this.updateQuery(this.state.currentValue, this.props);
 
 			if (this.props.showCount) {
 				this.updateQueryOptions(this.props);
