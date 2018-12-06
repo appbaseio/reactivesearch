@@ -47,7 +47,7 @@ class MultiDataList extends Component {
 		this.locked = false;
 
 		props.addComponent(props.componentId);
-		props.addComponent(props.componentId);
+		props.addComponent(this.internalComponent);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		this.setReact(props);
