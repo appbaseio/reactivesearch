@@ -24,7 +24,7 @@ const Header = () => (
 					placeholder="Discover products..."
 					URLParams
 					filterLabel="Search"
-					autosuggest
+					autosuggest={false}
 				/>
 			</FlexChild>
 		</Flex>
