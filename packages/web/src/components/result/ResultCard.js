@@ -27,25 +27,27 @@ class ResultCard extends Component {
 						style={{ backgroundImage: `url(${result.image})` }}
 						className={getClassName(this.props.innerClass, 'image')}
 					/>
-					{typeof result.title === 'string' ? (
-						<Title
-							dangerouslySetInnerHTML={{ __html: result.title }}
-							className={getClassName(this.props.innerClass, 'title')}
-						/>
-					) : (
-						<Title className={getClassName(this.props.innerClass, 'title')}>
-							{result.title}
-						</Title>
-					)}
-					{typeof result.description === 'string' ? (
-						<article
-							dangerouslySetInnerHTML={{
-								__html: result.description,
-							}}
-						/>
-					) : (
-						<article>{result.description}</article>
-					)}
+					{result.title
+						&& (typeof result.title === 'string' ? (
+							<Title
+								dangerouslySetInnerHTML={{ __html: result.title }}
+								className={getClassName(this.props.innerClass, 'title')}
+							/>
+						) : (
+							<Title className={getClassName(this.props.innerClass, 'title')}>
+								{result.title}
+							</Title>
+						))}
+					{result.description
+						&& (typeof result.description === 'string' ? (
+							<article
+								dangerouslySetInnerHTML={{
+									__html: result.description,
+								}}
+							/>
+						) : (
+							<article>{result.description}</article>
+						))}
 				</Card>
 			);
 		}
