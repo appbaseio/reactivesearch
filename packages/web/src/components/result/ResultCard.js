@@ -23,10 +23,12 @@ class ResultCard extends Component {
 					onClick={triggerClickAnalytics}
 					{...result.containerProps}
 				>
-					<Image
-						style={{ backgroundImage: `url(${result.image})` }}
-						className={getClassName(this.props.innerClass, 'image')}
-					/>
+					{
+						result.image ? <Image
+							style={{ backgroundImage: `url(${result.image})` }}
+							className={getClassName(this.props.innerClass, 'image')}
+						/> : null
+					}
 					{result.title
 						&& (typeof result.title === 'string' ? (
 							<Title

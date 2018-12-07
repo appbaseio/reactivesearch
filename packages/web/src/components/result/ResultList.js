@@ -33,27 +33,29 @@ class ResultList extends Component {
 						/>
 					) : null}
 					<article>
-						{typeof result.title === 'string' ? (
-							<Title
-								dangerouslySetInnerHTML={{
-									__html: result.title,
-								}}
-								className={getClassName(this.props.innerClass, 'title')}
-							/>
-						) : (
-							<Title className={getClassName(this.props.innerClass, 'title')}>
-								{result.title}
-							</Title>
-						)}
-						{typeof result.description === 'string' ? (
-							<div
-								dangerouslySetInnerHTML={{
-									__html: result.description,
-								}}
-							/>
-						) : (
-							<div>{result.description}</div>
-						)}
+						{result.title
+							&& (typeof result.title === 'string' ? (
+								<Title
+									dangerouslySetInnerHTML={{
+										__html: result.title,
+									}}
+									className={getClassName(this.props.innerClass, 'title')}
+								/>
+							) : (
+								<Title className={getClassName(this.props.innerClass, 'title')}>
+									{result.title}
+								</Title>
+							))}
+						{result.description
+							&& (typeof result.description === 'string' ? (
+								<div
+									dangerouslySetInnerHTML={{
+										__html: result.description,
+									}}
+								/>
+							) : (
+								<div>{result.description}</div>
+							))}
 					</article>
 				</ListItem>
 			);
