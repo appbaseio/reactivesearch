@@ -4,7 +4,7 @@ import { MultiList } from '@appbaseio/reactivesearch';
 const SearchFilters = () => (
 	<MultiList
 		componentId="categories"
-		dataField="topics.raw"
+		dataField="categories.keyword"
 		title="Categories"
 		size={15}
 		sortBy="count"
