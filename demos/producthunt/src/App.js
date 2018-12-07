@@ -30,9 +30,9 @@ class App extends Component {
 		return (
 			<Container>
 				<ReactiveBase
-					app="producthunt"
-					credentials="We5c0D8OP:b3f3b3ee-529c-41b2-b69a-84245c091105"
-					type="post"
+					app="ph-dataset"
+					credentials="NPWzzJQT0:e367967e-9005-4b8a-94b2-28d1f8b49d1d"
+					type="ph-dataset"
 					theme={theme}
 				>
 					<Header />
