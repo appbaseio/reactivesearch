@@ -25,36 +25,35 @@ class NumberBox extends Component {
 		super(props);
 
 		this.type = 'term';
+		const currentValue
+			= props.selectedValue || props.defaultValue || props.value || props.data.start;
 		this.state = {
-			currentValue: this.props.data.start,
+			currentValue,
 		};
 		this.locked = false;
+
+		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
+		this.setReact(props);
+		const hasMounted = false;
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
-
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+		if (currentValue) {
+			this.setValue(currentValue, this.props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => {
-			this.setReact(nextProps);
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => {
+			this.setReact(this.props);
 		});
-		checkPropChange(this.props.defaultSelected, nextProps.defaultSelected, () => {
-			this.setValue(nextProps.defaultSelected, nextProps);
+		checkPropChange(this.props.value, prevProps.value, () => {
+			this.setValue(this.props.value, this.props);
 		});
-		checkPropChange(this.props.queryFormat, nextProps.queryFormat, () => {
-			this.updateQuery(this.state.currentValue, nextProps);
+		checkPropChange(this.props.queryFormat, this.props.queryFormat, () => {
+			this.updateQuery(this.state.currentValue, this.props);
 		});
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
-			this.updateQuery(this.state.currentValue, nextProps);
+		checkPropChange(this.props.dataField, this.props.dataField, () => {
+			this.updateQuery(this.state.currentValue, this.props);
 		});
 	}
 
@@ -102,7 +101,12 @@ class NumberBox extends Component {
 			return;
 		}
 		const { currentValue } = this.state;
-		this.setValue(currentValue + 1);
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(currentValue + 1);
+		} else {
+			this.setValue(currentValue + 1);
+		}
 	};
 
 	decrementValue = () => {
@@ -110,10 +114,15 @@ class NumberBox extends Component {
 			return;
 		}
 		const { currentValue } = this.state;
-		this.setValue(currentValue - 1);
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(currentValue - 1);
+		} else {
+			this.setValue(currentValue - 1);
+		}
 	};
 
-	setValue = (value, props = this.props) => {
+	setValue = (value, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -121,16 +130,22 @@ class NumberBox extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentValue: value,
-				},
-				() => {
-					this.updateQuery(value, props);
-					this.locked = false;
-					if (props.onValueChange) props.onValueChange(value);
-				},
-			);
+			const handleUpdates = () => {
+				this.updateQuery(value, props);
+				this.locked = false;
+				if (props.onValueChange) props.onValueChange(value);
+			};
+
+			if (hasMounted) {
+				this.setState(
+					{
+						currentValue: value,
+					},
+					handleUpdates,
+				);
+			} else {
+				handleUpdates();
+			}
 		};
 		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
@@ -199,10 +214,13 @@ NumberBox.propTypes = {
 	componentId: types.stringRequired,
 	data: types.dataNumberBox,
 	dataField: types.stringRequired,
-	defaultSelected: types.number,
+	defaultValue: types.number,
+	value: types.number,
 	innerClass: types.style,
 	labelPosition: types.labelPosition,
 	onQueryChange: types.func,
+	onValueChange: types.func,
+	onChange: types.func,
 	queryFormat: types.queryFormatNumberBox,
 	react: types.react,
 	style: types.style,
