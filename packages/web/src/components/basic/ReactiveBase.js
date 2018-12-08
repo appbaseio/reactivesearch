@@ -30,13 +30,13 @@ class ReactiveBase extends Component {
 		this.setStore(props);
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		checkSomePropChange(
 			this.props,
-			nextProps,
+			prevProps,
 			['app', 'url', 'type', 'credentials', 'mapKey', 'headers'],
 			() => {
-				this.setStore(nextProps);
+				this.setStore(this.props);
 				this.setState(state => ({
 					key: `${state.key}-0`,
 				}));
