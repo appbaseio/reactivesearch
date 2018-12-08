@@ -124,32 +124,32 @@ class ReactiveList extends Component {
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		const totalPages = Math.ceil(nextProps.total / nextProps.size) || 0;
+	componentDidUpdate(prevProps) {
+		const totalPages = Math.ceil(this.props.total / this.props.size) || 0;
 
 		if (
-			!isEqual(this.props.sortOptions, nextProps.sortOptions)
-			|| this.props.sortBy !== nextProps.sortBy
-			|| this.props.size !== nextProps.size
-			|| !isEqual(this.props.dataField, nextProps.dataField)
-			|| !isEqual(this.props.includeFields, nextProps.includeFields)
-			|| !isEqual(this.props.excludeFields, nextProps.excludeFields)
+			!isEqual(this.props.sortOptions, prevProps.sortOptions)
+			|| this.props.sortBy !== prevProps.sortBy
+			|| this.props.size !== prevProps.size
+			|| !isEqual(this.props.dataField, prevProps.dataField)
+			|| !isEqual(this.props.includeFields, prevProps.includeFields)
+			|| !isEqual(this.props.excludeFields, prevProps.excludeFields)
 		) {
-			const options = getQueryOptions(nextProps);
+			const options = getQueryOptions(this.props);
 			options.from = this.state.from;
-			if (nextProps.sortOptions) {
+			if (this.props.sortOptions) {
 				options.sort = [
 					{
-						[nextProps.sortOptions[0].dataField]: {
-							order: nextProps.sortOptions[0].sortBy,
+						[this.props.sortOptions[0].dataField]: {
+							order: this.props.sortOptions[0].sortBy,
 						},
 					},
 				];
-			} else if (nextProps.sortBy) {
+			} else if (this.props.sortBy) {
 				options.sort = [
 					{
-						[nextProps.dataField]: {
-							order: nextProps.sortBy,
+						[this.props.dataField]: {
+							order: this.props.sortBy,
 						},
 					},
 				];
@@ -157,16 +157,16 @@ class ReactiveList extends Component {
 			this.props.setQueryOptions(this.props.componentId, options, true);
 		}
 
-		if (nextProps.defaultQuery && !isEqual(nextProps.defaultQuery(), this.defaultQuery)) {
-			const options = getQueryOptions(nextProps);
+		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
+			const options = getQueryOptions(this.props);
 			options.from = 0;
-			this.defaultQuery = nextProps.defaultQuery();
+			this.defaultQuery = this.props.defaultQuery();
 
 			const { sort, ...query } = this.defaultQuery;
 
 			if (sort) {
 				options.sort = this.defaultQuery.sort;
-				nextProps.setQueryOptions(nextProps.componentId, options, !query);
+				this.props.setQueryOptions(this.props.componentId, options, !query);
 			}
 
 			this.props.updateQuery(
@@ -178,6 +178,7 @@ class ReactiveList extends Component {
 			);
 
 			// reset page because of query change
+			// eslint-disable-next-line
 			this.setState(
 				{
 					currentPage: 0,
@@ -189,42 +190,43 @@ class ReactiveList extends Component {
 			);
 		}
 
-		if (this.props.stream !== nextProps.stream) {
-			this.props.setStreaming(nextProps.componentId, nextProps.stream);
+		if (this.props.stream !== prevProps.stream) {
+			this.props.setStreaming(this.props.componentId, this.props.stream);
 		}
 
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
+		if (!isEqual(prevProps.react, this.props.react)) {
+			this.setReact(this.props);
 		}
 
 		if (this.props.pagination) {
 			// called when page is changed
-			if (this.props.isLoading && (this.props.hits || nextProps.hits)) {
-				if (nextProps.onPageChange) {
-					nextProps.onPageChange(this.state.currentPage + 1, totalPages);
+			if (this.props.isLoading && (this.props.hits || prevProps.hits)) {
+				if (this.props.onPageChange) {
+					this.props.onPageChange(this.state.currentPage + 1, totalPages);
 				} else {
 					this.domNode.scrollTo(0, 0);
 				}
 			}
 
 			if (
-				this.props.currentPage !== nextProps.currentPage
-				&& nextProps.currentPage > 0
-				&& nextProps.currentPage <= totalPages
+				this.props.currentPage !== prevProps.currentPage
+				&& this.props.currentPage > 0
+				&& this.props.currentPage <= totalPages
 			) {
-				this.setPage(nextProps.currentPage - 1);
+				this.setPage(this.props.currentPage - 1);
 			}
 		}
 
-		if (!nextProps.pagination) {
-			if (this.props.hits && nextProps.hits) {
+		if (!this.props.pagination) {
+			if (this.props.hits && prevProps.hits) {
 				if (
-					this.props.hits.length !== nextProps.hits.length
-					|| nextProps.hits.length === nextProps.total
+					this.props.hits.length !== prevProps.hits.length
+					|| this.props.hits.length === this.props.total
 				) {
-					if (nextProps.hits.length < this.props.hits.length) {
+					if (this.props.hits.length < prevProps.hits.length) {
 						// query has changed
 						this.domNode.scrollTo(0, 0);
+						// eslint-disable-next-line
 						this.setState({
 							from: 0,
 						});
@@ -234,16 +236,17 @@ class ReactiveList extends Component {
 		}
 
 		if (
-			nextProps.queryLog
+			prevProps.queryLog
 			&& this.props.queryLog
-			&& nextProps.queryLog !== this.props.queryLog
+			&& prevProps.queryLog !== this.props.queryLog
 		) {
 			// usecase:
 			// - query has changed from non-null prev query
 
-			if (nextProps.queryLog.from !== this.state.from) {
+			if (this.props.queryLog.from !== this.state.from) {
 				// query's 'from' key doesn't match the state's 'from' key,
 				// i.e. this query change was not triggered by the page change (loadMore)
+				// eslint-disable-next-line
 				this.setState(
 					{
 						currentPage: 0,
@@ -253,33 +256,33 @@ class ReactiveList extends Component {
 					},
 				);
 
-				if (nextProps.onPageChange) {
-					nextProps.onPageChange(1, totalPages);
+				if (this.props.onPageChange) {
+					this.props.onPageChange(1, totalPages);
 				}
-			} else if (this.initialFrom && this.initialFrom === nextProps.queryLog.from) {
+			} else if (this.initialFrom && this.initialFrom === this.props.queryLog.from) {
 				// [non-zero] initialFrom matches the current query's from
 				// but the query has changed
 
 				// we need to update the query options in this case
 				// because the initial load had set the query 'from' in the store
 				// which is not valid anymore because the query has changed
-				const options = getQueryOptions(nextProps);
+				const options = getQueryOptions(this.props);
 				options.from = 0;
 				this.initialFrom = 0;
 
-				if (nextProps.sortOptions) {
+				if (this.props.sortOptions) {
 					options.sort = [
 						{
-							[nextProps.sortOptions[0].dataField]: {
-								order: nextProps.sortOptions[0].sortBy,
+							[this.props.sortOptions[0].dataField]: {
+								order: this.props.sortOptions[0].sortBy,
 							},
 						},
 					];
-				} else if (nextProps.sortBy) {
+				} else if (this.props.sortBy) {
 					options.sort = [
 						{
-							[nextProps.dataField]: {
-								order: nextProps.sortBy,
+							[this.props.dataField]: {
+								order: this.props.sortBy,
 							},
 						},
 					];
@@ -289,8 +292,8 @@ class ReactiveList extends Component {
 			}
 		}
 
-		if (nextProps.pagination !== this.props.pagination) {
-			if (nextProps.pagination) {
+		if (prevProps.pagination !== this.props.pagination) {
+			if (this.props.pagination) {
 				this.domNode.addEventListener('scroll', this.scrollHandler);
 			} else {
 				this.domNode.removeEventListener('scroll', this.scrollHandler);
@@ -299,10 +302,10 @@ class ReactiveList extends Component {
 
 		// handle window url history change (on native back and forth interactions)
 		if (
-			this.state.currentPage !== nextProps.defaultPage
-			&& this.props.defaultPage !== nextProps.defaultPage
+			this.state.currentPage !== this.props.defaultPage
+			&& this.props.defaultPage !== prevProps.defaultPage
 		) {
-			this.setPage(nextProps.defaultPage >= 0 ? nextProps.defaultPage : 0);
+			this.setPage(this.props.defaultPage >= 0 ? this.props.defaultPage : 0);
 		}
 	}
 
