@@ -78,7 +78,7 @@ class CustomComponent extends Component {
 		this.props.setQuery({
 			query: {
 				term: {
-					brand: value,
+					'brand.keyword': value,
 				},
 			},
 			value,
@@ -87,10 +87,17 @@ class CustomComponent extends Component {
 
 	render() {
 		if (this.props.aggregations) {
-			return this.props.aggregations['brand.raw'].buckets.map(item => (
-				<div key={item.key} onClick={() => this.setValue(item.key)}>
+			return this.props.aggregations['brand.keyword'].buckets.map(item => (
+				<button
+					key={item.key}
+					onClick={() => this.setValue(item.key)}
+					style={{
+						display: 'block',
+						margin: '5px 0',
+					}}
+				>
 					{item.key}
-				</div> // eslint-disable-line
+				</button>
 			));
 		}
 
