@@ -11,7 +11,8 @@ export interface DatePickerProps extends CommonProps {
 	clickUnselectsDay?: boolean;
 	dataField: string;
 	dayPickerInputProps?: types.props;
-	defaultSelected?: types.date;
+	defaultValue?: types.date;
+	value?: types.date;
 	filterLabel?: string;
 	focused?: boolean;
 	initialMonth?: types.dateObject;
@@ -24,6 +25,8 @@ export interface DatePickerProps extends CommonProps {
 	showFilter?: boolean;
 	theme?: types.style;
 	title?: string;
+	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 }
 
 declare const DatePicker: React.ComponentType<DatePickerProps>;
