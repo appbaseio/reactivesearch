@@ -8,7 +8,8 @@ export interface TextFieldProps extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	dataField: string;
 	debounce?: number;
-	defaultSelected?: string;
+	defaultValue?: string;
+	value?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
 	innerRef?: (...args: any[]) => any;
@@ -18,6 +19,7 @@ export interface TextFieldProps extends CommonProps {
 	onKeyPress?: (...args: any[]) => any;
 	onKeyUp?: (...args: any[]) => any;
 	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;
 	ref?: (...args: any[]) => any;
