@@ -41,6 +41,7 @@ const RangeSlider = {
 			start: VueTypes.integer.def(0),
 			end: VueTypes.integer.def(10),
 		}),
+		rangeLabels: types.rangeLabels,
 		componentId: types.stringRequired,
 		customQuery: types.func,
 		data: types.data,
@@ -166,9 +167,32 @@ const RangeSlider = {
 							min={this.$props.range.start}
 							max={this.$props.range.end}
 							onDrag-end={this.handleSlider}
+							dotSize={20}
+							height={4}
+							enable-cross={false}
 							tooltip-merge={this.$props.mergeTooltip}
 							tooltip={tooltipTrigger}
 						/>
+						{this.$props.rangeLabels && (
+							<div class="label-container">
+								<label
+									class={
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-left'
+									}
+								>
+									{this.$props.rangeLabels.start}
+								</label>
+								<label
+									class={
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-right'
+									}
+								>
+									{this.$props.rangeLabels.end}
+								</label>
+							</div>
+						)}
 					</Slider>
 				</NoSSR>
 			</Container>

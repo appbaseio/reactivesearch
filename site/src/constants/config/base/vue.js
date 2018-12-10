@@ -1,6 +1,7 @@
 export default {
 	name: 'vue',
 	githubCount: '2432',
+	producthunt: 'https://www.producthunt.com/posts/reactivesearch-for-vue',
 	gettingStart:
 		'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
 	urls: {
@@ -9,7 +10,7 @@ export default {
 	},
 	header: {
 		logo: {
-			src: 'images/vueLogo.svg',
+			src: '../../reactivesearch/images/vueLogo.svg',
 			title: {
 				light: 'Reactive',
 				dark: 'Search',

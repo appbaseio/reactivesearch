@@ -3,13 +3,14 @@ export default {
 	githubCount: '2432',
 	gettingStart:
 		'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
+	producthunt: 'https://www.producthunt.com/posts/reactivesearch-native',
 	urls: {
 		github: 'https://github.com/appbaseio/reactivesearch/tree/dev/packages/native',
 		support: 'https://appbase.io/pricing#support',
 	},
 	header: {
 		logo: {
-			src: 'images/RSlogo.svg',
+			src: '../../reactivesearch/images/RSlogo.svg',
 			title: {
 				light: 'ReactiveSearch',
 				dark: 'Native',

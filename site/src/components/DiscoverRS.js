@@ -31,9 +31,9 @@ const titleCls = css`
 
 const DiscoverRS = ({ cardConfig }) => (
 	<Section css="max-width: 950px;margin: 0 auto;background-color: #fff">
-		<H2 css="margin-bottom: 20px;"> Discover the ReactiveSearch </H2>{' '}
+		<H2 css="margin-bottom: 20px;"> Other Reactive&lt;X&gt; libraries</H2>{' '}
 		<p css="max-width: 700px;margin: 0 auto 64px auto">
-			Libraries built to unleash the full potential of Appbase’s search infrastructure.
+			Build consistent, cross-platform search UIs that delight your users.
 		</p>
 		<FlexGrid
 			size={2}
@@ -83,25 +83,25 @@ DiscoverRS.defaultProps = {
 		{
 			title: 'ReactiveSearch',
 			srcSet:
-				'images/reactivesearch/Reactive%20Search@3x.svg 3x, images/reactivesearch/Reactive%20Search@2x.png 2x, images/reactivesearch/Reactive%20Search@1x.png',
-			href: 'https://opensource.appbase.io/reactivesearch/',
+				'../../reactivesearch/images/reactivesearch/Reactive%20Search@3x.svg 3x, images/reactivesearch/Reactive%20Search@2x.png 2x, images/reactivesearch/Reactive%20Search@1x.png',
+			href: '../../reactivesearch/',
 		},
 		{
 			title: 'ReactiveSearch for Vue',
 			srcSet:
-				'images/reactivesearch/Reactive%20Search%20for%20vue@3x.svg 3x, images/reactivesearch/Reactive%20Search%20for%20vue@2x.png 2x, images/reactivesearch/Reactive%20Search%20for%20vue@1x.png',
-			href: 'https://opensource.appbase.io/reactivesearch/vue',
+				'../../reactivesearch/images/reactivesearch/Reactive%20Search%20for%20vue@3x.svg 3x, images/reactivesearch/Reactive%20Search%20for%20vue@2x.png 2x, images/reactivesearch/Reactive%20Search%20for%20vue@1x.png',
+			href: '../../reactivesearch/vue',
 		},
 		{
 			title: 'ReactiveSearch Native',
 			srcSet:
-				'images/reactivesearch/Reactive%20Search%20Native@3x.svg 3x, images/reactivesearch/Reactive%20Search%20Native@2x.png 2x, images/reactivesearch/Reactive%20Search%20Native@1x.png',
-			href: 'https://opensource.appbase.io/reactivesearch/native',
+				'../../reactivesearch/images/reactivesearch/Reactive%20Search%20Native@3x.svg 3x, images/reactivesearch/Reactive%20Search%20Native@2x.png 2x, images/reactivesearch/Reactive%20Search%20Native@1x.png',
+			href: '../../reactivesearch/native',
 		},
 		{
 			title: 'Reactive Maps',
 			srcSet:
-				'images/reactivesearch/Group%2029@3x.svg 3x, images/reactivesearch/Group%2029@2x.png 2x, images/reactivesearch/Group%2029@1x.png',
+				'../../reactivesearch/images/reactivesearch/Group%2029@3x.svg 3x, images/reactivesearch/Group%2029@2x.png 2x, images/reactivesearch/Group%2029@1x.png',
 			href: 'https://opensource.appbase.io/reactivemaps/',
 		},
 	],

@@ -21,7 +21,7 @@ import {
 class Main extends Component {
 	state = {
 		isReady: false,
-	}
+	};
 
 	async componentWillMount() {
 		await Expo.Font.loadAsync({
@@ -40,12 +40,12 @@ class Main extends Component {
 			keyExtractor={item => item._id}
 			renderItem={({ item }) => (
 				<View style={{ margin: 5 }}>
-					<Text
-						style={{ flex: 1, fontWeight: 'bold' }}
-					>
+					<Text style={{ flex: 1, fontWeight: 'bold' }}>
 						{this.parseToElement(item.name)}
 					</Text>
-					<Text>{item.brand} - {item.model}</Text>
+					<Text>
+						{item.brand} - {item.model}
+					</Text>
 				</View>
 			)}
 			onEndReachedThreshold={0.5}
@@ -72,7 +72,7 @@ class Main extends Component {
 		}
 
 		return str;
-	}
+	};
 
 	render() {
 		if (!this.state.isReady) {
@@ -81,8 +81,8 @@ class Main extends Component {
 
 		return (
 			<ReactiveBase
-				app="car-store"
-				credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
+				app="carstore-dataset"
+				credentials="4HWI27QmA:58c731f7-79ab-4f55-a590-7e15c7e36721"
 				type="cars"
 				// theme={{
 				// 	textColor: 'yellow',
@@ -96,10 +96,7 @@ class Main extends Component {
 				<ScrollView>
 					<View style={{ padding: 10 }}>
 						<SelectedFilters />
-						<SingleDropdownList
-							componentId="StComponent"
-							dataField="brand.raw"
-						/>
+						<SingleDropdownList componentId="StComponent" dataField="brand.raw" />
 
 						<MultiDropdownList
 							componentId="MultiDropdownListComponent"
@@ -123,10 +120,7 @@ class Main extends Component {
 							}}
 						/>
 
-						<DatePicker
-							dataField="someField"
-							componentId="DatePicker"
-						/>
+						<DatePicker dataField="someField" componentId="DatePicker" />
 
 						<DateRange
 							dataField="someField"
@@ -192,10 +186,7 @@ class Main extends Component {
 							pagination
 							stream
 							react={{
-								and: [
-									'DataSearchComponent',
-									'StComponent',
-								],
+								and: ['DataSearchComponent', 'StComponent'],
 							}}
 						/>
 					</View>
