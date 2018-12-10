@@ -6,8 +6,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@appbaseio/reactivesearch": "^2.12.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.7.0-alpha.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
