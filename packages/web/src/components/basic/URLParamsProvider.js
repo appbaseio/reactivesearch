@@ -29,32 +29,32 @@ class URLParamsProvider extends Component {
 		};
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.currentSelectedState = nextProps.selectedValues;
-		if (!isEqual(this.props.selectedValues, nextProps.selectedValues)) {
+	componentDidUpdate(prevProps) {
+		this.currentSelectedState = this.props.selectedValues;
+		if (!isEqual(this.props.selectedValues, prevProps.selectedValues)) {
 			this.params = new URLSearchParams(window.location.search);
-			const currentComponents = Object.keys(nextProps.selectedValues);
+			const currentComponents = Object.keys(this.props.selectedValues);
 			const urlComponents = Array.from(this.params.keys());
 
 			currentComponents
-				.filter(component => nextProps.selectedValues[component].URLParams)
+				.filter(component => this.props.selectedValues[component].URLParams)
 				.forEach((component) => {
 					// prevents empty history pollution on initial load
 					if (
 						this.hasValidValue(this.props.selectedValues[component])
-						|| this.hasValidValue(nextProps.selectedValues[component])
+						|| this.hasValidValue(prevProps.selectedValues[component])
 					) {
-						if (nextProps.selectedValues[component].URLParams) {
+						if (this.props.selectedValues[component].URLParams) {
 							this.setURL(
 								component,
-								this.getValue(nextProps.selectedValues[component].value),
+								this.getValue(this.props.selectedValues[component].value),
 							);
 						} else {
 							this.params.delete(component);
 							this.pushToHistory();
 						}
 					} else if (
-						!this.hasValidValue(nextProps.selectedValues[component])
+						!this.hasValidValue(this.props.selectedValues[component])
 						&& urlComponents.includes(component)
 					) {
 						// doesn't have a valid value, but the url has a (stale) valid value set
@@ -79,8 +79,8 @@ class URLParamsProvider extends Component {
 			}
 		}
 
-		if (!isEqual(this.props.headers, nextProps.headers)) {
-			nextProps.setHeaders(nextProps.headers);
+		if (!isEqual(this.props.headers, prevProps.headers)) {
+			this.props.setHeaders(this.props.headers);
 		}
 	}
 
