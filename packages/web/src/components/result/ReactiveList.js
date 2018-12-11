@@ -545,8 +545,16 @@ class ReactiveList extends Component {
 		</select>
 	);
 
+	renderError = () => {
+		const { error, isLoading, renderError } = this.props;
+		if (renderError && error && !isLoading) {
+			return typeof renderError === 'function' ? renderError(error) : renderError;
+		}
+		return null;
+	}
+
 	render() {
-		const { renderData, size } = this.props;
+		const { renderData, size, error } = this.props;
 		const { currentPage } = this.state;
 		const allData = this.getAllData();
 		const { results, streamResults } = allData;
@@ -560,6 +568,7 @@ class ReactiveList extends Component {
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.isLoading && this.props.pagination && this.props.loader}
+				{this.renderError()}
 				<Flex
 					labelPosition={this.props.sortOptions ? 'right' : 'left'}
 					className={getClassName(this.props.innerClass, 'resultsInfo')}
@@ -567,7 +576,7 @@ class ReactiveList extends Component {
 					{this.props.sortOptions ? this.renderSortOptions() : null}
 					{this.props.showResultStats ? this.renderResultStats() : null}
 				</Flex>
-				{!this.props.isLoading && (results.length === 0 && streamResults.length === 0)
+				{!this.props.isLoading && !error && (results.length === 0 && streamResults.length === 0)
 					? this.renderNoResults()
 					: null}
 				{this.props.pagination
@@ -662,12 +671,14 @@ ReactiveList.propTypes = {
 	dataField: types.stringRequired,
 	defaultPage: types.number,
 	defaultQuery: types.func,
+	error: types.title,
 	excludeFields: types.excludeFields,
 	innerClass: types.style,
 	listClass: types.string,
 	loader: types.title,
 	renderAllData: types.func,
 	renderData: types.func,
+	renderError: types.title,
 	onData: types.func,
 	onNoResults: types.title,
 	onPageChange: types.func,
@@ -716,6 +727,7 @@ const mapStateToProps = (state, props) => ({
 	analytics: state.analytics,
 	config: state.config,
 	queryLog: state.queryLog[props.componentId],
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({

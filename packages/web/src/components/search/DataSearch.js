@@ -458,10 +458,13 @@ class DataSearch extends Component {
 			isLoading,
 			renderNoSuggestion,
 			innerClass,
+			error,
+			renderError,
 		} = this.props;
 		const { isOpen, currentValue } = this.state;
 		if (renderNoSuggestion
-				&& isOpen && !finalSuggestionsList.length && !isLoading && currentValue) {
+				&& isOpen && !finalSuggestionsList.length && !isLoading && currentValue
+				&& !(renderError && error)) {
 			return (
 				<SuggestionWrapper innerClass={innerClass} themePreset={themePreset} theme={theme} innerClassName="noSuggestion">
 					{typeof renderNoSuggestion === 'function' ? renderNoSuggestion(currentValue) : renderNoSuggestion}
@@ -684,10 +687,10 @@ DataSearch.propTypes = {
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
-	renderError: types.children,
+	renderError: types.title,
 	renderSuggestion: types.func,
 	renderAllSuggestion: types.func,
-	renderNoSuggestion: types.children,
+	renderNoSuggestion: types.title,
 	showClear: types.bool,
 	showFilter: types.bool,
 	showIcon: types.bool,
