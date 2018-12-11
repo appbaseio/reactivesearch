@@ -111,7 +111,19 @@ class DataSearch extends Component {
 			this.props.selectedValue !== prevProps.selectedValue
 			&& this.state.currentValue !== this.props.selectedValue
 		) {
-			this.setValue(this.props.selectedValue || '', true, this.props);
+			const { value, onChange } = this.props;
+			if (value) {
+				if (onChange) {
+					onChange(this.props.selectedValue || '');
+				} else {
+					// we need to put the current value back into the store
+					// if the clear action was triggered by interacting with
+					// selected-filters component
+					this.setValue(this.state.currentValue, true, this.props);
+				}
+			} else {
+				this.setValue(this.props.selectedValue || '', true, this.props);
+			}
 		}
 	}
 
