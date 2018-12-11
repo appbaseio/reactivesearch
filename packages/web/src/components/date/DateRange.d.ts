@@ -11,7 +11,8 @@ export interface DateRangeProps extends CommonProps {
 	autoFocusEnd?: boolean;
 	dataField: string;
 	dayPickerInputProps?: types.props;
-	defaultSelected?: types.dateObject;
+	defaultValue?: types.dateObject;
+	value?: types.dateObject;
 	filterLabel?: string;
 	focused?: boolean;
 	initialMonth?: types.dateObject;
@@ -24,6 +25,8 @@ export interface DateRangeProps extends CommonProps {
 	showFilter?: boolean;
 	theme?: types.style;
 	title?: string;
+	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 }
 
 declare const DateRange: React.ComponentType<DateRangeProps>;
