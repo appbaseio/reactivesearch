@@ -23,13 +23,14 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
-import Input, { suggestionsContainer, suggestions, noSuggestions } from '../../styles/Input';
+import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
 import { connect } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
+import SuggestionWrapper from './addons/SuggestionWrapper';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -47,7 +48,7 @@ class DataSearch extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 
 		if (props.highlight) {
 			const queryOptions = DataSearch.highlightQuery(props) || {};
@@ -456,19 +457,15 @@ class DataSearch extends Component {
 			theme,
 			isLoading,
 			renderNoSuggestion,
+			innerClass,
 		} = this.props;
 		const { isOpen, currentValue } = this.state;
 		if (renderNoSuggestion
 				&& isOpen && !finalSuggestionsList.length && !isLoading && currentValue) {
 			return (
-				<ul
-					className={`${noSuggestions(
-						themePreset,
-						theme,
-					)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
-				>
-					<li>{typeof renderNoSuggestion === 'function' ? renderNoSuggestion(currentValue) : renderNoSuggestion}</li>
-				</ul>
+				<SuggestionWrapper innerClass={innerClass} themePreset={themePreset} theme={theme} innerClassName="noSuggestion">
+					{typeof renderNoSuggestion === 'function' ? renderNoSuggestion(currentValue) : renderNoSuggestion}
+				</SuggestionWrapper>
 			);
 		}
 		return null;
@@ -476,18 +473,29 @@ class DataSearch extends Component {
 
 	renderLoader = () => {
 		const {
-			loader, isLoading, themePreset, theme,
+			loader, isLoading, themePreset, theme, innerClass,
 		} = this.props;
 		const { currentValue } = this.state;
 		if (isLoading && loader && currentValue) {
 			return (
-				<div className={`${noSuggestions(
-					themePreset,
-					theme,
-				)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
-				>
-					<li>{loader}</li>
-				</div>
+				<SuggestionWrapper innerClass={innerClass} innerClassName="loader" theme={theme} themePreset={themePreset}>
+					{loader}
+				</SuggestionWrapper>
+			);
+		}
+		return null;
+	}
+
+	renderError = () => {
+		const {
+			error, renderError, themePreset, theme, isLoading, innerClass,
+		} = this.props;
+		const { currentValue } = this.state;
+		if (error && renderError && currentValue && !isLoading) {
+			return (
+				<SuggestionWrapper innerClass={innerClass} innerClassName="error" theme={theme} themePreset={themePreset}>
+					{typeof renderError === 'function' ? renderError(error) : renderError}
+				</SuggestionWrapper>
 			);
 		}
 		return null;
@@ -559,6 +567,7 @@ class DataSearch extends Component {
 										parsedSuggestions: suggestionsList,
 									})}
 								{this.renderLoader()}
+								{this.renderError()}
 								{!renderAllSuggestion && isOpen && suggestionsList.length ? (
 									<ul
 										className={`${suggestions(
@@ -648,6 +657,8 @@ DataSearch.propTypes = {
 	value: types.string,
 	defaultSuggestions: types.suggestions,
 	downShiftProps: types.props,
+	// eslint-disable-next-line
+	error: types.any,
 	fieldWeights: types.fieldWeights,
 	filterLabel: types.string,
 	fuzziness: types.fuzziness,
@@ -659,6 +670,7 @@ DataSearch.propTypes = {
 	innerRef: types.func,
 	isLoading: types.bool,
 	loader: types.title,
+	onError: types.func,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
@@ -672,6 +684,7 @@ DataSearch.propTypes = {
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
+	renderError: types.children,
 	renderSuggestion: types.func,
 	renderAllSuggestion: types.func,
 	renderNoSuggestion: types.children,
@@ -710,6 +723,7 @@ const mapStateToProps = (state, props) => ({
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({

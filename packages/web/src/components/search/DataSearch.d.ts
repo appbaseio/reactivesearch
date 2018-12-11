@@ -26,6 +26,7 @@ export interface DataSearchProps extends CommonProps {
 	innerClass?: types.style;
 	innerRef?: (...args: any[]) => any;
 	onBlur?: (...args: any[]) => any;
+	onError?: (...args: any[]) => any;
 	onFocus?: (...args: any[]) => any;
 	onKeyDown?: (...args: any[]) => any;
 	onKeyPress?: (...args: any[]) => any;
@@ -40,6 +41,7 @@ export interface DataSearchProps extends CommonProps {
 	renderSuggestion?: (...args: any[]) => any;
 	renderAllSuggestion?: (...args: any[]) => any;
 	renderNoSuggestion?: types.title;
+	renderError?: types.title;
 	showFilter?: boolean;
 	showIcon?: boolean;
 	title?: types.title;

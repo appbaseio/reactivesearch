@@ -27,6 +27,7 @@ export interface CategorySearchProps extends CommonProps {
 	innerClass?: types.style;
 	innerRef?: (...args: any[]) => any;
 	onBlur?: (...args: any[]) => any;
+	onError?: (...args: any[]) => any;
 	onFocus?: (...args: any[]) => any;
 	onKeyDown?: (...args: any[]) => any;
 	onKeyPress?: (...args: any[]) => any;
@@ -40,6 +41,7 @@ export interface CategorySearchProps extends CommonProps {
 	react?: types.react;
 	renderSuggestion?: (...args: any[]) => any;
 	renderAllSuggestion?: (...args: any[]) => any;
+	renderError?: types.title;
 	renderNoSuggestion?: types.title;
 	showFilter?: boolean;
 	showIcon?: boolean;
