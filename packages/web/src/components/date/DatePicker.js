@@ -27,38 +27,39 @@ import { connect } from '../../utils';
 class DatePicker extends Component {
 	constructor(props) {
 		super(props);
+
+		const currentDate = props.selectedValue || props.value || props.defaultValue || '';
 		this.state = {
-			currentDate: '',
+			currentDate,
 		};
 		this.locked = false;
+
+		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
+		this.setReact(props);
+		const hasMounted = false;
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
-
-		if (this.props.selectedValue) {
-			this.handleDateChange(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.handleDateChange(this.props.defaultSelected, true);
+		if (currentDate) {
+			this.handleDateChange(currentDate, true, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
-		checkPropChange(this.props.dataField, nextProps.dataField, () =>
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
+		checkPropChange(this.props.dataField, prevProps.dataField, () =>
 			this.updateQuery(
 				this.state.currentDate ? this.formatInputDate(this.state.currentDate) : null,
-				nextProps,
-			));
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.handleDateChange(nextProps.defaultSelected, true, nextProps);
+				this.props,
+			),
+		);
+
+		if (!isEqual(this.props.value, prevProps.value)) {
+			this.handleDateChange(this.props.value, true, this.props);
 		} else if (
-			!isEqual(this.formatInputDate(this.state.currentDate), nextProps.selectedValue)
-			&& !isEqual(this.props.selectedValue, nextProps.selectedValue)
+			!isEqual(this.formatInputDate(this.state.currentDate), this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
-			this.handleDateChange(nextProps.selectedValue || '', true, nextProps);
+			this.handleDateChange(this.props.selectedValue || '', true, this.props);
 		}
 	}
 
@@ -96,10 +97,20 @@ class DatePicker extends Component {
 	};
 
 	handleDayPicker = (date) => {
-		this.handleDateChange(date || '');
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(date || '');
+		} else {
+			this.handleDateChange(date || '');
+		}
 	};
 
-	handleDateChange = (currentDate, isDefaultValue = false, props = this.props) => {
+	handleDateChange = (
+		currentDate,
+		isDefaultValue = false,
+		props = this.props,
+		hasMounted = true,
+	) => {
 		// currentDate should be valid or empty string for resetting the query
 		if (isDefaultValue && !new XDate(currentDate).valid() && currentDate.length) {
 			console.error(`DatePicker: ${props.componentId} invalid value passed for date`);
@@ -116,16 +127,22 @@ class DatePicker extends Component {
 			}
 
 			const performUpdate = () => {
-				this.setState(
-					{
-						currentDate,
-					},
-					() => {
-						this.updateQuery(value, props);
-						this.locked = false;
-						if (props.onValueChange) props.onValueChange(value);
-					},
-				);
+				const handleUpdates = () => {
+					this.updateQuery(value, props);
+					this.locked = false;
+					if (props.onValueChange) props.onValueChange(value);
+				};
+
+				if (hasMounted) {
+					this.setState(
+						{
+							currentDate,
+						},
+						handleUpdates,
+					);
+				} else {
+					handleUpdates();
+				}
 			};
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		}
@@ -191,8 +208,9 @@ class DatePicker extends Component {
 						}}
 						{...this.props.dayPickerInputProps}
 					/>
-					{this.props.showClear
-						&& this.state.currentDate && <CancelSvg onClick={this.clearDayPicker} />}
+					{this.props.showClear && this.state.currentDate && (
+						<CancelSvg onClick={this.clearDayPicker} />
+					)}
 				</Flex>
 			</DateContainer>
 		);
@@ -212,13 +230,16 @@ DatePicker.propTypes = {
 	componentId: types.stringRequired,
 	dataField: types.stringRequired,
 	dayPickerInputProps: types.props,
-	defaultSelected: types.date,
+	defaultValue: types.date,
+	value: types.date,
 	filterLabel: types.string,
 	focused: types.bool,
 	initialMonth: types.dateObject,
 	innerClass: types.style,
 	numberOfMonths: types.number,
 	onQueryChange: types.func,
+	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatDate,
 	react: types.react,

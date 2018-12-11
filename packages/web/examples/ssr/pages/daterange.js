@@ -31,8 +31,8 @@ const dateQuery = (value) => {
 };
 
 const settings = {
-	app: 'housing',
-	credentials: '0aL1X5Vts:1ee67be1-9195-4f4b-bd4f-a91cd1b5e4b5',
+	app: 'airbeds-test-app',
+	credentials: 'X8RsOu0Lp:9b4fe1a4-58c6-4089-a042-505d86d9da30',
 	type: 'listing',
 };
 

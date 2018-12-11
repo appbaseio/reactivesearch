@@ -11,13 +11,13 @@ const onData = res => ({
 			<p style={{ marginBottom: 5 }}>{res.tagline}</p>
 			<Flex justifyContent="space-between" responsive>
 				<Flex>
-					{res.topics.map(topic => (
+					{res.categories.map(topic => (
 						<Topic key={topic}>{topic}</Topic>
 					))}
 				</Flex>
 				<Flex>
 					<Topic hollow>
-						<i className="fa fa-caret-up" /> {res.upvotes}
+						<i className="fa fa-caret-up" /> {res.votes_count}
 					</Topic>
 					<Topic hollow>
 						<i className="fa fa-comment" /> {res.comments_count}

@@ -26,49 +26,41 @@ class RatingsFilter extends Component {
 	constructor(props) {
 		super(props);
 
-		this.type = 'range';
+		const defaultValue = props.defaultValue || props.value;
+		const value = props.selectedValue || defaultValue || null;
+		const currentValue = RatingsFilter.parseValue(value, props);
+
 		this.state = {
-			currentValue: null,
+			currentValue,
 		};
+		this.type = 'range';
 		this.locked = false;
+
+		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
+		this.setReact(props);
+		const hasMounted = false;
 
-		const { selectedValue, defaultSelected } = this.props;
-		if (selectedValue) {
-			if (Array.isArray(selectedValue)) {
-				this.setValue(selectedValue);
-			} else {
-				// for SSR
-				this.setValue(RatingsFilter.parseValue(selectedValue));
-			}
-		} else if (defaultSelected) {
-			this.setValue(RatingsFilter.parseValue(defaultSelected));
+		if (currentValue) {
+			this.setValue(currentValue, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => {
-			this.setReact(nextProps);
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
+
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateQuery(this.state.currentValue, this.props);
 		});
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
-			this.updateQuery(this.state.currentValue, nextProps);
-		});
-
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.setValue(
-				nextProps.defaultSelected
-					? [nextProps.defaultSelected.start, nextProps.defaultSelected.end]
-					: null,
-				nextProps,
-			);
-		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.setValue(nextProps.selectedValue || null, nextProps);
+		if (!isEqual(this.props.value, prevProps.value)) {
+			this.setValue(this.props.value);
+		} else if (
+			!isEqual(this.state.currentValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
+		) {
+			this.setValue(this.props.selectedValue || null);
 		}
 	}
 
@@ -83,7 +75,10 @@ class RatingsFilter extends Component {
 	}
 
 	// parses range label to get start and end
-	static parseValue = value => (value ? [value.start, value.end] : null);
+	static parseValue = (value) => {
+		if (Array.isArray(value)) return value;
+		return value ? [value.start, value.end] : null;
+	};
 
 	static defaultQuery = (value, props) => {
 		if (value) {
@@ -100,7 +95,7 @@ class RatingsFilter extends Component {
 		return null;
 	};
 
-	setValue = (value, props = this.props) => {
+	setValue = (value, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -108,16 +103,22 @@ class RatingsFilter extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState(
-				{
-					currentValue: value,
-				},
-				() => {
-					this.updateQuery(value, props);
-					this.locked = false;
-					if (props.onValueChange) props.onValueChange(value);
-				},
-			);
+			const handleUpdates = () => {
+				this.updateQuery(value, props);
+				this.locked = false;
+				if (props.onValueChange) props.onValueChange(value);
+			};
+
+			if (hasMounted) {
+				this.setState(
+					{
+						currentValue: value,
+					},
+					handleUpdates,
+				);
+			} else {
+				handleUpdates();
+			}
 		};
 		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
@@ -134,6 +135,15 @@ class RatingsFilter extends Component {
 			URLParams: props.URLParams,
 			componentType: 'RATINGSFILTER',
 		});
+	};
+
+	handleClick = (selectedItem) => {
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(selectedItem);
+		} else {
+			this.setValue(selectedItem);
+		}
 	};
 
 	render() {
@@ -154,9 +164,9 @@ class RatingsFilter extends Component {
 									? 'active'
 									: ''
 							}
-							onClick={() => this.setValue([item.start, item.end])}
+							onClick={() => this.handleClick([item.start, item.end])}
 							onKeyPress={e =>
-								handleA11yAction(e, () => this.setValue([item.start, item.end]))
+								handleA11yAction(e, () => this.handleClick([item.start, item.end]))
 							}
 							key={`${this.props.componentId}-${item.start}-${item.end}`}
 						>
@@ -184,11 +194,13 @@ RatingsFilter.propTypes = {
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
-	defaultSelected: types.range,
+	defaultValue: types.range,
+	value: types.range,
 	filterLabel: types.string,
 	innerClass: types.style,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	react: types.react,
 	style: types.style,
 	title: types.title,

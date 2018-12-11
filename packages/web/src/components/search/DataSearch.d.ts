@@ -11,7 +11,8 @@ export interface DataSearchProps extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;
 	debounce?: number;
-	defaultSelected?: string;
+	defaultValue?: string;
+	value?: string;
 	defaultSuggestions?: types.suggestions;
 	defaultQuery?: (...args: any[]) => any;
 	downShiftProps?: types.props;
@@ -31,6 +32,7 @@ export interface DataSearchProps extends CommonProps {
 	onKeyUp?: (...args: any[]) => any;
 	onSuggestions?: (...args: any[]) => any;
 	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 	onValueSelected?: (...args: any[]) => any;
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;

@@ -38,18 +38,40 @@ class ReactiveComponent extends Component {
 		if (props.defaultQuery) {
 			this.internalComponent = `${props.componentId}__internal`;
 		}
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
+		props.addComponent(props.componentId);
 		if (this.internalComponent) {
-			this.props.addComponent(this.internalComponent);
+			props.addComponent(this.internalComponent);
 		}
 
-		this.setReact(this.props);
+		this.setReact(props);
 
 		// set query for internal component
-		if (this.internalComponent && this.props.defaultQuery) {
+		if (this.internalComponent && props.defaultQuery) {
+			this.defaultQuery = props.defaultQuery();
+			const { query, ...queryOptions } = this.defaultQuery || {};
+
+			if (queryOptions) {
+				props.setQueryOptions(this.internalComponent, queryOptions, false);
+			}
+
+			props.updateQuery({
+				componentId: this.internalComponent,
+				query: query || null,
+			});
+		}
+	}
+
+	componentDidUpdate(prevProps) {
+		if (
+			this.props.onAllData
+			&& (!isEqual(prevProps.hits, this.props.hits)
+				|| !isEqual(prevProps.aggregations, this.props.aggregations))
+		) {
+			this.props.onAllData(parseHits(this.props.hits), this.props.aggregations);
+		}
+
+		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
 			this.defaultQuery = this.props.defaultQuery();
 			const { query, ...queryOptions } = this.defaultQuery || {};
 
@@ -62,33 +84,9 @@ class ReactiveComponent extends Component {
 				query: query || null,
 			});
 		}
-	}
 
-	componentWillReceiveProps(nextProps) {
-		if (
-			nextProps.onAllData
-			&& (!isEqual(nextProps.hits, this.props.hits)
-				|| !isEqual(nextProps.aggregations, this.props.aggregations))
-		) {
-			nextProps.onAllData(parseHits(nextProps.hits), nextProps.aggregations);
-		}
-
-		if (nextProps.defaultQuery && !isEqual(nextProps.defaultQuery(), this.defaultQuery)) {
-			this.defaultQuery = nextProps.defaultQuery();
-			const { query, ...queryOptions } = this.defaultQuery || {};
-
-			if (queryOptions) {
-				nextProps.setQueryOptions(this.internalComponent, queryOptions, false);
-			}
-
-			nextProps.updateQuery({
-				componentId: this.internalComponent,
-				query: query || null,
-			});
-		}
-
-		checkPropChange(this.props.react, nextProps.react, () => {
-			this.setReact(nextProps);
+		checkPropChange(this.props.react, prevProps.react, () => {
+			this.setReact(this.props);
 		});
 	}
 

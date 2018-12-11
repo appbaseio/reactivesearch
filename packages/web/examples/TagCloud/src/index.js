@@ -9,9 +9,8 @@ class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="meetup_demo"
-				credentials="LPpISlEBe:2a8935f5-0f63-4084-bc3e-2b2b4d1a8e02"
-				type="meetupdata1"
+				app="meetup_app"
+				credentials="lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181"
 			>
 				<div className="row">
 					<div className="col">

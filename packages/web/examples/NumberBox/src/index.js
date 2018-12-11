@@ -17,7 +17,6 @@ class Main extends Component {
 						<NumberBox
 							componentId="BookSensor"
 							dataField="average_rating_rounded"
-							defaultSelected={2}
 							data={{
 								label: 'Book Rating',
 								start: 2,
@@ -64,7 +63,7 @@ class Main extends Component {
 								{Array(data.average_rating_rounded)
 									.fill('x')
 									.map((item, index) => (
-										<i className="fas fa-star" key={index} />
+										<i className="fas fa-star" key={`star-${index + 1}`} />
 									)) // eslint-disable-line
 								}
 							</span>

@@ -54,8 +54,8 @@ class MultiList extends Component {
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 
-		props.addComponent(this.internalComponent);
 		props.addComponent(props.componentId);
+		props.addComponent(this.internalComponent);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 		this.updateQueryOptions(props);
 

@@ -7,16 +7,12 @@ import { categorySearchContainer } from '../styles/Container';
 
 export default () => (
 	<Navbar>
-		<Flex
-			alignCenter
-			responsive
-			justifyContent="space-between"
-		>
+		<Flex alignCenter responsive justifyContent="space-between">
 			<FlexChild className={title}>Car Store</FlexChild>
 			<FlexChild className={categorySearchContainer}>
 				<CategorySearch
-					dataField="name"
-					categoryField="brand.raw"
+					dataField="model"
+					categoryField="brand.keyword"
 					componentId="category"
 					placeholder="Search for cars..."
 					iconPosition="left"

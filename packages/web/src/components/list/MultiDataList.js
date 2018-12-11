@@ -6,12 +6,15 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryListener,
+	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	pushToAndClause,
+	getQueryOptions,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -21,6 +24,7 @@ import Input from '../../styles/Input';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { connect } from '../../utils';
+import { getAggsQuery } from './utils';
 
 class MultiDataList extends Component {
 	constructor(props) {
@@ -36,15 +40,24 @@ class MultiDataList extends Component {
 		this.state = {
 			currentValue,
 			searchTerm: '',
+			options: props.data || [],
 		};
+		this.internalComponent = `${props.componentId}__internal`;
 		this.type = 'term';
 		this.locked = false;
 
 		props.addComponent(props.componentId);
+		props.addComponent(this.internalComponent);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		this.setReact(props);
 		const hasMounted = false;
+
+		if (props.showCount) {
+			this.updateQueryOptions(props);
+		}
+
+		this.setReact(props);
 
 		if (currentValueArray.length) {
 			this.setValue(currentValueArray, true, props, hasMounted);
@@ -52,14 +65,24 @@ class MultiDataList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkPropChange(
-			this.props.react,
-			prevProps.react,
-			() => this.setReact(this.props),
-		);
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
 		checkPropChange(this.props.dataField, prevProps.dataField, () => {
 			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+
+			if (this.props.showCount) {
+				this.updateQueryOptions(this.props);
+			}
+		});
+
+		checkPropChange(this.props.data, prevProps.data, () => {
+			if (this.props.showCount) {
+				this.updateQueryOptions(this.props);
+			}
+		});
+
+		checkPropChange(this.props.options, prevProps.options, () => {
+			this.updateStateOptions(this.props.options[this.props.dataField].buckets);
 		});
 
 		let selectedValue = Object.keys(this.state.currentValue);
@@ -84,11 +107,19 @@ class MultiDataList extends Component {
 
 	componentWillUnmount() {
 		this.props.removeComponent(this.props.componentId);
+		this.props.removeComponent(this.internalComponent);
 	}
 
 	setReact(props) {
-		if (props.react) {
-			props.watchComponent(props.componentId, props.react);
+		const { react } = this.props;
+
+		if (react) {
+			const newReact = pushToAndClause(react, this.internalComponent);
+			props.watchComponent(props.componentId, newReact);
+		} else {
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	}
 
@@ -194,9 +225,12 @@ class MultiDataList extends Component {
 			};
 
 			if (hasMounted) {
-				this.setState({
-					currentValue,
-				}, handleUpdates);
+				this.setState(
+					{
+						currentValue,
+					},
+					handleUpdates,
+				);
 			} else {
 				handleUpdates();
 			}
@@ -226,6 +260,45 @@ class MultiDataList extends Component {
 			URLParams: props.URLParams,
 			componentType: 'MULTIDATALIST',
 		});
+	};
+
+	static generateQueryOptions(props, state) {
+		const queryOptions = getQueryOptions(props);
+		const includes = state.options.map(item => item.value);
+		return getAggsQuery(queryOptions, props, includes);
+	}
+
+	updateQueryOptions = (props) => {
+		const queryOptions = MultiDataList.generateQueryOptions(props, this.state);
+		props.setQueryOptions(this.internalComponent, queryOptions);
+	};
+
+	updateStateOptions = (bucket) => {
+		if (bucket) {
+			const bucketDictionary = bucket.reduce(
+				(obj, item) => ({
+					...obj,
+					[item.key]: item.doc_count,
+				}),
+				{},
+			);
+
+			const { options } = this.state;
+			const newOptions = options.map((item) => {
+				if (bucketDictionary[item.value]) {
+					return {
+						...item,
+						count: bucketDictionary[item.value],
+					};
+				}
+
+				return item;
+			});
+
+			this.setState({
+				options: newOptions,
+			});
+		}
 	};
 
 	handleInputChange = (e) => {
@@ -263,9 +336,10 @@ class MultiDataList extends Component {
 	};
 
 	render() {
-		const { selectAllLabel } = this.props;
+		const { selectAllLabel, showCount, renderListItem } = this.props;
+		const { options } = this.state;
 
-		if (this.props.data.length === 0) {
+		if (options.length === 0) {
 			return null;
 		}
 
@@ -300,7 +374,7 @@ class MultiDataList extends Component {
 							</label>
 						</li>
 					) : null}
-					{this.props.data
+					{options
 						.filter((item) => {
 							if (this.props.showSearch && this.state.searchTerm) {
 								return item.label
@@ -329,7 +403,25 @@ class MultiDataList extends Component {
 									className={getClassName(this.props.innerClass, 'label') || null}
 									htmlFor={`${this.props.componentId}-${item.label}`}
 								>
-									{item.label}
+									{renderListItem ? (
+										renderListItem(item.label, item.count)
+									) : (
+										<span>
+											{item.label}
+											{showCount && item.count && (
+												<span
+													className={
+														getClassName(
+															this.props.innerClass,
+															'count',
+														) || null
+													}
+												>
+													&nbsp;({item.count})
+												</span>
+											)}
+										</span>
+									)}
 								</label>
 							</li>
 						))}
@@ -343,9 +435,11 @@ MultiDataList.propTypes = {
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
 	setQueryListener: types.funcRequired,
+	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
+	options: types.options,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -371,6 +465,8 @@ MultiDataList.propTypes = {
 	themePreset: types.themePreset,
 	title: types.title,
 	URLParams: types.bool,
+	showCount: types.bool,
+	renderListItem: types.func,
 };
 
 MultiDataList.defaultProps = {
@@ -382,6 +478,7 @@ MultiDataList.defaultProps = {
 	showSearch: true,
 	style: {},
 	URLParams: false,
+	showCount: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -390,6 +487,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	themePreset: state.config.themePreset,
+	options: state.aggregations[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -399,6 +497,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 export default connect(
