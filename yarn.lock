@@ -2238,7 +2238,7 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-appbase-js@^4.0.2-beta.2, appbase-js@^4.0.2-beta.3:
+appbase-js@^4.0.2-beta.2:
   version "4.0.2-beta.3"
   resolved "https://registry.npmjs.org/appbase-js/-/appbase-js-4.0.2-beta.3.tgz#10c20ab03a8d66d732c0a2cd529923b6e579dddc"
   integrity sha512-RvnETkjjRuevsixB8INNZxpzHP/pGq5xm9F+zJ5lMwaR0TqHtMkH7guEF4qnD11uPfKsalf9uqJk3qMTenLemw==
@@ -2249,6 +2249,18 @@ appbase-js@^4.0.2-beta.2, appbase-js@^4.0.2-beta.3:
     stream "^0.0.2"
     url-parser-lite "^0.1.0"
     ws "^2.2.0"
+
+appbase-js@^4.0.2-beta.4:
+  version "4.0.2-beta.4"
+  resolved "https://registry.npmjs.org/appbase-js/-/appbase-js-4.0.2-beta.4.tgz#59bcba7265d3f7937f8d3b1cfecb1973f5d059c8"
+  integrity sha512-yfljZF2WA4qjAEd1tqOXL49bQSGcnC8DWuDJJU3/DBgS7WB+vFeYPlk7Q+JANFx9+XCT3RXja68gu1Ic0jJWlg==
+  dependencies:
+    cross-fetch "^2.2.2"
+    json-stable-stringify "^1.0.1"
+    querystring "^0.2.0"
+    stream "^0.0.2"
+    url-parser-lite "^0.1.0"
+    ws "^6.1.2"
 
 append-transform@^0.4.0:
   version "0.4.0"
@@ -20123,7 +20135,7 @@ ws@^5.2.0:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^6.0.0:
+ws@^6.0.0, ws@^6.1.2:
   version "6.1.2"
   resolved "https://registry.npmjs.org/ws/-/ws-6.1.2.tgz#3cc7462e98792f0ac679424148903ded3b9c3ad8"
   integrity sha512-rfUqzvz0WxmSXtJpPMX2EeASXabOrSMk1ruMOV3JBTBjo4ac2lDjGGsbQSyxj8Odhw5fBib8ZKEjDNvgouNKYw==
