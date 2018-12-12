@@ -14,8 +14,10 @@ export interface TagCloudProps extends CommonProps {
 	multiSelect?: boolean;
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
+	onError?: (...args: any[]) => any;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
+	renderError?: types.title;
 	showCount?: boolean;
 	showFilter?: boolean;
 	size?: number;

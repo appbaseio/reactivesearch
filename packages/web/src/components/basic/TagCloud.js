@@ -25,7 +25,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import TagList from '../../styles/TagList';
 import Container from '../../styles/Container';
-import { connect } from '../../utils';
+import { connect, isFunction } from '../../utils';
 
 class TagCloud extends Component {
 	constructor(props) {
@@ -53,7 +53,7 @@ class TagCloud extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 		this.updateQueryOptions(props);
 
 		this.setReact(props);
@@ -246,10 +246,15 @@ class TagCloud extends Component {
 	render() {
 		const min = 0.8;
 		const max = 3;
-
 		if (this.props.isLoading && this.props.loader) {
 			return this.props.loader;
 		}
+
+		const { renderError, error } = this.props;
+		if (renderError && error) {
+			return isFunction(renderError) ? renderError(error) : renderError;
+		}
+
 
 		if (this.state.options.length === 0) {
 			return null;
@@ -313,16 +318,19 @@ TagCloud.propTypes = {
 	customQuery: types.func,
 	dataField: types.stringRequired,
 	defaultValue: types.stringOrArray,
+	error: types.title,
 	value: types.stringOrArray,
 	filterLabel: types.string,
 	innerClass: types.style,
 	isLoading: types.bool,
 	loader: types.title,
 	multiSelect: types.bool,
+	onError: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
 	queryFormat: types.queryFormatSearch,
+	renderError: types.title,
 	react: types.react,
 	showCount: types.bool,
 	showFilter: types.bool,
@@ -351,6 +359,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	isLoading: state.isLoading[props.componentId],
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({

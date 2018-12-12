@@ -8,6 +8,7 @@ export interface ReactiveComponentProps {
 	defaultQuery?: (...args: any[]) => any;
 	filterLabel?: string;
 	onAllData?: (...args: any[]) => any;
+	onError?: (...args: any[]) => any;
 	react?: types.react;
 	showFilter?: boolean;
 	onQueryChange?: (...args: any[]) => any;

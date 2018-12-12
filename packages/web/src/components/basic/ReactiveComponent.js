@@ -23,7 +23,7 @@ class ReactiveComponent extends Component {
 		super(props);
 		this.internalComponent = null;
 		this.defaultQuery = null;
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 
 		this.setQuery = (obj) => {
 			this.props.updateQuery({
@@ -144,6 +144,7 @@ ReactiveComponent.defaultProps = {
 
 ReactiveComponent.propTypes = {
 	addComponent: types.funcRequired,
+	error: types.title,
 	removeComponent: types.funcRequired,
 	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
@@ -159,6 +160,7 @@ ReactiveComponent.propTypes = {
 	defaultQuery: types.func,
 	filterLabel: types.string,
 	onQueryChange: types.func,
+	onError: types.func,
 	react: types.react,
 	showFilter: types.bool,
 	URLParams: types.bool,
@@ -174,6 +176,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	isLoading: state.isLoading[props.componentId],
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
