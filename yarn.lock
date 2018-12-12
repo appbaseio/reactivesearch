@@ -38,6 +38,25 @@
     vue-slider-component "^2.8.2"
     vue-types "^1.3.3"
 
+"@appbaseio/reactivesearch@^2.12.1", "@appbaseio/reactivesearch@^2.5.0", "@appbaseio/reactivesearch@^2.6.6":
+  version "2.14.1"
+  resolved "https://registry.npmjs.org/@appbaseio/reactivesearch/-/reactivesearch-2.14.1.tgz#8db4ba70ff65a9c38bebd647e981f9dcd2d71226"
+  integrity sha512-6wmEW3iLIEIgtonF3/yrv3sY2/bh/fPlZ+2x+ta4kG6YvIM5ErSt94Mrs4gTLpbgQm+zDTpmeSdS5Y9OT/feFw==
+  dependencies:
+    "@appbaseio/reactivecore" "^7.0.0"
+    appbase-js "^4.0.2-beta.3"
+    downshift "^1.31.2"
+    emotion "^9.0.0"
+    emotion-theming "^9.0.0"
+    polished "^1.9.3"
+    prop-types "^15.6.0"
+    react-day-picker "^7.0.5"
+    react-emotion "^9.0.0"
+    react-redux "^5.0.7"
+    rheostat "^2.1.1"
+    url-search-params "^0.10.0"
+    xdate "^0.8.2"
+
 "@babel/code-frame@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "http://registry.npmjs.org/@babel/code-frame/-/code-frame-7.0.0-beta.44.tgz#2a02643368de80916162be70865c97774f3adbd9"
@@ -1516,9 +1535,9 @@
     string.prototype.padstart "^3.0.0"
 
 "@vue/component-compiler-utils@^2.0.0":
-  version "2.3.0"
-  resolved "https://registry.npmjs.org/@vue/component-compiler-utils/-/component-compiler-utils-2.3.0.tgz#4f580f1b28fc7685859d87ea0e92a1c0271c93da"
-  integrity sha512-4RB1mow8IO2X0/86plKhflMJYSiSn3sWHiqVob8s/LCADFMHSaFRTQp5GdqvjvlGmwjhdn2dzDQik+RLjTx/5g==
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/@vue/component-compiler-utils/-/component-compiler-utils-2.3.1.tgz#d1c2623f02ad3fe6b6fc9c3762be55c9c61e3977"
+  integrity sha512-8VuzMhHTf5UU7+HvBeEbBmYiNLvRxIXtDpvxUl5x26WBPgKmQuuJVFY3dN3GFgnWK9Rveh/u/8NF4quhdUUQ1Q==
   dependencies:
     consolidate "^0.15.1"
     hash-sum "^1.0.2"
@@ -11628,9 +11647,9 @@ mem@^4.0.0:
     p-is-promise "^1.1.0"
 
 memoize-one@^4.0.0:
-  version "4.0.3"
-  resolved "https://registry.npmjs.org/memoize-one/-/memoize-one-4.0.3.tgz#cdfdd942853f1a1b4c71c5336b8c49da0bf0273c"
-  integrity sha512-QmpUu4KqDmX0plH4u+tf0riMc1KHE1+lw95cMrLlXQAFOx/xnBtwhZ52XJxd9X2O6kwKBqX32kmhbhlobD0cuw==
+  version "4.1.0"
+  resolved "https://registry.npmjs.org/memoize-one/-/memoize-one-4.1.0.tgz#a2387c58c03fff27ca390c31b764a79addf3f906"
+  integrity sha512-2GApq0yI/b22J2j9rhbrAlsHb0Qcz+7yWxeLG8h+95sl1XPUgeLimQSOdur4Vw7cUhrBHwaUZxWFZueojqNRzA==
 
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"
@@ -18639,9 +18658,9 @@ vue-style-loader@^4.1.0:
     loader-utils "^1.0.2"
 
 vue-template-compiler@^2.5.17:
-  version "2.5.20"
-  resolved "https://registry.npmjs.org/vue-template-compiler/-/vue-template-compiler-2.5.20.tgz#b9c01741b7e0261d1c5aac5937c93bde98f880f0"
-  integrity sha512-aGJRLd1bJZi6oerGwCQVaDqvQ1T3dhCbNg9C2gNwzoKnyA3BmYfAWy8OQ3OhOebTri8o4YcLeXfwOOxtOKFfmA==
+  version "2.5.21"
+  resolved "https://registry.npmjs.org/vue-template-compiler/-/vue-template-compiler-2.5.21.tgz#a57ceb903177e8f643560a8d639a0f8db647054a"
+  integrity sha512-Vmk5Cv7UcmI99B9nXJEkaK262IQNnHp5rJYo+EwYpe2epTAXqcVyExhV6pk8jTkxQK2vRc8v8KmZBAwdmUZvvw==
   dependencies:
     de-indent "^1.0.2"
     he "^1.1.0"
@@ -18659,9 +18678,9 @@ vue-types@^1.3.3:
     lodash "^4.17.10"
 
 vue@^2.5.17:
-  version "2.5.20"
-  resolved "https://registry.npmjs.org/vue/-/vue-2.5.20.tgz#79fff9ccaa10cc37e7a7239b4c7adfac94df81ba"
-  integrity sha512-kVLZi8RWOk8qwAt+a0bVDy9VV5Zzcnj0fLCMyKLx1dmEBjqmYJYRWHvPwiypiJBtJkdmROy5NP5hyDqTdfBcvQ==
+  version "2.5.21"
+  resolved "https://registry.npmjs.org/vue/-/vue-2.5.21.tgz#3d33dcd03bb813912ce894a8303ab553699c4a85"
+  integrity sha512-Aejvyyfhn0zjVeLvXd70h4hrE4zZDx1wfZqia6ekkobLmUZ+vNFQer53B4fu0EjWBSiqApxPejzkO1Znt3joxQ==
 
 w3c-hr-time@^1.0.1:
   version "1.0.1"
