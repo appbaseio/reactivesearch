@@ -1,6 +1,6 @@
 import VueTypes from 'vue-types';
-import vueSlider from 'vue-slider-component';
 import { Actions, helper } from '@appbaseio/reactivecore';
+import NoSSR from 'vue-no-ssr';
 import Container from '../../styles/Container';
 import { connect } from '../../utils/index';
 import Title from '../../styles/Title';
@@ -11,11 +11,20 @@ const { addComponent, removeComponent, watchComponent, updateQuery, setQueryList
 
 const { checkValueChange, getClassName } = helper;
 
+const getComponents = () => {
+	const components = { NoSSR };
+	if (process.browser) {
+		// in older versions of nuxt, it's process.BROWSER_BUILD
+		// eslint-disable-next-line
+		const VueSlider = require('vue-slider-component');
+		components['vue-slider'] = VueSlider;
+	}
+	return components;
+};
+
 const RangeSlider = {
 	name: 'RangeSlider',
-	components: {
-		vueSlider,
-	},
+	components: getComponents(),
 	data() {
 		this.state = {
 			currentValue: [this.$props.range.start, this.$props.range.end],
@@ -150,36 +159,42 @@ const RangeSlider = {
 					</Title>
 				)}
 
-				<Slider class={getClassName(this.$props.innerClass, 'slider')}>
-					<vue-slider
-						ref="slider"
-						value={this.state.currentValue}
-						min={this.$props.range.start}
-						max={this.$props.range.end}
-						onDrag-end={this.handleSlider}
-						dotSize={20}
-						height={4}
-						enable-cross={false}
-						tooltip-merge={this.$props.mergeTooltip}
-						tooltip={tooltipTrigger}
-					/>
-					{this.$props.rangeLabels
-						&& (
+				<NoSSR>
+					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
+						<vue-slider
+							ref="slider"
+							value={this.state.currentValue}
+							min={this.$props.range.start}
+							max={this.$props.range.end}
+							onDrag-end={this.handleSlider}
+							dotSize={20}
+							height={4}
+							enable-cross={false}
+							tooltip-merge={this.$props.mergeTooltip}
+							tooltip={tooltipTrigger}
+						/>
+						{this.$props.rangeLabels && (
 							<div class="label-container">
 								<label
-									class={getClassName(this.$props.innerClass, 'label') || 'range-label-left'}
+									class={
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-left'
+									}
 								>
 									{this.$props.rangeLabels.start}
 								</label>
 								<label
-									class={getClassName(this.$props.innerClass, 'label') || 'range-label-right'}
+									class={
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-right'
+									}
 								>
 									{this.$props.rangeLabels.end}
 								</label>
 							</div>
-						)
-					}
-				</Slider>
+						)}
+					</Slider>
+				</NoSSR>
 			</Container>
 		);
 	},
