@@ -30,7 +30,6 @@ const onData = res => ({
 
 const onResultStats = stats =>
 	<div style={{ margin: '10px 0' }}>{`Found ${stats.totalResults} results in ${stats.time} milliseconds`}</div>;
-);
 
 const Results = () => (
 	<div>
