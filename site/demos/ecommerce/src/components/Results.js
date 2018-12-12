@@ -5,24 +5,21 @@ import PropTypes from 'prop-types';
 import Flex, { FlexChild } from '../styles/Flex';
 import Topic, { price } from '../styles/Topic';
 
-const onResultStats = (results, time) => (
+const onResultStats = stats => (
 	<Flex justifyContent="flex-end" style={{ marginTop: '0.6rem' }}>
-		{results} results found in {time}ms
+		{stats.totalResults} results found in {stats.time}ms
 	</Flex>
 );
 
 const onData = data => ({
-	image:
-		data.vehicleType === 'other' || data.vehicleType === 'unknown'
-			? 'src/images/car.jpg'
-			: `src/images/${data.vehicleType.replace(/ /g, '-')}/${data.color}.jpg`,
-	title: data.name,
+	image: data.image,
+	title: data.model,
 	description: (
 		<div>
 			<div className={price}>${data.price}</div>
 			<Flex justifyContent="space-between" responsive>
 				<FlexChild>{'⭐'.repeat(data.rating)}</FlexChild>
-				<FlexChild>REGD. {data.yearOfRegistration}</FlexChild>
+				<FlexChild>REGD. {data.year}</FlexChild>
 			</Flex>
 			<Flex style={{ marginTop: 5 }} flexWrap>
 				{data.fuelType && <Topic>{data.fuelType}</Topic>}
@@ -36,8 +33,8 @@ const onData = data => ({
 const Results = () => (
 	<ResultCard
 		componentId="results"
-		dataField="name"
-		onData={onData}
+		renderData={onData}
+		dataField="model"
 		onResultStats={onResultStats}
 		react={{
 			and: ['category', 'brand', 'rating', 'vehicle', 'price'],
@@ -53,7 +50,7 @@ const Results = () => (
 );
 
 onData.propTypes = {
-	_source: PropTypes.object // eslint-disable-line
+	_source: PropTypes.object, // eslint-disable-line
 };
 
 export default Results;

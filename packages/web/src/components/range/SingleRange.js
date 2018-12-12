@@ -25,40 +25,41 @@ class SingleRange extends Component {
 	constructor(props) {
 		super(props);
 
+		const defaultValue = props.defaultValue || props.value;
+		const value = props.selectedValue || defaultValue || null;
+		const currentValue = SingleRange.parseValue(value, props);
+
 		this.state = {
-			currentValue: null,
+			currentValue,
 		};
 		this.type = 'range';
 		this.locked = false;
+
+		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
+		this.setReact(props);
+		const hasMounted = false;
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+		if (currentValue) {
+			this.setValue(currentValue, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
-			this.updateQuery(this.state.currentValue, nextProps);
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateQuery(this.state.currentValue, this.props);
 		});
 
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.setValue(nextProps.defaultSelected);
-		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.setValue(nextProps.selectedValue);
+		if (!isEqual(this.props.value, prevProps.value)) {
+			this.setValue(this.props.value);
+		} else if (
+			!isEqual(this.state.currentValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
+		) {
+			this.setValue(this.props.selectedValue || null);
 		}
 	}
 
@@ -73,7 +74,7 @@ class SingleRange extends Component {
 	}
 
 	// parses range label to get start and end
-	static parseValue = (value, props) => props.data.find(item => item.label === value) || null
+	static parseValue = (value, props) => props.data.find(item => item.label === value) || null;
 
 	static defaultQuery = (value, props) => {
 		if (value) {
@@ -88,34 +89,40 @@ class SingleRange extends Component {
 			};
 		}
 		return null;
-	}
+	};
 
-	setValue = (value, props = this.props) => {
+	setValue = (value, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
 		}
 
 		this.locked = true;
-		const currentValue = SingleRange.parseValue(value, props);
+		const currentValue = (typeof value === 'string')
+			? SingleRange.parseValue(value, props)
+			: value;
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-			}, () => {
+			const handleUpdates = () => {
 				this.updateQuery(currentValue, props);
 				this.locked = false;
 				if (props.onValueChange) props.onValueChange(currentValue);
-			});
+			};
+
+			if (hasMounted) {
+				this.setState(
+					{
+						currentValue,
+					},
+					handleUpdates,
+				);
+			} else {
+				handleUpdates();
+			}
 		};
 
-		checkValueChange(
-			props.componentId,
-			currentValue,
-			props.beforeValueChange,
-			performUpdate,
-		);
-	}
+		checkValueChange(props.componentId, currentValue, props.beforeValueChange, performUpdate);
+	};
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || SingleRange.defaultQuery;
@@ -132,39 +139,47 @@ class SingleRange extends Component {
 	};
 
 	handleClick = (e) => {
-		this.setValue(e.target.value);
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(e);
+		} else {
+			this.setValue(e.target.value);
+		}
 	};
 
 	render() {
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
-					{
-						this.props.data.map((item) => {
-							const selected = !!this.state.currentValue
-								&& this.state.currentValue.label === item.label;
-							return (
-								<li key={item.label} className={`${selected ? 'active' : ''}`}>
-									<Radio
-										className={getClassName(this.props.innerClass, 'radio')}
-										id={`${this.props.componentId}-${item.label}`}
-										name={this.props.componentId}
-										value={item.label}
-										onChange={this.handleClick}
-										checked={selected}
-										show={this.props.showRadio}
-									/>
-									<label
-										className={getClassName(this.props.innerClass, 'label') || null}
-										htmlFor={`${this.props.componentId}-${item.label}`}
-									>
-										{item.label}
-									</label>
-								</li>
-							);
-						})
-					}
+					{this.props.data.map((item) => {
+						const selected
+							= !!this.state.currentValue
+							&& this.state.currentValue.label === item.label;
+						return (
+							<li key={item.label} className={`${selected ? 'active' : ''}`}>
+								<Radio
+									className={getClassName(this.props.innerClass, 'radio')}
+									id={`${this.props.componentId}-${item.label}`}
+									name={this.props.componentId}
+									value={item.label}
+									onChange={this.handleClick}
+									checked={selected}
+									show={this.props.showRadio}
+								/>
+								<label
+									className={getClassName(this.props.innerClass, 'label') || null}
+									htmlFor={`${this.props.componentId}-${item.label}`}
+								>
+									{item.label}
+								</label>
+							</li>
+						);
+					})}
 				</UL>
 			</Container>
 		);
@@ -185,11 +200,13 @@ SingleRange.propTypes = {
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
-	defaultSelected: types.string,
+	defaultValue: types.string,
+	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	react: types.react,
 	showFilter: types.bool,
 	showRadio: types.boolRequired,
@@ -207,10 +224,10 @@ SingleRange.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: (
-		state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value
-	) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 });
 
 const mapDispatchtoProps = dispatch => ({

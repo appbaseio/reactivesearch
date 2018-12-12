@@ -28,7 +28,9 @@ import CancelSvg from '../shared/CancelSvg';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
-import { connect } from '../../utils';
+import { connect, isFunction } from '../../utils';
+import SuggestionItem from './addons/SuggestionItem';
+import SuggestionWrapper from './addons/SuggestionWrapper';
 
 const Text = withTheme(props => (
 	<span
@@ -45,93 +47,93 @@ class CategorySearch extends Component {
 	constructor(props) {
 		super(props);
 
+		const currentValue = props.selectedValue || props.value || props.defaultValue || '';
+
 		this.state = {
-			currentValue: '',
+			currentValue,
 			suggestions: [],
 			isOpen: false,
 		};
+
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
+
+		props.addComponent(props.componentId);
+		props.addComponent(this.internalComponent);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId, 'CATEGORYSEARCH');
-		this.props.addComponent(this.internalComponent);
-
-		if (this.props.highlight) {
-			const queryOptions = CategorySearch.highlightQuery(this.props) || {};
+		if (props.highlight) {
+			const queryOptions = CategorySearch.highlightQuery(props) || {};
 			queryOptions.size = 20;
-			this.props.setQueryOptions(this.props.componentId, queryOptions);
+			props.setQueryOptions(props.componentId, queryOptions);
 		} else {
-			this.props.setQueryOptions(this.props.componentId, {
+			props.setQueryOptions(props.componentId, {
 				size: 20,
 			});
 		}
-		this.setReact(this.props);
 
-		const aggsQuery = this.getAggsQuery(this.props.categoryField);
-		this.props.setQueryOptions(this.internalComponent, aggsQuery, false);
+		this.setReact(props);
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected, true);
+		const aggsQuery = this.getAggsQuery(props.categoryField);
+		props.setQueryOptions(this.internalComponent, aggsQuery, false);
+		const hasMounted = false;
+		const category = null; // TODO: Add support for reading categories
+		const cause = null;
+
+		if (currentValue) {
+			this.setValue(currentValue, true, props, category, cause, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		checkSomePropChange(
 			this.props,
-			nextProps,
+			prevProps,
 			['highlight', 'dataField', 'highlightField'],
 			() => {
-				const queryOptions = CategorySearch.highlightQuery(nextProps) || {};
+				const queryOptions = CategorySearch.highlightQuery(this.props) || {};
 				queryOptions.size = 20;
-				this.props.setQueryOptions(nextProps.componentId, queryOptions);
+				this.props.setQueryOptions(this.props.componentId, queryOptions);
 			},
 		);
 
-		checkPropChange(this.props.react, nextProps.react, () =>
-			this.setReact(nextProps));
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		if (
-			Array.isArray(nextProps.suggestions)
-			&& this.state.currentValue.trim().length
-		) {
+		if (Array.isArray(this.props.suggestions) && this.state.currentValue.trim().length) {
 			// shallow check allows us to set suggestions even if the next set
 			// of suggestions are same as the current one
-			if (this.props.suggestions !== nextProps.suggestions) {
+
+			if (this.props.suggestions !== prevProps.suggestions) {
+				if (this.props.onSuggestions) {
+					this.props.onSuggestions(this.props.suggestions);
+				}
+				// eslint-disable-next-line
 				this.setState({
-					suggestions: this.onSuggestions(nextProps.suggestions),
+					suggestions: this.onSuggestions(this.props.suggestions),
 				});
 			}
 		}
 
 		checkSomePropChange(
 			this.props,
-			nextProps,
+			prevProps,
 			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'categoryField'],
 			() => {
-				this.updateQuery(
-					nextProps.componentId,
-					this.state.currentValue,
-					nextProps,
-				);
+				this.updateQuery(this.props.componentId, this.state.currentValue, this.props);
 			},
 		);
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected, true, nextProps);
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value);
 		} else if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
 			// clear action from SelectedFilters component in which case,
 			// the currentValue will never match the updated selectedValue
-			this.props.selectedValue !== nextProps.selectedValue
-			&& this.state.currentValue !== nextProps.selectedValue
+			this.props.selectedValue !== prevProps.selectedValue
+			&& this.state.currentValue !== this.props.selectedValue
 		) {
-			this.setValue(nextProps.selectedValue || '', true, nextProps);
+			this.setValue(this.props.selectedValue || '', true, this.props);
 		}
 	}
 
@@ -156,7 +158,9 @@ class CategorySearch extends Component {
 			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
@@ -168,9 +172,7 @@ class CategorySearch extends Component {
 			return null;
 		}
 		const fields = {};
-		const highlightField = props.highlightField
-			? props.highlightField
-			: props.dataField;
+		const highlightField = props.highlightField ? props.highlightField : props.dataField;
 
 		if (typeof highlightField === 'string') {
 			fields[highlightField] = {};
@@ -228,8 +230,8 @@ class CategorySearch extends Component {
 	};
 
 	static shouldQuery = (value, dataFields, props) => {
-		const fields = dataFields.map((field, index) =>
-			`${field}${
+		const fields = dataFields.map(
+			(field, index) => `${field}${
 				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
 					? `^${props.fieldWeights[index]}`
 					: ''
@@ -278,22 +280,30 @@ class CategorySearch extends Component {
 	};
 
 	onSuggestions = (searchSuggestions) => {
-		if (this.props.onSuggestion) {
-			return searchSuggestions.map(suggestion => this.props.onSuggestion(suggestion));
-		}
-
+		const { renderSuggestion } = this.props;
 		const fields = Array.isArray(this.props.dataField)
 			? this.props.dataField
 			: [this.props.dataField];
 
-		return getSuggestions(
+		const parsedSuggestions = getSuggestions(
 			fields,
 			searchSuggestions,
 			this.state.currentValue.toLowerCase(),
 		);
+		if (renderSuggestion) {
+			return parsedSuggestions.map(suggestion => renderSuggestion(suggestion));
+		}
+		return parsedSuggestions;
 	};
 
-	setValue = (value, isDefaultValue = false, props = this.props, category, cause) => {
+	setValue = (
+		value,
+		isDefaultValue = false,
+		props = this.props,
+		category,
+		cause,
+		hasMounted = true,
+	) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -301,42 +311,47 @@ class CategorySearch extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState({
-				currentValue: value,
-				suggestions: [],
-			}, () => {
-				if (isDefaultValue) {
-					if (this.props.autosuggest) {
-						this.setState({
-							isOpen: false,
-						});
-						this.updateQuery(this.internalComponent, value, props);
-					}
-					// in case of strict selection only SUGGESTION_SELECT should be able
-					// to set the query otherwise the value should reset
-					if (props.strictSelection) {
-						if (cause === causes.SUGGESTION_SELECT || value === '') {
-							this.updateQuery(props.componentId, value, props, category);
+			if (hasMounted) {
+				this.setState(
+					{
+						currentValue: value,
+						suggestions: [],
+					},
+					() => {
+						if (isDefaultValue) {
+							if (this.props.autosuggest) {
+								this.setState({
+									isOpen: false,
+								});
+								this.updateQuery(this.internalComponent, value, props);
+							}
+							// in case of strict selection only SUGGESTION_SELECT should be able
+							// to set the query otherwise the value should reset
+							if (props.strictSelection) {
+								if (cause === causes.SUGGESTION_SELECT || value === '') {
+									this.updateQuery(props.componentId, value, props, category);
+								} else {
+									this.setValue('', true);
+								}
+							} else {
+								this.updateQuery(props.componentId, value, props, category);
+							}
 						} else {
-							this.setValue('', true);
+							// debounce for handling text while typing
+							this.handleTextChange(value);
 						}
-					} else {
-						this.updateQuery(props.componentId, value, props, category);
-					}
-				} else {
-					// debounce for handling text while typing
-					this.handleTextChange(value);
-				}
+						this.locked = false;
+						if (props.onValueChange) props.onValueChange(value);
+					},
+				);
+			} else {
+				this.updateQuery(this.internalComponent, value, props);
+				this.updateQuery(props.componentId, value, props, category);
 				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);
-			});
+			}
 		};
-		checkValueChange(
-			props.componentId,
-			value,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
 	handleTextChange = debounce((value) => {
@@ -349,11 +364,7 @@ class CategorySearch extends Component {
 
 	updateQuery = (componentId, value, props, category) => {
 		const {
-			customQuery,
-			defaultQuery,
-			filterLabel,
-			showFilter,
-			URLParams,
+			customQuery, defaultQuery, filterLabel, showFilter, URLParams,
 		} = props;
 
 		// defaultQuery from props is always appended regardless of a customQuery
@@ -366,7 +377,7 @@ class CategorySearch extends Component {
 						...defaultQuery(value, props, category),
 					],
 				},
-			}
+			} // prettier-ignore
 			: query(value, props, category);
 		props.updateQuery({
 			componentId,
@@ -405,13 +416,19 @@ class CategorySearch extends Component {
 	};
 
 	onInputChange = (e) => {
-		const { value } = e.target;
+		const { value: inputValue } = e.target;
 		if (!this.state.isOpen) {
 			this.setState({
 				isOpen: true,
 			});
 		}
-		this.setValue(value);
+
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(inputValue);
+		} else {
+			this.setValue(inputValue);
+		}
 	};
 
 	onSuggestionSelected = (suggestion) => {
@@ -435,7 +452,7 @@ class CategorySearch extends Component {
 		if (onValueSelected) {
 			onValueSelected(currentValue, category, ...cause);
 		}
-	}
+	};
 
 	handleStateChange = (changes) => {
 		const { isOpen, type } = changes;
@@ -449,11 +466,9 @@ class CategorySearch extends Component {
 	getBackgroundColor = (highlightedIndex, index) => {
 		const isDark = this.props.themePreset === 'dark';
 		if (isDark) {
-			return highlightedIndex === index
-				? '#555' : '#424242';
+			return highlightedIndex === index ? '#555' : '#424242';
 		}
-		return highlightedIndex === index
-			? '#eee' : '#fff';
+		return highlightedIndex === index ? '#eee' : '#fff';
 	};
 
 	renderIcon = () => {
@@ -468,37 +483,91 @@ class CategorySearch extends Component {
 			return this.props.clearIcon || <CancelSvg />;
 		}
 		return null;
-	}
+	};
 
 	renderIcons = () => (
 		<div>
-			{
-				this.state.currentValue && this.props.showClear
-				&& (
-					<InputIcon
-						onClick={this.clearValue}
-						iconPosition="right"
-						clearIcon={this.props.iconPosition === 'right'}
-					>
-						{this.renderCancelIcon()}
-					</InputIcon>
-				)
-			}
+			{this.state.currentValue
+				&& this.props.showClear && (
+				<InputIcon
+					onClick={this.clearValue}
+					iconPosition="right"
+					clearIcon={this.props.iconPosition === 'right'}
+				>
+					{this.renderCancelIcon()}
+				</InputIcon>
+			)}
 			<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
 		</div>
 	);
 
+	renderNoSuggestion = (finalSuggestionsList = []) => {
+		const {
+			themePreset,
+			theme,
+			isLoading,
+			renderNoSuggestion,
+			innerClass,
+			renderError,
+			error,
+		} = this.props;
+		const { isOpen, currentValue } = this.state;
+		if (renderNoSuggestion
+				&& isOpen && !finalSuggestionsList.length && !isLoading && currentValue
+				&& !(renderError && error)) {
+			return (
+				<SuggestionWrapper innerClass={innerClass} themePreset={themePreset} theme={theme} innerClassName="noSuggestion">
+					{typeof renderNoSuggestion === 'function' ? renderNoSuggestion(currentValue) : renderNoSuggestion}
+				</SuggestionWrapper>
+			);
+		}
+		return null;
+	}
+
+	renderLoader = () => {
+		const {
+			loader, isLoading, themePreset, theme, innerClass,
+		} = this.props;
+		const { currentValue } = this.state;
+		if (isLoading && loader && currentValue) {
+			return (
+				<SuggestionWrapper innerClass={innerClass} innerClassName="loader" theme={theme} themePreset={themePreset}>
+					{loader}
+				</SuggestionWrapper>
+			);
+		}
+		return null;
+	}
+
+	renderError = () => {
+		const {
+			error, renderError, themePreset, theme, isLoading, innerClass,
+		} = this.props;
+		const { currentValue } = this.state;
+		if (error && renderError && currentValue && !isLoading) {
+			return (
+				<SuggestionWrapper innerClass={innerClass} innerClassName="error" theme={theme} themePreset={themePreset}>
+					{isFunction(renderError) ? renderError(error) : renderError}
+				</SuggestionWrapper>
+			);
+		}
+		return null;
+	}
+
 	render() {
 		let suggestionsList = [];
 		let finalSuggestionsList = [];
+		const { currentValue } = this.state;
 		const {
 			theme,
 			themePreset,
-			renderSuggestions,
-			categories,	// defaults to empty array
+			renderAllSuggestion,
+			categories, // defaults to empty array
 		} = this.props;
+
+		// filter out empty categories
 		const filteredCategories = categories
-			.filter(category => Boolean(category.key));	// filter out empty categories
+			.filter(category => Boolean(category.key));
 
 		if (
 			!this.state.currentValue
@@ -510,11 +579,7 @@ class CategorySearch extends Component {
 			suggestionsList = this.state.suggestions;
 		}
 
-		if (
-			this.state.currentValue
-			&& this.state.suggestions.length
-			&& filteredCategories.length
-		) {
+		if (this.state.currentValue && this.state.suggestions.length && filteredCategories.length) {
 			let categorySuggestions = [
 				{
 					label: `${this.state.currentValue} in all categories`,
@@ -524,9 +589,7 @@ class CategorySearch extends Component {
 					source: null,
 				},
 				{
-					label: `${this.state.currentValue} in ${
-						filteredCategories[0].key
-					}`,
+					label: `${this.state.currentValue} in ${filteredCategories[0].key}`,
 					value: this.state.currentValue,
 					category: filteredCategories[0].key,
 					source: null,
@@ -537,9 +600,7 @@ class CategorySearch extends Component {
 				categorySuggestions = [
 					...categorySuggestions,
 					{
-						label: `${this.state.currentValue} in ${
-							filteredCategories[1].key
-						}`,
+						label: `${this.state.currentValue} in ${filteredCategories[1].key}`,
 						value: this.state.currentValue,
 						category: filteredCategories[1].key,
 						source: null,
@@ -548,13 +609,10 @@ class CategorySearch extends Component {
 			}
 			finalSuggestionsList = [...categorySuggestions, ...suggestionsList];
 		}
-
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
-					<Title
-						className={getClassName(this.props.innerClass, 'title') || null}
-					>
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
 					</Title>
 				)}
@@ -566,10 +624,7 @@ class CategorySearch extends Component {
 						isOpen={this.state.isOpen}
 						itemToString={i => i}
 						render={({
-							getInputProps,
-							getItemProps,
-							isOpen,
-							highlightedIndex,
+							getInputProps, getItemProps, isOpen, highlightedIndex,
 						}) => (
 							<div className={suggestionsContainer}>
 								<Input
@@ -597,8 +652,10 @@ class CategorySearch extends Component {
 									themePreset={themePreset}
 								/>
 								{this.renderIcons()}
-								{renderSuggestions
-									&& renderSuggestions({
+								{this.renderLoader()}
+								{this.renderError()}
+								{renderAllSuggestion
+									&& renderAllSuggestion({
 										currentValue: this.state.currentValue,
 										isOpen,
 										getItemProps,
@@ -607,9 +664,12 @@ class CategorySearch extends Component {
 										categories: filteredCategories,
 										parsedSuggestions: suggestionsList,
 									})}
-								{!renderSuggestions && isOpen && finalSuggestionsList.length ? (
+								{!renderAllSuggestion && isOpen && finalSuggestionsList.length ? (
 									<ul
-										className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}
+										className={`${suggestions(
+											themePreset,
+											theme,
+										)} ${getClassName(this.props.innerClass, 'list')}`}
 									>
 										{finalSuggestionsList.slice(0, 10).map((item, index) => (
 											<li
@@ -622,11 +682,13 @@ class CategorySearch extends Component {
 													),
 												}}
 											>
-												<Text primary={!!item.category}>{item.label}</Text>
+												<Text primary={!!item.category}>
+													<SuggestionItem currentValue={currentValue} suggestion={item} />
+												</Text>
 											</li>
 										))}
 									</ul>
-								) : null}
+								) : this.renderNoSuggestion(finalSuggestionsList)}
 							</div>
 						)}
 						{...this.props.downShiftProps}
@@ -683,7 +745,8 @@ CategorySearch.propTypes = {
 	customQuery: types.func,
 	dataField: types.dataFieldArray,
 	debounce: types.number,
-	defaultSelected: types.string,
+	defaultValue: types.string,
+	value: types.string,
 	defaultSuggestions: types.suggestions,
 	downShiftProps: types.props,
 	fieldWeights: types.fieldWeights,
@@ -694,19 +757,26 @@ CategorySearch.propTypes = {
 	icon: types.children,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
+	isLoading: types.bool,
+	loader: types.title,
+	onError: types.func,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
 	onKeyPress: types.func,
 	onKeyUp: types.func,
 	onQueryChange: types.func,
-	onSuggestion: types.func,
+	onSuggestions: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	onValueSelected: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
-	renderSuggestions: types.func,
+	renderError: types.title,
+	renderSuggestion: types.func,
+	renderAllSuggestion: types.func,
+	renderNoSuggestion: types.title,
 	showClear: types.bool,
 	showFilter: types.bool,
 	showIcon: types.bool,
@@ -735,24 +805,29 @@ CategorySearch.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	categories: (
-		state.aggregations[props.componentId]
-		&& state.aggregations[props.componentId][props.categoryField]
-		&& state.aggregations[props.componentId][props.categoryField].buckets
-	) || [],
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	categories:
+		(state.aggregations[props.componentId]
+			&& state.aggregations[props.componentId][props.categoryField]
+			&& state.aggregations[props.componentId][props.categoryField].buckets)
+		|| [],
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	themePreset: state.config.themePreset,
+	isLoading: state.isLoading[props.componentId],
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
-	addComponent: (component, name) => dispatch(addComponent(component, name)),
+	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	setQueryOptions: (component, props, execute) =>
-		dispatch(setQueryOptions(component, props, execute)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryOptions:
+		(component, props, execute) => dispatch(setQueryOptions(component, props, execute)),
+	setQueryListener: (
+		component, onQueryChange, beforeQueryChange,
+	) => dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });

@@ -25,14 +25,14 @@ class App extends Component {
 		this.setState({
 			visible: !visible,
 		});
-	}
+	};
 
 	render() {
 		return (
 			<Container>
 				<ReactiveBase
-					app="car-store"
-					credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
+					app="carstore-dataset"
+					credentials="4HWI27QmA:58c731f7-79ab-4f55-a590-7e15c7e36721"
 					theme={theme}
 				>
 					<Header />
@@ -45,11 +45,7 @@ class App extends Component {
 						</FlexChild>
 					</Flex>
 					<ToggleButton onClick={this.toggleFilters}>
-						{
-							this.state.visible
-								? '🚗 SHOW CARS'
-								: '📂 SHOW FILTERS'
-						}
+						{this.state.visible ? '🚗 SHOW CARS' : '📂 SHOW FILTERS'}
 					</ToggleButton>
 				</ReactiveBase>
 			</Container>

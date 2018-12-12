@@ -34,7 +34,7 @@ class Main extends Component {
 							dataField="original_title"
 							from={0}
 							size={3}
-							onData={this.booksList}
+							renderData={this.booksList}
 							className="result-list-container"
 							pagination
 							react={{
@@ -49,16 +49,25 @@ class Main extends Component {
 
 	booksList(data) {
 		return {
-			title: <div className="book-title" dangerouslySetInnerHTML={{ __html: data.original_title }} />,
+			title: (
+				<div
+					className="book-title"
+					dangerouslySetInnerHTML={{ __html: data.original_title }}
+				/>
+			),
 			description: (
 				<div className="flex column justify-space-between">
 					<div>
-						<div>by <span className="authors-list">{data.authors}</span></div>
+						<div>
+							by <span className="authors-list">{data.authors}</span>
+						</div>
 						<div className="ratings-list flex align-center">
 							<span className="stars">
-								{
-									Array(data.average_rating_rounded).fill('x')
-										.map((item, index) => <i className="fas fa-star" key={index} />) // eslint-disable-line
+								{Array(data.average_rating_rounded)
+									.fill('x')
+									.map((item, index) => (
+										<i className="fas fa-star" key={index} />
+									)) // eslint-disable-line
 								}
 							</span>
 							<span className="avg-rating">({data.average_rating} avg)</span>

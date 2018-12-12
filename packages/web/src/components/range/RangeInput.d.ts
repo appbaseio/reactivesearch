@@ -4,9 +4,11 @@ import * as types from '../../types';
 
 export interface RangeInputProps extends CommonProps {
 	className: string;
-	defaultSelected: types.range;
+	defaultValue: types.range;
+	value: types.range;
 	innerClass: types.style;
 	onValueChange: (...args: any[]) => any;
+	onChange: (...args: any[]) => any;
 	range: types.range;
 	stepValue: number;
 	style: types.style;

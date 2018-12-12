@@ -23,7 +23,7 @@ class ReactiveComponent extends Component {
 		super(props);
 		this.internalComponent = null;
 		this.defaultQuery = null;
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 
 		this.setQuery = (obj) => {
 			this.props.updateQuery({
@@ -38,18 +38,40 @@ class ReactiveComponent extends Component {
 		if (props.defaultQuery) {
 			this.internalComponent = `${props.componentId}__internal`;
 		}
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
+		props.addComponent(props.componentId);
 		if (this.internalComponent) {
-			this.props.addComponent(this.internalComponent);
+			props.addComponent(this.internalComponent);
 		}
 
-		this.setReact(this.props);
+		this.setReact(props);
 
 		// set query for internal component
-		if (this.internalComponent && this.props.defaultQuery) {
+		if (this.internalComponent && props.defaultQuery) {
+			this.defaultQuery = props.defaultQuery();
+			const { query, ...queryOptions } = this.defaultQuery || {};
+
+			if (queryOptions) {
+				props.setQueryOptions(this.internalComponent, queryOptions, false);
+			}
+
+			props.updateQuery({
+				componentId: this.internalComponent,
+				query: query || null,
+			});
+		}
+	}
+
+	componentDidUpdate(prevProps) {
+		if (
+			this.props.onAllData
+			&& (!isEqual(prevProps.hits, this.props.hits)
+				|| !isEqual(prevProps.aggregations, this.props.aggregations))
+		) {
+			this.props.onAllData(parseHits(this.props.hits), this.props.aggregations);
+		}
+
+		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
 			this.defaultQuery = this.props.defaultQuery();
 			const { query, ...queryOptions } = this.defaultQuery || {};
 
@@ -62,41 +84,9 @@ class ReactiveComponent extends Component {
 				query: query || null,
 			});
 		}
-	}
 
-	componentWillReceiveProps(nextProps) {
-		if (
-			nextProps.onAllData
-			&& (
-				!isEqual(nextProps.hits, this.props.hits)
-				|| !isEqual(nextProps.aggregations, this.props.aggregations)
-			)
-		) {
-			nextProps.onAllData(parseHits(nextProps.hits), nextProps.aggregations);
-		}
-
-		if (
-			nextProps.defaultQuery
-			&& !isEqual(
-				nextProps.defaultQuery(),
-				this.defaultQuery,
-			)
-		) {
-			this.defaultQuery = nextProps.defaultQuery();
-			const { query, ...queryOptions } = this.defaultQuery || {};
-
-			if (queryOptions) {
-				nextProps.setQueryOptions(this.internalComponent, queryOptions, false);
-			}
-
-			nextProps.updateQuery({
-				componentId: this.internalComponent,
-				query: query || null,
-			});
-		}
-
-		checkPropChange(this.props.react, nextProps.react, () => {
-			this.setReact(nextProps);
+		checkPropChange(this.props.react, prevProps.react, () => {
+			this.setReact(this.props);
 		});
 	}
 
@@ -119,7 +109,9 @@ class ReactiveComponent extends Component {
 				props.watchComponent(props.componentId, react);
 			}
 		} else if (this.internalComponent) {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
@@ -136,7 +128,8 @@ class ReactiveComponent extends Component {
 
 		try {
 			const childrenWithProps = React.Children.map(children, child =>
-				React.cloneElement(child, { ...rest, setQuery: this.setQuery }));
+				React.cloneElement(child, { ...rest, setQuery: this.setQuery }),
+			);
 			return <div>{childrenWithProps}</div>;
 		} catch (e) {
 			return null;
@@ -151,6 +144,7 @@ ReactiveComponent.defaultProps = {
 
 ReactiveComponent.propTypes = {
 	addComponent: types.funcRequired,
+	error: types.title,
 	removeComponent: types.funcRequired,
 	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
@@ -158,6 +152,7 @@ ReactiveComponent.propTypes = {
 	watchComponent: types.funcRequired,
 	aggregations: types.selectedValues,
 	hits: types.data,
+	isLoading: types.bool,
 	selectedValue: types.selectedValue,
 	// component props
 	children: types.children,
@@ -165,6 +160,7 @@ ReactiveComponent.propTypes = {
 	defaultQuery: types.func,
 	filterLabel: types.string,
 	onQueryChange: types.func,
+	onError: types.func,
 	react: types.react,
 	showFilter: types.bool,
 	URLParams: types.bool,
@@ -172,22 +168,22 @@ ReactiveComponent.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-	aggregations: (state.aggregations[props.componentId]
-		&& state.aggregations[props.componentId]) || null,
-	hits: (state.hits[props.componentId]
-		&& state.hits[props.componentId].hits) || [],
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	aggregations:
+		(state.aggregations[props.componentId] && state.aggregations[props.componentId]) || null,
+	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
+	isLoading: state.isLoading[props.componentId],
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(
-		component,
-		props,
-		execute,
-	)),
+	setQueryOptions: (component, props, execute) =>
+		dispatch(setQueryOptions(component, props, execute)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
@@ -199,5 +195,6 @@ const ConnectedMyComponent = connect(
 	mapDispatchtoProps,
 )(props => <ReactiveComponent ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedMyComponent {...props} myForwardedRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<ConnectedMyComponent {...props} myForwardedRef={ref} />
+));

@@ -1,11 +1,6 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import {
-	ReactiveBase,
-	SingleList,
-	SelectedFilters,
-	ReactiveList,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, SingleList, SelectedFilters, ReactiveList } from '@appbaseio/reactivesearch';
 
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
 
@@ -30,7 +25,7 @@ const reactiveListProps = {
 	className: 'result-list-container',
 	from: 0,
 	size: 5,
-	onData: data => (<BookCard key={data._id} data={data} />),
+	renderData: data => <BookCard key={data._id} data={data} />,
 	defaultQuery: () => ({
 		query: {
 			exists: {
@@ -71,16 +66,12 @@ export default class Main extends Component {
 				<ReactiveBase {...settings} initialState={this.props.store}>
 					<div className="row">
 						<div className="col">
-							<SingleList
-								{...singleListProps}
-							/>
+							<SingleList {...singleListProps} />
 						</div>
 
 						<div className="col">
 							<SelectedFilters />
-							<ReactiveList
-								{...reactiveListProps}
-							/>
+							<ReactiveList {...reactiveListProps} />
 						</div>
 					</div>
 				</ReactiveBase>

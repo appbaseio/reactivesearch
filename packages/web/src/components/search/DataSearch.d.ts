@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { CommonProps } from '../../';
+import { CommonProps } from '../..';
 import * as types from '../../types';
 
 export interface DataSearchProps extends CommonProps {
@@ -11,7 +11,8 @@ export interface DataSearchProps extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;
 	debounce?: number;
-	defaultSelected?: string;
+	defaultValue?: string;
+	value?: string;
 	defaultSuggestions?: types.suggestions;
 	defaultQuery?: (...args: any[]) => any;
 	downShiftProps?: types.props;
@@ -24,21 +25,27 @@ export interface DataSearchProps extends CommonProps {
 	iconPosition?: types.iconPosition;
 	innerClass?: types.style;
 	onBlur?: (...args: any[]) => any;
+	onError?: (...args: any[]) => any;
 	onFocus?: (...args: any[]) => any;
 	onKeyDown?: (...args: any[]) => any;
 	onKeyPress?: (...args: any[]) => any;
 	onKeyUp?: (...args: any[]) => any;
-	onSuggestion?: (...args: any[]) => any;
+	onSuggestions?: (...args: any[]) => any;
 	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 	onValueSelected?: (...args: any[]) => any;
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
-	renderSuggestions?: (...args: any[]) => any;
+	renderSuggestion?: (...args: any[]) => any;
+	renderAllSuggestion?: (...args: any[]) => any;
+	renderNoSuggestion?: types.title;
+	renderError?: types.title;
 	showFilter?: boolean;
 	showIcon?: boolean;
 	title?: types.title;
 	theme?: types.style;
+	loader?: types.title;
 	themePreset?: types.themePreset;
 }
 

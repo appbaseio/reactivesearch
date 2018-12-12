@@ -28,93 +28,107 @@ import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
-import { connect } from '../../utils';
-
+import { connect, isFunction } from '../../utils';
+import SuggestionItem from './addons/SuggestionItem';
+import SuggestionWrapper from './addons/SuggestionWrapper';
 
 class DataSearch extends Component {
 	constructor(props) {
 		super(props);
 
+		const currentValue = props.selectedValue || props.value || props.defaultValue || '';
+
 		this.state = {
-			currentValue: '',
+			currentValue,
 			suggestions: [],
 			isOpen: false,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId, 'DATASEARCH');
-		this.props.addComponent(this.internalComponent);
+		props.addComponent(props.componentId);
+		props.addComponent(this.internalComponent);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 
-		if (this.props.highlight) {
-			const queryOptions = DataSearch.highlightQuery(this.props) || {};
+		if (props.highlight) {
+			const queryOptions = DataSearch.highlightQuery(props) || {};
 			queryOptions.size = 20;
-			this.props.setQueryOptions(this.props.componentId, queryOptions);
+			props.setQueryOptions(props.componentId, queryOptions);
 		} else {
-			this.props.setQueryOptions(this.props.componentId, {
+			props.setQueryOptions(props.componentId, {
 				size: 20,
 			});
 		}
-		this.setReact(this.props);
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected, true);
+		this.setReact(props);
+		const hasMounted = false;
+		const cause = null;
+
+		if (currentValue) {
+			this.setValue(currentValue, true, props, cause, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		checkSomePropChange(
 			this.props,
-			nextProps,
+			prevProps,
 			['highlight', 'dataField', 'highlightField'],
 			() => {
-				const queryOptions = DataSearch.highlightQuery(nextProps) || {};
+				const queryOptions = DataSearch.highlightQuery(this.props) || {};
 				queryOptions.size = 20;
-				this.props.setQueryOptions(nextProps.componentId, queryOptions);
+				this.props.setQueryOptions(this.props.componentId, queryOptions);
 			},
 		);
 
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		if (Array.isArray(nextProps.suggestions) && this.state.currentValue.trim().length) {
+		if (Array.isArray(this.props.suggestions) && this.state.currentValue.trim().length) {
 			// shallow check allows us to set suggestions even if the next set
 			// of suggestions are same as the current one
-			if (this.props.suggestions !== nextProps.suggestions) {
+			if (this.props.suggestions !== prevProps.suggestions) {
+				if (this.props.onSuggestions) {
+					this.props.onSuggestions(this.props.suggestions);
+				}
+				// eslint-disable-next-line
 				this.setState({
-					suggestions: this.onSuggestions(nextProps.suggestions),
+					suggestions: this.onSuggestions(this.props.suggestions),
 				});
 			}
 		}
 
 		checkSomePropChange(
 			this.props,
-			nextProps,
+			prevProps,
 			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField'],
 			() => {
-				this.updateQuery(nextProps.componentId, this.state.currentValue, nextProps);
+				this.updateQuery(this.props.componentId, this.state.currentValue, this.props);
 			},
 		);
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected, true, nextProps);
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value);
 		} else if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
 			// clear action from SelectedFilters component in which case,
 			// the currentValue will never match the updated selectedValue
-			this.props.selectedValue !== nextProps.selectedValue
-			&& this.state.currentValue !== nextProps.selectedValue
+			this.props.selectedValue !== prevProps.selectedValue
+			&& this.state.currentValue !== this.props.selectedValue
 		) {
-			this.setValue(nextProps.selectedValue || '', true, nextProps);
+			const { value, onChange } = this.props;
+			if (value) {
+				if (onChange) {
+					onChange(this.props.selectedValue || '');
+				} else {
+					// we need to put the current value back into the store
+					// if the clear action was triggered by interacting with
+					// selected-filters component
+					this.setValue(this.state.currentValue, true, this.props);
+				}
+			} else {
+				this.setValue(this.props.selectedValue || '', true, this.props);
+			}
 		}
 	}
 
@@ -129,7 +143,9 @@ class DataSearch extends Component {
 			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
@@ -188,8 +204,8 @@ class DataSearch extends Component {
 	};
 
 	static shouldQuery = (value, dataFields, props) => {
-		const fields = dataFields.map((field, index) =>
-			`${field}${
+		const fields = dataFields.map(
+			(field, index) => `${field}${
 				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
 					? `^${props.fieldWeights[index]}`
 					: ''
@@ -238,21 +254,26 @@ class DataSearch extends Component {
 	};
 
 	onSuggestions = (results) => {
-		if (this.props.onSuggestion) {
-			return results.map(suggestion => this.props.onSuggestion(suggestion));
-		}
+		const { renderSuggestion } = this.props;
 
 		const fields = Array.isArray(this.props.dataField)
-			? this.props.dataField : [this.props.dataField];
+			? this.props.dataField
+			: [this.props.dataField];
 
-		return getSuggestions(
+		const parsedSuggestions = getSuggestions(
 			fields,
 			results,
 			this.state.currentValue.toLowerCase(),
 		);
+
+		if (renderSuggestion) {
+			return parsedSuggestions.map(suggestion => renderSuggestion(suggestion));
+		}
+
+		return parsedSuggestions;
 	};
 
-	setValue = (value, isDefaultValue = false, props = this.props, cause) => {
+	setValue = (value, isDefaultValue = false, props = this.props, cause, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -260,42 +281,47 @@ class DataSearch extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState({
-				currentValue: value,
-				suggestions: [],
-			}, () => {
-				if (isDefaultValue) {
-					if (this.props.autosuggest) {
-						this.setState({
-							isOpen: false,
-						});
-						this.updateQuery(this.internalComponent, value, props);
-					}
-					// in case of strict selection only SUGGESTION_SELECT should be able
-					// to set the query otherwise the value should reset
-					if (props.strictSelection) {
-						if (cause === causes.SUGGESTION_SELECT || value === '') {
-							this.updateQuery(props.componentId, value, props);
+			if (hasMounted) {
+				this.setState(
+					{
+						currentValue: value,
+						suggestions: [],
+					},
+					() => {
+						if (isDefaultValue) {
+							if (this.props.autosuggest) {
+								this.setState({
+									isOpen: false,
+								});
+								this.updateQuery(this.internalComponent, value, props);
+							}
+							// in case of strict selection only SUGGESTION_SELECT should be able
+							// to set the query otherwise the value should reset
+							if (props.strictSelection) {
+								if (cause === causes.SUGGESTION_SELECT || value === '') {
+									this.updateQuery(props.componentId, value, props);
+								} else {
+									this.setValue('', true);
+								}
+							} else {
+								this.updateQuery(props.componentId, value, props);
+							}
 						} else {
-							this.setValue('', true);
+							// debounce for handling text while typing
+							this.handleTextChange(value);
 						}
-					} else {
-						this.updateQuery(props.componentId, value, props);
-					}
-				} else {
-					// debounce for handling text while typing
-					this.handleTextChange(value);
-				}
+						this.locked = false;
+						if (props.onValueChange) props.onValueChange(value);
+					},
+				);
+			} else {
+				this.updateQuery(this.internalComponent, value, props);
+				this.updateQuery(props.componentId, value, props);
 				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);
-			});
+			}
 		};
-		checkValueChange(
-			props.componentId,
-			value,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
 	handleTextChange = debounce((value) => {
@@ -308,14 +334,11 @@ class DataSearch extends Component {
 
 	updateQuery = (componentId, value, props) => {
 		const {
-			customQuery,
-			defaultQuery,
-			filterLabel,
-			showFilter,
-			URLParams,
+			customQuery, defaultQuery, filterLabel, showFilter, URLParams,
 		} = props;
 
-		// defaultQuery from props is always appended regardless of a customQuery
+		// defaultQuery from props is always appended
+		// regardless of a customQuery
 		const query = customQuery || DataSearch.defaultQuery;
 		const queryObject = defaultQuery
 			? {
@@ -325,7 +348,7 @@ class DataSearch extends Component {
 						...defaultQuery(value, props),
 					],
 				},
-			}
+			} // prettier-ignore
 			: query(value, props);
 
 		props.updateQuery({
@@ -354,7 +377,8 @@ class DataSearch extends Component {
 	};
 
 	handleKeyDown = (event, highlightedIndex) => {
-		// if a suggestion was selected, delegate the handling to suggestion handler
+		// if a suggestion was selected, delegate the handling
+		// to suggestion handler
 		if (event.key === 'Enter' && highlightedIndex === null) {
 			this.setValue(event.target.value, true);
 			this.onValueSelected(event.target.value, causes.ENTER_PRESS);
@@ -365,13 +389,19 @@ class DataSearch extends Component {
 	};
 
 	onInputChange = (e) => {
-		const { value } = e.target;
+		const { value: inputValue } = e.target;
 		if (!this.state.isOpen) {
 			this.setState({
 				isOpen: true,
 			});
 		}
-		this.setValue(value);
+
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(inputValue);
+		} else {
+			this.setValue(inputValue);
+		}
 	};
 
 	onSuggestionSelected = (suggestion) => {
@@ -384,7 +414,7 @@ class DataSearch extends Component {
 		if (onValueSelected) {
 			onValueSelected(currentValue, ...cause);
 		}
-	}
+	};
 
 	handleStateChange = (changes) => {
 		const { isOpen, type } = changes;
@@ -398,11 +428,9 @@ class DataSearch extends Component {
 	getBackgroundColor = (highlightedIndex, index) => {
 		const isDark = this.props.themePreset === 'dark';
 		if (isDark) {
-			return highlightedIndex === index
-				? '#555' : '#424242';
+			return highlightedIndex === index ? '#555' : '#424242';
 		}
-		return highlightedIndex === index
-			? '#eee' : '#fff';
+		return highlightedIndex === index ? '#eee' : '#fff';
 	};
 
 	renderIcon = () => {
@@ -410,34 +438,86 @@ class DataSearch extends Component {
 			return this.props.icon || <SearchSvg />;
 		}
 		return null;
-	}
+	};
 
 	renderCancelIcon = () => {
 		if (this.props.showClear) {
 			return this.props.clearIcon || <CancelSvg />;
 		}
 		return null;
-	}
+	};
 
 	renderIcons = () => (
 		<div>
-			{
-				this.state.currentValue && this.props.showClear
-				&& (
-					<InputIcon
-						onClick={this.clearValue}
-						iconPosition="right"
-						clearIcon={this.props.iconPosition === 'right'}
-					>
-						{this.renderCancelIcon()}
-					</InputIcon>
-				)
-			}
+			{this.state.currentValue
+				&& this.props.showClear && (
+				<InputIcon
+					onClick={this.clearValue}
+					iconPosition="right"
+					clearIcon={this.props.iconPosition === 'right'}
+				>
+					{this.renderCancelIcon()}
+				</InputIcon>
+			)}
 			<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
 		</div>
 	);
 
+	renderNoSuggestion = (finalSuggestionsList = []) => {
+		const {
+			themePreset,
+			theme,
+			isLoading,
+			renderNoSuggestion,
+			innerClass,
+			error,
+			renderError,
+		} = this.props;
+		const { isOpen, currentValue } = this.state;
+		if (renderNoSuggestion
+				&& isOpen && !finalSuggestionsList.length && !isLoading && currentValue
+				&& !(renderError && error)) {
+			return (
+				<SuggestionWrapper innerClass={innerClass} themePreset={themePreset} theme={theme} innerClassName="noSuggestion">
+					{typeof renderNoSuggestion === 'function' ? renderNoSuggestion(currentValue) : renderNoSuggestion}
+				</SuggestionWrapper>
+			);
+		}
+		return null;
+	}
+
+	renderLoader = () => {
+		const {
+			loader, isLoading, themePreset, theme, innerClass,
+		} = this.props;
+		const { currentValue } = this.state;
+		if (isLoading && loader && currentValue) {
+			return (
+				<SuggestionWrapper innerClass={innerClass} innerClassName="loader" theme={theme} themePreset={themePreset}>
+					{loader}
+				</SuggestionWrapper>
+			);
+		}
+		return null;
+	}
+
+	renderError = () => {
+		const {
+			error, renderError, themePreset, theme, isLoading, innerClass,
+		} = this.props;
+		const { currentValue } = this.state;
+		if (error && renderError && currentValue && !isLoading) {
+			return (
+				<SuggestionWrapper innerClass={innerClass} innerClassName="error" theme={theme} themePreset={themePreset}>
+					{isFunction(renderError) ? renderError(error) : renderError}
+				</SuggestionWrapper>
+			);
+		}
+		return null;
+	}
+
 	render() {
+		const { currentValue } = this.state;
 		let suggestionsList = [];
 
 		if (
@@ -450,122 +530,120 @@ class DataSearch extends Component {
 			suggestionsList = this.state.suggestions;
 		}
 
-		const { theme, themePreset, renderSuggestions } = this.props;
-
+		const { theme, themePreset, renderAllSuggestion } = this.props;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
-				{
-					this.props.defaultSuggestions || this.props.autosuggest
-						? (<Downshift
-							id={`${this.props.componentId}-downshift`}
-							onChange={this.onSuggestionSelected}
-							onStateChange={this.handleStateChange}
-							isOpen={this.state.isOpen}
-							itemToString={i => i}
-							render={({
-								getInputProps,
-								getItemProps,
-								isOpen,
-								highlightedIndex,
-							}) => (
-								<div className={suggestionsContainer}>
-									<Input
-										id={`${this.props.componentId}-input`}
-										showIcon={this.props.showIcon}
-										showClear={this.props.showClear}
-										iconPosition={this.props.iconPosition}
-										innerRef={(c) => {
-											this._inputRef = c;
-										}}
-										{...getInputProps({
-											className: getClassName(this.props.innerClass, 'input'),
-											placeholder: this.props.placeholder,
-											value: this.state.currentValue === null ? '' : this.state.currentValue,
-											onChange: this.onInputChange,
-											onBlur: this.props.onBlur,
-											onFocus: this.handleFocus,
-											onKeyPress: this.props.onKeyPress,
-											onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
-											onKeyUp: this.props.onKeyUp,
-										})}
-										themePreset={themePreset}
-									/>
-									{this.renderIcons()}
-									{renderSuggestions
-										&& renderSuggestions({
-											currentValue: this.state.currentValue,
-											isOpen,
-											getItemProps,
-											highlightedIndex,
-											suggestions: this.props.suggestions,
-											parsedSuggestions: suggestionsList,
-										})}
-
-									{
-										!renderSuggestions && isOpen && suggestionsList.length
-											? (
-												<ul className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}>
-													{
-														suggestionsList
-															.slice(0, 10)
-															.map((item, index) => (
-																<li
-																	{...getItemProps({ item })}
-																	key={`${index + 1}-${item.value}`}
-																	style={{
-																		backgroundColor: this.getBackgroundColor(
-																			highlightedIndex,
-																			index,
-																		),
-																	}}
-																>
-																	{
-																		typeof item.label === 'string'
-																			? <div
-																				className="trim"
-																				dangerouslySetInnerHTML={{
-																					__html: item.label,
-																				}}
-																			/>
-																			: item.label
-																	}
-																</li>
-															))
-													}
-												</ul>
-											)
-											: null
-									}
-								</div>
-							)}
-							{...this.props.downShiftProps}
-						/>)
-						: (
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
+				{this.props.defaultSuggestions || this.props.autosuggest ? (
+					<Downshift
+						id={`${this.props.componentId}-downshift`}
+						onChange={this.onSuggestionSelected}
+						onStateChange={this.handleStateChange}
+						isOpen={this.state.isOpen}
+						itemToString={i => i}
+						render={({
+							getInputProps, getItemProps, isOpen, highlightedIndex,
+						}) => (
 							<div className={suggestionsContainer}>
 								<Input
-									className={getClassName(this.props.innerClass, 'input') || null}
-									placeholder={this.props.placeholder}
-									value={this.state.currentValue ? this.state.currentValue : ''}
-									onChange={this.onInputChange}
-									onBlur={this.props.onBlur}
-									onFocus={this.props.onFocus}
-									onKeyPress={this.props.onKeyPress}
-									onKeyDown={this.props.onKeyDown}
-									onKeyUp={this.props.onKeyUp}
-									autoFocus={this.props.autoFocus}
-									iconPosition={this.props.iconPosition}
+									id={`${this.props.componentId}-input`}
 									showIcon={this.props.showIcon}
 									showClear={this.props.showClear}
+									iconPosition={this.props.iconPosition}
 									innerRef={(c) => {
 										this._inputRef = c;
 									}}
+									{...getInputProps({
+										className: getClassName(this.props.innerClass, 'input'),
+										placeholder: this.props.placeholder,
+										value:
+											this.state.currentValue === null
+												? ''
+												: this.state.currentValue,
+										onChange: this.onInputChange,
+										onBlur: this.props.onBlur,
+										onFocus: this.handleFocus,
+										onKeyPress: this.props.onKeyPress,
+										onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
+										onKeyUp: this.props.onKeyUp,
+									})}
 									themePreset={themePreset}
 								/>
 								{this.renderIcons()}
+								{renderAllSuggestion
+									&& renderAllSuggestion({
+										currentValue: this.state.currentValue,
+										isOpen,
+										getItemProps,
+										highlightedIndex,
+										suggestions: this.props.suggestions,
+										parsedSuggestions: suggestionsList,
+									})}
+								{this.renderLoader()}
+								{this.renderError()}
+								{!renderAllSuggestion && isOpen && suggestionsList.length ? (
+									<ul
+										className={`${suggestions(
+											themePreset,
+											theme,
+										)} ${getClassName(this.props.innerClass, 'list')}`}
+									>
+										{suggestionsList.slice(0, 10).map((item, index) => (
+											<li
+												{...getItemProps({ item })}
+												key={`${index + 1}-${item.value}`}
+												style={{
+													backgroundColor: this.getBackgroundColor(
+														highlightedIndex,
+														index,
+													),
+												}}
+											>
+												<SuggestionItem currentValue={currentValue} suggestion={item} />
+												{/* {typeof item.label === 'string' ? (
+													<div
+														className="trim"
+														dangerouslySetInnerHTML={{
+															__html: item.label,
+														}}
+													/>
+												) : (
+													item.label
+												)} */}
+											</li>
+										))}
+									</ul>
+								) : this.renderNoSuggestion(suggestionsList)}
 							</div>
-						)
-				}
+						)}
+						{...this.props.downShiftProps}
+					/>
+				) : (
+					<div className={suggestionsContainer}>
+						<Input
+							className={getClassName(this.props.innerClass, 'input') || null}
+							placeholder={this.props.placeholder}
+							value={this.state.currentValue ? this.state.currentValue : ''}
+							onChange={this.onInputChange}
+							onBlur={this.props.onBlur}
+							onFocus={this.props.onFocus}
+							onKeyPress={this.props.onKeyPress}
+							onKeyDown={this.props.onKeyDown}
+							onKeyUp={this.props.onKeyUp}
+							autoFocus={this.props.autoFocus}
+							iconPosition={this.props.iconPosition}
+							showIcon={this.props.showIcon}
+							showClear={this.props.showClear}
+							innerRef={this.props.innerRef}
+							themePreset={themePreset}
+						/>
+						{this.renderIcons()}
+					</div>
+				)}
 			</Container>
 		);
 	}
@@ -592,9 +670,12 @@ DataSearch.propTypes = {
 	customQuery: types.func,
 	dataField: types.dataFieldArray,
 	debounce: types.number,
-	defaultSelected: types.string,
+	defaultValue: types.string,
+	value: types.string,
 	defaultSuggestions: types.suggestions,
 	downShiftProps: types.props,
+	// eslint-disable-next-line
+	error: types.any,
 	fieldWeights: types.fieldWeights,
 	filterLabel: types.string,
 	fuzziness: types.fuzziness,
@@ -603,19 +684,26 @@ DataSearch.propTypes = {
 	icon: types.children,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
+	isLoading: types.bool,
+	loader: types.title,
+	onError: types.func,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
 	onKeyPress: types.func,
 	onKeyUp: types.func,
 	onQueryChange: types.func,
-	onSuggestion: types.func,
+	onSuggestions: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	onValueSelected: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
-	renderSuggestions: types.func,
+	renderError: types.title,
+	renderSuggestion: types.func,
+	renderAllSuggestion: types.func,
+	renderNoSuggestion: types.title,
 	showClear: types.bool,
 	showFilter: types.bool,
 	showIcon: types.bool,
@@ -644,20 +732,25 @@ DataSearch.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	themePreset: state.config.themePreset,
+	isLoading: state.isLoading[props.componentId],
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
-	addComponent: (component, name) => dispatch(addComponent(component, name)),
+	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryListener: (
+		component, onQueryChange, beforeQueryChange,
+	) => dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
 

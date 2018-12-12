@@ -7,12 +7,14 @@ export interface RangeSliderProps extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	histogramQuery?: (props: RangeSliderProps) => any;
 	dataField: string;
-	defaultSelected?: types.range;
+	defaultValue?: types.range;
+	value?: types.range;
 	filterLabel?: string;
 	innerClass?: types.style;
 	interval?: number;
 	onDrag?: (...args: any[]) => any;
 	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 	range?: types.range;
 	rangeLabels?: types.rangeLabels;
 	react?: types.react;

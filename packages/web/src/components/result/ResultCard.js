@@ -10,7 +10,7 @@ class ResultCard extends Component {
 	static generateQueryOptions = props => ReactiveList.generateQueryOptions(props);
 
 	renderAsCard = (item, triggerClickAnalytics) => {
-		const result = this.props.onData(item);
+		const result = this.props.renderData(item);
 
 		if (result) {
 			return (
@@ -23,27 +23,33 @@ class ResultCard extends Component {
 					onClick={triggerClickAnalytics}
 					{...result.containerProps}
 				>
-					<Image
-						style={{ backgroundImage: `url(${result.image})` }}
-						className={getClassName(this.props.innerClass, 'image')}
-					/>
-					{
-						typeof result.title === 'string'
-							? <Title
+					{result.image && (
+						<Image
+							style={{ backgroundImage: `url(${result.image})` }}
+							className={getClassName(this.props.innerClass, 'image')}
+						/>
+					)}
+					{result.title
+						&& (typeof result.title === 'string' ? (
+							<Title
 								dangerouslySetInnerHTML={{ __html: result.title }}
 								className={getClassName(this.props.innerClass, 'title')}
 							/>
-							: (
-								<Title className={getClassName(this.props.innerClass, 'title')}>
-									{result.title}
-								</Title>
-							)
-					}
-					{
-						typeof result.description === 'string'
-							? <article dangerouslySetInnerHTML={{ __html: result.description }} />
-							: <article>{result.description}</article>
-					}
+						) : (
+							<Title className={getClassName(this.props.innerClass, 'title')}>
+								{result.title}
+							</Title>
+						))}
+					{result.description
+						&& (typeof result.description === 'string' ? (
+							<article
+								dangerouslySetInnerHTML={{
+									__html: result.description,
+								}}
+							/>
+						) : (
+							<article>{result.description}</article>
+						))}
 				</Card>
 			);
 		}
@@ -52,22 +58,16 @@ class ResultCard extends Component {
 	};
 
 	render() {
-		const { onData, ...props } = this.props;
+		const { renderData, ...props } = this.props;
 
-		return (
-			<ReactiveList
-				{...props}
-				onData={this.renderAsCard}
-				listClass={container}
-			/>
-		);
+		return <ReactiveList {...props} renderData={this.renderAsCard} listClass={container} />;
 	}
 }
 
 ResultCard.propTypes = {
 	innerClass: types.style,
 	target: types.stringRequired,
-	onData: types.func,
+	renderData: types.func,
 };
 
 ResultCard.defaultProps = {

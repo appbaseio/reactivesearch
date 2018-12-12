@@ -30,7 +30,7 @@ const reactiveListProps = {
 	className: 'result-list-container',
 	from: 0,
 	size: 5,
-	onData: data => (<BookCard key={data._id} data={data} />),
+	renderData: data => <BookCard key={data._id} data={data} />,
 	react: {
 		and: ['BookSensor'],
 	},
@@ -64,16 +64,12 @@ export default class Main extends Component {
 				<ReactiveBase {...settings} initialState={this.props.store}>
 					<div className="row">
 						<div className="col">
-							<SingleDropdownList
-								{...singleDropdownListProps}
-							/>
+							<SingleDropdownList {...singleDropdownListProps} />
 						</div>
 
 						<div className="col">
 							<SelectedFilters />
-							<ReactiveList
-								{...reactiveListProps}
-							/>
+							<ReactiveList {...reactiveListProps} />
 						</div>
 					</div>
 				</ReactiveBase>

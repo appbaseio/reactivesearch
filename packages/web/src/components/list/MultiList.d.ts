@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CommonProps } from '../../';
+import { CommonProps } from '../..';
 import * as types from '../../types';
 
 export interface MultiList extends CommonProps {
@@ -7,14 +7,19 @@ export interface MultiList extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	dataField: string;
 	nestedField?: string;
-	defaultSelected?: types.stringArray;
+	defaultValue?: types.stringArray;
+	value?: types.stringArray;
 	filterLabel?: string;
 	innerClass?: types.style;
+	loader?: types.title;
 	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
+	onError?: (...args: any[]) => any;
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
-	renderListItem?: (...args: any[]) => any;
+	renderItem?: (...args: any[]) => any;
+	renderError?: types.title;
 	transformData?: (...args: any[]) => any;
 	selectAllLabel?: string;
 	showCheckbox: boolean;

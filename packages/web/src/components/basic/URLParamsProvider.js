@@ -24,37 +24,37 @@ class URLParamsProvider extends Component {
 
 			// update active components in selectedValues
 			Array.from(this.params.entries()).forEach((item) => {
-				this.props.setValue(
-					item[0],
-					JSON.parse(item[1]),
-				);
+				this.props.setValue(item[0], JSON.parse(item[1]));
 			});
 		};
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.currentSelectedState = nextProps.selectedValues;
-		if (!isEqual(this.props.selectedValues, nextProps.selectedValues)) {
+	componentDidUpdate(prevProps) {
+		this.currentSelectedState = this.props.selectedValues;
+		if (!isEqual(this.props.selectedValues, prevProps.selectedValues)) {
 			this.params = new URLSearchParams(window.location.search);
-			const currentComponents = Object.keys(nextProps.selectedValues);
+			const currentComponents = Object.keys(this.props.selectedValues);
 			const urlComponents = Array.from(this.params.keys());
 
 			currentComponents
-				.filter(component => nextProps.selectedValues[component].URLParams)
+				.filter(component => this.props.selectedValues[component].URLParams)
 				.forEach((component) => {
 					// prevents empty history pollution on initial load
 					if (
 						this.hasValidValue(this.props.selectedValues[component])
-						|| this.hasValidValue(nextProps.selectedValues[component])
+						|| this.hasValidValue(prevProps.selectedValues[component])
 					) {
-						if (nextProps.selectedValues[component].URLParams) {
-							this.setURL(component, this.getValue(nextProps.selectedValues[component].value));
+						if (this.props.selectedValues[component].URLParams) {
+							this.setURL(
+								component,
+								this.getValue(this.props.selectedValues[component].value),
+							);
 						} else {
 							this.params.delete(component);
 							this.pushToHistory();
 						}
 					} else if (
-						!this.hasValidValue(nextProps.selectedValues[component])
+						!this.hasValidValue(this.props.selectedValues[component])
 						&& urlComponents.includes(component)
 					) {
 						// doesn't have a valid value, but the url has a (stale) valid value set
@@ -79,8 +79,8 @@ class URLParamsProvider extends Component {
 			}
 		}
 
-		if (!isEqual(this.props.headers, nextProps.headers)) {
-			nextProps.setHeaders(nextProps.headers);
+		if (!isEqual(this.props.headers, prevProps.headers)) {
+			this.props.setHeaders(this.props.headers);
 		}
 	}
 
@@ -103,8 +103,11 @@ class URLParamsProvider extends Component {
 
 	setURL(component, value) {
 		this.params = new URLSearchParams(window.location.search);
-		if (!value || (typeof value === 'string' && value.trim() === '')
-			|| (Array.isArray(value) && value.length === 0)) {
+		if (
+			!value
+			|| (typeof value === 'string' && value.trim() === '')
+			|| (Array.isArray(value) && value.length === 0)
+		) {
 			this.params.delete(component);
 			this.pushToHistory();
 		} else {
@@ -165,5 +168,6 @@ const ConnectedMyComponent = connect(
 	mapDispatchtoProps,
 )(props => <URLParamsProvider ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedMyComponent {...props} myForwardedRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<ConnectedMyComponent {...props} myForwardedRef={ref} />
+));

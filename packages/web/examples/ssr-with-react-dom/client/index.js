@@ -33,15 +33,18 @@ const reactiveListProps = {
 	dataField: 'original_title.raw',
 	from: 0,
 	size: 10,
-	onData: data => (<BookCard key={data._id} data={data} />),
+	renderData: data => <BookCard key={data._id} data={data} />,
 	react: {
 		and: ['BookSensor'],
 	},
 };
 
-hydrate(<App
-	store={store}
-	settings={settings}
-	singleRangeProps={singleRangeProps}
-	reactiveListProps={reactiveListProps}
-/>, document.getElementById('root'));
+hydrate(
+	<App
+		store={store}
+		settings={settings}
+		singleRangeProps={singleRangeProps}
+		reactiveListProps={reactiveListProps}
+	/>,
+	document.getElementById('root'),
+);

@@ -49,21 +49,14 @@ class RangeSlider extends Component {
 		if (this.props.selectedValue) {
 			this.handleChange(this.props.selectedValue);
 		} else if (this.props.defaultSelected) {
-			this.handleChange([
-				this.props.defaultSelected.start,
-				this.props.defaultSelected.end,
-			]);
+			this.handleChange([this.props.defaultSelected.start, this.props.defaultSelected.end]);
 		}
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () =>
-			this.setReact(nextProps));
-		checkSomePropChange(
-			this.props,
-			nextProps,
-			['showHistogram', 'interval'],
-			() => this.updateQueryOptions(nextProps),
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkSomePropChange(this.props, nextProps, ['showHistogram', 'interval'], () =>
+			this.updateQueryOptions(nextProps),
 		);
 		checkPropChange(this.props.options, nextProps.options, () => {
 			const { options } = nextProps;
@@ -90,14 +83,20 @@ class RangeSlider extends Component {
 				nextProps,
 			);
 		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.handleChange(nextProps.selectedValue || [nextProps.range.start, nextProps.range.end]);
+			this.handleChange(
+				nextProps.selectedValue || [nextProps.range.start, nextProps.range.end],
+			);
 		}
 	}
 
 	shouldComponentUpdate(nextProps) {
 		const upperLimit = Math.floor((nextProps.range.end - nextProps.range.start) / 2);
 		if (nextProps.stepValue < 1 || nextProps.stepValue > upperLimit) {
-			console.warn(`stepValue for RangeSlider ${nextProps.componentId} should be greater than 0 and less than or equal to ${upperLimit}`);
+			console.warn(
+				`stepValue for RangeSlider ${
+					nextProps.componentId
+				} should be greater than 0 and less than or equal to ${upperLimit}`,
+			);
 			return false;
 		}
 		return true;
@@ -138,7 +137,11 @@ class RangeSlider extends Component {
 		if (!props.interval) {
 			return min;
 		} else if (props.interval < min) {
-			console.error(`${props.componentId}: interval prop's value should be greater than or equal to ${min}`);
+			console.error(
+				`${
+					props.componentId
+				}: interval prop's value should be greater than or equal to ${min}`,
+			);
 			return min;
 		}
 		return props.interval;
@@ -169,18 +172,21 @@ class RangeSlider extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-			}, () => {
-				this.updateQuery([currentValue[0], currentValue[1]], props);
-				this.locked = false;
-				if (props.onValueChange) {
-					props.onValueChange({
-						start: currentValue[0],
-						end: currentValue[1],
-					});
-				}
-			});
+			this.setState(
+				{
+					currentValue,
+				},
+				() => {
+					this.updateQuery([currentValue[0], currentValue[1]], props);
+					this.locked = false;
+					if (props.onValueChange) {
+						props.onValueChange({
+							start: currentValue[0],
+							end: currentValue[1],
+						});
+					}
+				},
+			);
 		};
 		checkValueChange(
 			props.componentId,
@@ -239,39 +245,35 @@ class RangeSlider extends Component {
 		return (
 			<View style={{ paddingTop: 25, ...this.props.style }}>
 				<View onLayout={e => this.setWidth(e.nativeEvent.layout.width)}>
-					{
-						this.state.stats.length && this.props.showHistogram
-							? (<Histogram
-								stats={this.state.stats}
-								range={this.props.range}
-								interval={
-									this.props.interval
-									|| Math.ceil((this.props.range.end - this.props.range.start) / 10)
-								}
-								paddingHorizontal={Platform.OS === 'ios' ? 15 : 6}
-								barStyle={getInnerKey(this.props.innerStyle, 'histogramBar')}
-							/>)
-							: null
-					}
-					{
-						this.state.width
-							? (<MultiSlider
-								values={this.state.currentValue}
-								min={this.props.range.start}
-								max={this.props.range.end}
-								step={this.props.stepValue}
-								allowOverlap={false}
-								snapped
-								containerStyle={styles}
-								selectedStyle={{
-									backgroundColor: this.props.theming.primaryColor,
-								}}
-								sliderLength={this.state.width}
-								onValuesChangeFinish={this.handleChange}
-								{...getInnerKey(this.props.innerProps, 'slider')}
-							/>)
-							: null
-					}
+					{this.state.stats.length && this.props.showHistogram ? (
+						<Histogram
+							stats={this.state.stats}
+							range={this.props.range}
+							interval={
+								this.props.interval
+								|| Math.ceil((this.props.range.end - this.props.range.start) / 10)
+							}
+							paddingHorizontal={Platform.OS === 'ios' ? 15 : 6}
+							barStyle={getInnerKey(this.props.innerStyle, 'histogramBar')}
+						/>
+					) : null}
+					{this.state.width ? (
+						<MultiSlider
+							values={this.state.currentValue}
+							min={this.props.range.start}
+							max={this.props.range.end}
+							step={this.props.stepValue}
+							allowOverlap={false}
+							snapped
+							containerStyle={styles}
+							selectedStyle={{
+								backgroundColor: this.props.theming.primaryColor,
+							}}
+							sliderLength={this.state.width}
+							onValuesChangeFinish={this.handleChange}
+							{...getInnerKey(this.props.innerProps, 'slider')}
+						/>
+					) : null}
 				</View>
 			</View>
 		);
@@ -319,8 +321,8 @@ RangeSlider.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId]
-		? (state.aggregations[props.componentId][props.dataField]
-			&& state.aggregations[props.componentId][props.dataField].buckets)
+		? state.aggregations[props.componentId][props.dataField]
+		  && state.aggregations[props.componentId][props.dataField].buckets // eslint-disable-line
 		: [],
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
@@ -338,4 +340,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(RangeSlider));
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(RangeSlider));

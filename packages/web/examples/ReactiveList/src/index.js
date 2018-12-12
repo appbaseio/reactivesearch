@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import {
-	ReactiveBase,
-	MultiDropdownList,
-	ReactiveList,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, MultiDropdownList, ReactiveList } from '@appbaseio/reactivesearch';
 
 import './index.css';
 
@@ -32,7 +28,7 @@ class Main extends Component {
 							dataField="original_title.raw"
 							className="result-list-container"
 							size={5}
-							onData={this.booksReactiveList}
+							renderData={this.booksReactiveList}
 							pagination
 							URLParams
 							react={{
@@ -53,12 +49,16 @@ class Main extends Component {
 					<div className="book-header">{data.original_title}</div>
 					<div className="flex column justify-space-between">
 						<div>
-							<div>by <span className="authors-list">{data.authors}</span></div>
+							<div>
+								by <span className="authors-list">{data.authors}</span>
+							</div>
 							<div className="ratings-list flex align-center">
 								<span className="stars">
-									{
-										Array(data.average_rating_rounded).fill('x')
-											.map((item, index) => <i className="fas fa-star" key={index} />) // eslint-disable-line
+									{Array(data.average_rating_rounded)
+										.fill('x')
+										.map((item, index) => (
+											<i className="fas fa-star" key={index} />
+										)) // eslint-disable-line
 									}
 								</span>
 								<span className="avg-rating">({data.average_rating} avg)</span>
@@ -71,6 +71,5 @@ class Main extends Component {
 		);
 	}
 }
-
 
 ReactDOM.render(<Main />, document.getElementById('root'));

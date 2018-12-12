@@ -26,44 +26,43 @@ class TextField extends Component {
 	constructor(props) {
 		super(props);
 
+		const currentValue = props.selectedValue || props.value || props.defaultValue || '';
 		this.state = {
-			currentValue: props.selectedValue || '',
+			currentValue,
 		};
 		this.locked = false;
+
+		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
+		this.setReact(props);
+		const hasMounted = false;
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected, true);
+		if (currentValue) {
+			this.setValue(currentValue, true, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => {
-			this.setReact(nextProps);
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => {
+			this.setReact(this.props);
 		});
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
-			this.updateQuery(this.state.currentValue, nextProps);
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateQuery(this.state.currentValue, this.props);
 		});
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected, true, nextProps);
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value, true, this.props);
 		} else if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
 			// clear action from SelectedFilters component in which case,
 			// the currentValue will never match the updated selectedValue
-			this.props.selectedValue !== nextProps.selectedValue
-			&& this.state.currentValue !== nextProps.selectedValue
+			this.props.selectedValue !== prevProps.selectedValue
+			&& this.state.currentValue !== this.props.selectedValue
 		) {
-			this.setValue(nextProps.selectedValue || '', true, nextProps);
+			this.setValue(this.props.selectedValue || '', true, this.props);
 		}
 	}
 
@@ -86,13 +85,13 @@ class TextField extends Component {
 			};
 		}
 		return null;
-	}
+	};
 
 	handleTextChange = debounce((value) => {
 		this.updateQuery(value, this.props);
 	}, this.props.debounce);
 
-	setValue = (value, isDefaultValue = false, props = this.props) => {
+	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -100,25 +99,29 @@ class TextField extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState({
-				currentValue: value,
-			}, () => {
-				if (isDefaultValue) {
-					this.updateQuery(value, props);
-				} else {
-					// debounce for handling text while typing
-					this.handleTextChange(value);
-				}
+			if (hasMounted) {
+				this.setState(
+					{
+						currentValue: value,
+					},
+					() => {
+						if (isDefaultValue) {
+							this.updateQuery(value, props);
+						} else {
+							// debounce for handling text while typing
+							this.handleTextChange(value);
+						}
+						this.locked = false;
+						if (props.onValueChange) props.onValueChange(value);
+					},
+				);
+			} else {
+				this.updateQuery(value, props);
 				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);
-			});
+			}
 		};
-		checkValueChange(
-			props.componentId,
-			value,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -135,11 +138,21 @@ class TextField extends Component {
 	};
 
 	handleChange = (e) => {
-		this.setValue(e.target.value);
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(e.target.value);
+		} else {
+			this.setValue(e.target.value);
+		}
 	};
 
 	clearValue = () => {
-		this.setValue('', true);
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange('');
+		} else {
+			this.setValue('', true);
+		}
 	};
 
 	renderCancelIcon = () => {
@@ -147,28 +160,26 @@ class TextField extends Component {
 			return this.props.clearIcon || <CancelSvg />;
 		}
 		return null;
-	}
+	};
 
 	renderIcons = () => (
 		<div>
-			{
-				this.state.currentValue && this.props.showClear
-				&& (
-					<InputIcon
-						onClick={this.clearValue}
-						iconPosition="right"
-					>
-						{this.renderCancelIcon()}
-					</InputIcon>
-				)
-			}
+			{this.state.currentValue && this.props.showClear && (
+				<InputIcon onClick={this.clearValue} iconPosition="right">
+					{this.renderCancelIcon()}
+				</InputIcon>
+			)}
 		</div>
 	);
 
 	render() {
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<div className={suggestionsContainer}>
 					<Input
 						type="text"
@@ -211,7 +222,8 @@ TextField.propTypes = {
 	customQuery: types.func,
 	dataField: types.stringRequired,
 	debounce: types.number,
-	defaultSelected: types.string,
+	defaultValue: types.string,
+	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
 	onBlur: types.func,
@@ -221,6 +233,7 @@ TextField.propTypes = {
 	onKeyUp: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	react: types.react,
 	ref: types.func,
@@ -243,8 +256,10 @@ TextField.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	themePreset: state.config.themePreset,
 });
 
@@ -262,5 +277,6 @@ const ConnectedMyComponent = connect(
 	mapDispatchtoProps,
 )(props => <TextField ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedMyComponent {...props} myForwardedRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<ConnectedMyComponent {...props} myForwardedRef={ref} />
+));

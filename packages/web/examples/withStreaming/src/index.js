@@ -1,12 +1,7 @@
 import Appbase from 'appbase-js';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {
-	ReactiveBase,
-	DataSearch,
-	SelectedFilters,
-	ResultList,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, DataSearch, SelectedFilters, ResultList } from '@appbaseio/reactivesearch';
 
 const streamingData = {
 	genres: 'Action',
@@ -31,14 +26,16 @@ const indexNewData = () =>
 			.index({
 				type: 'movies',
 				body: streamingData,
-			}).then(() => {
+			})
+			.then(() => {
 				resolve();
-			}).catch((e) => {
+			})
+			.catch((e) => {
 				reject(e);
 			});
 	});
 
-const onData = res => ({
+const renderData = res => ({
 	image: `https://image.tmdb.org/t/p/w92${res.poster_path}`,
 	title: res.original_title,
 	description: (
@@ -72,16 +69,11 @@ class Main extends Component {
 			<div>
 				<h3>Streaming updates</h3>
 				<p>
-					We will add a new movie to our dataset. Once added,
-					it will appear in realtime in the existing results if it matches
-					the search query.
+					We will add a new movie to our dataset. Once added, it will appear in realtime
+					in the existing results if it matches the search query.
 				</p>
 			</div>
-			<button
-				onClick={this.indexData}
-			>
-				Add New Movie
-			</button>
+			<button onClick={this.indexData}>Add New Movie</button>
 		</div>
 	);
 
@@ -138,7 +130,7 @@ class Main extends Component {
 							and: ['search', 'genres', 'original_language', 'release_year'],
 						}}
 						size={4}
-						onData={onData}
+						renderData={renderData}
 						className="right-col"
 						innerClass={{
 							listItem: 'list-item',

@@ -5,7 +5,10 @@ import * as types from '../../types';
 export interface ToggleButtonProps extends CommonProps {
 	data?: types.data;
 	dataField: string;
-	defaultSelected?: types.stringOrArray;
+	defaultValue?: types.stringOrArray;
+	value?: types.stringOrArray;
+	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 	filterLabel?: string;
 	innerClass?: types.style;
 	multiSelect?: boolean;

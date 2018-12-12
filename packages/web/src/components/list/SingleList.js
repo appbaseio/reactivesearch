@@ -26,98 +26,105 @@ import Input from '../../styles/Input';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import { connect } from '../../utils';
+import { connect, isFunction } from '../../utils';
 
 // showLoadMore is experimental API and works only with ES6
 class SingleList extends Component {
 	constructor(props) {
 		super(props);
 
+		const defaultValue = props.defaultValue || props.value;
+		const currentValue = props.selectedValue || defaultValue;
+
 		this.state = {
-			currentValue: '',
-			options: (props.options && props.options[props.dataField])
-				? this.getOptions(
-					props.options[props.dataField].buckets,
-					props,
-				)
-				: [],
+			currentValue: currentValue || '',
+			options:
+				props.options && props.options[props.dataField]
+					? this.getOptions(props.options[props.dataField].buckets, props)
+					: [],
 			searchTerm: '',
-			after: {},	// for composite aggs
+			after: {}, // for composite aggs
 			isLastBucket: false,
 		};
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.internalComponent);
-		this.props.addComponent(this.props.componentId);
-		this.updateQueryOptions(this.props);
+		props.addComponent(this.internalComponent);
+		props.addComponent(props.componentId);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+		this.updateQueryOptions(props);
 
-		this.setReact(this.props);
+		this.setReact(props);
+		const hasMounted = false;
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+		if (currentValue) {
+			this.setValue(currentValue, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		checkPropChange(
+			prevProps.react,
 			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
+			() => this.setReact(this.props),
 		);
+
 		checkPropChange(
+			prevProps.options,
 			this.props.options,
-			nextProps.options,
 			() => {
-				const { showLoadMore, dataField } = nextProps;
+				const { showLoadMore, dataField, options } = this.props;
+
 				if (showLoadMore) {
-					const { buckets } = nextProps.options[dataField];
-					const after = nextProps.options[dataField].after_key;
-					// detect the last bucket by checking if the after key is absent
+					const { buckets } = options[dataField];
+					const after = options[dataField].after_key;
+
+					// detect the last bucket by checking if the
+					// after key is absent
 					const isLastBucket = !after;
 					this.setState(state => ({
 						...state,
 						after: after ? { after } : state.after,
 						isLastBucket,
-						options: this.getOptions(buckets, nextProps),
+						options: this.getOptions(buckets, this.props),
 					}));
 				} else {
 					this.setState({
-						options: nextProps.options[nextProps.dataField]
+						options: options[dataField]
 							? this.getOptions(
-								nextProps.options[nextProps.dataField].buckets,
-								nextProps,
+								options[dataField].buckets,
+								this.props,
 							)
 							: [],
 					});
 				}
 			},
 		);
+
 		checkSomePropChange(
+			prevProps,
 			this.props,
-			nextProps,
 			['size', 'sortBy'],
-			() => this.updateQueryOptions(nextProps),
+			() => this.updateQueryOptions(this.props),
 		);
 
-		checkPropChange(
-			this.props.dataField,
-			nextProps.dataField,
+		checkSomePropChange(
+			this.props,
+			prevProps,
+			['dataField', 'nestedField'],
 			() => {
-				this.updateQueryOptions(nextProps);
-				this.updateQuery(this.state.currentValue, nextProps);
+				this.updateQueryOptions(this.props);
+				this.updateQuery(this.state.currentValue, this.props);
 			},
 		);
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected);
-		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || '');
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value);
+		} else if (
+			this.state.currentValue !== this.props.selectedValue
+			&& this.props.selectedValue !== prevProps.selectedValue
+		) {
+			this.setValue(this.props.selectedValue || '');
 		}
 	}
 
@@ -132,7 +139,9 @@ class SingleList extends Component {
 			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
@@ -187,34 +196,36 @@ class SingleList extends Component {
 		return query;
 	};
 
-	setValue = (nextValue, props = this.props) => {
+	setValue = (nextValue, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
 		}
 
-		this.locked = true;
 		let value = nextValue;
-		if (nextValue === this.state.currentValue) {
+		if (this.state.currentValue === nextValue && hasMounted) {
 			value = '';
 		}
 
+		this.locked = true;
+
 		const performUpdate = () => {
-			this.setState({
-				currentValue: value,
-			}, () => {
+			const handleUpdates = () => {
 				this.updateQuery(value, props);
 				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);
-			});
+			};
+
+			if (hasMounted) {
+				this.setState({
+					currentValue: value,
+				}, handleUpdates);
+			} else {
+				handleUpdates();
+			}
 		};
 
-		checkValueChange(
-			props.componentId,
-			value,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -246,8 +257,10 @@ class SingleList extends Component {
 			});
 		}
 		// for a new query due to other changes don't append after to get fresh results
-		const queryOptions = SingleList
-			.generateQueryOptions(props, addAfterKey ? this.state.after : {});
+		const queryOptions = SingleList.generateQueryOptions(
+			props,
+			addAfterKey ? this.state.after : {},
+		);
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
@@ -261,33 +274,48 @@ class SingleList extends Component {
 	handleLoadMore = () => {
 		const queryOptions = SingleList.generateQueryOptions(this.props, this.state.after);
 		this.props.loadMore(this.props.componentId, queryOptions);
-	}
+	};
 
 	renderSearch = () => {
 		if (this.props.showSearch) {
-			return (<Input
-				className={getClassName(this.props.innerClass, 'input') || null}
-				onChange={this.handleInputChange}
-				value={this.state.searchTerm}
-				placeholder={this.props.placeholder}
-				style={{
-					margin: '0 0 8px',
-				}}
-				themePreset={this.props.themePreset}
-			/>);
+			return (
+				<Input
+					className={getClassName(this.props.innerClass, 'input') || null}
+					onChange={this.handleInputChange}
+					value={this.state.searchTerm}
+					placeholder={this.props.placeholder}
+					style={{
+						margin: '0 0 8px',
+					}}
+					themePreset={this.props.themePreset}
+				/>
+			);
 		}
 		return null;
 	};
 
 	handleClick = (e) => {
-		this.setValue(e.target.value);
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(e);
+		} else {
+			this.setValue(e.target.value);
+		}
 	};
 
 	render() {
 		const {
-			selectAllLabel, renderListItem, showLoadMore, loadMoreLabel,
+			selectAllLabel, renderItem, showLoadMore, loadMoreLabel, renderError, error,
 		} = this.props;
 		const { isLastBucket } = this.state;
+
+		if (this.props.isLoading && this.props.loader) {
+			return this.props.loader;
+		}
+
+		if (renderError && error) {
+			return isFunction(renderError) ? renderError(error) : renderError;
+		}
 
 		if (this.state.options.length === 0) {
 			return null;
@@ -301,47 +329,59 @@ class SingleList extends Component {
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				{this.renderSearch()}
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
-					{
-						selectAllLabel
-							? (
-								<li key={selectAllLabel} className={`${this.state.currentValue === selectAllLabel ? 'active' : ''}`}>
-									<Radio
-										className={getClassName(this.props.innerClass, 'radio')}
-										id={`${this.props.componentId}-${selectAllLabel}`}
-										name={this.props.componentId}
-										value={selectAllLabel}
-										onClick={this.handleClick}
-										readOnly
-										checked={this.state.currentValue === selectAllLabel}
-										show={this.props.showRadio}
-									/>
-									<label
-										className={getClassName(this.props.innerClass, 'label') || null}
-										htmlFor={`${this.props.componentId}-${selectAllLabel}`}
-									>
-										{selectAllLabel}
-									</label>
-								</li>
-							)
-							: null
-					}
-					{
-						itemsToRender
-							.filter((item) => {
-								if (String(item.key).length) {
-									if (this.props.showSearch && this.state.searchTerm) {
-										return String(item.key).toLowerCase()
-											.includes(this.state.searchTerm.toLowerCase());
-									}
-									return true;
+					{selectAllLabel ? (
+						<li
+							key={selectAllLabel}
+							className={`${
+								this.state.currentValue === selectAllLabel ? 'active' : ''
+							}`}
+						>
+							<Radio
+								className={getClassName(this.props.innerClass, 'radio')}
+								id={`${this.props.componentId}-${selectAllLabel}`}
+								name={this.props.componentId}
+								value={selectAllLabel}
+								onClick={this.handleClick}
+								readOnly
+								checked={this.state.currentValue === selectAllLabel}
+								show={this.props.showRadio}
+							/>
+							<label
+								className={getClassName(this.props.innerClass, 'label') || null}
+								htmlFor={`${this.props.componentId}-${selectAllLabel}`}
+							>
+								{selectAllLabel}
+							</label>
+						</li>
+					) : null}
+					{itemsToRender
+						.filter((item) => {
+							if (String(item.key).length) {
+								if (this.props.showSearch && this.state.searchTerm) {
+									return String(item.key)
+										.toLowerCase()
+										.includes(this.state.searchTerm.toLowerCase());
 								}
-								return false;
-							})
-							.map(item => (
-								<li key={item.key} className={`${this.state.currentValue === String(item.key) ? 'active' : ''}`}>
+								return true;
+							}
+							return false;
+						})
+						.map((item) => {
+							const isChecked = this.state.currentValue === String(item.key);
+							return (
+								<li
+									key={item.key}
+									className={`${
+										isChecked ? 'active' : ''
+									}`}
+								>
 									<Radio
 										className={getClassName(this.props.innerClass, 'radio')}
 										id={`${this.props.componentId}-${item.key}`}
@@ -349,46 +389,42 @@ class SingleList extends Component {
 										value={item.key}
 										readOnly
 										onClick={this.handleClick}
-										checked={this.state.currentValue === String(item.key)}
+										checked={isChecked}
 										show={this.props.showRadio}
 									/>
 									<label
 										className={getClassName(this.props.innerClass, 'label') || null}
 										htmlFor={`${this.props.componentId}-${item.key}`}
 									>
-										{
-											renderListItem
-												? renderListItem(item.key, item.doc_count)
-												: (
-													<span>
-														{item.key}
-														{
-															this.props.showCount
-															&& (
-																<span
-																	className={
-																		getClassName(this.props.innerClass, 'count')
-																		|| null
-																	}
-																>
-																	&nbsp;({item.doc_count})
-																</span>
-															)
+										{renderItem ? (
+											renderItem(item.key, item.doc_count, isChecked)
+										) : (
+											<span>
+												{item.key}
+												{this.props.showCount && (
+													<span
+														className={
+															getClassName(
+																this.props.innerClass,
+																'count',
+															) || null
 														}
+													>
+														&nbsp;({item.doc_count})
 													</span>
-												)
-										}
+												)}
+											</span>
+										)}
 									</label>
 								</li>
-							))
-					}
-					{
-						showLoadMore && !isLastBucket && (
-							<div css={loadMoreContainer}>
-								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
-							</div>
-						)
-					}
+							);
+						})}
+					{showLoadMore
+						&& !isLastBucket && (
+						<div css={loadMoreContainer}>
+							<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
+						</div>
+					)}
 				</UL>
 			</Container>
 		);
@@ -411,14 +447,21 @@ SingleList.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	dataField: types.stringRequired,
-	defaultSelected: types.string,
+	defaultValue: types.string,
+	error: types.title,
+	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
+	isLoading: types.bool,
+	loader: types.title,
 	onQueryChange: types.func,
+	onError: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	react: types.react,
-	renderListItem: types.func,
+	renderItem: types.func,
+	renderError: types.title,
 	transformData: types.func,
 	selectAllLabel: types.string,
 	showCount: types.bool,
@@ -456,22 +499,27 @@ SingleList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	options: props.nestedField && state.aggregations[props.componentId]
-		? state.aggregations[props.componentId].reactivesearch_nested
-		: state.aggregations[props.componentId],
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || '',
+	options:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId],
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| '',
 	themePreset: state.config.themePreset,
+	isLoading: state.isLoading[props.componentId],
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
-	loadMore: (component, aggsQuery) =>
-		dispatch(loadMore(component, aggsQuery, true, true)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	loadMore: (component, aggsQuery) => dispatch(loadMore(component, aggsQuery, true, true)),
+	setQueryListener: (
+		component, onQueryChange, beforeQueryChange,
+	) => dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });

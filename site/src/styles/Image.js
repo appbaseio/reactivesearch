@@ -9,7 +9,7 @@ const ImageCard = styled('div')`
 	border-radius: 10px;
 	overflow: hidden;
 	background-color: #fff;
-	box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
+	box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
 
 	.info {
 		width: 100%;
@@ -49,7 +49,7 @@ const Image = styled('div')`
 	height: 300px;
 	background-image: ${props => (props.src ? `url(${props.src})` : '#fafafa')};
 	background-size: cover;
-	transition: all .3s ease;
+	transition: all 0.3s ease;
 
 	${queries.medium`
 		height: 200px;

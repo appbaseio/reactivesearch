@@ -25,40 +25,41 @@ class SingleDropdownRange extends Component {
 	constructor(props) {
 		super(props);
 
+		const defaultValue = props.defaultValue || props.value;
+		const value = props.selectedValue || defaultValue || null;
+		const currentValue = SingleDropdownRange.parseValue(value, props);
+
 		this.state = {
-			currentValue: null,
+			currentValue,
 		};
 		this.type = 'range';
 		this.locked = false;
+
+		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
+		this.setReact(props);
+		const hasMounted = false;
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected, true);
+		if (currentValue) {
+			this.setValue(currentValue.label, true, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
-			this.updateQuery(this.state.currentValue, nextProps);
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateQuery(this.state.currentValue, prevProps);
 		});
 
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.setValue(nextProps.defaultSelected, true);
-		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)) {
-			this.setValue(nextProps.selectedValue, true);
+		if (!isEqual(this.props.value, prevProps.value)) {
+			this.setValue(this.props.value, true);
+		} else if (
+			!isEqual(this.state.currentValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
+		) {
+			this.setValue(this.props.selectedValue || null, true);
 		}
 	}
 
@@ -73,7 +74,7 @@ class SingleDropdownRange extends Component {
 	}
 
 	// parses range label to get start and end
-	static parseValue = (value, props) => props.data.find(item => item.label === value) || null
+	static parseValue = (value, props) => props.data.find(item => item.label === value) || null;
 
 	static defaultQuery = (value, props) => {
 		if (value) {
@@ -90,7 +91,7 @@ class SingleDropdownRange extends Component {
 		return null;
 	};
 
-	setValue = (value, isDefaultValue = false, props = this.props) => {
+	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -99,26 +100,29 @@ class SingleDropdownRange extends Component {
 		this.locked = true;
 		let currentValue = value;
 		if (isDefaultValue) {
-			currentValue = props.data.find(item => item.label === value) || null;
 			currentValue = SingleDropdownRange.parseValue(value, props);
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-			}, () => {
+			const handleUpdates = () => {
 				this.updateQuery(currentValue, props);
 				this.locked = false;
 				if (props.onValueChange) props.onValueChange(currentValue);
-			});
+			};
+
+			if (hasMounted) {
+				this.setState(
+					{
+						currentValue,
+					},
+					handleUpdates,
+				);
+			} else {
+				handleUpdates();
+			}
 		};
 
-		checkValueChange(
-			props.componentId,
-			currentValue,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, currentValue, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -135,14 +139,27 @@ class SingleDropdownRange extends Component {
 		});
 	};
 
+	handleChange = (selectedItem) => {
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(selectedItem);
+		} else {
+			this.setValue(selectedItem);
+		}
+	};
+
 	render() {
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<Dropdown
 					innerClass={this.props.innerClass}
 					items={this.props.data}
-					onChange={this.setValue}
+					onChange={this.handleChange}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
 					keyField="label"
@@ -168,11 +185,13 @@ SingleDropdownRange.propTypes = {
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
-	defaultSelected: types.string,
+	defaultValue: types.string,
+	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	react: types.react,
 	showFilter: types.bool,
@@ -191,10 +210,10 @@ SingleDropdownRange.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: (
-		state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value
-	) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	themePreset: state.config.themePreset,
 });
 
@@ -212,6 +231,6 @@ const ConnectedMyComponent = connect(
 	mapDispatchtoProps,
 )(props => <SingleDropdownRange ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedMyComponent {...props} myForwardedRef={ref} />);
-
+export default React.forwardRef((props, ref) => (
+	<ConnectedMyComponent {...props} myForwardedRef={ref} />
+));

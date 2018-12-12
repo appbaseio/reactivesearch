@@ -8,6 +8,7 @@ import MultiDropdownList from './components/list/MultiDropdownList.jsx';
 import ReactiveComponent from './components/basic/ReactiveComponent.jsx';
 import SelectedFilters from './components/basic/SelectedFilters.jsx';
 import SingleRange from './components/range/SingleRange.jsx';
+import MultiRange from './components/range/MultiRange.jsx';
 import version from './components/Version/index';
 
 const components = [
@@ -17,10 +18,11 @@ const components = [
 	SingleList,
 	MultiList,
 	SingleRange,
+	MultiRange,
 	ReactiveComponent,
 	SelectedFilters,
 	SingleDropdownList,
-	MultiDropdownList
+	MultiDropdownList,
 ];
 
 const install = function(Vue) {

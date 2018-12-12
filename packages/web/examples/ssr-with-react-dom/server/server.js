@@ -10,64 +10,43 @@ import BookCard from '../common/BookCard';
 
 // settings for the ReactiveBase component
 const settings = {
-	app:
-		'good-books-ds',
-	credentials:
-		'nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d',
+	app: 'good-books-ds',
+	credentials: 'nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d',
 };
 
 // props for ReactiveSearch components
 // we need these to run the query and get the results server side
 const singleRangeProps = {
-	componentId:
-		'BookSensor',
-	dataField:
-		'average_rating',
+	componentId: 'BookSensor',
+	dataField: 'average_rating',
 	data: [
 		{
 			start: 0,
 			end: 3,
-			label:
-				'Rating < 3',
+			label: 'Rating < 3',
 		},
 		{
 			start: 3,
 			end: 4,
-			label:
-				'Rating 3 to 4',
+			label: 'Rating 3 to 4',
 		},
 		{
 			start: 4,
 			end: 5,
-			label:
-				'Rating > 4',
+			label: 'Rating > 4',
 		},
 	],
-	defaultSelected:
-		'Rating 3 to 4',
+	defaultSelected: 'Rating 3 to 4',
 };
 
 const reactiveListProps = {
-	componentId:
-		'SearchResult',
-	dataField:
-		'original_title.raw',
+	componentId: 'SearchResult',
+	dataField: 'original_title.raw',
 	from: 0,
 	size: 10,
-	onData: data => (
-		<BookCard
-			key={
-				data._id
-			}
-			data={
-				data
-			}
-		/>
-	),
+	renderData: data => <BookCard key={data._id} data={data} />,
 	react: {
-		and: [
-			'BookSensor',
-		],
+		and: ['BookSensor'],
 	},
 };
 
@@ -104,14 +83,12 @@ async function handleRender(req, res) {
 		[
 			{
 				...singleRangeProps,
-				type:
-					'SingleRange',
+				type: 'SingleRange',
 				source: SingleRange,
 			},
 			{
 				...reactiveListProps,
-				type:
-					'ReactiveList',
+				type: 'ReactiveList',
 				source: ReactiveList,
 			},
 		],
@@ -123,37 +100,30 @@ async function handleRender(req, res) {
 	// ReactiveSearch uses emotion and this will inline the styles
 	// so you can get the correct styles for ReactiveSearch's components
 	// on the first load
-	const html = renderStylesToString(renderToString(<App
-		store={
-			store
-		}
-		settings={
-			settings
-		}
-		singleRangeProps={
-			singleRangeProps
-		}
-		reactiveListProps={
-			reactiveListProps
-		}
-	/>));
+	const html = renderStylesToString(
+		renderToString(
+			<App
+				store={store}
+				settings={settings}
+				singleRangeProps={singleRangeProps}
+				reactiveListProps={reactiveListProps}
+			/>,
+		),
+	);
 
 	// Send the rendered page back to the client
-	res.send(renderFullPage(
-		html,
-		store,
-	));
+	res.send(renderFullPage(html, store));
 }
 
 // This is fired every time the server side receives a request
 app.use(handleRender);
 app.listen(port, (error) => {
-	if (
-		error
-	) {
+	if (error) {
 		console.error(error);
 	} else {
 		// eslint-disable-next-line
-		console.info(`==> 🌎  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.`);
+		console.info(
+			`==> 🌎  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.`,
+		);
 	}
 });

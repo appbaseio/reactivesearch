@@ -59,25 +59,31 @@ class GeoDistanceSlider extends Component {
 		this.setReact(this.props);
 
 		if (this.props.selectedValue && this.props.selectedValue.location) {
-			this.setState({
-				currentLocation: this.props.selectedValue.location,
-			}, () => {
-				this.getCoordinates(this.props.selectedValue.location, () => {
-					if (this.props.selectedValue.distance) {
-						this.setDistance(this.props.selectedValue.distance);
-					}
-				});
-			});
+			this.setState(
+				{
+					currentLocation: this.props.selectedValue.location,
+				},
+				() => {
+					this.getCoordinates(this.props.selectedValue.location, () => {
+						if (this.props.selectedValue.distance) {
+							this.setDistance(this.props.selectedValue.distance);
+						}
+					});
+				},
+			);
 		} else if (this.props.defaultSelected && this.props.defaultSelected.location) {
-			this.setState({
-				currentLocation: this.props.defaultSelected.location,
-			}, () => {
-				this.getCoordinates(this.props.defaultSelected.location, () => {
-					if (this.props.defaultSelected.distance) {
-						this.setDistance(this.props.defaultSelected.distance);
-					}
-				});
-			});
+			this.setState(
+				{
+					currentLocation: this.props.defaultSelected.location,
+				},
+				() => {
+					this.getCoordinates(this.props.defaultSelected.location, () => {
+						if (this.props.defaultSelected.distance) {
+							this.setDistance(this.props.defaultSelected.distance);
+						}
+					});
+				},
+			);
 		}
 	}
 
@@ -86,11 +92,7 @@ class GeoDistanceSlider extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
 		checkPropChange(this.props.dataField, nextProps.dataField, () => {
 			this.updateQuery(this.state.currentDistance, nextProps);
@@ -114,12 +116,15 @@ class GeoDistanceSlider extends Component {
 			!isEqual(this.props.selectedValue, nextProps.selectedValue)
 			&& !nextProps.selectedValue
 		) {
-			this.setState({
-				currentLocation: null,
-				currentDistance: null,
-			}, () => {
-				this.updateQuery(null);
-			});
+			this.setState(
+				{
+					currentLocation: null,
+					currentDistance: null,
+				},
+				() => {
+					this.updateQuery(null);
+				},
+			);
 		}
 	}
 
@@ -140,7 +145,7 @@ class GeoDistanceSlider extends Component {
 		this.getCoordinates(selected.location, () => {
 			this.setDistance(selected.distance);
 		});
-	}
+	};
 
 	defaultQuery = (coordinates, distance, props) => {
 		if (coordinates && distance) {
@@ -158,7 +163,11 @@ class GeoDistanceSlider extends Component {
 		navigator.geolocation.getCurrentPosition((location) => {
 			const coordinates = `${location.coords.latitude}, ${location.coords.longitude}`;
 
-			fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${this.props.mapKey}&v=3.31&latlng=${coordinates}`)
+			fetch(
+				`https://maps.googleapis.com/maps/api/geocode/json?key=${
+					this.props.mapKey
+				}&v=3.31&latlng=${coordinates}`,
+			)
 				.then(res => res.json())
 				.then((res) => {
 					if (Array.isArray(res.results) && res.results.length) {
@@ -176,7 +185,11 @@ class GeoDistanceSlider extends Component {
 
 	getCoordinates(value, cb) {
 		if (value) {
-			fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${this.props.mapKey}&v=3.31&address=${value}`)
+			fetch(
+				`https://maps.googleapis.com/maps/api/geocode/json?key=${
+					this.props.mapKey
+				}&v=3.31&address=${value}`,
+			)
 				.then(res => res.json())
 				.then((res) => {
 					if (Array.isArray(res.results) && res.results.length) {
@@ -202,23 +215,26 @@ class GeoDistanceSlider extends Component {
 		this.locked = true;
 
 		const performUpdate = () => {
-			this.setState({
-				currentLocation: currentValue.value,
-				isOpen: false,
-			}, () => {
-				this.getCoordinates(currentValue.value, () => {
-					if (this.state.currentDistance) {
-						this.updateQuery(this.state.currentDistance);
-						if (props.onValueChange) {
-							props.onValueChange({
-								distance: this.state.currentDistance,
-								location: currentValue.value,
-							});
+			this.setState(
+				{
+					currentLocation: currentValue.value,
+					isOpen: false,
+				},
+				() => {
+					this.getCoordinates(currentValue.value, () => {
+						if (this.state.currentDistance) {
+							this.updateQuery(this.state.currentDistance);
+							if (props.onValueChange) {
+								props.onValueChange({
+									distance: this.state.currentDistance,
+									location: currentValue.value,
+								});
+							}
 						}
-					}
-					this.locked = false;
-				});
-			});
+						this.locked = false;
+					});
+				},
+			);
 		};
 
 		checkValueChange(
@@ -230,13 +246,16 @@ class GeoDistanceSlider extends Component {
 	};
 
 	setDistance = (currentDistance) => {
-		this.setState({
-			currentDistance,
-		}, () => {
-			if (this.state.currentLocation) {
-				this.updateQuery(currentDistance, this.props);
-			}
-		});
+		this.setState(
+			{
+				currentDistance,
+			},
+			() => {
+				if (this.state.currentLocation) {
+					this.updateQuery(currentDistance, this.props);
+				}
+			},
+		);
 	};
 
 	updateQuery = (distance, props = this.props) => {
@@ -280,19 +299,25 @@ class GeoDistanceSlider extends Component {
 
 			const restrictedCountries = this.props.countries || [];
 
-			this.autocompleteService.getPlacePredictions({
-				input: value,
-				componentRestrictions: { country: restrictedCountries },
-			}, (res) => {
-				const suggestionsList = (res && res.map(place => ({
-					label: place.description,
-					value: place.description,
-				}))) || [];
+			this.autocompleteService.getPlacePredictions(
+				{
+					input: value,
+					componentRestrictions: { country: restrictedCountries },
+				},
+				(res) => {
+					const suggestionsList
+						= (res
+							&& res.map(place => ({
+								label: place.description,
+								value: place.description,
+							})))
+						|| [];
 
-				this.setState({
-					suggestions: suggestionsList,
-				});
-			});
+					this.setState({
+						suggestions: suggestionsList,
+					});
+				},
+			);
 		} else {
 			this.setState({
 				suggestions: [],
@@ -336,73 +361,71 @@ class GeoDistanceSlider extends Component {
 			];
 		}
 
-		return (<Downshift
-			onChange={this.setLocation}
-			onOuterClick={this.handleOuterClick}
-			onStateChange={this.handleStateChange}
-			isOpen={this.state.isOpen}
-			itemToString={i => i}
-			render={({
-				getInputProps,
-				getItemProps,
-				isOpen,
-				highlightedIndex,
-			}) => (
-				<div className={suggestionsContainer}>
-					<Input
-						showIcon={this.props.showIcon}
-						iconPosition={this.props.iconPosition}
-						innerRef={this.props.innerRef}
-						{...getInputProps({
-							className: getClassName(this.props.innerClass, 'input'),
-							placeholder: this.props.placeholder,
-							value: this.state.currentLocation || '',
-							onChange: this.onInputChange,
-							onBlur: this.props.onBlur,
-							onFocus: this.handleFocus,
-							onKeyPress: this.props.onKeyPress,
-							onKeyDown: this.handleKeyDown,
-							onKeyUp: this.props.onKeyUp,
-						})}
-						themePreset={themePreset}
-					/>
-					<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
-					{
-						isOpen && this.state.suggestions.length
-							? (
-								<ul className={`${suggestions(themePreset, theme)} ${getClassName(this.props.innerClass, 'list')}`}>
-									{
-										suggestionsList
-											.slice(0, 11)
-											.map((item, index) => (
-												<li
-													{...getItemProps({ item })}
-													key={item.label}
-													style={{
-														backgroundColor: highlightedIndex === index
-															? '#eee' : '#fff',
-													}}
-												>
-													{
-														typeof item.label === 'string'
-															? <div
-																className="trim"
-																dangerouslySetInnerHTML={{
-																	__html: item.label,
-																}}
-															/>
-															: item.label
-													}
-												</li>
-											))
-									}
-								</ul>
-							)
-							: null
-					}
-				</div>
-			)}
-		/>);
+		return (
+			<Downshift
+				onChange={this.setLocation}
+				onOuterClick={this.handleOuterClick}
+				onStateChange={this.handleStateChange}
+				isOpen={this.state.isOpen}
+				itemToString={i => i}
+				render={({
+					getInputProps, getItemProps, isOpen, highlightedIndex,
+				}) => (
+					<div className={suggestionsContainer}>
+						<Input
+							showIcon={this.props.showIcon}
+							iconPosition={this.props.iconPosition}
+							innerRef={this.props.innerRef}
+							{...getInputProps({
+								className: getClassName(this.props.innerClass, 'input'),
+								placeholder: this.props.placeholder,
+								value: this.state.currentLocation || '',
+								onChange: this.onInputChange,
+								onBlur: this.props.onBlur,
+								onFocus: this.handleFocus,
+								onKeyPress: this.props.onKeyPress,
+								onKeyDown: this.handleKeyDown,
+								onKeyUp: this.props.onKeyUp,
+							})}
+							themePreset={themePreset}
+						/>
+						<InputIcon iconPosition={this.props.iconPosition}>
+							{this.renderIcon()}
+						</InputIcon>
+						{isOpen && this.state.suggestions.length ? (
+							<ul
+								className={`${suggestions(themePreset, theme)} ${getClassName(
+									this.props.innerClass,
+									'list',
+								)}`}
+							>
+								{suggestionsList.slice(0, 11).map((item, index) => (
+									<li
+										{...getItemProps({ item })}
+										key={item.label}
+										style={{
+											backgroundColor:
+												highlightedIndex === index ? '#eee' : '#fff',
+										}}
+									>
+										{typeof item.label === 'string' ? (
+											<div
+												className="trim"
+												dangerouslySetInnerHTML={{
+													__html: item.label,
+												}}
+											/>
+										) : (
+											item.label
+										)}
+									</li>
+								))}
+							</ul>
+						) : null}
+					</div>
+				)}
+			/>
+		);
 	};
 
 	handleSlider = ({ values }) => {
@@ -414,7 +437,11 @@ class GeoDistanceSlider extends Component {
 	render() {
 		return (
 			<Slider primary style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				{this.renderSearchBox()}
 				<Rheostat
 					min={this.props.range.start}
@@ -422,38 +449,32 @@ class GeoDistanceSlider extends Component {
 					values={[this.state.currentDistance]}
 					onChange={this.handleSlider}
 					className={getClassName(this.props.innerClass, 'slider')}
-					handle={({ className, style, ...passProps }) =>
-						(
-							<SliderHandle
-								style={style}
-								className={className}
-								{...passProps}
-								renderTooltipData={this.props.renderTooltipData}
-								tooltipTrigger={this.props.tooltipTrigger}
-							/>
-						)
-					}
+					handle={({ className, style, ...passProps }) => (
+						<SliderHandle
+							style={style}
+							className={className}
+							{...passProps}
+							renderTooltipData={this.props.renderTooltipData}
+							tooltipTrigger={this.props.tooltipTrigger}
+						/>
+					)}
 				/>
-				{
-					this.props.rangeLabels
-						? (
-							<div className={rangeLabelsContainer}>
-								<RangeLabel
-									align="left"
-									className={getClassName(this.props.innerClass, 'label') || null}
-								>
-									{this.props.rangeLabels.start}
-								</RangeLabel>
-								<RangeLabel
-									align="right"
-									className={getClassName(this.props.innerClass, 'label') || null}
-								>
-									{this.props.rangeLabels.end}
-								</RangeLabel>
-							</div>
-						)
-						: null
-				}
+				{this.props.rangeLabels ? (
+					<div className={rangeLabelsContainer}>
+						<RangeLabel
+							align="left"
+							className={getClassName(this.props.innerClass, 'label') || null}
+						>
+							{this.props.rangeLabels.start}
+						</RangeLabel>
+						<RangeLabel
+							align="right"
+							className={getClassName(this.props.innerClass, 'label') || null}
+						>
+							{this.props.rangeLabels.end}
+						</RangeLabel>
+					</div>
+				) : null}
 			</Slider>
 		);
 	}
@@ -523,10 +544,10 @@ GeoDistanceSlider.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	mapKey: state.config.mapKey,
-	selectedValue: (
-		state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value
-	) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	themePreset: state.config.themePreset,
 });
 

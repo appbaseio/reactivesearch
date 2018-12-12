@@ -22,11 +22,11 @@ class Main extends Component {
 						<SingleDropdownRange
 							componentId="BookSensor"
 							dataField="average_rating"
-							data={
-								[{ start: 0, end: 3, label: 'Rating < 3' },
-									{ start: 3, end: 4, label: 'Rating 3 to 4' },
-									{ start: 4, end: 5, label: 'Rating > 4' }]
-							}
+							data={[
+								{ start: 0, end: 3, label: 'Rating < 3' },
+								{ start: 3, end: 4, label: 'Rating 3 to 4' },
+								{ start: 4, end: 5, label: 'Rating > 4' },
+							]}
 						/>
 					</div>
 					<div className="col" style={{ backgroundColor: '#fafafa' }}>
@@ -36,7 +36,7 @@ class Main extends Component {
 							dataField="original_title.raw"
 							from={0}
 							size={10}
-							onData={this.booksCard}
+							renderData={this.booksCard}
 							react={{
 								and: 'BookSensor',
 							}}
@@ -49,16 +49,25 @@ class Main extends Component {
 
 	booksCard(data) {
 		return {
-			title: <div className="book-title-card text-center" dangerouslySetInnerHTML={{ __html: data.original_title }} />,
+			title: (
+				<div
+					className="book-title-card text-center"
+					dangerouslySetInnerHTML={{ __html: data.original_title }}
+				/>
+			),
 			description: (
 				<div className="flex column justify-space-between text-center">
 					<div>
-						<div>by <span className="authors-list">{data.authors}</span></div>
+						<div>
+							by <span className="authors-list">{data.authors}</span>
+						</div>
 						<div className="ratings-list flex align-center justify-center">
 							<span className="stars">
-								{
-									Array(data.average_rating_rounded).fill('x')
-										.map((item, index) => <i className="fas fa-star" key={index} />) // eslint-disable-line
+								{Array(data.average_rating_rounded)
+									.fill('x')
+									.map((item, index) => (
+										<i className="fas fa-star" key={index} />
+									)) // eslint-disable-line
 								}
 							</span>
 							<span className="avg-rating">({data.average_rating} avg)</span>

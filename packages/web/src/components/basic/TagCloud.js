@@ -25,81 +25,75 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import TagList from '../../styles/TagList';
 import Container from '../../styles/Container';
-import { connect } from '../../utils';
+import { connect, isFunction } from '../../utils';
 
 class TagCloud extends Component {
 	constructor(props) {
 		super(props);
 
+		const defaultValue = props.defaultValue || props.value;
+		const currentValueArray = props.selectedValue || defaultValue || [];
+		const currentValue = {};
+
+		currentValueArray.forEach((item) => {
+			currentValue[item] = true;
+		});
+
+		const options = props.options && props.options[props.dataField]
+			? this.getOptions(props.options[props.dataField].buckets, props)
+			: [];
+
 		this.state = {
-			currentValue: {},
-			options: (props.options && props.options[props.dataField])
-				? props.options[props.dataField].buckets
-				: [],
+			currentValue,
+			options,
 		};
 		this.locked = false;
 		this.type = 'term';
 		this.internalComponent = `${props.componentId}__internal`;
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.internalComponent);
-		this.props.addComponent(this.props.componentId);
-		this.updateQueryOptions(this.props);
+		props.addComponent(props.componentId);
+		props.addComponent(this.internalComponent);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+		this.updateQueryOptions(props);
 
-		this.setReact(this.props);
+		this.setReact(props);
+		const hasMounted = false;
 
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected, true);
+		if (currentValueArray.length) {
+			this.setValue(currentValueArray, true, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
-		checkPropChange(
-			this.props.options,
-			nextProps.options,
-			() => {
-				this.setState({
-					options: nextProps.options[nextProps.dataField]
-						? nextProps.options[nextProps.dataField].buckets
-						: [],
-				});
-			},
-		);
-		checkSomePropChange(
-			this.props,
-			nextProps,
-			['size', 'sortBy'],
-			() => this.updateQueryOptions(nextProps),
-		);
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
+		checkPropChange(this.props.options, prevProps.options, () => {
+			this.setState({
+				options: this.props.options[this.props.dataField]
+					? this.props.options[this.props.dataField].buckets
+					: [],
+			});
+		});
+		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
+			this.updateQueryOptions(this.props));
 
-		checkPropChange(
-			this.props.dataField,
-			nextProps.dataField,
-			() => {
-				this.updateQueryOptions(nextProps);
-				this.updateQuery(Object.keys(this.state.currentValue), nextProps);
-			},
-		);
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateQueryOptions(this.props);
+			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+		});
 
 		let selectedValue = Object.keys(this.state.currentValue);
 
-		if (!nextProps.multiSelect) {
+		if (!this.props.multiSelect) {
 			selectedValue = (selectedValue.length && selectedValue[0]) || '';
 		}
 
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.setValue(nextProps.defaultSelected, true, nextProps);
-		} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
-			this.setValue(nextProps.selectedValue, true, nextProps);
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value, true);
+		} else if (
+			!isEqual(selectedValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
+		) {
+			this.setValue(this.props.selectedValue || [], true);
 		}
 	}
 
@@ -114,7 +108,9 @@ class TagCloud extends Component {
 			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
@@ -132,13 +128,11 @@ class TagCloud extends Component {
 				};
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
-				const queryArray = value.map(item => (
-					{
-						[type]: {
-							[props.dataField]: item,
-						},
-					}
-				));
+				const queryArray = value.map(item => ({
+					[type]: {
+						[props.dataField]: item,
+					},
+				}));
 				listQuery = {
 					bool: {
 						must: queryArray,
@@ -151,7 +145,7 @@ class TagCloud extends Component {
 		return query;
 	};
 
-	setValue = (value, isDefaultValue = false, props = this.props) => {
+	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -187,21 +181,22 @@ class TagCloud extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-			}, () => {
+			const handleUpdates = () => {
 				this.updateQuery(finalValues, props);
 				this.locked = false;
 				if (props.onValueChange) props.onValueChange(finalValues);
-			});
+			};
+
+			if (hasMounted) {
+				this.setState({
+					currentValue,
+				}, handleUpdates);
+			} else {
+				handleUpdates();
+			}
 		};
 
-		checkValueChange(
-			props.componentId,
-			finalValues,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, finalValues, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -239,9 +234,27 @@ class TagCloud extends Component {
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
+	handleClick = (item) => {
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(item);
+		} else {
+			this.setValue(item);
+		}
+	};
+
 	render() {
 		const min = 0.8;
 		const max = 3;
+		if (this.props.isLoading && this.props.loader) {
+			return this.props.loader;
+		}
+
+		const { renderError, error } = this.props;
+		if (renderError && error) {
+			return isFunction(renderError) ? renderError(error) : renderError;
+		}
+
 
 		if (this.state.options.length === 0) {
 			return null;
@@ -254,36 +267,35 @@ class TagCloud extends Component {
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<TagList className={getClassName(this.props.innerClass, 'list') || null}>
-					{
-						this.state.options
-							.map((item) => {
-								const size = ((item.doc_count / highestCount) * (max - min)) + min;
+					{this.state.options.map((item) => {
+						const size = ((item.doc_count / highestCount) * (max - min)) + min;
 
-								return (
-									<span
-										key={item.key}
-										onClick={() => this.setValue(item.key)}
-										onKeyPress={e => handleA11yAction(e, () => this.setValue(item.key))}
-										style={{ fontSize: `${size}em` }}
-										className={
-											this.state.currentValue[item.key]
-												? `${getClassName(this.props.innerClass, 'input') || ''} active`
-												: getClassName(this.props.innerClass, 'input')
-										}
-										role="menuitem"
-										tabIndex="0"
-									>
-										{item.key}
-										{
-											this.props.showCount
-											&& ` (${item.doc_count})`
-										}
-									</span>
-								);
-							})
-					}
+						return (
+							<span
+								key={item.key}
+								onClick={() => this.handleClick(item.key)}
+								onKeyPress={e => handleA11yAction(e, () => this.handleClick(item.key))}
+								style={{ fontSize: `${size}em` }}
+								className={
+									this.state.currentValue[item.key]
+										? `${getClassName(this.props.innerClass, 'input')
+												|| ''} active`
+										: getClassName(this.props.innerClass, 'input')
+								}
+								role="menuitem"
+								tabIndex="0"
+							>
+								{item.key}
+								{this.props.showCount && ` (${item.doc_count})`}
+							</span>
+						);
+					})}
 				</TagList>
 			</Container>
 		);
@@ -305,13 +317,20 @@ TagCloud.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	dataField: types.stringRequired,
-	defaultSelected: types.stringOrArray,
+	defaultValue: types.stringOrArray,
+	error: types.title,
+	value: types.stringOrArray,
 	filterLabel: types.string,
 	innerClass: types.style,
+	isLoading: types.bool,
+	loader: types.title,
 	multiSelect: types.bool,
+	onError: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	queryFormat: types.queryFormatSearch,
+	renderError: types.title,
 	react: types.react,
 	showCount: types.bool,
 	showFilter: types.bool,
@@ -335,8 +354,12 @@ TagCloud.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId],
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
+	isLoading: state.isLoading[props.componentId],
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({

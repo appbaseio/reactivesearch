@@ -34,7 +34,7 @@ const button = css`
 	${queries.small`
 		width: 100%;
 		margin-top: 12px;
-	`}
+	`};
 `;
 
 const col = css`
@@ -61,9 +61,10 @@ const decoratedLink = css`
 	border-bottom: 1px dashed ${primaryColor};
 	text-decoration: none;
 	padding: 3px 0;
-	transition: all .3s ease;
+	transition: all 0.3s ease;
 
-	&:hover, &:focus {
+	&:hover,
+	&:focus {
 		color: #3f4ab9;
 		border-bottom: 1px solid #3f4ab9;
 	}
@@ -75,7 +76,8 @@ const decoratedSecondaryLink = css`
 		border-bottom: 1px dashed ${secondaryColor};
 		font-size: 1rem;
 
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			color: ${secondaryColor};
 			border-bottom: 1px solid ${secondaryColor};
 			filter: brightness(90%);
@@ -93,11 +95,12 @@ const card = css`
 	justify-content: flex-start;
 	align-items: center;
 	text-align: center;
-	box-shadow: 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.07);
+	box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
 	cursor: pointer;
 
-	&:hover, &:focus {
-		box-shadow: 0 15px 35px rgba(50,50,93,.2), 0 5px 15px rgba(0,0,0,.2);
+	&:hover,
+	&:focus {
+		box-shadow: 0 15px 35px rgba(50, 50, 93, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
 
 		h4 {
 			color: ${primaryColor};
@@ -247,7 +250,7 @@ const tabHide = css`
 const tabPadding = css`
 	${queries.medium`
 		padding: 1.5rem;
-	`}
+	`};
 `;
 
 const tabJustifyCenter = css`
@@ -255,7 +258,7 @@ const tabJustifyCenter = css`
 		margin: 20px 0;
 
 		img {
-			transition: all .3s ease;
+			transition: all 0.3s ease;
 
 			&:hover {
 				transform: scale(1.1);

@@ -10,7 +10,7 @@ class ResultList extends Component {
 	static generateQueryOptions = props => ReactiveList.generateQueryOptions(props);
 
 	renderAsListItem = (item, triggerClickAnalytics) => {
-		const result = this.props.onData(item);
+		const result = this.props.renderData(item);
 
 		if (result) {
 			return (
@@ -25,33 +25,37 @@ class ResultList extends Component {
 					onClick={triggerClickAnalytics}
 					{...result.containerProps}
 				>
-					{
-						result.image
-							? <Image
-								src={result.image}
-								small={result.image_size === 'small'}
-								className={getClassName(this.props.innerClass, 'image')}
-							/>
-							: null
-					}
+					{result.image ? (
+						<Image
+							src={result.image}
+							small={result.image_size === 'small'}
+							className={getClassName(this.props.innerClass, 'image')}
+						/>
+					) : null}
 					<article>
-						{
-							typeof result.title === 'string'
-								? <Title
-									dangerouslySetInnerHTML={{ __html: result.title }}
+						{result.title
+							&& (typeof result.title === 'string' ? (
+								<Title
+									dangerouslySetInnerHTML={{
+										__html: result.title,
+									}}
 									className={getClassName(this.props.innerClass, 'title')}
 								/>
-								: (
-									<Title className={getClassName(this.props.innerClass, 'title')}>
-										{result.title}
-									</Title>
-								)
-						}
-						{
-							typeof result.description === 'string'
-								? <div dangerouslySetInnerHTML={{ __html: result.description }} />
-								: <div>{result.description}</div>
-						}
+							) : (
+								<Title className={getClassName(this.props.innerClass, 'title')}>
+									{result.title}
+								</Title>
+							))}
+						{result.description
+							&& (typeof result.description === 'string' ? (
+								<div
+									dangerouslySetInnerHTML={{
+										__html: result.description,
+									}}
+								/>
+							) : (
+								<div>{result.description}</div>
+							))}
 					</article>
 				</ListItem>
 			);
@@ -61,22 +65,16 @@ class ResultList extends Component {
 	};
 
 	render() {
-		const { onData, ...props } = this.props;
+		const { renderData, ...props } = this.props;
 
-		return (
-			<ReactiveList
-				{...props}
-				onData={this.renderAsListItem}
-				listClass={container}
-			/>
-		);
+		return <ReactiveList {...props} renderData={this.renderAsListItem} listClass={container} />;
 	}
 }
 
 ResultList.propTypes = {
 	innerClass: types.style,
 	target: types.stringRequired,
-	onData: types.func,
+	renderData: types.func,
 };
 
 ResultList.defaultProps = {
@@ -84,4 +82,3 @@ ResultList.defaultProps = {
 };
 
 export default ResultList;
-
