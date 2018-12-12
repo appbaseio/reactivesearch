@@ -34,9 +34,9 @@ function timeSince(date) {
 	return `${Math.floor(seconds)} seconds`;
 }
 
-const onResultStats = (results, time) => (
+const onResultStats = stats => (
 	<Flex justifyContent="flex-end" style={{ padding: '0 1rem' }}>
-		{results} results found in {time}ms
+		{stats.totalResults} results found in {stats.time}ms
 	</Flex>
 );
 

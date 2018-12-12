@@ -10,9 +10,9 @@ import Link from '../styles/Link';
 import Avatar from '../styles/Avatar';
 import Button from '../styles/Button';
 
-const onResultStats = (results, time) => (
+const onResultStats = stats => (
 	<Flex justifyContent="flex-end">
-		{results} results found in {time}ms
+		{stats.totalResults} results found in {stats.time}ms
 	</Flex>
 );
 
