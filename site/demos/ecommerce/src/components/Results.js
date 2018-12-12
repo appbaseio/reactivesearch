@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import Flex, { FlexChild } from '../styles/Flex';
 import Topic, { price } from '../styles/Topic';
 
-const onResultStats = (results, time) => (
+const onResultStats = stats => (
 	<Flex justifyContent="flex-end" style={{ marginTop: '0.6rem' }}>
-		{results} results found in {time}ms
+		{stats.totalResults} results found in {stats.time}ms
 	</Flex>
 );
 

@@ -426,7 +426,24 @@ class ReactiveList extends Component {
 
 	renderResultStats = () => {
 		if (this.props.onResultStats && this.props.total) {
-			return this.props.onResultStats(this.props.total, this.props.time);
+			const results = parseHits(this.props.hits) || [];
+			const streamResults = parseHits(this.props.streamHits) || [];
+			let filteredResults = results;
+
+			if (streamResults.length) {
+				const ids = streamResults.map(item => item._id);
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+			}
+
+			const stats = {
+				totalResults: this.props.total,
+				totalPages: Math.ceil(this.props.total / this.props.size),
+				displayedResults: [...streamResults, ...filteredResults].length,
+				time: this.props.time,
+				currentPage: this.state.currentPage,
+			};
+
+			return this.props.onResultStats(stats);
 		} else if (this.props.total) {
 			return (
 				<p
