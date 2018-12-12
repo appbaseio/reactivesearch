@@ -164,8 +164,7 @@ class TextField extends Component {
 
 	renderIcons = () => (
 		<div>
-			{this.state.currentValue
-				&& this.props.showClear && (
+			{this.state.currentValue && this.props.showClear && (
 				<InputIcon onClick={this.clearValue} iconPosition="right">
 					{this.renderCancelIcon()}
 				</InputIcon>
@@ -194,7 +193,9 @@ class TextField extends Component {
 						onKeyDown={this.props.onKeyDown}
 						onKeyUp={this.props.onKeyUp}
 						autoFocus={this.props.autoFocus}
-						innerRef={this.props.innerRef}
+						innerRef={(c) => {
+							this._inputRef = c;
+						}}
 						themePreset={this.props.themePreset}
 						showClear={this.props.showClear}
 					/>
@@ -225,7 +226,6 @@ TextField.propTypes = {
 	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
-	innerRef: types.func,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
@@ -272,7 +272,11 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(
+const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(TextField);
+)(props => <TextField ref={props.myForwardedRef} {...props} />);
+
+export default React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));

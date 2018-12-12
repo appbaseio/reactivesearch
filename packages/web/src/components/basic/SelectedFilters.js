@@ -141,7 +141,10 @@ const mapDispatchtoProps = dispatch => ({
 	setValue: (component, value) => dispatch(setValue(component, value)),
 });
 
-export default connect(
+const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(withTheme(SelectedFilters));
+)(withTheme(props => <SelectedFilters ref={props.myForwardedRef} {...props} />));
+
+export default React.forwardRef((props, ref) =>
+	<ConnectedComponent {...props} myForwardedRef={ref} />);

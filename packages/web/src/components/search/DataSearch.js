@@ -554,7 +554,9 @@ class DataSearch extends Component {
 									showIcon={this.props.showIcon}
 									showClear={this.props.showClear}
 									iconPosition={this.props.iconPosition}
-									innerRef={this.props.innerRef}
+									innerRef={(c) => {
+										this._inputRef = c;
+									}}
 									{...getInputProps({
 										className: getClassName(this.props.innerClass, 'input'),
 										placeholder: this.props.placeholder,
@@ -682,7 +684,6 @@ DataSearch.propTypes = {
 	icon: types.children,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
-	innerRef: types.func,
 	isLoading: types.bool,
 	loader: types.title,
 	onError: types.func,
@@ -752,7 +753,11 @@ const mapDispatchtoProps = dispatch => ({
 	) => dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(
+
+const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(withTheme(DataSearch));
+)(withTheme(props => <DataSearch ref={props.myForwardedRef} {...props} />));
+
+export default React.forwardRef((props, ref) =>
+	<ConnectedComponent {...props} myForwardedRef={ref} />);

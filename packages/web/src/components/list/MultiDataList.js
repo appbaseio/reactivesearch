@@ -500,7 +500,11 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
-export default connect(
+const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(MultiDataList);
+)(props => <MultiDataList ref={props.myForwardedRef} {...props} />);
+
+export default React.forwardRef((props, ref) =>
+	<ConnectedComponent {...props} myForwardedRef={ref} />);
+

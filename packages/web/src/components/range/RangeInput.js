@@ -84,7 +84,7 @@ class RangeInput extends Component {
 		} else {
 			this.handleSlider({ start, end });
 		}
-	}
+	};
 
 	handleSlider = ({ start, end }) => {
 		this.setState({
@@ -178,7 +178,11 @@ const mapStateToProps = state => ({
 	themePreset: state.config.themePreset,
 });
 
-export default connect(
+const ConnectedComponent = connect(
 	mapStateToProps,
 	null,
-)(RangeInput);
+)(props => <RangeInput ref={props.myForwardedRef} {...props} />);
+
+export default React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));

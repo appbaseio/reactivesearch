@@ -397,7 +397,10 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(
+const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(SingleDropdownList);
+)(props => <SingleDropdownList ref={props.myForwardedRef} {...props} />);
+
+export default React.forwardRef((props, ref) =>
+	<ConnectedComponent {...props} myForwardedRef={ref} />);
