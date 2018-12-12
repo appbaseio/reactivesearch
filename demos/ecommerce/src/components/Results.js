@@ -33,8 +33,8 @@ const onData = data => ({
 const Results = () => (
 	<ResultCard
 		componentId="results"
+		renderData={onData}
 		dataField="model"
-		onData={onData}
 		onResultStats={onResultStats}
 		react={{
 			and: ['category', 'brand', 'rating', 'vehicle', 'price'],
