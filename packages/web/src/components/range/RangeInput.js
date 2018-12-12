@@ -178,11 +178,11 @@ const mapStateToProps = state => ({
 	themePreset: state.config.themePreset,
 });
 
-const ConnectedMyComponent = connect(
+const ConnectedComponent = connect(
 	mapStateToProps,
 	null,
 )(props => <RangeInput ref={props.myForwardedRef} {...props} />);
 
 export default React.forwardRef((props, ref) => (
-	<ConnectedMyComponent {...props} myForwardedRef={ref} />
+	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));

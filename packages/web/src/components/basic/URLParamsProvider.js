@@ -163,11 +163,11 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setValue(component, value, label, showFilter, URLParams)),
 });
 
-const ConnectedMyComponent = connect(
+const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
 )(props => <URLParamsProvider ref={props.myForwardedRef} {...props} />);
 
 export default React.forwardRef((props, ref) => (
-	<ConnectedMyComponent {...props} myForwardedRef={ref} />
+	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));

@@ -123,11 +123,11 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-const ConnectedMyComponent = connect(
+const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
 )(props => <DataController ref={props.myForwardedRef} {...props} />);
 
 export default React.forwardRef((props, ref) => (
-	<ConnectedMyComponent {...props} myForwardedRef={ref} />
+	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));

@@ -762,10 +762,10 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-const ConnectedMyComponent = connect(
+const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
 )(props => <ReactiveList ref={props.myForwardedRef} {...props} />);
 
 export default React.forwardRef((props, ref) =>
-	<ConnectedMyComponent {...props} myForwardedRef={ref} />);
+	<ConnectedComponent {...props} myForwardedRef={ref} />);
