@@ -28,7 +28,7 @@ import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
-import { connect } from '../../utils';
+import { connect, isFunction } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 
@@ -497,7 +497,7 @@ class DataSearch extends Component {
 		if (error && renderError && currentValue && !isLoading) {
 			return (
 				<SuggestionWrapper innerClass={innerClass} innerClassName="error" theme={theme} themePreset={themePreset}>
-					{typeof renderError === 'function' ? renderError(error) : renderError}
+					{isFunction(renderError) ? renderError(error) : renderError}
 				</SuggestionWrapper>
 			);
 		}

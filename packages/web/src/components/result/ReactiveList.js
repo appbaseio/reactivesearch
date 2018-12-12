@@ -26,7 +26,7 @@ import PoweredBy from './addons/PoweredBy';
 
 import Flex from '../../styles/Flex';
 import { resultStats, sortOptions } from '../../styles/results';
-import { connect } from '../../utils';
+import { connect, isFunction } from '../../utils';
 
 class ReactiveList extends Component {
 	constructor(props) {
@@ -548,7 +548,7 @@ class ReactiveList extends Component {
 	renderError = () => {
 		const { error, isLoading, renderError } = this.props;
 		if (renderError && error && !isLoading) {
-			return typeof renderError === 'function' ? renderError(error) : renderError;
+			return isFunction(renderError) ? renderError(error) : renderError;
 		}
 		return null;
 	}
