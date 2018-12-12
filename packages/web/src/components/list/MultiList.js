@@ -27,7 +27,7 @@ import Input from '../../styles/Input';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect } from '../../utils';
+import { connect, isFunction } from '../../utils';
 
 class MultiList extends Component {
 	constructor(props) {
@@ -56,7 +56,7 @@ class MultiList extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 		this.updateQueryOptions(props);
 
 		this.setReact(props);
@@ -414,12 +414,16 @@ class MultiList extends Component {
 
 	render() {
 		const {
-			selectAllLabel, renderItem, showLoadMore, loadMoreLabel,
+			selectAllLabel, renderItem, showLoadMore, loadMoreLabel, renderError, error,
 		} = this.props;
 		const { isLastBucket } = this.state;
 
 		if (this.props.isLoading && this.props.loader) {
 			return this.props.loader;
+		}
+
+		if (renderError && error) {
+			return isFunction(renderError) ? renderError(error) : renderError;
 		}
 
 		if (this.state.options.length === 0) {
@@ -545,6 +549,7 @@ MultiList.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	dataField: types.stringRequired,
+	error: types.title,
 	nestedField: types.string,
 	defaultValue: types.stringArray,
 	value: types.stringArray,
@@ -552,6 +557,7 @@ MultiList.propTypes = {
 	innerClass: types.style,
 	isLoading: types.bool,
 	loader: types.title,
+	onError: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
@@ -559,6 +565,7 @@ MultiList.propTypes = {
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
 	renderItem: types.func,
+	renderError: types.title,
 	transformData: types.func,
 	selectAllLabel: types.string,
 	showCheckbox: types.boolRequired,
@@ -604,6 +611,7 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({

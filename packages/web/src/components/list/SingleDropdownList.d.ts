@@ -13,9 +13,11 @@ export interface SingleDropdownList extends CommonProps {
 	loader?: types.title;
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
+	onError?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;
 	renderItem?: (...args: any[]) => any;
+	renderError?: types.title;
 	transformData?: (...args: any[]) => any;
 	selectAllLabel?: string;
 	showCount?: boolean;

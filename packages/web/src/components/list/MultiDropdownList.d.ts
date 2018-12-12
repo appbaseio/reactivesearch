@@ -12,10 +12,12 @@ export interface MultiDropdownList extends CommonProps {
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
+	onError?: (...args: any[]) => any;
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	renderItem?: (...args: any[]) => any;
+	renderError?: types.title;
 	transformData?: (...args: any[]) => any;
 	selectAllLabel?: string;
 	showCount?: boolean;

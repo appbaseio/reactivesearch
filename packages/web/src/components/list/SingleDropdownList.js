@@ -24,7 +24,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/Dropdown';
-import { connect } from '../../utils';
+import { connect, isFunction } from '../../utils';
 
 class SingleDropdownList extends Component {
 	constructor(props) {
@@ -44,7 +44,7 @@ class SingleDropdownList extends Component {
 
 		props.addComponent(this.internalComponent);
 		props.addComponent(props.componentId);
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 		this.updateQueryOptions(props);
 
 		this.setReact(props);
@@ -245,12 +245,18 @@ class SingleDropdownList extends Component {
 	};
 
 	render() {
-		const { showLoadMore, loadMoreLabel } = this.props;
+		const {
+			showLoadMore, loadMoreLabel, renderError, error,
+		} = this.props;
 		const { isLastBucket } = this.state;
 		let selectAll = [];
 
 		if (this.props.isLoading && this.props.loader) {
 			return this.props.loader;
+		}
+
+		if (renderError && error) {
+			return isFunction(renderError) ? renderError(error) : renderError;
 		}
 
 		if (this.state.options.length === 0) {
@@ -319,6 +325,7 @@ SingleDropdownList.propTypes = {
 	customQuery: types.func,
 	dataField: types.stringRequired,
 	defaultValue: types.string,
+	error: types.title,
 	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
@@ -327,9 +334,11 @@ SingleDropdownList.propTypes = {
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
+	onError: types.func,
 	placeholder: types.string,
 	react: types.react,
 	renderItem: types.func,
+	renderError: types.title,
 	transformData: types.func,
 	selectAllLabel: types.string,
 	showCount: types.bool,
@@ -375,6 +384,7 @@ const mapStateToProps = (state, props) => ({
 		|| '',
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
