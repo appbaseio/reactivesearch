@@ -42,11 +42,7 @@ class TextField extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 		if (this.props.defaultSelected !== nextProps.defaultSelected) {
 			this.setValue(nextProps.defaultSelected, true, nextProps);
 		} else if (this.state.currentValue !== nextProps.selectedValue) {
@@ -73,7 +69,7 @@ class TextField extends Component {
 			};
 		}
 		return null;
-	}
+	};
 
 	handleTextChange = debounce((value, props) => {
 		this.updateQuery(value, this.props);
@@ -82,24 +78,22 @@ class TextField extends Component {
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
 		const performUpdate = () => {
-			this.setState({
-				currentValue: value,
-			}, () => {
-				if (isDefaultValue) {
-					this.updateQuery(value, props);
-					if (props.onValueChange) props.onValueChange(value);
-				} else {
-					// debounce for handling text while typing
-					this.handleTextChange(value, props);
-				}
-			});
+			this.setState(
+				{
+					currentValue: value,
+				},
+				() => {
+					if (isDefaultValue) {
+						this.updateQuery(value, props);
+						if (props.onValueChange) props.onValueChange(value);
+					} else {
+						// debounce for handling text while typing
+						this.handleTextChange(value, props);
+					}
+				},
+			);
 		};
-		checkValueChange(
-			props.componentId,
-			value,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -117,7 +111,7 @@ class TextField extends Component {
 
 	clearValue = () => {
 		this.setValue('', true);
-	}
+	};
 
 	render() {
 		let style = {};
@@ -140,21 +134,17 @@ class TextField extends Component {
 				style={{ marginLeft: 0, ...this.props.style }}
 				{...getInnerKey(this.props.innerProps, 'item')}
 			>
-				{
-					this.props.showIcon && this.props.iconPosition === 'left'
-						? (
-							<Icon
-								name="search"
-								style={{
-									fontSize: 22,
-									top: 2,
-									...getInnerKey(this.props.innerStyle, 'icon'),
-								}}
-								{...getInnerKey(this.props.innerProps, 'icon')}
-							/>
-						)
-						: null
-				}
+				{this.props.showIcon && this.props.iconPosition === 'left' ? (
+					<Icon
+						name="search"
+						style={{
+							fontSize: 22,
+							top: 2,
+							...getInnerKey(this.props.innerStyle, 'icon'),
+						}}
+						{...getInnerKey(this.props.innerProps, 'icon')}
+					/>
+				) : null}
 				<Input
 					style={{
 						color: this.props.theming.textColor,
@@ -167,50 +157,41 @@ class TextField extends Component {
 					autoFocus={this.props.autoFocus}
 					{...getInnerKey(this.props.innerProps, 'input')}
 				/>
-				{
-					this.state.currentValue && this.props.showClear
-						? (
-							<Button
-								transparent
-								onPress={this.clearValue}
-								style={getInnerKey(this.props.innerStyle, 'button')}
-								{...getInnerKey(this.props.innerProps, 'button')}
-							>
-								<Icon
-									name="md-close"
-									style={{
-										fontSize: 22,
-										top: 3,
-										color: '#666',
-										marginLeft: 10,
-										marginRight: (
-											this.props.showIcon && this.props.iconPosition === 'right'
-												? 0
-												: 10
-										),
-										...getInnerKey(this.props.innerStyle, 'icon'),
-									}}
-									{...getInnerKey(this.props.innerProps, 'icon')}
-								/>
-							</Button>
-						)
-						: null
-				}
-				{
-					this.props.showIcon && this.props.iconPosition === 'right'
-						? (
-							<Icon
-								name="search"
-								style={{
-									fontSize: 22,
-									top: 2,
-									...getInnerKey(this.props.innerStyle, 'icon'),
-								}}
-								{...getInnerKey(this.props.innerProps, 'icon')}
-							/>
-						)
-						: null
-				}
+				{this.state.currentValue && this.props.showClear ? (
+					<Button
+						transparent
+						onPress={this.clearValue}
+						style={getInnerKey(this.props.innerStyle, 'button')}
+						{...getInnerKey(this.props.innerProps, 'button')}
+					>
+						<Icon
+							name="md-close"
+							style={{
+								fontSize: 22,
+								top: 3,
+								color: '#666',
+								marginLeft: 10,
+								marginRight:
+									this.props.showIcon && this.props.iconPosition === 'right'
+										? 0
+										: 10,
+								...getInnerKey(this.props.innerStyle, 'icon'),
+							}}
+							{...getInnerKey(this.props.innerProps, 'icon')}
+						/>
+					</Button>
+				) : null}
+				{this.props.showIcon && this.props.iconPosition === 'right' ? (
+					<Icon
+						name="search"
+						style={{
+							fontSize: 22,
+							top: 2,
+							...getInnerKey(this.props.innerStyle, 'icon'),
+						}}
+						{...getInnerKey(this.props.innerProps, 'icon')}
+					/>
+				) : null}
 			</Item>
 		);
 	}
@@ -256,8 +237,10 @@ TextField.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -269,4 +252,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(TextField));
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(TextField));

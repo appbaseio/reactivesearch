@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-	ReactiveBase,
-	MultiRange,
-	SelectedFilters,
-	ReactiveList,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, MultiRange, SelectedFilters, ReactiveList } from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
 
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
@@ -33,7 +28,7 @@ const reactiveListProps = {
 	dataField: 'original_title.raw',
 	from: 0,
 	size: 10,
-	onData: data => (<BookCard key={data._id} data={data} />),
+	onData: data => <BookCard key={data._id} data={data} />,
 	react: {
 		and: ['BookSensor'],
 	},
@@ -67,16 +62,12 @@ export default class Main extends Component {
 				<ReactiveBase {...settings} initialState={this.props.store}>
 					<div className="row">
 						<div className="col">
-							<MultiRange
-								{...multiRangeProps}
-							/>
+							<MultiRange {...multiRangeProps} />
 						</div>
 
 						<div className="col">
 							<SelectedFilters />
-							<ReactiveList
-								{...reactiveListProps}
-							/>
+							<ReactiveList {...reactiveListProps} />
 						</div>
 					</div>
 				</ReactiveBase>

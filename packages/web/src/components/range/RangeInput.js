@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import {
-	isEqual,
-	getClassName,
-} from '@appbaseio/reactivecore/lib/utils/helper';
+import { isEqual, getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import RangeSlider from './RangeSlider';
 import Input from '../../styles/Input';
@@ -16,27 +13,29 @@ import { connect } from '../../utils';
 class RangeInput extends Component {
 	constructor(props) {
 		super(props);
+
+		const value = props.selectedValue || props.value || props.defaultValue || props.range;
 		this.state = {
-			start: this.props.defaultSelected ? this.props.defaultSelected.start : props.range.start,
-			end: this.props.defaultSelected ? this.props.defaultSelected.end : props.range.end,
+			start: value.start,
+			end: value.end,
 			isStartValid: true,
 			isEndValid: true,
 		};
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.handleSlider(nextProps.defaultSelected);
+	componentDidUpdate(prevProps) {
+		if (!isEqual(this.props.value, prevProps.value)) {
+			this.handleSlider(this.props.value);
 		}
 	}
 
 	// for SSR
-	static defaultQuery = RangeSlider.defaultQuery
-
-	static parseValue = RangeSlider.parseValue
+	static defaultQuery = RangeSlider.defaultQuery;
+	static parseValue = RangeSlider.parseValue;
 
 	handleInputChange = (e) => {
 		const { name, value } = e.target;
+
 		if (Number.isNaN(value)) {
 			// set errors for invalid inputs
 			if (name === 'start') {
@@ -61,10 +60,31 @@ class RangeInput extends Component {
 				});
 			}
 		}
-		this.setState({
+
+		const currentValue = {
+			start: this.state.start,
+			end: this.state.end,
 			[name]: value,
-		});
+		};
+
+		const { value: valueProp, onChange } = this.props;
+		if (valueProp) {
+			if (onChange) onChange(currentValue);
+		} else {
+			this.setState({
+				[name]: value,
+			});
+		}
 	};
+
+	handleSliderChange = ([start, end]) => {
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange({ start, end });
+		} else {
+			this.handleSlider({ start, end });
+		}
+	}
 
 	handleSlider = ({ start, end }) => {
 		this.setState({
@@ -77,7 +97,7 @@ class RangeInput extends Component {
 				end,
 			});
 		}
-	}
+	};
 
 	render() {
 		const {
@@ -87,11 +107,13 @@ class RangeInput extends Component {
 			<Container style={style} className={className}>
 				<RangeSlider
 					{...rest}
-					defaultSelected={{
-						start: this.state.isStartValid ? Number(this.state.start) : this.props.range.start,
+					value={{
+						start: this.state.isStartValid
+							? Number(this.state.start)
+							: this.props.range.start,
 						end: this.state.isEndValid ? Number(this.state.end) : this.props.range.end,
 					}}
-					onValueChange={this.handleSlider}
+					onChange={this.handleSliderChange}
 					className={getClassName(this.props.innerClass, 'slider-container') || null}
 				/>
 				<Flex className={getClassName(this.props.innerClass, 'input-container') || null}>
@@ -106,12 +128,13 @@ class RangeInput extends Component {
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
 						/>
-						{
-							!this.state.isStartValid
-							&& <Content alert>Input range is invalid</Content>
-						}
+						{!this.state.isStartValid && (
+							<Content alert>Input range is invalid</Content>
+						)}
 					</Flex>
-					<Flex justifyContent="center" alignItems="center" flex={1}>-</Flex>
+					<Flex justifyContent="center" alignItems="center" flex={1}>
+						-
+					</Flex>
 					<Flex direction="column" flex={2}>
 						<Input
 							name="end"
@@ -123,10 +146,7 @@ class RangeInput extends Component {
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
 						/>
-						{
-							!this.state.isEndValid
-							&& <Content alert>Input range is invalid</Content>
-						}
+						{!this.state.isEndValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
 				</Flex>
 			</Container>
@@ -136,9 +156,10 @@ class RangeInput extends Component {
 
 RangeInput.propTypes = {
 	className: types.string,
-	defaultSelected: types.range,
+	defaultValue: types.range,
 	innerClass: types.style,
 	onValueChange: types.func,
+	onChange: types.func,
 	range: types.range,
 	stepValue: types.number,
 	style: types.style,
@@ -157,4 +178,7 @@ const mapStateToProps = state => ({
 	themePreset: state.config.themePreset,
 });
 
-export default connect(mapStateToProps, null)(RangeInput);
+export default connect(
+	mapStateToProps,
+	null,
+)(RangeInput);

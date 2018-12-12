@@ -7,10 +7,13 @@ export interface MultiList extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	dataField: string;
 	nestedField?: string;
-	defaultSelected?: types.stringArray;
+	defaultValue?: types.stringArray;
+	value?: types.stringArray;
 	filterLabel?: string;
 	innerClass?: types.style;
+	loader?: types.title;
 	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;

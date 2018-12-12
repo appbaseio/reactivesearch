@@ -7,10 +7,12 @@ export interface RatingsFilterProps extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	data?: types.data;
 	dataField: string;
-	defaultSelected?: types.range;
+	defaultValue?: types.range;
+	value?: types.range;
 	filterLabel?: string;
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 	react?: types.react;
 	title?: types.title;
 }

@@ -40,7 +40,6 @@ class ReactiveList extends Component {
 		this.initialFrom = currentPage * props.size; // used for page resetting on query change
 		this.state = {
 			from: this.initialFrom,
-			isLoading: true,
 			currentPage,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
@@ -58,17 +57,21 @@ class ReactiveList extends Component {
 		const options = getQueryOptions(this.props);
 		options.from = this.state.from;
 		if (this.props.sortOptions) {
-			options.sort = [{
-				[this.props.sortOptions[0].dataField]: {
-					order: this.props.sortOptions[0].sortBy,
+			options.sort = [
+				{
+					[this.props.sortOptions[0].dataField]: {
+						order: this.props.sortOptions[0].sortBy,
+					},
 				},
-			}];
+			];
 		} else if (this.props.sortBy) {
-			options.sort = [{
-				[this.props.dataField]: {
-					order: this.props.sortBy,
+			options.sort = [
+				{
+					[this.props.dataField]: {
+						order: this.props.sortBy,
+					},
 				},
-			}];
+			];
 		}
 
 		// Override sort query with defaultQuery's sort if defined
@@ -88,22 +91,24 @@ class ReactiveList extends Component {
 		// and only executing it with setReact() at core
 		const execute = false;
 
-		this.props.setQueryOptions(
-			this.props.componentId,
-			options,
-			execute,
-		);
+		this.props.setQueryOptions(this.props.componentId, options, execute);
 
 		if (this.defaultQuery) {
-			this.props.updateQuery({
-				componentId: this.internalComponent,
-				query,
-			}, execute);
+			this.props.updateQuery(
+				{
+					componentId: this.internalComponent,
+					query,
+				},
+				execute,
+			);
 		} else {
-			this.props.updateQuery({
-				componentId: this.internalComponent,
-				query: null,
-			}, execute);
+			this.props.updateQuery(
+				{
+					componentId: this.internalComponent,
+					query: null,
+				},
+				execute,
+			);
 		}
 
 		// query will be executed here
@@ -119,173 +124,176 @@ class ReactiveList extends Component {
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		const totalPages = Math.ceil(nextProps.total / nextProps.size) || 0;
+	componentDidUpdate(prevProps) {
+		const totalPages = Math.ceil(this.props.total / this.props.size) || 0;
 
 		if (
-			!isEqual(this.props.sortOptions, nextProps.sortOptions)
-			|| this.props.sortBy !== nextProps.sortBy
-			|| this.props.size !== nextProps.size
-			|| !isEqual(this.props.dataField, nextProps.dataField)
-			|| !isEqual(this.props.includeFields, nextProps.includeFields)
-			|| !isEqual(this.props.excludeFields, nextProps.excludeFields)
+			!isEqual(this.props.sortOptions, prevProps.sortOptions)
+			|| this.props.sortBy !== prevProps.sortBy
+			|| this.props.size !== prevProps.size
+			|| !isEqual(this.props.dataField, prevProps.dataField)
+			|| !isEqual(this.props.includeFields, prevProps.includeFields)
+			|| !isEqual(this.props.excludeFields, prevProps.excludeFields)
 		) {
-			const options = getQueryOptions(nextProps);
+			const options = getQueryOptions(this.props);
 			options.from = this.state.from;
-			if (nextProps.sortOptions) {
-				options.sort = [{
-					[nextProps.sortOptions[0].dataField]: {
-						order: nextProps.sortOptions[0].sortBy,
+			if (this.props.sortOptions) {
+				options.sort = [
+					{
+						[this.props.sortOptions[0].dataField]: {
+							order: this.props.sortOptions[0].sortBy,
+						},
 					},
-				}];
-			} else if (nextProps.sortBy) {
-				options.sort = [{
-					[nextProps.dataField]: {
-						order: nextProps.sortBy,
+				];
+			} else if (this.props.sortBy) {
+				options.sort = [
+					{
+						[this.props.dataField]: {
+							order: this.props.sortBy,
+						},
 					},
-				}];
+				];
 			}
 			this.props.setQueryOptions(this.props.componentId, options, true);
 		}
 
-		if (
-			nextProps.defaultQuery
-			&& !isEqual(nextProps.defaultQuery(), this.defaultQuery)
-		) {
-			const options = getQueryOptions(nextProps);
+		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
+			const options = getQueryOptions(this.props);
 			options.from = 0;
-			this.defaultQuery = nextProps.defaultQuery();
+			this.defaultQuery = this.props.defaultQuery();
 
 			const { sort, ...query } = this.defaultQuery;
 
 			if (sort) {
 				options.sort = this.defaultQuery.sort;
-				nextProps.setQueryOptions(nextProps.componentId, options, !query);
+				this.props.setQueryOptions(this.props.componentId, options, !query);
 			}
 
-			this.props.updateQuery({
-				componentId: this.internalComponent,
-				query,
-			}, true);
+			this.props.updateQuery(
+				{
+					componentId: this.internalComponent,
+					query,
+				},
+				true,
+			);
 
 			// reset page because of query change
-			this.setState({
-				currentPage: 0,
-				from: 0,
-			}, () => {
-				this.updatePageURL(0);
-			});
+			// eslint-disable-next-line
+			this.setState(
+				{
+					currentPage: 0,
+					from: 0,
+				},
+				() => {
+					this.updatePageURL(0);
+				},
+			);
 		}
 
-		if (this.props.stream !== nextProps.stream) {
-			this.props.setStreaming(nextProps.componentId, nextProps.stream);
+		if (this.props.stream !== prevProps.stream) {
+			this.props.setStreaming(this.props.componentId, this.props.stream);
 		}
 
-		if (!isEqual(nextProps.react, this.props.react)) {
-			this.setReact(nextProps);
+		if (!isEqual(prevProps.react, this.props.react)) {
+			this.setReact(this.props);
 		}
 
 		if (this.props.pagination) {
 			// called when page is changed
-			if (this.state.isLoading && (this.props.hits || nextProps.hits)) {
-				if (nextProps.onPageChange) {
-					nextProps.onPageChange(this.state.currentPage + 1, totalPages);
+			if (this.props.isLoading && (this.props.hits || prevProps.hits)) {
+				if (this.props.onPageChange) {
+					this.props.onPageChange(this.state.currentPage + 1, totalPages);
 				} else {
 					this.domNode.scrollTo(0, 0);
 				}
-				this.setState({
-					isLoading: false,
-				});
 			}
 
 			if (
-				this.props.currentPage !== nextProps.currentPage
-				&& nextProps.currentPage > 0
-				&& nextProps.currentPage <= totalPages
+				this.props.currentPage !== prevProps.currentPage
+				&& this.props.currentPage > 0
+				&& this.props.currentPage <= totalPages
 			) {
-				this.setPage(nextProps.currentPage - 1);
+				this.setPage(this.props.currentPage - 1);
 			}
 		}
 
-		if (!nextProps.pagination) {
-			if (this.props.hits && nextProps.hits) {
+		if (!this.props.pagination) {
+			if (this.props.hits && prevProps.hits) {
 				if (
-					this.props.hits.length !== nextProps.hits.length
-					|| nextProps.hits.length === nextProps.total
+					this.props.hits.length !== prevProps.hits.length
+					|| this.props.hits.length === this.props.total
 				) {
-					this.setState({
-						isLoading: false,
-					});
-
-					if (nextProps.hits.length < this.props.hits.length) {
+					if (this.props.hits.length < prevProps.hits.length) {
 						// query has changed
 						this.domNode.scrollTo(0, 0);
+						// eslint-disable-next-line
 						this.setState({
 							from: 0,
 						});
 					}
 				}
-			} else if ((!this.props.hits || !this.props.hits.length) && nextProps.hits) {
-				this.setState({
-					isLoading: false,
-				});
 			}
 		}
 
 		if (
-			nextProps.queryLog
+			prevProps.queryLog
 			&& this.props.queryLog
-			&& nextProps.queryLog !== this.props.queryLog
+			&& prevProps.queryLog !== this.props.queryLog
 		) {
 			// usecase:
 			// - query has changed from non-null prev query
 
-			if (nextProps.queryLog.from !== this.state.from) {
+			if (this.props.queryLog.from !== this.state.from) {
 				// query's 'from' key doesn't match the state's 'from' key,
 				// i.e. this query change was not triggered by the page change (loadMore)
-				this.setState({
-					currentPage: 0,
-				}, () => {
-					this.updatePageURL(0);
-				});
+				// eslint-disable-next-line
+				this.setState(
+					{
+						currentPage: 0,
+					},
+					() => {
+						this.updatePageURL(0);
+					},
+				);
 
-				if (nextProps.onPageChange) {
-					nextProps.onPageChange(1, totalPages);
+				if (this.props.onPageChange) {
+					this.props.onPageChange(1, totalPages);
 				}
-			} else if (
-				this.initialFrom
-				&& this.initialFrom === nextProps.queryLog.from
-			) {
+			} else if (this.initialFrom && this.initialFrom === this.props.queryLog.from) {
 				// [non-zero] initialFrom matches the current query's from
 				// but the query has changed
 
 				// we need to update the query options in this case
 				// because the initial load had set the query 'from' in the store
 				// which is not valid anymore because the query has changed
-				const options = getQueryOptions(nextProps);
+				const options = getQueryOptions(this.props);
 				options.from = 0;
 				this.initialFrom = 0;
 
-				if (nextProps.sortOptions) {
-					options.sort = [{
-						[nextProps.sortOptions[0].dataField]: {
-							order: nextProps.sortOptions[0].sortBy,
+				if (this.props.sortOptions) {
+					options.sort = [
+						{
+							[this.props.sortOptions[0].dataField]: {
+								order: this.props.sortOptions[0].sortBy,
+							},
 						},
-					}];
-				} else if (nextProps.sortBy) {
-					options.sort = [{
-						[nextProps.dataField]: {
-							order: nextProps.sortBy,
+					];
+				} else if (this.props.sortBy) {
+					options.sort = [
+						{
+							[this.props.dataField]: {
+								order: this.props.sortBy,
+							},
 						},
-					}];
+					];
 				}
 
 				this.props.setQueryOptions(this.props.componentId, options, true);
 			}
 		}
 
-		if (nextProps.pagination !== this.props.pagination) {
-			if (nextProps.pagination) {
+		if (prevProps.pagination !== this.props.pagination) {
+			if (this.props.pagination) {
 				this.domNode.addEventListener('scroll', this.scrollHandler);
 			} else {
 				this.domNode.removeEventListener('scroll', this.scrollHandler);
@@ -294,10 +302,10 @@ class ReactiveList extends Component {
 
 		// handle window url history change (on native back and forth interactions)
 		if (
-			this.state.currentPage !== nextProps.defaultPage
-			&& this.props.defaultPage !== nextProps.defaultPage
+			this.state.currentPage !== this.props.defaultPage
+			&& this.props.defaultPage !== prevProps.defaultPage
 		) {
-			this.setPage(nextProps.defaultPage >= 0 ? nextProps.defaultPage : 0);
+			this.setPage(this.props.defaultPage >= 0 ? this.props.defaultPage : 0);
 		}
 	}
 
@@ -316,7 +324,9 @@ class ReactiveList extends Component {
 			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
@@ -327,35 +337,35 @@ class ReactiveList extends Component {
 		options.size = props.size || 10;
 
 		if (props.sortOptions) {
-			options.sort = [{
-				[props.sortOptions[0].dataField]: {
-					order: props.sortOptions[0].sortBy,
+			options.sort = [
+				{
+					[props.sortOptions[0].dataField]: {
+						order: props.sortOptions[0].sortBy,
+					},
 				},
-			}];
+			];
 		} else if (props.sortBy) {
-			options.sort = [{
-				[props.dataField]: {
-					order: props.sortBy,
+			options.sort = [
+				{
+					[props.dataField]: {
+						order: props.sortBy,
+					},
 				},
-			}];
+			];
 		}
 
 		return options;
 	};
 
 	scrollHandler = () => {
-		let renderLoader = (
-			window.innerHeight + window.pageYOffset + 300
-		) >= document.body.offsetHeight;
+		let renderLoader
+			= window.innerHeight + window.pageYOffset + 300 >= document.body.offsetHeight;
 		if (this.props.scrollTarget) {
-			renderLoader = (
-				this.domNode.clientHeight + this.domNode.scrollTop + 300
-			) >= this.domNode.scrollHeight;
+			renderLoader
+				= this.domNode.clientHeight + this.domNode.scrollTop + 300
+				>= this.domNode.scrollHeight;
 		}
-		if (
-			!this.state.isLoading
-			&& renderLoader
-		) {
+		if (!this.props.isLoading && renderLoader) {
 			this.loadMore();
 		}
 	};
@@ -371,16 +381,15 @@ class ReactiveList extends Component {
 
 			this.setState({
 				from: value,
-				isLoading: true,
 			});
-			this.props.loadMore(this.props.componentId, {
-				...options,
-				from: value,
-			}, true);
-		} else if (this.state.isLoading) {
-			this.setState({
-				isLoading: false,
-			});
+			this.props.loadMore(
+				this.props.componentId,
+				{
+					...options,
+					from: value,
+				},
+				true,
+			);
 		}
 	};
 
@@ -394,18 +403,24 @@ class ReactiveList extends Component {
 			const value = this.props.size * page;
 			const options = getQueryOptions(this.props);
 			options.from = this.state.from;
-			this.setState({
-				from: value,
-				isLoading: true,
-				currentPage: page,
-			}, () => {
-				this.props.loadMore(this.props.componentId, {
-					...options,
+			this.setState(
+				{
 					from: value,
-				}, false);
+					currentPage: page,
+				},
+				() => {
+					this.props.loadMore(
+						this.props.componentId,
+						{
+							...options,
+							from: value,
+						},
+						false,
+					);
 
-				this.updatePageURL(page);
-			});
+					this.updatePageURL(page);
+				},
+			);
 		}
 	};
 
@@ -431,7 +446,12 @@ class ReactiveList extends Component {
 			return this.props.onResultStats(stats);
 		} else if (this.props.total) {
 			return (
-				<p className={`${resultStats} ${getClassName(this.props.innerClass, 'resultStats')}`}>
+				<p
+					className={`${resultStats} ${getClassName(
+						this.props.innerClass,
+						'resultStats',
+					)}`}
+				>
 					{this.props.total} results found in {this.props.time}ms
 				</p>
 			);
@@ -441,7 +461,7 @@ class ReactiveList extends Component {
 
 	renderNoResults = () => (
 		<p className={getClassName(this.props.innerClass, 'noResults') || null}>
-			{ this.props.onNoResults }
+			{this.props.onNoResults}
 		</p>
 	);
 
@@ -451,19 +471,24 @@ class ReactiveList extends Component {
 		// This fixes issue #371 (where sorting a multi-result page with infinite loader breaks)
 		options.from = 0;
 
-		options.sort = [{
-			[this.props.sortOptions[index].dataField]: {
-				order: this.props.sortOptions[index].sortBy,
+		options.sort = [
+			{
+				[this.props.sortOptions[index].dataField]: {
+					order: this.props.sortOptions[index].sortBy,
+				},
 			},
-		}];
+		];
 		this.props.setQueryOptions(this.props.componentId, options, true);
 
-		this.setState({
-			currentPage: 0,
-			from: 0,
-		}, () => {
-			this.updatePageURL(0);
-		});
+		this.setState(
+			{
+				currentPage: 0,
+				from: 0,
+			},
+			() => {
+				this.updatePageURL(0);
+			},
+		);
 	};
 
 	updatePageURL = (page) => {
@@ -476,11 +501,14 @@ class ReactiveList extends Component {
 				true,
 			);
 		}
-	}
+	};
 
 	triggerClickAnalytics = (searchPosition) => {
 		// click analytics would only work client side and after javascript loads
-		const { config, analytics: { searchId } } = this.props;
+		const {
+			config,
+			analytics: { searchId },
+		} = this.props;
 		const { url, app, credentials } = config;
 		if (config.analytics && url.endsWith('scalr.api.appbase.io') && searchId) {
 			fetch(`${url}/${app}/analytics`, {
@@ -494,7 +522,7 @@ class ReactiveList extends Component {
 				},
 			});
 		}
-	}
+	};
 
 	renderSortOptions = () => (
 		<select
@@ -502,11 +530,11 @@ class ReactiveList extends Component {
 			name="sort-options"
 			onChange={this.handleSortChange}
 		>
-			{
-				this.props.sortOptions.map((sort, index) => (
-					<option key={sort.label} value={index}>{sort.label}</option>
-				))
-			}
+			{this.props.sortOptions.map((sort, index) => (
+				<option key={sort.label} value={index}>
+					{sort.label}
+				</option>
+			))}
 		</select>
 	);
 
@@ -524,99 +552,79 @@ class ReactiveList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.state.isLoading && this.props.pagination && this.props.loader}
+				{this.props.isLoading && this.props.pagination && this.props.loader}
 				<Flex
 					labelPosition={this.props.sortOptions ? 'right' : 'left'}
 					className={getClassName(this.props.innerClass, 'resultsInfo')}
 				>
-					{
-						this.props.sortOptions
-							? this.renderSortOptions()
-							: null
-					}
-					{
-						this.props.showResultStats
-							? this.renderResultStats()
-							: null
-					}
+					{this.props.sortOptions ? this.renderSortOptions() : null}
+					{this.props.showResultStats ? this.renderResultStats() : null}
 				</Flex>
-				{
-					(
-						!this.state.isLoading
-						&& (results.length === 0 && streamResults.length === 0)
-					)
-						? this.renderNoResults()
-						: null
-				}
-				{
-					this.props.pagination && (
-						this.props.paginationAt === 'top'
-						|| this.props.paginationAt === 'both'
-					)
-						? (<Pagination
+				{!this.props.isLoading && (results.length === 0 && streamResults.length === 0)
+					? this.renderNoResults()
+					: null}
+				{this.props.pagination
+				&& (this.props.paginationAt === 'top' || this.props.paginationAt === 'both')
+					? (
+						<Pagination
 							pages={this.props.pages}
 							totalPages={Math.ceil(this.props.total / this.props.size)}
 							currentPage={this.state.currentPage}
 							setPage={this.setPage}
 							innerClass={this.props.innerClass}
 							fragmentName={this.props.componentId}
-						/>)
-						: null
-				}
-				{
-					this.props.onAllData
-						? (this.props.onAllData(
-							results,
-							streamResults,
-							this.loadMore,
-							{ base: (currentPage * size), triggerClickAnalytics: this.triggerClickAnalytics },
-						))
-						: (
-							<div className={`${this.props.listClass} ${getClassName(this.props.innerClass, 'list')}`}>
-								{
-									[...streamResults, ...filteredResults]
-										.map((item, index) =>
-											onData(item, () => this.triggerClickAnalytics((currentPage * size) + index)))
-								}
-							</div>
-						)
-				}
-				{
-					this.state.isLoading && !this.props.pagination
-						? this.props.loader || (
-							<div style={{ textAlign: 'center', margin: '20px 0', color: '#666' }}>
+						/>
+					) : null}
+				{this.props.onAllData ? (
+					this.props.onAllData(results, streamResults, this.loadMore, {
+						base: currentPage * size,
+						triggerClickAnalytics: this.triggerClickAnalytics,
+					})
+				) : (
+					<div
+						className={`${this.props.listClass} ${getClassName(
+							this.props.innerClass,
+							'list',
+						)}`}
+					>
+						{[...streamResults, ...filteredResults].map((item, index) =>
+							onData(item, () =>
+								this.triggerClickAnalytics((currentPage * size) + index)))}
+					</div>
+				)}
+				{this.props.isLoading && !this.props.pagination
+					? this.props.loader || (
+						<div
+							style={{
+								textAlign: 'center',
+								margin: '20px 0',
+								color: '#666',
+							}}
+						>
 								Loading...
-							</div>
-						)
-						: null
-				}
-				{
-					this.props.pagination && (
-						this.props.paginationAt === 'bottom'
-						|| this.props.paginationAt === 'both'
-					)
-						? (<Pagination
+						</div>
+					) // prettier-ignore
+					: null}
+				{this.props.pagination
+				&& (this.props.paginationAt === 'bottom' || this.props.paginationAt === 'both')
+					? (
+						<Pagination
 							pages={this.props.pages}
 							totalPages={Math.ceil(this.props.total / this.props.size)}
 							currentPage={this.state.currentPage}
 							setPage={this.setPage}
 							innerClass={this.props.innerClass}
 							fragmentName={this.props.componentId}
-						/>)
-						: null
-				}
-				{
-					this.props.config.url.endsWith('appbase.io') && results.length
-						? (
-							<Flex
-								direction="row-reverse"
-								className={getClassName(this.props.innerClass, 'poweredBy')}
-							>
-								<PoweredBy />
-							</Flex>
-						)
-						: null
-				}
+						/>
+					) : null}
+				{this.props.config.url.endsWith('appbase.io') && results.length ? (
+					<Flex
+						direction="row-reverse"
+						className={getClassName(this.props.innerClass, 'poweredBy')}
+					>
+						<PoweredBy />
+					</Flex>
+				) : null}
 			</div>
 		);
 	}
@@ -691,10 +699,10 @@ ReactiveList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	defaultPage: (
-		state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value - 1
-	) || -1,
+	defaultPage:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value - 1)
+		|| -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	isLoading: state.isLoading[props.componentId] || false,
 	streamHits: state.streamHits[props.componentId],
@@ -720,4 +728,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveList);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(ReactiveList);

@@ -30,92 +30,80 @@ class SingleDropdownList extends Component {
 	constructor(props) {
 		super(props);
 
+		const defaultValue = props.defaultValue || props.value;
+		const currentValue = props.selectedValue || defaultValue;
+
 		this.state = {
-			currentValue: '',
+			currentValue: currentValue || '',
 			options: [],
-			after: {},	// for composite aggs
+			after: {}, // for composite aggs
 			isLastBucket: false,
 		};
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
+
+		props.addComponent(this.internalComponent);
+		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
+		this.updateQueryOptions(props);
 
-	componentWillMount() {
-		this.props.addComponent(this.internalComponent);
-		this.props.addComponent(this.props.componentId);
-		this.updateQueryOptions(this.props);
+		this.setReact(props);
+		const hasMounted = false;
 
-		this.setReact(this.props);
-
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected);
+		if (currentValue) {
+			this.setValue(currentValue, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
-		checkPropChange(
-			this.props.options,
-			nextProps.options,
-			() => {
-				const { showLoadMore, dataField } = nextProps;
-				const { options } = this.state;
-				if (showLoadMore) {
-					// append options with showLoadMore
-					const { buckets } = nextProps.options[dataField];
-					const nextOptions = [
-						...options,
-						...buckets.map(bucket => ({
-							key: bucket.key[dataField],
-							doc_count: bucket.doc_count,
-						})),
-					];
-					const after = nextProps.options[dataField].after_key;
-					// detect the last bucket by checking if the next set of buckets were empty
-					const isLastBucket = !buckets.length;
-					this.setState({
-						after: {
-							after,
-						},
-						isLastBucket,
-						options: nextOptions,
-					});
-				} else {
-					this.setState({
-						options: nextProps.options[nextProps.dataField]
-							? nextProps.options[nextProps.dataField].buckets
-							: [],
-					});
-				}
-			},
-		);
-		checkSomePropChange(
-			this.props,
-			nextProps,
-			['size', 'sortBy'],
-			() => this.updateQueryOptions(nextProps),
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
+		checkPropChange(this.props.options, prevProps.options, () => {
+			const { showLoadMore, dataField } = this.props;
+			const { options } = this.state;
+			if (showLoadMore) {
+				// append options with showLoadMore
+				const { buckets } = this.props.options[dataField];
+				const nextOptions = [
+					...options,
+					...buckets.map(bucket => ({
+						key: bucket.key[dataField],
+						doc_count: bucket.doc_count,
+					})),
+				];
+				const after = this.props.options[dataField].after_key;
+				// detect the last bucket by checking if the next set of buckets were empty
+				const isLastBucket = !buckets.length;
+				this.setState({
+					after: {
+						after,
+					},
+					isLastBucket,
+					options: nextOptions,
+				});
+			} else {
+				this.setState({
+					options: this.props.options[dataField]
+						? this.props.options[dataField].buckets
+						: [],
+				});
+			}
+		});
+		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
+			this.updateQueryOptions(this.props),
 		);
 
-		checkPropChange(
-			this.props.dataField,
-			nextProps.dataField,
-			() => {
-				this.updateQueryOptions(nextProps);
-				this.updateQuery(this.state.currentValue, nextProps);
-			},
-		);
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateQueryOptions(this.props);
+			this.updateQuery(this.state.currentValue, this.props);
+		});
 
-		if (this.props.defaultSelected !== nextProps.defaultSelected) {
-			this.setValue(nextProps.defaultSelected);
-		} else if (this.state.currentValue !== nextProps.selectedValue) {
-			this.setValue(nextProps.selectedValue || '');
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value);
+		} else if (
+			this.state.currentValue !== this.props.selectedValue
+			&& this.props.selectedValue !== prevProps.selectedValue
+		) {
+			this.setValue(this.props.selectedValue || '');
 		}
 	}
 
@@ -130,7 +118,9 @@ class SingleDropdownList extends Component {
 			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
@@ -174,9 +164,9 @@ class SingleDropdownList extends Component {
 		}
 
 		return query;
-	}
+	};
 
-	setValue = (value, props = this.props) => {
+	setValue = (value, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -184,21 +174,25 @@ class SingleDropdownList extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState({
-				currentValue: value,
-			}, () => {
+			const handleUpdates = () => {
 				this.updateQuery(value, props);
 				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);
-			});
+			};
+
+			if (hasMounted) {
+				this.setState(
+					{
+						currentValue: value,
+					},
+					handleUpdates,
+				);
+			} else {
+				handleUpdates();
+			}
 		};
 
-		checkValueChange(
-			props.componentId,
-			value,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -230,44 +224,63 @@ class SingleDropdownList extends Component {
 			});
 		}
 		// for a new query due to other changes don't append after to get fresh results
-		const queryOptions = SingleDropdownList
-			.generateQueryOptions(props, addAfterKey ? this.state.after : {});
+		const queryOptions = SingleDropdownList.generateQueryOptions(
+			props,
+			addAfterKey ? this.state.after : {},
+		);
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
 	handleLoadMore = () => {
 		this.updateQueryOptions(this.props, true);
-	}
+	};
+
+	handleChange = (item) => {
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(item);
+		} else {
+			this.setValue(item);
+		}
+	};
 
 	render() {
 		const { showLoadMore, loadMoreLabel } = this.props;
 		const { isLastBucket } = this.state;
 		let selectAll = [];
 
+		if (this.props.isLoading && this.props.loader) {
+			return this.props.loader;
+		}
+
 		if (this.state.options.length === 0) {
 			return null;
 		}
 
 		if (this.props.selectAllLabel) {
-			selectAll = [{
-				key: this.props.selectAllLabel,
-			}];
+			selectAll = [
+				{
+					key: this.props.selectAllLabel,
+				},
+			];
 		}
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<Dropdown
 					innerClass={this.props.innerClass}
-					items={
-						[
-							...selectAll,
-							...this.state.options
-								.filter(item => String(item.key).trim().length)
-								.map(item => ({ ...item, key: String(item.key) })),
-						]
-					}
-					onChange={this.setValue}
+					items={[
+						...selectAll,
+						...this.state.options
+							.filter(item => String(item.key).trim().length)
+							.map(item => ({ ...item, key: String(item.key) })),
+					]}
+					onChange={this.handleChange}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
 					labelField="key"
@@ -277,7 +290,8 @@ class SingleDropdownList extends Component {
 					showSearch={this.props.showSearch}
 					transformData={this.props.transformData}
 					footer={
-						showLoadMore && !isLastBucket && (
+						showLoadMore
+						&& !isLastBucket && (
 							<div css={loadMoreContainer}>
 								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
 							</div>
@@ -304,11 +318,15 @@ SingleDropdownList.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	dataField: types.stringRequired,
-	defaultSelected: types.string,
+	defaultValue: types.string,
+	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
+	isLoading: types.bool,
+	loader: types.title,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	react: types.react,
 	renderListItem: types.func,
@@ -347,11 +365,15 @@ SingleDropdownList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	options: props.nestedField && state.aggregations[props.componentId]
-		? state.aggregations[props.componentId].reactivesearch_nested
-		: state.aggregations[props.componentId],
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || '',
+	options:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId],
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| '',
+	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 });
 
@@ -365,4 +387,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(SingleDropdownList);

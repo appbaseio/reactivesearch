@@ -9,11 +9,9 @@ const todos = (state = [], action) => {
 					completed: false,
 				},
 			];
-		case 'TOGGLE_TODO':
-			return state.map(todo =>
-				((todo.id === action.id)
-					? { ...todo, completed: !todo.completed }
-					: todo));
+		case 'TOGGLE_TODO': // eslint-disable-next-line
+			return state.map(
+				todo => (todo.id === action.id ? { ...todo, completed: !todo.completed } : todo));
 		default:
 			return state;
 	}

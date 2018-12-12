@@ -15,8 +15,8 @@ class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="car-store"
-				credentials="cf7QByt5e:d2d60548-82a9-43cc-8b40-93cbbe75c34c"
+				app="carstore-dataset"
+				credentials="4HWI27QmA:58c731f7-79ab-4f55-a590-7e15c7e36721"
 			>
 				<div className="row">
 					<div className="col">
@@ -25,9 +25,9 @@ class Main extends Component {
 							componentId="CarSensor"
 							defaultQuery={() => ({
 								aggs: {
-									'brand.raw': {
+									'brand.keyword': {
 										terms: {
-											field: 'brand.raw',
+											field: 'brand.keyword',
 											order: {
 												_count: 'desc',
 											},
@@ -44,7 +44,7 @@ class Main extends Component {
 					<div className="col">
 						<ReactiveList
 							componentId="SearchResult"
-							dataField="name"
+							dataField="model"
 							title="ReactiveList"
 							from={0}
 							size={20}
@@ -64,7 +64,9 @@ class Main extends Component {
 		return (
 			<div key={data._id}>
 				<h2>{data.name}</h2>
-				<p>{data.price} - {data.rating} stars rated</p>
+				<p>
+					{data.price} - {data.rating} stars rated
+				</p>
 			</div>
 		);
 	}
@@ -76,7 +78,7 @@ class CustomComponent extends Component {
 		this.props.setQuery({
 			query: {
 				term: {
-					brand: value,
+					'brand.keyword': value,
 				},
 			},
 			value,
@@ -85,8 +87,17 @@ class CustomComponent extends Component {
 
 	render() {
 		if (this.props.aggregations) {
-			return this.props.aggregations['brand.raw'].buckets.map(item => (
-				<div key={item.key} onClick={() => this.setValue(item.key)}>{item.key}</div> // eslint-disable-line
+			return this.props.aggregations['brand.keyword'].buckets.map(item => (
+				<button
+					key={item.key}
+					onClick={() => this.setValue(item.key)}
+					style={{
+						display: 'block',
+						margin: '5px 0',
+					}}
+				>
+					{item.key}
+				</button>
 			));
 		}
 

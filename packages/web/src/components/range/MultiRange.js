@@ -25,45 +25,48 @@ class MultiRange extends Component {
 	constructor(props) {
 		super(props);
 
+		const defaultValue = props.defaultValue || props.value;
+		const value = props.selectedValue || defaultValue || [];
+		const currentValue = MultiRange.parseValue(value, props);
+
+		const selectedValues = {};
+		currentValue.forEach((item) => {
+			selectedValues[item.label] = true;
+		});
+
 		this.state = {
-			currentValue: [],
-			showModal: false,
+			currentValue,
 			// selectedValues hold the selected items as keys for O(1) complexity
-			selectedValues: {},
+			selectedValues,
 		};
 
 		this.type = 'range';
 		this.locked = false;
+
+		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
+		this.setReact(props);
+		const hasMounted = false;
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
-
-		if (this.props.selectedValue) {
-			this.selectItem(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.selectItem(this.props.defaultSelected, true);
+		if (value.length) {
+			this.selectItem(value, true, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
-			this.updateQuery(this.state.currentValue, nextProps);
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateQuery(this.state.currentValue, this.props);
 		});
 
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.selectItem(nextProps.defaultSelected, true);
-		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)
-			&& (nextProps.selectedValue || nextProps.selectedValue === null)) {
-			this.selectItem(nextProps.selectedValue, true);
+		if (!isEqual(this.props.value, prevProps.value)) {
+			this.selectItem(this.props.value);
+		} else if (
+			!isEqual(this.state.currentValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
+		) {
+			this.selectItem(this.props.selectedValue || null);
 		}
 	}
 
@@ -78,9 +81,8 @@ class MultiRange extends Component {
 	}
 
 	// parses range label to get start and end
-	static parseValue = (value, props) => (value
-		? props.data.filter(item => value.includes(item.label))
-		: null)
+	static parseValue = (value, props) =>
+		(value ? props.data.filter(item => value.includes(item.label)) : null);
 
 	static defaultQuery = (values, props) => {
 		const generateRangeQuery = (dataField, items) => {
@@ -109,9 +111,9 @@ class MultiRange extends Component {
 			return query;
 		}
 		return null;
-	}
+	};
 
-	selectItem = (item, isDefaultValue = false, props = this.props) => {
+	selectItem = (item, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -119,7 +121,6 @@ class MultiRange extends Component {
 
 		this.locked = true;
 		let { currentValue, selectedValues } = this.state;
-
 		if (!item) {
 			currentValue = [];
 			selectedValues = {};
@@ -138,29 +139,28 @@ class MultiRange extends Component {
 			currentValue = [...currentValue, currentItem];
 			selectedValues = { ...selectedValues, [item]: true };
 		}
+
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-				selectedValues,
-			}, () => {
+			const handleUpdates = () => {
 				this.updateQuery(currentValue, props);
 				this.locked = false;
 				if (props.onValueChange) props.onValueChange(currentValue);
-			});
+			};
+
+			if (hasMounted) {
+				this.setState(
+					{
+						currentValue,
+						selectedValues,
+					},
+					handleUpdates,
+				);
+			} else {
+				handleUpdates();
+			}
 		};
 
-		checkValueChange(
-			props.componentId,
-			currentValue,
-			props.beforeValueChange,
-			performUpdate,
-		);
-	}
-
-	toggleModal = () => {
-		this.setState({
-			showModal: !this.state.showModal,
-		});
+		checkValueChange(props.componentId, currentValue, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -178,35 +178,45 @@ class MultiRange extends Component {
 	};
 
 	handleClick = (e) => {
-		this.selectItem(e.target.value);
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(e);
+		} else {
+			this.selectItem(e.target.value);
+		}
 	};
 
 	render() {
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<UL className={getClassName(this.props.innerClass, 'list') || null}>
-					{
-						this.props.data.map(item => (
-							<li key={item.label} className={`${this.state.selectedValues[item.label] ? 'active' : ''}`}>
-								<Checkbox
-									className={getClassName(this.props.innerClass, 'checkbox') || null}
-									id={`${this.props.componentId}-${item.label}`}
-									name={this.props.componentId}
-									value={item.label}
-									onChange={this.handleClick}
-									checked={!!this.state.selectedValues[item.label]}
-									show={this.props.showCheckbox}
-								/>
-								<label
-									className={getClassName(this.props.innerClass, 'label') || null}
-									htmlFor={`${this.props.componentId}-${item.label}`}
-								>
-									{item.label}
-								</label>
-							</li>
-						))
-					}
+					{this.props.data.map(item => (
+						<li
+							key={item.label}
+							className={`${this.state.selectedValues[item.label] ? 'active' : ''}`}
+						>
+							<Checkbox
+								className={getClassName(this.props.innerClass, 'checkbox') || null}
+								id={`${this.props.componentId}-${item.label}`}
+								name={this.props.componentId}
+								value={item.label}
+								onChange={this.handleClick}
+								checked={!!this.state.selectedValues[item.label]}
+								show={this.props.showCheckbox}
+							/>
+							<label
+								className={getClassName(this.props.innerClass, 'label') || null}
+								htmlFor={`${this.props.componentId}-${item.label}`}
+							>
+								{item.label}
+							</label>
+						</li>
+					))}
 				</UL>
 			</Container>
 		);
@@ -227,11 +237,13 @@ MultiRange.propTypes = {
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
-	defaultSelected: types.stringArray,
+	defaultValue: types.stringArray,
+	value: types.stringArray,
 	filterLabel: types.filterLabel,
 	innerClass: types.style,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	react: types.react,
 	showCheckbox: types.boolRequired,
@@ -265,4 +277,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(MultiRange);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(MultiRange);

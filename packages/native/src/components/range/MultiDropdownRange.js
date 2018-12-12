@@ -1,18 +1,7 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { View, Modal, ListView, TouchableWithoutFeedback } from 'react-native';
-import {
-	CheckBox,
-	Text,
-	Body,
-	Item,
-	Header,
-	Left,
-	Button,
-	Icon,
-	Title,
-	Right,
-} from 'native-base';
+import { CheckBox, Text, Body, Item, Header, Left, Button, Icon, Title, Right } from 'native-base';
 
 import {
 	addComponent,
@@ -44,8 +33,8 @@ class MultiDropdownRange extends Component {
 		};
 
 		this.ds = new ListView.DataSource({
-			rowHasChanged: (r1, r2) => r1.start !== r2.start
-			|| r1.end !== r2.end || r1.label !== r2.label,
+			rowHasChanged: (r1, r2) =>
+				r1.start !== r2.start || r1.end !== r2.end || r1.label !== r2.label,
 		});
 
 		// selectedValues hold the selected items as keys for O(1) complexity
@@ -67,11 +56,7 @@ class MultiDropdownRange extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
 		checkPropChange(this.props.dataField, nextProps.dataField, () => {
 			this.updateQuery(this.state.currentValue, nextProps);
@@ -79,8 +64,10 @@ class MultiDropdownRange extends Component {
 
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.selectItem(nextProps.defaultSelected, true);
-		} else if (!isEqual(this.state.currentValue, nextProps.selectedValue)
-			&& (nextProps.selectedValue || nextProps.selectedValue === null)) {
+		} else if (
+			!isEqual(this.state.currentValue, nextProps.selectedValue) &&
+			(nextProps.selectedValue || nextProps.selectedValue === null)
+		) {
 			this.selectItem(nextProps.selectedValue, true);
 		}
 	}
@@ -139,7 +126,7 @@ class MultiDropdownRange extends Component {
 		} else if (isDefaultValue) {
 			// checking if the items in defaultSeleted exist in the data prop
 			currentValue = props.data.filter(value => item.includes(value.label));
-			currentValue.forEach((value) => {
+			currentValue.forEach(value => {
 				this.selectedValues = { ...this.selectedValues, [value.label]: true };
 			});
 		} else if (this.selectedValues[item]) {
@@ -152,21 +139,19 @@ class MultiDropdownRange extends Component {
 			this.selectedValues = { ...this.selectedValues, [item]: true };
 		}
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-			}, () => {
-				this.updateQuery(currentValue, props);
-				this.locked = false;
-				if (props.onValueChange) props.onValueChange(currentValue);
-			});
+			this.setState(
+				{
+					currentValue,
+				},
+				() => {
+					this.updateQuery(currentValue, props);
+					this.locked = false;
+					if (props.onValueChange) props.onValueChange(currentValue);
+				},
+			);
 		};
 
-		checkValueChange(
-			props.componentId,
-			currentValue,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, currentValue, props.beforeValueChange, performUpdate);
 	};
 
 	toggleModal = () => {
@@ -192,114 +177,112 @@ class MultiDropdownRange extends Component {
 		const { color, ...checkBoxStyles } = getInnerKey(this.props.innerStyle, 'checkbox');
 		return (
 			<View>
-				{
-					this.state.showModal
-						? (
-							<Modal
-								supportedOrientations={this.props.supportedOrientations || null}
-								transparent={false}
-								visible={this.state.showModal}
-								onRequestClose={this.toggleModal}
-								{...getInnerKey(this.props.innerProps, 'modal')}
-							>
-								<Header {...getInnerKey(this.props.innerProps, 'header')}>
-									<Left style={getInnerKey(this.props.innerStyle, 'left')}>
-										<Button
-											transparent
-											onPress={this.toggleModal}
-											style={getInnerKey(this.props.innerStyle, 'button')}
-											{...getInnerKey(this.props.innerProps, 'button')}
-										>
-											<Icon
-												name="arrow-back"
-												color={this.props.theming.primaryColor}
-												style={getInnerKey(this.props.innerStyle, 'icon')}
-												{...getInnerKey(this.props.innerProps, 'icon')}
-											/>
-										</Button>
-									</Left>
-									<Body style={getInnerKey(this.props.innerStyle, 'body')}>
-										<Title
-											style={getInnerKey(this.props.innerStyle, 'title')}
-											{...getInnerKey(this.props.innerProps, 'title')}
-										>
-											{this.props.placeholder}
-										</Title>
-									</Body>
-									<Right style={getInnerKey(this.props.innerStyle, 'right')} />
-								</Header>
-								<ListView
-									dataSource={this.ds.cloneWithRows(this.props.data)}
-									enableEmptySections
-									renderRow={item => (
-										<TouchableWithoutFeedback onPress={() => this.selectItem(item.label)}>
-											<View style={{
-												flex: 1,
-												flexDirection: 'row',
-												padding: 15,
-												borderBottomColor: '#c9c9c9',
-												borderBottomWidth: 0.5,
-											}}
-											>
-												<CheckBox
-													onPress={() => this.selectItem(item.label)}
-													checked={!!this.selectedValues[item.label]}
-													color={color || this.props.theming.primaryColor}
-													style={checkBoxStyles}
-													{...getInnerKey(this.props.innerProps, 'checkbox')}
-												/>
-												<Text
-													style={{
-														color: this.props.theming.textColor,
-														marginLeft: 20,
-														...getInnerKey(this.props.innerStyle, 'label'),
-													}}
-													{...getInnerKey(this.props.innerProps, 'text')}
-												>
-													{item.label}
-												</Text>
-											</View>
-										</TouchableWithoutFeedback>
-									)}
-									{...getInnerKey(this.props.innerProps, 'listView')}
-								/>
-							</Modal>)
-						: (
-							<Item
-								regular
-								style={{ marginLeft: 0 }}
-								{...getInnerKey(this.props.innerProps, 'text')}
-							>
-								<TouchableWithoutFeedback
+				{this.state.showModal ? (
+					<Modal
+						supportedOrientations={this.props.supportedOrientations || null}
+						transparent={false}
+						visible={this.state.showModal}
+						onRequestClose={this.toggleModal}
+						{...getInnerKey(this.props.innerProps, 'modal')}
+					>
+						<Header {...getInnerKey(this.props.innerProps, 'header')}>
+							<Left style={getInnerKey(this.props.innerStyle, 'left')}>
+								<Button
+									transparent
 									onPress={this.toggleModal}
+									style={getInnerKey(this.props.innerStyle, 'button')}
+									{...getInnerKey(this.props.innerProps, 'button')}
 								>
-									<Text
-										numberOfLines={1}
-										ellipsizeMode="tail"
+									<Icon
+										name="arrow-back"
+										color={this.props.theming.primaryColor}
+										style={getInnerKey(this.props.innerStyle, 'icon')}
+										{...getInnerKey(this.props.innerProps, 'icon')}
+									/>
+								</Button>
+							</Left>
+							<Body style={getInnerKey(this.props.innerStyle, 'body')}>
+								<Title
+									style={getInnerKey(this.props.innerStyle, 'title')}
+									{...getInnerKey(this.props.innerProps, 'title')}
+								>
+									{this.props.placeholder}
+								</Title>
+							</Body>
+							<Right style={getInnerKey(this.props.innerStyle, 'right')} />
+						</Header>
+						<ListView
+							dataSource={this.ds.cloneWithRows(this.props.data)}
+							enableEmptySections
+							renderRow={item => (
+								<TouchableWithoutFeedback
+									onPress={() => this.selectItem(item.label)}
+								>
+									<View
 										style={{
 											flex: 1,
-											alignItems: 'center',
-											color: this.state.currentDate ? this.props.theming.textColor : '#555',
-											fontSize: 17,
-											height: 50,
-											lineHeight: 24,
-											paddingLeft: 8,
-											paddingRight: 5,
-											paddingTop: 12,
-											...getInnerKey(this.props.innerStyle, 'label'),
+											flexDirection: 'row',
+											padding: 15,
+											borderBottomColor: '#c9c9c9',
+											borderBottomWidth: 0.5,
 										}}
-										{...getInnerKey(this.props.innerProps, 'text')}
 									>
-										{
-											Object.keys(this.state.currentValue).length
-												? this.state.currentValue.map(item => item.label).join(', ')
-												: this.props.placeholder
-										}
-									</Text>
+										<CheckBox
+											onPress={() => this.selectItem(item.label)}
+											checked={!!this.selectedValues[item.label]}
+											color={color || this.props.theming.primaryColor}
+											style={checkBoxStyles}
+											{...getInnerKey(this.props.innerProps, 'checkbox')}
+										/>
+										<Text
+											style={{
+												color: this.props.theming.textColor,
+												marginLeft: 20,
+												...getInnerKey(this.props.innerStyle, 'label'),
+											}}
+											{...getInnerKey(this.props.innerProps, 'text')}
+										>
+											{item.label}
+										</Text>
+									</View>
 								</TouchableWithoutFeedback>
-							</Item>)
-
-				}
+							)}
+							{...getInnerKey(this.props.innerProps, 'listView')}
+						/>
+					</Modal>
+				) : (
+					<Item
+						regular
+						style={{ marginLeft: 0 }}
+						{...getInnerKey(this.props.innerProps, 'text')}
+					>
+						<TouchableWithoutFeedback onPress={this.toggleModal}>
+							<Text
+								numberOfLines={1}
+								ellipsizeMode="tail"
+								style={{
+									flex: 1,
+									alignItems: 'center',
+									color: this.state.currentDate
+										? this.props.theming.textColor
+										: '#555',
+									fontSize: 17,
+									height: 50,
+									lineHeight: 24,
+									paddingLeft: 8,
+									paddingRight: 5,
+									paddingTop: 12,
+									...getInnerKey(this.props.innerStyle, 'label'),
+								}}
+								{...getInnerKey(this.props.innerProps, 'text')}
+							>
+								{Object.keys(this.state.currentValue).length
+									? this.state.currentValue.map(item => item.label).join(', ')
+									: this.props.placeholder}
+							</Text>
+						</TouchableWithoutFeedback>
+					</Item>
+				)}
 			</View>
 		);
 	}
@@ -352,4 +335,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(MultiDropdownRange));
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(MultiDropdownRange));

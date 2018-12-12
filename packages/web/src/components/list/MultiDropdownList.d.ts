@@ -6,10 +6,12 @@ export interface MultiDropdownList extends CommonProps {
 	beforeValueChange?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
 	dataField: string;
-	defaultSelected?: types.stringArray;
+	defaultValue?: types.stringArray;
+	value?: types.stringArray;
 	filterLabel?: string;
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
@@ -21,6 +23,7 @@ export interface MultiDropdownList extends CommonProps {
 	size?: number;
 	sortBy?: types.sortByWithCount;
 	themePreset?: types.themePreset;
+	loader?: types.title;
 	title?: types.title;
 	showMissing?: boolean;
 	missingLabel?: string;

@@ -31,46 +31,50 @@ class MultiDropdownList extends Component {
 	constructor(props) {
 		super(props);
 
+		const defaultValue = props.defaultValue || props.value;
+		const currentValueArray = props.selectedValue || defaultValue || [];
+		const currentValue = {};
+		currentValueArray.forEach((item) => {
+			currentValue[item] = true;
+		});
+
 		this.state = {
-			currentValue: {},
+			currentValue,
 			options: [],
-			after: {},	// for composite aggs
+			after: {}, // for composite aggs
 			isLastBucket: false,
 		};
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
+
+		props.addComponent(this.internalComponent);
+		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
+		this.updateQueryOptions(props);
 
-	componentWillMount() {
-		this.props.addComponent(this.internalComponent);
-		this.props.addComponent(this.props.componentId);
-		this.updateQueryOptions(this.props);
+		this.setReact(props);
+		const hasMounted = false;
 
-		this.setReact(this.props);
-
-		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue, true);
-		} else if (this.props.defaultSelected) {
-			this.setValue(this.props.defaultSelected, true);
+		if (currentValueArray.length) {
+			this.setValue(currentValueArray, true, props, hasMounted);
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		checkPropChange(
 			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
+			prevProps.react,
+			() => this.setReact(this.props),
 		);
 		checkPropChange(
 			this.props.options,
-			nextProps.options,
+			prevProps.options,
 			() => {
-				const { showLoadMore, dataField } = nextProps;
+				const { showLoadMore, dataField } = this.props;
 				const { options } = this.state;
 				if (showLoadMore) {
 					// append options with showLoadMore
-					const { buckets } = nextProps.options[dataField];
+					const { buckets } = this.props.options[dataField];
 					const nextOptions = [
 						...options,
 						...buckets.map(bucket => ({
@@ -78,7 +82,7 @@ class MultiDropdownList extends Component {
 							doc_count: bucket.doc_count,
 						})),
 					];
-					const after = nextProps.options[dataField].after_key;
+					const after = this.props.options[dataField].after_key;
 					// detect the last bucket by checking if the next set of buckets were empty
 					const isLastBucket = !buckets.length;
 					this.setState({
@@ -87,46 +91,65 @@ class MultiDropdownList extends Component {
 						},
 						isLastBucket,
 						options: nextOptions,
+					}, () => {
+						// this will ensure that the Select-All (or any)
+						// value gets handled on the initial load and
+						// consecutive loads
+						const { currentValue } = this.state;
+						const value = Object.keys(currentValue)
+							.filter(item => currentValue[item]);
+						if (value.length) this.setValue(value, true);
 					});
 				} else {
 					this.setState({
-						options: nextProps.options[nextProps.dataField]
-							? nextProps.options[nextProps.dataField].buckets
+						options: this.props.options[dataField]
+							? this.props.options[dataField].buckets
 							: [],
+					}, () => {
+						// this will ensure that the Select-All (or any)
+						// value gets handled on the initial load and
+						// consecutive loads
+						const { currentValue } = this.state;
+						const value = Object.keys(currentValue)
+							.filter(item => currentValue[item]);
+						if (value.length) this.setValue(value, true);
 					});
 				}
 			},
 		);
 		checkSomePropChange(
 			this.props,
-			nextProps,
+			prevProps,
 			['size', 'sortBy'],
-			() => this.updateQueryOptions(nextProps),
+			() => this.updateQueryOptions(this.props),
 		);
 
 		checkPropChange(
 			this.props.dataField,
-			nextProps.dataField,
+			prevProps.dataField,
 			() => {
-				this.updateQueryOptions(nextProps);
-				this.updateQuery(Object.keys(this.state.currentValue), nextProps);
+				this.updateQueryOptions(this.props);
+				this.updateQuery(Object.keys(this.state.currentValue), this.props);
 			},
 		);
 
 		let selectedValue = Object.keys(this.state.currentValue);
+		const { selectAllLabel } = this.props;
 
-		if (this.props.selectAllLabel) {
-			selectedValue = selectedValue.filter(val => val !== this.props.selectAllLabel);
-
-			if (this.state.currentValue[this.props.selectAllLabel]) {
-				selectedValue = [this.props.selectAllLabel];
+		if (selectAllLabel) {
+			selectedValue = selectedValue.filter(val => val !== selectAllLabel);
+			if (this.state.currentValue[selectAllLabel]) {
+				selectedValue = [selectAllLabel];
 			}
 		}
 
-		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-			this.setValue(nextProps.defaultSelected, true);
-		} else if (!isEqual(selectedValue, nextProps.selectedValue)) {
-			this.setValue(nextProps.selectedValue || [], true);
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value, true);
+		} else if (
+			!isEqual(selectedValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
+		) {
+			this.setValue(this.props.selectedValue || [], true);
 		}
 	}
 
@@ -141,7 +164,9 @@ class MultiDropdownList extends Component {
 			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
@@ -171,7 +196,9 @@ class MultiDropdownList extends Component {
 					let should = [
 						{
 							[type]: {
-								[props.dataField]: value.filter(item => item !== props.missingLabel),
+								[props.dataField]: value.filter(
+									item => item !== props.missingLabel,
+								),
 							},
 						},
 					];
@@ -198,13 +225,11 @@ class MultiDropdownList extends Component {
 				}
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
-				const queryArray = value.map(item => (
-					{
-						[type]: {
-							[props.dataField]: item,
-						},
-					}
-				));
+				const queryArray = value.map(item => ({
+					[type]: {
+						[props.dataField]: item,
+					},
+				}));
 				listQuery = {
 					bool: {
 						must: queryArray,
@@ -228,7 +253,7 @@ class MultiDropdownList extends Component {
 		return query;
 	};
 
-	setValue = (value, isDefaultValue = false, props = this.props) => {
+	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -240,7 +265,7 @@ class MultiDropdownList extends Component {
 		let finalValues = null;
 
 		if (selectAllLabel && value.includes(selectAllLabel)) {
-			if (currentValue[selectAllLabel]) {
+			if (currentValue[selectAllLabel] && hasMounted && !isDefaultValue) {
 				currentValue = {};
 				finalValues = [];
 			} else {
@@ -279,21 +304,22 @@ class MultiDropdownList extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-			}, () => {
+			const handleUpdates = () => {
 				this.updateQuery(finalValues, props);
 				this.locked = false;
 				if (props.onValueChange) props.onValueChange(finalValues);
-			});
+			};
+
+			if (hasMounted) {
+				this.setState({
+					currentValue,
+				}, handleUpdates);
+			} else {
+				handleUpdates();
+			}
 		};
 
-		checkValueChange(
-			props.componentId,
-			finalValues,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, finalValues, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -325,44 +351,62 @@ class MultiDropdownList extends Component {
 			});
 		}
 		// for a new query due to other changes don't append after to get fresh results
-		const queryOptions = MultiDropdownList
-			.generateQueryOptions(props, addAfterKey ? this.state.after : {});
+		const queryOptions = MultiDropdownList.generateQueryOptions(
+			props,
+			addAfterKey ? this.state.after : {},
+		);
 		props.setQueryOptions(this.internalComponent, queryOptions);
 	};
 
 	handleLoadMore = () => {
 		this.updateQueryOptions(this.props, true);
-	}
+	};
+
+	handleChange = (item) => {
+		const { value, onChange } = this.props;
+		if (value) {
+			if (onChange) onChange(item);
+		} else {
+			this.setValue(item);
+		}
+	};
 
 	render() {
 		const { showLoadMore, loadMoreLabel } = this.props;
 		const { isLastBucket } = this.state;
 		let selectAll = [];
 
+		if (this.props.isLoading && this.props.loader) {
+			return this.props.loader;
+		}
+
 		if (this.state.options.length === 0) {
 			return null;
 		}
 
 		if (this.props.selectAllLabel) {
-			selectAll = [{
-				key: this.props.selectAllLabel,
-			}];
+			selectAll = [
+				{
+					key: this.props.selectAllLabel,
+				},
+			];
 		}
-
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>}
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				<Dropdown
 					innerClass={this.props.innerClass}
-					items={
-						[
-							...selectAll,
-							...this.state.options
-								.filter(item => String(item.key).trim().length)
-								.map(item => ({ ...item, key: String(item.key) })),
-						]
-					}
-					onChange={this.setValue}
+					items={[
+						...selectAll,
+						...this.state.options
+							.filter(item => String(item.key).trim().length)
+							.map(item => ({ ...item, key: String(item.key) })),
+					]}
+					onChange={this.handleChange}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
 					labelField="key"
@@ -373,7 +417,8 @@ class MultiDropdownList extends Component {
 					showSearch={this.props.showSearch}
 					transformData={this.props.transformData}
 					footer={
-						showLoadMore && !isLastBucket && (
+						showLoadMore
+						&& !isLastBucket && (
 							<div css={loadMoreContainer}>
 								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
 							</div>
@@ -400,11 +445,15 @@ MultiDropdownList.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	dataField: types.stringRequired,
-	defaultSelected: types.stringArray,
+	defaultValue: types.stringArray,
+	value: types.stringArray,
 	filterLabel: types.string,
 	innerClass: types.style,
+	isLoading: types.bool,
+	loader: types.title,
 	onQueryChange: types.func,
 	onValueChange: types.func,
+	onChange: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
@@ -445,11 +494,15 @@ MultiDropdownList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-	options: props.nestedField && state.aggregations[props.componentId]
-		? state.aggregations[props.componentId].reactivesearch_nested
-		: state.aggregations[props.componentId],
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	options:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId],
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
+	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 });
 
@@ -463,4 +516,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(MultiDropdownList);

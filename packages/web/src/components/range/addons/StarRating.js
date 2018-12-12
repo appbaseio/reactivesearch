@@ -7,16 +7,16 @@ import { starRow, whiteStar } from '../../../styles/ratingsList';
 function StarRating(props) {
 	return (
 		<div className={starRow}>
-			{
-				Array(props.stars).fill('').map((item, index) => (
+			{Array(props.stars)
+				.fill('')
+				.map((item, index) => (
 					<Star key={index} /> // eslint-disable-line
-				))
-			}
-			{
-				Array(5 - props.stars).fill('').map((item, index) => (
+				))}
+			{Array(5 - props.stars)
+				.fill('')
+				.map((item, index) => (
 					<Star key={index} className={whiteStar} /> // eslint-disable-line
-				))
-			}
+				))}
 		</div>
 	);
 }

@@ -6,7 +6,8 @@ export interface DataControllerProps extends CommonProps {
 	beforeValueChange?: (...args: any[]) => any;
 	children?: types.children;
 	customQuery?: (...args: any[]) => any;
-	defaultSelected?: any;
+	defaultValue?: any;
+	value?: any;
 	filterLabel?: string;
 	onValueChange?: (...args: any[]) => any;
 	showFilter?: boolean;

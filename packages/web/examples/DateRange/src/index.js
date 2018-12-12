@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 
-import {
-	ReactiveBase,
-	DateRange,
-	ResultCard,
-	SelectedFilters,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, DateRange, ResultCard, SelectedFilters } from '@appbaseio/reactivesearch';
 
 import './index.css';
 
@@ -43,7 +38,9 @@ class Main extends Component {
 				<div>
 					<div>${res.price}</div>
 					<span style={{ backgroundImage: `url(${res.host_image})` }} />
-					<p>{res.room_type} · {res.accommodates} guests</p>
+					<p>
+						{res.room_type} · {res.accommodates} guests
+					</p>
 				</div>
 			),
 			url: res.listing_url,
@@ -53,8 +50,8 @@ class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="housing"
-				credentials="0aL1X5Vts:1ee67be1-9195-4f4b-bd4f-a91cd1b5e4b5"
+				app="airbeds-test-app"
+				credentials="X8RsOu0Lp:9b4fe1a4-58c6-4089-a042-505d86d9da30"
 				type="listing"
 			>
 				<div className="row">

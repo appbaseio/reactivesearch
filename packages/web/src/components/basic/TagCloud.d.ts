@@ -6,11 +6,14 @@ export interface TagCloudProps extends CommonProps {
 	beforeValueChange?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
 	dataField: string;
-	defaultSelected?: types.stringOrArray;
+	defaultValue?: types.stringOrArray;
+	value?: types.stringOrArray;
 	filterLabel?: string;
 	innerClass?: types.style;
+	loader?: any;
 	multiSelect?: boolean;
 	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	showCount?: boolean;

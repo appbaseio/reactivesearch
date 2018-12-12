@@ -1,11 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-	SingleList,
-	SingleRange,
-	MultiList,
-	RangeSlider,
-} from '@appbaseio/reactivesearch';
+import { SingleList, SingleRange, MultiList, RangeSlider } from '@appbaseio/reactivesearch';
 
 import Flex, { FlexChild } from '../styles/Flex';
 
@@ -14,7 +9,7 @@ const SearchFilters = () => (
 		<FlexChild card margin="10px">
 			<SingleList
 				componentId="brand"
-				dataField="brand.raw"
+				dataField="brand.keyword"
 				title="Cars"
 				innerClass={{
 					list: 'list',
@@ -43,7 +38,7 @@ const SearchFilters = () => (
 		<FlexChild card margin="10px">
 			<MultiList
 				componentId="vehicle"
-				dataField="vehicleType.raw"
+				dataField="vehicleType.keyword"
 				title="Vehicle Type"
 				showSearch={false}
 				innerClass={{
@@ -60,12 +55,12 @@ const SearchFilters = () => (
 				title="Price Range"
 				react={{ and: ['brand', 'type', 'rating'] }}
 				range={{
-					start: 0,
-					end: 10000,
+					start: 10000,
+					end: 60000,
 				}}
 				rangeLabels={{
-					start: '$0',
-					end: '$10,000',
+					start: '$10,000',
+					end: '$60,000',
 				}}
 				interval={1000}
 			/>

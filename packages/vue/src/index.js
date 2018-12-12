@@ -3,9 +3,12 @@ import ReactiveBase from './components/ReactiveBase/index.jsx';
 import DataSearch from './components/search/DataSearch.jsx';
 import SingleList from './components/list/SingleList.jsx';
 import MultiList from './components/list/MultiList.jsx';
+import SingleDropdownList from './components/list/SingleDropdownList.jsx';
+import MultiDropdownList from './components/list/MultiDropdownList.jsx';
 import ReactiveComponent from './components/basic/ReactiveComponent.jsx';
 import SelectedFilters from './components/basic/SelectedFilters.jsx';
 import SingleRange from './components/range/SingleRange.jsx';
+import MultiRange from './components/range/MultiRange.jsx';
 import version from './components/Version/index';
 
 const components = [
@@ -15,8 +18,11 @@ const components = [
 	SingleList,
 	MultiList,
 	SingleRange,
+	MultiRange,
 	ReactiveComponent,
-	SelectedFilters
+	SelectedFilters,
+	SingleDropdownList,
+	MultiDropdownList,
 ];
 
 const install = function(Vue) {
@@ -40,7 +46,9 @@ export {
 	MultiList,
 	SingleRange,
 	ReactiveComponent,
-	SelectedFilters
+	SelectedFilters,
+	SingleDropdownList,
+	MultiDropdownList
 };
 
 export default {

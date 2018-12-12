@@ -19,19 +19,17 @@ class DataController extends Component {
 		this.props.addComponent(this.props.componentId);
 		this.props.setQueryListener(this.props.componentId, this.props.onQueryChange, null);
 
-		if (this.props.defaultSelected) {
-			this.updateQuery(this.props.defaultSelected, this.props);
-		} else {
-			this.updateQuery(null, this.props);
-		}
+		const { value, defaultValue, selectedValue } = this.props;
+		const initialValue = selectedValue || value || defaultValue || null;
+		this.updateQuery(initialValue, this.props);
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		if (!this.locked) {
-			if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
-				this.updateQuery(nextProps.defaultSelected, nextProps);
-			} else if (!isEqual(this.props.selectedValue, nextProps.selectedValue)) {
-				this.updateQuery(nextProps.selectedValue, nextProps);
+			if (!isEqual(this.props.value, prevProps.value)) {
+				this.updateQuery(this.props.value, this.props);
+			} else if (!isEqual(this.props.selectedValue, prevProps.selectedValue)) {
+				this.updateQuery(this.props.selectedValue, this.props);
 			}
 		}
 	}
@@ -100,7 +98,8 @@ DataController.propTypes = {
 	className: types.string,
 	customQuery: types.func,
 	// DataController can accept any defaultSelected depending on the query used
-	defaultSelected: types.any, // eslint-disable-line
+	defaultValue: types.any, // eslint-disable-line
+	value: types.any, // eslint-disable-line
 	filterLabel: types.string,
 	onQueryChange: types.func,
 	onValueChange: types.func,
@@ -110,10 +109,10 @@ DataController.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: (
-		state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value
-	) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -124,4 +123,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(DataController);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(DataController);

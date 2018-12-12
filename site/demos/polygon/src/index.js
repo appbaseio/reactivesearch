@@ -6,10 +6,10 @@ import { ReactiveMap } from '@appbaseio/reactivemaps';
 import './index.css';
 
 const triangleCoords = [
-	{ lat: 25.774, lng: -80.190 },
+	{ lat: 25.774, lng: -80.19 },
 	{ lat: 18.466, lng: -66.118 },
 	{ lat: 32.321, lng: -64.757 },
-	{ lat: 25.774, lng: -80.190 },
+	{ lat: 25.774, lng: -80.19 },
 ];
 
 class Main extends React.Component {
@@ -25,7 +25,7 @@ class Main extends React.Component {
 	renderInfo() {
 		const { title } = this.state;
 		if (title) {
-			return (<div className="title-box">{title}</div>);
+			return <div className="title-box">{title}</div>;
 		}
 		return null;
 	}
@@ -33,8 +33,8 @@ class Main extends React.Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="reactivemap_demo"
-				credentials="y4pVxY2Ok:c92481e2-c07f-4473-8326-082919282c18"
+				app="meetup_app"
+				credentials="lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181"
 				type="meetupdata1"
 				mapKey="AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q"
 			>

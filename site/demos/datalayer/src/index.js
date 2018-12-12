@@ -5,20 +5,9 @@ import { ReactiveMap } from '@appbaseio/reactivemaps';
 
 import './index.css';
 
-const texas = [
-	'Dallas',
-	'San Angelo',
-	'Austin',
-	'San Antonio',
-];
+const texas = ['Dallas', 'San Angelo', 'Austin', 'San Antonio'];
 
-const california = [
-	'San Jose',
-	'San Francisco',
-	'California',
-	'Los Angeles',
-	'San Diego',
-];
+const california = ['San Jose', 'San Francisco', 'California', 'Los Angeles', 'San Diego'];
 
 class Main extends React.Component {
 	constructor() {
@@ -33,7 +22,7 @@ class Main extends React.Component {
 	renderInfo() {
 		const { title } = this.state;
 		if (title) {
-			return (<div className="title-box">{title}</div>);
+			return <div className="title-box">{title}</div>;
 		}
 		return null;
 	}
@@ -41,8 +30,8 @@ class Main extends React.Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="reactivemap_demo"
-				credentials="y4pVxY2Ok:c92481e2-c07f-4473-8326-082919282c18"
+				app="meetup_app"
+				credentials="lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181"
 				type="meetupdata1"
 				mapKey="AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q"
 			>
@@ -60,10 +49,7 @@ class Main extends React.Component {
 					defaultQuery={() => ({
 						query: {
 							terms: {
-								'group.group_city.raw': [
-									...texas,
-									...california,
-								],
+								'group.group_city.raw': [...texas, ...california],
 							},
 						},
 					})}
@@ -85,10 +71,14 @@ class Main extends React.Component {
 
 							// renders data layer on the map
 							// refer: https://developers.google.com/maps/documentation/javascript/datalayer
-							map.data.loadGeoJson('https://raw.githubusercontent.com/appbaseio/reactivesearch/dev/site/demos/datalayer/src/us-states.json');
+							map.data.loadGeoJson(
+								'https://raw.githubusercontent.com/appbaseio/reactivesearch/dev/site/demos/datalayer/src/us-states.json',
+							);
 							map.data.addListener('click', (event) => {
 								this.setState({
-									title: `${event.feature.f.name}: ${count[event.feature.f.name]} meetups`,
+									title: `${event.feature.f.name}: ${
+										count[event.feature.f.name]
+									} meetups`,
 								});
 							});
 						}

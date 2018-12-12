@@ -24,7 +24,7 @@ class SelectedFilters extends Component {
 		if (onClear) {
 			onClear(null);
 		}
-	}
+	};
 
 	renderValue = (value, isArray) => {
 		if (isArray && value.length) {
@@ -32,14 +32,18 @@ class SelectedFilters extends Component {
 			return arrayToRender.join(', ');
 		} else if (value && typeof value === 'object') {
 			// TODO: support for NestedList
-			let label = (typeof value.label === 'string' ? value.label : value.value) || value.key || value.distance || null;
+			let label
+				= (typeof value.label === 'string' ? value.label : value.value)
+				|| value.key
+				|| value.distance
+				|| null;
 			if (value.location) {
 				label = `${value.location} - ${label}`;
 			}
 			return label;
 		}
 		return value;
-	}
+	};
 
 	renderFilters = () => {
 		const { selectedValues } = this.props;
@@ -68,7 +72,7 @@ class SelectedFilters extends Component {
 				return null;
 			})
 			.filter(Boolean);
-	}
+	};
 
 	render() {
 		if (this.props.render) {
@@ -80,25 +84,25 @@ class SelectedFilters extends Component {
 		const hasValues = !!filtersToRender.length;
 
 		return (
-			<Container style={this.props.style} className={`${filters(theme)} ${this.props.className || ''}`}>
-				{
-					this.props.title
-					&& hasValues
-					&& <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>
-				}
+			<Container
+				style={this.props.style}
+				className={`${filters(theme)}
+				${this.props.className || ''}`}
+			>
+				{this.props.title && hasValues && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				{filtersToRender}
-				{
-					this.props.showClearAll && hasValues
-						? (
-							<Button
-								className={getClassName(this.props.innerClass, 'button') || null}
-								onClick={this.clearValues}
-							>
-								{this.props.clearAllLabel}
-							</Button>
-						)
-						: null
-				}
+				{this.props.showClearAll && hasValues ? (
+					<Button
+						className={getClassName(this.props.innerClass, 'button') || null}
+						onClick={this.clearValues}
+					>
+						{this.props.clearAllLabel}
+					</Button>
+				) : null}
 			</Container>
 		);
 	}
@@ -133,7 +137,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	clearValues: () => (dispatch(clearValues())),
+	clearValues: () => dispatch(clearValues()),
 	setValue: (component, value) => dispatch(setValue(component, value)),
 });
 
