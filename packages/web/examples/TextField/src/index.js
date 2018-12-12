@@ -24,7 +24,7 @@ class Main extends Component {
 							dataField="original_title"
 							from={0}
 							size={3}
-							onData={this.booksList}
+							renderData={this.booksList}
 							className="result-list-container"
 							pagination
 							react={{

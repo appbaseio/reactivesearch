@@ -41,7 +41,7 @@ const Results = () => (
 			react={{
 				and: ['categories', 'search'],
 			}}
-			onData={onData}
+			renderData={onData}
 			onResultStats={onResultStats}
 			innerClass={{
 				listItem: 'list-item',

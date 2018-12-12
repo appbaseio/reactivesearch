@@ -44,7 +44,7 @@ const reactiveListProps = {
 	dataField: 'original_title.raw',
 	from: 0,
 	size: 10,
-	onData: data => <BookCard key={data._id} data={data} />,
+	renderData: data => <BookCard key={data._id} data={data} />,
 	react: {
 		and: ['BookSensor'],
 	},
@@ -100,12 +100,16 @@ async function handleRender(req, res) {
 	// ReactiveSearch uses emotion and this will inline the styles
 	// so you can get the correct styles for ReactiveSearch's components
 	// on the first load
-	const html = renderStylesToString(renderToString(<App
-		store={store}
-		settings={settings}
-		singleRangeProps={singleRangeProps}
-		reactiveListProps={reactiveListProps}
-	/>));
+	const html = renderStylesToString(
+		renderToString(
+			<App
+				store={store}
+				settings={settings}
+				singleRangeProps={singleRangeProps}
+				reactiveListProps={reactiveListProps}
+			/>,
+		),
+	);
 
 	// Send the rendered page back to the client
 	res.send(renderFullPage(html, store));
@@ -119,6 +123,7 @@ app.listen(port, (error) => {
 	} else {
 		// eslint-disable-next-line
 		console.info(
-			`==> 🌎  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.`);
+			`==> 🌎  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.`,
+		);
 	}
 });

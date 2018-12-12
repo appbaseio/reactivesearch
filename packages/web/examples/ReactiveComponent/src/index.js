@@ -48,7 +48,7 @@ class Main extends Component {
 							title="ReactiveList"
 							from={0}
 							size={20}
-							onData={this.onData}
+							renderData={this.renderData}
 							pagination
 							react={{
 								and: 'CarSensor',
@@ -60,7 +60,7 @@ class Main extends Component {
 		);
 	}
 
-	onData(data) {
+	renderData(data) {
 		return (
 			<div key={data._id}>
 				<h2>{data.name}</h2>

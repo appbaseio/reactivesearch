@@ -40,6 +40,7 @@
     "prop-types": "^15.6.0",
     "react-day-picker": "^7.0.5",
     "react-emotion": "^9.0.0",
+    "react-highlight-words": "^0.14.0",
     "react-redux": "^5.0.7",
     "rheostat": "^2.1.1",
     "url-search-params": "^0.10.0",

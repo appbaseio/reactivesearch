@@ -10,7 +10,7 @@ class ResultCard extends Component {
 	static generateQueryOptions = props => ReactiveList.generateQueryOptions(props);
 
 	renderAsCard = (item, triggerClickAnalytics) => {
-		const result = this.props.onData(item);
+		const result = this.props.renderData(item);
 
 		if (result) {
 			return (
@@ -58,16 +58,16 @@ class ResultCard extends Component {
 	};
 
 	render() {
-		const { onData, ...props } = this.props;
+		const { renderData, ...props } = this.props;
 
-		return <ReactiveList {...props} onData={this.renderAsCard} listClass={container} />;
+		return <ReactiveList {...props} renderData={this.renderAsCard} listClass={container} />;
 	}
 }
 
 ResultCard.propTypes = {
 	innerClass: types.style,
 	target: types.stringRequired,
-	onData: types.func,
+	renderData: types.func,
 };
 
 ResultCard.defaultProps = {

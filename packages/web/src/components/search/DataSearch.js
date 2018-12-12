@@ -23,12 +23,14 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
-import Input, { suggestionsContainer, suggestions, noSuggestions } from '../../styles/Input';
+import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
-import { connect } from '../../utils';
+import { connect, isFunction } from '../../utils';
+import SuggestionItem from './addons/SuggestionItem';
+import SuggestionWrapper from './addons/SuggestionWrapper';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -46,7 +48,7 @@ class DataSearch extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 
 		if (props.highlight) {
 			const queryOptions = DataSearch.highlightQuery(props) || {};
@@ -85,6 +87,9 @@ class DataSearch extends Component {
 			// shallow check allows us to set suggestions even if the next set
 			// of suggestions are same as the current one
 			if (this.props.suggestions !== prevProps.suggestions) {
+				if (this.props.onSuggestions) {
+					this.props.onSuggestions(this.props.suggestions);
+				}
 				// eslint-disable-next-line
 				this.setState({
 					suggestions: this.onSuggestions(this.props.suggestions),
@@ -199,8 +204,8 @@ class DataSearch extends Component {
 	};
 
 	static shouldQuery = (value, dataFields, props) => {
-		const fields = dataFields.map((field, index) =>
-			`${field}${
+		const fields = dataFields.map(
+			(field, index) => `${field}${
 				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
 					? `^${props.fieldWeights[index]}`
 					: ''
@@ -249,15 +254,23 @@ class DataSearch extends Component {
 	};
 
 	onSuggestions = (results) => {
-		if (this.props.onSuggestion) {
-			return results.map(suggestion => this.props.onSuggestion(suggestion));
-		}
+		const { renderSuggestion } = this.props;
 
 		const fields = Array.isArray(this.props.dataField)
 			? this.props.dataField
 			: [this.props.dataField];
 
-		return getSuggestions(fields, results, this.state.currentValue.toLowerCase());
+		const parsedSuggestions = getSuggestions(
+			fields,
+			results,
+			this.state.currentValue.toLowerCase(),
+		);
+
+		if (renderSuggestion) {
+			return parsedSuggestions.map(suggestion => renderSuggestion(suggestion));
+		}
+
+		return parsedSuggestions;
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, cause, hasMounted = true) => {
@@ -456,19 +469,18 @@ class DataSearch extends Component {
 			theme,
 			isLoading,
 			renderNoSuggestion,
+			innerClass,
+			error,
+			renderError,
 		} = this.props;
 		const { isOpen, currentValue } = this.state;
 		if (renderNoSuggestion
-				&& isOpen && !finalSuggestionsList.length && !isLoading && currentValue) {
+				&& isOpen && !finalSuggestionsList.length && !isLoading && currentValue
+				&& !(renderError && error)) {
 			return (
-				<ul
-					className={`${noSuggestions(
-						themePreset,
-						theme,
-					)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
-				>
-					<li>{typeof renderNoSuggestion === 'function' ? renderNoSuggestion(currentValue) : renderNoSuggestion}</li>
-				</ul>
+				<SuggestionWrapper innerClass={innerClass} themePreset={themePreset} theme={theme} innerClassName="noSuggestion">
+					{typeof renderNoSuggestion === 'function' ? renderNoSuggestion(currentValue) : renderNoSuggestion}
+				</SuggestionWrapper>
 			);
 		}
 		return null;
@@ -476,24 +488,36 @@ class DataSearch extends Component {
 
 	renderLoader = () => {
 		const {
-			loader, isLoading, themePreset, theme,
+			loader, isLoading, themePreset, theme, innerClass,
 		} = this.props;
 		const { currentValue } = this.state;
 		if (isLoading && loader && currentValue) {
 			return (
-				<div className={`${noSuggestions(
-					themePreset,
-					theme,
-				)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
-				>
-					<li>{loader}</li>
-				</div>
+				<SuggestionWrapper innerClass={innerClass} innerClassName="loader" theme={theme} themePreset={themePreset}>
+					{loader}
+				</SuggestionWrapper>
+			);
+		}
+		return null;
+	}
+
+	renderError = () => {
+		const {
+			error, renderError, themePreset, theme, isLoading, innerClass,
+		} = this.props;
+		const { currentValue } = this.state;
+		if (error && renderError && currentValue && !isLoading) {
+			return (
+				<SuggestionWrapper innerClass={innerClass} innerClassName="error" theme={theme} themePreset={themePreset}>
+					{isFunction(renderError) ? renderError(error) : renderError}
+				</SuggestionWrapper>
 			);
 		}
 		return null;
 	}
 
 	render() {
+		const { currentValue } = this.state;
 		let suggestionsList = [];
 
 		if (
@@ -506,7 +530,7 @@ class DataSearch extends Component {
 			suggestionsList = this.state.suggestions;
 		}
 
-		const { theme, themePreset, renderSuggestions } = this.props;
+		const { theme, themePreset, renderAllSuggestion } = this.props;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -548,8 +572,8 @@ class DataSearch extends Component {
 									themePreset={themePreset}
 								/>
 								{this.renderIcons()}
-								{renderSuggestions
-									&& renderSuggestions({
+								{renderAllSuggestion
+									&& renderAllSuggestion({
 										currentValue: this.state.currentValue,
 										isOpen,
 										getItemProps,
@@ -558,7 +582,8 @@ class DataSearch extends Component {
 										parsedSuggestions: suggestionsList,
 									})}
 								{this.renderLoader()}
-								{!renderSuggestions && isOpen && suggestionsList.length ? (
+								{this.renderError()}
+								{!renderAllSuggestion && isOpen && suggestionsList.length ? (
 									<ul
 										className={`${suggestions(
 											themePreset,
@@ -576,7 +601,8 @@ class DataSearch extends Component {
 													),
 												}}
 											>
-												{typeof item.label === 'string' ? (
+												<SuggestionItem currentValue={currentValue} suggestion={item} />
+												{/* {typeof item.label === 'string' ? (
 													<div
 														className="trim"
 														dangerouslySetInnerHTML={{
@@ -585,7 +611,7 @@ class DataSearch extends Component {
 													/>
 												) : (
 													item.label
-												)}
+												)} */}
 											</li>
 										))}
 									</ul>
@@ -646,6 +672,8 @@ DataSearch.propTypes = {
 	value: types.string,
 	defaultSuggestions: types.suggestions,
 	downShiftProps: types.props,
+	// eslint-disable-next-line
+	error: types.any,
 	fieldWeights: types.fieldWeights,
 	filterLabel: types.string,
 	fuzziness: types.fuzziness,
@@ -657,21 +685,24 @@ DataSearch.propTypes = {
 	innerRef: types.func,
 	isLoading: types.bool,
 	loader: types.title,
+	onError: types.func,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
 	onKeyPress: types.func,
 	onKeyUp: types.func,
 	onQueryChange: types.func,
-	onSuggestion: types.func,
+	onSuggestions: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
 	onValueSelected: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
-	renderSuggestions: types.func,
-	renderNoSuggestion: types.children,
+	renderError: types.title,
+	renderSuggestion: types.func,
+	renderAllSuggestion: types.func,
+	renderNoSuggestion: types.title,
 	showClear: types.bool,
 	showFilter: types.bool,
 	showIcon: types.bool,
@@ -707,6 +738,7 @@ const mapStateToProps = (state, props) => ({
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -715,8 +747,9 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryListener: (
+		component, onQueryChange, beforeQueryChange,
+	) => dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
 export default connect(

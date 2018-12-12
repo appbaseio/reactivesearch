@@ -17,6 +17,7 @@ import {
 	pushToAndClause,
 	getClassName,
 	parseHits,
+	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -25,7 +26,7 @@ import PoweredBy from './addons/PoweredBy';
 
 import Flex from '../../styles/Flex';
 import { resultStats, sortOptions } from '../../styles/results';
-import { connect } from '../../utils';
+import { connect, isFunction } from '../../utils';
 
 class ReactiveList extends Component {
 	constructor(props) {
@@ -126,7 +127,16 @@ class ReactiveList extends Component {
 
 	componentDidUpdate(prevProps) {
 		const totalPages = Math.ceil(this.props.total / this.props.size) || 0;
-
+		if (this.props.onData) {
+			checkSomePropChange(
+				this.props,
+				prevProps,
+				['hits', 'streamHits'],
+				() => {
+					this.props.onData(this.getAllData());
+				},
+			);
+		}
 		if (
 			!isEqual(this.props.sortOptions, prevProps.sortOptions)
 			|| this.props.sortBy !== prevProps.sortBy
@@ -316,6 +326,20 @@ class ReactiveList extends Component {
 		if (this.domNode) {
 			this.domNode.removeEventListener('scroll', this.scrollHandler);
 		}
+	}
+	// Shape of the object to be returned in onData & renderAllData
+	getAllData = () => {
+		const { size } = this.props;
+		const { currentPage } = this.state;
+		const results = parseHits(this.props.hits) || [];
+		const streamResults = parseHits(this.props.streamHits) || [];
+		return {
+			results,
+			streamResults,
+			loadMore: this.loadMore,
+			base: currentPage * size,
+			triggerClickAnalytics: this.triggerClickAnalytics,
+		};
 	}
 
 	setReact = (props) => {
@@ -538,11 +562,19 @@ class ReactiveList extends Component {
 		</select>
 	);
 
+	renderError = () => {
+		const { error, isLoading, renderError } = this.props;
+		if (renderError && error && !isLoading) {
+			return isFunction(renderError) ? renderError(error) : renderError;
+		}
+		return null;
+	}
+
 	render() {
-		const { onData, size } = this.props;
+		const { renderData, size, error } = this.props;
 		const { currentPage } = this.state;
-		const results = parseHits(this.props.hits) || [];
-		const streamResults = parseHits(this.props.streamHits) || [];
+		const allData = this.getAllData();
+		const { results, streamResults } = allData;
 		let filteredResults = results;
 
 		if (streamResults.length) {
@@ -553,6 +585,7 @@ class ReactiveList extends Component {
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.isLoading && this.props.pagination && this.props.loader}
+				{this.renderError()}
 				<Flex
 					labelPosition={this.props.sortOptions ? 'right' : 'left'}
 					className={getClassName(this.props.innerClass, 'resultsInfo')}
@@ -560,7 +593,7 @@ class ReactiveList extends Component {
 					{this.props.sortOptions ? this.renderSortOptions() : null}
 					{this.props.showResultStats ? this.renderResultStats() : null}
 				</Flex>
-				{!this.props.isLoading && (results.length === 0 && streamResults.length === 0)
+				{!this.props.isLoading && !error && (results.length === 0 && streamResults.length === 0)
 					? this.renderNoResults()
 					: null}
 				{this.props.pagination
@@ -575,11 +608,8 @@ class ReactiveList extends Component {
 							fragmentName={this.props.componentId}
 						/>
 					) : null}
-				{this.props.onAllData ? (
-					this.props.onAllData(results, streamResults, this.loadMore, {
-						base: currentPage * size,
-						triggerClickAnalytics: this.triggerClickAnalytics,
-					})
+				{this.props.renderAllData ? (
+					this.props.renderAllData(allData)
 				) : (
 					<div
 						className={`${this.props.listClass} ${getClassName(
@@ -588,7 +618,7 @@ class ReactiveList extends Component {
 						)}`}
 					>
 						{[...streamResults, ...filteredResults].map((item, index) =>
-							onData(item, () =>
+							renderData(item, () =>
 								this.triggerClickAnalytics((currentPage * size) + index)))}
 					</div>
 				)}
@@ -658,11 +688,14 @@ ReactiveList.propTypes = {
 	dataField: types.stringRequired,
 	defaultPage: types.number,
 	defaultQuery: types.func,
+	error: types.title,
 	excludeFields: types.excludeFields,
 	innerClass: types.style,
 	listClass: types.string,
 	loader: types.title,
-	onAllData: types.func,
+	renderAllData: types.func,
+	renderData: types.func,
+	renderError: types.title,
 	onData: types.func,
 	onNoResults: types.title,
 	onPageChange: types.func,
@@ -711,6 +744,7 @@ const mapStateToProps = (state, props) => ({
 	analytics: state.analytics,
 	config: state.config,
 	queryLog: state.queryLog[props.componentId],
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({

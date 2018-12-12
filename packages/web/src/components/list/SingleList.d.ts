@@ -14,9 +14,11 @@ export interface SingleList extends CommonProps {
 	nestedField?: string;
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
+	onError?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;
-	renderListItem?: (...args: any[]) => any;
+	renderItem?: (...args: any[]) => any;
+	renderError?: types.title;
 	transformData?: (...args: any[]) => any;
 	selectAllLabel?: string;
 	showCount?: boolean;

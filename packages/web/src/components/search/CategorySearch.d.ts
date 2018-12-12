@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { CommonProps } from '../../';
+import { CommonProps } from '../..';
 import * as types from '../../types';
 
 export interface CategorySearchProps extends CommonProps {
@@ -27,18 +27,21 @@ export interface CategorySearchProps extends CommonProps {
 	innerClass?: types.style;
 	innerRef?: (...args: any[]) => any;
 	onBlur?: (...args: any[]) => any;
+	onError?: (...args: any[]) => any;
 	onFocus?: (...args: any[]) => any;
 	onKeyDown?: (...args: any[]) => any;
 	onKeyPress?: (...args: any[]) => any;
 	onKeyUp?: (...args: any[]) => any;
-	onSuggestion?: (...args: any[]) => any;
+	onSuggestions?: (...args: any[]) => any;
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
 	onValueSelected?: (...args: any[]) => any;
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
-	renderSuggestions?: (...args: any[]) => any;
+	renderSuggestion?: (...args: any[]) => any;
+	renderAllSuggestion?: (...args: any[]) => any;
+	renderError?: types.title;
 	renderNoSuggestion?: types.title;
 	showFilter?: boolean;
 	showIcon?: boolean;

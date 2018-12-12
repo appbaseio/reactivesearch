@@ -14,8 +14,9 @@ export interface ReactiveListProps extends CommonProps {
 	innerClass?: types.style;
 	includeFields?: Array<string>;
 	loader?: types.title;
-	onAllData?: (data: any) => any;
-	onData?: (data: any) => any;
+	renderAllData?: (data: any) => any;
+	renderData?: (data: any) => any;
+	renderError?: types.title;
 	onError?: (...args: any[]) => any;
 	onNoResults?: types.title;
 	onResultStats?: (...args: any[]) => any;
@@ -32,7 +33,7 @@ export interface ReactiveListProps extends CommonProps {
 	onPageClick?: (...args: any[]) => any;
 	defaultPage?: number;
 	listClass?: string;
-	scrollTarget?:string;
+	scrollTarget?: string;
 }
 
 declare const ReactiveList: React.ComponentType<ReactiveListProps>;

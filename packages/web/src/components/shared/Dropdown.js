@@ -58,7 +58,8 @@ class Dropdown extends Component {
 		const isDark = this.props.themePreset === 'dark';
 		if (highlighted) {
 			return isDark ? '#555' : '#eee';
-		} else if (selected) {
+		}
+		if (selected) {
 			return isDark ? '#686868' : '#fafafa';
 		}
 		return isDark ? '#424242' : '#fff';
@@ -75,10 +76,12 @@ class Dropdown extends Component {
 		if (Array.isArray(value) && value.length) {
 			const arrayToRender = value.map(item => this.renderToString(item));
 			return arrayToRender.join(', ');
-		} else if (value && typeof value === 'object') {
+		}
+		if (value && typeof value === 'object') {
 			if (value[this.props.labelField]) {
 				return value[this.props.labelField];
-			} else if (Object.keys(value).length) {
+			}
+			if (Object.keys(value).length) {
 				return this.renderToString(Object.keys(value));
 			}
 			return this.props.placeholder;
@@ -95,7 +98,7 @@ class Dropdown extends Component {
 			keyField,
 			themePreset,
 			theme,
-			renderListItem,
+			renderItem,
 			transformData,
 			footer,
 		} = this.props;
@@ -171,9 +174,8 @@ class Dropdown extends Component {
 											&& ((selectedItem && !!selectedItem[item[keyField]])
 												// MultiDropdownRange
 												|| (Array.isArray(selectedItem)
-													&& selectedItem.find(value =>
-														value[labelField] === item[labelField])));
-
+													&& selectedItem.find(
+														value => value[labelField] === item[labelField])));
 										if (!this.props.multi) selected = item.key === selectedItem;
 
 										return (
@@ -188,8 +190,8 @@ class Dropdown extends Component {
 													),
 												}}
 											>
-												{renderListItem ? (
-													renderListItem(item[labelField], item.doc_count)
+												{renderItem ? (
+													renderItem(item[labelField], item.doc_count, selected && this.props.multi)
 												) : (
 													<div>
 														{typeof item[labelField] === 'string' ? (
@@ -254,7 +256,7 @@ Dropdown.propTypes = {
 	onChange: types.func,
 	placeholder: types.string,
 	returnsObject: types.bool,
-	renderListItem: types.func,
+	renderItem: types.func,
 	transformData: types.func,
 	selectedItem: types.selectedValue,
 	showCount: types.bool,

@@ -6,7 +6,6 @@ import { Text, Header, Body, Title } from 'native-base';
 import {
 	ReactiveBase,
 	DataSearch,
-	TextField,
 	SingleDropdownList,
 	MultiDropdownList,
 	SingleDropdownRange,

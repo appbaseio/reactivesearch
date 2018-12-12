@@ -26,6 +26,7 @@ import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/Dropdown';
 import { connect } from '../../utils';
+import { isFunction } from '../../../lib/utils';
 
 class MultiDropdownList extends Component {
 	constructor(props) {
@@ -49,7 +50,7 @@ class MultiDropdownList extends Component {
 
 		props.addComponent(this.internalComponent);
 		props.addComponent(props.componentId);
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 		this.updateQueryOptions(props);
 
 		this.setReact(props);
@@ -372,12 +373,18 @@ class MultiDropdownList extends Component {
 	};
 
 	render() {
-		const { showLoadMore, loadMoreLabel } = this.props;
+		const {
+			showLoadMore, loadMoreLabel, error, renderError, isLoading, loader,
+		} = this.props;
 		const { isLastBucket } = this.state;
 		let selectAll = [];
 
-		if (this.props.isLoading && this.props.loader) {
-			return this.props.loader;
+		if (isLoading && loader) {
+			return loader;
+		}
+
+		if (renderError && error) {
+			return isFunction(renderError) ? renderError(error) : renderError;
 		}
 
 		if (this.state.options.length === 0) {
@@ -413,7 +420,7 @@ class MultiDropdownList extends Component {
 					multi
 					showCount={this.props.showCount}
 					themePreset={this.props.themePreset}
-					renderListItem={this.props.renderListItem}
+					renderItem={this.props.renderItem}
 					showSearch={this.props.showSearch}
 					transformData={this.props.transformData}
 					footer={
@@ -446,6 +453,7 @@ MultiDropdownList.propTypes = {
 	customQuery: types.func,
 	dataField: types.stringRequired,
 	defaultValue: types.stringArray,
+	error: types.title,
 	value: types.stringArray,
 	filterLabel: types.string,
 	innerClass: types.style,
@@ -454,10 +462,12 @@ MultiDropdownList.propTypes = {
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
+	onError: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
-	renderListItem: types.func,
+	renderItem: types.func,
+	renderError: types.title,
 	transformData: types.func,
 	selectAllLabel: types.string,
 	showCount: types.bool,
@@ -504,6 +514,7 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
