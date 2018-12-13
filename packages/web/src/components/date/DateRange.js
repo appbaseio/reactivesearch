@@ -100,8 +100,8 @@ class DateRange extends Component {
 				this.state.currentDate
 					? {
 						// we need the date in correct queryFormat
-						start: formatDate(this.state.currentDate.start),
-						end: formatDate(this.state.currentDate.end),
+						start: formatDate(this.state.currentDate.start, this.props),
+						end: formatDate(this.state.currentDate.end, this.props),
 					} // prettier-ignore
 					: this.state.currentDate,
 				this.props,
