@@ -21,4 +21,8 @@ export const composeThemeObject = (ownTheme = {}, userTheme = {}) => ({
 	},
 });
 
+/**
+ * To determine wether an element is a function
+ * @param {any} element
+ */
 export const isFunction = element => typeof element === 'function';

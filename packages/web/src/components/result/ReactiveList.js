@@ -18,6 +18,7 @@ import {
 	getClassName,
 	parseHits,
 	checkSomePropChange,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -55,7 +56,7 @@ class ReactiveList extends Component {
 			this.props.setStreaming(this.props.componentId, true);
 		}
 
-		const options = getQueryOptions(this.props);
+		let options = getQueryOptions(this.props);
 		options.from = this.state.from;
 		if (this.props.sortOptions) {
 			options.sort = [
@@ -79,9 +80,7 @@ class ReactiveList extends Component {
 		this.defaultQuery = null;
 		if (this.props.defaultQuery) {
 			this.defaultQuery = this.props.defaultQuery();
-			if (this.defaultQuery.sort) {
-				options.sort = this.defaultQuery.sort;
-			}
+			options = { ...options, ...getOptionsFromQuery(this.defaultQuery) };
 		}
 
 		const { sort, ...query } = this.defaultQuery || {};
@@ -168,14 +167,15 @@ class ReactiveList extends Component {
 		}
 
 		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
-			const options = getQueryOptions(this.props);
+			let options = getQueryOptions(this.props);
 			options.from = 0;
 			this.defaultQuery = this.props.defaultQuery();
 
 			const { sort, ...query } = this.defaultQuery;
 
-			if (sort) {
-				options.sort = this.defaultQuery.sort;
+			const queryOptions = getOptionsFromQuery(this.defaultQuery);
+			if (queryOptions) {
+				options = { ...options, ...getOptionsFromQuery(this.defaultQuery) };
 				this.props.setQueryOptions(this.props.componentId, options, !query);
 			}
 
