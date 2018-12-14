@@ -336,9 +336,24 @@ class DynamicRangeSlider extends Component {
 	};
 
 	updateRangeQueryOptions = (props) => {
-		const queryOptions = {
-			aggs: this.rangeQuery(props),
-		};
+		let queryOptions = {};
+		const { nestedField } = props;
+		if (nestedField) {
+			queryOptions = {
+				aggs: {
+					[nestedField]: {
+						nested: {
+							path: nestedField,
+						},
+						aggs: this.rangeQuery(props),
+					},
+				},
+			};
+		} else {
+			queryOptions = {
+				aggs: this.rangeQuery(props),
+			};
+		}
 
 		props.setQueryOptions(this.internalRangeComponent, queryOptions);
 	};
@@ -480,26 +495,47 @@ DynamicRangeSlider.defaultProps = {
 	showFilter: true,
 };
 
-const mapStateToProps = (state, props) => ({
-	options:
-		state.aggregations[props.componentId]
-		&& state.aggregations[props.componentId][props.dataField]
-		&& state.aggregations[props.componentId][props.dataField].buckets
-			? state.aggregations[props.componentId][props.dataField].buckets
-			: [],
-	isLoading: state.isLoading[props.componentId],
-	range:
-		state.aggregations[`${props.componentId}__range__internal`]
-		&& state.aggregations[`${props.componentId}__range__internal`].min
-			? {
-				start: state.aggregations[`${props.componentId}__range__internal`].min.value,
-				end: state.aggregations[`${props.componentId}__range__internal`].max.value,
-			} // prettier-ignore
+const mapStateToProps = (state, props) => {
+	let options
+		= state.aggregations[props.componentId]
+		&& state.aggregations[props.componentId][props.dataField];
+	let range = state.aggregations[`${props.componentId}__range__internal`];
+	if (props.nestedField) {
+		options
+			= options
+			&& state.aggregations[props.componentId][props.dataField].nested
+			&& state.aggregations[props.componentId][props.dataField].nested.buckets
+				? state.aggregations[props.componentId][props.dataField].nested.buckets
+				: [];
+		range
+			= range && state.aggregations[`${props.componentId}__range__internal`].nested.min
+				? {
+					start: state.aggregations[`${props.componentId}__range__internal`].nested.min.value,
+					end: state.aggregations[`${props.componentId}__range__internal`].nested.max.value,
+				} // prettier-ignore
+				: null;
+	} else {
+		options
+			= options && state.aggregations[props.componentId][props.dataField].buckets
+				? state.aggregations[props.componentId][props.dataField].buckets
+				: [];
+		range
+			= range && state.aggregations[`${props.componentId}__range__internal`].min
+				? {
+					start: state.aggregations[`${props.componentId}__range__internal`].min.value,
+					end: state.aggregations[`${props.componentId}__range__internal`].max.value,
+				} // prettier-ignore
+				: null;
+	}
+	return {
+		options,
+		isLoading: state.isLoading[props.componentId],
+		range,
+		selectedValue: state.selectedValues[props.componentId]
+			? state.selectedValues[props.componentId].value
 			: null,
-	selectedValue: state.selectedValues[props.componentId]
-		? state.selectedValues[props.componentId].value
-		: null,
-});
+	};
+};
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
