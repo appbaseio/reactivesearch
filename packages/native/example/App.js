@@ -40,10 +40,10 @@ class Main extends Component {
 			renderItem={({ item }) => (
 				<View style={{ margin: 5 }}>
 					<Text style={{ flex: 1, fontWeight: 'bold' }}>
-						{this.parseToElement(item.name)}
+						{this.parseToElement(item.model)}
 					</Text>
 					<Text>
-						{item.brand} - {item.model}
+						{item.brand} - {item.vehicleType} - {item.year}
 					</Text>
 				</View>
 			)}
@@ -53,6 +53,7 @@ class Main extends Component {
 	);
 
 	parseToElement = (str) => {
+		if (!str) return null;
 		const start = str.indexOf('<em>');
 		const end = str.indexOf('</em>');
 
@@ -108,8 +109,8 @@ class Main extends Component {
 							dataField="year"
 							componentId="DateRange"
 							defaultSelected={{
-								start: '2017-04-04',
-								end: '2017-04-10',
+								start: '2015-04-04',
+								end: '2016-04-10',
 							}}
 						/>
 
@@ -117,10 +118,10 @@ class Main extends Component {
 							componentId="SingleDropdownRange"
 							dataField="price"
 							data={[
-								{ start: 0, end: 100, label: 'Cheap' },
-								{ start: 101, end: 200, label: 'Moderate' },
-								{ start: 201, end: 500, label: 'Pricey' },
-								{ start: 501, end: 1000, label: 'First Date' },
+								{ start: 1000, end: 3000, label: 'Cheap' },
+								{ start: 3001, end: 5000, label: 'Moderate' },
+								{ start: 5001, end: 10000, label: 'Pricey' },
+								{ start: 10001, end: 100000, label: 'First Date' },
 							]}
 							defaultSelected="Pricey"
 						/>
@@ -129,10 +130,10 @@ class Main extends Component {
 							componentId="MultiDropdownRange"
 							dataField="price"
 							data={[
-								{ start: 0, end: 100, label: 'Cheap' },
-								{ start: 101, end: 200, label: 'Moderate' },
-								{ start: 201, end: 500, label: 'Pricey' },
-								{ start: 501, end: 1000, label: 'First Date' },
+								{ start: 1000, end: 3000, label: 'Cheap' },
+								{ start: 3001, end: 5000, label: 'Moderate' },
+								{ start: 5001, end: 10000, label: 'Pricey' },
+								{ start: 10001, end: 100000, label: 'First Date' },
 							]}
 							defaultSelected={['Pricey', 'First Date']}
 							innerStyle={{
@@ -153,15 +154,15 @@ class Main extends Component {
 
 						<DataSearch
 							componentId="DataSearchComponent"
-							dataField="model"
-							defaultSelected="Nissan"
+							dataField={['model', 'model.search']}
+							defaultSelected="Nitro"
 							react={{
 								and: 'TextFieldComponent',
 							}}
 						/>
 
 						<ReactiveList
-							dataField="model"
+							dataField="model.keyword"
 							componentId="ReactiveList"
 							size={20}
 							onAllData={this.onAllData}
