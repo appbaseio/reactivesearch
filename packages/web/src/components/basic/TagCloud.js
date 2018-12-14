@@ -18,6 +18,7 @@ import {
 	checkSomePropChange,
 	getClassName,
 	handleA11yAction,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -201,6 +202,16 @@ class TagCloud extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || TagCloud.defaultQuery;
+		const { customQuery } = props;
+
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(value, props))
+			: null;
+		this.queryOptions = {
+			...this.queryOptions,
+			...customQueryOptions,
+		};
+		props.setQueryOptions(props.componentId, this.queryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -231,7 +242,11 @@ class TagCloud extends Component {
 
 	updateQueryOptions = (props) => {
 		const queryOptions = TagCloud.generateQueryOptions(props);
-		props.setQueryOptions(this.internalComponent, queryOptions);
+		this.queryOptions = {
+			...this.queryOptions,
+			...queryOptions,
+		};
+		props.setQueryOptions(this.internalComponent, this.queryOptions);
 	};
 
 	handleClick = (item) => {
