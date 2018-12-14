@@ -280,7 +280,7 @@ class TagCloud extends Component {
 				)}
 				<TagList className={getClassName(this.props.innerClass, 'list') || null}>
 					{this.state.options.map((item) => {
-						const size = (item.doc_count / highestCount) * (max - min) + min;
+						const size = (item.doc_count / highestCount) * (max - min) + min; // eslint-disable-line
 
 						return (
 							<span
@@ -355,11 +355,16 @@ TagCloud.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => {
-	console.log(state.aggregations[props.componentId]);
+	let options = {};
+	if (props.nestedField) {
+		options
+			= state.aggregations[props.componentId]
+			&& state.aggregations[props.componentId][props.nestedField];
+	} else {
+		options = state.aggregations[props.componentId];
+	}
 	return {
-		options: props.nestedField
-			? state.aggregations[props.componentId][props.nestedField]
-			: state.aggregations[props.componentId],
+		options,
 		selectedValue:
 			(state.selectedValues[props.componentId]
 				&& state.selectedValues[props.componentId].value)

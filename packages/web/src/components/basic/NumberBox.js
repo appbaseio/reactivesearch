@@ -63,15 +63,17 @@ class NumberBox extends Component {
 	}
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		switch (props.queryFormat) {
 			case 'exact':
-				return {
+				query = {
 					term: {
 						[props.dataField]: value,
 					},
 				};
+				break;
 			case 'lte':
-				return {
+				query = {
 					range: {
 						[props.dataField]: {
 							lte: value,
@@ -79,8 +81,9 @@ class NumberBox extends Component {
 						},
 					},
 				};
+				break;
 			default:
-				return {
+				query = {
 					range: {
 						[props.dataField]: {
 							gte: value,
@@ -89,6 +92,18 @@ class NumberBox extends Component {
 					},
 				};
 		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+		return query;
 	};
 
 	setReact(props) {
@@ -202,6 +217,7 @@ NumberBox.propTypes = {
 	defaultSelected: types.number,
 	innerClass: types.style,
 	labelPosition: types.labelPosition,
+	nestedField: types.string,
 	onQueryChange: types.func,
 	queryFormat: types.queryFormatNumberBox,
 	react: types.react,
