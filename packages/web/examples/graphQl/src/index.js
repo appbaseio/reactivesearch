@@ -10,7 +10,7 @@ class Main extends Component {
 			<ReactiveBase
 				app="good-books-ds"
 				credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d"
-				graphQlUrl="https://graphql-es.herokuapp.com"
+				graphQLUrl="https://graphql-es.herokuapp.com"
 			>
 				<div className="row">
 					<div className="col">
@@ -29,7 +29,7 @@ class Main extends Component {
 							className="result-list-container"
 							from={0}
 							size={5}
-							onData={this.booksReactiveList}
+							renderData={this.booksReactiveList}
 							react={{
 								and: ['BookSensor'],
 							}}
