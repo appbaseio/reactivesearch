@@ -503,15 +503,15 @@ const mapStateToProps = (state, props) => {
 	if (props.nestedField) {
 		options
 			= options
-			&& state.aggregations[props.componentId][props.dataField].nested
-			&& state.aggregations[props.componentId][props.dataField].nested.buckets
-				? state.aggregations[props.componentId][props.dataField].nested.buckets
+			&& state.aggregations[props.componentId][props.dataField][props.nestedField]
+			&& state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
+			? state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
 				: [];
 		range
-			= range && state.aggregations[`${props.componentId}__range__internal`].nested.min
+			= range && state.aggregations[`${props.componentId}__range__internal`][props.nestedField].min
 				? {
-					start: state.aggregations[`${props.componentId}__range__internal`].nested.min.value,
-					end: state.aggregations[`${props.componentId}__range__internal`].nested.max.value,
+				start: state.aggregations[`${props.componentId}__range__internal`][props.nestedField].min.value,
+				end: state.aggregations[`${props.componentId}__range__internal`][props.nestedField].max.value,
 				} // prettier-ignore
 				: null;
 	} else {
