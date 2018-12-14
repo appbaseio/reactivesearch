@@ -15357,7 +15357,7 @@ react-native-web-maps@^0.1.0:
   dependencies:
     react-google-maps "^7.3.0"
 
-react-native@^0.55.4:
+react-native@^0.55.4, react-native@~0.55.4:
   version "0.55.4"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.55.4.tgz#eecffada3750a928e2ddd07cf11d857ae9751c30"
   integrity sha512-J6U2KeuFIfH0I6kbwymQWe7Yw7AVzPq22tq6z5VmvcYQiKbqKkvjJukgHqR6keRreHjohEaWP5Gi007IGFJdyQ==
@@ -15597,6 +15597,16 @@ react@^16.7.0-alpha.2:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.12.0-alpha.2"
+
+react@~16.3.2:
+  version "16.3.2"
+  resolved "https://registry.npmjs.org/react/-/react-16.3.2.tgz#fdc8420398533a1e58872f59091b272ce2f91ea9"
+  integrity sha512-o5GPdkhciQ3cEph6qgvYB7LTOHw/GB0qRI6ZFNugj49qJCFfgHwVNjZ5u+b7nif4vOeMIOuYj3CeYe2IBD74lg==
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
 
 reactcss@^1.2.0:
   version "1.2.3"
