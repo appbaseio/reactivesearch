@@ -15,6 +15,7 @@ import {
 	getClassName,
 	pushToAndClause,
 	getQueryOptions,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -240,7 +241,8 @@ class MultiDataList extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const { customQuery } = props;
+		const query = customQuery || this.defaultQuery;
 
 		// find the corresponding value of the label for running the query
 		const queryValue = value.reduce((acc, item) => {
@@ -250,6 +252,15 @@ class MultiDataList extends Component {
 			const matchingItem = props.data.find(dataItem => dataItem.label === item);
 			return matchingItem ? acc.concat(matchingItem.value) : acc;
 		}, []);
+
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(queryValue, props))
+			: null;
+		this.queryOptions = {
+			...this.queryOptions,
+			...customQueryOptions,
+		};
+		props.setQueryOptions(props.componentId, this.queryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -270,7 +281,11 @@ class MultiDataList extends Component {
 
 	updateQueryOptions = (props) => {
 		const queryOptions = MultiDataList.generateQueryOptions(props, this.state);
-		props.setQueryOptions(this.internalComponent, queryOptions);
+		this.queryOptions = {
+			...this.queryOptions,
+			...queryOptions,
+		};
+		props.setQueryOptions(this.internalComponent, this.queryOptions);
 	};
 
 	updateStateOptions = (bucket) => {
