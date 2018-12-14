@@ -44,11 +44,19 @@ class URLParamsProvider extends Component {
 						this.hasValidValue(this.props.selectedValues[component])
 						|| this.hasValidValue(nextProps.selectedValues[component])
 					) {
-						if (nextProps.selectedValues[component].URLParams) {
-							this.setURL(
-								component,
-								this.getValue(nextProps.selectedValues[component].value),
-							);
+						const selectedValues = nextProps.selectedValues[component];
+						if (selectedValues.URLParams) {
+							if (selectedValues.category) {
+								this.setURL(
+									component,
+									this.getValue({
+										category: selectedValues.category,
+										value: selectedValues.value,
+									}),
+								);
+							} else {
+								this.setURL(component, this.getValue(selectedValues.value));
+							}
 						} else {
 							this.params.delete(component);
 							this.pushToHistory();
@@ -96,6 +104,7 @@ class URLParamsProvider extends Component {
 		} else if (value && typeof value === 'object') {
 			// TODO: support for NestedList
 			if (value.location) return value;
+			if (value.category) return value;
 			return value.label || value.key || null;
 		}
 		return value;

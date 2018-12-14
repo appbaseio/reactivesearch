@@ -81,9 +81,17 @@ class ReactiveBase extends Component {
 
 		try {
 			Array.from(params.keys()).forEach((key) => {
+				const parsedParams = JSON.parse(params.get(key));
+				const selectedValue = {};
+				if (parsedParams.value) {
+					selectedValue.value = parsedParams.value;
+				} else {
+					selectedValue.value = parsedParams;
+				}
+				if (parsedParams.category) selectedValue.category = parsedParams.category;
 				selectedValues = {
 					...selectedValues,
-					[key]: { value: JSON.parse(params.get(key)) },
+					[key]: selectedValue,
 				};
 			});
 		} catch (e) {
