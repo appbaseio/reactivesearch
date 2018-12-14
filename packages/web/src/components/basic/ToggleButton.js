@@ -95,6 +95,18 @@ class ToggleButton extends Component {
 				},
 			};
 		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
 		return query;
 	};
 
@@ -181,7 +193,9 @@ class ToggleButton extends Component {
 					</Title>
 				)}
 				{this.props.data.map((item) => {
-					const isSelected = this.state.currentValue.some(value => value.value === item.value);
+					const isSelected = this.state.currentValue.some(
+						value => value.value === item.value,
+					);
 					return (
 						<Button
 							className={`${getClassName(this.props.innerClass, 'button')} ${
@@ -217,6 +231,7 @@ ToggleButton.propTypes = {
 	filterLabel: types.string,
 	innerClass: types.style,
 	multiSelect: types.bool,
+	nestedField: types.string,
 	onQueryChange: types.func,
 	react: types.react,
 	showFilter: types.bool,

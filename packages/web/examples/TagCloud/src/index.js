@@ -9,15 +9,16 @@ class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="meetup_app"
-				credentials="lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181"
+				app="Movies_JY"
+				credentials="k1meXR4WG:7b5c21f3-6e11-4140-9f7a-a05b46f5f245"
 			>
 				<div className="row">
 					<div className="col">
 						<TagCloud
 							title="TagCloud"
+							nestedField="nested"
 							componentId="CitySensor"
-							dataField="group.group_city.raw"
+							dataField="nested.genre.keyword"
 							multiSelect
 							size={50}
 						/>
@@ -26,7 +27,7 @@ class Main extends Component {
 						<SelectedFilters />
 						<ResultList
 							componentId="SearchResult"
-							dataField="group.group_topics.topic_name_raw"
+							dataField="original_title.keyword"
 							title="Results"
 							sortBy="asc"
 							className="result-list-container"
@@ -49,32 +50,7 @@ class Main extends Component {
 
 	meetupList(data) {
 		return {
-			title: (
-				<div className="meetup-title">
-					{data.member ? data.member.member_name : ''} is going to $
-					{data.event ? data.event.event_name : ''}
-				</div>
-			),
-			image: data.member.photo,
-			image_size: 'small',
-			description: (
-				<div className="flex column">
-					<div className="meetup-location">
-						<span className="location">
-							<i className="fas fa-map-marker-alt" />
-						</span>
-						{data.group ? data.group.group_city : ''}
-					</div>
-					<div className="flex wrap meetup-topics">
-						{data.group.group_topics.slice(0, 4).map(tag => (
-							<div className="meetup-topic" key={tag.topic_name}>
-								{tag.topic_name}
-							</div>
-						))}
-					</div>
-				</div>
-			),
-			url: data.event.event_url,
+			title: <div className="meetup-title">{data.original_title}</div>,
 		};
 	}
 }

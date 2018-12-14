@@ -78,14 +78,25 @@ class TextField extends Component {
 	}
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (value && value.trim() !== '') {
-			return {
+			query = {
 				match: {
 					[props.dataField]: value,
 				},
 			};
 		}
-		return null;
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+		return query;
 	};
 
 	handleTextChange = debounce((value) => {
@@ -149,8 +160,7 @@ class TextField extends Component {
 
 	renderIcons = () => (
 		<div>
-			{this.state.currentValue
-				&& this.props.showClear && (
+			{this.state.currentValue && this.props.showClear && (
 				<InputIcon onClick={this.clearValue} iconPosition="right">
 					{this.renderCancelIcon()}
 				</InputIcon>

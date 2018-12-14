@@ -68,7 +68,8 @@ class TagCloud extends Component {
 			});
 		});
 		checkSomePropChange(this.props, nextProps, ['size', 'sortBy'], () =>
-			this.updateQueryOptions(nextProps));
+			this.updateQueryOptions(nextProps),
+		);
 
 		checkPropChange(this.props.dataField, nextProps.dataField, () => {
 			this.updateQueryOptions(nextProps);
@@ -132,6 +133,17 @@ class TagCloud extends Component {
 			}
 
 			query = value.length ? listQuery : null;
+		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
 		}
 		return query;
 	};
@@ -204,15 +216,35 @@ class TagCloud extends Component {
 	static generateQueryOptions(props) {
 		const queryOptions = getQueryOptions(props);
 		queryOptions.size = 0;
-		queryOptions.aggs = {
-			[props.dataField]: {
-				terms: {
-					field: props.dataField,
-					size: props.size,
-					order: getAggsOrder(props.sortBy || 'asc'),
+		const { nestedField } = props;
+		if (nestedField) {
+			queryOptions.aggs = {
+				[nestedField]: {
+					nested: {
+						path: nestedField,
+					},
+					aggs: {
+						[props.dataField]: {
+							terms: {
+								field: props.dataField,
+								size: props.size,
+								order: getAggsOrder(props.sortBy || 'asc'),
+							},
+						},
+					},
 				},
-			},
-		};
+			};
+		} else {
+			queryOptions.aggs = {
+				[props.dataField]: {
+					terms: {
+						field: props.dataField,
+						size: props.size,
+						order: getAggsOrder(props.sortBy || 'asc'),
+					},
+				},
+			};
+		}
 
 		return queryOptions;
 	}
@@ -248,7 +280,7 @@ class TagCloud extends Component {
 				)}
 				<TagList className={getClassName(this.props.innerClass, 'list') || null}>
 					{this.state.options.map((item) => {
-						const size = ((item.doc_count / highestCount) * (max - min)) + min;
+						const size = (item.doc_count / highestCount) * (max - min) + min;
 
 						return (
 							<span
@@ -297,6 +329,7 @@ TagCloud.propTypes = {
 	isLoading: types.bool,
 	loader: types.title,
 	multiSelect: types.bool,
+	nestedField: types.string,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	queryFormat: types.queryFormatSearch,
@@ -321,14 +354,19 @@ TagCloud.defaultProps = {
 	URLParams: false,
 };
 
-const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId],
-	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
-	isLoading: state.isLoading[props.componentId],
-});
+const mapStateToProps = (state, props) => {
+	console.log(state.aggregations[props.componentId]);
+	return {
+		options: props.nestedField
+			? state.aggregations[props.componentId][props.nestedField]
+			: state.aggregations[props.componentId],
+		selectedValue:
+			(state.selectedValues[props.componentId]
+				&& state.selectedValues[props.componentId].value)
+			|| null,
+		isLoading: state.isLoading[props.componentId],
+	};
+};
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
