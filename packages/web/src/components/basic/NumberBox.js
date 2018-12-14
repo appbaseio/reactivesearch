@@ -6,11 +6,13 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryListener,
+	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -151,7 +153,13 @@ class NumberBox extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || NumberBox.defaultQuery;
+		const { customQuery } = props;
+		const query = customQuery || this.defaultQuery;
+
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(value, props))
+			: null;
+		props.setQueryOptions(props.componentId, customQueryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -209,6 +217,7 @@ NumberBox.propTypes = {
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
+	setQueryOptions: types.funcRequired,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -249,6 +258,8 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryOptions: (component, props, execute) =>
+		dispatch(setQueryOptions(component, props, execute)),
 });
 
 const ConnectedComponent = connect(
@@ -256,5 +267,6 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <NumberBox ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));

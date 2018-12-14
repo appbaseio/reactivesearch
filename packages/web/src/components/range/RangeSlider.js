@@ -13,6 +13,7 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
+	getOptionsFromQuery,
 	pushToAndClause,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -257,7 +258,9 @@ class RangeSlider extends Component {
 	};
 
 	updateQuery = (value, props) => {
+		const { customQuery } = props;
 		const query = props.customQuery || RangeSlider.defaultQuery;
+
 		const {
 			showFilter,
 			range: { start, end },
@@ -265,6 +268,10 @@ class RangeSlider extends Component {
 		const [currentStart, currentEnd] = value;
 		// check if the slider is at its initial position
 		const isInitialValue = currentStart === start && currentEnd === end;
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(value, props))
+			: null;
+		props.setQueryOptions(props.componentId, customQueryOptions);
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
@@ -278,18 +285,24 @@ class RangeSlider extends Component {
 
 	updateQueryOptions = (props) => {
 		if (props.showHistogram) {
+			const { customQuery } = props;
 			const queryOptions = {
 				size: 0,
 				aggs: (props.histogramQuery || this.histogramQuery)(props),
 			};
+			const value = [props.range.start, props.range.end];
+			const query = customQuery || RangeSlider.defaultQuery;
 
-			props.setQueryOptions(this.internalComponent, queryOptions, false);
-
-			const query = props.customQuery || RangeSlider.defaultQuery;
-
+			const customQueryOptions = customQuery
+				? getOptionsFromQuery(customQuery(value, props))
+				: null;
+			props.setQueryOptions(this.internalComponent, {
+				...queryOptions,
+				...customQueryOptions,
+			}, false);
 			props.updateQuery({
 				componentId: this.internalComponent,
-				query: query([props.range.start, props.range.end], props),
+				query: query(value, props),
 			});
 		}
 	};

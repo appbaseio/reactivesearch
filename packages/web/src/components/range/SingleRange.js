@@ -6,12 +6,14 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryListener,
+	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -98,9 +100,8 @@ class SingleRange extends Component {
 		}
 
 		this.locked = true;
-		const currentValue = (typeof value === 'string')
-			? SingleRange.parseValue(value, props)
-			: value;
+		const currentValue
+			= typeof value === 'string' ? SingleRange.parseValue(value, props) : value;
 
 		const performUpdate = () => {
 			const handleUpdates = () => {
@@ -125,7 +126,13 @@ class SingleRange extends Component {
 	};
 
 	updateQuery = (value, props) => {
+		const { customQuery } = props;
 		const query = props.customQuery || SingleRange.defaultQuery;
+
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(value, props))
+			: null;
+		props.setQueryOptions(props.componentId, customQueryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -237,6 +244,8 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryOptions: (component, props, execute) =>
+		dispatch(setQueryOptions(component, props, execute)),
 });
 
 const ConnectedComponent = connect(
@@ -244,6 +253,6 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <SingleRange ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
-
+export default React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));
