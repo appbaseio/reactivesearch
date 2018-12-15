@@ -7,6 +7,9 @@
     componentId="BookSensor"
     :dataField="['original_title', 'original_title.search']"
     :URLParams="true"
+    :innerClass="{
+      input:'data-input'
+    }"
   />
   <ReactiveList
   componentId="SearchResult"
@@ -58,5 +61,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+.data-input {
+  background-color: blue !important;
 }
 </style>
