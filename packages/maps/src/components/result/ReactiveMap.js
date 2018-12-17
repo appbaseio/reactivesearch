@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ReactDOMServer from 'react-dom/server';
+
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
@@ -22,6 +24,13 @@ import {
 	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import {
+	Map as OpenStreetMap,
+	TileLayer as OpenStreetLayer,
+	Marker as OpenStreetMaker,
+	Popup as OpenStreetPopup,
+} from 'react-leaflet';
+import { Icon, DivIcon } from 'leaflet';
 
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
@@ -36,6 +45,11 @@ const FlatMap = require('./addons/styles/FlatMap');
 const LightMonochrome = require('./addons/styles/LightMonochrome');
 const MidnightCommander = require('./addons/styles/MidnightCommander');
 const UnsaturatedBrowns = require('./addons/styles/UnsaturatedBrowns');
+
+const PROVIDER = {
+	GOOGLE: 'google',
+	OPENSTREET: 'openstreet',
+};
 
 const MAP_CENTER = {
 	lat: 37.7749,
@@ -66,7 +80,7 @@ function getPrecision(a) {
 function withDistinctLat(loc, count) {
 	const length = getPrecision(loc.lat);
 	const noiseFactor = length >= 6 ? 4 : length - 2;
-	const suffix = (1 / (10 ** noiseFactor)) * count;
+	const suffix = (1 / 10) ** noiseFactor * count; // eslint-disable-line
 	const location = {
 		...loc,
 		lat: parseFloat((loc.lat + suffix).toFixed(length)),
@@ -397,7 +411,7 @@ class ReactiveMap extends Component {
 			Z /= numCoords;
 
 			const lng = Math.atan2(Y, X);
-			const hyp = Math.sqrt((X * X) + (Y * Y));
+			const hyp = Math.sqrt(X * X + Y * Y); // eslint-disable-line
 			const lat = Math.atan2(Z, hyp);
 
 			const newX = (lat * 180) / Math.PI;
@@ -678,6 +692,7 @@ class ReactiveMap extends Component {
 						padding: '8px 10px',
 						boxShadow: 'rgba(0,0,0,0.3) 0px 1px 4px -1px',
 						borderRadius: 2,
+						zIndex: 1000,
 					}}
 					className={getClassName(this.props.innerClass, 'checkboxContainer') || null}
 				>
@@ -781,47 +796,140 @@ class ReactiveMap extends Component {
 	};
 
 	getMarkers = (resultsToRender) => {
-		let markers = [];
-		if (this.props.showMarkers) {
-			markers = resultsToRender.map((item) => {
-				const markerProps = {
-					position: this.getPosition(item),
+		const {
+			showMarkers,
+			onData,
+			defaultPin,
+			markerProps,
+			onPopoverClick,
+			provider,
+		} = this.props;
+
+		if (showMarkers) {
+			const markers = resultsToRender.map((item) => {
+				const position = this.getPosition(item);
+				const openStreetMarkerProps = {
+					riseOnHover: true,
+				};
+
+				const openStreetPopupPorops = {
+					css: {
+						'.leaflet-popup-content-wrapper': {
+							borderRadius: '3px !important',
+						},
+					},
+				};
+
+				const customMarkerProps = {
+					position,
 				};
 
 				if (this.state.markerOnTop === item._id) {
-					markerProps.zIndex = window.google.maps.Marker.MAX_ZINDEX + 1;
+					customMarkerProps.zIndex = window.google.maps.Marker.MAX_ZINDEX + 1;
 				}
 
-				if (this.props.onData) {
-					const data = this.props.onData(item);
+				if (onData) {
+					const data = onData(item);
 
 					if ('label' in data) {
-						return (
-							<MarkerWithLabel
-								key={item._id}
-								labelAnchor={new window.google.maps.Point(0, 30)}
-								icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
-								onClick={() => this.openMarkerInfo(item._id)}
-								onMouseOver={() => this.increaseMarkerZIndex(item._id)}
-								onFocus={() => this.increaseMarkerZIndex(item._id)}
-								onMouseOut={this.removeMarkerZIndex}
-								onBlur={this.removeMarkerZIndex}
-								{...markerProps}
-								{...this.props.markerProps}
-							>
+						openStreetMarkerProps.icon = new DivIcon({
+							html: ReactDOMServer.renderToStaticMarkup(
 								<div className={mapPinWrapper}>
-									<MapPin>{data.label}</MapPin>
-									<MapPinArrow />
-									{this.props.onPopoverClick
+									<MapPin css={{ height: 'auto' }}>{data.label}</MapPin>
+									<div
+										css={{
+											position: 'absolute',
+											left: 0,
+											width: 0,
+											height: 0,
+											borderTop: '12px solid white',
+											borderRight: '12px solid transparent',
+											boxShadow: '0 2px 4px 0 rgba(0,0,0,0.15)',
+										}}
+									/>
+									{onPopoverClick
 										? this.renderPopover(item, true)
 										: null}
-								</div>
-							</MarkerWithLabel>
+								</div>,
+							),
+						});
+						return (
+							provider === PROVIDER.GOOGLE ? (
+								<MarkerWithLabel
+									key={item._id}
+									labelAnchor={new window.google.maps.Point(0, 30)}
+									icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
+									onClick={() => this.openMarkerInfo(item._id)}
+									onMouseOver={() => this.increaseMarkerZIndex(item._id)}
+									onFocus={() => this.increaseMarkerZIndex(item._id)}
+									onMouseOut={this.removeMarkerZIndex}
+									onBlur={this.removeMarkerZIndex}
+									{...customMarkerProps}
+									{...markerProps}
+								>
+									<div className={mapPinWrapper}>
+										<MapPin>{data.label}</MapPin>
+										<MapPinArrow />
+										{onPopoverClick
+											? this.renderPopover(item, true)
+											: null}
+									</div>
+								</MarkerWithLabel>
+							) : (
+								<OpenStreetMaker
+									key={item._id}
+									position={[position.lat, position.lng]}
+									{...openStreetMarkerProps}
+								>
+									{
+										onPopoverClick
+											? (
+												<OpenStreetPopup {...openStreetPopupPorops}>
+													{onPopoverClick(item)}
+												</OpenStreetPopup>
+											) : null
+									}
+								</OpenStreetMaker>
+							)
 						);
 					} else if ('icon' in data) {
 						markerProps.icon = data.icon;
-					} else {
+						openStreetMarkerProps.icon = new Icon({
+							iconUrl: data.icon,
+						});
 						return (
+							provider === PROVIDER.GOOGLE ? (
+								<Marker
+									key={item._id}
+									onClick={() => this.openMarkerInfo(item._id)}
+									{...customMarkerProps}
+									{...markerProps}
+								>
+									{onPopoverClick ? this.renderPopover(item) : null}
+								</Marker>
+							) : (
+								<OpenStreetMaker
+									key={item._id}
+									position={[position.lat, position.lng]}
+									{...openStreetMarkerProps}
+								>
+									{
+										onPopoverClick
+											? (
+												<OpenStreetPopup {...openStreetPopupPorops}>
+													{onPopoverClick(item)}
+												</OpenStreetPopup>
+											) : null
+									}
+								</OpenStreetMaker>
+							)
+						);
+					}
+					openStreetMarkerProps.icon = new DivIcon({
+						html: ReactDOMServer.renderToStaticMarkup(data.custom),
+					});
+					return (
+						provider === PROVIDER.GOOGLE ? (
 							<MarkerWithLabel
 								key={item._id}
 								labelAnchor={new window.google.maps.Point(0, 0)}
@@ -829,30 +937,66 @@ class ReactiveMap extends Component {
 								onFocus={() => this.increaseMarkerZIndex(item._id)}
 								onMouseOut={this.removeMarkerZIndex}
 								onBlur={this.removeMarkerZIndex}
+								{...customMarkerProps}
 								{...markerProps}
-								{...this.props.markerProps}
 							>
 								{data.custom}
 							</MarkerWithLabel>
-						);
-					}
-				} else if (this.props.defaultPin) {
-					markerProps.icon = this.props.defaultPin;
+						) : (
+							<OpenStreetMaker
+								key={item._id}
+								position={[position.lat, position.lng]}
+								{...openStreetMarkerProps}
+							>
+								{
+									onPopoverClick
+										? (
+											<OpenStreetPopup {...openStreetPopupPorops}>
+												{onPopoverClick(item)}
+											</OpenStreetPopup>
+										) : null
+								}
+							</OpenStreetMaker>
+						)
+					);
+				} else if (defaultPin) {
+					customMarkerProps.icon = defaultPin;
+					openStreetMarkerProps.icon = new Icon({
+						iconUrl: defaultPin,
+					});
 				}
-
 				return (
-					<Marker
-						key={item._id}
-						onClick={() => this.openMarkerInfo(item._id)}
-						{...markerProps}
-						{...this.props.markerProps}
-					>
-						{this.props.onPopoverClick ? this.renderPopover(item) : null}
-					</Marker>
+					provider === PROVIDER.GOOGLE ? (
+						<Marker
+							key={item._id}
+							onClick={() => this.openMarkerInfo(item._id)}
+							{...customMarkerProps}
+							{...markerProps}
+						>
+							{onPopoverClick ? this.renderPopover(item) : null}
+						</Marker>
+					) : (
+						<OpenStreetMaker
+							key={item._id}
+							position={[position.lat, position.lng]}
+							{...openStreetMarkerProps}
+						>
+							{
+								onPopoverClick
+									? (
+										<OpenStreetPopup {...openStreetPopupPorops}>
+											{onPopoverClick(item)}
+										</OpenStreetPopup>
+									) : null
+							}
+						</OpenStreetMaker>
+					)
 				);
 			});
+
+			return markers;
 		}
-		return markers;
+		return null;
 	};
 
 	renderMap = () => {
@@ -873,64 +1017,101 @@ class ReactiveMap extends Component {
 			height: '100%',
 			position: 'relative',
 		};
+		const { provider } = this.props;
+		const center = this.getCenter(resultsToRender);
 
-		return (
-			<div style={style}>
-				<MapComponent
-					containerElement={<div style={style} />}
-					mapElement={<div style={{ height: '100%' }} />}
-					onMapMounted={(ref) => {
-						this.mapRef = ref;
-						if (this.props.innerRef && ref) {
-							const map = Object.values(ref.context)[0];
-							const mapRef = { ...ref, map };
-							this.props.innerRef(mapRef);
-						}
-					}}
-					zoom={this.state.zoom}
-					center={this.getCenter(resultsToRender)}
-					{...this.props.mapProps}
-					onIdle={this.handleOnIdle}
-					onZoomChanged={this.handleZoomChange}
-					onDragEnd={this.handleOnDragEnd}
-					options={{
-						styles: this.state.currentMapStyle.value,
-						...getInnerKey(this.props.mapProps, 'options'),
-					}}
-				>
-					{this.props.showMarkers && this.props.showMarkerClusters ? (
-						<MarkerClusterer averageCenter enableRetinaIcons gridSize={60}>
-							{markers}
-						</MarkerClusterer>
-					) : (
-						markers
-					)}
-					{this.props.showMarkers && this.props.markers}
-					{this.renderSearchAsMove()}
-				</MapComponent>
-				{this.props.showMapStyles ? (
-					<div
-						style={{
-							position: 'absolute',
-							top: 10,
-							right: 46,
-							width: 120,
-							zIndex: window.google.maps.Marker.MAX_ZINDEX + 1,
-						}}
-					>
-						<Dropdown
-							innerClass={this.props.innerClass}
-							items={this.mapStyles}
-							onChange={this.setMapStyle}
-							selectedItem={this.state.currentMapStyle}
-							keyField="label"
-							returnsObject
-							small
-						/>
+		switch (provider) {
+			case PROVIDER.GOOGLE:
+				return (
+					<div style={style}>
+						<MapComponent
+							containerElement={<div style={style} />}
+							mapElement={<div style={{ height: '100%' }} />}
+							onMapMounted={(ref) => {
+								this.mapRef = ref;
+								if (this.props.innerRef && ref) {
+									const map = Object.values(ref.context)[0];
+									const mapRef = { ...ref, map };
+									this.props.innerRef(mapRef);
+								}
+							}}
+							zoom={this.state.zoom}
+							center={center}
+							{...this.props.mapProps}
+							onIdle={this.handleOnIdle}
+							onZoomChanged={this.handleZoomChange}
+							onDragEnd={this.handleOnDragEnd}
+							options={{
+								styles: this.state.currentMapStyle.value,
+								...getInnerKey(this.props.mapProps, 'options'),
+							}}
+						>
+							{this.props.showMarkers && this.props.showMarkerClusters ? (
+								<MarkerClusterer averageCenter enableRetinaIcons gridSize={60}>
+									{markers}
+								</MarkerClusterer>
+							) : (
+								markers
+							)}
+							{this.props.showMarkers && this.props.markers}
+							{this.renderSearchAsMove()}
+						</MapComponent>
+						{this.props.showMapStyles ? (
+							<div
+								style={{
+									position: 'absolute',
+									top: 10,
+									right: 46,
+									width: 120,
+									zIndex: window.google.maps.Marker.MAX_ZINDEX + 1,
+								}}
+							>
+								<Dropdown
+									innerClass={this.props.innerClass}
+									items={this.mapStyles}
+									onChange={this.setMapStyle}
+									selectedItem={this.state.currentMapStyle}
+									keyField="label"
+									returnsObject
+									small
+								/>
+							</div>
+						) : null}
 					</div>
-				) : null}
-			</div>
-		);
+				);
+			case PROVIDER.OPENSTREET: {
+				const position = [center.lat, center.lng];
+				return (
+					<div style={{ ...style, overflow: 'hidden' }}>
+						<OpenStreetMap
+							style={style}
+							zoom={this.state.zoom}
+							center={position}
+							css={{
+								'.leaflet-div-icon': {
+									width: 'auto !important',
+									border: 0,
+								},
+								'.leaflet-popup-content-wrapper': {
+									borderRadius: '3px !important',
+								},
+								'.leaflet-popup': {
+									marginLeft: 15,
+								},
+							}}
+							touchZoom
+						>
+							<OpenStreetLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
+							{markers}
+							{this.props.showMarkers && this.props.markers}
+							{this.renderSearchAsMove()}
+						</OpenStreetMap>
+					</div>
+				);
+			}
+			default:
+				return null;
+		}
 	};
 
 	renderPagination = () => (
@@ -1023,6 +1204,7 @@ ReactiveMap.propTypes = {
 	defaultRadius: types.number,
 	unit: types.string,
 	autoClosePopover: types.bool,
+	provider: types.string,
 };
 
 ReactiveMap.defaultProps = {
@@ -1046,6 +1228,7 @@ ReactiveMap.defaultProps = {
 	unit: 'mi',
 	defaultRadius: 100,
 	autoClosePopover: false,
+	provider: PROVIDER.GOOGLE,
 };
 
 const mapStateToProps = (state, props) => ({
