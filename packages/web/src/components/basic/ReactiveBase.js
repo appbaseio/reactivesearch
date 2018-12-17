@@ -34,7 +34,7 @@ class ReactiveBase extends Component {
 		checkSomePropChange(
 			this.props,
 			prevProps,
-			['app', 'url', 'type', 'credentials', 'mapKey', 'headers'],
+			['app', 'url', 'type', 'credentials', 'mapKey', 'headers', 'graphQLUrl'],
 			() => {
 				this.setStore(this.props);
 				this.setState(state => ({
@@ -67,6 +67,7 @@ class ReactiveBase extends Component {
 			type: this.type,
 			transformRequest: props.transformRequest,
 			analytics: props.analytics,
+			graphQLUrl: props.graphQLUrl,
 		};
 
 		let queryParams = '';
@@ -131,6 +132,7 @@ ReactiveBase.defaultProps = {
 	themePreset: 'light',
 	initialState: {},
 	analytics: false,
+	graphQLUrl: '',
 };
 
 ReactiveBase.propTypes = {
@@ -149,6 +151,7 @@ ReactiveBase.propTypes = {
 	className: types.string,
 	initialState: types.children,
 	analytics: types.bool,
+	graphQLUrl: types.string,
 };
 
 export default ReactiveBase;

@@ -15,6 +15,7 @@ export interface ReactiveBaseProps {
 	mapKey?: string;
 	style?: types.style;
 	className?: string;
+	graphQLUrl?: string;
 }
 
 declare const ReactiveBase: React.ComponentType<ReactiveBaseProps>;
