@@ -51,7 +51,8 @@ class DatePicker extends Component {
 			this.updateQuery(
 				this.state.currentDate ? this.formatInputDate(this.state.currentDate) : null,
 				nextProps,
-			));
+			),
+		);
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleDateChange(nextProps.defaultSelected, true, nextProps);
 		} else if (
@@ -91,12 +92,17 @@ class DatePicker extends Component {
 
 	clearDayPicker = () => {
 		if (this.state.currentDate !== '') {
-			this.handleDateChange(''); // resets the day picker component
+			this.setState({
+				currentDate: '',
+			});
 		}
 	};
 
-	handleDayPicker = (date) => {
-		this.handleDateChange(date || '');
+	handleDayPicker = (selectedDay, modifiers, dayPickerInput) => {
+		// Check no of characters in input and than fire the query
+		if (dayPickerInput.getInput().value.length === 10) {
+			this.handleDateChange(selectedDay || '');
+		}
 	};
 
 	handleDateChange = (currentDate, isDefaultValue = false, props = this.props) => {
@@ -175,9 +181,6 @@ class DatePicker extends Component {
 						}}
 						clickUnselectsDay={this.props.clickUnselectsDay}
 						onDayChange={this.handleDayPicker}
-						inputProps={{
-							readOnly: true,
-						}}
 						classNames={{
 							container:
 								getClassName(this.props.innerClass, 'daypicker-container')
@@ -191,8 +194,9 @@ class DatePicker extends Component {
 						}}
 						{...this.props.dayPickerInputProps}
 					/>
-					{this.props.showClear
-						&& this.state.currentDate && <CancelSvg onClick={this.clearDayPicker} />}
+					{this.props.showClear && this.state.currentDate && (
+						<CancelSvg onClick={this.clearDayPicker} />
+					)}
 				</Flex>
 			</DateContainer>
 		);
