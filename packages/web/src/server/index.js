@@ -69,6 +69,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			url: settings.url && settings.url.trim() !== '' ? settings.url : 'https://scalr.api.appbase.io',
 			app: settings.app,
 			credentials,
+			transformRequest: settings.transformRequest || null,
 			type: settings.type ? settings.type : '*',
 		};
 		const appbaseRef = Appbase(config);
@@ -268,7 +269,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 		appbaseRef.msearch({
 			type: config.type === '*' ? '' : config.type,
-			body: finalQuery,
+			body: config.transformRequest ? config.transformRequest(finalQuery) : finalQuery,
 		}).then((res) => {
 			orderOfQueries.forEach((component, index) => {
 				const response = res.responses[index];
