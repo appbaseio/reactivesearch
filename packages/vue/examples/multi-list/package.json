@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "vue": "^2.5.17",
-    "@appbaseio/reactivesearch-vue": "^1.0.0-beta"
+    "@appbaseio/reactivesearch-vue": "^1.0.0-beta.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.4",
