@@ -6,8 +6,9 @@ export interface MultiDataList extends CommonProps {
 	beforeValueChange?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
 	data?: types.data;
+	defaultValue?: types.stringArray;
+	value?: types.stringArray;
 	dataField: string;
-	defaultSelected?: types.stringArray;
 	filterLabel?: string;
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
@@ -20,7 +21,7 @@ export interface MultiDataList extends CommonProps {
 	showSearch?: boolean;
 	themePreset?: types.themePreset;
 	title?: types.title;
-	showCount?: boolean,
+	showCount?: boolean;
 	renderListItem?: (...args: any[]) => any;
 }
 
