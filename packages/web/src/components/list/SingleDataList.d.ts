@@ -7,7 +7,8 @@ export interface SingleDataList extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	data?: types.data;
 	dataField: string;
-	defaultSelected?: string;
+	defaultValue?: string;
+	value?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
@@ -19,7 +20,7 @@ export interface SingleDataList extends CommonProps {
 	showSearch?: boolean;
 	themePreset?: types.themePreset;
 	title?: types.title;
-	showCount?: boolean,
+	showCount?: boolean;
 	renderListItem?: (...args: any[]) => any;
 }
 

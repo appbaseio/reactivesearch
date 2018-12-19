@@ -135,14 +135,14 @@ class DateRange extends Component {
 						{
 							range: {
 								[props.dataField[0]]: {
-									lte: formatDate(new XDate(value.start)),
+									lte: formatDate(new XDate(value.start), props),
 								},
 							},
 						},
 						{
 							range: {
 								[props.dataField[1]]: {
-									gte: formatDate(new XDate(value.end)),
+									gte: formatDate(new XDate(value.end), props),
 								},
 							},
 						},
@@ -153,8 +153,8 @@ class DateRange extends Component {
 			query = {
 				range: {
 					[props.dataField[0]]: {
-						gte: formatDate(new XDate(value.start)),
-						lte: formatDate(new XDate(value.end)),
+						gte: formatDate(new XDate(value.start), props),
+						lte: formatDate(new XDate(value.end), props),
 					},
 				},
 			};
@@ -162,8 +162,8 @@ class DateRange extends Component {
 			query = {
 				range: {
 					[props.dataField]: {
-						gte: formatDate(new XDate(value.start)),
-						lte: formatDate(new XDate(value.end)),
+						gte: formatDate(new XDate(value.start), props),
+						lte: formatDate(new XDate(value.end), props),
 					},
 				},
 			};
@@ -204,8 +204,8 @@ class DateRange extends Component {
 				};
 
 				date = {
-					start: formatDate(new XDate(value.start)),
-					end: formatDate(new XDate(value.end)),
+					start: formatDate(new XDate(value.start), props),
+					end: formatDate(new XDate(value.end), props),
 				};
 
 				checkValueChange(props.componentId, date, props.beforeValueChange, performUpdate);

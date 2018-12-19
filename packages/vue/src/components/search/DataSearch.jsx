@@ -424,7 +424,7 @@ const DataSearch = {
 										showClear={this.$props.showClear}
 										iconPosition={this.$props.iconPosition}
 										innerRef={this.$props.innerRef}
-										className={getClassName(this.$props.innerClass, 'input')}
+										class={getClassName(this.$props.innerClass, 'input')}
 										placeholder={this.$props.placeholder}
 										{...{
 											on: getInputEvents({
