@@ -306,7 +306,7 @@ class DataSearch extends Component {
 		// defaultQuery from props is always appended
 		// regardless of a customQuery
 		const query = customQuery || DataSearch.defaultQuery;
-		const queryObject = defaultQuery
+		let queryObject = defaultQuery
 			? {
 				bool: {
 					must: [
@@ -316,6 +316,15 @@ class DataSearch extends Component {
 				},
 			} // prettier-ignore
 			: query(value, props);
+
+		if (queryObject && props.nestedField) {
+			queryObject = {
+				nested: {
+					path: props.nestedField,
+					query: queryObject,
+				},
+			};
+		}
 
 		props.updateQuery({
 			componentId,

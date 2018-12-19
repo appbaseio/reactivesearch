@@ -340,7 +340,7 @@ class CategorySearch extends Component {
 
 		// defaultQuery from props is always appended regardless of a customQuery
 		const query = customQuery || CategorySearch.defaultQuery;
-		const queryObject = defaultQuery
+		let queryObject = defaultQuery
 			? {
 				bool: {
 					must: [
@@ -350,6 +350,17 @@ class CategorySearch extends Component {
 				},
 			} // prettier-ignore
 			: query(value, props, category);
+
+		if (queryObject && props.nestedField) {
+			queryObject = {
+				nested: {
+					path: props.nestedField,
+					query: queryObject,
+				},
+			};
+		}
+
+
 		props.updateQuery({
 			componentId,
 			query: queryObject,
@@ -677,6 +688,7 @@ CategorySearch.propTypes = {
 	fuzziness: types.fuzziness,
 	highlight: types.bool,
 	highlightField: types.stringOrArray,
+	nestedField: types.string,
 	icon: types.children,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
