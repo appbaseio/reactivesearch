@@ -288,7 +288,7 @@ const MultiDropdownList = {
 				this.currentValue = currentValue;
 				this.updateQueryHandler(finalValues, props);
 				this.locked = false;
-				this.$emit('valueChange', value);
+				this.$emit('valueChange', finalValues);
 			};
 
 			checkValueChange(
