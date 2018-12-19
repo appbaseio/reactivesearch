@@ -116,8 +116,13 @@ const types = {
 	queryFormatNumberBox: VueTypes.oneOf(['exact', 'lte', 'gte']),
 	params: VueTypes.object.isRequired,
 	props: VueTypes.object,
+	rangeLabels: VueTypes.shape({
+		start: VueTypes.string,
+		end: VueTypes.string,
+	}),
 	rangeLabelsAlign: VueTypes.oneOf(['left', 'right']),
 	title: VueTypes.oneOfType([VueTypes.string, VueTypes.any]),
+	tooltipTrigger: VueTypes.oneOf(['always', 'none', 'hover']),
 	location: VueTypes.shape({
 		lat: validateLocation,
 		lng: validateLocation
