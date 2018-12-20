@@ -21,6 +21,9 @@ class RangeInput extends Component {
 			isStartValid: true,
 			isEndValid: true,
 		};
+
+		this.startInputRef = null;
+		this.endInputRef = null;
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -66,16 +69,29 @@ class RangeInput extends Component {
 	};
 
 	handleSlider = ({ start, end }) => {
-		this.setState({
-			start,
-			end,
-		});
+		if (
+			document.activeElement !== this.startInputRef
+			&& document.activeElement !== this.endInputRef
+		) {
+			this.setState({
+				start,
+				end,
+			});
+		}
 		if (this.props.onValueChange) {
 			this.props.onValueChange({
 				start,
 				end,
 			});
 		}
+	};
+
+	setStartInputRef = (ref) => {
+		this.startInputRef = ref;
+	};
+
+	setEndInputRef = (ref) => {
+		this.endInputRef = ref;
 	};
 
 	render() {
@@ -106,6 +122,8 @@ class RangeInput extends Component {
 							alert={!this.state.isStartValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
+							innerRef={this.setStartInputRef}
+							id="startInput"
 						/>
 						{!this.state.isStartValid && (
 							<Content alert>Input range is invalid</Content>
@@ -124,6 +142,8 @@ class RangeInput extends Component {
 							alert={!this.state.isEndValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
+							innerRef={this.setEndInputRef}
+							id="endInput"
 						/>
 						{!this.state.isEndValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
