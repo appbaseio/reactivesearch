@@ -521,7 +521,7 @@ class MultiList extends Component {
 									)}
 								</label>
 							</li>
-						)) : this.props.onNoResults()}
+						)) : this.props.onNoResults && this.props.onNoResults()}
 					{showLoadMore && !isLastBucket && (
 						<div css={loadMoreContainer}>
 							<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
