@@ -208,7 +208,9 @@ class RangeSlider extends Component {
 				}
 			};
 
-			if (hasMounted) {
+			const [start, end] = currentValue;
+			const { range } = props;
+			if (hasMounted && start <= end && start >= range.start && end <= range.end) {
 				this.setState(
 					{
 						currentValue,

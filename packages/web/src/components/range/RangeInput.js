@@ -27,8 +27,8 @@ class RangeInput extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (!isEqual(this.props.defaultValue, prevProps.defaultValue)) {
-			this.handleSlider(this.props.defaultValue);
+		if (!isEqual(this.props.value, prevProps.value)) {
+			this.handleSlider(this.props.value);
 		}
 	}
 
@@ -80,7 +80,7 @@ class RangeInput extends Component {
 		}
 	};
 
-	handleSliderChange = ({ start, end }) => {
+	handleSliderChange = ([start, end]) => {
 		const { value, onChange } = this.props;
 		if (value) {
 			if (onChange) onChange({ start, end });
@@ -115,13 +115,13 @@ class RangeInput extends Component {
 			<Container style={style} className={className}>
 				<RangeSlider
 					{...rest}
-					defaultValue={{
+					value={{
 						start: this.state.isStartValid
 							? Number(this.state.start)
 							: this.props.range.start,
 						end: this.state.isEndValid ? Number(this.state.end) : this.props.range.end,
 					}}
-					onValueChange={this.handleSliderChange}
+					onChange={this.handleSliderChange}
 					className={getClassName(this.props.innerClass, 'slider-container') || null}
 				/>
 				<Flex className={getClassName(this.props.innerClass, 'input-container') || null}>
