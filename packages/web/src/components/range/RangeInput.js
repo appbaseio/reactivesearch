@@ -21,11 +21,14 @@ class RangeInput extends Component {
 			isStartValid: true,
 			isEndValid: true,
 		};
+
+		this.startInputRef = React.createRef();
+		this.endInputRef = React.createRef();
 	}
 
 	componentDidUpdate(prevProps) {
-		if (!isEqual(this.props.value, prevProps.value)) {
-			this.handleSlider(this.props.value);
+		if (!isEqual(this.props.defaultValue, prevProps.defaultValue)) {
+			this.handleSlider(this.props.defaultValue);
 		}
 	}
 
@@ -77,7 +80,7 @@ class RangeInput extends Component {
 		}
 	};
 
-	handleSliderChange = ([start, end]) => {
+	handleSliderChange = ({ start, end }) => {
 		const { value, onChange } = this.props;
 		if (value) {
 			if (onChange) onChange({ start, end });
@@ -87,10 +90,15 @@ class RangeInput extends Component {
 	};
 
 	handleSlider = ({ start, end }) => {
-		this.setState({
-			start,
-			end,
-		});
+		if (
+			document.activeElement !== this.startInputRef.current
+			&& document.activeElement !== this.endInputRef.current
+		) {
+			this.setState({
+				start,
+				end,
+			});
+		}
 		if (this.props.onValueChange) {
 			this.props.onValueChange({
 				start,
@@ -107,13 +115,13 @@ class RangeInput extends Component {
 			<Container style={style} className={className}>
 				<RangeSlider
 					{...rest}
-					value={{
+					defaultValue={{
 						start: this.state.isStartValid
 							? Number(this.state.start)
 							: this.props.range.start,
 						end: this.state.isEndValid ? Number(this.state.end) : this.props.range.end,
 					}}
-					onChange={this.handleSliderChange}
+					onValueChange={this.handleSliderChange}
 					className={getClassName(this.props.innerClass, 'slider-container') || null}
 				/>
 				<Flex className={getClassName(this.props.innerClass, 'input-container') || null}>
@@ -127,6 +135,7 @@ class RangeInput extends Component {
 							alert={!this.state.isStartValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
+							innerRef={this.startInputRef}
 						/>
 						{!this.state.isStartValid && (
 							<Content alert>Input range is invalid</Content>
@@ -145,6 +154,7 @@ class RangeInput extends Component {
 							alert={!this.state.isEndValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
+							innerRef={this.endInputRef}
 						/>
 						{!this.state.isEndValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
