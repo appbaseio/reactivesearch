@@ -203,7 +203,9 @@ class RangeSlider extends Component {
 				}
 			};
 
-			if (hasMounted) {
+			const [start, end] = currentValue;
+			const { range } = props;
+			if (hasMounted && start <= end && start >= range.start && end <= range.end) {
 				this.setState(
 					{
 						currentValue,
@@ -433,5 +435,6 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <RangeSlider ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));
