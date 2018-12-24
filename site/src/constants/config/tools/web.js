@@ -20,4 +20,7 @@ export default {
 	banner5: {
 		backgroundColor: '#DDEBFF',
 	},
+	bannerVue: {
+		backgroundColor: '#1B2C36',
+	},
 };

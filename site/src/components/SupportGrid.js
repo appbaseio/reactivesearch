@@ -3,7 +3,7 @@ import { Grid, Card, Title } from '@appbaseio/designkit';
 
 // eslint-disable-next-line
 export default ({ configName }) => {
-	const imagePrefix = configName === 'vue' ? 'images/vue' : 'images/support';
+	const imagePrefix = configName === 'vue' ? '../../reactivesearch/images/vue' : '../../reactivesearch/images/support';
 	return (
 		<Grid
 			size={4}
@@ -37,10 +37,7 @@ export default ({ configName }) => {
 				<p>Go from scratch to a full app with these tutorial guides.</p>
 			</Card>
 			<Card big href="https://appbase.io/support">
-				<img
-					src={`${imagePrefix}/Support.png`}
-					alt="Support"
-				/>
+				<img src={`${imagePrefix}/Support.png`} alt="Support" />
 				<Title>Support</Title>
 				<p>
 					Get first-class support from appbase.io for your{' '}
