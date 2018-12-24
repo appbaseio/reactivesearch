@@ -5,6 +5,7 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryListener,
+	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -12,6 +13,7 @@ import {
 	checkPropChange,
 	getClassName,
 	formatDate,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import XDate from 'xdate';
@@ -149,8 +151,12 @@ class DatePicker extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || DatePicker.defaultQuery;
-
+		const { customQuery } = props;
+		const query = customQuery || DatePicker.defaultQuery;
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(value, props))
+			: null;
+		props.setQueryOptions(props.componentId, customQueryOptions);
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
@@ -224,6 +230,7 @@ DatePicker.propTypes = {
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
+	setQueryOptions: types.funcRequired,
 	// component props
 	className: types.string,
 	clickUnselectsDay: types.bool,
@@ -271,6 +278,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 const ConnectedComponent = connect(
@@ -278,5 +286,6 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(withTheme(props => <DatePicker ref={props.myForwardedRef} {...props} />));
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));

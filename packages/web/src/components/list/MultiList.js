@@ -17,6 +17,7 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -338,7 +339,17 @@ class MultiList extends Component {
 	};
 
 	updateQuery = (value, props) => {
+		const { customQuery } = props;
 		const query = props.customQuery || MultiList.defaultQuery;
+
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(value, props))
+			: null;
+		this.queryOptions = {
+			...this.queryOptions,
+			...customQueryOptions,
+		};
+		props.setQueryOptions(props.componentId, this.queryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -370,7 +381,11 @@ class MultiList extends Component {
 			props,
 			addAfterKey ? this.state.after : {},
 		);
-		props.setQueryOptions(this.internalComponent, queryOptions);
+		this.queryOptions = {
+			...this.queryOptions,
+			...queryOptions,
+		};
+		props.setQueryOptions(this.internalComponent, this.queryOptions);
 	};
 
 	handleInputChange = (e) => {

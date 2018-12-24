@@ -35,7 +35,7 @@
     "react-dom": ">=15"
   },
   "devDependencies": {
-    "@appbaseio/reactivesearch": "^2.12.1",
+    "@appbaseio/reactivesearch": "^3.0.0-alpha.3",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",

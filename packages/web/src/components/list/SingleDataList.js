@@ -14,6 +14,7 @@ import {
 	getClassName,
 	pushToAndClause,
 	getQueryOptions,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -157,13 +158,23 @@ class SingleDataList extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || SingleDataList.defaultQuery;
+		const { customQuery } = props;
+		const query = customQuery || SingleDataList.defaultQuery;
 
 		let currentValue = value;
 		if (value !== props.selectAllLabel) {
 			currentValue = props.data.find(item => item.label === value);
 			currentValue = currentValue ? currentValue.value : null;
 		}
+
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(currentValue, props))
+			: null;
+		this.queryOptions = {
+			...this.queryOptions,
+			...customQueryOptions,
+		};
+		props.setQueryOptions(props.componentId, this.queryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -184,7 +195,8 @@ class SingleDataList extends Component {
 
 	updateQueryOptions = (props) => {
 		const queryOptions = SingleDataList.generateQueryOptions(props, this.state);
-		props.setQueryOptions(this.internalComponent, queryOptions);
+		this.queryOptions = { ...this.queryOptions, ...queryOptions };
+		props.setQueryOptions(this.internalComponent, this.queryOptions);
 	};
 
 	updateStateOptions = (bucket) => {

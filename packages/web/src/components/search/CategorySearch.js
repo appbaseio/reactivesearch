@@ -16,6 +16,7 @@ import {
 	checkValueChange,
 	checkPropChange,
 	checkSomePropChange,
+	getOptionsFromQuery,
 	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
@@ -57,6 +58,9 @@ class CategorySearch extends Component {
 
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
+		this.queryOptions = {
+			size: 20,
+		};
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
@@ -65,11 +69,10 @@ class CategorySearch extends Component {
 		if (props.highlight) {
 			const queryOptions = CategorySearch.highlightQuery(props) || {};
 			queryOptions.size = 20;
+			this.queryOptions = queryOptions;
 			props.setQueryOptions(props.componentId, queryOptions);
 		} else {
-			props.setQueryOptions(props.componentId, {
-				size: 20,
-			});
+			props.setQueryOptions(props.componentId, this.queryOptions);
 		}
 
 		this.setReact(props);
@@ -93,6 +96,7 @@ class CategorySearch extends Component {
 			() => {
 				const queryOptions = CategorySearch.highlightQuery(this.props) || {};
 				queryOptions.size = 20;
+				this.queryOptions = queryOptions;
 				this.props.setQueryOptions(this.props.componentId, queryOptions);
 			},
 		);
@@ -379,6 +383,13 @@ class CategorySearch extends Component {
 				},
 			} // prettier-ignore
 			: query(value, props, category);
+		const defaultQueryOptions = defaultQuery
+			? getOptionsFromQuery(defaultQuery(value, props)) : null;
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(value, props)) : null;
+		props.setQueryOptions(this.props.componentId, {
+			...this.queryOptions, ...defaultQueryOptions, ...customQueryOptions,
+		});
 		props.updateQuery({
 			componentId,
 			query: queryObject,

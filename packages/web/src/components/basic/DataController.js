@@ -5,8 +5,13 @@ import {
 	removeComponent,
 	updateQuery,
 	setQueryListener,
+	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
-import { isEqual, checkValueChange } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	isEqual,
+	checkValueChange,
+	getOptionsFromQuery,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -46,7 +51,17 @@ class DataController extends Component {
 
 	updateQuery = (defaultSelected = null, props) => {
 		this.locked = true;
-		const query = props.customQuery || DataController.defaultQuery;
+		const { customQuery } = props;
+		const query = customQuery || DataController.defaultQuery;
+
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(defaultSelected, props))
+			: null;
+		this.queryOptions = {
+			...this.queryOptions,
+			...customQueryOptions,
+		};
+		props.setQueryOptions(props.componentId, this.queryOptions);
 
 		const performUpdate = () => {
 			props.updateQuery({
@@ -90,6 +105,7 @@ DataController.propTypes = {
 	removeComponent: types.funcRequired,
 	setQueryListener: types.funcRequired,
 	updateQuery: types.funcRequired,
+	setQueryOptions: types.funcRequired,
 	selectedValue: types.selectedValue,
 	// component props
 	componentId: types.stringRequired,
@@ -121,6 +137,7 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 const ConnectedComponent = connect(

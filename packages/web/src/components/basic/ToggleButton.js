@@ -6,12 +6,14 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryListener,
+	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -173,6 +175,16 @@ class ToggleButton extends Component {
 		if (!props.multiSelect) {
 			filterValue = value[0] ? value[0].value : null;
 		}
+		const { customQuery } = props;
+
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(value, props))
+			: null;
+		this.queryOptions = {
+			...this.queryOptions,
+			...customQueryOptions,
+		};
+		props.setQueryOptions(props.componentId, this.queryOptions);
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
@@ -234,6 +246,7 @@ ToggleButton.propTypes = {
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
+	setQueryOptions: types.funcRequired,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -276,6 +289,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 const ConnectedComponent = connect(

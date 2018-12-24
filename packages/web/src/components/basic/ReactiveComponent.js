@@ -13,6 +13,7 @@ import {
 	parseHits,
 	isEqual,
 	checkPropChange,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -49,10 +50,17 @@ class ReactiveComponent extends Component {
 		// set query for internal component
 		if (this.internalComponent && props.defaultQuery) {
 			this.defaultQuery = props.defaultQuery();
-			const { query, ...queryOptions } = this.defaultQuery || {};
+			const { query } = this.defaultQuery || {};
+			const customQueryOptions = this.defaultQuery
+				? getOptionsFromQuery(this.defaultQuery)
+				: null;
+			this.queryOptions = {
+				...this.queryOptions,
+				...customQueryOptions,
+			};
 
-			if (queryOptions) {
-				props.setQueryOptions(this.internalComponent, queryOptions, false);
+			if (this.queryOptions) {
+				props.setQueryOptions(this.internalComponent, this.queryOptions, false);
 			}
 
 			props.updateQuery({

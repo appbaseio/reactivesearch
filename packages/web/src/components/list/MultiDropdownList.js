@@ -16,6 +16,7 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -324,8 +325,17 @@ class MultiDropdownList extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || MultiDropdownList.defaultQuery;
+		const { customQuery } = props;
+		const query = customQuery || MultiDropdownList.defaultQuery;
 
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(value, props))
+			: null;
+		this.queryOptions = {
+			...this.queryOptions,
+			...customQueryOptions,
+		};
+		props.setQueryOptions(props.componentId, this.queryOptions);
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
@@ -356,7 +366,11 @@ class MultiDropdownList extends Component {
 			props,
 			addAfterKey ? this.state.after : {},
 		);
-		props.setQueryOptions(this.internalComponent, queryOptions);
+		this.queryOptions = {
+			...this.queryOptions,
+			...queryOptions,
+		};
+		props.setQueryOptions(this.internalComponent, this.queryOptions);
 	};
 
 	handleLoadMore = () => {

@@ -14,6 +14,7 @@ import {
 	checkSomePropChange,
 	getClassName,
 	pushToAndClause,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import Rheostat from 'rheostat/lib/Slider';
@@ -70,10 +71,7 @@ class DynamicRangeSlider extends Component {
 			if (this.props.selectedValue && !this.state.currentValue) {
 				this.handleChange(this.props.selectedValue);
 			} else if (value) {
-				const { start, end } = value(
-					this.props.range.start,
-					this.props.range.end,
-				);
+				const { start, end } = value(this.props.range.start, this.props.range.end);
 				this.handleChange([start, end]);
 			} else {
 				this.handleChange([
@@ -84,17 +82,12 @@ class DynamicRangeSlider extends Component {
 		} else if (
 			this.props.range
 			&& !isEqual(
-				this.props.value
-					&& this.props.value(this.props.range.start, this.props.range.end),
-				prevProps.value
-					&& prevProps.value(this.props.range.start, this.props.range.end),
+				this.props.value && this.props.value(this.props.range.start, this.props.range.end),
+				prevProps.value && prevProps.value(this.props.range.start, this.props.range.end),
 			)
 		) {
 			// when value prop is changed
-			const { start, end } = this.props.value(
-				this.props.range.start,
-				this.props.range.end,
-			);
+			const { start, end } = this.props.value(this.props.range.start, this.props.range.end);
 			this.handleChange([start, end]);
 		} else if (
 			this.props.range
@@ -115,7 +108,8 @@ class DynamicRangeSlider extends Component {
 		});
 
 		checkSomePropChange(this.props, prevProps, ['showHistogram', 'interval'], () =>
-			this.updateQueryOptions(this.props, this.props.range || this.state.range));
+			this.updateQueryOptions(this.props, this.props.range || this.state.range),
+		);
 
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { options } = this.props;
@@ -180,7 +174,7 @@ class DynamicRangeSlider extends Component {
 	// value parser for SSR
 	static parseValue = (value) => {
 		if (Array.isArray(value)) return value;
-		return (value ? [value().start, value().end] : null);
+		return value ? [value().start, value().end] : null;
 	};
 
 	static defaultQuery = (value, props) => {
@@ -310,7 +304,8 @@ class DynamicRangeSlider extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || DynamicRangeSlider.defaultQuery;
+		const { customQuery } = props;
+		const query = customQuery || DynamicRangeSlider.defaultQuery;
 		const {
 			showFilter,
 			range: { start, end },
@@ -318,6 +313,11 @@ class DynamicRangeSlider extends Component {
 		const [currentStart, currentEnd] = value;
 		// check if the slider is at its initial position
 		const isInitialValue = currentStart === start && currentEnd === end;
+
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(value, props))
+			: null;
+		props.setQueryOptions(props.componentId, customQueryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -335,14 +335,18 @@ class DynamicRangeSlider extends Component {
 			const queryOptions = {
 				aggs: this.histogramQuery(props, range),
 			};
-
-			props.setQueryOptions(this.internalHistogramComponent, queryOptions, false);
+			const { customQuery } = props;
 
 			const query = props.customQuery || DynamicRangeSlider.defaultQuery;
-
+			const value = [range.start, range.end];
+			const customQueryOptions = customQuery
+				? getOptionsFromQuery(customQuery(value, props))
+				: null;
+			props.setQueryOptions(this.internalHistogramComponent,
+				{ ...queryOptions, ...customQueryOptions }, false);
 			props.updateQuery({
 				componentId: this.internalHistogramComponent,
-				query: query([range.start, range.end], props),
+				query: query(value, props),
 			});
 		}
 	};
@@ -536,5 +540,6 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <DynamicRangeSlider ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));

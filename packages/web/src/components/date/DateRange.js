@@ -5,12 +5,14 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryListener,
+	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	getOptionsFromQuery,
 	formatDate,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -105,7 +107,8 @@ class DateRange extends Component {
 					} // prettier-ignore
 					: this.state.currentDate,
 				this.props,
-			));
+			),
+		);
 	}
 
 	componentWillUnmount() {
@@ -246,7 +249,11 @@ class DateRange extends Component {
 	};
 
 	handleDateChange = (
-		currentDate, isDefaultValue = false, props = this.props, hasMounted = true) => {
+		currentDate,
+		isDefaultValue = false,
+		props = this.props,
+		hasMounted = true,
+	) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -286,8 +293,12 @@ class DateRange extends Component {
 
 	updateQuery = (value, props) => {
 		if (!value || (value && value.start.length && value.end.length)) {
-			const query = props.customQuery || this.defaultQuery;
-
+			const { customQuery } = props;
+			const query = customQuery || this.defaultQuery;
+			const customQueryOptions = customQuery
+				? getOptionsFromQuery(customQuery(value, props))
+				: null;
+			props.setQueryOptions(props.componentId, customQueryOptions);
 			props.updateQuery({
 				componentId: props.componentId,
 				query: query(value, props),
@@ -434,6 +445,7 @@ DateRange.propTypes = {
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
+	setQueryOptions: types.funcRequired,
 	// component props
 	autoFocusEnd: types.bool,
 	className: types.string,
@@ -484,6 +496,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 const ConnectedComponent = connect(
@@ -491,5 +504,6 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(withTheme(props => <DateRange ref={props.myForwardedRef} {...props} />));
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));

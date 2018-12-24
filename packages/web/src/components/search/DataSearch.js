@@ -17,6 +17,7 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -35,7 +36,6 @@ import SuggestionWrapper from './addons/SuggestionWrapper';
 class DataSearch extends Component {
 	constructor(props) {
 		super(props);
-
 		const currentValue = props.selectedValue || props.value || props.defaultValue || '';
 
 		this.state = {
@@ -45,6 +45,9 @@ class DataSearch extends Component {
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
+		this.queryOptions = {
+			size: 20,
+		};
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
@@ -53,11 +56,10 @@ class DataSearch extends Component {
 		if (props.highlight) {
 			const queryOptions = DataSearch.highlightQuery(props) || {};
 			queryOptions.size = 20;
+			this.queryOptions = queryOptions;
 			props.setQueryOptions(props.componentId, queryOptions);
 		} else {
-			props.setQueryOptions(props.componentId, {
-				size: 20,
-			});
+			props.setQueryOptions(props.componentId, this.queryOptions);
 		}
 
 		this.setReact(props);
@@ -77,6 +79,7 @@ class DataSearch extends Component {
 			() => {
 				const queryOptions = DataSearch.highlightQuery(this.props) || {};
 				queryOptions.size = 20;
+				this.queryOptions = queryOptions;
 				this.props.setQueryOptions(this.props.componentId, queryOptions);
 			},
 		);
@@ -350,7 +353,13 @@ class DataSearch extends Component {
 				},
 			} // prettier-ignore
 			: query(value, props);
-
+		const defaultQueryOptions = defaultQuery
+			? getOptionsFromQuery(defaultQuery(value, props)) : null;
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(value, props)) : null;
+		props.setQueryOptions(this.props.componentId, {
+			...this.queryOptions, ...defaultQueryOptions, ...customQueryOptions,
+		});
 		props.updateQuery({
 			componentId,
 			query: queryObject,

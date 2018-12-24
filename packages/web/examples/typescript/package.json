@@ -1,44 +1,44 @@
 {
-  "name": "reactivesearch-typescript",
-  "version": "1.0.0",
-  "description": "TypeScript example with ReactiveSearch",
-  "scripts": {
-    "build": "webpack --env.production",
-    "serve": "serve build -s",
-    "start": "webpack-dev-server --inline --hot --progress"
-  },
-  "author": "dhruvdutt",
-  "license": "Apache-2.0",
-  "devDependencies": {
-    "@types/react": "^16.3.10",
-    "@types/react-dom": "^16.0.5",
-    "autoprefixer": "^6.7.7",
-    "awesome-typescript-loader": "^3.1.3",
-    "clean-webpack-plugin": "^0.1.16",
-    "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "^0.28.7",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "file-loader": "^0.11.1",
-    "html-webpack-plugin": "^2.28.0",
-    "offline-plugin": "^4.7.0",
-    "postcss": "^5.2.17",
-    "postcss-cssnext": "^2.10.0",
-    "postcss-import": "^9.1.0",
-    "postcss-loader": "^1.3.3",
-    "serve": "^5.1.4",
-    "style-loader": "^0.20.3",
-    "surge": "^0.19.0",
-    "typescript": "^2.8.1",
-    "webpack": "^3.10.0",
-    "webpack-dashboard": "^0.4.0",
-    "webpack-dev-server": "^2.9.5",
-    "webpack-manifest-plugin": "^1.1.0"
-  },
-  "dependencies": {
-    "@appbaseio/reactivesearch": "^2.5.0",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
-    "react-router-dom": "^4.1.1",
-    "tslib": "^1.7.0"
-  }
+	"name": "reactivesearch-typescript",
+	"version": "1.0.0",
+	"description": "TypeScript example with ReactiveSearch",
+	"scripts": {
+		"build": "webpack --env.production",
+		"serve": "serve build -s",
+		"start": "webpack-dev-server --inline --hot --progress"
+	},
+	"author": "dhruvdutt",
+	"license": "Apache-2.0",
+	"devDependencies": {
+		"@types/react": "^16.3.10",
+		"@types/react-dom": "^16.0.5",
+		"autoprefixer": "^6.7.7",
+		"awesome-typescript-loader": "^3.1.3",
+		"clean-webpack-plugin": "^0.1.16",
+		"copy-webpack-plugin": "^4.0.1",
+		"css-loader": "^0.28.7",
+		"extract-text-webpack-plugin": "^2.1.0",
+		"file-loader": "^0.11.1",
+		"html-webpack-plugin": "^2.28.0",
+		"offline-plugin": "^4.7.0",
+		"postcss": "^5.2.17",
+		"postcss-cssnext": "^2.10.0",
+		"postcss-import": "^9.1.0",
+		"postcss-loader": "^1.3.3",
+		"serve": "^5.1.4",
+		"style-loader": "^0.20.3",
+		"surge": "^0.19.0",
+		"typescript": "^2.8.1",
+		"webpack": "^3.10.0",
+		"webpack-dashboard": "^0.4.0",
+		"webpack-dev-server": "^2.9.5",
+		"webpack-manifest-plugin": "^1.1.0"
+	},
+	"dependencies": {
+		"@appbaseio/reactivesearch": "^3.0.0-alpha.3",
+		"react": "^16.3.1",
+		"react-dom": "^16.3.1",
+		"react-router-dom": "^4.1.1",
+		"tslib": "^1.7.0"
+	}
 }

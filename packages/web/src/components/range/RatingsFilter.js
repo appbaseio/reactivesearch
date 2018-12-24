@@ -6,6 +6,7 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryListener,
+	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	checkValueChange,
@@ -13,6 +14,7 @@ import {
 	getClassName,
 	handleA11yAction,
 	isEqual,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -124,7 +126,13 @@ class RatingsFilter extends Component {
 	};
 
 	updateQuery = (value, props) => {
+		const { customQuery } = props;
 		const query = props.customQuery || RatingsFilter.defaultQuery;
+
+		const customQueryOptions = customQuery
+			? getOptionsFromQuery(customQuery(value, props))
+			: null;
+		props.setQueryOptions(props.componentId, customQueryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -187,6 +195,7 @@ RatingsFilter.propTypes = {
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
+	setQueryOptions: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -227,6 +236,8 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryOptions: (component, props, execute) =>
+		dispatch(setQueryOptions(component, props, execute)),
 });
 
 const ConnectedComponent = connect(
