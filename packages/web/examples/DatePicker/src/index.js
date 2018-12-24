@@ -56,7 +56,7 @@ class Main extends Component {
 				},
 			];
 		}
-		return query;
+		return query ? { query: { bool: { must: query } } } : null;
 	}
 
 	renderData(res) {
