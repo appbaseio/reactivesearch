@@ -213,7 +213,7 @@ class ReactiveList extends Component {
 			if (this.props.isLoading && (this.props.hits || prevProps.hits)) {
 				if (this.props.onPageChange) {
 					this.props.onPageChange(this.state.currentPage + 1, totalPages);
-				} else {
+				} else if (this.props.scrollOnChange) {
 					this.domNode.scrollTo(0, 0);
 				}
 			}
@@ -233,9 +233,11 @@ class ReactiveList extends Component {
 					this.props.hits.length !== prevProps.hits.length
 					|| this.props.hits.length === this.props.total
 				) {
-					if (this.props.hits.length < prevProps.hits.length) {
+					if (this.props.hits !== prevProps.hits) {
 						// query has changed
-						this.domNode.scrollTo(0, 0);
+						if (this.props.scrollOnChange) {
+							this.domNode.scrollTo(0, 0);
+						}
 						// eslint-disable-next-line
 						this.setState({
 							from: 0,
@@ -705,6 +707,7 @@ ReactiveList.propTypes = {
 	pagination: types.bool,
 	paginationAt: types.paginationAt,
 	react: types.react,
+	scrollOnChange: types.bool,
 	scrollTarget: types.string,
 	showResultStats: types.bool,
 	size: types.number,
@@ -729,6 +732,7 @@ ReactiveList.defaultProps = {
 	style: {},
 	URLParams: false,
 	onNoResults: 'No Results found.',
+	scrollOnChange: true,
 };
 
 const mapStateToProps = (state, props) => ({
