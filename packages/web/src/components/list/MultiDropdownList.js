@@ -421,6 +421,7 @@ class MultiDropdownList extends Component {
 					showCount={this.props.showCount}
 					themePreset={this.props.themePreset}
 					renderItem={this.props.renderItem}
+					renderNoResults={this.props.renderNoResults}
 					showSearch={this.props.showSearch}
 					transformData={this.props.transformData}
 					footer={
@@ -467,6 +468,7 @@ MultiDropdownList.propTypes = {
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
 	renderItem: types.func,
+	renderNoResults: types.func,
 	renderError: types.title,
 	transformData: types.func,
 	selectAllLabel: types.string,

@@ -109,6 +109,18 @@ class Dropdown extends Component {
 			itemsToRender = transformData(itemsToRender);
 		}
 
+		const dropdownItems = itemsToRender.filter((item) => {
+			if (String(item[labelField]).length) {
+				if (this.props.showSearch && this.state.searchTerm) {
+					return String(item[labelField])
+						.toLowerCase()
+						.includes(this.state.searchTerm.toLowerCase());
+				}
+				return true;
+			}
+			return false;
+		});
+
 		return (
 			<Downshift
 				selectedItem={selectedItem}
@@ -155,19 +167,8 @@ class Dropdown extends Component {
 										themePreset={themePreset}
 									/>
 								) : null}
-								{itemsToRender
-									.filter((item) => {
-										if (String(item[labelField]).length) {
-											if (this.props.showSearch && this.state.searchTerm) {
-												return String(item[labelField])
-													.toLowerCase()
-													.includes(this.state.searchTerm.toLowerCase());
-											}
-											return true;
-										}
-										return false;
-									})
-									.map((item, index) => {
+								{
+									dropdownItems.length ? dropdownItems.map((item, index) => {
 										let selected
 											= this.props.multi
 											// MultiDropdownList
@@ -230,7 +231,7 @@ class Dropdown extends Component {
 												) : null}
 											</li>
 										);
-									})}
+									}) : this.props.renderNoResults && this.props.renderNoResults()}
 								{footer}
 							</ul>
 						) : null}
@@ -258,6 +259,7 @@ Dropdown.propTypes = {
 	returnsObject: types.bool,
 	renderItem: types.func,
 	transformData: types.func,
+	renderNoResults: types.func,
 	selectedItem: types.selectedValue,
 	showCount: types.bool,
 	single: types.bool,

@@ -63,60 +63,41 @@ class SingleList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkPropChange(
-			prevProps.react,
-			this.props.react,
-			() => this.setReact(this.props),
+		checkPropChange(prevProps.react, this.props.react, () => this.setReact(this.props));
+
+		checkPropChange(prevProps.options, this.props.options, () => {
+			const { showLoadMore, dataField, options } = this.props;
+
+			if (showLoadMore) {
+				const { buckets } = options[dataField];
+				const after = options[dataField].after_key;
+
+				// detect the last bucket by checking if the
+				// after key is absent
+				const isLastBucket = !after;
+				this.setState(state => ({
+					...state,
+					after: after ? { after } : state.after,
+					isLastBucket,
+					options: this.getOptions(buckets, this.props),
+				}));
+			} else {
+				this.setState({
+					options: options[dataField]
+						? this.getOptions(options[dataField].buckets, this.props)
+						: [],
+				});
+			}
+		});
+
+		checkSomePropChange(prevProps, this.props, ['size', 'sortBy'], () =>
+			this.updateQueryOptions(this.props),
 		);
 
-		checkPropChange(
-			prevProps.options,
-			this.props.options,
-			() => {
-				const { showLoadMore, dataField, options } = this.props;
-
-				if (showLoadMore) {
-					const { buckets } = options[dataField];
-					const after = options[dataField].after_key;
-
-					// detect the last bucket by checking if the
-					// after key is absent
-					const isLastBucket = !after;
-					this.setState(state => ({
-						...state,
-						after: after ? { after } : state.after,
-						isLastBucket,
-						options: this.getOptions(buckets, this.props),
-					}));
-				} else {
-					this.setState({
-						options: options[dataField]
-							? this.getOptions(
-								options[dataField].buckets,
-								this.props,
-							)
-							: [],
-					});
-				}
-			},
-		);
-
-		checkSomePropChange(
-			prevProps,
-			this.props,
-			['size', 'sortBy'],
-			() => this.updateQueryOptions(this.props),
-		);
-
-		checkSomePropChange(
-			this.props,
-			prevProps,
-			['dataField', 'nestedField'],
-			() => {
-				this.updateQueryOptions(this.props);
-				this.updateQuery(this.state.currentValue, this.props);
-			},
-		);
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
+			this.updateQueryOptions(this.props);
+			this.updateQuery(this.state.currentValue, this.props);
+		});
 
 		if (this.props.value !== prevProps.value) {
 			this.setValue(this.props.value);
@@ -217,9 +198,12 @@ class SingleList extends Component {
 			};
 
 			if (hasMounted) {
-				this.setState({
-					currentValue: value,
-				}, handleUpdates);
+				this.setState(
+					{
+						currentValue: value,
+					},
+					handleUpdates,
+				);
 			} else {
 				handleUpdates();
 			}
@@ -305,7 +289,12 @@ class SingleList extends Component {
 
 	render() {
 		const {
-			selectAllLabel, renderItem, showLoadMore, loadMoreLabel, renderError, error,
+			selectAllLabel,
+			renderItem,
+			showLoadMore,
+			loadMoreLabel,
+			renderError,
+			error,
 		} = this.props;
 		const { isLastBucket } = this.state;
 
@@ -326,6 +315,18 @@ class SingleList extends Component {
 		if (this.props.transformData) {
 			itemsToRender = this.props.transformData(itemsToRender);
 		}
+
+		const listItems = itemsToRender.filter((item) => {
+			if (String(item.key).length) {
+				if (this.props.showSearch && this.state.searchTerm) {
+					return String(item.key)
+						.toLowerCase()
+						.includes(this.state.searchTerm.toLowerCase());
+				}
+				return true;
+			}
+			return false;
+		});
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
@@ -361,27 +362,11 @@ class SingleList extends Component {
 							</label>
 						</li>
 					) : null}
-					{itemsToRender
-						.filter((item) => {
-							if (String(item.key).length) {
-								if (this.props.showSearch && this.state.searchTerm) {
-									return String(item.key)
-										.toLowerCase()
-										.includes(this.state.searchTerm.toLowerCase());
-								}
-								return true;
-							}
-							return false;
-						})
-						.map((item) => {
+					{listItems.length
+						? listItems.map((item) => {
 							const isChecked = this.state.currentValue === String(item.key);
 							return (
-								<li
-									key={item.key}
-									className={`${
-										isChecked ? 'active' : ''
-									}`}
-								>
+								<li key={item.key} className={`${isChecked ? 'active' : ''}`}>
 									<Radio
 										className={getClassName(this.props.innerClass, 'radio')}
 										id={`${this.props.componentId}-${item.key}`}
@@ -393,7 +378,9 @@ class SingleList extends Component {
 										show={this.props.showRadio}
 									/>
 									<label
-										className={getClassName(this.props.innerClass, 'label') || null}
+										className={
+											getClassName(this.props.innerClass, 'label') || null
+										}
 										htmlFor={`${this.props.componentId}-${item.key}`}
 									>
 										{renderItem ? (
@@ -410,7 +397,7 @@ class SingleList extends Component {
 															) || null
 														}
 													>
-														&nbsp;({item.doc_count})
+															&nbsp;({item.doc_count})
 													</span>
 												)}
 											</span>
@@ -418,9 +405,9 @@ class SingleList extends Component {
 									</label>
 								</li>
 							);
-						})}
-					{showLoadMore
-						&& !isLastBucket && (
+						}) // prettier-ignore
+						: this.props.renderNoResults && this.props.renderNoResults()}
+					{showLoadMore && !isLastBucket && (
 						<div css={loadMoreContainer}>
 							<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
 						</div>
@@ -462,6 +449,7 @@ SingleList.propTypes = {
 	react: types.react,
 	renderItem: types.func,
 	renderError: types.title,
+	renderNoResults: types.func,
 	transformData: types.func,
 	selectAllLabel: types.string,
 	showCount: types.bool,
@@ -517,9 +505,8 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	loadMore: (component, aggsQuery) => dispatch(loadMore(component, aggsQuery, true, true)),
-	setQueryListener: (
-		component, onQueryChange, beforeQueryChange,
-	) => dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
@@ -529,5 +516,6 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <SingleList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));

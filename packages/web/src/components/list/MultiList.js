@@ -479,7 +479,9 @@ class MultiList extends Component {
 						? listItems.map(item => (
 							<li
 								key={item.key}
-								className={`${this.state.currentValue[item.key] ? 'active' : ''}`}
+								className={`${
+									this.state.currentValue[item.key] ? 'active' : ''
+								}`}
 							>
 								<Checkbox
 									className={
@@ -493,7 +495,9 @@ class MultiList extends Component {
 									show={this.props.showCheckbox}
 								/>
 								<label
-									className={getClassName(this.props.innerClass, 'label') || null}
+									className={
+										getClassName(this.props.innerClass, 'label') || null
+									}
 									htmlFor={`${this.props.componentId}-${item.key}`}
 								>
 									{renderItem ? (
@@ -514,14 +518,15 @@ class MultiList extends Component {
 														) || null
 													}
 												>
-													&nbsp;({item.doc_count})
+														&nbsp;({item.doc_count})
 												</span>
 											)}
 										</span>
 									)}
 								</label>
 							</li>
-						)) : this.props.onNoResults && this.props.onNoResults()}
+						)) // prettier-ignore
+						: this.props.renderNoResults && this.props.renderNoResults()}
 					{showLoadMore && !isLastBucket && (
 						<div css={loadMoreContainer}>
 							<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
@@ -558,7 +563,7 @@ MultiList.propTypes = {
 	isLoading: types.bool,
 	loader: types.title,
 	onError: types.func,
-	onNoResults: types.func,
+	renderNoResults: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,

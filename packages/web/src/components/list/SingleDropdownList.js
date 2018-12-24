@@ -293,6 +293,7 @@ class SingleDropdownList extends Component {
 					showCount={this.props.showCount}
 					themePreset={this.props.themePreset}
 					renderItem={this.props.renderItem}
+					renderNoResults={this.props.renderNoResults}
 					showSearch={this.props.showSearch}
 					transformData={this.props.transformData}
 					footer={
@@ -339,6 +340,7 @@ SingleDropdownList.propTypes = {
 	react: types.react,
 	renderItem: types.func,
 	renderError: types.title,
+	renderNoResults: types.func,
 	transformData: types.func,
 	selectAllLabel: types.string,
 	showCount: types.bool,
