@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import Flex, { FlexChild } from '../styles/Flex';
 import Topic, { price } from '../styles/Topic';
 
-const onResultStats = stats => (
+const onResultStats = (results, time) => (
 	<Flex justifyContent="flex-end" style={{ marginTop: '0.6rem' }}>
-		{stats.totalResults} results found in {stats.time}ms
+		{results} results found in {time}ms
 	</Flex>
 );
 
@@ -33,8 +33,8 @@ const onData = data => ({
 const Results = () => (
 	<ResultCard
 		componentId="results"
-		renderData={onData}
 		dataField="model"
+		onData={onData}
 		onResultStats={onResultStats}
 		react={{
 			and: ['category', 'brand', 'rating', 'vehicle', 'price'],

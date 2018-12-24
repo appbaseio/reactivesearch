@@ -59,7 +59,7 @@ const SearchFilters = () => (
 					end: 60000,
 				}}
 				rangeLabels={{
-					start: '$10,000',
+					start: '$10000',
 					end: '$60,000',
 				}}
 				interval={1000}

@@ -149,17 +149,17 @@ class App extends Component {
 									label: 'Title Z->A',
 								},
 							]}
-							renderData={res => ({
+							onData={res => ({
 								image: res.image,
 								title: res.original_title || ' ',
 								description:
-									`<div class='result-author' title='${res.authors}'>by ${
+									`<div class='result-author' title='${
 										res.authors
-									}</div>`
-									+ `<span class="star">${'★'.repeat(
-										res.average_rating_rounded,
-									)}</span>`,
-								url: `https://google.com/search?q=${res.original_title}`,
+									}'>by ${res.authors}</div>`
+									+ `<span class="star">${'★'.repeat(res.average_rating_rounded)}</span>`,
+								url: `https://google.com/search?q=${
+									res.original_title
+								}`,
 							})}
 							className="result-data"
 							innerClass={{
@@ -177,7 +177,11 @@ class App extends Component {
 						onClick={this.toggleState}
 						className={`toggle-btn ${this.state.visible ? 'active' : ''}`}
 					>
-						{this.state.visible ? '📚  Show Books' : '📂  Show Filters'}
+						{
+							this.state.visible
+								? '📚  Show Books'
+								: '📂  Show Filters'
+						}
 					</div>
 				</div>
 			</ReactiveBase>
