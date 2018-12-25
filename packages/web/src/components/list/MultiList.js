@@ -41,9 +41,10 @@ class MultiList extends Component {
 			currentValue[item] = true;
 		});
 
-		const options = props.options && props.options[props.dataField]
-			? this.getOptions(props.options[props.dataField].buckets, props)
-			: [];
+		const options
+			= props.options && props.options[props.dataField]
+				? this.getOptions(props.options[props.dataField].buckets, props)
+				: [];
 
 		this.state = {
 			currentValue,
@@ -69,71 +70,56 @@ class MultiList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkPropChange(
-			this.props.react,
-			prevProps.react,
-			() => this.setReact(this.props),
-		);
-		checkPropChange(
-			this.props.options,
-			prevProps.options,
-			() => {
-				const { showLoadMore, dataField, options } = this.props;
-				if (showLoadMore) {
-					const { buckets } = options[dataField];
-					const after = options[dataField].after_key;
-					// detect the last bucket by checking if the after key is absent
-					const isLastBucket = !after;
-					this.setState(state => ({
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
+		checkPropChange(this.props.options, prevProps.options, () => {
+			const { showLoadMore, dataField, options } = this.props;
+			if (showLoadMore) {
+				const { buckets } = options[dataField];
+				const after = options[dataField].after_key;
+				// detect the last bucket by checking if the after key is absent
+				const isLastBucket = !after;
+				this.setState(
+					state => ({
 						...state,
 						after: after ? { after } : state.after,
 						isLastBucket,
 						options: this.getOptions(buckets, this.props),
-					}), () => {
+					}),
+					() => {
 						// this will ensure that the Select-All (or any)
 						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
-						const value = Object.keys(currentValue)
-							.filter(item => currentValue[item]);
+						const value = Object.keys(currentValue).filter(item => currentValue[item]);
 						if (value.length) this.setValue(value, true);
-					});
-				} else {
-					this.setState({
+					},
+				);
+			} else {
+				this.setState(
+					{
 						options: options[dataField]
-							? this.getOptions(
-								options[dataField].buckets,
-								this.props,
-							)
+							? this.getOptions(options[dataField].buckets, this.props)
 							: [],
-					}, () => {
+					},
+					() => {
 						// this will ensure that the Select-All (or any)
 						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
-						const value = Object.keys(currentValue)
-							.filter(item => currentValue[item]);
+						const value = Object.keys(currentValue).filter(item => currentValue[item]);
 						if (value.length) this.setValue(value, true);
-					});
-				}
-			},
-		);
-		checkSomePropChange(
-			this.props,
-			prevProps,
-			['size', 'sortBy'],
-			() => this.updateQueryOptions(this.props),
+					},
+				);
+			}
+		});
+		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
+			this.updateQueryOptions(this.props),
 		);
 
-		checkSomePropChange(
-			this.props,
-			prevProps,
-			['dataField', 'nestedField'],
-			() => {
-				this.updateQueryOptions(this.props);
-				this.updateQuery(Object.keys(this.state.currentValue), this.props);
-			},
-		);
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
+			this.updateQueryOptions(this.props);
+			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+		});
 
 		let selectedValue = Object.keys(this.state.currentValue);
 		const { selectAllLabel } = this.props;
@@ -209,7 +195,9 @@ class MultiList extends Component {
 					let should = [
 						{
 							[type]: {
-								[props.dataField]: value.filter(item => item !== props.missingLabel),
+								[props.dataField]: value.filter(
+									item => item !== props.missingLabel,
+								),
 							},
 						},
 					];
@@ -327,9 +315,12 @@ class MultiList extends Component {
 			};
 
 			if (hasMounted) {
-				this.setState({
-					currentValue,
-				}, handleUpdates);
+				this.setState(
+					{
+						currentValue,
+					},
+					handleUpdates,
+				);
 			} else {
 				handleUpdates();
 			}
@@ -429,7 +420,12 @@ class MultiList extends Component {
 
 	render() {
 		const {
-			selectAllLabel, renderItem, showLoadMore, loadMoreLabel, renderError, error,
+			selectAllLabel,
+			renderItem,
+			showLoadMore,
+			loadMoreLabel,
+			renderError,
+			error,
 		} = this.props;
 		const { isLastBucket } = this.state;
 
@@ -450,6 +446,18 @@ class MultiList extends Component {
 		if (this.props.transformData) {
 			itemsToRender = this.props.transformData(itemsToRender);
 		}
+
+		const listItems = itemsToRender.filter((item) => {
+			if (String(item.key).length) {
+				if (this.props.showSearch && this.state.searchTerm) {
+					return String(item.key)
+						.toLowerCase()
+						.includes(this.state.searchTerm.toLowerCase());
+				}
+				return true;
+			}
+			return false;
+		});
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
@@ -482,22 +490,13 @@ class MultiList extends Component {
 							</label>
 						</li>
 					) : null}
-					{itemsToRender
-						.filter((item) => {
-							if (String(item.key).length) {
-								if (this.props.showSearch && this.state.searchTerm) {
-									return String(item.key)
-										.toLowerCase()
-										.includes(this.state.searchTerm.toLowerCase());
-								}
-								return true;
-							}
-							return false;
-						})
-						.map(item => (
+					{listItems.length
+						? listItems.map(item => (
 							<li
 								key={item.key}
-								className={`${this.state.currentValue[item.key] ? 'active' : ''}`}
+								className={`${
+									this.state.currentValue[item.key] ? 'active' : ''
+								}`}
 							>
 								<Checkbox
 									className={
@@ -511,11 +510,17 @@ class MultiList extends Component {
 									show={this.props.showCheckbox}
 								/>
 								<label
-									className={getClassName(this.props.innerClass, 'label') || null}
+									className={
+										getClassName(this.props.innerClass, 'label') || null
+									}
 									htmlFor={`${this.props.componentId}-${item.key}`}
 								>
 									{renderItem ? (
-										renderItem(item.key, item.doc_count, !!this.state.currentValue[item.key])
+										renderItem(
+											item.key,
+											item.doc_count,
+											!!this.state.currentValue[item.key],
+										)
 									) : (
 										<span>
 											{item.key}
@@ -535,9 +540,9 @@ class MultiList extends Component {
 									)}
 								</label>
 							</li>
-						))}
-					{showLoadMore
-						&& !isLastBucket && (
+						)) // prettier-ignore
+						: this.props.renderNoResults && this.props.renderNoResults()}
+					{showLoadMore && !isLastBucket && (
 						<div css={loadMoreContainer}>
 							<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
 						</div>
@@ -573,6 +578,7 @@ MultiList.propTypes = {
 	isLoading: types.bool,
 	loader: types.title,
 	onError: types.func,
+	renderNoResults: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
@@ -645,5 +651,6 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <MultiList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));

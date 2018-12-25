@@ -269,6 +269,13 @@ class SingleDataList extends Component {
 			return null;
 		}
 
+		const listItems = options.filter((item) => {
+			if (this.props.showSearch && this.state.searchTerm) {
+				return item.label.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+			}
+			return true;
+		});
+
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -302,16 +309,8 @@ class SingleDataList extends Component {
 							</label>
 						</li>
 					)}
-					{options
-						.filter((item) => {
-							if (this.props.showSearch && this.state.searchTerm) {
-								return item.label
-									.toLowerCase()
-									.includes(this.state.searchTerm.toLowerCase());
-							}
-							return true;
-						})
-						.map(item => (
+					{listItems.length
+						? listItems.map(item => (
 							<li
 								key={item.label}
 								className={`${
@@ -329,7 +328,9 @@ class SingleDataList extends Component {
 									show={this.props.showRadio}
 								/>
 								<label
-									className={getClassName(this.props.innerClass, 'label') || null}
+									className={
+										getClassName(this.props.innerClass, 'label') || null
+									}
 									htmlFor={`${this.props.componentId}-${item.label}`}
 								>
 									{renderListItem ? (
@@ -353,7 +354,8 @@ class SingleDataList extends Component {
 									)}
 								</label>
 							</li>
-						))}
+						)) // prettier-ignore
+						: this.props.renderNoResults && this.props.renderNoResults()}
 				</UL>
 			</Container>
 		);
@@ -395,6 +397,7 @@ SingleDataList.propTypes = {
 	URLParams: types.bool,
 	showCount: types.bool,
 	renderListItem: types.func,
+	renderNoResults: types.func,
 };
 
 SingleDataList.defaultProps = {
