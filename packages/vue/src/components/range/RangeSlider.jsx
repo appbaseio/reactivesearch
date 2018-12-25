@@ -56,6 +56,7 @@ const RangeSlider = {
 		URLParams: VueTypes.bool.def(false),
 		tooltipTrigger: types.tooltipTrigger,
 		mergeTooltip: VueTypes.bool.def(true),
+		tooltipFormatter: types.func,
 	},
 
 	methods: {
@@ -172,6 +173,7 @@ const RangeSlider = {
 							enable-cross={false}
 							tooltip-merge={this.$props.mergeTooltip}
 							tooltip={tooltipTrigger}
+							formatter={this.$props.tooltipFormatter}
 						/>
 						{this.$props.rangeLabels && (
 							<div class="label-container">
