@@ -518,7 +518,7 @@ class MultiList extends Component {
 														) || null
 													}
 												>
-														&nbsp;({item.doc_count})
+													&nbsp;({item.doc_count})
 												</span>
 											)}
 										</span>

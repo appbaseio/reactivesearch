@@ -420,7 +420,7 @@ class MultiDataList extends Component {
 														) || null
 													}
 												>
-														&nbsp;({item.count})
+													&nbsp;({item.count})
 												</span>
 											)}
 										</span>

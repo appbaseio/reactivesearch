@@ -335,7 +335,7 @@ class SingleDataList extends Component {
 														) || null
 													}
 												>
-														&nbsp;({item.count})
+													&nbsp;({item.count})
 												</span>
 											)}
 										</span>
