@@ -1,27 +1,27 @@
 {
-  "name": "reactivemap",
-  "version": "1.0.0",
-  "description": "ReactiveMap example for ReactiveSearch",
-  "main": "index.js",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "@appbaseio/reactivesearch": "^3.0.0-alpha.3",
-    "@appbaseio/reactivemaps": "^2.0.0-beta",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "css-loader": "^0.28.7",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.5"
-  },
-  "scripts": {
-    "build": "webpack -p --progress",
-    "start": "webpack-dev-server --hot --inline --progress --colors --port 8001"
-  }
+	"name": "reactivemap",
+	"version": "1.0.0",
+	"description": "ReactiveMap example for ReactiveSearch",
+	"main": "index.js",
+	"license": "Apache-2.0",
+	"dependencies": {
+		"@appbaseio/reactivesearch": "^3.0.0-alpha.3",
+		"@appbaseio/reactivemaps": "^2.0.1",
+		"react": "^16.2.0",
+		"react-dom": "^16.2.0"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-core": "^6.26.0",
+		"babel-loader": "^7.1.2",
+		"babel-preset-env": "^1.6.1",
+		"babel-preset-react": "^6.24.1",
+		"css-loader": "^0.28.7",
+		"webpack": "^3.10.0",
+		"webpack-dev-server": "^2.9.5"
+	},
+	"scripts": {
+		"build": "webpack -p --progress",
+		"start": "webpack-dev-server --hot --inline --progress --colors --port 8001"
+	}
 }
