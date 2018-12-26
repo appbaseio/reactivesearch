@@ -43,11 +43,9 @@ class App extends React.Component {
 			defaultMapStyle: 'Light Monochrome',
 			title: 'Reactive Maps',
 			defaultZoom: 13,
-			defaultCenter: { lat: 37.74, lng: -122.45 },
 			react: {
 				and: 'GeoDistanceDropdown',
 			},
-			provider: 'openstreet',
 			onPopoverClick: item => <div>{item.venue.venue_name}</div>,
 			showMapStyles: true,
 		};
