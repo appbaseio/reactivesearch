@@ -253,6 +253,11 @@ class DataSearch extends Component {
 		}
 	}, this.props.debounce);
 
+	handleUserSelection = (value) => {
+		if (this.props.onValueSelected) this.props.onValueSelected(value)
+		this.selectSuggestion(value.title)
+	}
+
 	selectSuggestion = (value) => {
 		this.setState({
 			suggestions: [],
@@ -310,7 +315,7 @@ class DataSearch extends Component {
 				keyboardShouldPersistTaps="always"
 				renderRow={item => (
 					<ListItem
-						onPress={() => this.selectSuggestion(item.label)}
+						onPress={() => this.handleUserSelection(item)}
 						{...getInnerKey(this.props.innerProps, 'listItem')}
 					>
 						<Text
