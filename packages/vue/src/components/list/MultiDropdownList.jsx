@@ -148,7 +148,7 @@ const MultiDropdownList = {
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
 		},
 		defaultSelected(newVal) {
-			this.setValue(newVal);
+			this.setValue(newVal, true);
 		}
 	},
 
