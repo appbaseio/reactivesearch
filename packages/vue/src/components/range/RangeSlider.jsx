@@ -27,7 +27,7 @@ const RangeSlider = {
 	components: getComponents(),
 	data() {
 		this.state = {
-			currentValue: [this.$props.range.start, this.$props.range.end],
+			currentValue: this.$props.range ? [this.$props.range.start, this.$props.range.end]: [],
 			stats: [],
 		};
 		this.locked = false;
@@ -59,11 +59,13 @@ const RangeSlider = {
 	},
 
 	methods: {
+
 		setReact(props) {
 			if (props.react) {
 				this.watchComponent(props.componentId, props.react);
 			}
 		},
+
 		handleSlider(values) {
 			this.handleChange(values.currentValue);
 		},
@@ -117,6 +119,7 @@ const RangeSlider = {
 		react() {
 			this.setReact(this.$props);
 		},
+
 		defaultSelected(newVal) {
 			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
 		},
@@ -126,21 +129,26 @@ const RangeSlider = {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
+		if(!this.$props.range){
+			console.error("%crange is not defined. Read more about this at https://opensource.appbase.io/reactive-manual/vue/range-components/rangeslider.html#props", "font-size: 12.5px;")
+		}
 		this.setQueryListener(this.$props.componentId, onQueryChange, null);
 	},
+
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
-		this.addComponent(this.internalComponent);
 		this.setReact(this.$props);
 
 		const { defaultSelected } = this.$props;
 		const { selectedValue } = this;
-		if (Array.isArray(selectedValue)) {
-			this.handleChange(selectedValue);
-		} else if (selectedValue) {
-			this.handleChange(RangeSlider.parseValue(selectedValue, this.$props));
-		} else if (defaultSelected) {
-			this.handleChange(RangeSlider.parseValue(defaultSelected, this.$props));
+		if(this.$props.range){
+			if (Array.isArray(selectedValue)) {
+				this.handleChange(selectedValue);
+			} else if (selectedValue) {
+				this.handleChange(RangeSlider.parseValue(selectedValue, this.$props));
+			} else if (defaultSelected) {
+				this.handleChange(RangeSlider.parseValue(defaultSelected, this.$props));
+			}
 		}
 	},
 
@@ -158,43 +166,47 @@ const RangeSlider = {
 						{this.$props.title}
 					</Title>
 				)}
-
-				<NoSSR>
-					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
-						<vue-slider
-							ref="slider"
-							value={this.state.currentValue}
-							min={this.$props.range.start}
-							max={this.$props.range.end}
-							onDrag-end={this.handleSlider}
-							dotSize={20}
-							height={4}
-							enable-cross={false}
-							tooltip-merge={this.$props.mergeTooltip}
-							tooltip={tooltipTrigger}
-						/>
-						{this.$props.rangeLabels && (
-							<div class="label-container">
-								<label
-									class={
-										getClassName(this.$props.innerClass, 'label')
-										|| 'range-label-left'
-									}
-								>
-									{this.$props.rangeLabels.start}
-								</label>
-								<label
-									class={
-										getClassName(this.$props.innerClass, 'label')
-										|| 'range-label-right'
-									}
-								>
-									{this.$props.rangeLabels.end}
-								</label>
-							</div>
-						)}
-					</Slider>
-				</NoSSR>
+				{
+					this.$props.range ? (
+						<NoSSR>
+							<Slider class={getClassName(this.$props.innerClass, 'slider')}>
+								<vue-slider
+									ref="slider"
+									value={this.state.currentValue}
+									min={this.$props.range.start}
+									max={this.$props.range.end}
+									onDrag-end={this.handleSlider}
+									dotSize={20}
+									height={4}
+									enable-cross={false}
+									tooltip-merge={this.$props.mergeTooltip}
+									tooltip={tooltipTrigger}
+								/>
+								{this.$props.rangeLabels && (
+									<div class="label-container">
+										<label
+											class={
+												getClassName(this.$props.innerClass, 'label')
+												|| 'range-label-left'
+											}
+										>
+											{this.$props.rangeLabels.start}
+										</label>
+										<label
+											class={
+												getClassName(this.$props.innerClass, 'label')
+												|| 'range-label-right'
+											}
+										>
+											{this.$props.rangeLabels.end}
+										</label>
+									</div>
+								)}
+							</Slider>
+						</NoSSR>
+					) :
+					null
+				}
 			</Container>
 		);
 	},
@@ -215,8 +227,14 @@ RangeSlider.defaultQuery = (values, props) => {
 	return null;
 };
 
-RangeSlider.parseValue = (value, props) =>
-	value ? [value.start, value.end] : [props.range.start, props.range.end];
+RangeSlider.parseValue = (value, props) => {
+	if(value){
+		return [value.start, value.end];
+	}else if(props.range){
+		return [props.range.start, props.range.end];
+	}
+	return [];
+}
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId]
