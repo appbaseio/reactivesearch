@@ -54,8 +54,7 @@ const RangeSlider = {
 		showCheckbox: VueTypes.bool.def(true),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
-		tooltipTrigger: types.tooltipTrigger,
-		mergeTooltip: VueTypes.bool.def(true),
+		sliderOptions: VueTypes.object.def({})
 	},
 
 	methods: {
@@ -167,11 +166,10 @@ const RangeSlider = {
 							min={this.$props.range.start}
 							max={this.$props.range.end}
 							onDrag-end={this.handleSlider}
+							enable-cross={false}
 							dotSize={20}
 							height={4}
-							enable-cross={false}
-							tooltip-merge={this.$props.mergeTooltip}
-							tooltip={tooltipTrigger}
+							{...{props:this.$props.sliderOptions}}
 						/>
 						{this.$props.rangeLabels && (
 							<div class="label-container">
