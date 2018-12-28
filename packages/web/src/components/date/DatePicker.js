@@ -100,8 +100,11 @@ class DatePicker extends Component {
 
 	handleDayPicker = (date) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(date || '');
+
+		if (value === undefined) {
+			this.handleDateChange(date || '');
+		} else if (onChange) {
+			onChange(date || '');
 		} else {
 			this.handleDateChange(date || '');
 		}

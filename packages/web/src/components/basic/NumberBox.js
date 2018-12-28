@@ -104,8 +104,11 @@ class NumberBox extends Component {
 		}
 		const { currentValue } = this.state;
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(currentValue + 1);
+
+		if (value === undefined) {
+			this.setValue(currentValue + 1);
+		} else if (onChange) {
+			onChange(currentValue + 1);
 		} else {
 			this.setValue(currentValue + 1);
 		}
@@ -117,8 +120,11 @@ class NumberBox extends Component {
 		}
 		const { currentValue } = this.state;
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(currentValue - 1);
+
+		if (value === undefined) {
+			this.setValue(currentValue - 1);
+		} else if (onChange) {
+			onChange(currentValue - 1);
 		} else {
 			this.setValue(currentValue - 1);
 		}
@@ -154,7 +160,7 @@ class NumberBox extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		const query = customQuery || this.defaultQuery;
+		const query = customQuery || NumberBox.defaultQuery;
 
 		const customQueryOptions = customQuery
 			? getOptionsFromQuery(customQuery(value, props))

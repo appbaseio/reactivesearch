@@ -231,23 +231,27 @@ class RangeSlider extends Component {
 	handleSlider = ({ values }) => {
 		if (!isEqual(values, this.state.currentValue)) {
 			const { value, onChange } = this.props;
-			if (value) {
-				if (onChange) {
-					// force re-rendering to avail the currentValue
-					// in rheostat component since it doesn't respect
-					// the controlled behavior properly
-					this.forceUpdate();
-					onChange(values);
-				} else {
-					// since value prop is set & onChange is not defined
-					// we need to reset the slider position
-					// to the original 'value' prop
-					this.setState({
-						currentValue: this.state.currentValue,
-					});
-				}
+
+			if (value === undefined) {
+				// since value prop is set & onChange is not defined
+				// we need to reset the slider position
+				// to the original 'value' prop
+				this.setState({
+					currentValue: values,
+				});
+				this.updateQuery(values, this.props);
+			} else if (onChange) {
+				// force re-rendering to avail the currentValue
+				// in rheostat component since it doesn't respect
+				// the controlled behavior properly
+				this.forceUpdate();
+				onChange(values);
 			} else {
-				this.handleChange(values);
+				this.setState({
+					currentValue: values,
+				});
+
+				this.updateQuery(values, this.props);
 			}
 		}
 	};
@@ -298,10 +302,14 @@ class RangeSlider extends Component {
 			const customQueryOptions = customQuery
 				? getOptionsFromQuery(customQuery(value, props))
 				: null;
-			props.setQueryOptions(this.internalComponent, {
-				...queryOptions,
-				...customQueryOptions,
-			}, false);
+			props.setQueryOptions(
+				this.internalComponent,
+				{
+					...queryOptions,
+					...customQueryOptions,
+				},
+				false,
+			);
 			props.updateQuery({
 				componentId: this.internalComponent,
 				query: query(value, props),

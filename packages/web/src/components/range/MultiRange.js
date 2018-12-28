@@ -167,7 +167,7 @@ class MultiRange extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		const query = customQuery || this.defaultQuery;
+		const query = customQuery || MultiRange.defaultQuery;
 
 		const customQueryOptions = customQuery
 			? getOptionsFromQuery(customQuery(value, props))
@@ -187,10 +187,14 @@ class MultiRange extends Component {
 
 	handleClick = (e) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(e);
+
+		const { value: rangeValue } = e.target;
+		if (value === undefined) {
+			this.selectItem(rangeValue);
+		} else if (onChange) {
+			onChange(e);
 		} else {
-			this.selectItem(e.target.value);
+			this.selectItem(rangeValue);
 		}
 	};
 

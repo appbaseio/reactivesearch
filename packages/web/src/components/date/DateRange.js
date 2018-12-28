@@ -180,8 +180,11 @@ class DateRange extends Component {
 	clearDayPickerStart = () => {
 		if (this.state.currentDate && this.state.currentDate.start !== '') {
 			const { value, onChange } = this.props;
-			if (value) {
-				if (onChange) onChange({ start: '', end: this.state.currentDate.end });
+
+			if (value === undefined) {
+				this.handleStartDate('', false); // resets the day picker component
+			} else if (onChange) {
+				onChange({ start: '', end: this.state.currentDate.end });
 			} else {
 				this.handleStartDate('', false); // resets the day picker component
 			}
@@ -192,10 +195,13 @@ class DateRange extends Component {
 		if (this.state.currentDate && this.state.currentDate.end !== '') {
 			this.handleEndDate(''); // resets the day picker component
 			const { value, onChange } = this.props;
-			if (value) {
-				if (onChange) onChange({ start: this.state.currentDate.start, end: '' });
+
+			if (value === undefined) {
+				this.handleEndDate('', false); // resets the day picker component
+			} else if (onChange) {
+				onChange({ start: this.state.currentDate.start, end: '' });
 			} else {
-				this.handleStartDate('', false); // resets the day picker component
+				this.handleEndDate('', false); // resets the day picker component
 			}
 		}
 	};
@@ -204,13 +210,17 @@ class DateRange extends Component {
 		const { currentDate } = this.state;
 		const end = currentDate ? currentDate.end : '';
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) {
-				onChange({
-					start: date,
-					end,
-				});
-			}
+
+		if (value === undefined) {
+			this.handleDateChange({
+				start: date,
+				end,
+			});
+		} else if (onChange) {
+			onChange({
+				start: date,
+				end,
+			});
 		} else {
 			this.handleDateChange({
 				start: date,
@@ -227,16 +237,21 @@ class DateRange extends Component {
 	handleEndDate = (date) => {
 		const { currentDate } = this.state;
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) {
-				onChange({
-					start: currentDate ? currentDate.start : '',
-					end: date,
-				});
-			}
+		const start = currentDate ? currentDate.start : '';
+
+		if (value === undefined) {
+			this.handleDateChange({
+				start,
+				end: date,
+			});
+		} else if (onChange) {
+			onChange({
+				start,
+				end: date,
+			});
 		} else {
 			this.handleDateChange({
-				start: currentDate ? currentDate.start : '',
+				start,
 				end: date,
 			});
 		}

@@ -151,10 +151,14 @@ class TextField extends Component {
 
 	handleChange = (e) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(e.target.value);
+		const { value: textValue } = e.target;
+
+		if (value === undefined) {
+			this.setValue(textValue);
+		} else if (onChange) {
+			onChange(textValue);
 		} else {
-			this.setValue(e.target.value);
+			this.setValue(textValue);
 		}
 	};
 

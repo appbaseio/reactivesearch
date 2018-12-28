@@ -279,17 +279,10 @@ class DynamicRangeSlider extends Component {
 	handleSlider = ({ values }) => {
 		if (!isEqual(values, this.state.currentValue)) {
 			const { value, onChange } = this.props;
-			if (value) {
-				if (onChange) {
-					onChange(values);
-				} else {
-					// since value prop is set & onChange is not defined
-					// we need to reset the slider position
-					// to the original 'value' prop
-					this.setState({
-						currentValue: this.state.currentValue,
-					});
-				}
+			if (value === undefined) {
+				this.handleChange(values);
+			} else if (onChange) {
+				onChange(values);
 			} else {
 				this.handleChange(values);
 			}
@@ -342,8 +335,11 @@ class DynamicRangeSlider extends Component {
 			const customQueryOptions = customQuery
 				? getOptionsFromQuery(customQuery(value, props))
 				: null;
-			props.setQueryOptions(this.internalHistogramComponent,
-				{ ...queryOptions, ...customQueryOptions }, false);
+			props.setQueryOptions(
+				this.internalHistogramComponent,
+				{ ...queryOptions, ...customQueryOptions },
+				false,
+			);
 			props.updateQuery({
 				componentId: this.internalHistogramComponent,
 				query: query(value, props),
