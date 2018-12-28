@@ -54,8 +54,7 @@ const RangeSlider = {
 		showCheckbox: VueTypes.bool.def(true),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
-		tooltipTrigger: types.tooltipTrigger,
-		mergeTooltip: VueTypes.bool.def(true),
+		sliderOptions: VueTypes.object.def({})
 	},
 
 	methods: {
