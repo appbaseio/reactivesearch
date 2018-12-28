@@ -32,6 +32,7 @@ import Container from '../../styles/Container';
 import { connect, isFunction } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
+import { input } from '../../../lib/styles/Input';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -406,8 +407,10 @@ class DataSearch extends Component {
 		}
 
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(inputValue);
+		if (value === undefined) {
+			this.setValue(inputValue);
+		} else if (onChange) {
+			onChange(inputValue);
 		} else {
 			this.setValue(inputValue);
 		}

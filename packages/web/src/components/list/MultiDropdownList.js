@@ -379,8 +379,10 @@ class MultiDropdownList extends Component {
 
 	handleChange = (item) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(item);
+		if (value === undefined) {
+			this.setValue(item);
+		} else if (onChange) {
+			onChange(item);
 		} else {
 			this.setValue(item);
 		}
