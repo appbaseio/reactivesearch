@@ -162,7 +162,7 @@ class Tools extends Component {
 								<div>
 									<img
 										src="images/tools/Search.svg"
-										alt="Reactivesearch for web"
+										alt="Reactivesearch for Web"
 									/>
 									<p className={brand}>
 										Reactive <span className={boldFont}>Search</span> for Web
@@ -217,7 +217,7 @@ class Tools extends Component {
 									<H2 light>
 										<img
 											src="images/tools/Search.svg"
-											alt="Reactivesearch for web"
+											alt="Reactivesearch for Web"
 											style={{
 												height: '44px',
 												marginRight: '15px',
@@ -322,7 +322,7 @@ class Tools extends Component {
 									<H2 light>
 										<img
 											src="images/tools/ReactiveMaps.svg"
-											alt="Reactivesearch for web"
+											alt="ReactiveMaps for Web"
 											style={{
 												height: '44px',
 												marginRight: '15px',
@@ -528,7 +528,7 @@ class Tools extends Component {
 									<H2 light>
 										<img
 											src="images/tools/ReactiveNative.svg"
-											alt="Reactivesearch for web"
+											alt="Reactivesearch for Mobile"
 											style={{
 												height: '44px',
 												marginRight: '15px',
