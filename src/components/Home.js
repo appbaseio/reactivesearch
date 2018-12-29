@@ -455,7 +455,7 @@ class HomePage extends Component {
 														color: primary,
 													}}
 												>
-													Read More
+													Read Now
 												</SecondaryLink>
 											</div>
 										</ImageCard>
