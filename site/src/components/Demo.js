@@ -4,17 +4,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Navbar, Logo, Button, H1, Title, Grid } from '@appbaseio/designkit';
 
-import {
-	Base,
-	Layout,
-	SecondaryLink,
-	Section,
-	titleText,
-	showMobileFlex,
-} from '../styles';
+import { Base, Layout, SecondaryLink, Section, titleText, showMobileFlex } from '../styles';
 import Footer from '../components/Footer';
 import ImageCard from '../styles/ImageCard';
-
 
 class Demo extends Component {
 	componentDidMount() {
@@ -44,9 +36,7 @@ class Demo extends Component {
 						<Navbar.List>
 							{config.header.links.map((l, i) => (
 								<li
-									className={
-										l.href === '/demo' || l.href === '/native/demo' ? 'active' : undefined
-									}
+									className={l.href === '/demo' || l.href === '/native/demo' ? 'active' : undefined}
 									/* eslint-disable-next-line */
 									key={i}
 								>
@@ -66,7 +56,7 @@ class Demo extends Component {
 									bold
 									uppercase
 								>
-									<img src="/images/support.svg" style={{ marginRight: 8 }} alt="support" /> SUPPORT
+									<img src="images/support.svg" style={{ marginRight: 8 }} alt="support" /> SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>
@@ -107,7 +97,7 @@ class Demo extends Component {
 							</Grid>
 						</Layout>
 					</Section>
-					<Footer />
+					<Footer configName={config.name} footerConfig={config.footer} />
 				</Base>
 			</ThemeProvider>
 		);

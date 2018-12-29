@@ -6,10 +6,10 @@ const { primary, primaryDark } = theme;
 const baseConfigHeader = {
 	...baseConfig.header,
 	links: [
-		// {
-		// 	description: 'examples',
-		// 	href: '#examples',
-		// },
+		{
+			description: 'examples',
+			href: '#examples',
+		},
 		...baseConfig.header.links,
 	],
 };
@@ -18,71 +18,74 @@ export default {
 	...baseConfig,
 	header: baseConfigHeader,
 	banner1: {
-		title: 'Vue.js UI components for Elasticsearch',
-		description: 'Now more configurable, lighter and performant.Open source licensed.',
+		title: 'Vue + ElasticSearch = ❤️',
+		description: 'UI components for building data-driven search experiences.',
 		image: {
-			src: '/images/vue/Hero.png',
+			src: '../../reactivesearch/images/vue/Hero.png',
 			alt: 'Reactive Search Components',
 		},
 		button: {
 			title: 'Get Started',
-			href: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
+			href: './quickstart',
 		},
 		link: {
 			title: 'LEARN MORE',
-			href: '/vue/learn',
+			href:
+				'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
 		},
 	},
 	banner2: {
 		image: {
-			src: 'images/vue/components.png',
+			src: '../../reactivesearch/images/vue/components.png',
 			alt: 'Components',
 			mobile: {
-				src: 'images/vue/components.png',
+				src: '../../reactivesearch/images/vue/components.png',
 			},
 		},
 		title: 'UI Components for every occasion',
 		description:
-			'Build the perfect search experience using our UI components or by creating your own.30+ prebuilt components with customizable queries and configurable styles.',
+			'Build the perfect search experience using our UI components or by creating your own. Over 10 prebuilt components with customizable queries and configurable styles.',
 		button: {
 			title: 'View Components',
-			href: 'https://opensource.appbase.io/reactive-manual/vue/base-components/selectedfilters.html',
+			href:
+				'https://opensource.appbase.io/reactive-manual/vue/getting-started/componentsindex.html',
 		},
 		link: {
-			title: 'Create your own',
-			href: 'https://opensource.appbase.io/reactive-manual/vue/advanced/reactivecomponent.html',
+			title: 'Creating your components',
+			href: 'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent',
 		},
-		// sketch: {
-		// 	href:
-		// 		'https://opensource.appbase.io/reactivesearch/resources/ReactiveSearchNative_Playground.sketch',
-		// },
+		sketch: {
+			href:
+				'https://opensource.appbase.io/reactivesearch/resources/ReactiveSearch_Playground.sketch',
+		},
 	},
 	banner3: {
 		title: 'Up to 10x Time Savings',
-		description: 'Focus on design and user experience, let us handle the details.',
+		description: 'Focus on design and user experience as ReactiveSearch handles the details.',
 		cards: [
 			{
 				image: {
-					src: 'images/rocket.png',
+					src: '../../reactivesearch/images/rocket.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Launch and iterate faster',
 				description:
-					'10+ well-designed and performance optimized UI components.Ship faster and solve fewer edge cases.',
+					'10+ well-designed and performance optimized UI components. Ship faster and solve fewer edge cases.',
 				href: 'https://opensource.appbase.io/reactive-manual/vue/',
 			},
 			{
 				image: {
-					src: 'images/remix.png',
+					src: '../../reactivesearch/images/remix.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Works with existing UIs',
 				description: 'Already have your own components? Bring them to ReactiveSearch.',
-				href: 'https://opensource.appbase.io/reactive-manual/vue/advanced/reactivecomponent.html',
+				href:
+					'https://opensource.appbase.io/reactive-manual/vue/advanced/reactivecomponent.html',
 			},
 			{
 				image: {
-					src: 'icons/2.png',
+					src: '../../reactivesearch/icons/2.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Configurable styles',
@@ -91,16 +94,17 @@ export default {
 			},
 			{
 				image: {
-					src: 'icons/4.png',
+					src: '../../reactivesearch/icons/4.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Elasticsearch compatible',
 				description: 'Connect to an ES index hosted anywhere. Supports v2, v5 and v6.',
-				href: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
+				href:
+					'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
 			},
 			{
 				image: {
-					src: 'icons/5.png',
+					src: '../../reactivesearch/icons/5.png',
 					alt: 'Data-driven UIs',
 				},
 				title: 'Customizable queries',
@@ -110,45 +114,40 @@ export default {
 			},
 			{
 				image: {
-					src: 'images/shield.png',
+					src: '../../reactivesearch/images/shield.png',
 					alt: 'Easy to secure',
 				},
 				title: 'Easy to secure',
 				description:
-					'Use appbase.io to get read-only credentials, or set up a middleware proxy with authorization rules.',
-				href: 'https://appbase.io',
+					'Use appbase.io to get security out of the box, or set up a middleware proxy with authorization rules.',
+				href:
+					'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivebase.html#connect-to-elasticsearch',
 			},
 		],
-	},
-	banner4: {
-		title: 'Write Less Code',
-		description: `Reactivesearch handles UI rendering, query requests and manages
-		response state so you can focus on the product experience,
-		ship faster and iterate quicker.`,
 	},
 	banner5: [
 		{
 			backgroundColor: primary,
 			title: 'Build a live app in 5 minutes',
 			description:
-				'Go from scratch to creating a data-driven Maps application with our quick start guide for beginners.',
+				'Go from scratch to creating a data-driven search app with our beginner friendly quick start guide.',
 			button: {
 				title: 'Get Started',
-				href: 'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
+				href: './quickstart',
 			},
 			link: {
-				title: 'Learn More',
+				title: 'Docs',
 				href: 'https://opensource.appbase.io/reactive-manual/vue',
 			},
 		},
 		{
 			backgroundColor: primaryDark,
-			title: 'Work with us to build your app.',
+			title: 'Get dedicated support',
 			description:
-				"We work with teams of all sizes to set up Apollo and GraphQL to fit their specific needs. Let us know what you're building and we'll see how we can help.",
+				'We offer production support for ReactiveSearch. Work with us to bring your dream project to life.',
 			button: {
 				title: 'SUPPORT PLANS',
-				href: 'https://appbase.io/support',
+				href: 'https://appbase.io/pricing#support',
 			},
 			link: {
 				title: 'Get in touch',
@@ -156,37 +155,34 @@ export default {
 			},
 		},
 	],
-	// banner6: {
-	// 	title: 'Check our demos',
-	// 	button: {
-	// 		title: 'See more',
-	// 		href: '/reactivemaps/demos',
-	// 	},
-	// 	demos: [
-	// 		{
-	// 			src: 'images/apps/airbeds.png',
-	// 			title: 'Airbeds',
-	// 			href: 'https://opensource.appbase.io/reactivesearch/demos/airbeds/',
-	// 			description: 'An airbnb inspired app for browsing housing areas in Seattle',
-	// 		},
-	// 		{
-	// 			src: 'images/apps/productsearch.png',
-	// 			title: 'Product Search',
-	// 			href: 'https://opensource.appbase.io/reactivesearch/demos/producthunt/',
-	// 			description: '',
-	// 		},
-	// 		{
-	// 			src: 'images/apps/gitxplore.png',
-	// 			title: 'GitHub Search',
-	// 			href: 'https://opensource.appbase.io/reactivesearch/demos/gitxplore/',
-	// 			description: '',
-	// 		},
-	// 		{
-	// 			src: 'images/apps/carstore.png',
-	// 			title: 'Car Store',
-	// 			href: 'https://opensource.appbase.io/reactivesearch/demos/ecommerce/',
-	// 			description: '',
-	// 		},
-	// 	],
-	// },
+	banner6: {
+		title: 'Check starter apps',
+		demos: [
+			{
+				src: '../../reactivesearch/images/apps/gitxplore.png',
+				title: 'GitHub Search',
+				href: 'https://codesandbox.io/s/54l2m5rqxl',
+				description:
+					'Explore top 30K Github repositories by various filters like stars, forks, and topics.',
+			},
+			{
+				src: '../../reactivesearch/images/apps/goodbooks.png',
+				title: 'Book Search',
+				href: 'https://9167mmkqlo.codesandbox.io/',
+				description: 'An e-commerce search experience for a books dataset.',
+			},
+		],
+	},
+	banner7: {
+		title: 'Featured Posts',
+		articles: [
+			{
+				src: 'https://cdn-images-1.medium.com/max/2000/1*o4yRyTm2pKfa_Flr3W2TPw.png',
+				title: 'Vue.JS Components for building Search UIs',
+				href:
+					'https://medium.appbase.io/vue-js-components-for-building-search-uis-7b2a1b6fe159',
+				description: 'Introductory article for reactivesearch-vue',
+			},
+		],
+	},
 };

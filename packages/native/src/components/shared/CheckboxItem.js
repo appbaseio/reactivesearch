@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import {
-	CheckBox,
-	Text,
-} from 'native-base';
+import { CheckBox, Text } from 'native-base';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getInnerKey } from '@appbaseio/reactivecore/lib/utils/helper';
 
@@ -17,11 +14,7 @@ class CheckboxItem extends Component {
 	render() {
 		const { color, ...checkBoxStyles } = getInnerKey(this.props.innerStyle, 'checkbox');
 		return (
-			<TouchableItem
-				pressOpacity={0.5}
-				delayPressIn={0}
-				onPress={this.handlePress}
-			>
+			<TouchableItem pressOpacity={0.5} delayPressIn={0} onPress={this.handlePress}>
 				<View
 					style={{
 						flex: 1,

@@ -9,10 +9,7 @@ import {
 	setQueryOptions,
 	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
-import {
-	pushToAndClause,
-	isEqual,
-} from '@appbaseio/reactivecore/lib/utils/helper';
+import { pushToAndClause, isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import { connect } from '../../utils';
@@ -64,13 +61,7 @@ class ReactiveComponent extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (
-			nextProps.defaultQuery
-			&& !isEqual(
-				nextProps.defaultQuery(),
-				this.defaultQuery,
-			)
-		) {
+		if (nextProps.defaultQuery && !isEqual(nextProps.defaultQuery(), this.defaultQuery)) {
 			this.defaultQuery = nextProps.defaultQuery();
 			const { query, ...queryOptions } = this.defaultQuery || {};
 
@@ -121,7 +112,8 @@ class ReactiveComponent extends Component {
 
 		try {
 			const childrenWithProps = React.Children.map(children, child =>
-				React.cloneElement(child, { ...rest, setQuery: this.setQuery }));
+				React.cloneElement(child, { ...rest, setQuery: this.setQuery }),
+			);
 			return <View>{childrenWithProps}</View>;
 		} catch (e) {
 			return null;
@@ -154,12 +146,13 @@ ReactiveComponent.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-	hits: (state.hits[props.componentId]
-		&& state.hits[props.componentId].hits) || [],
-	aggregations: (state.aggregations[props.componentId]
-		&& state.aggregations[props.componentId]) || null,
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	aggregations:
+		(state.aggregations[props.componentId] && state.aggregations[props.componentId]) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -167,13 +160,13 @@ const mapDispatchtoProps = dispatch => ({
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(
-		component,
-		props,
-		execute,
-	)),
+	setQueryOptions: (component, props, execute) =>
+		dispatch(setQueryOptions(component, props, execute)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveComponent);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(ReactiveComponent);

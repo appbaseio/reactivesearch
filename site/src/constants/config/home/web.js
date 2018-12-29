@@ -20,7 +20,7 @@ export default {
 		title: 'React + ElasticSearch = ❤️',
 		description: 'UI components for building data-driven search experiences.',
 		image: {
-			src: './../images/browser.png',
+			src: '../../reactivesearch/images/browser.png',
 			alt: 'Reactive Search Components',
 		},
 		button: {
@@ -29,16 +29,17 @@ export default {
 		},
 		link: {
 			title: 'Docs',
-			href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+			href:
+				'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
 		},
 	},
 	banner2: {
 		image: {
-			src: '../../images/components.png',
+			src: '../../reactivesearch/images/components.png',
 			alt: 'Components',
 			mobile: {
-				src: '../../images/components.png',
-				srcSet: '../../images/components.png',
+				src: '../../reactivesearch/images/components.png',
+				srcSet: '../../reactivesearch/images/components.png',
 			},
 		},
 		title: 'Components for every occasion',
@@ -46,7 +47,8 @@ export default {
 			'Build the perfect search experience using our UI components or by creating your own. 30+ pre-built components with customizable queries and configurable styles.',
 		button: {
 			title: 'View Components',
-			href: 'https://opensource.appbase.io/reactive-manual/getting-started/componentsindex.html',
+			href:
+				'https://opensource.appbase.io/reactive-manual/getting-started/componentsindex.html',
 		},
 		link: {
 			title: 'Creating your components',
@@ -63,27 +65,29 @@ export default {
 		cards: [
 			{
 				image: {
-					src: '../../images/rocket.png',
-					alt: 'Data-driven UIs',
+					src: '../../reactivesearch/images/rocket.png',
+					alt: 'Launch and iterate faster',
 				},
 				title: 'Launch and iterate faster',
 				description:
 					'30+ well-designed and performance optimized UI components. Ship faster and solve fewer edge cases.',
-				href: 'https://medium.com/@siddharthlatest/v2-ui-components-for-elasticsearch-23743d9a1070',
+				href:
+					'https://medium.com/@siddharthlatest/v2-ui-components-for-elasticsearch-23743d9a1070',
 			},
 			{
 				image: {
-					src: '../../icons/1.png',
-					alt: 'Data-driven UIs',
+					src: '../../reactivesearch/icons/1.png',
+					alt: 'Works with existing UIs',
 				},
 				title: 'Works with existing UIs',
 				description: 'Already have your own components? Bring them to ReactiveSearch.',
-				href: 'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html',
+				href:
+					'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html',
 			},
 			{
 				image: {
-					src: '../../icons/2.png',
-					alt: 'Data-driven UIs',
+					src: '../../reactivesearch/icons/2.png',
+					alt: 'Configurable styles',
 				},
 				title: 'Configurable styles',
 				description: 'Styled components with rich theming and CSS class-injection support.',
@@ -91,8 +95,8 @@ export default {
 			},
 			{
 				image: {
-					src: '../../icons/3.png',
-					alt: 'Data-driven UIs',
+					src: '../../reactivesearch/icons/3.png',
+					alt: 'Create cross-platform apps',
 				},
 				title: 'Create cross-platform apps',
 				description: 'Reactivesearch components can be ported to create native mobile UIs.',
@@ -100,17 +104,18 @@ export default {
 			},
 			{
 				image: {
-					src: '../../icons/4.png',
-					alt: 'Data-driven UIs',
+					src: '../../reactivesearch/icons/4.png',
+					alt: 'Elasticsearch compatible',
 				},
 				title: 'Elasticsearch compatible',
 				description: 'Connect to an ES index hosted anywhere. Supports v2, v5 and v6.',
-				href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html',
+				href:
+					'https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html',
 			},
 			{
 				image: {
-					src: '../../icons/5.png',
-					alt: 'Data-driven UIs',
+					src: '../../reactivesearch/icons/5.png',
+					alt: 'Customizable queries',
 				},
 				title: 'Customizable queries',
 				description:
@@ -153,41 +158,42 @@ export default {
 		title: 'Check starter apps',
 		button: {
 			title: 'See more',
-			href: '/demo',
+			href: '/reactivesearch/demo',
 		},
 		demos: [
 			{
-				src: 'images/apps/airbeds.png',
+				src: '../../reactivesearch/images/apps/airbeds.png',
 				title: 'Airbeds',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/airbeds/',
 				description: 'An airbnb inspired app for browsing housing areas in Seattle.',
 			},
 			{
-				src: 'images/apps/productsearch.png',
+				src: '../../reactivesearch/images/apps/productsearch.png',
 				title: 'Product Search',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/producthunt/',
 				description: 'A Product Hunt inspired search experience.',
 			},
 			{
-				src: 'images/apps/gitxplore.png',
+				src: '../../reactivesearch/images/apps/gitxplore.png',
 				title: 'GitHub Search',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/gitxplore/',
-				description: 'Explore top 30K Github repositories by various filters like stars, forks, topics.',
+				description:
+					'Explore top 30K Github repositories by various filters like stars, forks, topics.',
 			},
 			// {
-			// 	src: 'images/apps/carstore.png',
+			// 	src: '../../reactivesearch/images/apps/carstore.png',
 			// 	title: 'Car Store',
 			// 	href: 'https://opensource.appbase.io/reactivesearch/demos/ecommerce/',
 			// 	description: 'An e-commerce search experience for a car store.',
 			// },
 			{
-				src: 'images/apps/goodbooks.png',
+				src: '../../reactivesearch/images/apps/goodbooks.png',
 				title: 'Book Search',
 				href: 'https://opensource.appbase.io/reactivesearch/demos/goodbooks/',
 				description: 'An e-commerce search experience for a books dataset.',
 			},
 			// {
-			// 	src: 'images/apps/technews.png',
+			// 	src: '../../reactivesearch/images/apps/technews.png',
 			// 	title: 'Tech News Search',
 			// 	href: 'https://opensource.appbase.io/reactivesearch/demos/technews/',
 			// 	description: '',

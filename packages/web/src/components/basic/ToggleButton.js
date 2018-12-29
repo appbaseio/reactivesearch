@@ -116,7 +116,7 @@ class ToggleButton extends Component {
 		}
 
 		this.setValue(finalValue);
-	}
+	};
 
 	setReact(props) {
 		if (props.react) {
@@ -132,13 +132,16 @@ class ToggleButton extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState({
-				currentValue: value,
-			}, () => {
-				this.updateQuery(value, props);
-				this.locked = false;
-				if (props.onValueChange) props.onValueChange(value);
-			});
+			this.setState(
+				{
+					currentValue: value,
+				},
+				() => {
+					this.updateQuery(value, props);
+					this.locked = false;
+					if (props.onValueChange) props.onValueChange(value);
+				},
+			);
 		};
 		checkValueChange(
 			props.componentId,
@@ -158,7 +161,7 @@ class ToggleButton extends Component {
 		props.updateQuery({
 			componentId: props.componentId,
 			query: query(value, props),
-			value: filterValue,	// sets a string in URL not array
+			value: filterValue, // sets a string in URL not array
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
@@ -168,16 +171,22 @@ class ToggleButton extends Component {
 
 	render() {
 		return (
-			<Container style={this.props.style} className={`${toggleButtons} ${this.props.className || ''}`}>
-				{
-					this.props.title
-					&& <Title className={getClassName(this.props.innerClass, 'title') || null}>{this.props.title}</Title>
-				}
+			<Container
+				style={this.props.style}
+				className={`${toggleButtons} ${this.props.className || ''}`}
+			>
+				{this.props.title && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
 				{this.props.data.map((item) => {
 					const isSelected = this.state.currentValue.some(value => value.value === item.value);
 					return (
 						<Button
-							className={`${getClassName(this.props.innerClass, 'button')} ${isSelected ? 'active' : ''}`}
+							className={`${getClassName(this.props.innerClass, 'button')} ${
+								isSelected ? 'active' : ''
+							}`}
 							onClick={() => this.handleToggle(item)}
 							key={item.value}
 							primary={isSelected}
@@ -240,4 +249,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(ToggleButton);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(ToggleButton);

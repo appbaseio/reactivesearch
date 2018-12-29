@@ -26,13 +26,10 @@ const MapPinArrow = styled('div')`
 `;
 
 const mapPinWrapper = css`
-	&:hover, &:focus {
+	&:hover,
+	&:focus {
 		z-index: 200;
 	}
 `;
 
-export {
-	MapPin,
-	MapPinArrow,
-	mapPinWrapper,
-};
+export { MapPin, MapPinArrow, mapPinWrapper };

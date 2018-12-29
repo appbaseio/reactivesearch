@@ -1,19 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-	ReactiveBase,
-	SingleList,
-	SelectedFilters,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, SingleList, SelectedFilters } from '@appbaseio/reactivesearch';
 import { ReactiveMap } from '@appbaseio/reactivemaps';
 
 import './index.css';
 
 const Main = () => (
 	<ReactiveBase
-		app="earthquake"
-		credentials="OrXIHcgHn:d539c6e7-ed14-4407-8214-c227b0600d8e"
-		type="places"
+		app="earthquakes"
+		credentials="dshr057Nz:e18bbbbe-5d55-4234-a17e-4d64fb2222c7"
 		mapKey="AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q"
 	>
 		<div className="row">
@@ -21,7 +16,7 @@ const Main = () => (
 				<SingleList
 					title="Places"
 					componentId="places"
-					dataField="place.raw"
+					dataField="place.keyword"
 					size={50}
 					showSearch
 				/>
@@ -35,7 +30,7 @@ const Main = () => (
 						and: 'places',
 					}}
 					onData={result => ({
-						label: result.mag,
+						label: result.magnitude,
 					})}
 					onPopoverClick={() => <div>wasssssssaaaa</div>}
 					autoClosePopover

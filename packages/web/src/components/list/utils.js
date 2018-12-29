@@ -1,10 +1,19 @@
 import { getAggsOrder } from '@appbaseio/reactivecore/lib/utils/helper';
 
-const getAggsQuery = (query, props) => {
+const getAggsQuery = (query, props, include) => {
 	const clonedQuery = { ...query };
 	const {
 		dataField, size, sortBy, showMissing, missingLabel,
 	} = props;
+
+	let includesQuery = {};
+
+	if (include) {
+		includesQuery = {
+			include,
+		};
+	}
+
 	clonedQuery.size = 0;
 	clonedQuery.aggs = {
 		[dataField]: {
@@ -13,6 +22,7 @@ const getAggsQuery = (query, props) => {
 				size,
 				order: getAggsOrder(sortBy || 'count'),
 				...(showMissing ? { missing: missingLabel } : {}),
+				...includesQuery,
 			},
 		},
 	};
@@ -44,15 +54,17 @@ const getCompositeAggsQuery = (query, props, after) => {
 	clonedQuery.aggs = {
 		[dataField]: {
 			composite: {
-				sources: [{
-					[dataField]: {
-						terms: {
-							field: dataField,
-							...order,
-							...(showMissing ? { missing_bucket: true } : {}),
+				sources: [
+					{
+						[dataField]: {
+							terms: {
+								field: dataField,
+								...order,
+								...(showMissing ? { missing_bucket: true } : {}),
+							},
 						},
 					},
-				}],
+				],
 				size,
 				...after,
 			},

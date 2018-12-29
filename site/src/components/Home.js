@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
-import {
-	Navbar,
-	Logo,
-	Button,
-	H3,
-	Title,
-	Flex,
-	Text,
-	GithubButton,
-	Grid,
-} from '@appbaseio/designkit';
+import { Navbar, Logo, Button, H3, Title, Flex, GithubButton, Grid } from '@appbaseio/designkit';
+import { Link } from 'react-router-dom';
 import { css } from 'emotion';
 import { ThemeProvider } from 'emotion-theming';
 import PropTypes from 'prop-types';
@@ -32,21 +23,13 @@ import BannerRow from '../components/BannerRow';
 import Footer from '../components/Footer';
 import Testimonials from '../components/Testimonials';
 import SupportGrid from '../components/SupportGrid';
-import { code, tabPadding, tabJustifyCenter } from '../styles/base';
+import { tabPadding, tabJustifyCenter } from '../styles/base';
 import H1 from '../styles/H1';
 import H2 from '../styles/H2';
 import queries from '../styles/mediaQueries';
 import { getButtonStyle, getLinkStyle } from '../styles/utils';
-import { mockDataSearch, mockDataSearchFull } from '../components/mock';
+import DiscoverRS from './DiscoverRS';
 
-function isScrolledIntoView(el) {
-	const rect = el.getBoundingClientRect();
-	const Ti = rect.top;
-	const elemBottom = rect.bottom;
-
-	const isVisible = Ti <= window.innerHeight / 2 && elemBottom >= 0;
-	return { isVisible, Ti };
-}
 const button = {
 	fontSize: '14px',
 	lineHeight: '19px',
@@ -57,21 +40,22 @@ const navTitle = css`
 		font-size: 20px;
 	`};
 `;
-const p = css`
-	lineHeight: 1.3
+const description = css`
+	margin-left: 7px !important;
+	${queries.small`
+		font-size: 12px;
+	`};
 `;
 class HomePage extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			origin: 0,
 			githubStarCount: undefined,
 		};
 	}
 
 	componentDidMount() {
-		const el = document.getElementById('code');
 		// To fetch reactive search github stars
 		fetch('https://api.github.com/repos/appbaseio/reactivesearch')
 			.then(res => res.json())
@@ -80,27 +64,7 @@ class HomePage extends Component {
 					githubStarCount: res.stargazers_count,
 				});
 			})
-			.catch(e => console.log(e));
-
-		window.addEventListener('scroll', () => {
-			const { isVisible, Ti } = isScrolledIntoView(el);
-
-			const L = 1850;
-			const K = 500;
-			const Tc = window.innerHeight / 2;
-			const delta = Tc - Ti;
-			const scroll = Math.min((delta * L) / K, L - K);
-
-			if (isVisible) {
-				this.setState({
-					origin: scroll * -1,
-				});
-			} else if (Tc < Ti) {
-				this.setState({
-					origin: 0,
-				});
-			}
-		});
+			.catch(e => console.log(e)); // eslint-disable-line
 
 		window.scrollTo(0, 0);
 	}
@@ -123,10 +87,12 @@ class HomePage extends Component {
 								<Logo.Light>{config.header.logo.title.light}</Logo.Light>
 								<Logo.Dark>{config.header.logo.title.dark}</Logo.Dark>
 								{config.header.logo.title.description && (
-									<span css="margin-left: 7px !important">
-										<Logo.Light>{config.header.logo.title.description}</Logo.Light>
-									</span>)
-								}
+									<span css={description}>
+										<Logo.Light>
+											{config.header.logo.title.description}
+										</Logo.Light>
+									</span>
+								)}
 							</Logo>
 						</Navbar.Logo>
 						<Navbar.List>
@@ -134,7 +100,10 @@ class HomePage extends Component {
 								/* eslint-disable-next-line */
 								<li key={i}>
 									{/* eslint-disable-next-line */}
-									<a style={getLinkStyle(config.name)} href={l.href}>{l.description.toUpperCase()}</a>
+									<Link style={getLinkStyle(config.name)} to={l.href}>
+										{l.description.toUpperCase()}
+									</Link>
+									{/* <a style={getLinkStyle(config.name)} href={l.href}>{l.description.toUpperCase()}</a> */}
 								</li>
 							))}
 							<li className={showMobileFlex}>
@@ -150,9 +119,15 @@ class HomePage extends Component {
 									href={config.urls.support}
 									uppercase
 								>
-									<img src="/reactivesearch/images/support.svg"
-										onError={e => e.target.src='/images/support.svg'}
-										style={{ marginRight: 8 }} alt="support" /> SUPPORT
+									<img
+										src="images/support.svg"
+										onError={(e) => {
+											e.target.src = '/images/support.svg';
+										}}
+										style={{ marginRight: 8 }}
+										alt="support"
+									/>{' '}
+									SUPPORT
 								</Button>
 							</li>
 						</Navbar.List>
@@ -161,11 +136,15 @@ class HomePage extends Component {
 						<Layout>
 							<div className="content">
 								<H1 light>{config.banner1.title}</H1>
-								<p style={getLinkStyle(config.name)}>{config.banner1.description}</p>
+								<p style={getLinkStyle(config.name)}>
+									{config.banner1.description}
+								</p>
 								<div className="button-row">
 									<GithubButton
 										style={button}
-										count={(this.state.githubStarCount || config.githubCount).toString()}
+										count={(
+											this.state.githubStarCount || config.githubCount
+										).toString()}
 										href={config.urls.github}
 									/>
 									<Button
@@ -181,7 +160,10 @@ class HomePage extends Component {
 									>
 										{config.banner1.button.title}
 									</Button>
-									<SecondaryLink href={config.banner1.link.href} style={getLinkStyle(config.name)}>
+									<SecondaryLink
+										href={config.banner1.link.href}
+										style={getLinkStyle(config.name)}
+									>
 										{config.banner1.link.title}
 									</SecondaryLink>
 								</div>
@@ -192,7 +174,11 @@ class HomePage extends Component {
 					<Row style={{ backgroundColor: '#FEFEFE', marginTop: '50px' }}>
 						<Layout>
 							<div className={hideMobile}>
-								<img src={config.banner2.image.src} width="100%" alt={config.banner2.image.alt} />
+								<img
+									src={config.banner2.image.src}
+									width="100%"
+									alt={config.banner2.image.alt}
+								/>
 							</div>
 							<div style={config.banner2.style} className={vcenter}>
 								<H2>{config.banner2.title}</H2>
@@ -229,11 +215,15 @@ class HomePage extends Component {
 										{config.banner2.link.title}
 									</SecondaryLink>
 								</div>
-								{config.banner2.sketch &&
+								{config.banner2.sketch && (
 									<p>
-										Get <a href={config.banner2.sketch.href}>our designer templates</a> for sketch.
+										Get{' '}
+										<a href={config.banner2.sketch.href}>
+											our designer templates
+										</a>{' '}
+										for sketch.
 									</p>
-								}
+								)}
 							</div>
 						</Layout>
 					</Row>
@@ -252,7 +242,11 @@ class HomePage extends Component {
 									// eslint-disable-next-line
 									<ActionCard key={i}>
 										<ActionCard.Icon>
-											<img style={{ maxHeight: 40 }} src={cardI.image.src} alt={cardI.image.alt} />
+											<img
+												style={{ maxHeight: 40 }}
+												src={cardI.image.src}
+												alt={cardI.image.alt}
+											/>
 										</ActionCard.Icon>
 										<Title>{cardI.title}</Title>
 										<p>{cardI.description}</p>
@@ -270,81 +264,167 @@ class HomePage extends Component {
 							</Grid>
 						</Layout>
 					</Section>
-					<BannerRow configName={config.name} config={config.banner5} theme={this.props.theme} />
+					<BannerRow
+						configName={config.name}
+						config={config.banner5}
+						theme={this.props.theme}
+					/>
+					<DiscoverRS />
 					{/** Demos Section */}
-					{config.banner6 &&
-					<Section id="examples">
-						<Layout>
-							<div className={titleRow}>
-							{
-								config.banner6.button ? (<H3>{config.banner6.title}</H3>)
-								: (
-								<H2 style={{
-									margin: '0 auto',
-								}}
-								>
-									{config.banner6.title}
-								</H2>)
-							}
-								{
-									config.banner6.button &&
-									<Button
-										style={{
-											backgroundColor: secondary,
-											...button,
-										}}
-										uppercase
-										primary={!isVue}
-										href={config.banner6.button.href}
-									>
-										{config.banner6.button.title}
-									</Button>
-								}
-							</div>
-							{config.name === 'native' ?
-								<Flex
-									flexDirection="column"
-									justifyContent="center"
-									alignItems="center"
-									className={tabPadding}
-								>
+					{config.banner6 && (
+						<Section id="examples">
+							<Layout>
+								<div className={titleRow}>
+									{config.banner6.button ? (
+										<H3>{config.banner6.title}</H3>
+									) : (
+										<H2
+											style={{
+												margin: '0 auto',
+											}}
+										>
+											{config.banner6.title}
+										</H2>
+									)}
+									{config.banner6.button && (
+										<Button
+											style={{
+												backgroundColor: secondary,
+												...button,
+											}}
+											uppercase
+											primary={!isVue}
+											href={config.banner6.button.href}
+										>
+											{config.banner6.button.title}
+										</Button>
+									)}
+								</div>
+								{config.name === 'native' ? (
 									<Flex
-										flexDirection="row"
-										justifyContent="space-around"
+										flexDirection="column"
+										justifyContent="center"
 										alignItems="center"
-										padding="3rem 0 0 0"
-										style={{
-											width: '95%',
-										}}
-										className={tabJustifyCenter}
+										className={tabPadding}
 									>
-									{
-										config.banner6.demos.map((d, index) => (
-											// eslint-disable-next-line
-											<Flex key={index} flexDirection="column" justifyContent="center" alignItems="center">
-												<a target="_blank" rel="noopener noreferrer" href={d.href} className="demo">
-													<img width="240" src={d.src} alt="Demo app" />
-												</a>
-												<Button
-													rel="noopener noreferrer"
-													shadow
-													primary
-													style={{
-														width: 140,
-														marginTop: 0,
-														marginBottom: 50,
-														backgroundColor: secondary,
-														...button,
-													}}
-													href={d.href}
+										<Flex
+											flexDirection="row"
+											justifyContent="space-around"
+											alignItems="center"
+											padding="3rem 0 0 0"
+											style={{
+												width: '95%',
+											}}
+											className={tabJustifyCenter}
+										>
+											{config.banner6.demos.map((d, index) => (
+												<Flex
+													// eslint-disable-next-line
+													key={index}
+													flexDirection="column"
+													justifyContent="center"
+													alignItems="center"
 												>
-													CHECK DEMO
-												</Button>
-											</Flex>
-										))
-									}
+													<a
+														target="_blank"
+														rel="noopener noreferrer"
+														href={d.href}
+														className="demo"
+													>
+														<img
+															width="240"
+															src={d.src}
+															alt="Demo app"
+														/>
+													</a>
+													<Button
+														rel="noopener noreferrer"
+														shadow
+														primary
+														style={{
+															width: 140,
+															marginTop: 0,
+															marginBottom: 50,
+															backgroundColor: secondary,
+															...button,
+														}}
+														href={d.href}
+													>
+														CHECK DEMO
+													</Button>
+												</Flex>
+											))}
+										</Flex>
 									</Flex>
-								</Flex> :
+								) : (
+									<Grid
+										size={4}
+										mdSize={2}
+										smSize={1}
+										gutter="15px"
+										smGutter="0px"
+										style={{ marginBottom: '50px' }}
+									>
+										{config.banner6.demos.map((d, index) => (
+											// eslint-disable-next-line
+											<ImageCard key={index} src={d.src}>
+												<div>
+													<Title>{d.title}</Title>
+													<p>{d.description}</p>
+												</div>
+												<div>
+													<SecondaryLink
+														primary
+														href={d.href}
+														style={{
+															color: primary,
+														}}
+													>
+														Check Demo
+													</SecondaryLink>
+												</div>
+											</ImageCard>
+										))}
+									</Grid>
+								)}
+							</Layout>
+						</Section>
+					)}
+					{/** Article section */}
+					{config.banner7 && (
+						<Section
+							style={{
+								padding: '10px 0',
+							}}
+							id="articles"
+						>
+							<Layout>
+								<div className={titleRow}>
+									{config.banner7.button ? (
+										<H3>{config.banner7.title}</H3>
+									) : (
+										<H2
+											style={{
+												margin: '0 auto',
+											}}
+										>
+											{config.banner7.title}
+										</H2>
+									)}
+									{config.banner7.button && (
+										<Button
+											style={{
+												backgroundColor: secondary,
+												...button,
+											}}
+											uppercase
+											primary={!isVue}
+											href={config.banner7.button.href}
+										>
+											{config.banner7.button.title}
+										</Button>
+									)}
+								</div>
 								<Grid
 									size={4}
 									mdSize={2}
@@ -353,7 +433,7 @@ class HomePage extends Component {
 									smGutter="0px"
 									style={{ marginBottom: '50px' }}
 								>
-									{config.banner6.demos.map((d, index) => (
+									{config.banner7.articles.map((d, index) => (
 										// eslint-disable-next-line
 										<ImageCard key={index} src={d.src}>
 											<div>
@@ -368,15 +448,15 @@ class HomePage extends Component {
 														color: primary,
 													}}
 												>
-													Check Demo
+													Read More
 												</SecondaryLink>
 											</div>
 										</ImageCard>
 									))}
 								</Grid>
-							}
-						</Layout>
-					</Section>}
+							</Layout>
+						</Section>
+					)}
 					<Section style={{ backgroundColor: '#fff' }}>
 						<Layout>
 							<H2>See what our users say</H2>
@@ -400,13 +480,21 @@ class HomePage extends Component {
 								BUILD MY FIRST APP
 							</Button>
 
-							<H2 style={{ margin: '1.4rem 0px 0.5rem' }}>Need Help?</H2>
+							<H2>Need Help?</H2>
 							<p>Resources to get help with Reactive Search.</p>
 
 							<SupportGrid configName={config.name} />
 						</Layout>
 					</Section>
-					<Footer configName={config.name} />
+					<Footer configName={config.name} footerConfig={config.footer} />
+					<a
+						href={config.producthunt}
+						// eslint-disable-next-line
+						target="_blank"
+						className="featured-post-link"
+					>
+						<span>Featured on Producthunt</span>🎉
+					</a>
 				</Base>
 			</ThemeProvider>
 		);

@@ -1,162 +1,155 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<base href="/reactivesearch/" />
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Reactivesearch - React and React Native UI components for Elasticsearch</title>
+		<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="styles.css" />
+		<link rel="apple-touch-icon" sizes="57x57" href="images/favicon/apple-icon-57x57.png" />
+		<link rel="apple-touch-icon" sizes="60x60" href="images/favicon/apple-icon-60x60.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="images/favicon/apple-icon-72x72.png" />
+		<link rel="apple-touch-icon" sizes="76x76" href="images/favicon/apple-icon-76x76.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="images/favicon/apple-icon-114x114.png" />
+		<link rel="apple-touch-icon" sizes="120x120" href="images/favicon/apple-icon-120x120.png" />
+		<link rel="apple-touch-icon" sizes="144x144" href="images/favicon/apple-icon-144x144.png" />
+		<link rel="apple-touch-icon" sizes="152x152" href="images/favicon/apple-icon-152x152.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-icon-180x180.png" />
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="192x192"
+			href="images/favicon/android-icon-192x192.png"
+		/>
+		<link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="96x96" href="images/favicon/favicon-96x96.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png" />
+		<link rel="manifest" href="manifest.json" />
+		<meta name="msapplication-TileColor" content="#ffffff" />
+		<meta name="msapplication-TileImage" content="ms-icon-144x144.png" />
+		<meta name="theme-color" content="#ffffff" />
+		<meta
+			name="description"
+			content="Reactivesearch is an open-source UI components library for React and React Native that works out of the box with appbase.io and Elasticsearch backends."
+		/>
 
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Reactivesearch - React and React Native UI components for Elasticsearch</title>
-	<link href="https://fonts.googleapis.com/css?family=Rubik:400,700" rel="stylesheet">
-	<link rel="stylesheet" href="/styles.css">
-	<link rel="apple-touch-icon" sizes="57x57" href="/images/favicon/apple-icon-57x57.png">
-	<link rel="apple-touch-icon" sizes="60x60" href="/images/favicon/apple-icon-60x60.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="/images/favicon/apple-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="/images/favicon/apple-icon-76x76.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="/images/favicon/apple-icon-114x114.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="/images/favicon/apple-icon-120x120.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="/images/favicon/apple-icon-144x144.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="/images/favicon/apple-icon-152x152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-icon-180x180.png">
-	<link rel="icon" type="image/png" sizes="192x192" href="/images/favicon/android-icon-192x192.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="/images/favicon/favicon-96x96.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
-	<link rel="manifest" href="/manifest.json">
-	<meta name="msapplication-TileColor" content="#ffffff">
-	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-	<meta name="theme-color" content="#ffffff">
-	<meta name="description" content="Reactivesearch is an open-source UI components library for React and React Native that works out of the box with appbase.io and Elasticsearch backends."
-	/>
+		<style>
+			@keyframes octocat-wave {
+				0%,
+				100% {
+					transform: rotate(0);
+				}
 
-	<style>
-		.github-corner:hover .octo-arm {
-			animation: octocat-wave 560ms ease-in-out
-		}
+				20%,
+				60% {
+					transform: rotate(-25deg);
+				}
 
-		@keyframes octocat-wave {
-			0%,
-			100% {
-				transform: rotate(0)
+				40%,
+				80% {
+					transform: rotate(10deg);
+				}
 			}
-			20%,
-			60% {
-				transform: rotate(-25deg)
-			}
-			40%,
-			80% {
-				transform: rotate(10deg)
-			}
-		}
 
-		@media (max-width:500px) {
-			.github-corner:hover .octo-arm {
-				animation: none
-			}
-			.github-corner .octo-arm {
-				animation: octocat-wave 560ms ease-in-out
-			}
-		}
+			@keyframes slideLeft {
+				0% {
+					transform: translateX(-100%);
+				}
 
-		.github-corner {
-			z-index: 999;
-			top: 0;
-			right: 0;
-			position: fixed;
-		}
-
-		@media all and (min-width: 576px) {
-			.github-corner {
-				display: none;
+				100% {
+					transform: translateX(0);
+				}
 			}
-		}
 
-		@keyframes slideLeft {
-			0% {
+			.featured-post-link {
+				position: fixed;
+				bottom: 15px;
+				left: 0;
+				padding-left: 15px;
+				background: #173baa;
+				font-family: 'Open Sans', sans-serif;
+				font-weight: bold;
+				font-size: 13px;
+				padding: 15px 30px;
+				border-radius: 0 5px 5px 0;
+				color: white;
+				z-index: 99999;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transition: all 0.4s cubic-bezier(1, 0.48, 0.89, 1.33);
+				text-decoration: none;
 				transform: translateX(-100%);
+				animation: 800ms slideRight forwards;
 			}
-			100% {
-				transform: translateX(0);
+
+			.featured-post-link:not(.js-active) {
+				animation-delay: 1200ms;
 			}
-		}
 
-		.featured-post-link {
-			position: fixed;
-			bottom: 15px;
-			left: 0;
-			padding-left: 15px;
-			background: #173baa;
-			font-family: Rubik, sans-serif;
-			font-weight: bold;
-			font-size: 13px;
-			padding: 15px 30px;
-			border-radius: 0 5px 5px 0;
-			color: white;
-			z-index: 99999;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			transition: all 0.4s cubic-bezier(1, 0.48, 0.89, 1.33);
-			text-decoration: none;
-			transform: translateX(-100%);
-			animation: 800ms slideRight forwards;
-		}
+			.featured-post-link.js-active {
+				animation: 800ms slideLeft forwards;
+			}
 
-		.featured-post-link:not(.js-active) {
-			animation-delay: 1200ms;
-		}
+			.featured-post-link span {
+				margin-right: 10px;
+			}
 
-		.featured-post-link.js-active {
-			animation: 800ms slideLeft forwards;
-		}
+			.featured-post-link:hover,
+			.featured-post-link:active,
+			.featured-post-link:focus {
+				color: white;
+				background: #1a42c1;
+				text-decoration: none;
+			}
+		</style>
+		<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+	</head>
 
-		.featured-post-link span {
-			margin-right: 10px;
-		}
+	<body class="reset">
+		<div id="root"></div>
+		<script src="dist/common.js"></script>
+		<script src="dist/main.js"></script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-54082612-13"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
 
-		.featured-post-link:hover,
-		.featured-post-link:active,
-		.featured-post-link:focus {
-			color: white;
-			background: #1a42c1;
-			text-decoration: none;
-		}
-	</style>
-	<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-</head>
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
 
-<body class="reset">
-	<div id="root"></div>
-	<a href="https://www.producthunt.com/posts/reactivesearch-native" target="_blank" class="featured-post-link">
-		<span>Featured on Producthunt</span>🎉
-	</a>
-
-	<script src="/dist/common.js"></script>
-	<script src="/dist/main.js"></script>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-54082612-13"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() { dataLayer.push(arguments); }
-		gtag('js', new Date());
-
-		gtag('config', 'UA-54082612-13');
-	</script>
-	<!-- Hotjar Tracking Code for appbase.io -->
-	<script>
-		(function (h, o, t, j, a, r) {
-			h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
-			h._hjSettings = { hjid: 22389, hjsv: 6 };
-			a = o.getElementsByTagName('head')[0];
-			r = o.createElement('script'); r.async = 1;
-			r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-			a.appendChild(r);
-		})(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
-	</script>
-	<script>
-		setTimeout(function () {
-			document.getElementsByClassName('featured-post-link')[0].classList.add('js-active');
-		}, 2000);
-	</script>
-</body>
-
+			gtag('config', 'UA-54082612-13');
+		</script>
+		<!-- Hotjar Tracking Code for appbase.io -->
+		<script>
+			(function(h, o, t, j, a, r) {
+				h.hj =
+					h.hj ||
+					function() {
+						(h.hj.q = h.hj.q || []).push(arguments);
+					};
+				h._hjSettings = {
+					hjid: 22389,
+					hjsv: 6,
+				};
+				a = o.getElementsByTagName('head')[0];
+				r = o.createElement('script');
+				r.async = 1;
+				r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+				a.appendChild(r);
+			})(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+		</script>
+		<script>
+			setTimeout(function() {
+				document.getElementsByClassName('featured-post-link')[0].classList.add('js-active');
+			}, 2000);
+		</script>
+	</body>
 </html>

@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
 import { View, Modal, TouchableWithoutFeedback, Platform } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import {
-	Text,
-	Body,
-	Item,
-	Header,
-	Left,
-	Button,
-	Icon,
-	Title,
-	Right,
-} from 'native-base';
+import { Text, Body, Item, Header, Left, Button, Icon, Title, Right } from 'native-base';
 
 import {
 	addComponent,
@@ -66,11 +56,7 @@ class DatePicker extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			const currentDate = {
@@ -79,7 +65,7 @@ class DatePicker extends Component {
 			};
 			this.handleDateChange(currentDate, nextProps);
 		} else if (
-			(this.props.selectedValue !== nextProps.selectedValue)
+			this.props.selectedValue !== nextProps.selectedValue
 			&& !nextProps.selectedValue
 		) {
 			this.handleDateChange(null, nextProps);
@@ -120,19 +106,17 @@ class DatePicker extends Component {
 		}
 
 		const performUpdate = () => {
-			this.setState({
-				currentDate,
-			}, () => {
-				this.updateQuery(value, props);
-				if (props.onValueChange) props.onValueChange(date);
-			});
+			this.setState(
+				{
+					currentDate,
+				},
+				() => {
+					this.updateQuery(value, props);
+					if (props.onValueChange) props.onValueChange(date);
+				},
+			);
 		};
-		checkValueChange(
-			props.componentId,
-			date,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, date, props.beforeValueChange, performUpdate);
 	};
 
 	updateQuery = (value, props) => {
@@ -166,16 +150,20 @@ class DatePicker extends Component {
 				[this.state.currentDate.dateString]: {
 					startingDay: true,
 					endingDay: true,
-					color: (this.props.innerProps && this.props.innerProps.calendar
+					color:
+						this.props.innerProps
+						&& this.props.innerProps.calendar
 						&& this.props.innerProps.calendar.theme
-						&& this.props.innerProps.calendar.theme.selectedDayBackgroundColor)
-						? this.props.innerProps.calendar.theme.selectedDayBackgroundColor
-						: this.props.theming.primaryColor,
-					textColor: (this.props.innerProps && this.props.innerProps.calendar
+						&& this.props.innerProps.calendar.theme.selectedDayBackgroundColor
+							? this.props.innerProps.calendar.theme.selectedDayBackgroundColor
+							: this.props.theming.primaryColor,
+					textColor:
+						this.props.innerProps
+						&& this.props.innerProps.calendar
 						&& this.props.innerProps.calendar.theme
-						&& this.props.innerProps.calendar.theme.selectedDayTextColor)
-						? this.props.innerProps.calendar.theme.selectedDayTextColor
-						: this.props.theming.primaryTextColor,
+						&& this.props.innerProps.calendar.theme.selectedDayTextColor
+							? this.props.innerProps.calendar.theme.selectedDayTextColor
+							: this.props.theming.primaryTextColor,
 				},
 			};
 		}
@@ -192,14 +180,14 @@ class DatePicker extends Component {
 					style={{ marginLeft: 0, ...this.props.style }}
 					{...getInnerKey(this.props.innerProps, 'item')}
 				>
-					<TouchableWithoutFeedback
-						onPress={this.toggleModal}
-					>
+					<TouchableWithoutFeedback onPress={this.toggleModal}>
 						<Text
 							style={{
 								flex: 1,
 								alignItems: 'center',
-								color: this.state.currentDate ? this.props.theming.textColor : '#555',
+								color: this.state.currentDate
+									? this.props.theming.textColor
+									: '#555',
 								fontSize: 17,
 								height: 50,
 								lineHeight: 24,
@@ -210,11 +198,9 @@ class DatePicker extends Component {
 							}}
 							{...getInnerKey(this.props.innerProps, 'text')}
 						>
-							{
-								this.state.currentDate
-									? this.state.currentDate.dateString
-									: this.props.placeholder
-							}
+							{this.state.currentDate
+								? this.state.currentDate.dateString
+								: this.props.placeholder}
 						</Text>
 					</TouchableWithoutFeedback>
 				</Item>
@@ -249,33 +235,29 @@ class DatePicker extends Component {
 							</Title>
 						</Body>
 						<Right style={getInnerKey(this.props.innerStyle, 'right')}>
-							{
-								this.state.currentDate
-									? (
-										<Button
-											style={{
-												paddingRight: 0,
-												...getInnerKey(this.props.innerStyle, 'button'),
-											}}
-											transparent
-											onPress={() => {
-												this.handleDateChange(null);
-												this.toggleModal();
-											}}
-										>
-											<Text
-												style={{
-													...resetButtonStyles,
-													...getInnerKey(this.props.innerStyle, 'label'),
-												}}
-												{...getInnerKey(this.props.innerProps, 'text')}
-											>
-												Reset
-											</Text>
-										</Button>
-									)
-									: null
-							}
+							{this.state.currentDate ? (
+								<Button
+									style={{
+										paddingRight: 0,
+										...getInnerKey(this.props.innerStyle, 'button'),
+									}}
+									transparent
+									onPress={() => {
+										this.handleDateChange(null);
+										this.toggleModal();
+									}}
+								>
+									<Text
+										style={{
+											...resetButtonStyles,
+											...getInnerKey(this.props.innerStyle, 'label'),
+										}}
+										{...getInnerKey(this.props.innerProps, 'text')}
+									>
+										Reset
+									</Text>
+								</Button>
+							) : null}
 						</Right>
 					</Header>
 					<Calendar
@@ -289,34 +271,30 @@ class DatePicker extends Component {
 						}}
 						{...getInnerKey(this.props.innerProps, 'calendar')}
 					/>
-					{
-						this.state.currentDate
-							? (
-								<Button
-									onPress={this.toggleModal}
-									style={{
-										width: '100%',
-										borderRadius: 0,
-										alignItems: 'center',
-										justifyContent: 'center',
-										backgroundColor: this.props.theming.primaryColor,
-										...getInnerKey(this.props.innerStyle, 'button'),
-									}}
-									{...getInnerKey(this.props.innerProps, 'button')}
-								>
-									<Text
-										style={{
-											color: this.props.theming.primaryTextColor,
-											...getInnerKey(this.props.innerStyle, 'label'),
-										}}
-										{...getInnerKey(this.props.innerProps, 'text')}
-									>
-										View Results
-									</Text>
-								</Button>
-							)
-							: null
-					}
+					{this.state.currentDate ? (
+						<Button
+							onPress={this.toggleModal}
+							style={{
+								width: '100%',
+								borderRadius: 0,
+								alignItems: 'center',
+								justifyContent: 'center',
+								backgroundColor: this.props.theming.primaryColor,
+								...getInnerKey(this.props.innerStyle, 'button'),
+							}}
+							{...getInnerKey(this.props.innerProps, 'button')}
+						>
+							<Text
+								style={{
+									color: this.props.theming.primaryTextColor,
+									...getInnerKey(this.props.innerStyle, 'label'),
+								}}
+								{...getInnerKey(this.props.innerProps, 'text')}
+							>
+								View Results
+							</Text>
+						</Button>
+					) : null}
 				</Modal>
 			</View>
 		);
@@ -364,4 +342,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(DatePicker));
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(DatePicker));

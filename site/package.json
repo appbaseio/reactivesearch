@@ -14,6 +14,7 @@
     "concurrently": "^3.5.1",
     "emotion": "^9.0.0",
     "emotion-theming": "^9.0.0",
+    "gh-pages": "^2.0.1",
     "prop-types": "^15.6.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -29,6 +30,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "copy-webpack-plugin": "^4.6.0",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.9.7"
   }

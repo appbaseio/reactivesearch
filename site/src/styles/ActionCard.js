@@ -49,7 +49,7 @@ class ActionCard extends Component {
 }
 
 ActionCard.propTypes = {
-	children: PropTypes.node,
+	children: PropTypes.node.isRequired,
 };
 
 export default ActionCard;

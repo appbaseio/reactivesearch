@@ -52,9 +52,13 @@ const ImageCard = props => (
 	</Wrapper>
 );
 
+ImageCard.defaultProps = {
+	big: false,
+};
+
 ImageCard.propTypes = {
-	src: PropTypes.string,
+	src: PropTypes.string.isRequired,
 	big: PropTypes.bool,
-	children: PropTypes.node,
+	children: PropTypes.node.isRequired,
 };
 export default ImageCard;

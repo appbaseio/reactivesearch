@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-	TouchableNativeFeedback,
-	TouchableOpacity,
-	Platform,
-	View,
-} from 'react-native';
+import { TouchableNativeFeedback, TouchableOpacity, Platform, View } from 'react-native';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 

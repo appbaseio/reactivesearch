@@ -67,21 +67,13 @@ class ReactiveComponent extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (
 			nextProps.onAllData
-			&& (
-				!isEqual(nextProps.hits, this.props.hits)
-				|| !isEqual(nextProps.aggregations, this.props.aggregations)
-			)
+			&& (!isEqual(nextProps.hits, this.props.hits)
+				|| !isEqual(nextProps.aggregations, this.props.aggregations))
 		) {
 			nextProps.onAllData(parseHits(nextProps.hits), nextProps.aggregations);
 		}
 
-		if (
-			nextProps.defaultQuery
-			&& !isEqual(
-				nextProps.defaultQuery(),
-				this.defaultQuery,
-			)
-		) {
+		if (nextProps.defaultQuery && !isEqual(nextProps.defaultQuery(), this.defaultQuery)) {
 			this.defaultQuery = nextProps.defaultQuery();
 			const { query, ...queryOptions } = this.defaultQuery || {};
 
@@ -119,7 +111,9 @@ class ReactiveComponent extends Component {
 				props.watchComponent(props.componentId, react);
 			}
 		} else if (this.internalComponent) {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
@@ -136,7 +130,8 @@ class ReactiveComponent extends Component {
 
 		try {
 			const childrenWithProps = React.Children.map(children, child =>
-				React.cloneElement(child, { ...rest, setQuery: this.setQuery }));
+				React.cloneElement(child, { ...rest, setQuery: this.setQuery }),
+			);
 			return <div>{childrenWithProps}</div>;
 		} catch (e) {
 			return null;
@@ -158,6 +153,7 @@ ReactiveComponent.propTypes = {
 	watchComponent: types.funcRequired,
 	aggregations: types.selectedValues,
 	hits: types.data,
+	isLoading: types.bool,
 	selectedValue: types.selectedValue,
 	// component props
 	children: types.children,
@@ -172,26 +168,28 @@ ReactiveComponent.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-	aggregations: (state.aggregations[props.componentId]
-		&& state.aggregations[props.componentId]) || null,
-	hits: (state.hits[props.componentId]
-		&& state.hits[props.componentId].hits) || [],
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	aggregations:
+		(state.aggregations[props.componentId] && state.aggregations[props.componentId]) || null,
+	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
+	isLoading: state.isLoading[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(
-		component,
-		props,
-		execute,
-	)),
+	setQueryOptions: (component, props, execute) =>
+		dispatch(setQueryOptions(component, props, execute)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveComponent);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(ReactiveComponent);
