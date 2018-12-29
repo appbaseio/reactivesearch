@@ -168,7 +168,7 @@ export default {
 			{
 				src: '../../reactivesearch/images/apps/goodbooks.png',
 				title: 'Book Search',
-				href: 'https://9167mmkqlo.codesandbox.io/',
+				href: 'https://codesandbox.io/s/y2rvj53koz/',
 				description: 'An e-commerce search experience for a books dataset.',
 			},
 			{},
@@ -182,7 +182,15 @@ export default {
 				title: 'Vue.JS Components for building Search UIs',
 				href:
 					'https://medium.appbase.io/vue-js-components-for-building-search-uis-7b2a1b6fe159',
-				description: 'Introductory article for reactivesearch-vue',
+				description: 'Introductory article for Reactivesearch Vue.',
+			},
+			{
+				src: 'https://cdn-images-1.medium.com/max/2000/1*xX5Q917ujpQsdZp-gy72zw.png',
+				title: 'How to Build BookSearch App using Vue.js and ElasticSearch',
+				href:
+					'https://medium.appbase.io/building-booksearch-application-using-vue-and-elasticsearch-a39615f4d6b3',
+				description:
+					'A 101 post showing how to build real world apps with ReactiveSearch Vue.',
 			},
 		],
 	},
