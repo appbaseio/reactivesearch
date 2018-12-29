@@ -16,7 +16,7 @@ export default {
 				dark: 'Search',
 				description: 'for Vue',
 			},
-			href: '/vue',
+			href: '/reactivesearch/vue',
 		},
 		links: [
 			{
