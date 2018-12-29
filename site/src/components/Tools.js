@@ -165,28 +165,28 @@ class Tools extends Component {
 										alt="Reactivesearch for web"
 									/>
 									<p className={brand}>
-										Reactive <span className={boldFont}>Search</span> for web
+										Reactive <span className={boldFont}>Search</span> for Web
 									</p>
 								</div>
 								<div>
 									<img src="images/tools/ReactiveMaps.svg" alt="Reactivemaps" />
 									<p className={brand}>
-										Reactive <span className={boldFont}>Maps</span> for web
+										Reactive <span className={boldFont}>Maps</span> for Web
 									</p>
 								</div>
 								<div>
-									<img src="images/tools/Vue.svg" alt="Reactivesearch for vue" />
+									<img src="images/tools/Vue.svg" alt="Reactivesearch for Vue.js" />
 									<p className={brand}>
-										Reactive <span className={boldFont}>Search</span> for vue
+										Reactive <span className={boldFont}>Search</span> for Vue
 									</p>
 								</div>
 								<div>
 									<img
 										src="images/tools/ReactiveNative.svg"
-										alt="Reactivesearch for mobile"
+										alt="Reactivesearch for Mobile Apps"
 									/>
 									<p className={brand}>
-										Reactive <span className={boldFont}>Search</span> for mobile
+										Reactive <span className={boldFont}>Search</span> for Mobile Apps
 									</p>
 								</div>
 							</Grid>
@@ -420,7 +420,7 @@ class Tools extends Component {
 									<H2 light>
 										<img
 											src="images/tools/vueSmall.svg"
-											alt="Reactivesearch for vue"
+											alt="Reactivesearch for Vue"
 											style={{
 												height: '44px',
 												marginRight: '15px',
