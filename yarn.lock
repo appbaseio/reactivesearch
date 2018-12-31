@@ -20,16 +20,26 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivecore@^7.0.1":
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-7.1.0.tgz#6a17c253afd2ad0bb24e8027d4ecc67f3023e8e7"
-  integrity sha512-P85tjrVeG/ebPzn/Tq44xoRuDJ4JOyTuXYYKC0y9fp/cId8KwpClbVcVpSn9yIVyzOtlXfJKKcZTi8A4pe2EyA==
+"@appbaseio/reactivesearch-vue@^1.0.0-beta.3":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.0.0-beta.3.tgz#0569f3fa4d1f6efd5633647dafdaa08fc67d2178"
+  integrity sha512-T1WJwFQa3J6qSgCt8PdvaJ4Aco9R+Bqswy5ohG1WEObMtU7FZxc/nYi67T0M3TWKEFy76c6VJJaBZLH+/3hHVw==
   dependencies:
-    prop-types "^15.6.0"
+    "@appbaseio/reactivecore" "^7.1.0"
+    appbase-js "^4.0.2-beta.2"
+    babel-helper-vue-jsx-merge-props "^2.0.3"
+    compute-scroll-into-view "^1.0.11"
+    emotion "^9.2.12"
+    polished "^2.2.0"
     redux "^4.0.0"
-    redux-thunk "^2.3.0"
+    url-search-params "^1.1.0"
+    vue "^2.5.17"
+    vue-emotion "^0.4.2"
+    vue-no-ssr "^1.1.0"
+    vue-slider-component "^2.8.2"
+    vue-types "^1.3.3"
 
-"@appbaseio/reactivesearch@^2.12.1", "@appbaseio/reactivesearch@^2.6.6":
+"@appbaseio/reactivesearch@^2.6.6":
   version "2.14.1"
   resolved "https://registry.npmjs.org/@appbaseio/reactivesearch/-/reactivesearch-2.14.1.tgz#8db4ba70ff65a9c38bebd647e981f9dcd2d71226"
   integrity sha512-6wmEW3iLIEIgtonF3/yrv3sY2/bh/fPlZ+2x+ta4kG6YvIM5ErSt94Mrs4gTLpbgQm+zDTpmeSdS5Y9OT/feFw==
