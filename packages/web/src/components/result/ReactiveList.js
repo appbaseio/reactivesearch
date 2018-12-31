@@ -83,7 +83,7 @@ class ReactiveList extends Component {
 			options = { ...options, ...getOptionsFromQuery(this.defaultQuery) };
 		}
 
-		const { sort, ...query } = this.defaultQuery || {};
+		const { query } = this.defaultQuery || {};
 
 		// execute is set to false at the time of mount
 		// to avoid firing (multiple) partial queries.
@@ -171,7 +171,7 @@ class ReactiveList extends Component {
 			options.from = 0;
 			this.defaultQuery = this.props.defaultQuery();
 
-			const { sort, ...query } = this.defaultQuery;
+			const { query } = this.defaultQuery;
 
 			const queryOptions = getOptionsFromQuery(this.defaultQuery);
 			if (queryOptions) {
