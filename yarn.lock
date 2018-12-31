@@ -16286,6 +16286,13 @@ react-router-dom@^4.1.1, react-router-dom@^4.2.2:
     react-router "^4.3.1"
     warning "^4.0.1"
 
+react-router-hash-link@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/react-router-hash-link/-/react-router-hash-link-1.2.1.tgz#da3b6384e5bff90e9b2172d2e689a994646f2f45"
+  integrity sha512-ddkCtmk/JwMmuU087TGShQHYyNjsJ+/9CTyuVdvvKf6ACgqk2Ma9ndX2xogo7WWmyq9AjuziBm5bmJ12zBxtsQ==
+  dependencies:
+    prop-types "^15.6.0"
+
 react-router@^4.3.1:
   version "4.3.1"
   resolved "https://registry.npmjs.org/react-router/-/react-router-4.3.1.tgz#aada4aef14c809cb2e686b05cee4742234506c4e"
