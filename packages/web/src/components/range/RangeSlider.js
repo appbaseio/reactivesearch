@@ -233,13 +233,7 @@ class RangeSlider extends Component {
 			const { value, onChange } = this.props;
 
 			if (value === undefined) {
-				// since value prop is set & onChange is not defined
-				// we need to reset the slider position
-				// to the original 'value' prop
-				this.setState({
-					currentValue: values,
-				});
-				this.updateQuery(values, this.props);
+				this.handleChange(values);
 			} else if (onChange) {
 				// force re-rendering to avail the currentValue
 				// in rheostat component since it doesn't respect
@@ -247,11 +241,12 @@ class RangeSlider extends Component {
 				this.forceUpdate();
 				onChange(values);
 			} else {
+				// since value prop is set & onChange is not defined
+				// we need to reset the slider position
+				// to the original 'value' prop
 				this.setState({
-					currentValue: values,
+					currentValue: this.state.currentValue,
 				});
-
-				this.updateQuery(values, this.props);
 			}
 		}
 	};
