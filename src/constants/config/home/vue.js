@@ -1,5 +1,5 @@
-import theme from './../../theme/vue';
-import baseConfig from './../base/vue';
+import theme from '../../theme/vue';
+import baseConfig from '../base/vue';
 
 const { primary, primaryDark } = theme;
 
@@ -192,6 +192,7 @@ export default {
 				description:
 					'A 101 post showing how to build real world apps with ReactiveSearch Vue.',
 			},
+			{},
 		],
 	},
 };
