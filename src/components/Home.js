@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Logo, Button, H3, Title, Flex, GithubButton, Grid } from '@appbaseio/designkit';
-import { Link } from 'react-router-dom';
+import { HashLink as Link } from 'react-router-hash-link';
 import { css } from 'emotion';
 import { ThemeProvider } from 'emotion-theming';
 import PropTypes from 'prop-types';
@@ -19,10 +19,10 @@ import {
 } from '../styles';
 import ActionCard from '../styles/ActionCard';
 import ImageCard from '../styles/ImageCard';
-import BannerRow from '../components/BannerRow';
-import Footer from '../components/Footer';
-import Testimonials from '../components/Testimonials';
-import SupportGrid from '../components/SupportGrid';
+import BannerRow from './BannerRow';
+import Footer from './Footer';
+import Testimonials from './Testimonials';
+import SupportGrid from './SupportGrid';
 import { tabPadding, tabJustifyCenter } from '../styles/base';
 import H1 from '../styles/H1';
 import H2 from '../styles/H2';
@@ -277,12 +277,17 @@ class HomePage extends Component {
 							<Layout>
 								<div className={titleRow}>
 									{config.banner6.button ? (
-										<H3>{config.banner6.title}</H3>
+										<H3 style={{
+												paddingBottom: 50,
+											}}
+										>
+											{config.banner6.title}
+										</H3>
 									) : (
 										<H2
 											style={{
 												margin: '0 auto',
-												paddingBottom: 10,
+												paddingBottom: 50,
 											}}
 										>
 											{config.banner6.title}
@@ -370,8 +375,7 @@ class HomePage extends Component {
 										{config.banner6.demos.map((
 											d,
 											index, // eslint-disable-line
-										) =>
-											(Object.keys(d).length ? ( // eslint-disable-next-line
+										) => (Object.keys(d).length ? ( // eslint-disable-next-line
 												<ImageCard key={index} src={d.src}>
 													<div>
 														<Title>{d.title}</Title>
@@ -408,11 +412,17 @@ class HomePage extends Component {
 							<Layout>
 								<div className={titleRow}>
 									{config.banner7.button ? (
-										<H3>{config.banner7.title}</H3>
+										<H3 style={{
+											paddingBottom: 50,
+											}}
+										>
+											{config.banner7.title}
+										</H3>
 									) : (
 										<H2
 											style={{
 												margin: '0 auto',
+												paddingBottom: 50,
 											}}
 										>
 											{config.banner7.title}
@@ -441,24 +451,26 @@ class HomePage extends Component {
 									style={{ marginBottom: '50px' }}
 								>
 									{config.banner7.articles.map((d, index) => (
+										Object.keys(d).length ? (
 										// eslint-disable-next-line
 										<ImageCard key={index} src={d.src}>
-											<div>
-												<Title>{d.title}</Title>
-												<p>{d.description}</p>
-											</div>
-											<div>
-												<SecondaryLink
-													primary
-													href={d.href}
-													style={{
-														color: primary,
-													}}
-												>
-													Read More
-												</SecondaryLink>
-											</div>
-										</ImageCard>
+												<div>
+													<Title>{d.title}</Title>
+													<p>{d.description}</p>
+												</div>
+												<div>
+													<SecondaryLink
+														primary
+														href={d.href}
+														style={{
+															color: primary,
+														}}
+													>
+														Read Now
+													</SecondaryLink>
+												</div>
+										</ImageCard>)
+										: <div />
 									))}
 								</Grid>
 							</Layout>
