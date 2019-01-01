@@ -167,7 +167,7 @@ class MultiRange extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		let query = this.defaultQuery(value, props);
+		let query = MultiRange.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
 			({ query } = customQuery(value, props));
