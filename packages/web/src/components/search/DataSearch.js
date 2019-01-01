@@ -344,23 +344,32 @@ class DataSearch extends Component {
 
 		// defaultQuery from props is always appended
 		// regardless of a customQuery
-		const query = customQuery || DataSearch.defaultQuery;
+		let query = [];
+		let customQueryOptions;
+		let defaultQueryOptions;
+		const defaultQueryTobeSet = DataSearch.defaultQuery(value, props);
+		if (customQuery) {
+			const customQueryTobeSet = customQuery(value, props);
+			const queryTobeSet = customQueryTobeSet.query;
+			query = queryTobeSet ? [queryTobeSet] : defaultQueryTobeSet;
+			customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
+		} else {
+			query = defaultQueryTobeSet;
+		}
+		if (defaultQuery) {
+			if (defaultQuery(value, props).query) {
+				query = [...query, ...defaultQuery(value, props).query];
+			}
+			defaultQueryOptions = getOptionsFromQuery(defaultQuery(value, props));
+		}
 		const queryObject = defaultQuery
 			? {
 				bool: {
-					must: [
-						...query(value, props),
-						...defaultQuery(value, props),
-					],
+					must: query,
 				},
 			} // prettier-ignore
-			: query(value, props);
-		const defaultQueryOptions = defaultQuery
-			? getOptionsFromQuery(defaultQuery(value, props))
-			: null;
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+			: query;
+
 		props.setQueryOptions(this.props.componentId, {
 			...this.queryOptions,
 			...defaultQueryOptions,
