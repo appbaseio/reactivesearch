@@ -235,11 +235,13 @@ class CategorySearch extends Component {
 
 	static shouldQuery = (value, dataFields, props) => {
 		const fields = dataFields.map(
-			(field, index) => `${field}${
-				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-					? `^${props.fieldWeights[index]}`
-					: ''
-			}`);
+			(field, index) =>
+				`${field}${
+					Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+						? `^${props.fieldWeights[index]}`
+						: ''
+				}`,
+		);
 
 		if (props.queryFormat === 'and') {
 			return [
@@ -397,8 +399,11 @@ class CategorySearch extends Component {
 				},
 			} // prettier-ignore
 			: query;
+
 		props.setQueryOptions(this.props.componentId, {
-			...this.queryOptions, ...defaultQueryOptions, ...customQueryOptions,
+			...this.queryOptions,
+			...defaultQueryOptions,
+			...customQueryOptions,
 		});
 		props.updateQuery({
 			componentId,
@@ -492,6 +497,13 @@ class CategorySearch extends Component {
 		return highlightedIndex === index ? '#eee' : '#fff';
 	};
 
+	handleSearchIconClick = () => {
+		const { currentValue } = this.state;
+		if (currentValue.trim()) {
+			this.setValue(currentValue, true);
+		}
+	};
+
 	renderIcon = () => {
 		if (this.props.showIcon) {
 			return this.props.icon || <SearchSvg />;
@@ -508,8 +520,7 @@ class CategorySearch extends Component {
 
 	renderIcons = () => (
 		<div>
-			{this.state.currentValue
-				&& this.props.showClear && (
+			{this.state.currentValue && this.props.showClear && (
 				<InputIcon
 					onClick={this.clearValue}
 					iconPosition="right"
@@ -518,7 +529,9 @@ class CategorySearch extends Component {
 					{this.renderCancelIcon()}
 				</InputIcon>
 			)}
-			<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
+			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
+				{this.renderIcon()}
+			</InputIcon>
 		</div>
 	);
 
@@ -533,17 +546,29 @@ class CategorySearch extends Component {
 			error,
 		} = this.props;
 		const { isOpen, currentValue } = this.state;
-		if (renderNoSuggestion
-				&& isOpen && !finalSuggestionsList.length && !isLoading && currentValue
-				&& !(renderError && error)) {
+		if (
+			renderNoSuggestion
+			&& isOpen
+			&& !finalSuggestionsList.length
+			&& !isLoading
+			&& currentValue
+			&& !(renderError && error)
+		) {
 			return (
-				<SuggestionWrapper innerClass={innerClass} themePreset={themePreset} theme={theme} innerClassName="noSuggestion">
-					{typeof renderNoSuggestion === 'function' ? renderNoSuggestion(currentValue) : renderNoSuggestion}
+				<SuggestionWrapper
+					innerClass={innerClass}
+					themePreset={themePreset}
+					theme={theme}
+					innerClassName="noSuggestion"
+				>
+					{typeof renderNoSuggestion === 'function'
+						? renderNoSuggestion(currentValue)
+						: renderNoSuggestion}
 				</SuggestionWrapper>
 			);
 		}
 		return null;
-	}
+	};
 
 	renderLoader = () => {
 		const {
@@ -552,13 +577,18 @@ class CategorySearch extends Component {
 		const { currentValue } = this.state;
 		if (isLoading && loader && currentValue) {
 			return (
-				<SuggestionWrapper innerClass={innerClass} innerClassName="loader" theme={theme} themePreset={themePreset}>
+				<SuggestionWrapper
+					innerClass={innerClass}
+					innerClassName="loader"
+					theme={theme}
+					themePreset={themePreset}
+				>
 					{loader}
 				</SuggestionWrapper>
 			);
 		}
 		return null;
-	}
+	};
 
 	renderError = () => {
 		const {
@@ -567,13 +597,18 @@ class CategorySearch extends Component {
 		const { currentValue } = this.state;
 		if (error && renderError && currentValue && !isLoading) {
 			return (
-				<SuggestionWrapper innerClass={innerClass} innerClassName="error" theme={theme} themePreset={themePreset}>
+				<SuggestionWrapper
+					innerClass={innerClass}
+					innerClassName="error"
+					theme={theme}
+					themePreset={themePreset}
+				>
 					{isFunction(renderError) ? renderError(error) : renderError}
 				</SuggestionWrapper>
 			);
 		}
 		return null;
-	}
+	};
 
 	render() {
 		let suggestionsList = [];
@@ -587,8 +622,7 @@ class CategorySearch extends Component {
 		} = this.props;
 
 		// filter out empty categories
-		const filteredCategories = categories
-			.filter(category => Boolean(category.key));
+		const filteredCategories = categories.filter(category => Boolean(category.key));
 
 		if (
 			!this.state.currentValue
@@ -704,12 +738,17 @@ class CategorySearch extends Component {
 												}}
 											>
 												<Text primary={!!item.category}>
-													<SuggestionItem currentValue={currentValue} suggestion={item} />
+													<SuggestionItem
+														currentValue={currentValue}
+														suggestion={item}
+													/>
 												</Text>
 											</li>
 										))}
 									</ul>
-								) : this.renderNoSuggestion(finalSuggestionsList)}
+								) : (
+									this.renderNoSuggestion(finalSuggestionsList)
+								)}
 							</div>
 						)}
 						{...this.props.downShiftProps}
@@ -844,11 +883,10 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	setQueryOptions:
-		(component, props, execute) => dispatch(setQueryOptions(component, props, execute)),
-	setQueryListener: (
-		component, onQueryChange, beforeQueryChange,
-	) => dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryOptions: (component, props, execute) =>
+		dispatch(setQueryOptions(component, props, execute)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
@@ -858,5 +896,6 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <CategorySearch ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));
