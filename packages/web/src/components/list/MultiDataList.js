@@ -242,7 +242,7 @@ class MultiDataList extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		const query = customQuery || this.defaultQuery;
+		let customQueryOptions;
 
 		// find the corresponding value of the label for running the query
 		const queryValue = value.reduce((acc, item) => {
@@ -253,18 +253,20 @@ class MultiDataList extends Component {
 			return matchingItem ? acc.concat(matchingItem.value) : acc;
 		}, []);
 
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(queryValue, props))
-			: null;
 		this.queryOptions = {
 			...this.queryOptions,
 			...customQueryOptions,
 		};
+		let query = this.defaultQuery((queryValue, props));
+		if (customQuery) {
+			({ query } = customQuery((queryValue, props)));
+			customQueryOptions = getOptionsFromQuery(customQuery((queryValue, props)));
+		}
 		props.setQueryOptions(props.componentId, this.queryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(queryValue, props),
+			query,
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,

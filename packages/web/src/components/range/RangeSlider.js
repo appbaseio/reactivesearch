@@ -260,8 +260,12 @@ class RangeSlider extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		const query = props.customQuery || RangeSlider.defaultQuery;
-
+		let query = RangeSlider.defaultQuery(value, props);
+		let customQueryOptions;
+		if (customQuery) {
+			({ query } = customQuery(value, props));
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+		}
 		const {
 			showFilter,
 			range: { start, end },
@@ -269,13 +273,10 @@ class RangeSlider extends Component {
 		const [currentStart, currentEnd] = value;
 		// check if the slider is at its initial position
 		const isInitialValue = currentStart === start && currentEnd === end;
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
 		props.setQueryOptions(props.componentId, customQueryOptions);
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query,
 			value,
 			label: props.filterLabel,
 			showFilter: showFilter && !isInitialValue,

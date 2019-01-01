@@ -374,23 +374,32 @@ class CategorySearch extends Component {
 		} = props;
 
 		// defaultQuery from props is always appended regardless of a customQuery
-		const query = customQuery || CategorySearch.defaultQuery;
+		let query = [];
+		let customQueryOptions;
+		let defaultQueryOptions;
+		const defaultQueryTobeSet = CategorySearch.defaultQuery(value, props, category);
+		if (customQuery) {
+			const customQueryTobeSet = customQuery(value, props, category);
+			const queryTobeSet = customQueryTobeSet.query;
+			query = queryTobeSet ? [queryTobeSet] : defaultQueryTobeSet;
+			customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
+		} else {
+			query = defaultQueryTobeSet;
+		}
+		if (defaultQuery) {
+			if (defaultQuery(value, props, category).query) {
+				query = [...query, ...defaultQuery(value, props, category).query];
+			}
+			defaultQueryOptions = getOptionsFromQuery(defaultQuery(value, props, category));
+		}
 		const queryObject = defaultQuery
 			? {
 				bool: {
-					must: [
-						...query(value, props, category),
-						...defaultQuery(value, props, category),
-					],
+					must: query,
 				},
 			} // prettier-ignore
-			: query(value, props, category);
-		const defaultQueryOptions = defaultQuery
-			? getOptionsFromQuery(defaultQuery(value, props))
-			: null;
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+			: query;
+
 		props.setQueryOptions(this.props.componentId, {
 			...this.queryOptions,
 			...defaultQueryOptions,
@@ -490,6 +499,13 @@ class CategorySearch extends Component {
 		return highlightedIndex === index ? '#eee' : '#fff';
 	};
 
+	handleSearchIconClick = () => {
+		const { currentValue } = this.state;
+		if (currentValue.trim()) {
+			this.setValue(currentValue, true);
+		}
+	};
+
 	renderIcon = () => {
 		if (this.props.showIcon) {
 			return this.props.icon || <SearchSvg />;
@@ -515,7 +531,9 @@ class CategorySearch extends Component {
 					{this.renderCancelIcon()}
 				</InputIcon>
 			)}
-			<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
+			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
+				{this.renderIcon()}
+			</InputIcon>
 		</div>
 	);
 

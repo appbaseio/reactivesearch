@@ -159,17 +159,18 @@ class SingleDataList extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		const query = customQuery || SingleDataList.defaultQuery;
+		let customQueryOptions;
 
 		let currentValue = value;
 		if (value !== props.selectAllLabel) {
 			currentValue = props.data.find(item => item.label === value);
 			currentValue = currentValue ? currentValue.value : null;
 		}
-
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(currentValue, props))
-			: null;
+		let query = SingleDataList.defaultQuery(currentValue, props);
+		if (customQuery) {
+			({ query } = customQuery(currentValue, props));
+			customQueryOptions = getOptionsFromQuery(customQuery(currentValue, props));
+		}
 		this.queryOptions = {
 			...this.queryOptions,
 			...customQueryOptions,
@@ -178,7 +179,7 @@ class SingleDataList extends Component {
 
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(currentValue, props),
+			query,
 			value: currentValue ? value : null,
 			label: props.filterLabel,
 			showFilter: props.showFilter,

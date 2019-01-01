@@ -127,12 +127,13 @@ class TextField extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || TextField.defaultQuery;
 		const { customQuery } = props;
-
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+		let query = TextField.defaultQuery(value, props);
+		let customQueryOptions;
+		if (customQuery) {
+			({ query } = customQuery(value, props));
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+		}
 		this.queryOptions = {
 			...this.queryOptions,
 			...customQueryOptions,
@@ -141,7 +142,7 @@ class TextField extends Component {
 
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query,
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,

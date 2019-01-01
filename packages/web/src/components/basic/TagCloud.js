@@ -206,12 +206,13 @@ class TagCloud extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || TagCloud.defaultQuery;
 		const { customQuery } = props;
-
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+		let query = TagCloud.defaultQuery(value, props);
+		let customQueryOptions;
+		if (customQuery) {
+			({ query } = customQuery(value, props));
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+		}
 		this.queryOptions = {
 			...this.queryOptions,
 			...customQueryOptions,
@@ -220,7 +221,7 @@ class TagCloud extends Component {
 
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query,
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
