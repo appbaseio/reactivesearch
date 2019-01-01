@@ -208,11 +208,13 @@ class DataSearch extends Component {
 
 	static shouldQuery = (value, dataFields, props) => {
 		const fields = dataFields.map(
-			(field, index) => `${field}${
-				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-					? `^${props.fieldWeights[index]}`
-					: ''
-			}`);
+			(field, index) =>
+				`${field}${
+					Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+						? `^${props.fieldWeights[index]}`
+						: ''
+				}`,
+		);
 
 		if (props.queryFormat === 'and') {
 			return [
@@ -354,11 +356,15 @@ class DataSearch extends Component {
 			} // prettier-ignore
 			: query(value, props);
 		const defaultQueryOptions = defaultQuery
-			? getOptionsFromQuery(defaultQuery(value, props)) : null;
+			? getOptionsFromQuery(defaultQuery(value, props))
+			: null;
 		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props)) : null;
+			? getOptionsFromQuery(customQuery(value, props))
+			: null;
 		props.setQueryOptions(this.props.componentId, {
-			...this.queryOptions, ...defaultQueryOptions, ...customQueryOptions,
+			...this.queryOptions,
+			...defaultQueryOptions,
+			...customQueryOptions,
 		});
 		props.updateQuery({
 			componentId,
@@ -442,6 +448,13 @@ class DataSearch extends Component {
 		return highlightedIndex === index ? '#eee' : '#fff';
 	};
 
+	handleSearchIconClick = () => {
+		const { currentValue } = this.state;
+		if (currentValue.trim()) {
+			this.setValue(currentValue, true);
+		}
+	};
+
 	renderIcon = () => {
 		if (this.props.showIcon) {
 			return this.props.icon || <SearchSvg />;
@@ -458,8 +471,7 @@ class DataSearch extends Component {
 
 	renderIcons = () => (
 		<div>
-			{this.state.currentValue
-				&& this.props.showClear && (
+			{this.state.currentValue && this.props.showClear && (
 				<InputIcon
 					onClick={this.clearValue}
 					iconPosition="right"
@@ -468,7 +480,9 @@ class DataSearch extends Component {
 					{this.renderCancelIcon()}
 				</InputIcon>
 			)}
-			<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
+			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
+				{this.renderIcon()}
+			</InputIcon>
 		</div>
 	);
 
@@ -483,17 +497,29 @@ class DataSearch extends Component {
 			renderError,
 		} = this.props;
 		const { isOpen, currentValue } = this.state;
-		if (renderNoSuggestion
-				&& isOpen && !finalSuggestionsList.length && !isLoading && currentValue
-				&& !(renderError && error)) {
+		if (
+			renderNoSuggestion
+			&& isOpen
+			&& !finalSuggestionsList.length
+			&& !isLoading
+			&& currentValue
+			&& !(renderError && error)
+		) {
 			return (
-				<SuggestionWrapper innerClass={innerClass} themePreset={themePreset} theme={theme} innerClassName="noSuggestion">
-					{typeof renderNoSuggestion === 'function' ? renderNoSuggestion(currentValue) : renderNoSuggestion}
+				<SuggestionWrapper
+					innerClass={innerClass}
+					themePreset={themePreset}
+					theme={theme}
+					innerClassName="noSuggestion"
+				>
+					{typeof renderNoSuggestion === 'function'
+						? renderNoSuggestion(currentValue)
+						: renderNoSuggestion}
 				</SuggestionWrapper>
 			);
 		}
 		return null;
-	}
+	};
 
 	renderLoader = () => {
 		const {
@@ -502,13 +528,18 @@ class DataSearch extends Component {
 		const { currentValue } = this.state;
 		if (isLoading && loader && currentValue) {
 			return (
-				<SuggestionWrapper innerClass={innerClass} innerClassName="loader" theme={theme} themePreset={themePreset}>
+				<SuggestionWrapper
+					innerClass={innerClass}
+					innerClassName="loader"
+					theme={theme}
+					themePreset={themePreset}
+				>
 					{loader}
 				</SuggestionWrapper>
 			);
 		}
 		return null;
-	}
+	};
 
 	renderError = () => {
 		const {
@@ -517,13 +548,18 @@ class DataSearch extends Component {
 		const { currentValue } = this.state;
 		if (error && renderError && currentValue && !isLoading) {
 			return (
-				<SuggestionWrapper innerClass={innerClass} innerClassName="error" theme={theme} themePreset={themePreset}>
+				<SuggestionWrapper
+					innerClass={innerClass}
+					innerClassName="error"
+					theme={theme}
+					themePreset={themePreset}
+				>
 					{isFunction(renderError) ? renderError(error) : renderError}
 				</SuggestionWrapper>
 			);
 		}
 		return null;
-	}
+	};
 
 	render() {
 		const { currentValue } = this.state;
@@ -612,7 +648,10 @@ class DataSearch extends Component {
 													),
 												}}
 											>
-												<SuggestionItem currentValue={currentValue} suggestion={item} />
+												<SuggestionItem
+													currentValue={currentValue}
+													suggestion={item}
+												/>
 												{/* {typeof item.label === 'string' ? (
 													<div
 														className="trim"
@@ -626,7 +665,9 @@ class DataSearch extends Component {
 											</li>
 										))}
 									</ul>
-								) : this.renderNoSuggestion(suggestionsList)}
+								) : (
+									this.renderNoSuggestion(suggestionsList)
+								)}
 							</div>
 						)}
 						{...this.props.downShiftProps}
@@ -757,16 +798,15 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	setQueryListener: (
-		component, onQueryChange, beforeQueryChange,
-	) => dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
+		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
-
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
 )(withTheme(props => <DataSearch ref={props.myForwardedRef} {...props} />));
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));
