@@ -213,7 +213,7 @@ class ReactiveList extends Component {
 			if (this.props.isLoading && (this.props.hits || prevProps.hits)) {
 				if (this.props.onPageChange) {
 					this.props.onPageChange(this.state.currentPage + 1, totalPages);
-				} else if (this.props.scrollOnChange) {
+				} else if (this.props.scrollOnChange && this.props.pagination) {
 					this.domNode.scrollTo(0, 0);
 				}
 			}
@@ -235,7 +235,7 @@ class ReactiveList extends Component {
 				) {
 					if (this.props.hits !== prevProps.hits) {
 						// query has changed
-						if (this.props.scrollOnChange) {
+						if (this.props.scrollOnChange && this.props.pagination) {
 							this.domNode.scrollTo(0, 0);
 						}
 						// eslint-disable-next-line
