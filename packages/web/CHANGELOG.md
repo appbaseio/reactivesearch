@@ -6,6 +6,11 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v2.16.0
+
+-   Add click handler for search icon in search components [#746](https://github.com/appbaseio/reactivesearch/pull/746)
+-   Enable better parsing of query parameters [752](https://github.com/appbaseio/reactivesearch/pull/752)
+
 ## v2.15.0
 
 -   Add loader support [#652](https://github.com/appbaseio/reactivesearch/pull/652)
