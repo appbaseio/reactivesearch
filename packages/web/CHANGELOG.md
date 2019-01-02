@@ -6,6 +6,8 @@
     <summary>The following changes have been included in the <code>dev</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v2.16.1
+
 -   Enable better parsing of query parameters [754](https://github.com/appbaseio/reactivesearch/pull/754)
 
 ## v2.16.0
