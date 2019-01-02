@@ -393,6 +393,13 @@ class DataSearch extends Component {
 		return highlightedIndex === index ? '#eee' : '#fff';
 	};
 
+	handleSearchIconClick = () => {
+		const { currentValue } = this.state;
+		if (currentValue.trim()) {
+			this.setValue(currentValue, true);
+		}
+	};
+
 	renderIcon = () => {
 		if (this.props.showIcon) {
 			return this.props.icon || <SearchSvg />;
@@ -419,7 +426,12 @@ class DataSearch extends Component {
 					{this.renderCancelIcon()}
 				</InputIcon>
 			)}
-			<InputIcon iconPosition={this.props.iconPosition}>{this.renderIcon()}</InputIcon>
+			<InputIcon
+				onClick={this.handleSearchIconClick}
+				iconPosition={this.props.iconPosition}
+			>
+				{this.renderIcon()}
+			</InputIcon>
 		</div>
 	);
 
