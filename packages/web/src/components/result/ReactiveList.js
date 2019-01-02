@@ -207,7 +207,10 @@ class ReactiveList extends Component {
 		if (!isEqual(prevProps.react, this.props.react)) {
 			this.setReact(this.props);
 		}
-
+		// called when results are updated
+		if (this.props.onResultStats && prevProps.hits !== this.props.hits) {
+			this.props.onResultStats(this.stats);
+		}
 		if (this.props.pagination) {
 			// called when page is changed
 			if (this.props.isLoading && (this.props.hits || prevProps.hits)) {
@@ -343,6 +346,23 @@ class ReactiveList extends Component {
 			triggerClickAnalytics: this.triggerClickAnalytics,
 		};
 	}
+	get stats() {
+		const results = parseHits(this.props.hits) || [];
+		const streamResults = parseHits(this.props.streamHits) || [];
+		let filteredResults = results;
+
+		if (streamResults.length) {
+			const ids = streamResults.map(item => item._id);
+			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+		}
+		return {
+			totalResults: this.props.total,
+			totalPages: Math.ceil(this.props.total / this.props.size),
+			displayedResults: [...streamResults, ...filteredResults].length,
+			time: this.props.time,
+			currentPage: this.state.currentPage,
+		};
+	}
 
 	setReact = (props) => {
 		const { react } = props;
@@ -451,25 +471,8 @@ class ReactiveList extends Component {
 	};
 
 	renderResultStats = () => {
-		if (this.props.onResultStats && this.props.total) {
-			const results = parseHits(this.props.hits) || [];
-			const streamResults = parseHits(this.props.streamHits) || [];
-			let filteredResults = results;
-
-			if (streamResults.length) {
-				const ids = streamResults.map(item => item._id);
-				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-			}
-
-			const stats = {
-				totalResults: this.props.total,
-				totalPages: Math.ceil(this.props.total / this.props.size),
-				displayedResults: [...streamResults, ...filteredResults].length,
-				time: this.props.time,
-				currentPage: this.state.currentPage,
-			};
-
-			return this.props.onResultStats(stats);
+		if (this.props.renderResultStats && this.props.total) {
+			return this.props.renderResultStats(this.stats);
 		} else if (this.props.total) {
 			return (
 				<p
@@ -707,6 +710,7 @@ ReactiveList.propTypes = {
 	pagination: types.bool,
 	paginationAt: types.paginationAt,
 	react: types.react,
+	renderResultStats: types.func,
 	scrollOnChange: types.bool,
 	scrollTarget: types.string,
 	showResultStats: types.bool,

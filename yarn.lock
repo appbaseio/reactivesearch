@@ -20,15 +20,6 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivecore@^7.1.0":
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-7.1.0.tgz#6a17c253afd2ad0bb24e8027d4ecc67f3023e8e7"
-  integrity sha512-P85tjrVeG/ebPzn/Tq44xoRuDJ4JOyTuXYYKC0y9fp/cId8KwpClbVcVpSn9yIVyzOtlXfJKKcZTi8A4pe2EyA==
-  dependencies:
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
 "@appbaseio/reactivesearch@^2.6.6":
   version "2.14.1"
   resolved "https://registry.npmjs.org/@appbaseio/reactivesearch/-/reactivesearch-2.14.1.tgz#8db4ba70ff65a9c38bebd647e981f9dcd2d71226"
