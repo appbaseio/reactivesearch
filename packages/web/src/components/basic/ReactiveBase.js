@@ -68,6 +68,7 @@ class ReactiveBase extends Component {
 			transformRequest: props.transformRequest,
 			analytics: props.analytics,
 			graphQLUrl: props.graphQLUrl,
+			transformResponse: props.transformResponse,
 		};
 
 		let queryParams = '';
@@ -80,7 +81,6 @@ class ReactiveBase extends Component {
 		const params = new URLSearchParams(queryParams);
 		let selectedValues = {};
 
-
 		Array.from(params.keys()).forEach((key) => {
 			try {
 				const value = JSON.parse(params.get(key));
@@ -92,7 +92,7 @@ class ReactiveBase extends Component {
 				// Do not add to selectedValues if JSON parsing fails.
 			}
 		});
-		
+
 		const { headers = {}, themePreset } = props;
 		const appbaseRef = Appbase(config);
 		if (this.props.transformRequest) {
@@ -153,6 +153,7 @@ ReactiveBase.propTypes = {
 	initialState: types.children,
 	analytics: types.bool,
 	graphQLUrl: types.string,
+	transformResponse: types.func,
 };
 
 export default ReactiveBase;
