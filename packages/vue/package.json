@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch-vue",
-	"version": "1.0.0-beta.2",
+	"version": "1.0.0-beta.3",
 	"private": false,
 	"main": "dist/@appbaseio/reactivesearch-vue.cjs.js",
 	"jsnext:main": "dist/@appbaseio/reactivesearch-vue.es.js",
@@ -28,7 +28,7 @@
 		"prepare": "npm start validate"
 	},
 	"dependencies": {
-		"@appbaseio/reactivecore": "^7.0.0",
+		"@appbaseio/reactivecore": "^7.1.0",
 		"appbase-js": "^4.0.2-beta.2",
 		"babel-helper-vue-jsx-merge-props": "^2.0.3",
 		"compute-scroll-into-view": "^1.0.11",

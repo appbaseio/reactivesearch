@@ -6,21 +6,11 @@ import { connect } from '../../utils/index';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
+import { getComponents } from './addons/ssr';
 
 const { addComponent, removeComponent, watchComponent, updateQuery, setQueryListener,setQueryOptions } = Actions;
 
 const { checkValueChange, getClassName } = helper;
-
-const getComponents = () => {
-	const components = { NoSSR };
-	if (process.browser) {
-		// in older versions of nuxt, it's process.BROWSER_BUILD
-		// eslint-disable-next-line
-		const VueSlider = require('vue-slider-component');
-		components['vue-slider'] = VueSlider;
-	}
-	return components;
-};
 
 const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
@@ -50,8 +40,7 @@ const DynamicRangeSlider = {
 		showCheckbox: VueTypes.bool.def(true),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
-		tooltipTrigger: types.tooltipTrigger,
-		mergeTooltip: VueTypes.bool.def(true),
+		sliderOptions: VueTypes.object.def({})
 	},
 
 	methods: {
@@ -197,8 +186,6 @@ const DynamicRangeSlider = {
 	},
 
 	render() {
-		const tooltipTrigger
-			= this.$props.tooltipTrigger === 'none' ? false : this.$props.tooltipTrigger;
 		if(!this.range){
 			return null;
 		}
@@ -222,8 +209,7 @@ const DynamicRangeSlider = {
 							dotSize={20}
 							height={4}
 							enable-cross={false}
-							tooltip-merge={this.$props.mergeTooltip}
-							tooltip={tooltipTrigger}
+							{...{ props: this.$props.sliderOptions }}
 						/>
 
 						{this.$props.rangeLabels ? <div class="label-container">

@@ -154,16 +154,17 @@ class NumberBox extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		const query = customQuery || this.defaultQuery;
-
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+		let query = NumberBox.defaultQuery(value, props);
+		let customQueryOptions;
+		if (customQuery) {
+			({ query } = customQuery(value, props));
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query,
 			value,
 			showFilter: false, // we don't need filters for NumberBox
 			URLParams: props.URLParams,

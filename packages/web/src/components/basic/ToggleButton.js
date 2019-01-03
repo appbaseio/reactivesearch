@@ -169,17 +169,19 @@ class ToggleButton extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || ToggleButton.defaultQuery;
-
 		let filterValue = value;
 		if (!props.multiSelect) {
 			filterValue = value[0] ? value[0].value : null;
 		}
 		const { customQuery } = props;
 
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+		let query = ToggleButton.defaultQuery(value, props);
+		let customQueryOptions;
+		if (customQuery) {
+			({ query } = customQuery(value, props));
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+		}
+
 		this.queryOptions = {
 			...this.queryOptions,
 			...customQueryOptions,
@@ -187,7 +189,7 @@ class ToggleButton extends Component {
 		props.setQueryOptions(props.componentId, this.queryOptions);
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query,
 			value: filterValue, // sets a string in URL not array
 			label: props.filterLabel,
 			showFilter: props.showFilter,
