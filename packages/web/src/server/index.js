@@ -6,10 +6,7 @@ import queryOptionsReducer from '@appbaseio/reactivecore/lib/reducers/queryOptio
 import dependencyTreeReducer from '@appbaseio/reactivecore/lib/reducers/dependencyTreeReducer';
 import { buildQuery, pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
 
-const componentsWithHighlightQuery = [
-	'DataSearch',
-	'CategorySearch',
-];
+const componentsWithHighlightQuery = ['DataSearch', 'CategorySearch'];
 
 const componentsWithOptions = [
 	'ResultList',
@@ -62,13 +59,18 @@ function getQuery(component, value) {
 
 export default function initReactivesearch(componentCollection, searchState, settings) {
 	return new Promise((resolve, reject) => {
-		const credentials = settings.url && settings.url.trim() !== '' && !settings.credentials
-			? null
-			: settings.credentials;
+		const credentials
+			= settings.url && settings.url.trim() !== '' && !settings.credentials
+				? null
+				: settings.credentials;
 		const config = {
-			url: settings.url && settings.url.trim() !== '' ? settings.url : 'https://scalr.api.appbase.io',
+			url:
+				settings.url && settings.url.trim() !== ''
+					? settings.url
+					: 'https://scalr.api.appbase.io',
 			app: settings.app,
 			credentials,
+			transformRequest: settings.transformRequest || null,
 			type: settings.type ? settings.type : '*',
 		};
 		const appbaseRef = Appbase(config);
@@ -116,10 +118,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 					: null;
 				let highlightQuery = {};
 
-				if (
-					componentsWithHighlightQuery.includes(component.type)
-					&& component.highlight
-				) {
+				if (componentsWithHighlightQuery.includes(component.type) && component.highlight) {
 					highlightQuery = component.source.highlightQuery(component);
 				}
 
@@ -155,9 +154,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 							mainQueryOptions = { ...otherQueryOptions, ...highlightQuery };
 						}
 						if (isResultComponent) {
-							let currentPage = component.currentPage
-								? component.currentPage - 1
-								: 0;
+							let currentPage = component.currentPage ? component.currentPage - 1 : 0;
 							if (
 								selectedValues[component.componentId]
 								&& selectedValues[component.componentId].value
@@ -226,9 +223,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			// check if query or options are valid - non-empty
 			if (
 				(queryObj && !!Object.keys(queryObj).length)
-				|| (options && (
-					Object.keys(options).some(item => validOptions.includes(item)))
-				)
+				|| (options && Object.keys(options).some(item => validOptions.includes(item)))
 			) {
 				if (!queryObj || (queryObj && !Object.keys(queryObj).length)) {
 					queryObj = { match_all: {} };
@@ -266,33 +261,36 @@ export default function initReactivesearch(componentCollection, searchState, set
 			queryLog,
 		};
 
-		appbaseRef.msearch({
-			type: config.type === '*' ? '' : config.type,
-			body: finalQuery,
-		}).then((res) => {
-			orderOfQueries.forEach((component, index) => {
-				const response = res.responses[index];
-				if (response.aggregations) {
-					aggregations = {
-						...aggregations,
-						[component]: response.aggregations,
+		appbaseRef
+			.msearch({
+				type: config.type === '*' ? '' : config.type,
+				body: config.transformRequest ? config.transformRequest(finalQuery) : finalQuery,
+			})
+			.then((res) => {
+				orderOfQueries.forEach((component, index) => {
+					const response = res.responses[index];
+					if (response.aggregations) {
+						aggregations = {
+							...aggregations,
+							[component]: response.aggregations,
+						};
+					}
+					hits = {
+						...hits,
+						[component]: {
+							hits: response.hits.hits,
+							total: response.hits.total,
+							time: response.took,
+						},
 					};
-				}
-				hits = {
-					...hits,
-					[component]: {
-						hits: response.hits.hits,
-						total: response.hits.total,
-						time: response.took,
-					},
+				});
+				state = {
+					...state,
+					hits,
+					aggregations,
 				};
-			});
-			state = {
-				...state,
-				hits,
-				aggregations,
-			};
-			resolve(state);
-		}).catch(err => reject(err));
+				resolve(state);
+			})
+			.catch(err => reject(err));
 	});
 }
