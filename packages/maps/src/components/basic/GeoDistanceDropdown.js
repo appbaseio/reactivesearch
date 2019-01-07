@@ -158,7 +158,7 @@ class GeoDistanceDropdown extends Component {
 			fetch(
 				`https://maps.googleapis.com/maps/api/geocode/json?key=${
 					this.props.mapKey
-				}&v=3.31&latlng=${coordinates}`,
+				}&v=weekly&latlng=${coordinates}`,
 			)
 				.then(res => res.json())
 				.then((res) => {
@@ -180,7 +180,7 @@ class GeoDistanceDropdown extends Component {
 			fetch(
 				`https://maps.googleapis.com/maps/api/geocode/json?key=${
 					this.props.mapKey
-				}&v=3.31&address=${value}`,
+				}&v=weekly&address=${value}`,
 			)
 				.then(res => res.json())
 				.then((res) => {

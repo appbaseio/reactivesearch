@@ -18,8 +18,9 @@
 		"babel-preset-react": "^6.24.1",
 		"css-loader": "^0.28.7",
 		"style-loader": "^0.20.3",
-		"webpack": "^3.10.0",
-		"webpack-dev-server": "^3.1.11"
+		"webpack": "^4.28.3",
+		"webpack-cli": "^3.2.0",
+		"webpack-dev-server": "^3.1.14"
 	},
 	"scripts": {
 		"build": "webpack -p --progress",
