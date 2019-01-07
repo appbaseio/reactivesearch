@@ -18,7 +18,7 @@
 		"css-loader": "^0.28.7",
 		"style-loader": "^0.20.3",
 		"webpack": "^3.10.0",
-		"webpack-dev-server": "^2.9.5"
+		"webpack-dev-server": "^3.1.11"
 	},
 	"scripts": {
 		"build": "webpack -p --progress",

@@ -1,27 +1,28 @@
 {
-  "name": "resultcard",
-  "version": "1.0.0",
-  "description": "ResultCard example for ReactiveSearch",
-  "main": "index.js",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "@appbaseio/reactivesearch": "^3.0.0-alpha.5",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "css-loader": "^0.28.7",
-    "style-loader": "^0.20.3",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.5"
-  },
-  "scripts": {
-    "build": "webpack -p --progress",
-    "start": "webpack-dev-server --hot --inline --progress --colors --port 8001"
-  }
+	"name": "resultcard",
+	"version": "1.0.0",
+	"description": "ResultCard example for ReactiveSearch",
+	"main": "index.js",
+	"license": "Apache-2.0",
+	"dependencies": {
+		"@appbaseio/reactivesearch": "^3.0.0-alpha.5",
+		"react": "^16.2.0",
+		"react-dom": "^16.2.0"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-core": "^6.26.0",
+		"babel-loader": "^7.1.2",
+		"babel-preset-env": "^1.6.1",
+		"babel-preset-react": "^6.24.1",
+		"css-loader": "^0.28.7",
+		"style-loader": "^0.20.3",
+		"webpack": "^4.28.3",
+		"webpack-cli": "^3.2.0",
+		"webpack-dev-server": "^3.1.14"
+	},
+	"scripts": {
+		"build": "webpack -p --progress",
+		"start": "webpack-dev-server --hot --inline --progress --colors --port 8001"
+	}
 }
