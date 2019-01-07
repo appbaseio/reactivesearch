@@ -20,6 +20,7 @@ import {
 	handleA11yAction,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -40,9 +41,10 @@ class TagCloud extends Component {
 			currentValue[item] = true;
 		});
 
-		const options = props.options && props.options[props.dataField]
-			? this.getOptions(props.options[props.dataField].buckets, props)
-			: [];
+		const options
+			= props.options && props.options[props.dataField]
+				? this.getOptions(props.options[props.dataField].buckets, props)
+				: [];
 
 		this.state = {
 			currentValue,
@@ -75,7 +77,8 @@ class TagCloud extends Component {
 			});
 		});
 		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
-			this.updateQueryOptions(this.props));
+			this.updateQueryOptions(this.props),
+		);
 
 		checkPropChange(this.props.dataField, prevProps.dataField, () => {
 			this.updateQueryOptions(this.props);
@@ -189,9 +192,12 @@ class TagCloud extends Component {
 			};
 
 			if (hasMounted) {
-				this.setState({
-					currentValue,
-				}, handleUpdates);
+				this.setState(
+					{
+						currentValue,
+					},
+					handleUpdates,
+				);
 			} else {
 				handleUpdates();
 			}
@@ -271,7 +277,6 @@ class TagCloud extends Component {
 			return isFunction(renderError) ? renderError(error) : renderError;
 		}
 
-
 		if (this.state.options.length === 0) {
 			return null;
 		}
@@ -290,13 +295,16 @@ class TagCloud extends Component {
 				)}
 				<TagList className={getClassName(this.props.innerClass, 'list') || null}>
 					{this.state.options.map((item) => {
-						const size = ((item.doc_count / highestCount) * (max - min)) + min;
+						// eslint-disable-next-line
+						const size = (item.doc_count / highestCount) * (max - min) + min;
 
 						return (
 							<span
 								key={item.key}
 								onClick={() => this.handleClick(item.key)}
-								onKeyPress={e => handleA11yAction(e, () => this.handleClick(item.key))}
+								onKeyPress={e =>
+									handleA11yAction(e, () => this.handleClick(item.key))
+								}
 								style={{ fontSize: `${size}em` }}
 								className={
 									this.state.currentValue[item.key]
@@ -393,6 +401,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <TagCloud ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));
 
+hoistNonReactStatics(ForwardRefComponent, TagCloud);
+
+export default ForwardRefComponent;

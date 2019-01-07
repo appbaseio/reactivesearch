@@ -8,6 +8,7 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	debounce,
 	checkValueChange,
@@ -292,6 +293,10 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <TextField ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, TextField);
+
+export default ForwardRefComponent;

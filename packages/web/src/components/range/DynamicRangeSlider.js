@@ -7,6 +7,7 @@ import {
 	setQueryOptions,
 	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
@@ -541,6 +542,10 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <DynamicRangeSlider ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, DynamicRangeSlider);
+
+export default ForwardRefComponent;

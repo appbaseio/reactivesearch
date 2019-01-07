@@ -8,6 +8,7 @@ import {
 	setQueryOptions,
 	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	getQueryOptions,
 	pushToAndClause,
@@ -419,5 +420,10 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <SingleDropdownList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));
+hoistNonReactStatics(ForwardRefComponent, SingleDropdownList);
+
+export default ForwardRefComponent;
