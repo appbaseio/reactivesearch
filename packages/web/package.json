@@ -36,6 +36,7 @@
 		"downshift": "^1.31.2",
 		"emotion": "^9.0.0",
 		"emotion-theming": "^9.0.0",
+		"hoist-non-react-statics": "^3.2.1",
 		"polished": "^1.9.3",
 		"prop-types": "^15.6.0",
 		"react-day-picker": "^7.0.5",

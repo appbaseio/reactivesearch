@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import {
 	addComponent,
@@ -805,6 +806,8 @@ CategorySearch.propTypes = {
 	customQuery: types.func,
 	dataField: types.dataFieldArray,
 	debounce: types.number,
+	// eslint-disable-next-line
+	error: types.any,
 	defaultValue: types.string,
 	value: types.string,
 	defaultSuggestions: types.suggestions,
@@ -896,6 +899,10 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <CategorySearch ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, CategorySearch);
+
+export default ForwardRefComponent;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	addComponent,
 	removeComponent,
@@ -775,5 +775,10 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <ReactiveList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));
+hoistNonReactStatics(ForwardRefComponent, ReactiveList);
+
+export default ForwardRefComponent;

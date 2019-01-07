@@ -9,6 +9,7 @@ import {
 	setQueryListener,
 	loadMore,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	getQueryOptions,
@@ -652,6 +653,10 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <MultiList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, MultiList);
+
+export default ForwardRefComponent;
