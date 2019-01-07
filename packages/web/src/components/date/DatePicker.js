@@ -51,7 +51,8 @@ class DatePicker extends Component {
 			this.updateQuery(
 				this.state.currentDate ? this.formatInputDate(this.state.currentDate) : null,
 				nextProps,
-			));
+			),
+		);
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			this.handleDateChange(nextProps.defaultSelected, true, nextProps);
 		} else if (
@@ -82,6 +83,17 @@ class DatePicker extends Component {
 					[props.dataField]: {
 						gte: formatDate(new XDate(value).addHours(-24), props),
 						lte: formatDate(new XDate(value), props),
+					},
+				},
+			};
+		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
 					},
 				},
 			};
@@ -191,8 +203,9 @@ class DatePicker extends Component {
 						}}
 						{...this.props.dayPickerInputProps}
 					/>
-					{this.props.showClear
-						&& this.state.currentDate && <CancelSvg onClick={this.clearDayPicker} />}
+					{this.props.showClear && this.state.currentDate && (
+						<CancelSvg onClick={this.clearDayPicker} />
+					)}
 				</Flex>
 			</DateContainer>
 		);
@@ -217,6 +230,7 @@ DatePicker.propTypes = {
 	focused: types.bool,
 	initialMonth: types.dateObject,
 	innerClass: types.style,
+	nestedField: types.string,
 	numberOfMonths: types.number,
 	onQueryChange: types.func,
 	placeholder: types.string,
