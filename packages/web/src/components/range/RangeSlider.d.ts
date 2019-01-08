@@ -10,6 +10,7 @@ export interface RangeSliderProps extends CommonProps {
 	defaultSelected?: types.range;
 	filterLabel?: string;
 	innerClass?: types.style;
+	nestedField?: string;
 	interval?: number;
 	onDrag?: (...args: any[]) => any;
 	onValueChange?: (...args: any[]) => any;

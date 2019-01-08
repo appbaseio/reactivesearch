@@ -11,6 +11,7 @@ import {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	checkSomePropChange,
 	handleA11yAction,
 	isEqual,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -56,7 +57,7 @@ class RatingsFilter extends Component {
 			this.setReact(nextProps);
 		});
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, nextProps);
 		});
 

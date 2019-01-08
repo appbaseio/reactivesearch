@@ -100,7 +100,7 @@ class DynamicRangeSlider extends Component {
 			this.updateRangeQueryOptions(nextProps);
 			this.setReact(nextProps);
 		});
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
 			this.updateRangeQueryOptions(nextProps);
 		});
 		checkSomePropChange(this.props, nextProps, ['showHistogram', 'interval'], () =>
@@ -505,13 +505,14 @@ const mapStateToProps = (state, props) => {
 			= options
 			&& state.aggregations[props.componentId][props.dataField][props.nestedField]
 			&& state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
-			? state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
+				? state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
 				: [];
 		range
-			= range && state.aggregations[`${props.componentId}__range__internal`][props.nestedField].min
+			= range
+			&& state.aggregations[`${props.componentId}__range__internal`][props.nestedField].min
 				? {
-				start: state.aggregations[`${props.componentId}__range__internal`][props.nestedField].min.value,
-				end: state.aggregations[`${props.componentId}__range__internal`][props.nestedField].max.value,
+					start: state.aggregations[`${props.componentId}__range__internal`][props.nestedField].min.value,
+					end: state.aggregations[`${props.componentId}__range__internal`][props.nestedField].max.value,
 				} // prettier-ignore
 				: null;
 	} else {
