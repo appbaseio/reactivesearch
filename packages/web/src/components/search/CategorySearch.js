@@ -106,7 +106,7 @@ class CategorySearch extends Component {
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'categoryField'],
+			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'categoryField', 'nestedField'],
 			() => {
 				this.updateQuery(nextProps.componentId, this.state.currentValue, nextProps);
 			},
@@ -215,16 +215,27 @@ class CategorySearch extends Component {
 			};
 		}
 
+		if (finalQuery && props.nestedField) {
+			finalQuery = {
+				nested: {
+					path: props.nestedField,
+					query: finalQuery,
+				},
+			};
+		}
+
 		return finalQuery;
 	};
 
 	static shouldQuery = (value, dataFields, props) => {
-		const fields = dataFields.map((field, index) =>
-			`${field}${
-				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-					? `^${props.fieldWeights[index]}`
-					: ''
-			}`);
+		const fields = dataFields.map(
+			(field, index) =>
+				`${field}${
+					Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+						? `^${props.fieldWeights[index]}`
+						: ''
+				}`,
+		);
 
 		if (props.queryFormat === 'and') {
 			return [
@@ -349,6 +360,7 @@ class CategorySearch extends Component {
 				},
 			} // prettier-ignore
 			: query(value, props, category);
+
 		props.updateQuery({
 			componentId,
 			query: queryObject,
@@ -459,8 +471,7 @@ class CategorySearch extends Component {
 
 	renderIcons = () => (
 		<div>
-			{this.state.currentValue
-				&& this.props.showClear && (
+			{this.state.currentValue && this.props.showClear && (
 				<InputIcon
 					onClick={this.clearValue}
 					iconPosition="right"
@@ -485,17 +496,18 @@ class CategorySearch extends Component {
 		const { currentValue } = this.state;
 		if (isLoading && loader && currentValue) {
 			return (
-				<div className={`${noSuggestions(
-					themePreset,
-					theme,
-				)} ${getClassName(this.props.innerClass, 'no-suggestion')}`}
+				<div
+					className={`${noSuggestions(themePreset, theme)} ${getClassName(
+						this.props.innerClass,
+						'no-suggestion',
+					)}`}
 				>
 					<li>{loader}</li>
 				</div>
 			);
 		}
 		return null;
-	}
+	};
 
 	render() {
 		let suggestionsList = [];
@@ -508,8 +520,7 @@ class CategorySearch extends Component {
 		} = this.props;
 
 		// filter out empty categories
-		const filteredCategories = categories
-			.filter(category => Boolean(category.key));
+		const filteredCategories = categories.filter(category => Boolean(category.key));
 
 		if (
 			!this.state.currentValue
@@ -690,6 +701,7 @@ CategorySearch.propTypes = {
 	fuzziness: types.fuzziness,
 	highlight: types.bool,
 	highlightField: types.stringOrArray,
+	nestedField: types.string,
 	icon: types.children,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
