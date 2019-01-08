@@ -417,6 +417,7 @@ DateRange.propTypes = {
 	innerClass: types.style,
 	numberOfMonths: types.number,
 	onQueryChange: types.func,
+	parseDate: types.func,
 	placeholder: types.rangeLabels,
 	queryFormat: types.queryFormatDate,
 	react: types.react,
