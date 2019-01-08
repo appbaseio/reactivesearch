@@ -109,7 +109,8 @@ class DateRange extends Component {
 					} // prettier-ignore
 					: this.state.currentDate,
 				nextProps,
-			));
+			),
+		);
 	}
 
 	componentWillUnmount() {
@@ -178,6 +179,10 @@ class DateRange extends Component {
 		this.endDateRef = ref;
 	};
 
+	getStartDateRef = (ref) => {
+		this.startDateRef = ref;
+	};
+
 	clearDayPickerStart = () => {
 		if (this.state.currentDate && this.state.currentDate.start !== '') {
 			this.handleStartDate('', false); // resets the day picker component
@@ -193,23 +198,27 @@ class DateRange extends Component {
 	handleStartDate = (date, autoFocus = true) => {
 		const { currentDate } = this.state;
 		const end = currentDate ? currentDate.end : '';
-		this.handleDateChange({
-			start: date,
-			end,
-		});
-		// focus the end date DayPicker if its empty
-		if (this.props.autoFocusEnd && autoFocus) {
-			// TODO: replace with a single date component in v2.1.0
-			window.setTimeout(() => this.endDateRef.getInput().focus(), 0);
+		if (this.startDateRef.getInput().value.length === 10) {
+			this.handleDateChange({
+				start: date,
+				end,
+			});
+			// focus the end date DayPicker if its empty
+			if (this.props.autoFocusEnd && autoFocus) {
+				this.endDateRef.getInput().focus();
+			}
 		}
 	};
 
-	handleEndDate = (date) => {
+	handleEndDate = (selectedDay) => {
 		const { currentDate } = this.state;
-		this.handleDateChange({
-			start: currentDate ? currentDate.start : '',
-			end: date,
-		});
+		if (this.endDateRef.getInput().value.length === 10) {
+			this.handleDayMouseEnter(selectedDay);
+			this.handleDateChange({
+				start: currentDate ? currentDate.start : '',
+				end: selectedDay,
+			});
+		}
 	};
 
 	handleDayMouseEnter = (day) => {
@@ -295,6 +304,7 @@ class DateRange extends Component {
 						}}
 					>
 						<DayPickerInput
+							ref={this.getStartDateRef}
 							showOverlay={this.props.focused}
 							formatDate={this.formatInputDate}
 							value={start}
@@ -309,9 +319,6 @@ class DateRange extends Component {
 								modifiers,
 							}}
 							onDayChange={this.handleStartDate}
-							inputProps={{
-								readOnly: true,
-							}}
 							classNames={{
 								container:
 									getClassName(this.props.innerClass, 'daypicker-container')
@@ -363,9 +370,6 @@ class DateRange extends Component {
 								modifiers,
 							}}
 							onDayChange={this.handleEndDate}
-							inputProps={{
-								readOnly: true,
-							}}
 							classNames={{
 								container:
 									getClassName(this.props.innerClass, 'daypicker-container')

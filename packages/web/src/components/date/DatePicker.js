@@ -103,12 +103,17 @@ class DatePicker extends Component {
 
 	clearDayPicker = () => {
 		if (this.state.currentDate !== '') {
-			this.handleDateChange(''); // resets the day picker component
+			this.setState({
+				currentDate: '',
+			});
 		}
 	};
 
-	handleDayPicker = (date) => {
-		this.handleDateChange(date || '');
+	handleDayPicker = (selectedDay, modifiers, dayPickerInput) => {
+		// Check no of characters in input and than fire the query
+		if (dayPickerInput.getInput().value.length === 10) {
+			this.handleDateChange(selectedDay || '');
+		}
 	};
 
 	handleDateChange = (currentDate, isDefaultValue = false, props = this.props) => {
@@ -187,9 +192,6 @@ class DatePicker extends Component {
 						}}
 						clickUnselectsDay={this.props.clickUnselectsDay}
 						onDayChange={this.handleDayPicker}
-						inputProps={{
-							readOnly: true,
-						}}
 						classNames={{
 							container:
 								getClassName(this.props.innerClass, 'daypicker-container')
