@@ -8,6 +8,7 @@ export interface ToggleButtonProps extends CommonProps {
 	defaultSelected?: types.stringOrArray;
 	filterLabel?: string;
 	innerClass?: types.style;
+	nestedField?: string;
 	multiSelect?: boolean;
 	react?: types.react;
 	showFilter?: boolean;
