@@ -72,9 +72,8 @@ class CategorySearch extends Component {
 
 		const aggsQuery = this.getAggsQuery(this.props.categoryField);
 		this.props.setQueryOptions(this.internalComponent, aggsQuery, false);
-
 		if (this.props.selectedValue) {
-			this.setValue(this.props.selectedValue, true);
+			this.setValue(this.props.selectedValue, true, this.props, this.props.selectedCategory);
 		} else if (this.props.defaultSelected) {
 			this.setValue(this.props.defaultSelected, true);
 		}
@@ -358,6 +357,7 @@ class CategorySearch extends Component {
 			showFilter,
 			URLParams,
 			componentType: 'CATEGORYSEARCH',
+			category,
 		});
 	};
 
@@ -668,6 +668,7 @@ CategorySearch.propTypes = {
 	options: types.options,
 	categories: types.data,
 	selectedValue: types.selectedValue,
+	selectedCategory: types.selectedValue,
 	suggestions: types.suggestions,
 	// component props
 	autoFocus: types.bool,
@@ -744,6 +745,10 @@ const mapStateToProps = (state, props) => ({
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
+		|| null,
+	selectedCategory:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].category)
 		|| null,
 	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	themePreset: state.config.themePreset,

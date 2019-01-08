@@ -47,15 +47,16 @@ class SelectedFilters extends Component {
 
 	renderFilters = () => {
 		const { selectedValues } = this.props;
-
 		return Object.keys(selectedValues)
 			.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
 			.map((component, index) => {
-				const { label, value } = selectedValues[component];
+				const { label, value, category } = selectedValues[component];
 				const isArray = Array.isArray(value);
 
 				if (label && ((isArray && value.length) || (!isArray && value))) {
-					const valueToRender = this.renderValue(value, isArray);
+					const valueToRender = category
+						? this.renderValue(`${value} in ${category} category`, isArray)
+						: this.renderValue(value, isArray);
 					return (
 						<Button
 							className={getClassName(this.props.innerClass, 'button') || null}
@@ -88,8 +89,7 @@ class SelectedFilters extends Component {
 				style={this.props.style}
 				className={`${filters(theme)} ${this.props.className || ''}`}
 			>
-				{this.props.title
-					&& hasValues && (
+				{this.props.title && hasValues && (
 					<Title className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
 					</Title>
