@@ -12,6 +12,7 @@ import {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	checkSomePropChange,
 	pushToAndClause,
 	getQueryOptions,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -59,7 +60,7 @@ class SingleDataList extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, nextProps);
 
 			if (nextProps.showCount) {
