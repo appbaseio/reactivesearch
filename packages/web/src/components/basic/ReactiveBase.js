@@ -95,8 +95,7 @@ class ReactiveBase extends Component {
 				};
 			});
 		} catch (e) {
-			console.error('REACTIVESEARCH - An error occured while parsing the URL state.', e);
-			selectedValues = {};
+			// Do not add to selectedValues if JSON parsing fails.
 		}
 
 		const { headers = {}, themePreset } = props;

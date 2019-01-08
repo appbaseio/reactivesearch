@@ -3,8 +3,8 @@ import styled from 'vue-emotion';
 import { lighten } from 'polished';
 
 const item = {
-	width: '16px',
-	height: '16px',
+	width: '15px',
+	height: '15px',
 	scale: '4px'
 };
 
@@ -79,7 +79,7 @@ const formItem = ({ theme }) => css`
 
 		&::before {
 			background-color: #fff;
-			border: 2px solid
+			border: 1px solid
 				${theme.colors.borderColor || lighten(0.1, theme.colors.textColor)};
 			box-sizing: content-box;
 			content: '';
@@ -99,7 +99,7 @@ const formItem = ({ theme }) => css`
 			background-color: ${theme.colors.primaryColor};
 			position: absolute;
 			top: 50%;
-			left: calc(2px + ${item.scale} / 2);
+			left: calc(1px + ${item.scale} / 2);
 			width: calc(${item.width} - ${item.scale});
 			height: calc(${item.height} - ${item.scale});
 			margin-top: calc(${item.height} / -2 - ${item.scale} / -2);
@@ -161,7 +161,7 @@ const Checkbox = styled('input')`
 		&::after {
 			background-color: transparent;
 			top: 50%;
-			left: calc(2px + ${item.width} / 5);
+			left: calc(1px + ${item.width} / 5);
 			width: calc(${item.width} / 2);
 			height: calc(${item.width} / 5);
 			margin-top: calc(${item.height} / -2 / 2 * 0.8);

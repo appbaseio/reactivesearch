@@ -140,15 +140,28 @@ class GeoDistanceDropdown extends Component {
 	};
 
 	defaultQuery = (coordinates, distance, props) => {
+		let query = null;
 		if (coordinates && distance) {
-			return {
+			query = {
 				[this.type]: {
 					distance: `${distance}${props.unit}`,
 					[props.dataField]: coordinates,
 				},
 			};
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	getUserLocation() {
@@ -474,6 +487,7 @@ GeoDistanceDropdown.propTypes = {
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
 	innerRef: types.func,
+	nestedField: types.string,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,

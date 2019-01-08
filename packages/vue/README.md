@@ -5,8 +5,8 @@
   <br />
 </h2>
 
-<p align="center">Elasticsearch UI components for Vue. </p>
-
+<p align="center">Elasticsearch UI components for Vue. <a href="https://opensource.appbase.io/reactivesearch/vue">Website 🌐</a></p>
+<p align="center" style="font-size: 1.2rem"><a href="https://medium.appbase.io/building-booksearch-application-using-vue-and-elasticsearch-a39615f4d6b3">Read how to build a BookSearch UI with ReactiveSearch Vue.js</a>.</p>
 <hr />
 
 [![npm version](https://badge.fury.io/js/%40appbaseio%2Freactivesearch-vue.svg)](https://badge.fury.io/js/%40appbaseio%2Freactivesearch-vue)
