@@ -291,4 +291,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, MultiDropdownRange);
 
+ForwardRefComponent.name = 'MultiDropdownRange';
 export default ForwardRefComponent;

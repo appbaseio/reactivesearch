@@ -167,6 +167,8 @@ class RangeInput extends Component {
 RangeInput.propTypes = {
 	className: types.string,
 	defaultValue: types.range,
+	value: types.range,
+	selectedValue: types.selectedValue,
 	innerClass: types.style,
 	onValueChange: types.func,
 	onChange: types.func,
@@ -199,4 +201,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, RangeInput);
 
+ForwardRefComponent.name = 'RangeInput';
 export default ForwardRefComponent;

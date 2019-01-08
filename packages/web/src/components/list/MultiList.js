@@ -659,4 +659,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, MultiList);
 
+ForwardRefComponent.name = 'MultiList';
 export default ForwardRefComponent;

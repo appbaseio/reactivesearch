@@ -697,7 +697,8 @@ class DataSearch extends Component {
 							autoFocus={this.props.autoFocus}
 							iconPosition={this.props.iconPosition}
 							showIcon={this.props.showIcon}
-							showClear={this.props.showClear}							themePreset={themePreset}
+							showClear={this.props.showClear}
+							themePreset={themePreset}
 						/>
 						{this.renderIcons()}
 					</div>
@@ -821,5 +822,6 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, DataSearch);
 
+ForwardRefComponent.name = 'DataSearch';
 export default ForwardRefComponent;
 

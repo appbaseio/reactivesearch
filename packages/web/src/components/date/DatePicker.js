@@ -289,11 +289,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(withTheme(props => <DatePicker ref={props.myForwardedRef} {...props} />));
 
-
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
 hoistNonReactStatics(ForwardRefComponent, DatePicker);
 
+ForwardRefComponent.name = 'DatePicker';
 export default ForwardRefComponent;

@@ -154,4 +154,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 
 hoistNonReactStatics(ForwardRefComponent, DataController);
 
+ForwardRefComponent.name = 'DataController';
 export default ForwardRefComponent;

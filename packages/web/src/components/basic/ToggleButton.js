@@ -306,4 +306,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, ToggleButton);
 
+ForwardRefComponent.name = 'ToggleButton';
 export default ForwardRefComponent;

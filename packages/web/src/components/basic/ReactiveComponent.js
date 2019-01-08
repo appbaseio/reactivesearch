@@ -203,6 +203,10 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <ReactiveComponent ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+
+ForwardRefComponent.name = 'ReactiveComponent';
+export default ForwardRefComponent;

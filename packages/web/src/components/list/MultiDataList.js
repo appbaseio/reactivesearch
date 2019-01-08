@@ -534,4 +534,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, MultiDataList);
 
+ForwardRefComponent.name = 'MultiDataList';
 export default ForwardRefComponent;

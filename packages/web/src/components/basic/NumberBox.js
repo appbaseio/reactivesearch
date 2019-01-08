@@ -276,4 +276,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 
 hoistNonReactStatics(ForwardRefComponent, NumberBox);
 
+ForwardRefComponent.name = 'NumberBox';
 export default ForwardRefComponent;

@@ -7,6 +7,7 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
@@ -126,7 +127,7 @@ class DateRange extends Component {
 		return xdate.valid() ? xdate.toString('yyyy-MM-dd') : '';
 	};
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		let query = null;
 		if (value) {
 			if (Array.isArray(props.dataField) && props.dataField.length === 2) {
@@ -294,7 +295,7 @@ class DateRange extends Component {
 	updateQuery = (value, props) => {
 		if (!value || (value && value.start.length && value.end.length)) {
 			const { customQuery } = props;
-			let query = this.defaultQuery(value, props);
+			let query = DateRange.defaultQuery(value, props);
 			let customQueryOptions;
 			if (customQuery) {
 				({ query } = customQuery(value, props));
@@ -506,6 +507,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(withTheme(props => <DateRange ref={props.myForwardedRef} {...props} />));
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, DateRange);
+
+ForwardRefComponent.name = 'DateRange';
+export default ForwardRefComponent;

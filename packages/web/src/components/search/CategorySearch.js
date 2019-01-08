@@ -911,4 +911,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, CategorySearch);
 
+ForwardRefComponent.name = 'CategorySearch';
 export default ForwardRefComponent;

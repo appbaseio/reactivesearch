@@ -548,4 +548,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, DynamicRangeSlider);
 
+ForwardRefComponent.name = 'DynamicRangeSlider';
 export default ForwardRefComponent;

@@ -299,4 +299,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, TextField);
 
+ForwardRefComponent.name = 'TextField';
 export default ForwardRefComponent;

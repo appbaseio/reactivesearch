@@ -302,4 +302,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, MultiRange);
 
+ForwardRefComponent.name = 'MultiRange';
 export default ForwardRefComponent;

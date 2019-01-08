@@ -300,10 +300,14 @@ class RangeSlider extends Component {
 			const customQueryOptions = customQuery
 				? getOptionsFromQuery(customQuery(value, props))
 				: null;
-			props.setQueryOptions(this.internalComponent, {
-				...queryOptions,
-				...customQueryOptions,
-			}, false);
+			props.setQueryOptions(
+				this.internalComponent,
+				{
+					...queryOptions,
+					...customQueryOptions,
+				},
+				false,
+			);
 			props.updateQuery({
 				componentId: this.internalComponent,
 				query: query(value, props),
@@ -456,4 +460,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, RangeSlider);
 
+ForwardRefComponent.name = 'RangeSlider';
 export default ForwardRefComponent;
