@@ -34,7 +34,16 @@ const resultComponents = ['ResultCard', 'ResultList', 'ReactiveList', 'ReactiveM
 
 function getValue(state, id, defaultValue) {
 	if (!state) return defaultValue;
-	return state[id] || defaultValue;
+	if (state[id]) {
+		try {
+			const parsedValue = JSON.parse(state[id]);
+			return parsedValue;
+		} catch (error) {
+			// eslint-disable-next-line
+			console.log('REACTIVESEARCH - could not parse the search state for', id);
+		}
+	}
+	return defaultValue;
 }
 
 function parseValue(value, component) {

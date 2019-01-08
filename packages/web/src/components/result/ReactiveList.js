@@ -329,7 +329,8 @@ class ReactiveList extends Component {
 
 	// only used for SSR
 	static generateQueryOptions = (props) => {
-		const options = {};
+		// simulate default (includeFields and excludeFields) props to generate consistent query
+		const options = getQueryOptions({ includeFields: ['*'], excludeFields: [], ...props });
 		options.from = props.currentPage ? (props.currentPage - 1) * (props.size || 10) : 0;
 		options.size = props.size || 10;
 
