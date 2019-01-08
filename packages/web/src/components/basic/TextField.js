@@ -12,6 +12,7 @@ import {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -49,7 +50,7 @@ class TextField extends Component {
 			this.setReact(nextProps);
 		});
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, nextProps);
 		});
 

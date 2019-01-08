@@ -18,6 +18,7 @@ export interface TextFieldProps extends CommonProps {
 	onKeyPress?: (...args: any[]) => any;
 	onKeyUp?: (...args: any[]) => any;
 	onValueChange?: (...args: any[]) => any;
+	nestedField?: string;
 	placeholder?: string;
 	react?: types.react;
 	ref?: (...args: any[]) => any;

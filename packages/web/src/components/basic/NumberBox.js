@@ -10,6 +10,7 @@ import {
 import {
 	checkValueChange,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -53,7 +54,7 @@ class NumberBox extends Component {
 		checkPropChange(this.props.queryFormat, nextProps.queryFormat, () => {
 			this.updateQuery(this.state.currentValue, nextProps);
 		});
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, nextProps);
 		});
 	}

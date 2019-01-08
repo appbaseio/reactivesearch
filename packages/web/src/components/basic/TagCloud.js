@@ -13,7 +13,6 @@ import {
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
-	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
@@ -26,6 +25,7 @@ import Title from '../../styles/Title';
 import TagList from '../../styles/TagList';
 import Container from '../../styles/Container';
 import { connect } from '../../utils';
+import getAggsQuery from './utils';
 
 class TagCloud extends Component {
 	constructor(props) {
@@ -71,7 +71,7 @@ class TagCloud extends Component {
 			this.updateQueryOptions(nextProps),
 		);
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
 			this.updateQueryOptions(nextProps);
 			this.updateQuery(Object.keys(this.state.currentValue), nextProps);
 		});
@@ -216,37 +216,8 @@ class TagCloud extends Component {
 	static generateQueryOptions(props) {
 		const queryOptions = getQueryOptions(props);
 		queryOptions.size = 0;
-		const { nestedField } = props;
-		if (nestedField) {
-			queryOptions.aggs = {
-				[nestedField]: {
-					nested: {
-						path: nestedField,
-					},
-					aggs: {
-						[props.dataField]: {
-							terms: {
-								field: props.dataField,
-								size: props.size,
-								order: getAggsOrder(props.sortBy || 'asc'),
-							},
-						},
-					},
-				},
-			};
-		} else {
-			queryOptions.aggs = {
-				[props.dataField]: {
-					terms: {
-						field: props.dataField,
-						size: props.size,
-						order: getAggsOrder(props.sortBy || 'asc'),
-					},
-				},
-			};
-		}
 
-		return queryOptions;
+		return getAggsQuery(queryOptions, props);
 	}
 
 	updateQueryOptions = (props) => {
