@@ -93,7 +93,7 @@ class DataSearch extends Component {
 		checkSomePropChange(
 			this.props,
 			nextProps,
-			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField'],
+			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'nestedField'],
 			() => {
 				this.updateQuery(nextProps.componentId, this.state.currentValue, nextProps);
 			},
@@ -178,6 +178,15 @@ class DataSearch extends Component {
 		if (value === '') {
 			finalQuery = {
 				match_all: {},
+			};
+		}
+
+		if (finalQuery && props.nestedField) {
+			finalQuery = {
+				nested: {
+					path: props.nestedField,
+					query: finalQuery,
+				},
 			};
 		}
 
@@ -306,7 +315,7 @@ class DataSearch extends Component {
 		// defaultQuery from props is always appended
 		// regardless of a customQuery
 		const query = customQuery || DataSearch.defaultQuery;
-		let queryObject = defaultQuery
+		const queryObject = defaultQuery
 			? {
 				bool: {
 					must: [
@@ -316,15 +325,6 @@ class DataSearch extends Component {
 				},
 			} // prettier-ignore
 			: query(value, props);
-
-		if (queryObject && props.nestedField) {
-			queryObject = {
-				nested: {
-					path: props.nestedField,
-					query: queryObject,
-				},
-			};
-		}
 
 		props.updateQuery({
 			componentId,
