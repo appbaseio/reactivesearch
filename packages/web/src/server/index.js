@@ -50,9 +50,9 @@ function parseValue(value, component) {
 	return value;
 }
 
-function getQuery(component, value) {
+function getQuery(component, value, componentType) {
 	// get default query of result components
-	if (resultComponents.includes(component.type)) {
+	if (resultComponents.includes(componentType)) {
 		return component.defaultQuery ? component.defaultQuery() : {};
 	}
 
@@ -97,17 +97,18 @@ export default function initReactivesearch(componentCollection, searchState, set
 		let state = {};
 
 		componentCollection.forEach((component) => {
+			const componentType = component.source.name;
 			components = [...components, component.componentId];
 
 			let isInternalComponentPresent = false;
-			const isResultComponent = resultComponents.includes(component.type);
+			const isResultComponent = resultComponents.includes(componentType);
 			const internalComponent = `${component.componentId}__internal`;
 			const label = component.filterLabel || component.componentId;
 			const value = getValue(searchState, label, component.defaultSelected);
 
 			// [1] set selected values
 			let showFilter = component.showFilter !== undefined ? component.showFilter : true;
-			if (componentsWithoutFilters.includes(component.type)) {
+			if (componentsWithoutFilters.includes(componentType)) {
 				showFilter = false;
 			}
 
@@ -121,13 +122,13 @@ export default function initReactivesearch(componentCollection, searchState, set
 			});
 
 			// [2] set query options - main component query (valid for result components)
-			if (componentsWithOptions.includes(component.type)) {
+			if (componentsWithOptions.includes(componentType)) {
 				const options = component.source.generateQueryOptions
 					? component.source.generateQueryOptions(component)
 					: null;
 				let highlightQuery = {};
 
-				if (componentsWithHighlightQuery.includes(component.type) && component.highlight) {
+				if (componentsWithHighlightQuery.includes(componentType) && component.highlight) {
 					highlightQuery = component.source.highlightQuery(component);
 				}
 
@@ -203,7 +204,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 			// [4] set query list
 			if (isResultComponent) {
-				const { query } = getQuery(component);
+				const { query } = getQuery(component, null, componentType);
 				queryList = queryReducer(queryList, {
 					type: 'SET_QUERY',
 					component: internalComponent,
@@ -213,7 +214,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				queryList = queryReducer(queryList, {
 					type: 'SET_QUERY',
 					component: component.componentId,
-					query: getQuery(component, value),
+					query: getQuery(component, value, componentType),
 				});
 			}
 		});
