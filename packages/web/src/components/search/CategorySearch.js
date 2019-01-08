@@ -81,7 +81,7 @@ class CategorySearch extends Component {
 		const aggsQuery = this.getAggsQuery(props.categoryField);
 		props.setQueryOptions(this.internalComponent, aggsQuery, false);
 		const hasMounted = false;
-		const category = null; // TODO: Add support for reading categories
+		const category = props.selectedCategory;
 		const cause = null;
 
 		if (currentValue) {
@@ -414,6 +414,7 @@ class CategorySearch extends Component {
 			showFilter,
 			URLParams,
 			componentType: 'CATEGORYSEARCH',
+			category,
 		});
 	};
 
@@ -793,6 +794,7 @@ CategorySearch.propTypes = {
 	options: types.options,
 	categories: types.data,
 	selectedValue: types.selectedValue,
+	selectedCategory: types.selectedValue,
 	suggestions: types.suggestions,
 	// component props
 	autoFocus: types.bool,
@@ -876,6 +878,10 @@ const mapStateToProps = (state, props) => ({
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
+		|| null,
+	selectedCategory:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].category)
 		|| null,
 	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	themePreset: state.config.themePreset,

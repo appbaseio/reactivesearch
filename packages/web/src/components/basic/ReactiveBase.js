@@ -81,17 +81,24 @@ class ReactiveBase extends Component {
 		const params = new URLSearchParams(queryParams);
 		let selectedValues = {};
 
-		Array.from(params.keys()).forEach((key) => {
-			try {
-				const value = JSON.parse(params.get(key));
+		try {
+			Array.from(params.keys()).forEach((key) => {
+				const parsedParams = JSON.parse(params.get(key));
+				const selectedValue = {};
+				if (parsedParams.value) {
+					selectedValue.value = parsedParams.value;
+				} else {
+					selectedValue.value = parsedParams;
+				}
+				if (parsedParams.category) selectedValue.category = parsedParams.category;
 				selectedValues = {
 					...selectedValues,
-					[key]: { value },
+					[key]: selectedValue,
 				};
-			} catch (e) {
-				// Do not add to selectedValues if JSON parsing fails.
-			}
-		});
+			});
+		} catch (e) {
+			// Do not add to selectedValues if JSON parsing fails.
+		}
 
 		const { headers = {}, themePreset } = props;
 		const appbaseRef = Appbase(config);
