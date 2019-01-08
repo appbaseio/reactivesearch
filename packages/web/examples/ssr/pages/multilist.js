@@ -38,12 +38,10 @@ export default class Main extends Component {
 				[
 					{
 						...multiListProps,
-						type: 'MultiList',
 						source: MultiList,
 					},
 					{
 						...reactiveListProps,
-						type: 'ReactiveList',
 						source: ReactiveList,
 					},
 				],

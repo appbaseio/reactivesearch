@@ -70,12 +70,10 @@ export default class Main extends Component {
 				[
 					{
 						...datePickerProps,
-						type: 'DatePicker',
 						source: DatePicker,
 					},
 					{
 						...resultCardProps,
-						type: 'ResultCard',
 						source: ResultCard,
 					},
 				],

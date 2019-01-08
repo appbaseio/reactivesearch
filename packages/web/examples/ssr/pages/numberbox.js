@@ -43,12 +43,10 @@ export default class Main extends Component {
 				[
 					{
 						...numberBoxProps,
-						type: 'NumberBox',
 						source: NumberBox,
 					},
 					{
 						...reactiveListProps,
-						type: 'ReactiveList',
 						source: ReactiveList,
 					},
 				],

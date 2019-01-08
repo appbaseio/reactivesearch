@@ -41,12 +41,10 @@ export default class Main extends Component {
 				[
 					{
 						...multiRangeProps,
-						type: 'MultiRange',
 						source: MultiRange,
 					},
 					{
 						...reactiveListProps,
-						type: 'ReactiveList',
 						source: ReactiveList,
 					},
 				],

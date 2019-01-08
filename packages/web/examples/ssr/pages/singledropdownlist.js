@@ -43,12 +43,10 @@ export default class Main extends Component {
 				[
 					{
 						...singleDropdownListProps,
-						type: 'SingleDropdownList',
 						source: SingleDropdownList,
 					},
 					{
 						...reactiveListProps,
-						type: 'ReactiveList',
 						source: ReactiveList,
 					},
 				],
