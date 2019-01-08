@@ -10,6 +10,7 @@ import {
 import {
 	isEqual,
 	checkValueChange,
+	checkSomePropChange,
 	checkPropChange,
 	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -50,7 +51,7 @@ class MultiDropdownRange extends Component {
 	componentWillReceiveProps(nextProps) {
 		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, nextProps);
 		});
 
@@ -93,18 +94,29 @@ class MultiDropdownRange extends Component {
 			}
 			return null;
 		};
+		let query = null;
 
 		if (values && values.length) {
-			const query = {
+			query = {
 				bool: {
 					should: generateRangeQuery(props.dataField, values),
 					minimum_should_match: 1,
 					boost: 1.0,
 				},
 			};
-			return query;
 		}
-		return null;
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	selectItem = (item, isDefaultValue = false, props = this.props) => {
@@ -211,6 +223,7 @@ MultiDropdownRange.propTypes = {
 	filterLabel: types.filterLabel,
 	innerClass: types.style,
 	onQueryChange: types.func,
+	nestedField: types.string,
 	onValueChange: types.func,
 	placeholder: types.string,
 	react: types.react,

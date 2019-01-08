@@ -10,6 +10,7 @@ export interface RatingsFilterProps extends CommonProps {
 	defaultSelected?: types.range;
 	filterLabel?: string;
 	innerClass?: types.style;
+	nestedField?: string;
 	onValueChange?: (...args: any[]) => any;
 	react?: types.react;
 	title?: types.title;
