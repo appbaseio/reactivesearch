@@ -14,6 +14,7 @@ import {
 	checkPropChange,
 	getClassName,
 	pushToAndClause,
+	checkSomePropChange,
 	getQueryOptions,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -69,7 +70,7 @@ class MultiDataList extends Component {
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(Object.keys(this.state.currentValue), this.props);
 
 			if (this.props.showCount) {
@@ -125,13 +126,13 @@ class MultiDataList extends Component {
 		}
 	}
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		let query = null;
 		const type = props.queryFormat === 'or' ? 'terms' : 'term';
 		if (
-			this.props.selectAllLabel
+			props.selectAllLabel
 			&& Array.isArray(value)
-			&& value.includes(this.props.selectAllLabel)
+			&& value.includes(props.selectAllLabel)
 		) {
 			query = {
 				exists: {
@@ -162,6 +163,18 @@ class MultiDataList extends Component {
 
 			query = value.length ? listQuery : null;
 		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
 		return query;
 	};
 
@@ -258,7 +271,7 @@ class MultiDataList extends Component {
 			...this.queryOptions,
 			...customQueryOptions,
 		};
-		let query = this.defaultQuery(queryValue, props);
+		let query = MultiDataList.defaultQuery(queryValue, props);
 		if (customQuery) {
 			({ query } = customQuery(queryValue, props));
 			customQueryOptions = getOptionsFromQuery(customQuery((queryValue, props)));
@@ -480,6 +493,7 @@ MultiDataList.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.string,
+	nestedField: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
 	selectAllLabel: types.string,
@@ -513,7 +527,10 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	themePreset: state.config.themePreset,
-	options: state.aggregations[props.componentId],
+	options:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
