@@ -115,13 +115,13 @@ class MultiDataList extends Component {
 		}
 	}
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		let query = null;
 		const type = props.queryFormat === 'or' ? 'terms' : 'term';
 		if (
-			this.props.selectAllLabel
+			props.selectAllLabel
 			&& Array.isArray(value)
-			&& value.includes(this.props.selectAllLabel)
+			&& value.includes(props.selectAllLabel)
 		) {
 			query = {
 				exists: {
@@ -238,7 +238,7 @@ class MultiDataList extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const query = props.customQuery || MultiDataList.defaultQuery;
 
 		// find the corresponding value of the label for running the query
 		const queryValue = value.reduce((acc, item) => {
