@@ -122,7 +122,7 @@ class CategorySearch extends Component {
 		checkSomePropChange(
 			this.props,
 			prevProps,
-			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'categoryField'],
+			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'categoryField', 'nestedField'],
 			() => {
 				this.updateQuery(this.props.componentId, this.state.currentValue, this.props);
 			},
@@ -228,6 +228,15 @@ class CategorySearch extends Component {
 		if (value === '') {
 			finalQuery = {
 				match_all: {},
+			};
+		}
+
+		if (finalQuery && props.nestedField) {
+			finalQuery = {
+				nested: {
+					path: props.nestedField,
+					query: finalQuery,
+				},
 			};
 		}
 
@@ -826,6 +835,7 @@ CategorySearch.propTypes = {
 	innerClass: types.style,
 	isLoading: types.bool,
 	loader: types.title,
+	nestedField: types.string,
 	onError: types.func,
 	onBlur: types.func,
 	onFocus: types.func,

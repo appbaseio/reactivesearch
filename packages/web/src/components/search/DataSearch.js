@@ -104,7 +104,7 @@ class DataSearch extends Component {
 		checkSomePropChange(
 			this.props,
 			prevProps,
-			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField'],
+			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'nestedField'],
 			() => {
 				this.updateQuery(this.props.componentId, this.state.currentValue, this.props);
 			},
@@ -201,6 +201,15 @@ class DataSearch extends Component {
 		if (value === '') {
 			finalQuery = {
 				match_all: {},
+			};
+		}
+
+		if (finalQuery && props.nestedField) {
+			finalQuery = {
+				nested: {
+					path: props.nestedField,
+					query: finalQuery,
+				},
 			};
 		}
 
@@ -747,6 +756,7 @@ DataSearch.propTypes = {
 	innerClass: types.style,
 	isLoading: types.bool,
 	loader: types.title,
+	nestedField: types.string,
 	onError: types.func,
 	onBlur: types.func,
 	onFocus: types.func,
