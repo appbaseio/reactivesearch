@@ -11,6 +11,7 @@ export interface SingleDataList extends CommonProps {
 	filterLabel?: string;
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
+	nestedField?: string;
 	placeholder?: string;
 	react?: types.react;
 	selectAllLabel?: string;
@@ -19,7 +20,7 @@ export interface SingleDataList extends CommonProps {
 	showSearch?: boolean;
 	themePreset?: types.themePreset;
 	title?: types.title;
-	showCount?: boolean,
+	showCount?: boolean;
 	renderListItem?: (...args: any[]) => any;
 }
 
