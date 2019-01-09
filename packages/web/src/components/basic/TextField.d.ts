@@ -20,6 +20,7 @@ export interface TextFieldProps extends CommonProps {
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
 	placeholder?: string;
+	nestedField?: string;
 	react?: types.react;
 	ref?: (...args: any[]) => any;
 	showFilter?: boolean;

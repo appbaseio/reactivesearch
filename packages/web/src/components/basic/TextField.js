@@ -13,6 +13,7 @@ import {
 	debounce,
 	checkValueChange,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -51,7 +52,7 @@ class TextField extends Component {
 			this.setReact(this.props);
 		});
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
 
@@ -80,14 +81,26 @@ class TextField extends Component {
 	}
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (value && value.trim() !== '') {
-			return {
+			query = {
 				match: {
 					[props.dataField]: value,
 				},
 			};
 		}
-		return null;
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	handleTextChange = debounce((value) => {
@@ -254,6 +267,7 @@ TextField.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.string,
+	nestedField: types.string,
 	react: types.react,
 	ref: types.func,
 	showClear: types.bool,
