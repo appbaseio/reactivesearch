@@ -25,7 +25,7 @@ import Title from '../../styles/Title';
 import TagList from '../../styles/TagList';
 import Container from '../../styles/Container';
 import { connect } from '../../utils';
-import getAggsQuery from './utils';
+import { getAggsQuery } from '../list/utils';
 
 class TagCloud extends Component {
 	constructor(props) {
@@ -330,7 +330,7 @@ const mapStateToProps = (state, props) => {
 	if (props.nestedField) {
 		options
 			= state.aggregations[props.componentId]
-			&& state.aggregations[props.componentId][props.nestedField];
+			&& state.aggregations[props.componentId].reactivesearch_nested;
 	} else {
 		options = state.aggregations[props.componentId];
 	}
