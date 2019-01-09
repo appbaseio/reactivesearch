@@ -13,6 +13,7 @@ import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Rheostat from 'rheostat/lib/Slider';
@@ -94,7 +95,7 @@ class GeoDistanceSlider extends Component {
 	componentWillReceiveProps(nextProps) {
 		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentDistance, nextProps);
 		});
 
@@ -148,15 +149,28 @@ class GeoDistanceSlider extends Component {
 	};
 
 	defaultQuery = (coordinates, distance, props) => {
+		let query = null;
 		if (coordinates && distance) {
-			return {
+			query = {
 				[this.type]: {
 					distance: `${distance}${props.unit}`,
 					[props.dataField]: coordinates,
 				},
 			};
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	getUserLocation() {
@@ -504,6 +518,7 @@ GeoDistanceSlider.propTypes = {
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
 	innerRef: types.func,
+	nestedField: types.string,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
