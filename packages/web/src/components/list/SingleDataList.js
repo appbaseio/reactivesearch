@@ -14,6 +14,7 @@ import {
 	checkPropChange,
 	getClassName,
 	pushToAndClause,
+	checkSomePropChange,
 	getQueryOptions,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -62,7 +63,7 @@ class SingleDataList extends Component {
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 
 			if (this.props.showCount) {
@@ -108,20 +109,33 @@ class SingleDataList extends Component {
 	}
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (props.selectAllLabel && props.selectAllLabel === value) {
-			return {
+			query = {
 				exists: {
 					field: props.dataField,
 				},
 			};
 		} else if (value) {
-			return {
+			query = {
 				term: {
 					[props.dataField]: value,
 				},
 			};
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	setValue = (nextValue, props = this.props, hasMounted = true) => {
@@ -388,6 +402,7 @@ SingleDataList.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.string,
+	nestedField: types.string,
 	react: types.react,
 	selectAllLabel: types.string,
 	showFilter: types.bool,
@@ -419,7 +434,10 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	themePreset: state.config.themePreset,
-	options: state.aggregations[props.componentId],
+	options:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
