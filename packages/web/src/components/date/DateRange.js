@@ -15,6 +15,7 @@ import {
 	getClassName,
 	getOptionsFromQuery,
 	formatDate,
+	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import XDate from 'xdate';
@@ -98,7 +99,7 @@ class DateRange extends Component {
 			}
 		}
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () =>
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () =>
 			this.updateQuery(
 				this.state.currentDate
 					? {
@@ -171,6 +172,18 @@ class DateRange extends Component {
 				};
 			}
 		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
 		return query;
 	};
 
@@ -482,6 +495,7 @@ DateRange.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.rangeLabels,
+	nestedField: types.string,
 	queryFormat: types.queryFormatDate,
 	react: types.react,
 	showClear: types.bool,

@@ -12,6 +12,7 @@ import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName,
 	formatDate,
 	getOptionsFromQuery,
@@ -49,7 +50,7 @@ class DatePicker extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
-		checkPropChange(this.props.dataField, prevProps.dataField, () =>
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () =>
 			this.updateQuery(
 				this.state.currentDate ? this.formatInputDate(this.state.currentDate) : null,
 				this.props,
@@ -90,6 +91,18 @@ class DatePicker extends Component {
 				},
 			};
 		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
 		return query;
 	};
 
@@ -254,6 +267,7 @@ DatePicker.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.string,
+	nestedField: types.string,
 	queryFormat: types.queryFormatDate,
 	react: types.react,
 	showClear: types.bool,
