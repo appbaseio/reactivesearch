@@ -75,7 +75,7 @@ class RangeSlider extends Component {
 			});
 		});
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQueryOptions(this.props);
 			this.handleChange(this.state.currentValue, this.props);
 		});
@@ -128,8 +128,9 @@ class RangeSlider extends Component {
 	};
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (Array.isArray(value) && value.length) {
-			return {
+			query = {
 				range: {
 					[props.dataField]: {
 						gte: value[0],
@@ -139,7 +140,19 @@ class RangeSlider extends Component {
 				},
 			};
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	getSnapPoints = () => {
@@ -391,6 +404,7 @@ RangeSlider.propTypes = {
 	filterLabel: types.string,
 	innerClass: types.style,
 	interval: types.number,
+	nestedField: types.string,
 	onDrag: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,

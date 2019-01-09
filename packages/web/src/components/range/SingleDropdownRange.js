@@ -12,6 +12,7 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
+	checkSomePropChange,
 	checkPropChange,
 	getClassName,
 	getOptionsFromQuery,
@@ -52,7 +53,7 @@ class SingleDropdownRange extends Component {
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, prevProps);
 		});
 
@@ -80,8 +81,9 @@ class SingleDropdownRange extends Component {
 	static parseValue = (value, props) => props.data.find(item => item.label === value) || null;
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (value) {
-			return {
+			query = {
 				range: {
 					[props.dataField]: {
 						gte: value.start,
@@ -91,7 +93,19 @@ class SingleDropdownRange extends Component {
 				},
 			};
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
@@ -203,6 +217,7 @@ SingleDropdownRange.propTypes = {
 	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
+	nestedField: types.string,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,

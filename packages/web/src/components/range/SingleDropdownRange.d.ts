@@ -11,6 +11,7 @@ export interface SingleDropdownRangeProps extends CommonProps {
 	value?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
+	nestedField?: string;
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
 	placeholder?: string;
