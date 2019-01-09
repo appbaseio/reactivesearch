@@ -256,10 +256,13 @@ class SingleDataList extends Component {
 
 	handleClick = (e) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(e);
+		const { value: listValue } = e.target;
+		if (value === undefined) {
+			this.setValue(listValue);
+		} else if (onChange) {
+			onChange(e);
 		} else {
-			this.setValue(e.target.value);
+			this.setValue(listValue);
 		}
 	};
 

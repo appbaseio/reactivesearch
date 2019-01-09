@@ -151,8 +151,11 @@ class SingleDropdownRange extends Component {
 
 	handleChange = (selectedItem) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(selectedItem);
+
+		if (value === undefined) {
+			this.setValue(selectedItem);
+		} else if (onChange) {
+			onChange(selectedItem);
 		} else {
 			this.setValue(selectedItem);
 		}

@@ -149,10 +149,14 @@ class SingleRange extends Component {
 
 	handleClick = (e) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(e);
+		const { value: rangeValue } = e.target;
+
+		if (value === undefined) {
+			this.setValue(rangeValue);
+		} else if (onChange) {
+			onChange(e);
 		} else {
-			this.setValue(e.target.value);
+			this.setValue(rangeValue);
 		}
 	};
 
