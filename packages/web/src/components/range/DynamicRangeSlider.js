@@ -104,7 +104,7 @@ class DynamicRangeSlider extends Component {
 			this.setReact(this.props);
 		});
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateRangeQueryOptions(this.props);
 		});
 
@@ -179,8 +179,9 @@ class DynamicRangeSlider extends Component {
 	};
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (Array.isArray(value) && value.length) {
-			return {
+			query = {
 				range: {
 					[props.dataField]: {
 						gte: value[0],
@@ -190,7 +191,19 @@ class DynamicRangeSlider extends Component {
 				},
 			};
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	getSnapPoints = () => {
@@ -356,9 +369,24 @@ class DynamicRangeSlider extends Component {
 	};
 
 	updateRangeQueryOptions = (props) => {
-		const queryOptions = {
-			aggs: this.rangeQuery(props),
-		};
+		let queryOptions = {};
+		const { nestedField } = props;
+		if (nestedField) {
+			queryOptions = {
+				aggs: {
+					[nestedField]: {
+						nested: {
+							path: nestedField,
+						},
+						aggs: this.rangeQuery(props),
+					},
+				},
+			};
+		} else {
+			queryOptions = {
+				aggs: this.rangeQuery(props),
+			};
+		}
 
 		props.setQueryOptions(this.internalRangeComponent, queryOptions);
 	};
@@ -473,6 +501,7 @@ DynamicRangeSlider.propTypes = {
 	interval: types.number,
 	isLoading: types.bool,
 	loader: types.title,
+	nestedField: types.string,
 	onDrag: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
@@ -501,26 +530,48 @@ DynamicRangeSlider.defaultProps = {
 	showFilter: true,
 };
 
-const mapStateToProps = (state, props) => ({
-	options:
-		state.aggregations[props.componentId]
-		&& state.aggregations[props.componentId][props.dataField]
-		&& state.aggregations[props.componentId][props.dataField].buckets
-			? state.aggregations[props.componentId][props.dataField].buckets
-			: [],
-	isLoading: state.isLoading[props.componentId],
-	range:
-		state.aggregations[`${props.componentId}__range__internal`]
-		&& state.aggregations[`${props.componentId}__range__internal`].min
-			? {
-				start: state.aggregations[`${props.componentId}__range__internal`].min.value,
-				end: state.aggregations[`${props.componentId}__range__internal`].max.value,
-			} // prettier-ignore
+const mapStateToProps = (state, props) => {
+	let options
+		= state.aggregations[props.componentId]
+		&& state.aggregations[props.componentId][props.dataField];
+	let range = state.aggregations[`${props.componentId}__range__internal`];
+	if (props.nestedField) {
+		options
+			= options
+				&& state.aggregations[props.componentId][props.dataField][props.nestedField]
+				&& state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
+				? state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
+				: [];
+		range
+			= range
+				&& state.aggregations[`${props.componentId}__range__internal`][props.nestedField].min
+				? {
+					start: state.aggregations[`${props.componentId}__range__internal`][props.nestedField].min.value,
+					end: state.aggregations[`${props.componentId}__range__internal`][props.nestedField].max.value,
+				} // prettier-ignore
+				: null;
+	} else {
+		options
+			= options && state.aggregations[props.componentId][props.dataField].buckets
+				? state.aggregations[props.componentId][props.dataField].buckets
+				: [];
+		range
+			= range && state.aggregations[`${props.componentId}__range__internal`].min
+				? {
+					start: state.aggregations[`${props.componentId}__range__internal`].min.value,
+					end: state.aggregations[`${props.componentId}__range__internal`].max.value,
+				} // prettier-ignore
+				: null;
+	}
+	return {
+		options,
+		isLoading: state.isLoading[props.componentId],
+		range,
+		selectedValue: state.selectedValues[props.componentId]
+			? state.selectedValues[props.componentId].value
 			: null,
-	selectedValue: state.selectedValues[props.componentId]
-		? state.selectedValues[props.componentId].value
-		: null,
-});
+	};
+};
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
