@@ -13,6 +13,7 @@ export interface SingleDataList extends CommonProps {
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
 	placeholder?: string;
+	nestedField?: string;
 	react?: types.react;
 	selectAllLabel?: string;
 	showFilter?: boolean;

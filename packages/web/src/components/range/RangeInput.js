@@ -71,8 +71,12 @@ class RangeInput extends Component {
 		};
 
 		const { value: valueProp, onChange } = this.props;
-		if (valueProp) {
-			if (onChange) onChange(currentValue);
+		if (valueProp === undefined) {
+			this.setState({
+				[name]: value,
+			});
+		} else if (onChange) {
+			onChange(currentValue);
 		} else {
 			this.setState({
 				[name]: value,
@@ -82,8 +86,11 @@ class RangeInput extends Component {
 
 	handleSliderChange = ([start, end]) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange({ start, end });
+
+		if (value === undefined) {
+			this.handleSlider({ start, end });
+		} else if (onChange) {
+			onChange({ start, end });
 		} else {
 			this.handleSlider({ start, end });
 		}

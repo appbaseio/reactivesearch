@@ -13,6 +13,7 @@ export interface MultiDataList extends CommonProps {
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
 	placeholder?: string;
+	nestedField?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	selectAllLabel?: string;

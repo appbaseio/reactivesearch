@@ -149,8 +149,11 @@ class RatingsFilter extends Component {
 
 	handleClick = (selectedItem) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(selectedItem);
+
+		if (value === undefined) {
+			this.setValue(selectedItem);
+		} else if (onChange) {
+			onChange(selectedItem);
 		} else {
 			this.setValue(selectedItem);
 		}

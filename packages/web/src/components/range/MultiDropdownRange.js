@@ -192,8 +192,11 @@ class MultiDropdownRange extends Component {
 
 	handleChange = (items) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(items);
+
+		if (value === undefined) {
+			this.selectItem(items);
+		} else if (onChange) {
+			onChange(items);
 		} else {
 			this.selectItem(items);
 		}
