@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	addComponent,
 	removeComponent,
@@ -207,13 +207,16 @@ class ReactiveList extends Component {
 		if (!isEqual(prevProps.react, this.props.react)) {
 			this.setReact(this.props);
 		}
-
+		// called when results are updated
+		if (this.props.onResultStats && prevProps.hits !== this.props.hits) {
+			this.props.onResultStats(this.stats);
+		}
 		if (this.props.pagination) {
 			// called when page is changed
 			if (this.props.isLoading && (this.props.hits || prevProps.hits)) {
 				if (this.props.onPageChange) {
 					this.props.onPageChange(this.state.currentPage + 1, totalPages);
-				} else if (this.props.scrollOnChange) {
+				} else if (this.props.scrollOnChange && this.props.pagination) {
 					this.domNode.scrollTo(0, 0);
 				}
 			}
@@ -235,7 +238,7 @@ class ReactiveList extends Component {
 				) {
 					if (this.props.hits !== prevProps.hits) {
 						// query has changed
-						if (this.props.scrollOnChange) {
+						if (this.props.scrollOnChange && this.props.pagination) {
 							this.domNode.scrollTo(0, 0);
 						}
 						// eslint-disable-next-line
@@ -343,6 +346,23 @@ class ReactiveList extends Component {
 			triggerClickAnalytics: this.triggerClickAnalytics,
 		};
 	}
+	get stats() {
+		const results = parseHits(this.props.hits) || [];
+		const streamResults = parseHits(this.props.streamHits) || [];
+		let filteredResults = results;
+
+		if (streamResults.length) {
+			const ids = streamResults.map(item => item._id);
+			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+		}
+		return {
+			totalResults: this.props.total,
+			totalPages: Math.ceil(this.props.total / this.props.size),
+			displayedResults: [...streamResults, ...filteredResults].length,
+			time: this.props.time,
+			currentPage: this.state.currentPage,
+		};
+	}
 
 	setReact = (props) => {
 		const { react } = props;
@@ -358,7 +378,8 @@ class ReactiveList extends Component {
 
 	// only used for SSR
 	static generateQueryOptions = (props) => {
-		const options = {};
+		// simulate default (includeFields and excludeFields) props to generate consistent query
+		const options = getQueryOptions({ includeFields: ['*'], excludeFields: [], ...props });
 		options.from = props.currentPage ? (props.currentPage - 1) * (props.size || 10) : 0;
 		options.size = props.size || 10;
 
@@ -451,25 +472,8 @@ class ReactiveList extends Component {
 	};
 
 	renderResultStats = () => {
-		if (this.props.onResultStats && this.props.total) {
-			const results = parseHits(this.props.hits) || [];
-			const streamResults = parseHits(this.props.streamHits) || [];
-			let filteredResults = results;
-
-			if (streamResults.length) {
-				const ids = streamResults.map(item => item._id);
-				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-			}
-
-			const stats = {
-				totalResults: this.props.total,
-				totalPages: Math.ceil(this.props.total / this.props.size),
-				displayedResults: [...streamResults, ...filteredResults].length,
-				time: this.props.time,
-				currentPage: this.state.currentPage,
-			};
-
-			return this.props.onResultStats(stats);
+		if (this.props.renderResultStats && this.props.total) {
+			return this.props.renderResultStats(this.stats);
 		} else if (this.props.total) {
 			return (
 				<p
@@ -707,6 +711,7 @@ ReactiveList.propTypes = {
 	pagination: types.bool,
 	paginationAt: types.paginationAt,
 	react: types.react,
+	renderResultStats: types.func,
 	scrollOnChange: types.bool,
 	scrollTarget: types.string,
 	showResultStats: types.bool,
@@ -771,5 +776,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <ReactiveList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));
+hoistNonReactStatics(ForwardRefComponent, ReactiveList);
+
+ForwardRefComponent.name = 'ReactiveList';
+export default ForwardRefComponent;

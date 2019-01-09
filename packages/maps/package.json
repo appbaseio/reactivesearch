@@ -51,6 +51,6 @@
 		"compression-webpack-plugin": "^1.0.1",
 		"react": "^16.1.1",
 		"react-dom": "^16.1.1",
-		"webpack": "^3.2.0"
+		"webpack": "^4.18.0"
 	}
 }

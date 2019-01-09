@@ -17,6 +17,7 @@ import {
 	getQueryOptions,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -257,9 +258,9 @@ class MultiDataList extends Component {
 			...this.queryOptions,
 			...customQueryOptions,
 		};
-		let query = this.defaultQuery((queryValue, props));
+		let query = this.defaultQuery(queryValue, props);
 		if (customQuery) {
-			({ query } = customQuery((queryValue, props)));
+			({ query } = customQuery(queryValue, props));
 			customQueryOptions = getOptionsFromQuery(customQuery((queryValue, props)));
 		}
 		props.setQueryOptions(props.componentId, this.queryOptions);
@@ -530,6 +531,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <MultiDataList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, MultiDataList);
+
+ForwardRefComponent.name = 'MultiDataList';
+export default ForwardRefComponent;

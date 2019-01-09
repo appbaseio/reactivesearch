@@ -8,6 +8,7 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
@@ -167,7 +168,7 @@ class MultiRange extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		let query = this.defaultQuery(value, props);
+		let query = MultiRange.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
 			({ query } = customQuery(value, props));
@@ -299,6 +300,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <MultiRange ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, MultiRange);
+
+ForwardRefComponent.name = 'MultiRange';
+export default ForwardRefComponent;

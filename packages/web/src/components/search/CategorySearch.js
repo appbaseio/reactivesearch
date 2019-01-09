@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import {
 	addComponent,
@@ -80,7 +81,7 @@ class CategorySearch extends Component {
 		const aggsQuery = this.getAggsQuery(props.categoryField);
 		props.setQueryOptions(this.internalComponent, aggsQuery, false);
 		const hasMounted = false;
-		const category = null; // TODO: Add support for reading categories
+		const category = props.selectedCategory;
 		const cause = null;
 
 		if (currentValue) {
@@ -413,6 +414,7 @@ class CategorySearch extends Component {
 			showFilter,
 			URLParams,
 			componentType: 'CATEGORYSEARCH',
+			category,
 		});
 	};
 
@@ -794,6 +796,7 @@ CategorySearch.propTypes = {
 	options: types.options,
 	categories: types.data,
 	selectedValue: types.selectedValue,
+	selectedCategory: types.selectedValue,
 	suggestions: types.suggestions,
 	// component props
 	autoFocus: types.bool,
@@ -807,6 +810,8 @@ CategorySearch.propTypes = {
 	customQuery: types.func,
 	dataField: types.dataFieldArray,
 	debounce: types.number,
+	// eslint-disable-next-line
+	error: types.any,
 	defaultValue: types.string,
 	value: types.string,
 	defaultSuggestions: types.suggestions,
@@ -876,6 +881,10 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	selectedCategory:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].category)
+		|| null,
 	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
@@ -898,6 +907,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <CategorySearch ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, CategorySearch);
+
+ForwardRefComponent.name = 'CategorySearch';
+export default ForwardRefComponent;

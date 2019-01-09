@@ -46,23 +46,6 @@ module.exports = {
 			"process.env.VERSION": JSON.stringify(require("./package.json").version)
 		}),
 		new webpack.optimize.OccurrenceOrderPlugin(),
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false,
-				screw_ie8: true,
-				conditionals: true,
-				unused: true,
-				comparisons: true,
-				sequences: true,
-				dead_code: true,
-				evaluate: true,
-				join_vars: true,
-				if_return: true
-			},
-			output: {
-				comments: false
-			}
-		}),
 		new BabiliPlugin(),
 		new BrotliPlugin({
 			asset: "[path].br[query]",

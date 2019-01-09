@@ -10,6 +10,7 @@ import {
 	setQueryOptions,
 	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	debounce,
 	pushToAndClause,
@@ -699,7 +700,6 @@ class DataSearch extends Component {
 							iconPosition={this.props.iconPosition}
 							showIcon={this.props.showIcon}
 							showClear={this.props.showClear}
-							innerRef={this.props.innerRef}
 							themePreset={themePreset}
 						/>
 						{this.renderIcons()}
@@ -818,6 +818,12 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(withTheme(props => <DataSearch ref={props.myForwardedRef} {...props} />));
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, DataSearch);
+
+ForwardRefComponent.name = 'DataSearch';
+export default ForwardRefComponent;
+

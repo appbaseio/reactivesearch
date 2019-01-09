@@ -51,12 +51,10 @@ export default class Main extends Component {
 				[
 					{
 						...singleDataListProps,
-						type: 'SingleDataList',
 						source: SingleDataList,
 					},
 					{
 						...resultListProps,
-						type: 'ResultList',
 						source: ResultList,
 					},
 				],

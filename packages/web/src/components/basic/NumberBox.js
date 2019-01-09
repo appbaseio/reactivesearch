@@ -8,6 +8,7 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	checkValueChange,
 	checkPropChange,
@@ -160,7 +161,7 @@ class NumberBox extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		let query = this.defaultQuery(value, props);
+		let query = NumberBox.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
 			({ query } = customQuery(value, props));
@@ -274,6 +275,12 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <NumberBox ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+
+hoistNonReactStatics(ForwardRefComponent, NumberBox);
+
+ForwardRefComponent.name = 'NumberBox';
+export default ForwardRefComponent;

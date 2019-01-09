@@ -20,6 +20,7 @@ import {
 	handleA11yAction,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -297,6 +298,7 @@ class TagCloud extends Component {
 				)}
 				<TagList className={getClassName(this.props.innerClass, 'list') || null}>
 					{this.state.options.map((item) => {
+						// eslint-disable-next-line
 						const size = (item.doc_count / highestCount) * (max - min) + min;
 
 						return (
@@ -402,6 +404,12 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <TagCloud ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+
+hoistNonReactStatics(ForwardRefComponent, TagCloud);
+
+ForwardRefComponent.name = 'TagCloud';
+export default ForwardRefComponent;

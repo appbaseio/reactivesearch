@@ -47,15 +47,16 @@ class SelectedFilters extends Component {
 
 	renderFilters = () => {
 		const { selectedValues } = this.props;
-
 		return Object.keys(selectedValues)
 			.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
 			.map((component, index) => {
-				const { label, value } = selectedValues[component];
+				const { label, value, category } = selectedValues[component];
 				const isArray = Array.isArray(value);
 
 				if (label && ((isArray && value.length) || (!isArray && value))) {
-					const valueToRender = this.renderValue(value, isArray);
+					const valueToRender = category
+						? this.renderValue(`${value} in ${category} category`, isArray)
+						: this.renderValue(value, isArray);
 					return (
 						<Button
 							className={getClassName(this.props.innerClass, 'button') || null}
@@ -146,5 +147,6 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(withTheme(props => <SelectedFilters ref={props.myForwardedRef} {...props} />));
 
+// eslint-disable-next-line
 export default React.forwardRef((props, ref) =>
 	<ConnectedComponent {...props} myForwardedRef={ref} />);
