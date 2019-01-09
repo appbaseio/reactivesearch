@@ -25,6 +25,7 @@ export interface CategorySearchProps extends CommonProps {
 	icon?: types.children;
 	iconPosition?: types.iconPosition;
 	innerClass?: types.style;
+	nestedField?: string;
 	onBlur?: (...args: any[]) => any;
 	onError?: (...args: any[]) => any;
 	onFocus?: (...args: any[]) => any;
