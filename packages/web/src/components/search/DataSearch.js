@@ -111,7 +111,7 @@ class DataSearch extends Component {
 		);
 
 		if (this.props.value !== prevProps.value) {
-			this.setValue(this.props.value);
+			this.setValue(this.props.value, true, this.props);
 		} else if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
@@ -121,17 +121,17 @@ class DataSearch extends Component {
 			&& this.state.currentValue !== this.props.selectedValue
 		) {
 			const { value, onChange } = this.props;
-			if (value) {
-				if (onChange) {
-					onChange(this.props.selectedValue || '');
-				} else {
-					// we need to put the current value back into the store
-					// if the clear action was triggered by interacting with
-					// selected-filters component
-					this.setValue(this.state.currentValue, true, this.props);
-				}
-			} else {
+			if (value === undefined) {
 				this.setValue(this.props.selectedValue || '', true, this.props);
+			} else if (onChange) {
+				// value prop exists
+				onChange(this.props.selectedValue || '');
+			} else {
+				// value prop exists and onChange is not defined:
+				// we need to put the current value back into the store
+				// if the clear action was triggered by interacting with
+				// selected-filters component
+				this.setValue(this.state.currentValue, true, this.props);
 			}
 		}
 	}
@@ -435,14 +435,17 @@ class DataSearch extends Component {
 			this.setValue(inputValue);
 		} else if (onChange) {
 			onChange(inputValue);
-		} else {
-			this.setValue(inputValue);
 		}
 	};
 
 	onSuggestionSelected = (suggestion) => {
-		this.setValue(suggestion.value, true, this.props, causes.SUGGESTION_SELECT);
-		this.onValueSelected(suggestion.value, causes.SUGGESTION_SELECT, suggestion.source);
+		const { value, onChange } = this.props;
+		if (value === undefined) {
+			this.setValue(suggestion.value, true, this.props, causes.SUGGESTION_SELECT);
+			this.onValueSelected(suggestion.value, causes.SUGGESTION_SELECT, suggestion.source);
+		} else if (onChange) {
+			onChange(suggestion.value);
+		}
 	};
 
 	onValueSelected = (currentValue = this.state.currentValue, ...cause) => {
@@ -673,16 +676,6 @@ class DataSearch extends Component {
 													currentValue={currentValue}
 													suggestion={item}
 												/>
-												{/* {typeof item.label === 'string' ? (
-													<div
-														className="trim"
-														dangerouslySetInnerHTML={{
-															__html: item.label,
-														}}
-													/>
-												) : (
-													item.label
-												)} */}
 											</li>
 										))}
 									</ul>
