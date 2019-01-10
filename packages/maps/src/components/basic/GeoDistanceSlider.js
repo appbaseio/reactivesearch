@@ -12,6 +12,7 @@ import {
 import {
 	isEqual,
 	checkValueChange,
+	checkSomePropChange,
 	checkPropChange,
 	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -94,7 +95,7 @@ class GeoDistanceSlider extends Component {
 	componentWillReceiveProps(nextProps) {
 		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentDistance, nextProps);
 		});
 
