@@ -21,26 +21,6 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivesearch@^2.12.1", "@appbaseio/reactivesearch@^2.6.6":
-  version "2.16.1"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-2.16.1.tgz#fb69db8f286c100877b50d471f6f3fdd0d7346b2"
-  integrity sha512-adlEDZALLxLQdXmN+us7xKhTsC7fuZw0cjTJZOy5QHR2d7bnU7tK7UB0GUvNVTccXKrytTzgnPFPCmLH/L8NKg==
-  dependencies:
-    "@appbaseio/reactivecore" "^7.1.0"
-    appbase-js "^4.0.2-beta.4"
-    cross-env "^5.2.0"
-    downshift "^1.31.2"
-    emotion "^9.0.0"
-    emotion-theming "^9.0.0"
-    polished "^1.9.3"
-    prop-types "^15.6.0"
-    react-day-picker "^7.0.5"
-    react-emotion "^9.0.0"
-    react-redux "^5.0.7"
-    rheostat "^2.1.1"
-    url-search-params "^0.10.0"
-    xdate "^0.8.2"
-
 "@babel/code-frame@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.44.tgz#2a02643368de80916162be70865c97774f3adbd9"
@@ -2615,7 +2595,7 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-appbase-js@^4.0.2-beta.04, appbase-js@^4.0.2-beta.2, appbase-js@^4.0.2-beta.4:
+appbase-js@^4.0.2-beta.04, appbase-js@^4.0.2-beta.2:
   version "4.0.2-beta.4"
   resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.2-beta.4.tgz#59bcba7265d3f7937f8d3b1cfecb1973f5d059c8"
   integrity sha512-yfljZF2WA4qjAEd1tqOXL49bQSGcnC8DWuDJJU3/DBgS7WB+vFeYPlk7Q+JANFx9+XCT3RXja68gu1Ic0jJWlg==
