@@ -168,7 +168,7 @@ class SingleRange extends Component {
 		if (value === undefined) {
 			this.setValue(rangeValue);
 		} else if (onChange) {
-			onChange(e);
+			onChange(rangeValue);
 		} else {
 			this.setValue(rangeValue);
 		}
