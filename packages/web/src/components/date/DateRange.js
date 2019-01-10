@@ -428,6 +428,7 @@ DateRange.propTypes = {
 	focused: types.bool,
 	initialMonth: types.dateObject,
 	innerClass: types.style,
+	nestedField: types.string,
 	numberOfMonths: types.number,
 	onQueryChange: types.func,
 	parseDate: types.func,
