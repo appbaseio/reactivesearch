@@ -85,7 +85,9 @@ class MultiDataList extends Component {
 		});
 
 		checkPropChange(this.props.options, prevProps.options, () => {
-			this.updateStateOptions(this.props.options[this.props.dataField].buckets);
+			if (this.props.options[this.props.dataField]) {
+				this.updateStateOptions(this.props.options[this.props.dataField].buckets);
+			}
 		});
 
 		let selectedValue = Object.keys(this.state.currentValue);

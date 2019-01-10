@@ -78,7 +78,9 @@ class SingleDataList extends Component {
 		});
 
 		checkPropChange(this.props.options, prevProps.options, () => {
-			this.updateStateOptions(this.props.options[this.props.dataField].buckets);
+			if (this.props.options[this.props.dataField]) {
+				this.updateStateOptions(this.props.options[this.props.dataField].buckets);
+			}
 		});
 
 		if (this.props.value !== prevProps.value) {
