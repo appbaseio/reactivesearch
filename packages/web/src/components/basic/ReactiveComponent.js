@@ -47,8 +47,8 @@ class ReactiveComponent extends Component {
 
 		this.setReact(props);
 
-		// set query for internal component
-		if (this.internalComponent && props.defaultQuery) {
+		// set query for internal component if customQuery is absent
+		if (!props.customQuery && this.internalComponent && props.defaultQuery) {
 			this.defaultQuery = props.defaultQuery();
 			const { query } = this.defaultQuery || {};
 			const customQueryOptions = this.defaultQuery
@@ -70,27 +70,56 @@ class ReactiveComponent extends Component {
 		}
 	}
 
-	componentDidUpdate(prevProps) {
-		if (
-			this.props.onAllData
-			&& (!isEqual(prevProps.hits, this.props.hits)
-				|| !isEqual(prevProps.aggregations, this.props.aggregations))
-		) {
-			this.props.onAllData(parseHits(this.props.hits), this.props.aggregations);
+	componentDidMount() {
+		const {
+			customQuery,
+			selectedValue,
+			value,
+			defaultValue,
+			componentId,
+			filterLabel,
+			showFilter,
+			URLParams,
+		} = this.props;
+		const initialValue = selectedValue || value || defaultValue || null;
+
+		if (customQuery) {
+			const { query } = customQuery(this.props) || {};
+			this.props.updateQuery({
+				componentId,
+				query,
+				value: initialValue,
+				label: filterLabel,
+				showFilter,
+				URLParams,
+			});
 		}
+	}
 
-		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
-			this.defaultQuery = this.props.defaultQuery();
-			const { query, ...queryOptions } = this.defaultQuery || {};
-
-			if (queryOptions) {
-				this.props.setQueryOptions(this.internalComponent, queryOptions, false);
+	componentDidUpdate(prevProps) {
+		if (!this.props.customQuery) {
+			// only consider hits and defaultQuery when customQuery is absent
+			if (
+				this.props.onAllData
+				&& (!isEqual(prevProps.hits, this.props.hits)
+					|| !isEqual(prevProps.aggregations, this.props.aggregations))
+			) {
+				this.props.onAllData(parseHits(this.props.hits), this.props.aggregations);
 			}
 
-			this.props.updateQuery({
-				componentId: this.internalComponent,
-				query: query || null,
-			});
+			if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
+				this.defaultQuery = this.props.defaultQuery();
+				const { query, ...queryOptions } = this.defaultQuery || {};
+
+				if (queryOptions) {
+					this.props.setQueryOptions(this.internalComponent, queryOptions, false);
+				}
+
+				this.props.updateQuery({
+					componentId: this.internalComponent,
+					query: query || null,
+				});
+			}
 		}
 
 		checkPropChange(this.props.react, prevProps.react, () => {
@@ -166,6 +195,9 @@ ReactiveComponent.propTypes = {
 	children: types.children,
 	componentId: types.stringRequired,
 	defaultQuery: types.func,
+	customQuery: types.func,
+	defaultValue: types.any, // eslint-disable-line
+	value: types.any, // eslint-disable-line
 	filterLabel: types.string,
 	onQueryChange: types.func,
 	onError: types.func,

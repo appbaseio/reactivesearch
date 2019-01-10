@@ -6,6 +6,9 @@ export interface ReactiveComponentProps {
 	children?: types.children;
 	componentId: string;
 	defaultQuery?: (...args: any[]) => any;
+	customQuery?: (...args: any[]) => any;
+	defaultValue?: any;
+	value?: any;
 	filterLabel?: string;
 	onAllData?: (...args: any[]) => any;
 	onError?: (...args: any[]) => any;
