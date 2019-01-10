@@ -11,6 +11,7 @@ import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -47,7 +48,7 @@ class ToggleButton extends Component {
 			this.setReact(nextProps);
 		});
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, nextProps);
 		});
 
@@ -95,6 +96,18 @@ class ToggleButton extends Component {
 				},
 			};
 		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
 		return query;
 	};
 
@@ -181,7 +194,9 @@ class ToggleButton extends Component {
 					</Title>
 				)}
 				{this.props.data.map((item) => {
-					const isSelected = this.state.currentValue.some(value => value.value === item.value);
+					const isSelected = this.state.currentValue.some(
+						value => value.value === item.value,
+					);
 					return (
 						<Button
 							className={`${getClassName(this.props.innerClass, 'button')} ${
@@ -217,6 +232,7 @@ ToggleButton.propTypes = {
 	filterLabel: types.string,
 	innerClass: types.style,
 	multiSelect: types.bool,
+	nestedField: types.string,
 	onQueryChange: types.func,
 	react: types.react,
 	showFilter: types.bool,

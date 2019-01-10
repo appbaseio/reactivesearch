@@ -12,6 +12,7 @@ import {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -49,7 +50,7 @@ class TextField extends Component {
 			this.setReact(nextProps);
 		});
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, nextProps);
 		});
 
@@ -78,14 +79,25 @@ class TextField extends Component {
 	}
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (value && value.trim() !== '') {
-			return {
+			query = {
 				match: {
 					[props.dataField]: value,
 				},
 			};
 		}
-		return null;
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+		return query;
 	};
 
 	handleTextChange = debounce((value) => {
@@ -149,8 +161,7 @@ class TextField extends Component {
 
 	renderIcons = () => (
 		<div>
-			{this.state.currentValue
-				&& this.props.showClear && (
+			{this.state.currentValue && this.props.showClear && (
 				<InputIcon onClick={this.clearValue} iconPosition="right">
 					{this.renderCancelIcon()}
 				</InputIcon>
