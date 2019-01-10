@@ -10,6 +10,7 @@ import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName,
 	formatDate,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -99,7 +100,7 @@ class DateRange extends Component {
 				);
 			}
 		}
-		checkPropChange(this.props.dataField, nextProps.dataField, () =>
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () =>
 			this.updateQuery(
 				this.state.currentDate
 					? {
@@ -128,7 +129,7 @@ class DateRange extends Component {
 		return xdate.valid() ? xdate.toString('yyyy-MM-dd') : '';
 	};
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		let query = null;
 		if (value) {
 			if (Array.isArray(props.dataField) && props.dataField.length === 2) {
@@ -172,6 +173,18 @@ class DateRange extends Component {
 				};
 			}
 		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
 		return query;
 	};
 
@@ -261,7 +274,7 @@ class DateRange extends Component {
 
 	updateQuery = (value, props) => {
 		if (!value || (value && value.start.length && value.end.length)) {
-			const query = props.customQuery || this.defaultQuery;
+			const query = props.customQuery || DateRange.defaultQuery;
 
 			props.updateQuery({
 				componentId: props.componentId,
@@ -415,6 +428,7 @@ DateRange.propTypes = {
 	focused: types.bool,
 	initialMonth: types.dateObject,
 	innerClass: types.style,
+	nestedField: types.string,
 	numberOfMonths: types.number,
 	onQueryChange: types.func,
 	parseDate: types.func,

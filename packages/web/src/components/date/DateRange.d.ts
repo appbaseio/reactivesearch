@@ -16,6 +16,7 @@ export interface DateRangeProps extends CommonProps {
 	focused?: boolean;
 	initialMonth?: types.dateObject;
 	innerClass?: types.style;
+	nestedField?: string;
 	numberOfMonths?: number;
 	placeholder?: types.rangeLabels;
 	queryFormat?: types.queryFormatDate;
