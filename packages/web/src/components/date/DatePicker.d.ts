@@ -16,6 +16,7 @@ export interface DatePickerProps extends CommonProps {
 	focused?: boolean;
 	initialMonth?: types.dateObject;
 	innerClass?: types.style;
+	nestedField?: string;
 	numberOfMonths?: number;
 	placeholder?: string;
 	queryFormat?: types.queryFormatDate;

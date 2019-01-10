@@ -10,6 +10,7 @@ import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName,
 	formatDate,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -47,7 +48,7 @@ class DatePicker extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
-		checkPropChange(this.props.dataField, nextProps.dataField, () =>
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () =>
 			this.updateQuery(
 				this.state.currentDate ? this.formatInputDate(this.state.currentDate) : null,
 				nextProps,
