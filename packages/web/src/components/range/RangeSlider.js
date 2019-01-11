@@ -277,7 +277,7 @@ class RangeSlider extends Component {
 		let query = RangeSlider.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		const {

@@ -186,7 +186,7 @@ class SingleDataList extends Component {
 		}
 		let query = SingleDataList.defaultQuery(currentValue, props);
 		if (customQuery) {
-			({ query } = customQuery(currentValue, props));
+			({ query } = customQuery(currentValue, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(currentValue, props));
 		}
 		this.queryOptions = {

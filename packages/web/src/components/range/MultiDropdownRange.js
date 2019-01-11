@@ -188,7 +188,7 @@ class MultiDropdownRange extends Component {
 		let query = MultiDropdownRange.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions);

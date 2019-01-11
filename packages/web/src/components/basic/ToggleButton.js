@@ -191,7 +191,7 @@ class ToggleButton extends Component {
 		let query = ToggleButton.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 
