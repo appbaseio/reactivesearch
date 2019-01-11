@@ -526,7 +526,7 @@ class MultiList extends Component {
 										)
 									) : (
 										<span>
-											{item.key}
+											<span>{item.key}</span>
 											{this.props.showCount && (
 												<span
 													className={
@@ -536,7 +536,7 @@ class MultiList extends Component {
 														) || null
 													}
 												>
-													&nbsp;({item.doc_count})
+													{item.doc_count}
 												</span>
 											)}
 										</span>

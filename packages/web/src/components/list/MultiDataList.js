@@ -440,7 +440,7 @@ class MultiDataList extends Component {
 										renderListItem(item.label, item.count)
 									) : (
 										<span>
-											{item.label}
+											<span>{item.label}</span>
 											{showCount && item.count && (
 												<span
 													className={
@@ -450,7 +450,7 @@ class MultiDataList extends Component {
 														) || null
 													}
 												>
-													&nbsp;({item.count})
+													{item.count}
 												</span>
 											)}
 										</span>

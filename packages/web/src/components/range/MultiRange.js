@@ -240,7 +240,7 @@ class MultiRange extends Component {
 								className={getClassName(this.props.innerClass, 'label') || null}
 								htmlFor={`${this.props.componentId}-${item.label}`}
 							>
-								{item.label}
+								<span>{item.label}</span>
 							</label>
 						</li>
 					))}
