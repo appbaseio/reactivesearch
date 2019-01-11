@@ -385,8 +385,6 @@ class MultiDropdownList extends Component {
 			this.setValue(item);
 		} else if (onChange) {
 			onChange(item);
-		} else {
-			this.setValue(item);
 		}
 	};
 
