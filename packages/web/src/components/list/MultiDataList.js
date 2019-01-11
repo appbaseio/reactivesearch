@@ -131,11 +131,7 @@ class MultiDataList extends Component {
 	static defaultQuery = (value, props) => {
 		let query = null;
 		const type = props.queryFormat === 'or' ? 'terms' : 'term';
-		if (
-			props.selectAllLabel
-			&& Array.isArray(value)
-			&& value.includes(props.selectAllLabel)
-		) {
+		if (props.selectAllLabel && Array.isArray(value) && value.includes(props.selectAllLabel)) {
 			query = {
 				exists: {
 					field: props.dataField,
@@ -275,7 +271,8 @@ class MultiDataList extends Component {
 		};
 		let query = MultiDataList.defaultQuery(queryValue, props);
 		if (customQuery) {
-			({ query } = customQuery(queryValue, props));
+			const customQueryObject = customQuery(queryValue, props);
+			query = customQueryObject && customQueryObject.query;
 			customQueryOptions = getOptionsFromQuery(customQuery((queryValue, props)));
 		}
 		props.setQueryOptions(props.componentId, this.queryOptions);

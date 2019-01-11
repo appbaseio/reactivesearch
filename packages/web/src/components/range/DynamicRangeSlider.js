@@ -315,7 +315,8 @@ class DynamicRangeSlider extends Component {
 		let query = DynamicRangeSlider.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			const customQueryObject = customQuery(value, props);
+			query = customQueryObject && customQueryObject.query;
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		const {
@@ -538,13 +539,13 @@ const mapStateToProps = (state, props) => {
 	if (props.nestedField) {
 		options
 			= options
-				&& state.aggregations[props.componentId][props.dataField][props.nestedField]
-				&& state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
+			&& state.aggregations[props.componentId][props.dataField][props.nestedField]
+			&& state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
 				? state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
 				: [];
 		range
 			= range
-				&& state.aggregations[`${props.componentId}__range__internal`][props.nestedField].min
+			&& state.aggregations[`${props.componentId}__range__internal`][props.nestedField].min
 				? {
 					start: state.aggregations[`${props.componentId}__range__internal`][props.nestedField].min.value,
 					end: state.aggregations[`${props.componentId}__range__internal`][props.nestedField].max.value,

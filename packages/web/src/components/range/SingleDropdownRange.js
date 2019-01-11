@@ -147,7 +147,8 @@ class SingleDropdownRange extends Component {
 		let query = SingleDropdownRange.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			const customQueryObject = customQuery(value, props);
+			query = customQueryObject && customQueryObject.query;
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
