@@ -33,7 +33,7 @@ class SingleDataList extends Component {
 		super(props);
 
 		const defaultValue = props.defaultValue || props.value;
-		const currentValue = props.selectedValue || defaultValue;
+		const currentValue = props.selectedValue || defaultValue || '';
 		this.state = {
 			currentValue,
 			searchTerm: '',
