@@ -52,6 +52,8 @@ class DateRange extends Component {
 		this.state = {
 			currentDate,
 			dateHovered: null,
+			startKey: 'onStart',
+			endKey: 'onEnd',
 		};
 		this.locked = false;
 		const hasMounted = false;
@@ -240,9 +242,9 @@ class DateRange extends Component {
 				end,
 			});
 		} else {
-			this.setState({
-				currentDate,
-			});
+			this.setState(state => ({
+				startKey: state.startKey === 'onStart' ? 'offStart' : 'onStart',
+			}));
 		}
 		// focus the end date DayPicker if its empty
 		if (this.props.autoFocusEnd && autoFocus) {
@@ -267,9 +269,9 @@ class DateRange extends Component {
 				end: date,
 			});
 		} else {
-			this.setState({
-				currentDate,
-			});
+			this.setState(state => ({
+				endKey: state.endKey === 'onEnd' ? 'offEnd' : 'onEnd',
+			}));
 		}
 	};
 
@@ -377,6 +379,7 @@ class DateRange extends Component {
 							showOverlay={this.props.focused}
 							formatDate={this.formatInputDate}
 							value={start}
+							key={this.state.startKey}
 							placeholder={this.props.placeholder.start}
 							dayPickerProps={{
 								numberOfMonths: this.props.numberOfMonths,
@@ -428,6 +431,7 @@ class DateRange extends Component {
 							showOverlay={this.props.focused}
 							formatDate={this.formatInputDate}
 							value={end}
+							key={this.state.endKey}
 							placeholder={this.props.placeholder.end}
 							dayPickerProps={{
 								numberOfMonths: this.props.numberOfMonths,

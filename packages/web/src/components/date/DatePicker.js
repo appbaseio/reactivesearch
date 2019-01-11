@@ -35,6 +35,7 @@ class DatePicker extends Component {
 		const currentDate = props.selectedValue || props.value || props.defaultValue || '';
 		this.state = {
 			currentDate,
+			key: 'on',
 		};
 		this.locked = false;
 
@@ -120,9 +121,9 @@ class DatePicker extends Component {
 		} else if (onChange) {
 			onChange(date || '');
 		} else {
-			this.setState({
-				currentDate: this.state.currentDate,
-			});
+			this.setState(state => ({
+				key: state.key === 'on' ? 'off' : 'on',
+			}));
 		}
 	};
 
@@ -217,6 +218,7 @@ class DatePicker extends Component {
 							numberOfMonths: this.props.numberOfMonths,
 							initialMonth: this.props.initialMonth,
 						}}
+						key={this.state.key}
 						clickUnselectsDay={this.props.clickUnselectsDay}
 						onDayChange={this.handleDayPicker}
 						inputProps={{
