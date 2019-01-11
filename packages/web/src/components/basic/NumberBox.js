@@ -124,8 +124,6 @@ class NumberBox extends Component {
 			this.setValue(currentValue + 1);
 		} else if (onChange) {
 			onChange(currentValue + 1);
-		} else {
-			this.setValue(currentValue + 1);
 		}
 	};
 
@@ -140,8 +138,6 @@ class NumberBox extends Component {
 			this.setValue(currentValue - 1);
 		} else if (onChange) {
 			onChange(currentValue - 1);
-		} else {
-			this.setValue(currentValue - 1);
 		}
 	};
 
