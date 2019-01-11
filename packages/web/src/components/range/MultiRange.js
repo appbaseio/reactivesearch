@@ -65,7 +65,7 @@ class MultiRange extends Component {
 		});
 
 		if (!isEqual(this.props.value, prevProps.value)) {
-			this.selectItem(this.props.value);
+			this.selectItem(this.props.value, true);
 		} else if (
 			!isEqual(this.state.currentValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
@@ -210,8 +210,6 @@ class MultiRange extends Component {
 			this.selectItem(rangeValue);
 		} else if (onChange) {
 			onChange(rangeValue);
-		} else {
-			this.selectItem(rangeValue);
 		}
 	};
 

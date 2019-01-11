@@ -77,10 +77,6 @@ class RangeInput extends Component {
 			});
 		} else if (onChange) {
 			onChange(currentValue);
-		} else {
-			this.setState({
-				[name]: value,
-			});
 		}
 	};
 
@@ -91,8 +87,6 @@ class RangeInput extends Component {
 			this.handleSlider({ start, end });
 		} else if (onChange) {
 			onChange({ start, end });
-		} else {
-			this.handleSlider({ start, end });
 		}
 	};
 
