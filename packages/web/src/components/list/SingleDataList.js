@@ -32,7 +32,8 @@ class SingleDataList extends Component {
 	constructor(props) {
 		super(props);
 
-		const currentValue = props.selectedValue || props.defaultValue || '';
+		const defaultValue = props.defaultValue || props.value;
+		const currentValue = props.selectedValue || defaultValue;
 		this.state = {
 			currentValue,
 			searchTerm: '',
@@ -84,7 +85,7 @@ class SingleDataList extends Component {
 		});
 
 		if (this.props.value !== prevProps.value) {
-			this.setValue(this.props.defaultValue);
+			this.setValue(this.props.value);
 		} else if (
 			this.state.currentValue !== this.props.selectedValue
 			&& this.props.selectedValue !== prevProps.selectedValue
@@ -277,8 +278,6 @@ class SingleDataList extends Component {
 			this.setValue(listValue);
 		} else if (onChange) {
 			onChange(listValue);
-		} else {
-			this.setValue(listValue);
 		}
 	};
 
