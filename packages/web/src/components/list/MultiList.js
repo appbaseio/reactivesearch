@@ -335,8 +335,7 @@ class MultiList extends Component {
 		let query = MultiList.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			const customQueryObject = customQuery(value, props);
-			query = customQueryObject && customQueryObject.query;
+			({ query } = customQuery(value, props) || {})
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		this.queryOptions = {

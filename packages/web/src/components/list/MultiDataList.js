@@ -271,8 +271,7 @@ class MultiDataList extends Component {
 		};
 		let query = MultiDataList.defaultQuery(queryValue, props);
 		if (customQuery) {
-			const customQueryObject = customQuery(queryValue, props);
-			query = customQueryObject && customQueryObject.query;
+			({ query } = customQuery(queryValue, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery((queryValue, props)));
 		}
 		props.setQueryOptions(props.componentId, this.queryOptions);
