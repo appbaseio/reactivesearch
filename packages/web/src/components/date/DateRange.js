@@ -200,7 +200,9 @@ class DateRange extends Component {
 			} else if (onChange) {
 				onChange({ start: '', end: this.state.currentDate.end });
 			} else {
-				this.handleStartDate('', false); // resets the day picker component
+				this.setState({
+					currentDate: this.state.currentDate,
+				});
 			}
 		}
 	};
@@ -215,7 +217,9 @@ class DateRange extends Component {
 			} else if (onChange) {
 				onChange({ start: this.state.currentDate.start, end: '' });
 			} else {
-				this.handleEndDate('', false); // resets the day picker component
+				this.setState({
+					currentDate: this.state.currentDate,
+				});
 			}
 		}
 	};
@@ -236,9 +240,8 @@ class DateRange extends Component {
 				end,
 			});
 		} else {
-			this.handleDateChange({
-				start: date,
-				end,
+			this.setState({
+				currentDate,
 			});
 		}
 		// focus the end date DayPicker if its empty
@@ -264,9 +267,8 @@ class DateRange extends Component {
 				end: date,
 			});
 		} else {
-			this.handleDateChange({
-				start,
-				end: date,
+			this.setState({
+				currentDate,
 			});
 		}
 	};

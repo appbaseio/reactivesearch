@@ -120,7 +120,9 @@ class DatePicker extends Component {
 		} else if (onChange) {
 			onChange(date || '');
 		} else {
-			this.handleDateChange(date || '');
+			this.setState({
+				currentDate: this.state.currentDate,
+			});
 		}
 	};
 
