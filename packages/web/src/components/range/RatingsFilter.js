@@ -168,8 +168,6 @@ class RatingsFilter extends Component {
 			this.setValue(selectedItem);
 		} else if (onChange) {
 			onChange(selectedItem);
-		} else {
-			this.setValue(selectedItem);
 		}
 	};
 
