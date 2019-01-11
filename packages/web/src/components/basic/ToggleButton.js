@@ -213,11 +213,9 @@ class ToggleButton extends Component {
 
 	handleClick = (item) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(item);
-		} else {
+		if (value === undefined) {
 			this.handleToggle(item);
-		}
+		} else if (onChange) onChange(item);
 	};
 
 	render() {

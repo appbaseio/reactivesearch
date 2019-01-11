@@ -172,8 +172,6 @@ class TextField extends Component {
 			this.setValue(textValue);
 		} else if (onChange) {
 			onChange(textValue);
-		} else {
-			this.setValue(textValue);
 		}
 	};
 
