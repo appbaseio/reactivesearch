@@ -105,7 +105,15 @@ class SingleDropdownList extends Component {
 			this.state.currentValue !== this.props.selectedValue
 			&& this.props.selectedValue !== prevProps.selectedValue
 		) {
-			this.setValue(this.props.selectedValue || '');
+			const { value, onChange } = this.props;
+
+			if (value === undefined) {
+				this.setValue(this.props.selectedValue || '');
+			} else if (onChange) {
+				onChange(this.props.selectedValue || '');
+			} else {
+				this.setValue(this.state.currentValue);
+			}
 		}
 	}
 

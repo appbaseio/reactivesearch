@@ -57,7 +57,7 @@ class SingleDataList extends Component {
 		this.setReact(props);
 
 		if (currentValue) {
-			this.setValue(currentValue, props, hasMounted);
+			this.setValue(currentValue, false, props, hasMounted);
 		}
 	}
 
@@ -90,7 +90,14 @@ class SingleDataList extends Component {
 			this.state.currentValue !== this.props.selectedValue
 			&& this.props.selectedValue !== prevProps.selectedValue
 		) {
-			this.setValue(this.props.selectedValue || '');
+			const { value, onChange } = this.props;
+			if (value === undefined) {
+				this.setValue(this.props.selectedValue || '');
+			} else if (onChange) {
+				onChange(this.props.selectedValue || '');
+			} else {
+				this.setValue(this.state.currentValue, true);
+			}
 		}
 	}
 
@@ -141,7 +148,7 @@ class SingleDataList extends Component {
 		return query;
 	};
 
-	setValue = (nextValue, props = this.props, hasMounted = true) => {
+	setValue = (nextValue, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -149,7 +156,10 @@ class SingleDataList extends Component {
 
 		this.locked = true;
 		let value = nextValue;
-		if (nextValue === this.state.currentValue && hasMounted) {
+
+		if (isDefaultValue) {
+			value = nextValue;
+		} else if (nextValue === this.state.currentValue && hasMounted) {
 			value = '';
 		}
 

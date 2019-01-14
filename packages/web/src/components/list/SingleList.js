@@ -60,7 +60,7 @@ class SingleList extends Component {
 		const hasMounted = false;
 
 		if (currentValue) {
-			this.setValue(currentValue, props, hasMounted);
+			this.setValue(currentValue, false, props, hasMounted);
 		}
 	}
 
@@ -107,7 +107,15 @@ class SingleList extends Component {
 			this.state.currentValue !== this.props.selectedValue
 			&& this.props.selectedValue !== prevProps.selectedValue
 		) {
-			this.setValue(this.props.selectedValue || '');
+			const { value, onChange } = this.props;
+
+			if (value === undefined) {
+				this.setValue(this.props.selectedValue || '');
+			} else if (onChange) {
+				onChange(this.props.selectedValue || '');
+			} else {
+				this.setValue(this.state.currentValue, true);
+			}
 		}
 	}
 
@@ -179,14 +187,14 @@ class SingleList extends Component {
 		return query;
 	};
 
-	setValue = (nextValue, props = this.props, hasMounted = true) => {
+	setValue = (nextValue, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
 		}
 
 		let value = nextValue;
-		if (this.state.currentValue === nextValue && hasMounted) {
+		if (!isDefaultValue && (this.state.currentValue === nextValue && hasMounted)) {
 			value = '';
 		}
 

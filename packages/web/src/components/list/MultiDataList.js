@@ -106,7 +106,15 @@ class MultiDataList extends Component {
 			!isEqual(selectedValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
-			this.setValue(this.props.selectedValue || [], true);
+			const { value, onChange } = this.props;
+			if (value === undefined) {
+				this.setValue(this.props.selectedValue || [], true);
+			} else if (onChange) {
+				onChange(this.props.selectedValue || null);
+			} else {
+				const selectedListItems = Object.keys(this.state.currentValue);
+				this.setValue(selectedListItems, true);
+			}
 		}
 	}
 
