@@ -491,7 +491,7 @@ class ReactiveList extends Component {
 
 	renderNoResults = () => (
 		<p className={getClassName(this.props.innerClass, 'noResults') || null}>
-			{this.props.onNoResults}
+			{this.props.renderNoResults()}
 		</p>
 	);
 
@@ -703,7 +703,7 @@ ReactiveList.propTypes = {
 	renderData: types.func,
 	renderError: types.title,
 	onData: types.func,
-	onNoResults: types.title,
+	renderNoResults: types.title,
 	onPageChange: types.func,
 	onPageClick: types.func,
 	onResultStats: types.func,
@@ -736,7 +736,7 @@ ReactiveList.defaultProps = {
 	size: 10,
 	style: {},
 	URLParams: false,
-	onNoResults: 'No Results found.',
+	renderNoResults: () => 'No Results found.',
 	scrollOnChange: true,
 };
 
