@@ -192,7 +192,14 @@ export default {
 				description:
 					'A 101 post showing how to build real world apps with ReactiveSearch Vue.',
 			},
-			{},
+			{
+				src: 'https://cdn-images-1.medium.com/max/1000/1*906R2mDgLnoatUtK6PeQ8g.png',
+				title: 'How to Build A Gitxplore Search UI',
+				href:
+					'https://medium.appbase.io/learn-how-to-build-a-github-search-explorer-app-with-vue-js-c66f61d6e152',
+				description:
+					'A 101 post showing how to build a data-driven search UI with ReactiveSearch Vue.',
+			},
 		],
 	},
 };

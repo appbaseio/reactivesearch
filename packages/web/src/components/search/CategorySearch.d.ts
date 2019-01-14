@@ -40,7 +40,7 @@ export interface CategorySearchProps extends CommonProps {
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	renderSuggestion?: (...args: any[]) => any;
-	renderAllSuggestion?: (...args: any[]) => any;
+	renderAllSuggestions?: (...args: any[]) => any;
 	renderError?: types.title;
 	renderNoSuggestion?: types.title;
 	showFilter?: boolean;

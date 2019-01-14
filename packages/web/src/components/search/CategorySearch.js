@@ -410,7 +410,7 @@ class CategorySearch extends Component {
 			} // prettier-ignore
 			: query;
 
-		props.setQueryOptions(this.props.componentId, {
+		props.setQueryOptions(componentId, {
 			...this.queryOptions,
 			...defaultQueryOptions,
 			...customQueryOptions,
@@ -630,7 +630,7 @@ class CategorySearch extends Component {
 		const {
 			theme,
 			themePreset,
-			renderAllSuggestion,
+			renderAllSuggestions,
 			categories, // defaults to empty array
 		} = this.props;
 
@@ -722,8 +722,8 @@ class CategorySearch extends Component {
 								{this.renderIcons()}
 								{this.renderLoader()}
 								{this.renderError()}
-								{renderAllSuggestion
-									&& renderAllSuggestion({
+								{renderAllSuggestions
+									&& renderAllSuggestions({
 										currentValue: this.state.currentValue,
 										isOpen,
 										getItemProps,
@@ -732,7 +732,7 @@ class CategorySearch extends Component {
 										categories: filteredCategories,
 										parsedSuggestions: suggestionsList,
 									})}
-								{!renderAllSuggestion && isOpen && finalSuggestionsList.length ? (
+								{!renderAllSuggestions && isOpen && finalSuggestionsList.length ? (
 									<ul
 										className={`${suggestions(
 											themePreset,
@@ -852,7 +852,7 @@ CategorySearch.propTypes = {
 	react: types.react,
 	renderError: types.title,
 	renderSuggestion: types.func,
-	renderAllSuggestion: types.func,
+	renderAllSuggestions: types.func,
 	renderNoSuggestion: types.title,
 	showClear: types.bool,
 	showFilter: types.bool,

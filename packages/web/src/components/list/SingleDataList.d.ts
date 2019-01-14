@@ -5,6 +5,7 @@ import * as types from '../../types';
 export interface SingleDataList extends CommonProps {
 	beforeValueChange?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
+	defaultQuery?: (...args: any[]) => any;
 	data?: types.data;
 	dataField: string;
 	defaultValue?: string;

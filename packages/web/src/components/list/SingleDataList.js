@@ -215,7 +215,14 @@ class SingleDataList extends Component {
 	updateQueryOptions = (props) => {
 		const queryOptions = SingleDataList.generateQueryOptions(props, this.state);
 		this.queryOptions = { ...this.queryOptions, ...queryOptions };
-		props.setQueryOptions(this.internalComponent, this.queryOptions);
+		if (props.defaultQuery) {
+			const value = this.state.currentValue;
+			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+			props.setQueryOptions(this.internalComponent,
+				{ ...this.queryOptions, ...defaultQueryOptions });
+		} else {
+			props.setQueryOptions(this.internalComponent, this.queryOptions);
+		}
 	};
 
 	updateStateOptions = (bucket) => {

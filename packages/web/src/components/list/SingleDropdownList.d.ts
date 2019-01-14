@@ -5,6 +5,7 @@ import * as types from '../../types';
 export interface SingleDropdownList extends CommonProps {
 	beforeValueChange?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
+	defaultQuery?: (...args: any[]) => any;
 	dataField: string;
 	defaultValue?: string;
 	value?: string;

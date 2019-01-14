@@ -380,7 +380,7 @@ class DataSearch extends Component {
 			} // prettier-ignore
 			: query;
 
-		props.setQueryOptions(this.props.componentId, {
+		props.setQueryOptions(componentId, {
 			...this.queryOptions,
 			...defaultQueryOptions,
 			...customQueryOptions,
@@ -599,7 +599,7 @@ class DataSearch extends Component {
 			suggestionsList = this.state.suggestions;
 		}
 
-		const { theme, themePreset, renderAllSuggestion } = this.props;
+		const { theme, themePreset, renderAllSuggestions } = this.props;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -643,8 +643,8 @@ class DataSearch extends Component {
 									themePreset={themePreset}
 								/>
 								{this.renderIcons()}
-								{renderAllSuggestion
-									&& renderAllSuggestion({
+								{renderAllSuggestions
+									&& renderAllSuggestions({
 										currentValue: this.state.currentValue,
 										isOpen,
 										getItemProps,
@@ -654,7 +654,7 @@ class DataSearch extends Component {
 									})}
 								{this.renderLoader()}
 								{this.renderError()}
-								{!renderAllSuggestion && isOpen && suggestionsList.length ? (
+								{!renderAllSuggestions && isOpen && suggestionsList.length ? (
 									<ul
 										className={`${suggestions(
 											themePreset,
@@ -766,7 +766,7 @@ DataSearch.propTypes = {
 	react: types.react,
 	renderError: types.title,
 	renderSuggestion: types.func,
-	renderAllSuggestion: types.func,
+	renderAllSuggestions: types.func,
 	renderNoSuggestion: types.title,
 	showClear: types.bool,
 	showFilter: types.bool,
