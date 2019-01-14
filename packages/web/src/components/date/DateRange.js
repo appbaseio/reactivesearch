@@ -52,8 +52,8 @@ class DateRange extends Component {
 		this.state = {
 			currentDate,
 			dateHovered: null,
-			startKey: 'onStart',
-			endKey: 'onEnd',
+			startKey: 'on-start',
+			endKey: 'on-end',
 		};
 		this.locked = false;
 		const hasMounted = false;
@@ -202,6 +202,8 @@ class DateRange extends Component {
 			} else if (onChange) {
 				onChange({ start: '', end: this.state.currentDate.end });
 			} else {
+				// Since value prop is defined and onChange is not define
+				// we keep the same date as in store
 				this.setState({
 					currentDate: this.state.currentDate,
 				});
@@ -219,6 +221,8 @@ class DateRange extends Component {
 			} else if (onChange) {
 				onChange({ start: this.state.currentDate.start, end: '' });
 			} else {
+				// Since value prop is defined and onChange is not define
+				// we keep the same date as in store
 				this.setState({
 					currentDate: this.state.currentDate,
 				});
@@ -242,8 +246,10 @@ class DateRange extends Component {
 				end,
 			});
 		} else {
+			// this will trigger a remount on the date component
+			// since DayPickerInput doesn't respect the controlled behavior setting on its own
 			this.setState(state => ({
-				startKey: state.startKey === 'onStart' ? 'offStart' : 'onStart',
+				startKey: state.startKey === 'on-start' ? 'off-start' : 'on-start',
 			}));
 		}
 		// focus the end date DayPicker if its empty
@@ -269,8 +275,10 @@ class DateRange extends Component {
 				end: date,
 			});
 		} else {
+			// this will trigger a remount on the date component
+			// since DayPickerInput doesn't respect the controlled behavior setting on its own
 			this.setState(state => ({
-				endKey: state.endKey === 'onEnd' ? 'offEnd' : 'onEnd',
+				endKey: state.endKey === 'on-end' ? 'off-end' : 'on-end',
 			}));
 		}
 	};
