@@ -1,5 +1,5 @@
-import theme from './../../theme/web';
-import baseConfig from './../base/web';
+import theme from '../../theme/web';
+import baseConfig from '../base/web';
 
 const { primary, primaryDark } = theme;
 
