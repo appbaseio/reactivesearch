@@ -63,7 +63,19 @@ class ToggleButton extends Component {
 				!isEqual(this.state.currentValue, this.props.selectedValue)
 				&& !isEqual(prevProps.selectedValue, this.props.selectedValue)
 			) {
-				this.handleToggle(this.props.selectedValue || [], true, this.props);
+				const { value, onChange } = this.props;
+				if (value === undefined) {
+					this.handleToggle(this.props.selectedValue || [], true, this.props);
+				} else if (onChange) {
+					// value prop exists
+					onChange(this.props.selectedValue || '');
+				} else {
+					// value prop exists and onChange is not defined:
+					// we need to put the current value back into the store
+					// if the clear action was triggered by interacting with
+					// selected-filters component
+					this.handleToggle(this.state.currentValue, true, this.props);
+				}
 			}
 		} else {
 			// else selectedValue will be a string
@@ -74,7 +86,19 @@ class ToggleButton extends Component {
 				!isEqual(currentValue, this.props.selectedValue)
 				&& !isEqual(prevProps.selectedValue, this.props.selectedValue)
 			) {
-				this.handleToggle(this.props.selectedValue || [], true, this.props);
+				const { value, onChange } = this.props;
+				if (value === undefined) {
+					this.handleToggle(this.props.selectedValue || [], true, this.props);
+				} else if (onChange) {
+					// value prop exists
+					onChange(this.props.selectedValue || '');
+				} else {
+					// value prop exists and onChange is not defined:
+					// we need to put the current value back into the store
+					// if the clear action was triggered by interacting with
+					// selected-filters component
+					this.handleToggle(this.state.currentValue, true, this.props);
+				}
 			}
 		}
 	}
