@@ -5,6 +5,7 @@ import * as types from '../../types';
 export interface SingleDataList extends CommonProps {
 	beforeValueChange?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
+	defaultQuery?: (...args: any[]) => any;
 	data?: types.data;
 	dataField: string;
 	defaultValue?: string;
@@ -13,6 +14,7 @@ export interface SingleDataList extends CommonProps {
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
 	placeholder?: string;
+	nestedField?: string;
 	react?: types.react;
 	selectAllLabel?: string;
 	showFilter?: boolean;

@@ -6,10 +6,7 @@ import queryOptionsReducer from '@appbaseio/reactivecore/lib/reducers/queryOptio
 import dependencyTreeReducer from '@appbaseio/reactivecore/lib/reducers/dependencyTreeReducer';
 import { buildQuery, pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
 
-const componentsWithHighlightQuery = [
-	'DataSearch',
-	'CategorySearch',
-];
+const componentsWithHighlightQuery = ['DataSearch', 'CategorySearch'];
 
 const componentsWithOptions = [
 	'ResultList',
@@ -34,7 +31,16 @@ const resultComponents = ['ResultCard', 'ResultList', 'ReactiveList', 'ReactiveM
 
 function getValue(state, id, defaultValue) {
 	if (!state) return defaultValue;
-	return state[id] || defaultValue;
+	if (state[id]) {
+		try {
+			const parsedValue = JSON.parse(state[id]);
+			return parsedValue;
+		} catch (error) {
+			// eslint-disable-next-line
+			console.log('REACTIVESEARCH - could not parse the search state for', id);
+		}
+	}
+	return defaultValue;
 }
 
 function parseValue(value, component) {
@@ -44,9 +50,9 @@ function parseValue(value, component) {
 	return value;
 }
 
-function getQuery(component, value) {
+function getQuery(component, value, componentType) {
 	// get default query of result components
-	if (resultComponents.includes(component.type)) {
+	if (resultComponents.includes(componentType)) {
 		return component.defaultQuery ? component.defaultQuery() : {};
 	}
 
@@ -62,13 +68,18 @@ function getQuery(component, value) {
 
 export default function initReactivesearch(componentCollection, searchState, settings) {
 	return new Promise((resolve, reject) => {
-		const credentials = settings.url && settings.url.trim() !== '' && !settings.credentials
-			? null
-			: settings.credentials;
+		const credentials
+			= settings.url && settings.url.trim() !== '' && !settings.credentials
+				? null
+				: settings.credentials;
 		const config = {
-			url: settings.url && settings.url.trim() !== '' ? settings.url : 'https://scalr.api.appbase.io',
+			url:
+				settings.url && settings.url.trim() !== ''
+					? settings.url
+					: 'https://scalr.api.appbase.io',
 			app: settings.app,
 			credentials,
+			transformRequest: settings.transformRequest || null,
 			type: settings.type ? settings.type : '*',
 		};
 		const appbaseRef = Appbase(config);
@@ -86,17 +97,18 @@ export default function initReactivesearch(componentCollection, searchState, set
 		let state = {};
 
 		componentCollection.forEach((component) => {
+			const componentType = component.source.name;
 			components = [...components, component.componentId];
 
 			let isInternalComponentPresent = false;
-			const isResultComponent = resultComponents.includes(component.type);
+			const isResultComponent = resultComponents.includes(componentType);
 			const internalComponent = `${component.componentId}__internal`;
 			const label = component.filterLabel || component.componentId;
 			const value = getValue(searchState, label, component.defaultSelected);
 
 			// [1] set selected values
 			let showFilter = component.showFilter !== undefined ? component.showFilter : true;
-			if (componentsWithoutFilters.includes(component.type)) {
+			if (componentsWithoutFilters.includes(componentType)) {
 				showFilter = false;
 			}
 
@@ -110,16 +122,13 @@ export default function initReactivesearch(componentCollection, searchState, set
 			});
 
 			// [2] set query options - main component query (valid for result components)
-			if (componentsWithOptions.includes(component.type)) {
+			if (componentsWithOptions.includes(componentType)) {
 				const options = component.source.generateQueryOptions
 					? component.source.generateQueryOptions(component)
 					: null;
 				let highlightQuery = {};
 
-				if (
-					componentsWithHighlightQuery.includes(component.type)
-					&& component.highlight
-				) {
+				if (componentsWithHighlightQuery.includes(componentType) && component.highlight) {
 					highlightQuery = component.source.highlightQuery(component);
 				}
 
@@ -155,9 +164,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 							mainQueryOptions = { ...otherQueryOptions, ...highlightQuery };
 						}
 						if (isResultComponent) {
-							let currentPage = component.currentPage
-								? component.currentPage - 1
-								: 0;
+							let currentPage = component.currentPage ? component.currentPage - 1 : 0;
 							if (
 								selectedValues[component.componentId]
 								&& selectedValues[component.componentId].value
@@ -197,7 +204,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 			// [4] set query list
 			if (isResultComponent) {
-				const { query } = getQuery(component);
+				const { query } = getQuery(component, null, componentType);
 				queryList = queryReducer(queryList, {
 					type: 'SET_QUERY',
 					component: internalComponent,
@@ -207,7 +214,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				queryList = queryReducer(queryList, {
 					type: 'SET_QUERY',
 					component: component.componentId,
-					query: getQuery(component, value),
+					query: getQuery(component, value, componentType),
 				});
 			}
 		});
@@ -226,9 +233,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			// check if query or options are valid - non-empty
 			if (
 				(queryObj && !!Object.keys(queryObj).length)
-				|| (options && (
-					Object.keys(options).some(item => validOptions.includes(item)))
-				)
+				|| (options && Object.keys(options).some(item => validOptions.includes(item)))
 			) {
 				if (!queryObj || (queryObj && !Object.keys(queryObj).length)) {
 					queryObj = { match_all: {} };
@@ -266,33 +271,36 @@ export default function initReactivesearch(componentCollection, searchState, set
 			queryLog,
 		};
 
-		appbaseRef.msearch({
-			type: config.type === '*' ? '' : config.type,
-			body: finalQuery,
-		}).then((res) => {
-			orderOfQueries.forEach((component, index) => {
-				const response = res.responses[index];
-				if (response.aggregations) {
-					aggregations = {
-						...aggregations,
-						[component]: response.aggregations,
+		appbaseRef
+			.msearch({
+				type: config.type === '*' ? '' : config.type,
+				body: config.transformRequest ? config.transformRequest(finalQuery) : finalQuery,
+			})
+			.then((res) => {
+				orderOfQueries.forEach((component, index) => {
+					const response = res.responses[index];
+					if (response.aggregations) {
+						aggregations = {
+							...aggregations,
+							[component]: response.aggregations,
+						};
+					}
+					hits = {
+						...hits,
+						[component]: {
+							hits: response.hits.hits,
+							total: response.hits.total,
+							time: response.took,
+						},
 					};
-				}
-				hits = {
-					...hits,
-					[component]: {
-						hits: response.hits.hits,
-						total: response.hits.total,
-						time: response.took,
-					},
+				});
+				state = {
+					...state,
+					hits,
+					aggregations,
 				};
-			});
-			state = {
-				...state,
-				hits,
-				aggregations,
-			};
-			resolve(state);
-		}).catch(err => reject(err));
+				resolve(state);
+			})
+			.catch(err => reject(err));
 	});
 }

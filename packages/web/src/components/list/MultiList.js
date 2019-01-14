@@ -9,6 +9,7 @@ import {
 	setQueryListener,
 	loadMore,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	getQueryOptions,
@@ -331,11 +332,12 @@ class MultiList extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		const query = props.customQuery || MultiList.defaultQuery;
-
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+		let query = MultiList.defaultQuery(value, props);
+		let customQueryOptions;
+		if (customQuery) {
+			({ query } = customQuery(value, props) || {});
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+		}
 		this.queryOptions = {
 			...this.queryOptions,
 			...customQueryOptions,
@@ -344,7 +346,7 @@ class MultiList extends Component {
 
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query,
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
@@ -376,7 +378,14 @@ class MultiList extends Component {
 			...this.queryOptions,
 			...queryOptions,
 		};
-		props.setQueryOptions(this.internalComponent, this.queryOptions);
+		if (props.defaultQuery) {
+			const value = Object.keys(this.state.currentValue);
+			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+			props.setQueryOptions(this.internalComponent,
+				{ ...this.queryOptions, ...defaultQueryOptions });
+		} else {
+			props.setQueryOptions(this.internalComponent, this.queryOptions);
+		}
 	};
 
 	handleInputChange = (e) => {
@@ -411,10 +420,11 @@ class MultiList extends Component {
 
 	handleClick = (e) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(e);
-		} else {
-			this.setValue(e.target.value);
+		const { value: listValue } = e.target;
+		if (value === undefined) {
+			this.setValue(listValue);
+		} else if (onChange) {
+			onChange(listValue);
 		}
 	};
 
@@ -523,7 +533,7 @@ class MultiList extends Component {
 										)
 									) : (
 										<span>
-											{item.key}
+											<span>{item.key}</span>
 											{this.props.showCount && (
 												<span
 													className={
@@ -533,7 +543,7 @@ class MultiList extends Component {
 														) || null
 													}
 												>
-													&nbsp;({item.doc_count})
+													{item.doc_count}
 												</span>
 											)}
 										</span>
@@ -568,6 +578,7 @@ MultiList.propTypes = {
 	className: types.string,
 	componentId: types.stringRequired,
 	customQuery: types.func,
+	defaultQuery: types.func,
 	dataField: types.stringRequired,
 	error: types.title,
 	nestedField: types.string,
@@ -651,6 +662,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <MultiList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, MultiList);
+
+ForwardRefComponent.name = 'MultiList';
+export default ForwardRefComponent;

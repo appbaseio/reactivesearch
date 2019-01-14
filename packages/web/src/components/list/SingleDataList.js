@@ -8,11 +8,13 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
 	pushToAndClause,
+	checkSomePropChange,
 	getQueryOptions,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -30,7 +32,8 @@ class SingleDataList extends Component {
 	constructor(props) {
 		super(props);
 
-		const currentValue = props.selectedValue || props.defaultValue || '';
+		const defaultValue = props.defaultValue || props.value;
+		const currentValue = props.selectedValue || defaultValue || '';
 		this.state = {
 			currentValue,
 			searchTerm: '',
@@ -61,7 +64,7 @@ class SingleDataList extends Component {
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 
 			if (this.props.showCount) {
@@ -76,11 +79,13 @@ class SingleDataList extends Component {
 		});
 
 		checkPropChange(this.props.options, prevProps.options, () => {
-			this.updateStateOptions(this.props.options[this.props.dataField].buckets);
+			if (this.props.options[this.props.dataField]) {
+				this.updateStateOptions(this.props.options[this.props.dataField].buckets);
+			}
 		});
 
 		if (this.props.value !== prevProps.value) {
-			this.setValue(this.props.defaultValue);
+			this.setValue(this.props.value);
 		} else if (
 			this.state.currentValue !== this.props.selectedValue
 			&& this.props.selectedValue !== prevProps.selectedValue
@@ -107,20 +112,33 @@ class SingleDataList extends Component {
 	}
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (props.selectAllLabel && props.selectAllLabel === value) {
-			return {
+			query = {
 				exists: {
 					field: props.dataField,
 				},
 			};
 		} else if (value) {
-			return {
+			query = {
 				term: {
 					[props.dataField]: value,
 				},
 			};
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	setValue = (nextValue, props = this.props, hasMounted = true) => {
@@ -159,17 +177,18 @@ class SingleDataList extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		const query = customQuery || SingleDataList.defaultQuery;
+		let customQueryOptions;
 
 		let currentValue = value;
 		if (value !== props.selectAllLabel) {
 			currentValue = props.data.find(item => item.label === value);
 			currentValue = currentValue ? currentValue.value : null;
 		}
-
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(currentValue, props))
-			: null;
+		let query = SingleDataList.defaultQuery(currentValue, props);
+		if (customQuery) {
+			({ query } = customQuery(currentValue, props) || {});
+			customQueryOptions = getOptionsFromQuery(customQuery(currentValue, props));
+		}
 		this.queryOptions = {
 			...this.queryOptions,
 			...customQueryOptions,
@@ -178,7 +197,7 @@ class SingleDataList extends Component {
 
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(currentValue, props),
+			query,
 			value: currentValue ? value : null,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
@@ -196,7 +215,14 @@ class SingleDataList extends Component {
 	updateQueryOptions = (props) => {
 		const queryOptions = SingleDataList.generateQueryOptions(props, this.state);
 		this.queryOptions = { ...this.queryOptions, ...queryOptions };
-		props.setQueryOptions(this.internalComponent, this.queryOptions);
+		if (props.defaultQuery) {
+			const value = this.state.currentValue;
+			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+			props.setQueryOptions(this.internalComponent,
+				{ ...this.queryOptions, ...defaultQueryOptions });
+		} else {
+			props.setQueryOptions(this.internalComponent, this.queryOptions);
+		}
 	};
 
 	updateStateOptions = (bucket) => {
@@ -254,10 +280,11 @@ class SingleDataList extends Component {
 
 	handleClick = (e) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(e);
-		} else {
-			this.setValue(e.target.value);
+		const { value: listValue } = e.target;
+		if (value === undefined) {
+			this.setValue(listValue);
+		} else if (onChange) {
+			onChange(listValue);
 		}
 	};
 
@@ -386,6 +413,7 @@ SingleDataList.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.string,
+	nestedField: types.string,
 	react: types.react,
 	selectAllLabel: types.string,
 	showFilter: types.bool,
@@ -417,7 +445,10 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	themePreset: state.config.themePreset,
-	options: state.aggregations[props.componentId],
+	options:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -435,6 +466,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <SingleDataList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, SingleDataList);
+
+ForwardRefComponent.name = 'SingleDataList';
+export default ForwardRefComponent;

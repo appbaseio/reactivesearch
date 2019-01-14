@@ -31,11 +31,11 @@
 		"typescript": "^2.8.1",
 		"webpack": "^3.10.0",
 		"webpack-dashboard": "^0.4.0",
-		"webpack-dev-server": "^2.9.5",
+		"webpack-dev-server": "^3.1.11",
 		"webpack-manifest-plugin": "^1.1.0"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch": "^3.0.0-alpha.3",
+		"@appbaseio/reactivesearch": "^3.0.0-alpha.9",
 		"react": "^16.3.1",
 		"react-dom": "^16.3.1",
 		"react-router-dom": "^4.1.1",

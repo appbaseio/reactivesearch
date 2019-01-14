@@ -47,12 +47,10 @@ export default class Main extends Component {
 				[
 					{
 						...rangeInputProps,
-						type: 'RangeInput',
 						source: RangeInput,
 					},
 					{
 						...reactiveListProps,
-						type: 'ReactiveList',
 						source: ReactiveList,
 					},
 				],

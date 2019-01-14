@@ -23,6 +23,14 @@ class Main extends Component {
 						<SelectedFilters />
 						<ReactiveComponent
 							componentId="CarSensor"
+							// either use customQuery or defaultQuery
+							// customQuery={() => ({
+							// 	query: {
+							// 		term: {
+							// 			'brand.keyword': 'Nissan',
+							// 		},
+							// 	},
+							// })}
 							defaultQuery={() => ({
 								aggs: {
 									'brand.keyword': {

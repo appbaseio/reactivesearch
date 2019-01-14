@@ -8,6 +8,7 @@ export interface NumberBoxProps extends CommonProps {
 	defaultSelected?: number;
 	innerClass?: types.style;
 	labelPosition?: types.labelPosition;
+	nestedField?: string;
 	queryFormat?: types.queryFormatNumberBox;
 	react?: types.react;
 	title?: types.title;

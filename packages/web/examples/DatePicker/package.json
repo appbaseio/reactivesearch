@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/reactivesearch": "^3.0.0-alpha.3",
+		"@appbaseio/reactivesearch": "^3.0.0-alpha.9",
 		"moment": "^2.20.1",
 		"react": "^16.7.0-alpha.2",
 		"react-dom": "^16.7.0-alpha.2"
@@ -18,8 +18,9 @@
 		"babel-preset-react": "^6.24.1",
 		"css-loader": "^0.28.7",
 		"style-loader": "^0.20.3",
-		"webpack": "^3.10.0",
-		"webpack-dev-server": "^2.9.5"
+		"webpack": "^4.28.3",
+		"webpack-cli": "^3.2.0",
+		"webpack-dev-server": "^3.1.14"
 	},
 	"scripts": {
 		"build": "webpack -p --progress",

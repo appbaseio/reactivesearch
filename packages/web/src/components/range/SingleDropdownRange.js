@@ -8,9 +8,11 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
+	checkSomePropChange,
 	checkPropChange,
 	getClassName,
 	getOptionsFromQuery,
@@ -51,7 +53,7 @@ class SingleDropdownRange extends Component {
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, prevProps);
 		});
 
@@ -79,8 +81,9 @@ class SingleDropdownRange extends Component {
 	static parseValue = (value, props) => props.data.find(item => item.label === value) || null;
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (value) {
-			return {
+			query = {
 				range: {
 					[props.dataField]: {
 						gte: value.start,
@@ -90,7 +93,19 @@ class SingleDropdownRange extends Component {
 				},
 			};
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
@@ -129,16 +144,17 @@ class SingleDropdownRange extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		const query = props.customQuery || SingleDropdownRange.defaultQuery;
-
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+		let query = SingleDropdownRange.defaultQuery(value, props);
+		let customQueryOptions;
+		if (customQuery) {
+			({ query } = customQuery(value, props) || {});
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query,
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
@@ -149,10 +165,11 @@ class SingleDropdownRange extends Component {
 
 	handleChange = (selectedItem) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(selectedItem);
-		} else {
+
+		if (value === undefined) {
 			this.setValue(selectedItem);
+		} else if (onChange) {
+			onChange(selectedItem);
 		}
 	};
 
@@ -198,6 +215,7 @@ SingleDropdownRange.propTypes = {
 	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
+	nestedField: types.string,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
@@ -242,6 +260,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <SingleDropdownRange ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, SingleDropdownRange);
+
+ForwardRefComponent.name = 'SingleDropdownRange';
+export default ForwardRefComponent;

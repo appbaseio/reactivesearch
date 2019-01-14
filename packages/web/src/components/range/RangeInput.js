@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { isEqual, getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
-
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import RangeSlider from './RangeSlider';
 import Input from '../../styles/Input';
 import Flex from '../../styles/Flex';
@@ -71,21 +71,22 @@ class RangeInput extends Component {
 		};
 
 		const { value: valueProp, onChange } = this.props;
-		if (valueProp) {
-			if (onChange) onChange(currentValue);
-		} else {
+		if (valueProp === undefined) {
 			this.setState({
 				[name]: value,
 			});
+		} else if (onChange) {
+			onChange(currentValue);
 		}
 	};
 
 	handleSliderChange = ([start, end]) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange({ start, end });
-		} else {
+
+		if (value === undefined) {
 			this.handleSlider({ start, end });
+		} else if (onChange) {
+			onChange({ start, end });
 		}
 	};
 
@@ -167,6 +168,8 @@ class RangeInput extends Component {
 RangeInput.propTypes = {
 	className: types.string,
 	defaultValue: types.range,
+	value: types.range,
+	selectedValue: types.selectedValue,
 	innerClass: types.style,
 	onValueChange: types.func,
 	onChange: types.func,
@@ -193,6 +196,11 @@ const ConnectedComponent = connect(
 	null,
 )(props => <RangeInput ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, RangeInput);
+
+ForwardRefComponent.name = 'RangeInput';
+export default ForwardRefComponent;

@@ -24,7 +24,11 @@ class URLParamsProvider extends Component {
 
 			// update active components in selectedValues
 			Array.from(this.params.entries()).forEach((item) => {
-				this.props.setValue(item[0], JSON.parse(item[1]));
+				try {
+					this.props.setValue(item[0], JSON.parse(item[1]));
+				} catch (e) {
+					// Do not set value if JSON parsing fails.
+				}
 			});
 		};
 	}
@@ -44,11 +48,19 @@ class URLParamsProvider extends Component {
 						this.hasValidValue(this.props.selectedValues[component])
 						|| this.hasValidValue(prevProps.selectedValues[component])
 					) {
-						if (this.props.selectedValues[component].URLParams) {
-							this.setURL(
-								component,
-								this.getValue(this.props.selectedValues[component].value),
-							);
+						const selectedValues = this.props.selectedValues[component];
+						if (selectedValues.URLParams) {
+							if (selectedValues.category) {
+								this.setURL(
+									component,
+									this.getValue({
+										category: selectedValues.category,
+										value: selectedValues.value,
+									}),
+								);
+							} else {
+								this.setURL(component, this.getValue(selectedValues.value));
+							}
 						} else {
 							this.params.delete(component);
 							this.pushToHistory();
@@ -96,6 +108,7 @@ class URLParamsProvider extends Component {
 		} else if (value && typeof value === 'object') {
 			// TODO: support for NestedList
 			if (value.location) return value;
+			if (value.category) return value;
 			return value.label || value.key || null;
 		}
 		return value;
@@ -168,6 +181,7 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <URLParamsProvider ref={props.myForwardedRef} {...props} />);
 
+// eslint-disable-next-line
 export default React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));

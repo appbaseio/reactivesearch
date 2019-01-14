@@ -8,11 +8,13 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	checkSomePropChange,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
@@ -57,12 +59,12 @@ class MultiDropdownRange extends Component {
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
 
 		if (!isEqual(this.props.value, prevProps.value)) {
-			this.selectItem(this.props.value);
+			this.selectItem(this.props.value, true);
 		} else if (
 			!isEqual(this.state.currentValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
@@ -101,17 +103,30 @@ class MultiDropdownRange extends Component {
 			return null;
 		};
 
+		let query = null;
+
 		if (values && values.length) {
-			const query = {
+			query = {
 				bool: {
 					should: generateRangeQuery(props.dataField, values),
 					minimum_should_match: 1,
 					boost: 1.0,
 				},
 			};
-			return query;
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	selectItem = (item, isDefaultValue = false, props = this.props, hasMounted = true) => {
@@ -170,16 +185,17 @@ class MultiDropdownRange extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		const query = props.customQuery || MultiDropdownRange.defaultQuery;
-
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+		let query = MultiDropdownRange.defaultQuery(value, props);
+		let customQueryOptions;
+		if (customQuery) {
+			({ query } = customQuery(value, props) || {});
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query,
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
@@ -190,10 +206,11 @@ class MultiDropdownRange extends Component {
 
 	handleChange = (items) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(items);
-		} else {
+
+		if (value === undefined) {
 			this.selectItem(items);
+		} else if (onChange) {
+			onChange(items);
 		}
 	};
 
@@ -240,6 +257,7 @@ MultiDropdownRange.propTypes = {
 	value: types.stringArray,
 	filterLabel: types.filterLabel,
 	innerClass: types.style,
+	nestedField: types.string,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
@@ -283,6 +301,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <MultiDropdownRange ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, MultiDropdownRange);
+
+ForwardRefComponent.name = 'MultiDropdownRange';
+export default ForwardRefComponent;

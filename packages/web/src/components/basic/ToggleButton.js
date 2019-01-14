@@ -8,10 +8,12 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -49,7 +51,7 @@ class ToggleButton extends Component {
 			this.setReact(this.props);
 		});
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
 
@@ -103,6 +105,17 @@ class ToggleButton extends Component {
 							[props.dataField]: item.value,
 						},
 					})),
+				},
+			};
+		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
 				},
 			};
 		}
@@ -169,17 +182,19 @@ class ToggleButton extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || ToggleButton.defaultQuery;
-
 		let filterValue = value;
 		if (!props.multiSelect) {
 			filterValue = value[0] ? value[0].value : null;
 		}
 		const { customQuery } = props;
 
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+		let query = ToggleButton.defaultQuery(value, props);
+		let customQueryOptions;
+		if (customQuery) {
+			({ query } = customQuery(value, props) || {});
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+		}
+
 		this.queryOptions = {
 			...this.queryOptions,
 			...customQueryOptions,
@@ -187,7 +202,7 @@ class ToggleButton extends Component {
 		props.setQueryOptions(props.componentId, this.queryOptions);
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query,
 			value: filterValue, // sets a string in URL not array
 			label: props.filterLabel,
 			showFilter: props.showFilter,
@@ -198,11 +213,9 @@ class ToggleButton extends Component {
 
 	handleClick = (item) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(item);
-		} else {
+		if (value === undefined) {
 			this.handleToggle(item);
-		}
+		} else if (onChange) onChange(item);
 	};
 
 	render() {
@@ -255,6 +268,7 @@ ToggleButton.propTypes = {
 	defaultValue: types.stringOrArray,
 	value: types.stringOrArray,
 	filterLabel: types.string,
+	nestedField: types.string,
 	innerClass: types.style,
 	multiSelect: types.bool,
 	onValueChange: types.func,
@@ -297,6 +311,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <ToggleButton ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, ToggleButton);
+
+ForwardRefComponent.name = 'ToggleButton';
+export default ForwardRefComponent;

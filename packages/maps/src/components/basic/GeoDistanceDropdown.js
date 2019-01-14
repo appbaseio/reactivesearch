@@ -12,6 +12,7 @@ import {
 import {
 	isEqual,
 	checkValueChange,
+	checkSomePropChange,
 	checkPropChange,
 	getClassName,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -85,7 +86,7 @@ class GeoDistanceDropdown extends Component {
 	componentWillReceiveProps(nextProps) {
 		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
-		checkPropChange(this.props.dataField, nextProps.dataField, () => {
+		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentDistance, nextProps);
 		});
 
@@ -140,15 +141,27 @@ class GeoDistanceDropdown extends Component {
 	};
 
 	defaultQuery = (coordinates, distance, props) => {
+		let query = null;
 		if (coordinates && distance) {
-			return {
+			query = {
 				[this.type]: {
 					distance: `${distance}${props.unit}`,
 					[props.dataField]: coordinates,
 				},
 			};
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+		return query;
 	};
 
 	getUserLocation() {
@@ -158,7 +171,7 @@ class GeoDistanceDropdown extends Component {
 			fetch(
 				`https://maps.googleapis.com/maps/api/geocode/json?key=${
 					this.props.mapKey
-				}&v=3.31&latlng=${coordinates}`,
+				}&v=weekly&latlng=${coordinates}`,
 			)
 				.then(res => res.json())
 				.then((res) => {
@@ -180,7 +193,7 @@ class GeoDistanceDropdown extends Component {
 			fetch(
 				`https://maps.googleapis.com/maps/api/geocode/json?key=${
 					this.props.mapKey
-				}&v=3.31&address=${value}`,
+				}&v=weekly&address=${value}`,
 			)
 				.then(res => res.json())
 				.then((res) => {
@@ -474,6 +487,7 @@ GeoDistanceDropdown.propTypes = {
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
 	innerRef: types.func,
+	nestedField: types.string,
 	onBlur: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,

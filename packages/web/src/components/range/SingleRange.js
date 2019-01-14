@@ -8,10 +8,12 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -51,7 +53,7 @@ class SingleRange extends Component {
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
 
@@ -79,8 +81,9 @@ class SingleRange extends Component {
 	static parseValue = (value, props) => props.data.find(item => item.label === value) || null;
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (value) {
-			return {
+			query = {
 				range: {
 					[props.dataField]: {
 						gte: value.start,
@@ -90,7 +93,19 @@ class SingleRange extends Component {
 				},
 			};
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	setValue = (value, props = this.props, hasMounted = true) => {
@@ -127,16 +142,17 @@ class SingleRange extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		const query = props.customQuery || SingleRange.defaultQuery;
-
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+		let query = SingleRange.defaultQuery(value, props);
+		let customQueryOptions;
+		if (customQuery) {
+			({ query } = customQuery(value, props) || {});
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query,
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
@@ -147,10 +163,12 @@ class SingleRange extends Component {
 
 	handleClick = (e) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(e);
-		} else {
-			this.setValue(e.target.value);
+		const { value: rangeValue } = e.target;
+
+		if (value === undefined) {
+			this.setValue(rangeValue);
+		} else if (onChange) {
+			onChange(rangeValue);
 		}
 	};
 
@@ -182,7 +200,7 @@ class SingleRange extends Component {
 									className={getClassName(this.props.innerClass, 'label') || null}
 									htmlFor={`${this.props.componentId}-${item.label}`}
 								>
-									{item.label}
+									<span>{item.label}</span>
 								</label>
 							</li>
 						);
@@ -211,6 +229,7 @@ SingleRange.propTypes = {
 	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
+	nestedField: types.string,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
@@ -253,6 +272,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <SingleRange ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, SingleRange);
+
+ForwardRefComponent.name = 'SingleRange';
+export default ForwardRefComponent;

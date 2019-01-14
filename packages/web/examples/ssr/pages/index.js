@@ -100,22 +100,18 @@ export default class Main extends Component {
 				[
 					{
 						...components.datasearch,
-						type: 'DataSearch',
 						source: DataSearch,
 					},
 					{
 						...components.numberbox,
-						type: 'NumberBox',
 						source: NumberBox,
 					},
 					// {
 					// 	...components.rangeslider,
-					// 	type: 'RangeSlider',
 					// 	source: RangeSlider,
 					// },
 					{
 						...components.resultcard,
-						type: 'ResultCard',
 						source: ResultCard,
 					},
 				],

@@ -43,12 +43,10 @@ export default class Main extends Component {
 				[
 					{
 						...categorySearchProps,
-						type: 'CategorySearch',
 						source: CategorySearch,
 					},
 					{
 						...reactiveListProps,
-						type: 'ReactiveList',
 						source: ReactiveList,
 					},
 				],

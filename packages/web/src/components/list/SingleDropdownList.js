@@ -8,6 +8,7 @@ import {
 	setQueryOptions,
 	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	getQueryOptions,
 	pushToAndClause,
@@ -198,11 +199,12 @@ class SingleDropdownList extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		const query = customQuery || SingleDropdownList.defaultQuery;
-
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+		let query = SingleDropdownList.defaultQuery(value, props);
+		let customQueryOptions;
+		if (customQuery) {
+			({ query } = customQuery(value, props) || {});
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+		}
 		this.queryOptions = {
 			...this.queryOptions,
 			...customQueryOptions,
@@ -210,7 +212,7 @@ class SingleDropdownList extends Component {
 		props.setQueryOptions(props.componentId, this.queryOptions);
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query,
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
@@ -242,7 +244,14 @@ class SingleDropdownList extends Component {
 			...this.queryOptions,
 			...queryOptions,
 		};
-		props.setQueryOptions(this.internalComponent, this.queryOptions);
+		if (props.defaultQuery) {
+			const value = this.state.currentValue;
+			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+			props.setQueryOptions(this.internalComponent,
+				{ ...this.queryOptions, ...defaultQueryOptions });
+		} else {
+			props.setQueryOptions(this.internalComponent, this.queryOptions);
+		}
 	};
 
 	handleLoadMore = () => {
@@ -251,10 +260,10 @@ class SingleDropdownList extends Component {
 
 	handleChange = (item) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(item);
-		} else {
+		if (value === undefined) {
 			this.setValue(item);
+		} else if (onChange) {
+			onChange(item);
 		}
 	};
 
@@ -338,6 +347,7 @@ SingleDropdownList.propTypes = {
 	className: types.string,
 	componentId: types.stringRequired,
 	customQuery: types.func,
+	defaultQuery: types.func,
 	dataField: types.stringRequired,
 	defaultValue: types.string,
 	error: types.title,
@@ -418,5 +428,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <SingleDropdownList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));
+hoistNonReactStatics(ForwardRefComponent, SingleDropdownList);
+
+ForwardRefComponent.name = 'SingleDropdownList';
+export default ForwardRefComponent;

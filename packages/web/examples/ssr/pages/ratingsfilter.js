@@ -49,12 +49,10 @@ export default class Main extends Component {
 				[
 					{
 						...ratingsFilterProps,
-						type: 'RatingsFilter',
 						source: RatingsFilter,
 					},
 					{
 						...reactiveListProps,
-						type: 'ReactiveList',
 						source: ReactiveList,
 					},
 				],

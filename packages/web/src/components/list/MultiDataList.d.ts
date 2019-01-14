@@ -5,6 +5,7 @@ import * as types from '../../types';
 export interface MultiDataList extends CommonProps {
 	beforeValueChange?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
+	defaultQuery?: (...args: any[]) => any;
 	data?: types.data;
 	defaultValue?: types.stringArray;
 	value?: types.stringArray;
@@ -13,6 +14,7 @@ export interface MultiDataList extends CommonProps {
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
 	placeholder?: string;
+	nestedField?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	selectAllLabel?: string;

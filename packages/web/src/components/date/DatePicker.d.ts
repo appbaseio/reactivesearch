@@ -19,6 +19,7 @@ export interface DatePickerProps extends CommonProps {
 	innerClass?: types.style;
 	numberOfMonths?: number;
 	placeholder?: string;
+	nestedField?: string;
 	queryFormat?: types.queryFormatDate;
 	react?: types.react;
 	showClear?: boolean;

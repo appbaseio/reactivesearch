@@ -52,12 +52,10 @@ export default class Main extends Component {
 				[
 					{
 						...rangeSliderProps,
-						type: 'RangeSlider',
 						source: RangeSlider,
 					},
 					{
 						...reactiveListProps,
-						type: 'ReactiveList',
 						source: ReactiveList,
 					},
 				],

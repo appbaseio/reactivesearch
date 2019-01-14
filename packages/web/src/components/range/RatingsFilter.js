@@ -8,9 +8,11 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	checkValueChange,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName,
 	handleA11yAction,
 	isEqual,
@@ -52,7 +54,7 @@ class RatingsFilter extends Component {
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
 
@@ -83,8 +85,9 @@ class RatingsFilter extends Component {
 	};
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (value) {
-			return {
+			query = {
 				range: {
 					[props.dataField]: {
 						gte: value[0],
@@ -94,7 +97,19 @@ class RatingsFilter extends Component {
 				},
 			};
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	setValue = (value, props = this.props, hasMounted = true) => {
@@ -127,16 +142,17 @@ class RatingsFilter extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		const query = props.customQuery || RatingsFilter.defaultQuery;
-
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+		let query = RatingsFilter.defaultQuery(value, props);
+		let customQueryOptions;
+		if (customQuery) {
+			({ query } = customQuery(value, props) || {});
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query,
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
@@ -147,10 +163,11 @@ class RatingsFilter extends Component {
 
 	handleClick = (selectedItem) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(selectedItem);
-		} else {
+
+		if (value === undefined) {
 			this.setValue(selectedItem);
+		} else if (onChange) {
+			onChange(selectedItem);
 		}
 	};
 
@@ -207,6 +224,7 @@ RatingsFilter.propTypes = {
 	value: types.range,
 	filterLabel: types.string,
 	innerClass: types.style,
+	nestedField: types.string,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
@@ -245,6 +263,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <RatingsFilter ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, RatingsFilter);
+
+ForwardRefComponent.name = 'RatingsFilter';
+export default ForwardRefComponent;

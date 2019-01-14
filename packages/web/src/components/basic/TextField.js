@@ -8,10 +8,12 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	debounce,
 	checkValueChange,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -50,7 +52,7 @@ class TextField extends Component {
 			this.setReact(this.props);
 		});
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
 
@@ -79,14 +81,26 @@ class TextField extends Component {
 	}
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (value && value.trim() !== '') {
-			return {
+			query = {
 				match: {
 					[props.dataField]: value,
 				},
 			};
 		}
-		return null;
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	handleTextChange = debounce((value) => {
@@ -127,12 +141,13 @@ class TextField extends Component {
 	};
 
 	updateQuery = (value, props) => {
-		const query = props.customQuery || TextField.defaultQuery;
 		const { customQuery } = props;
-
-		const customQueryOptions = customQuery
-			? getOptionsFromQuery(customQuery(value, props))
-			: null;
+		let query = TextField.defaultQuery(value, props);
+		let customQueryOptions;
+		if (customQuery) {
+			({ query } = customQuery(value, props) || {});
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+		}
 		this.queryOptions = {
 			...this.queryOptions,
 			...customQueryOptions,
@@ -141,7 +156,7 @@ class TextField extends Component {
 
 		props.updateQuery({
 			componentId: props.componentId,
-			query: query(value, props),
+			query,
 			value,
 			label: props.filterLabel,
 			showFilter: props.showFilter,
@@ -151,10 +166,12 @@ class TextField extends Component {
 
 	handleChange = (e) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(e.target.value);
-		} else {
-			this.setValue(e.target.value);
+		const { value: textValue } = e.target;
+
+		if (value === undefined) {
+			this.setValue(textValue);
+		} else if (onChange) {
+			onChange(textValue);
 		}
 	};
 
@@ -248,6 +265,7 @@ TextField.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.string,
+	nestedField: types.string,
 	react: types.react,
 	ref: types.func,
 	showClear: types.bool,
@@ -291,6 +309,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <TextField ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, TextField);
+
+ForwardRefComponent.name = 'TextField';
+export default ForwardRefComponent;
