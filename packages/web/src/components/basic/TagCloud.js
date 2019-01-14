@@ -13,13 +13,13 @@ import {
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
-	getAggsOrder,
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
 	handleA11yAction,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -27,6 +27,7 @@ import Title from '../../styles/Title';
 import TagList from '../../styles/TagList';
 import Container from '../../styles/Container';
 import { connect, isFunction } from '../../utils';
+import { getAggsQuery } from '../list/utils';
 
 class TagCloud extends Component {
 	constructor(props) {
@@ -40,9 +41,10 @@ class TagCloud extends Component {
 			currentValue[item] = true;
 		});
 
-		const options = props.options && props.options[props.dataField]
-			? this.getOptions(props.options[props.dataField].buckets, props)
-			: [];
+		const options
+			= props.options && props.options[props.dataField]
+				? this.getOptions(props.options[props.dataField].buckets, props)
+				: [];
 
 		this.state = {
 			currentValue,
@@ -75,9 +77,10 @@ class TagCloud extends Component {
 			});
 		});
 		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
-			this.updateQueryOptions(this.props));
+			this.updateQueryOptions(this.props),
+		);
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQueryOptions(this.props);
 			this.updateQuery(Object.keys(this.state.currentValue), this.props);
 		});
@@ -143,6 +146,17 @@ class TagCloud extends Component {
 
 			query = value.length ? listQuery : null;
 		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
 		return query;
 	};
 
@@ -189,9 +203,12 @@ class TagCloud extends Component {
 			};
 
 			if (hasMounted) {
-				this.setState({
-					currentValue,
-				}, handleUpdates);
+				this.setState(
+					{
+						currentValue,
+					},
+					handleUpdates,
+				);
 			} else {
 				handleUpdates();
 			}
@@ -205,7 +222,7 @@ class TagCloud extends Component {
 		let query = TagCloud.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		this.queryOptions = {
@@ -228,17 +245,7 @@ class TagCloud extends Component {
 	static generateQueryOptions(props) {
 		const queryOptions = getQueryOptions(props);
 		queryOptions.size = 0;
-		queryOptions.aggs = {
-			[props.dataField]: {
-				terms: {
-					field: props.dataField,
-					size: props.size,
-					order: getAggsOrder(props.sortBy || 'asc'),
-				},
-			},
-		};
-
-		return queryOptions;
+		return getAggsQuery(queryOptions, props);
 	}
 
 	updateQueryOptions = (props) => {
@@ -252,10 +259,11 @@ class TagCloud extends Component {
 
 	handleClick = (item) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(item);
-		} else {
+
+		if (value === undefined) {
 			this.setValue(item);
+		} else if (onChange) {
+			onChange(item);
 		}
 	};
 
@@ -270,7 +278,6 @@ class TagCloud extends Component {
 		if (renderError && error) {
 			return isFunction(renderError) ? renderError(error) : renderError;
 		}
-
 
 		if (this.state.options.length === 0) {
 			return null;
@@ -290,13 +297,16 @@ class TagCloud extends Component {
 				)}
 				<TagList className={getClassName(this.props.innerClass, 'list') || null}>
 					{this.state.options.map((item) => {
-						const size = ((item.doc_count / highestCount) * (max - min)) + min;
+						// eslint-disable-next-line
+						const size = (item.doc_count / highestCount) * (max - min) + min;
 
 						return (
 							<span
 								key={item.key}
 								onClick={() => this.handleClick(item.key)}
-								onKeyPress={e => handleA11yAction(e, () => this.handleClick(item.key))}
+								onKeyPress={e =>
+									handleA11yAction(e, () => this.handleClick(item.key))
+								}
 								style={{ fontSize: `${size}em` }}
 								className={
 									this.state.currentValue[item.key]
@@ -345,6 +355,7 @@ TagCloud.propTypes = {
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
+	nestedField: types.string,
 	queryFormat: types.queryFormatSearch,
 	renderError: types.title,
 	react: types.react,
@@ -368,15 +379,25 @@ TagCloud.defaultProps = {
 	URLParams: false,
 };
 
-const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId],
-	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
-	isLoading: state.isLoading[props.componentId],
-	error: state.error[props.componentId],
-});
+const mapStateToProps = (state, props) => {
+	let options = {};
+	if (props.nestedField) {
+		options
+			= state.aggregations[props.componentId]
+			&& state.aggregations[props.componentId].reactivesearch_nested;
+	} else {
+		options = state.aggregations[props.componentId];
+	}
+	return {
+		options,
+		selectedValue:
+			(state.selectedValues[props.componentId]
+				&& state.selectedValues[props.componentId].value)
+			|| null,
+		isLoading: state.isLoading[props.componentId],
+		error: state.error[props.componentId],
+	};
+};
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
@@ -393,6 +414,12 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <TagCloud ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));
 
+hoistNonReactStatics(ForwardRefComponent, TagCloud);
+
+ForwardRefComponent.name = 'TagCloud';
+export default ForwardRefComponent;

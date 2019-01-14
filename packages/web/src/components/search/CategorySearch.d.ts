@@ -25,6 +25,7 @@ export interface CategorySearchProps extends CommonProps {
 	icon?: types.children;
 	iconPosition?: types.iconPosition;
 	innerClass?: types.style;
+	nestedField?: string;
 	onBlur?: (...args: any[]) => any;
 	onError?: (...args: any[]) => any;
 	onFocus?: (...args: any[]) => any;
@@ -39,7 +40,7 @@ export interface CategorySearchProps extends CommonProps {
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	renderSuggestion?: (...args: any[]) => any;
-	renderAllSuggestion?: (...args: any[]) => any;
+	renderAllSuggestions?: (...args: any[]) => any;
 	renderError?: types.title;
 	renderNoSuggestion?: types.title;
 	showFilter?: boolean;

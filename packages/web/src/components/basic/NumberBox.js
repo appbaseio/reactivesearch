@@ -8,6 +8,7 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	checkValueChange,
 	checkPropChange,
@@ -64,15 +65,17 @@ class NumberBox extends Component {
 	}
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		switch (props.queryFormat) {
 			case 'exact':
-				return {
+				query = {
 					term: {
 						[props.dataField]: value,
 					},
 				};
+				break;
 			case 'lte':
-				return {
+				query = {
 					range: {
 						[props.dataField]: {
 							lte: value,
@@ -80,8 +83,9 @@ class NumberBox extends Component {
 						},
 					},
 				};
+				break;
 			default:
-				return {
+				query = {
 					range: {
 						[props.dataField]: {
 							gte: value,
@@ -90,6 +94,17 @@ class NumberBox extends Component {
 					},
 				};
 		}
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+		return query;
 	};
 
 	setReact(props) {
@@ -104,10 +119,11 @@ class NumberBox extends Component {
 		}
 		const { currentValue } = this.state;
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(currentValue + 1);
-		} else {
+
+		if (value === undefined) {
 			this.setValue(currentValue + 1);
+		} else if (onChange) {
+			onChange(currentValue + 1);
 		}
 	};
 
@@ -117,10 +133,11 @@ class NumberBox extends Component {
 		}
 		const { currentValue } = this.state;
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(currentValue - 1);
-		} else {
+
+		if (value === undefined) {
 			this.setValue(currentValue - 1);
+		} else if (onChange) {
+			onChange(currentValue - 1);
 		}
 	};
 
@@ -157,7 +174,7 @@ class NumberBox extends Component {
 		let query = NumberBox.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
@@ -227,6 +244,7 @@ NumberBox.propTypes = {
 	defaultValue: types.number,
 	value: types.number,
 	innerClass: types.style,
+	nestedField: types.string,
 	labelPosition: types.labelPosition,
 	onQueryChange: types.func,
 	onValueChange: types.func,
@@ -268,6 +286,12 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <NumberBox ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+
+hoistNonReactStatics(ForwardRefComponent, NumberBox);
+
+ForwardRefComponent.name = 'NumberBox';
+export default ForwardRefComponent;

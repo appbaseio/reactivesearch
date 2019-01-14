@@ -1,32 +1,33 @@
 {
-  "name": "ecommerce",
-  "version": "1.0.0",
-  "description": "Ecommerce app built with ReactiveSearch",
-  "main": "index.js",
-  "author": "Divyanshu Maithani <div.blackcat@gmail.com>",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "@appbaseio/reactivesearch": "^3.0.0-alpha.5",
-    "emotion": "*",
-    "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-emotion": "*"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-emotion": "^8.0.10",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.5"
-  },
-  "scripts": {
-    "build": "webpack -p --progress",
-    "start": "webpack-dev-server --hot --inline --progress --colors --port 8001"
-  }
+	"name": "ecommerce",
+	"version": "1.0.0",
+	"description": "Ecommerce app built with ReactiveSearch",
+	"main": "index.js",
+	"author": "Divyanshu Maithani <div.blackcat@gmail.com>",
+	"license": "Apache-2.0",
+	"dependencies": {
+		"@appbaseio/reactivesearch": "^3.0.0-alpha.9",
+		"emotion": "*",
+		"prop-types": "^15.6.0",
+		"react": "^16.2.0",
+		"react-dom": "^16.2.0",
+		"react-emotion": "*"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-core": "^6.26.0",
+		"babel-loader": "^7.1.2",
+		"babel-plugin-emotion": "^8.0.10",
+		"babel-plugin-transform-class-properties": "^6.24.1",
+		"babel-plugin-transform-object-rest-spread": "^6.26.0",
+		"babel-preset-env": "^1.6.1",
+		"babel-preset-react": "^6.24.1",
+		"webpack": "^4.28.3",
+		"webpack-cli": "^3.2.0",
+		"webpack-dev-server": "^3.1.14"
+	},
+	"scripts": {
+		"build": "webpack -p --progress",
+		"start": "webpack-dev-server --hot --inline --progress --colors --port 8001"
+	}
 }

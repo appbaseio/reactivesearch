@@ -15,6 +15,7 @@ export interface TagCloudProps extends CommonProps {
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
 	onError?: (...args: any[]) => any;
+	nestedField?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	renderError?: types.title;

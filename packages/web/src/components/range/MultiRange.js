@@ -8,10 +8,12 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -58,12 +60,12 @@ class MultiRange extends Component {
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
 
 		if (!isEqual(this.props.value, prevProps.value)) {
-			this.selectItem(this.props.value);
+			this.selectItem(this.props.value, true);
 		} else if (
 			!isEqual(this.state.currentValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
@@ -102,17 +104,30 @@ class MultiRange extends Component {
 			return null;
 		};
 
+		let query = null;
+
 		if (values && values.length) {
-			const query = {
+			query = {
 				bool: {
 					should: generateRangeQuery(props.dataField, values),
 					minimum_should_match: 1,
 					boost: 1.0,
 				},
 			};
-			return query;
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	selectItem = (item, isDefaultValue = false, props = this.props, hasMounted = true) => {
@@ -170,7 +185,7 @@ class MultiRange extends Component {
 		let query = MultiRange.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 
@@ -189,10 +204,12 @@ class MultiRange extends Component {
 
 	handleClick = (e) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(e);
-		} else {
-			this.selectItem(e.target.value);
+
+		const { value: rangeValue } = e.target;
+		if (value === undefined) {
+			this.selectItem(rangeValue);
+		} else if (onChange) {
+			onChange(rangeValue);
 		}
 	};
 
@@ -223,7 +240,7 @@ class MultiRange extends Component {
 								className={getClassName(this.props.innerClass, 'label') || null}
 								htmlFor={`${this.props.componentId}-${item.label}`}
 							>
-								{item.label}
+								<span>{item.label}</span>
 							</label>
 						</li>
 					))}
@@ -252,6 +269,7 @@ MultiRange.propTypes = {
 	value: types.stringArray,
 	filterLabel: types.filterLabel,
 	innerClass: types.style,
+	nestedField: types.string,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
@@ -295,6 +313,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <MultiRange ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, MultiRange);
+
+ForwardRefComponent.name = 'MultiRange';
+export default ForwardRefComponent;

@@ -7,10 +7,12 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
 	checkPropChange,
+	checkSomePropChange,
 	getClassName,
 	formatDate,
 	getOptionsFromQuery,
@@ -33,6 +35,7 @@ class DatePicker extends Component {
 		const currentDate = props.selectedValue || props.value || props.defaultValue || '';
 		this.state = {
 			currentDate,
+			key: 'on',
 		};
 		this.locked = false;
 
@@ -48,7 +51,7 @@ class DatePicker extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
-		checkPropChange(this.props.dataField, prevProps.dataField, () =>
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () =>
 			this.updateQuery(
 				this.state.currentDate ? this.formatInputDate(this.state.currentDate) : null,
 				this.props,
@@ -89,21 +92,52 @@ class DatePicker extends Component {
 				},
 			};
 		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
 		return query;
 	};
 
 	clearDayPicker = () => {
 		if (this.state.currentDate !== '') {
-			this.handleDateChange(''); // resets the day picker component
+			const { value, onChange } = this.props;
+
+			if (value === undefined) {
+				this.handleDateChange('', false); // resets the day picker component
+			} else if (onChange) {
+				onChange('');
+			} else {
+				// Since value prop is defined and onChange is not define
+				// we keep the same date as in store
+				this.setState({
+					currentDate: this.state.currentDate,
+				});
+			}
 		}
 	};
 
 	handleDayPicker = (date) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(date || '');
-		} else {
+
+		if (value === undefined) {
 			this.handleDateChange(date || '');
+		} else if (onChange) {
+			onChange(date || '');
+		} else {
+			// this will trigger a remount on the date component
+			// since DayPickerInput doesn't respect the controlled behavior setting on its own
+			this.setState(state => ({
+				key: state.key === 'on' ? 'off' : 'on',
+			}));
 		}
 	};
 
@@ -155,7 +189,7 @@ class DatePicker extends Component {
 		let query = DatePicker.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
@@ -198,6 +232,7 @@ class DatePicker extends Component {
 							numberOfMonths: this.props.numberOfMonths,
 							initialMonth: this.props.initialMonth,
 						}}
+						key={this.state.key}
 						clickUnselectsDay={this.props.clickUnselectsDay}
 						onDayChange={this.handleDayPicker}
 						inputProps={{
@@ -250,6 +285,7 @@ DatePicker.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.string,
+	nestedField: types.string,
 	queryFormat: types.queryFormatDate,
 	react: types.react,
 	showClear: types.bool,
@@ -288,6 +324,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(withTheme(props => <DatePicker ref={props.myForwardedRef} {...props} />));
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, DatePicker);
+
+ForwardRefComponent.name = 'DatePicker';
+export default ForwardRefComponent;

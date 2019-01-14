@@ -45,12 +45,10 @@ export default class Main extends Component {
 				[
 					{
 						...toggleButtonProps,
-						type: 'ToggleButton',
 						source: ToggleButton,
 					},
 					{
 						...resultListProps,
-						type: 'ResultList',
 						source: ResultList,
 					},
 				],

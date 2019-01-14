@@ -10,6 +10,7 @@ import {
 	setQueryOptions,
 	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	debounce,
 	pushToAndClause,
@@ -103,14 +104,14 @@ class DataSearch extends Component {
 		checkSomePropChange(
 			this.props,
 			prevProps,
-			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField'],
+			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'nestedField'],
 			() => {
 				this.updateQuery(this.props.componentId, this.state.currentValue, this.props);
 			},
 		);
 
 		if (this.props.value !== prevProps.value) {
-			this.setValue(this.props.value);
+			this.setValue(this.props.value, true, this.props);
 		} else if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
@@ -120,17 +121,17 @@ class DataSearch extends Component {
 			&& this.state.currentValue !== this.props.selectedValue
 		) {
 			const { value, onChange } = this.props;
-			if (value) {
-				if (onChange) {
-					onChange(this.props.selectedValue || '');
-				} else {
-					// we need to put the current value back into the store
-					// if the clear action was triggered by interacting with
-					// selected-filters component
-					this.setValue(this.state.currentValue, true, this.props);
-				}
-			} else {
+			if (value === undefined) {
 				this.setValue(this.props.selectedValue || '', true, this.props);
+			} else if (onChange) {
+				// value prop exists
+				onChange(this.props.selectedValue || '');
+			} else {
+				// value prop exists and onChange is not defined:
+				// we need to put the current value back into the store
+				// if the clear action was triggered by interacting with
+				// selected-filters component
+				this.setValue(this.state.currentValue, true, this.props);
 			}
 		}
 	}
@@ -200,6 +201,15 @@ class DataSearch extends Component {
 		if (value === '') {
 			finalQuery = {
 				match_all: {},
+			};
+		}
+
+		if (finalQuery && props.nestedField) {
+			finalQuery = {
+				nested: {
+					path: props.nestedField,
+					query: finalQuery,
+				},
 			};
 		}
 
@@ -370,7 +380,7 @@ class DataSearch extends Component {
 			} // prettier-ignore
 			: query;
 
-		props.setQueryOptions(this.props.componentId, {
+		props.setQueryOptions(componentId, {
 			...this.queryOptions,
 			...defaultQueryOptions,
 			...customQueryOptions,
@@ -421,16 +431,21 @@ class DataSearch extends Component {
 		}
 
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(inputValue);
-		} else {
+		if (value === undefined) {
 			this.setValue(inputValue);
+		} else if (onChange) {
+			onChange(inputValue);
 		}
 	};
 
 	onSuggestionSelected = (suggestion) => {
-		this.setValue(suggestion.value, true, this.props, causes.SUGGESTION_SELECT);
-		this.onValueSelected(suggestion.value, causes.SUGGESTION_SELECT, suggestion.source);
+		const { value, onChange } = this.props;
+		if (value === undefined) {
+			this.setValue(suggestion.value, true, this.props, causes.SUGGESTION_SELECT);
+			this.onValueSelected(suggestion.value, causes.SUGGESTION_SELECT, suggestion.source);
+		} else if (onChange) {
+			onChange(suggestion.value);
+		}
 	};
 
 	onValueSelected = (currentValue = this.state.currentValue, ...cause) => {
@@ -584,7 +599,7 @@ class DataSearch extends Component {
 			suggestionsList = this.state.suggestions;
 		}
 
-		const { theme, themePreset, renderAllSuggestion } = this.props;
+		const { theme, themePreset, renderAllSuggestions } = this.props;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -628,8 +643,8 @@ class DataSearch extends Component {
 									themePreset={themePreset}
 								/>
 								{this.renderIcons()}
-								{renderAllSuggestion
-									&& renderAllSuggestion({
+								{renderAllSuggestions
+									&& renderAllSuggestions({
 										currentValue: this.state.currentValue,
 										isOpen,
 										getItemProps,
@@ -639,7 +654,7 @@ class DataSearch extends Component {
 									})}
 								{this.renderLoader()}
 								{this.renderError()}
-								{!renderAllSuggestion && isOpen && suggestionsList.length ? (
+								{!renderAllSuggestions && isOpen && suggestionsList.length ? (
 									<ul
 										className={`${suggestions(
 											themePreset,
@@ -661,16 +676,6 @@ class DataSearch extends Component {
 													currentValue={currentValue}
 													suggestion={item}
 												/>
-												{/* {typeof item.label === 'string' ? (
-													<div
-														className="trim"
-														dangerouslySetInnerHTML={{
-															__html: item.label,
-														}}
-													/>
-												) : (
-													item.label
-												)} */}
 											</li>
 										))}
 									</ul>
@@ -697,7 +702,6 @@ class DataSearch extends Component {
 							iconPosition={this.props.iconPosition}
 							showIcon={this.props.showIcon}
 							showClear={this.props.showClear}
-							innerRef={this.props.innerRef}
 							themePreset={themePreset}
 						/>
 						{this.renderIcons()}
@@ -745,6 +749,7 @@ DataSearch.propTypes = {
 	innerClass: types.style,
 	isLoading: types.bool,
 	loader: types.title,
+	nestedField: types.string,
 	onError: types.func,
 	onBlur: types.func,
 	onFocus: types.func,
@@ -761,7 +766,7 @@ DataSearch.propTypes = {
 	react: types.react,
 	renderError: types.title,
 	renderSuggestion: types.func,
-	renderAllSuggestion: types.func,
+	renderAllSuggestions: types.func,
 	renderNoSuggestion: types.title,
 	showClear: types.bool,
 	showFilter: types.bool,
@@ -816,6 +821,12 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(withTheme(props => <DataSearch ref={props.myForwardedRef} {...props} />));
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, DataSearch);
+
+ForwardRefComponent.name = 'DataSearch';
+export default ForwardRefComponent;
+

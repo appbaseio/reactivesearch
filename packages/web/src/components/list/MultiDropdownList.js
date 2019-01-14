@@ -8,6 +8,7 @@ import {
 	setQueryOptions,
 	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	getQueryOptions,
@@ -329,7 +330,7 @@ class MultiDropdownList extends Component {
 		let query = MultiDropdownList.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		this.queryOptions = {
@@ -371,7 +372,14 @@ class MultiDropdownList extends Component {
 			...this.queryOptions,
 			...queryOptions,
 		};
-		props.setQueryOptions(this.internalComponent, this.queryOptions);
+		if (props.defaultQuery) {
+			const value = Object.keys(this.state.currentValue);
+			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+			props.setQueryOptions(this.internalComponent,
+				{ ...this.queryOptions, ...defaultQueryOptions });
+		} else {
+			props.setQueryOptions(this.internalComponent, this.queryOptions);
+		}
 	};
 
 	handleLoadMore = () => {
@@ -380,10 +388,10 @@ class MultiDropdownList extends Component {
 
 	handleChange = (item) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(item);
-		} else {
+		if (value === undefined) {
 			this.setValue(item);
+		} else if (onChange) {
+			onChange(item);
 		}
 	};
 
@@ -467,6 +475,7 @@ MultiDropdownList.propTypes = {
 	className: types.string,
 	componentId: types.stringRequired,
 	customQuery: types.func,
+	defaultQuery: types.func,
 	dataField: types.stringRequired,
 	defaultValue: types.stringArray,
 	error: types.title,
@@ -549,5 +558,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <MultiDropdownList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));
+hoistNonReactStatics(ForwardRefComponent, MultiDropdownList);
+
+ForwardRefComponent.name = 'MultiDropdownList';
+export default ForwardRefComponent;

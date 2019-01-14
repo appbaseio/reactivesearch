@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	addComponent,
 	removeComponent,
@@ -378,7 +378,8 @@ class ReactiveList extends Component {
 
 	// only used for SSR
 	static generateQueryOptions = (props) => {
-		const options = {};
+		// simulate default (includeFields and excludeFields) props to generate consistent query
+		const options = getQueryOptions({ includeFields: ['*'], excludeFields: [], ...props });
 		options.from = props.currentPage ? (props.currentPage - 1) * (props.size || 10) : 0;
 		options.size = props.size || 10;
 
@@ -490,7 +491,7 @@ class ReactiveList extends Component {
 
 	renderNoResults = () => (
 		<p className={getClassName(this.props.innerClass, 'noResults') || null}>
-			{this.props.onNoResults}
+			{this.props.renderNoResults()}
 		</p>
 	);
 
@@ -702,7 +703,7 @@ ReactiveList.propTypes = {
 	renderData: types.func,
 	renderError: types.title,
 	onData: types.func,
-	onNoResults: types.title,
+	renderNoResults: types.title,
 	onPageChange: types.func,
 	onPageClick: types.func,
 	onResultStats: types.func,
@@ -735,7 +736,7 @@ ReactiveList.defaultProps = {
 	size: 10,
 	style: {},
 	URLParams: false,
-	onNoResults: 'No Results found.',
+	renderNoResults: () => 'No Results found.',
 	scrollOnChange: true,
 };
 
@@ -775,5 +776,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <ReactiveList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));
+hoistNonReactStatics(ForwardRefComponent, ReactiveList);
+
+ForwardRefComponent.name = 'ReactiveList';
+export default ForwardRefComponent;

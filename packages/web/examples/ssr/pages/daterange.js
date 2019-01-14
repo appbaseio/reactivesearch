@@ -80,12 +80,10 @@ export default class Main extends Component {
 				[
 					{
 						...dateRangeProps,
-						type: 'DateRange',
 						source: DateRange,
 					},
 					{
 						...resultCardProps,
-						type: 'ResultCard',
 						source: ResultCard,
 					},
 				],

@@ -38,12 +38,10 @@ export default class Main extends Component {
 				[
 					{
 						...dataSearchProps,
-						type: 'DataSearch',
 						source: DataSearch,
 					},
 					{
 						...reactiveListProps,
-						type: 'ReactiveList',
 						source: ReactiveList,
 					},
 				],

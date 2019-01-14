@@ -7,6 +7,7 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
@@ -14,6 +15,7 @@ import {
 	getClassName,
 	getOptionsFromQuery,
 	formatDate,
+	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import XDate from 'xdate';
@@ -50,6 +52,8 @@ class DateRange extends Component {
 		this.state = {
 			currentDate,
 			dateHovered: null,
+			startKey: 'on-start',
+			endKey: 'on-end',
 		};
 		this.locked = false;
 		const hasMounted = false;
@@ -97,7 +101,7 @@ class DateRange extends Component {
 			}
 		}
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () =>
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () =>
 			this.updateQuery(
 				this.state.currentDate
 					? {
@@ -126,7 +130,7 @@ class DateRange extends Component {
 		return xdate.valid() ? xdate.toString('yyyy-MM-dd') : '';
 	};
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		let query = null;
 		if (value) {
 			if (Array.isArray(props.dataField) && props.dataField.length === 2) {
@@ -170,6 +174,18 @@ class DateRange extends Component {
 				};
 			}
 		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
 		return query;
 	};
 
@@ -180,10 +196,17 @@ class DateRange extends Component {
 	clearDayPickerStart = () => {
 		if (this.state.currentDate && this.state.currentDate.start !== '') {
 			const { value, onChange } = this.props;
-			if (value) {
-				if (onChange) onChange({ start: '', end: this.state.currentDate.end });
-			} else {
+
+			if (value === undefined) {
 				this.handleStartDate('', false); // resets the day picker component
+			} else if (onChange) {
+				onChange({ start: '', end: this.state.currentDate.end });
+			} else {
+				// Since value prop is defined and onChange is not define
+				// we keep the same date as in store
+				this.setState({
+					currentDate: this.state.currentDate,
+				});
 			}
 		}
 	};
@@ -192,10 +215,17 @@ class DateRange extends Component {
 		if (this.state.currentDate && this.state.currentDate.end !== '') {
 			this.handleEndDate(''); // resets the day picker component
 			const { value, onChange } = this.props;
-			if (value) {
-				if (onChange) onChange({ start: this.state.currentDate.start, end: '' });
+
+			if (value === undefined) {
+				this.handleEndDate('', false); // resets the day picker component
+			} else if (onChange) {
+				onChange({ start: this.state.currentDate.start, end: '' });
 			} else {
-				this.handleStartDate('', false); // resets the day picker component
+				// Since value prop is defined and onChange is not define
+				// we keep the same date as in store
+				this.setState({
+					currentDate: this.state.currentDate,
+				});
 			}
 		}
 	};
@@ -204,18 +234,23 @@ class DateRange extends Component {
 		const { currentDate } = this.state;
 		const end = currentDate ? currentDate.end : '';
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) {
-				onChange({
-					start: date,
-					end,
-				});
-			}
-		} else {
+
+		if (value === undefined) {
 			this.handleDateChange({
 				start: date,
 				end,
 			});
+		} else if (onChange) {
+			onChange({
+				start: date,
+				end,
+			});
+		} else {
+			// this will trigger a remount on the date component
+			// since DayPickerInput doesn't respect the controlled behavior setting on its own
+			this.setState(state => ({
+				startKey: state.startKey === 'on-start' ? 'off-start' : 'on-start',
+			}));
 		}
 		// focus the end date DayPicker if its empty
 		if (this.props.autoFocusEnd && autoFocus) {
@@ -227,18 +262,24 @@ class DateRange extends Component {
 	handleEndDate = (date) => {
 		const { currentDate } = this.state;
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) {
-				onChange({
-					start: currentDate ? currentDate.start : '',
-					end: date,
-				});
-			}
-		} else {
+		const start = currentDate ? currentDate.start : '';
+
+		if (value === undefined) {
 			this.handleDateChange({
-				start: currentDate ? currentDate.start : '',
+				start,
 				end: date,
 			});
+		} else if (onChange) {
+			onChange({
+				start,
+				end: date,
+			});
+		} else {
+			// this will trigger a remount on the date component
+			// since DayPickerInput doesn't respect the controlled behavior setting on its own
+			this.setState(state => ({
+				endKey: state.endKey === 'on-end' ? 'off-end' : 'on-end',
+			}));
 		}
 	};
 
@@ -294,10 +335,11 @@ class DateRange extends Component {
 	updateQuery = (value, props) => {
 		if (!value || (value && value.start.length && value.end.length)) {
 			const { customQuery } = props;
-			let query = this.defaultQuery(value, props);
+			let query = DateRange.defaultQuery(value, props);
 			let customQueryOptions;
 			if (customQuery) {
-				({ query } = customQuery(value, props));
+				const customQueryObject = customQuery(value, props);
+				query = customQueryObject && customQueryObject.query;
 				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			}
 			props.setQueryOptions(props.componentId, customQueryOptions);
@@ -345,6 +387,7 @@ class DateRange extends Component {
 							showOverlay={this.props.focused}
 							formatDate={this.formatInputDate}
 							value={start}
+							key={this.state.startKey}
 							placeholder={this.props.placeholder.start}
 							dayPickerProps={{
 								numberOfMonths: this.props.numberOfMonths,
@@ -396,6 +439,7 @@ class DateRange extends Component {
 							showOverlay={this.props.focused}
 							formatDate={this.formatInputDate}
 							value={end}
+							key={this.state.endKey}
 							placeholder={this.props.placeholder.end}
 							dayPickerProps={{
 								numberOfMonths: this.props.numberOfMonths,
@@ -465,6 +509,7 @@ DateRange.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.rangeLabels,
+	nestedField: types.string,
 	queryFormat: types.queryFormatDate,
 	react: types.react,
 	showClear: types.bool,
@@ -506,6 +551,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(withTheme(props => <DateRange ref={props.myForwardedRef} {...props} />));
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, DateRange);
+
+ForwardRefComponent.name = 'DateRange';
+export default ForwardRefComponent;

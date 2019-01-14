@@ -7,6 +7,7 @@ import {
 	setQueryOptions,
 	setQueryListener,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
@@ -74,7 +75,7 @@ class RangeSlider extends Component {
 			});
 		});
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQueryOptions(this.props);
 			this.handleChange(this.state.currentValue, this.props);
 		});
@@ -127,8 +128,9 @@ class RangeSlider extends Component {
 	};
 
 	static defaultQuery = (value, props) => {
+		let query = null;
 		if (Array.isArray(value) && value.length) {
-			return {
+			query = {
 				range: {
 					[props.dataField]: {
 						gte: value[0],
@@ -138,7 +140,19 @@ class RangeSlider extends Component {
 				},
 			};
 		}
-		return null;
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
+		return query;
 	};
 
 	getSnapPoints = () => {
@@ -231,23 +245,22 @@ class RangeSlider extends Component {
 	handleSlider = ({ values }) => {
 		if (!isEqual(values, this.state.currentValue)) {
 			const { value, onChange } = this.props;
-			if (value) {
-				if (onChange) {
-					// force re-rendering to avail the currentValue
-					// in rheostat component since it doesn't respect
-					// the controlled behavior properly
-					this.forceUpdate();
-					onChange(values);
-				} else {
-					// since value prop is set & onChange is not defined
-					// we need to reset the slider position
-					// to the original 'value' prop
-					this.setState({
-						currentValue: this.state.currentValue,
-					});
-				}
-			} else {
+
+			if (value === undefined) {
 				this.handleChange(values);
+			} else if (onChange) {
+				// force re-rendering to avail the currentValue
+				// in rheostat component since it doesn't respect
+				// the controlled behavior properly
+				this.forceUpdate();
+				onChange(values);
+			} else {
+				// since value prop is set & onChange is not defined
+				// we need to reset the slider position
+				// to the original 'value' prop
+				this.setState({
+					currentValue: this.state.currentValue,
+				});
 			}
 		}
 	};
@@ -264,7 +277,7 @@ class RangeSlider extends Component {
 		let query = RangeSlider.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		const {
@@ -299,10 +312,14 @@ class RangeSlider extends Component {
 			const customQueryOptions = customQuery
 				? getOptionsFromQuery(customQuery(value, props))
 				: null;
-			props.setQueryOptions(this.internalComponent, {
-				...queryOptions,
-				...customQueryOptions,
-			}, false);
+			props.setQueryOptions(
+				this.internalComponent,
+				{
+					...queryOptions,
+					...customQueryOptions,
+				},
+				false,
+			);
 			props.updateQuery({
 				componentId: this.internalComponent,
 				query: query(value, props),
@@ -387,6 +404,7 @@ RangeSlider.propTypes = {
 	filterLabel: types.string,
 	innerClass: types.style,
 	interval: types.number,
+	nestedField: types.string,
 	onDrag: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
@@ -449,6 +467,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <RangeSlider ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, RangeSlider);
+
+ForwardRefComponent.name = 'RangeSlider';
+export default ForwardRefComponent;

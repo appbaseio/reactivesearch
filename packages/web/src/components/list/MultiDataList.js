@@ -14,9 +14,11 @@ import {
 	checkPropChange,
 	getClassName,
 	pushToAndClause,
+	checkSomePropChange,
 	getQueryOptions,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -68,7 +70,7 @@ class MultiDataList extends Component {
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(Object.keys(this.state.currentValue), this.props);
 
 			if (this.props.showCount) {
@@ -83,7 +85,9 @@ class MultiDataList extends Component {
 		});
 
 		checkPropChange(this.props.options, prevProps.options, () => {
-			this.updateStateOptions(this.props.options[this.props.dataField].buckets);
+			if (this.props.options[this.props.dataField]) {
+				this.updateStateOptions(this.props.options[this.props.dataField].buckets);
+			}
 		});
 
 		let selectedValue = Object.keys(this.state.currentValue);
@@ -124,14 +128,10 @@ class MultiDataList extends Component {
 		}
 	}
 
-	defaultQuery = (value, props) => {
+	static defaultQuery = (value, props) => {
 		let query = null;
 		const type = props.queryFormat === 'or' ? 'terms' : 'term';
-		if (
-			this.props.selectAllLabel
-			&& Array.isArray(value)
-			&& value.includes(this.props.selectAllLabel)
-		) {
+		if (props.selectAllLabel && Array.isArray(value) && value.includes(props.selectAllLabel)) {
 			query = {
 				exists: {
 					field: props.dataField,
@@ -161,6 +161,18 @@ class MultiDataList extends Component {
 
 			query = value.length ? listQuery : null;
 		}
+
+		if (query && props.nestedField) {
+			return {
+				query: {
+					nested: {
+						path: props.nestedField,
+						query,
+					},
+				},
+			};
+		}
+
 		return query;
 	};
 
@@ -257,9 +269,9 @@ class MultiDataList extends Component {
 			...this.queryOptions,
 			...customQueryOptions,
 		};
-		let query = this.defaultQuery(queryValue, props);
+		let query = MultiDataList.defaultQuery(queryValue, props);
 		if (customQuery) {
-			({ query } = customQuery(queryValue, props));
+			({ query } = customQuery(queryValue, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery((queryValue, props)));
 		}
 		props.setQueryOptions(props.componentId, this.queryOptions);
@@ -287,7 +299,14 @@ class MultiDataList extends Component {
 			...this.queryOptions,
 			...queryOptions,
 		};
-		props.setQueryOptions(this.internalComponent, this.queryOptions);
+		if (props.defaultQuery) {
+			const value = Object.keys(this.state.currentValue);
+			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+			props.setQueryOptions(this.internalComponent,
+				{ ...this.queryOptions, ...defaultQueryOptions });
+		} else {
+			props.setQueryOptions(this.internalComponent, this.queryOptions);
+		}
 	};
 
 	updateStateOptions = (bucket) => {
@@ -345,10 +364,11 @@ class MultiDataList extends Component {
 
 	handleClick = (e) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(e);
-		} else {
-			this.setValue(e.target.value);
+		const { value: listValue } = e.target;
+		if (value === undefined) {
+			this.setValue(listValue);
+		} else if (onChange) {
+			onChange(listValue);
 		}
 	};
 
@@ -427,7 +447,7 @@ class MultiDataList extends Component {
 										renderListItem(item.label, item.count)
 									) : (
 										<span>
-											{item.label}
+											<span>{item.label}</span>
 											{showCount && item.count && (
 												<span
 													className={
@@ -437,7 +457,7 @@ class MultiDataList extends Component {
 														) || null
 													}
 												>
-													&nbsp;({item.count})
+													{item.count}
 												</span>
 											)}
 										</span>
@@ -466,6 +486,7 @@ MultiDataList.propTypes = {
 	className: types.string,
 	componentId: types.stringRequired,
 	customQuery: types.func,
+	defaultQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
 	defaultValue: types.stringArray,
@@ -476,6 +497,7 @@ MultiDataList.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.string,
+	nestedField: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
 	selectAllLabel: types.string,
@@ -509,7 +531,10 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	themePreset: state.config.themePreset,
-	options: state.aggregations[props.componentId],
+	options:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -527,6 +552,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <MultiDataList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, MultiDataList);
+
+ForwardRefComponent.name = 'MultiDataList';
+export default ForwardRefComponent;

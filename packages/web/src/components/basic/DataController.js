@@ -7,6 +7,7 @@ import {
 	setQueryListener,
 	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
@@ -55,7 +56,7 @@ class DataController extends Component {
 		let query = DataController.defaultQuery(defaultSelected, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(defaultSelected, props));
+			({ query } = customQuery(defaultSelected, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(defaultSelected, props));
 		}
 		this.queryOptions = {
@@ -146,6 +147,12 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <DataController ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+
+hoistNonReactStatics(ForwardRefComponent, DataController);
+
+ForwardRefComponent.name = 'DataController';
+export default ForwardRefComponent;

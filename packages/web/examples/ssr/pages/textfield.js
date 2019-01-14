@@ -37,12 +37,10 @@ export default class Main extends Component {
 				[
 					{
 						...textFieldProps,
-						type: 'TextField',
 						source: TextField,
 					},
 					{
 						...reactiveListProps,
-						type: 'ReactiveList',
 						source: ReactiveList,
 					},
 				],

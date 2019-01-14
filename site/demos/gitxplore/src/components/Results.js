@@ -29,24 +29,31 @@ const onData = (data, currentTopics, toggleTopic) => (
 		</Flex>
 		<div style={{ margin: '10px 0' }}>{data.description}</div>
 		<Flex flexWrap justifyContent="center">
-			{
-				data.topics.slice(0, 7)
-					.map(item =>
-						(
-							<Topic
-								key={item}
-								active={currentTopics.includes(item)}
-								toggleTopic={toggleTopic}
-							>
-								{item}
-							</Topic>
-						))
-			}
+			{data.topics.slice(0, 7).map(item => (
+				<Topic key={item} active={currentTopics.includes(item)} toggleTopic={toggleTopic}>
+					{item}
+				</Topic>
+			))}
 		</Flex>
 		<Flex>
-			<FlexChild><Button><i className="fas fa-star" />{data.stars}</Button></FlexChild>
-			<FlexChild><Button><i className="fas fa-code-branch" />{data.forks}</Button></FlexChild>
-			<FlexChild><Button><i className="fas fa-eye" />{data.watchers}</Button></FlexChild>
+			<FlexChild>
+				<Button>
+					<i className="fas fa-star" />
+					{data.stars}
+				</Button>
+			</FlexChild>
+			<FlexChild>
+				<Button>
+					<i className="fas fa-code-branch" />
+					{data.forks}
+				</Button>
+			</FlexChild>
+			<FlexChild>
+				<Button>
+					<i className="fas fa-eye" />
+					{data.watchers}
+				</Button>
+			</FlexChild>
 		</Flex>
 	</ResultItem>
 );
@@ -55,7 +62,7 @@ const Results = ({ toggleTopic, currentTopics }) => (
 	<ReactiveList
 		componentId="results"
 		dataField="name"
-		onData={data => onData(data, currentTopics, toggleTopic)}
+		renderData={data => onData(data, currentTopics, toggleTopic)}
 		onResultStats={onResultStats}
 		react={{
 			and: ['name', 'language', 'topics', 'pushed', 'created', 'stars', 'forks', 'repo'],

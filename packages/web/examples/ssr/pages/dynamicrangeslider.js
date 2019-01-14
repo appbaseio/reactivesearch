@@ -44,12 +44,10 @@ export default class Main extends Component {
 				[
 					{
 						...dynamicRangeSliderProps,
-						type: 'DynamicRangeSlider',
 						source: DynamicRangeSlider,
 					},
 					{
 						...reactiveListProps,
-						type: 'ReactiveList',
 						source: ReactiveList,
 					},
 				],

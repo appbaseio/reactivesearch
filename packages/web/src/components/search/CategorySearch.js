@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import {
 	addComponent,
@@ -80,7 +81,7 @@ class CategorySearch extends Component {
 		const aggsQuery = this.getAggsQuery(props.categoryField);
 		props.setQueryOptions(this.internalComponent, aggsQuery, false);
 		const hasMounted = false;
-		const category = null; // TODO: Add support for reading categories
+		const category = props.selectedCategory;
 		const cause = null;
 
 		if (currentValue) {
@@ -121,7 +122,7 @@ class CategorySearch extends Component {
 		checkSomePropChange(
 			this.props,
 			prevProps,
-			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'categoryField'],
+			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'categoryField', 'nestedField'],
 			() => {
 				this.updateQuery(this.props.componentId, this.state.currentValue, this.props);
 			},
@@ -227,6 +228,15 @@ class CategorySearch extends Component {
 		if (value === '') {
 			finalQuery = {
 				match_all: {},
+			};
+		}
+
+		if (finalQuery && props.nestedField) {
+			finalQuery = {
+				nested: {
+					path: props.nestedField,
+					query: finalQuery,
+				},
 			};
 		}
 
@@ -400,7 +410,7 @@ class CategorySearch extends Component {
 			} // prettier-ignore
 			: query;
 
-		props.setQueryOptions(this.props.componentId, {
+		props.setQueryOptions(componentId, {
 			...this.queryOptions,
 			...defaultQueryOptions,
 			...customQueryOptions,
@@ -413,6 +423,7 @@ class CategorySearch extends Component {
 			showFilter,
 			URLParams,
 			componentType: 'CATEGORYSEARCH',
+			category,
 		});
 	};
 
@@ -450,8 +461,10 @@ class CategorySearch extends Component {
 		}
 
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(inputValue);
+		if (value === undefined) {
+			this.setValue(inputValue);
+		} else if (onChange) {
+			onChange(inputValue);
 		} else {
 			this.setValue(inputValue);
 		}
@@ -617,7 +630,7 @@ class CategorySearch extends Component {
 		const {
 			theme,
 			themePreset,
-			renderAllSuggestion,
+			renderAllSuggestions,
 			categories, // defaults to empty array
 		} = this.props;
 
@@ -709,8 +722,8 @@ class CategorySearch extends Component {
 								{this.renderIcons()}
 								{this.renderLoader()}
 								{this.renderError()}
-								{renderAllSuggestion
-									&& renderAllSuggestion({
+								{renderAllSuggestions
+									&& renderAllSuggestions({
 										currentValue: this.state.currentValue,
 										isOpen,
 										getItemProps,
@@ -719,7 +732,7 @@ class CategorySearch extends Component {
 										categories: filteredCategories,
 										parsedSuggestions: suggestionsList,
 									})}
-								{!renderAllSuggestion && isOpen && finalSuggestionsList.length ? (
+								{!renderAllSuggestions && isOpen && finalSuggestionsList.length ? (
 									<ul
 										className={`${suggestions(
 											themePreset,
@@ -792,6 +805,7 @@ CategorySearch.propTypes = {
 	options: types.options,
 	categories: types.data,
 	selectedValue: types.selectedValue,
+	selectedCategory: types.selectedValue,
 	suggestions: types.suggestions,
 	// component props
 	autoFocus: types.bool,
@@ -805,6 +819,8 @@ CategorySearch.propTypes = {
 	customQuery: types.func,
 	dataField: types.dataFieldArray,
 	debounce: types.number,
+	// eslint-disable-next-line
+	error: types.any,
 	defaultValue: types.string,
 	value: types.string,
 	defaultSuggestions: types.suggestions,
@@ -819,6 +835,7 @@ CategorySearch.propTypes = {
 	innerClass: types.style,
 	isLoading: types.bool,
 	loader: types.title,
+	nestedField: types.string,
 	onError: types.func,
 	onBlur: types.func,
 	onFocus: types.func,
@@ -835,7 +852,7 @@ CategorySearch.propTypes = {
 	react: types.react,
 	renderError: types.title,
 	renderSuggestion: types.func,
-	renderAllSuggestion: types.func,
+	renderAllSuggestions: types.func,
 	renderNoSuggestion: types.title,
 	showClear: types.bool,
 	showFilter: types.bool,
@@ -874,6 +891,10 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	selectedCategory:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].category)
+		|| null,
 	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
@@ -896,6 +917,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <CategorySearch ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, CategorySearch);
+
+ForwardRefComponent.name = 'CategorySearch';
+export default ForwardRefComponent;

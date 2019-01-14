@@ -9,6 +9,7 @@ import {
 	setQueryListener,
 	loadMore,
 } from '@appbaseio/reactivecore/lib/actions';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	getQueryOptions,
 	pushToAndClause,
@@ -218,7 +219,7 @@ class SingleList extends Component {
 		let query = SingleList.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		this.queryOptions = {
@@ -260,7 +261,14 @@ class SingleList extends Component {
 			...this.queryOptions,
 			...queryOptions,
 		};
-		props.setQueryOptions(this.internalComponent, this.queryOptions);
+		if (props.defaultQuery) {
+			const value = this.state.currentValue;
+			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+			props.setQueryOptions(this.internalComponent,
+				{ ...this.queryOptions, ...defaultQueryOptions });
+		} else {
+			props.setQueryOptions(this.internalComponent, this.queryOptions);
+		}
 	};
 
 	handleInputChange = (e) => {
@@ -295,10 +303,11 @@ class SingleList extends Component {
 
 	handleClick = (e) => {
 		const { value, onChange } = this.props;
-		if (value) {
-			if (onChange) onChange(e);
-		} else {
-			this.setValue(e.target.value);
+		const { value: listValue } = e.target;
+		if (value === undefined) {
+			this.setValue(listValue);
+		} else if (onChange) {
+			onChange(listValue);
 		}
 	};
 
@@ -402,7 +411,7 @@ class SingleList extends Component {
 											renderItem(item.key, item.doc_count, isChecked)
 										) : (
 											<span>
-												{item.key}
+												<span>{item.key}</span>
 												{this.props.showCount && (
 													<span
 														className={
@@ -412,7 +421,7 @@ class SingleList extends Component {
 															) || null
 														}
 													>
-														&nbsp;({item.doc_count})
+														{item.doc_count}
 													</span>
 												)}
 											</span>
@@ -448,6 +457,7 @@ SingleList.propTypes = {
 	className: types.string,
 	componentId: types.stringRequired,
 	customQuery: types.func,
+	defaultQuery: types.func,
 	dataField: types.stringRequired,
 	defaultValue: types.string,
 	error: types.title,
@@ -531,6 +541,11 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(props => <SingleList ref={props.myForwardedRef} {...props} />);
 
-export default React.forwardRef((props, ref) => (
+// eslint-disable-next-line
+const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
+hoistNonReactStatics(ForwardRefComponent, SingleList);
+
+ForwardRefComponent.name = 'SingleList';
+export default ForwardRefComponent;
