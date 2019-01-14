@@ -52,6 +52,8 @@ class DateRange extends Component {
 		this.state = {
 			currentDate,
 			dateHovered: null,
+			startKey: 'on-start',
+			endKey: 'on-end',
 		};
 		this.locked = false;
 		const hasMounted = false;
@@ -200,7 +202,11 @@ class DateRange extends Component {
 			} else if (onChange) {
 				onChange({ start: '', end: this.state.currentDate.end });
 			} else {
-				this.handleStartDate('', false); // resets the day picker component
+				// Since value prop is defined and onChange is not define
+				// we keep the same date as in store
+				this.setState({
+					currentDate: this.state.currentDate,
+				});
 			}
 		}
 	};
@@ -215,7 +221,11 @@ class DateRange extends Component {
 			} else if (onChange) {
 				onChange({ start: this.state.currentDate.start, end: '' });
 			} else {
-				this.handleEndDate('', false); // resets the day picker component
+				// Since value prop is defined and onChange is not define
+				// we keep the same date as in store
+				this.setState({
+					currentDate: this.state.currentDate,
+				});
 			}
 		}
 	};
@@ -236,10 +246,11 @@ class DateRange extends Component {
 				end,
 			});
 		} else {
-			this.handleDateChange({
-				start: date,
-				end,
-			});
+			// this will trigger a remount on the date component
+			// since DayPickerInput doesn't respect the controlled behavior setting on its own
+			this.setState(state => ({
+				startKey: state.startKey === 'on-start' ? 'off-start' : 'on-start',
+			}));
 		}
 		// focus the end date DayPicker if its empty
 		if (this.props.autoFocusEnd && autoFocus) {
@@ -264,10 +275,11 @@ class DateRange extends Component {
 				end: date,
 			});
 		} else {
-			this.handleDateChange({
-				start,
-				end: date,
-			});
+			// this will trigger a remount on the date component
+			// since DayPickerInput doesn't respect the controlled behavior setting on its own
+			this.setState(state => ({
+				endKey: state.endKey === 'on-end' ? 'off-end' : 'on-end',
+			}));
 		}
 	};
 
@@ -375,6 +387,7 @@ class DateRange extends Component {
 							showOverlay={this.props.focused}
 							formatDate={this.formatInputDate}
 							value={start}
+							key={this.state.startKey}
 							placeholder={this.props.placeholder.start}
 							dayPickerProps={{
 								numberOfMonths: this.props.numberOfMonths,
@@ -426,6 +439,7 @@ class DateRange extends Component {
 							showOverlay={this.props.focused}
 							formatDate={this.formatInputDate}
 							value={end}
+							key={this.state.endKey}
 							placeholder={this.props.placeholder.end}
 							dayPickerProps={{
 								numberOfMonths: this.props.numberOfMonths,

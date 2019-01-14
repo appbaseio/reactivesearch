@@ -35,6 +35,7 @@ class DatePicker extends Component {
 		const currentDate = props.selectedValue || props.value || props.defaultValue || '';
 		this.state = {
 			currentDate,
+			key: 'on',
 		};
 		this.locked = false;
 
@@ -108,7 +109,19 @@ class DatePicker extends Component {
 
 	clearDayPicker = () => {
 		if (this.state.currentDate !== '') {
-			this.handleDateChange(''); // resets the day picker component
+			const { value, onChange } = this.props;
+
+			if (value === undefined) {
+				this.handleDateChange('', false); // resets the day picker component
+			} else if (onChange) {
+				onChange('');
+			} else {
+				// Since value prop is defined and onChange is not define
+				// we keep the same date as in store
+				this.setState({
+					currentDate: this.state.currentDate,
+				});
+			}
 		}
 	};
 
@@ -120,7 +133,11 @@ class DatePicker extends Component {
 		} else if (onChange) {
 			onChange(date || '');
 		} else {
-			this.handleDateChange(date || '');
+			// this will trigger a remount on the date component
+			// since DayPickerInput doesn't respect the controlled behavior setting on its own
+			this.setState(state => ({
+				key: state.key === 'on' ? 'off' : 'on',
+			}));
 		}
 	};
 
@@ -215,6 +232,7 @@ class DatePicker extends Component {
 							numberOfMonths: this.props.numberOfMonths,
 							initialMonth: this.props.initialMonth,
 						}}
+						key={this.state.key}
 						clickUnselectsDay={this.props.clickUnselectsDay}
 						onDayChange={this.handleDayPicker}
 						inputProps={{
