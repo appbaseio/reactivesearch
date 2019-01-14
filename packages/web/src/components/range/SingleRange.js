@@ -145,7 +145,7 @@ class SingleRange extends Component {
 		let query = SingleRange.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
@@ -169,8 +169,6 @@ class SingleRange extends Component {
 			this.setValue(rangeValue);
 		} else if (onChange) {
 			onChange(rangeValue);
-		} else {
-			this.setValue(rangeValue);
 		}
 	};
 
@@ -202,7 +200,7 @@ class SingleRange extends Component {
 									className={getClassName(this.props.innerClass, 'label') || null}
 									htmlFor={`${this.props.componentId}-${item.label}`}
 								>
-									{item.label}
+									<span>{item.label}</span>
 								</label>
 							</li>
 						);

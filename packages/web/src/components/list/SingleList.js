@@ -219,7 +219,7 @@ class SingleList extends Component {
 		let query = SingleList.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		this.queryOptions = {
@@ -404,7 +404,7 @@ class SingleList extends Component {
 											renderItem(item.key, item.doc_count, isChecked)
 										) : (
 											<span>
-												{item.key}
+												<span>{item.key}</span>
 												{this.props.showCount && (
 													<span
 														className={
@@ -414,7 +414,7 @@ class SingleList extends Component {
 															) || null
 														}
 													>
-														&nbsp;({item.doc_count})
+														{item.doc_count}
 													</span>
 												)}
 											</span>

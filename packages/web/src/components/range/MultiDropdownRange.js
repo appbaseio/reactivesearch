@@ -64,7 +64,7 @@ class MultiDropdownRange extends Component {
 		});
 
 		if (!isEqual(this.props.value, prevProps.value)) {
-			this.selectItem(this.props.value);
+			this.selectItem(this.props.value, true);
 		} else if (
 			!isEqual(this.state.currentValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
@@ -188,7 +188,7 @@ class MultiDropdownRange extends Component {
 		let query = MultiDropdownRange.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
@@ -211,8 +211,6 @@ class MultiDropdownRange extends Component {
 			this.selectItem(items);
 		} else if (onChange) {
 			onChange(items);
-		} else {
-			this.selectItem(items);
 		}
 	};
 

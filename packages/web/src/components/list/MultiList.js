@@ -335,7 +335,7 @@ class MultiList extends Component {
 		let query = MultiList.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 		this.queryOptions = {
@@ -526,7 +526,7 @@ class MultiList extends Component {
 										)
 									) : (
 										<span>
-											{item.key}
+											<span>{item.key}</span>
 											{this.props.showCount && (
 												<span
 													className={
@@ -536,7 +536,7 @@ class MultiList extends Component {
 														) || null
 													}
 												>
-													&nbsp;({item.doc_count})
+													{item.doc_count}
 												</span>
 											)}
 										</span>

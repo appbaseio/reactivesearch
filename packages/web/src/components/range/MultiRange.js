@@ -65,7 +65,7 @@ class MultiRange extends Component {
 		});
 
 		if (!isEqual(this.props.value, prevProps.value)) {
-			this.selectItem(this.props.value);
+			this.selectItem(this.props.value, true);
 		} else if (
 			!isEqual(this.state.currentValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
@@ -185,7 +185,7 @@ class MultiRange extends Component {
 		let query = MultiRange.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props));
+			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
 
@@ -210,8 +210,6 @@ class MultiRange extends Component {
 			this.selectItem(rangeValue);
 		} else if (onChange) {
 			onChange(rangeValue);
-		} else {
-			this.selectItem(rangeValue);
 		}
 	};
 
@@ -242,7 +240,7 @@ class MultiRange extends Component {
 								className={getClassName(this.props.innerClass, 'label') || null}
 								htmlFor={`${this.props.componentId}-${item.label}`}
 							>
-								{item.label}
+								<span>{item.label}</span>
 							</label>
 						</li>
 					))}
