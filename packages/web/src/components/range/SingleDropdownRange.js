@@ -63,7 +63,15 @@ class SingleDropdownRange extends Component {
 			!isEqual(this.state.currentValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
-			this.setValue(this.props.selectedValue || null, true);
+			const { value, onChange } = this.props;
+			if (value === undefined) {
+				this.setValue(this.props.selectedValue || null, true);
+			} else if (onChange) {
+				onChange(this.props.selectedValue || null);
+			} else {
+				const selectedItem = this.state.currentValue.label;
+				this.setValue(selectedItem, true);
+			}
 		}
 	}
 

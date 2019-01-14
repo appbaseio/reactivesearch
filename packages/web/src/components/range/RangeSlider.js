@@ -87,8 +87,16 @@ class RangeSlider extends Component {
 			!isEqual(this.state.currentValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
-			const value = RangeSlider.parseValue(this.props.selectedValue, this.props);
-			this.handleChange(value, this.props);
+			const { value, onChange } = this.props;
+
+			if (value === undefined) {
+				const selectedValue = RangeSlider.parseValue(this.props.selectedValue, this.props);
+				this.handleChange(selectedValue, this.props);
+			} else if (onChange) {
+				onChange(this.props.selectedValue || null);
+			} else {
+				this.handleChange(this.state.currentValue);
+			}
 		}
 	}
 

@@ -69,7 +69,15 @@ class MultiDropdownRange extends Component {
 			!isEqual(this.state.currentValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
-			this.selectItem(this.props.selectedValue || null);
+			const { value, onChange } = this.props;
+			if (value === undefined) {
+				this.selectItem(this.props.selectedValue || null);
+			} else if (onChange) {
+				onChange(this.props.selectedValue || null);
+			} else {
+				const selectedValuesArray = Object.keys(this.selectedValues);
+				this.selectItem(selectedValuesArray, true);
+			}
 		}
 	}
 

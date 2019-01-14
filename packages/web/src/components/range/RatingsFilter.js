@@ -64,7 +64,14 @@ class RatingsFilter extends Component {
 			!isEqual(this.state.currentValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
-			this.setValue(this.props.selectedValue || null);
+			const { value, onChange } = this.props;
+			if (value === undefined) {
+				this.setValue(this.props.selectedValue || null);
+			} else if (onChange) {
+				onChange(this.props.selectedValue || null);
+			} else {
+				this.setValue(this.state.currentValue);
+			}
 		}
 	}
 
