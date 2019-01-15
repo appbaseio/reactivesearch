@@ -12,7 +12,7 @@ const URLParamsProvider = {
 	name: 'URLParamsProvider',
 	props: {
 		headers: types.headers,
-		className: types.string
+		className: types.string,
 	},
 	mounted() {
 		window.onpopstate = () => {
@@ -61,7 +61,8 @@ const URLParamsProvider = {
 							this.$params.delete(component);
 							this.pushToHistory();
 						}
-					}); // remove unmounted components
+					});
+				// remove unmounted components
 				Object.keys(oldVal)
 					.filter(component => !currentComponents.includes(component))
 					.forEach(component => {
@@ -80,7 +81,7 @@ const URLParamsProvider = {
 			if (!isEqual(oldVal, newVal)) {
 				this.setHeaders(newVal);
 			}
-		}
+		},
 	},
 
 	render() {
@@ -126,30 +127,28 @@ const URLParamsProvider = {
 		},
 		pushToHistory() {
 			if (window.history.pushState) {
-				const paramsSting = this.$params.toString()
-					? `?${this.$params.toString()}`
-					: '';
+				const paramsSting = this.$params.toString() ? `?${this.$params.toString()}` : '';
 				const base = window.location.href.split('?')[0];
 				const newurl = `${base}${paramsSting}`;
 				window.history.pushState(
 					{
-						path: newurl
+						path: newurl,
 					},
 					'',
-					newurl
+					newurl,
 				);
 			}
-		}
-	}
+		},
+	},
 };
 
 const mapStateToProps = state => ({
-	selectedValues: state.selectedValues
+	selectedValues: state.selectedValues,
 });
 
 const mapDispatchtoProps = {
 	setHeaders,
-	setValue
+	setValue,
 };
 
 URLParamsProvider.install = function(Vue) {
@@ -157,5 +156,5 @@ URLParamsProvider.install = function(Vue) {
 };
 export default connect(
 	mapStateToProps,
-	mapDispatchtoProps
+	mapDispatchtoProps,
 )(URLParamsProvider);

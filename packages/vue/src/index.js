@@ -7,6 +7,7 @@ import SingleDropdownList from './components/list/SingleDropdownList.jsx';
 import MultiDropdownList from './components/list/MultiDropdownList.jsx';
 import ReactiveComponent from './components/basic/ReactiveComponent.jsx';
 import SelectedFilters from './components/basic/SelectedFilters.jsx';
+import ToggleButton from './components/basic/ToggleButton.jsx';
 import SingleRange from './components/range/SingleRange.jsx';
 import MultiRange from './components/range/MultiRange.jsx';
 import ResultCard from './components/result/ResultCard.jsx';
@@ -29,6 +30,7 @@ const components = [
 	DynamicRangeSlider,
 	ReactiveComponent,
 	SelectedFilters,
+	ToggleButton,
 	SingleDropdownList,
 	MultiDropdownList,
 ];
@@ -61,10 +63,11 @@ export {
 	ReactiveComponent,
 	SelectedFilters,
 	SingleDropdownList,
-	MultiDropdownList
+	MultiDropdownList,
+	ToggleButton,
 };
 
 export default {
 	version,
-	install
+	install,
 };
