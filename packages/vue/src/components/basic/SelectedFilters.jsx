@@ -6,7 +6,7 @@ import Container from '../../styles/Container';
 import Title from '../../styles/Title';
 import { connect } from '../../utils/index';
 
-const { setValue, clearValues } = Actions;
+const { patchValue, clearValues } = Actions;
 const { getClassName } = helper;
 
 const SelectedFilters = {
@@ -16,7 +16,7 @@ const SelectedFilters = {
 		clearAllLabel: VueTypes.string.def('Clear All'),
 		innerClass: types.style,
 		showClearAll: VueTypes.bool.def(true),
-		title: types.title
+		title: types.title,
 	},
 	inject: ['theme'],
 	render() {
@@ -26,11 +26,8 @@ const SelectedFilters = {
 		const filtersToRender = this.renderFilters();
 		const hasValues = !!filtersToRender.length;
 		return (
-			<Container
-				class={`${filters(this.theme)} ${this.$props.className || ''}`}
-			>
-				{this.$props.title
-					&& hasValues && (
+			<Container class={`${filters(this.theme)} ${this.$props.className || ''}`}>
+				{this.$props.title && hasValues && (
 					<Title class={getClassName(this.$props.innerClass, 'title') || ''}>
 						{this.$props.title}
 					</Title>
@@ -41,8 +38,8 @@ const SelectedFilters = {
 						class={getClassName(this.$props.innerClass, 'button') || ''}
 						{...{
 							on: {
-								click: this.clearValues
-							}
+								click: this.clearValues,
+							},
 						}}
 					>
 						{this.$props.clearAllLabel}
@@ -54,7 +51,7 @@ const SelectedFilters = {
 
 	methods: {
 		remove(component, value = null) {
-			this.setValue(component, null);
+			this.patchValue(component, { value: null });
 			this.$emit('clear', component, value);
 		},
 		clearValues() {
@@ -88,9 +85,7 @@ const SelectedFilters = {
 		renderFilters() {
 			const { selectedValues } = this;
 			return Object.keys(selectedValues)
-				.filter(
-					id => this.components.includes(id) && selectedValues[id].showFilter
-				)
+				.filter(id => this.components.includes(id) && selectedValues[id].showFilter)
 				.map((component, index) => {
 					const { label, value } = selectedValues[component];
 					const isArray = Array.isArray(value);
@@ -103,8 +98,8 @@ const SelectedFilters = {
 								key={`${component}-${index + 1}`}
 								{...{
 									on: {
-										click: () => this.remove(component, value)
-									}
+										click: () => this.remove(component, value),
+									},
 								}}
 							>
 								<span>
@@ -118,23 +113,23 @@ const SelectedFilters = {
 					return null;
 				})
 				.filter(Boolean);
-		}
-	}
+		},
+	},
 };
 
 const mapStateToProps = state => ({
 	components: state.components,
-	selectedValues: state.selectedValues
+	selectedValues: state.selectedValues,
 });
 
 const mapDispatchtoProps = {
 	clearValuesAction: clearValues,
-	setValue
+	patchValue,
 };
 
 const RcConnected = connect(
 	mapStateToProps,
-	mapDispatchtoProps
+	mapDispatchtoProps,
 )(SelectedFilters);
 
 SelectedFilters.install = function(Vue) {

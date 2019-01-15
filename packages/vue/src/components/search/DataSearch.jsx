@@ -176,8 +176,8 @@ const DataSearch = {
 				this.normalizedSuggestions = this.onSuggestions(newVal);
 			}
 		},
-		selectedValue(newVal) {
-			if (this.selectedValue !== newVal && this.$data.currentValue !== newVal) {
+		selectedValue(newVal, oldVal) {
+			if (oldVal !== newVal && this.$data.currentValue !== newVal) {
 				this.setValue(newVal || '', true, this.$props);
 			}
 		}
