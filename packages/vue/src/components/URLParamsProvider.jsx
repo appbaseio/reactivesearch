@@ -63,7 +63,7 @@ const URLParamsProvider = {
 						}
 					});
 				// remove unmounted components
-				Object.keys(oldVal)
+				Object.keys(newVal)
 					.filter(component => !currentComponents.includes(component))
 					.forEach(component => {
 						this.$params.delete(component);
