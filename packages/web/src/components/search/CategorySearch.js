@@ -410,7 +410,9 @@ class CategorySearch extends Component {
 			} // prettier-ignore
 			: query;
 
-		props.setQueryOptions(componentId, {
+		// query options should be applied to the source component,
+		// not on internal component, hence using `this.props.componentId` here
+		props.setQueryOptions(this.props.componentId, {
 			...this.queryOptions,
 			...defaultQueryOptions,
 			...customQueryOptions,
@@ -677,6 +679,7 @@ class CategorySearch extends Component {
 			}
 			finalSuggestionsList = [...categorySuggestions, ...suggestionsList];
 		}
+
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
