@@ -380,7 +380,9 @@ class DataSearch extends Component {
 			} // prettier-ignore
 			: query;
 
-		props.setQueryOptions(componentId, {
+		// query options should be applied to the source component,
+		// not on internal component, hence using `this.props.componentId` here
+		props.setQueryOptions(this.props.componentId, {
 			...this.queryOptions,
 			...defaultQueryOptions,
 			...customQueryOptions,
