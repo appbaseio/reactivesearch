@@ -92,12 +92,25 @@ class TagCloud extends Component {
 		}
 
 		if (this.props.value !== prevProps.value) {
-			this.setValue(this.props.value, true);
+			this.setValue(this.props.value, true, this.props);
 		} else if (
 			!isEqual(selectedValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
-			this.setValue(this.props.selectedValue || [], true);
+			const { value, onChange } = this.props;
+			if (value === undefined) {
+				this.setValue(this.props.selectedValue || [], true, this.props);
+			} else if (onChange) {
+				// value prop exists
+				onChange(this.props.selectedValue || '');
+			} else {
+				// value prop exists and onChange is not defined:
+				// we need to put the current value back into the store
+				// if the clear action was triggered by interacting with
+				// selected-filters component
+				const selectedTags = Object.keys(this.state.currentValue);
+				this.setValue(selectedTags, true, this.props, false);
+			}
 		}
 	}
 
