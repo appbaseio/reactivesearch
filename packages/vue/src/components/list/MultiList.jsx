@@ -6,6 +6,7 @@ import Container from '../../styles/Container';
 import { connect } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Checkbox } from '../../styles/FormControlList';
+import { getAggsQuery } from './utils';
 
 const {
 	addComponent,
@@ -50,7 +51,8 @@ const MultiList = {
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
 		showMissing: VueTypes.bool.def(false),
-		missingLabel: VueTypes.string.def('N/A')
+		missingLabel: VueTypes.string.def('N/A'),
+		nestedField: types.string,
 	},
 	data() {
 		const props = this.$props;
@@ -143,7 +145,6 @@ const MultiList = {
 		if (this.$props.transformData) {
 			itemsToRender = this.$props.transformData(itemsToRender);
 		}
-
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -345,22 +346,7 @@ const MultiList = {
 
 		generateQueryOptions(props) {
 			const queryOptions = getQueryOptions(props);
-			queryOptions.size = 0;
-			queryOptions.aggs = {
-				[props.dataField]: {
-					terms: {
-						field: props.dataField,
-						size: props.size,
-						order: getAggsOrder(props.sortBy || 'count'),
-						...(props.showMissing
-							? {
-								missing: props.missingLabel
-							  }
-							: {})
-					}
-				}
-			};
-			return queryOptions;
+			return getAggsQuery(queryOptions, props);
 		},
 
 		updateQueryHandlerOptions(props) {
@@ -466,26 +452,28 @@ MultiList.defaultQuery = (value, props) => {
 
 		query = value.length ? listQuery : null;
 	}
+
+	if (query && props.nestedField) {
+		query = {
+			query: {
+				nested: {
+					path: props.nestedField,
+					query,
+				},
+			},
+		};
+	}
+
 	return query;
 };
 MultiList.generateQueryOptions = props => {
 	const queryOptions = getQueryOptions(props);
-	queryOptions.size = 0;
-	queryOptions.aggs = {
-		[props.dataField]: {
-			terms: {
-				field: props.dataField,
-				size: props.size,
-				order: getAggsOrder(props.sortBy || 'count'),
-				...(props.showMissing ? { missing: props.missingLabel } : {})
-			}
-		}
-	};
-
-	return queryOptions;
+	return getAggsQuery(queryOptions, props);
 };
 const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId],
+	options: props.nestedField && state.aggregations[props.componentId]
+		? state.aggregations[props.componentId].reactivesearch_nested
+		: state.aggregations[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)

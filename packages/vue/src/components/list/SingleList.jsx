@@ -6,6 +6,7 @@ import Container from '../../styles/Container';
 import { connect } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Radio } from '../../styles/FormControlList';
+import { getAggsQuery } from './utils';
 
 const {
 	addComponent,
@@ -48,7 +49,8 @@ const SingleList = {
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
 		showMissing: VueTypes.bool.def(false),
-		missingLabel: VueTypes.string.def('N/A')
+		missingLabel: VueTypes.string.def('N/A'),
+		nestedField: types.string,
 	},
 	data() {
 		const props = this.$props;
@@ -292,22 +294,7 @@ const SingleList = {
 
 		generateQueryOptions(props) {
 			const queryOptions = getQueryOptions(props);
-			queryOptions.size = 0;
-			queryOptions.aggs = {
-				[props.dataField]: {
-					terms: {
-						field: props.dataField,
-						size: props.size,
-						order: getAggsOrder(props.sortBy || 'count'),
-						...(props.showMissing
-							? {
-								missing: props.missingLabel
-							  }
-							: {})
-					}
-				}
-			};
-			return queryOptions;
+			return getAggsQuery(queryOptions, props);
 		},
 
 		updateQueryHandlerOptions(props) {
@@ -347,25 +334,15 @@ const SingleList = {
 
 SingleList.generateQueryOptions = props => {
 	const queryOptions = getQueryOptions(props);
-	queryOptions.size = 0;
-	queryOptions.aggs = {
-		[props.dataField]: {
-			terms: {
-				field: props.dataField,
-				size: props.size,
-				order: getAggsOrder(props.sortBy || 'count'),
-				...(props.showMissing ? { missing: props.missingLabel } : {})
-			}
-		}
-	};
-	return queryOptions;
+	return getAggsQuery(queryOptions, props);
 };
 SingleList.defaultQuery = (value, props) => {
+	let query = null;
 	if (props.selectAllLabel && props.selectAllLabel === value) {
 		if (props.showMissing) {
-			return { match_all: {} };
+			query = { match_all: {} };
 		}
-		return {
+		query = {
 			exists: {
 				field: props.dataField
 			}
@@ -373,7 +350,7 @@ SingleList.defaultQuery = (value, props) => {
 	}
 	if (value) {
 		if (props.showMissing && props.missingLabel === value) {
-			return {
+			query = {
 				bool: {
 					must_not: {
 						exists: { field: props.dataField }
@@ -381,16 +358,30 @@ SingleList.defaultQuery = (value, props) => {
 				}
 			};
 		}
-		return {
+		query = {
 			term: {
 				[props.dataField]: value
 			}
 		};
 	}
-	return null;
+
+	if (query && props.nestedField) {
+		return {
+			query: {
+				nested: {
+					path: props.nestedField,
+					query,
+				},
+			},
+		};
+	}
+
+	return query;
 };
 const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId],
+	options: props.nestedField && state.aggregations[props.componentId]
+		? state.aggregations[props.componentId].reactivesearch_nested
+		: state.aggregations[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
