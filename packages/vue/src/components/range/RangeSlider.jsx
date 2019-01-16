@@ -44,7 +44,8 @@ const RangeSlider = {
 		showCheckbox: VueTypes.bool.def(true),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
-		sliderOptions: VueTypes.object.def({})
+		sliderOptions: VueTypes.object.def({}),
+		nestedField: types.string,
 	},
 
 	methods: {
@@ -199,8 +200,9 @@ const RangeSlider = {
 };
 
 RangeSlider.defaultQuery = (values, props) => {
+	let query = null;
 	if (Array.isArray(values) && values.length) {
-		return {
+		query = {
 			range: {
 				[props.dataField]: {
 					gte: values[0],
@@ -210,7 +212,17 @@ RangeSlider.defaultQuery = (values, props) => {
 			},
 		};
 	}
-	return null;
+	if (query && props.nestedField) {
+		return {
+			query: {
+				nested: {
+					path: props.nestedField,
+					query
+				}
+			}
+		};
+	}
+	return query;
 };
 
 RangeSlider.parseValue = (value, props) => {

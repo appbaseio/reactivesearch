@@ -36,6 +36,7 @@ const MultiRange = {
 		showCheckbox: VueTypes.bool.def(true),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
+		nestedField: types.string,
 	},
 	methods: {
 		setReact(props) {
@@ -206,18 +207,28 @@ MultiRange.defaultQuery = (values, props) => {
 		}
 		return null;
 	};
-
+	let query = null;
 	if (values && values.length) {
-		const query = {
+		query = {
 			bool: {
 				should: generateRangeQuery(props.dataField, values),
 				minimum_should_match: 1,
 				boost: 1.0,
 			},
 		};
-		return query;
 	}
-	return null;
+	if (query && props.nestedField) {
+		return {
+			query: {
+				nested: {
+					path: props.nestedField,
+					query,
+				},
+			},
+		};
+	}
+
+	return query;
 };
 
 const mapStateToProps = (state, props) => ({

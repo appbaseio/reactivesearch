@@ -34,6 +34,7 @@ const SingleRange = {
 		showRadio: VueTypes.bool.def(true),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
+		nestedField: types.string,
 	},
 	created() {
 		const onQueryChange = (...args) => {
@@ -164,8 +165,9 @@ const SingleRange = {
 SingleRange.parseValue = (value, props) => props.data.find(item => item.label === value) || null;
 
 SingleRange.defaultQuery = (value, props) => {
+	let query = null;
 	if (value) {
-		return {
+		query = {
 			range: {
 				[props.dataField]: {
 					gte: value.start,
@@ -175,7 +177,17 @@ SingleRange.defaultQuery = (value, props) => {
 			},
 		};
 	}
-	return null;
+	if (query && props.nestedField) {
+		return {
+			query: {
+				nested: {
+					path: props.nestedField,
+					query
+				}
+			}
+		};
+	}
+	return query;
 };
 
 const mapStateToProps = (state, props) => ({
