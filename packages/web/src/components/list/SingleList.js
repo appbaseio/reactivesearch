@@ -60,7 +60,7 @@ class SingleList extends Component {
 		const hasMounted = false;
 
 		if (currentValue) {
-			this.setValue(currentValue, false, props, hasMounted);
+			this.setValue(currentValue, true, props, hasMounted);
 		}
 	}
 
@@ -194,7 +194,9 @@ class SingleList extends Component {
 		}
 
 		let value = nextValue;
-		if (!isDefaultValue && (this.state.currentValue === nextValue && hasMounted)) {
+		if (isDefaultValue) {
+			value = nextValue;
+		} else if (nextValue === this.state.currentValue && hasMounted) {
 			value = '';
 		}
 

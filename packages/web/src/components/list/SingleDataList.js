@@ -57,7 +57,7 @@ class SingleDataList extends Component {
 		this.setReact(props);
 
 		if (currentValue) {
-			this.setValue(currentValue, false, props, hasMounted);
+			this.setValue(currentValue, true, props, hasMounted);
 		}
 	}
 
