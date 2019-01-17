@@ -99,7 +99,8 @@ const DataSearch = {
 		title: types.title,
 		theme: types.style,
 		URLParams: VueTypes.bool.def(false),
-		strictSelection: VueTypes.bool.def(false)
+		strictSelection: VueTypes.bool.def(false),
+		nestedField: types.string,
 	},
 	beforeMount() {
 		this.addComponent(this.$props.componentId, 'DATASEARCH');
@@ -559,6 +560,17 @@ DataSearch.defaultQuery = (value, props) => {
 	if (value === '') {
 		finalQuery = {
 			match_all: {}
+		};
+	}
+
+	if (finalQuery && props.nestedField) {
+		return {
+			query: {
+				nested: {
+					path: props.nestedField,
+					query: finalQuery,
+				},
+			},
 		};
 	}
 
