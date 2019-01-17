@@ -63,8 +63,8 @@ const ReactiveList = {
 		innerClass: types.style,
 		listClass: VueTypes.string.def(''),
 		loader: types.title,
-		onAllData: types.func,
-		onData: types.func,
+		renderAllData: types.func,
+		renderData: types.func,
 		onResultStats: types.func,
 		onNoResults: VueTypes.string.def('No Results found.'),
 		pages: VueTypes.number.def(5),
@@ -154,7 +154,11 @@ const ReactiveList = {
 				this.setReact(this.$props);
 			}
 		},
+		streamHits() {
+			this.$emit('data', this.getAllData());
+		},
 		hits(newVal, oldVal) {
+			this.$emit('data', this.getAllData());
 			if (this.$props.pagination) {
 				// called when page is changed
 				if (this.isLoading && (oldVal || newVal)) {
@@ -291,7 +295,7 @@ const ReactiveList = {
 		const streamResults = parseHits(this.$data.streamHits) || [];
 		let filteredResults = results;
 
-		const onData = this.$scopedSlots.onData || this.$props.onData;
+		const renderData = this.$scopedSlots.renderData || this.$props.renderData;
 
 		if (streamResults.length) {
 			const ids = streamResults.map(item => item._id);
@@ -323,16 +327,8 @@ const ReactiveList = {
 							innerClass={this.$props.innerClass}
 						/>
 					) : null}
-				{this.$scopedSlots.onAllData ? (
-					this.$scopedSlots.onAllData({
-						results,
-						streamResults,
-						loadMore: this.loadMore,
-						analytics: {
-							base: this.$currentPage * size,
-							triggerClickAnalytics: this.triggerClickAnalytics,
-						},
-					})
+				{this.$scopedSlots.renderAllData ? (
+					this.$scopedSlots.renderAllData(this.getAllData())
 				) : (
 					<div
 						class={`${this.$props.listClass} ${getClassName(
@@ -341,7 +337,7 @@ const ReactiveList = {
 						)}`}
 					>
 						{[...streamResults, ...filteredResults].map((item, index) =>
-							onData({
+							renderData({
 								item,
 								triggerClickAnalytics: () =>
 									this.triggerClickAnalytics(this.$currentPage * size + index),
@@ -563,6 +559,20 @@ const ReactiveList = {
 					))}
 				</select>
 			);
+		},
+		// Shape of the object to be returned in onData & renderAllData
+		getAllData() {
+			const { size } = this.$props;
+			const { hits, streamHits } = this.$data;
+			const results = parseHits(hits) || [];
+			const streamResults = parseHits(streamHits) || [];
+			return {
+				results,
+				streamResults,
+				loadMore: this.loadMore,
+				base: this.$currentPage * size,
+				triggerClickAnalytics: this.triggerClickAnalytics,
+			};
 		},
 	},
 };
