@@ -65,7 +65,7 @@ const ReactiveList = {
 		loader: types.title,
 		renderAllData: types.func,
 		renderData: types.func,
-		onResultStats: types.func,
+		renderResultStats: types.func,
 		onNoResults: VueTypes.string.def('No Results found.'),
 		pages: VueTypes.number.def(5),
 		pagination: VueTypes.bool.def(false),
@@ -88,6 +88,23 @@ const ReactiveList = {
 		hasResultStatsListener() {
 			return this.$listeners && this.$listeners.resultStats;
 		},
+		stats() {
+			const results = parseHits(this.$data.hits) || [];
+			const streamResults = parseHits(this.$data.streamHits) || [];
+			let filteredResults = results;
+
+			if (streamResults.length) {
+				const ids = streamResults.map(item => item._id);
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+			}
+			return {
+				totalResults: this.$data.total,
+				totalPages: Math.ceil(this.$data.total / this.$props.size),
+				displayedResults: [...streamResults, ...filteredResults].length,
+				time: this.$data.time,
+				currentPage: this.$data.currentPage,
+			};
+		}
 	},
 	watch: {
 		sortOptions(newVal, oldVal) {
@@ -159,6 +176,7 @@ const ReactiveList = {
 		},
 		hits(newVal, oldVal) {
 			this.$emit('data', this.getAllData());
+			this.$emit('resultStats', this.stats);
 			if (this.$props.pagination) {
 				// called when page is changed
 				if (this.isLoading && (oldVal || newVal)) {
@@ -312,7 +330,7 @@ const ReactiveList = {
 					class={getClassName(this.$props.innerClass, 'resultsInfo')}
 				>
 					{this.$props.sortOptions ? this.renderSortOptions() : null}
-					{this.$props.showResultStats ? this.renderResultStats() : null}
+					{this.$props.showResultStats ? this.renderStats() : null}
 				</Flex>
 				{!this.isLoading && results.length === 0 && streamResults.length === 0
 					? this.renderNoResults()
@@ -475,15 +493,12 @@ const ReactiveList = {
 			}
 		},
 
-		renderResultStats() {
-			const onResultStats = this.$props.onResultStats || this.$scopedSlots.onResultStats;
-			if (onResultStats) {
-				return onResultStats({
-					total: this.$data.total,
-					time: this.$data.time,
-				});
-			}
-			if (this.$data.total) {
+		renderStats() {
+			const renderResultStats
+				= this.$scopedSlots.renderResultStats || this.$props.renderResultStats;
+			if (renderResultStats && this.$data.total) {
+				return renderResultStats(this.stats);
+			} else if (this.$data.total) {
 				return (
 					<p
 						class={`${resultStats} ${getClassName(
@@ -496,7 +511,6 @@ const ReactiveList = {
 					</p>
 				);
 			}
-
 			return null;
 		},
 
