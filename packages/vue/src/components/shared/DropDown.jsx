@@ -11,7 +11,7 @@ const Dropdown = {
 	data() {
 		this.__state = {
 			isOpen: false,
-			searchTerm: ''
+			searchTerm: '',
 		};
 		return this.__state;
 	},
@@ -24,7 +24,7 @@ const Dropdown = {
 		multi: types.bool, // change event
 		placeholder: types.string,
 		returnsObject: types.bool,
-		renderListItem: types.func,
+		renderItem: types.func,
 		handleChange: types.func,
 		transformData: types.func,
 		selectedItem: types.selectedValue,
@@ -32,7 +32,7 @@ const Dropdown = {
 		single: types.bool,
 		small: VueTypes.bool.def(false),
 		themePreset: types.themePreset,
-		showSearch: types.bool
+		showSearch: types.bool,
 	},
 
 	render() {
@@ -43,9 +43,9 @@ const Dropdown = {
 			labelField,
 			keyField,
 			themePreset,
-			renderListItem,
+			renderItem,
 			transformData,
-			footer
+			footer,
 		} = this.$props;
 		let itemsToRender = items;
 
@@ -64,16 +64,16 @@ const Dropdown = {
 						isOpen,
 						highlightedIndex,
 						getButtonProps,
-						getItemEvents
+						getItemEvents,
 					}) => (
 						<div class={suggestionsContainer}>
 							<Select
 								{...{
 									on: {
 										...getButtonProps({
-											onClick: this.toggle
-										})
-									}
+											onClick: this.toggle,
+										}),
+									},
 								}}
 								class={getClassName(this.$props.innerClass, 'select') || ''}
 								title={
@@ -83,9 +83,7 @@ const Dropdown = {
 								themePreset={this.$props.themePreset}
 							>
 								<div>
-									{selectedItem
-										? this.renderToString(selectedItem)
-										: placeholder}
+									{selectedItem ? this.renderToString(selectedItem) : placeholder}
 								</div>
 								<Chevron open={isOpen} />
 							</Select>
@@ -100,7 +98,7 @@ const Dropdown = {
 											id={`${this.$props.componentId}-input`}
 											style={{
 												border: 0,
-												borderBottom: '1px solid #ddd'
+												borderBottom: '1px solid #ddd',
 											}}
 											showIcon={false}
 											class={getClassName(this.$props.innerClass, 'input')}
@@ -113,10 +111,15 @@ const Dropdown = {
 									{itemsToRender
 										.filter(item => {
 											if (String(item[labelField]).length) {
-												if (this.$props.showSearch && this.$data.searchTerm) {
+												if (
+													this.$props.showSearch
+													&& this.$data.searchTerm
+												) {
 													return String(item[labelField])
 														.toLowerCase()
-														.includes(this.$data.searchTerm.toLowerCase());
+														.includes(
+															this.$data.searchTerm.toLowerCase(),
+														);
 												}
 
 												return true;
@@ -130,48 +133,58 @@ const Dropdown = {
 												&& ((selectedItem && !!selectedItem[item[keyField]]) // MultiDropdownRange
 													|| (Array.isArray(selectedItem)
 														&& selectedItem.find(
-															value => value[labelField] === item[labelField]
+															value =>
+																value[labelField]
+																=== item[labelField],
 														)));
 											if (!this.$props.multi)
 												selected = item.key === selectedItem;
 											return (
 												<li
 													{...{
-														domProps: getItemProps({ item })
+														domProps: getItemProps({ item }),
 													}}
 													{...{
 														on: getItemEvents({
-															item
-														})
+															item,
+														}),
 													}}
 													key={item[keyField]}
 													class={`${selected ? 'active' : ''}`}
 													style={{
 														backgroundColor: this.getBackgroundColor(
 															highlightedIndex === index,
-															selected
-														)
+															selected,
+														),
 													}}
 												>
-													{renderListItem ? (
-														renderListItem({
+													{renderItem ? (
+														renderItem({
 															label: item[labelField],
-															count: item.doc_count
+															count: item.doc_count,
+															isChecked:
+																selected && this.$props.multi,
 														})
 													) : (
 														<div>
-															{typeof item[labelField] === 'string' ? (
-																<span domPropsInnerHTML={item[labelField]} />
-															) : (
-																item[labelField]
-															)}
+															{typeof item[labelField]
+															=== 'string' ? (
+																	<span
+																		domPropsInnerHTML={
+																			item[labelField]
+																		}
+																	/>
+																) : (
+																	item[labelField]
+																)}
 															{this.$props.showCount
 																&& item.doc_count && (
 																<span
 																	class={
 																		getClassName(
-																			this.$props.innerClass,
-																			'count'
+																			this.$props
+																				.innerClass,
+																			'count',
 																		) || ''
 																	}
 																>
@@ -184,8 +197,10 @@ const Dropdown = {
 													{selected && this.$props.multi ? (
 														<Tick
 															class={
-																getClassName(this.$props.innerClass, 'icon')
-																|| ''
+																getClassName(
+																	this.$props.innerClass,
+																	'icon',
+																) || ''
 															}
 														/>
 													) : null}
@@ -196,7 +211,7 @@ const Dropdown = {
 								</ul>
 							) : null}
 						</div>
-					)
+					),
 				}}
 			/>
 		);
@@ -258,7 +273,7 @@ const Dropdown = {
 			}
 
 			return value;
-		}
-	}
+		},
+	},
 };
 export default Dropdown;

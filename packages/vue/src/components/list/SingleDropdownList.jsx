@@ -49,7 +49,7 @@ const SingleDropdownList = {
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Select a value'),
 		react: types.react,
-		renderListItem: types.func,
+		renderItem: types.func,
 		transformData: types.func,
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
@@ -140,11 +140,11 @@ const SingleDropdownList = {
 	},
 
 	render() {
-		const { showLoadMore, loadMoreLabel, renderListItem } = this.$props;
+		const { showLoadMore, loadMoreLabel, renderItem } = this.$props;
 		const { isLastBucket } = this.$data;
 		let selectAll = [];
-		const renderListItemCalc
-			= this.$scopedSlots.renderListItem || renderListItem;
+		const renderItemCalc
+			= this.$scopedSlots.renderItem || renderItem;
 
 		if (this.$data.modifiedOptions.length === 0) {
 			return null;
@@ -181,9 +181,9 @@ const SingleDropdownList = {
 					placeholder={this.$props.placeholder}
 					labelField="key"
 					showCount={this.$props.showCount}
-					renderListItem={renderListItemCalc}
+					renderItem={renderItemCalc}
 					themePreset={this.themePreset}
-					renderListItem={this.$props.renderListItem}
+					renderItem={this.$props.renderItem}
 					showSearch={this.$props.showSearch}
 					transformData={this.$props.transformData}
 					footer={

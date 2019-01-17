@@ -51,7 +51,7 @@ const MultiDropdownList = {
 		placeholder: VueTypes.string.def('Select values'),
 		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		react: types.react,
-		renderListItem: types.func,
+		renderItem: types.func,
 		transformData: types.func,
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
@@ -153,9 +153,9 @@ const MultiDropdownList = {
 	},
 
 	render() {
-		const { showLoadMore, loadMoreLabel, renderListItem } = this.$props;
-		const renderListItemCalc
-			= this.$scopedSlots.renderListItem || renderListItem;
+		const { showLoadMore, loadMoreLabel, renderItem } = this.$props;
+		const renderItemCalc
+			= this.$scopedSlots.renderItem || renderItem;
 		const { isLastBucket } = this.$data;
 		let selectAll = [];
 
@@ -196,7 +196,7 @@ const MultiDropdownList = {
 					multi
 					showCount={this.$props.showCount}
 					themePreset={this.themePreset}
-					renderListItem={renderListItemCalc}
+					renderItem={renderItemCalc}
 					showSearch={this.$props.showSearch}
 					transformData={this.$props.transformData}
 					footer={

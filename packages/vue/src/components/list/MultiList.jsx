@@ -14,16 +14,9 @@ const {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener
+	setQueryListener,
 } = Actions;
-const {
-	isEqual,
-	getQueryOptions,
-	pushToAndClause,
-	checkValueChange,
-	getAggsOrder,
-	getClassName
-} = helper;
+const { isEqual, getQueryOptions, pushToAndClause, checkValueChange, getClassName } = helper;
 
 const MultiList = {
 	name: 'MultiList',
@@ -40,7 +33,7 @@ const MultiList = {
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Search'),
 		react: types.react,
-		renderListItem: types.func,
+		renderItem: types.func,
 		transformData: types.func,
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
@@ -62,7 +55,7 @@ const MultiList = {
 				props.options && props.options[props.dataField]
 					? props.options[props.dataField].buckets
 					: [],
-			searchTerm: ''
+			searchTerm: '',
 		};
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -118,9 +111,7 @@ const MultiList = {
 			let selectedValue = Object.keys(this.$data.currentValue);
 
 			if (this.$props.selectAllLabel) {
-				selectedValue = selectedValue.filter(
-					val => val !== this.$props.selectAllLabel
-				);
+				selectedValue = selectedValue.filter(val => val !== this.$props.selectAllLabel);
 
 				if (this.$data.currentValue[this.$props.selectAllLabel]) {
 					selectedValue = [this.$props.selectAllLabel];
@@ -129,13 +120,12 @@ const MultiList = {
 			if (!isEqual(selectedValue, newVal)) {
 				this.setValue(newVal || [], true);
 			}
-		}
+		},
 	},
 	render() {
-		const { selectAllLabel, renderListItem } = this.$props;
+		const { selectAllLabel, renderItem } = this.$props;
 
-		const renderListItemCalc
-			= this.$scopedSlots.renderListItem || renderListItem;
+		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
 		if (this.modifiedOptions.length === 0) {
 			return null;
 		}
@@ -168,8 +158,8 @@ const MultiList = {
 								onClick={this.handleClick}
 								{...{
 									domProps: {
-										checked: !!this.currentValue[selectAllLabel]
-									}
+										checked: !!this.currentValue[selectAllLabel],
+									},
 								}}
 								show={this.$props.showCheckbox}
 							/>
@@ -210,25 +200,29 @@ const MultiList = {
 									show={this.$props.showCheckbox}
 									{...{
 										domProps: {
-											checked: !!this.$data.currentValue[item.key]
-										}
+											checked: !!this.$data.currentValue[item.key],
+										},
 									}}
 								/>
 								<label
 									class={getClassName(this.$props.innerClass, 'label')}
 									for={`${this.$props.componentId}-${item.key}`}
 								>
-									{renderListItemCalc ? (
-										renderListItemCalc({
+									{renderItemCalc ? (
+										renderItemCalc({
 											label: item.key,
-											count: item.doc_count
+											count: item.doc_count,
+											isChecked: !!this.$data.currentValue[item.key],
 										})
 									) : (
 										<span>
 											{item.key}
 											{this.$props.showCount && (
 												<span
-													class={getClassName(this.$props.innerClass, 'count')}
+													class={getClassName(
+														this.$props.innerClass,
+														'count',
+													)}
 												>
 													&nbsp;(
 													{item.doc_count})
@@ -253,7 +247,7 @@ const MultiList = {
 				this.watchComponent(props.componentId, newReact);
 			} else {
 				this.watchComponent(props.componentId, {
-					and: this.internalComponent
+					and: this.internalComponent,
 				});
 			}
 		},
@@ -295,14 +289,14 @@ const MultiList = {
 				if (selectAllLabel && selectAllLabel in currentValue) {
 					const { [selectAllLabel]: del, ...obj } = currentValue;
 					currentValue = {
-						...obj
+						...obj,
 					};
 				}
 			} else {
 				if (currentValue[value]) {
 					const { [value]: del, ...rest } = currentValue;
 					currentValue = {
-						...rest
+						...rest,
 					};
 				} else {
 					currentValue[value] = true;
@@ -310,7 +304,7 @@ const MultiList = {
 				if (selectAllLabel && selectAllLabel in currentValue) {
 					const { [selectAllLabel]: del, ...obj } = currentValue;
 					currentValue = {
-						...obj
+						...obj,
 					};
 				}
 
@@ -327,7 +321,7 @@ const MultiList = {
 				props.componentId,
 				finalValues,
 				props.beforeValueChange,
-				performUpdate
+				performUpdate,
 			);
 		},
 
@@ -340,7 +334,7 @@ const MultiList = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'MULTILIST'
+				componentType: 'MULTILIST',
 			});
 		},
 
@@ -368,7 +362,7 @@ const MultiList = {
 						value={this.$data.searchTerm}
 						placeholder={this.$props.placeholder}
 						style={{
-							margin: '0 0 8px'
+							margin: '0 0 8px',
 						}}
 						themePreset={this.$props.themePreset}
 					/>
@@ -380,8 +374,8 @@ const MultiList = {
 
 		handleClick(e) {
 			this.setValue(e.target.value);
-		}
-	}
+		},
+	},
 };
 MultiList.defaultQuery = (value, props) => {
 	let query = null;
@@ -397,8 +391,8 @@ MultiList.defaultQuery = (value, props) => {
 		} else {
 			query = {
 				exists: {
-					field: props.dataField
-				}
+					field: props.dataField,
+				},
 			};
 		}
 	} else if (value) {
@@ -409,44 +403,42 @@ MultiList.defaultQuery = (value, props) => {
 				let should = [
 					{
 						[type]: {
-							[props.dataField]: value.filter(
-								item => item !== props.missingLabel
-							)
-						}
-					}
+							[props.dataField]: value.filter(item => item !== props.missingLabel),
+						},
+					},
 				];
 				if (hasMissingTerm) {
 					should = should.concat({
 						bool: {
 							must_not: {
-								exists: { field: props.dataField }
-							}
-						}
+								exists: { field: props.dataField },
+							},
+						},
 					});
 				}
 				listQuery = {
 					bool: {
-						should
-					}
+						should,
+					},
 				};
 			} else {
 				listQuery = {
 					[type]: {
-						[props.dataField]: value
-					}
+						[props.dataField]: value,
+					},
 				};
 			}
 		} else {
 			// adds a sub-query with must as an array of objects for each term/value
 			const queryArray = value.map(item => ({
 				[type]: {
-					[props.dataField]: item
-				}
+					[props.dataField]: item,
+				},
 			}));
 			listQuery = {
 				bool: {
-					must: queryArray
-				}
+					must: queryArray,
+				},
 			};
 		}
 
@@ -471,14 +463,15 @@ MultiList.generateQueryOptions = props => {
 	return getAggsQuery(queryOptions, props);
 };
 const mapStateToProps = (state, props) => ({
-	options: props.nestedField && state.aggregations[props.componentId]
-		? state.aggregations[props.componentId].reactivesearch_nested
-		: state.aggregations[props.componentId],
+	options:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
-	themePreset: state.config.themePreset
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = {
@@ -487,12 +480,12 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 	setQueryListener,
 	updateQuery,
-	watchComponent
+	watchComponent,
 };
 
 const ListConnected = connect(
 	mapStateToProps,
-	mapDispatchtoProps
+	mapDispatchtoProps,
 )(MultiList);
 
 MultiList.install = function(Vue) {

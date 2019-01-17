@@ -1,9 +1,4 @@
-import {
-	Actions,
-	helper,
-	suggestions as getSuggestions,
-	causes
-} from '@appbaseio/reactivecore';
+import { Actions, helper, suggestions as getSuggestions, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { connect } from '../../utils/index';
 import Title from '../../styles/Title';
@@ -12,6 +7,7 @@ import InputIcon from '../../styles/InputIcon';
 import Downshift from '../basic/DownShift.jsx';
 import Container from '../../styles/Container';
 import types from '../../utils/vueTypes';
+import SuggestionWrapper from './addons/SuggestionWrapper.jsx';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 
@@ -21,7 +17,7 @@ const {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener
+	setQueryListener,
 } = Actions;
 const { debounce, pushToAndClause, checkValueChange, getClassName } = helper;
 
@@ -32,7 +28,7 @@ const DataSearch = {
 		this.__state = {
 			currentValue: '',
 			isOpen: false,
-			normalizedSuggestions: []
+			normalizedSuggestions: [],
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
@@ -64,7 +60,7 @@ const DataSearch = {
 				suggestionsList = this.normalizedSuggestions;
 			}
 			return suggestionsList;
-		}
+		},
 	},
 	props: {
 		options: types.options,
@@ -89,7 +85,9 @@ const DataSearch = {
 		iconPosition: VueTypes.oneOf(['left', 'right']).def('left'),
 		innerClass: types.style,
 		innerRef: types.func,
-		onSuggestion: types.func,
+		renderAllSuggestions: types.func,
+		renderSuggestion: types.func,
+		renderNoSuggestion: types.title,
 		placeholder: VueTypes.string.def('Search'),
 		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		react: types.react,
@@ -112,7 +110,7 @@ const DataSearch = {
 			this.setQueryOptions(this.$props.componentId, queryOptions);
 		} else {
 			this.setQueryOptions(this.$props.componentId, {
-				size: 20
+				size: 20,
 			});
 		}
 
@@ -134,11 +132,7 @@ const DataSearch = {
 		},
 		dataField() {
 			this.updateQueryOptions();
-			this.updateQueryHandler(
-				this.$props.componentId,
-				this.$data.currentValue,
-				this.$props
-			);
+			this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
 		},
 		highlightField() {
 			this.updateQueryOptions();
@@ -147,25 +141,13 @@ const DataSearch = {
 			this.setReact(this.$props);
 		},
 		fieldWeights() {
-			this.updateQueryHandler(
-				this.$props.componentId,
-				this.$data.currentValue,
-				this.$props
-			);
+			this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
 		},
 		fuzziness() {
-			this.updateQueryHandler(
-				this.$props.componentId,
-				this.$data.currentValue,
-				this.$props
-			);
+			this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
 		},
 		queryFormat() {
-			this.updateQueryHandler(
-				this.$props.componentId,
-				this.$data.currentValue,
-				this.$props
-			);
+			this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
 		},
 		defaultSelected(newVal) {
 			this.setValue(newVal, true, this.$props);
@@ -174,6 +156,7 @@ const DataSearch = {
 			if (Array.isArray(newVal) && this.$data.currentValue.trim().length) {
 				// shallow check allows us to set suggestions even if the next set
 				// of suggestions are same as the current one
+				this.$emit('suggestions', newVal);
 				this.normalizedSuggestions = this.onSuggestions(newVal);
 			}
 		},
@@ -181,7 +164,7 @@ const DataSearch = {
 			if (oldVal !== newVal && this.$data.currentValue !== newVal) {
 				this.setValue(newVal || '', true, this.$props);
 			}
-		}
+		},
 	},
 	methods: {
 		updateQueryOptions() {
@@ -197,23 +180,27 @@ const DataSearch = {
 				this.watchComponent(props.componentId, newReact);
 			} else {
 				this.watchComponent(props.componentId, {
-					and: this.internalComponent
+					and: this.internalComponent,
 				});
 			}
 		},
 		onSuggestions(results) {
-			if (this.$props.onSuggestion) {
-				return results.map(suggestion => this.$props.onSuggestion(suggestion));
-			}
-
+			const { renderSuggestion } = this.$props;
 			const fields = Array.isArray(this.$props.dataField)
 				? this.$props.dataField
 				: [this.$props.dataField];
-			return getSuggestions(
+
+			const parsedSuggestions = getSuggestions(
 				fields,
 				results,
-				this.$data.currentValue.toLowerCase()
+				this.$data.currentValue.toLowerCase(),
 			);
+
+			if (renderSuggestion) {
+				return parsedSuggestions.map(suggestion => renderSuggestion(suggestion));
+			}
+
+			return parsedSuggestions;
 		},
 		setValue(value, isDefaultValue = false, props = this.$props, cause) {
 			// ignore state updates when component is locked
@@ -251,29 +238,18 @@ const DataSearch = {
 				this.$emit('valueChange', value);
 			};
 
-			checkValueChange(
-				props.componentId,
-				value,
-				props.beforeValueChange,
-				performUpdate
-			);
+			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
 
 		updateQueryHandler(componentId, value, props) {
-			const {
-				customQuery,
-				defaultQuery,
-				filterLabel,
-				showFilter,
-				URLParams
-			} = props; // defaultQuery from props is always appended regardless of a customQuery
+			const { customQuery, defaultQuery, filterLabel, showFilter, URLParams } = props; // defaultQuery from props is always appended regardless of a customQuery
 
 			const query = customQuery || DataSearch.defaultQuery;
 			const queryObject = defaultQuery
 				? {
 					bool: {
-						must: [...query(value, props), ...defaultQuery(value, props)]
-					}
+						must: [...query(value, props), ...defaultQuery(value, props)],
+					},
 				  }
 				: query(value, props);
 			this.updateQuery({
@@ -283,7 +259,7 @@ const DataSearch = {
 				label: filterLabel,
 				showFilter,
 				URLParams,
-				componentType: 'DATASEARCH'
+				componentType: 'DATASEARCH',
 			});
 		},
 		// need to review
@@ -323,20 +299,15 @@ const DataSearch = {
 		},
 
 		onSuggestionSelected(suggestion) {
-			this.setValue(
-				suggestion.value,
-				true,
-				this.$props,
-				causes.SUGGESTION_SELECT
-			);
+			this.setValue(suggestion.value, true, this.$props, causes.SUGGESTION_SELECT);
 			this.onValueSelectedHandler(
 				suggestion.value,
 				causes.SUGGESTION_SELECT,
-				suggestion.source
+				suggestion.source,
 			);
 		},
 
-		onValueSelectedHandler(currentValue = this.state.currentValue, ...cause) {
+		onValueSelectedHandler(currentValue = this.$data.currentValue, ...cause) {
 			this.$emit('valueSelected', currentValue, ...cause);
 		},
 
@@ -370,12 +341,44 @@ const DataSearch = {
 
 			return null;
 		},
+		renderNoSuggestions(finalSuggestionsList = []) {
+			const {
+				theme,
+				innerClass,
+			} = this.$props;
+			const renderNoSuggestion = this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
+			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+			const { isOpen, currentValue } = this.$data;
+			if (
+				renderNoSuggestion
+				&& isOpen
+				&& !finalSuggestionsList.length
+				&& !this.isLoading
+				&& currentValue
+				&& !(renderError && this.error)
+			) {
+				return (
+					<SuggestionWrapper
+						innerClass={innerClass}
+						themePreset={this.themePreset}
+						theme={theme}
+						innerClassName="noSuggestion"
+						scopedSlots={{ default: () =>
+							typeof renderNoSuggestion === 'function'
+								? renderNoSuggestion(currentValue)
+								: renderNoSuggestion
+						}}
+					>
+					</SuggestionWrapper>
+				);
+			}
+			return null;
+		},
 
 		renderIcons() {
 			return (
 				<div>
-					{this.$data.currentValue
-						&& this.$props.showClear && (
+					{this.$data.currentValue && this.$props.showClear && (
 						<InputIcon
 							onClick={this.clearValue}
 							iconPosition="right"
@@ -389,11 +392,12 @@ const DataSearch = {
 					</InputIcon>
 				</div>
 			);
-		}
+		},
 	},
 	render() {
 		const { theme } = this.$props;
-		const renderSuggestions = this.$scopedSlots.suggestions;
+		const renderAllSuggestions
+			= this.$scopedSlots.renderAllSuggestions || this.$props.renderAllSuggestions;
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -416,7 +420,7 @@ const DataSearch = {
 								getItemEvents,
 
 								isOpen,
-								highlightedIndex
+								highlightedIndex,
 							}) => (
 								<div class={suggestionsContainer}>
 									<Input
@@ -437,61 +441,76 @@ const DataSearch = {
 												onKeyPress: e => {
 													this.$emit('keyPress', e);
 												},
-												onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
+												onKeyDown: e =>
+													this.handleKeyDown(e, highlightedIndex),
 												onKeyUp: e => {
 													this.$emit('keyUp', e);
-												}
-											})
+												},
+											}),
 										}}
 										{...{
 											domProps: getInputProps({
 												value:
 													this.$data.currentValue === null
 														? ''
-														: this.$data.currentValue
-											})
+														: this.$data.currentValue,
+											}),
 										}}
 										themePreset={this.themePreset}
 									/>
 									{this.renderIcons()}
-									{!renderSuggestions
+									{renderAllSuggestions
+										&& renderAllSuggestions({
+											currentValue: this.$data.currentValue,
+											isOpen,
+											getItemProps,
+											highlightedIndex,
+											suggestions: this.props.suggestions,
+											parsedSuggestions: this.suggestionsList,
+										})}
+									{!renderAllSuggestions
 									&& isOpen
 									&& this.suggestionsList.length ? (
 											<ul
 												class={`${suggestions(
 													this.themePreset,
-													theme
+													theme,
 												)} ${getClassName(this.$props.innerClass, 'list')}`}
 											>
-												{this.suggestionsList.slice(0, 10).map((item, index) => (
-													<li
-														{...{
-															domProps: getItemProps({ item })
-														}}
-														{...{
-															on: getItemEvents({
-																item
-															})
-														}}
-														key={`${index + 1}-${item.value}`}
-														style={{
-															backgroundColor: this.getBackgroundColor(
-																highlightedIndex,
-																index
-															)
-														}}
-													>
-														{typeof item.label === 'string' ? (
-															<div class="trim" domPropsInnerHTML={item.label} />
-														) : (
-															item.label
-														)}
-													</li>
-												))}
+												{this.suggestionsList
+													.slice(0, 10)
+													.map((item, index) => (
+														<li
+															{...{
+																domProps: getItemProps({ item }),
+															}}
+															{...{
+																on: getItemEvents({
+																	item,
+																}),
+															}}
+															key={`${index + 1}-${item.value}`}
+															style={{
+																backgroundColor: this.getBackgroundColor(
+																	highlightedIndex,
+																	index,
+																),
+															}}
+														>
+															{typeof item.label === 'string' ? (
+																<div
+																	class="trim"
+																	domPropsInnerHTML={item.label}
+																/>
+															) : (
+																item.label
+															)}
+														</li>
+													))}
 											</ul>
-										) : null}{' '}
+										) : this.renderNoSuggestions(this.suggestionsList)}{' '}
 								</div>
-							)
+							),
 						}}
 					/>
 				) : (
@@ -516,14 +535,14 @@ const DataSearch = {
 									},
 									keyup: e => {
 										this.$emit('keyUp', e);
-									}
-								}
+									},
+								},
 							}}
 							{...{
 								domProps: {
 									autofocus: this.$props.autoFocus,
-									value: this.$data.currentValue ? this.$data.currentValue : ''
-								}
+									value: this.$data.currentValue ? this.$data.currentValue : '',
+								},
 							}}
 							iconPosition={this.$props.iconPosition}
 							showIcon={this.$props.showIcon}
@@ -536,7 +555,7 @@ const DataSearch = {
 				)}
 			</Container>
 		);
-	}
+	},
 };
 
 DataSearch.defaultQuery = (value, props) => {
@@ -552,14 +571,14 @@ DataSearch.defaultQuery = (value, props) => {
 		finalQuery = {
 			bool: {
 				should: DataSearch.shouldQuery(value, fields, props),
-				minimum_should_match: '1'
-			}
+				minimum_should_match: '1',
+			},
 		};
 	}
 
 	if (value === '') {
 		finalQuery = {
-			match_all: {}
+			match_all: {},
 		};
 	}
 
@@ -583,7 +602,7 @@ DataSearch.shouldQuery = (value, dataFields, props) => {
 				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
 					? `^${props.fieldWeights[index]}`
 					: ''
-			}`
+			}`,
 	);
 
 	if (props.queryFormat === 'and') {
@@ -593,17 +612,17 @@ DataSearch.shouldQuery = (value, dataFields, props) => {
 					query: value,
 					fields,
 					type: 'cross_fields',
-					operator: 'and'
-				}
+					operator: 'and',
+				},
 			},
 			{
 				multi_match: {
 					query: value,
 					fields,
 					type: 'phrase_prefix',
-					operator: 'and'
-				}
-			}
+					operator: 'and',
+				},
+			},
 		];
 	}
 
@@ -614,17 +633,17 @@ DataSearch.shouldQuery = (value, dataFields, props) => {
 				fields,
 				type: 'best_fields',
 				operator: 'or',
-				fuzziness: props.fuzziness ? props.fuzziness : 0
-			}
+				fuzziness: props.fuzziness ? props.fuzziness : 0,
+			},
 		},
 		{
 			multi_match: {
 				query: value,
 				fields,
 				type: 'phrase_prefix',
-				operator: 'or'
-			}
-		}
+				operator: 'or',
+			},
+		},
 	];
 };
 DataSearch.highlightQuery = props => {
@@ -635,9 +654,7 @@ DataSearch.highlightQuery = props => {
 		return null;
 	}
 	const fields = {};
-	const highlightField = props.highlightField
-		? props.highlightField
-		: props.dataField;
+	const highlightField = props.highlightField ? props.highlightField : props.dataField;
 
 	if (typeof highlightField === 'string') {
 		fields[highlightField] = {};
@@ -651,8 +668,8 @@ DataSearch.highlightQuery = props => {
 		highlight: {
 			pre_tags: ['<mark>'],
 			post_tags: ['</mark>'],
-			fields
-		}
+			fields,
+		},
 	};
 };
 
@@ -661,9 +678,9 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
-	suggestions:
-		state.hits[props.componentId] && state.hits[props.componentId].hits,
-	themePreset: state.config.themePreset
+	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	isLoading: state.isLoading[props.componentId],
+	themePreset: state.config.themePreset,
 });
 const mapDispatchtoProps = {
 	addComponent,
@@ -671,11 +688,11 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 	updateQuery,
 	watchComponent,
-	setQueryListener
+	setQueryListener,
 };
 const DSConnected = connect(
 	mapStateToProps,
-	mapDispatchtoProps
+	mapDispatchtoProps,
 )(DataSearch);
 
 DataSearch.install = function(Vue) {
