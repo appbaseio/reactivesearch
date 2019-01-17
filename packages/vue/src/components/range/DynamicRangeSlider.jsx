@@ -40,7 +40,8 @@ const DynamicRangeSlider = {
 		showCheckbox: VueTypes.bool.def(true),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
-		sliderOptions: VueTypes.object.def({})
+		sliderOptions: VueTypes.object.def({}),
+		nestedField: types.string
 	},
 
 	methods: {
@@ -73,9 +74,24 @@ const DynamicRangeSlider = {
 		},
 
 		updateRangeQueryOptions(props){
-			const queryOptions = {
-				aggs: this.rangeQuery(props),
-			};
+			let queryOptions = {};
+			const { nestedField } = props;
+			if (nestedField) {
+				queryOptions = {
+					aggs: {
+						[nestedField]: {
+							nested: {
+								path: nestedField,
+							},
+							aggs: this.rangeQuery(props),
+						},
+					},
+				};
+			} else {
+				queryOptions = {
+					aggs: this.rangeQuery(props),
+				};
+			}
 
 			this.setQueryOptions(this.componentId, queryOptions);
 		},
@@ -238,8 +254,9 @@ const DynamicRangeSlider = {
 };
 
 DynamicRangeSlider.defaultQuery = (values, props) => {
+	let query = null;
 	if (Array.isArray(values) && values.length) {
-		return {
+		query = {
 			range: {
 				[props.dataField]: {
 					gte: values[0],
@@ -249,29 +266,65 @@ DynamicRangeSlider.defaultQuery = (values, props) => {
 			},
 		};
 	}
-	return null;
+
+	if (query && props.nestedField) {
+		return {
+			query: {
+				nested: {
+					path: props.nestedField,
+					query,
+				},
+			},
+		};
+	}
+
+	return query;
 };
 
 DynamicRangeSlider.parseValue = (value, props) =>
 	value ? [value.start, value.end] : [props.range.start, props.range.end];
 
-const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId]
-		? state.aggregations[props.componentId][props.dataField]
-		&& state.aggregations[props.componentId][props.dataField].buckets // eslint-disable-line
-		: [],
-	selectedValue: state.selectedValues[props.componentId]
-		? state.selectedValues[props.componentId].value
-		: null,
-	range:
-		state.aggregations[props.componentId]
-			&& state.aggregations[props.componentId].min
-			? {
+const mapStateToProps = (state, props) => {
+	let options
+		= state.aggregations[props.componentId]
+		&& state.aggregations[props.componentId][props.dataField];
+	let range = state.aggregations[props.componentId];
+	if (props.nestedField) {
+		options
+			= options
+				&& state.aggregations[props.componentId][props.dataField][props.nestedField]
+				&& state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
+				? state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
+				: [];
+		range
+			= range
+			&& state.aggregations[props.componentId][props.nestedField].min
+				? {
+				start: state.aggregations[props.componentId][props.nestedField].min.value,
+				end: state.aggregations[props.componentId][props.nestedField].max.value,
+				} // prettier-ignore
+				: null;
+	} else {
+		options
+			= options && state.aggregations[props.componentId][props.dataField].buckets
+				? state.aggregations[props.componentId][props.dataField].buckets
+				: [];
+		range
+			= range && state.aggregations[props.componentId].min
+				? {
 				start: state.aggregations[props.componentId].min.value,
-				end: state.aggregations[props.componentId].max.value,
-			} // prettier-ignore
+					end: state.aggregations[props.componentId].max.value,
+				} // prettier-ignore
+				: null;
+	}
+	return {
+		options,
+		selectedValue: state.selectedValues[props.componentId]
+			? state.selectedValues[props.componentId].value
 			: null,
-});
+		range
+	}
+};
 
 const mapDispatchtoProps = {
 	addComponent,
