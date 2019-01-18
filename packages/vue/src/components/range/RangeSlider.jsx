@@ -16,12 +16,12 @@ const RangeSlider = {
 	name: 'RangeSlider',
 	components: getComponents(),
 	data() {
-		this._state = {
+		const state = {
 			currentValue: this.$props.range ? [this.$props.range.start, this.$props.range.end]: [],
 			stats: [],
 		};
 		this.locked = false;
-		return this._state;
+		return state;
 	},
 
 	props: {

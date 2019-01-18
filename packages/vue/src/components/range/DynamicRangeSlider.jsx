@@ -16,12 +16,12 @@ const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
 	components: getComponents(),
 	data() {
-		this._state = {
+		const state = {
 			currentValue: null,
 			stats: [],
 		};
 		this.locked = false;
-		return this._state;
+		return state;
 	},
 
 	props: {
