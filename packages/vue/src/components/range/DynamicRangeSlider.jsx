@@ -16,12 +16,12 @@ const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
 	components: getComponents(),
 	data() {
-		this.state = {
+		const state = {
 			currentValue: null,
 			stats: [],
 		};
 		this.locked = false;
-		return this.state;
+		return state;
 	},
 
 	props: {
@@ -48,9 +48,9 @@ const DynamicRangeSlider = {
 		setRange({start, end}){
 			if(this.$props.defaultSelected){
 				const {start : defaultStart, end: defaultEnd} = this.$props.defaultSelected(start,end);
-				this.state.currentValue = [defaultStart,defaultEnd];
+				this.currentValue = [defaultStart,defaultEnd];
 			}else{
-				this.state.currentValue = [start,end] ;
+				this.currentValue = [start,end] ;
 			}
 		},
 
@@ -107,7 +107,7 @@ const DynamicRangeSlider = {
 
 			this.locked = true;
 			const performUpdate = () => {
-				this.state.currentValue = currentValue;
+				this.currentValue = currentValue;
 				this.updateQueryHandler([currentValue[0], currentValue[1]], props);
 				this.locked = false;
 				this.$emit('valueChange', { start: currentValue[0], end: currentValue[1] });
@@ -192,7 +192,7 @@ const DynamicRangeSlider = {
 	},
 
 	beforeUpdate(){
-		if(!this.state.currentValue){
+		if(!this.currentValue){
 			this.setRange(this.range);
 		}
 	},
@@ -218,7 +218,7 @@ const DynamicRangeSlider = {
 					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
 						<vue-slider
 							ref="slider"
-							value={this.state.currentValue}
+							value={this.currentValue}
 							min={this.range.start}
 							max={this.range.end}
 							onDrag-end={this.handleSlider}

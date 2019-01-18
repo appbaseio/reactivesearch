@@ -16,12 +16,12 @@ const RangeSlider = {
 	name: 'RangeSlider',
 	components: getComponents(),
 	data() {
-		this.state = {
+		const state = {
 			currentValue: this.$props.range ? [this.$props.range.start, this.$props.range.end]: [],
 			stats: [],
 		};
 		this.locked = false;
-		return this.state;
+		return state;
 	},
 
 	props: {
@@ -67,7 +67,7 @@ const RangeSlider = {
 
 			this.locked = true;
 			const performUpdate = () => {
-				this.state.currentValue = currentValue;
+				this.currentValue = currentValue;
 				this.updateQueryHandler([currentValue[0], currentValue[1]], props);
 				this.locked = false;
 				this.$emit('valueChange', { start: currentValue[0], end: currentValue[1] });
@@ -160,7 +160,7 @@ const RangeSlider = {
 							<Slider class={getClassName(this.$props.innerClass, 'slider')}>
 								<vue-slider
 									ref="slider"
-									value={this.state.currentValue}
+									value={this.currentValue}
 									min={this.$props.range.start}
 									max={this.$props.range.end}
 									onDrag-end={this.handleSlider}
