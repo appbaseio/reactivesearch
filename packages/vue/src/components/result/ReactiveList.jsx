@@ -2,7 +2,7 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
-import { connect } from '../../utils/index';
+import { connect, isFunction } from '../../utils/index';
 import Flex from '../../styles/Flex';
 import types from '../../utils/vueTypes';
 import { resultStats, sortOptions } from '../../styles/results';
@@ -46,8 +46,8 @@ const ReactiveList = {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		const onError = (...args) => {
-			this.$emit('error', ...args);
+		const onError = (e) => {
+			this.$emit('error', e);
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, onError);
 	},
@@ -65,6 +65,7 @@ const ReactiveList = {
 		loader: types.title,
 		renderAllData: types.func,
 		renderData: types.func,
+		renderError: types.title,
 		renderResultStats: types.func,
 		onNoResults: VueTypes.string.def('No Results found.'),
 		pages: VueTypes.number.def(5),
@@ -325,6 +326,7 @@ const ReactiveList = {
 				{this.isLoading
 					&& this.$props.pagination
 					&& (this.$scopedSlots.loader || this.$props.loader)}
+				{this.renderErrorComponent()}
 				<Flex
 					labelPosition={this.$props.sortOptions ? 'right' : 'left'}
 					class={getClassName(this.$props.innerClass, 'resultsInfo')}
@@ -399,6 +401,13 @@ const ReactiveList = {
 	},
 
 	methods: {
+		renderErrorComponent() {
+			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+			if (renderError && this.error && !this.isLoading) {
+				return isFunction(renderError) ? renderError(this.error) : renderError;
+			}
+			return null;
+		},
 		updateQueryOptions(props) {
 			const options = getQueryOptions(props);
 			options.from = this.$data.from;
@@ -601,6 +610,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	analytics: state.analytics,
 	config: state.config,
+	error: state.error[props.componentId],
 });
 const mapDispatchtoProps = {
 	addComponent,

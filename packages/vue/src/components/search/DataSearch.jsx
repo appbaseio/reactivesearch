@@ -1,6 +1,6 @@
 import { Actions, helper, suggestions as getSuggestions, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
-import { connect } from '../../utils/index';
+import { connect, isFunction } from '../../utils/index';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import InputIcon from '../../styles/InputIcon';
@@ -45,7 +45,9 @@ const DataSearch = {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
+			this.$emit('error', e);
+		});
 	},
 	computed: {
 		suggestionsList() {
@@ -88,6 +90,7 @@ const DataSearch = {
 		renderAllSuggestions: types.func,
 		renderSuggestion: types.func,
 		renderNoSuggestion: types.title,
+		renderError: types.title,
 		placeholder: VueTypes.string.def('Search'),
 		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		react: types.react,
@@ -334,6 +337,23 @@ const DataSearch = {
 			return null;
 		},
 
+		renderErrorComponent() {
+			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+			if (this.error && renderError && this.$data.currentValue && !this.isLoading) {
+				return (
+					<SuggestionWrapper
+						innerClass={this.$props.innerClass}
+						innerClassName="error"
+						theme={this.theme}
+						themePreset={this.themePreset}
+					>
+						{isFunction(renderError) ? renderError(this.error) : renderError}
+					</SuggestionWrapper>
+				);
+			}
+			return null;
+		},
+
 		renderCancelIcon() {
 			if (this.$props.showClear) {
 				return this.$props.clearIcon || <CancelSvg />;
@@ -468,6 +488,7 @@ const DataSearch = {
 											suggestions: this.props.suggestions,
 											parsedSuggestions: this.suggestionsList,
 										})}
+									{this.renderErrorComponent()}
 									{!renderAllSuggestions
 									&& isOpen
 									&& this.suggestionsList.length ? (
@@ -681,6 +702,7 @@ const mapStateToProps = (state, props) => ({
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
+	error: state.error[props.componentId],
 });
 const mapDispatchtoProps = {
 	addComponent,

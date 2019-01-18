@@ -3,7 +3,7 @@ import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
-import { connect } from '../../utils/index';
+import { connect, isFunction } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Radio } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
@@ -64,7 +64,9 @@ const SingleList = {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
+			this.$emit('error', e);
+		});
 	},
 	beforeMount() {
 		this.addComponent(this.internalComponent);
@@ -112,8 +114,13 @@ const SingleList = {
 		},
 	},
 	render() {
-		const { selectAllLabel, renderItem } = this.$props;
+		const { selectAllLabel, renderItem, renderError } = this.$props;
 		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
+		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
+
+		if (renderErrorCalc && this.error) {
+			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
+		}
 		if (this.modifiedOptions.length === 0) {
 			return null;
 		}
@@ -377,6 +384,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| '',
 	themePreset: state.config.themePreset,
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = {

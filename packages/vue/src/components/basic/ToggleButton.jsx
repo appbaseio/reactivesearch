@@ -56,7 +56,9 @@ const ToggleButton = {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
+			this.$emit('error', e);
+		});
 	},
 	beforeDestroy() {
 		this.removeComponent(this.$props.componentId);

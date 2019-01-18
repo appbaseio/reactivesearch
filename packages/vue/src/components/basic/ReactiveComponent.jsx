@@ -9,7 +9,7 @@ const {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener
+	setQueryListener,
 } = Actions;
 const { pushToAndClause, parseHits, isEqual } = helper;
 const ReactiveComponent = {
@@ -20,7 +20,7 @@ const ReactiveComponent = {
 		filterLabel: types.string,
 		react: types.react,
 		showFilter: VueTypes.bool.def(true),
-		URLParams: VueTypes.bool.def(false)
+		URLParams: VueTypes.bool.def(false),
 	},
 	created() {
 		const props = this.$props;
@@ -29,7 +29,9 @@ const ReactiveComponent = {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		this.setQueryListener(props.componentId, onQueryChange, null);
+		this.setQueryListener(props.componentId, onQueryChange, e => {
+			this.$emit('error', e);
+		});
 
 		this.setQuery = obj => {
 			this.updateQuery({
@@ -37,7 +39,7 @@ const ReactiveComponent = {
 				componentId: props.componentId,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
-				URLParams: props.URLParams
+				URLParams: props.URLParams,
 			});
 		};
 
@@ -65,7 +67,7 @@ const ReactiveComponent = {
 
 			this.updateQuery({
 				componentId: this.internalComponent,
-				query: query || null
+				query: query || null,
 			});
 		}
 	},
@@ -100,13 +102,13 @@ const ReactiveComponent = {
 
 				this.updateQuery({
 					componentId: this.internalComponent,
-					query: query || null
+					query: query || null,
 				});
 			}
 		},
 		react() {
 			this.setReact(this.$props);
-		}
+		},
 	},
 
 	render() {
@@ -117,7 +119,9 @@ const ReactiveComponent = {
 				hits: this.hits,
 				selectedValue: this.selectedValue,
 				setQuery: this.setQuery,
-				...this.$props
+				error: this.error,
+				isLoading: this.isLoading,
+				...this.$props,
 			};
 			return <div>{dom(propsToBePassed)}</div>;
 		} catch (e) {
@@ -138,24 +142,23 @@ const ReactiveComponent = {
 				}
 			} else if (this.internalComponent) {
 				this.watchComponent(props.componentId, {
-					and: this.internalComponent
+					and: this.internalComponent,
 				});
 			}
-		}
-	}
+		},
+	},
 };
 
 const mapStateToProps = (state, props) => ({
 	aggregations:
-		(state.aggregations[props.componentId]
-			&& state.aggregations[props.componentId])
-		|| null,
-	hits:
-		(state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+		(state.aggregations[props.componentId] && state.aggregations[props.componentId]) || null,
+	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	error: state.error[props.componentId],
+	isLoading: state.isLoading[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
-		|| null
+		|| null,
 });
 
 const mapDispatchtoProps = {
@@ -164,11 +167,11 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 	setQueryListener,
 	updateQuery,
-	watchComponent
+	watchComponent,
 };
 const RcConnected = connect(
 	mapStateToProps,
-	mapDispatchtoProps
+	mapDispatchtoProps,
 )(ReactiveComponent);
 
 ReactiveComponent.install = function(Vue) {

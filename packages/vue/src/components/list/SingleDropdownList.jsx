@@ -6,7 +6,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
-import { connect } from '../../utils/index';
+import { connect, isFunction } from '../../utils/index';
 
 const {
 	addComponent,
@@ -14,14 +14,14 @@ const {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener
+	setQueryListener,
 } = Actions;
 const {
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
 	checkPropChange,
-	getClassName
+	getClassName,
 } = helper;
 const SingleDropdownList = {
 	name: 'SingleDropdownList',
@@ -32,7 +32,7 @@ const SingleDropdownList = {
 			modifiedOptions: [],
 			after: {},
 			// for composite aggs
-			isLastBucket: false
+			isLastBucket: false,
 		};
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -50,6 +50,7 @@ const SingleDropdownList = {
 		placeholder: VueTypes.string.def('Select a value'),
 		react: types.react,
 		renderItem: types.func,
+		renderError: types.title,
 		transformData: types.func,
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
@@ -62,16 +63,16 @@ const SingleDropdownList = {
 		missingLabel: VueTypes.string.def('N/A'),
 		showSearch: VueTypes.bool.def(false),
 		showLoadMore: VueTypes.bool.def(false),
-		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def(
-			'Load More'
-		),
-		nestedField: types.string
+		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def('Load More'),
+		nestedField: types.string,
 	},
 	created() {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
+			this.$emit('error', e);
+		});
 	},
 	beforeMount() {
 		this.addComponent(this.internalComponent);
@@ -105,13 +106,13 @@ const SingleDropdownList = {
 						...modifiedOptions,
 						...buckets.map(bucket => ({
 							key: bucket.key[dataField],
-							doc_count: bucket.doc_count
-						}))
+							doc_count: bucket.doc_count,
+						})),
 					];
 					const after = newVal[dataField].after_key; // detect the last bucket by checking if the next set of buckets were empty
 					const isLastBucket = !buckets.length;
 					this.after = {
-						after
+						after,
 					};
 					this.isLastBucket = isLastBucket;
 					this.modifiedOptions = nextOptions;
@@ -136,15 +137,19 @@ const SingleDropdownList = {
 			if (this.$data.currentValue !== newVal) {
 				this.setValue(newVal || '');
 			}
-		}
+		},
 	},
 
 	render() {
-		const { showLoadMore, loadMoreLabel, renderItem } = this.$props;
+		const { showLoadMore, loadMoreLabel, renderItem, renderError } = this.$props;
 		const { isLastBucket } = this.$data;
 		let selectAll = [];
-		const renderItemCalc
-			= this.$scopedSlots.renderItem || renderItem;
+		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
+		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
+
+		if (renderErrorCalc && this.error) {
+			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
+		}
 
 		if (this.$data.modifiedOptions.length === 0) {
 			return null;
@@ -153,8 +158,8 @@ const SingleDropdownList = {
 		if (this.$props.selectAllLabel) {
 			selectAll = [
 				{
-					key: this.$props.selectAllLabel
-				}
+					key: this.$props.selectAllLabel,
+				},
 			];
 		}
 
@@ -173,8 +178,8 @@ const SingleDropdownList = {
 							.filter(item => String(item.key).trim().length)
 							.map(item => ({
 								...item,
-								key: String(item.key)
-							}))
+								key: String(item.key),
+							})),
 					]}
 					handleChange={this.setValue}
 					selectedItem={this.$data.currentValue}
@@ -208,7 +213,7 @@ const SingleDropdownList = {
 				this.watchComponent(props.componentId, newReact);
 			} else {
 				this.watchComponent(props.componentId, {
-					and: this.internalComponent
+					and: this.internalComponent,
 				});
 			}
 		},
@@ -228,12 +233,7 @@ const SingleDropdownList = {
 				this.$emit('valueChange', value);
 			};
 
-			checkValueChange(
-				props.componentId,
-				value,
-				props.beforeValueChange,
-				performUpdate
-			);
+			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
 
 		updateQueryHandler(value, props) {
@@ -245,7 +245,7 @@ const SingleDropdownList = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'SINGLEDROPDOWNLIST'
+				componentType: 'SINGLEDROPDOWNLIST',
 			});
 		},
 
@@ -264,15 +264,15 @@ const SingleDropdownList = {
 
 			const queryOptions = SingleDropdownList.generateQueryOptions(
 				props,
-				addAfterKey ? this.$data.after : {}
+				addAfterKey ? this.$data.after : {},
 			);
 			this.setQueryOptions(this.internalComponent, queryOptions);
 		},
 
 		handleLoadMore() {
 			this.updateQueryOptions(this.$props, true);
-		}
-	}
+		},
+	},
 };
 SingleDropdownList.defaultQuery = (value, props) => {
 	let query = null;
@@ -282,23 +282,23 @@ SingleDropdownList.defaultQuery = (value, props) => {
 		}
 		query = {
 			exists: {
-				field: props.dataField
-			}
+				field: props.dataField,
+			},
 		};
 	} else if (value) {
 		if (props.showMissing && props.missingLabel === value) {
 			query = {
 				bool: {
 					must_not: {
-						exists: { field: props.dataField }
-					}
-				}
+						exists: { field: props.dataField },
+					},
+				},
 			};
 		}
 		query = {
 			term: {
-				[props.dataField]: value
-			}
+				[props.dataField]: value,
+			},
 		};
 	}
 
@@ -307,9 +307,9 @@ SingleDropdownList.defaultQuery = (value, props) => {
 			query: {
 				nested: {
 					path: props.nestedField,
-					query
-				}
-			}
+					query,
+				},
+			},
 		};
 	}
 
@@ -331,7 +331,8 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| '',
-	themePreset: state.config.themePreset
+	themePreset: state.config.themePreset,
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = {
@@ -340,12 +341,12 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 	setQueryListener,
 	updateQuery,
-	watchComponent
+	watchComponent,
 };
 
 const ListConnected = connect(
 	mapStateToProps,
-	mapDispatchtoProps
+	mapDispatchtoProps,
 )(SingleDropdownList);
 
 SingleDropdownList.install = function(Vue) {
