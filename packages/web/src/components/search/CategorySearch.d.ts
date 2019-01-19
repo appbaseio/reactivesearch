@@ -3,6 +3,11 @@ import * as React from 'react';
 import { CommonProps } from '../..';
 import * as types from '../../types';
 
+interface categorySearchValue {
+	term: string;
+	category?: string;
+}
+
 export interface CategorySearchProps extends CommonProps {
 	autoFocus?: boolean;
 	autosuggest?: boolean;
@@ -12,8 +17,8 @@ export interface CategorySearchProps extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;
 	debounce?: number;
-	defaultValue?: string;
-	value?: string;
+	defaultValue?: categorySearchValue;
+	value?: categorySearchValue;
 	defaultSuggestions?: types.suggestions;
 	defaultQuery?: (...args: any[]) => any;
 	downShiftProps?: types.props;

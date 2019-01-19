@@ -19,6 +19,7 @@ import {
 	checkSomePropChange,
 	getOptionsFromQuery,
 	getClassName,
+	isEqual,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -49,10 +50,16 @@ class CategorySearch extends Component {
 	constructor(props) {
 		super(props);
 
-		const currentValue = props.selectedValue || props.value || props.defaultValue || '';
+		const value = props.value || props.defaultValue || {};
+		// eslint-disable-next-line
+		let { term: currentValue = '', category: currentCategory = null } = value;
+		// add preference to selected-X value from URL/SSR
+		currentValue = props.selectedValue || currentValue;
+		currentCategory = props.selectedCategory || currentCategory;
 
 		this.state = {
 			currentValue,
+			currentCategory,
 			suggestions: [],
 			isOpen: false,
 		};
@@ -81,11 +88,10 @@ class CategorySearch extends Component {
 		const aggsQuery = this.getAggsQuery(props.categoryField);
 		props.setQueryOptions(this.internalComponent, aggsQuery, false);
 		const hasMounted = false;
-		const category = props.selectedCategory;
 		const cause = null;
 
 		if (currentValue) {
-			this.setValue(currentValue, true, props, category, cause, hasMounted);
+			this.setValue(currentValue, true, props, currentCategory, cause, hasMounted);
 		}
 	}
 
@@ -128,8 +134,9 @@ class CategorySearch extends Component {
 			},
 		);
 
-		if (this.props.value !== prevProps.value) {
-			this.setValue(this.props.value);
+		if (!isEqual(this.props.value, prevProps.value)) {
+			const { term: currentValue, category: currentCategory = null } = this.props.value;
+			this.setValue(currentValue, true, this.props, currentCategory);
 		} else if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
@@ -138,7 +145,22 @@ class CategorySearch extends Component {
 			this.props.selectedValue !== prevProps.selectedValue
 			&& this.state.currentValue !== this.props.selectedValue
 		) {
-			this.setValue(this.props.selectedValue || '', true, this.props);
+			const { value, onChange } = this.props;
+			if (value === undefined) {
+				this.setValue(this.props.selectedValue || '', true, this.props, this.props.selectedCategory);
+			} else if (onChange) {
+				// value prop exists
+				onChange({
+					term: this.props.selectedValue || '',
+					category: this.props.selectedCategory || null,
+				});
+			} else {
+				// value prop exists and onChange is not defined:
+				// we need to put the current value back into the store
+				// if the clear action was triggered by interacting with
+				// selected-filters component
+				this.setValue(this.state.currentValue, true, this.props, this.state.currentCategory);
+			}
 		}
 	}
 
@@ -330,7 +352,8 @@ class CategorySearch extends Component {
 			if (hasMounted) {
 				this.setState(
 					{
-						currentValue: value,
+						currentValue: value || '',
+						currentCategory: category || null,
 						suggestions: [],
 					},
 					() => {
@@ -440,14 +463,18 @@ class CategorySearch extends Component {
 
 	clearValue = () => {
 		this.setValue('', true);
-		this.onValueSelected(null, causes.CLEAR_VALUE);
+		this.onValueSelected(null, causes.CLEAR_VALUE, null);
 	};
 
 	handleKeyDown = (event, highlightedIndex) => {
 		// if a suggestion was selected, delegate the handling to suggestion handler
 		if (event.key === 'Enter' && highlightedIndex === null) {
 			this.setValue(event.target.value, true);
-			this.onValueSelected(event.target.value, causes.ENTER_PRESS);
+			const value = {
+				term: event.target.value,
+				category: null,
+			};
+			this.onValueSelected(value, causes.ENTER_PRESS);
 		}
 		if (this.props.onKeyDown) {
 			this.props.onKeyDown(event);
@@ -466,32 +493,48 @@ class CategorySearch extends Component {
 		if (value === undefined) {
 			this.setValue(inputValue);
 		} else if (onChange) {
-			onChange(inputValue);
+			onChange({
+				term: inputValue,
+				// category: null,
+			});
 		} else {
 			this.setValue(inputValue);
 		}
 	};
 
 	onSuggestionSelected = (suggestion) => {
-		this.setValue(
-			suggestion.value,
-			true,
-			this.props,
-			suggestion.category,
-			causes.SUGGESTION_SELECT,
-		);
+		const { value, onChange } = this.props;
+		const currentValue = {
+			term: suggestion.value,
+			category: suggestion.category || null,
+		};
+
+		if (value === undefined) {
+			this.setValue(
+				currentValue.term,
+				true,
+				this.props,
+				currentValue.category,
+				causes.SUGGESTION_SELECT,
+			);
+		} else if (onChange) {
+			onChange(currentValue);
+		}
+
+		// onValueSelected is user interaction driven:
+		// it should be triggered irrespective of controlled (or)
+		// uncontrolled component behavior
 		this.onValueSelected(
-			suggestion.value,
-			suggestion.category,
+			currentValue,
 			causes.SUGGESTION_SELECT,
 			suggestion.source,
 		);
 	};
 
-	onValueSelected = (currentValue = this.state.currentValue, category = null, ...cause) => {
+	onValueSelected = (selectedValue, cause, source) => {
 		const { onValueSelected } = this.props;
 		if (onValueSelected) {
-			onValueSelected(currentValue, category, ...cause);
+			onValueSelected(selectedValue, cause, source);
 		}
 	};
 
@@ -824,8 +867,8 @@ CategorySearch.propTypes = {
 	debounce: types.number,
 	// eslint-disable-next-line
 	error: types.any,
-	defaultValue: types.string,
-	value: types.string,
+	defaultValue: types.categorySearchValue,
+	value: types.categorySearchValue,
 	defaultSuggestions: types.suggestions,
 	downShiftProps: types.props,
 	fieldWeights: types.fieldWeights,
