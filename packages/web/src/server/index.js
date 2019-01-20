@@ -19,13 +19,7 @@ const componentsWithOptions = [
 	...componentsWithHighlightQuery,
 ];
 
-const componentsWithoutFilters = [
-	'NumberBox',
-	'RangeSlider',
-	'DynamicRangeSlider',
-	'RangeInput',
-	'RatingsFilter',
-];
+const componentsWithoutFilters = ['NumberBox', 'RatingsFilter'];
 
 const resultComponents = ['ResultCard', 'ResultList', 'ReactiveList', 'ReactiveMap'];
 
