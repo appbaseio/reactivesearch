@@ -20,7 +20,7 @@ const settings = {
 const dynamicRangeSliderProps = {
 	componentId: 'BookSensor',
 	dataField: 'ratings_count',
-	defaultSelected: () => ({
+	defaultValue: () => ({
 		start: 4000,
 		end: 8000,
 	}),

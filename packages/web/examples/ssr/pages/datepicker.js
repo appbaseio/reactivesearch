@@ -34,7 +34,7 @@ const datePickerProps = {
 	dataField: 'date_from',
 	initialMonth: new Date('2017-05-05'),
 	customQuery: dateQuery,
-	defaultSelected: '2017-05-05',
+	defaultValue: '2017-05-05',
 };
 
 const resultCardProps = {

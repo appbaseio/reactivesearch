@@ -15,7 +15,7 @@ const settings = {
 const textFieldProps = {
 	dataField: 'original_title.search',
 	componentId: 'SearchSensor',
-	defaultSelected: 'Harry Potter',
+	defaultValue: 'Harry Potter',
 };
 
 const reactiveListProps = {

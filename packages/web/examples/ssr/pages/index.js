@@ -35,7 +35,7 @@ const components = {
 		componentId: 'GuestSensor',
 		dataField: 'accommodates',
 		title: 'Guests',
-		defaultSelected: 2,
+		defaultValue: 2,
 		labelPosition: 'right',
 		data: {
 			start: 1,
@@ -54,7 +54,7 @@ const components = {
 			start: '$10',
 			end: '$250',
 		},
-		defaultSelected: {
+		defaultValue: {
 			start: 10,
 			end: 50,
 		},

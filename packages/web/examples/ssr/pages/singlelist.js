@@ -15,7 +15,7 @@ const settings = {
 const singleListProps = {
 	componentId: 'BookSensor',
 	dataField: 'original_series.raw',
-	defaultSelected: 'In Death',
+	defaultValue: 'In Death',
 	size: 100,
 };
 

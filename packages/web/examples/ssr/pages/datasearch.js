@@ -16,7 +16,7 @@ const dataSearchProps = {
 	dataField: ['original_title', 'original_title.search'],
 	categoryField: 'authors.raw',
 	componentId: 'BookSensor',
-	defaultSelected: 'Harry',
+	defaultValue: 'Harry',
 };
 
 const reactiveListProps = {

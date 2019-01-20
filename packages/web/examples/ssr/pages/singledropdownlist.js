@@ -20,7 +20,7 @@ const settings = {
 const singleDropdownListProps = {
 	componentId: 'BookSensor',
 	dataField: 'original_series.raw',
-	defaultSelected: 'In Death',
+	defaultValue: 'In Death',
 	size: 100,
 };
 

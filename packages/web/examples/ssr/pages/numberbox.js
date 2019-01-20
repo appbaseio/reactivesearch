@@ -21,7 +21,7 @@ const numberBoxProps = {
 		end: 5,
 	},
 	showFilter: false,
-	defaultSelected: 3,
+	defaultValue: 3,
 };
 
 const reactiveListProps = {
