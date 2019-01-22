@@ -28,7 +28,7 @@ const rangeSliderProps = {
 		start: '3K',
 		end: '50K',
 	},
-	defaultSelected: {
+	defaultValue: {
 		start: 4000,
 		end: 8000,
 	},

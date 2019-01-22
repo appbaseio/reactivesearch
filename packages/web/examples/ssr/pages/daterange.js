@@ -41,7 +41,7 @@ const dateRangeProps = {
 	dataField: 'date_from',
 	initialMonth: new Date('2017-05-05'),
 	customQuery: dateQuery,
-	defaultSelected: {
+	defaultValue: {
 		start: '2017-05-05',
 		end: '2017-05-10',
 	},

@@ -444,10 +444,14 @@ class DataSearch extends Component {
 		const { value, onChange } = this.props;
 		if (value === undefined) {
 			this.setValue(suggestion.value, true, this.props, causes.SUGGESTION_SELECT);
-			this.onValueSelected(suggestion.value, causes.SUGGESTION_SELECT, suggestion.source);
 		} else if (onChange) {
 			onChange(suggestion.value);
 		}
+
+		// onValueSelected is user interaction driven:
+		// it should be triggered irrespective of controlled (or)
+		// uncontrolled component behavior
+		this.onValueSelected(suggestion.value, causes.SUGGESTION_SELECT, suggestion.source);
 	};
 
 	onValueSelected = (currentValue = this.state.currentValue, ...cause) => {
