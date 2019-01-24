@@ -23,6 +23,7 @@ const {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	getOptionsFromQuery,
 } = helper;
 const MultiDropdownList = {
 	name: 'MultiDropdownList',
@@ -46,6 +47,7 @@ const MultiDropdownList = {
 		customQuery: types.func,
 		dataField: types.stringRequired,
 		defaultSelected: types.stringArray,
+		defaultQuery: types.func,
 		filterLabel: types.string,
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Select values'),
@@ -332,7 +334,20 @@ const MultiDropdownList = {
 				props,
 				addAfterKey ? this.$data.after : {},
 			);
-			this.setQueryOptions(this.internalComponent, queryOptions);
+			this.queryOptions = {
+				...this.queryOptions,
+				...queryOptions,
+			};
+			if (props.defaultQuery) {
+				const value = Object.keys(this.$data.currentValue);
+				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+				this.setQueryOptions(this.internalComponent, {
+					...this.queryOptions,
+					...defaultQueryOptions,
+				});
+			} else {
+				this.setQueryOptions(this.internalComponent, this.queryOptions);
+			}
 		},
 
 		handleLoadMore() {
