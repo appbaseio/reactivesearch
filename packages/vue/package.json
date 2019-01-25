@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch-vue",
-	"version": "1.0.0-beta.5",
+	"version": "1.0.0-beta.6",
 	"private": false,
 	"main": "dist/@appbaseio/reactivesearch-vue.cjs.js",
 	"jsnext:main": "dist/@appbaseio/reactivesearch-vue.es.js",

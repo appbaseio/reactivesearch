@@ -19,7 +19,14 @@ const {
 	setQueryListener,
 } = Actions;
 
-const { isEqual, getQueryOptions, pushToAndClause, getClassName, parseHits, getOptionsFromQuery } = helper;
+const {
+	isEqual,
+	getQueryOptions,
+	pushToAndClause,
+	getClassName,
+	parseHits,
+	getOptionsFromQuery,
+} = helper;
 
 const ReactiveList = {
 	name: 'ReactiveList',
@@ -46,7 +53,7 @@ const ReactiveList = {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		const onError = (e) => {
+		const onError = e => {
 			this.$emit('error', e);
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, onError);
@@ -65,9 +72,9 @@ const ReactiveList = {
 		loader: types.title,
 		renderAllData: types.func,
 		renderData: types.func,
+		renderNoResults: VueTypes.any.def('No Results found.'),
 		renderError: types.title,
 		renderResultStats: types.func,
-		onNoResults: VueTypes.string.def('No Results found.'),
 		pages: VueTypes.number.def(5),
 		pagination: VueTypes.bool.def(false),
 		paginationAt: types.paginationAt.def('bottom'),
@@ -105,7 +112,7 @@ const ReactiveList = {
 				time: this.$data.time,
 				currentPage: this.$data.currentPage,
 			};
-		}
+		},
 	},
 	watch: {
 		sortOptions(newVal, oldVal) {
@@ -340,7 +347,7 @@ const ReactiveList = {
 					{this.$props.showResultStats ? this.renderStats() : null}
 				</Flex>
 				{!this.isLoading && results.length === 0 && streamResults.length === 0
-					? this.renderNoResults()
+					? this.renderNoResult()
 					: null}
 				{this.$props.pagination
 				&& (this.$props.paginationAt === 'top' || this.$props.paginationAt === 'both') ? (
@@ -528,10 +535,12 @@ const ReactiveList = {
 			return null;
 		},
 
-		renderNoResults() {
+		renderNoResult() {
+			const renderNoResults
+				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
-					{this.$props.onNoResults}
+					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
 				</p>
 			);
 		},
