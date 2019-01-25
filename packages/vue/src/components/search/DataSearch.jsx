@@ -19,7 +19,7 @@ const {
 	setQueryOptions,
 	setQueryListener,
 } = Actions;
-const { debounce, pushToAndClause, checkValueChange, getClassName } = helper;
+const { debounce, pushToAndClause, checkValueChange, getClassName, getOptionsFromQuery } = helper;
 
 const DataSearch = {
 	name: 'DataSearch',
@@ -245,19 +245,29 @@ const DataSearch = {
 		},
 
 		updateQueryHandler(componentId, value, props) {
-			const { customQuery, defaultQuery, filterLabel, showFilter, URLParams } = props; // defaultQuery from props is always appended regardless of a customQuery
+			const {
+				customQuery, filterLabel, showFilter, URLParams,
+			} = props;
 
-			const query = customQuery || DataSearch.defaultQuery;
-			const queryObject = defaultQuery
-				? {
-					bool: {
-						must: [...query(value, props), ...defaultQuery(value, props)],
-					},
-				  }
-				: query(value, props);
+			let customQueryOptions;
+			const defaultQueryTobeSet = DataSearch.defaultQuery(value, props);
+			let query = defaultQueryTobeSet;
+			if (customQuery) {
+				const customQueryTobeSet = customQuery(value, props);
+				const queryTobeSet = customQueryTobeSet.query;
+				if (queryTobeSet) {
+					query = [queryTobeSet];
+				}
+				customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
+			}
+
+			this.setQueryOptions(componentId, {
+				...this.queryOptions,
+				...customQueryOptions,
+			});
 			this.updateQuery({
 				componentId,
-				query: queryObject,
+				query,
 				value,
 				label: filterLabel,
 				showFilter,
