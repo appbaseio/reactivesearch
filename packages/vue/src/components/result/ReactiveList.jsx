@@ -19,7 +19,7 @@ const {
 	setQueryListener,
 } = Actions;
 
-const { isEqual, getQueryOptions, pushToAndClause, getClassName, parseHits } = helper;
+const { isEqual, getQueryOptions, pushToAndClause, getClassName, parseHits, getOptionsFromQuery } = helper;
 
 const ReactiveList = {
 	name: 'ReactiveList',
@@ -140,15 +140,19 @@ const ReactiveList = {
 		},
 		defaultQuery(newVal, oldVal) {
 			if (newVal && !isEqual(newVal(), oldVal)) {
-				const options = getQueryOptions(this.$props);
+				let options = getQueryOptions(this.$props);
 				options.from = 0;
 				this.$defaultQuery = newVal();
 				const { sort, ...query } = this.$defaultQuery;
 
 				if (sort) {
 					options.sort = this.$defaultQuery.sort;
-					this.setQueryOptions(this.$props.componentId, options, !query);
 				}
+				const queryOptions = getOptionsFromQuery(this.$defaultQuery);
+				if (queryOptions) {
+					options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
+				}
+				this.setQueryOptions(this.$props.componentId, options, !query);
 
 				this.updateQuery(
 					{
@@ -237,7 +241,7 @@ const ReactiveList = {
 			this.setStreaming(this.$props.componentId, true);
 		}
 
-		const options = getQueryOptions(this.$props);
+		let options = getQueryOptions(this.$props);
 		options.from = this.$data.from;
 
 		if (this.$props.sortOptions) {
@@ -262,6 +266,7 @@ const ReactiveList = {
 
 		if (this.$props.defaultQuery) {
 			this.$defaultQuery = this.$props.defaultQuery();
+			options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
 
 			if (this.$defaultQuery.sort) {
 				options.sort = this.$defaultQuery.sort;
