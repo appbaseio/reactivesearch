@@ -59,11 +59,7 @@ class DataController extends Component {
 			({ query } = customQuery(defaultSelected, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(defaultSelected, props));
 		}
-		this.queryOptions = {
-			...this.queryOptions,
-			...customQueryOptions,
-		};
-		props.setQueryOptions(props.componentId, this.queryOptions);
+		props.setQueryOptions(props.componentId, customQueryOptions);
 
 		const performUpdate = () => {
 			props.updateQuery({

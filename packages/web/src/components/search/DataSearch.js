@@ -349,45 +349,28 @@ class DataSearch extends Component {
 
 	updateQuery = (componentId, value, props) => {
 		const {
-			customQuery, defaultQuery, filterLabel, showFilter, URLParams,
+			customQuery, filterLabel, showFilter, URLParams,
 		} = props;
 
-		// defaultQuery from props is always appended
-		// regardless of a customQuery
-		let query = [];
 		let customQueryOptions;
-		let defaultQueryOptions;
 		const defaultQueryTobeSet = DataSearch.defaultQuery(value, props);
+		let query = defaultQueryTobeSet;
 		if (customQuery) {
 			const customQueryTobeSet = customQuery(value, props);
 			const queryTobeSet = customQueryTobeSet.query;
-			query = queryTobeSet ? [queryTobeSet] : defaultQueryTobeSet;
-			customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
-		} else {
-			query = defaultQueryTobeSet;
-		}
-		if (defaultQuery) {
-			if (defaultQuery(value, props).query) {
-				query = [...query, ...defaultQuery(value, props).query];
+			if (queryTobeSet) {
+				query = [queryTobeSet];
 			}
-			defaultQueryOptions = getOptionsFromQuery(defaultQuery(value, props));
+			customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
 		}
-		const queryObject = defaultQuery
-			? {
-				bool: {
-					must: query,
-				},
-			} // prettier-ignore
-			: query;
 
 		props.setQueryOptions(componentId, {
 			...this.queryOptions,
-			...defaultQueryOptions,
 			...customQueryOptions,
 		});
 		props.updateQuery({
 			componentId,
-			query: queryObject,
+			query,
 			value,
 			label: filterLabel,
 			showFilter,

@@ -54,13 +54,9 @@ class ReactiveComponent extends Component {
 			const customQueryOptions = this.defaultQuery
 				? getOptionsFromQuery(this.defaultQuery)
 				: null;
-			this.queryOptions = {
-				...this.queryOptions,
-				...customQueryOptions,
-			};
 
-			if (this.queryOptions) {
-				props.setQueryOptions(this.internalComponent, this.queryOptions, false);
+			if (customQueryOptions) {
+				props.setQueryOptions(this.internalComponent, customQueryOptions, false);
 			}
 
 			props.updateQuery({
