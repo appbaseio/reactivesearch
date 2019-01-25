@@ -7,7 +7,7 @@ import { connect } from '../../utils/index';
 import types from '../../utils/vueTypes';
 
 const { addComponent, removeComponent, watchComponent, updateQuery, setQueryListener } = Actions;
-const { isEqual, checkValueChange, getClassName } = helper;
+const { isEqual, checkValueChange, getClassName, getOptionsFromQuery } = helper;
 
 const SingleRange = {
 	name: 'SingleRange',
@@ -144,10 +144,18 @@ const SingleRange = {
 		},
 
 		updateQueryHandler(value, props) {
-			const query = props.customQuery || SingleRange.defaultQuery;
+			const { customQuery } = props;
+			let query = SingleRange.defaultQuery(value, props);
+			let customQueryOptions;
+			if (customQuery) {
+				({ query } = customQuery(value, props) || {});
+				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			}
+			this.setQueryOptions(props.componentId, customQueryOptions);
+
 			this.updateQuery({
 				componentId: props.componentId,
-				query: query(value, props),
+				query,
 				value,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
@@ -182,9 +190,9 @@ SingleRange.defaultQuery = (value, props) => {
 			query: {
 				nested: {
 					path: props.nestedField,
-					query
-				}
-			}
+					query,
+				},
+			},
 		};
 	}
 	return query;

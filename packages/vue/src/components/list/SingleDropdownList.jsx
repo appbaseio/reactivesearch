@@ -22,6 +22,7 @@ const {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
+	getOptionsFromQuery,
 } = helper;
 const SingleDropdownList = {
 	name: 'SingleDropdownList',
@@ -44,6 +45,7 @@ const SingleDropdownList = {
 		componentId: types.stringRequired,
 		customQuery: types.func,
 		dataField: types.stringRequired,
+		defaultQuery: types.func,
 		defaultSelected: types.string,
 		filterLabel: types.string,
 		innerClass: types.style,
@@ -237,10 +239,17 @@ const SingleDropdownList = {
 		},
 
 		updateQueryHandler(value, props) {
-			const query = props.customQuery || SingleDropdownList.defaultQuery;
+			const { customQuery } = props;
+			let query = SingleDropdownList.defaultQuery(value, props);
+			let customQueryOptions;
+			if (customQuery) {
+				({ query } = customQuery(value, props) || {});
+				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			}
+			this.setQueryOptions(props.componentId, customQueryOptions);
 			this.updateQuery({
 				componentId: props.componentId,
-				query: query(value, props),
+				query,
 				value,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
@@ -266,7 +275,16 @@ const SingleDropdownList = {
 				props,
 				addAfterKey ? this.$data.after : {},
 			);
-			this.setQueryOptions(this.internalComponent, queryOptions);
+			if (props.defaultQuery) {
+				const value = this.$data.currentValue;
+				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+				this.setQueryOptions(this.internalComponent, {
+					...queryOptions,
+					...defaultQueryOptions,
+				});
+			} else {
+				this.setQueryOptions(this.internalComponent, queryOptions);
+			}
 		},
 
 		handleLoadMore() {

@@ -305,10 +305,17 @@ const MultiDropdownList = {
 		},
 
 		updateQueryHandler(value, props) {
-			const query = props.customQuery || MultiDropdownList.defaultQuery;
+			const { customQuery } = props;
+			let query = MultiDropdownList.defaultQuery(value, props);
+			let customQueryOptions;
+			if (customQuery) {
+				({ query } = customQuery(value, props) || {});
+				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			}
+			this.setQueryOptions(props.componentId, customQueryOptions);
 			this.updateQuery({
 				componentId: props.componentId,
-				query: query(value, props),
+				query,
 				value,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
@@ -334,19 +341,15 @@ const MultiDropdownList = {
 				props,
 				addAfterKey ? this.$data.after : {},
 			);
-			this.queryOptions = {
-				...this.queryOptions,
-				...queryOptions,
-			};
 			if (props.defaultQuery) {
 				const value = Object.keys(this.$data.currentValue);
 				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
 				this.setQueryOptions(this.internalComponent, {
-					...this.queryOptions,
+					...queryOptions,
 					...defaultQueryOptions,
 				});
 			} else {
-				this.setQueryOptions(this.internalComponent, this.queryOptions);
+				this.setQueryOptions(this.internalComponent, queryOptions);
 			}
 		},
 

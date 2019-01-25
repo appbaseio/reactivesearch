@@ -16,7 +16,13 @@ const {
 	setQueryOptions,
 	setQueryListener,
 } = Actions;
-const { getQueryOptions, pushToAndClause, checkValueChange, getClassName } = helper;
+const {
+	getQueryOptions,
+	pushToAndClause,
+	checkValueChange,
+	getClassName,
+	getOptionsFromQuery,
+} = helper;
 
 const SingleList = {
 	name: 'SingleList',
@@ -27,6 +33,7 @@ const SingleList = {
 		customQuery: types.func,
 		dataField: types.stringRequired,
 		defaultSelected: types.string,
+		defaultQuery: types.func,
 		filterLabel: types.string,
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Search'),
@@ -276,10 +283,17 @@ const SingleList = {
 		},
 
 		updateQueryHandler(value, props) {
-			const query = props.customQuery || SingleList.defaultQuery;
+			const { customQuery } = props;
+			let query = SingleList.defaultQuery(value, props);
+			let customQueryOptions;
+			if (customQuery) {
+				({ query } = customQuery(value, props) || {});
+				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			}
+			this.setQueryOptions(props.componentId, customQueryOptions);
 			this.updateQuery({
 				componentId: props.componentId,
-				query: query(value, props),
+				query,
 				value,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
@@ -295,7 +309,16 @@ const SingleList = {
 
 		updateQueryHandlerOptions(props) {
 			const queryOptions = SingleList.generateQueryOptions(props);
-			this.setQueryOptions(this.internalComponent, queryOptions);
+			if (props.defaultQuery) {
+				const value = this.$data.currentValue;
+				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+				this.setQueryOptions(this.internalComponent, {
+					...queryOptions,
+					...defaultQueryOptions,
+				});
+			} else {
+				this.setQueryOptions(this.internalComponent, queryOptions);
+			}
 		},
 
 		handleInputChange(e) {
