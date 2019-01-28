@@ -21,8 +21,8 @@ const ResultList = {
 		innerClass: types.style,
 		listClass: VueTypes.string.def(''),
 		loader: types.title,
-		onAllData: types.func,
-		onData: types.func,
+		renderAllData: types.func,
+		renderData: types.func,
 		onResultStats: types.func,
 		onNoResults: VueTypes.string.def('No Results found.'),
 		pages: VueTypes.number.def(5),
@@ -38,14 +38,14 @@ const ResultList = {
 		target: VueTypes.string.def('_blank'),
 	},
 	render() {
-		const { onData, ...props } = this.$props;
+		const { renderData, ...props } = this.$props;
 		const onResultStats = this.$props.onResultStats || this.$scopedSlots.onResultStats;
 		return (
 			<RLConnected
 				{...{
 					props: {
 						...props,
-						onData: this.renderAsList,
+						renderData: this.renderAsList,
 						onResultStats,
 						listClass: container,
 					},
@@ -55,8 +55,8 @@ const ResultList = {
 	},
 	methods: {
 		renderAsList({ item, triggerClickAnalytics }) {
-			const onData = this.$props.onData || this.$scopedSlots.onData;
-			const result = onData(item);
+			const renderData = this.$props.renderData || this.$scopedSlots.renderData;
+			const result = renderData(item);
 			if (result) {
 				return (
 					<ListItem

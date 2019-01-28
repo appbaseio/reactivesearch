@@ -10,14 +10,14 @@ import { getComponents } from './addons/ssr';
 
 const { addComponent, removeComponent, watchComponent, updateQuery, setQueryListener } = Actions;
 
-const { checkValueChange, getClassName } = helper;
+const { checkValueChange, getClassName, getOptionsFromQuery } = helper;
 
 const RangeSlider = {
 	name: 'RangeSlider',
 	components: getComponents(),
 	data() {
 		const state = {
-			currentValue: this.$props.range ? [this.$props.range.start, this.$props.range.end]: [],
+			currentValue: this.$props.range ? [this.$props.range.start, this.$props.range.end] : [],
 			stats: [],
 		};
 		this.locked = false;
@@ -49,7 +49,6 @@ const RangeSlider = {
 	},
 
 	methods: {
-
 		setReact(props) {
 			if (props.react) {
 				this.watchComponent(props.componentId, props.react);
@@ -85,18 +84,24 @@ const RangeSlider = {
 		},
 
 		updateQueryHandler(value, props) {
-			const query = props.customQuery || RangeSlider.defaultQuery;
+			const { customQuery } = props;
+			let query = RangeSlider.defaultQuery(value, props);
+			let customQueryOptions;
+			if (customQuery) {
+				({ query } = customQuery(value, props) || {});
+				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			}
 			const {
 				showFilter,
 				range: { start, end },
 			} = props;
-
 			const [currentStart, currentEnd] = value;
+			// check if the slider is at its initial position
 			const isInitialValue = currentStart === start && currentEnd === end;
-
+			this.setQueryOptions(props.componentId, customQueryOptions);
 			this.updateQuery({
 				componentId: props.componentId,
-				query: query(value, props),
+				query,
 				value,
 				label: props.filterLabel,
 				showFilter: showFilter && !isInitialValue,
@@ -119,8 +124,11 @@ const RangeSlider = {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		if(!this.$props.range){
-			console.error("%crange is not defined. Read more about this at https://opensource.appbase.io/reactive-manual/vue/range-components/rangeslider.html#props", "font-size: 12.5px;")
+		if (!this.$props.range) {
+			console.error(
+				'%crange is not defined. Read more about this at https://opensource.appbase.io/reactive-manual/vue/range-components/rangeslider.html#props',
+				'font-size: 12.5px;',
+			);
 		}
 		this.setQueryListener(this.$props.componentId, onQueryChange, null);
 	},
@@ -131,7 +139,7 @@ const RangeSlider = {
 
 		const { defaultSelected } = this.$props;
 		const { selectedValue } = this;
-		if(this.$props.range){
+		if (this.$props.range) {
 			if (Array.isArray(selectedValue)) {
 				this.handleChange(selectedValue);
 			} else if (selectedValue) {
@@ -154,46 +162,43 @@ const RangeSlider = {
 						{this.$props.title}
 					</Title>
 				)}
-				{
-					this.$props.range ? (
-						<NoSSR>
-							<Slider class={getClassName(this.$props.innerClass, 'slider')}>
-								<vue-slider
-									ref="slider"
-									value={this.currentValue}
-									min={this.$props.range.start}
-									max={this.$props.range.end}
-									onDrag-end={this.handleSlider}
-									dotSize={20}
-									height={4}
-									enable-cross={false}
-									{...{ props: this.$props.sliderOptions }}
-								/>
-								{this.$props.rangeLabels && (
-									<div class="label-container">
-										<label
-											class={
-												getClassName(this.$props.innerClass, 'label')
-												|| 'range-label-left'
-											}
-										>
-											{this.$props.rangeLabels.start}
-										</label>
-										<label
-											class={
-												getClassName(this.$props.innerClass, 'label')
-												|| 'range-label-right'
-											}
-										>
-											{this.$props.rangeLabels.end}
-										</label>
-									</div>
-								)}
-							</Slider>
-						</NoSSR>
-					) :
-					null
-				}
+				{this.$props.range ? (
+					<NoSSR>
+						<Slider class={getClassName(this.$props.innerClass, 'slider')}>
+							<vue-slider
+								ref="slider"
+								value={this.currentValue}
+								min={this.$props.range.start}
+								max={this.$props.range.end}
+								onDrag-end={this.handleSlider}
+								dotSize={20}
+								height={4}
+								enable-cross={false}
+								{...{ props: this.$props.sliderOptions }}
+							/>
+							{this.$props.rangeLabels && (
+								<div class="label-container">
+									<label
+										class={
+											getClassName(this.$props.innerClass, 'label')
+											|| 'range-label-left'
+										}
+									>
+										{this.$props.rangeLabels.start}
+									</label>
+									<label
+										class={
+											getClassName(this.$props.innerClass, 'label')
+											|| 'range-label-right'
+										}
+									>
+										{this.$props.rangeLabels.end}
+									</label>
+								</div>
+							)}
+						</Slider>
+					</NoSSR>
+				) : null}
 			</Container>
 		);
 	},
@@ -217,22 +222,22 @@ RangeSlider.defaultQuery = (values, props) => {
 			query: {
 				nested: {
 					path: props.nestedField,
-					query
-				}
-			}
+					query,
+				},
+			},
 		};
 	}
 	return query;
 };
 
 RangeSlider.parseValue = (value, props) => {
-	if(value){
+	if (value) {
 		return [value.start, value.end];
-	}else if(props.range){
+	} else if (props.range) {
 		return [props.range.start, props.range.end];
 	}
 	return [];
-}
+};
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId]

@@ -6,7 +6,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
-import { connect } from '../../utils/index';
+import { connect, isFunction } from '../../utils/index';
 
 const {
 	addComponent,
@@ -14,7 +14,7 @@ const {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener
+	setQueryListener,
 } = Actions;
 const {
 	isEqual,
@@ -22,7 +22,8 @@ const {
 	pushToAndClause,
 	checkValueChange,
 	checkPropChange,
-	getClassName
+	getClassName,
+	getOptionsFromQuery,
 } = helper;
 const MultiDropdownList = {
 	name: 'MultiDropdownList',
@@ -33,7 +34,7 @@ const MultiDropdownList = {
 			modifiedOptions: [],
 			after: {},
 			// for composite aggs
-			isLastBucket: false
+			isLastBucket: false,
 		};
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -46,12 +47,14 @@ const MultiDropdownList = {
 		customQuery: types.func,
 		dataField: types.stringRequired,
 		defaultSelected: types.stringArray,
+		defaultQuery: types.func,
 		filterLabel: types.string,
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Select values'),
 		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		react: types.react,
-		renderListItem: types.func,
+		renderItem: types.func,
+		renderError: types.title,
 		transformData: types.func,
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
@@ -64,16 +67,16 @@ const MultiDropdownList = {
 		missingLabel: VueTypes.string.def('N/A'),
 		showSearch: VueTypes.bool.def(false),
 		showLoadMore: VueTypes.bool.def(false),
-		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def(
-			'Load More'
-		),
-		nestedField: types.string
+		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def('Load More'),
+		nestedField: types.string,
 	},
 	created() {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
+			this.$emit('error', e);
+		});
 	},
 
 	beforeMount() {
@@ -101,9 +104,7 @@ const MultiDropdownList = {
 		selectedValue(newVal) {
 			let selectedValue = Object.keys(this.$data.currentValue);
 			if (this.$props.selectAllLabel) {
-				selectedValue = selectedValue.filter(
-					val => val !== this.$props.selectAllLabel
-				);
+				selectedValue = selectedValue.filter(val => val !== this.$props.selectAllLabel);
 				if (this.$data.currentValue[this.$props.selectAllLabel]) {
 					selectedValue = [this.$props.selectAllLabel];
 				}
@@ -123,13 +124,13 @@ const MultiDropdownList = {
 						...modifiedOptions,
 						...buckets.map(bucket => ({
 							key: bucket.key[dataField],
-							doc_count: bucket.doc_count
-						}))
+							doc_count: bucket.doc_count,
+						})),
 					];
 					const after = newVal[dataField].after_key; // detect the last bucket by checking if the next set of buckets were empty
 					const isLastBucket = !buckets.length;
 					this.after = {
-						after
+						after,
 					};
 					this.isLastBucket = isLastBucket;
 					this.modifiedOptions = nextOptions;
@@ -149,15 +150,19 @@ const MultiDropdownList = {
 		},
 		defaultSelected(newVal) {
 			this.setValue(newVal, true);
-		}
+		},
 	},
 
 	render() {
-		const { showLoadMore, loadMoreLabel, renderListItem } = this.$props;
-		const renderListItemCalc
-			= this.$scopedSlots.renderListItem || renderListItem;
+		const { showLoadMore, loadMoreLabel, renderItem, renderError } = this.$props;
+		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
+		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
 		const { isLastBucket } = this.$data;
 		let selectAll = [];
+
+		if (renderErrorCalc && this.error) {
+			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
+		}
 
 		if (this.$data.modifiedOptions.length === 0) {
 			return null;
@@ -166,8 +171,8 @@ const MultiDropdownList = {
 		if (this.$props.selectAllLabel) {
 			selectAll = [
 				{
-					key: this.$props.selectAllLabel
-				}
+					key: this.$props.selectAllLabel,
+				},
 			];
 		}
 
@@ -186,8 +191,8 @@ const MultiDropdownList = {
 							.filter(item => String(item.key).trim().length)
 							.map(item => ({
 								...item,
-								key: String(item.key)
-							}))
+								key: String(item.key),
+							})),
 					]}
 					handleChange={this.setValue}
 					selectedItem={this.$data.currentValue}
@@ -196,7 +201,7 @@ const MultiDropdownList = {
 					multi
 					showCount={this.$props.showCount}
 					themePreset={this.themePreset}
-					renderListItem={renderListItemCalc}
+					renderItem={renderItemCalc}
 					showSearch={this.$props.showSearch}
 					transformData={this.$props.transformData}
 					footer={
@@ -221,7 +226,7 @@ const MultiDropdownList = {
 				this.watchComponent(props.componentId, newReact);
 			} else {
 				this.watchComponent(props.componentId, {
-					and: this.internalComponent
+					and: this.internalComponent,
 				});
 			}
 		},
@@ -261,14 +266,14 @@ const MultiDropdownList = {
 				if (selectAllLabel && selectAllLabel in currentValue) {
 					const { [selectAllLabel]: del, ...obj } = currentValue;
 					currentValue = {
-						...obj
+						...obj,
 					};
 				}
 			} else {
 				if (currentValue[value]) {
 					const { [value]: del, ...rest } = currentValue;
 					currentValue = {
-						...rest
+						...rest,
 					};
 				} else {
 					currentValue[value] = true;
@@ -277,7 +282,7 @@ const MultiDropdownList = {
 				if (selectAllLabel && selectAllLabel in currentValue) {
 					const { [selectAllLabel]: del, ...obj } = currentValue;
 					currentValue = {
-						...obj
+						...obj,
 					};
 				}
 
@@ -295,20 +300,27 @@ const MultiDropdownList = {
 				props.componentId,
 				finalValues,
 				props.beforeValueChange,
-				performUpdate
+				performUpdate,
 			);
 		},
 
 		updateQueryHandler(value, props) {
-			const query = props.customQuery || MultiDropdownList.defaultQuery;
+			const { customQuery } = props;
+			let query = MultiDropdownList.defaultQuery(value, props);
+			let customQueryOptions;
+			if (customQuery) {
+				({ query } = customQuery(value, props) || {});
+				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			}
+			this.setQueryOptions(props.componentId, customQueryOptions);
 			this.updateQuery({
 				componentId: props.componentId,
-				query: query(value, props),
+				query,
 				value,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'MULTIDROPDOWNLIST'
+				componentType: 'MULTIDROPDOWNLIST',
 			});
 		},
 
@@ -327,15 +339,24 @@ const MultiDropdownList = {
 
 			const queryOptions = MultiDropdownList.generateQueryOptions(
 				props,
-				addAfterKey ? this.$data.after : {}
+				addAfterKey ? this.$data.after : {},
 			);
-			this.setQueryOptions(this.internalComponent, queryOptions);
+			if (props.defaultQuery) {
+				const value = Object.keys(this.$data.currentValue);
+				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+				this.setQueryOptions(this.internalComponent, {
+					...queryOptions,
+					...defaultQueryOptions,
+				});
+			} else {
+				this.setQueryOptions(this.internalComponent, queryOptions);
+			}
 		},
 
 		handleLoadMore() {
 			this.updateQueryOptions(this.$props, true);
-		}
-	}
+		},
+	},
 };
 
 MultiDropdownList.defaultQuery = (value, props) => {
@@ -352,8 +373,8 @@ MultiDropdownList.defaultQuery = (value, props) => {
 		} else {
 			query = {
 				exists: {
-					field: props.dataField
-				}
+					field: props.dataField,
+				},
 			};
 		}
 	} else if (value) {
@@ -364,44 +385,42 @@ MultiDropdownList.defaultQuery = (value, props) => {
 				let should = [
 					{
 						[type]: {
-							[props.dataField]: value.filter(
-								item => item !== props.missingLabel
-							)
-						}
-					}
+							[props.dataField]: value.filter(item => item !== props.missingLabel),
+						},
+					},
 				];
 				if (hasMissingTerm) {
 					should = should.concat({
 						bool: {
 							must_not: {
-								exists: { field: props.dataField }
-							}
-						}
+								exists: { field: props.dataField },
+							},
+						},
 					});
 				}
 				listQuery = {
 					bool: {
-						should
-					}
+						should,
+					},
 				};
 			} else {
 				listQuery = {
 					[type]: {
-						[props.dataField]: value
-					}
+						[props.dataField]: value,
+					},
 				};
 			}
 		} else {
 			// adds a sub-query with must as an array of objects for each term/value
 			const queryArray = value.map(item => ({
 				[type]: {
-					[props.dataField]: item
-				}
+					[props.dataField]: item,
+				},
 			}));
 			listQuery = {
 				bool: {
-					must: queryArray
-				}
+					must: queryArray,
+				},
 			};
 		}
 
@@ -413,9 +432,9 @@ MultiDropdownList.defaultQuery = (value, props) => {
 			query: {
 				nested: {
 					path: props.nestedField,
-					query
-				}
-			}
+					query,
+				},
+			},
 		};
 	}
 	return query;
@@ -436,7 +455,8 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
-	themePreset: state.config.themePreset
+	themePreset: state.config.themePreset,
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = {
@@ -445,12 +465,12 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 	setQueryListener,
 	updateQuery,
-	watchComponent
+	watchComponent,
 };
 
 const ListConnected = connect(
 	mapStateToProps,
-	mapDispatchtoProps
+	mapDispatchtoProps,
 )(MultiDropdownList);
 
 MultiDropdownList.install = function(Vue) {

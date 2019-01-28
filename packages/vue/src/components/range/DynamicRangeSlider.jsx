@@ -8,9 +8,16 @@ import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
 import { getComponents } from './addons/ssr';
 
-const { addComponent, removeComponent, watchComponent, updateQuery, setQueryListener,setQueryOptions } = Actions;
+const {
+	addComponent,
+	removeComponent,
+	watchComponent,
+	updateQuery,
+	setQueryListener,
+	setQueryOptions,
+} = Actions;
 
-const { checkValueChange, getClassName } = helper;
+const { checkValueChange, getClassName, getOptionsFromQuery } = helper;
 
 const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
@@ -41,39 +48,42 @@ const DynamicRangeSlider = {
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
 		sliderOptions: VueTypes.object.def({}),
-		nestedField: types.string
+		nestedField: types.string,
 	},
 
 	methods: {
-		setRange({start, end}){
-			if(this.$props.defaultSelected){
-				const {start : defaultStart, end: defaultEnd} = this.$props.defaultSelected(start,end);
-				this.currentValue = [defaultStart,defaultEnd];
-			}else{
-				this.currentValue = [start,end] ;
+		setRange({ start, end }) {
+			if (this.$props.defaultSelected) {
+				const { start: defaultStart, end: defaultEnd } = this.$props.defaultSelected(
+					start,
+					end,
+				);
+				this.currentValue = [defaultStart, defaultEnd];
+			} else {
+				this.currentValue = [start, end];
 			}
 		},
 
 		setReact(props) {
 			if (props.react) {
 				this.watchComponent(props.componentId, props.react);
-			}else{
-				this.watchComponent(props.componentId, {})
+			} else {
+				this.watchComponent(props.componentId, {});
 			}
 		},
 
-		updateRange(range){
+		updateRange(range) {
 			this.currentValue = range;
 		},
 
-		rangeQuery(props){
+		rangeQuery(props) {
 			return {
 				min: { min: { field: props.dataField } },
 				max: { max: { field: props.dataField } },
-			}
+			};
 		},
 
-		updateRangeQueryOptions(props){
+		updateRangeQueryOptions(props) {
 			let queryOptions = {};
 			const { nestedField } = props;
 			if (nestedField) {
@@ -125,19 +135,23 @@ const DynamicRangeSlider = {
 		},
 
 		updateQueryHandler(value, props) {
-			const query = props.customQuery || DynamicRangeSlider.defaultQuery;
-			const {
-				showFilter,
-			} = props;
-
-			const {start, end} = this.range;
-
+			const { customQuery } = props;
+			let query = DynamicRangeSlider.defaultQuery(value, props);
+			let customQueryOptions;
+			if (customQuery) {
+				({ query } = customQuery(value, props) || {});
+				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			}
+			const { showFilter } = props;
+			const { start, end } = this.range;
 			const [currentStart, currentEnd] = value;
+			// check if the slider is at its initial position
 			const isInitialValue = currentStart === start && currentEnd === end;
+			this.setQueryOptions(props.componentId, customQueryOptions);
 
 			this.updateQuery({
 				componentId: props.componentId,
-				query: query(value, props),
+				query,
 				value,
 				label: props.filterLabel,
 				showFilter: showFilter && !isInitialValue,
@@ -146,14 +160,11 @@ const DynamicRangeSlider = {
 			});
 		},
 
-		getRangeLabels(){
+		getRangeLabels() {
 			let { start: startLabel, end: endLabel } = this.range;
 
 			if (this.$props.rangeLabels) {
-				const rangeLabels = this.$props.rangeLabels(
-					this.range.start,
-					this.range.end,
-				);
+				const rangeLabels = this.$props.rangeLabels(this.range.start, this.range.end);
 				startLabel = rangeLabels.start;
 				endLabel = rangeLabels.end;
 			}
@@ -162,7 +173,7 @@ const DynamicRangeSlider = {
 				startLabel,
 				endLabel,
 			};
-		}
+		},
 	},
 
 	watch: {
@@ -181,7 +192,7 @@ const DynamicRangeSlider = {
 	beforeMount() {
 		this.updateRangeQueryOptions(this.$props);
 		this.addComponent(this.$props.componentId);
-		this.setReact(this.$props)
+		this.setReact(this.$props);
 		const { selectedValue } = this;
 
 		if (Array.isArray(selectedValue)) {
@@ -191,8 +202,8 @@ const DynamicRangeSlider = {
 		}
 	},
 
-	beforeUpdate(){
-		if(!this.currentValue){
+	beforeUpdate() {
+		if (!this.currentValue) {
 			this.setRange(this.range);
 		}
 	},
@@ -202,11 +213,11 @@ const DynamicRangeSlider = {
 	},
 
 	render() {
-		if(!this.range){
+		if (!this.range) {
 			return null;
 		}
 
-		const { startLabel, endLabel} = this.getRangeLabels();
+		const { startLabel, endLabel } = this.getRangeLabels();
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -228,24 +239,26 @@ const DynamicRangeSlider = {
 							{...{ props: this.$props.sliderOptions }}
 						/>
 
-						{this.$props.rangeLabels ? <div class="label-container">
-							<label
-								class={
-									getClassName(this.$props.innerClass, 'label')
-									|| 'range-label-left'
-								}
-							>
-								{startLabel}
-							</label>
-							<label
-								class={
-									getClassName(this.$props.innerClass, 'label')
-									|| 'range-label-right'
-								}
-							>
-								{endLabel}
-							</label>
-						</div>: null}
+						{this.$props.rangeLabels ? (
+							<div class="label-container">
+								<label
+									class={
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-left'
+									}
+								>
+									{startLabel}
+								</label>
+								<label
+									class={
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-right'
+									}
+								>
+									{endLabel}
+								</label>
+							</div>
+						) : null}
 					</Slider>
 				</NoSSR>
 			</Container>
@@ -292,16 +305,15 @@ const mapStateToProps = (state, props) => {
 	if (props.nestedField) {
 		options
 			= options
-				&& state.aggregations[props.componentId][props.dataField][props.nestedField]
-				&& state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
+			&& state.aggregations[props.componentId][props.dataField][props.nestedField]
+			&& state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
 				? state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
 				: [];
 		range
-			= range
-			&& state.aggregations[props.componentId][props.nestedField].min
+			= range && state.aggregations[props.componentId][props.nestedField].min
 				? {
-				start: state.aggregations[props.componentId][props.nestedField].min.value,
-				end: state.aggregations[props.componentId][props.nestedField].max.value,
+					start: state.aggregations[props.componentId][props.nestedField].min.value,
+					end: state.aggregations[props.componentId][props.nestedField].max.value,
 				} // prettier-ignore
 				: null;
 	} else {
@@ -312,7 +324,7 @@ const mapStateToProps = (state, props) => {
 		range
 			= range && state.aggregations[props.componentId].min
 				? {
-				start: state.aggregations[props.componentId].min.value,
+					start: state.aggregations[props.componentId].min.value,
 					end: state.aggregations[props.componentId].max.value,
 				} // prettier-ignore
 				: null;
@@ -322,8 +334,8 @@ const mapStateToProps = (state, props) => {
 		selectedValue: state.selectedValues[props.componentId]
 			? state.selectedValues[props.componentId].value
 			: null,
-		range
-	}
+		range,
+	};
 };
 
 const mapDispatchtoProps = {
@@ -332,7 +344,7 @@ const mapDispatchtoProps = {
 	updateQuery,
 	watchComponent,
 	setQueryListener,
-	setQueryOptions
+	setQueryOptions,
 };
 
 const RangeConnected = connect(
@@ -340,7 +352,7 @@ const RangeConnected = connect(
 	mapDispatchtoProps,
 )(DynamicRangeSlider);
 
-DynamicRangeSlider.install = function (Vue) {
+DynamicRangeSlider.install = function(Vue) {
 	Vue.component(DynamicRangeSlider.name, RangeConnected);
 };
 export default DynamicRangeSlider;

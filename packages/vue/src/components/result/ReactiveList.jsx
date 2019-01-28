@@ -2,7 +2,7 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
-import { connect } from '../../utils/index';
+import { connect, isFunction } from '../../utils/index';
 import Flex from '../../styles/Flex';
 import types from '../../utils/vueTypes';
 import { resultStats, sortOptions } from '../../styles/results';
@@ -19,7 +19,14 @@ const {
 	setQueryListener,
 } = Actions;
 
-const { isEqual, getQueryOptions, pushToAndClause, getClassName, parseHits } = helper;
+const {
+	isEqual,
+	getQueryOptions,
+	pushToAndClause,
+	getClassName,
+	parseHits,
+	getOptionsFromQuery,
+} = helper;
 
 const ReactiveList = {
 	name: 'ReactiveList',
@@ -46,8 +53,8 @@ const ReactiveList = {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		const onError = (...args) => {
-			this.$emit('error', ...args);
+		const onError = e => {
+			this.$emit('error', e);
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, onError);
 	},
@@ -63,10 +70,11 @@ const ReactiveList = {
 		innerClass: types.style,
 		listClass: VueTypes.string.def(''),
 		loader: types.title,
-		onAllData: types.func,
-		onData: types.func,
-		onResultStats: types.func,
-		onNoResults: VueTypes.string.def('No Results found.'),
+		renderAllData: types.func,
+		renderData: types.func,
+		renderNoResults: VueTypes.any.def('No Results found.'),
+		renderError: types.title,
+		renderResultStats: types.func,
 		pages: VueTypes.number.def(5),
 		pagination: VueTypes.bool.def(false),
 		paginationAt: types.paginationAt.def('bottom'),
@@ -87,6 +95,23 @@ const ReactiveList = {
 		},
 		hasResultStatsListener() {
 			return this.$listeners && this.$listeners.resultStats;
+		},
+		stats() {
+			const results = parseHits(this.$data.hits) || [];
+			const streamResults = parseHits(this.$data.streamHits) || [];
+			let filteredResults = results;
+
+			if (streamResults.length) {
+				const ids = streamResults.map(item => item._id);
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+			}
+			return {
+				totalResults: this.$data.total,
+				totalPages: Math.ceil(this.$data.total / this.$props.size),
+				displayedResults: [...streamResults, ...filteredResults].length,
+				time: this.$data.time,
+				currentPage: this.$data.currentPage,
+			};
 		},
 	},
 	watch: {
@@ -122,15 +147,19 @@ const ReactiveList = {
 		},
 		defaultQuery(newVal, oldVal) {
 			if (newVal && !isEqual(newVal(), oldVal)) {
-				const options = getQueryOptions(this.$props);
+				let options = getQueryOptions(this.$props);
 				options.from = 0;
 				this.$defaultQuery = newVal();
 				const { sort, ...query } = this.$defaultQuery;
 
 				if (sort) {
 					options.sort = this.$defaultQuery.sort;
-					this.setQueryOptions(this.$props.componentId, options, !query);
 				}
+				const queryOptions = getOptionsFromQuery(this.$defaultQuery);
+				if (queryOptions) {
+					options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
+				}
+				this.setQueryOptions(this.$props.componentId, options, !query);
 
 				this.updateQuery(
 					{
@@ -154,7 +183,12 @@ const ReactiveList = {
 				this.setReact(this.$props);
 			}
 		},
+		streamHits() {
+			this.$emit('data', this.getAllData());
+		},
 		hits(newVal, oldVal) {
+			this.$emit('data', this.getAllData());
+			this.$emit('resultStats', this.stats);
 			if (this.$props.pagination) {
 				// called when page is changed
 				if (this.isLoading && (oldVal || newVal)) {
@@ -214,7 +248,7 @@ const ReactiveList = {
 			this.setStreaming(this.$props.componentId, true);
 		}
 
-		const options = getQueryOptions(this.$props);
+		let options = getQueryOptions(this.$props);
 		options.from = this.$data.from;
 
 		if (this.$props.sortOptions) {
@@ -239,6 +273,7 @@ const ReactiveList = {
 
 		if (this.$props.defaultQuery) {
 			this.$defaultQuery = this.$props.defaultQuery();
+			options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
 
 			if (this.$defaultQuery.sort) {
 				options.sort = this.$defaultQuery.sort;
@@ -291,7 +326,7 @@ const ReactiveList = {
 		const streamResults = parseHits(this.$data.streamHits) || [];
 		let filteredResults = results;
 
-		const onData = this.$scopedSlots.onData || this.$props.onData;
+		const renderData = this.$scopedSlots.renderData || this.$props.renderData;
 
 		if (streamResults.length) {
 			const ids = streamResults.map(item => item._id);
@@ -303,15 +338,16 @@ const ReactiveList = {
 				{this.isLoading
 					&& this.$props.pagination
 					&& (this.$scopedSlots.loader || this.$props.loader)}
+				{this.renderErrorComponent()}
 				<Flex
 					labelPosition={this.$props.sortOptions ? 'right' : 'left'}
 					class={getClassName(this.$props.innerClass, 'resultsInfo')}
 				>
 					{this.$props.sortOptions ? this.renderSortOptions() : null}
-					{this.$props.showResultStats ? this.renderResultStats() : null}
+					{this.$props.showResultStats ? this.renderStats() : null}
 				</Flex>
 				{!this.isLoading && results.length === 0 && streamResults.length === 0
-					? this.renderNoResults()
+					? this.renderNoResult()
 					: null}
 				{this.$props.pagination
 				&& (this.$props.paginationAt === 'top' || this.$props.paginationAt === 'both') ? (
@@ -323,16 +359,8 @@ const ReactiveList = {
 							innerClass={this.$props.innerClass}
 						/>
 					) : null}
-				{this.$scopedSlots.onAllData ? (
-					this.$scopedSlots.onAllData({
-						results,
-						streamResults,
-						loadMore: this.loadMore,
-						analytics: {
-							base: this.$currentPage * size,
-							triggerClickAnalytics: this.triggerClickAnalytics,
-						},
-					})
+				{this.$scopedSlots.renderAllData ? (
+					this.$scopedSlots.renderAllData(this.getAllData())
 				) : (
 					<div
 						class={`${this.$props.listClass} ${getClassName(
@@ -341,7 +369,7 @@ const ReactiveList = {
 						)}`}
 					>
 						{[...streamResults, ...filteredResults].map((item, index) =>
-							onData({
+							renderData({
 								item,
 								triggerClickAnalytics: () =>
 									this.triggerClickAnalytics(this.$currentPage * size + index),
@@ -385,6 +413,13 @@ const ReactiveList = {
 	},
 
 	methods: {
+		renderErrorComponent() {
+			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+			if (renderError && this.error && !this.isLoading) {
+				return isFunction(renderError) ? renderError(this.error) : renderError;
+			}
+			return null;
+		},
 		updateQueryOptions(props) {
 			const options = getQueryOptions(props);
 			options.from = this.$data.from;
@@ -479,15 +514,12 @@ const ReactiveList = {
 			}
 		},
 
-		renderResultStats() {
-			const onResultStats = this.$props.onResultStats || this.$scopedSlots.onResultStats;
-			if (onResultStats) {
-				return onResultStats({
-					total: this.$data.total,
-					time: this.$data.time,
-				});
-			}
-			if (this.$data.total) {
+		renderStats() {
+			const renderResultStats
+				= this.$scopedSlots.renderResultStats || this.$props.renderResultStats;
+			if (renderResultStats && this.$data.total) {
+				return renderResultStats(this.stats);
+			} else if (this.$data.total) {
 				return (
 					<p
 						class={`${resultStats} ${getClassName(
@@ -500,14 +532,15 @@ const ReactiveList = {
 					</p>
 				);
 			}
-
 			return null;
 		},
 
-		renderNoResults() {
+		renderNoResult() {
+			const renderNoResults
+				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
-					{this.$props.onNoResults}
+					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
 				</p>
 			);
 		},
@@ -564,6 +597,20 @@ const ReactiveList = {
 				</select>
 			);
 		},
+		// Shape of the object to be returned in onData & renderAllData
+		getAllData() {
+			const { size } = this.$props;
+			const { hits, streamHits } = this.$data;
+			const results = parseHits(hits) || [];
+			const streamResults = parseHits(streamHits) || [];
+			return {
+				results,
+				streamResults,
+				loadMore: this.loadMore,
+				base: this.$currentPage * size,
+				triggerClickAnalytics: this.triggerClickAnalytics,
+			};
+		},
 	},
 };
 const mapStateToProps = (state, props) => ({
@@ -577,6 +624,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	analytics: state.analytics,
 	config: state.config,
+	error: state.error[props.componentId],
 });
 const mapDispatchtoProps = {
 	addComponent,

@@ -8,7 +8,7 @@ import types from '../../utils/vueTypes';
 
 const { addComponent, removeComponent, watchComponent, updateQuery, setQueryListener } = Actions;
 
-const { isEqual, checkValueChange, getClassName } = helper;
+const { isEqual, checkValueChange, getClassName, getOptionsFromQuery } = helper;
 const MultiRange = {
 	name: 'MultiRange',
 	data() {
@@ -90,10 +90,19 @@ const MultiRange = {
 		},
 
 		updateQueryHandler(value, props) {
-			const query = props.customQuery || MultiRange.defaultQuery;
+			const { customQuery } = props;
+			let query = MultiRange.defaultQuery(value, props);
+			let customQueryOptions;
+			if (customQuery) {
+				({ query } = customQuery(value, props) || {});
+				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			}
+
+			this.setQueryOptions(props.componentId, customQueryOptions);
+
 			this.updateQuery({
 				componentId: props.componentId,
-				query: query(value, props),
+				query,
 				value,
 				label: props.filterLabel,
 				showFilter: props.showFilter,

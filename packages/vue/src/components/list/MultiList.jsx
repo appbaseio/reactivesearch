@@ -3,7 +3,7 @@ import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
-import { connect } from '../../utils/index';
+import { connect, isFunction } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
@@ -14,15 +14,15 @@ const {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener
+	setQueryListener,
 } = Actions;
 const {
 	isEqual,
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
-	getAggsOrder,
-	getClassName
+	getClassName,
+	getOptionsFromQuery,
 } = helper;
 
 const MultiList = {
@@ -36,11 +36,13 @@ const MultiList = {
 		componentId: types.stringRequired,
 		customQuery: types.func,
 		dataField: types.stringRequired,
+		defaultQuery: types.func,
 		filterLabel: types.string,
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Search'),
 		react: types.react,
-		renderListItem: types.func,
+		renderItem: types.func,
+		renderError: types.title,
 		transformData: types.func,
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
@@ -62,7 +64,7 @@ const MultiList = {
 				props.options && props.options[props.dataField]
 					? props.options[props.dataField].buckets
 					: [],
-			searchTerm: ''
+			searchTerm: '',
 		};
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -72,7 +74,9 @@ const MultiList = {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
+			this.$emit('error', e);
+		});
 	},
 	beforeMount() {
 		this.addComponent(this.internalComponent);
@@ -118,9 +122,7 @@ const MultiList = {
 			let selectedValue = Object.keys(this.$data.currentValue);
 
 			if (this.$props.selectAllLabel) {
-				selectedValue = selectedValue.filter(
-					val => val !== this.$props.selectAllLabel
-				);
+				selectedValue = selectedValue.filter(val => val !== this.$props.selectAllLabel);
 
 				if (this.$data.currentValue[this.$props.selectAllLabel]) {
 					selectedValue = [this.$props.selectAllLabel];
@@ -129,13 +131,18 @@ const MultiList = {
 			if (!isEqual(selectedValue, newVal)) {
 				this.setValue(newVal || [], true);
 			}
-		}
+		},
 	},
 	render() {
-		const { selectAllLabel, renderListItem } = this.$props;
+		const { selectAllLabel, renderItem, renderError } = this.$props;
 
-		const renderListItemCalc
-			= this.$scopedSlots.renderListItem || renderListItem;
+		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
+		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
+
+		if (renderErrorCalc && this.error) {
+			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
+		}
+
 		if (this.modifiedOptions.length === 0) {
 			return null;
 		}
@@ -168,8 +175,8 @@ const MultiList = {
 								onClick={this.handleClick}
 								{...{
 									domProps: {
-										checked: !!this.currentValue[selectAllLabel]
-									}
+										checked: !!this.currentValue[selectAllLabel],
+									},
 								}}
 								show={this.$props.showCheckbox}
 							/>
@@ -210,25 +217,29 @@ const MultiList = {
 									show={this.$props.showCheckbox}
 									{...{
 										domProps: {
-											checked: !!this.$data.currentValue[item.key]
-										}
+											checked: !!this.$data.currentValue[item.key],
+										},
 									}}
 								/>
 								<label
 									class={getClassName(this.$props.innerClass, 'label')}
 									for={`${this.$props.componentId}-${item.key}`}
 								>
-									{renderListItemCalc ? (
-										renderListItemCalc({
+									{renderItemCalc ? (
+										renderItemCalc({
 											label: item.key,
-											count: item.doc_count
+											count: item.doc_count,
+											isChecked: !!this.$data.currentValue[item.key],
 										})
 									) : (
 										<span>
 											{item.key}
 											{this.$props.showCount && (
 												<span
-													class={getClassName(this.$props.innerClass, 'count')}
+													class={getClassName(
+														this.$props.innerClass,
+														'count',
+													)}
 												>
 													&nbsp;(
 													{item.doc_count})
@@ -253,7 +264,7 @@ const MultiList = {
 				this.watchComponent(props.componentId, newReact);
 			} else {
 				this.watchComponent(props.componentId, {
-					and: this.internalComponent
+					and: this.internalComponent,
 				});
 			}
 		},
@@ -295,14 +306,14 @@ const MultiList = {
 				if (selectAllLabel && selectAllLabel in currentValue) {
 					const { [selectAllLabel]: del, ...obj } = currentValue;
 					currentValue = {
-						...obj
+						...obj,
 					};
 				}
 			} else {
 				if (currentValue[value]) {
 					const { [value]: del, ...rest } = currentValue;
 					currentValue = {
-						...rest
+						...rest,
 					};
 				} else {
 					currentValue[value] = true;
@@ -310,7 +321,7 @@ const MultiList = {
 				if (selectAllLabel && selectAllLabel in currentValue) {
 					const { [selectAllLabel]: del, ...obj } = currentValue;
 					currentValue = {
-						...obj
+						...obj,
 					};
 				}
 
@@ -327,20 +338,28 @@ const MultiList = {
 				props.componentId,
 				finalValues,
 				props.beforeValueChange,
-				performUpdate
+				performUpdate,
 			);
 		},
 
 		updateQueryHandler(value, props) {
-			const query = props.customQuery || MultiList.defaultQuery;
+			const { customQuery } = props;
+			let query = MultiList.defaultQuery(value, props);
+			let customQueryOptions;
+			if (customQuery) {
+				({ query } = customQuery(value, props) || {});
+				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			}
+			this.setQueryOptions(props.componentId, customQueryOptions);
+
 			this.updateQuery({
 				componentId: props.componentId,
-				query: query(value, props),
+				query,
 				value,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'MULTILIST'
+				componentType: 'MULTILIST',
 			});
 		},
 
@@ -351,7 +370,14 @@ const MultiList = {
 
 		updateQueryHandlerOptions(props) {
 			const queryOptions = MultiList.generateQueryOptions(props);
-			this.setQueryOptions(this.internalComponent, queryOptions);
+			if (props.defaultQuery) {
+				const value = Object.keys(this.$data.currentValue);
+				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+				this.setQueryOptions(this.internalComponent,
+					{ ...queryOptions, ...defaultQueryOptions });
+			} else {
+				this.setQueryOptions(this.internalComponent, queryOptions);
+			}
 		},
 
 		handleInputChange(e) {
@@ -368,7 +394,7 @@ const MultiList = {
 						value={this.$data.searchTerm}
 						placeholder={this.$props.placeholder}
 						style={{
-							margin: '0 0 8px'
+							margin: '0 0 8px',
 						}}
 						themePreset={this.$props.themePreset}
 					/>
@@ -380,8 +406,8 @@ const MultiList = {
 
 		handleClick(e) {
 			this.setValue(e.target.value);
-		}
-	}
+		},
+	},
 };
 MultiList.defaultQuery = (value, props) => {
 	let query = null;
@@ -397,8 +423,8 @@ MultiList.defaultQuery = (value, props) => {
 		} else {
 			query = {
 				exists: {
-					field: props.dataField
-				}
+					field: props.dataField,
+				},
 			};
 		}
 	} else if (value) {
@@ -409,44 +435,42 @@ MultiList.defaultQuery = (value, props) => {
 				let should = [
 					{
 						[type]: {
-							[props.dataField]: value.filter(
-								item => item !== props.missingLabel
-							)
-						}
-					}
+							[props.dataField]: value.filter(item => item !== props.missingLabel),
+						},
+					},
 				];
 				if (hasMissingTerm) {
 					should = should.concat({
 						bool: {
 							must_not: {
-								exists: { field: props.dataField }
-							}
-						}
+								exists: { field: props.dataField },
+							},
+						},
 					});
 				}
 				listQuery = {
 					bool: {
-						should
-					}
+						should,
+					},
 				};
 			} else {
 				listQuery = {
 					[type]: {
-						[props.dataField]: value
-					}
+						[props.dataField]: value,
+					},
 				};
 			}
 		} else {
 			// adds a sub-query with must as an array of objects for each term/value
 			const queryArray = value.map(item => ({
 				[type]: {
-					[props.dataField]: item
-				}
+					[props.dataField]: item,
+				},
 			}));
 			listQuery = {
 				bool: {
-					must: queryArray
-				}
+					must: queryArray,
+				},
 			};
 		}
 
@@ -471,14 +495,16 @@ MultiList.generateQueryOptions = props => {
 	return getAggsQuery(queryOptions, props);
 };
 const mapStateToProps = (state, props) => ({
-	options: props.nestedField && state.aggregations[props.componentId]
-		? state.aggregations[props.componentId].reactivesearch_nested
-		: state.aggregations[props.componentId],
+	options:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
-	themePreset: state.config.themePreset
+	themePreset: state.config.themePreset,
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = {
@@ -487,12 +513,12 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 	setQueryListener,
 	updateQuery,
-	watchComponent
+	watchComponent,
 };
 
 const ListConnected = connect(
 	mapStateToProps,
-	mapDispatchtoProps
+	mapDispatchtoProps,
 )(MultiList);
 
 MultiList.install = function(Vue) {

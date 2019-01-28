@@ -3,7 +3,7 @@ import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
-import { connect } from '../../utils/index';
+import { connect, isFunction } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Radio } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
@@ -14,14 +14,14 @@ const {
 	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener
+	setQueryListener,
 } = Actions;
 const {
 	getQueryOptions,
 	pushToAndClause,
 	checkValueChange,
-	getAggsOrder,
-	getClassName
+	getClassName,
+	getOptionsFromQuery,
 } = helper;
 
 const SingleList = {
@@ -33,11 +33,12 @@ const SingleList = {
 		customQuery: types.func,
 		dataField: types.stringRequired,
 		defaultSelected: types.string,
+		defaultQuery: types.func,
 		filterLabel: types.string,
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Search'),
 		react: types.react,
-		renderListItem: types.func,
+		renderItem: types.func,
 		transformData: types.func,
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
@@ -60,7 +61,7 @@ const SingleList = {
 				props.options && props.options[props.dataField]
 					? props.options[props.dataField].buckets
 					: [],
-			searchTerm: ''
+			searchTerm: '',
 		};
 		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
@@ -70,7 +71,9 @@ const SingleList = {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
+			this.$emit('error', e);
+		});
 	},
 	beforeMount() {
 		this.addComponent(this.internalComponent);
@@ -115,12 +118,16 @@ const SingleList = {
 			if (this.$data.currentValue !== newVal) {
 				this.setValue(newVal || '');
 			}
-		}
+		},
 	},
 	render() {
-		const { selectAllLabel, renderListItem } = this.$props;
-		const renderListItemCalc
-			= this.$scopedSlots.renderListItem || renderListItem;
+		const { selectAllLabel, renderItem, renderError } = this.$props;
+		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
+		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
+
+		if (renderErrorCalc && this.error) {
+			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
+		}
 		if (this.modifiedOptions.length === 0) {
 			return null;
 		}
@@ -142,9 +149,7 @@ const SingleList = {
 					{selectAllLabel ? (
 						<li
 							key={selectAllLabel}
-							class={`${
-								this.$data.currentValue === selectAllLabel ? 'active' : ''
-							}`}
+							class={`${this.$data.currentValue === selectAllLabel ? 'active' : ''}`}
 						>
 							<Radio
 								class={getClassName(this.$props.innerClass, 'radio')}
@@ -156,8 +161,8 @@ const SingleList = {
 								show={this.$props.showRadio}
 								{...{
 									domProps: {
-										checked: this.$data.currentValue === selectAllLabel
-									}
+										checked: this.$data.currentValue === selectAllLabel,
+									},
 								}}
 							/>
 							<label
@@ -200,18 +205,19 @@ const SingleList = {
 									show={this.$props.showRadio}
 									{...{
 										domProps: {
-											checked: this.$data.currentValue === String(item.key)
-										}
+											checked: this.$data.currentValue === String(item.key),
+										},
 									}}
 								/>
 								<label
 									class={getClassName(this.$props.innerClass, 'label') || null}
 									for={`${this.$props.componentId}-${item.key}`}
 								>
-									{renderListItemCalc ? (
-										renderListItemCalc({
+									{renderItemCalc ? (
+										renderItemCalc({
 											label: item.key,
-											count: item.doc_count
+											count: item.doc_count,
+											isChecked: this.$data.currentValue === String(item.key),
 										})
 									) : (
 										<span>
@@ -219,8 +225,10 @@ const SingleList = {
 											{this.$props.showCount && (
 												<span
 													class={
-														getClassName(this.$props.innerClass, 'count')
-														|| null
+														getClassName(
+															this.$props.innerClass,
+															'count',
+														) || null
 													}
 												>
 													&nbsp;(
@@ -246,7 +254,7 @@ const SingleList = {
 				this.watchComponent(props.componentId, newReact);
 			} else {
 				this.watchComponent(props.componentId, {
-					and: this.internalComponent
+					and: this.internalComponent,
 				});
 			}
 		},
@@ -271,24 +279,26 @@ const SingleList = {
 				this.$emit('valueChange', value);
 			};
 
-			checkValueChange(
-				props.componentId,
-				value,
-				props.beforeValueChange,
-				performUpdate
-			);
+			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
 
 		updateQueryHandler(value, props) {
-			const query = props.customQuery || SingleList.defaultQuery;
+			const { customQuery } = props;
+			let query = SingleList.defaultQuery(value, props);
+			let customQueryOptions;
+			if (customQuery) {
+				({ query } = customQuery(value, props) || {});
+				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			}
+			this.setQueryOptions(props.componentId, customQueryOptions);
 			this.updateQuery({
 				componentId: props.componentId,
-				query: query(value, props),
+				query,
 				value,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'SINGLELIST'
+				componentType: 'SINGLELIST',
 			});
 		},
 
@@ -299,7 +309,16 @@ const SingleList = {
 
 		updateQueryHandlerOptions(props) {
 			const queryOptions = SingleList.generateQueryOptions(props);
-			this.setQueryOptions(this.internalComponent, queryOptions);
+			if (props.defaultQuery) {
+				const value = this.$data.currentValue;
+				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+				this.setQueryOptions(this.internalComponent, {
+					...queryOptions,
+					...defaultQueryOptions,
+				});
+			} else {
+				this.setQueryOptions(this.internalComponent, queryOptions);
+			}
 		},
 
 		handleInputChange(e) {
@@ -316,7 +335,7 @@ const SingleList = {
 						value={this.$data.searchTerm}
 						placeholder={this.$props.placeholder}
 						style={{
-							margin: '0 0 8px'
+							margin: '0 0 8px',
 						}}
 						themePreset={this.$props.themePreset}
 					/>
@@ -328,8 +347,8 @@ const SingleList = {
 
 		handleClick(e) {
 			this.setValue(e.target.value);
-		}
-	}
+		},
+	},
 };
 
 SingleList.generateQueryOptions = props => {
@@ -344,8 +363,8 @@ SingleList.defaultQuery = (value, props) => {
 		}
 		query = {
 			exists: {
-				field: props.dataField
-			}
+				field: props.dataField,
+			},
 		};
 	}
 	if (value) {
@@ -353,15 +372,15 @@ SingleList.defaultQuery = (value, props) => {
 			query = {
 				bool: {
 					must_not: {
-						exists: { field: props.dataField }
-					}
-				}
+						exists: { field: props.dataField },
+					},
+				},
 			};
 		}
 		query = {
 			term: {
-				[props.dataField]: value
-			}
+				[props.dataField]: value,
+			},
 		};
 	}
 
@@ -379,14 +398,16 @@ SingleList.defaultQuery = (value, props) => {
 	return query;
 };
 const mapStateToProps = (state, props) => ({
-	options: props.nestedField && state.aggregations[props.componentId]
-		? state.aggregations[props.componentId].reactivesearch_nested
-		: state.aggregations[props.componentId],
+	options:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| '',
-	themePreset: state.config.themePreset
+	themePreset: state.config.themePreset,
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = {
@@ -395,12 +416,12 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 	setQueryListener,
 	updateQuery,
-	watchComponent
+	watchComponent,
 };
 
 const ListConnected = connect(
 	mapStateToProps,
-	mapDispatchtoProps
+	mapDispatchtoProps,
 )(SingleList);
 
 SingleList.install = function(Vue) {
