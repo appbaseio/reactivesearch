@@ -341,11 +341,7 @@ class MultiDropdownList extends Component {
 			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
-		this.queryOptions = {
-			...this.queryOptions,
-			...customQueryOptions,
-		};
-		props.setQueryOptions(props.componentId, this.queryOptions);
+		props.setQueryOptions(props.componentId, customQueryOptions);
 		props.updateQuery({
 			componentId: props.componentId,
 			query,
@@ -376,17 +372,13 @@ class MultiDropdownList extends Component {
 			props,
 			addAfterKey ? this.state.after : {},
 		);
-		this.queryOptions = {
-			...this.queryOptions,
-			...queryOptions,
-		};
 		if (props.defaultQuery) {
 			const value = Object.keys(this.state.currentValue);
 			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
 			props.setQueryOptions(this.internalComponent,
-				{ ...this.queryOptions, ...defaultQueryOptions });
+				{ ...queryOptions, ...defaultQueryOptions });
 		} else {
-			props.setQueryOptions(this.internalComponent, this.queryOptions);
+			props.setQueryOptions(this.internalComponent, queryOptions);
 		}
 	};
 

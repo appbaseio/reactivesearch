@@ -160,11 +160,7 @@ class TextField extends Component {
 			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
-		this.queryOptions = {
-			...this.queryOptions,
-			...customQueryOptions,
-		};
-		props.setQueryOptions(props.componentId, this.queryOptions);
+		props.setQueryOptions(props.componentId, customQueryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,

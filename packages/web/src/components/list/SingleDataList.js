@@ -199,11 +199,7 @@ class SingleDataList extends Component {
 			({ query } = customQuery(currentValue, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(currentValue, props));
 		}
-		this.queryOptions = {
-			...this.queryOptions,
-			...customQueryOptions,
-		};
-		props.setQueryOptions(props.componentId, this.queryOptions);
+		props.setQueryOptions(props.componentId, customQueryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -224,14 +220,13 @@ class SingleDataList extends Component {
 
 	updateQueryOptions = (props) => {
 		const queryOptions = SingleDataList.generateQueryOptions(props, this.state);
-		this.queryOptions = { ...this.queryOptions, ...queryOptions };
 		if (props.defaultQuery) {
 			const value = this.state.currentValue;
 			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
 			props.setQueryOptions(this.internalComponent,
-				{ ...this.queryOptions, ...defaultQueryOptions });
+				{ ...queryOptions, ...defaultQueryOptions });
 		} else {
-			props.setQueryOptions(this.internalComponent, this.queryOptions);
+			props.setQueryOptions(this.internalComponent, queryOptions);
 		}
 	};
 

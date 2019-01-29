@@ -273,16 +273,12 @@ class MultiDataList extends Component {
 			return matchingItem ? acc.concat(matchingItem.value) : acc;
 		}, []);
 
-		this.queryOptions = {
-			...this.queryOptions,
-			...customQueryOptions,
-		};
 		let query = MultiDataList.defaultQuery(queryValue, props);
 		if (customQuery) {
 			({ query } = customQuery(queryValue, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery((queryValue, props)));
 		}
-		props.setQueryOptions(props.componentId, this.queryOptions);
+		props.setQueryOptions(props.componentId, customQueryOptions);
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -303,17 +299,13 @@ class MultiDataList extends Component {
 
 	updateQueryOptions = (props) => {
 		const queryOptions = MultiDataList.generateQueryOptions(props, this.state);
-		this.queryOptions = {
-			...this.queryOptions,
-			...queryOptions,
-		};
 		if (props.defaultQuery) {
 			const value = Object.keys(this.state.currentValue);
 			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
 			props.setQueryOptions(this.internalComponent,
-				{ ...this.queryOptions, ...defaultQueryOptions });
+				{ ...queryOptions, ...defaultQueryOptions });
 		} else {
-			props.setQueryOptions(this.internalComponent, this.queryOptions);
+			props.setQueryOptions(this.internalComponent, queryOptions);
 		}
 	};
 
