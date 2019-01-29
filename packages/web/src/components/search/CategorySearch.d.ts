@@ -20,7 +20,6 @@ export interface CategorySearchProps extends CommonProps {
 	defaultValue?: categorySearchValue;
 	value?: categorySearchValue;
 	defaultSuggestions?: types.suggestions;
-	defaultQuery?: (...args: any[]) => any;
 	downShiftProps?: types.props;
 	fieldWeights?: types.fieldWeights;
 	filterLabel?: string;

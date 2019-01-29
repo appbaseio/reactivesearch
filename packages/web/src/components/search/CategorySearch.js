@@ -403,46 +403,27 @@ class CategorySearch extends Component {
 
 	updateQuery = (componentId, value, props, category) => {
 		const {
-			customQuery, defaultQuery, filterLabel, showFilter, URLParams,
+			customQuery, filterLabel, showFilter, URLParams,
 		} = props;
 
-		// defaultQuery from props is always appended regardless of a customQuery
-		let query = [];
 		let customQueryOptions;
-		let defaultQueryOptions;
 		const defaultQueryTobeSet = CategorySearch.defaultQuery(value, props, category);
+		let query = defaultQueryTobeSet;
 		if (customQuery) {
 			const customQueryTobeSet = customQuery(value, props, category);
-			const queryTobeSet = customQueryTobeSet.query;
-			query = queryTobeSet ? [queryTobeSet] : defaultQueryTobeSet;
+			query = customQueryTobeSet.query;
 			customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
-		} else {
-			query = defaultQueryTobeSet;
 		}
-		if (defaultQuery) {
-			if (defaultQuery(value, props, category).query) {
-				query = [...query, ...defaultQuery(value, props, category).query];
-			}
-			defaultQueryOptions = getOptionsFromQuery(defaultQuery(value, props, category));
-		}
-		const queryObject = defaultQuery
-			? {
-				bool: {
-					must: query,
-				},
-			} // prettier-ignore
-			: query;
 
 		// query options should be applied to the source component,
 		// not on internal component, hence using `this.props.componentId` here
 		props.setQueryOptions(this.props.componentId, {
 			...this.queryOptions,
-			...defaultQueryOptions,
 			...customQueryOptions,
 		});
 		props.updateQuery({
 			componentId,
-			query: queryObject,
+			query,
 			value,
 			label: filterLabel,
 			showFilter,
