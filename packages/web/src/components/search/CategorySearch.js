@@ -388,14 +388,13 @@ class CategorySearch extends Component {
 		let query = defaultQueryTobeSet;
 		if (customQuery) {
 			const customQueryTobeSet = customQuery(value, props, category);
-			const queryTobeSet = customQueryTobeSet.query;
-			if (queryTobeSet) {
-				query = [queryTobeSet];
-			}
+			query = customQueryTobeSet.query;
 			customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
 		}
 
-		props.setQueryOptions(componentId, {
+		// query options should be applied to the source component,
+		// not on internal component, hence using `this.props.componentId` here
+		props.setQueryOptions(this.props.componentId, {
 			...this.queryOptions,
 			...customQueryOptions,
 		});
