@@ -160,7 +160,7 @@ class ReactiveOpenStreetMap extends Component {
 				}}
 				touchZoom
 			>
-				<OpenStreetLayer url={this.props.tileServer ? this.props.tileServer : 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'} />
+				<OpenStreetLayer url={this.props.tileServer || 'https://{s}.tile.osm.org/{z}/{x}/{y}.png'} />
 				{markers}
 				{this.props.showMarkers && this.props.markers}
 			</OpenStreetMap>
