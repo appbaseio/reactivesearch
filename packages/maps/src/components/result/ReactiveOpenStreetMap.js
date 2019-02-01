@@ -9,6 +9,7 @@ import {
 } from 'react-leaflet';
 import { Icon, DivIcon } from 'leaflet';
 import { MapPin, mapPinWrapper } from './addons/styles/MapPin';
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import ReactiveMap from './ReactiveMap';
 
@@ -171,5 +172,9 @@ class ReactiveOpenStreetMap extends Component {
 		return <ReactiveMap {...this.props} renderMap={this.renderMap} />;
 	}
 }
+
+ReactiveOpenStreetMap.propTypes = {
+  tileServer: types.string,
+};
 
 export default ReactiveOpenStreetMap;
