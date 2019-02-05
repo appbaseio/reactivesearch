@@ -5,7 +5,7 @@ import { ReactiveListProps } from './ReactiveList';
 
 export interface ResultCardProps extends ReactiveListProps {
 	innerClass?: types.style;
-	target: string;
+	target?: string;
 	onData?: (...args: any[]) => any;
 }
 
