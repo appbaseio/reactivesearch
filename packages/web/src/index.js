@@ -1,3 +1,5 @@
+import '@appbaseio/reactivecore/lib/utils/polyfills';
+
 import ReactiveBase from './components/basic/ReactiveBase';
 import TextField from './components/basic/TextField';
 import SelectedFilters from './components/basic/SelectedFilters';
@@ -33,8 +35,6 @@ import ReactiveList from './components/result/ReactiveList';
 import ResultCard from './components/result/ResultCard';
 import ResultList from './components/result/ResultList';
 
-import './polyfills';
-
 export {
 	// basic
 	ReactiveBase,
@@ -45,11 +45,9 @@ export {
 	DataController,
 	TagCloud,
 	ReactiveComponent,
-
 	// date
 	DatePicker,
 	DateRange,
-
 	// list
 	SingleList,
 	MultiList,
@@ -57,7 +55,6 @@ export {
 	MultiDropdownList,
 	SingleDataList,
 	MultiDataList,
-
 	// range
 	SingleRange,
 	MultiRange,
@@ -67,11 +64,9 @@ export {
 	DynamicRangeSlider,
 	RangeInput,
 	RatingsFilter,
-
 	// search
 	DataSearch,
 	CategorySearch,
-
 	// result
 	ReactiveList,
 	ResultCard,

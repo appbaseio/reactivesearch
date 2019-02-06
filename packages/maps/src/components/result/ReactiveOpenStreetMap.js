@@ -161,7 +161,9 @@ class ReactiveOpenStreetMap extends Component {
 				}}
 				touchZoom
 			>
-				<OpenStreetLayer url={this.props.tileServer || 'https://{s}.tile.osm.org/{z}/{x}/{y}.png'} />
+				<OpenStreetLayer
+					url={this.props.tileServer || 'https://{s}.tile.osm.org/{z}/{x}/{y}.png'}
+				/>
 				{markers}
 				{this.props.showMarkers && this.props.markers}
 			</OpenStreetMap>
@@ -174,7 +176,7 @@ class ReactiveOpenStreetMap extends Component {
 }
 
 ReactiveOpenStreetMap.propTypes = {
-  tileServer: types.string,
+	tileServer: types.string,
 };
 
 export default ReactiveOpenStreetMap;
