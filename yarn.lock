@@ -21,6 +21,18 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
+"@appbaseio/reactivemaps@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-2.0.1.tgz#ca94c3f9aa43260589792ef009541ac9bb2df644"
+  integrity sha512-dHJNm5pIqtPGzX75yoR97F5RxWMzdjMtO8si7fiX6cMME9nR4C0tgTKU/5huJez6jaYbQPbnTiIGA4QIGTzcKw==
+  dependencies:
+    downshift "^1.31.2"
+    emotion "^9.0.0"
+    emotion-theming "^9.0.0"
+    prop-types "^15.6.0"
+    react-emotion "^9.0.0"
+    react-google-maps "^9.4.5"
+
 "@babel/code-frame@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.44.tgz#2a02643368de80916162be70865c97774f3adbd9"

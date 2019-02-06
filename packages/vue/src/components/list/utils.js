@@ -3,7 +3,9 @@ import { helper } from '@appbaseio/reactivecore';
 const { getAggsOrder } = helper;
 const getAggsQuery = (query, props) => {
 	const clonedQuery = { ...query };
-	const { dataField, size, sortBy, showMissing, missingLabel } = props;
+	const {
+		dataField, size, sortBy, showMissing, missingLabel,
+	} = props;
 	clonedQuery.size = 0;
 	clonedQuery.aggs = {
 		[dataField]: {
@@ -11,19 +13,20 @@ const getAggsQuery = (query, props) => {
 				field: dataField,
 				size,
 				order: getAggsOrder(sortBy || 'count'),
-				...(showMissing ? { missing: missingLabel } : {})
-			}
-		}
+				...(showMissing ? { missing: missingLabel } : {}),
+			},
+		},
 	};
 
 	if (props.nestedField) {
 		clonedQuery.aggs = {
 			reactivesearch_nested: {
 				nested: {
-					path: props.nestedField
+					path: props.nestedField,
 				},
-				aggs: clonedQuery.aggs
-			}
+				aggs: clonedQuery.aggs,
+				size: clonedQuery.size,
+			},
 		};
 	}
 
@@ -33,7 +36,9 @@ const getAggsQuery = (query, props) => {
 const getCompositeAggsQuery = (query, props, after) => {
 	const clonedQuery = { ...query };
 	// missing label not available in composite aggs
-	const { dataField, size, sortBy, showMissing } = props;
+	const {
+		dataField, size, sortBy, showMissing,
+	} = props;
 
 	// composite aggs only allows asc and desc
 	const order = sortBy === 'count' ? {} : { order: sortBy };
@@ -47,25 +52,27 @@ const getCompositeAggsQuery = (query, props, after) => {
 							terms: {
 								field: dataField,
 								...order,
-								...(showMissing ? { missing_bucket: true } : {})
-							}
-						}
-					}
+								...(showMissing ? { missing_bucket: true } : {}),
+							},
+						},
+					},
 				],
 				size,
-				...after
-			}
-		}
+				...after,
+			},
+		},
 	};
+	clonedQuery.size = 0;
 
 	if (props.nestedField) {
 		clonedQuery.aggs = {
 			reactivesearch_nested: {
 				nested: {
-					path: props.nestedField
+					path: props.nestedField,
 				},
-				aggs: clonedQuery.aggs
-			}
+				aggs: clonedQuery.aggs,
+				size: clonedQuery.size,
+			},
 		};
 	}
 

@@ -1,19 +1,11 @@
-import { getAggsOrder } from '@appbaseio/reactivecore/lib/utils/helper';
+import { helper } from '@appbaseio/reactivecore';
 
-const getAggsQuery = (query, props, include) => {
+const { getAggsOrder } = helper;
+const getAggsQuery = (query, props) => {
 	const clonedQuery = { ...query };
 	const {
 		dataField, size, sortBy, showMissing, missingLabel,
 	} = props;
-
-	let includesQuery = {};
-
-	if (include) {
-		includesQuery = {
-			include,
-		};
-	}
-
 	clonedQuery.size = 0;
 	clonedQuery.aggs = {
 		[dataField]: {
@@ -22,7 +14,6 @@ const getAggsQuery = (query, props, include) => {
 				size,
 				order: getAggsOrder(sortBy || 'count'),
 				...(showMissing ? { missing: missingLabel } : {}),
-				...includesQuery,
 			},
 		},
 	};
@@ -34,6 +25,7 @@ const getAggsQuery = (query, props, include) => {
 					path: props.nestedField,
 				},
 				aggs: clonedQuery.aggs,
+				size: clonedQuery.size,
 			},
 		};
 	}
@@ -70,6 +62,7 @@ const getCompositeAggsQuery = (query, props, after) => {
 			},
 		},
 	};
+	clonedQuery.size = 0;
 
 	if (props.nestedField) {
 		clonedQuery.aggs = {
@@ -78,6 +71,7 @@ const getCompositeAggsQuery = (query, props, after) => {
 					path: props.nestedField,
 				},
 				aggs: clonedQuery.aggs,
+				size: clonedQuery.size,
 			},
 		};
 	}
