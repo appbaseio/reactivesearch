@@ -20,12 +20,12 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivesearch-vue@^1.0.0-beta.4":
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.0.0-beta.4.tgz#e8a30fb798629075ff1c3e3908b27f6ec94a7af2"
-  integrity sha512-QCHhNtHgmlGpVpdM7joKpAcyq+snlkAjeX5XaJGw9yUJQJkXdnfO8avmAw8Dht9mRNJROlNg7ABpC5Ii5BecYA==
+"@appbaseio/reactivesearch-vue@^1.0.0-beta.7":
+  version "1.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.0.0-beta.7.tgz#062d4a961ebb142ad0d7304cd5c9462f6175737c"
+  integrity sha512-YVqEVU08fZPKcRO5muvhf/oobUbBcANmQzq4NVQIxmvL0VsC2zLCVhI7yLaFF+YjLesonYFsB+a38r8KC4Wi7Q==
   dependencies:
-    "@appbaseio/reactivecore" "^7.3.1"
+    "@appbaseio/reactivecore" "^7.4.0"
     appbase-js "^4.0.2-beta.2"
     babel-helper-vue-jsx-merge-props "^2.0.3"
     compute-scroll-into-view "^1.0.11"
