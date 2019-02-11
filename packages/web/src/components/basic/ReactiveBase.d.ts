@@ -16,6 +16,9 @@ export interface ReactiveBaseProps {
 	style?: types.style;
 	className?: string;
 	graphQLUrl?: string;
+	transformResponse?: (...args: any[]) => any;
+	getSearchParams?: () => string;
+	setSearchParams?: () => string;
 }
 
 declare const ReactiveBase: React.ComponentType<ReactiveBaseProps>;
