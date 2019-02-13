@@ -8,8 +8,8 @@ import {
 	Popup as OpenStreetPopup,
 } from 'react-leaflet';
 import { Icon, DivIcon } from 'leaflet';
-import { MapPin, mapPinWrapper } from './addons/styles/MapPin';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { MapPin, mapPinWrapper } from './addons/styles/MapPin';
 
 import ReactiveMap from './ReactiveMap';
 
@@ -177,6 +177,8 @@ class ReactiveOpenStreetMap extends Component {
 
 ReactiveOpenStreetMap.propTypes = {
 	tileServer: types.string,
+	showMarkers: types.bool,
+	markers: types.children,
 };
 
 export default ReactiveOpenStreetMap;
