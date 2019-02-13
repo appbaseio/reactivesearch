@@ -577,7 +577,12 @@ class ReactiveList extends Component {
 	}
 
 	render() {
-		const { renderData, size, error } = this.props;
+		const {
+			renderData,
+			size,
+			error,
+			promotedResults,
+		} = this.props;
 		const { currentPage } = this.state;
 		const allData = this.getAllData();
 		const { results, streamResults } = allData;
@@ -586,6 +591,15 @@ class ReactiveList extends Component {
 		if (streamResults.length) {
 			const ids = streamResults.map(item => item._id);
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+		}
+
+		if (promotedResults.length) {
+			const ids = promotedResults.map(item => item._id).filter(Boolean);
+			if (ids) {
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+			}
+
+			filteredResults = [...promotedResults, ...filteredResults];
 		}
 
 		return (
@@ -683,6 +697,7 @@ ReactiveList.propTypes = {
 	isLoading: types.bool,
 	includeFields: types.includeFields,
 	streamHits: types.hits,
+	promotedResults: types.hits,
 	time: types.number,
 	total: types.number,
 	config: types.props,
@@ -754,6 +769,7 @@ const mapStateToProps = (state, props) => ({
 	config: state.config,
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
+	promotedResults: state.promotedResults,
 });
 
 const mapDispatchtoProps = dispatch => ({
