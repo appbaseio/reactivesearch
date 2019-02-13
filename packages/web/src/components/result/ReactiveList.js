@@ -233,19 +233,22 @@ class ReactiveList extends Component {
 		if (!this.props.pagination) {
 			if (this.props.hits && prevProps.hits) {
 				if (
-					this.props.hits.length !== prevProps.hits.length
-					|| this.props.hits.length === this.props.total
+					// new items are loaded (from: 0)
+					this.props.hits.length < prevProps.hits.length
+					|| (
+						// new items are loaded and 'from' hasn't changed
+						this.props.hits.length === prevProps.hits.length
+						&& this.props.hits !== prevProps.hits
+					)
 				) {
-					if (this.props.hits !== prevProps.hits) {
-						// query has changed
-						if (this.props.scrollOnChange && this.props.pagination) {
-							this.domNode.scrollTo(0, 0);
-						}
-						// eslint-disable-next-line
-						this.setState({
-							from: 0,
-						});
+					// query has changed
+					if (this.props.scrollOnChange) {
+						this.domNode.scrollTo(0, 0);
 					}
+					// eslint-disable-next-line
+					this.setState({
+						from: 0,
+					});
 				}
 			}
 		}
@@ -425,6 +428,7 @@ class ReactiveList extends Component {
 		) {
 			const value = this.state.from + this.props.size;
 			const options = getQueryOptions(this.props);
+
 
 			this.setState({
 				from: value,
