@@ -21,15 +21,6 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivecore@^7.4.1":
-  version "7.4.1"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-7.4.1.tgz#a9b6f799b42bca0cbcf138ba497b28ad21a3d71a"
-  integrity sha512-zqbUw2pTkwp9/vclkU8FaaRLWH6qWezZ9jrJTIxqDJ7OBzEUhSVGkJVNvkIoRChaa9+kkTrn9ksnquaYaPz1xg==
-  dependencies:
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
 "@appbaseio/reactivemaps@^2.0.0-beta", "@appbaseio/reactivemaps@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-2.0.1.tgz#ca94c3f9aa43260589792ef009541ac9bb2df644"
@@ -41,25 +32,6 @@
     prop-types "^15.6.0"
     react-emotion "^9.0.0"
     react-google-maps "^9.4.5"
-
-"@appbaseio/reactivesearch-vue@^1.0.0-beta.8":
-  version "1.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.0.0-beta.8.tgz#b2dd9b0e700171cb6354496fbb10141d4ca73bec"
-  integrity sha512-vH+qmkuyaH4ektsnjmjkW+DyyJYVXWGgvRQZWI2T+rys2X4mRKiIKpYagBW7M9+N+W6xhmzgNZy1T0qc5MH6iA==
-  dependencies:
-    "@appbaseio/reactivecore" "^7.4.1"
-    appbase-js "^4.0.2-beta.2"
-    babel-helper-vue-jsx-merge-props "^2.0.3"
-    compute-scroll-into-view "^1.0.11"
-    emotion "^9.2.12"
-    polished "^2.2.0"
-    redux "^4.0.0"
-    url-search-params "^1.1.0"
-    vue "^2.5.17"
-    vue-emotion "^0.4.2"
-    vue-no-ssr "^1.1.0"
-    vue-slider-component "^2.8.2"
-    vue-types "^1.3.3"
 
 "@appbaseio/reactivesearch@^2.12.1":
   version "2.16.1"

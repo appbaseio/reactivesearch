@@ -9,14 +9,10 @@ export interface CommonProps {
 	style?: types.style;
 }
 
-export { default as DataController } from './components/basic/DataController';
 export { default as NumberBox } from './components/basic/NumberBox';
 export { default as ReactiveBase } from './components/basic/ReactiveBase';
 export { default as ReactiveComponent } from './components/basic/ReactiveComponent';
 export { default as SelectedFilters } from './components/basic/SelectedFilters';
-export { default as TagCloud } from './components/basic/TagCloud';
-export { default as TextField } from './components/basic/TextField';
-export { default as ToggleButton } from './components/basic/ToggleButton';
 
 export { default as DatePicker } from './components/date/DatePicker';
 export { default as DateRange } from './components/date/DateRange';
@@ -27,6 +23,8 @@ export { default as MultiList } from './components/list/MultiList';
 export { default as SingleDataList } from './components/list/SingleDataList';
 export { default as SingleDropdownList } from './components/list/SingleDropdownList';
 export { default as SingleList } from './components/list/SingleList';
+export { default as TagCloud } from './components/list/TagCloud';
+export { default as ToggleButton } from './components/list/ToggleButton';
 
 export { default as DynamicRangeSlider } from './components/range/DynamicRangeSlider';
 export { default as MultiDropdownRange } from './components/range/MultiDropdownRange';
