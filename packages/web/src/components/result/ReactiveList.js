@@ -45,6 +45,10 @@ class ReactiveList extends Component {
 			currentPage,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
+		this.sortOptionIndex = this.props.defaultSortOption
+			? this.props.sortOptions.findIndex(s => s.label === this.props.defaultSortOption)
+			: 0;
+
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
 
@@ -61,8 +65,8 @@ class ReactiveList extends Component {
 		if (this.props.sortOptions) {
 			options.sort = [
 				{
-					[this.props.sortOptions[0].dataField]: {
-						order: this.props.sortOptions[0].sortBy,
+					[this.props.sortOptions[this.sortOptionIndex].dataField]: {
+						order: this.props.sortOptions[this.sortOptionIndex].sortBy,
 					},
 				},
 			];
@@ -149,8 +153,8 @@ class ReactiveList extends Component {
 			if (this.props.sortOptions) {
 				options.sort = [
 					{
-						[this.props.sortOptions[0].dataField]: {
-							order: this.props.sortOptions[0].sortBy,
+						[this.props.sortOptions[this.sortOptionIndex].dataField]: {
+							order: this.props.sortOptions[this.sortOptionIndex].sortBy,
 						},
 					},
 				];
@@ -291,8 +295,8 @@ class ReactiveList extends Component {
 				if (this.props.sortOptions) {
 					options.sort = [
 						{
-							[this.props.sortOptions[0].dataField]: {
-								order: this.props.sortOptions[0].sortBy,
+							[this.props.sortOptions[this.sortOptionIndex].dataField]: {
+								order: this.props.sortOptions[this.sortOptionIndex].sortBy,
 							},
 						},
 					];
@@ -389,8 +393,8 @@ class ReactiveList extends Component {
 		if (props.sortOptions) {
 			options.sort = [
 				{
-					[props.sortOptions[0].dataField]: {
-						order: props.sortOptions[0].sortBy,
+					[props.sortOptions[this.sortOptionIndex].dataField]: {
+						order: props.sortOptions[this.sortOptionIndex].sortBy,
 					},
 				},
 			];
@@ -563,6 +567,7 @@ class ReactiveList extends Component {
 			className={`${sortOptions} ${getClassName(this.props.innerClass, 'sortOptions')}`}
 			name="sort-options"
 			onChange={this.handleSortChange}
+			defaultValue={this.sortOptionIndex}
 		>
 			{this.props.sortOptions.map((sort, index) => (
 				<option key={sort.label} value={index}>
@@ -740,6 +745,7 @@ ReactiveList.propTypes = {
 	stream: types.bool,
 	style: types.style,
 	URLParams: types.bool,
+	defaultSortOption: types.string,
 };
 
 ReactiveList.defaultProps = {
@@ -757,6 +763,7 @@ ReactiveList.defaultProps = {
 	URLParams: false,
 	renderNoResults: () => 'No Results found.',
 	scrollOnChange: true,
+	defaultSortOption: null,
 };
 
 const mapStateToProps = (state, props) => ({
