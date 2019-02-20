@@ -45,6 +45,10 @@ class ReactiveList extends Component {
 			currentPage,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
+		this.sortOptionIndex = this.props.defaultSortOption
+			? this.props.sortOptions.findIndex(s => s.label === this.props.defaultSortOption)
+			: 0;
+
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
 
@@ -61,8 +65,8 @@ class ReactiveList extends Component {
 		if (this.props.sortOptions) {
 			options.sort = [
 				{
-					[this.props.sortOptions[0].dataField]: {
-						order: this.props.sortOptions[0].sortBy,
+					[this.props.sortOptions[this.sortOptionIndex].dataField]: {
+						order: this.props.sortOptions[this.sortOptionIndex].sortBy,
 					},
 				},
 			];
@@ -149,8 +153,8 @@ class ReactiveList extends Component {
 			if (this.props.sortOptions) {
 				options.sort = [
 					{
-						[this.props.sortOptions[0].dataField]: {
-							order: this.props.sortOptions[0].sortBy,
+						[this.props.sortOptions[this.sortOptionIndex].dataField]: {
+							order: this.props.sortOptions[this.sortOptionIndex].sortBy,
 						},
 					},
 				];
@@ -233,19 +237,22 @@ class ReactiveList extends Component {
 		if (!this.props.pagination) {
 			if (this.props.hits && prevProps.hits) {
 				if (
-					this.props.hits.length !== prevProps.hits.length
-					|| this.props.hits.length === this.props.total
+					// new items are loaded (from: 0)
+					this.props.hits.length < prevProps.hits.length
+					|| (
+						// new items are loaded and 'from' hasn't changed
+						this.props.hits.length === prevProps.hits.length
+						&& this.props.hits !== prevProps.hits
+					)
 				) {
-					if (this.props.hits !== prevProps.hits) {
-						// query has changed
-						if (this.props.scrollOnChange && this.props.pagination) {
-							this.domNode.scrollTo(0, 0);
-						}
-						// eslint-disable-next-line
-						this.setState({
-							from: 0,
-						});
+					// query has changed
+					if (this.props.scrollOnChange) {
+						this.domNode.scrollTo(0, 0);
 					}
+					// eslint-disable-next-line
+					this.setState({
+						from: 0,
+					});
 				}
 			}
 		}
@@ -288,8 +295,8 @@ class ReactiveList extends Component {
 				if (this.props.sortOptions) {
 					options.sort = [
 						{
-							[this.props.sortOptions[0].dataField]: {
-								order: this.props.sortOptions[0].sortBy,
+							[this.props.sortOptions[this.sortOptionIndex].dataField]: {
+								order: this.props.sortOptions[this.sortOptionIndex].sortBy,
 							},
 						},
 					];
@@ -386,8 +393,8 @@ class ReactiveList extends Component {
 		if (props.sortOptions) {
 			options.sort = [
 				{
-					[props.sortOptions[0].dataField]: {
-						order: props.sortOptions[0].sortBy,
+					[props.sortOptions[this.sortOptionIndex].dataField]: {
+						order: props.sortOptions[this.sortOptionIndex].sortBy,
 					},
 				},
 			];
@@ -425,6 +432,7 @@ class ReactiveList extends Component {
 		) {
 			const value = this.state.from + this.props.size;
 			const options = getQueryOptions(this.props);
+
 
 			this.setState({
 				from: value,
@@ -559,6 +567,7 @@ class ReactiveList extends Component {
 			className={`${sortOptions} ${getClassName(this.props.innerClass, 'sortOptions')}`}
 			name="sort-options"
 			onChange={this.handleSortChange}
+			defaultValue={this.sortOptionIndex}
 		>
 			{this.props.sortOptions.map((sort, index) => (
 				<option key={sort.label} value={index}>
@@ -736,6 +745,7 @@ ReactiveList.propTypes = {
 	stream: types.bool,
 	style: types.style,
 	URLParams: types.bool,
+	defaultSortOption: types.string,
 };
 
 ReactiveList.defaultProps = {
@@ -753,6 +763,7 @@ ReactiveList.defaultProps = {
 	URLParams: false,
 	renderNoResults: () => 'No Results found.',
 	scrollOnChange: true,
+	defaultSortOption: null,
 };
 
 const mapStateToProps = (state, props) => ({
