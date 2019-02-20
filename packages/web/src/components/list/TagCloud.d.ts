@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CommonProps } from '../../';
+import { CommonProps } from '../..';
 import * as types from '../../types';
 
 export interface TagCloudProps extends CommonProps {

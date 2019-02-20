@@ -1,9 +1,4 @@
-import {
-	ReactiveBase,
-	ResultList,
-	SelectedFilters,
-	TextField,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, ResultList, SelectedFilters, DataSearch } from '@appbaseio/reactivesearch';
 import * as React from 'react';
 import { render } from 'react-dom';
 
@@ -18,9 +13,10 @@ class App extends React.Component<any, any> {
 			>
 				<div className="row">
 					<div className="col">
-						<TextField
-							dataField="original_title.search"
+						<DataSearch
+							dataField="original_title.raw"
 							componentId="BookSensor"
+							defaultValue="Artemis Fowl"
 						/>
 					</div>
 
@@ -48,12 +44,16 @@ class App extends React.Component<any, any> {
 			description: (
 				<div className="flex column justify-space-between">
 					<div>
-						<div>by <span className="authors-list">{data.authors}</span></div>
+						<div>
+							by <span className="authors-list">{data.authors}</span>
+						</div>
 						<div className="ratings-list flex align-center">
 							<span className="stars">
-								{
-									Array(data.average_rating_rounded).fill('x')
-										.map((item, index) => <i className="fas fa-star" key={index} />) // eslint-disable-line
+								{Array(data.average_rating_rounded)
+									.fill('x')
+									.map((item, index) => (
+										<i className="fas fa-star" key={index} />
+									)) // eslint-disable-line
 								}
 							</span>
 							<span className="avg-rating">({data.average_rating} avg)</span>
@@ -63,7 +63,12 @@ class App extends React.Component<any, any> {
 				</div>
 			),
 			image: data.image,
-			title: <div className="book-title" dangerouslySetInnerHTML={{ __html: data.original_title }} />,
+			title: (
+				<div
+					className="book-title"
+					dangerouslySetInnerHTML={{ __html: data.original_title }}
+				/>
+			),
 		};
 	}
 }

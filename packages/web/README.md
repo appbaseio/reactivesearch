@@ -22,7 +22,6 @@ React UI components for Elasticsearch.
 
 [Get our designer templates for sketch](https://opensource.appbase.io/reactivesearch/resources/ReactiveSearch_Playground.sketch).
 
-
 ## Installation
 
 ```
@@ -47,23 +46,24 @@ ResultCard displays the results in a card interface whereas ResultList displays 
 
 A set of live demos inspired by real world apps, built with ReactiveSearch.
 
-- [demos/airbeds](https://opensource.appbase.io/reactivesearch/demos/airbeds/) - An airbnb-like booking search experience.
-- [demos/technews](https://opensource.appbase.io/reactivesearch/demos/technews/) - A full-text search app on the Hacker News dataset.
-- [demos/gitxplore](https://opensource.appbase.io/reactivesearch/demos/gitxplore/) - Explore all the popular Github repositories.
-- [demos/productsearch](https://opensource.appbase.io/reactivesearch/demos/producthunt/) - Filtered feed of products based on a small Product Hunt dataset.
-- [demos/booksearch](https://opensource.appbase.io/reactivesearch/demos/goodbooks/) - An book search app based on a goodbooks dataset.
-- [demos/ecommerce](https://opensource.appbase.io/reactivesearch/demos/ecommerce/) - An e-commerce car store app.
+-   [demos/airbeds](https://opensource.appbase.io/reactivesearch/demos/airbeds/) - An airbnb-like booking search experience.
+-   [demos/technews](https://opensource.appbase.io/reactivesearch/demos/technews/) - A full-text search app on the Hacker News dataset.
+-   [demos/gitxplore](https://opensource.appbase.io/reactivesearch/demos/gitxplore/) - Explore all the popular Github repositories.
+-   [demos/productsearch](https://opensource.appbase.io/reactivesearch/demos/producthunt/) - Filtered feed of products based on a small Product Hunt dataset.
+-   [demos/booksearch](https://opensource.appbase.io/reactivesearch/demos/goodbooks/) - An book search app based on a goodbooks dataset.
+-   [demos/ecommerce](https://opensource.appbase.io/reactivesearch/demos/ecommerce/) - An e-commerce car store app.
 
 ## Documentation
 
 The official docs for the library are at [https://opensource.appbase.io/reactive-manual](https://opensource.appbase.io/reactive-manual).
 
 The components are divided into four sections:
-* Generic UI components are at [reactive-manual/base-components](https://opensource.appbase.io/reactive-manual/base-components/textfield.html).
-* List based UI components are at [reactive-manual/list-components](https://opensource.appbase.io/reactive-manual/list-components/singlelist.html).
-* Range based UI components are at [reactive-manual/range-components](https://opensource.appbase.io/reactive-manual/range-components/singlerange.html).
-* Search UI components are at [reactive-manual/search-components](https://opensource.appbase.io/reactive-manual/search-components/datasearch.html).
-* Result components are at [reactive-manual/result-components](https://opensource.appbase.io/reactive-manual/result-components/resultlist.html).
+
+-   Generic UI components are at [reactive-manual/base-components](https://opensource.appbase.io/reactive-manual/base-components/selectedfilters.html).
+-   List based UI components are at [reactive-manual/list-components](https://opensource.appbase.io/reactive-manual/list-components/singlelist.html).
+-   Range based UI components are at [reactive-manual/range-components](https://opensource.appbase.io/reactive-manual/range-components/singlerange.html).
+-   Search UI components are at [reactive-manual/search-components](https://opensource.appbase.io/reactive-manual/search-components/datasearch.html).
+-   Result components are at [reactive-manual/result-components](https://opensource.appbase.io/reactive-manual/result-components/resultlist.html).
 
 ## Changelog
 
@@ -71,13 +71,13 @@ Check out the [changelog](./CHANGELOG.md) for more info.
 
 ## Related tooling and projects
 
-- [**ReactiveSearch Dashboard**](https://dashboard.appbase.io/reactivesearch/) All your Reactive Search related apps (created via interactive tutorial, shared by others, etc.) can be accessed from here.
-- [**ReactiveMaps**](https://github.com/appbaseio/reactivemaps) is a similar project to Reactive Search that allows building realtime maps easily.
+-   [**ReactiveSearch Dashboard**](https://dashboard.appbase.io/reactivesearch/) All your Reactive Search related apps (created via interactive tutorial, shared by others, etc.) can be accessed from here.
+-   [**ReactiveMaps**](https://github.com/appbaseio/reactivemaps) is a similar project to Reactive Search that allows building realtime maps easily.
 
-- [**appbase-js**](https://github.com/appbaseio/appbase-js) While building search UIs is dandy with Reactive Search, you might also need to add some input forms. **appbase-js** comes in handy there.
+-   [**appbase-js**](https://github.com/appbaseio/appbase-js) While building search UIs is dandy with Reactive Search, you might also need to add some input forms. **appbase-js** comes in handy there.
 
-- [**dejavu**](https://github.com/appbaseio/dejavu) allows viewing raw data within an appbase.io (or Elasticsearch) app. **Soon to be released feature:** An ability to import custom data from CSV and JSON files, along with a guided walkthrough on applying data mappings.
+-   [**dejavu**](https://github.com/appbaseio/dejavu) allows viewing raw data within an appbase.io (or Elasticsearch) app. **Soon to be released feature:** An ability to import custom data from CSV and JSON files, along with a guided walkthrough on applying data mappings.
 
-- [**mirage**](https://github.com/appbaseio/mirage) ReactiveSearch components can be extended using custom Elasticsearch queries. For those new to Elasticsearch, Mirage provides an intuitive GUI for composing queries.
+-   [**mirage**](https://github.com/appbaseio/mirage) ReactiveSearch components can be extended using custom Elasticsearch queries. For those new to Elasticsearch, Mirage provides an intuitive GUI for composing queries.
 
 <a href="https://appbase.io/support/"><img src="https://i.imgur.com/UL6B0uE.png" width="100%" /></a>
