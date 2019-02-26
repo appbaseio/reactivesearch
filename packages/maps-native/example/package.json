@@ -1,38 +1,38 @@
 {
-  "name": "maps-example",
-  "version": "0.0.1",
-  "main": "node_modules/expo/AppEntry.js",
-  "private": true,
-  "scripts": {
-    "start": "react-native-scripts start",
-    "eject": "react-native-scripts eject",
-    "android": "react-native-scripts android",
-    "ios": "react-native-scripts ios",
-    "postinstall": "rm -rf node_modules/native-base-shoutem-theme/node_modules/hoist-non-react-statics node_modules/xdl/node_modules/react node_modules/react-google-maps/node_modules/prop-types/"
-  },
-  "dependencies": {
-    "@ptomasroos/react-native-multi-slider": "^0.0.13",
-    "appbase-js": "^4.0.2-beta.04",
-    "escape-string-regexp": "^1.0.5",
-    "expo": "^27.0.1",
-    "hoist-non-react-statics": "^2.5.0",
-    "metro": "^0.34.0",
-    "metro-core": "^0.34.0",
-    "native-base": "^2.4.2",
-    "react": "16.3.0-alpha.1",
-    "react-native": "^0.55.4",
-    "react-native-calendars": "^1.18.2",
-    "react-native-gesture-handler": "^1.0.0-alpha.43",
-    "react-redux": "^5.0.7",
-    "redux": "3.7.2",
-    "redux-thunk": "^2.2.0",
-    "xdate": "^0.8.2"
-  },
-  "devDependencies": {
-    "babel-plugin-module-resolver": "^3.1.1",
-    "babel-plugin-transform-inline-environment-variables": "^0.4.0",
-    "babel-preset-expo": "^4.0.0",
-    "prop-types": "^15.6.1",
-    "react-native-scripts": "^1.14.0"
-  }
+	"name": "maps-example",
+	"version": "0.0.1",
+	"main": "node_modules/expo/AppEntry.js",
+	"private": true,
+	"scripts": {
+		"start": "react-native-scripts start",
+		"eject": "react-native-scripts eject",
+		"android": "react-native-scripts android",
+		"ios": "react-native-scripts ios",
+		"postinstall": "rm -rf node_modules/native-base-shoutem-theme/node_modules/hoist-non-react-statics node_modules/xdl/node_modules/react node_modules/react-google-maps/node_modules/prop-types/"
+	},
+	"dependencies": {
+		"@ptomasroos/react-native-multi-slider": "^0.0.13",
+		"appbase-js": "^4.0.2-beta.05",
+		"escape-string-regexp": "^1.0.5",
+		"expo": "^27.0.1",
+		"hoist-non-react-statics": "^2.5.0",
+		"metro": "^0.34.0",
+		"metro-core": "^0.34.0",
+		"native-base": "^2.4.2",
+		"react": "16.3.0-alpha.1",
+		"react-native": "^0.55.4",
+		"react-native-calendars": "^1.18.2",
+		"react-native-gesture-handler": "^1.0.0-alpha.43",
+		"react-redux": "^5.0.7",
+		"redux": "3.7.2",
+		"redux-thunk": "^2.2.0",
+		"xdate": "^0.8.2"
+	},
+	"devDependencies": {
+		"babel-plugin-module-resolver": "^3.1.1",
+		"babel-plugin-transform-inline-environment-variables": "^0.4.0",
+		"babel-preset-expo": "^4.0.0",
+		"prop-types": "^15.6.1",
+		"react-native-scripts": "^1.14.0"
+	}
 }

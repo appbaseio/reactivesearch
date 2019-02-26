@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import { ReactiveBase, TextField, ResultList, SelectedFilters } from '@appbaseio/reactivesearch';
+import { ReactiveBase, DataSearch, ResultList, SelectedFilters } from '@appbaseio/reactivesearch';
 
 import './index.css';
 
@@ -14,10 +14,10 @@ class Main extends Component {
 			>
 				<div className="row">
 					<div className="col">
-						<TextField
-							dataField="original_title.search"
+						<DataSearch
+							dataField="original_title.raw"
 							componentId="BookSensor"
-							defaultSelected="Artemis Fowl"
+							defaultValue="Artemis Fowl"
 						/>
 					</div>
 

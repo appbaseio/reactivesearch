@@ -10,6 +10,7 @@ export interface ReactiveListProps extends CommonProps {
 	// non-common props
 	dataField: string;
 	defaultQuery?: (...args: any[]) => any;
+	defaultSortOption?: string;
 	excludeFields?: Array<string>;
 	innerClass?: types.style;
 	includeFields?: Array<string>;

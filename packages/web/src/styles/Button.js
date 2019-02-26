@@ -32,7 +32,8 @@ const filters = ({ colors: { borderColor } }) => css`
 			margin-left: 8px;
 		}
 
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			span:first-child {
 				text-decoration: line-through;
 			}
@@ -47,6 +48,7 @@ const pagination = css`
 
 	a {
 		margin: 0 3px;
+		text-decoration: none;
 	}
 `;
 
@@ -79,7 +81,8 @@ const primary = ({ theme }) => css`
 	background-color: ${theme.colors.primaryColor};
 	color: ${theme.colors.primaryTextColor};
 
-	&:hover, &:focus {
+	&:hover,
+	&:focus {
 		background-color: ${darken(0.1, theme.colors.primaryColor)};
 	}
 `;
@@ -90,16 +93,17 @@ const large = () => css`
 `;
 
 const disabled = ({ theme }) => css`
-	background-color: ${(theme.colors.backgroundColor
+	background-color: ${theme.colors.backgroundColor
 		? lighten(0.1, theme.colors.backgroundColor)
-		: '#fafafa')};
+		: '#fafafa'};
 	color: #ccc;
 	cursor: not-allowed;
 
-	&:hover, &:focus {
-		background-color: ${(theme.colors.backgroundColor
+	&:hover,
+	&:focus {
+		background-color: ${theme.colors.backgroundColor
 		? lighten(0.2, theme.colors.backgroundColor)
-		: '#fafafa')};
+		: '#fafafa'};
 	}
 `;
 
@@ -113,18 +117,16 @@ const Button = styled('a')`
 	word-wrap: break-word;
 	padding: 5px 12px;
 	line-height: 1.2rem;
-	background-color: ${({ theme }) =>
-		theme.colors.backgroundColor || '#eee'};
+	background-color: ${({ theme }) => theme.colors.backgroundColor || '#eee'};
 	color: ${({ theme }) => theme.colors.textColor};
 	cursor: pointer;
 	user-select: none;
 	transition: all 0.3s ease;
 
-	&:hover, &:focus {
+	&:hover,
+	&:focus {
 		background-color: ${({ theme }) =>
-		(theme.colors.backgroundColor
-			? darken(0.1, theme.colors.backgroundColor)
-			: '#ccc')};
+		(theme.colors.backgroundColor ? darken(0.1, theme.colors.backgroundColor) : '#ccc')};
 	}
 
 	&:focus {
