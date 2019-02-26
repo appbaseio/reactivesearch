@@ -35,6 +35,7 @@ const DataSearch = {
 		return this.__state;
 	},
 	created() {
+		this.currentValue = this.selectedValue || '';
 		this.handleTextChange = debounce(value => {
 			if (this.$props.autosuggest) {
 				this.updateQueryHandler(this.internalComponent, value, this.$props);

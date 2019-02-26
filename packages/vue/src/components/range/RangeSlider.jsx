@@ -8,7 +8,7 @@ import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
 import { getComponents } from './addons/ssr';
 
-const { addComponent, removeComponent, watchComponent, updateQuery, setQueryListener } = Actions;
+const { addComponent, removeComponent, watchComponent, updateQuery, setQueryListener, setQueryOptions } = Actions;
 
 const { checkValueChange, getClassName, getOptionsFromQuery } = helper;
 
@@ -255,6 +255,7 @@ const mapDispatchtoProps = {
 	updateQuery,
 	watchComponent,
 	setQueryListener,
+	setQueryOptions,
 };
 
 const RangeConnected = connect(
