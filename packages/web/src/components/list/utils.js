@@ -2,7 +2,7 @@ import { helper } from '@appbaseio/reactivecore';
 
 const { getAggsOrder } = helper;
 const getAggsQuery = (query, props) => {
-	const clonedQuery = { ...query };
+	const clonedQuery = { ...query, ...(props.defaultQuery && props.defaultQuery()) };
 	const {
 		dataField, size, sortBy, showMissing, missingLabel,
 	} = props;
@@ -34,7 +34,7 @@ const getAggsQuery = (query, props) => {
 };
 
 const getCompositeAggsQuery = (query, props, after) => {
-	const clonedQuery = { ...query };
+	const clonedQuery = { ...query, ...(props.defaultQuery && props.defaultQuery()) };
 	// missing label not available in composite aggs
 	const {
 		dataField, size, sortBy, showMissing,
