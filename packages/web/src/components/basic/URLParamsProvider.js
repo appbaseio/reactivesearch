@@ -6,16 +6,12 @@ import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import Base from '../../styles/Base';
 import { connect } from '../../utils';
 
-const URLSearchParams = require('url-search-params');
-
 class URLParamsProvider extends Component {
 	componentDidMount() {
-		const searchParams = this.props.getSearchParams
-			? this.props.getSearchParams()
-			: window.location.search;
-		this.params = new URLSearchParams(searchParams);
-		this.currentSelectedState = this.props.selectedValues || {};
+		this.init();
+
 		window.onpopstate = () => {
+			this.init();
 			const activeComponents = Array.from(this.params.keys());
 
 			// remove inactive components from selectedValues
@@ -37,12 +33,17 @@ class URLParamsProvider extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		// this ensures the url params change are handled
+		// when the url changes, which enables us to
+		// make `onpopstate` event handler work with history.pushState updates
+		this.checkForURLParamsChange();
+
 		this.currentSelectedState = this.props.selectedValues;
 		if (!isEqual(this.props.selectedValues, prevProps.selectedValues)) {
-			const searchParams = this.props.getSearchParams
+			this.searchString = this.props.getSearchParams
 				? this.props.getSearchParams()
 				: window.location.search;
-			this.params = new URLSearchParams(searchParams);
+			this.params = new URLSearchParams(this.searchString);
 			const currentComponents = Object.keys(this.props.selectedValues);
 			const urlComponents = Array.from(this.params.keys());
 
@@ -102,6 +103,29 @@ class URLParamsProvider extends Component {
 		}
 	}
 
+	init = () => {
+		this.searchString = this.props.getSearchParams
+			? this.props.getSearchParams()
+			: window.location.search;
+		this.params = new URLSearchParams(this.searchString);
+		this.currentSelectedState = this.props.selectedValues || {};
+	};
+
+	checkForURLParamsChange = () => {
+		// we only compare the search string (window.location.search by default)
+		// to see if the route has changed (or) not. This handles the following usecase:
+		// search on homepage -> route changes -> search results page with same search query
+		if (window) {
+			const searchString = this.props.getSearchParams
+				? this.props.getSearchParams()
+				: window.location.search;
+
+			if (searchString !== this.searchString) {
+				window.dispatchEvent(new Event('popstate'));
+			}
+		}
+	};
+
 	hasValidValue(component) {
 		if (!component) return false;
 		if (Array.isArray(component.value)) return !!component.value.length;
@@ -121,10 +145,10 @@ class URLParamsProvider extends Component {
 	}
 
 	setURL(component, value) {
-		const searchParams = this.props.getSearchParams
+		this.searchString = this.props.getSearchParams
 			? this.props.getSearchParams()
 			: window.location.search;
-		this.params = new URLSearchParams(searchParams);
+		this.params = new URLSearchParams(this.searchString);
 		if (
 			!value
 			|| (typeof value === 'string' && value.trim() === '')
@@ -151,6 +175,7 @@ class URLParamsProvider extends Component {
 		} else if (window.history.pushState) {
 			window.history.pushState({ path: newURL }, '', newURL);
 		}
+		this.init();
 	}
 
 	render() {
