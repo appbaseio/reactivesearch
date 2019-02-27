@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/reactivesearch": "^3.0.0-beta.4",
+		"@appbaseio/reactivesearch": "^3.0.0-beta.6",
 		"appbase-js": "^4.0.2-beta.05",
 		"react": "^16.2.0",
 		"react-dom": "^16.2.0"
