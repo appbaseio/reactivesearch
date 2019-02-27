@@ -246,9 +246,7 @@ const DataSearch = {
 		},
 
 		updateQueryHandler(componentId, value, props) {
-			const {
-				customQuery, filterLabel, showFilter, URLParams,
-			} = props;
+			const { customQuery, filterLabel, showFilter, URLParams } = props;
 
 			let customQueryOptions;
 			const defaultQueryTobeSet = DataSearch.defaultQuery(value, props);
@@ -373,11 +371,9 @@ const DataSearch = {
 			return null;
 		},
 		renderNoSuggestions(finalSuggestionsList = []) {
-			const {
-				theme,
-				innerClass,
-			} = this.$props;
-			const renderNoSuggestion = this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
+			const { theme, innerClass } = this.$props;
+			const renderNoSuggestion
+				= this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
 			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
 			const { isOpen, currentValue } = this.$data;
 			if (
@@ -394,13 +390,13 @@ const DataSearch = {
 						themePreset={this.themePreset}
 						theme={theme}
 						innerClassName="noSuggestion"
-						scopedSlots={{ default: () =>
-							typeof renderNoSuggestion === 'function'
-								? renderNoSuggestion(currentValue)
-								: renderNoSuggestion
+						scopedSlots={{
+							default: () =>
+								typeof renderNoSuggestion === 'function'
+									? renderNoSuggestion(currentValue)
+									: renderNoSuggestion,
 						}}
-					>
-					</SuggestionWrapper>
+					/>
 				);
 			}
 			return null;
@@ -540,7 +536,9 @@ const DataSearch = {
 														</li>
 													))}
 											</ul>
-										) : this.renderNoSuggestions(this.suggestionsList)}{' '}
+										) : (
+											this.renderNoSuggestions(this.suggestionsList)
+										)}{' '}
 								</div>
 							),
 						}}
