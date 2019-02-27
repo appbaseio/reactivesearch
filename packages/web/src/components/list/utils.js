@@ -1,8 +1,24 @@
 import { helper } from '@appbaseio/reactivecore';
 
 const { getAggsOrder } = helper;
+
+const extractQuery = (defaultQuery) => {
+	const queryToBeReturned = {};
+	if (defaultQuery) {
+		const evaluateQuery = defaultQuery();
+		if (evaluateQuery) {
+			if (evaluateQuery.query) {
+				queryToBeReturned.query = evaluateQuery.query;
+			}
+			if (evaluateQuery.aggs) {
+				queryToBeReturned.aggs = evaluateQuery.aggs;
+			}
+		}
+	}
+	return queryToBeReturned;
+};
 const getAggsQuery = (query, props) => {
-	const clonedQuery = { ...query };
+	const clonedQuery = query;
 	const {
 		dataField, size, sortBy, showMissing, missingLabel,
 	} = props;
@@ -29,12 +45,11 @@ const getAggsQuery = (query, props) => {
 			},
 		};
 	}
-
-	return clonedQuery;
+	return { ...clonedQuery, ...extractQuery(props.defaultQuery) };
 };
 
 const getCompositeAggsQuery = (query, props, after) => {
-	const clonedQuery = { ...query };
+	const clonedQuery = query;
 	// missing label not available in composite aggs
 	const {
 		dataField, size, sortBy, showMissing,
@@ -75,8 +90,7 @@ const getCompositeAggsQuery = (query, props, after) => {
 			},
 		};
 	}
-
-	return clonedQuery;
+	return { ...clonedQuery, ...extractQuery(props.defaultQuery) };
 };
 
 export { getAggsQuery, getCompositeAggsQuery };
