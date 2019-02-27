@@ -7,7 +7,7 @@
 	"license": "Apache-2.0",
 	"dependencies": {
 		"@appbaseio/reactivemaps": "^2.0.1",
-		"@appbaseio/reactivesearch": "^3.0.0-beta.4",
+		"@appbaseio/reactivesearch": "^3.0.0-beta.6",
 		"emotion": "*",
 		"prop-types": "^15.6.0",
 		"react": "^16.2.0",
