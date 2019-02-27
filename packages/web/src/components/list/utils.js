@@ -11,7 +11,7 @@ const extractQuery = (defaultQuery) => {
 				queryToBeReturned.query = evaluateQuery.query;
 			}
 			if (evaluateQuery.aggs) {
-				queryToBeReturned.query = evaluateQuery.aggs;
+				queryToBeReturned.aggs = evaluateQuery.aggs;
 			}
 		}
 	}
