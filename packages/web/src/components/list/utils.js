@@ -2,21 +2,24 @@ import { helper } from '@appbaseio/reactivecore';
 
 const { getAggsOrder } = helper;
 
-const extractQuery = (defaultQuery) => {
-	const queryToBeReturned = {};
+// extracts query options from defaultQuery if set
+const extractQueryFromDefaultQuery = (defaultQuery) => {
+	let queryToBeReturned = {};
 	if (defaultQuery) {
 		const evaluateQuery = defaultQuery();
 		if (evaluateQuery) {
-			if (evaluateQuery.query) {
-				queryToBeReturned.query = evaluateQuery.query;
-			}
-			if (evaluateQuery.aggs) {
-				queryToBeReturned.aggs = evaluateQuery.aggs;
+			// we should only retrieve and set the query options here
+			// `query` key should be handled separately for adding it to `queryList`
+			// in the redux store
+			const { query, ...options } = evaluateQuery;
+			if (options) {
+				queryToBeReturned = options;
 			}
 		}
 	}
 	return queryToBeReturned;
 };
+
 const getAggsQuery = (query, props) => {
 	const clonedQuery = query;
 	const {
@@ -45,7 +48,7 @@ const getAggsQuery = (query, props) => {
 			},
 		};
 	}
-	return { ...clonedQuery, ...extractQuery(props.defaultQuery) };
+	return { ...clonedQuery, ...extractQueryFromDefaultQuery(props.defaultQuery) };
 };
 
 const getCompositeAggsQuery = (query, props, after) => {
@@ -90,7 +93,7 @@ const getCompositeAggsQuery = (query, props, after) => {
 			},
 		};
 	}
-	return { ...clonedQuery, ...extractQuery(props.defaultQuery) };
+	return { ...clonedQuery, ...extractQueryFromDefaultQuery(props.defaultQuery) };
 };
 
 export { getAggsQuery, getCompositeAggsQuery };
