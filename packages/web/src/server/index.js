@@ -27,11 +27,12 @@ function getValue(state, id, defaultValue) {
 	if (!state) return defaultValue;
 	if (state[id]) {
 		try {
+			// parsing for next.js - since it uses extra set of quotes to wrap params
 			const parsedValue = JSON.parse(state[id]);
 			return parsedValue;
 		} catch (error) {
-			// eslint-disable-next-line
-			console.log('REACTIVESEARCH - could not parse the search state for', id);
+			// using react-dom-server for ssr
+			return state[id] || defaultValue;
 		}
 	}
 	return defaultValue;
