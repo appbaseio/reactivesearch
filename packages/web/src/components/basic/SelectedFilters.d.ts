@@ -14,6 +14,8 @@ export interface SelectedFiltersProps {
 	style?: types.style;
 	theme?: types.style;
 	title?: types.title;
+	render?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 }
 
 declare const SelectedFilters: React.ComponentType<SelectedFiltersProps>;
