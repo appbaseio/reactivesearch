@@ -30,6 +30,7 @@ const components = {
 		iconPosition: 'left',
 		className: 'search',
 		highlight: true,
+		URLParams: true,
 	},
 	numberbox: {
 		componentId: 'GuestSensor',
@@ -41,6 +42,7 @@ const components = {
 			start: 1,
 			end: 16,
 		},
+		URLParams: true,
 	},
 	rangeslider: {
 		componentId: 'PriceSensor',

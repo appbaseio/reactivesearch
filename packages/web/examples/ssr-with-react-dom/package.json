@@ -10,8 +10,8 @@
 		"emotion-server": "^9.1.1",
 		"express": "^4.16.3",
 		"prop-types": "^15.6.1",
-		"react": "^16.2.0",
-		"react-dom": "^16.2.0"
+		"react": "^16.7.0-alpha.2",
+		"react-dom": "^16.7.0-alpha.2"
 	},
 	"devDependencies": {
 		"babel-core": "^6.26.0",
@@ -28,7 +28,7 @@
 	},
 	"scripts": {
 		"start:server": "babel-node --plugins transform-object-rest-spread server/index.js",
-		"start:client": "webpack-dev-server --hot --inline --progress --colors --port 8001",
+		"start:client": "webpack -w",
 		"build:client": "webpack"
 	}
 }

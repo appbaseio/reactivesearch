@@ -36,7 +36,7 @@ const singleRangeProps = {
 			label: 'Rating > 4',
 		},
 	],
-	defaultSelected: 'Rating 3 to 4',
+	URLParams: true,
 };
 
 const reactiveListProps = {
@@ -57,7 +57,7 @@ const port = 3000;
 // Since we're passing all requests to same handleRenderer
 // We need to serve the bundle.js as it is
 // Alternatively you can define your own set of routes
-app.use('/static', Express.static('dist'));
+app.use('/dist', Express.static('dist'));
 
 function renderFullPage(html, preloadedState) {
 	return `
@@ -71,7 +71,7 @@ function renderFullPage(html, preloadedState) {
 			<script>
 				window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
 			</script>
-			<script src="/static/bundle.js"></script>
+			<script src="dist/bundle.js"></script>
 		</body>
 		</html>
     `;
@@ -92,7 +92,9 @@ async function handleRender(req, res) {
 				source: ReactiveList,
 			},
 		],
-		null,
+		{
+			BookSensor: 'Rating 3 to 4',
+		},
 		settings,
 	);
 	// Render the component to a string
