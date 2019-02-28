@@ -8,9 +8,9 @@ const extractQueryFromDefaultQuery = (defaultQuery) => {
 	if (defaultQuery) {
 		const evaluateQuery = defaultQuery();
 		if (evaluateQuery) {
-			// we should only retrieve and set the query options here
-			// `query` key should be handled separately for adding it to `queryList`
-			// in the redux store
+			// we should only retrieve and set the query options here.
+			// [Not implemented yet] `query` key should be handled separately for
+			// adding it to `queryList` in the redux store
 			const { query, ...options } = evaluateQuery;
 			if (options) {
 				queryToBeReturned = options;
