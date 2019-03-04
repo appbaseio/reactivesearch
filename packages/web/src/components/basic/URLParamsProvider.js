@@ -10,7 +10,7 @@ const URLSearchParams = require('url-search-params');
 
 class URLParamsProvider extends Component {
 	componentDidMount() {
-    const searchParams = this.props.getSearchParams
+		const searchParams = this.props.getSearchParams
 			? this.props.getSearchParams()
 			: window.location.search;
 		this.params = new URLSearchParams(searchParams);
@@ -32,7 +32,7 @@ class URLParamsProvider extends Component {
 				} catch (e) {
 					// Do not set value if JSON parsing fails.
 				}
-
+				
 			});
 		};
 	}
@@ -43,7 +43,7 @@ class URLParamsProvider extends Component {
 			const searchParams = this.props.getSearchParams
 			  ? this.props.getSearchParams()
 			  : window.location.search;
-		  this.params = new URLSearchParams(searchParams);
+			this.params = new URLSearchParams(searchParams);
 			const currentComponents = Object.keys(nextProps.selectedValues);
 			const urlComponents = Array.from(this.params.keys());
 
@@ -161,8 +161,8 @@ URLParamsProvider.propTypes = {
 	children: types.children,
 	headers: types.headers,
 	style: types.style,
-  className: types.string,
-  getSearchParams: types.func,
+	className: types.string,
+	getSearchParams: types.func,
 	setSearchParams: types.func,
 };
 
