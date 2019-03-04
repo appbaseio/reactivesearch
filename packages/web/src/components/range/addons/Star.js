@@ -12,13 +12,7 @@ function Star(props) {
 			className={props.className}
 		>
 			<defs />
-			<g
-				id="Page-1"
-				stroke="none"
-				strokeWidth="1"
-				fill="none"
-				fillRule="evenodd"
-			>
+			<g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
 				<polygon
 					id="star-flat"
 					fill="#FFA91B"

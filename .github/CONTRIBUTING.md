@@ -2,7 +2,7 @@
 
 Welcome to the contribution guide! We welcome all contributions. A list of issues is present [here](https://github.com/appbaseio/reactivesearch/issues). If you're interested in picking up something, feel free to start a discussion 😺
 
-The reactivesearch monorepo contains the code for both the [web](../packages/web) and [native](../packages/native) libraries. Both uses a common [core](https://github.com/appbaseio/reactivecore/) architecture. Project specific readme files are available inside each package.
+The reactivesearch monorepo contains the code for [web](../packages/web), [vue](../packages/vue) and [native](../packages/native) libraries. Both uses a common [core](https://github.com/appbaseio/reactivecore/) architecture. Project specific readme files are available inside each package.
 
 ## Initial setup
 
@@ -24,7 +24,7 @@ git submodule sync
 git submodule update --remote
 ```
 
-6. The submodules will be fetched into `/packages`. Defaults to `dev` in `/packages/playground` and `master` in `/packages/reactivecore`.
+6. The submodules will be fetched into `/packages`. Defaults to `dev` in `/packages/playground` and `master` in `/packages/reactivecore` & `/packages/vue-playground`.
 
 7. You can then install the dependencies, we recommend `yarn`. Run this from the project root:
 
@@ -51,6 +51,27 @@ yarn storybook
 ```
 
 **Note:** If you see any errors about missing dependencies, please try running `yarn` inside the sub-directory you're at.
+
+## Vue
+
+1. You can run the following command from `reactivesearch` root which will start the babel watchers inside `/reactivecore` and `/vue`. This will let you make changes to these projects on the fly and the files will be transpiled and updated instantly:
+
+```bash
+yarn dev:vue
+```
+
+Alternatively the manual approach would be to open the sub-projects for `/vue` and `/reactivecore` and start the watchers inside their respective directories.
+
+2. You can try the examples for any of the `vue` components inside `/packages/vue/examples` which will also pick the updated code as and when you make changes to the `/packages/vue/src` files.
+
+3. Another way to try out the components is by checking into `/packages/vue-playground` and running the storybook which also updates itself from the components inside `/packages/vue/src`.
+
+```bash
+yarn storybook
+```
+
+**Note:** We have used jsx for building vue components using [babel-plugin-transform-vue-jsx](https://github.com/vuejs/babel-plugin-transform-vue-jsx) which compiles the .jsx files to .vue.
+
 
 ## Native
 

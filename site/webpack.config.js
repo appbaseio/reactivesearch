@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const config = {
 	context: path.resolve(__dirname, 'src'),
@@ -10,7 +11,7 @@ const config = {
 		path: path.resolve(__dirname, 'dist'),
 		filename: '[name].js',
 		chunkFilename: '[name].bundle.js',
-		publicPath: 'dist/',
+		publicPath: '/reactivesearch/dist/',
 	},
 	module: {
 		rules: [
@@ -40,6 +41,10 @@ if (process.env.NODE_ENV === 'production') {
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'common',
 		}),
+		new CopyWebpackPlugin([
+			{ from: '../images', to: '../reactivesearch/images' },
+			{ from: '../icons', to: '../reactivesearch/icons' },
+		]),
 	];
 }
 

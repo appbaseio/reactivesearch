@@ -6,9 +6,11 @@ export interface MultiList extends CommonProps {
 	beforeValueChange?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
 	dataField: string;
+	nestedField?: string;
 	defaultSelected?: types.stringArray;
 	filterLabel?: string;
 	innerClass?: types.style;
+	loader?: types.title;
 	onValueChange?: (...args: any[]) => any;
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
@@ -27,6 +29,7 @@ export interface MultiList extends CommonProps {
 	showMissing?: boolean;
 	missingLabel?: string;
 	showLoadMore?: boolean;
+	loadMoreLabel?: types.title;
 }
 
 declare const MultiList: React.ComponentType<MultiList>;

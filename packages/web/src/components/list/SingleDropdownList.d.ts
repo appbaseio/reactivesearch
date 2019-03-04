@@ -9,6 +9,7 @@ export interface SingleDropdownList extends CommonProps {
 	defaultSelected?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
+	loader?: types.title;
 	onValueChange?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;
@@ -24,6 +25,8 @@ export interface SingleDropdownList extends CommonProps {
 	showMissing?: boolean;
 	missingLabel?: string;
 	showLoadMore?: boolean;
+	loadMoreLabel?: types.title;
+	nestedField?: string;
 }
 
 declare const SingleDropdownList: React.ComponentType<SingleDropdownList>;

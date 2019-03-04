@@ -37,19 +37,19 @@ class ReactiveBase extends Component {
 			['app', 'url', 'type', 'credentials', 'mapKey', 'headers'],
 			() => {
 				this.setStore(nextProps);
-				this.setState((state => ({
+				this.setState(state => ({
 					key: `${state.key}-0`,
-				})));
+				}));
 			},
 		);
 	}
 
 	componentDidCatch() {
 		console.error(
-			'An error has occured. You\'re using Reactivesearch Version:',
+			"An error has occured. You're using Reactivesearch Version:",
 			`${process.env.VERSION || require('../../../package.json').version}.`,
 			'If you think this is a problem with Reactivesearch, please try updating',
-			'to the latest version. If you\'re already at the latest version, please open',
+			"to the latest version. If you're already at the latest version, please open",
 			'an issue at https://github.com/appbaseio/reactivesearch/issues',
 		);
 	}
@@ -57,16 +57,15 @@ class ReactiveBase extends Component {
 	setStore = (props) => {
 		this.type = props.type ? props.type : '*';
 
-		const credentials = props.url && props.url.trim() !== '' && !props.credentials
-			? null
-			: props.credentials;
+		const credentials
+			= props.url && props.url.trim() !== '' && !props.credentials ? null : props.credentials;
 
 		const config = {
 			url: props.url && props.url.trim() !== '' ? props.url : 'https://scalr.api.appbase.io',
 			app: props.app,
 			credentials,
 			type: this.type,
-			beforeSend: props.beforeSend,
+			transformRequest: props.transformRequest,
 			analytics: props.analytics,
 		};
 
@@ -77,22 +76,27 @@ class ReactiveBase extends Component {
 			queryParams = props.queryParams || '';
 		}
 
-		this.params = new URLSearchParams(queryParams);
+		const params = new URLSearchParams(queryParams);
 		let selectedValues = {};
 
-		try {
-			Array.from(this.params.keys()).forEach((key) => {
+
+		Array.from(params.keys()).forEach((key) => {
+			try {
+				const value = JSON.parse(params.get(key));
 				selectedValues = {
 					...selectedValues,
-					[key]: { value: JSON.parse(this.params.get(key)) },
+					[key]: { value },
 				};
-			});
-		} catch (e) {
-			selectedValues = {};
-		}
-
+			} catch (e) {
+				// Do not add to selectedValues if JSON parsing fails.
+			}
+		});
+		
 		const { headers = {}, themePreset } = props;
 		const appbaseRef = Appbase(config);
+		if (this.props.transformRequest) {
+			appbaseRef.transformRequest = this.props.transformRequest;
+		}
 
 		const initialState = {
 			config: { ...config, mapKey: props.mapKey, themePreset },
@@ -105,19 +109,12 @@ class ReactiveBase extends Component {
 	};
 
 	render() {
-		const theme = composeThemeObject(
-			getTheme(this.props.themePreset),
-			this.props.theme,
-		);
+		const theme = composeThemeObject(getTheme(this.props.themePreset), this.props.theme);
 
 		return (
-			<ThemeProvider
-				theme={theme}
-				key={this.state.key}
-			>
+			<ThemeProvider theme={theme} key={this.state.key}>
 				<Provider store={this.store}>
 					<URLParamsProvider
-						params={this.params}
 						headers={this.props.headers}
 						style={this.props.style}
 						className={this.props.className}
@@ -147,7 +144,7 @@ ReactiveBase.propTypes = {
 	themePreset: types.themePreset,
 	type: types.string,
 	url: types.string,
-	beforeSend: types.func,
+	transformRequest: types.func,
 	mapKey: types.string,
 	style: types.style,
 	className: types.string,

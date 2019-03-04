@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { CommonProps } from '../../';
 import * as types from '../../types';
 
@@ -14,6 +15,7 @@ export interface CategorySearchProps extends CommonProps {
 	defaultSelected?: string;
 	defaultSuggestions?: types.suggestions;
 	defaultQuery?: (...args: any[]) => any;
+	downShiftProps?: types.props;
 	fieldWeights?: types.fieldWeights;
 	filterLabel?: string;
 	fuzziness?: types.fuzziness;
@@ -34,9 +36,11 @@ export interface CategorySearchProps extends CommonProps {
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
+	renderSuggestions?: (...args: any[]) => any;
 	showFilter?: boolean;
 	showIcon?: boolean;
 	title?: types.title;
+	loader?: types.title;
 	theme?: types.style;
 	themePreset?: types.themePreset;
 }

@@ -7,8 +7,8 @@ import { header, filters, listContainer, mapContainer } from '../styles';
 export default () => (
 	<div>
 		<ReactiveBase
-			app="reactivemap_demo"
-			credentials="y4pVxY2Ok:c92481e2-c07f-4473-8326-082919282c18"
+			app="meetup_app"
+			credentials="lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181"
 			type="meetupdata1"
 			mapKey="AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q"
 			theme={{
@@ -74,18 +74,23 @@ export default () => (
 						<div id="list" className={listContainer}>
 							{hits.map(data => (
 								<div key={data._id} className="user">
-									<div className="user__image" style={{ backgroundImage: `url(${data.member.photo})` }} alt={data.name} />
+									<div
+										className="user__image"
+										style={{ backgroundImage: `url(${data.member.photo})` }}
+										alt={data.name}
+									/>
 									<div className="user__info">
-										<h3>{data.member.member_name} is going to {data.event.event_name}</h3>
+										<h3>
+											{data.member.member_name} is going to{' '}
+											{data.event.event_name}
+										</h3>
 										<p>{data.venue_name_ngrams}</p>
 									</div>
 								</div>
 							))}
 							{renderPagination()}
 						</div>
-						<div className={mapContainer}>
-							{renderMap()}
-						</div>
+						<div className={mapContainer}>{renderMap()}</div>
 					</div>
 				)}
 				onData={data => ({

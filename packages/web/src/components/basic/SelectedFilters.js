@@ -6,6 +6,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
+import Title from '../../styles/Title';
 import { connect } from '../../utils';
 
 class SelectedFilters extends Component {
@@ -23,7 +24,7 @@ class SelectedFilters extends Component {
 		if (onClear) {
 			onClear(null);
 		}
-	}
+	};
 
 	renderValue = (value, isArray) => {
 		if (isArray && value.length) {
@@ -31,63 +32,77 @@ class SelectedFilters extends Component {
 			return arrayToRender.join(', ');
 		} else if (value && typeof value === 'object') {
 			// TODO: support for NestedList
-			let label = (typeof value.label === 'string' ? value.label : value.value) || value.key || value.distance || null;
+			let label
+				= (typeof value.label === 'string' ? value.label : value.value)
+				|| value.key
+				|| value.distance
+				|| null;
 			if (value.location) {
 				label = `${value.location} - ${label}`;
 			}
 			return label;
 		}
 		return value;
-	}
+	};
+
+	renderFilters = () => {
+		const { selectedValues } = this.props;
+
+		return Object.keys(selectedValues)
+			.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
+			.map((component, index) => {
+				const { label, value } = selectedValues[component];
+				const isArray = Array.isArray(value);
+
+				if (label && ((isArray && value.length) || (!isArray && value))) {
+					const valueToRender = this.renderValue(value, isArray);
+					return (
+						<Button
+							className={getClassName(this.props.innerClass, 'button') || null}
+							key={`${component}-${index + 1}`}
+							onClick={() => this.remove(component, value)}
+						>
+							<span>
+								{selectedValues[component].label}: {valueToRender}
+							</span>
+							<span>&#x2715;</span>
+						</Button>
+					);
+				}
+				return null;
+			})
+			.filter(Boolean);
+	};
 
 	render() {
-		const { selectedValues, theme } = this.props;
-		let hasValues = false;
-
 		if (this.props.render) {
 			return this.props.render(this.props);
 		}
 
-		return (
-			<Container style={this.props.style} className={`${filters(theme)} ${this.props.className || ''}`}>
-				{
-					Object.keys(selectedValues)
-						.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
-						.map((component, index) => {
-							const { label, value } = selectedValues[component];
-							const isArray = Array.isArray(value);
+		const { theme } = this.props;
+		const filtersToRender = this.renderFilters();
+		const hasValues = !!filtersToRender.length;
 
-							if (label && ((isArray && value.length) || (!isArray && value))) {
-								hasValues = true;
-								const valueToRender = this.renderValue(value, isArray);
-								return (
-									<Button
-										className={getClassName(this.props.innerClass, 'button') || null}
-										key={`${component}-${index + 1}`}
-										onClick={() => this.remove(component, value)}
-									>
-										<span>
-											{selectedValues[component].label}: {valueToRender}
-										</span>
-										<span>&#x2715;</span>
-									</Button>
-								);
-							}
-							return null;
-						})
-				}
-				{
-					this.props.showClearAll && hasValues
-						? (
-							<Button
-								className={getClassName(this.props.innerClass, 'button') || null}
-								onClick={this.clearValues}
-							>
-								{this.props.clearAllLabel}
-							</Button>
-						)
-						: null
-				}
+		return (
+			<Container
+				style={this.props.style}
+				className={`${filters(theme)} ${this.props.className || ''}`}
+			>
+				{this.props.title
+					&& hasValues && (
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+						{this.props.title}
+					</Title>
+				)}
+				{filtersToRender}
+				{this.props.showClearAll && hasValues ? (
+					<Button
+						className={getClassName(this.props.innerClass, 'button') || null}
+						onClick={this.clearValues}
+					>
+						{this.props.clearAllLabel}
+					</Button>
+				) : null}
 			</Container>
 		);
 	}
@@ -106,6 +121,7 @@ SelectedFilters.propTypes = {
 	theme: types.style,
 	onClear: types.func,
 	render: types.func,
+	title: types.title,
 };
 
 SelectedFilters.defaultProps = {
@@ -121,7 +137,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	clearValues: () => (dispatch(clearValues())),
+	clearValues: () => dispatch(clearValues()),
 	setValue: (component, value) => dispatch(setValue(component, value)),
 });
 

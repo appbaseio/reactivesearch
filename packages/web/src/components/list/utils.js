@@ -1,10 +1,19 @@
 import { getAggsOrder } from '@appbaseio/reactivecore/lib/utils/helper';
 
-const getAggsQuery = (query, props) => {
+const getAggsQuery = (query, props, include) => {
 	const clonedQuery = { ...query };
 	const {
 		dataField, size, sortBy, showMissing, missingLabel,
 	} = props;
+
+	let includesQuery = {};
+
+	if (include) {
+		includesQuery = {
+			include,
+		};
+	}
+
 	clonedQuery.size = 0;
 	clonedQuery.aggs = {
 		[dataField]: {
@@ -13,9 +22,21 @@ const getAggsQuery = (query, props) => {
 				size,
 				order: getAggsOrder(sortBy || 'count'),
 				...(showMissing ? { missing: missingLabel } : {}),
+				...includesQuery,
 			},
 		},
 	};
+
+	if (props.nestedField) {
+		clonedQuery.aggs = {
+			reactivesearch_nested: {
+				nested: {
+					path: props.nestedField,
+				},
+				aggs: clonedQuery.aggs,
+			},
+		};
+	}
 
 	return clonedQuery;
 };
@@ -26,24 +47,40 @@ const getCompositeAggsQuery = (query, props, after) => {
 	const {
 		dataField, size, sortBy, showMissing,
 	} = props;
-	const order = sortBy === 'count' ? {} : { order: sortBy };	// composite aggs only allows asc and desc
+
+	// composite aggs only allows asc and desc
+	const order = sortBy === 'count' ? {} : { order: sortBy };
+
 	clonedQuery.aggs = {
 		[dataField]: {
 			composite: {
-				sources: [{
-					[dataField]: {
-						terms: {
-							field: dataField,
-							...order,
-							...(showMissing ? { missing_bucket: true } : {}),
+				sources: [
+					{
+						[dataField]: {
+							terms: {
+								field: dataField,
+								...order,
+								...(showMissing ? { missing_bucket: true } : {}),
+							},
 						},
 					},
-				}],
+				],
 				size,
 				...after,
 			},
 		},
 	};
+
+	if (props.nestedField) {
+		clonedQuery.aggs = {
+			reactivesearch_nested: {
+				nested: {
+					path: props.nestedField,
+				},
+				aggs: clonedQuery.aggs,
+			},
+		};
+	}
 
 	return clonedQuery;
 };

@@ -9,6 +9,8 @@ export interface SingleList extends CommonProps {
 	defaultSelected?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
+	loader?: types.title;
+	nestedField?: string;
 	onValueChange?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;
@@ -26,6 +28,7 @@ export interface SingleList extends CommonProps {
 	showMissing?: boolean;
 	missingLabel?: string;
 	showLoadMore?: boolean;
+	loadMoreLabel?: types.title;
 }
 
 declare const SingleList: React.ComponentType<SingleList>;

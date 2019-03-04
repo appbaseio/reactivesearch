@@ -1,17 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, View, Modal, TouchableWithoutFeedback } from 'react-native';
-import {
-	Input,
-	Item,
-	List,
-	ListItem,
-	Text,
-	Button,
-	Header,
-	Left,
-	Right,
-	Icon,
-} from 'native-base';
+import { Input, Item, List, ListItem, Text, Button, Header, Left, Right, Icon } from 'native-base';
 
 import {
 	addComponent,
@@ -83,11 +72,7 @@ class DataSearch extends Component {
 			},
 		);
 
-		checkPropChange(
-			this.props.react,
-			nextProps.react,
-			() => this.setReact(nextProps),
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
 
 		if (Array.isArray(nextProps.suggestions) && this.state.currentValue.trim().length) {
 			// shallow check allows us to set suggestions even if the next set
@@ -128,7 +113,7 @@ class DataSearch extends Component {
 		} else {
 			props.watchComponent(props.componentId, { and: this.internalComponent });
 		}
-	}
+	};
 
 	highlightQuery = (props) => {
 		if (!props.highlight) {
@@ -182,12 +167,14 @@ class DataSearch extends Component {
 	};
 
 	shouldQuery = (value, dataFields, props) => {
-		const fields = dataFields.map((field, index) =>
-			`${field}${
-				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-					? `^${props.fieldWeights[index]}`
-					: ''
-			}`);
+		const fields = dataFields.map(
+			(field, index) =>
+				`${field}${
+					Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+						? `^${props.fieldWeights[index]}`
+						: ''
+				}`,
+		);
 
 		if (props.queryFormat === 'and') {
 			return [
@@ -233,13 +220,10 @@ class DataSearch extends Component {
 
 	onSuggestions = (results) => {
 		const fields = Array.isArray(this.props.dataField)
-			? this.props.dataField : [this.props.dataField];
+			? this.props.dataField
+			: [this.props.dataField];
 
-		return getSuggestions(
-			fields,
-			results,
-			this.state.currentValue.toLowerCase(),
-		);
+		return getSuggestions(fields, results, this.state.currentValue.toLowerCase());
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
@@ -258,12 +242,7 @@ class DataSearch extends Component {
 			}
 			if (props.onValueChange) props.onValueChange(value);
 		};
-		checkValueChange(
-			props.componentId,
-			value,
-			props.beforeValueChange,
-			performUpdate,
-		);
+		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
 	handleTextChange = debounce((value) => {
@@ -273,6 +252,11 @@ class DataSearch extends Component {
 			this.updateQuery(this.props.componentId, value, this.props);
 		}
 	}, this.props.debounce);
+
+	handleUserSelection = (value) => {
+		if (this.props.onValueSelected) this.props.onValueSelected(value)
+		this.selectSuggestion(value.label)
+	}
 
 	selectSuggestion = (value) => {
 		this.setState({
@@ -331,7 +315,7 @@ class DataSearch extends Component {
 				keyboardShouldPersistTaps="always"
 				renderRow={item => (
 					<ListItem
-						onPress={() => this.selectSuggestion(item.label)}
+						onPress={() => this.handleUserSelection(item)}
 						{...getInnerKey(this.props.innerProps, 'listItem')}
 					>
 						<Text
@@ -382,56 +366,50 @@ class DataSearch extends Component {
 								/>
 							</Button>
 						</Left>
-						{
-							this.state.currentValue
-								? (
-									<Right style={getInnerKey(this.props.innerStyle, 'right')}>
-										<Button
-											style={{
-												paddingRight: 0,
-												...getInnerKey(this.props.innerStyle, 'button'),
-											}}
-											transparent
-											onPress={() => this.selectSuggestion('')}
-											{...getInnerKey(this.props.innerProps, 'button')}
-										>
-											<Text
-												style={{
-													...Platform.select({
-														android: {
-															color: '#fff',
-														},
-													}),
-												}}
-												{...getInnerKey(this.props.innerProps, 'text')}
-											>
-												Reset
-											</Text>
-										</Button>
-									</Right>
-								)
-								: <Right style={getInnerKey(this.props.innerStyle, 'right')} />
-						}
+						{this.state.currentValue ? (
+							<Right style={getInnerKey(this.props.innerStyle, 'right')}>
+								<Button
+									style={{
+										paddingRight: 0,
+										...getInnerKey(this.props.innerStyle, 'button'),
+									}}
+									transparent
+									onPress={() => this.selectSuggestion('')}
+									{...getInnerKey(this.props.innerProps, 'button')}
+								>
+									<Text
+										style={{
+											...Platform.select({
+												android: {
+													color: '#fff',
+												},
+											}),
+										}}
+										{...getInnerKey(this.props.innerProps, 'text')}
+									>
+										Reset
+									</Text>
+								</Button>
+							</Right>
+						) : (
+							<Right style={getInnerKey(this.props.innerStyle, 'right')} />
+						)}
 					</Header>
 					<Item
 						regular
 						style={{ marginLeft: 10, margin: 10 }}
 						{...getInnerKey(this.props.innerProps, 'item')}
 					>
-						{
-							this.props.showIcon && this.props.iconPosition === 'left'
-								? (
-									<Icon
-										name="search"
-										style={{
-											fontSize: 22,
-											top: 2,
-											...getInnerKey(this.props.innerStyle, 'icon'),
-										}}
-									/>
-								)
-								: null
-						}
+						{this.props.showIcon && this.props.iconPosition === 'left' ? (
+							<Icon
+								name="search"
+								style={{
+									fontSize: 22,
+									top: 2,
+									...getInnerKey(this.props.innerStyle, 'icon'),
+								}}
+							/>
+						) : null}
 						<Input
 							style={{
 								color: this.props.theming.textColor,
@@ -447,36 +425,7 @@ class DataSearch extends Component {
 							autoFocus
 							{...getInnerKey(this.props.innerProps, 'input')}
 						/>
-						{
-							this.props.showIcon && this.props.iconPosition === 'right'
-								? (
-									<Icon
-										name="search"
-										style={{
-											fontSize: 22,
-											top: 2,
-											...getInnerKey(this.props.innerStyle, 'icon'),
-										}}
-										{...getInnerKey(this.props.innerProps, 'icon')}
-									/>
-								)
-								: null
-						}
-					</Item>
-					{this.renderSuggestions()}
-				</Modal>
-			);
-		}
-
-		return (
-			<Item
-				regular
-				style={{ marginLeft: 0 }}
-				{...getInnerKey(this.props.innerProps, 'item')}
-			>
-				{
-					this.props.showIcon && this.props.iconPosition === 'left'
-						? (
+						{this.props.showIcon && this.props.iconPosition === 'right' ? (
 							<Icon
 								name="search"
 								style={{
@@ -484,23 +433,38 @@ class DataSearch extends Component {
 									top: 2,
 									...getInnerKey(this.props.innerStyle, 'icon'),
 								}}
+								{...getInnerKey(this.props.innerProps, 'icon')}
 							/>
-						)
-						: null
-				}
-				<TouchableWithoutFeedback
-					onPress={this.toggleModal}
-				>
+						) : null}
+					</Item>
+					{this.renderSuggestions()}
+				</Modal>
+			);
+		}
+
+		return (
+			<Item regular style={{ marginLeft: 0 }} {...getInnerKey(this.props.innerProps, 'item')}>
+				{this.props.showIcon && this.props.iconPosition === 'left' ? (
+					<Icon
+						name="search"
+						style={{
+							fontSize: 22,
+							top: 2,
+							...getInnerKey(this.props.innerStyle, 'icon'),
+						}}
+					/>
+				) : null}
+				<TouchableWithoutFeedback onPress={this.toggleModal}>
 					<Text
 						numberOfLines={1}
 						ellipsizeMode="tail"
 						style={{
 							flex: 1,
 							alignItems: 'center',
-							color: (
-								this.state.currentValue
-								&& this.state.currentValue !== ''
-							) ? this.props.theming.textColor : '#555',
+							color:
+								this.state.currentValue && this.state.currentValue !== ''
+									? this.props.theming.textColor
+									: '#555',
 							fontSize: 17,
 							height: 50,
 							lineHeight: 24,
@@ -512,28 +476,22 @@ class DataSearch extends Component {
 						}}
 						{...getInnerKey(this.props.innerProps, 'text')}
 					>
-						{
-							this.state.currentValue && this.state.currentValue !== ''
-								? this.state.currentValue
-								: this.props.placeholder
-						}
+						{this.state.currentValue && this.state.currentValue !== ''
+							? this.state.currentValue
+							: this.props.placeholder}
 					</Text>
 				</TouchableWithoutFeedback>
-				{
-					this.props.showIcon && this.props.iconPosition === 'right'
-						? (
-							<Icon
-								name="search"
-								style={{
-									fontSize: 22,
-									top: 2,
-									...getInnerKey(this.props.innerStyle, 'icon'),
-								}}
-								{...getInnerKey(this.props.innerProps, 'icon')}
-							/>
-						)
-						: null
-				}
+				{this.props.showIcon && this.props.iconPosition === 'right' ? (
+					<Icon
+						name="search"
+						style={{
+							fontSize: 22,
+							top: 2,
+							...getInnerKey(this.props.innerStyle, 'icon'),
+						}}
+						{...getInnerKey(this.props.innerProps, 'icon')}
+					/>
+				) : null}
 			</Item>
 		);
 	};
@@ -559,89 +517,75 @@ class DataSearch extends Component {
 
 		return (
 			<View style={this.props.style}>
-				{
-					this.props.defaultSuggestions || this.props.autosuggest
-						? this.renderDataSearch(style)
-						: (
-							<Item
-								regular
-								style={{ marginLeft: 0 }}
-								{...getInnerKey(this.props.innerProps, 'item')}
+				{this.props.defaultSuggestions || this.props.autosuggest ? (
+					this.renderDataSearch(style)
+				) : (
+					<Item
+						regular
+						style={{ marginLeft: 0 }}
+						{...getInnerKey(this.props.innerProps, 'item')}
+					>
+						{this.props.showIcon && this.props.iconPosition === 'left' ? (
+							<Icon
+								name="search"
+								style={{
+									fontSize: 22,
+									top: 2,
+									...getInnerKey(this.props.innerStyle, 'icon'),
+								}}
+								{...getInnerKey(this.props.innerProps, 'icon')}
+							/>
+						) : null}
+						<Input
+							style={{
+								color: this.props.theming.textColor,
+								...style,
+								...getInnerKey(this.props.innerStyle, 'input'),
+							}}
+							placeholder={this.props.placeholder}
+							onChangeText={this.setValue}
+							value={this.state.currentValue}
+							autoFocus={this.props.autoFocus}
+							{...getInnerKey(this.props.innerProps, 'input')}
+						/>
+						{this.state.currentValue && this.props.showClear ? (
+							<Button
+								transparent
+								onPress={this.clearValue}
+								style={getInnerKey(this.props.innerStyle, 'button')}
+								{...getInnerKey(this.props.innerProps, 'button')}
 							>
-								{
-									this.props.showIcon && this.props.iconPosition === 'left'
-										? (
-											<Icon
-												name="search"
-												style={{
-													fontSize: 22,
-													top: 2,
-													...getInnerKey(this.props.innerStyle, 'icon'),
-												}}
-												{...getInnerKey(this.props.innerProps, 'icon')}
-											/>
-										)
-										: null
-								}
-								<Input
+								<Icon
+									name="md-close"
 									style={{
-										color: this.props.theming.textColor,
-										...style,
-										...getInnerKey(this.props.innerStyle, 'input'),
+										fontSize: 22,
+										top: 3,
+										color: '#666',
+										marginLeft: 10,
+										marginRight:
+											this.props.showIcon
+											&& this.props.iconPosition === 'right'
+												? 0
+												: 10,
+										...getInnerKey(this.props.innerStyle, 'icon'),
 									}}
-									placeholder={this.props.placeholder}
-									onChangeText={this.setValue}
-									value={this.state.currentValue}
-									autoFocus={this.props.autoFocus}
-									{...getInnerKey(this.props.innerProps, 'input')}
+									{...getInnerKey(this.props.innerProps, 'icon')}
 								/>
-								{
-									this.state.currentValue && this.props.showClear
-										? (
-											<Button
-												transparent
-												onPress={this.clearValue}
-												style={getInnerKey(this.props.innerStyle, 'button')}
-												{...getInnerKey(this.props.innerProps, 'button')}
-											>
-												<Icon
-													name="md-close"
-													style={{
-														fontSize: 22,
-														top: 3,
-														color: '#666',
-														marginLeft: 10,
-														marginRight: (
-															this.props.showIcon && this.props.iconPosition === 'right'
-																? 0
-																: 10
-														),
-														...getInnerKey(this.props.innerStyle, 'icon'),
-													}}
-													{...getInnerKey(this.props.innerProps, 'icon')}
-												/>
-											</Button>
-										)
-										: null
-								}
-								{
-									this.props.showIcon && this.props.iconPosition === 'right'
-										? (
-											<Icon
-												name="search"
-												style={{
-													fontSize: 22,
-													top: 2,
-													...getInnerKey(this.props.innerStyle, 'icon'),
-												}}
-												{...getInnerKey(this.props.innerProps, 'icon')}
-											/>
-										)
-										: null
-								}
-							</Item>
-						)
-				}
+							</Button>
+						) : null}
+						{this.props.showIcon && this.props.iconPosition === 'right' ? (
+							<Icon
+								name="search"
+								style={{
+									fontSize: 22,
+									top: 2,
+									...getInnerKey(this.props.innerStyle, 'icon'),
+								}}
+								{...getInnerKey(this.props.innerProps, 'icon')}
+							/>
+						) : null}
+					</Item>
+				)}
 			</View>
 		);
 	}
@@ -700,8 +644,10 @@ DataSearch.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value) || null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -714,4 +660,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(DataSearch));
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(withTheme(DataSearch));

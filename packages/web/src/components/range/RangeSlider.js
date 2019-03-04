@@ -20,6 +20,7 @@ import Rheostat from 'rheostat/lib/Slider';
 
 import HistogramContainer from './addons/HistogramContainer';
 import RangeLabel from './addons/RangeLabel';
+import SliderHandle from './addons/SliderHandle';
 import Slider from '../../styles/Slider';
 import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
@@ -58,14 +59,9 @@ class RangeSlider extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () =>
-			this.setReact(nextProps));
-		checkSomePropChange(
-			this.props,
-			nextProps,
-			['showHistogram', 'interval'],
-			() => this.updateQueryOptions(nextProps),
-		);
+		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+		checkSomePropChange(this.props, nextProps, ['showHistogram', 'interval'], () =>
+			this.updateQueryOptions(nextProps));
 		checkPropChange(this.props.options, nextProps.options, () => {
 			const { options } = nextProps;
 			if (Array.isArray(options)) {
@@ -98,7 +94,9 @@ class RangeSlider extends Component {
 	shouldComponentUpdate(nextProps) {
 		const upperLimit = Math.floor((nextProps.range.end - nextProps.range.start) / 2);
 		if (nextProps.stepValue < 1 || nextProps.stepValue > upperLimit) {
-			console.warn(`stepValue for RangeSlider ${nextProps.componentId} should be greater than 0 and less than or equal to ${upperLimit}`);
+			console.warn(`stepValue for RangeSlider ${
+				nextProps.componentId
+			} should be greater than 0 and less than or equal to ${upperLimit}`);
 			return false;
 		}
 		return true;
@@ -115,14 +113,14 @@ class RangeSlider extends Component {
 			const newReact = pushToAndClause(react, this.internalComponent);
 			props.watchComponent(props.componentId, newReact);
 		} else {
-			props.watchComponent(props.componentId, { and: this.internalComponent });
+			props.watchComponent(props.componentId, {
+				and: this.internalComponent,
+			});
 		}
 	};
 
-	static parseValue = (value, props) => (value
-		? [value.start, value.end]
-		: [props.range.start, props.range.end]
-	)
+	static parseValue = (value, props) =>
+		(value ? [value.start, value.end] : [props.range.start, props.range.end]);
 
 	static defaultQuery = (value, props) => {
 		if (Array.isArray(value) && value.length) {
@@ -162,7 +160,9 @@ class RangeSlider extends Component {
 		if (!props.interval) {
 			return min;
 		} else if (props.interval < min) {
-			console.error(`${props.componentId}: interval prop's value should be greater than or equal to ${min}`);
+			console.error(`${
+				props.componentId
+			}: interval prop's value should be greater than or equal to ${min}`);
 			return min;
 		}
 		return props.interval;
@@ -186,18 +186,21 @@ class RangeSlider extends Component {
 
 		this.locked = true;
 		const performUpdate = () => {
-			this.setState({
-				currentValue,
-			}, () => {
-				this.updateQuery([currentValue[0], currentValue[1]], props);
-				this.locked = false;
-				if (props.onValueChange) {
-					props.onValueChange({
-						start: currentValue[0],
-						end: currentValue[1],
-					});
-				}
-			});
+			this.setState(
+				{
+					currentValue,
+				},
+				() => {
+					this.updateQuery([currentValue[0], currentValue[1]], props);
+					this.locked = false;
+					if (props.onValueChange) {
+						props.onValueChange({
+							start: currentValue[0],
+							end: currentValue[1],
+						});
+					}
+				},
+			);
 		};
 		checkValueChange(
 			props.componentId,
@@ -225,7 +228,10 @@ class RangeSlider extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || RangeSlider.defaultQuery;
-		const { showFilter, range: { start, end } } = props;
+		const {
+			showFilter,
+			range: { start, end },
+		} = props;
 		const [currentStart, currentEnd] = value;
 		// check if the slider is at its initial position
 		const isInitialValue = currentStart === start && currentEnd === end;
@@ -262,9 +268,7 @@ class RangeSlider extends Component {
 		return (
 			<Slider primary style={this.props.style} className={this.props.className}>
 				{this.props.title && (
-					<Title
-						className={getClassName(this.props.innerClass, 'title') || null}
-					>
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
 					</Title>
 				)}
@@ -275,9 +279,8 @@ class RangeSlider extends Component {
 						interval={this.getValidInterval(this.props)}
 					/>
 				) : null}
-				{
-					this.props.showSlider
-					&& <Rheostat
+				{this.props.showSlider && (
+					<Rheostat
 						min={this.props.range.start}
 						max={this.props.range.end}
 						values={this.state.currentValue}
@@ -286,9 +289,19 @@ class RangeSlider extends Component {
 						snap={this.props.snap}
 						snapPoints={this.props.snap ? this.getSnapPoints() : null}
 						className={getClassName(this.props.innerClass, 'slider')}
+						handle={({ className, style, ...passProps }) => (
+							<SliderHandle
+								style={style}
+								className={className}
+								{...passProps}
+								renderTooltipData={this.props.renderTooltipData}
+								tooltipTrigger={this.props.tooltipTrigger}
+							/>
+						)}
 					/>
-				}
-				{this.props.rangeLabels && this.props.showSlider && (
+				)}
+				{this.props.rangeLabels
+					&& this.props.showSlider && (
 					<div className={rangeLabelsContainer}>
 						<RangeLabel
 							align="left"
@@ -338,6 +351,8 @@ RangeSlider.propTypes = {
 	histogramQuery: types.func,
 	showFilter: types.bool,
 	showSlider: types.bool,
+	tooltipTrigger: types.tooltipTrigger,
+	renderTooltipData: types.func,
 	snap: types.bool,
 	stepValue: types.number,
 	style: types.style,
@@ -353,6 +368,7 @@ RangeSlider.defaultProps = {
 	},
 	showHistogram: true,
 	showSlider: true,
+	tooltipTrigger: 'none',
 	snap: true,
 	stepValue: 1,
 	showFilter: true,
@@ -362,8 +378,8 @@ RangeSlider.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId]
-		? (state.aggregations[props.componentId][props.dataField]
-			&& state.aggregations[props.componentId][props.dataField].buckets)
+		? state.aggregations[props.componentId][props.dataField]
+		  && state.aggregations[props.componentId][props.dataField].buckets // eslint-disable-line
 		: [],
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
@@ -381,4 +397,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(RangeSlider);
+export default connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(RangeSlider);
