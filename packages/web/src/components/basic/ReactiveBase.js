@@ -91,7 +91,7 @@ class ReactiveBase extends Component {
 				// Do not add to selectedValues if JSON parsing fails.
 			}
 		});
-
+		
 		const { headers = {}, themePreset } = props;
 		const appbaseRef = Appbase(config);
 		if (this.props.transformRequest) {
@@ -117,8 +117,8 @@ class ReactiveBase extends Component {
 					<URLParamsProvider
 						headers={this.props.headers}
 						style={this.props.style}
-            className={this.props.className}
-            getSearchParams={this.props.getSearchParams}
+						className={this.props.className}
+						getSearchParams={this.props.getSearchParams}
 						setSearchParams={this.props.setSearchParams}
 					>
 						{this.props.children}
@@ -151,8 +151,8 @@ ReactiveBase.propTypes = {
 	style: types.style,
 	className: types.string,
 	initialState: types.children,
-  analytics: types.bool,
-  getSearchParams: types.func,
+	analytics: types.bool,
+	getSearchParams: types.func,
 	setSearchParams: types.func,
 };
 
