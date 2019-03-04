@@ -14,7 +14,9 @@ export interface ReactiveBaseProps {
 	url?: string;
 	mapKey?: string;
 	style?: types.style;
-	className?: string;
+  className?: string;
+  getSearchParams?: () => string;
+	setSearchParams?: () => string;
 }
 
 declare const ReactiveBase: React.ComponentType<ReactiveBaseProps>;

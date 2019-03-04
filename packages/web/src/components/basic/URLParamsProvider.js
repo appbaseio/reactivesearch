@@ -10,7 +10,10 @@ const URLSearchParams = require('url-search-params');
 
 class URLParamsProvider extends Component {
 	componentDidMount() {
-		this.params = new URLSearchParams(window.location.search);
+    const searchParams = this.props.getSearchParams
+			? this.props.getSearchParams()
+			: window.location.search;
+		this.params = new URLSearchParams(searchParams);
 		this.currentSelectedState = this.props.selectedValues || {};
 		window.onpopstate = () => {
 			const activeComponents = Array.from(this.params.keys());
@@ -29,7 +32,7 @@ class URLParamsProvider extends Component {
 				} catch (e) {
 					// Do not set value if JSON parsing fails.
 				}
-				
+
 			});
 		};
 	}
@@ -37,7 +40,10 @@ class URLParamsProvider extends Component {
 	componentWillReceiveProps(nextProps) {
 		this.currentSelectedState = nextProps.selectedValues;
 		if (!isEqual(this.props.selectedValues, nextProps.selectedValues)) {
-			this.params = new URLSearchParams(window.location.search);
+			const searchParams = this.props.getSearchParams
+			  ? this.props.getSearchParams()
+			  : window.location.search;
+		  this.params = new URLSearchParams(searchParams);
 			const currentComponents = Object.keys(nextProps.selectedValues);
 			const urlComponents = Array.from(this.params.keys());
 
@@ -107,7 +113,10 @@ class URLParamsProvider extends Component {
 	}
 
 	setURL(component, value) {
-		this.params = new URLSearchParams(window.location.search);
+		const searchParams = this.props.getSearchParams
+			? this.props.getSearchParams()
+			: window.location.search;
+		this.params = new URLSearchParams(searchParams);
 		if (
 			!value
 			|| (typeof value === 'string' && value.trim() === '')
@@ -125,11 +134,13 @@ class URLParamsProvider extends Component {
 	}
 
 	pushToHistory() {
-		if (window.history.pushState) {
-			const paramsSting = this.params.toString() ? `?${this.params.toString()}` : '';
-			const base = window.location.href.split('?')[0];
-			const newurl = `${base}${paramsSting}`;
-			window.history.pushState({ path: newurl }, '', newurl);
+		const paramsSting = this.params.toString() ? `?${this.params.toString()}` : '';
+		const base = window.location.href.split('?')[0];
+		const newURL = `${base}${paramsSting}`;
+		if (this.props.setSearchParams) {
+			this.props.setSearchParams(newURL);
+		} else if (window.history.pushState) {
+			window.history.pushState({ path: newURL }, '', newURL);
 		}
 	}
 
@@ -150,7 +161,9 @@ URLParamsProvider.propTypes = {
 	children: types.children,
 	headers: types.headers,
 	style: types.style,
-	className: types.string,
+  className: types.string,
+  getSearchParams: types.func,
+	setSearchParams: types.func,
 };
 
 URLParamsProvider.defaultProps = {

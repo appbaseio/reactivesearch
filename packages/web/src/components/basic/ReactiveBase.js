@@ -71,7 +71,7 @@ class ReactiveBase extends Component {
 
 		let queryParams = '';
 		if (typeof window !== 'undefined') {
-			queryParams = window.location.search;
+			queryParams = props.getSearchParams ? props.getSearchParams() : window.location.search;
 		} else {
 			queryParams = props.queryParams || '';
 		}
@@ -91,7 +91,7 @@ class ReactiveBase extends Component {
 				// Do not add to selectedValues if JSON parsing fails.
 			}
 		});
-		
+
 		const { headers = {}, themePreset } = props;
 		const appbaseRef = Appbase(config);
 		if (this.props.transformRequest) {
@@ -117,7 +117,9 @@ class ReactiveBase extends Component {
 					<URLParamsProvider
 						headers={this.props.headers}
 						style={this.props.style}
-						className={this.props.className}
+            className={this.props.className}
+            getSearchParams={this.props.getSearchParams}
+						setSearchParams={this.props.setSearchParams}
 					>
 						{this.props.children}
 					</URLParamsProvider>
@@ -149,7 +151,9 @@ ReactiveBase.propTypes = {
 	style: types.style,
 	className: types.string,
 	initialState: types.children,
-	analytics: types.bool,
+  analytics: types.bool,
+  getSearchParams: types.func,
+	setSearchParams: types.func,
 };
 
 export default ReactiveBase;
