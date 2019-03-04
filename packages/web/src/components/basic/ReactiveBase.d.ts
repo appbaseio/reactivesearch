@@ -14,8 +14,8 @@ export interface ReactiveBaseProps {
 	url?: string;
 	mapKey?: string;
 	style?: types.style;
-  className?: string;
-  getSearchParams?: () => string;
+	className?: string;
+	getSearchParams?: () => string;
 	setSearchParams?: () => string;
 }
 
