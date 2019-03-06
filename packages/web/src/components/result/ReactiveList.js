@@ -548,7 +548,7 @@ class ReactiveList extends Component {
 			analytics: { searchId },
 		} = this.props;
 		const { url, app, credentials } = config;
-		if (config.analytics && url.endsWith('scalr.api.appbase.io') && searchId) {
+		if (config.analytics && searchId) {
 			fetch(`${url}/${app}/analytics`, {
 				method: 'POST',
 				headers: {
