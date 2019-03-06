@@ -330,7 +330,9 @@ class DataSearch extends Component {
 					},
 				);
 			} else {
-				this.updateQuery(this.internalComponent, value, props);
+				if (this.props.autosuggest) {
+					this.updateQuery(this.internalComponent, value, props);
+				}
 				this.updateQuery(props.componentId, value, props);
 				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);

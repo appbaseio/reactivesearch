@@ -1,5 +1,5 @@
 import React from 'react';
-import { hydrate } from 'react-dom';
+import ReactDOM from 'react-dom';
 
 import App from '../common/App';
 import BookCard from '../common/BookCard';
@@ -25,7 +25,7 @@ const singleRangeProps = {
 		{ start: 3, end: 4, label: 'Rating 3 to 4' },
 		{ start: 4, end: 5, label: 'Rating > 4' },
 	],
-	defaultSelected: 'Rating 3 to 4',
+	URLParams: true,
 };
 
 const reactiveListProps = {
@@ -39,7 +39,7 @@ const reactiveListProps = {
 	},
 };
 
-hydrate(
+ReactDOM.hydrate(
 	<App
 		store={store}
 		settings={settings}

@@ -10,6 +10,12 @@ import Title from '../../styles/Title';
 import { connect } from '../../utils';
 
 class SelectedFilters extends Component {
+	componentDidUpdate = () => {
+		if (this.props.onChange) {
+			this.props.onChange(this.props.selectedValues);
+		}
+	};
+
 	remove = (component, value = null) => {
 		const { onClear } = this.props;
 		this.props.setValue(component, null);
@@ -123,6 +129,7 @@ SelectedFilters.propTypes = {
 	onClear: types.func,
 	render: types.func,
 	title: types.title,
+	onChange: types.func,
 };
 
 SelectedFilters.defaultProps = {
@@ -148,5 +155,6 @@ const ConnectedComponent = connect(
 )(withTheme(props => <SelectedFilters ref={props.myForwardedRef} {...props} />));
 
 // eslint-disable-next-line
-export default React.forwardRef((props, ref) =>
-	<ConnectedComponent {...props} myForwardedRef={ref} />);
+export default React.forwardRef((props, ref) => (
+	<ConnectedComponent {...props} myForwardedRef={ref} />
+));
