@@ -71,7 +71,7 @@ class ReactiveBase extends Component {
 
 		let queryParams = '';
 		if (typeof window !== 'undefined') {
-			queryParams = window.location.search;
+			queryParams = props.getSearchParams ? props.getSearchParams() : window.location.search;
 		} else {
 			queryParams = props.queryParams || '';
 		}
@@ -124,6 +124,8 @@ class ReactiveBase extends Component {
 						headers={this.props.headers}
 						style={this.props.style}
 						className={this.props.className}
+						getSearchParams={this.props.getSearchParams}
+						setSearchParams={this.props.setSearchParams}
 					>
 						{this.props.children}
 					</URLParamsProvider>
@@ -156,6 +158,8 @@ ReactiveBase.propTypes = {
 	className: types.string,
 	initialState: types.children,
 	analytics: types.bool,
+	getSearchParams: types.func,
+	setSearchParams: types.func,
 };
 
 export default ReactiveBase;
