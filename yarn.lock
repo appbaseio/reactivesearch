@@ -20,6 +20,15 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
+"@appbaseio/reactivecore@^7.1.0", "@appbaseio/reactivecore@^7.4.0":
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-7.5.0.tgz#9f71deb993437735dfe694abe5e264a026f6a4f2"
+  integrity sha512-ku4gnZ9p3+Yv8AdciufoERwsNVpJQLWg/ofGY+tlzmBOMPvjfUkjwlJY/DL6yrbQfV9/N/CwT13sLl8JX4zwSg==
+  dependencies:
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+
 "@appbaseio/reactivesearch-vue@^1.0.0-beta.7":
   version "1.0.0-beta.7"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.0.0-beta.7.tgz#062d4a961ebb142ad0d7304cd5c9462f6175737c"
@@ -2269,10 +2278,10 @@ appbase-js@^4.0.2-beta.2:
     url-parser-lite "^0.1.0"
     ws "^2.2.0"
 
-appbase-js@^4.0.2-beta.4:
-  version "4.0.2-beta.4"
-  resolved "https://registry.npmjs.org/appbase-js/-/appbase-js-4.0.2-beta.4.tgz#59bcba7265d3f7937f8d3b1cfecb1973f5d059c8"
-  integrity sha512-yfljZF2WA4qjAEd1tqOXL49bQSGcnC8DWuDJJU3/DBgS7WB+vFeYPlk7Q+JANFx9+XCT3RXja68gu1Ic0jJWlg==
+appbase-js@^4.0.2-beta.5:
+  version "4.0.2-beta.5"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.2-beta.5.tgz#456eecb825f124b996bfd617aab47c1f2a95d087"
+  integrity sha512-SEvYFK4oCQ4WcQUiTj2e2E/hbFiZNihmd2562aXyXQp7i5vg2O2G/cxOmesUFfKBq0C1aOOxSfBz5m0yuklUqg==
   dependencies:
     cross-fetch "^2.2.2"
     json-stable-stringify "^1.0.1"
