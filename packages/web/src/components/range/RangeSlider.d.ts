@@ -19,7 +19,7 @@ export interface RangeSliderProps extends CommonProps {
 	react?: types.react;
 	showHistogram?: boolean;
 	showSlider?: boolean;
-	snapPoints?: number[];
+	snapPoints?: number[] | (start: number, end: number, stepValue: number) => number[];
 	algorithm?: {
 		getValue: (position: number, min: number max: number) => number;
 		getPosition: (position: number, min: number max: number) => number;
