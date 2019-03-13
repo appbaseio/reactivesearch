@@ -17,6 +17,11 @@ export interface DynamicRangeSliderProps extends CommonProps {
 	rangeLabels?: (...args: any[]) => any;
 	react?: types.react;
 	showHistogram?: boolean;
+	snapPoints?: number[];
+	algorithm?: {
+		getValue: (position: number, min: number max: number) => number;
+		getPosition: (position: number, min: number max: number) => number;
+	};
 	snap?: boolean;
 	loader?: any;
 	stepValue?: number;

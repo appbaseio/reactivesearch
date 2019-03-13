@@ -197,8 +197,17 @@ class DynamicRangeSlider extends Component {
 	};
 
 	getSnapPoints = () => {
-		let snapPoints = [];
 		let { stepValue } = this.props;
+
+		if (this.props.snapPoints) {
+			if (typeof this.props.snapPoints === 'function') {
+				return this.props.snapPoints(this.props.range.start, this.props.range.end, stepValue);
+			}
+			return this.props.snapPoints;
+		}
+
+		let snapPoints = [];
+
 		const { range } = this.state;
 
 		// limit the number of steps to prevent generating a large number of snapPoints
@@ -408,6 +417,7 @@ class DynamicRangeSlider extends Component {
 				)}
 				{this.renderHistogram()}
 				<Rheostat
+					algorithm={this.props.algorithm}
 					min={this.state.range.start}
 					max={this.state.range.end}
 					values={this.state.currentValue}

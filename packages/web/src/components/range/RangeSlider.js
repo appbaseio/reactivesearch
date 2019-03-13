@@ -155,8 +155,16 @@ class RangeSlider extends Component {
 	};
 
 	getSnapPoints = () => {
-		let snapPoints = [];
 		let { stepValue } = this.props;
+
+		if (this.props.snapPoints) {
+			if (typeof this.props.snapPoints === 'function') {
+				return this.props.snapPoints(this.props.range.start, this.props.range.end, stepValue);
+			}
+			return this.props.snapPoints;
+		}
+
+		let snapPoints = [];
 
 		// limit the number of steps to prevent generating a large number of snapPoints
 		if ((this.props.range.end - this.props.range.start) / stepValue > 100) {
@@ -300,6 +308,7 @@ class RangeSlider extends Component {
 				) : null}
 				{this.props.showSlider && (
 					<Rheostat
+						algorithm={this.props.algorithm}
 						min={this.props.range.start}
 						max={this.props.range.end}
 						values={this.state.currentValue}
