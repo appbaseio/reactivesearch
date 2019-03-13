@@ -11,6 +11,12 @@ export interface RangeInputProps extends CommonProps {
 	stepValue: number;
 	style: types.style;
 	themePreset: types.themePreset;
+	snapPoints?: number[] | (start: number, end: number, stepValue: number) => number[];
+	algorithm?: {
+		getValue: (position: number, min: number max: number) => number;
+		getPosition: (position: number, min: number max: number) => number;
+	};
+	snap?: boolean;
 }
 
 declare const RangeInput: React.ComponentType<RangeInputProps>;
