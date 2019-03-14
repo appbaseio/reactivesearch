@@ -548,15 +548,16 @@ class ReactiveList extends Component {
 			analytics: { searchId },
 		} = this.props;
 		const { url, app, credentials } = config;
-		if (config.analytics && url.endsWith('scalr.api.appbase.io') && searchId) {
-			fetch(`${url}/${app}/analytics`, {
+		if (config.analytics && searchId) {
+			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: `Basic ${btoa(credentials)}`,
 					'X-Search-Id': searchId,
 					'X-Search-Click': true,
-					'X-Search-Click-Position': searchPosition + 1,
+					'X-Search-ClickPosition': searchPosition + 1,
+					'X-Search-Conversion': true,
 				},
 			});
 		}
@@ -647,8 +648,10 @@ class ReactiveList extends Component {
 						)}`}
 					>
 						{[...streamResults, ...filteredResults].map((item, index) =>
-							renderData(item, () =>
-								this.triggerClickAnalytics((currentPage * size) + index)))}
+							renderData(item, () =>	{
+								this.triggerClickAnalytics((currentPage * size) + index);
+							},
+							))}
 					</div>
 				)}
 				{this.props.isLoading && !this.props.pagination
