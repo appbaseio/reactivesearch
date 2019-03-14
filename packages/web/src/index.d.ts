@@ -31,6 +31,7 @@ export { default as SingleList } from './components/list/SingleList';
 export { default as DynamicRangeSlider } from './components/range/DynamicRangeSlider';
 export { default as MultiDropdownRange } from './components/range/MultiDropdownRange';
 export { default as MultiRange } from './components/range/MultiRange';
+export { default as DynamicRangeInput } from './components/range/DynamicRangeInput';
 export { default as RangeInput } from './components/range/RangeInput';
 export { default as RangeSlider } from './components/range/RangeSlider';
 export { default as RatingsFilter } from './components/range/RatingsFilter';
