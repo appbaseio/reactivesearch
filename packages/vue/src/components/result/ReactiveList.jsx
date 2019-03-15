@@ -568,15 +568,16 @@ const ReactiveList = {
 				analytics: { searchId },
 			} = this;
 			const { url, app, credentials } = config;
-			if (config.analytics && url.endsWith('scalr.api.appbase.io') && searchId) {
-				fetch(`${url}/${app}/analytics`, {
+			if (config.analytics && searchId) {
+				fetch(`${url}/${app}/_analytics`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
 						Authorization: `Basic ${btoa(credentials)}`,
 						'X-Search-Id': searchId,
 						'X-Search-Click': true,
-						'X-Search-Click-Position': searchPosition + 1,
+						'X-Search-ClickPosition': searchPosition + 1,
+						'X-Search-Conversion': true,
 					},
 				});
 			}

@@ -6,7 +6,14 @@ import { UL, Radio } from '../../styles/FormControlList';
 import { connect } from '../../utils/index';
 import types from '../../utils/vueTypes';
 
-const { addComponent, removeComponent, watchComponent, updateQuery, setQueryListener } = Actions;
+const {
+	addComponent,
+	removeComponent,
+	watchComponent,
+	updateQuery,
+	setQueryListener,
+	setQueryOptions,
+} = Actions;
 const { isEqual, checkValueChange, getClassName, getOptionsFromQuery } = helper;
 
 const SingleRange = {
@@ -211,6 +218,7 @@ const mapDispatchtoProps = {
 	updateQuery,
 	watchComponent,
 	setQueryListener,
+	setQueryOptions,
 };
 
 const RangeConnected = connect(

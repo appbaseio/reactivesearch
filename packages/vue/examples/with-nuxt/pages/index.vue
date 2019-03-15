@@ -1,9 +1,16 @@
 <template>
   <div id="app">
     <ReactiveBase app="good-books-ds" credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d">
+      <DataSearch
+        categoryField="authors.raw"
+        componentId="BookSensorSearch"
+        :dataField="['original_title', 'original_title.search']"
+        :URLParams="true"
+      />
       <RangeSlider
         data-field="ratings_count"
         componentId="BookSensor"
+        :react="{and: ['BookSensorSearch']}"
         :range="{
             start: 3000,
             end: 50000
@@ -21,7 +28,7 @@
         :pagination="true"
         :from="0"
         :size="5"
-        :react="{and: ['BookSensor','Authors']}"
+        :react="{and: ['BookSensor','Authors', 'BookSensorSearch']}"
       >
         <div slot="renderData" slot-scope="{ item }">
           <div class="flex book-content" key="item._id">

@@ -21,6 +21,15 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
+"@appbaseio/reactivecore@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.npmjs.org/@appbaseio/reactivecore/-/reactivecore-8.0.0.tgz#9acc3e484bf7d5d59290b311e5f0dd396efaead0"
+  integrity sha512-eAbHhOnInqLDn+Ji1U3WslbpmwrVQrQqTW/5GLF7fCTV1L8UJ2KbX98IXhExYadSsqa0+ZOOmkLUsXsuavoZrA==
+  dependencies:
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+
 "@appbaseio/reactivemaps@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-2.0.1.tgz#ca94c3f9aa43260589792ef009541ac9bb2df644"
@@ -7654,7 +7663,7 @@ emotion-utils@^8.0.12:
 
 emotion-utils@^9.1.0:
   version "9.1.0"
-  resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-9.1.0.tgz#7484dbf18f3b1dc1de68559d1ff35a74caa998dc"
+  resolved "https://registry.npmjs.org/emotion-utils/-/emotion-utils-9.1.0.tgz#7484dbf18f3b1dc1de68559d1ff35a74caa998dc"
   integrity sha512-Zdy9TiZzMDRsCufivL/ZhQ0JdfGGSOc20opRjaBOemF5h2kYI/MD/bLcXfAZgzYVL12WNQegZIme6l+N/JFE4Q==
 
 emotion@*:
@@ -7665,7 +7674,7 @@ emotion@*:
     babel-plugin-emotion "^10.0.7"
     create-emotion "^10.0.7"
 
-emotion@^9.0.0, emotion@^9.1.1, emotion@^9.2.12:
+emotion@9.2.12, emotion@^9.0.0, emotion@^9.1.1:
   version "9.2.12"
   resolved "https://registry.yarnpkg.com/emotion/-/emotion-9.2.12.tgz#53925aaa005614e65c6e43db8243c843574d1ea9"
   integrity sha512-hcx7jppaI8VoXxIWEhxpDW7I+B4kq9RNzQLmsrF6LY8BGKqe2N+gFAQr0EfuFucFlPs2A9HM4+xNj4NeqEWIOQ==
@@ -20124,9 +20133,9 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vue-emotion@^0.4.2:
+vue-emotion@0.4.2:
   version "0.4.2"
-  resolved "https://registry.yarnpkg.com/vue-emotion/-/vue-emotion-0.4.2.tgz#df97359aadd49cc476eb23ba44b7d2962a669ced"
+  resolved "https://registry.npmjs.org/vue-emotion/-/vue-emotion-0.4.2.tgz#df97359aadd49cc476eb23ba44b7d2962a669ced"
   integrity sha1-35c1mq3UnMR26yO6RLfSlipmnO0=
   dependencies:
     emotion-utils "^9.1.0"
