@@ -21,15 +21,6 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivecore@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.npmjs.org/@appbaseio/reactivecore/-/reactivecore-8.0.0.tgz#9acc3e484bf7d5d59290b311e5f0dd396efaead0"
-  integrity sha512-eAbHhOnInqLDn+Ji1U3WslbpmwrVQrQqTW/5GLF7fCTV1L8UJ2KbX98IXhExYadSsqa0+ZOOmkLUsXsuavoZrA==
-  dependencies:
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
 "@appbaseio/reactivemaps@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-2.0.1.tgz#ca94c3f9aa43260589792ef009541ac9bb2df644"
