@@ -11,7 +11,7 @@ export interface DynamicRangeInputProps extends CommonProps {
 	stepValue: number;
 	style: types.style;
 	themePreset: types.themePreset;
-	snapPoints?: number[] | (start: number, end: number, stepValue: number) => number[];
+	snapPoints?: (start: number, end: number, stepValue: number) => number[];
 	algorithm?: {
 		getValue: (position: number, min: number max: number) => number;
 		getPosition: (position: number, min: number max: number) => number;

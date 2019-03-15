@@ -200,10 +200,7 @@ class DynamicRangeSlider extends Component {
 		let { stepValue } = this.props;
 
 		if (this.props.snapPoints) {
-			if (typeof this.props.snapPoints === 'function') {
-				return this.props.snapPoints(this.props.range.start, this.props.range.end, stepValue);
-			}
-			return this.props.snapPoints;
+			return this.props.snapPoints(this.props.range.start, this.props.range.end, stepValue);
 		}
 
 		let snapPoints = [];

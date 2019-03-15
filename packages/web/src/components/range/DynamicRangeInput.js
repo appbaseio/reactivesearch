@@ -90,11 +90,17 @@ class DynamicRangeInput extends Component {
 		const {
 			className, style, themePreset, ...rest
 		} = this.props;
-		const { start, end } = this.state;
+		const {
+			start, end, isStartValid, isEndValid,
+		} = this.state;
 		return (
 			<Container style={style} className={className}>
 				<DynamicRangeSlider
 					{...rest}
+					defaultSelected={() => ({
+						start: isStartValid ? Number(start) : this.props.range.start,
+						end: isEndValid ? Number(end) : this.props.range.end,
+					})}
 					onValueChange={this.handleSlider}
 					className={getClassName(this.props.innerClass, 'slider-container') || null}
 				/>
@@ -154,7 +160,7 @@ DynamicRangeInput.propTypes = {
 DynamicRangeInput.defaultProps = {
 	range: {
 		start: 0,
-		end: 10,
+		end: 9999999999,
 	},
 	stepValue: 1,
 };
