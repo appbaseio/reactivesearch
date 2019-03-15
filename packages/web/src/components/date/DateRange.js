@@ -511,6 +511,7 @@ DateRange.propTypes = {
 	placeholder: types.rangeLabels,
 	nestedField: types.string,
 	queryFormat: types.queryFormatDate,
+	parseDate: types.func,
 	react: types.react,
 	showClear: types.bool,
 	showFilter: types.bool,
@@ -528,6 +529,7 @@ DateRange.defaultProps = {
 	},
 	showClear: true,
 	showFilter: true,
+	queryFormat: 'epoch_millis',
 };
 
 const mapStateToProps = (state, props) => ({

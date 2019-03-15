@@ -285,6 +285,7 @@ DatePicker.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.string,
+	parseDate: types.func,
 	nestedField: types.string,
 	queryFormat: types.queryFormatDate,
 	react: types.react,
@@ -301,6 +302,7 @@ DatePicker.defaultProps = {
 	placeholder: 'Select Date',
 	showClear: true,
 	showFilter: true,
+	queryFormat: 'epoch_millis',
 };
 
 const mapStateToProps = (state, props) => ({
