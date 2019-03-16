@@ -112,7 +112,9 @@ class DatePicker extends Component {
 			const { value, onChange } = this.props;
 
 			if (value === undefined) {
-				this.handleDateChange('', false); // resets the day picker component
+				this.setState({
+					currentDate: '',
+				});
 			} else if (onChange) {
 				onChange('');
 			} else {
@@ -125,13 +127,17 @@ class DatePicker extends Component {
 		}
 	};
 
-	handleDayPicker = (date) => {
+	handleDayPicker = (selectedDay, _, dayPickerInput) => {
 		const { value, onChange } = this.props;
 
 		if (value === undefined) {
-			this.handleDateChange(date || '');
+			if (dayPickerInput.getInput().value.length === 10) {
+				this.handleDateChange(selectedDay || '');
+			}
 		} else if (onChange) {
-			onChange(date || '');
+			if (dayPickerInput.getInput().value.length === 10) {
+				onChange(selectedDay || '');
+			}
 		} else {
 			// this will trigger a remount on the date component
 			// since DayPickerInput doesn't respect the controlled behavior setting on its own
@@ -235,9 +241,6 @@ class DatePicker extends Component {
 						key={this.state.key}
 						clickUnselectsDay={this.props.clickUnselectsDay}
 						onDayChange={this.handleDayPicker}
-						inputProps={{
-							readOnly: true,
-						}}
 						classNames={{
 							container:
 								getClassName(this.props.innerClass, 'daypicker-container')

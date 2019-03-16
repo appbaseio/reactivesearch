@@ -193,6 +193,10 @@ class DateRange extends Component {
 		this.endDateRef = ref;
 	};
 
+	getStartDateRef = (ref) => {
+		this.startDateRef = ref;
+	};
+
 	clearDayPickerStart = () => {
 		if (this.state.currentDate && this.state.currentDate.start !== '') {
 			const { value, onChange } = this.props;
@@ -234,17 +238,28 @@ class DateRange extends Component {
 		const { currentDate } = this.state;
 		const end = currentDate ? currentDate.end : '';
 		const { value, onChange } = this.props;
-
 		if (value === undefined) {
-			this.handleDateChange({
-				start: date,
-				end,
-			});
+			if (this.startDateRef.getInput().value.length === 10) {
+				this.handleDateChange({
+					start: date,
+					end,
+				});
+				// focus the end date DayPicker if its empty
+				if (this.props.autoFocusEnd && autoFocus) {
+					this.endDateRef.getInput().focus();
+				}
+			}
 		} else if (onChange) {
-			onChange({
-				start: date,
-				end,
-			});
+			if (this.startDateRef.getInput().value.length === 10) {
+				onChange({
+					start: date,
+					end,
+				});
+				// focus the end date DayPicker if its empty
+				if (this.props.autoFocusEnd && autoFocus) {
+					this.endDateRef.getInput().focus();
+				}
+			}
 		} else {
 			// this will trigger a remount on the date component
 			// since DayPickerInput doesn't respect the controlled behavior setting on its own
@@ -252,28 +267,28 @@ class DateRange extends Component {
 				startKey: state.startKey === 'on-start' ? 'off-start' : 'on-start',
 			}));
 		}
-		// focus the end date DayPicker if its empty
-		if (this.props.autoFocusEnd && autoFocus) {
-			// TODO: replace with a single date component in v2.1.0
-			window.setTimeout(() => this.endDateRef.getInput().focus(), 0);
-		}
 	};
 
-	handleEndDate = (date) => {
+	handleEndDate = (selectedDay) => {
 		const { currentDate } = this.state;
 		const { value, onChange } = this.props;
 		const start = currentDate ? currentDate.start : '';
 
 		if (value === undefined) {
-			this.handleDateChange({
-				start,
-				end: date,
-			});
+			if (this.endDateRef.getInput().value.length === 10) {
+				this.handleDayMouseEnter(selectedDay);
+				this.handleDateChange({
+					start: currentDate ? currentDate.start : '',
+					end: selectedDay,
+				});
+			}
 		} else if (onChange) {
-			onChange({
-				start,
-				end: date,
-			});
+			if (this.endDateRef.getInput().value.length === 10) {
+				onChange({
+					start,
+					end: selectedDay,
+				});
+			}
 		} else {
 			// this will trigger a remount on the date component
 			// since DayPickerInput doesn't respect the controlled behavior setting on its own
@@ -384,6 +399,7 @@ class DateRange extends Component {
 						}}
 					>
 						<DayPickerInput
+							ref={this.getStartDateRef}
 							showOverlay={this.props.focused}
 							formatDate={this.formatInputDate}
 							value={start}
@@ -399,9 +415,6 @@ class DateRange extends Component {
 								modifiers,
 							}}
 							onDayChange={this.handleStartDate}
-							inputProps={{
-								readOnly: true,
-							}}
 							classNames={{
 								container:
 									getClassName(this.props.innerClass, 'daypicker-container')
@@ -454,9 +467,6 @@ class DateRange extends Component {
 								modifiers,
 							}}
 							onDayChange={this.handleEndDate}
-							inputProps={{
-								readOnly: true,
-							}}
 							classNames={{
 								container:
 									getClassName(this.props.innerClass, 'daypicker-container')
