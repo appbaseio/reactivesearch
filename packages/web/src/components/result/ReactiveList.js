@@ -498,9 +498,9 @@ class ReactiveList extends Component {
 	};
 
 	renderNoResults = () => (
-		<p className={getClassName(this.props.innerClass, 'noResults') || null}>
+		<div className={getClassName(this.props.innerClass, 'noResults') || null}>
 			{this.props.renderNoResults()}
-		</p>
+		</div>
 	);
 
 	handleSortChange = (e) => {
