@@ -5,7 +5,9 @@ import * as types from '../../types';
 export interface NumberBoxProps extends CommonProps {
 	data?: types.dataNumberBox;
 	dataField?: string;
-	defaultSelected?: number;
+	defaultValue?: number;
+	onChange?: (...args: any[]) => any;
+	value?: number;
 	innerClass?: types.style;
 	labelPosition?: types.labelPosition;
 	nestedField?: string;
