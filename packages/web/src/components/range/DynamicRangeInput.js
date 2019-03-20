@@ -39,7 +39,8 @@ class DynamicRangeInput extends Component {
 
 	handleInputChange = (e) => {
 		const { name, value } = e.target;
-		if (Number.isNaN(value)) {
+		const val = this.props.inputUnformat ? this.props.inputUnformat(value) : value;
+		if (Number.isNaN(val)) {
 			// set errors for invalid inputs
 			if (name === 'start') {
 				this.setState({
@@ -64,7 +65,7 @@ class DynamicRangeInput extends Component {
 			}
 		}
 		this.setState({
-			[name]: value,
+			[name]: val,
 		});
 	};
 
@@ -116,8 +117,8 @@ class DynamicRangeInput extends Component {
 							name="start"
 							type="number"
 							onChange={this.handleInputChange}
-							value={start}
 							step={this.props.stepValue}
+							value={this.props.inputFormat ? this.props.inputFormat(start) : start}
 							alert={!this.state.isStartValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
@@ -136,8 +137,8 @@ class DynamicRangeInput extends Component {
 							name="end"
 							type="number"
 							onChange={this.handleInputChange}
-							value={end}
 							step={this.props.stepValue}
+							value={this.props.inputFormat ? this.props.inputFormat(end) : end}
 							alert={!this.state.isEndValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
