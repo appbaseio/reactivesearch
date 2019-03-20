@@ -111,6 +111,7 @@ class DynamicRangeInput extends Component {
 				/>
 				<Flex className={getClassName(this.props.innerClass, 'input-container') || null}>
 					<Flex direction="column" flex={2}>
+						{this.props.prefix ? this.props.prefix : null}
 						<Input
 							name="start"
 							type="number"
@@ -123,6 +124,7 @@ class DynamicRangeInput extends Component {
 							innerRef={this.startInputRef}
 							id="startInput"
 						/>
+						{this.props.suffix ? this.props.suffix : null}
 						{!this.state.isStartValid && (
 							<Content alert>Input range is invalid</Content>
 						)}
@@ -131,6 +133,7 @@ class DynamicRangeInput extends Component {
 						-
 					</Flex>
 					<Flex direction="column" flex={2}>
+						{this.props.prefix ? this.props.prefix : null}
 						<Input
 							name="end"
 							type="number"
@@ -143,6 +146,7 @@ class DynamicRangeInput extends Component {
 							innerRef={this.endInputRef}
 							id="endInput"
 						/>
+						{this.props.suffix ? this.props.suffix : null}
 						{!this.state.isEndValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
 				</Flex>
