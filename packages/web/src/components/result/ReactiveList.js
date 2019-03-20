@@ -203,7 +203,7 @@ class ReactiveList extends Component {
 				if (nextProps.onPageChange) {
 					nextProps.onPageChange(this.state.currentPage + 1, totalPages);
 				} else {
-					this.domNode.scrollTo(0, 0);
+					this.domNode.scrollTop = 0;
 				}
 			}
 
@@ -224,7 +224,7 @@ class ReactiveList extends Component {
 				) {
 					if (nextProps.hits.length < this.props.hits.length) {
 						// query has changed
-						this.domNode.scrollTo(0, 0);
+						this.domNode.scrollTop = 0;
 						this.setState({
 							from: 0,
 						});
