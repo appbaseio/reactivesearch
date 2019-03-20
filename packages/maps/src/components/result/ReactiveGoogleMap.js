@@ -153,8 +153,8 @@ class ReactiveGoogleMap extends Component {
 					markerProps.zIndex = window.google.maps.Marker.MAX_ZINDEX + 1;
 				}
 
-				if (params.onData) {
-					const data = params.onData(item);
+				if (params.renderData) {
+					const data = params.renderData(item);
 
 					if ('label' in data) {
 						return (
@@ -255,6 +255,7 @@ class ReactiveGoogleMap extends Component {
 	};
 
 	renderMap = (params) => {
+		if (typeof window === 'undefined') return null;
 		const markers = this.getMarkers(params);
 
 		const style = {

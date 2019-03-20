@@ -1,29 +1,39 @@
 import React, { Component } from 'react';
 import ReactDOMServer from 'react-dom/server';
-
-import {
-	Map as OpenStreetMap,
-	TileLayer as OpenStreetLayer,
-	Marker as OpenStreetMaker,
-	Popup as OpenStreetPopup,
-} from 'react-leaflet';
-import { Icon, DivIcon } from 'leaflet';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { MapPin, mapPinWrapper } from './addons/styles/MapPin';
 
 import ReactiveMap from './ReactiveMap';
 
+let OpenStreetMap;
+let OpenStreetLayer;
+let OpenStreetMaker;
+let OpenStreetPopup;
+let Icon;
+let DivIcon;
+
 class ReactiveOpenStreetMap extends Component {
+	componentDidMount() {
+		/* eslint-disable */
+		OpenStreetMap = require('react-leaflet').Map;
+		OpenStreetLayer = require('react-leaflet').TileLayer;
+		OpenStreetMaker = require('react-leaflet').Marker;
+		OpenStreetPopup = require('react-leaflet').Popup;
+		Icon = require('leaflet').Icon;
+		DivIcon = require('leaflet').DivIcon;
+		this.forceUpdate();
+	}
+
 	getMarkers = ({
 		showMarkers,
-		onData,
+		renderData,
 		defaultPin,
 		onPopoverClick,
 		resultsToRender,
 		getPosition,
 	}) => {
 		if (showMarkers) {
-			const markers = resultsToRender.map((item) => {
+			const markers = resultsToRender.map(item => {
 				const position = getPosition(item);
 				const openStreetMarkerProps = {
 					riseOnHover: true,
@@ -37,8 +47,8 @@ class ReactiveOpenStreetMap extends Component {
 					},
 				};
 
-				if (onData) {
-					const data = onData(item);
+				if (renderData) {
+					const data = renderData(item);
 
 					if ('label' in data) {
 						openStreetMarkerProps.icon = new DivIcon({
@@ -136,7 +146,12 @@ class ReactiveOpenStreetMap extends Component {
 		return null;
 	};
 
-	renderMap = (params) => {
+	renderMap = params => {
+		// we check for `OpenStreetMap` here instead of `window`
+		// because leaflet and react-leaflet are incompatible with SSR setup
+		// hence the leaflet modules are imported on mount and the component
+		// is force-rendered to avail the map module
+		if (typeof OpenStreetMap === 'undefined') return null;
 		const markers = this.getMarkers(params);
 
 		const style = {
