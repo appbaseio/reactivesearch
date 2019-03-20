@@ -103,8 +103,11 @@ class DynamicRangeInput extends Component {
 						end: isEndValid ? Number(end) : this.props.range.end,
 					})}
 					onDrag={([newStart, newEnd]) => {
-						this.startInputRef.current.value = newStart;
-						this.endInputRef.current.value = newEnd;
+						const { inputFormat } = this.props;
+						const newStartInput = inputFormat ? inputFormat(newStart) : newStart;
+						const newEndInput = inputFormat ? inputFormat(newEnd) : newEnd;
+						this.startInputRef.current.value = newStartInput;
+						this.endInputRef.current.value = newEndInput;
 					}}
 					onValueChange={this.handleSlider}
 					className={getClassName(this.props.innerClass, 'slider-container') || null}
