@@ -37,6 +37,21 @@ class DynamicRangeInput extends Component {
 
 	static parseValue = DynamicRangeSlider.parseValue;
 
+	handleInputBlur = (e) => {
+		const { name, value } = e.target;
+		const val = Number(this.props.inputUnformat ? this.props.inputUnformat(value) : value);
+		if (name === 'start' && val > this.state.end) {
+			this.setState(state => ({
+				start: state.end,
+			}));
+		}
+		if (name === 'end' && val < this.state.start) {
+			this.setState(state => ({
+				end: state.start,
+			}));
+		}
+	}
+
 	handleInputChange = (e) => {
 		const { name, value } = e.target;
 		const val = this.props.inputUnformat ? this.props.inputUnformat(value) : value;
@@ -94,6 +109,7 @@ class DynamicRangeInput extends Component {
 		const {
 			start, end, isStartValid, isEndValid,
 		} = this.state;
+
 		return (
 			<Container style={style} className={className}>
 				<DynamicRangeSlider
@@ -112,47 +128,71 @@ class DynamicRangeInput extends Component {
 					onValueChange={this.handleSlider}
 					className={getClassName(this.props.innerClass, 'slider-container') || null}
 				/>
-				<Flex className={getClassName(this.props.innerClass, 'input-container') || null}>
-					<Flex direction="column" flex={2}>
-						{this.props.prefix ? this.props.prefix : null}
-						<Input
-							name="start"
-							type="number"
-							onChange={this.handleInputChange}
-							step={this.props.stepValue}
-							value={this.props.inputFormat ? this.props.inputFormat(start) : start}
-							alert={!this.state.isStartValid}
-							className={getClassName(this.props.innerClass, 'input') || null}
-							themePreset={themePreset}
-							innerRef={this.startInputRef}
-							id="startInput"
-						/>
-						{this.props.suffix ? this.props.suffix : null}
-						{!this.state.isStartValid && (
-							<Content alert>Input range is invalid</Content>
-						)}
-					</Flex>
-					<Flex justifyContent="center" alignItems="center" flex={1}>
-						-
-					</Flex>
-					<Flex direction="column" flex={2}>
-						{this.props.prefix ? this.props.prefix : null}
-						<Input
-							name="end"
-							type="number"
-							onChange={this.handleInputChange}
-							step={this.props.stepValue}
-							value={this.props.inputFormat ? this.props.inputFormat(end) : end}
-							alert={!this.state.isEndValid}
-							className={getClassName(this.props.innerClass, 'input') || null}
-							themePreset={themePreset}
-							innerRef={this.endInputRef}
-							id="endInput"
-						/>
-						{this.props.suffix ? this.props.suffix : null}
-						{!this.state.isEndValid && <Content alert>Input range is invalid</Content>}
-					</Flex>
-				</Flex>
+				{
+					this.props.inputs ? this.props.inputs({
+						innerClass: {
+							'input-container': getClassName(this.props.innerClass, 'input-container'),
+							input: getClassName(this.props.innerClass, 'input'),
+						},
+						value: {
+							start,
+							end,
+						},
+						inputFormat: this.props.inputFormat,
+						prefix: this.props.prefix,
+						suffix: this.props.suffix,
+						onChange: this.handleInputChange,
+						onBlur: this.handleInputBlur,
+						themePreset,
+						alert: {
+							start: this.state.isStartValid,
+							end: this.state.isEndValid,
+						},
+						innerRef: {
+							start: this.startInputRef,
+							end: this.endInputRef,
+						},
+					}) : (
+						<Flex className={getClassName(this.props.innerClass, 'input-container') || null}>
+							<Flex flex={2}>
+								{this.props.prefix ? this.props.prefix : null}
+								<Input
+									name="start"
+									type="number"
+									onChange={this.handleInputChange}
+									onBlur={this.handleInputBlur}
+									value={this.props.inputFormat ? this.props.inputFormat(start) : start}
+									alert={!this.state.isStartValid}
+									className={getClassName(this.props.innerClass, 'input') || null}
+									themePreset={themePreset}
+									innerRef={this.startInputRef}
+									id="startInput"
+								/>
+								{this.props.suffix ? this.props.suffix : null}
+								{!this.state.isStartValid && (
+									<Content alert>Input range is invalid</Content>
+								)}
+							</Flex>
+							<Flex alignItems="end" justifyContent="flex-end" flex={2}>
+								{this.props.prefix ? this.props.prefix : null}
+								<Input
+									name="end"
+									type="number"
+									onChange={this.handleInputChange}
+									onBlur={this.handleInputBlur}
+									value={this.props.inputFormat ? this.props.inputFormat(end) : end}
+									alert={!this.state.isEndValid}
+									className={getClassName(this.props.innerClass, 'input') || null}
+									themePreset={themePreset}
+									innerRef={this.endInputRef}
+									id="endInput"
+								/>
+								{this.props.suffix ? this.props.suffix : null}
+								{!this.state.isEndValid && <Content alert>Input range is invalid</Content>}
+							</Flex>
+						</Flex>
+					)
+				}
 			</Container>
 		);
 	}
@@ -163,6 +203,11 @@ DynamicRangeInput.propTypes = {
 	defaultSelected: types.range,
 	innerClass: types.style,
 	onValueChange: types.func,
+	inputs: types.func,
+	prefix: types.string,
+	suffix: types.string,
+	inputFormat: types.func,
+	inputUnformat: types.func,
 	range: types.range,
 	stepValue: types.number,
 	style: types.style,

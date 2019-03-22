@@ -37,8 +37,23 @@ class RangeInput extends Component {
 
 	static parseValue = RangeSlider.parseValue;
 
+	handleInputBlur = (e) => {
+		const { name, value } = e.target;
+		const val = Number(value);
+		if (name === 'start' && val > this.state.end) {
+			this.setState(state => ({
+				start: state.end,
+			}));
+		}
+		if (name === 'end' && val < this.state.start) {
+			this.setState(state => ({
+				end: state.start,
+			}));
+		}
+	}
 	handleInputChange = (e) => {
 		const { name, value } = e.target;
+
 		if (Number.isNaN(value)) {
 			// set errors for invalid inputs
 			if (name === 'start') {
@@ -109,6 +124,7 @@ class RangeInput extends Component {
 							name="start"
 							type="number"
 							onChange={this.handleInputChange}
+							onBlur={this.handleInputBlur}
 							value={this.state.start}
 							step={this.props.stepValue}
 							alert={!this.state.isStartValid}
@@ -129,6 +145,7 @@ class RangeInput extends Component {
 							name="end"
 							type="number"
 							onChange={this.handleInputChange}
+							onBlur={this.handleInputBlur}
 							value={this.state.end}
 							step={this.props.stepValue}
 							alert={!this.state.isEndValid}
