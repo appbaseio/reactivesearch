@@ -112,15 +112,19 @@ class RangeInput extends Component {
 		const {
 			className, style, themePreset, ...rest
 		} = this.props;
+
+		const value = {
+			start: this.props.onChange ? Number(this.props.value.start) : Number(this.state.start),
+			end: this.props.onChange ? Number(this.props.value.end) : Number(this.state.end),
+		};
+
 		return (
 			<Container style={style} className={className}>
 				<RangeSlider
 					{...rest}
 					value={{
-						start: this.state.isStartValid
-							? Number(this.state.start)
-							: this.props.range.start,
-						end: this.state.isEndValid ? Number(this.state.end) : this.props.range.end,
+						start: this.state.isStartValid ? value.start : this.props.range.start,
+						end: this.state.isEndValid ? value.end : this.props.range.end,
 					}}
 					onChange={this.handleSliderChange}
 					className={getClassName(this.props.innerClass, 'slider-container') || null}
@@ -131,7 +135,7 @@ class RangeInput extends Component {
 							name="start"
 							type="number"
 							onChange={this.handleInputChange}
-							value={this.state.start}
+							value={value.start}
 							step={this.props.stepValue}
 							alert={!this.state.isStartValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
@@ -150,7 +154,7 @@ class RangeInput extends Component {
 							name="end"
 							type="number"
 							onChange={this.handleInputChange}
-							value={this.state.end}
+							value={value.end}
 							step={this.props.stepValue}
 							alert={!this.state.isEndValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
