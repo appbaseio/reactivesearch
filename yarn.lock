@@ -20,30 +20,30 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivecore@^7.1.0", "@appbaseio/reactivecore@^7.4.0":
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-7.5.0.tgz#9f71deb993437735dfe694abe5e264a026f6a4f2"
-  integrity sha512-ku4gnZ9p3+Yv8AdciufoERwsNVpJQLWg/ofGY+tlzmBOMPvjfUkjwlJY/DL6yrbQfV9/N/CwT13sLl8JX4zwSg==
+"@appbaseio/reactivecore@^8.0.0":
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-8.1.0.tgz#f95b08099c93ab3401fa591edaad4be7427866ff"
+  integrity sha512-FtmXTtHDRbyyAAeIhofGE6zB7jMhHnQudZDIgcBohfyHwdurRjPVZ1t9h9VDDOkms2r0beC3yZ/SPliA000EFA==
   dependencies:
     prop-types "^15.6.0"
     redux "^4.0.0"
     redux-thunk "^2.3.0"
 
-"@appbaseio/reactivesearch-vue@^1.0.0-beta.7":
-  version "1.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.0.0-beta.7.tgz#062d4a961ebb142ad0d7304cd5c9462f6175737c"
-  integrity sha512-YVqEVU08fZPKcRO5muvhf/oobUbBcANmQzq4NVQIxmvL0VsC2zLCVhI7yLaFF+YjLesonYFsB+a38r8KC4Wi7Q==
+"@appbaseio/reactivesearch-vue@^1.0.0-beta.9":
+  version "1.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.0.0-beta.9.tgz#02fd09947a15c817c6558e19b4fe948b68c49cb7"
+  integrity sha512-8tEl53bMsHpHSZIEkqmx6ycHTCx+i2fmHezMgeDFZ8f+Yap2NFxyKZ8nbkGvCLfWo4nE4623O7GVoFERV9fH5g==
   dependencies:
-    "@appbaseio/reactivecore" "^7.4.0"
+    "@appbaseio/reactivecore" "^8.0.0"
     appbase-js "^4.0.2-beta.2"
     babel-helper-vue-jsx-merge-props "^2.0.3"
     compute-scroll-into-view "^1.0.11"
-    emotion "^9.2.12"
+    emotion "9.2.12"
     polished "^2.2.0"
     redux "^4.0.0"
     url-search-params "^1.1.0"
     vue "^2.5.17"
-    vue-emotion "^0.4.2"
+    vue-emotion "0.4.2"
     vue-no-ssr "^1.1.0"
     vue-slider-component "^2.8.2"
     vue-types "^1.3.3"
@@ -7170,7 +7170,7 @@ emotion@*:
     babel-plugin-emotion "^10.0.4"
     create-emotion "^10.0.4"
 
-emotion@^9.0.0, emotion@^9.1.1, emotion@^9.2.12:
+emotion@9.2.12, emotion@^9.0.0, emotion@^9.1.1, emotion@^9.2.12:
   version "9.2.12"
   resolved "https://registry.npmjs.org/emotion/-/emotion-9.2.12.tgz#53925aaa005614e65c6e43db8243c843574d1ea9"
   integrity sha512-hcx7jppaI8VoXxIWEhxpDW7I+B4kq9RNzQLmsrF6LY8BGKqe2N+gFAQr0EfuFucFlPs2A9HM4+xNj4NeqEWIOQ==
@@ -19403,7 +19403,7 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vue-emotion@^0.4.2:
+vue-emotion@0.4.2, vue-emotion@^0.4.2:
   version "0.4.2"
   resolved "https://registry.npmjs.org/vue-emotion/-/vue-emotion-0.4.2.tgz#df97359aadd49cc476eb23ba44b7d2962a669ced"
   integrity sha1-35c1mq3UnMR26yO6RLfSlipmnO0=
