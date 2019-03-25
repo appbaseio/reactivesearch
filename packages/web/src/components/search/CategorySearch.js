@@ -31,7 +31,7 @@ import CancelSvg from '../shared/CancelSvg';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
-import { connect, isFunction } from '../../utils';
+import { connect, isFunction, getComponent, hasCustomRenderer } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 
@@ -318,7 +318,7 @@ class CategorySearch extends Component {
 	};
 
 	onSuggestions = (searchSuggestions) => {
-		const { renderSuggestion } = this.props;
+		const { parseSuggestion } = this.props;
 		const fields = Array.isArray(this.props.dataField)
 			? this.props.dataField
 			: [this.props.dataField];
@@ -328,8 +328,8 @@ class CategorySearch extends Component {
 			searchSuggestions,
 			this.state.currentValue.toLowerCase(),
 		);
-		if (renderSuggestion) {
-			return parsedSuggestions.map(suggestion => renderSuggestion(suggestion));
+		if (parseSuggestion) {
+			return parsedSuggestions.map(suggestion => parseSuggestion(suggestion));
 		}
 		return parsedSuggestions;
 	};
@@ -649,19 +649,38 @@ class CategorySearch extends Component {
 		return null;
 	};
 
-	render() {
-		let suggestionsList = [];
-		let finalSuggestionsList = [];
+	getComponent = (downshiftProps = {}) => {
+		const { error, isLoading } = this.props;
 		const { currentValue } = this.state;
-		const {
-			theme,
-			themePreset,
-			renderAllSuggestions,
-			categories, // defaults to empty array
-		} = this.props;
+		const data = {
+			error,
+			loading: isLoading,
+			downshiftProps,
+			data: this.parsedSuggestions,
+			value: currentValue,
+			suggestions: this.state.suggestions,
+			rawSuggestions: this.props.suggestions || [],
+			categories: this.filteredCategories,
+			rawCategories: this.props.categories,
+		};
+		return getComponent(data, this.props);
+	}
+
+	get hasCustomRenderer() {
+		return hasCustomRenderer(this.props);
+	}
+
+	get filteredCategories() {
+		const { categories } = this.props;
+		return categories.filter(category => Boolean(category.key));
+	}
+
+	get parsedSuggestions() {
+		let finalSuggestionsList = [];
+		let suggestionsList = [];
 
 		// filter out empty categories
-		const filteredCategories = categories.filter(category => Boolean(category.key));
+		const filteredCategories = this.filteredCategories;
 
 		if (
 			!this.state.currentValue
@@ -703,7 +722,16 @@ class CategorySearch extends Component {
 			}
 			finalSuggestionsList = [...categorySuggestions, ...suggestionsList];
 		}
+		return finalSuggestionsList;
+	}
 
+	render() {
+		const { currentValue } = this.state;
+		const {
+			theme,
+			themePreset,
+		} = this.props;
+		const finalSuggestionsList = this.parsedSuggestions;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -719,7 +747,7 @@ class CategorySearch extends Component {
 						isOpen={this.state.isOpen}
 						itemToString={i => i}
 						render={({
-							getInputProps, getItemProps, isOpen, highlightedIndex,
+							getInputProps, getItemProps, isOpen, highlightedIndex, ...rest
 						}) => (
 							<div className={suggestionsContainer}>
 								<Input
@@ -749,17 +777,15 @@ class CategorySearch extends Component {
 								{this.renderIcons()}
 								{this.renderLoader()}
 								{this.renderError()}
-								{renderAllSuggestions
-									&& renderAllSuggestions({
-										currentValue: this.state.currentValue,
-										isOpen,
+								{this.hasCustomRenderer
+									&& this.getComponent({
+										getInputProps,
 										getItemProps,
+										isOpen,
 										highlightedIndex,
-										suggestions: this.props.suggestions,
-										categories: filteredCategories,
-										parsedSuggestions: suggestionsList,
+										...rest,
 									})}
-								{!renderAllSuggestions && isOpen && finalSuggestionsList.length ? (
+								{!this.hasCustomRenderer && isOpen && finalSuggestionsList.length ? (
 									<ul
 										className={`${suggestions(
 											themePreset,
@@ -878,8 +904,7 @@ CategorySearch.propTypes = {
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
 	renderError: types.title,
-	renderSuggestion: types.func,
-	renderAllSuggestions: types.func,
+	parseSuggestion: types.func,
 	renderNoSuggestion: types.title,
 	showClear: types.bool,
 	showFilter: types.bool,

@@ -29,7 +29,7 @@ import Flex from '../../styles/Flex';
 import { resultStats, sortOptions } from '../../styles/results';
 import { container } from '../../styles/Card';
 import { container as listContainer } from '../../styles/ListItem';
-import { connect, isFunction } from '../../utils';
+import { connect, isFunction, getComponent, hasCustomRenderer } from '../../utils';
 
 class ReactiveList extends Component {
 	static ResultsCardWrapper = ({ children, ...rest }) => (
@@ -619,9 +619,7 @@ class ReactiveList extends Component {
 		};
 	}
 	getComponent() {
-		const {
-			render, children, error, isLoading,
-		} = this.props;
+		const { error, isLoading } = this.props;
 		const data = {
 			error,
 			loading: isLoading,
@@ -629,15 +627,7 @@ class ReactiveList extends Component {
 			triggerAnalytics: this.triggerClickAnalytics,
 			...this.getData(),
 		};
-		// Render function as child
-		if (isFunction(children)) {
-			return children(data);
-		}
-		// Render function as render prop
-		if (isFunction(render)) {
-			return render(data);
-		}
-		return null;
+		return getComponent(data, this.props);
 	}
 
 	render() {
@@ -674,7 +664,7 @@ class ReactiveList extends Component {
 							fragmentName={this.props.componentId}
 						/>
 					) : null}
-				{this.getComponent() ? this.getComponent() : (
+				{hasCustomRenderer(this.props) ? this.getComponent() : (
 					<div
 						className={`${this.props.listClass} ${getClassName(
 							this.props.innerClass,

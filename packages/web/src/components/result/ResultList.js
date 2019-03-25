@@ -16,7 +16,7 @@ class ResultList extends Component {
 		} = this.props;
 		let hasImage = false;
 		React.Children.forEach(this.props.children, (o) => {
-			if (!hasImage && o.type.name === ResultListImage.name) {
+			if (!hasImage && o.type && o.type.name === ResultListImage.name) {
 				hasImage = true;
 			}
 		});
