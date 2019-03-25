@@ -30,7 +30,7 @@ class Main extends Component {
 							componentId="SearchResult"
 							dataField="original_title.raw"
 							size={10}
-							renderData={this.booksCard}
+							renderItem={this.booksCard}
 							pagination
 							URLParams
 							react={{

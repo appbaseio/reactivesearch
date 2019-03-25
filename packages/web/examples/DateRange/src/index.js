@@ -71,7 +71,7 @@ class Main extends Component {
 							dataField="name"
 							from={0}
 							size={40}
-							renderData={this.renderData}
+							renderItem={this.renderData}
 							showPagination
 							react={{
 								and: ['DateSensor'],

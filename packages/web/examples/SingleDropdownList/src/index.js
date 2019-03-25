@@ -34,7 +34,7 @@ class Main extends Component {
 							className="result-list-container"
 							from={0}
 							size={5}
-							renderData={this.booksReactiveList}
+							renderItem={this.booksReactiveList}
 							react={{
 								and: ['BookSensor'],
 							}}
