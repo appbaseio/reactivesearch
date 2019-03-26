@@ -26,7 +26,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/Dropdown';
-import { connect, isFunction } from '../../utils';
+import { connect, isFunction, getComponent, hasCustomRenderer, isEvent } from '../../utils';
 
 class SingleDropdownList extends Component {
 	constructor(props) {
@@ -258,14 +258,37 @@ class SingleDropdownList extends Component {
 		this.updateQueryOptions(this.props, true);
 	};
 
-	handleChange = (item) => {
+	handleChange = (e) => {
 		const { value, onChange } = this.props;
-		if (value === undefined) {
-			this.setValue(item);
-		} else if (onChange) {
-			onChange(item);
+		if (isEvent(e)) {
+			const { value: listValue } = e.target;
+			if (value === undefined) {
+				this.setValue(listValue);
+			} else if (onChange) {
+				onChange(listValue);
+			}
+		} else {
+			this.setValue(e);
 		}
 	};
+
+	get hasCustomRenderer() {
+		return hasCustomRenderer(this.props);
+	}
+
+	getComponent = (items, downshiftProps) => {
+		const { error, isLoading } = this.props;
+		const { currentValue } = this.state;
+		const data = {
+			error,
+			loading: isLoading,
+			value: currentValue,
+			data: items || [],
+			handleChange: this.handleChange,
+			downshiftProps,
+		};
+		return getComponent(data, this.props);
+	}
 
 	render() {
 		const {
@@ -282,7 +305,7 @@ class SingleDropdownList extends Component {
 			return isFunction(renderError) ? renderError(error) : renderError;
 		}
 
-		if (this.state.options.length === 0) {
+		if (!this.hasCustomRenderer && this.state.options.length === 0) {
 			return null;
 		}
 
@@ -316,6 +339,8 @@ class SingleDropdownList extends Component {
 					showCount={this.props.showCount}
 					themePreset={this.props.themePreset}
 					renderItem={this.props.renderItem}
+					hasCustomRenderer={this.hasCustomRenderer}
+					customRenderer={this.getComponent}
 					renderNoResults={this.props.renderNoResults}
 					showSearch={this.props.showSearch}
 					transformData={this.props.transformData}
@@ -344,6 +369,7 @@ SingleDropdownList.propTypes = {
 	selectedValue: types.selectedValue,
 	// component props
 	beforeValueChange: types.func,
+	children: types.func,
 	className: types.string,
 	componentId: types.stringRequired,
 	customQuery: types.func,
@@ -362,6 +388,7 @@ SingleDropdownList.propTypes = {
 	onError: types.func,
 	placeholder: types.string,
 	react: types.react,
+	render: types.func,
 	renderItem: types.func,
 	renderError: types.title,
 	renderNoResults: types.func,

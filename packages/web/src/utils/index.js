@@ -52,3 +52,6 @@ export const hasCustomRenderer = (props = {}) => {
 	const { render, children } = props;
 	return isFunction(children) || isFunction(render);
 };
+
+export const isEvent = candidate =>
+	!!(candidate && candidate.stopPropagation && candidate.preventDefault);

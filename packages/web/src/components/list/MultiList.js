@@ -29,7 +29,7 @@ import Input from '../../styles/Input';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect, isFunction } from '../../utils';
+import { connect, isFunction, getComponent, hasCustomRenderer, isEvent } from '../../utils';
 
 class MultiList extends Component {
 	constructor(props) {
@@ -420,13 +420,55 @@ class MultiList extends Component {
 
 	handleClick = (e) => {
 		const { value, onChange } = this.props;
-		const { value: listValue } = e.target;
-		if (value === undefined) {
-			this.setValue(listValue);
-		} else if (onChange) {
-			onChange(listValue);
+		if (isEvent(e)) {
+			const { value: listValue } = e.target;
+			if (value === undefined) {
+				this.setValue(listValue);
+			} else if (onChange) {
+				onChange(listValue);
+			}
+		} else {
+			this.setValue(e);
 		}
 	};
+
+	get hasCustomRenderer() {
+		return hasCustomRenderer(this.props);
+	}
+
+	get listItems() {
+		let { options: itemsToRender } = this.state;
+
+		if (this.props.transformData) {
+			itemsToRender = this.props.transformData(itemsToRender);
+		}
+
+		const listItems = itemsToRender.filter((item) => {
+			if (String(item.key).length) {
+				if (this.props.showSearch && this.state.searchTerm) {
+					return String(item.key)
+						.toLowerCase()
+						.includes(this.state.searchTerm.toLowerCase());
+				}
+				return true;
+			}
+			return false;
+		});
+		return listItems;
+	}
+
+	getComponent() {
+		const { error, isLoading } = this.props;
+		const { currentValue } = this.state;
+		const data = {
+			error,
+			loading: isLoading,
+			value: currentValue,
+			data: this.listItems,
+			handleChange: this.handleClick,
+		};
+		return getComponent(data, this.props);
+	}
 
 	render() {
 		const {
@@ -447,27 +489,11 @@ class MultiList extends Component {
 			return isFunction(renderError) ? renderError(error) : renderError;
 		}
 
-		if (this.state.options.length === 0) {
+		if (!this.hasCustomRenderer && this.state.options.length === 0) {
 			return null;
 		}
 
-		let { options: itemsToRender } = this.state;
-
-		if (this.props.transformData) {
-			itemsToRender = this.props.transformData(itemsToRender);
-		}
-
-		const listItems = itemsToRender.filter((item) => {
-			if (String(item.key).length) {
-				if (this.props.showSearch && this.state.searchTerm) {
-					return String(item.key)
-						.toLowerCase()
-						.includes(this.state.searchTerm.toLowerCase());
-				}
-				return true;
-			}
-			return false;
-		});
+		const listItems = this.listItems;
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
@@ -477,87 +503,90 @@ class MultiList extends Component {
 					</Title>
 				)}
 				{this.renderSearch()}
-				<UL className={getClassName(this.props.innerClass, 'list') || null}>
-					{selectAllLabel ? (
-						<li
-							key={selectAllLabel}
-							className={`${this.state.currentValue[selectAllLabel] ? 'active' : ''}`}
-						>
-							<Checkbox
-								className={getClassName(this.props.innerClass, 'checkbox') || null}
-								id={`${this.props.componentId}-${selectAllLabel}`}
-								name={selectAllLabel}
-								value={selectAllLabel}
-								onChange={this.handleClick}
-								checked={!!this.state.currentValue[selectAllLabel]}
-								show={this.props.showCheckbox}
-							/>
-							<label
-								className={getClassName(this.props.innerClass, 'label') || null}
-								htmlFor={`${this.props.componentId}-${selectAllLabel}`}
-							>
-								{selectAllLabel}
-							</label>
-						</li>
-					) : null}
-					{listItems.length
-						? listItems.map(item => (
-							<li
-								key={item.key}
-								className={`${
-									this.state.currentValue[item.key] ? 'active' : ''
-								}`}
-							>
-								<Checkbox
-									className={
-										getClassName(this.props.innerClass, 'checkbox') || null
-									}
-									id={`${this.props.componentId}-${item.key}`}
-									name={this.props.componentId}
-									value={item.key}
-									onChange={this.handleClick}
-									checked={!!this.state.currentValue[item.key]}
-									show={this.props.showCheckbox}
-								/>
-								<label
-									className={
-										getClassName(this.props.innerClass, 'label') || null
-									}
-									htmlFor={`${this.props.componentId}-${item.key}`}
+				{
+					this.hasCustomRenderer ? this.getComponent() : (
+						<UL className={getClassName(this.props.innerClass, 'list') || null}>
+							{selectAllLabel ? (
+								<li
+									key={selectAllLabel}
+									className={`${this.state.currentValue[selectAllLabel] ? 'active' : ''}`}
 								>
-									{renderItem ? (
-										renderItem(
-											item.key,
-											item.doc_count,
-											!!this.state.currentValue[item.key],
-										)
-									) : (
-										<span>
-											<span>{item.key}</span>
-											{this.props.showCount && (
-												<span
-													className={
-														getClassName(
-															this.props.innerClass,
-															'count',
-														) || null
-													}
-												>
-													{item.doc_count}
+									<Checkbox
+										className={getClassName(this.props.innerClass, 'checkbox') || null}
+										id={`${this.props.componentId}-${selectAllLabel}`}
+										name={selectAllLabel}
+										value={selectAllLabel}
+										onChange={this.handleClick}
+										checked={!!this.state.currentValue[selectAllLabel]}
+										show={this.props.showCheckbox}
+									/>
+									<label
+										className={getClassName(this.props.innerClass, 'label') || null}
+										htmlFor={`${this.props.componentId}-${selectAllLabel}`}
+									>
+										{selectAllLabel}
+									</label>
+								</li>
+							) : null}
+							{listItems.length
+								? listItems.map(item => (
+									<li
+										key={item.key}
+										className={`${
+											this.state.currentValue[item.key] ? 'active' : ''
+										}`}
+									>
+										<Checkbox
+											className={
+												getClassName(this.props.innerClass, 'checkbox') || null
+											}
+											id={`${this.props.componentId}-${item.key}`}
+											name={this.props.componentId}
+											value={item.key}
+											onChange={this.handleClick}
+											checked={!!this.state.currentValue[item.key]}
+											show={this.props.showCheckbox}
+										/>
+										<label
+											className={
+												getClassName(this.props.innerClass, 'label') || null
+											}
+											htmlFor={`${this.props.componentId}-${item.key}`}
+										>
+											{renderItem ? (
+												renderItem(
+													item.key,
+													item.doc_count,
+													!!this.state.currentValue[item.key],
+												)
+											) : (
+												<span>
+													<span>{item.key}</span>
+													{this.props.showCount && (
+														<span
+															className={
+																getClassName(
+																	this.props.innerClass,
+																	'count',
+																) || null
+															}
+														>
+															{item.doc_count}
+														</span>
+													)}
 												</span>
 											)}
-										</span>
-									)}
-								</label>
-							</li>
-						)) // prettier-ignore
-						: this.props.renderNoResults && this.props.renderNoResults()}
-					{showLoadMore && !isLastBucket && (
-						<div css={loadMoreContainer}>
-							<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
-						</div>
+										</label>
+									</li>
+								)) // prettier-ignore
+								: this.props.renderNoResults && this.props.renderNoResults()}
+							{showLoadMore && !isLastBucket && (
+								<div css={loadMoreContainer}>
+									<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
+								</div>
+							)}
+						</UL>
 					)}
-				</UL>
 			</Container>
 		);
 	}
@@ -575,6 +604,7 @@ MultiList.propTypes = {
 	selectedValue: types.selectedValue,
 	// component props
 	beforeValueChange: types.func,
+	children: types.func,
 	className: types.string,
 	componentId: types.stringRequired,
 	customQuery: types.func,
@@ -596,6 +626,7 @@ MultiList.propTypes = {
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
+	render: types.func,
 	renderItem: types.func,
 	renderError: types.title,
 	transformData: types.func,

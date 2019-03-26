@@ -23,7 +23,8 @@ export interface SingleDataList extends CommonProps {
 	themePreset?: types.themePreset;
 	title?: types.title;
 	showCount?: boolean;
-	renderListItem?: (...args: any[]) => any;
+	render?: (...args: any[]) => any;
+	renderItem?: (...args: any[]) => any;
 }
 
 declare const SingleDataList: React.ComponentType<SingleDataList>;
