@@ -13,11 +13,15 @@ import { connect } from '../../utils';
 class DynamicRangeInput extends Component {
 	constructor(props) {
 		super(props);
+		const defaultStart = props.defaultSelected
+			? props.defaultSelected.start
+			: props.range.start;
+		const defaultEnd = props.defaultSelected ? props.defaultSelected.end : props.range.end;
 		this.state = {
-			start: this.props.defaultSelected
-				? this.props.defaultSelected.start
-				: props.range.start,
-			end: this.props.defaultSelected ? this.props.defaultSelected.end : props.range.end,
+			start: defaultStart,
+			end: defaultEnd,
+			maskedstart: props.inputFormat ? props.inputFormat(defaultStart) : defaultStart,
+			maskedend: props.inputFormat ? props.inputFormat(defaultEnd) : defaultEnd,
 			isStartValid: true,
 			isEndValid: true,
 		};
@@ -55,6 +59,7 @@ class DynamicRangeInput extends Component {
 	handleInputChange = (e) => {
 		const { name, value } = e.target;
 		const val = this.props.inputUnformat ? this.props.inputUnformat(value) : value;
+
 		if (Number.isNaN(val)) {
 			// set errors for invalid inputs
 			if (name === 'start') {
@@ -66,6 +71,9 @@ class DynamicRangeInput extends Component {
 					isEndValid: false,
 				});
 			}
+			this.setState({
+				[`masked${name}`]: value,
+			});
 		} else {
 			// reset error states for valid inputs
 			// eslint-disable-next-line
@@ -78,13 +86,15 @@ class DynamicRangeInput extends Component {
 					isEndValid: true,
 				});
 			}
+			this.setState({
+				[name]: val,
+				[`masked${name}`]: value,
+			});
 		}
-		this.setState({
-			[name]: val,
-		});
 	};
 
 	handleSlider = ([start, end]) => {
+		const { onValueChange, inputFormat } = this.props;
 		if (
 			document.activeElement !== this.startInputRef.current
 			&& document.activeElement !== this.endInputRef.current
@@ -92,12 +102,16 @@ class DynamicRangeInput extends Component {
 			this.setState({
 				start,
 				end,
+				maskedstart: inputFormat ? inputFormat(start) : start,
+				maskedend: inputFormat ? inputFormat(end) : end,
 			});
 		}
-		if (this.props.onValueChange) {
-			this.props.onValueChange({
+		if (onValueChange) {
+			onValueChange({
 				start,
 				end,
+				maskedstart: inputFormat ? inputFormat(start) : start,
+				maskedend: inputFormat ? inputFormat(end) : end,
 			});
 		}
 	};
@@ -107,7 +121,12 @@ class DynamicRangeInput extends Component {
 			className, style, themePreset, ...rest
 		} = this.props;
 		const {
-			start, end, isStartValid, isEndValid,
+			start,
+			end,
+			isStartValid,
+			isEndValid,
+			maskedstart,
+			maskedend,
 		} = this.state;
 
 		return (
@@ -137,6 +156,8 @@ class DynamicRangeInput extends Component {
 						value: {
 							start,
 							end,
+							maskedstart,
+							maskedend,
 						},
 						inputFormat: this.props.inputFormat,
 						prefix: this.props.prefix,
