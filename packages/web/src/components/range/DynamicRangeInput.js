@@ -43,17 +43,23 @@ class DynamicRangeInput extends Component {
 
 	handleInputBlur = (e) => {
 		const { name, value } = e.target;
-		const val = Number(this.props.inputUnformat ? this.props.inputUnformat(value) : value);
+		const { inputUnformat, inputFormat } = this.props;
+		const val = Number(inputUnformat ? inputUnformat(value) : value);
 		if (name === 'start' && val > this.state.end) {
-			this.setState(state => ({
+			return this.setState(state => ({
+				maskedstart: inputFormat ? inputFormat(state.end) : state.end,
 				start: state.end,
 			}));
 		}
 		if (name === 'end' && val < this.state.start) {
-			this.setState(state => ({
+			return this.setState(state => ({
+				maskedend: inputFormat ? inputFormat(state.start) : state.start,
 				end: state.start,
 			}));
 		}
+		return this.setState(state => ({
+			[`masked${name}`]: inputFormat ? inputFormat(state[name]) : state[name],
+		}));
 	}
 
 	handleInputChange = (e) => {
