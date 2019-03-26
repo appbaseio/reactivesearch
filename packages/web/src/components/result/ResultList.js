@@ -10,16 +10,28 @@ class ResultList extends Component {
 	static Title = ({ children, ...props }) => <Title {...props}>{children}</Title>;
 	static Description = ({ children, ...props }) => <div {...props}>{children}</div>;
 
-	render() {
-		const {
-			children, href, small, target, ...props
-		} = this.props;
+	state = {
+		hasImage: false,
+	};
+
+	componentDidMount() {
 		let hasImage = false;
 		React.Children.forEach(this.props.children, (o) => {
 			if (!hasImage && o.type && o.type.name === ResultListImage.name) {
 				hasImage = true;
 			}
 		});
+		// eslint-disable-next-line
+		this.setState({
+			hasImage,
+		});
+	}
+
+	render() {
+		const {
+			children, href, small, target, ...props
+		} = this.props;
+		const { hasImage } = this.state;
 		return (
 			<ListItem
 				href={href}

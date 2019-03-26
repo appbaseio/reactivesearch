@@ -18,7 +18,6 @@ export interface ReactiveListProps extends CommonProps {
 	includeFields?: Array<string>;
 	loader?: types.title;
 	render?: (data: any) => any;
-	renderAllData?: (data: any) => any;
 	renderItem?: (data: any) => any;
 	renderResultStats?: (...args: any[]) => any;
 	renderError?: types.title;

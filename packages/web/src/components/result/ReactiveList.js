@@ -32,10 +32,10 @@ import { container as listContainer } from '../../styles/ListItem';
 import { connect, isFunction, getComponent, hasCustomRenderer } from '../../utils';
 
 class ReactiveList extends Component {
-	static ResultsCardWrapper = ({ children, ...rest }) => (
+	static ResultCardsWrapper = ({ children, ...rest }) => (
 		<div className={container} {...rest}>{children}</div>
 	);
-	static ResultsListWrapper = ({ children, ...rest }) => (
+	static ResultListWrapper = ({ children, ...rest }) => (
 		<div className={listContainer} {...rest}>{children}</div>
 	);
 	constructor(props) {
