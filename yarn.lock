@@ -21,16 +21,7 @@
     grunt "~0.4.0"
     serve-static "^1.10.2"
 
-"@appbaseio/reactivecore@^7.6.0":
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-7.6.0.tgz#ef28957730dc01ceb2e254eb958686d733143f9a"
-  integrity sha512-kUVtK9Oaw0Fcm+riNuTcVUkhK5d1uT3CwfIVhpZCCWB75jscWFjjCnUYA5N8tJX29nlH5xvJesWsghh+xorHBA==
-  dependencies:
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
-"@appbaseio/reactivemaps@^2.0.0-beta", "@appbaseio/reactivemaps@^2.0.1":
+"@appbaseio/reactivemaps@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-2.0.1.tgz#ca94c3f9aa43260589792ef009541ac9bb2df644"
   integrity sha512-dHJNm5pIqtPGzX75yoR97F5RxWMzdjMtO8si7fiX6cMME9nR4C0tgTKU/5huJez6jaYbQPbnTiIGA4QIGTzcKw==
@@ -41,26 +32,6 @@
     prop-types "^15.6.0"
     react-emotion "^9.0.0"
     react-google-maps "^9.4.5"
-
-"@appbaseio/reactivesearch@^2.12.1":
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-2.18.0.tgz#9915b1c326000a484badccd507d3306d0ca51803"
-  integrity sha512-tskPVcgl8v+/HDdCzCsibI9Uo20nEnwIQ46bwHKGf9biaW8zBDKIV8aI2DNLFqiutBtzrnVvTiYvK7a/2vGn2g==
-  dependencies:
-    "@appbaseio/reactivecore" "^7.6.0"
-    appbase-js "^4.0.2-beta.5"
-    cross-env "^5.2.0"
-    downshift "^1.31.2"
-    emotion "^9.0.0"
-    emotion-theming "^9.0.0"
-    polished "^1.9.3"
-    prop-types "^15.6.0"
-    react-day-picker "^7.0.5"
-    react-emotion "^9.0.0"
-    react-redux "^5.0.7"
-    rheostat "^2.1.1"
-    url-search-params "^0.10.0"
-    xdate "^0.8.2"
 
 "@babel/code-frame@7.0.0-beta.44":
   version "7.0.0-beta.44"
@@ -2822,7 +2793,7 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-appbase-js@^4.0.2-beta.05, appbase-js@^4.0.2-beta.5:
+appbase-js@^4.0.2-beta.05:
   version "4.0.2-beta.5"
   resolved "https://registry.npmjs.org/appbase-js/-/appbase-js-4.0.2-beta.5.tgz#456eecb825f124b996bfd617aab47c1f2a95d087"
   integrity sha512-SEvYFK4oCQ4WcQUiTj2e2E/hbFiZNihmd2562aXyXQp7i5vg2O2G/cxOmesUFfKBq0C1aOOxSfBz5m0yuklUqg==
