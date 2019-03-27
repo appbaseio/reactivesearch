@@ -419,16 +419,13 @@ class MultiList extends Component {
 	};
 
 	handleClick = (e) => {
+		let currentValue = e;
+		if (isEvent(e)) { currentValue = e.target.value; }
 		const { value, onChange } = this.props;
-		if (isEvent(e)) {
-			const { value: listValue } = e.target;
-			if (value === undefined) {
-				this.setValue(listValue);
-			} else if (onChange) {
-				onChange(listValue);
-			}
-		} else {
-			this.setValue(e);
+		if (value === undefined) {
+			this.setValue(currentValue);
+		} else if (onChange) {
+			onChange(currentValue);
 		}
 	};
 
