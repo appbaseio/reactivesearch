@@ -44,6 +44,23 @@ class App extends React.Component {
 			},
 			onPopoverClick: item => <div>{item.place}</div>,
 			showMapStyles: true,
+			renderData: result => ({
+				custom: (
+					<div
+						style={{
+							background: 'dodgerblue',
+							color: '#fff',
+							paddingLeft: 5,
+							paddingRight: 5,
+							borderRadius: 3,
+							padding: 10,
+						}}
+					>
+						<i className="fas fa-globe-europe" />
+						&nbsp;{result.magnitude}
+					</div>
+				),
+			}),
 		};
 		return (
 			<ReactiveBase

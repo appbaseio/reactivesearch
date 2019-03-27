@@ -197,7 +197,15 @@ class ReactiveGoogleMap extends Component {
 						return (
 							<MarkerWithLabel
 								key={item._id}
-								labelAnchor={new window.google.maps.Point(0, 0)}
+								labelAnchor={new window.google.maps.Point(0, 30)}
+								icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
+								onClick={() =>
+									this.openMarkerInfo(
+										item._id,
+										params.autoClosePopover,
+										params.handlePreserveCenter,
+									)
+								}
 								onMouseOver={() =>
 									this.increaseMarkerZIndex(item._id, params.handlePreserveCenter)
 								}
@@ -209,9 +217,14 @@ class ReactiveGoogleMap extends Component {
 								}
 								onBlur={() => this.removeMarkerZIndex(params.handlePreserveCenter)}
 								{...markerProps}
-								{...params.markerProps}
+								{...this.props.markerProps}
 							>
-								{data.custom}
+								<div className={mapPinWrapper}>
+									{data.custom}
+									{params.onPopoverClick
+										? this.renderPopover(item, params, true)
+										: null}
+								</div>
 							</MarkerWithLabel>
 						);
 					}
