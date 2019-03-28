@@ -27,9 +27,17 @@ import PoweredBy from './addons/PoweredBy';
 
 import Flex from '../../styles/Flex';
 import { resultStats, sortOptions } from '../../styles/results';
-import { connect, isFunction } from '../../utils';
+import { container } from '../../styles/Card';
+import { container as listContainer } from '../../styles/ListItem';
+import { connect, isFunction, getComponent, hasCustomRenderer } from '../../utils';
 
 class ReactiveList extends Component {
+	static ResultCardsWrapper = ({ children, ...rest }) => (
+		<div className={container} {...rest}>{children}</div>
+	);
+	static ResultListWrapper = ({ children, ...rest }) => (
+		<div className={listContainer} {...rest}>{children}</div>
+	);
 	constructor(props) {
 		super(props);
 
@@ -119,7 +127,7 @@ class ReactiveList extends Component {
 		this.setReact(this.props);
 
 		this.domNode = window;
-		if (!this.props.pagination) {
+		if (this.showInfiniteScroll) {
 			const { scrollTarget } = this.props;
 			if (scrollTarget) {
 				this.domNode = document.getElementById(scrollTarget);
@@ -134,9 +142,9 @@ class ReactiveList extends Component {
 			checkSomePropChange(
 				this.props,
 				prevProps,
-				['hits', 'streamHits'],
+				['hits', 'streamHits', 'promotedResults'],
 				() => {
-					this.props.onData(this.getAllData());
+					this.props.onData(this.getData());
 				},
 			);
 		}
@@ -211,10 +219,6 @@ class ReactiveList extends Component {
 		if (!isEqual(prevProps.react, this.props.react)) {
 			this.setReact(this.props);
 		}
-		// called when results are updated
-		if (this.props.onResultStats && prevProps.hits !== this.props.hits) {
-			this.props.onResultStats(this.stats);
-		}
 		if (this.props.pagination) {
 			// called when page is changed
 			if (this.props.isLoading && (this.props.hits || prevProps.hits)) {
@@ -234,7 +238,7 @@ class ReactiveList extends Component {
 			}
 		}
 
-		if (!this.props.pagination) {
+		if (this.showInfiniteScroll) {
 			if (this.props.hits && prevProps.hits) {
 				if (
 					// new items are loaded (from: 0)
@@ -314,14 +318,6 @@ class ReactiveList extends Component {
 			}
 		}
 
-		if (prevProps.pagination !== this.props.pagination) {
-			if (this.props.pagination) {
-				this.domNode.addEventListener('scroll', this.scrollHandler);
-			} else {
-				this.domNode.removeEventListener('scroll', this.scrollHandler);
-			}
-		}
-
 		// handle window url history change (on native back and forth interactions)
 		if (
 			this.state.currentPage !== this.props.defaultPage
@@ -339,36 +335,54 @@ class ReactiveList extends Component {
 			this.domNode.removeEventListener('scroll', this.scrollHandler);
 		}
 	}
-	// Shape of the object to be returned in onData & renderAllData
+	// Calculate results
 	getAllData = () => {
-		const { size } = this.props;
+		const { size, promotedResults } = this.props;
 		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
-		return {
-			results,
-			streamResults,
-			loadMore: this.loadMore,
-			base: currentPage * size,
-			triggerClickAnalytics: this.triggerClickAnalytics,
-		};
-	}
-	get stats() {
-		const results = parseHits(this.props.hits) || [];
-		const streamResults = parseHits(this.props.streamHits) || [];
 		let filteredResults = results;
-
+		const base = currentPage * size;
 		if (streamResults.length) {
 			const ids = streamResults.map(item => item._id);
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 		}
+
+		if (promotedResults.length) {
+			const ids = promotedResults.map(item => item._id).filter(Boolean);
+			if (ids) {
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+			}
+
+			filteredResults = [...streamResults, ...promotedResults, ...filteredResults];
+		}
 		return {
-			totalResults: this.props.total,
-			totalPages: Math.ceil(this.props.total / this.props.size),
-			displayedResults: [...streamResults, ...filteredResults].length,
-			time: this.props.time,
-			currentPage: this.state.currentPage,
+			results,
+			streamResults,
+			filteredResults,
+			promotedResults,
+			loadMore: this.loadMore,
+			base,
+			triggerClickAnalytics: this.triggerClickAnalytics,
 		};
+	}
+	get stats() {
+		const { total, size, time } = this.props;
+		const { currentPage } = this.state;
+		const { filteredResults } = this.getAllData();
+		return {
+			numberOfResults: total,
+			numberOfPages: Math.ceil(total / size),
+			time,
+			currentPage,
+			displayedResults: filteredResults.length,
+		};
+	}
+
+	get showInfiniteScroll() {
+		// Pagination has higher priority then infinite scroll
+		const { pagination, infiniteScroll } = this.props;
+		return infiniteScroll && !pagination;
 	}
 
 	setReact = (props) => {
@@ -427,7 +441,6 @@ class ReactiveList extends Component {
 	loadMore = () => {
 		if (
 			this.props.hits
-			&& !this.props.pagination
 			&& this.props.total !== this.props.hits.length
 		) {
 			const value = this.state.from + this.props.size;
@@ -586,32 +599,45 @@ class ReactiveList extends Component {
 		return null;
 	}
 
+	withClickIds = (results) => {
+		const { base } = this.getAllData();
+		return results.map((result, index) => ({
+			...result,
+			_click_id: base + index,
+		}));
+	}
+	getData() {
+		const {
+			results, streamResults, filteredResults, promotedResults,
+		} = this.getAllData();
+		return {
+			data: this.withClickIds(filteredResults),
+			streamData: this.withClickIds(streamResults),
+			promotedData: this.withClickIds(promotedResults),
+			rawData: this.withClickIds(results),
+			resultStats: this.stats,
+		};
+	}
+	getComponent() {
+		const { error, isLoading } = this.props;
+		const data = {
+			error,
+			loading: isLoading,
+			loadMore: this.loadMore,
+			triggerAnalytics: this.triggerClickAnalytics,
+			...this.getData(),
+		};
+		return getComponent(data, this.props);
+	}
+
 	render() {
 		const {
-			renderData,
+			renderItem,
 			size,
 			error,
-			promotedResults,
 		} = this.props;
 		const { currentPage } = this.state;
-		const allData = this.getAllData();
-		const { results, streamResults } = allData;
-		let filteredResults = results;
-
-		if (streamResults.length) {
-			const ids = streamResults.map(item => item._id);
-			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-		}
-
-		if (promotedResults.length) {
-			const ids = promotedResults.map(item => item._id).filter(Boolean);
-			if (ids) {
-				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-			}
-
-			filteredResults = [...promotedResults, ...filteredResults];
-		}
-
+		const { filteredResults } = this.getAllData();
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.isLoading && this.props.pagination && this.props.loader}
@@ -623,7 +649,7 @@ class ReactiveList extends Component {
 					{this.props.sortOptions ? this.renderSortOptions() : null}
 					{this.props.showResultStats ? this.renderResultStats() : null}
 				</Flex>
-				{!this.props.isLoading && !error && (results.length === 0 && streamResults.length === 0)
+				{(!this.props.isLoading && !error && filteredResults.length === 0)
 					? this.renderNoResults()
 					: null}
 				{this.props.pagination
@@ -638,23 +664,21 @@ class ReactiveList extends Component {
 							fragmentName={this.props.componentId}
 						/>
 					) : null}
-				{this.props.renderAllData ? (
-					this.props.renderAllData(allData)
-				) : (
+				{hasCustomRenderer(this.props) ? this.getComponent() : (
 					<div
 						className={`${this.props.listClass} ${getClassName(
 							this.props.innerClass,
 							'list',
 						)}`}
 					>
-						{[...streamResults, ...filteredResults].map((item, index) =>
-							renderData(item, () =>	{
+						{filteredResults.map((item, index) =>
+							renderItem(item, () =>	{
 								this.triggerClickAnalytics((currentPage * size) + index);
 							},
 							))}
 					</div>
 				)}
-				{this.props.isLoading && !this.props.pagination
+				{this.props.isLoading && this.showInfiniteScroll
 					? this.props.loader || (
 						<div
 							style={{
@@ -679,7 +703,7 @@ class ReactiveList extends Component {
 							fragmentName={this.props.componentId}
 						/>
 					) : null}
-				{this.props.config.url.endsWith('appbase.io') && results.length ? (
+				{this.props.config.url.endsWith('appbase.io') && filteredResults.length ? (
 					<Flex
 						direction="row-reverse"
 						className={getClassName(this.props.innerClass, 'poweredBy')}
@@ -718,22 +742,23 @@ ReactiveList.propTypes = {
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
+	children: types.func,
 	dataField: types.stringRequired,
 	defaultPage: types.number,
 	defaultQuery: types.func,
 	error: types.title,
 	excludeFields: types.excludeFields,
 	innerClass: types.style,
+	infiniteScroll: types.bool,
 	listClass: types.string,
 	loader: types.title,
-	renderAllData: types.func,
-	renderData: types.func,
+	render: types.func,
+	renderItem: types.func,
 	renderError: types.title,
 	onData: types.func,
 	renderNoResults: types.title,
 	onPageChange: types.func,
 	onPageClick: types.func,
-	onResultStats: types.func,
 	pages: types.number,
 	pagination: types.bool,
 	paginationAt: types.paginationAt,
@@ -756,6 +781,7 @@ ReactiveList.defaultProps = {
 	currentPage: 0,
 	listClass: '',
 	pages: 5,
+	infiniteScroll: true,
 	pagination: false,
 	paginationAt: 'bottom',
 	includeFields: ['*'],

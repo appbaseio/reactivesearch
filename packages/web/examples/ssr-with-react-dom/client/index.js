@@ -33,7 +33,7 @@ const reactiveListProps = {
 	dataField: 'original_title.raw',
 	from: 0,
 	size: 10,
-	renderData: data => <BookCard key={data._id} data={data} />,
+	renderItem: data => <BookCard key={data._id} data={data} />,
 	react: {
 		and: ['BookSensor'],
 	},

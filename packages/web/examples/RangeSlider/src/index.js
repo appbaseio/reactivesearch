@@ -36,7 +36,7 @@ class Main extends Component {
 							from={0}
 							size={3}
 							className="result-list-container"
-							renderData={this.booksList}
+							renderItem={this.booksList}
 							pagination
 							react={{
 								and: 'BookSensor',

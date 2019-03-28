@@ -30,7 +30,7 @@ import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
-import { connect, isFunction } from '../../utils';
+import { connect, isFunction, getComponent, hasCustomRenderer } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 
@@ -269,7 +269,7 @@ class DataSearch extends Component {
 	};
 
 	onSuggestions = (results) => {
-		const { renderSuggestion } = this.props;
+		const { parseSuggestion } = this.props;
 
 		const fields = Array.isArray(this.props.dataField)
 			? this.props.dataField
@@ -281,8 +281,8 @@ class DataSearch extends Component {
 			this.state.currentValue.toLowerCase(),
 		);
 
-		if (renderSuggestion) {
-			return parsedSuggestions.map(suggestion => renderSuggestion(suggestion));
+		if (parseSuggestion) {
+			return parsedSuggestions.map(suggestion => parseSuggestion(suggestion));
 		}
 
 		return parsedSuggestions;
@@ -576,21 +576,44 @@ class DataSearch extends Component {
 		return null;
 	};
 
-	render() {
+	getComponent = (downshiftProps = {}) => {
+		const { error, isLoading } = this.props;
 		const { currentValue } = this.state;
-		let suggestionsList = [];
+		const data = {
+			error,
+			loading: isLoading,
+			downshiftProps,
+			data: this.parsedSuggestions,
+			rawData: this.props.suggestions || [],
+			value: currentValue,
+		};
+		return getComponent(data, this.props);
+	}
 
+	get parsedSuggestions() {
+		let suggestionsList = [];
+		const { currentValue } = this.state;
+		const { defaultSuggestions } = this.props;
 		if (
-			!this.state.currentValue
-			&& this.props.defaultSuggestions
-			&& this.props.defaultSuggestions.length
+			!currentValue
+			&& defaultSuggestions
+			&& defaultSuggestions.length
 		) {
-			suggestionsList = this.props.defaultSuggestions;
-		} else if (this.state.currentValue) {
+			suggestionsList = defaultSuggestions;
+		} else if (currentValue) {
 			suggestionsList = this.state.suggestions;
 		}
+		return suggestionsList;
+	}
 
-		const { theme, themePreset, renderAllSuggestions } = this.props;
+	get hasCustomRenderer() {
+		return hasCustomRenderer(this.props);
+	}
+
+	render() {
+		const { currentValue } = this.state;
+		const suggestionsList = this.parsedSuggestions;
+		const { theme, themePreset } = this.props;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -606,7 +629,7 @@ class DataSearch extends Component {
 						isOpen={this.state.isOpen}
 						itemToString={i => i}
 						render={({
-							getInputProps, getItemProps, isOpen, highlightedIndex,
+							getInputProps, getItemProps, isOpen, highlightedIndex, ...rest
 						}) => (
 							<div className={suggestionsContainer}>
 								<Input
@@ -634,18 +657,16 @@ class DataSearch extends Component {
 									themePreset={themePreset}
 								/>
 								{this.renderIcons()}
-								{renderAllSuggestions
-									&& renderAllSuggestions({
-										currentValue: this.state.currentValue,
-										isOpen,
-										getItemProps,
-										highlightedIndex,
-										suggestions: this.props.suggestions,
-										parsedSuggestions: suggestionsList,
-									})}
+								{this.hasCustomRenderer && this.getComponent({
+									getInputProps,
+									getItemProps,
+									isOpen,
+									highlightedIndex,
+									...rest,
+								})}
 								{this.renderLoader()}
 								{this.renderError()}
-								{!renderAllSuggestions && isOpen && suggestionsList.length ? (
+								{!this.hasCustomRenderer && isOpen && suggestionsList.length ? (
 									<ul
 										className={`${suggestions(
 											themePreset,
@@ -729,7 +750,8 @@ DataSearch.propTypes = {
 	defaultSuggestions: types.suggestions,
 	downShiftProps: types.props,
 	// eslint-disable-next-line
-	error: types.any,
+	children: types.func,
+	error: types.title,
 	fieldWeights: types.fieldWeights,
 	filterLabel: types.string,
 	fuzziness: types.fuzziness,
@@ -755,9 +777,9 @@ DataSearch.propTypes = {
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
+	render: types.func,
 	renderError: types.title,
-	renderSuggestion: types.func,
-	renderAllSuggestions: types.func,
+	parseSuggestion: types.func,
 	renderNoSuggestion: types.title,
 	showClear: types.bool,
 	showFilter: types.bool,
@@ -793,7 +815,7 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	themePreset: state.config.themePreset,
-	isLoading: state.isLoading[props.componentId],
+	isLoading: state.isLoading[props.componentId] || false,
 	error: state.error[props.componentId],
 });
 
@@ -820,4 +842,3 @@ hoistNonReactStatics(ForwardRefComponent, DataSearch);
 
 ForwardRefComponent.name = 'DataSearch';
 export default ForwardRefComponent;
-

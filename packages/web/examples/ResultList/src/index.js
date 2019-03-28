@@ -30,7 +30,7 @@ class Main extends Component {
 							componentId="SearchResult"
 							dataField="original_title"
 							size={3}
-							renderData={this.booksList}
+							renderItem={this.booksList}
 							className="result-list-container"
 							pagination
 							URLParams

@@ -34,7 +34,7 @@ class Main extends Component {
 							dataField="original_title"
 							from={0}
 							size={3}
-							renderData={this.booksList}
+							renderItem={this.booksList}
 							className="result-list-container"
 							pagination
 							react={{

@@ -17,6 +17,7 @@ export interface SingleDropdownList extends CommonProps {
 	onError?: (...args: any[]) => any;
 	placeholder?: string;
 	react?: types.react;
+	render?: (...args: any[]) => any;
 	renderItem?: (...args: any[]) => any;
 	renderError?: types.title;
 	transformData?: (...args: any[]) => any;

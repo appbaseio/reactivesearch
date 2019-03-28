@@ -130,7 +130,7 @@ class Main extends Component {
 							and: ['search', 'genres', 'original_language', 'release_year'],
 						}}
 						size={4}
-						renderData={renderData}
+						renderItem={renderData}
 						className="right-col"
 						innerClass={{
 							listItem: 'list-item',
