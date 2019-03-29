@@ -36,7 +36,7 @@ class Main extends Component {
 							dataField="original_title.raw"
 							from={0}
 							size={10}
-							renderData={this.booksCard}
+							renderItem={this.booksCard}
 							react={{
 								and: 'BookSensor',
 							}}

@@ -41,7 +41,7 @@ class Main extends Component {
 							className="result-list-container"
 							from={0}
 							size={5}
-							renderData={this.meetupList}
+							renderItem={this.meetupList}
 							innerClass={{
 								image: 'meetup-list-image',
 							}}

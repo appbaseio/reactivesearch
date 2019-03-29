@@ -38,7 +38,7 @@ class Main extends Component {
 								componentId="SearchResult"
 								dataField="original_title"
 								size={10}
-								renderData={this.renderData}
+								renderItem={this.renderData}
 								className="result-list-container"
 								pagination
 								react={{

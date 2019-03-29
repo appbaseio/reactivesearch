@@ -7,6 +7,7 @@ export interface DataSearchProps extends CommonProps {
 	autoFocus?: boolean;
 	autosuggest?: boolean;
 	beforeValueChange?: (...args: any[]) => any;
+	children?: (data: any) => any;
 	customHighlight?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;
@@ -37,8 +38,8 @@ export interface DataSearchProps extends CommonProps {
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
-	renderSuggestion?: (...args: any[]) => any;
-	renderAllSuggestions?: (...args: any[]) => any;
+	render?: (data: any) => any;
+	parseSuggestion?: (...args: any[]) => any;
 	renderNoSuggestion?: types.title;
 	renderError?: types.title;
 	showFilter?: boolean;

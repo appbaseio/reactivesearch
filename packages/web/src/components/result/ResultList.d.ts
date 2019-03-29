@@ -3,10 +3,11 @@ import { CommonProps } from '../../';
 import * as types from '../../types';
 import { ReactiveListProps } from './ReactiveList';
 
-export interface ResultListProps extends ReactiveListProps {
-	innerClass?: types.style;
+export interface ResultListProps {
 	target?: string;
-	renderData?: (data: any) => any;
+	href?: string;
+	children: React.ReactNode;
+	small?: boolean;
 }
 
 declare const ResultList: React.ComponentType<ResultListProps>;

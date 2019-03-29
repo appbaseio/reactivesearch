@@ -13,6 +13,7 @@ export interface CategorySearchProps extends CommonProps {
 	autosuggest?: boolean;
 	beforeValueChange?: (...args: any[]) => any;
 	categoryField?: string;
+	children?: (data: any) => any;
 	customHighlight?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;
@@ -43,8 +44,8 @@ export interface CategorySearchProps extends CommonProps {
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
-	renderSuggestion?: (...args: any[]) => any;
-	renderAllSuggestions?: (...args: any[]) => any;
+	render?: (data: any) => any;
+	parseSuggestion?: (...args: any[]) => any;
 	renderError?: types.title;
 	renderNoSuggestion?: types.title;
 	showFilter?: boolean;

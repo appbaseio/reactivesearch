@@ -101,6 +101,8 @@ class Dropdown extends Component {
 			renderItem,
 			transformData,
 			footer,
+			hasCustomRenderer,
+			customRenderer,
 		} = this.props;
 
 		let itemsToRender = items;
@@ -130,7 +132,7 @@ class Dropdown extends Component {
 				isOpen={this.state.isOpen}
 				itemToString={i => i && i[this.props.labelField]}
 				render={({
-					getButtonProps, getItemProps, isOpen, highlightedIndex,
+					getButtonProps, getItemProps, isOpen, highlightedIndex, ...rest
 				}) => (
 					<div className={suggestionsContainer}>
 						<Select
@@ -146,95 +148,100 @@ class Dropdown extends Component {
 							</div>
 							<Chevron open={isOpen} />
 						</Select>
-						{isOpen && itemsToRender.length ? (
-							<ul
-								className={`${suggestions(themePreset, theme)} ${
-									this.props.small ? 'small' : ''
-								} ${getClassName(this.props.innerClass, 'list')}`}
-							>
-								{this.props.showSearch ? (
-									<Input
-										id={`${this.props.componentId}-input`}
-										style={{
-											border: 0,
-											borderBottom: '1px solid #ddd',
-										}}
-										showIcon={false}
-										className={getClassName(this.props.innerClass, 'input')}
-										placeholder="Type here to search..."
-										value={this.state.searchTerm}
-										onChange={this.handleInputChange}
-										themePreset={themePreset}
-									/>
-								) : null}
-								{
-									dropdownItems.length ? dropdownItems.map((item, index) => {
-										let selected
-											= this.props.multi
-											// MultiDropdownList
-											&& ((selectedItem && !!selectedItem[item[keyField]])
-												// MultiDropdownRange
-												|| (Array.isArray(selectedItem)
-													&& selectedItem.find(
-														value => value[labelField] === item[labelField])));
-										if (!this.props.multi) selected = item.key === selectedItem;
+						{
+							// eslint-disable-next-line
+							hasCustomRenderer ? customRenderer(itemsToRender, {
+								getButtonProps, getItemProps, isOpen, highlightedIndex, ...rest,
+							}) : isOpen && itemsToRender.length ? (
+								<ul
+									className={`${suggestions(themePreset, theme)} ${
+										this.props.small ? 'small' : ''
+									} ${getClassName(this.props.innerClass, 'list')}`}
+								>
+									{this.props.showSearch ? (
+										<Input
+											id={`${this.props.componentId}-input`}
+											style={{
+												border: 0,
+												borderBottom: '1px solid #ddd',
+											}}
+											showIcon={false}
+											className={getClassName(this.props.innerClass, 'input')}
+											placeholder="Type here to search..."
+											value={this.state.searchTerm}
+											onChange={this.handleInputChange}
+											themePreset={themePreset}
+										/>
+									) : null}
+									{
+										dropdownItems.length ? dropdownItems.map((item, index) => {
+											let selected
+												= this.props.multi
+												// MultiDropdownList
+												&& ((selectedItem && !!selectedItem[item[keyField]])
+													// MultiDropdownRange
+													|| (Array.isArray(selectedItem)
+														&& selectedItem.find(
+															value => value[labelField] === item[labelField])));
+											if (!this.props.multi) selected = item.key === selectedItem;
 
-										return (
-											<li
-												{...getItemProps({ item })}
-												key={item[keyField]}
-												className={`${selected ? 'active' : ''}`}
-												style={{
-													backgroundColor: this.getBackgroundColor(
-														highlightedIndex === index,
-														selected,
-													),
-												}}
-											>
-												{renderItem ? (
-													renderItem(item[labelField], item.doc_count, selected && this.props.multi)
-												) : (
-													<div>
-														{typeof item[labelField] === 'string' ? (
-															<span
-																dangerouslySetInnerHTML={{
-																	__html: item[labelField],
-																}}
-															/>
-														) : (
-															item[labelField]
-														)}
-														{this.props.showCount
-															&& item.doc_count && (
-															<span
-																className={
-																	getClassName(
-																		this.props.innerClass,
-																		'count',
-																	) || null
-																}
-															>
-																	&nbsp;({item.doc_count})
-															</span>
-														)}
-													</div>
-												)}
-												{selected && this.props.multi ? (
-													<Tick
-														className={
-															getClassName(
-																this.props.innerClass,
-																'icon',
-															) || null
-														}
-													/>
-												) : null}
-											</li>
-										);
-									}) : this.props.renderNoResults && this.props.renderNoResults()}
-								{footer}
-							</ul>
-						) : null}
+											return (
+												<li
+													{...getItemProps({ item })}
+													key={item[keyField]}
+													className={`${selected ? 'active' : ''}`}
+													style={{
+														backgroundColor: this.getBackgroundColor(
+															highlightedIndex === index,
+															selected,
+														),
+													}}
+												>
+													{renderItem ? (
+														renderItem(item[labelField], item.doc_count, selected && this.props.multi)
+													) : (
+														<div>
+															{typeof item[labelField] === 'string' ? (
+																<span
+																	dangerouslySetInnerHTML={{
+																		__html: item[labelField],
+																	}}
+																/>
+															) : (
+																item[labelField]
+															)}
+															{this.props.showCount
+																&& item.doc_count && (
+																<span
+																	className={
+																		getClassName(
+																			this.props.innerClass,
+																			'count',
+																		) || null
+																	}
+																>
+																		&nbsp;({item.doc_count})
+																</span>
+															)}
+														</div>
+													)}
+													{selected && this.props.multi ? (
+														<Tick
+															className={
+																getClassName(
+																	this.props.innerClass,
+																	'icon',
+																) || null
+															}
+														/>
+													) : null}
+												</li>
+											);
+										}) : this.props.renderNoResults && this.props.renderNoResults()}
+									{footer}
+								</ul>
+							) : null
+						}
 					</div>
 				)}
 			/>
@@ -254,12 +261,14 @@ Dropdown.propTypes = {
 	keyField: types.string,
 	labelField: types.string,
 	multi: types.bool,
+	hasCustomRenderer: types.bool,
 	onChange: types.func,
 	placeholder: types.string,
 	returnsObject: types.bool,
 	renderItem: types.func,
 	transformData: types.func,
 	renderNoResults: types.func,
+	customRenderer: types.func,
 	selectedItem: types.selectedValue,
 	showCount: types.bool,
 	single: types.bool,
