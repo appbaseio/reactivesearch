@@ -71,7 +71,7 @@ class RangeInput extends Component {
 	};
 
 	get isControlled() {
-		return this.props.onChange;
+		return this.props.onChange && this.props.value !== undefined;
 	}
 
 	get value() {
