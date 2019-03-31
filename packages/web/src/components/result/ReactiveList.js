@@ -530,6 +530,7 @@ class ReactiveList extends Component {
 			},
 		];
 		this.props.setQueryOptions(this.props.componentId, options, true);
+		this.sortOptionIndex = index;
 
 		this.setState(
 			{
