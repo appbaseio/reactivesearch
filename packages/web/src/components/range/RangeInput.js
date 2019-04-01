@@ -71,13 +71,13 @@ class RangeInput extends Component {
 	};
 
 	get isControlled() {
-		return this.props.onChange && this.props.value !== undefined;
+		return this.props.value !== undefined;
 	}
 
 	get value() {
 		return {
-			start: this.isControlled ? Number(this.props.value.start) : Number(this.state.start),
-			end: this.isControlled ? Number(this.props.value.end) : Number(this.state.end),
+			start: this.isControlled ? this.props.value.start : this.state.start,
+			end: this.isControlled ? this.props.value.end : this.state.end,
 		};
 	}
 
@@ -117,8 +117,10 @@ class RangeInput extends Component {
 				<RangeSlider
 					{...rest}
 					value={{
-						start: this.state.isStartValid ? this.value.start : this.props.range.start,
-						end: this.state.isEndValid ? this.value.end : this.props.range.end,
+						start: this.state.isStartValid
+							? Number(this.value.start)
+							: this.props.range.start,
+						end: this.state.isEndValid ? Number(this.value.end) : this.props.range.end,
 					}}
 					onChange={this.handleSliderChange}
 					className={getClassName(this.props.innerClass, 'slider-container') || null}
