@@ -35,7 +35,7 @@
 		"webpack-manifest-plugin": "^1.1.0"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch": "^3.0.0-beta.12",
+		"@appbaseio/reactivesearch": "3.0.0-beta.13",
 		"react": "^16.3.1",
 		"react-dom": "^16.3.1",
 		"react-router-dom": "^4.1.1",
