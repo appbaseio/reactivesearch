@@ -12,31 +12,35 @@ class ResultList extends Component {
 
 	state = {
 		hasImage: false,
+		isSmall: false,
 	};
 
 	componentDidMount() {
 		let hasImage = false;
+		let isSmall = false;
 		React.Children.forEach(this.props.children, (o) => {
 			if (!hasImage && o.type && o.type.name === ResultListImage.name) {
 				hasImage = true;
+				if (o.props.small) { isSmall = true; }
 			}
 		});
 		// eslint-disable-next-line
 		this.setState({
 			hasImage,
+			isSmall,
 		});
 	}
 
 	render() {
 		const {
-			children, href, small, target, ...props
+			children, href, target, ...props
 		} = this.props;
-		const { hasImage } = this.state;
+		const { hasImage, isSmall } = this.state;
 		return (
 			<ListItem
 				href={href}
 				image={hasImage}
-				small={small}
+				small={isSmall}
 				target={target}
 				rel={target === '_blank' ? 'noopener noreferrer' : null}
 				{...props}
@@ -51,12 +55,10 @@ ResultList.propTypes = {
 	children: types.children,
 	target: types.stringRequired,
 	href: types.string,
-	small: types.bool,
 };
 
 ResultList.defaultProps = {
 	target: '_blank',
-	small: false,
 };
 
 export default ResultList;
