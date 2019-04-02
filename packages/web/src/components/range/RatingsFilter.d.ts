@@ -16,6 +16,7 @@ export interface RatingsFilterProps extends CommonProps {
 	onChange?: (...args: any[]) => any;
 	react?: types.react;
 	title?: types.title;
+	showDimmedStars?: boolean;
 }
 
 declare const RatingsFilter: React.ComponentType<RatingsFilterProps>;

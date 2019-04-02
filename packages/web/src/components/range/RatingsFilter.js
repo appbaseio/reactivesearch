@@ -202,7 +202,10 @@ class RatingsFilter extends Component {
 							}
 							key={`${this.props.componentId}-${item.start}-${item.end}`}
 						>
-							<StarRating stars={item.start} />
+							<StarRating
+								showDimmedStars={this.props.showDimmedStars}
+								stars={item.start}
+							/>
 							{item.label ? <span>{item.label}</span> : null}
 						</li>
 					))}
@@ -236,6 +239,7 @@ RatingsFilter.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	react: types.react,
+	showDimmedStars: types.bool,
 	style: types.style,
 	title: types.title,
 	URLParams: types.bool,
@@ -245,6 +249,7 @@ RatingsFilter.defaultProps = {
 	className: null,
 	style: {},
 	URLParams: false,
+	showDimmedStars: true,
 };
 
 const mapStateToProps = (state, props) => ({
