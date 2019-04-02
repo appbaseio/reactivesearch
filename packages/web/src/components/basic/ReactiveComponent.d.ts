@@ -3,7 +3,8 @@ import { CommonProps } from '../../';
 import * as types from '../../types';
 
 export interface ReactiveComponentProps {
-	children?: types.children;
+	children?: (...args: any[]) => any;
+	render?: (...args: any[]) => any;
 	componentId: string;
 	defaultQuery?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
