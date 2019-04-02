@@ -24,7 +24,9 @@ class URLParamsProvider extends Component {
 			// update active components in selectedValues
 			Array.from(this.params.entries()).forEach((item) => {
 				try {
-					this.props.setValue(item[0], JSON.parse(item[1]));
+					const [component, value] = item;
+					const { label, showFilter, URLParams } = this.props.selectedValues[component];
+					this.props.setValue(component, JSON.parse(value), label, showFilter, URLParams);
 				} catch (e) {
 					// Do not set value if JSON parsing fails.
 				}

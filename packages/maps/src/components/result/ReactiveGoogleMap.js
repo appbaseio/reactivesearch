@@ -3,6 +3,7 @@ import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
 import { getInnerKey, isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 import { MapPin, MapPinArrow, mapPinWrapper } from './addons/styles/MapPin';
@@ -197,7 +198,15 @@ class ReactiveGoogleMap extends Component {
 						return (
 							<MarkerWithLabel
 								key={item._id}
-								labelAnchor={new window.google.maps.Point(0, 0)}
+								labelAnchor={new window.google.maps.Point(0, 30)}
+								icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
+								onClick={() =>
+									this.openMarkerInfo(
+										item._id,
+										params.autoClosePopover,
+										params.handlePreserveCenter,
+									)
+								}
 								onMouseOver={() =>
 									this.increaseMarkerZIndex(item._id, params.handlePreserveCenter)
 								}
@@ -209,9 +218,14 @@ class ReactiveGoogleMap extends Component {
 								}
 								onBlur={() => this.removeMarkerZIndex(params.handlePreserveCenter)}
 								{...markerProps}
-								{...params.markerProps}
+								{...this.props.markerProps}
 							>
-								{data.custom}
+								<div className={mapPinWrapper}>
+									{data.custom}
+									{params.onPopoverClick
+										? this.renderPopover(item, params, true)
+										: null}
+								</div>
 							</MarkerWithLabel>
 						);
 					}
@@ -336,5 +350,67 @@ class ReactiveGoogleMap extends Component {
 		);
 	}
 }
+
+ReactiveGoogleMap.propTypes = {
+	addComponent: types.funcRequired,
+	setMapData: types.funcRequired,
+	loadMore: types.funcRequired,
+	removeComponent: types.funcRequired,
+	setQueryListener: types.funcRequired,
+	onQueryChange: types.func,
+	setPageURL: types.func,
+	setQueryOptions: types.funcRequired,
+	setStreaming: types.func,
+	updateQuery: types.funcRequired,
+	watchComponent: types.funcRequired,
+	currentPage: types.number,
+	hits: types.hits,
+	isLoading: types.bool,
+	streamHits: types.hits,
+	time: types.number,
+	total: types.number,
+	url: types.string,
+	// component props
+	autoCenter: types.bool,
+	center: types.location,
+	className: types.string,
+	componentId: types.stringRequired,
+	dataField: types.stringRequired,
+	defaultCenter: types.location,
+	defaultMapStyle: types.string,
+	defaultPin: types.string,
+	defaultQuery: types.func,
+	defaultZoom: types.number,
+	innerClass: types.style,
+	innerRef: types.func,
+	loader: types.title,
+	mapProps: types.props,
+	markerProps: types.props,
+	markers: types.children,
+	renderAllData: types.func,
+	renderData: types.func,
+	onPageChange: types.func,
+	onPopoverClick: types.func,
+	pages: types.number,
+	pagination: types.bool,
+	react: types.react,
+	searchAsMove: types.bool,
+	showMapStyles: types.bool,
+	showMarkerClusters: types.bool,
+	showMarkers: types.bool,
+	showSearchAsMove: types.bool,
+	size: types.number,
+	sortBy: types.sortBy,
+	stream: types.bool,
+	streamAutoCenter: types.bool,
+	style: types.style,
+	URLParams: types.bool,
+	defaultRadius: types.number,
+	unit: types.string,
+	autoClosePopover: types.bool,
+	renderMap: types.funcRequired,
+	updaterKey: types.number,
+	mapRef: types.any, // eslint-disable-line
+};
 
 export default ReactiveGoogleMap;

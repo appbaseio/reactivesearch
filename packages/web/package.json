@@ -21,7 +21,8 @@
 		"stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
 		"prepublish": "yarn run build",
 		"test": "jest --watch",
-		"typescript": "tsc -p tsconfig.json"
+		"typescript": "tsc -p tsconfig.json",
+		"build-example": "scripts/build-example.sh 3.0.0-beta.13"
 	},
 	"repository": {
 		"type": "git",
