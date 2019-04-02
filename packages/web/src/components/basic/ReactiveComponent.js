@@ -17,7 +17,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { connect } from '../../utils';
+import { connect, getComponent, hasCustomRenderer } from '../../utils';
 
 class ReactiveComponent extends Component {
 	constructor(props) {
@@ -96,11 +96,11 @@ class ReactiveComponent extends Component {
 		if (!this.props.customQuery) {
 			// only consider hits and defaultQuery when customQuery is absent
 			if (
-				this.props.onAllData
+				this.props.onData
 				&& (!isEqual(prevProps.hits, this.props.hits)
 					|| !isEqual(prevProps.aggregations, this.props.aggregations))
 			) {
-				this.props.onAllData(parseHits(this.props.hits), this.props.aggregations);
+				this.props.onData(this.getData());
 			}
 
 			if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
@@ -148,25 +148,32 @@ class ReactiveComponent extends Component {
 		}
 	};
 
-	render() {
-		const {
-			children,
-			addComponent: addFn,
-			watchComponent: watchFn,
-			removeComponent: removeFn,
-			setQueryOptions: queryOptionsFn,
-			updateQuery: updateFn,
-			...rest
-		} = this.props;
+	getData() {
+		const { hits, aggregations } = this.props;
+		return {
+			data: parseHits(hits),
+			rawData: hits,
+			aggregations,
+		};
+	}
 
-		try {
-			const childrenWithProps = React.Children.map(children, child =>
-				React.cloneElement(child, { ...rest, setQuery: this.setQuery }),
-			);
-			return <div>{childrenWithProps}</div>;
-		} catch (e) {
-			return null;
+	getComponent() {
+		const { error, isLoading, selectedValue } = this.props;
+		const data = {
+			error,
+			loading: isLoading,
+			...this.getData(),
+			value: selectedValue,
+			setQuery: this.setQuery,
+		};
+		return getComponent(data, this.props);
+	}
+
+	render() {
+		if (hasCustomRenderer(this.props)) {
+			return this.getComponent();
 		}
+		return null;
 	}
 }
 
@@ -188,7 +195,7 @@ ReactiveComponent.propTypes = {
 	isLoading: types.bool,
 	selectedValue: types.selectedValue,
 	// component props
-	children: types.children,
+	children: types.func,
 	componentId: types.stringRequired,
 	defaultQuery: types.func,
 	customQuery: types.func,
@@ -198,9 +205,10 @@ ReactiveComponent.propTypes = {
 	onQueryChange: types.func,
 	onError: types.func,
 	react: types.react,
+	render: types.func,
 	showFilter: types.bool,
 	URLParams: types.bool,
-	onAllData: types.func,
+	onData: types.func,
 };
 
 const mapStateToProps = (state, props) => ({
