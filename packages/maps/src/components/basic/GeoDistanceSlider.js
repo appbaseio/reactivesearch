@@ -55,11 +55,11 @@ class GeoDistanceSlider extends Component {
 					this.setDistance(props.selectedValue.distance);
 				}
 			});
-		} else if (props.defaultSelected && props.defaultSelected.location) {
-			currentLocation = props.defaultSelected.location;
-			this.getCoordinates(props.defaultSelected.location, () => {
-				if (props.defaultSelected.distance) {
-					this.setDistance(props.defaultSelected.distance);
+		} else if (props.defaultValue && props.defaultValue.location) {
+			currentLocation = props.defaultValue.location;
+			this.getCoordinates(props.defaultValue.location, () => {
+				if (props.defaultValue.distance) {
+					this.setDistance(props.defaultValue.distance);
 				}
 			});
 		}
@@ -89,12 +89,12 @@ class GeoDistanceSlider extends Component {
 		});
 
 		if (
-			this.props.defaultSelected
-			&& this.props.defaultSelected.distance
-			&& this.props.defaultSelected.location
-			&& !isEqual(this.props.defaultSelected, prevProps.defaultSelected)
+			this.props.defaultValue
+			&& this.props.defaultValue.distance
+			&& this.props.defaultValue.location
+			&& !isEqual(this.props.defaultValue, prevProps.defaultValue)
 		) {
-			this.setValues(this.props.defaultSelected);
+			this.setValues(this.props.defaultValue);
 		} else if (
 			this.props.selectedValue
 			&& this.props.selectedValue.distance
@@ -502,7 +502,7 @@ GeoDistanceSlider.propTypes = {
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
-	defaultSelected: types.selectedValue,
+	defaultValue: types.selectedValue,
 	filterLabel: types.string,
 	icon: types.children,
 	iconPosition: types.iconPosition,
