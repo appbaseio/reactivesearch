@@ -18,12 +18,17 @@ class ResultList extends Component {
 	componentDidMount() {
 		let hasImage = false;
 		let isSmall = false;
-		React.Children.forEach(this.props.children, (o) => {
-			if (!hasImage && o.type && o.type.name === ResultListImage.name) {
-				hasImage = true;
-				if (o.props.small) { isSmall = true; }
+		const { children } = this.props;
+		const ImageChild = React.Children.toArray(children).find(
+			o => o.type && o.type.name === ResultListImage.name,
+		);
+		if (ImageChild) {
+			hasImage = true;
+			if (ImageChild.props.small) {
+				isSmall = true;
 			}
-		});
+		}
+
 		// eslint-disable-next-line
 		this.setState({
 			hasImage,
