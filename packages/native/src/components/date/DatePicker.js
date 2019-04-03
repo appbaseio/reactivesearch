@@ -88,8 +88,8 @@ class DatePicker extends Component {
 			query = {
 				range: {
 					[props.dataField]: {
-						gte: formatDate(new XDate(value).addHours(-24), {}),
-						lte: formatDate(new XDate(value), {}),
+						gte: formatDate(new XDate(value).addHours(-24), props),
+						lte: formatDate(new XDate(value), props),
 					},
 				},
 			};
@@ -102,7 +102,7 @@ class DatePicker extends Component {
 		let date = null;
 		if (currentDate) {
 			value = currentDate.timestamp;
-			date = formatDate(new XDate(value), {});
+			date = formatDate(new XDate(value), props);
 		}
 
 		const performUpdate = () => {
@@ -121,7 +121,7 @@ class DatePicker extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
-		const date = value ? formatDate(new XDate(value), {}) : null;
+		const date = value ? formatDate(new XDate(value), props) : null;
 
 		props.updateQuery({
 			componentId: props.componentId,
