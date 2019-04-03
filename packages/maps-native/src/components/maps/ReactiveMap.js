@@ -35,7 +35,7 @@ const UnsaturatedBrowns = require('./addons/styles/UnsaturatedBrowns');
 
 const styles = StyleSheet.create({
 	map: {
-		...StyleSheet.absoluteFillObject,
+		...StyleSheet.absoluteFill,
 		flex: 1,
 	},
 });
@@ -445,11 +445,10 @@ class ReactiveMap extends Component {
 				);
 			});
 		}
-
 		return (
 			<View style={{ flex: 1 }}>
 				<MapView
-					style={[styles.map, ...this.props.style]}
+					style={{ ...styles.map, ...this.props.style }}
 					region={this.getRegion(resultsToRender)}
 					customMapStyle={this.state.currentMapStyle.value}
 					showsScale
@@ -582,13 +581,13 @@ class ReactiveMap extends Component {
 					<Button
 						onPress={() => this.setPage(0)}
 						light={this.state.currentPage !== 0}
-						style={[
+						style={{
 							...primaryStyles.button,
 							...getInnerKey(this.props.innerStyle, 'button'),
-							{
+							...{
 								paddingHorizontal: 12,
 							},
-						]}
+						}}
 						{...getInnerKey(this.props.innerProps, 'button')}
 					>
 						<Text
