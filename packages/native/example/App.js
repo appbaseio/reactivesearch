@@ -1,4 +1,4 @@
-import Expo from 'expo';
+import { registerRootComponent, Font } from 'expo';
 import React, { Component } from 'react';
 import { View, ScrollView, FlatList } from 'react-native';
 import { Text, Header, Body, Title } from 'native-base';
@@ -23,7 +23,7 @@ class Main extends Component {
 	};
 
 	async componentWillMount() {
-		await Expo.Font.loadAsync({
+		await Font.loadAsync({
 			Roboto: require('native-base/Fonts/Roboto.ttf'), // eslint-disable-line global-require
 			Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'), // eslint-disable-line global-require
 			Ionicons: require('@expo/vector-icons/fonts/Ionicons.ttf'), // eslint-disable-line global-require
@@ -167,7 +167,6 @@ class Main extends Component {
 							size={20}
 							onAllData={this.onAllData}
 							pagination
-							stream
 							react={{
 								and: ['DataSearchComponent', 'StComponent'],
 							}}
@@ -180,4 +179,4 @@ class Main extends Component {
 }
 
 module.exports = Main;
-Expo.registerRootComponent(Main);
+registerRootComponent(Main);
