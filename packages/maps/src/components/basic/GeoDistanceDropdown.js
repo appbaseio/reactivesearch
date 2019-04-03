@@ -34,13 +34,6 @@ class GeoDistanceDropdown extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			currentLocation: null,
-			currentDistance: 0,
-			userLocation: null,
-			suggestions: [],
-			isOpen: false,
-		};
 		this.type = 'geo_distance';
 		this.locked = false;
 		this.coordinates = null;
@@ -49,65 +42,71 @@ class GeoDistanceDropdown extends Component {
 		if (props.autoLocation) {
 			this.getUserLocation();
 		}
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
+		let currentLocation = null;
 
-		if (this.props.selectedValue) {
-			this.setState({
-				currentLocation: this.props.selectedValue.location,
-			});
-			this.getCoordinates(this.props.selectedValue.location, () => {
-				const selected = this.props.data.find(
-					item => item.label === this.props.selectedValue.label,
+		if (props.selectedValue) {
+			currentLocation = props.selectedValue.location;
+
+			this.getCoordinates(props.selectedValue.location, () => {
+				const selected = props.data.find(
+					item => item.label === props.selectedValue.label,
 				);
 				this.setDistance(selected.distance);
 			});
-		} else if (this.props.defaultSelected) {
-			this.setState({
-				currentLocation: this.props.defaultSelected.location,
-			});
-			this.getCoordinates(this.props.defaultSelected.location, () => {
-				const selected = this.props.data.find(
-					item => item.label === this.props.defaultSelected.label,
+		} else if (props.defaultSelected) {
+			currentLocation = props.defaultSelected.location;
+			this.getCoordinates(props.defaultSelected.location, () => {
+				const selected = props.data.find(
+					item => item.label === props.defaultSelected.label,
 				);
 				this.setDistance(selected.distance);
 			});
 		}
+
+		this.state = {
+			currentLocation,
+			currentDistance: 0,
+			userLocation: null,
+			suggestions: [],
+			isOpen: false,
+		};
+
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.addComponent(this.props.componentId);
+		this.setReact(props);
 	}
 
 	componentDidMount() {
 		this.autocompleteService = new window.google.maps.places.AutocompleteService();
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
-		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
-			this.updateQuery(this.state.currentDistance, nextProps);
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
+			this.updateQuery(this.state.currentDistance, this.props);
 		});
 
 		if (
-			nextProps.defaultSelected
-			&& nextProps.defaultSelected.label
-			&& nextProps.defaultSelected.location
-			&& !isEqual(this.props.defaultSelected, nextProps.defaultSelected)
+			this.props.defaultSelected
+			&& this.props.defaultSelected.label
+			&& this.props.defaultSelected.location
+			&& !isEqual(this.props.defaultSelected, prevProps.defaultSelected)
 		) {
-			this.setValues(nextProps.defaultSelected, nextProps);
+			this.setValues(this.props.defaultSelected, this.props);
 		} else if (
-			nextProps.selectedValue
-			&& nextProps.selectedValue.label
-			&& nextProps.selectedValue.location
-			&& !isEqual(this.state.currentLocation, nextProps.selectedValue.location)
+			this.props.selectedValue
+			&& this.props.selectedValue.label
+			&& this.props.selectedValue.location
+			&& !isEqual(this.state.currentLocation, this.props.selectedValue.location)
 		) {
-			this.setValues(nextProps.selectedValue, nextProps);
+			this.setValues(this.props.selectedValue, this.props);
 		} else if (
-			!isEqual(this.props.selectedValue, nextProps.selectedValue)
-			&& !nextProps.selectedValue
+			!isEqual(this.props.selectedValue, prevProps.selectedValue)
+			&& !this.props.selectedValue
 		) {
+			// eslint-disable-line
 			this.setState(
 				{
 					currentLocation: null,
