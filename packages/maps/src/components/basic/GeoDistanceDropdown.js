@@ -46,41 +46,38 @@ class GeoDistanceDropdown extends Component {
 		let currentLocation = null;
 		let currentDistance = 0;
 
+		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.addComponent(this.props.componentId);
+		this.setReact(props);
+
 		if (props.value) {
 			currentLocation = props.value.location;
 			const selected = props.data.find(
 				item => item.label === props.value.label,
 			);
+
 			currentDistance = selected.distance;
-			this.getCoordinates(props.value.location, () => {
-				this.setDistance(selected.distance);
-			});
 		} else if (props.selectedValue) {
 			currentLocation = props.selectedValue.location;
+			const selected = props.data.find(
+				item => item.label === props.selectedValue.label,
+			);
 
-			this.getCoordinates(props.selectedValue.location, () => {
-				const selected = props.data.find(
-					item => item.label === props.selectedValue.label,
-				);
-				this.setDistance(selected.distance);
-			});
+			currentDistance = selected.distance;
 		} else if (props.value) {
 			currentLocation = props.value.location;
-			this.getCoordinates(props.value.location, () => {
-				const selected = props.data.find(
-					item => item.label === props.value.label,
-				);
-				this.setDistance(selected.distance);
-			});
+			const selected = props.data.find(
+				item => item.label === props.value.label,
+			);
+			currentDistance = selected.distance;
 		} else if (props.defaultValue) {
 			currentLocation = props.defaultValue.location;
-			this.getCoordinates(props.defaultValue.location, () => {
-				const selected = props.data.find(
-					item => item.label === props.defaultValue.label,
-				);
-				this.setDistance(selected.distance);
-			});
+			const selected = props.data.find(
+				item => item.label === props.defaultValue.label,
+			);
+			currentDistance = selected.distance;
 		}
+
 
 		this.state = {
 			currentLocation,
@@ -89,10 +86,9 @@ class GeoDistanceDropdown extends Component {
 			suggestions: [],
 			isOpen: false,
 		};
-
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
-		props.addComponent(this.props.componentId);
-		this.setReact(props);
+		this.getCoordinates(currentLocation, () => {
+			this.setDistance(currentDistance);
+		});
 	}
 
 	componentDidMount() {
@@ -116,26 +112,34 @@ class GeoDistanceDropdown extends Component {
 			&& this.props.selectedValue.label
 			&& this.props.selectedValue.location
 			&& !isEqual(this.state.currentLocation, this.props.selectedValue.location)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
-			const { value } = this.props;
+			const { value, onChange } = this.props;
 
 			if (value === undefined) {
 				this.setValues(this.props.selectedValue, this.props);
+			} else if (onChange) {
+				onChange(this.props.selectedValue);
 			}
 		} else if (
 			!isEqual(this.props.selectedValue, prevProps.selectedValue)
 			&& !this.props.selectedValue
 		) {
-			// eslint-disable-next-line
-			this.setState(
-				{
-					currentLocation: null,
-					currentDistance: null,
-				},
-				() => {
-					this.updateQuery(null);
-				},
-			);
+			const { value, onChange } = this.props;
+			if (value === undefined) {
+				// eslint-disable-next-line
+				this.setState(
+					{
+						currentLocation: null,
+						currentDistance: null,
+					},
+					() => {
+						this.updateQuery(null);
+					},
+				);
+			} else if (onChange) {
+				onChange(null);
+			}
 		}
 	}
 
@@ -150,11 +154,12 @@ class GeoDistanceDropdown extends Component {
 	}
 
 	setValues = (selected, props) => {
+		const selectedDistance = props.data.find(item => item.label === selected.label);
 		this.setState({
 			currentLocation: selected.location,
+			currentDistance: selectedDistance.distance,
 		});
 		this.getCoordinates(selected.location, () => {
-			const selectedDistance = props.data.find(item => item.label === selected.label);
 			this.setDistance(selectedDistance.distance);
 		});
 	};
