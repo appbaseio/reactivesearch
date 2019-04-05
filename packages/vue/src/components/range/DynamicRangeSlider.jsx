@@ -59,6 +59,7 @@ const DynamicRangeSlider = {
 					end,
 				);
 				this.currentValue = [defaultStart, defaultEnd];
+				this.handleChange(this.currentValue);
 			} else {
 				this.currentValue = [start, end];
 			}
@@ -193,6 +194,7 @@ const DynamicRangeSlider = {
 				this.handleChange(DynamicRangeSlider.parseValue(value, this.$props));
 			}
 		},
+
 	},
 
 	created() {
@@ -307,8 +309,7 @@ DynamicRangeSlider.defaultQuery = (values, props) => {
 	return query;
 };
 
-DynamicRangeSlider.parseValue = (value, props) =>
-	value ? [value.start, value.end] : [props.defaultSelected.start, props.defaultSelected.end];
+DynamicRangeSlider.parseValue = (value, props) => [value.start, value.end]
 
 const mapStateToProps = (state, props) => {
 	let options
