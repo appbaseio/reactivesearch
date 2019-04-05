@@ -34,9 +34,9 @@ function timeSince(date) {
 	return `${Math.floor(seconds)} seconds`;
 }
 
-const onResultStats = (results, time) => (
+const renderResultStats = ({ numberOfResults, time }) => (
 	<Flex justifyContent="flex-end" style={{ padding: '0 1rem' }}>
-		{results} results found in {time}ms
+		{numberOfResults} results found in {time}ms
 	</Flex>
 );
 
@@ -77,7 +77,7 @@ const Results = () => (
 		componentId="results"
 		dataField="title"
 		onData={onData}
-		onResultStats={onResultStats}
+		renderResultStats={renderResultStats}
 		react={{
 			and: ['title', 'category', 'time'],
 		}}
