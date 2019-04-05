@@ -5,6 +5,7 @@ import {
 	DataSearch,
 	NumberBox,
 	// RangeSlider,
+	ReactiveList,
 	ResultCard,
 } from '@appbaseio/reactivesearch';
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
@@ -68,19 +69,24 @@ const components = {
 		componentId: 'SearchResult',
 		dataField: 'name',
 		size: 12,
-		renderItem: data => ({
-			image: data.image,
-			title: data.name,
-			description: (
-				<div>
-					<div className="price">${data.price}</div>
-					<p className="info">
-						{data.room_type} · {data.accommodates} guests
-					</p>
-				</div>
-			),
-			url: data.listing_url,
-		}),
+		render: ({ data }) => (
+			<ReactiveList.ResultCardsWrapper>
+				{data.map(item => (
+					<ResultCard href={item.listing_url} key={item._id}>
+						<ResultCard.Image src={item.image} />
+						<ResultCard.Title>{item.name}</ResultCard.Title>
+						<ResultCard.Description>
+							<div>
+								<div className="price">${item.price}</div>
+								<p className="info">
+									{item.room_type} · {item.accommodates} guests
+								</p>
+							</div>
+						</ResultCard.Description>
+					</ResultCard>
+				))}
+			</ReactiveList.ResultCardsWrapper>
+		),
 		pagination: true,
 		URLParams: true,
 		react: {
@@ -114,7 +120,7 @@ export default class Main extends Component {
 					// },
 					{
 						...components.resultcard,
-						source: ResultCard,
+						source: ReactiveList,
 					},
 				],
 				query,
@@ -136,7 +142,7 @@ export default class Main extends Component {
 						{/* <RangeSlider {...components.rangeslider} /> */}
 					</div>
 
-					<ResultCard {...components.resultcard} />
+					<ReactiveList {...components.resultcard} />
 				</ReactiveBase>
 			</div>
 		);

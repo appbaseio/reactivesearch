@@ -45,7 +45,7 @@ class Main extends Component {
 								},
 							})}
 						>
-							<CustomComponent />
+							{props => <CustomComponent {...props} />}
 						</ReactiveComponent>
 					</div>
 

@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { ReactiveBase, DatePicker, SelectedFilters, ResultCard } from '@appbaseio/reactivesearch';
+import {
+	ReactiveBase,
+	DatePicker,
+	SelectedFilters,
+	ReactiveList,
+	ResultCard,
+} from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
 
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
@@ -43,20 +49,25 @@ const resultCardProps = {
 	className: 'result-list-container',
 	from: 0,
 	size: 40,
-	onData: res => ({
-		image: res.image,
-		title: res.name,
-		description: (
-			<div>
-				<div>${res.price}</div>
-				<span style={{ backgroundImage: `url(${res.host_image})` }} />
-				<p>
-					{res.room_type} · {res.accommodates} guests
-				</p>
-			</div>
-		),
-		url: res.listing_url,
-	}),
+	render: ({ data }) => (
+		<ReactiveList.ResultCardsWrapper>
+			{data.map(item => (
+				<ResultCard href={item.listing_url} key={item._id}>
+					<ResultCard.Image src={item.image} />
+					<ResultCard.Title>{item.name}</ResultCard.Title>
+					<ResultCard.Description>
+						<div>
+							<div>${item.price}</div>
+							<span style={{ backgroundImage: `url(${item.host_image})` }} />
+							<p>
+								{item.room_type} · {item.accommodates} guests
+							</p>
+						</div>
+					</ResultCard.Description>
+				</ResultCard>
+			))}
+		</ReactiveList.ResultCardsWrapper>
+	),
 	react: {
 		and: ['DateSensor'],
 	},
@@ -74,7 +85,7 @@ export default class Main extends Component {
 					},
 					{
 						...resultCardProps,
-						source: ResultCard,
+						source: ReactiveList,
 					},
 				],
 				null,
@@ -94,7 +105,7 @@ export default class Main extends Component {
 
 						<div className="col">
 							<SelectedFilters />
-							<ResultCard {...resultCardProps} />
+							<ReactiveList {...resultCardProps} />
 						</div>
 					</div>
 				</ReactiveBase>
