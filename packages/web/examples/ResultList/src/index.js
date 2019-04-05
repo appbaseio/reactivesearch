@@ -30,7 +30,6 @@ const Main = () => (
 					componentId="SearchResult"
 					dataField="original_title"
 					size={3}
-					renderItem={this.booksList}
 					className="result-list-container"
 					pagination
 					URLParams
