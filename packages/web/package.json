@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch",
-	"version": "3.0.0-beta.13",
+	"version": "3.0.0-rc.0",
 	"description": "A React UI components library for building search experiences",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
@@ -22,7 +22,7 @@
 		"prepublish": "yarn run build",
 		"test": "jest --watch",
 		"typescript": "tsc -p tsconfig.json",
-		"build-example": "scripts/build-example.sh 3.0.0-beta.13"
+		"build-example": "scripts/build-example.sh 3.0.0-rc.0"
 	},
 	"repository": {
 		"type": "git",
