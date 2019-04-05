@@ -4,7 +4,7 @@ import {
 	ReactiveBase,
 	SingleDataList,
 	SelectedFilters,
-	ResultList,
+	ReactiveList,
 } from '@appbaseio/reactivesearch';
 
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
@@ -37,7 +37,13 @@ const resultListProps = {
 	className: 'result-list-container',
 	from: 0,
 	size: 5,
-	onData: ListItemView,
+	render: ({ data }) => (
+		<ReactiveList.ResultListWrapper>
+			{data.map(item => (
+				<ListItemView key={item._id} {...item} />
+			))}
+		</ReactiveList.ResultListWrapper>
+	),
 	pagination: true,
 	react: {
 		and: ['CitySensor'],
@@ -55,7 +61,7 @@ export default class Main extends Component {
 					},
 					{
 						...resultListProps,
-						source: ResultList,
+						source: ReactiveList,
 					},
 				],
 				null,
@@ -75,7 +81,7 @@ export default class Main extends Component {
 
 						<div className="col">
 							<SelectedFilters />
-							<ResultList {...resultListProps} />
+							<ReactiveList {...resultListProps} />
 						</div>
 					</div>
 				</ReactiveBase>

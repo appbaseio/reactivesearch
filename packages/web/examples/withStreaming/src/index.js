@@ -1,7 +1,13 @@
 import Appbase from 'appbase-js';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { ReactiveBase, DataSearch, SelectedFilters, ResultList } from '@appbaseio/reactivesearch';
+import {
+	ReactiveBase,
+	DataSearch,
+	SelectedFilters,
+	ResultList,
+	ReactiveList,
+} from '@appbaseio/reactivesearch';
 
 const streamingData = {
 	genres: 'Action',
@@ -34,29 +40,6 @@ const indexNewData = () =>
 				reject(e);
 			});
 	});
-
-const renderData = res => ({
-	image: `https://image.tmdb.org/t/p/w92${res.poster_path}`,
-	title: res.original_title,
-	description: (
-		<div>
-			<p
-				style={{ fontSize: '16px', lineHeight: '24px' }}
-				dangerouslySetInnerHTML={{ __html: res.tagline }}
-			/>
-			<p
-				style={{
-					color: '#888',
-					margin: '8px 0',
-					fontSize: '13px',
-					lineHeight: '18px',
-				}}
-				dangerouslySetInnerHTML={{ __html: res.overview }}
-			/>
-			<div>{res.genres ? <span className="tag">{res.genres}</span> : null}</div>
-		</div>
-	),
-});
 
 class Main extends Component {
 	indexData = () => {
@@ -123,14 +106,13 @@ class Main extends Component {
 				<SelectedFilters style={{ marginTop: 20 }} />
 
 				<div>
-					<ResultList
+					<ReactiveList
 						componentId="results"
 						dataField="name"
 						react={{
 							and: ['search', 'genres', 'original_language', 'release_year'],
 						}}
 						size={4}
-						renderItem={renderData}
 						className="right-col"
 						innerClass={{
 							listItem: 'list-item',
@@ -138,6 +120,60 @@ class Main extends Component {
 						}}
 						pagination
 						stream
+						render={({ data }) => (
+							<ReactiveList.ResultListWrapper>
+								{data.map(item => (
+									<ResultList key={item._id}>
+										<ResultList.Image
+											src={`https://image.tmdb.org/t/p/w92${
+												item.poster_path
+											}`}
+										/>
+										<ResultList.Content>
+											<ResultList.Title>
+												<div
+													className="book-title"
+													dangerouslySetInnerHTML={{
+														__html: item.original_title,
+													}}
+												/>
+											</ResultList.Title>
+											<ResultList.Description>
+												<div>
+													<p
+														style={{
+															fontSize: '16px',
+															lineHeight: '24px',
+														}}
+														dangerouslySetInnerHTML={{
+															__html: item.tagline,
+														}}
+													/>
+													<p
+														style={{
+															color: '#888',
+															margin: '8px 0',
+															fontSize: '13px',
+															lineHeight: '18px',
+														}}
+														dangerouslySetInnerHTML={{
+															__html: item.overview,
+														}}
+													/>
+													<div>
+														{item.genres ? (
+															<span className="tag">
+																{item.genres}
+															</span>
+														) : null}
+													</div>
+												</div>
+											</ResultList.Description>
+										</ResultList.Content>
+									</ResultList>
+								))}
+							</ReactiveList.ResultListWrapper>
+						)}
 					/>
 				</div>
 			</ReactiveBase>

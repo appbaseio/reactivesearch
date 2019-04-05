@@ -7,6 +7,7 @@ import {
 	SingleRange,
 	SelectedFilters,
 	ResultCard,
+	ReactiveList,
 } from '@appbaseio/reactivesearch';
 import './App.css';
 
@@ -119,7 +120,7 @@ class App extends Component {
 					</div>
 					<div className="mainBar">
 						<SelectedFilters />
-						<ResultCard
+						<ReactiveList
 							componentId="results"
 							dataField="original_title"
 							react={{
@@ -149,18 +150,26 @@ class App extends Component {
 									label: 'Title Z->A',
 								},
 							]}
-							onData={res => ({
-								image: res.image,
-								title: res.original_title || ' ',
-								description:
-									`<div class='result-author' title='${
-										res.authors
-									}'>by ${res.authors}</div>`
-									+ `<span class="star">${'★'.repeat(res.average_rating_rounded)}</span>`,
-								url: `https://google.com/search?q=${
-									res.original_title
-								}`,
-							})}
+							render={({ data }) => (
+								<ReactiveList.ResultCardWrapper>
+									{data.map(item => (
+										<ResultCard href={item.original_title} key={item._id}>
+											<ResultCard.Image src={item.image} />
+											<ResultCard.Title>
+												{item.original_title || ' '}
+											</ResultCard.Title>
+											<ResultCard.Description>
+												{`<div class='result-author' title='${
+													item.authors
+												}'>by ${item.authors}</div>`
+													+ `<span class="star">${'★'.repeat(
+														item.average_rating_rounded,
+													)}</span>`}
+											</ResultCard.Description>
+										</ResultCard>
+									))}
+								</ReactiveList.ResultCardWrapper>
+							)}
 							className="result-data"
 							innerClass={{
 								title: 'result-title',
@@ -177,11 +186,7 @@ class App extends Component {
 						onClick={this.toggleState}
 						className={`toggle-btn ${this.state.visible ? 'active' : ''}`}
 					>
-						{
-							this.state.visible
-								? '📚  Show Books'
-								: '📂  Show Filters'
-						}
+						{this.state.visible ? '📚  Show Books' : '📂  Show Filters'}
 					</div>
 				</div>
 			</ReactiveBase>
