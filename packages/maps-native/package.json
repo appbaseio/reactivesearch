@@ -40,17 +40,17 @@
 		"eslint-plugin-prettier": "^2.6.0",
 		"eslint-plugin-react": "^7.7.0",
 		"eslint-plugin-react-native": "^3.2.1",
-		"expo": "^27.0.2",
+		"expo": "^32.0.6",
 		"husky": "^0.14.3",
 		"prettier": "^1.12.1",
-		"react": "^16.3.2",
-		"react-native": "^0.55.4"
+		"react": "~16.8.6",
+		"react-native": "~0.59.1"
 	},
 	"dependencies": {
 		"@appbaseio/reactivecore": "^8.1.0",
 		"@ptomasroos/react-native-multi-slider": "^0.0.13",
 		"appbase-js": "^4.0.2-beta.05",
-		"hoist-non-react-statics": "^2.5.0",
+		"hoist-non-react-statics": "^3.3.0",
 		"native-base": "^2.4.2",
 		"prop-types": "^15.6.1"
 	}

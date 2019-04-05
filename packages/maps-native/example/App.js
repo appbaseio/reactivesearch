@@ -1,4 +1,5 @@
-import Expo from 'expo';
+/* eslint-disable import/no-extraneous-dependencies */
+import { Font, registerRootComponent } from 'expo';
 import React, { Component } from 'react';
 import { ScrollView, View, Text } from 'react-native'; // eslint-disable-line
 
@@ -11,7 +12,7 @@ class Main extends Component {
 	};
 
 	async componentWillMount() {
-		await Expo.Font.loadAsync({
+		await Font.loadAsync({
 			Roboto: require('native-base/Fonts/Roboto.ttf'), // eslint-disable-line global-require
 			Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'), // eslint-disable-line global-require
 			Ionicons: require('@expo/vector-icons/fonts/Ionicons.ttf'), // eslint-disable-line global-require
@@ -51,22 +52,26 @@ class Main extends Component {
 							onPopoverClick={item => (
 								<Text>Run before it exceeds {item.magnitude}</Text>
 							)}
-							// onData={item => ({
-							// 	label: item.mag,
-							// })}
-							// onAllData={(hits, streamHits, loadMore, renderMap, renderPagination) => (
-							// 	<View style={{ flex: 1 }}>
-							// 		{renderMap()}
-							// 		<ScrollView style={{ flex: 1 }}>
-							// 			{hits.map(data => (
-							// 				<Text style={{ padding: 10 }} key={data._id}>
-							// 					{data.place} - {data.mag}
-							// 				</Text>
-							// 			))}
-							// 			{renderPagination()}
-							// 		</ScrollView>
-							// 	</View>
-							// )}
+							defaultZoom={13}
+							onAllData={(
+								hits,
+								streamHits,
+								loadMore,
+								renderMap,
+								renderPagination,
+							) => (
+								<View style={{ flex: 1 }}>
+									{renderMap()}
+									<ScrollView style={{ flex: 1 }}>
+										{hits.map(data => (
+											<Text style={{ padding: 10 }} key={data._id}>
+												{data.place} - {data.magnitude}
+											</Text>
+										))}
+										{renderPagination()}
+									</ScrollView>
+								</View>
+							)}
 						/>
 					</View>
 				</ReactiveBase>
@@ -76,4 +81,4 @@ class Main extends Component {
 }
 
 module.exports = Main;
-Expo.registerRootComponent(Main);
+registerRootComponent(Main);
