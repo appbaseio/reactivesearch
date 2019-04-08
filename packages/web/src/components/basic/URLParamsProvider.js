@@ -123,7 +123,16 @@ class URLParamsProvider extends Component {
 				: window.location.search;
 
 			if (searchString !== this.searchString) {
-				window.dispatchEvent(new Event('popstate'));
+				let event;
+				if (typeof (Event) === 'function') {
+					event = new Event('popstate');
+				} else {
+					// Correctly fire popstate event on IE11 to prevent app crash.
+					event = document.createEvent('Event');
+					event.initEvent('popstate', true, true);
+				}
+
+				window.dispatchEvent(event);
 			}
 		}
 	};
