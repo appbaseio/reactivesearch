@@ -167,17 +167,17 @@ export default {
 			{
 				src: '../../reactivesearch/images/native/booksearch.png',
 				title: 'Book Search',
-				href: 'https://snack.expo.io/@metagrover/booksearch',
+				href: 'https://snack.expo.io/@lakhansamani/booksearch',
 			},
 			{
 				src: '../../reactivesearch/images/native/gitxplore.png',
 				title: 'GitHub Search',
-				href: 'https://snack.expo.io/@dhruvdutt/gitxplore-native-app',
+				href: 'https://snack.expo.io/@lakhansamani/gitxplore-native-app',
 			},
 			{
-				src: '../../reactivesearch/images/native/todo.png',
-				title: 'Todo',
-				href: 'https://snack.expo.io/@dhruvdutt/todo',
+				src: '../../reactivesearch/images/native/earthquake_reporter.png',
+				title: 'Earthquake Reporter',
+				href: 'https://snack.expo.io/@lakhansamani/earthquake-reporter',
 			},
 		],
 	},
