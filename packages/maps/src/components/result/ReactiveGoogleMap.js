@@ -269,7 +269,9 @@ class ReactiveGoogleMap extends Component {
 	};
 
 	renderMap = (params) => {
-		if (typeof window === 'undefined') return null;
+		if (typeof window === 'undefined' || (window && typeof window.google === 'undefined')) {
+			return null;
+		}
 		const markers = this.getMarkers(params);
 
 		const style = {
