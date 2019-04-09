@@ -19,7 +19,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { connect } from '@appbaseio/reactivesearch/lib/utils';
+import { connect, isFunction } from '@appbaseio/reactivesearch/lib/utils';
 import Pagination from '@appbaseio/reactivesearch/lib/components/result/addons/Pagination';
 import { Checkbox } from '@appbaseio/reactivesearch/lib/styles/FormControlList';
 
@@ -50,7 +50,8 @@ function getPrecision(a) {
 function withDistinctLat(loc, count) {
 	const length = getPrecision(loc.lat);
 	const noiseFactor = length >= 6 ? 4 : length - 2;
-	const suffix = (1 / (10 ** noiseFactor)) * count;
+	// eslint-disable-next-line
+	const suffix = (1 / 10 ** noiseFactor) * count;
 	const location = {
 		...loc,
 		lat: parseFloat((loc.lat + suffix).toFixed(length)),
@@ -89,7 +90,7 @@ class ReactiveMap extends Component {
 		};
 
 		this.internalComponent = `${props.componentId}__internal`;
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
 
 	componentDidMount() {
@@ -299,6 +300,7 @@ class ReactiveMap extends Component {
 			this.state.searchAsMove !== nextState.searchAsMove
 			|| this.props.showMapStyles !== nextProps.showMapStyles
 			|| this.props.autoCenter !== nextProps.autoCenter
+			|| this.props.error !== nextProps.error
 			|| this.props.streamAutoCenter !== nextProps.streamAutoCenter
 			|| this.props.defaultZoom !== nextProps.defaultZoom
 			|| this.props.showMarkerClusters !== nextProps.showMarkerClusters
@@ -372,7 +374,8 @@ class ReactiveMap extends Component {
 			Z /= numCoords;
 
 			const lng = Math.atan2(Y, X);
-			const hyp = Math.sqrt((X * X) + (Y * Y));
+			// eslint-disable-next-line
+			const hyp = Math.sqrt(X * X + Y * Y);
 			const lat = Math.atan2(Z, hyp);
 
 			const newX = (lat * 180) / Math.PI;
@@ -589,6 +592,15 @@ class ReactiveMap extends Component {
 		});
 	};
 
+	renderError = () => {
+		const { error, renderError } = this.props;
+		const { isLoading } = this.state;
+		if (renderError && error && !isLoading) {
+			return isFunction(renderError) ? renderError(error) : renderError;
+		}
+		return null;
+	};
+
 	renderSearchAsMove = () => {
 		if (this.props.showSearchAsMove) {
 			return (
@@ -665,13 +677,13 @@ class ReactiveMap extends Component {
 		const resultsToRender = this.addNoise([...streamResults, ...filteredResults]);
 
 		return resultsToRender;
-	}
+	};
 
 	handlePreserveCenter = (preserveCenter) => {
 		this.setState({
 			preserveCenter,
 		});
-	}
+	};
 
 	handleOnIdle = () => {
 		// only make the geo_bounding query if we have hits data
@@ -754,9 +766,9 @@ class ReactiveMap extends Component {
 			handleOnIdle: this.handleOnIdle,
 			handleZoomChange: this.handleZoomChange,
 		};
-
 		return (
 			<div style={{ ...style, ...this.props.style }} className={this.props.className}>
+				{this.renderError()}
 				{this.props.renderAllData
 					? this.props.renderAllData(
 						parseHits(this.props.hits),
@@ -801,6 +813,7 @@ ReactiveMap.propTypes = {
 	defaultPin: types.string,
 	defaultQuery: types.func,
 	defaultZoom: types.number,
+	error: types.title,
 	innerClass: types.style,
 	innerRef: types.func,
 	loader: types.title,
@@ -809,7 +822,9 @@ ReactiveMap.propTypes = {
 	markers: types.children,
 	renderAllData: types.func,
 	renderData: types.func,
+	renderError: types.title,
 	onPageChange: types.func,
+	onError: types.func,
 	onPopoverClick: types.func,
 	pages: types.number,
 	pagination: types.bool,
@@ -865,6 +880,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[`${props.componentId}-page`].value - 1)
 		|| 0,
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	error: state.error[props.componentId],
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 });
 
