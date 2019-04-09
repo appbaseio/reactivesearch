@@ -354,25 +354,6 @@ class ReactiveGoogleMap extends Component {
 }
 
 ReactiveGoogleMap.propTypes = {
-	addComponent: types.func,
-	setMapData: types.func,
-	loadMore: types.func,
-	removeComponent: types.func,
-	setQueryListener: types.func,
-	onQueryChange: types.func,
-	setPageURL: types.func,
-	setQueryOptions: types.func,
-	setStreaming: types.func,
-	updateQuery: types.func,
-	watchComponent: types.func,
-	currentPage: types.number,
-	hits: types.hits,
-	isLoading: types.bool,
-	streamHits: types.hits,
-	time: types.number,
-	total: types.number,
-	url: types.string,
-	// component props
 	autoCenter: types.bool,
 	center: types.location,
 	className: types.string,
