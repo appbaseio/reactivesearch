@@ -37,13 +37,7 @@ class GeoDistanceSlider extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			currentLocation: null,
-			currentDistance: props.range.start,
-			userLocation: null,
-			suggestions: [],
-			isOpen: false,
-		};
+
 		this.type = 'geo_distance';
 		this.locked = false;
 		this.coordinates = null;
@@ -53,79 +47,90 @@ class GeoDistanceSlider extends Component {
 			this.getUserLocation();
 		}
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-	}
 
-	componentWillMount() {
-		this.props.addComponent(this.props.componentId);
-		this.setReact(this.props);
+		props.addComponent(props.componentId);
+		this.setReact(props);
 
-		if (this.props.selectedValue && this.props.selectedValue.location) {
-			this.setState(
-				{
-					currentLocation: this.props.selectedValue.location,
-				},
-				() => {
-					this.getCoordinates(this.props.selectedValue.location, () => {
-						if (this.props.selectedValue.distance) {
-							this.setDistance(this.props.selectedValue.distance);
-						}
-					});
-				},
-			);
-		} else if (this.props.defaultSelected && this.props.defaultSelected.location) {
-			this.setState(
-				{
-					currentLocation: this.props.defaultSelected.location,
-				},
-				() => {
-					this.getCoordinates(this.props.defaultSelected.location, () => {
-						if (this.props.defaultSelected.distance) {
-							this.setDistance(this.props.defaultSelected.distance);
-						}
-					});
-				},
-			);
+		let currentLocation = null;
+		let currentDistance = props.range.start || null;
+
+		if (props.selectedValue) {
+			currentLocation = props.selectedValue.location || null;
+			currentDistance = props.selectedValue.distance || null;
+		} else if (props.value) {
+			currentLocation = props.value.location || null;
+			currentDistance = props.value.distance || null;
+		} else if (props.defaultValue) {
+			currentLocation = props.defaultValue.location || null;
+			currentDistance = props.defaultValue.distance || null;
 		}
+
+		this.state = {
+			currentLocation,
+			currentDistance,
+			userLocation: null,
+			suggestions: [],
+			isOpen: false,
+		};
+
+		this.getCoordinates(currentLocation, () => {
+			if (currentDistance) {
+				this.setDistance(currentDistance);
+			}
+		});
 	}
 
 	componentDidMount() {
 		this.autocompleteService = new window.google.maps.places.AutocompleteService();
 	}
 
-	componentWillReceiveProps(nextProps) {
-		checkPropChange(this.props.react, nextProps.react, () => this.setReact(nextProps));
+	componentDidUpdate(prevProps) {
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(prevProps));
 
-		checkSomePropChange(this.props, nextProps, ['dataField', 'nestedField'], () => {
-			this.updateQuery(this.state.currentDistance, nextProps);
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
+			this.updateQuery(this.state.currentDistance, this.props);
 		});
 
 		if (
-			nextProps.defaultSelected
-			&& nextProps.defaultSelected.distance
-			&& nextProps.defaultSelected.location
-			&& !isEqual(this.props.defaultSelected, nextProps.defaultSelected)
+			this.props.value
+			&& !isEqual(this.props.value, prevProps.value)
 		) {
-			this.setValues(nextProps.defaultSelected);
+			this.setValues(this.props.value);
 		} else if (
-			nextProps.selectedValue
-			&& nextProps.selectedValue.distance
-			&& nextProps.selectedValue.location
-			&& !isEqual(this.state.currentLocation, nextProps.selectedValue.location)
+			this.props.selectedValue
+			&& this.props.selectedValue.distance
+			&& this.props.selectedValue.location
+			&& !isEqual(this.state.currentLocation, this.props.selectedValue.location)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
-			this.setValues(nextProps.selectedValue);
+			const { onChange, value } = this.props;
+			if (value === undefined) {
+				this.setValues(this.props.selectedValue);
+			} else if (onChange) {
+				onChange(this.props.selectedValue);
+			}
 		} else if (
-			!isEqual(this.props.selectedValue, nextProps.selectedValue)
-			&& !nextProps.selectedValue
+			!isEqual(this.props.selectedValue, prevProps.selectedValue)
+			&& !this.props.selectedValue
 		) {
-			this.setState(
-				{
-					currentLocation: null,
-					currentDistance: null,
-				},
-				() => {
-					this.updateQuery(null);
-				},
-			);
+			const { value, onChange } = this.props;
+			if (value === undefined) {
+				// eslint-disable-next-line
+				this.setState(
+					{
+						currentLocation: null,
+						currentDistance: null,
+					},
+					() => {
+						this.updateQuery(null);
+					},
+				);
+			} else if (onChange) {
+				onChange({
+					location: null,
+					distance: null,
+				});
+			}
 		}
 	}
 
@@ -142,6 +147,7 @@ class GeoDistanceSlider extends Component {
 	setValues = (selected) => {
 		this.setState({
 			currentLocation: selected.location,
+			currentDistance: selected.distance,
 		});
 		this.getCoordinates(selected.location, () => {
 			this.setDistance(selected.distance);
@@ -303,9 +309,14 @@ class GeoDistanceSlider extends Component {
 
 	onInputChange = (e) => {
 		const { value } = e.target;
-		this.setState({
-			currentLocation: value,
-		});
+		const { value: valueProp, onChange } = this.props;
+		if (valueProp === undefined) {
+			this.setState({
+				currentLocation: value,
+			});
+		} else if (onChange) {
+			onChange({ location: value, distance: this.state.currentDistance });
+		}
 		if (value.trim()) {
 			if (!this.autocompleteService) {
 				this.autocompleteService = new window.google.maps.places.AutocompleteService();
@@ -349,7 +360,12 @@ class GeoDistanceSlider extends Component {
 	};
 
 	handleOuterClick = () => {
-		this.setLocation({ value: this.state.currentLocation });
+		const { value, onChange } = this.props;
+		if (value === undefined) {
+			this.setLocation({ value: this.state.currentLocation });
+		} else if (onChange) {
+			onChange({ location: this.state.currentLocation, distance: this.state.currentDistance });
+		}
 	};
 
 	handleStateChange = (changes) => {
@@ -360,6 +376,15 @@ class GeoDistanceSlider extends Component {
 			});
 		}
 	};
+
+	handleLocation = (data) => {
+		const { value, onChange } = this.props;
+		if (value === undefined) {
+			this.setLocation(data);
+		} else if (onChange) {
+			onChange({ location: data.value, distance: this.state.currentDistance });
+		}
+	}
 
 	renderSearchBox = () => {
 		let suggestionsList = [...this.state.suggestions];
@@ -377,7 +402,7 @@ class GeoDistanceSlider extends Component {
 
 		return (
 			<Downshift
-				onChange={this.setLocation}
+				onChange={this.handleLocation}
 				onOuterClick={this.handleOuterClick}
 				onStateChange={this.handleStateChange}
 				isOpen={this.state.isOpen}
@@ -443,8 +468,15 @@ class GeoDistanceSlider extends Component {
 	};
 
 	handleSlider = ({ values }) => {
-		if (values[0] !== this.state.currentDistance) {
-			this.setDistance(values[0]);
+		const { value, onChange } = this.props;
+		if (value === undefined) {
+			if (values[0] !== this.state.currentDistance) {
+				this.setDistance(values[0]);
+			}
+		} else if (onChange) {
+			// As rheostat do not follow controlled behavior we need to force update the component
+			this.forceUpdate();
+			onChange({ distance: values[0], location: this.state.currentLocation });
 		}
 	};
 
@@ -512,7 +544,7 @@ GeoDistanceSlider.propTypes = {
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,
-	defaultSelected: types.selectedValue,
+	defaultValue: types.selectedValue,
 	filterLabel: types.string,
 	icon: types.children,
 	iconPosition: types.iconPosition,
@@ -520,6 +552,7 @@ GeoDistanceSlider.propTypes = {
 	innerRef: types.func,
 	nestedField: types.string,
 	onBlur: types.func,
+	onChange: types.func,
 	onFocus: types.func,
 	onKeyDown: types.func,
 	onKeyPress: types.func,
@@ -537,6 +570,7 @@ GeoDistanceSlider.propTypes = {
 	style: types.style,
 	theme: types.style,
 	title: types.title,
+	value: types.selectedValue,
 	unit: types.string,
 	URLParams: types.bool,
 };
