@@ -206,7 +206,7 @@ ReactiveOpenStreetMap.propTypes = {
 	showMarkers: types.bool,
 	tileServer: types.string,
 	title: types.string,
-	error: types.title,
+	onError: types.func,
 	onPopoverClick: types.func,
 	renderError: types.title,
 	react: types.react,
