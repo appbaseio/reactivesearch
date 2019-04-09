@@ -122,7 +122,7 @@ const SingleRange = {
 	methods: {
 		setReact(props) {
 			if (props.react) {
-				props.watchComponent(props.componentId, props.react);
+				this.watchComponent(props.componentId, props.react);
 			}
 		},
 
