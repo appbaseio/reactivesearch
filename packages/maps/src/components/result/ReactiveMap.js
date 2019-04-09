@@ -843,7 +843,7 @@ ReactiveMap.propTypes = {
 	defaultRadius: types.number,
 	unit: types.string,
 	autoClosePopover: types.bool,
-	renderMap: types.funcRequired,
+	renderMap: types.func,
 	updaterKey: types.number,
 	mapRef: types.any, // eslint-disable-line
 };

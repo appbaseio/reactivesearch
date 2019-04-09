@@ -354,25 +354,6 @@ class ReactiveGoogleMap extends Component {
 }
 
 ReactiveGoogleMap.propTypes = {
-	addComponent: types.funcRequired,
-	setMapData: types.funcRequired,
-	loadMore: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
-	onQueryChange: types.func,
-	setPageURL: types.func,
-	setQueryOptions: types.funcRequired,
-	setStreaming: types.func,
-	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
-	currentPage: types.number,
-	hits: types.hits,
-	isLoading: types.bool,
-	streamHits: types.hits,
-	time: types.number,
-	total: types.number,
-	url: types.string,
-	// component props
 	autoCenter: types.bool,
 	center: types.location,
 	className: types.string,
@@ -410,7 +391,7 @@ ReactiveGoogleMap.propTypes = {
 	defaultRadius: types.number,
 	unit: types.string,
 	autoClosePopover: types.bool,
-	renderMap: types.funcRequired,
+	renderMap: types.func,
 	updaterKey: types.number,
 	mapRef: types.any, // eslint-disable-line
 };
