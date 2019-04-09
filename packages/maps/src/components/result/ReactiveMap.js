@@ -784,17 +784,17 @@ class ReactiveMap extends Component {
 }
 
 ReactiveMap.propTypes = {
-	addComponent: types.funcRequired,
-	setMapData: types.funcRequired,
-	loadMore: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
+	addComponent: types.func,
+	setMapData: types.func,
+	loadMore: types.func,
+	removeComponent: types.func,
+	setQueryListener: types.func,
 	onQueryChange: types.func,
 	setPageURL: types.func,
-	setQueryOptions: types.funcRequired,
+	setQueryOptions: types.func,
 	setStreaming: types.func,
-	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
+	updateQuery: types.func,
+	watchComponent: types.func,
 	currentPage: types.number,
 	hits: types.hits,
 	isLoading: types.bool,
@@ -843,7 +843,7 @@ ReactiveMap.propTypes = {
 	defaultRadius: types.number,
 	unit: types.string,
 	autoClosePopover: types.bool,
-	renderMap: types.funcRequired,
+	renderMap: types.func,
 	updaterKey: types.number,
 	mapRef: types.any, // eslint-disable-line
 };
