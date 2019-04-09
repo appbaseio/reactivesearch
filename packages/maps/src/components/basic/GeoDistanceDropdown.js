@@ -64,12 +64,6 @@ class GeoDistanceDropdown extends Component {
 			);
 
 			currentDistance = selected.distance;
-		} else if (props.value) {
-			currentLocation = props.value.location;
-			const selected = props.data.find(
-				item => item.label === props.value.label,
-			);
-			currentDistance = selected.distance;
 		} else if (props.defaultValue) {
 			currentLocation = props.defaultValue.location;
 			const selected = props.data.find(
