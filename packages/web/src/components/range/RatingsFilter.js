@@ -19,6 +19,7 @@ import {
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { element } from 'prop-types';
 
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
@@ -202,7 +203,11 @@ class RatingsFilter extends Component {
 							}
 							key={`${this.props.componentId}-${item.start}-${item.end}`}
 						>
-							<StarRating stars={item.start} />
+							<StarRating
+								icon={this.props.icon}
+								dimmedIcon={this.props.dimmedIcon}
+								stars={item.start}
+							/>
 							{item.label ? <span>{item.label}</span> : null}
 						</li>
 					))}
@@ -228,8 +233,10 @@ RatingsFilter.propTypes = {
 	data: types.data,
 	dataField: types.stringRequired,
 	defaultValue: types.range,
+	dimmedIcon: element,
 	value: types.range,
 	filterLabel: types.string,
+	icon: element,
 	innerClass: types.style,
 	nestedField: types.string,
 	onQueryChange: types.func,
