@@ -26,7 +26,7 @@ const Results = () => (
 		pagination
 		size={15}
 		render={({ data }) => (
-			<ReactiveList.ResultCardWrapper>
+			<ReactiveList.ResultCardsWrapper>
 				{data.map(item => (
 					<ResultCard key={item._id}>
 						<ResultCard.Image src={item.image} />
@@ -47,7 +47,7 @@ const Results = () => (
 						</ResultCard.Description>
 					</ResultCard>
 				))}
-			</ReactiveList.ResultCardWrapper>
+			</ReactiveList.ResultCardsWrapper>
 		)}
 	/>
 );

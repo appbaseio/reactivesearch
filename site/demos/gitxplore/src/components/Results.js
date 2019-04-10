@@ -62,7 +62,7 @@ const Results = ({ toggleTopic, currentTopics }) => (
 	<ReactiveList
 		componentId="results"
 		dataField="name"
-		renderData={data => onData(data, currentTopics, toggleTopic)}
+		renderItem={data => onData(data, currentTopics, toggleTopic)}
 		renderResultStats={renderResultStats}
 		react={{
 			and: ['name', 'language', 'topics', 'pushed', 'created', 'stars', 'forks', 'repo'],

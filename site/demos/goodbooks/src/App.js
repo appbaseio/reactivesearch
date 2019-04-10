@@ -151,7 +151,7 @@ class App extends Component {
 								},
 							]}
 							render={({ data }) => (
-								<ReactiveList.ResultCardWrapper>
+								<ReactiveList.ResultCardsWrapper>
 									{data.map(item => (
 										<ResultCard href={item.original_title} key={item._id}>
 											<ResultCard.Image src={item.image} />
@@ -159,16 +159,17 @@ class App extends Component {
 												{item.original_title || ' '}
 											</ResultCard.Title>
 											<ResultCard.Description>
-												{`<div class='result-author' title='${
-													item.authors
-												}'>by ${item.authors}</div>`
-													+ `<span class="star">${'★'.repeat(
-														item.average_rating_rounded,
-													)}</span>`}
+												<div className="result-author" title={item.authors}>
+													by {item.authors}
+												</div>
+
+												<span className="star">
+													{'★'.repeat(item.average_rating_rounded)}
+												</span>
 											</ResultCard.Description>
 										</ResultCard>
 									))}
-								</ReactiveList.ResultCardWrapper>
+								</ReactiveList.ResultCardsWrapper>
 							)}
 							className="result-data"
 							innerClass={{
