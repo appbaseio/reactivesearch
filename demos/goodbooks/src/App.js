@@ -151,7 +151,7 @@ class App extends Component {
 								},
 							]}
 							render={({ data }) => (
-								<ReactiveList.ResultCardWrapper>
+								<ReactiveList.ResultCardsWrapper>
 									{data.map(item => (
 										<ResultCard href={item.original_title} key={item._id}>
 											<ResultCard.Image src={item.image} />
@@ -168,7 +168,7 @@ class App extends Component {
 											</ResultCard.Description>
 										</ResultCard>
 									))}
-								</ReactiveList.ResultCardWrapper>
+								</ReactiveList.ResultCardsWrapper>
 							)}
 							className="result-data"
 							innerClass={{

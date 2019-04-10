@@ -76,7 +76,7 @@ const Results = () => (
 	<ReactiveList
 		componentId="results"
 		dataField="title"
-		onData={onData}
+		renderItem={onData}
 		renderResultStats={renderResultStats}
 		react={{
 			and: ['title', 'category', 'time'],
@@ -86,7 +86,7 @@ const Results = () => (
 );
 
 onData.propTypes = {
-	_source: PropTypes.object // eslint-disable-line
+	_source: PropTypes.object, // eslint-disable-line
 };
 
 export default Results;
