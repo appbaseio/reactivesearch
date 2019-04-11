@@ -158,14 +158,17 @@ class App extends Component {
 											<ResultCard.Title>
 												{item.original_title || ' '}
 											</ResultCard.Title>
-											<ResultCard.Description>
-												{`<div class='result-author' title='${
-													item.authors
-												}'>by ${item.authors}</div>`
-													+ `<span class="star">${'★'.repeat(
-														item.average_rating_rounded,
-													)}</span>`}
-											</ResultCard.Description>
+											<ResultCard.Description
+												dangerouslySetInnerHTML={{
+													__html:
+														`<div class='result-author' title='${
+															item.authors
+														}'>by ${item.authors}</div>`
+														+ `<span class="star">${'★'.repeat(
+															item.average_rating_rounded,
+														)}</span>`,
+												}}
+											/>
 										</ResultCard>
 									))}
 								</ReactiveList.ResultCardsWrapper>
