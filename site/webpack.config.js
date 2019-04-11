@@ -44,7 +44,7 @@ if (process.env.NODE_ENV === 'production') {
 				cache: true,
 				parallel: true,
 				uglifyOptions: {
-					compress: false,
+					compress: { warnings: false },
 					ecma: 6,
 					mangle: true,
 				},
