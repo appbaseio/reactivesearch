@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
 	context: path.resolve(__dirname, 'src'),
@@ -31,21 +32,29 @@ if (process.env.NODE_ENV === 'production') {
 				NODE_ENV: JSON.stringify('production'),
 			},
 		}),
-		new webpack.optimize.UglifyJsPlugin({
-			compress: { warnings: false },
-			mangle: true,
-			sourcemap: false,
-			beautify: false,
-			dead_code: true,
-		}),
-		new webpack.optimize.CommonsChunkPlugin({
-			name: 'common',
-		}),
 		new CopyWebpackPlugin([
 			{ from: '../images', to: '../reactivesearch/images' },
 			{ from: '../icons', to: '../reactivesearch/icons' },
 		]),
 	];
+	config.optimization = {
+		minimizer: [
+			// we specify a custom UglifyJsPlugin here to get source maps in production
+			new UglifyJsPlugin({
+				cache: true,
+				parallel: true,
+				uglifyOptions: {
+					compress: false,
+					ecma: 6,
+					mangle: true,
+				},
+				sourceMap: true,
+			}),
+		],
+	};
+	config.optimization.splitChunks = {
+		name: 'common',
+	};
 }
 
 module.exports = config;
