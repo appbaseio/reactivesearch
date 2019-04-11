@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch, BrowserRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import ToolsPageNative from './pages/native/Tools';
 import LearnPageNative from './pages/native/QuickStart';
@@ -40,12 +40,12 @@ const HomePageVue = Loadable({
 // 	loading: Loading,
 // });
 
-const history = createHistory({
-	basename: '/reactivesearch',
-});
+// const history = createHistory({
+// 	basename: '/reactivesearch',
+// });
 
 ReactDOM.render(
-	<Router history={history}>
+	<BrowserRouter basename="/reactivesearch">
 		<Switch>
 			<Route exact path="/" component={HomePage} />
 			<Route exact path="/tools" component={ToolsPage} />
@@ -58,16 +58,16 @@ ReactDOM.render(
 			<Route exact path="/reactivesearch/native/tools" component={ToolsPageNative} />
 			<Route exact path="/native/quickstart" component={LearnPageNative} />
 			<Route exact path="/reactivesearch/native/quickstart" component={LearnPageNative} />
-			<Route path="/native" component={HomePageNative} />
-			<Route path="/reactivesearch/native" component={HomePageNative} />
+			<Route exact path="/native" component={HomePageNative} />
+			<Route exact path="/reactivesearch/native" component={HomePageNative} />
 			<Route exact path="/vue/tools" component={ToolsPageVue} />
 			<Route exact path="/reactivesearch/vue/tools" component={ToolsPageVue} />
 			<Route exact path="/vue/quickstart" component={LearnPageVue} />
 			<Route exact path="/reactivesearch/vue/quickstart" component={LearnPageVue} />
-			<Route path="/vue" component={HomePageVue} />
-			<Route path="/reactivesearch/vue" component={HomePageVue} />
+			<Route exact path="/vue" component={HomePageVue} />
+			<Route exact path="/reactivesearch/vue" component={HomePageVue} />
 			<Route path="*" component={HomePage} />
 		</Switch>
-	</Router>,
+	</BrowserRouter>,
 	document.getElementById('root'),
 );
