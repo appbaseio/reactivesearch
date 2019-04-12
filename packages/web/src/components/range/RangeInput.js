@@ -61,11 +61,11 @@ class RangeInput extends Component {
 		if (this.isControlled) {
 			this.props.onChange({
 				...this.value,
-				[name]: value,
+				[name]: Number(value),
 			});
 		} else {
 			this.setState({
-				[name]: value,
+				[name]: Number(value),
 			});
 		}
 	};
