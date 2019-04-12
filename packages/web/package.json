@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch",
-	"version": "3.0.0-rc.2",
+	"version": "3.0.0-rc.3",
 	"description": "A React UI components library for building search experiences",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
@@ -31,7 +31,7 @@
 	"author": "metagrover",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/reactivecore": "^8.1.1",
+		"@appbaseio/reactivecore": "^8.1.2",
 		"appbase-js": "^4.0.2-beta.05",
 		"cross-env": "^5.2.0",
 		"downshift": "^1.31.2",
