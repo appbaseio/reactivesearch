@@ -23,6 +23,7 @@
 	],
 	"husky": {
 		"hooks": {
+			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
 			"pre-commit": "lint-staged"
 		}
 	},
@@ -30,6 +31,7 @@
 		"*.js": "eslint"
 	},
 	"devDependencies": {
+		"@commitlint/cli": "^7.5.2",
 		"babel-eslint": "^9.0.0",
 		"concurrently": "^3.5.1",
 		"eslint": "^4.10.0",
