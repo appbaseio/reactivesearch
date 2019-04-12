@@ -33,6 +33,28 @@
     react-emotion "^9.0.0"
     react-google-maps "^9.4.5"
 
+"@appbaseio/reactivesearch@3.0.0-rc.0":
+  version "3.0.0-rc.0"
+  resolved "https://registry.npmjs.org/@appbaseio/reactivesearch/-/reactivesearch-3.0.0-rc.0.tgz#f193c2dc8587e2b709c152ecec98463c3a0750e0"
+  integrity sha512-R6RY11/W0ZPsyN55z7mo7egpQRxHqZ5UQmo6qGEUAq1YkUAq1XhOE7qfGtiiBYf/HAHaxAA9eJ9AI1FPgcmSJA==
+  dependencies:
+    "@appbaseio/reactivecore" "^8.1.0"
+    appbase-js "^4.0.2-beta.05"
+    cross-env "^5.2.0"
+    downshift "^1.31.2"
+    emotion "^9.0.0"
+    emotion-theming "^9.0.0"
+    hoist-non-react-statics "^3.2.1"
+    polished "^1.9.3"
+    prop-types "^15.6.0"
+    react-day-picker "^7.0.5"
+    react-emotion "^9.0.0"
+    react-highlight-words "^0.14.0"
+    react-redux "^5.0.7"
+    rheostat "^2.1.1"
+    url-search-params "^0.10.0"
+    xdate "^0.8.2"
+
 "@babel/code-frame@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.0.0-beta.44.tgz#2a02643368de80916162be70865c97774f3adbd9"
