@@ -107,13 +107,16 @@
 				background: #1a42c1;
 				text-decoration: none;
 			}
+			body {
+				margin: 0;
+			}
 		</style>
 		<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 	</head>
 
 	<body class="reset">
 		<div id="root"></div>
-		<script src="dist/common.js"></script>
+		<script src="dist/common.bundle.js"></script>
 		<script src="dist/main.js?v=latest"></script>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-54082612-13"></script>
@@ -148,7 +151,10 @@
 		</script>
 		<script>
 			setTimeout(function() {
-				document.getElementsByClassName('featured-post-link')[0].classList.add('js-active');
+				document.getElementsByClassName('featured-post-link')[0] &&
+					document
+						.getElementsByClassName('featured-post-link')[0]
+						.classList.add('js-active');
 			}, 2000);
 		</script>
 	</body>

@@ -10,7 +10,7 @@ import { getComponents } from './addons/ssr';
 
 const { addComponent, removeComponent, watchComponent, updateQuery, setQueryListener, setQueryOptions } = Actions;
 
-const { checkValueChange, getClassName, getOptionsFromQuery } = helper;
+const { checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
 
 const RangeSlider = {
 	name: 'RangeSlider',
@@ -117,6 +117,12 @@ const RangeSlider = {
 
 		defaultSelected(newVal) {
 			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
+		},
+
+		selectedValue(newVal) {
+			if (!isEqual(this.$data.currentValue, newVal)) {
+				this.handleChange(RangeSlider.parseValue(newVal, this.$props));
+			}
 		},
 	},
 

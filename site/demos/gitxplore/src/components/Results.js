@@ -10,9 +10,9 @@ import Link from '../styles/Link';
 import Avatar from '../styles/Avatar';
 import Button from '../styles/Button';
 
-const onResultStats = (results, time) => (
+const renderResultStats = ({ numberOfResults, time }) => (
 	<Flex justifyContent="flex-end">
-		{results} results found in {time}ms
+		{numberOfResults} results found in {time}ms
 	</Flex>
 );
 
@@ -62,8 +62,8 @@ const Results = ({ toggleTopic, currentTopics }) => (
 	<ReactiveList
 		componentId="results"
 		dataField="name"
-		renderData={data => onData(data, currentTopics, toggleTopic)}
-		onResultStats={onResultStats}
+		renderItem={data => onData(data, currentTopics, toggleTopic)}
+		renderResultStats={renderResultStats}
 		react={{
 			and: ['name', 'language', 'topics', 'pushed', 'created', 'stars', 'forks', 'repo'],
 		}}

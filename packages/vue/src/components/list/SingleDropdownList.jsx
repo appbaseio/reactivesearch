@@ -190,7 +190,6 @@ const SingleDropdownList = {
 					showCount={this.$props.showCount}
 					renderItem={renderItemCalc}
 					themePreset={this.themePreset}
-					renderItem={this.$props.renderItem}
 					showSearch={this.$props.showSearch}
 					transformData={this.$props.transformData}
 					footer={

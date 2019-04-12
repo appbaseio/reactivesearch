@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch",
-	"version": "3.0.0-beta.13",
+	"version": "3.0.0-rc.3",
 	"description": "A React UI components library for building search experiences",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
@@ -21,7 +21,8 @@
 		"stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
 		"prepublish": "yarn run build",
 		"test": "jest --watch",
-		"typescript": "tsc -p tsconfig.json"
+		"typescript": "tsc -p tsconfig.json",
+		"build-example": "scripts/build-example.sh 3.0.0-rc.0"
 	},
 	"repository": {
 		"type": "git",
@@ -30,7 +31,7 @@
 	"author": "metagrover",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/reactivecore": "^8.1.0",
+		"@appbaseio/reactivecore": "^8.1.2",
 		"appbase-js": "^4.0.2-beta.05",
 		"cross-env": "^5.2.0",
 		"downshift": "^1.31.2",

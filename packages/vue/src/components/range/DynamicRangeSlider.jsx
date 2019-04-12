@@ -17,7 +17,7 @@ const {
 	setQueryOptions,
 } = Actions;
 
-const { checkValueChange, getClassName, getOptionsFromQuery } = helper;
+const { checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
 
 const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
@@ -59,6 +59,7 @@ const DynamicRangeSlider = {
 					end,
 				);
 				this.currentValue = [defaultStart, defaultEnd];
+				this.handleChange(this.currentValue);
 			} else {
 				this.currentValue = [start, end];
 			}
@@ -180,6 +181,20 @@ const DynamicRangeSlider = {
 		react() {
 			this.setReact(this.$props);
 		},
+
+		selectedValue(newVal) {
+			if (!isEqual(this.$data.currentValue, newVal)) {
+				let value = newVal;
+				if(!value){
+					value = {
+						start: this.range.start,
+						end: this.range.end
+					};
+				}
+				this.handleChange(DynamicRangeSlider.parseValue(value, this.$props));
+			}
+		},
+
 	},
 
 	created() {
@@ -294,8 +309,7 @@ DynamicRangeSlider.defaultQuery = (values, props) => {
 	return query;
 };
 
-DynamicRangeSlider.parseValue = (value, props) =>
-	value ? [value.start, value.end] : [props.range.start, props.range.end];
+DynamicRangeSlider.parseValue = (value, props) => [value.start, value.end]
 
 const mapStateToProps = (state, props) => {
 	let options

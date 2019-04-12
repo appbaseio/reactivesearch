@@ -34,9 +34,9 @@ function timeSince(date) {
 	return `${Math.floor(seconds)} seconds`;
 }
 
-const onResultStats = (results, time) => (
+const renderResultStats = ({ numberOfResults, time }) => (
 	<Flex justifyContent="flex-end" style={{ padding: '0 1rem' }}>
-		{results} results found in {time}ms
+		{numberOfResults} results found in {time}ms
 	</Flex>
 );
 
@@ -76,8 +76,8 @@ const Results = () => (
 	<ReactiveList
 		componentId="results"
 		dataField="title"
-		onData={onData}
-		onResultStats={onResultStats}
+		renderItem={onData}
+		renderResultStats={renderResultStats}
 		react={{
 			and: ['title', 'category', 'time'],
 		}}
@@ -86,7 +86,7 @@ const Results = () => (
 );
 
 onData.propTypes = {
-	_source: PropTypes.object // eslint-disable-line
+	_source: PropTypes.object, // eslint-disable-line
 };
 
 export default Results;
