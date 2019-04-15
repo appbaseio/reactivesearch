@@ -22,7 +22,8 @@
 		"prepublish": "yarn run build",
 		"test": "jest --watch",
 		"typescript": "tsc -p tsconfig.json",
-		"build-example": "scripts/build-example.sh 3.0.0-rc.0"
+		"build-example": "scripts/build-example.sh 3.0.0-rc.3",
+		"update-workspace": "scripts/update-workspace.sh 3.0.0-rc.3"
 	},
 	"repository": {
 		"type": "git",
