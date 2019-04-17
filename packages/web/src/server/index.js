@@ -9,8 +9,6 @@ import { buildQuery, pushToAndClause } from '@appbaseio/reactivecore/lib/utils/h
 const componentsWithHighlightQuery = ['DataSearch', 'CategorySearch'];
 
 const componentsWithOptions = [
-	'ResultList',
-	'ResultCard',
 	'ReactiveList',
 	'ReactiveMap',
 	'SingleList',
@@ -21,7 +19,7 @@ const componentsWithOptions = [
 
 const componentsWithoutFilters = ['NumberBox', 'RatingsFilter'];
 
-const resultComponents = ['ResultCard', 'ResultList', 'ReactiveList', 'ReactiveMap'];
+const resultComponents = ['ReactiveList', 'ReactiveMap'];
 
 function getValue(state, id, defaultValue) {
 	if (!state) return defaultValue;
