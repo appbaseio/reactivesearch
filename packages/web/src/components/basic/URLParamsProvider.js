@@ -25,10 +25,13 @@ class URLParamsProvider extends Component {
 			Array.from(this.params.entries()).forEach((item) => {
 				try {
 					const [component, value] = item;
-					const { label, showFilter, URLParams } = this.props.selectedValues[component];
+					const { label, showFilter, URLParams } = this.props.selectedValues[
+						component
+					] || { label: component };
 					this.props.setValue(component, JSON.parse(value), label, showFilter, URLParams);
 				} catch (e) {
 					// Do not set value if JSON parsing fails.
+					console.error(e);
 				}
 			});
 		};
@@ -124,7 +127,7 @@ class URLParamsProvider extends Component {
 
 			if (searchString !== this.searchString) {
 				let event;
-				if (typeof (Event) === 'function') {
+				if (typeof Event === 'function') {
 					event = new Event('popstate');
 				} else {
 					// Correctly fire popstate event on IE11 to prevent app crash.
