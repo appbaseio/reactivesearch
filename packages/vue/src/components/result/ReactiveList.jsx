@@ -33,10 +33,7 @@ const ReactiveList = {
 	data() {
 		const props = this.$props;
 		let $currentPage = 0;
-
-		if (this.defaultPage >= 0) {
-			$currentPage = this.defaultPage;
-		} else if (props.currentPage) {
+		if (props.currentPage) {
 			$currentPage = Math.max(props.currentPage - 1, 0);
 		}
 
@@ -48,6 +45,10 @@ const ReactiveList = {
 		return this.__state;
 	},
 	created() {
+		if (this.defaultPage >= 0) {
+			this.$currentPage = this.defaultPage;
+			this.from = this.$currentPage * this.$props.size;
+		}
 		this.isLoading = true;
 		this.internalComponent = `${this.$props.componentId}__internal`;
 		const onQueryChange = (...args) => {
@@ -637,6 +638,33 @@ const mapDispatchtoProps = {
 	setStreaming,
 	updateQuery,
 	watchComponent,
+};
+// Only used for SSR
+ReactiveList.generateQueryOptions = props => {
+	// simulate default (includeFields and excludeFields) props to generate consistent query
+	const options = getQueryOptions({ includeFields: ['*'], excludeFields: [], ...props });
+	options.from = props.currentPage ? (props.currentPage - 1) * (props.size || 10) : 0;
+	options.size = props.size || 10;
+
+	if (props.sortOptions) {
+		options.sort = [
+			{
+				[props.sortOptions[this.sortOptionIndex].dataField]: {
+					order: props.sortOptions[this.sortOptionIndex].sortBy,
+				},
+			},
+		];
+	} else if (props.sortBy) {
+		options.sort = [
+			{
+				[props.dataField]: {
+					order: props.sortBy,
+				},
+			},
+		];
+	}
+
+	return options;
 };
 export const RLConnected = connect(
 	mapStateToProps,

@@ -18,6 +18,7 @@ import ResultCard from './components/result/ResultCard.jsx';
 import ResultList from './components/result/ResultList.jsx';
 import RangeSlider from './components/range/RangeSlider.jsx';
 import DynamicRangeSlider from './components/range/DynamicRangeSlider.jsx';
+import initReactivesearch from './server/index';
 import version from './components/Version/index';
 
 const components = [
@@ -69,6 +70,7 @@ export {
 	SingleDropdownList,
 	MultiDropdownList,
 	ToggleButton,
+	initReactivesearch,
 };
 
 export default {

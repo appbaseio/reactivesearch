@@ -11,20 +11,14 @@ const normalizeMapState = mapState => {
 		return (state, ownProps) =>
 			Object.keys(mapState)
 				.filter(key => typeof mapState[key] === 'function')
-				.reduce(
-					(map, key) => ({ ...map, [key]: mapState[key](state, ownProps) }),
-					{}
-				);
+				.reduce((map, key) => ({ ...map, [key]: mapState[key](state, ownProps) }), {});
 	}
 
 	throw new Error('[revux] - mapState provided to connect is invalid');
 };
 
 // eslint-disable-next-line
-const connector = (
-	_mapState = defaultMapState,
-	mapDispatch = defaultMapDispatch
-) => component => {
+const connector = (_mapState = defaultMapState, mapDispatch = defaultMapDispatch) => component => {
 	const mapState = normalizeMapState(_mapState);
 
 	return {
@@ -35,13 +29,10 @@ const connector = (
 		data() {
 			const merged = {
 				...mapState(this.$$store.getState(), this.$props || {}),
-				...bindActionCreators(mapDispatch, this.$$store.dispatch)
+				...bindActionCreators(mapDispatch, this.$$store.dispatch),
 			};
 
-			return Object.keys(merged).reduce(
-				(data, key) => ({ ...data, [key]: merged[key] }),
-				{}
-			);
+			return Object.keys(merged).reduce((data, key) => ({ ...data, [key]: merged[key] }), {});
 		},
 
 		created() {
@@ -60,20 +51,16 @@ const connector = (
 				});
 			};
 
-			this._unsubscribe = observeStore(
-				this.$$store,
-				getMappedState,
-				newState => {
-					Object.keys(newState).forEach(key => {
-						this.$set(this, key, newState[key]);
-					});
-				}
-			);
+			this._unsubscribe = observeStore(this.$$store, getMappedState, newState => {
+				Object.keys(newState).forEach(key => {
+					this.$set(this, key, newState[key]);
+				});
+			});
 		},
 
 		beforeDestroy() {
 			this._unsubscribe();
-		}
+		},
 	};
 };
 

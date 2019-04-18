@@ -9,31 +9,29 @@ export default {
 		'highlightedIndex',
 		'handleChange',
 		'itemToString',
-		'handleMouseup'
+		'handleMouseup',
 	],
 	data: () => ({
 		isMouseDown: false,
 		internal_isOpen: false,
 		internal_inputValue: '',
 		internal_selectedItem: null,
-		internal_highlightedIndex: null
+		internal_highlightedIndex: null,
 	}),
 	computed: {
 		mergedState() {
 			return Object.keys(this.$props).reduce(
 				(state, key) => ({
 					...state,
-					[key]: this.isControlledProp(key)
-						? this.$props[key]
-						: this[`internal_${key}`]
+					[key]: this.isControlledProp(key) ? this.$props[key] : this[`internal_${key}`],
 				}),
-				{}
+				{},
 			);
 		},
 
 		internalItemCount() {
 			return this.items.length;
-		}
+		},
 	},
 
 	mounted() {
@@ -64,7 +62,7 @@ export default {
 					this.reset();
 					if (this.$props.handleMouseup) {
 						this.$props.handleMouseup({
-							isOpen: false
+							isOpen: false,
 						});
 					}
 				}
@@ -79,7 +77,7 @@ export default {
 				this.changeHighlightedIndex(amount);
 			} else {
 				this.setState({
-					isOpen: true
+					isOpen: true,
 				});
 
 				this.setHighlightedIndex();
@@ -94,7 +92,7 @@ export default {
 				this.changeHighlightedIndex(amount);
 			} else {
 				this.setState({
-					isOpen: true
+					isOpen: true,
 				});
 
 				this.setHighlightedIndex();
@@ -135,7 +133,7 @@ export default {
 				isOpen: false,
 				highlightedIndex: null,
 				selectedItem: item,
-				inputValue: this.isControlledProp('selectedItem') ? '' : item
+				inputValue: this.isControlledProp('selectedItem') ? '' : item,
 			});
 		},
 
@@ -165,7 +163,7 @@ export default {
 
 		setHighlightedIndex(highlightedIndex = null) {
 			this.setState({
-				highlightedIndex
+				highlightedIndex,
 			});
 			const element = document.getElementById(`Downshift${highlightedIndex}`);
 			scrollIntoView(element, this.rootNode);
@@ -178,7 +176,7 @@ export default {
 			this.setState({
 				isOpen: false,
 				highlightedIndex: null,
-				inputValue: selectedItem
+				inputValue: selectedItem,
 			});
 		},
 
@@ -196,7 +194,7 @@ export default {
 			}
 
 			return {
-				id: `Downshift${newIndex}`
+				id: `Downshift${newIndex}`,
 			};
 		},
 
@@ -216,7 +214,7 @@ export default {
 				click(event) {
 					event.stopPropagation();
 					vm.selectItemAtIndex(newIndex);
-				}
+				},
 			};
 		},
 
@@ -224,11 +222,11 @@ export default {
 			const { inputValue } = this.mergedState;
 			if (value !== inputValue) {
 				this.setState({
-					inputValue: value
+					inputValue: value,
 				});
 			}
 			return {
-				value: inputValue
+				value: inputValue,
 			};
 		},
 
@@ -237,7 +235,7 @@ export default {
 				click: event => {
 					this.setState({
 						isOpen: true,
-						inputValue: event.target.value
+						inputValue: event.target.value,
 					});
 					if (onClick) {
 						onClick(event);
@@ -260,23 +258,16 @@ export default {
 					if (onBlur) {
 						onBlur(event);
 					}
-				}
+				},
 			};
 		},
 
-		getInputEvents({
-			onInput,
-			onBlur,
-			onFocus,
-			onKeyPress,
-			onKeyDown,
-			onKeyUp
-		}) {
+		getInputEvents({ onInput, onBlur, onFocus, onKeyPress, onKeyDown, onKeyUp }) {
 			return {
 				input: event => {
 					this.setState({
 						isOpen: true,
-						inputValue: event.target.value
+						inputValue: event.target.value,
 					});
 					if (onInput) {
 						onInput(event);
@@ -311,7 +302,7 @@ export default {
 					}
 					// TODO: implement isMouseDown
 					// this.reset()
-				}
+				},
 			};
 		},
 
@@ -323,7 +314,7 @@ export default {
 				getInputProps,
 				getInputEvents,
 
-				getButtonProps
+				getButtonProps,
 			} = this;
 
 			return {
@@ -335,7 +326,7 @@ export default {
 
 				getButtonProps,
 
-				...this.mergedState
+				...this.mergedState,
 			};
 		},
 
@@ -353,7 +344,7 @@ export default {
 			});
 
 			this.$emit('stateChange', this.mergedState);
-		}
+		},
 	},
 
 	render() {
@@ -363,9 +354,9 @@ export default {
 			<div ref="rootNode">
 				{this.$scopedSlots.default
 					&& this.$scopedSlots.default({
-						...this.getHelpersAndState()
+						...this.getHelpersAndState(),
 					})}
 			</div>
 		);
-	}
+	},
 };

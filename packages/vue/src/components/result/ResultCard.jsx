@@ -1,6 +1,6 @@
 import VueTypes from 'vue-types';
 import { helper } from '@appbaseio/reactivecore';
-import { RLConnected } from './ReactiveList.jsx';
+import ReactiveList, { RLConnected } from './ReactiveList.jsx';
 import Title from '../../styles/Title';
 import types from '../../utils/vueTypes';
 import Card, { container, Image } from '../../styles/Card';
@@ -99,6 +99,8 @@ const ResultCard = {
 		},
 	},
 };
+
+ResultCard.generateQueryOptions = props => ReactiveList.generateQueryOptions(props);
 
 ResultCard.install = function(Vue) {
 	Vue.component(ResultCard.name, ResultCard);

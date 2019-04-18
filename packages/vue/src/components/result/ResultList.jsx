@@ -1,6 +1,6 @@
 import VueTypes from 'vue-types';
 import { helper } from '@appbaseio/reactivecore';
-import { RLConnected } from './ReactiveList.jsx';
+import ReactiveList, { RLConnected } from './ReactiveList.jsx';
 import Title from '../../styles/Title';
 import ListItem, { container, Image } from '../../styles/ListItem';
 import types from '../../utils/vueTypes';
@@ -106,7 +106,7 @@ const ResultList = {
 		},
 	},
 };
-
+ResultList.generateQueryOptions = props => ReactiveList.generateQueryOptions(props);
 ResultList.install = function(Vue) {
 	Vue.component(ResultList.name, ResultList);
 };
