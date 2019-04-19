@@ -46,8 +46,8 @@ class GeoDistanceDropdown extends Component {
 		let currentLocation = null;
 		let currentDistance = 0;
 
+		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-		props.addComponent(this.props.componentId);
 		this.setReact(props);
 
 		if (props.value) {
@@ -280,8 +280,15 @@ class GeoDistanceDropdown extends Component {
 			},
 			() => {
 				this.updateQuery(currentDistance, this.props);
+				if (this.props.onValueChange) {
+					this.props.onValueChange({
+						label: this.getSelectedLabel(currentDistance),
+						location: this.state.currentLocation,
+					});
+				}
 			},
 		);
+
 	};
 
 	updateQuery = (distance, props = this.props) => {
