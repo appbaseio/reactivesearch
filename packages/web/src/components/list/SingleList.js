@@ -28,7 +28,14 @@ import Input from '../../styles/Input';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import { connect, isFunction, getComponent, hasCustomRenderer, isEvent } from '../../utils';
+import {
+	connect,
+	isFunction,
+	getComponent,
+	hasCustomRenderer,
+	isEvent,
+	isIdentical,
+} from '../../utils';
 
 // showLoadMore is experimental API and works only with ES6
 class SingleList extends Component {
@@ -95,13 +102,13 @@ class SingleList extends Component {
 		});
 
 		// Treat defaultQuery and customQuery as reactive props
-		if (this.props.defaultQuery !== prevProps.defaultQuery) {
+		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
 			this.updateDefaultQuery();
 			// Clear the component value
 			this.updateQuery('', this.props);
 		}
 
-		if (this.props.customQuery !== prevProps.customQuery) {
+		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 

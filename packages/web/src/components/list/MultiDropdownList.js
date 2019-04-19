@@ -27,7 +27,14 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/Dropdown';
-import { connect, isFunction, getComponent, hasCustomRenderer, isEvent } from '../../utils';
+import {
+	connect,
+	isFunction,
+	getComponent,
+	hasCustomRenderer,
+	isEvent,
+	isIdentical,
+} from '../../utils';
 
 class MultiDropdownList extends Component {
 	constructor(props) {
@@ -116,14 +123,15 @@ class MultiDropdownList extends Component {
 			}
 		});
 		// Treat defaultQuery and customQuery as reactive props
-		if (this.props.defaultQuery !== prevProps.defaultQuery) {
+		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
 			this.updateDefaultQuery();
 			this.updateQuery([], this.props);
 		}
 
-		if (this.props.customQuery !== prevProps.customQuery) {
+		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
 			this.updateQuery(Object.keys(this.state.currentValue), this.props);
 		}
+
 		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
 			this.updateQueryOptions(this.props),
 		);

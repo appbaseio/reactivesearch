@@ -26,7 +26,14 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/Dropdown';
-import { connect, isFunction, getComponent, hasCustomRenderer, isEvent } from '../../utils';
+import {
+	connect,
+	isFunction,
+	getComponent,
+	hasCustomRenderer,
+	isEvent,
+	isIdentical,
+} from '../../utils';
 
 class SingleDropdownList extends Component {
 	constructor(props) {
@@ -95,13 +102,13 @@ class SingleDropdownList extends Component {
 		);
 
 		// Treat defaultQuery and customQuery as reactive props
-		if (this.props.defaultQuery !== prevProps.defaultQuery) {
+		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
 			this.updateDefaultQuery();
 			// Clear the component value
 			this.updateQuery('', this.props);
 		}
 
-		if (this.props.customQuery !== prevProps.customQuery) {
+		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 

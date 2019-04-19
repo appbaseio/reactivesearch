@@ -30,7 +30,7 @@ import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
-import { connect, isFunction, getComponent, hasCustomRenderer } from '../../utils';
+import { connect, isFunction, getComponent, hasCustomRenderer, isIdentical } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 
@@ -86,12 +86,12 @@ class DataSearch extends Component {
 		);
 
 		// Treat defaultQuery and customQuery as reactive props
-		if (this.props.defaultQuery !== prevProps.defaultQuery) {
+		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
 			this.updateDefaultQuery(this.state.currentValue, this.props);
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 
-		if (this.props.customQuery !== prevProps.customQuery) {
+		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 
