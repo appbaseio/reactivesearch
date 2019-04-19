@@ -297,7 +297,8 @@ class ReactiveMap extends Component {
 
 	shouldComponentUpdate(nextProps, nextState) {
 		if (
-			this.state.searchAsMove !== nextState.searchAsMove
+			this.props.showSearchAsMove !== nextProps.showSearchAsMove
+			|| this.state.searchAsMove !== nextState.searchAsMove
 			|| this.props.showMapStyles !== nextProps.showMapStyles
 			|| this.props.autoCenter !== nextProps.autoCenter
 			|| this.props.error !== nextProps.error
