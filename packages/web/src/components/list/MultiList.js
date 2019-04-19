@@ -51,7 +51,8 @@ class MultiList extends Component {
 			currentValue,
 			options,
 			searchTerm: '',
-			after: {}, // for composite aggs
+			after: {}, // for composite aggs,
+			prevAfter: {}, // useful when we want to prevent the showLoadMore results
 			isLastBucket: false,
 		};
 		this.locked = false;
@@ -77,11 +78,13 @@ class MultiList extends Component {
 			if (showLoadMore) {
 				const { buckets } = options[dataField];
 				const after = options[dataField].after_key;
+				const prevAfter = prevProps.options && prevProps.options[dataField].after_key;
 				// detect the last bucket by checking if the after key is absent
 				const isLastBucket = !after;
 				this.setState(
 					state => ({
 						...state,
+						prevAfter: prevAfter ? { after: prevAfter } : state.prevAfter,
 						after: after ? { after } : state.after,
 						isLastBucket,
 						options: this.getOptions(buckets, this.props),
@@ -346,7 +349,10 @@ class MultiList extends Component {
 			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 		}
-		props.setQueryOptions(props.componentId, customQueryOptions);
+		props.setQueryOptions(props.componentId, {
+			...MultiList.generateQueryOptions(props, this.state.prevAfter),
+			...customQueryOptions,
+		});
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -381,8 +387,10 @@ class MultiList extends Component {
 		if (props.defaultQuery) {
 			const value = Object.keys(this.state.currentValue);
 			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
-			props.setQueryOptions(this.internalComponent,
-				{ ...queryOptions, ...defaultQueryOptions });
+			props.setQueryOptions(this.internalComponent, {
+				...queryOptions,
+				...defaultQueryOptions,
+			});
 		} else {
 			props.setQueryOptions(this.internalComponent, queryOptions);
 		}
@@ -420,7 +428,9 @@ class MultiList extends Component {
 
 	handleClick = (e) => {
 		let currentValue = e;
-		if (isEvent(e)) { currentValue = e.target.value; }
+		if (isEvent(e)) {
+			currentValue = e.target.value;
+		}
 		const { value, onChange } = this.props;
 		if (value === undefined) {
 			this.setValue(currentValue);
@@ -500,90 +510,95 @@ class MultiList extends Component {
 					</Title>
 				)}
 				{this.renderSearch()}
-				{
-					this.hasCustomRenderer ? this.getComponent() : (
-						<UL className={getClassName(this.props.innerClass, 'list') || null}>
-							{selectAllLabel ? (
+				{this.hasCustomRenderer ? (
+					this.getComponent()
+				) : (
+					<UL className={getClassName(this.props.innerClass, 'list') || null}>
+						{selectAllLabel ? (
+							<li
+								key={selectAllLabel}
+								className={`${
+									this.state.currentValue[selectAllLabel] ? 'active' : ''
+								}`}
+							>
+								<Checkbox
+									className={
+										getClassName(this.props.innerClass, 'checkbox') || null
+									}
+									id={`${this.props.componentId}-${selectAllLabel}`}
+									name={selectAllLabel}
+									value={selectAllLabel}
+									onChange={this.handleClick}
+									checked={!!this.state.currentValue[selectAllLabel]}
+									show={this.props.showCheckbox}
+								/>
+								<label
+									className={getClassName(this.props.innerClass, 'label') || null}
+									htmlFor={`${this.props.componentId}-${selectAllLabel}`}
+								>
+									{selectAllLabel}
+								</label>
+							</li>
+						) : null}
+						{listItems.length
+							? listItems.map(item => (
 								<li
-									key={selectAllLabel}
-									className={`${this.state.currentValue[selectAllLabel] ? 'active' : ''}`}
+									key={item.key}
+									className={`${
+										this.state.currentValue[item.key] ? 'active' : ''
+									}`}
 								>
 									<Checkbox
-										className={getClassName(this.props.innerClass, 'checkbox') || null}
-										id={`${this.props.componentId}-${selectAllLabel}`}
-										name={selectAllLabel}
-										value={selectAllLabel}
+										className={
+											getClassName(this.props.innerClass, 'checkbox') || null
+										}
+										id={`${this.props.componentId}-${item.key}`}
+										name={this.props.componentId}
+										value={item.key}
 										onChange={this.handleClick}
-										checked={!!this.state.currentValue[selectAllLabel]}
+										checked={!!this.state.currentValue[item.key]}
 										show={this.props.showCheckbox}
 									/>
 									<label
-										className={getClassName(this.props.innerClass, 'label') || null}
-										htmlFor={`${this.props.componentId}-${selectAllLabel}`}
+										className={
+											getClassName(this.props.innerClass, 'label') || null
+										}
+										htmlFor={`${this.props.componentId}-${item.key}`}
 									>
-										{selectAllLabel}
+										{renderItem ? (
+											renderItem(
+												item.key,
+												item.doc_count,
+												!!this.state.currentValue[item.key],
+											)
+										) : (
+											<span>
+												<span>{item.key}</span>
+												{this.props.showCount && (
+													<span
+														className={
+															getClassName(
+																this.props.innerClass,
+																'count',
+															) || null
+														}
+													>
+														{item.doc_count}
+													</span>
+												)}
+											</span>
+										)}
 									</label>
 								</li>
-							) : null}
-							{listItems.length
-								? listItems.map(item => (
-									<li
-										key={item.key}
-										className={`${
-											this.state.currentValue[item.key] ? 'active' : ''
-										}`}
-									>
-										<Checkbox
-											className={
-												getClassName(this.props.innerClass, 'checkbox') || null
-											}
-											id={`${this.props.componentId}-${item.key}`}
-											name={this.props.componentId}
-											value={item.key}
-											onChange={this.handleClick}
-											checked={!!this.state.currentValue[item.key]}
-											show={this.props.showCheckbox}
-										/>
-										<label
-											className={
-												getClassName(this.props.innerClass, 'label') || null
-											}
-											htmlFor={`${this.props.componentId}-${item.key}`}
-										>
-											{renderItem ? (
-												renderItem(
-													item.key,
-													item.doc_count,
-													!!this.state.currentValue[item.key],
-												)
-											) : (
-												<span>
-													<span>{item.key}</span>
-													{this.props.showCount && (
-														<span
-															className={
-																getClassName(
-																	this.props.innerClass,
-																	'count',
-																) || null
-															}
-														>
-															{item.doc_count}
-														</span>
-													)}
-												</span>
-											)}
-										</label>
-									</li>
-								)) // prettier-ignore
-								: this.props.renderNoResults && this.props.renderNoResults()}
-							{showLoadMore && !isLastBucket && (
-								<div css={loadMoreContainer}>
-									<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
-								</div>
-							)}
-						</UL>
-					)}
+							)) // prettier-ignore
+							: this.props.renderNoResults && this.props.renderNoResults()}
+						{showLoadMore && !isLastBucket && (
+							<div css={loadMoreContainer}>
+								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
+							</div>
+						)}
+					</UL>
+				)}
 			</Container>
 		);
 	}
