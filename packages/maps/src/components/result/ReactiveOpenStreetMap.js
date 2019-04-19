@@ -175,12 +175,16 @@ class ReactiveOpenStreetMap extends Component {
 					},
 				}}
 				touchZoom
+				onDragend={obj => {
+					params.handleOpenStreetOnDragEnd(obj.target.getBounds());
+				}}
 			>
 				<OpenStreetLayer
 					url={this.props.tileServer || 'https://{s}.tile.osm.org/{z}/{x}/{y}.png'}
 				/>
 				{markers}
 				{this.props.showMarkers && this.props.markers}
+				{params.renderSearchAsMove()}
 			</OpenStreetMap>
 		);
 	};

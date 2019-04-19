@@ -452,15 +452,57 @@ class ReactiveMap extends Component {
 		return this.defaultQuery ? this.defaultQuery.query : null;
 	};
 
+	getOpenStreetGeoQuery = (bounds, props = this.props) => {
+		this.defaultQuery = props.defaultQuery ? props.defaultQuery() : null;
+
+		if (bounds) {
+			const north = bounds._northEast.lat;
+			const south = bounds._southWest.lat;
+			const east = bounds._northEast.lng;
+			const west = bounds._southWest.lng;
+			const boundingBoxCoordinates = {
+				top_left: [west, north],
+				bottom_right: [east, south],
+			};
+
+			this.setState({
+				mapBoxBounds: boundingBoxCoordinates,
+			});
+
+			const geoQuery = {
+				geo_bounding_box: {
+					[this.props.dataField]: boundingBoxCoordinates,
+				},
+			};
+
+			if (this.defaultQuery) {
+				const { query } = this.defaultQuery;
+
+				if (query) {
+					// adds defaultQuery's query to geo-query
+					// to generate a map query
+
+					return {
+						must: [geoQuery, query],
+					};
+				}
+			}
+
+			return geoQuery;
+		}
+
+		// return the defaultQuery (if set) or null when map query not available
+		return this.defaultQuery ? this.defaultQuery.query : null;
+	};
+
 	setGeoQuery = (executeUpdate = false) => {
-		// execute a new query on theinitial mount
+		// execute a new query on the initial mount
 		// or whenever searchAsMove is true and the map is dragged
 		if (executeUpdate || (!this.skipBoundingBox && !this.state.mapBoxBounds)) {
 			this.defaultQuery = this.getGeoQuery();
 
 			const persistMapQuery = !!this.props.center;
 			const forceExecute = this.state.searchAsMove;
-
 			this.props.setMapData(
 				this.props.componentId,
 				this.defaultQuery,
@@ -615,6 +657,7 @@ class ReactiveMap extends Component {
 						padding: '8px 10px',
 						boxShadow: 'rgba(0,0,0,0.3) 0px 1px 4px -1px',
 						borderRadius: 2,
+						zIndex: 10000,
 					}}
 					className={getClassName(this.props.innerClass, 'checkboxContainer') || null}
 				>
@@ -711,6 +754,29 @@ class ReactiveMap extends Component {
 		if (this.props.mapProps.onDragEnd) this.props.mapProps.onDragEnd();
 	};
 
+	handleOpenStreetOnDragEnd = (bounds) => {
+		if (this.state.searchAsMove) {
+			this.setState(
+				{
+					preserveCenter: true,
+				},
+				() => {
+					this.defaultQuery = this.getOpenStreetGeoQuery(bounds);
+
+					const persistMapQuery = !!this.props.center;
+					const forceExecute = this.state.searchAsMove;
+					this.props.setMapData(
+						this.props.componentId,
+						this.defaultQuery,
+						persistMapQuery,
+						forceExecute,
+					);
+				},
+			);
+		}
+		if (this.props.mapProps.onDragEnd) this.props.mapProps.onDragEnd();
+	};
+
 	handleZoomChange = () => {
 		const zoom = this.props.mapRef.getZoom();
 		if (this.state.searchAsMove) {
@@ -766,6 +832,7 @@ class ReactiveMap extends Component {
 			handleOnDragEnd: this.handleOnDragEnd,
 			handleOnIdle: this.handleOnIdle,
 			handleZoomChange: this.handleZoomChange,
+			handleOpenStreetOnDragEnd: this.handleOpenStreetOnDragEnd,
 		};
 		return (
 			<div style={{ ...style, ...this.props.style }} className={this.props.className}>
