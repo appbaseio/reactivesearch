@@ -16,6 +16,7 @@ export interface CategorySearchProps extends CommonProps {
 	children?: (data: any) => any;
 	customHighlight?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
+	defaultQuery?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;
 	debounce?: number;
 	defaultValue?: categorySearchValue;

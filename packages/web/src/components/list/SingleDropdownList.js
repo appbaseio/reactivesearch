@@ -94,6 +94,17 @@ class SingleDropdownList extends Component {
 			this.updateQueryOptions(this.props),
 		);
 
+		// Treat defaultQuery and customQuery as reactive props
+		if (this.props.defaultQuery !== prevProps.defaultQuery) {
+			this.updateDefaultQuery();
+			// Clear the component value
+			this.updateQuery('', this.props);
+		}
+
+		if (this.props.customQuery !== prevProps.customQuery) {
+			this.updateQuery(this.state.currentValue, this.props);
+		}
+
 		checkPropChange(this.props.dataField, prevProps.dataField, () => {
 			this.updateQueryOptions(this.props);
 			this.updateQuery(this.state.currentValue, this.props);
@@ -225,6 +236,30 @@ class SingleDropdownList extends Component {
 		});
 	};
 
+	updateDefaultQuery = (queryOptions) => {
+		const value = this.state.currentValue;
+		const props = this.props;
+		const { defaultQuery } = props;
+		let defaultQueryOptions;
+		let query;
+		if (defaultQuery) {
+			({ query } = defaultQuery(value, props) || {});
+			defaultQueryOptions = getOptionsFromQuery(defaultQuery(value, props));
+		}
+		props.setQueryOptions(this.internalComponent, {
+			...(queryOptions
+				|| SingleDropdownList.generateQueryOptions(props, this.state.prevAfter)),
+			...defaultQueryOptions,
+		});
+		if (query) {
+			props.updateQuery({
+				componentId: this.internalComponent,
+				query,
+				componentType: 'SINGLEDROPDOWNLIST',
+			});
+		}
+	};
+
 	static generateQueryOptions(props, after) {
 		const queryOptions = getQueryOptions(props);
 		return props.showLoadMore
@@ -245,10 +280,7 @@ class SingleDropdownList extends Component {
 			addAfterKey ? this.state.after : {},
 		);
 		if (props.defaultQuery) {
-			const value = this.state.currentValue;
-			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
-			props.setQueryOptions(this.internalComponent,
-				{ ...queryOptions, ...defaultQueryOptions });
+			this.updateDefaultQuery(queryOptions);
 		} else {
 			props.setQueryOptions(this.internalComponent, queryOptions);
 		}
@@ -260,7 +292,9 @@ class SingleDropdownList extends Component {
 
 	handleChange = (e) => {
 		let currentValue = e;
-		if (isEvent(e)) { currentValue = e.target.value; }
+		if (isEvent(e)) {
+			currentValue = e.target.value;
+		}
 		const { value, onChange } = this.props;
 		if (value === undefined) {
 			this.setValue(currentValue);
@@ -285,7 +319,7 @@ class SingleDropdownList extends Component {
 			downshiftProps,
 		};
 		return getComponent(data, this.props);
-	}
+	};
 
 	render() {
 		const {

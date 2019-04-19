@@ -116,9 +116,15 @@ class MultiList extends Component {
 				);
 			}
 		});
-		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
-			this.updateQueryOptions(this.props),
-		);
+		// Treat defaultQuery and customQuery as reactive props
+		if (this.props.defaultQuery !== prevProps.defaultQuery) {
+			this.updateDefaultQuery();
+			this.updateQuery([], this.props);
+		}
+
+		if (this.props.customQuery !== prevProps.customQuery) {
+			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+		}
 
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQueryOptions(this.props);
@@ -365,6 +371,29 @@ class MultiList extends Component {
 		});
 	};
 
+	updateDefaultQuery = (queryOptions) => {
+		const value = Object.keys(this.state.currentValue);
+		const props = this.props;
+		const { defaultQuery } = props;
+		let defaultQueryOptions;
+		let query;
+		if (defaultQuery) {
+			({ query } = defaultQuery(value, props) || {});
+			defaultQueryOptions = getOptionsFromQuery(defaultQuery(value, props));
+		}
+		props.setQueryOptions(this.internalComponent, {
+			...(queryOptions || MultiList.generateQueryOptions(props, this.state.prevAfter)),
+			...defaultQueryOptions,
+		});
+		if (query) {
+			props.updateQuery({
+				componentId: this.internalComponent,
+				query,
+				componentType: 'MULTILIST',
+			});
+		}
+	};
+
 	static generateQueryOptions(props, after) {
 		const queryOptions = getQueryOptions(props);
 		return props.showLoadMore
@@ -385,12 +414,7 @@ class MultiList extends Component {
 			addAfterKey ? this.state.after : {},
 		);
 		if (props.defaultQuery) {
-			const value = Object.keys(this.state.currentValue);
-			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
-			props.setQueryOptions(this.internalComponent, {
-				...queryOptions,
-				...defaultQueryOptions,
-			});
+			this.updateDefaultQuery(queryOptions);
 		} else {
 			props.setQueryOptions(this.internalComponent, queryOptions);
 		}

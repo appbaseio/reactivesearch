@@ -94,6 +94,17 @@ class SingleList extends Component {
 			}
 		});
 
+		// Treat defaultQuery and customQuery as reactive props
+		if (this.props.defaultQuery !== prevProps.defaultQuery) {
+			this.updateDefaultQuery();
+			// Clear the component value
+			this.updateQuery('', this.props);
+		}
+
+		if (this.props.customQuery !== prevProps.customQuery) {
+			this.updateQuery(this.state.currentValue, this.props);
+		}
+
 		checkSomePropChange(prevProps, this.props, ['size', 'sortBy'], () =>
 			this.updateQueryOptions(this.props),
 		);
@@ -249,6 +260,29 @@ class SingleList extends Component {
 		});
 	};
 
+	updateDefaultQuery = (queryOptions) => {
+		const value = this.state.currentValue;
+		const props = this.props;
+		const { defaultQuery } = props;
+		let defaultQueryOptions;
+		let query;
+		if (defaultQuery) {
+			({ query } = defaultQuery(value, props) || {});
+			defaultQueryOptions = getOptionsFromQuery(defaultQuery(value, props));
+		}
+		props.setQueryOptions(this.internalComponent, {
+			...(queryOptions || SingleList.generateQueryOptions(props, this.state.prevAfter)),
+			...defaultQueryOptions,
+		});
+		if (query) {
+			props.updateQuery({
+				componentId: this.internalComponent,
+				query,
+				componentType: 'SINGLELIST',
+			});
+		}
+	};
+
 	static generateQueryOptions(props, after) {
 		const queryOptions = getQueryOptions(props);
 		return props.showLoadMore
@@ -269,12 +303,7 @@ class SingleList extends Component {
 			addAfterKey ? this.state.after : {},
 		);
 		if (props.defaultQuery) {
-			const value = this.state.currentValue;
-			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
-			props.setQueryOptions(this.internalComponent, {
-				...queryOptions,
-				...defaultQueryOptions,
-			});
+			this.updateDefaultQuery(queryOptions);
 		} else {
 			props.setQueryOptions(this.internalComponent, queryOptions);
 		}
