@@ -8,6 +8,7 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryListener,
+	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -15,6 +16,7 @@ import {
 	checkSomePropChange,
 	checkPropChange,
 	getClassName,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -52,26 +54,19 @@ class GeoDistanceDropdown extends Component {
 
 		if (props.value) {
 			currentLocation = props.value.location;
-			const selected = props.data.find(
-				item => item.label === props.value.label,
-			);
+			const selected = props.data.find(item => item.label === props.value.label);
 
 			currentDistance = selected.distance;
 		} else if (props.selectedValue) {
 			currentLocation = props.selectedValue.location;
-			const selected = props.data.find(
-				item => item.label === props.selectedValue.label,
-			);
+			const selected = props.data.find(item => item.label === props.selectedValue.label);
 
 			currentDistance = selected.distance;
 		} else if (props.defaultValue) {
 			currentLocation = props.defaultValue.location;
-			const selected = props.data.find(
-				item => item.label === props.defaultValue.label,
-			);
+			const selected = props.data.find(item => item.label === props.defaultValue.label);
 			currentDistance = selected.distance;
 		}
-
 
 		this.state = {
 			currentLocation,
@@ -96,10 +91,7 @@ class GeoDistanceDropdown extends Component {
 			this.updateQuery(this.state.currentDistance, this.props);
 		});
 
-		if (
-			this.props.value
-			&& !isEqual(this.props.value, prevProps.value)
-		) {
+		if (this.props.value && !isEqual(this.props.value, prevProps.value)) {
 			this.setValues(this.props.value, this.props);
 		} else if (
 			this.props.selectedValue
@@ -288,11 +280,12 @@ class GeoDistanceDropdown extends Component {
 				}
 			},
 		);
-
 	};
 
 	updateQuery = (distance, props = this.props) => {
-		const query = props.customQuery || this.defaultQuery;
+		const {
+			componentId, customQuery, filterLabel, showFilter, URLParams,
+		} = props;
 		const selectedDistance = this.getSelectedLabel(distance);
 		let value = null;
 		if (selectedDistance) {
@@ -301,14 +294,21 @@ class GeoDistanceDropdown extends Component {
 				location: this.state.currentLocation,
 			};
 		}
-
+		let query = this.defaultQuery(this.coordinates, distance, props);
+		if (customQuery) {
+			const customQueryTobeSet = customQuery(this.coordinates, distance, props);
+			if (customQueryTobeSet.query) {
+				({ query } = customQueryTobeSet);
+			}
+			props.setQueryOptions(this.props.componentId, getOptionsFromQuery(customQueryTobeSet));
+		}
 		props.updateQuery({
-			componentId: props.componentId,
-			query: query(this.coordinates, distance, props),
+			componentId,
+			query,
 			value,
-			label: props.filterLabel,
-			showFilter: props.showFilter,
-			URLParams: props.URLParams,
+			label: filterLabel,
+			showFilter,
+			URLParams,
 		});
 	};
 
@@ -417,7 +417,7 @@ class GeoDistanceDropdown extends Component {
 				label: this.props.value.label,
 			});
 		}
-	}
+	};
 
 	renderSearchBox = () => {
 		let suggestionsList = [...this.state.suggestions];
@@ -559,6 +559,7 @@ GeoDistanceDropdown.propTypes = {
 	onValueChange: types.func,
 	placeholder: types.string,
 	react: types.react,
+	setQueryOptions: types.funcRequired,
 	value: types.selectedValue,
 	showFilter: types.bool,
 	showIcon: types.bool,
@@ -596,6 +597,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 export default connect(
