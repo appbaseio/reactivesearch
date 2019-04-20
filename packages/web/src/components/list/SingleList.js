@@ -22,7 +22,7 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { getAggsQuery, getCompositeAggsQuery } from './utils';
+import { getAggsQuery, getCompositeAggsQuery, updateInternalQuery } from './utils';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Button, { loadMoreContainer } from '../../styles/Button';
@@ -268,26 +268,16 @@ class SingleList extends Component {
 	};
 
 	updateDefaultQuery = (queryOptions) => {
-		const value = this.state.currentValue;
-		const props = this.props;
-		const { defaultQuery } = props;
-		let defaultQueryOptions;
-		let query;
-		if (defaultQuery) {
-			({ query } = defaultQuery(value, props) || {});
-			defaultQueryOptions = getOptionsFromQuery(defaultQuery(value, props));
-		}
-		props.setQueryOptions(this.internalComponent, {
-			...(queryOptions || SingleList.generateQueryOptions(props, this.state.prevAfter)),
-			...defaultQueryOptions,
-		});
-		if (query) {
-			props.updateQuery({
-				componentId: this.internalComponent,
-				query,
+		updateInternalQuery(
+			this.internalComponent,
+			queryOptions,
+			this.state.currentValue,
+			this.props,
+			SingleList.generateQueryOptions(this.props, this.state.prevAfter),
+			{
 				componentType: 'SINGLELIST',
-			});
-		}
+			},
+		);
 	};
 
 	static generateQueryOptions(props, after) {

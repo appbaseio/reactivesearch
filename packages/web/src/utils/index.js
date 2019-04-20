@@ -60,9 +60,7 @@ export const isEvent = candidate =>
  * To check if two functions are identical
  */
 export const isIdentical = (a, b) => {
-	if (a === b) {
-		return true;
-	}
+	if (!a && !b) return true;
 	if (typeof a === 'function' && typeof b === 'function') {
 		if (isEqual(a(), b())) {
 			return true;
