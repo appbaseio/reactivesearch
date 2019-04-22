@@ -385,9 +385,6 @@ class MultiList extends Component {
 			Object.keys(this.state.currentValue),
 			this.props,
 			MultiList.generateQueryOptions(this.props, this.state.prevAfter),
-			{
-				componentType: 'MULTILIST',
-			},
 		);
 	};
 

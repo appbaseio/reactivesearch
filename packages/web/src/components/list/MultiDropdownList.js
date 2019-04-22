@@ -368,9 +368,6 @@ class MultiDropdownList extends Component {
 			Object.keys(this.state.currentValue),
 			this.props,
 			MultiDropdownList.generateQueryOptions(this.props, this.state.prevAfter),
-			{
-				componentType: 'MULTIDROPDOWNLIST',
-			},
 		);
 	};
 

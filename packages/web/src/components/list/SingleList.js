@@ -274,9 +274,6 @@ class SingleList extends Component {
 			this.state.currentValue,
 			this.props,
 			SingleList.generateQueryOptions(this.props, this.state.prevAfter),
-			{
-				componentType: 'SINGLELIST',
-			},
 		);
 	};
 

@@ -250,9 +250,6 @@ class SingleDropdownList extends Component {
 			this.state.currentValue,
 			this.props,
 			SingleDropdownList.generateQueryOptions(this.props, this.state.prevAfter),
-			{
-				componentType: 'SINGLEDROPDOWNLIST',
-			},
 		);
 	};
 

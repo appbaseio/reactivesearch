@@ -378,7 +378,6 @@ class DataSearch extends Component {
 			componentId: this.internalComponent,
 			query,
 			value,
-			componentType: 'DATASEARCH',
 		});
 	};
 
