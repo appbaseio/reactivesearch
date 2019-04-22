@@ -62,7 +62,18 @@ class ReactiveGoogleMap extends Component {
 		) {
 			this.handleUpdaterKey();
 		}
+
+		if (this.props.defaultMapStyle !== nextProps.defaultMapStyle) {
+			this.handleStyleChange(nextProps.defaultMapStyle);
+		}
 	}
+
+	handleStyleChange = (newStyle) => {
+		this.setState({
+			currentMapStyle:
+				this.mapStyles.find(style => style.label === newStyle) || this.mapStyles[0],
+		});
+	};
 
 	openMarkerInfo = (id, autoClosePopover, handlePreserveCenter) => {
 		const openMarkers = autoClosePopover

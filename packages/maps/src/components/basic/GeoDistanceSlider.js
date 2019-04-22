@@ -8,6 +8,7 @@ import {
 	watchComponent,
 	updateQuery,
 	setQueryListener,
+	setQueryOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -15,6 +16,7 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
+	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Rheostat from 'rheostat/lib/Slider';
 
@@ -36,7 +38,6 @@ import { connect } from '@appbaseio/reactivesearch/lib/utils';
 class GeoDistanceSlider extends Component {
 	constructor(props) {
 		super(props);
-
 
 		this.type = 'geo_distance';
 		this.locked = false;
@@ -91,10 +92,7 @@ class GeoDistanceSlider extends Component {
 			this.updateQuery(this.state.currentDistance, this.props);
 		});
 
-		if (
-			this.props.value
-			&& !isEqual(this.props.value, prevProps.value)
-		) {
+		if (this.props.value && !isEqual(this.props.value, prevProps.value)) {
 			this.setValues(this.props.value);
 		} else if (
 			this.props.selectedValue
@@ -279,8 +277,9 @@ class GeoDistanceSlider extends Component {
 	};
 
 	updateQuery = (distance, props = this.props) => {
-		const query = props.customQuery || this.defaultQuery;
-
+		const {
+			componentId, customQuery, filterLabel, showFilter, URLParams,
+		} = props;
 		let value = null;
 		if (distance && this.state.currentLocation) {
 			value = {
@@ -289,14 +288,21 @@ class GeoDistanceSlider extends Component {
 				// unit: props.unit,
 			};
 		}
-
+		let query = this.defaultQuery(this.coordinates, distance, props);
+		if (customQuery) {
+			const customQueryTobeSet = customQuery(this.coordinates, distance, props);
+			if (customQueryTobeSet.query) {
+				({ query } = customQueryTobeSet);
+			}
+			props.setQueryOptions(this.props.componentId, getOptionsFromQuery(customQueryTobeSet));
+		}
 		props.updateQuery({
-			componentId: props.componentId,
-			query: query(this.coordinates, distance, props),
+			componentId,
+			query,
 			value,
-			label: props.filterLabel,
-			showFilter: props.showFilter,
-			URLParams: props.URLParams,
+			label: filterLabel,
+			showFilter,
+			URLParams,
 		});
 	};
 
@@ -364,7 +370,10 @@ class GeoDistanceSlider extends Component {
 		if (value === undefined) {
 			this.setLocation({ value: this.state.currentLocation });
 		} else if (onChange) {
-			onChange({ location: this.state.currentLocation, distance: this.state.currentDistance });
+			onChange({
+				location: this.state.currentLocation,
+				distance: this.state.currentDistance,
+			});
 		}
 	};
 
@@ -384,7 +393,7 @@ class GeoDistanceSlider extends Component {
 		} else if (onChange) {
 			onChange({ location: data.value, distance: this.state.currentDistance });
 		}
-	}
+	};
 
 	renderSearchBox = () => {
 		let suggestionsList = [...this.state.suggestions];
@@ -563,6 +572,7 @@ GeoDistanceSlider.propTypes = {
 	range: types.range,
 	rangeLabels: types.rangeLabels,
 	react: types.react,
+	setQueryOptions: types.funcRequired,
 	showFilter: types.bool,
 	showIcon: types.bool,
 	tooltipTrigger: types.tooltipTrigger,
@@ -607,6 +617,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 export default connect(
