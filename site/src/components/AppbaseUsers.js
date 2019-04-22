@@ -1,8 +1,10 @@
 import React from 'react';
 import { css, cx } from 'react-emotion';
-import { string, object, shape, arrayOf } from 'prop-types';
+import {
+ string, object, shape, arrayOf,
+} from 'prop-types';
 import { media } from '../utils';
-import SubHeading from '../components/SubHeading';
+import SubHeading from './SubHeading';
 
 const styles = css`
 	display: flex;
@@ -91,10 +93,12 @@ AppbaseUsers.propTypes = {
 	className: string,
 	style: object,
 	imageStyle: object,
-	imageConfig: arrayOf(shape({
+	imageConfig: arrayOf(
+		shape({
 			srcSet: string,
 			alt: string,
-		})),
+		}),
+	),
 };
 
 export default AppbaseUsers;
