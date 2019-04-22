@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Navbar, Logo, Button, H3, Title, Flex, GithubButton, Grid } from '@appbaseio/designkit';
+import {
+ Navbar, Logo, Button, H3, Title, Flex, GithubButton, Grid,
+} from '@appbaseio/designkit';
 import { HashLink as Link } from 'react-router-hash-link';
 import { css } from 'emotion';
 import { ThemeProvider } from 'emotion-theming';
@@ -30,6 +32,7 @@ import queries from '../styles/mediaQueries';
 import { getButtonStyle, getLinkStyle } from '../styles/utils';
 import DiscoverRS from './DiscoverRS';
 import AppbaseUsers from './AppbaseUsers';
+import DownloadStats from './DownloadStats';
 
 const button = {
 	fontSize: '14px',
@@ -377,8 +380,7 @@ class HomePage extends Component {
 										{config.banner6.demos.map((
 											d,
 											index, // eslint-disable-line
-										) =>
-											(Object.keys(d).length ? ( // eslint-disable-next-line
+										) => (Object.keys(d).length ? ( // eslint-disable-next-line
 												<ImageCard key={index} src={d.src}>
 													<div>
 														<Title>{d.title}</Title>
@@ -454,8 +456,7 @@ class HomePage extends Component {
 									smGutter="0px"
 									style={{ marginBottom: '50px' }}
 								>
-									{config.banner7.articles.map((d, index) =>
-										(Object.keys(d).length ? (
+									{config.banner7.articles.map((d, index) => (Object.keys(d).length ? (
 											// eslint-disable-next-line
 											<ImageCard key={index} src={d.src}>
 												<div>
@@ -510,6 +511,7 @@ class HomePage extends Component {
 							<SupportGrid configName={config.name} />
 						</Layout>
 					</Section>
+					{config.name === 'web' && <DownloadStats />}
 					<AppbaseUsers />
 					<Footer configName={config.name} footerConfig={config.footer} />
 					<a
