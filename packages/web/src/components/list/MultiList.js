@@ -23,13 +23,20 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { getAggsQuery, getCompositeAggsQuery } from './utils';
+import { getAggsQuery, getCompositeAggsQuery, updateInternalQuery } from './utils';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect, isFunction, getComponent, hasCustomRenderer, isEvent } from '../../utils';
+import {
+	connect,
+	isFunction,
+	getComponent,
+	hasCustomRenderer,
+	isEvent,
+	isIdentical,
+} from '../../utils';
 
 class MultiList extends Component {
 	constructor(props) {
@@ -116,9 +123,15 @@ class MultiList extends Component {
 				);
 			}
 		});
-		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
-			this.updateQueryOptions(this.props),
-		);
+		// Treat defaultQuery and customQuery as reactive props
+		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+			this.updateDefaultQuery();
+			this.updateQuery([], this.props);
+		}
+
+		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
+			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+		}
 
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQueryOptions(this.props);
@@ -365,6 +378,16 @@ class MultiList extends Component {
 		});
 	};
 
+	updateDefaultQuery = (queryOptions) => {
+		updateInternalQuery(
+			this.internalComponent,
+			queryOptions,
+			Object.keys(this.state.currentValue),
+			this.props,
+			MultiList.generateQueryOptions(this.props, this.state.prevAfter),
+		);
+	};
+
 	static generateQueryOptions(props, after) {
 		const queryOptions = getQueryOptions(props);
 		return props.showLoadMore
@@ -385,12 +408,7 @@ class MultiList extends Component {
 			addAfterKey ? this.state.after : {},
 		);
 		if (props.defaultQuery) {
-			const value = Object.keys(this.state.currentValue);
-			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
-			props.setQueryOptions(this.internalComponent, {
-				...queryOptions,
-				...defaultQueryOptions,
-			});
+			this.updateDefaultQuery(queryOptions);
 		} else {
 			props.setQueryOptions(this.internalComponent, queryOptions);
 		}

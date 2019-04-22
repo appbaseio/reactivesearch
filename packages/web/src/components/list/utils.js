@@ -1,7 +1,38 @@
 import { helper } from '@appbaseio/reactivecore';
 
-const { getAggsOrder } = helper;
+const { getAggsOrder, getOptionsFromQuery } = helper;
 
+/**
+ * Updates the query for the internal component
+ */
+export const updateInternalQuery = (
+	componentId,
+	queryOptions,
+	value,
+	props,
+	defaultQueryToExecute,
+	queryParams,
+) => {
+	const { defaultQuery } = props;
+	let defaultQueryOptions;
+	let query;
+	if (defaultQuery) {
+		const queryTobeSet = defaultQuery(value, props);
+		({ query } = queryTobeSet || {});
+		defaultQueryOptions = getOptionsFromQuery(queryTobeSet);
+	}
+	props.setQueryOptions(componentId, {
+		...defaultQueryOptions,
+		...(queryOptions || defaultQueryToExecute),
+	});
+	if (query) {
+		props.updateQuery({
+			componentId,
+			query,
+			...queryParams,
+		});
+	}
+};
 // extracts query options from defaultQuery if set
 const extractQueryFromDefaultQuery = (defaultQuery) => {
 	let queryToBeReturned = {};

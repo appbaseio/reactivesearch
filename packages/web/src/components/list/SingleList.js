@@ -22,13 +22,20 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { getAggsQuery, getCompositeAggsQuery } from './utils';
+import { getAggsQuery, getCompositeAggsQuery, updateInternalQuery } from './utils';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import { connect, isFunction, getComponent, hasCustomRenderer, isEvent } from '../../utils';
+import {
+	connect,
+	isFunction,
+	getComponent,
+	hasCustomRenderer,
+	isEvent,
+	isIdentical,
+} from '../../utils';
 
 // showLoadMore is experimental API and works only with ES6
 class SingleList extends Component {
@@ -93,6 +100,17 @@ class SingleList extends Component {
 				});
 			}
 		});
+
+		// Treat defaultQuery and customQuery as reactive props
+		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+			this.updateDefaultQuery();
+			// Clear the component value
+			this.updateQuery('', this.props);
+		}
+
+		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
+			this.updateQuery(this.state.currentValue, this.props);
+		}
 
 		checkSomePropChange(prevProps, this.props, ['size', 'sortBy'], () =>
 			this.updateQueryOptions(this.props),
@@ -249,6 +267,16 @@ class SingleList extends Component {
 		});
 	};
 
+	updateDefaultQuery = (queryOptions) => {
+		updateInternalQuery(
+			this.internalComponent,
+			queryOptions,
+			this.state.currentValue,
+			this.props,
+			SingleList.generateQueryOptions(this.props, this.state.prevAfter),
+		);
+	};
+
 	static generateQueryOptions(props, after) {
 		const queryOptions = getQueryOptions(props);
 		return props.showLoadMore
@@ -269,12 +297,7 @@ class SingleList extends Component {
 			addAfterKey ? this.state.after : {},
 		);
 		if (props.defaultQuery) {
-			const value = this.state.currentValue;
-			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
-			props.setQueryOptions(this.internalComponent, {
-				...queryOptions,
-				...defaultQueryOptions,
-			});
+			this.updateDefaultQuery(queryOptions);
 		} else {
 			props.setQueryOptions(this.internalComponent, queryOptions);
 		}

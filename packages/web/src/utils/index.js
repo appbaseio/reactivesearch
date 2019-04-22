@@ -1,5 +1,6 @@
 import { connect as connectToStore } from 'react-redux';
 import { storeKey } from '@appbaseio/reactivecore';
+import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 
 export const connect = (...args) =>
 	connectToStore(...args, null, {
@@ -55,3 +56,16 @@ export const hasCustomRenderer = (props = {}) => {
 
 export const isEvent = candidate =>
 	!!(candidate && candidate.stopPropagation && candidate.preventDefault);
+/**
+ * To check if two functions are identical
+ */
+export const isIdentical = (a, b) => {
+	if (!a && !b) return true;
+	if (typeof a === 'function' && typeof b === 'function') {
+		if (isEqual(a(), b())) {
+			return true;
+		}
+		return false;
+	}
+	return false;
+};

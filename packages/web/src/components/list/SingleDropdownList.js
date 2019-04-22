@@ -21,12 +21,19 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { getAggsQuery, getCompositeAggsQuery } from './utils';
+import { getAggsQuery, getCompositeAggsQuery, updateInternalQuery } from './utils';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/Dropdown';
-import { connect, isFunction, getComponent, hasCustomRenderer, isEvent } from '../../utils';
+import {
+	connect,
+	isFunction,
+	getComponent,
+	hasCustomRenderer,
+	isEvent,
+	isIdentical,
+} from '../../utils';
 
 class SingleDropdownList extends Component {
 	constructor(props) {
@@ -93,6 +100,17 @@ class SingleDropdownList extends Component {
 		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
 			this.updateQueryOptions(this.props),
 		);
+
+		// Treat defaultQuery and customQuery as reactive props
+		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+			this.updateDefaultQuery();
+			// Clear the component value
+			this.updateQuery('', this.props);
+		}
+
+		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
+			this.updateQuery(this.state.currentValue, this.props);
+		}
 
 		checkPropChange(this.props.dataField, prevProps.dataField, () => {
 			this.updateQueryOptions(this.props);
@@ -225,6 +243,16 @@ class SingleDropdownList extends Component {
 		});
 	};
 
+	updateDefaultQuery = (queryOptions) => {
+		updateInternalQuery(
+			this.internalComponent,
+			queryOptions,
+			this.state.currentValue,
+			this.props,
+			SingleDropdownList.generateQueryOptions(this.props, this.state.prevAfter),
+		);
+	};
+
 	static generateQueryOptions(props, after) {
 		const queryOptions = getQueryOptions(props);
 		return props.showLoadMore
@@ -245,10 +273,7 @@ class SingleDropdownList extends Component {
 			addAfterKey ? this.state.after : {},
 		);
 		if (props.defaultQuery) {
-			const value = this.state.currentValue;
-			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
-			props.setQueryOptions(this.internalComponent,
-				{ ...queryOptions, ...defaultQueryOptions });
+			this.updateDefaultQuery(queryOptions);
 		} else {
 			props.setQueryOptions(this.internalComponent, queryOptions);
 		}
@@ -260,7 +285,9 @@ class SingleDropdownList extends Component {
 
 	handleChange = (e) => {
 		let currentValue = e;
-		if (isEvent(e)) { currentValue = e.target.value; }
+		if (isEvent(e)) {
+			currentValue = e.target.value;
+		}
 		const { value, onChange } = this.props;
 		if (value === undefined) {
 			this.setValue(currentValue);
@@ -285,7 +312,7 @@ class SingleDropdownList extends Component {
 			downshiftProps,
 		};
 		return getComponent(data, this.props);
-	}
+	};
 
 	render() {
 		const {

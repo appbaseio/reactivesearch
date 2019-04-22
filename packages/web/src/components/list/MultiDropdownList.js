@@ -22,12 +22,19 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { getAggsQuery, getCompositeAggsQuery } from './utils';
+import { getAggsQuery, getCompositeAggsQuery, updateInternalQuery } from './utils';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/Dropdown';
-import { connect, isFunction, getComponent, hasCustomRenderer, isEvent } from '../../utils';
+import {
+	connect,
+	isFunction,
+	getComponent,
+	hasCustomRenderer,
+	isEvent,
+	isIdentical,
+} from '../../utils';
 
 class MultiDropdownList extends Component {
 	constructor(props) {
@@ -63,77 +70,76 @@ class MultiDropdownList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkPropChange(
-			this.props.react,
-			prevProps.react,
-			() => this.setReact(this.props),
-		);
-		checkPropChange(
-			this.props.options,
-			prevProps.options,
-			() => {
-				const { showLoadMore, dataField } = this.props;
-				const { options } = this.state;
-				if (showLoadMore) {
-					// append options with showLoadMore
-					const { buckets } = this.props.options[dataField];
-					const nextOptions = [
-						...options,
-						...buckets.map(bucket => ({
-							key: bucket.key[dataField],
-							doc_count: bucket.doc_count,
-						})),
-					];
-					const after = this.props.options[dataField].after_key;
-					// detect the last bucket by checking if the next set of buckets were empty
-					const isLastBucket = !buckets.length;
-					this.setState({
+		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
+		checkPropChange(this.props.options, prevProps.options, () => {
+			const { showLoadMore, dataField } = this.props;
+			const { options } = this.state;
+			if (showLoadMore) {
+				// append options with showLoadMore
+				const { buckets } = this.props.options[dataField];
+				const nextOptions = [
+					...options,
+					...buckets.map(bucket => ({
+						key: bucket.key[dataField],
+						doc_count: bucket.doc_count,
+					})),
+				];
+				const after = this.props.options[dataField].after_key;
+				// detect the last bucket by checking if the next set of buckets were empty
+				const isLastBucket = !buckets.length;
+				this.setState(
+					{
 						after: {
 							after,
 						},
 						isLastBucket,
 						options: nextOptions,
-					}, () => {
+					},
+					() => {
 						// this will ensure that the Select-All (or any)
 						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
-						const value = Object.keys(currentValue)
-							.filter(item => currentValue[item]);
+						const value = Object.keys(currentValue).filter(item => currentValue[item]);
 						if (value.length) this.setValue(value, true);
-					});
-				} else {
-					this.setState({
+					},
+				);
+			} else {
+				this.setState(
+					{
 						options: this.props.options[dataField]
 							? this.props.options[dataField].buckets
 							: [],
-					}, () => {
+					},
+					() => {
 						// this will ensure that the Select-All (or any)
 						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
-						const value = Object.keys(currentValue)
-							.filter(item => currentValue[item]);
+						const value = Object.keys(currentValue).filter(item => currentValue[item]);
 						if (value.length) this.setValue(value, true);
-					});
-				}
-			},
-		);
-		checkSomePropChange(
-			this.props,
-			prevProps,
-			['size', 'sortBy'],
-			() => this.updateQueryOptions(this.props),
+					},
+				);
+			}
+		});
+		// Treat defaultQuery and customQuery as reactive props
+		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+			this.updateDefaultQuery();
+			this.updateQuery([], this.props);
+		}
+
+		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
+			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+		}
+
+		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
+			this.updateQueryOptions(this.props),
 		);
 
-		checkPropChange(
-			this.props.dataField,
-			prevProps.dataField,
-			() => {
-				this.updateQueryOptions(this.props);
-				this.updateQuery(Object.keys(this.state.currentValue), this.props);
-			},
-		);
+		checkPropChange(this.props.dataField, prevProps.dataField, () => {
+			this.updateQueryOptions(this.props);
+			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+		});
 
 		let selectedValue = Object.keys(this.state.currentValue);
 		const { selectAllLabel } = this.props;
@@ -321,9 +327,12 @@ class MultiDropdownList extends Component {
 			};
 
 			if (hasMounted) {
-				this.setState({
-					currentValue,
-				}, handleUpdates);
+				this.setState(
+					{
+						currentValue,
+					},
+					handleUpdates,
+				);
 			} else {
 				handleUpdates();
 			}
@@ -352,6 +361,16 @@ class MultiDropdownList extends Component {
 		});
 	};
 
+	updateDefaultQuery = (queryOptions) => {
+		updateInternalQuery(
+			this.internalComponent,
+			queryOptions,
+			Object.keys(this.state.currentValue),
+			this.props,
+			MultiDropdownList.generateQueryOptions(this.props, this.state.prevAfter),
+		);
+	};
+
 	static generateQueryOptions(props, after) {
 		const queryOptions = getQueryOptions(props);
 		return props.showLoadMore
@@ -372,10 +391,7 @@ class MultiDropdownList extends Component {
 			addAfterKey ? this.state.after : {},
 		);
 		if (props.defaultQuery) {
-			const value = Object.keys(this.state.currentValue);
-			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
-			props.setQueryOptions(this.internalComponent,
-				{ ...queryOptions, ...defaultQueryOptions });
+			this.updateDefaultQuery(queryOptions);
 		} else {
 			props.setQueryOptions(this.internalComponent, queryOptions);
 		}
@@ -387,7 +403,9 @@ class MultiDropdownList extends Component {
 
 	handleChange = (e) => {
 		let currentValue = e;
-		if (isEvent(e)) { currentValue = e.target.value; }
+		if (isEvent(e)) {
+			currentValue = e.target.value;
+		}
 		const { value, onChange } = this.props;
 		if (value === undefined) {
 			this.setValue(currentValue);
@@ -412,7 +430,7 @@ class MultiDropdownList extends Component {
 			downshiftProps,
 		};
 		return getComponent(data, this.props);
-	}
+	};
 
 	render() {
 		const {
