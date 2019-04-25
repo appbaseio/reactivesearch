@@ -43,6 +43,7 @@
 		"eslint-plugin-react": "^7.5.1",
 		"husky": "^1.2.0",
 		"lint-staged": "^7.0.0",
+		"nps": "^5.9.5",
 		"prettier": "^1.15.2"
 	}
 }
