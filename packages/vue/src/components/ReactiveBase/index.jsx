@@ -13,7 +13,7 @@ const ReactiveBase = {
 	name: 'ReactiveBase',
 	data() {
 		this.state = {
-			key: '__REACTIVE_BASE__'
+			key: '__REACTIVE_BASE__',
 		};
 		return this.state;
 	},
@@ -33,15 +33,12 @@ const ReactiveBase = {
 		mapKey: types.string,
 		className: types.string,
 		initialState: VueTypes.object.def({}),
-		transformRequest: types.func
+		transformRequest: types.func,
 	},
 	provide() {
 		return {
-			theme: composeThemeObject(
-				getTheme(this.$props.themePreset),
-				this.$props.theme
-			),
-			store: this.store
+			theme: composeThemeObject(getTheme(this.$props.themePreset), this.$props.theme),
+			store: this.store,
 		};
 	},
 	watch: {
@@ -62,13 +59,13 @@ const ReactiveBase = {
 		},
 		headers() {
 			this.updateState(this.$props);
-		}
+		},
 	},
 	methods: {
 		updateState(props) {
 			this.setStore(props);
 			this.setState(state => ({
-				key: `${state.key}-0`
+				key: `${state.key}-0`,
 			}));
 		},
 		setStore(props) {
@@ -85,7 +82,7 @@ const ReactiveBase = {
 				credentials,
 				type: props.type ? props.type : '*',
 				transformRequest: props.transformRequest,
-				analytics: props.analytics
+				analytics: props.analytics,
 			};
 			let queryParams = '';
 
@@ -98,22 +95,24 @@ const ReactiveBase = {
 			const params = new URLSearchParams(queryParams);
 			let selectedValues = {};
 
-			try {
-				Array.from(params.keys()).forEach(key => {
+			Array.from(params.keys()).forEach(key => {
+				try {
+					const parsedParams = JSON.parse(params.get(key));
+					const selectedValue = {};
+					if (parsedParams.value) {
+						selectedValue.value = parsedParams.value;
+					} else {
+						selectedValue.value = parsedParams;
+					}
+					if (parsedParams.category) selectedValue.category = parsedParams.category;
 					selectedValues = {
 						...selectedValues,
-						[key]: {
-							value: JSON.parse(params.get(key))
-						}
+						[key]: selectedValue,
 					};
-				});
-			} catch (e) {
-				console.error(
-					'REACTIVESEARCH - An error occured while parsing the URL state.',
-					e
-				);
-				selectedValues = {};
-			}
+				} catch (e) {
+					// Do not add to selectedValues if JSON parsing fails.
+				}
+			});
 
 			const { headers = {}, themePreset } = props;
 			const appbaseRef = Appbase(config);
@@ -126,31 +125,27 @@ const ReactiveBase = {
 				config: {
 					...config,
 					mapKey: props.mapKey,
-					themePreset
+					themePreset,
 				},
 				appbaseRef,
 				selectedValues,
 				headers,
-				...this.$props.initialState
+				...this.$props.initialState,
 			};
 			this.store = configureStore(initialState);
-		}
+		},
 	},
 	render() {
 		const children = this.$slots.default;
 		const { headers, style, className } = this.$props;
 		return (
 			<Provider store={this.store}>
-				<URLParamsProvider
-					headers={headers}
-					style={style}
-					className={className}
-				>
+				<URLParamsProvider headers={headers} style={style} className={className}>
 					{children}
 				</URLParamsProvider>
 			</Provider>
 		);
-	}
+	},
 };
 ReactiveBase.install = function(Vue) {
 	Vue.component(ReactiveBase.name, ReactiveBase);
