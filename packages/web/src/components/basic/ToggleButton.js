@@ -197,7 +197,14 @@ class ToggleButton extends Component {
 					const isSelected = this.state.currentValue.some(
 						value => value.value === item.value,
 					);
-					return (
+					return item.button ? item.button({
+						item,
+						innerClass: {
+							button: getClassName(this.props.innerClass, 'button'),
+						},
+						onClick: () => this.handleToggle(item),
+						isSelected,
+					}) : (
 						<Button
 							className={`${getClassName(this.props.innerClass, 'button')} ${
 								isSelected ? 'active' : ''

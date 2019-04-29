@@ -231,8 +231,6 @@ DynamicRangeInput.propTypes = {
 	innerClass: types.style,
 	onValueChange: types.func,
 	inputs: types.func,
-	prefix: types.string,
-	suffix: types.string,
 	inputFormat: types.func,
 	inputUnformat: types.func,
 	range: types.range,
