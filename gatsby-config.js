@@ -75,42 +75,6 @@ const plugins = [
 		},
 	},
 	`gatsby-plugin-react-helmet`,
-	{
-		resolve: `gatsby-plugin-advanced-sitemap`,
-		options: {
-			query: `
-                allMarkdownRemark{
-                    edges {
-                        node {
-                            id
-                            frontmatter {
-                                published_at: date
-                                feature_image: image
-                            }
-                            fields {
-                                slug
-                            }
-                        }
-                    }
-                }
-            }`,
-			mapping: {
-				allMarkdownRemark: {
-					sitemap: `pages`,
-				},
-			},
-			exclude: [
-				`/dev-404-page`,
-				`/404`,
-				`/404.html`,
-				`/offline-plugin-app-shell-fallback`,
-				`/data-schema`,
-				`/data-schema-2`,
-				`/v0.11/README`,
-				`/README`,
-			],
-		},
-	},
 	`gatsby-plugin-force-trailing-slashes`,
 
 	`gatsby-offline-search-index`,
