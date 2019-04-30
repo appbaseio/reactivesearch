@@ -64,18 +64,18 @@ const NavBar = ({ theme }) => {
 					>
 						Integrations
 					</Link>
-					<Link
+					{/* <Link
 						to="/api/"
 						className={`${themeClasses[theme].menuItem} nowrap f8 pa3 mr1 mr3-l`}
 					>
 						API Reference
-					</Link>
-					<Link
+					</Link> */}
+					{/* <Link
 						to="/faq/"
 						className={`${themeClasses[theme].menuItem} nowrap f8 pa3 mr1 mr3-l`}
 					>
 						FAQ
-					</Link>
+					</Link> */}
 				</div>
 			</div>
 			<div className="relative pl3">

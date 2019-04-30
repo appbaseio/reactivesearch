@@ -61,7 +61,7 @@ const HomePage = ({ data, location }) => {
 
 						<section className="col-12 col-6-ns mt0-ns bt bn-ns b--whitegrey nl5 nr5 nl0-ns nr0-ns ml0-ns mr0-ns pl5 pr5 pl0-ns pr0-ns pt5 pt0-ns ">
 							<Link to="/faq/" className={`${Spirit.h3} link darkgrey hover-midgrey`}>
-								FAQ
+								Latest Releases
 							</Link>
 							<div className="mt3 mt7-ns">
 								<HomeFAQLink to="/faq/upgrade-to-ghost-2-0/" title="Dashboard 2.0">
@@ -70,27 +70,30 @@ const HomePage = ({ data, location }) => {
 								</HomeFAQLink>
 
 								<HomeFAQLink
-									to="/faq/using-custom-domains/"
-									title="Using Custom Domains"
+									to="/faq/reactivesearch-vue/"
+									title="Vue.JS Components for building Search UIs"
 								>
-									Map any domain you own directly to your Ghost(Pro) publication
-									and make your site more memorable!
+									Since we launched the first ReactiveSearch UI components for
+									React in 2017, they have been downloaded over 100,000 times and
+									helped save thousands of developer hours. One of the most
+									frequent requests we have received is adding support for Vue.JS.
 								</HomeFAQLink>
 
 								<HomeFAQLink
-									to="/faq/upgrading-from-deprecated-ghost-cli/"
-									title="Upgrading from deprecated Ghost CLI"
+									to="/faq/dejavu/"
+									title="Dejavu 3.0: The missing Web UI for Elasticsearch"
 								>
-									If you are using a deprecated version and need to upgrade in
-									order to upgrade or manage your Ghost site, some extra steps may
-									be required.
+									It’s been an amazing journey thus far: Since our first release
+									in 2015, we have crossed a lifetime total of 475,000 Docker
+									pulls, have over 11K active Chrome extension installations, and
+									over 5,100+ stars 🌟 on our Github repository.
 								</HomeFAQLink>
 
 								<Link
 									to="/faq/"
 									className={`${Spirit.p} midgrey fw5 link hover-blue`}
 								>
-									More FAQ...
+									More updates...
 								</Link>
 							</div>
 						</section>

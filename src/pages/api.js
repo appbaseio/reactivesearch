@@ -5,14 +5,8 @@ import { graphql } from 'gatsby';
 import { Spirit } from '../styles/spirit-styles';
 import { Layout } from '../components/common/layout';
 import { APICard } from '../components/api';
-import { getMetaImageUrls } from '../components/common/meta';
 
-const APIPage = ({ data, location }) => {
-	// Add meta title and description or this page here to overwrite the site meta data as set in the config
-	const title = `API Reference - Ghost`;
-	const description = `Comprehensive documentation of API clients, tools and libraries for working with Ghost.`;
-	const imageUrl = getMetaImageUrls();
-
+const APIPage = () => {
 	const sectionStyles = {
 		headingContainer: `col-12 col-4-ns mr10-ns`,
 		cardContainer: `col-12 col-8-ns mt-vw4 mt0-ns grid-icon-boxes`,
@@ -20,14 +14,6 @@ const APIPage = ({ data, location }) => {
 
 	return (
 		<>
-			<MetaData
-				data={data}
-				location={location}
-				type="website"
-				title={title}
-				description={description}
-				image={imageUrl}
-			/>
 			<Layout mainClass="bg-whitegrey-l2" bodyClass="bg-white">
 				<section className="bg-api-reference">
 					<div className={`${Spirit.page.xl} tc-ns pt-vw6 pt-vw5-ns pb-vw5 white`}>
@@ -35,7 +21,7 @@ const APIPage = ({ data, location }) => {
 							API Reference
 						</h1>
 						<p className={Spirit.sectionSubHeading}>
-							Clients, tools and libraries for working with Ghost
+							Clients, tools and libraries for working with Appbase
 						</p>
 					</div>
 				</section>
@@ -47,16 +33,15 @@ const APIPage = ({ data, location }) => {
 								Frontend Frameworks
 							</h2>
 							<p className={`${Spirit.small} midgrey-l2 mt2`}>
-								Frameworks for working with the Ghost API to build a publication
-								website
+								Frameworks for working with the Appbase
 							</p>
 						</div>
 						<div className={sectionStyles.cardContainer}>
 							<APICard to="/api/handlebars-themes/" icon="ghostache">
-								Ghost Themes
+								React
 							</APICard>
 							<APICard to="/api/gatsby/" icon="gatsby-logo">
-								Gatsby
+								Vue
 							</APICard>
 						</div>
 					</div>

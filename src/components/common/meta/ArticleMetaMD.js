@@ -37,7 +37,6 @@ const ArticleMetaMD = ({ data, canonical }) => {
 							<meta property="article:tag" content={keyword} key={i} />
 					  ))
 					: null}
-				<meta property="article:author" content="https://www.facebook.com/ghost/" />
 
 				<meta name="twitter:title" content={fm.meta_title || fm.title} />
 				<meta name="twitter:description" content={fm.meta_description || post.excerpt} />
@@ -46,8 +45,8 @@ const ArticleMetaMD = ({ data, canonical }) => {
 				<meta name="twitter:data1" content={`${post.timeToRead} min read`} />
 				{primaryTag ? <meta name="twitter:label2" content="Filed under" /> : null}
 				{primaryTag ? <meta name="twitter:data2" content={primaryTag} /> : null}
-				<meta name="twitter:site" content="@tryghost" />
-				<meta name="twitter:creator" content="@tryghost" />
+				<meta name="twitter:site" content="@appbaseio" />
+				<meta name="twitter:creator" content="@appbaseio" />
 				<script type="application/ld+json">
 					{`
                     {
@@ -55,11 +54,10 @@ const ArticleMetaMD = ({ data, canonical }) => {
                         "@type": "Article",
                         "author": {
                             "@type": "Person",
-                            "name": "Ghost",
+                            "name": "Appbase",
                             "sameAs": [
-                                "https://ghost.org/",
-                                "https://www.facebook.com/ghost/",
-                                "https://twitter.com/tryghost/"
+                                "https://appbase.io/",
+                                "https://twitter.com/appbaseio/"
                             ]
                         },
                         ${
@@ -89,17 +87,6 @@ const ArticleMetaMD = ({ data, canonical }) => {
 		</>
 	);
 };
-
-// "publisher": {
-//     "@type": "Organization",
-//     "name": "Ghost",
-//     "logo": {
-//         "@type": "ImageObject",
-//         "url": "https://blog.ghost.org/favicon.png",
-//         "width": 60,
-//         "height": 60
-//     }
-// },
 
 ArticleMetaMD.propTypes = {
 	data: PropTypes.shape({
