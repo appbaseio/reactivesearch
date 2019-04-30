@@ -1,0 +1,5 @@
+/* This is the same as in Spirit. We can't override this globally from here because all the 
+   Spirit definitions still take the values from Spirit...  */
+@custom-media --breakpoint-not-small screen and (min-width: 44rem);
+@custom-media --breakpoint-medium screen and (min-width: 44rem) and (max-width: 66rem);
+@custom-media --breakpoint-large screen and (min-width: 66rem);

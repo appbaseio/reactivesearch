@@ -1,0 +1,13 @@
+# This is recommended to prevent the caching of the service worker file itself
+# https://www.netlify.com/blog/2018/06/28/5-pro-tips-and-plugins-for-optimizing-your-gatsby---netlify-site/#4-get-your-service-workers-um-working
+/sw.js   # Gatsby's default service worker file path
+  Cache-Control: no-cache
+
+/*
+  Referrer-Policy: no-referrer-when-downgrade
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  X-Xss-Protection:	1; mode=block
+  Feature-Policy: accelerometer 'none'; camera 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; payment 'none'; usb 'none'
+  Access-Control-Allow-Origin: https://cloud.typography.com

@@ -1,0 +1,45 @@
+<svg width="1299" height="495" viewBox="0 0 1299 495" xmlns="http://www.w3.org/2000/svg">
+    <g fill="#FFF" fill-rule="nonzero" opacity="0.14">
+        <path opacity=".2" d="M99 396v100H-1z"/>
+        <path opacity=".4" d="M199 396v100H99z"/>
+        <path opacity=".03" d="M199 297v100H99z"/>
+        <path opacity=".4" d="M299 396v100H199z"/>
+        <path opacity=".2" d="M299 297v100H199z"/>
+        <path opacity=".1" d="M399 396v100H299z"/>
+        <path opacity=".08" d="M399 297v100H299zM499 396v100H399z"/>
+        <path opacity=".2" d="M499 297v100H399z"/>
+        <path opacity=".1" d="M599 396v100H499z"/>
+        <path opacity=".1" d="M599 297v100H499z"/>
+        <path opacity=".15" d="M699 396v100H599z"/>
+        <path opacity=".2" d="M699 297v100H599z"/>
+        <path opacity=".3" d="M799 396v100H699z"/>
+        <path opacity=".1" d="M799 297v100H699zM899 396v100H799z"/>
+        <path opacity=".4" d="M899 297v100H799z"/>
+        <path opacity=".03" d="M999 396v100H899z"/>
+        <path opacity=".1" d="M999 297v100H899zM1099 396v100H999z"/>
+        <path opacity=".1" d="M1099 297v100H999zM1199 396v100h-100z"/>
+        <path opacity=".2" d="M1199 297v100h-100z"/>
+        <path opacity=".03" d="M1299 297v100h-100z"/>
+        <path opacity=".4" d="M199 198v100H99z"/>
+        <path opacity=".03" d="M299 198v100H199zM399 198v100H299z"/>
+        <path opacity=".1" d="M499 198v100H399z"/>
+        <path opacity=".2" d="M599 198v100H499z"/>
+        <path opacity=".15" d="M699 198v100H599z"/>
+        <path opacity=".1" d="M799 198v100H699z"/>
+        <path opacity=".03" d="M899 198v100H799z"/>
+        <path opacity=".1" d="M999 198v100H899zM1099 198v100H999z"/>
+        <path opacity=".03" d="M1199 198v100h-100z"/>
+        <path opacity=".1" d="M1299 198v100h-100zM199 99v100H99z"/>
+        <path opacity=".03" d="M299 99v100H199z"/>
+        <path opacity=".1" d="M399 99v100H299z"/>
+        <path opacity=".2" d="M499 99v100H399z"/>
+        <path opacity=".15" d="M599 99v100H499z"/>
+        <path opacity=".1" d="M699 99v100H599zM899 99v100H799z"/>
+        <path opacity=".2" d="M999 99v100H899z"/>
+        <path opacity=".08" d="M1099 99v100H999z"/>
+        <path opacity=".1" d="M1199 99v100h-100z"/>
+        <path opacity=".2" d="M299 0v100H199z"/>
+        <path opacity=".03" d="M399 0v100H299zM499 0v100H399z"/>
+        <path opacity=".1" d="M999 0v100H899zM1299 0v100h-100z"/>
+    </g>
+</svg>

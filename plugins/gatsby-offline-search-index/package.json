@@ -1,0 +1,12 @@
+{
+  "name": "gatsby-offline-search-index",
+  "author": {
+    "name": "Divyanshu Maithani",
+    "email": "div.blackcat@gmail.com",
+    "url": "https://github.com/divyanshu013"
+  },
+  "version": "0.0.1",
+  "dependencies": {
+    "sanitize-html": "^1.15.0"
+  }
+}

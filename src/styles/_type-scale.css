@@ -1,0 +1,62 @@
+/* Overriding Spirit/Brand font sizes */
+.f-headline { font-size: 4.8rem; }
+.f-subheadline { font-size: 4.4rem; }
+.f1 { font-size: 4.4rem; }
+.f2 { font-size: 2.85rem; }
+.f3 { font-size: 2.25rem; }
+.f4 { font-size: 1.75rem; }
+.f5 { font-size: 1.45rem; }
+.f6 { font-size: 1.40rem; }
+.f7 { font-size: 1.35rem; }
+.f8 { font-size: 1.3rem; }
+.f-supersmall { font-size: 1.1rem; }
+.f-nav-first-level {font-size: 1.65rem;}
+.f1-mobile { font-size: 3.6rem; };
+
+@media (--breakpoint-not-small) {
+    .f-headline-ns { font-size: 4.8rem; }
+    .f-subheadline-ns { font-size: 4.4rem; }
+    .f1-ns { font-size: 4.4rem; }
+    .f2-ns { font-size: 2.85rem; }
+    .f3-ns { font-size: 2.25rem; }
+    .f4-ns { font-size: 1.75rem; }
+    .f5-ns { font-size: 1.45rem; }
+    .f6-ns { font-size: 1.40rem; }
+    .f7-ns { font-size: 1.35rem; }
+    .f8-ns { font-size: 1.3rem; }
+    .f-supersmall-ns { font-size: 1.1rem; }
+    .f-nav-first-level-ns {font-size: 1.65rem;}
+    .f1-mobile-ns { font-size: 3.6rem; };
+}
+
+@media (--breakpoint-medium) {
+    .f-headline-m { font-size: 4.8rem; }
+    .f-subheadline-m { font-size: 4.4rem; }
+    .f1-m { font-size: 4.4rem; }
+    .f2-m { font-size: 2.85rem; }
+    .f3-m { font-size: 2.25rem; }
+    .f4-m { font-size: 1.75rem; }
+    .f5-m { font-size: 1.45rem; }
+    .f6-m { font-size: 1.40rem; }
+    .f7-m { font-size: 1.35rem; }
+    .f8-m { font-size: 1.3rem; }
+    .f-supersmall-m { font-size: 1.1rem; }
+    .f-nav-first-level-m {font-size: 1.65rem;}
+    .f1-mobile-ns { font-size: 3.6rem; };
+}
+
+@media (--breakpoint-large) {
+    .f-headline-l { font-size: 4.8rem; }
+    .f-subheadline-l { font-size: 4.4rem; }
+    .f1-l { font-size: 4.4rem; }
+    .f2-l { font-size: 2.85rem; }
+    .f3-l { font-size: 2.25rem; }
+    .f4-l { font-size: 1.75rem; }
+    .f5-l { font-size: 1.45rem; }
+    .f6-l { font-size: 1.40rem; }
+    .f7-l { font-size: 1.35rem; }
+    .f8-l { font-size: 1.3rem; }
+    .f-supersmall-l { font-size: 1.1rem; }
+    .f-nav-first-level-l {font-size: 1.65rem;}
+    .f1-mobile-ns { font-size: 3.6rem; };
+}

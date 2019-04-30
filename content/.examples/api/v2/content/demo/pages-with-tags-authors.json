@@ -1,0 +1,67 @@
+{
+  "pages": [
+    {
+      "slug": "about",
+      "id": "5979a4d6df093500228e9582",
+      "uuid": "0f01aa10-c70c-485e-a12b-bdd876040951",
+      "title": "About",
+      "html": "<p>Ghost is professional publishing platform designed for modern journalism. This is a demo site of a basic Ghost install to give you a general sense of what a new Ghost site looks like when set up for the first time.</p>\n<blockquote>\n<p>If you'd like to set up a site like this for yourself, head over to <a href=\"https://ghost.org\">Ghost.org</a> and start a free 14 day trial to give Ghost a try!</p>\n</blockquote>\n<p>If you're a developer: Ghost is a completely open source (MIT) Node.js application built on a JSON API with an Ember.js admin client. It works with MySQL and SQLite, and is publicly available <a href=\"https://github.com/TryGhost/ghost\">on Github</a>.</p>\n<p>If you need help with using Ghost, you'll find a ton of useful articles on <a href=\"https://help.ghost.org\">our knowledgebase</a>, as well as extensive <a href=\"https://docs.ghost.org\">developer documentation</a>.</p>\n",
+      "comment_id": "5979a4d6df093500228e9582",
+      "feature_image": null,
+      "featured": false,
+      "page": true,
+      "meta_title": null,
+      "meta_description": null,
+      "created_at": "2017-07-27T08:31:18.000+00:00",
+      "updated_at": "2018-08-20T15:11:55.000+00:00",
+      "published_at": "2012-05-01T08:34:00.000+00:00",
+      "custom_excerpt": null,
+      "codeinjection_head": null,
+      "codeinjection_foot": null,
+      "og_image": null,
+      "og_title": null,
+      "og_description": null,
+      "twitter_image": null,
+      "twitter_title": null,
+      "twitter_description": null,
+      "custom_template": null,
+      "canonical_url": null,
+      "authors": [
+        {
+          "id": "1",
+          "name": "John O'Nolan",
+          "slug": "john",
+          "profile_image": "https://demo.ghost.io/content/images/2018/10/j8.jpg",
+          "cover_image": null,
+          "bio": "Founder at Ghost.org. Writes about open source, startup life, non-profits, and publishing platforms. Travels the world with a bag of kites.",
+          "website": "http://john.onolan.org",
+          "location": "On a plane",
+          "facebook": null,
+          "twitter": null,
+          "meta_title": null,
+          "meta_description": null,
+          "url": "https://demo.ghost.io/author/john/"
+        }
+      ],
+      "tags": [],
+      "primary_author": {
+        "id": "1",
+        "name": "John O'Nolan",
+        "slug": "john",
+        "profile_image": "https://demo.ghost.io/content/images/2018/10/j8.jpg",
+        "cover_image": null,
+        "bio": "Founder at Ghost.org. Writes about open source, startup life, non-profits, and publishing platforms. Travels the world with a bag of kites.",
+        "website": "http://john.onolan.org",
+        "location": "On a plane",
+        "facebook": null,
+        "twitter": null,
+        "meta_title": null,
+        "meta_description": null,
+        "url": "https://demo.ghost.io/author/john/"
+      },
+      "primary_tag": null,
+      "url": "https://demo.ghost.io/about/",
+      "excerpt": "Ghost is professional publishing platform designed for modern journalism. This\nis a demo site of a basic Ghost install to give you a general sense of what a\nnew Ghost site looks like when set up for the first time.\n\nIf you'd like to set up a site like this for yourself, head over to Ghost.org\n[https://ghost.org]  and start a free 14 day trial to give Ghost a try!\n\nIf you're a developer: Ghost is a completely open source (MIT) Node.js\napplication built on a JSON API with an Ember.js admin client."
+    }
+  ]
+}

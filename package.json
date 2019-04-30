@@ -1,0 +1,87 @@
+{
+	"name": "docs",
+	"version": "0.0.2",
+	"description": "Data-driven components for building Maps and Search UIs",
+	"repository": "git@github.com:appbaseio/docs.git",
+	"author": {
+		"name": "Yash Joshi",
+		"url": "https://github.com/jyash97"
+	},
+	"contributors": [
+		{
+			"name": "Deepak Grover",
+			"email": "deepakgrover333@gmail.com",
+			"url": "https://github.com/metagrover"
+		},
+		{
+			"name": "Siddharth Kothari",
+			"email": "siddharth@appbase.io",
+			"url": "https://github.com/siddharthlatest"
+		},
+		{
+			"name": "Divyanshu Maithani",
+			"email": "div.blackcat@gmail.com",
+			"url": "https://github.com/divyanshu013"
+		}
+	],
+	"license": "MIT",
+	"main": "app.js",
+	"scripts": {
+		"serve": "gatsby build && NODE_ENV=production gatsby serve",
+		"build": "gatsby build",
+		"start": "gatsby develop",
+		"lint": "eslint . --ext .js --cache"
+	},
+	"devDependencies": {
+		"autoprefixer": "9.5.0",
+		"cssnano": "4.1.10",
+		"eslint": "5.15.1",
+		"eslint-config-airbnb": "^17.1.0",
+		"eslint-config-prettier": "^4.1.0",
+		"eslint-plugin-import": "^2.16.0",
+		"eslint-plugin-jsx-a11y": "^6.2.1",
+		"eslint-plugin-prettier": "^3.0.1",
+		"eslint-plugin-react": "^7.12.4",
+		"ghost-spirit": "0.0.50",
+		"postcss-color-mod-function": "3.0.3",
+		"postcss-css-variables": "0.12.0",
+		"postcss-custom-media": "7.0.7",
+		"postcss-custom-properties": "8.0.9",
+		"postcss-easy-import": "3.0.0",
+		"prettier": "^1.16.4"
+	},
+	"dependencies": {
+		"gatsby": "2.1.34",
+		"gatsby-image": "2.0.33",
+		"gatsby-plugin-advanced-sitemap": "1.0.4",
+		"gatsby-plugin-catch-links": "2.0.13",
+		"gatsby-plugin-force-trailing-slashes": "1.0.4",
+		"gatsby-plugin-google-analytics": "^2.0.18",
+		"gatsby-plugin-manifest": "2.0.24",
+		"gatsby-plugin-offline": "2.0.25",
+		"gatsby-plugin-postcss": "2.0.6",
+		"gatsby-plugin-react-helmet": "3.0.9",
+		"gatsby-plugin-react-svg": "2.1.0",
+		"gatsby-plugin-remove-serviceworker": "1.0.0",
+		"gatsby-plugin-sharp": "2.0.28",
+		"gatsby-remark-autolink-headers": "2.0.16",
+		"gatsby-remark-code-titles": "1.1.0-rc.0",
+		"gatsby-remark-embed-snippet": "3.2.4",
+		"gatsby-remark-external-links": "0.0.4",
+		"gatsby-remark-images": "3.0.9",
+		"gatsby-remark-prismjs": "3.2.5",
+		"gatsby-source-filesystem": "2.0.26",
+		"gatsby-source-ghost": "3.3.0",
+		"gatsby-transformer-remark": "2.3.4",
+		"gatsby-transformer-sharp": "2.1.17",
+		"gatsby-transformer-yaml": "2.1.10",
+		"js-search": "^1.4.2",
+		"prismjs": "1.15.0",
+		"react": "16.8.4",
+		"react-autosuggest": "9.4.3",
+		"react-dom": "16.8.4",
+		"react-helmet": "5.2.0",
+		"react-modal": "3.8.1",
+		"tocbot": "4.5.0"
+	}
+}

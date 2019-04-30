@@ -1,0 +1,135 @@
+:root {
+    --ts-base-fontsize: 62.5%;
+    --ts-headline: 4.44rem;
+    --ts-subheadline: 3.86rem;
+    --ts-1: 3.36rem;
+    --ts-2: 2.92rem;
+    --ts-3: 2.54rem;
+    --ts-4: 2.21rem;
+    --ts-5: 1.92rem;
+    --ts-6: 1.67rem;
+    --ts-7: 1.45rem;
+    --ts-8: 1.26rem;
+    --ts-supersmall: 1.09rem;
+
+    --lh-1-15: 1.15em;
+    --lh-1-2: 1.2em;
+    --lh-1-3: 1.3em;
+    --lh-1-4: 1.4em;
+    --lh-1-5: 1.5em;
+    --lh-1-55: 1.55em;
+    --lh-1-6: 1.6em;
+    --lh-1-65: 1.65em;
+    --lh-1-8: 1.8em;
+    --lh-2-0: 2.0em;
+    --lh-2-2: 2.2em;
+
+    /* Typographic rules */
+    /* From: gridlover.net / Font size: 14.5, Line height: 0.835, Scale factor: 1.333 */
+    --baseline: 0.8rem;
+
+    /* Vertical rhythm */
+    --vr-1:  calc(var(--baseline) * 1);
+    --vr-2:  calc(var(--baseline) * 2);
+    --vr-3:  calc(var(--baseline) * 3);
+    --vr-4:  calc(var(--baseline) * 4);
+    --vr-5:  calc(var(--baseline) * 5);
+    --vr-6:  calc(var(--baseline) * 6);
+    --vr-7:  calc(var(--baseline) * 7);
+    --vr-8:  calc(var(--baseline) * 8);
+    --vr-9:  calc(var(--baseline) * 9);
+    --vr-10: calc(var(--baseline) * 10);
+    --vr-11: calc(var(--baseline) * 11);
+    --vr-12: calc(var(--baseline) * 12);
+    --vr-13: calc(var(--baseline) * 13);
+    --vr-14: calc(var(--baseline) * 14);
+    --vr-15: calc(var(--baseline) * 15);
+    --vr-16: calc(var(--baseline) * 16);
+    --vr-17: calc(var(--baseline) * 17);
+    --vr-18: calc(var(--baseline) * 18);
+    --vr-19: calc(var(--baseline) * 19);
+    --vr-20: calc(var(--baseline) * 20);
+}
+
+.typography {
+    line-height: var(--vr-3);
+}
+
+.typography h1 {
+    font-size: 4.4rem;
+    font-weight: 600;
+    line-height: var(--vr-7);
+    margin: var(--vr-6) 0 0;
+}
+.typography h2 {
+    font-size: 3.3rem;
+    font-weight: 600;
+    line-height: var(--vr-6);
+    margin: var(--vr-8) 0 0;
+}
+.typography h3 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: var(--vr-4);
+    margin: var(--vr-6) 0 0;
+}
+.typography h4 {
+    font-size: 1.9rem;
+    font-weight: 500;
+    line-height: var(--vr-4);
+    margin: var(--vr-6) 0 0;
+}
+.typography h5 {
+    font-size: 1.45rem;
+    font-weight: 600;
+    line-height: var(--vr-3);
+    margin: var(--vr-5) 0 0;
+}
+.typography h6 {
+    font-size: 1.45rem;
+    font-weight: 600;
+    line-height: var(--vr-3);
+    margin: var(--vr-5) 0 0;
+    text-transform: uppercase;
+}
+.typography p, 
+.typography ul, 
+.typography ol, 
+.typography pre, 
+.typography table, 
+.typography blockquote {
+    margin: var(--vr-2) 0 0;
+}
+.typography ul ul, 
+.typography ol ol, 
+.typography ul ol, 
+.typography ol ul {
+    margin: 0px;
+}
+
+/* Let's make sure all's aligned */
+.typography hr {
+    border: 1px solid;
+    margin: -1px 0;
+}
+.typography a, 
+.typography b, 
+.typography i, 
+.typography strong, 
+.typography em, 
+.typography small, 
+.typography code {
+    line-height: 0;
+}
+.typography sub, 
+.typography sup {
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+.typography sup {
+    top: -0.5em;
+}
+.typography sub {
+    bottom: -0.25em;
+}

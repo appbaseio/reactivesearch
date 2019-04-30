@@ -1,0 +1,132 @@
+@import "colors.css";
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 2.4rem 3.2rem;
+	margin: 0;
+	overflow: auto;
+	border-radius: 8px;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+    border: none;
+	background: #2a3644;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .3em .4em;
+	border-radius: .3em;
+	white-space: normal;
+	background: var(--whitegrey);
+	text-shadow: none;
+	color: var(--darkgrey);
+    font-size: 0.9em;
+}
+
+a > code[class*="language-"] {
+	color: var(--blue);
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: rgba(255,255,255,0.4);
+}
+
+.token.punctuation {
+	color: #fff;
+}
+
+.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #ff5884;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #e6db74;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #fff;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #a6e22e;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+
+/* Code block titles
+/* ----------------------------------------------------------------------- */
+
+/*
+
+Usage, in Markdown files:
+
+```handlebars:title=post.hbs
+// Some code
+```
+
+*/
+
+.gatsby-code-title {
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    margin-bottom: -8px !important;
+    padding: 8px 15px;
+    color: rgba(255,255,255,0.65);
+    font-size: 1.3rem;
+    font-family: Menlo, Courier, monospace;
+    background: #222c37;
+    border-radius: 8px 8px 0 0;
+    user-select: none;
+}
