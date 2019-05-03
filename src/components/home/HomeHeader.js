@@ -32,12 +32,12 @@ const HomeHeader = () => (
 					Learn about the basic fundamentals of organizing data with appbase.io.
 				</HomeHeaderBox>
 
-				<HomeHeaderBox to="/setup/" title="UI Components" icon="rocket" color="blue">
-					Build data-driven UI components with our Reactive UI Libraries.
+				<HomeHeaderBox to="/api/" title="APIs" icon="rocket" color="blue">
+					Check out the API provided by Appbase.
 				</HomeHeaderBox>
 
 				<HomeHeaderBox
-					to="/tutorials/"
+					to="/examples/js"
 					title="Examples"
 					icon="typing"
 					color="tutorial-green"

@@ -25,13 +25,16 @@ const SidebarNav = ({ sidebar, location }) => {
 									<SidebarLink
 										link={group.items[0].link}
 										title={group.group}
-										linkClasses="midgrey link"
+										linkClasses="link sidebarlink-active blue fw6"
 									/>
 								) : (
 									group.group
 								)}
 							</h4>
-							<SidebarList key={i} items={group.items} location={location} />
+
+							{group.items.length > 1 ? (
+								<SidebarList key={i} items={group.items} location={location} />
+							) : null}
 						</>
 					) : (
 						<h4 className="f5 fw5 link pa0 ma0">

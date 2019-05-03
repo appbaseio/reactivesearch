@@ -34,7 +34,7 @@ const HomePage = ({ data, location }) => {
 								elevation="1"
 							>
 								<HomeAPIBox
-									to="/api/#frontend-sdk"
+									to="/javascript/quickstart"
 									title="Javascript Quick Start"
 									icon="sdks"
 								>
@@ -42,19 +42,16 @@ const HomePage = ({ data, location }) => {
 									streaming data.
 								</HomeAPIBox>
 								<HomeAPIBox
-									to="/api/#rest-api"
+									to="/rest/quickstart"
 									title="Rest API Quick Start"
 									icon="rest-api"
 								>
 									Get started with the REST APIs for indexing, querying and
 									streaming data.
 								</HomeAPIBox>
-								<HomeAPIBox
-									to="/api/#tools"
-									title="Rest API Reference"
-									icon="tools"
-								>
-									Read the complete API reference.
+								<HomeAPIBox to="/go/quickstart" title="GO QuickStart" icon="tools">
+									Quick start with the Go APIs for indexing, querying and
+									streaming data.
 								</HomeAPIBox>
 							</Box>
 						</section>

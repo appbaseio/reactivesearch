@@ -27,25 +27,6 @@ const APIPage = () => {
 				</section>
 
 				<div className={`${Spirit.page.l} pb-vw4 pb-vw3-ns pt-vw4 pt-vw3-ns`}>
-					<div className="grid-12">
-						<div className={sectionStyles.headingContainer}>
-							<h2 id="frontend-sdk" className={`${Spirit.h3} pt20 nt20`}>
-								Frontend Frameworks
-							</h2>
-							<p className={`${Spirit.small} midgrey-l2 mt2`}>
-								Frameworks for working with the Appbase
-							</p>
-						</div>
-						<div className={sectionStyles.cardContainer}>
-							<APICard to="/api/handlebars-themes/" icon="ghostache">
-								React
-							</APICard>
-							<APICard to="/api/gatsby/" icon="gatsby-logo">
-								Vue
-							</APICard>
-						</div>
-					</div>
-
 					<div className="grid-12 mt-vw4 mt20-ns">
 						<div className={sectionStyles.headingContainer}>
 							<h2 id="rest-api" className={`${Spirit.h3} pt20 nt20`}>
@@ -56,39 +37,11 @@ const APIPage = () => {
 							</p>
 						</div>
 						<div className={sectionStyles.cardContainer}>
-							<APICard to="/api/content/" icon="content-api-logo">
-								Content API
+							<APICard to="/rest/quickstart/" icon="content-api-logo">
+								Quick Start
 							</APICard>
-							<APICard to="/api/admin/" icon="admin-api-logo">
-								Admin API
-							</APICard>
-							<APICard to="/api/webhooks/" icon="webhooks-logo">
-								Webhooks
-							</APICard>
-						</div>
-					</div>
-
-					<div className="grid-12 mt-vw4 mt20-ns">
-						<div className={sectionStyles.headingContainer}>
-							<h2 id="tools" className={`${Spirit.h3} pt20 nt20`}>
-								Tools
-							</h2>
-							<p className={`${Spirit.small} midgrey-l2 mt2`}>
-								Utilities to help build and manage Ghost
-							</p>
-						</div>
-						<div className={sectionStyles.cardContainer}>
-							<APICard to="/api/ghost-cli/" icon="ghost-cli-logo">
-								Ghost-CLI
-							</APICard>
-							<APICard to="/api/migration/" icon="migration-logo">
-								Migration
-							</APICard>
-							<APICard href="https://gscan.ghost.org" icon="gscan-logo">
-								GScan
-							</APICard>
-							<APICard to="/api/javascript/sdk/" icon="javascript-logo">
-								JavaScript SDK
+							<APICard to="/rest/abc/" icon="ghost-cli-logo">
+								Command Line
 							</APICard>
 						</div>
 					</div>
@@ -99,27 +52,24 @@ const APIPage = () => {
 								Client Libraries
 							</h2>
 							<p className={`${Spirit.small} midgrey-l2 mt2`}>
-								Specific libraries for interacting with the Ghost API directly
+								Specific libraries for interacting with the Appbase API directly
 							</p>
-							<h4 className="f-supersmall dib ma0 pa0 bg-green pa1 br-pill pl3 pr3 tc white mt2 nudge-top--2">
-								Coming soon
-							</h4>
 						</div>
 						<div className={sectionStyles.cardContainer}>
-							<APICard to="/api/javascript/" icon="javascript-logo">
+							<APICard to="/javascript/quickstart" icon="javascript-logo">
 								JavaScript
 							</APICard>
-							<APICard icon="ruby-logo" iconClass="stroke-midlightgrey o-30">
-								Ruby
-							</APICard>
-							<APICard icon="php-logo" iconClass="stroke-midlightgrey o-30">
+							<APICard to="/examples/php" icon="php-logo">
 								PHP
 							</APICard>
-							<APICard icon="python-logo" iconClass="stroke-midlightgrey o-30">
+							<APICard to="/examples/python" icon="python-logo">
 								Python
 							</APICard>
+							<APICard to="/go/quickstart" icon="ruby-logo">
+								Golang
+							</APICard>
 							<APICard icon="apple-logo" iconClass="stroke-midlightgrey o-30">
-								iOS
+								Swift
 							</APICard>
 							<APICard icon="android-logo" iconClass="stroke-midlightgrey o-30">
 								Android

@@ -11,14 +11,14 @@ const NavBar = ({ theme }) => {
 	const themeClasses = {
 		dark: {
 			menuItem: `middarkgrey-l1 link hover-blue nowrap`,
-			logoTheme: `dark`,
+			logoTheme: `light`,
 			docsTitleClass: `blue`,
 			searchBox: `bg-darkgrey-searchbar middarkgrey dark-placeholder`,
 			icon: `fill-midlightgrey`,
 		},
 		light: {
 			menuItem: Spirit.link.white,
-			logoTheme: `light`,
+			logoTheme: `dark`,
 			docsTitleClass: `white`,
 			searchBox: `bg-white-10 white white-placeholder`,
 			icon: `fill-white`,
@@ -34,7 +34,7 @@ const NavBar = ({ theme }) => {
 		>
 			<div className="flex items-center pt3 pb3 nudge-bottom--2 w-sidebar-l pr8">
 				<Link to="/" className="nudge-top--3">
-					<Logo />
+					<Logo theme={`${themeClasses[theme].logoTheme}`} />
 				</Link>
 			</div>
 			{/* navbar-container wrapper element and bottom padding is needed to hide the horizontal scrollbar on smaller screensizes */}
@@ -47,22 +47,22 @@ const NavBar = ({ theme }) => {
 						Concepts
 					</Link>
 					<Link
-						to="/setup/"
+						to="/javascript/quickstart"
 						className={`${themeClasses[theme].menuItem} nowrap f8 pa3 mr1 mr3-l`}
 					>
-						Setup
+						Javascript
 					</Link>
 					<Link
-						to="/tutorials/"
+						to="/rest/quickstart"
 						className={`${themeClasses[theme].menuItem} nowrap f8 pa3 mr1 mr3-l`}
 					>
-						Tutorials
+						REST
 					</Link>
 					<Link
-						to="/integrations/"
+						to="/examples/js"
 						className={`${themeClasses[theme].menuItem} nowrap f8 pa3 mr1 mr3-l`}
 					>
-						Integrations
+						Examples
 					</Link>
 					{/* <Link
 						to="/api/"

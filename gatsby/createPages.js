@@ -1,9 +1,6 @@
 const path = require(`path`);
 const _ = require(`lodash`);
 const { allMarkdownPosts } = require(`../utils/node-queries`);
-const { ghostQueryConfig } = require(`../utils/query-config`);
-const urlUtils = require(`../utils/urls`);
-const getRelatedPosts = require(`../utils/getRelatedPosts`);
 
 module.exports.createRedirects = ({ actions }) => {
 	const { createRedirect } = actions;

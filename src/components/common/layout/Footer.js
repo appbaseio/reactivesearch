@@ -68,8 +68,20 @@ const Footer = () => (
 						<a
 							href="https://appbase.io"
 							className="link pa2 midgrey hover-blue dib mr0"
+							target="_blank"
+							rel="noopener noreferrer"
 						>
 							Appbase.io
+						</a>
+					</li>
+					<li className={listItemClass}>
+						<a
+							href="https://dashboard.appbase.io"
+							className="link pa2 midgrey hover-blue dib mr0"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Dashboard
 						</a>
 					</li>
 				</ul>
