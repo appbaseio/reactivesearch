@@ -1,0 +1,11 @@
+categories:
+    - title: 🚀 Features
+      label: feature
+    - title: 🐛 Bug Fixes
+      label: fix
+    - title: 🔧 Maintenance
+      label: chore
+template: |
+    ## Changes
+
+    $CHANGES
