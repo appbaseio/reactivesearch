@@ -2521,7 +2521,7 @@
 
 "@types/prop-types@*":
   version "15.7.1"
-  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.1.tgz#f1a11e7babb0c3cad68100be381d1e064c68f1f6"
+  resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.1.tgz#f1a11e7babb0c3cad68100be381d1e064c68f1f6"
   integrity sha512-CFzn9idOEpHrgdw8JsoTkaDDyRWk1jrzIV8djzcgpq0y9tG4B4lFT+Nxh52DVpDXV+n4+NPNv7M1Dj5uMp6XFg==
 
 "@types/q@^1.5.1":
@@ -2541,10 +2541,25 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.8.14", "@types/react@^16.3.8":
+"@types/react@*":
+  version "16.3.7"
+  resolved "https://registry.npmjs.org/@types/react/-/react-16.3.7.tgz#3b90fc4c8382fc55f4d18a8d487dbd314eb6ec4c"
+  integrity sha512-7V1OfJvx2jKSBfBEDdjpozPzxPJN9ruzR1GtfDE7HmZymmvjMQqFHfHbiI4zzVzU09Yieg9B7ur0wPCu1edfQA==
+  dependencies:
+    csstype "^2.0.0"
+
+"@types/react@16.8.14":
   version "16.8.14"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.14.tgz#b561bfabeb8f60d12e6d4766367e7a9ae927aa18"
+  resolved "https://registry.npmjs.org/@types/react/-/react-16.8.14.tgz#b561bfabeb8f60d12e6d4766367e7a9ae927aa18"
   integrity sha512-26tFVJ1omGmzIdFTFmnC5zhz1GTaqCjxgUxV4KzWvsybF42P7/j4RBn6UeO3KbHPXqKWZszMXMoI65xIWm954A==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/react@^16.3.8":
+  version "16.8.17"
+  resolved "https://registry.npmjs.org/@types/react/-/react-16.8.17.tgz#f287b76a5badb93bc9aa3f54521a3eb53d6c2374"
+  integrity sha512-pln3mgc6VfkNg92WXODul/ONo140huK9OMsx62GlBlZ2lvjNK86PQJhYMPLO1i66aF5O9OPyZefogvNltBIszA==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -7663,9 +7678,9 @@ cssstyle@^1.0.0, cssstyle@^1.1.1:
   dependencies:
     cssom "0.3.x"
 
-csstype@^2.2.0, csstype@^2.5.2, csstype@^2.5.7:
+csstype@^2.0.0, csstype@^2.2.0, csstype@^2.5.2, csstype@^2.5.7:
   version "2.6.4"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.4.tgz#d585a6062096e324e7187f80e04f92bd0f00e37f"
+  resolved "https://registry.npmjs.org/csstype/-/csstype-2.6.4.tgz#d585a6062096e324e7187f80e04f92bd0f00e37f"
   integrity sha512-lAJUJP3M6HxFXbqtGRc0iZrdyeN+WzOWeY0q/VnFzI+kqVrYIzC7bWlKqCW7oCIdzoPkvfp82EVvrTlQ8zsWQg==
 
 cuint@^0.2.2:
@@ -15515,7 +15530,7 @@ nps-utils@^1.7.0:
 
 nps@^5.9.3, nps@^5.9.5:
   version "5.9.5"
-  resolved "https://registry.yarnpkg.com/nps/-/nps-5.9.5.tgz#cb091b2a3ea8b68f9282159e0d3d3877b19820de"
+  resolved "https://registry.npmjs.org/nps/-/nps-5.9.5.tgz#cb091b2a3ea8b68f9282159e0d3d3877b19820de"
   integrity sha512-UsjrtowHeXGnKELZUlqiyPSXc3vYs3YwLZEFfZJ1Z9kZCFgtzK4YRVKnxEa+teRMMdw6Q4keAX/M/aLCkPTqIw==
   dependencies:
     arrify "^1.0.1"

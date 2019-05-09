@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch",
-	"version": "3.0.0-rc.6",
+	"version": "3.0.0-rc.7",
 	"description": "A React UI components library for building search experiences",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
@@ -19,7 +19,9 @@
 		"build:copy-types": "npx babel-node ./scripts/copy-types.js",
 		"build:umd": "cross-env BABEL_ENV=commonjs webpack --progress -p --config webpack.config.umd.js",
 		"stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
+		"version-upgrade": "nps upgrade -c ../../package-scripts.js",
 		"prepublish": "yarn run build",
+		"postpublish": "yarn run version-upgrade",
 		"test": "jest --watch",
 		"typescript": "tsc -p tsconfig.json",
 		"build-example": "scripts/build-example.sh 3.0.0-rc.0"
@@ -31,7 +33,7 @@
 	"author": "metagrover",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/reactivecore": "^8.1.4",
+		"@appbaseio/reactivecore": "^8.1.5",
 		"appbase-js": "^4.0.2-beta.05",
 		"cross-env": "^5.2.0",
 		"downshift": "^1.31.2",
@@ -69,6 +71,7 @@
 		"fs-extra": "^7.0.0",
 		"glob": "^7.1.2",
 		"jest": "^22.4.2",
+		"nps": "^5.9.5",
 		"path": "^0.12.7",
 		"react": "^16.7.0-alpha.2",
 		"react-dom": "^16.7.0-alpha.2",
