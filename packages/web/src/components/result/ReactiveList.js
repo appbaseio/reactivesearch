@@ -56,7 +56,9 @@ class ReactiveList extends Component {
 
 		const options = getQueryOptions(this.props);
 		options.from = this.state.from;
-		if (this.props.sortOptions) {
+		if (this.props.customSort) {
+			options.sort = this.props.customSort();
+		} else if (this.props.sortOptions) {
 			options.sort = [
 				{
 					[this.props.sortOptions[0].dataField]: {
@@ -658,6 +660,7 @@ ReactiveList.propTypes = {
 	size: types.number,
 	sortBy: types.sortBy,
 	sortOptions: types.sortOptions,
+	customSort: types.func,
 	stream: types.bool,
 	style: types.style,
 	URLParams: types.bool,
