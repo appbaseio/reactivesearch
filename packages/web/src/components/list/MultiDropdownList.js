@@ -7,6 +7,8 @@ import {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -22,7 +24,11 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { getAggsQuery, getCompositeAggsQuery, updateInternalQuery } from './utils';
+import {
+	getAggsQuery,
+	getCompositeAggsQuery,
+	updateInternalQuery,
+} from './utils';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
@@ -34,6 +40,7 @@ import {
 	hasCustomRenderer,
 	isEvent,
 	isIdentical,
+	getValidPropsKeys,
 } from '../../utils';
 
 class MultiDropdownList extends Component {
@@ -59,6 +66,7 @@ class MultiDropdownList extends Component {
 		props.addComponent(this.internalComponent);
 		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+		props.setComponentProps(props.componentId, props);
 		this.updateQueryOptions(props);
 
 		this.setReact(props);
@@ -70,6 +78,9 @@ class MultiDropdownList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(this.props.componentId, this.props);
+		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, dataField } = this.props;
@@ -509,6 +520,8 @@ MultiDropdownList.propTypes = {
 	watchComponent: types.funcRequired,
 	options: types.options,
 	selectedValue: types.selectedValue,
+	setComponentProps: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -585,6 +598,9 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
+	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),

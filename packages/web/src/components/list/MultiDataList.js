@@ -7,6 +7,8 @@ import {
 	updateQuery,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -26,7 +28,7 @@ import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect, getComponent, hasCustomRenderer, isEvent } from '../../utils';
+import { connect, getComponent, hasCustomRenderer, isEvent, getValidPropsKeys } from '../../utils';
 import { getAggsQuery } from './utils';
 
 class MultiDataList extends Component {
@@ -51,6 +53,7 @@ class MultiDataList extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
+		props.setComponentProps(props.componentId, props);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		this.setReact(props);
@@ -68,6 +71,9 @@ class MultiDataList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(this.props.componentId, this.props);
+		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
@@ -302,8 +308,10 @@ class MultiDataList extends Component {
 		if (props.defaultQuery) {
 			const value = Object.keys(this.state.currentValue);
 			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
-			props.setQueryOptions(this.internalComponent,
-				{ ...queryOptions, ...defaultQueryOptions });
+			props.setQueryOptions(this.internalComponent, {
+				...queryOptions,
+				...defaultQueryOptions,
+			});
 		} else {
 			props.setQueryOptions(this.internalComponent, queryOptions);
 		}
@@ -364,7 +372,9 @@ class MultiDataList extends Component {
 
 	handleClick = (e) => {
 		let currentValue = e;
-		if (isEvent(e)) { currentValue = e.target.value; }
+		if (isEvent(e)) {
+			currentValue = e.target.value;
+		}
 		const { value, onChange } = this.props;
 		if (value === undefined) {
 			this.setValue(currentValue);
@@ -417,83 +427,86 @@ class MultiDataList extends Component {
 					</Title>
 				)}
 				{this.renderSearch()}
-				{
-					this.hasCustomRenderer ? this.getComponent() : (
-						<UL className={getClassName(this.props.innerClass, 'list') || null}>
-							{selectAllLabel ? (
+				{this.hasCustomRenderer ? (
+					this.getComponent()
+				) : (
+					<UL className={getClassName(this.props.innerClass, 'list') || null}>
+						{selectAllLabel ? (
+							<li
+								key={selectAllLabel}
+								className={`${
+									this.state.currentValue[selectAllLabel] ? 'active' : ''
+								}`}
+							>
+								<Checkbox
+									className={
+										getClassName(this.props.innerClass, 'checkbox') || null
+									}
+									id={`${this.props.componentId}-${selectAllLabel}`}
+									name={selectAllLabel}
+									value={selectAllLabel}
+									onChange={this.handleClick}
+									checked={!!this.state.currentValue[selectAllLabel]}
+									show={this.props.showCheckbox}
+								/>
+								<label
+									className={getClassName(this.props.innerClass, 'label') || null}
+									htmlFor={`${this.props.componentId}-${selectAllLabel}`}
+								>
+									{selectAllLabel}
+								</label>
+							</li>
+						) : null}
+						{listItems.length
+							? listItems.map(item => (
 								<li
-									key={selectAllLabel}
-									className={`${this.state.currentValue[selectAllLabel] ? 'active' : ''}`}
+									key={item.label}
+									className={`${
+										this.state.currentValue[item.label] ? 'active' : ''
+									}`}
 								>
 									<Checkbox
-										className={getClassName(this.props.innerClass, 'checkbox') || null}
-										id={`${this.props.componentId}-${selectAllLabel}`}
-										name={selectAllLabel}
-										value={selectAllLabel}
+										className={
+											getClassName(this.props.innerClass, 'checkbox') || null
+										}
+										id={`${this.props.componentId}-${item.label}`}
+										name={this.props.componentId}
+										value={item.label}
 										onChange={this.handleClick}
-										checked={!!this.state.currentValue[selectAllLabel]}
+										checked={!!this.state.currentValue[item.label]}
 										show={this.props.showCheckbox}
 									/>
 									<label
-										className={getClassName(this.props.innerClass, 'label') || null}
-										htmlFor={`${this.props.componentId}-${selectAllLabel}`}
+										className={
+											getClassName(this.props.innerClass, 'label') || null
+										}
+										htmlFor={`${this.props.componentId}-${item.label}`}
 									>
-										{selectAllLabel}
+										{renderItem ? (
+											renderItem(item.label, item.count, this.state.currentValue === item.label)
+										) : (
+											<span>
+												<span>{item.label}</span>
+												{showCount && item.count && (
+													<span
+														className={
+															getClassName(
+																this.props.innerClass,
+																'count',
+															) || null
+														}
+													>
+														{item.count}
+													</span>
+												)}
+											</span>
+										)}
 									</label>
 								</li>
-							) : null}
-							{listItems.length
-								? listItems.map(item => (
-									<li
-										key={item.label}
-										className={`${
-											this.state.currentValue[item.label] ? 'active' : ''
-										}`}
-									>
-										<Checkbox
-											className={
-												getClassName(this.props.innerClass, 'checkbox') || null
-											}
-											id={`${this.props.componentId}-${item.label}`}
-											name={this.props.componentId}
-											value={item.label}
-											onChange={this.handleClick}
-											checked={!!this.state.currentValue[item.label]}
-											show={this.props.showCheckbox}
-										/>
-										<label
-											className={
-												getClassName(this.props.innerClass, 'label') || null
-											}
-											htmlFor={`${this.props.componentId}-${item.label}`}
-										>
-											{renderItem ? (
-												renderItem(item.label, item.count, this.state.currentValue === item.label)
-											) : (
-												<span>
-													<span>{item.label}</span>
-													{showCount && item.count && (
-														<span
-															className={
-																getClassName(
-																	this.props.innerClass,
-																	'count',
-																) || null
-															}
-														>
-															{item.count}
-														</span>
-													)}
-												</span>
-											)}
-										</label>
-									</li>
-								)) // prettier-ignore
-								: this.props.renderNoResults && this.props.renderNoResults()}
-						</UL>
-
-					)
-				}
+							)) // prettier-ignore
+							: this.props.renderNoResults && this.props.renderNoResults()}
+					</UL>
+				)}
 			</Container>
 		);
 	}
@@ -508,6 +521,8 @@ MultiDataList.propTypes = {
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
 	options: types.options,
+	setComponentProps: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -567,6 +582,9 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
+	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),

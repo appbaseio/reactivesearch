@@ -6,6 +6,8 @@ import {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -26,7 +28,7 @@ import SliderHandle from './addons/SliderHandle';
 import Slider from '../../styles/Slider';
 import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
-import { connect } from '../../utils';
+import { connect, getValidPropsKeys } from '../../utils';
 
 class DynamicRangeSlider extends Component {
 	constructor(props) {
@@ -46,6 +48,7 @@ class DynamicRangeSlider extends Component {
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalHistogramComponent);
 		props.addComponent(this.internalRangeComponent);
+		props.setComponentProps(props.componentId, props);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		// get range before executing other queries
@@ -54,6 +57,9 @@ class DynamicRangeSlider extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(this.props.componentId, this.props);
+		});
 		if (!isEqual(this.props.range, prevProps.range) && this.props.range) {
 			// when range prop is changed
 			// it will happen due to initial mount (or) due to subscription
@@ -488,6 +494,8 @@ DynamicRangeSlider.propTypes = {
 	options: types.options,
 	range: types.range,
 	selectedValue: types.selectedValue,
+	setComponentProps: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -574,6 +582,9 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchtoProps = dispatch => ({
+	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props, execute) =>

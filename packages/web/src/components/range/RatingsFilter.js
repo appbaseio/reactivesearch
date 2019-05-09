@@ -7,6 +7,8 @@ import {
 	updateQuery,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -25,7 +27,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import StarRating from './addons/StarRating';
 import { ratingsList } from '../../styles/ratingsList';
-import { connect } from '../../utils';
+import { connect, getValidPropsKeys } from '../../utils';
 
 class RatingsFilter extends Component {
 	constructor(props) {
@@ -42,6 +44,7 @@ class RatingsFilter extends Component {
 		this.locked = false;
 
 		props.addComponent(props.componentId);
+		props.setComponentProps(props.componentId, props);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		this.setReact(props);
@@ -53,6 +56,9 @@ class RatingsFilter extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(this.props.componentId, this.props);
+		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
@@ -225,6 +231,8 @@ RatingsFilter.propTypes = {
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
+	setComponentProps: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -262,6 +270,9 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
+	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),

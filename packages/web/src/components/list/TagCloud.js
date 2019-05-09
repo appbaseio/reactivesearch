@@ -7,6 +7,8 @@ import {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -26,7 +28,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import TagList from '../../styles/TagList';
 import Container from '../../styles/Container';
-import { connect, isFunction } from '../../utils';
+import { connect, isFunction, getValidPropsKeys } from '../../utils';
 import { getAggsQuery } from './utils';
 
 class TagCloud extends Component {
@@ -56,6 +58,7 @@ class TagCloud extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
+		props.setComponentProps(props.componentId, props);
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 		this.updateQueryOptions(props);
 
@@ -68,6 +71,9 @@ class TagCloud extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(this.props.componentId, this.props);
+		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
 			this.setState({
@@ -342,6 +348,8 @@ TagCloud.propTypes = {
 	watchComponent: types.funcRequired,
 	options: types.options,
 	selectedValue: types.selectedValue,
+	setComponentProps: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -405,6 +413,9 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchtoProps = dispatch => ({
+	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),

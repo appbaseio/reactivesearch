@@ -6,6 +6,8 @@ import {
 	updateQuery,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -25,7 +27,7 @@ import { withTheme } from 'emotion-theming';
 import DateContainer from '../../styles/DateContainer';
 import Title from '../../styles/Title';
 import Flex from '../../styles/Flex';
-import { connect } from '../../utils';
+import { connect, getValidPropsKeys } from '../../utils';
 
 import CancelSvg from '../shared/CancelSvg';
 
@@ -59,6 +61,7 @@ class DateRange extends Component {
 		const hasMounted = false;
 
 		props.addComponent(props.componentId);
+		props.setComponentProps(props.componentId, props);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 		this.setReact(props);
 
@@ -68,6 +71,9 @@ class DateRange extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(this.props.componentId, this.props);
+		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
 		if (!isEqual(this.props.value, prevProps.value)) {
@@ -502,6 +508,8 @@ DateRange.propTypes = {
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
+	setComponentProps: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	// component props
 	autoFocusEnd: types.bool,
 	className: types.string,
@@ -549,6 +557,9 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
+	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),

@@ -7,6 +7,8 @@ import {
 	updateQuery,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -22,7 +24,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { toggleButtons } from '../../styles/Button';
-import { connect } from '../../utils';
+import { connect, getValidPropsKeys } from '../../utils';
 
 class ToggleButton extends Component {
 	constructor(props) {
@@ -37,6 +39,7 @@ class ToggleButton extends Component {
 		this.locked = false;
 
 		props.addComponent(props.componentId);
+		props.setComponentProps(props.componentId, props);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 		this.setReact(props);
 		const hasMounted = false;
@@ -47,6 +50,9 @@ class ToggleButton extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(this.props.componentId, this.props);
+		});
 		checkPropChange(this.props.react, prevProps.react, () => {
 			this.setReact(this.props);
 		});
@@ -280,6 +286,8 @@ ToggleButton.propTypes = {
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
+	setComponentProps: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -317,6 +325,9 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
+	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),

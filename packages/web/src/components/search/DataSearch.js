@@ -9,6 +9,8 @@ import {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -30,7 +32,7 @@ import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
-import { connect, isFunction, getComponent, hasCustomRenderer, isIdentical } from '../../utils';
+import { connect, isFunction, getComponent, hasCustomRenderer, isIdentical, getValidPropsKeys } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 
@@ -52,6 +54,7 @@ class DataSearch extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
+		props.setComponentProps(props.componentId, props);
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 
 		if (props.highlight) {
@@ -73,6 +76,9 @@ class DataSearch extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(this.props.componentId, this.props);
+		});
 		checkSomePropChange(
 			this.props,
 			prevProps,
@@ -766,6 +772,8 @@ DataSearch.propTypes = {
 	options: types.options,
 	selectedValue: types.selectedValue,
 	suggestions: types.suggestions,
+	setComponentProps: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
@@ -853,6 +861,9 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
+	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),

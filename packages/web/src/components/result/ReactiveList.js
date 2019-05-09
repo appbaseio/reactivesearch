@@ -10,6 +10,8 @@ import {
 	loadMore,
 	setValue,
 	setQueryListener,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -29,14 +31,24 @@ import Flex from '../../styles/Flex';
 import { resultStats, sortOptions } from '../../styles/results';
 import { container } from '../../styles/Card';
 import { container as listContainer } from '../../styles/ListItem';
-import { connect, isFunction, getComponent, hasCustomRenderer } from '../../utils';
+import {
+	connect,
+	isFunction,
+	getComponent,
+	hasCustomRenderer,
+	getValidPropsKeys,
+} from '../../utils';
 
 class ReactiveList extends Component {
 	static ResultCardsWrapper = ({ children, ...rest }) => (
-		<div className={container} {...rest}>{children}</div>
+		<div className={container} {...rest}>
+			{children}
+		</div>
 	);
 	static ResultListWrapper = ({ children, ...rest }) => (
-		<div className={listContainer} {...rest}>{children}</div>
+		<div className={listContainer} {...rest}>
+			{children}
+		</div>
 	);
 	constructor(props) {
 		super(props);
@@ -63,6 +75,7 @@ class ReactiveList extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
+		this.props.setComponentProps(this.props.componentId, this.props);
 
 		if (this.props.stream) {
 			this.props.setStreaming(this.props.componentId, true);
@@ -138,6 +151,9 @@ class ReactiveList extends Component {
 
 	componentDidUpdate(prevProps) {
 		const totalPages = Math.ceil(this.props.total / this.props.size) || 0;
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(this.props.componentId, this.props);
+		});
 		if (this.props.onData) {
 			checkSomePropChange(
 				this.props,
@@ -243,11 +259,9 @@ class ReactiveList extends Component {
 				if (
 					// new items are loaded (from: 0)
 					this.props.hits.length < prevProps.hits.length
-					|| (
-						// new items are loaded and 'from' hasn't changed
-						this.props.hits.length === prevProps.hits.length
-						&& this.props.hits !== prevProps.hits
-					)
+					// new items are loaded and 'from' hasn't changed
+					|| (this.props.hits.length === prevProps.hits.length
+						&& this.props.hits !== prevProps.hits)
 				) {
 					// query has changed
 					if (this.props.scrollOnChange) {
@@ -365,7 +379,7 @@ class ReactiveList extends Component {
 			base,
 			triggerClickAnalytics: this.triggerClickAnalytics,
 		};
-	}
+	};
 	get stats() {
 		const { total, size, time } = this.props;
 		const { currentPage } = this.state;
@@ -439,13 +453,9 @@ class ReactiveList extends Component {
 	};
 
 	loadMore = () => {
-		if (
-			this.props.hits
-			&& this.props.total !== this.props.hits.length
-		) {
+		if (this.props.hits && this.props.total !== this.props.hits.length) {
 			const value = this.state.from + this.props.size;
 			const options = getQueryOptions(this.props);
-
 
 			this.setState({
 				from: value,
@@ -598,7 +608,7 @@ class ReactiveList extends Component {
 			return isFunction(renderError) ? renderError(error) : renderError;
 		}
 		return null;
-	}
+	};
 
 	withClickIds = (results) => {
 		const { base } = this.getAllData();
@@ -606,7 +616,7 @@ class ReactiveList extends Component {
 			...result,
 			_click_id: base + index,
 		}));
-	}
+	};
 	getData() {
 		const {
 			results, streamResults, filteredResults, promotedResults,
@@ -632,11 +642,7 @@ class ReactiveList extends Component {
 	}
 
 	render() {
-		const {
-			renderItem,
-			size,
-			error,
-		} = this.props;
+		const { renderItem, size, error } = this.props;
 		const { currentPage } = this.state;
 		const { filteredResults } = this.getAllData();
 		return (
@@ -650,7 +656,7 @@ class ReactiveList extends Component {
 					{this.props.sortOptions ? this.renderSortOptions() : null}
 					{this.props.showResultStats ? this.renderResultStats() : null}
 				</Flex>
-				{(!this.props.isLoading && !error && filteredResults.length === 0)
+				{!this.props.isLoading && !error && filteredResults.length === 0
 					? this.renderNoResults()
 					: null}
 				{this.props.pagination
@@ -665,7 +671,9 @@ class ReactiveList extends Component {
 							fragmentName={this.props.componentId}
 						/>
 					) : null}
-				{hasCustomRenderer(this.props) ? this.getComponent() : (
+				{hasCustomRenderer(this.props) ? (
+					this.getComponent()
+				) : (
 					<div
 						className={`${this.props.listClass} ${getClassName(
 							this.props.innerClass,
@@ -673,10 +681,10 @@ class ReactiveList extends Component {
 						)}`}
 					>
 						{filteredResults.map((item, index) =>
-							renderItem(item, () =>	{
-								this.triggerClickAnalytics((currentPage * size) + index);
-							},
-							))}
+							renderItem(item, () => {
+								this.triggerClickAnalytics(currentPage * size + index);
+							}),
+						)}
 					</div>
 				)}
 				{this.props.isLoading && this.showInfiniteScroll
@@ -726,6 +734,8 @@ ReactiveList.propTypes = {
 	onError: types.func,
 	setPageURL: types.func,
 	setQueryOptions: types.funcRequired,
+	setComponentProps: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	setStreaming: types.func,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
@@ -815,6 +825,9 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
+	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setPageURL: (component, value, label, showFilter, URLParams) =>

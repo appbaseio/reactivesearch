@@ -7,17 +7,20 @@ import {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	pushToAndClause,
 	parseHits,
 	isEqual,
 	checkPropChange,
+	checkSomePropChange,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { connect, getComponent, hasCustomRenderer } from '../../utils';
+import { connect, getComponent, hasCustomRenderer, getValidPropsKeys } from '../../utils';
 
 class ReactiveComponent extends Component {
 	constructor(props) {
@@ -41,6 +44,7 @@ class ReactiveComponent extends Component {
 		}
 
 		props.addComponent(props.componentId);
+		props.setComponentProps(props.componentId, props);
 		if (this.internalComponent) {
 			props.addComponent(this.internalComponent);
 		}
@@ -93,6 +97,9 @@ class ReactiveComponent extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(this.props.componentId, this.props);
+		});
 		if (!this.props.customQuery) {
 			// only consider hits and defaultQuery when customQuery is absent
 			if (
@@ -194,6 +201,8 @@ ReactiveComponent.propTypes = {
 	hits: types.data,
 	isLoading: types.bool,
 	selectedValue: types.selectedValue,
+	setComponentProps: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	// component props
 	children: types.func,
 	componentId: types.stringRequired,
@@ -224,6 +233,9 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
+	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props, execute) =>

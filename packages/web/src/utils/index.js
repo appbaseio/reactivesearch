@@ -1,6 +1,7 @@
 import { connect as connectToStore } from 'react-redux';
 import { storeKey } from '@appbaseio/reactivecore';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+import validProps from '@appbaseio/reactivecore/lib/utils/validProps';
 
 export const connect = (...args) =>
 	connectToStore(...args, null, {
@@ -69,3 +70,5 @@ export const isIdentical = (a, b) => {
 	}
 	return false;
 };
+export const getValidPropsKeys = (props = {}) =>
+	Object.keys(props).filter(i => validProps.includes(i));

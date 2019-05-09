@@ -8,6 +8,8 @@ import {
 	setQueryOptions,
 	setQueryListener,
 	loadMore,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -36,6 +38,7 @@ import {
 	hasCustomRenderer,
 	isEvent,
 	isIdentical,
+	getValidPropsKeys,
 } from '../../utils';
 
 class MultiList extends Component {
@@ -67,6 +70,7 @@ class MultiList extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
+		props.setComponentProps(props.componentId, props);
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 		this.updateQueryOptions(props);
 
@@ -79,6 +83,9 @@ class MultiList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(this.props.componentId, this.props);
+		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, dataField, options } = this.props;
@@ -632,6 +639,8 @@ MultiList.propTypes = {
 	watchComponent: types.funcRequired,
 	options: types.options,
 	selectedValue: types.selectedValue,
+	setComponentProps: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -708,6 +717,9 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
+	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),

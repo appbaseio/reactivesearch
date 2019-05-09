@@ -4,6 +4,7 @@ import ReactiveBase from './components/basic/ReactiveBase';
 import SelectedFilters from './components/basic/SelectedFilters';
 import NumberBox from './components/basic/NumberBox';
 import ReactiveComponent from './components/basic/ReactiveComponent';
+import StateProvider from './components/basic/StateProvider';
 
 import DatePicker from './components/date/DatePicker';
 import DateRange from './components/date/DateRange';
@@ -36,6 +37,7 @@ import ResultList from './components/result/ResultList';
 export {
 	// basic
 	ReactiveBase,
+	StateProvider,
 	SelectedFilters,
 	ToggleButton,
 	NumberBox,

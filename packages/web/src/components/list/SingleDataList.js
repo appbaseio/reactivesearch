@@ -7,6 +7,8 @@ import {
 	updateQuery,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -26,7 +28,7 @@ import Input from '../../styles/Input';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
-import { connect, getComponent, hasCustomRenderer, isEvent } from '../../utils';
+import { connect, getComponent, hasCustomRenderer, isEvent, getValidPropsKeys } from '../../utils';
 
 class SingleDataList extends Component {
 	constructor(props) {
@@ -45,6 +47,7 @@ class SingleDataList extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
+		props.setComponentProps(props.componentId, props);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		this.setReact(props);
@@ -62,6 +65,9 @@ class SingleDataList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(this.props.componentId, this.props);
+		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
@@ -223,8 +229,10 @@ class SingleDataList extends Component {
 		if (props.defaultQuery) {
 			const value = this.state.currentValue;
 			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
-			props.setQueryOptions(this.internalComponent,
-				{ ...queryOptions, ...defaultQueryOptions });
+			props.setQueryOptions(this.internalComponent, {
+				...queryOptions,
+				...defaultQueryOptions,
+			});
 		} else {
 			props.setQueryOptions(this.internalComponent, queryOptions);
 		}
@@ -285,7 +293,9 @@ class SingleDataList extends Component {
 
 	handleClick = (e) => {
 		let currentValue = e;
-		if (isEvent(e)) { currentValue = e.target.value; }
+		if (isEvent(e)) {
+			currentValue = e.target.value;
+		}
 		const { value, onChange } = this.props;
 		if (value === undefined) {
 			this.setValue(currentValue);
@@ -338,84 +348,83 @@ class SingleDataList extends Component {
 					</Title>
 				)}
 				{this.renderSearch()}
-				{
-					this.hasCustomRenderer ? this.getComponent()
-						: (
-							<UL className={getClassName(this.props.innerClass, 'list') || null}>
-								{selectAllLabel && (
-									<li
-										key={selectAllLabel}
-										className={`${
-											this.state.currentValue === selectAllLabel ? 'active' : ''
-										}`}
+				{this.hasCustomRenderer ? (
+					this.getComponent()
+				) : (
+					<UL className={getClassName(this.props.innerClass, 'list') || null}>
+						{selectAllLabel && (
+							<li
+								key={selectAllLabel}
+								className={`${
+									this.state.currentValue === selectAllLabel ? 'active' : ''
+								}`}
+							>
+								<Radio
+									className={getClassName(this.props.innerClass, 'radio')}
+									id={`${this.props.componentId}-${selectAllLabel}`}
+									name={this.props.componentId}
+									value={selectAllLabel}
+									onChange={this.handleClick}
+									checked={this.state.currentValue === selectAllLabel}
+									show={this.props.showRadio}
+								/>
+								<label
+									className={getClassName(this.props.innerClass, 'label') || null}
+									htmlFor={`${this.props.componentId}-${selectAllLabel}`}
+								>
+									{selectAllLabel}
+								</label>
+							</li>
+						)}
+						{listItems.length
+							? listItems.map(item => (
+								<li
+									key={item.label}
+									className={`${
+										this.state.currentValue === item.label ? 'active' : ''
+									}`}
+								>
+									<Radio
+										className={getClassName(this.props.innerClass, 'radio')}
+										id={`${this.props.componentId}-${item.label}`}
+										name={this.props.componentId}
+										value={item.label}
+										onClick={this.handleClick}
+										readOnly
+										checked={this.state.currentValue === item.label}
+										show={this.props.showRadio}
+									/>
+									<label
+										className={
+											getClassName(this.props.innerClass, 'label') || null
+										}
+										htmlFor={`${this.props.componentId}-${item.label}`}
 									>
-										<Radio
-											className={getClassName(this.props.innerClass, 'radio')}
-											id={`${this.props.componentId}-${selectAllLabel}`}
-											name={this.props.componentId}
-											value={selectAllLabel}
-											onChange={this.handleClick}
-											checked={this.state.currentValue === selectAllLabel}
-											show={this.props.showRadio}
-										/>
-										<label
-											className={getClassName(this.props.innerClass, 'label') || null}
-											htmlFor={`${this.props.componentId}-${selectAllLabel}`}
-										>
-											{selectAllLabel}
-										</label>
-									</li>
-								)}
-								{listItems.length
-									? listItems.map(item => (
-										<li
-											key={item.label}
-											className={`${
-												this.state.currentValue === item.label ? 'active' : ''
-											}`}
-										>
-											<Radio
-												className={getClassName(this.props.innerClass, 'radio')}
-												id={`${this.props.componentId}-${item.label}`}
-												name={this.props.componentId}
-												value={item.label}
-												onClick={this.handleClick}
-												readOnly
-												checked={this.state.currentValue === item.label}
-												show={this.props.showRadio}
-											/>
-											<label
-												className={
-													getClassName(this.props.innerClass, 'label') || null
-												}
-												htmlFor={`${this.props.componentId}-${item.label}`}
-											>
-												{renderItem ? (
-													renderItem(item.label, item.count, this.state.currentValue === item.label)
-												) : (
-													<span>
-														{item.label}
-														{showCount && item.count && (
-															<span
-																className={
-																	getClassName(
-																		this.props.innerClass,
-																		'count',
-																	) || null
-																}
-															>
+										{renderItem ? (
+											renderItem(item.label, item.count, this.state.currentValue === item.label)
+										) : (
+											<span>
+												{item.label}
+												{showCount && item.count && (
+													<span
+														className={
+															getClassName(
+																this.props.innerClass,
+																'count',
+															) || null
+														}
+													>
 																&nbsp;({item.count})
-															</span>
-														)}
 													</span>
 												)}
-											</label>
-										</li>
-									)) // prettier-ignore
-									: this.props.renderNoResults && this.props.renderNoResults()}
-							</UL>
-						)
-				}
+											</span>
+										)}
+									</label>
+								</li>
+							)) // prettier-ignore
+							: this.props.renderNoResults && this.props.renderNoResults()}
+					</UL>
+				)}
 			</Container>
 		);
 	}
@@ -430,6 +439,8 @@ SingleDataList.propTypes = {
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
 	options: types.options,
+	setComponentProps: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -486,6 +497,9 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
+	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
