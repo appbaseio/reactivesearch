@@ -1,65 +1,40 @@
 import { Component } from 'react';
 import { oneOfType, arrayOf, string, bool } from 'prop-types';
-
+import { getSearchState } from '@appbaseio/reactivecore/lib/utils/helper';
 import { connect, getComponent } from '../../utils';
 
+const filterProps = props => ({
+	...props,
+	props: props.componentProps,
+});
 
-const calculateSearchState = (props) => {
-	const {
-		selectedValues, queryLogs, dependencyTree, componentProps,
-	} = props;
-	const searchState = {};
-	Object.keys(componentProps).forEach((componentId) => {
-		searchState[componentId] = {
-			...searchState[componentId],
-			...componentProps[componentId],
+const filterByComponentIds = (state, props = {}) => {
+	const { componentIds } = props;
+	if (typeof componentIds === 'string') {
+		return {
+			[componentIds]: state[componentIds],
 		};
-	});
-	Object.keys(selectedValues).forEach((componentId) => {
-		const componentState = searchState[componentId];
-		const selectedValue = selectedValues[componentId];
-		if (selectedValue) {
-			searchState[componentId] = {
-				...componentState,
-				...{
-					title: selectedValue.label,
-					componentType: selectedValue.componentType,
-					value: selectedValue.value,
-					...(selectedValue.category && {
-						category: selectedValue.category,
-					}),
-					URLParams: selectedValue.URLParams,
-				},
-			};
-		}
-	});
-	Object.keys(queryLogs).forEach((componentId) => {
-		searchState[componentId] = {
-			...searchState[componentId],
-			...queryLogs[componentId],
-		};
-	});
-	Object.keys(dependencyTree).forEach((componentId) => {
-		searchState[componentId] = {
-			...searchState[componentId],
-			...{
-				react: dependencyTree[componentId],
-			},
-		};
-	});
-	return searchState;
+	}
+	if (componentIds instanceof Array) {
+		const filteredState = {};
+		componentIds.forEach((componentId) => {
+			filteredState[componentId] = state[componentId];
+		});
+		return filteredState;
+	}
+	return state;
 };
 
 class StateProvider extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			searchState: calculateSearchState(props),
+			searchState: getSearchState(filterProps(props)),
 		};
 	}
 	static getDerivedStateFromProps(props) {
 		return {
-			searchState: calculateSearchState(props),
+			searchState: getSearchState(filterProps(props)),
 		};
 	}
 	shouldComponentUpdate(nextProps, nextState) {
@@ -82,25 +57,9 @@ StateProvider.propTypes = {
 	strict: bool,
 };
 
-const filterByComponentIds = (state, props = {}) => {
-	const { componentIds } = props;
-	if (typeof componentIds === 'string') {
-		return {
-			[componentIds]: state[componentIds],
-		};
-	}
-	if (componentIds instanceof Array) {
-		const filteredState = {};
-		componentIds.forEach((componentId) => {
-			filteredState[componentId] = state[componentId];
-		});
-		return filteredState;
-	}
-	return state;
-};
 const mapStateToProps = (state, props) => ({
 	selectedValues: filterByComponentIds(state.selectedValues, props),
-	queryLogs: filterByComponentIds(state.queryLog, props),
+	queryLog: filterByComponentIds(state.queryLog, props),
 	dependencyTree: filterByComponentIds(state.dependencyTree, props),
 	componentProps: filterByComponentIds(state.props, props),
 });

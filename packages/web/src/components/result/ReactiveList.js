@@ -21,6 +21,7 @@ import {
 	parseHits,
 	checkSomePropChange,
 	getOptionsFromQuery,
+	getSearchState,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -570,6 +571,7 @@ class ReactiveList extends Component {
 		const {
 			config,
 			analytics: { searchId },
+			searchState,
 		} = this.props;
 		const { url, app, credentials } = config;
 		if (config.analytics && searchId) {
@@ -582,6 +584,7 @@ class ReactiveList extends Component {
 					'X-Search-Click': true,
 					'X-Search-ClickPosition': searchPosition + 1,
 					'X-Search-Conversion': true,
+					'X-Search-State': JSON.stringify(searchState),
 				},
 			});
 		}
@@ -737,6 +740,7 @@ ReactiveList.propTypes = {
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	setStreaming: types.func,
+	searchState: types.dateObject,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	currentPage: types.number,
@@ -821,6 +825,7 @@ const mapStateToProps = (state, props) => ({
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults,
+	searchState: getSearchState(state),
 });
 
 const mapDispatchtoProps = dispatch => ({
