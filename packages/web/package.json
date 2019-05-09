@@ -1,6 +1,6 @@
 {
 	"name": "@dotdev/reactivesearch",
-	"version": "2.16.1-modified",
+	"version": "2.16.1-modified.1",
 	"description": "A React UI components library for building search experiences",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
