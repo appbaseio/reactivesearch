@@ -51,4 +51,8 @@ walk("$var", function(err, results) {
 
 EOF
 
+echo Formatting package.json files
+
+prettier --write "**/package.json"
+
 echo Upgraded $1 version to $2
