@@ -584,7 +584,9 @@ class ReactiveList extends Component {
 					'X-Search-Click': true,
 					'X-Search-ClickPosition': searchPosition + 1,
 					'X-Search-Conversion': true,
-					'X-Search-State': JSON.stringify(searchState),
+					...(config.searchStateHeader && {
+						'X-Search-State': JSON.stringify(searchState),
+					}),
 				},
 			});
 		}
@@ -825,7 +827,7 @@ const mapStateToProps = (state, props) => ({
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults,
-	searchState: getSearchState(state),
+	searchState: getSearchState(state, true),
 });
 
 const mapDispatchtoProps = dispatch => ({

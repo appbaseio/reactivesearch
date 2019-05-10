@@ -62,6 +62,10 @@ const mapStateToProps = (state, props) => ({
 	queryLog: filterByComponentIds(state.queryLog, props),
 	dependencyTree: filterByComponentIds(state.dependencyTree, props),
 	componentProps: filterByComponentIds(state.props, props),
+	hits: filterByComponentIds(state.hits, props),
+	aggregations: filterByComponentIds(state.aggregations, props),
+	isLoading: filterByComponentIds(state.isLoading, props),
+	error: filterByComponentIds(state.error, props),
 });
 
 export default connect(

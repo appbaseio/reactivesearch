@@ -67,6 +67,7 @@ class ReactiveBase extends Component {
 			type: this.type,
 			transformRequest: props.transformRequest,
 			analytics: props.analytics,
+			searchStateHeader: props.searchStateHeader,
 			graphQLUrl: props.graphQLUrl,
 			transformResponse: props.transformResponse,
 		};
@@ -142,11 +143,13 @@ ReactiveBase.defaultProps = {
 	themePreset: 'light',
 	initialState: {},
 	analytics: false,
+	searchStateHeader: false,
 	graphQLUrl: '',
 };
 
 ReactiveBase.propTypes = {
 	app: types.stringRequired,
+	searchStateHeader: types.bool,
 	children: types.children,
 	credentials: types.string,
 	headers: types.headers,
