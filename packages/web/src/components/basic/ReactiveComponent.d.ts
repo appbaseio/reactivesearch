@@ -11,7 +11,7 @@ export interface ReactiveComponentProps {
 	defaultValue?: any;
 	value?: any;
 	filterLabel?: string;
-	onAllData?: (...args: any[]) => any;
+	onData?: (...args: any[]) => any;
 	onError?: (...args: any[]) => any;
 	react?: types.react;
 	showFilter?: boolean;
