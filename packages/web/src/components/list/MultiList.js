@@ -522,7 +522,7 @@ class MultiList extends Component {
 		}
 
 		if (!this.hasCustomRenderer && this.state.options.length === 0) {
-			return null;
+			return this.props.renderNoResults ? this.props.renderNoResults() : null;
 		}
 
 		const listItems = this.listItems;
