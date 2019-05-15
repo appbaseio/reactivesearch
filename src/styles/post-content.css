@@ -1,15 +1,15 @@
-@import "colors.css";
+@import 'colors.css';
 
 :root {
-    --navbar-size: 88px;
+	--navbar-size: 88px;
 }
 
 /* ------------------------------------ */
 .post-content {
-    line-height: var(--vr-3);
-    width: 100%;
-    position: relative;
-    margin: 0 auto;
+	line-height: var(--vr-3);
+	width: 100%;
+	position: relative;
+	margin: 0 auto;
 }
 
 .post-content audio,
@@ -18,17 +18,17 @@
 .post-content img,
 .post-content svg,
 .post-content video {
-    vertical-align: middle;
+	vertical-align: middle;
 }
 
 .post-content fieldset {
-    margin: 0;
-    padding: 0;
-    border: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
 }
 
 .post-content textarea {
-    resize: vertical;
+	resize: vertical;
 }
 
 .post-content p,
@@ -36,98 +36,107 @@
 .post-content ol,
 .post-content dl,
 .post-content blockquote {
-    margin: var(--vr-3) 0 0;
-    font-size: 1.45rem;
+	margin: var(--vr-3) 0 0;
+	font-size: 1.45rem;
 }
 
 .post-content > p:first-child {
-    margin: calc(var(--vr-2) - 1px) 0 0;
-    font-size: 1.75rem;
-    line-height: calc(
-        var(--vr-4) - 0.4rem
-    ); /* Fine tune line height for this font size */
+	margin: calc(var(--vr-2) - 1px) 0 0;
+	font-size: 1.75rem;
+	line-height: calc(var(--vr-4) - 0.4rem); /* Fine tune line height for this font size */
 }
 
 .post-content ol,
 .post-content ul {
-    padding-left: 1.3em;
-    padding-right: 1.5em;
+	padding-left: 1.3em;
+	padding-right: 1.5em;
 }
 
 .post-content ol ol,
 .post-content ul ul,
 .post-content ul ol,
 .post-content ol ul {
-    margin: var(--vr-2) 0 0;
+	margin: var(--vr-2) 0 0;
 }
 
 .post-content ul {
-    list-style: disc;
+	list-style: disc;
 }
 
 .post-content ol {
-    list-style: decimal;
+	list-style: decimal;
 }
 
 .post-content ul,
 .post-content ol {
-    max-width: 100%;
+	max-width: 100%;
 }
 
 .post-content li {
-    margin: var(--vr-1) 0 0;
-    padding-left: 0.3em;
-    line-height: 1.6em;
+	margin: var(--vr-1) 0 0;
+	padding-left: 0.3em;
+	line-height: 1.6em;
 }
 
 .post-content dt {
-    float: left;
-    margin: 0 20px 0 0;
-    width: 120px;
-    color: var(--darkgrey);
-    font-weight: 500;
-    text-align: right;
+	float: left;
+	margin: 0 20px 0 0;
+	width: 120px;
+	color: var(--darkgrey);
+	font-weight: 500;
+	text-align: right;
 }
 
 .post-content dd {
-    margin: 0 0 5px 0;
-    text-align: left;
+	margin: 0 0 5px 0;
+	text-align: left;
 }
 
 .post-content blockquote {
-    padding: 0 0 0 1.5em;
-    border-left: #3eb0ef 2px solid;
+	padding: 0 0 0 1.5em;
+	border-left: #3eb0ef 4px solid;
+	background: #3eb0ef1a;
+	padding: 10px;
+}
+
+.post-content .warning blockquote {
+	margin: 0;
+	background: #f6df1d1a;
+	border-left-color: #f6df1d;
+}
+
+.post-content .warning blockquote code {
+	background: #fafafa;
 }
 
 .post-content blockquote p:last-child {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 .post-content blockquote p {
-    margin: 0;
-    font-size: 1.2em;
-    font-weight: 400;
-    color: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    font-style: italic;
+	margin: 0;
+	font-size: 1.2em;
+	font-weight: 400;
+	color: inherit;
+	font-size: inherit;
+	line-height: inherit;
 }
 
 .post-content blockquote small {
-    display: inline-block;
-    font-size: 0.9em;
-    opacity: 0.8;
+	display: inline-block;
+	font-size: 0.9em;
+	opacity: 0.8;
 }
 /* Quotation marks */
 .post-content blockquote small:before {
-    content: "\2014 \00A0";
+	content: '\2014 \00A0';
 }
 
 .post-content blockquote cite {
-    font-weight: bold;
+	font-weight: bold;
 }
 .post-content blockquote cite a {
-    font-weight: normal;
+	font-weight: normal;
 }
 
 .post-content h1,
@@ -145,56 +154,56 @@
 .post-content .gatsby-highlight,
 .post-comments,
 .footnotes {
-    min-width: 100%;
+	min-width: 100%;
 }
 
 .post-content li {
-    word-break: break-word;
+	word-break: break-word;
 }
 
 .post-content li p {
-    margin: 0;
+	margin: 0;
 }
 
 .post-content a {
-    color: var(--blue-d2);
-    word-break: break-word;
-    text-decoration: none;
-    box-shadow: var(--blue) 0 -1px 0 inset;
-    transition: all 0.2s ease;
+	color: var(--blue-d2);
+	word-break: break-word;
+	text-decoration: none;
+	box-shadow: var(--blue) 0 -1px 0 inset;
+	transition: all 0.2s ease;
 }
 
 .post-content a:hover {
-    color: #2497d6;
-    text-decoration: none;
-    box-shadow: var(--blue) 0 -1px 0 inset;
+	color: #2497d6;
+	text-decoration: none;
+	box-shadow: var(--blue) 0 -1px 0 inset;
 }
 
 .post-content .gatsby-resp-image-link:hover,
 .post-content a img:hover {
-    box-shadow: none;
+	box-shadow: none;
 }
 
 .post-content strong,
 .post-content em {
-    color: color(var(--darkgrey) l(-5%));
+	color: color(var(--darkgrey) l(-5%));
 }
 
 .post-content small {
-    display: inline-block;
-    line-height: 1.6em;
+	display: inline-block;
+	line-height: 1.6em;
 }
 
 .post-content li:first-child {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 .post-content img,
 .post-content video {
-    display: block;
-    margin: 1.5em auto;
-    max-width: 100%;
-    height: auto;
+	display: block;
+	margin: 1.5em auto;
+	max-width: 100%;
+	height: auto;
 }
 
 /* Full bleed images (#full)
@@ -202,9 +211,9 @@ Super neat trick courtesy of @JoelDrapper
 Usage (In Ghost edtior):
 ![img](/some/image.jpg#full)
 */
-.post-content img[src$="#full"] {
-    max-width: none;
-    width: 100vw;
+.post-content img[src$='#full'] {
+	max-width: none;
+	width: 100vw;
 }
 
 /* Image captions
@@ -213,23 +222,23 @@ Usage (In Ghost editor):
 <small>Your image caption</small>
 */
 .post-content img + br + small {
-    display: block;
-    margin-top: -3em;
-    margin-bottom: 1.5em;
-    text-align: center;
+	display: block;
+	margin-top: -3em;
+	margin-bottom: 1.5em;
+	text-align: center;
 }
 
 /* Override third party iframe styles */
 .post-content iframe {
-    margin: calc(var(--vr-4)) auto !important;
+	margin: calc(var(--vr-4)) auto !important;
 }
 
 .post-content figure iframe {
-    margin: 0 auto !important;
+	margin: 0 auto !important;
 }
 
 .post-content .fluid-width-video-wrapper {
-    margin: 1.5em 0 3em;
+	margin: 1.5em 0 3em;
 }
 
 .post-content h1,
@@ -238,8 +247,8 @@ Usage (In Ghost editor):
 .post-content h4,
 .post-content h5,
 .post-content h6 {
-    color: inherit;
-    outline: none;
+	color: inherit;
+	outline: none;
 }
 
 .post-content h1 .anchor,
@@ -248,9 +257,9 @@ Usage (In Ghost editor):
 .post-content h4 .anchor,
 .post-content h5 .anchor,
 .post-content h6 .anchor {
-    margin: -2px 0 0 -40px;
-    padding: 0 12px;
-    box-shadow: none;
+	margin: -2px 0 0 -40px;
+	padding: 0 12px;
+	box-shadow: none;
 }
 
 .post-content h1 .anchor svg,
@@ -259,15 +268,15 @@ Usage (In Ghost editor):
 .post-content h4 .anchor svg,
 .post-content h5 .anchor svg,
 .post-content h6 .anchor svg {
-    height: 16px;
-    width: 16px;
-    fill: var(--midgrey);
+	height: 16px;
+	width: 16px;
+	fill: var(--midgrey);
 }
 
 .post-content .anchor:hover {
-    border: none;
-    text-decoration: none;
-    box-shadow: none;
+	border: none;
+	text-decoration: none;
+	box-shadow: none;
 }
 
 .post-content > h1:first-child,
@@ -276,109 +285,109 @@ Usage (In Ghost editor):
 .post-content > h4:first-child,
 .post-content > h5:first-child,
 .post-content > h6:first-child {
-    margin: var(--vr-4) 0 0;
+	margin: var(--vr-4) 0 0;
 }
 
 .post-content h1 {
-    font-size: 4.4rem;
-    font-weight: 300;
-    line-height: var(--vr-8);
-    letter-spacing: -0.2px;
-    margin: var(--vr-8) 0 0;
+	font-size: 4.4rem;
+	font-weight: 300;
+	line-height: var(--vr-8);
+	letter-spacing: -0.2px;
+	margin: var(--vr-8) 0 0;
 }
 
 @media (max-width: 500px) {
-    .post-content h1 {
-        font-size: 2.8rem;
-    }
+	.post-content h1 {
+		font-size: 2.8rem;
+	}
 }
 
 .post-content h2 {
-    font-size: 2.85rem;
-    font-weight: 500;
-    line-height: var(--vr-5);
-    margin: var(--vr-7) 0 0;
+	font-size: 2.85rem;
+	font-weight: 500;
+	line-height: var(--vr-5);
+	margin: var(--vr-7) 0 0;
 }
 
 @media (max-width: 500px) {
-    .post-content h2 {
-        font-size: 2.6rem;
-    }
+	.post-content h2 {
+		font-size: 2.6rem;
+	}
 }
 
 .post-content h3 {
-    font-size: 2.25rem;
-    font-weight: 500;
-    line-height: var(--vr-5);
-    margin: var(--vr-6) 0 0;
-    letter-spacing: -0.4px;
+	font-size: 2.25rem;
+	font-weight: 500;
+	line-height: var(--vr-5);
+	margin: var(--vr-6) 0 0;
+	letter-spacing: -0.4px;
 }
 @media (max-width: 500px) {
-    .post-content h3 {
-        font-size: 2.2rem;
-    }
+	.post-content h3 {
+		font-size: 2.2rem;
+	}
 }
 
 .post-content h4 {
-    font-size: 1.75rem;
-    font-weight: 500;
-    line-height: calc(var(--vr-4) - 0.4rem);
-    margin: var(--vr-4) 0 0;
+	font-size: 1.75rem;
+	font-weight: 500;
+	line-height: calc(var(--vr-4) - 0.4rem);
+	margin: var(--vr-4) 0 0;
 }
 @media (max-width: 500px) {
-    .post-content h4 {
-        font-size: 2.2rem;
-    }
+	.post-content h4 {
+		font-size: 2.2rem;
+	}
 }
 
 .post-content h5 {
-    font-size: 2.25rem;
-    font-weight: 300;
-    font-style: italic;
-    line-height: var(--vr-5);
-    margin: var(--vr-6) 0 0;
-    color: var(--blue);
+	font-size: 2.25rem;
+	font-weight: 300;
+	font-style: italic;
+	line-height: var(--vr-5);
+	margin: var(--vr-6) 0 0;
+	color: var(--blue);
 }
 @media (max-width: 500px) {
-    .post-content h5 {
-        padding: 0 0 0.5em;
-        font-size: 2.2rem;
-    }
+	.post-content h5 {
+		padding: 0 0 0.5em;
+		font-size: 2.2rem;
+	}
 }
 
 .post-content h6 {
-    font-size: 1.45rem;
-    font-weight: 600;
-    line-height: var(--vr-3);
-    margin: var(--vr-4) 0 0;
-    text-transform: uppercase;
-    letter-spacing: 0.2px;
-    word-spacing: 3px;
+	font-size: 1.45rem;
+	font-weight: 600;
+	line-height: var(--vr-3);
+	margin: var(--vr-4) 0 0;
+	text-transform: uppercase;
+	letter-spacing: 0.2px;
+	word-spacing: 3px;
 }
 @media (max-width: 500px) {
-    .post-content h6 {
-        font-size: 2rem;
-    }
+	.post-content h6 {
+		font-size: 2rem;
+	}
 }
 
 /* Fixing in-page anchors for headings */
 .post-content h2:before,
 .post-content h3:before {
-    content: '';
-    display: block;
-    height: 80px;
-    margin-top: -80px;
+	content: '';
+	display: block;
+	height: 80px;
+	margin-top: -80px;
 }
 
 .post-content h2 {
-    pointer-events: none;
+	pointer-events: none;
 }
 
 .post-content h2 + p,
 .post-content h3 + p,
 .post-content h4 + p,
 .post-content h6 + p {
-    margin: var(--vr-1) 0 0;
+	margin: var(--vr-1) 0 0;
 }
 
 .post-content h1 + h1,
@@ -386,32 +395,32 @@ Usage (In Ghost editor):
 .post-content h1 + h3,
 .post-content h1 + h4,
 .post-content h1 + h6 {
-    margin: var(--vr-6) 0 0;
+	margin: var(--vr-6) 0 0;
 }
 
 .post-content h2 + h2,
 .post-content h2 + h3,
 .post-content h2 + h4,
 .post-content h2 + h6 {
-    margin: var(--vr-2) 0 0;
+	margin: var(--vr-2) 0 0;
 }
 
 .post-content h3 + h3,
 .post-content h3 + h4,
 .post-content h3 + h6 {
-    margin: var(--vr-2) 0 0;
+	margin: var(--vr-2) 0 0;
 }
 
 .post-content h4 + h4,
 .post-content h4 + h6 {
-    margin: var(--vr-1) 0 0;
+	margin: var(--vr-1) 0 0;
 }
 
 .post-content h5 + p,
 .post-content h5 + ul,
 .post-content h5 + ol,
 .post-content h5 + blockquote {
-    margin: var(--vr-6) 0 0;
+	margin: var(--vr-6) 0 0;
 }
 
 .post-content h5 + h1,
@@ -420,25 +429,25 @@ Usage (In Ghost editor):
 .post-content h5 + h4,
 .post-content h5 + h5,
 .post-content h5 + h6 {
-    margin: var(--vr-6) 0 0;
+	margin: var(--vr-6) 0 0;
 }
 
 .post-content hr {
-    position: relative;
-    display: block;
-    width: 100%;
-    margin: var(--vr-8) 0 0;
-    padding: 0;
-    height: 1px;
-    border: none;
-    border-top: 1px solid var(--whitegrey);
+	position: relative;
+	display: block;
+	width: 100%;
+	margin: var(--vr-8) 0 0;
+	padding: 0;
+	height: 1px;
+	border: none;
+	border-top: 1px solid var(--whitegrey);
 }
 
 .post-content hr + p,
 .post-content hr + ul,
 .post-content hr + ol,
 .post-content hr + blockquote {
-    margin: var(--vr-8) 0 0;
+	margin: var(--vr-8) 0 0;
 }
 
 .post-content hr + h1,
@@ -447,23 +456,23 @@ Usage (In Ghost editor):
 .post-content hr + h4,
 .post-content hr + h5,
 .post-content hr + h6 {
-    margin: var(--vr-6) 0 0;
+	margin: var(--vr-6) 0 0;
 }
 
 /* Some grouped styles for smaller viewports */
 @media (max-width: 500px) {
-    .post-content hr {
-        margin: var(--vr-6) 0 0;
-    }
+	.post-content hr {
+		margin: var(--vr-6) 0 0;
+	}
 
-    .post-content hr + h1,
-    .post-content hr + h2,
-    .post-content hr + h3,
-    .post-content hr + h4,
-    .post-content hr + h5,
-    .post-content hr + h6 {
-        margin: var(--vr-4) 0 0;
-    }
+	.post-content hr + h1,
+	.post-content hr + h2,
+	.post-content hr + h3,
+	.post-content hr + h4,
+	.post-content hr + h5,
+	.post-content hr + h6 {
+		margin: var(--vr-4) 0 0;
+	}
 }
 
 /* Non-text content */
@@ -504,7 +513,7 @@ Usage (In Ghost editor):
 .post-content ol + table,
 .post-content blockquote + table,
 .post-content h6 + table {
-    margin: var(--vr-4) 0 0;
+	margin: var(--vr-4) 0 0;
 }
 
 .post-content figure + h1,
@@ -527,13 +536,13 @@ Usage (In Ghost editor):
 .post-content table + h4,
 .post-content table + h5,
 .post-content table + h6 {
-    margin: var(--vr-6) 0 0;
+	margin: var(--vr-6) 0 0;
 }
 
 .post-content figure + h2,
 .post-content pre + h2,
 .post-content div + h2 {
-    margin: var(--vr-10) 0 0;
+	margin: var(--vr-10) 0 0;
 }
 
 .post-content h1 + figure,
@@ -560,292 +569,291 @@ Usage (In Ghost editor):
 .post-content h4 + table,
 .post-content h5 + table,
 .post-content h6 + table {
-    margin: var(--vr-2) 0;
+	margin: var(--vr-2) 0;
 }
 
 /* Footnotes */
 .footnotes-sep {
-    margin-bottom: 30px;
+	margin-bottom: 30px;
 }
 
 .footnotes {
-    font-size: 1.5rem;
+	font-size: 1.5rem;
 }
 
 .footnotes p {
-    margin: 0;
+	margin: 0;
 }
 
 .footnote-backref {
-    color: var(--blue) !important;
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-decoration: none !important;
-    box-shadow: none !important;
+	color: var(--blue) !important;
+	font-size: 1.2rem;
+	font-weight: bold;
+	text-decoration: none !important;
+	box-shadow: none !important;
 }
 
 /* Some grouped styles for smaller viewports */
 @media (max-width: 500px) {
-    .post-meta {
-        font-size: 1.2rem;
-        line-height: 1.3em;
-    }
-    .post-title {
-        font-size: 2.9rem;
-    }
-    .post-image {
-        margin-bottom: 4vw;
-        height: 350px;
-    }
-    .post-content {
-        padding: 0;
-    }
-    .post-content:before,
-    .post-content:after {
-        display: none;
-    }
+	.post-meta {
+		font-size: 1.2rem;
+		line-height: 1.3em;
+	}
+	.post-title {
+		font-size: 2.9rem;
+	}
+	.post-image {
+		margin-bottom: 4vw;
+		height: 350px;
+	}
+	.post-content {
+		padding: 0;
+	}
+	.post-content:before,
+	.post-content:after {
+		display: none;
+	}
 }
 
 /* Tables */
 .post-content table {
-    display: block;
-    overflow-x: auto;
-    margin: var(--vr-4) 0 0;
-    width: 100%;
-    border-spacing: 0;
-    border-collapse: collapse;
-    font-size: 1.35rem;
-    vertical-align: top;
-    -webkit-overflow-scrolling: touch;
-    align-self: flex-start;
+	display: block;
+	overflow-x: auto;
+	margin: var(--vr-4) 0 0;
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: collapse;
+	font-size: 1.35rem;
+	vertical-align: top;
+	-webkit-overflow-scrolling: touch;
+	align-self: flex-start;
 }
 
 .post-content thead,
 .post-content tbody {
-    width: 100%;
+	width: 100%;
 }
 
 .post-content tr:first-child td:first-child {
-    border-top-left-radius: 4px;
+	border-top-left-radius: 4px;
 }
 
 .post-content tr {
-    width: 100%;
+	width: 100%;
 }
 
 .post-content th {
-    padding: 12px;
-    border-bottom: 3px solid var(--whitegrey-l1);
-    text-align: left;
-    color: var(--darkgrey);
-    font-weight: 600;
-    font-size: 1.35rem;
-    line-height: 1.65em;
-    letter-spacing: 0.2px;
+	padding: 12px;
+	border-bottom: 3px solid var(--whitegrey-l1);
+	text-align: left;
+	color: var(--darkgrey);
+	font-weight: 600;
+	font-size: 1.35rem;
+	line-height: 1.65em;
+	letter-spacing: 0.2px;
 }
 
 .post-content td {
-    min-width: 150px;
-    padding: 14px;
-    border-bottom: 1px solid var(--whitegrey-l1);
-    border-right: 1px solid var(--whitegrey-l1);
-    vertical-align: top;
-    text-align: left;
-    line-height: 1.6em;
+	min-width: 150px;
+	padding: 14px;
+	border-bottom: 1px solid var(--whitegrey-l1);
+	border-right: 1px solid var(--whitegrey-l1);
+	vertical-align: top;
+	text-align: left;
+	line-height: 1.6em;
 }
 
 .post-content th:first-child,
 .post-content td:first-child {
-    text-align: left;
-    padding-left: 0;
+	text-align: left;
+	padding-left: 0;
 }
 
 .post-content td:last-child {
-    border-right: none;
-    padding-right: 0;
+	border-right: none;
+	padding-right: 0;
 }
 
 .post-content td ul {
-    margin: 0.7em 0;
-    padding: 0;
-    list-style: none;
+	margin: 0.7em 0;
+	padding: 0;
+	list-style: none;
 }
 
 .post-content td ul li {
-    margin: 0.7em 0;
-    padding: 0;
+	margin: 0.7em 0;
+	padding: 0;
 }
-
 
 /* 7.6. Koenig Styles
 /* ---------------------------------------------------------- */
 
 .post-content .kg-image {
-    max-width: 100%;
+	max-width: 100%;
 }
 
 /* Preventing full-width image overlap with post image.  */
 .post-image + .post-content .kg-content *:first-child .kg-image {
-    width: 100%;
+	width: 100%;
 }
 
 .post-content .kg-width-wide,
 .post-content .kg-width-full {
-    margin: var(--vr-4) -100% 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	margin: var(--vr-4) -100% 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .post-content .kg-width-wide .kg-image {
-    max-width: 1040px;
-    width: 100vw;
+	max-width: 1040px;
+	width: 100vw;
 }
 
 .post-content .kg-width-full .kg-image {
-    max-width: 100vw;
-    width: 100vw;
+	max-width: 100vw;
+	width: 100vw;
 }
 
 .post-content figure {
-    margin: var(--vr-2) 0 0;
+	margin: var(--vr-2) 0 0;
 }
 
 .post-content figure img {
-    margin: 0;
+	margin: 0;
 }
 
 .post-content figcaption {
-    margin: var(--vr-2) 0 0;
-    font-size: 0.9em;
-    line-height: var(--vr-2);
-    text-align: center;
-    letter-spacing: 0.2px;
+	margin: var(--vr-2) 0 0;
+	font-size: 0.9em;
+	line-height: var(--vr-2);
+	text-align: center;
+	letter-spacing: 0.2px;
 }
 
 .kg-width-full figcaption {
-    padding: 0 1.5em;
+	padding: 0 1.5em;
 }
 
 .kg-embed-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 100%;
 }
 
 .kg-embed-card .fluid-width-video-wrapper {
-    margin: 0;
+	margin: 0;
 }
 
 @media (max-width: 1040px) {
-    .post-content .kg-width-full .kg-image {
-        width: 100vw;
-    }
+	.post-content .kg-width-full .kg-image {
+		width: 100vw;
+	}
 }
 
 .kg-gallery-container {
-    display: flex;
-    flex-direction: column;
-    max-width: 1040px;
-    width: 100vw;
+	display: flex;
+	flex-direction: column;
+	max-width: 1040px;
+	width: 100vw;
 }
 
 .kg-gallery-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 }
 
 .kg-gallery-image img {
-    display: block;
-    margin: 0;
-    width: 100%;
-    height: 100%;
+	display: block;
+	margin: 0;
+	width: 100%;
+	height: 100%;
 }
 
 .kg-gallery-row:not(:first-of-type) {
-    margin: 0.75em 0 0 0;
+	margin: 0.75em 0 0 0;
 }
 
 .kg-gallery-image:not(:first-of-type) {
-    margin: 0 0 0 0.75em;
+	margin: 0 0 0 0.75em;
 }
 
 /* 7.7. FAQ Custom List Styles
 /* ---------------------------------------------------------- */
 
 .faq-content {
-    width: calc(100% - 3.2rem);
+	width: calc(100% - 3.2rem);
 }
 
 .faq-content ol {
-    padding: 0;
-    list-style: none;
-    counter-reset: listitem;
+	padding: 0;
+	list-style: none;
+	counter-reset: listitem;
 }
 
 .faq-content ol li {
-    position: relative;
-    padding-left: 30px;
-    margin: 15px 0 0;
+	position: relative;
+	padding-left: 30px;
+	margin: 15px 0 0;
 }
 
 .faq-content ol li:first-child {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 .faq-content ol li::before {
-    counter-increment: listitem;
-    content: counter(listitem);
-    background: var(--lightgrey-l2);
-    color: var(--darkgrey);
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1;
-    text-align: center;
-    padding: 4px 0;
-    height: 11px;
-    width: 19px;
-    border-radius: 10px;
-    position: absolute;
-    left: 0;
-    top: 2px;
+	counter-increment: listitem;
+	content: counter(listitem);
+	background: var(--lightgrey-l2);
+	color: var(--darkgrey);
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1;
+	text-align: center;
+	padding: 4px 0;
+	height: 11px;
+	width: 19px;
+	border-radius: 10px;
+	position: absolute;
+	left: 0;
+	top: 2px;
 }
 
 .faq-content img {
-    border: 1px solid var(--whitegrey);
+	border: 1px solid var(--whitegrey);
 }
 
 .faq-content h3 {
-    font-size: 1.9rem;
-    font-weight: 500;
-    line-height: var(--vr-4);
-    margin: var(--vr-5) 0 0;
+	font-size: 1.9rem;
+	font-weight: 500;
+	line-height: var(--vr-4);
+	margin: var(--vr-5) 0 0;
 }
 
 .faq-content h4 {
-    font-size: 1.45rem;
-    font-weight: 600;
-    line-height: var(--vr-4);
+	font-size: 1.45rem;
+	font-weight: 600;
+	line-height: var(--vr-4);
 }
 
 .faq-content h2 {
-    font-size: 2.25rem;
-    font-weight: 500;
-    letter-spacing: -0.2px;
-    line-height: var(--vr-4);
+	font-size: 2.25rem;
+	font-weight: 500;
+	letter-spacing: -0.2px;
+	line-height: var(--vr-4);
 }
 
 .faq-content .kg-width-wide,
 .faq-content .kg-width-full {
-    width: calc(100% + 12.8rem);
-    margin-left: -6.8rem;
+	width: calc(100% + 12.8rem);
+	margin-left: -6.8rem;
 }
 
 .faq-content .kg-width-wide .kg-image,
 .faq-content .kg-width-full .kg-image {
-    max-width: 100%;
+	max-width: 100%;
 }
 
 .faq-content hr,
@@ -853,7 +861,7 @@ Usage (In Ghost editor):
 .faq-content hr + ul,
 .faq-content hr + ol,
 .faq-content hr + blockquote {
-    margin: var(--vr-5) 0 0;
+	margin: var(--vr-5) 0 0;
 }
 
 .faq-content hr + h1,
@@ -862,162 +870,162 @@ Usage (In Ghost editor):
 .faq-content hr + h4,
 .faq-content hr + h5,
 .faq-content hr + h6 {
-    margin: var(--vr-4) 0 0;
+	margin: var(--vr-4) 0 0;
 }
 
 /* Tutorials and Integrations steps */
 /* ---------------------------------------------------------- */
 .tutorial-content,
 .integration-content {
-    counter-reset: headingitem;
+	counter-reset: headingitem;
 }
 
 .tutorial-content h2,
 .integration-content h2 {
-    position: relative;
-    font-size: 2.5rem;
-    font-weight: 500;
-    line-height: var(--vr-5);
-    margin: var(--vr-6) 0 0;
-    letter-spacing: -0.4px;
+	position: relative;
+	font-size: 2.5rem;
+	font-weight: 500;
+	line-height: var(--vr-5);
+	margin: var(--vr-6) 0 0;
+	letter-spacing: -0.4px;
 }
 
 .integration-content h2 {
-    color: var(--darkgrey);
+	color: var(--darkgrey);
 }
 
 .tutorial-content h2:after,
 .integration-content h2:after {
-    counter-increment: headingitem;
-    content: counter(headingitem);
-    position: absolute;
-    top: 88px;
-    left: -40px;
-    width: 23px;
-    height: 23px;
-    font-size: 1.3rem;
-    border-radius: 100%;
-    background: #35bcad;
-    color: #ffffff;
-    text-align: center;
-    padding: 0;
-    margin: 0;
-    line-height: 1.8em;
+	counter-increment: headingitem;
+	content: counter(headingitem);
+	position: absolute;
+	top: 88px;
+	left: -40px;
+	width: 23px;
+	height: 23px;
+	font-size: 1.3rem;
+	border-radius: 100%;
+	background: #35bcad;
+	color: #ffffff;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	line-height: 1.8em;
 }
 
 .integration-content h2:after {
-    background: var(--whitegrey);
-    color: var(--midgrey);
+	background: var(--whitegrey);
+	color: var(--midgrey);
 }
 
 .tutorial-content h2:last-of-type {
-    color: var(--darkgrey);
-    padding-top: 44px;
-    margin: calc(var(--vr-6)) 0 0;
+	color: var(--darkgrey);
+	padding-top: 44px;
+	margin: calc(var(--vr-6)) 0 0;
 }
 
 .tutorial-content h2:last-of-type:after {
-    content: "";
-    background: none;
-    top: 30px;
-    width: 100%;
-    left: 0;
-    border-top: 1px solid var(--whitegrey);
-    border-radius: 0;
+	content: '';
+	background: none;
+	top: 30px;
+	width: 100%;
+	left: 0;
+	border-top: 1px solid var(--whitegrey);
+	border-radius: 0;
 }
 
 .integration-content .kg-width-wide,
 .integration-content .kg-width-full {
-    width: calc(100% + 7rem);
-    margin-left: -6rem;
-    margin-right: -1rem;
+	width: calc(100% + 7rem);
+	margin-left: -6rem;
+	margin-right: -1rem;
 }
 .integration-content .kg-width-wide .kg-image,
 .integration-content .kg-width-full .kg-image {
-    max-width: 100%;
+	max-width: 100%;
 }
 
 /* Code Boxes
 /* ---------------------------------------------------------- */
 
 .gatsby-highlight {
-    max-width: 0;
+	max-width: 0;
 }
 
 code,
 pre {
-    font-family: Menlo, Courier, monospace;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    tab-size: 4;
-    hyphens: none;
+	font-family: Menlo, Courier, monospace;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	tab-size: 4;
+	hyphens: none;
 }
 
 .post-content code {
-    padding: 0 5px 2px;
-    font-size: 0.8em;
-    line-height: 1em;
-    font-weight: 400 !important;
-    background: var(--whitegrey);
-    border-radius: 3px;
-    white-space: pre-wrap;
+	padding: 0 5px 2px;
+	font-size: 0.8em;
+	line-height: 1em;
+	font-weight: 400 !important;
+	background: var(--whitegrey);
+	border-radius: 3px;
+	white-space: pre-wrap;
 }
 
 .post-content pre {
-    overflow-x: auto;
-    margin: 1.5em 0 3em;
-    padding: 20px;
-    max-width: 100%;
-    border: none;
-    color: var(--whitegrey);
-    font-size: 1.3rem;
-    line-height: 1.7em;
-    background: #2a3644;
-    border-radius: 5px;
+	overflow-x: auto;
+	margin: 1.5em 0 3em;
+	padding: 20px;
+	max-width: 100%;
+	border: none;
+	color: var(--whitegrey);
+	font-size: 1.3rem;
+	line-height: 1.7em;
+	background: #2a3644;
+	border-radius: 5px;
 }
 
 .post-content pre code {
-    padding: 0;
-    font-size: inherit;
-    line-height: inherit;
-    background: transparent;
-    white-space: pre;
+	padding: 0;
+	font-size: inherit;
+	line-height: inherit;
+	background: transparent;
+	white-space: pre;
 }
 
 .post-content pre code * {
-    color: inherit;
+	color: inherit;
 }
 
 /* Zapier Embeds
 /* ---------------------------------------------------------- */
 
 .zapier {
-    width: 100%;
+	width: 100%;
 }
 
 .zapier + .zapier {
-    position: relative;
+	position: relative;
 }
 
 .zapier + .zapier:before {
-    content: "";
-    height: 30px;
-    width: 100%;
-    background: #fff;
-    position: absolute;
-    top: -40px;
+	content: '';
+	height: 30px;
+	width: 100%;
+	background: #fff;
+	position: absolute;
+	top: -40px;
 }
 
 .zapier + .zapier:after {
-    content: "";
-    height: 29px;
-    width: 1px;
-    margin: 0 auto;
-    background: #dadfe2;
-    position: absolute;
-    top: -33px;
-    left: 50%;
-    z-index: 50;
+	content: '';
+	height: 29px;
+	width: 1px;
+	margin: 0 auto;
+	background: #dadfe2;
+	position: absolute;
+	top: -33px;
+	left: 50%;
+	z-index: 50;
 }

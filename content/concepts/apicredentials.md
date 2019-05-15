@@ -65,9 +65,9 @@ Let's go over each kind of authorization constraint you can apply to a key:
     - **Delete** (delete) allows access to all the deletion related endpoints.
     - **Analytics** (analytics) allows access to the Analytics APIs programmatically. [only available for `growth` plan users]
 
-3) **Security** constraints allow authorizing API access based on the selected HTTP Referers and IP Source values.
+3)  **Security** constraints allow authorizing API access based on the selected HTTP Referers and IP Source values.
 
-    - **HTTP Referers** allow adding one or more URIs that are whitelisted for accessing the API endpoints. By default, all referers are allowed access to the APIs.
+    -   **HTTP Referers** allow adding one or more URIs that are whitelisted for accessing the API endpoints. By default, all referers are allowed access to the APIs.
 
     ![](https://i.imgur.com/lJjUAUT.png)
 
@@ -77,7 +77,7 @@ Let's go over each kind of authorization constraint you can apply to a key:
     >
     > We recommend using **HTTP Referers** as an additional safeguard to your security model, but not as the only safeguard.
 
-    - **IP Sources** allow specifying whitelisted IP ranges (in CIDR format) that can access the APIs. By default, all IPs are allowed access to the APIs.
+    -   **IP Sources** allow specifying whitelisted IP ranges (in CIDR format) that can access the APIs. By default, all IPs are allowed access to the APIs.
 
     ![](https://i.imgur.com/7iEZzsj.png)
 
@@ -85,13 +85,13 @@ Let's go over each kind of authorization constraint you can apply to a key:
     >
     > We don't support specifying a blacklist of IP ranges. You can specify a maximum of `100` HTTP Referers and a maximum of `100` IP Sources.
 
-4) **Fields filtering** allows setting restrictions on fields that are returned when performing a search action.
+4.  **Fields filtering** allows setting restrictions on fields that are returned when performing a search action.
 
-    - **Include** fields offers a dropdown view to select one or more fields that should be included in the response.
+    -   **Include** fields offers a dropdown view to select one or more fields that should be included in the response.
 
-    - **Exclude** fields offers a dropdown view to remove one or more fields that should be excluded from the response.
+    -   **Exclude** fields offers a dropdown view to remove one or more fields that should be excluded from the response.
 
-5) **Rate Limit by IP** allows setting a per hour rate-limit for every unique IP that is used for making an API call with this API credential. By default, no rate limits are set. Setting a rate-limit prevents abuse of data for scraping or denial of service purposes.
+5.  **Rate Limit by IP** allows setting a per hour rate-limit for every unique IP that is used for making an API call with this API credential. By default, no rate limits are set. Setting a rate-limit prevents abuse of data for scraping or denial of service purposes.
 
 ![](https://i.imgur.com/vt8NUmx.png)
 

@@ -1,0 +1,77 @@
+- groups:
+      - group: Overview
+        items:
+            - title: QuickStart
+              link: /reactivesearch/quickstart/
+            - title: ReactiveMaps QuickStart
+              link: /reactivesearch/maps-quickstart/
+            - title: Importing Data
+              link: /reactivsearch/importing/
+            - title: ReactiveBase
+              link: /reactivsearch/reactivebase/
+            - title: Components Overview
+              link: /reactivsearch/overview/
+      - group: Base Components
+        items:
+            - title: SelectedFilters
+              link: /reactivesearch/base/selectedfitler/
+            - title: StateProvider
+              link: /reactivesearch/base/stateprovider/
+      - group: List Components
+        items:
+            - title: SingleList
+              link: /reactivesearch/singlelist/
+            - title: MultiList
+              link: /reactivesearch/multilist/
+            - title: SingleDropdownList
+              link: /reactivesearch/singledropdownlist/
+            - title: MultiDropdownList
+              link: /reactivesearch/multidropdownlist/
+            - title: SingleDataList
+              link: /reactivesearch/singledatalist/
+            - title: MultiDataList
+              link: /reactivesearch/multidatalist/
+            - title: ToggleButton
+              link: /reactivesearch/selectedfitler/
+            - title: TagCloud
+              link: /reactivesearch/tagcloud/
+      - group: Interactive Examples
+        items:
+            - title: Javascript / Node.js
+              link: /examples/js/
+            - title: Go
+              link: /examples/go/
+            - title: Python
+              link: /examples/python/
+            - title: Php
+              link: /examples/php/
+      - group: Javascript
+        items:
+            - title: QuickStart
+              link: /javascript/quickstart/
+            - title: API Reference
+              link: /javascript/apireference/
+            - title: Webhooks Guide
+              link: /javascript/webhooks/
+      - group: REST
+        items:
+            - title: Quickstart
+              link: /rest/quickstart/
+            - title: ABC - Appbase via command line
+              link: /rest/abc/
+      - group: Golang
+        items:
+            - title: QuickStart
+              link: /go/quickstart/
+            - title: Queries with Go
+              link: /go/queries/
+      - group: Interactive Examples
+        items:
+            - title: Javascript / Node.js
+              link: /examples/js/
+            - title: Go
+              link: /examples/go/
+            - title: Python
+              link: /examples/python/
+            - title: Php
+              link: /examples/php/

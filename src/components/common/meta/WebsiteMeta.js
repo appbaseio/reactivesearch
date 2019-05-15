@@ -19,6 +19,7 @@ const WebsiteMeta = ({ data, canonical, title, description, image, type }) => (
 			<meta name="twitter:description" content={description} />
 			<meta name="twitter:url" content={canonical} />
 			<meta name="twitter:site" content="@appbaseio" />
+			<scrip src="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 			<script type="application/ld+json">
 				{`
                     {
