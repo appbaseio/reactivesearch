@@ -19,6 +19,7 @@ import {
 	getClassName,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -50,7 +51,10 @@ class MultiRange extends Component {
 		this.locked = false;
 
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.multiRange,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 		this.setReact(props);
 		const hasMounted = false;
@@ -213,7 +217,7 @@ class MultiRange extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: 'MULTIRANGE',
+			componentType: componentTypes.multiRange,
 		});
 	};
 

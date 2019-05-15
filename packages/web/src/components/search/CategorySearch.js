@@ -23,6 +23,7 @@ import {
 	getClassName,
 	isEqual,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
@@ -74,7 +75,10 @@ class CategorySearch extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.categorySearch,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		if (props.highlight) {
@@ -486,7 +490,7 @@ class CategorySearch extends Component {
 			label: filterLabel,
 			showFilter,
 			URLParams,
-			componentType: 'CATEGORYSEARCH',
+			componentType: componentTypes.categorySearch,
 			category,
 		});
 	};

@@ -21,6 +21,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import Rheostat from 'rheostat/lib/Slider';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import HistogramContainer from './addons/HistogramContainer';
 import RangeLabel from './addons/RangeLabel';
@@ -48,7 +49,10 @@ class DynamicRangeSlider extends Component {
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalHistogramComponent);
 		props.addComponent(this.internalRangeComponent);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.dynamicRangeSlider,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		// get range before executing other queries
@@ -340,7 +344,7 @@ class DynamicRangeSlider extends Component {
 			label: props.filterLabel,
 			showFilter: showFilter && !isInitialValue,
 			URLParams: props.URLParams,
-			componentType: 'DYNAMICRANGESLIDER',
+			componentType: componentTypes.dynamicRangeSlider,
 		});
 	};
 

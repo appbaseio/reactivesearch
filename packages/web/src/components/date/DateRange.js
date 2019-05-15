@@ -21,6 +21,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import XDate from 'xdate';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { withTheme } from 'emotion-theming';
 
@@ -61,7 +62,10 @@ class DateRange extends Component {
 		const hasMounted = false;
 
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.dateRange,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 		this.setReact(props);
 
@@ -371,7 +375,7 @@ class DateRange extends Component {
 				showFilter: props.showFilter,
 				label: props.filterLabel,
 				URLParams: props.URLParams,
-				componentType: 'DATERANGE',
+				componentType: componentTypes.dateRange,
 			});
 		}
 	};

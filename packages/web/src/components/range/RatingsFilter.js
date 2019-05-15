@@ -11,6 +11,7 @@ import {
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
 	checkValueChange,
 	checkPropChange,
@@ -44,7 +45,10 @@ class RatingsFilter extends Component {
 		this.locked = false;
 
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.ratingsFilter,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		this.setReact(props);
@@ -171,7 +175,7 @@ class RatingsFilter extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: 'RATINGSFILTER',
+			componentType: componentTypes.ratingsFilter,
 		});
 	};
 

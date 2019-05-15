@@ -20,7 +20,7 @@ import {
 	getClassName,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import {
@@ -60,7 +60,10 @@ class SingleDropdownList extends Component {
 
 		props.addComponent(this.internalComponent);
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.singleDropdownList,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 		this.updateQueryOptions(props);
 
@@ -250,7 +253,7 @@ class SingleDropdownList extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: 'SINGLEDROPDOWNLIST',
+			componentType: componentTypes.singleDropdownList,
 		});
 	};
 

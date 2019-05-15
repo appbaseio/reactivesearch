@@ -21,6 +21,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import Rheostat from 'rheostat/lib/Slider';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import HistogramContainer from './addons/HistogramContainer';
 import RangeLabel from './addons/RangeLabel';
@@ -47,7 +48,10 @@ class RangeSlider extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.rangeSlider,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		this.updateQueryOptions(props);
@@ -309,7 +313,7 @@ class RangeSlider extends Component {
 			label: props.filterLabel,
 			showFilter: showFilter && !isInitialValue,
 			URLParams: props.URLParams,
-			componentType: 'RANGESLIDER',
+			componentType: componentTypes.rangeSlider,
 		});
 	};
 

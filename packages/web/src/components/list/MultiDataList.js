@@ -10,6 +10,7 @@ import {
 	setComponentProps,
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
 	isEqual,
 	checkValueChange,
@@ -53,7 +54,11 @@ class MultiDataList extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.multiDataList,
+		});
+
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		this.setReact(props);
@@ -293,7 +298,7 @@ class MultiDataList extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: 'MULTIDATALIST',
+			componentType: componentTypes.multiDataList,
 		});
 	};
 

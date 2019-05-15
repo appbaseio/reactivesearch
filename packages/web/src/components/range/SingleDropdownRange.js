@@ -19,6 +19,7 @@ import {
 	getClassName,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -42,7 +43,10 @@ class SingleDropdownRange extends Component {
 		this.locked = false;
 
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.singleDropdownRange,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		this.setReact(props);
@@ -173,7 +177,7 @@ class SingleDropdownRange extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: 'SINGLEDROPDOWNRANGE',
+			componentType: componentTypes.singleDropdownRange,
 		});
 	};
 

@@ -12,6 +12,7 @@ import {
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
 	isEqual,
 	getQueryOptions,
@@ -70,7 +71,10 @@ class MultiList extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.multiList,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 		this.updateQueryOptions(props);
 
@@ -381,7 +385,7 @@ class MultiList extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: 'MULTILIST',
+			componentType: componentTypes.multiList,
 		});
 	};
 

@@ -19,6 +19,7 @@ import {
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import Title from '../../styles/Title';
 import Button, { numberBoxContainer } from '../../styles/Button';
@@ -39,7 +40,10 @@ class NumberBox extends Component {
 		this.locked = false;
 
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.numberBox,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 		this.setReact(props);
 		const hasMounted = false;
@@ -192,7 +196,7 @@ class NumberBox extends Component {
 			value,
 			showFilter: false, // we don't need filters for NumberBox
 			URLParams: props.URLParams,
-			componentType: 'NUMBERBOX',
+			componentType: componentTypes.numberBox,
 		});
 	};
 

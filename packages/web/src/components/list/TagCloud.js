@@ -24,6 +24,7 @@ import {
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import Title from '../../styles/Title';
 import TagList from '../../styles/TagList';
@@ -58,7 +59,10 @@ class TagCloud extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.tagCloud,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 		this.updateQueryOptions(props);
 
@@ -253,7 +257,7 @@ class TagCloud extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: 'TAGCLOUD',
+			componentType: componentTypes.tagCloud,
 		});
 	};
 

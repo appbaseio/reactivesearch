@@ -20,6 +20,7 @@ import {
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
@@ -39,7 +40,10 @@ class ToggleButton extends Component {
 		this.locked = false;
 
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.toggleButton,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 		this.setReact(props);
 		const hasMounted = false;
@@ -233,7 +237,7 @@ class ToggleButton extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: 'TOGGLEBUTTON',
+			componentType: componentTypes.toggleButton,
 		});
 	};
 

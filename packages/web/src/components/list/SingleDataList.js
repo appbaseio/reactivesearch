@@ -20,7 +20,7 @@ import {
 	getQueryOptions,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
@@ -47,7 +47,10 @@ class SingleDataList extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.singleDataList,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 
 		this.setReact(props);
@@ -214,7 +217,7 @@ class SingleDataList extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: 'SINGLEDATALIST',
+			componentType: componentTypes.singleDataList,
 		});
 	};
 

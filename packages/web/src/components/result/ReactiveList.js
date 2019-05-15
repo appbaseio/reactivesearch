@@ -24,6 +24,7 @@ import {
 	getSearchState,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import Pagination from './addons/Pagination';
 import PoweredBy from './addons/PoweredBy';
@@ -76,8 +77,10 @@ class ReactiveList extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
-		this.props.setComponentProps(this.props.componentId, this.props);
-
+		this.props.setComponentProps(this.props.componentId, {
+			...this.props,
+			componentType: componentTypes.reactiveList,
+		});
 		if (this.props.stream) {
 			this.props.setStreaming(this.props.componentId, true);
 		}

@@ -21,6 +21,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
@@ -49,7 +50,10 @@ class MultiDropdownRange extends Component {
 		this.locked = false;
 
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.multiDropdownRange,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 		this.setReact(props);
 		const hasMounted = false;
@@ -214,7 +218,7 @@ class MultiDropdownRange extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: 'MULTIDROPDOWNRANGE',
+			componentType: componentTypes.multiDropdownRange,
 		});
 	};
 

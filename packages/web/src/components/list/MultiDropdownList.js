@@ -23,12 +23,9 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
-import {
-	getAggsQuery,
-	getCompositeAggsQuery,
-	updateInternalQuery,
-} from './utils';
+import { getAggsQuery, getCompositeAggsQuery, updateInternalQuery } from './utils';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
@@ -66,7 +63,10 @@ class MultiDropdownList extends Component {
 		props.addComponent(this.internalComponent);
 		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.multiDropdownList,
+		});
 		this.updateQueryOptions(props);
 
 		this.setReact(props);
@@ -368,7 +368,7 @@ class MultiDropdownList extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: 'MULTIDROPDOWNLIST',
+			componentType: componentTypes.multiDropdownList,
 		});
 	};
 

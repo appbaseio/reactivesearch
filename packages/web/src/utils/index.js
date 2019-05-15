@@ -1,7 +1,7 @@
 import { connect as connectToStore } from 'react-redux';
 import { storeKey } from '@appbaseio/reactivecore';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
-import validProps from '@appbaseio/reactivecore/lib/utils/validProps';
+import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
 
 export const connect = (...args) =>
 	connectToStore(...args, null, {

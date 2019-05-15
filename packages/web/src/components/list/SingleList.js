@@ -23,7 +23,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
-
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getAggsQuery, getCompositeAggsQuery, updateInternalQuery } from './utils';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
@@ -64,7 +64,10 @@ class SingleList extends Component {
 
 		props.addComponent(this.internalComponent);
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.singleList,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 		this.updateQueryOptions(props);
 
@@ -270,7 +273,7 @@ class SingleList extends Component {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: 'SINGLELIST',
+			componentType: componentTypes.singleList,
 		});
 	};
 

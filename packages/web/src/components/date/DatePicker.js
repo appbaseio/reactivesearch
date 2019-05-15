@@ -20,6 +20,7 @@ import {
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import XDate from 'xdate';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { withTheme } from 'emotion-theming';
@@ -42,7 +43,10 @@ class DatePicker extends Component {
 		this.locked = false;
 
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, props);
+		props.setComponentProps(props.componentId, {
+			...props,
+			componentType: componentTypes.datePicker,
+		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 		this.setReact(props);
 		const hasMounted = false;
@@ -212,7 +216,7 @@ class DatePicker extends Component {
 			showFilter: props.showFilter,
 			label: props.filterLabel,
 			URLParams: props.URLParams,
-			componentType: 'DATEPICKER',
+			componentType: componentTypes.datePicker,
 		});
 	};
 
