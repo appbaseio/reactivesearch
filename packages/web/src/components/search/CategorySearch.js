@@ -732,7 +732,7 @@ class CategorySearch extends Component {
 	get parsedSuggestions() {
 		let finalSuggestionsList = [];
 		let suggestionsList = [];
-
+        let categorySuggestions = [];
 		// filter out empty categories
 		const filteredCategories = this.filteredCategories;
 
@@ -747,7 +747,7 @@ class CategorySearch extends Component {
 		}
 
 		if (this.state.currentValue && this.state.suggestions.length && filteredCategories.length) {
-			let categorySuggestions = [
+			categorySuggestions = [
 				{
 					label: `${this.state.currentValue} in all categories`,
 					value: this.state.currentValue,
@@ -774,8 +774,8 @@ class CategorySearch extends Component {
 					},
 				];
 			}
-			finalSuggestionsList = [...categorySuggestions, ...suggestionsList];
 		}
+		finalSuggestionsList = [...categorySuggestions, ...suggestionsList];
 		return finalSuggestionsList;
 	}
 
