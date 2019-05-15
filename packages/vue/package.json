@@ -25,7 +25,9 @@
 		"pretest": "nps build",
 		"test": "nps test",
 		"precommit": "lint-staged",
-		"prepare": "npm start validate"
+		"prepare": "npm start validate",
+		"version-upgrade": "nps upgrade-vue -c ../../package-scripts.js",
+		"postpublish": "yarn run version-upgrade"
 	},
 	"dependencies": {
 		"@appbaseio/reactivecore": "^8.2.6",

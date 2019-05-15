@@ -2,7 +2,7 @@
 
 echo Upgrading $1 version to $2
 
-var=`pwd`;
+var=$3;
 node <<EOF
 
 var fs = require('fs');
