@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const config = {
 	context: path.resolve(__dirname, 'src'),
@@ -39,16 +39,16 @@ if (process.env.NODE_ENV === 'production') {
 	];
 	config.optimization = {
 		minimizer: [
-			// we specify a custom UglifyJsPlugin here to get source maps in production
-			new UglifyJsPlugin({
+			// we specify a custom TerserPlugin here to get source maps in production
+			new TerserPlugin({
 				cache: true,
+				sourceMap: true,
 				parallel: true,
-				uglifyOptions: {
+				terserOptions: {
 					compress: { warnings: false },
 					ecma: 6,
 					mangle: true,
 				},
-				sourceMap: true,
 			}),
 		],
 	};
