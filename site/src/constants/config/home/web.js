@@ -158,46 +158,38 @@ export default {
 		title: 'Check starter apps',
 		button: {
 			title: 'See more',
-			href: '/reactivesearch/demo',
+			openWithNewTab: true,
+			href: 'http://reactiveapps.io/',
 		},
 		demos: [
 			{
-				src: '../../reactivesearch/images/apps/airbeds.png',
-				title: 'Airbeds',
-				href: 'https://opensource.appbase.io/reactivesearch/demos/airbeds/',
-				description: 'An airbnb inspired app for browsing housing areas in Seattle.',
-			},
-			{
-				src: '../../reactivesearch/images/apps/productsearch.png',
-				title: 'Product Search',
-				href: 'https://opensource.appbase.io/reactivesearch/demos/producthunt/',
-				description: 'A Product Hunt inspired search experience.',
-			},
-			{
-				src: '../../reactivesearch/images/apps/gitxplore.png',
-				title: 'GitHub Search',
-				href: 'https://opensource.appbase.io/reactivesearch/demos/gitxplore/',
+				src: 'https://i.imgur.com/DitYcd7.jpg',
+				title: 'Book Search with Ant Design',
+				href: 'https://booksearch-appbase.netlify.com/',
 				description:
-					'Explore top 30K Github repositories by various filters like stars, forks, topics.',
+					'Ant Design styled book search app which can be customized to your dataset. Includes Home Page, Search Page, Product Detail Page, Navigation and comes with Mobile Responsiveness. Built with ReactiveSearch.',
 			},
-			// {
-			// 	src: '../../reactivesearch/images/apps/carstore.png',
-			// 	title: 'Car Store',
-			// 	href: 'https://opensource.appbase.io/reactivesearch/demos/ecommerce/',
-			// 	description: 'An e-commerce search experience for a car store.',
-			// },
 			{
-				src: '../../reactivesearch/images/apps/goodbooks.png',
-				title: 'Book Search',
-				href: 'https://opensource.appbase.io/reactivesearch/demos/goodbooks/',
-				description: 'An e-commerce search experience for a books dataset.',
+				src: 'https://i.imgur.com/My0xyCA.jpg',
+				title: 'Movies Store',
+				href: 'https://movies-store-appbase.herokuapp.com/',
+				description:
+					'Codebase + step-by-step tutorials for building a scalable movie store app.',
 			},
-			// {
-			// 	src: '../../reactivesearch/images/apps/technews.png',
-			// 	title: 'Tech News Search',
-			// 	href: 'https://opensource.appbase.io/reactivesearch/demos/technews/',
-			// 	description: '',
-			// },
+			{
+				src: 'https://i.imgur.com/GjZ8rsr.png',
+				title: 'Dashboard',
+				href: 'https://charts-dashboard.netlify.com/',
+				description:
+					'A configurable dashboard app that can be configured with different datasets and comes with the power of data visualization using Recharts & Apex Charts.',
+			},
+			{
+				src: 'https://i.imgur.com/G934ncL.png',
+				title: 'ReactiveSearch with GraphQL',
+				href: 'https://vigorous-noether-ab7748.netlify.com/',
+				description:
+					'ReactiveSearch application for Filter and searching across various Github repositories, it uses GraphQL middleware.',
+			},
 		],
 	},
 };
