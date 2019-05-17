@@ -21,7 +21,9 @@ const { checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
 
 const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
+
 	components: { VueSlider },
+
 	data() {
 		const state = {
 			currentValue: null,
@@ -54,10 +56,7 @@ const DynamicRangeSlider = {
 	methods: {
 		setRange({ start, end }) {
 			if (this.$props.defaultSelected) {
-				const { start: defaultStart, end: defaultEnd } = this.$props.defaultSelected(
-					start,
-					end,
-				);
+				const { start: defaultStart, end: defaultEnd } = this.defaultSelected(start, end);
 				this.currentValue = [defaultStart, defaultEnd];
 				this.handleChange(this.currentValue);
 			} else {
@@ -65,11 +64,11 @@ const DynamicRangeSlider = {
 			}
 		},
 
-		setReact(props) {
-			if (props.react) {
-				this.watchComponent(props.componentId, props.react);
+		setReact() {
+			if (this.react) {
+				this.watchComponent(this.componentId, this.react);
 			} else {
-				this.watchComponent(props.componentId, {});
+				this.watchComponent(this.componentId, {});
 			}
 		},
 
@@ -77,82 +76,80 @@ const DynamicRangeSlider = {
 			this.currentValue = range;
 		},
 
-		rangeQuery(props) {
+		rangeQuery() {
 			return {
-				min: { min: { field: props.dataField } },
-				max: { max: { field: props.dataField } },
+				min: { min: { field: this.dataField } },
+				max: { max: { field: this.dataField } },
 			};
 		},
 
-		updateRangeQueryOptions(props) {
+		updateRangeQueryOptions() {
 			let queryOptions = {};
-			const { nestedField } = props;
-			if (nestedField) {
+
+			if (this.nestedField) {
 				queryOptions = {
 					aggs: {
-						[nestedField]: {
+						[this.nestedField]: {
 							nested: {
-								path: nestedField,
+								path: this.nestedField,
 							},
-							aggs: this.rangeQuery(props),
+							aggs: this.rangeQuery(),
 						},
 					},
 				};
 			} else {
 				queryOptions = {
-					aggs: this.rangeQuery(props),
+					aggs: this.rangeQuery(),
 				};
 			}
 
 			this.setQueryOptions(this.componentId, queryOptions);
 		},
 
-		handleChange(currentValue, props = this.$props) {
-			if (props.beforeValueChange && this.locked) {
+		handleChange(currentValue) {
+			if (this.beforeValueChange && this.locked) {
 				return;
 			}
 
 			this.locked = true;
 			const performUpdate = () => {
 				this.currentValue = currentValue;
-				this.updateQueryHandler([currentValue[0], currentValue[1]], props);
+				this.updateQueryHandler([currentValue[0], currentValue[1]], this.$props);
 				this.locked = false;
 				this.$emit('valueChange', { start: currentValue[0], end: currentValue[1] });
 			};
 
 			checkValueChange(
-				props.componentId,
+				this.componentId,
 				{
 					start: currentValue[0],
 					end: currentValue[1],
 				},
-				props.beforeValueChange,
+				this.beforeValueChange,
 				performUpdate,
 			);
 		},
 
-		updateQueryHandler(value, props) {
-			const { customQuery } = props;
-			let query = DynamicRangeSlider.defaultQuery(value, props);
+		updateQueryHandler(value) {
+			let query = DynamicRangeSlider.defaultQuery(value, this.$props);
 			let customQueryOptions;
-			if (customQuery) {
-				({ query } = customQuery(value, props) || {});
-				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			if (this.customQuery) {
+				({ query } = this.customQuery(value, this.$props) || {});
+				customQueryOptions = getOptionsFromQuery(this.customQuery(value, this.$props));
 			}
-			const { showFilter } = props;
 			const { start, end } = this.range;
 			const [currentStart, currentEnd] = value;
 			// check if the slider is at its initial position
 			const isInitialValue = currentStart === start && currentEnd === end;
-			this.setQueryOptions(props.componentId, customQueryOptions);
+			this.setQueryOptions(this.componentId, customQueryOptions);
 
 			this.updateQuery({
-				componentId: props.componentId,
+				componentId: this.componentId,
 				query,
 				value,
-				label: props.filterLabel,
-				showFilter: showFilter && !isInitialValue,
-				URLParams: props.URLParams,
+				label: this.filterLabel,
+				showFilter: this.showFilter && !isInitialValue,
+				URLParams: this.URLParams,
 				componentType: 'DYNAMICRANGESLIDER',
 			});
 		},
@@ -160,8 +157,8 @@ const DynamicRangeSlider = {
 		getRangeLabels() {
 			let { start: startLabel, end: endLabel } = this.range;
 
-			if (this.$props.rangeLabels) {
-				const rangeLabels = this.$props.rangeLabels(this.range.start, this.range.end);
+			if (this.rangeLabels) {
+				const rangeLabels = this.rangeLabels(this.range.start, this.range.end);
 				startLabel = rangeLabels.start;
 				endLabel = rangeLabels.end;
 			}
@@ -175,11 +172,11 @@ const DynamicRangeSlider = {
 
 	watch: {
 		react() {
-			this.setReact(this.$props);
+			this.setReact();
 		},
 
 		selectedValue(newVal) {
-			if (!isEqual(this.$data.currentValue, newVal)) {
+			if (!isEqual(this.currentValue, newVal)) {
 				let value = newVal;
 				if(!value){
 					value = {
@@ -197,13 +194,13 @@ const DynamicRangeSlider = {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		this.setQueryListener(this.componentId, onQueryChange, null);
 	},
 
 	beforeMount() {
-		this.updateRangeQueryOptions(this.$props);
-		this.addComponent(this.$props.componentId);
-		this.setReact(this.$props);
+		this.updateRangeQueryOptions();
+		this.addComponent(this.componentId);
+		this.setReact();
 		const { selectedValue } = this;
 
 		if (Array.isArray(selectedValue)) {
@@ -220,7 +217,7 @@ const DynamicRangeSlider = {
 	},
 
 	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
+		this.removeComponent(this.componentId);
 	},
 
 	render() {
@@ -230,13 +227,13 @@ const DynamicRangeSlider = {
 
 		const { startLabel, endLabel } = this.getRangeLabels();
 		return (
-			<Container class={this.$props.className}>
-				{this.$props.title && (
-					<Title class={getClassName(this.$props.innerClass, 'title')}>
-						{this.$props.title}
+			<Container class={this.className}>
+				{this.title && (
+					<Title class={getClassName(this.innerClass, 'title')}>
+						{this.title}
 					</Title>
 				)}
-					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
+					<Slider class={getClassName(this.innerClass, 'slider')}>
 						<VueSlider
 							value={this.currentValue}
 							min={this.range.start}
@@ -245,14 +242,14 @@ const DynamicRangeSlider = {
 							dotSize={20}
 							height={4}
 							enable-cross={false}
-							{...{ props: this.$props.sliderOptions }}
+							{...{ props: this.sliderOptions }}
 						/>
 
-						{this.$props.rangeLabels ? (
+						{this.rangeLabels ? (
 							<div class="label-container">
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label')
+										getClassName(this.innerClass, 'label')
 										|| 'range-label-left'
 									}
 								>
@@ -260,7 +257,7 @@ const DynamicRangeSlider = {
 								</label>
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label')
+										getClassName(this.innerClass, 'label')
 										|| 'range-label-right'
 									}
 								>
