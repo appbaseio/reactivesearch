@@ -29,6 +29,7 @@ declare namespace ReactiveListTree {
 		paginationAt?: types.paginationAt;
 		react?: types.react;
 		showResultStats?: boolean;
+		showLoader?: boolean;
 		size?: number;
 		sortBy?: types.sortBy;
 		sortOptions?: types.sortOptions;

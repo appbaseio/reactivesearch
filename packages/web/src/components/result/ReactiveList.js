@@ -403,6 +403,10 @@ class ReactiveList extends Component {
 		return infiniteScroll && !pagination;
 	}
 
+	get hasCustomRenderer() {
+		return hasCustomRenderer(this.props);
+	}
+
 	setReact = (props) => {
 		const { react } = props;
 		if (react) {
@@ -679,7 +683,7 @@ class ReactiveList extends Component {
 							fragmentName={this.props.componentId}
 						/>
 					) : null}
-				{hasCustomRenderer(this.props) ? (
+				{this.hasCustomRenderer ? (
 					this.getComponent()
 				) : (
 					<div
@@ -690,12 +694,13 @@ class ReactiveList extends Component {
 					>
 						{filteredResults.map((item, index) =>
 							renderItem(item, () => {
-								this.triggerClickAnalytics(currentPage * size + index);
+								const base = currentPage * size;
+								this.triggerClickAnalytics(base + index);
 							}),
 						)}
 					</div>
 				)}
-				{this.props.isLoading && this.showInfiniteScroll
+				{this.props.showLoader && this.props.isLoading && this.showInfiniteScroll
 					? this.props.loader || (
 						<div
 							style={{
@@ -786,6 +791,7 @@ ReactiveList.propTypes = {
 	renderResultStats: types.func,
 	scrollOnChange: types.bool,
 	scrollTarget: types.string,
+	showLoader: types.bool,
 	showResultStats: types.bool,
 	size: types.number,
 	sortBy: types.sortBy,
@@ -810,6 +816,7 @@ ReactiveList.defaultProps = {
 	size: 10,
 	style: {},
 	URLParams: false,
+	showLoader: true,
 	renderNoResults: () => 'No Results found.',
 	scrollOnChange: true,
 	defaultSortOption: null,
