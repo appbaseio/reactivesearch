@@ -125,7 +125,7 @@ const HomePage = ({ data, location }) => {
 						</p>
 						<div className="grid-integrations-index mt4 mt6-l f8">
 							<Box
-								to="/integrations/zapier/"
+								to="/reactivesearch/overview/quickstart/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"

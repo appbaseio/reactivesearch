@@ -1,10 +1,10 @@
 ---
-title: 'Queries with Go'
-meta_title: 'Queries with Golang'
-meta_description: 'go-appbase is a universal Golang client library for working with the appbase.io database.'
+title: 'Quickstart'
+meta_title: 'ReactiveSearch Quickstart'
+meta_description: 'React UI Components for Elasticsearch.'
 keywords:
-    - queries
-    - golang
+    - reactivesearch
+    - quickstart
     - appbase
     - elasticsearch
 sidebar: 'web-reactivesearch'

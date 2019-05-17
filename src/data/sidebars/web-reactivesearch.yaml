@@ -1,77 +1,119 @@
 - groups:
-      - group: Overview
+      - group: Getting Started
         items:
             - title: QuickStart
-              link: /reactivesearch/quickstart/
+              link: /reactivesearch/overview/quickstart/
             - title: ReactiveMaps QuickStart
-              link: /reactivesearch/maps-quickstart/
+              link: /reactivesearch/overview/reactivemaps/
             - title: Importing Data
-              link: /reactivsearch/importing/
+              link: /reactivesearch/overview/importing/
             - title: ReactiveBase
-              link: /reactivsearch/reactivebase/
+              link: /reactivesearch/overview/reactivebase/
             - title: Components Overview
-              link: /reactivsearch/overview/
+              link: /reactivesearch/overview/components/
       - group: Base Components
         items:
             - title: SelectedFilters
-              link: /reactivesearch/base/selectedfitler/
+              link: /reactivesearch/base/selectedfilters/
             - title: StateProvider
               link: /reactivesearch/base/stateprovider/
       - group: List Components
         items:
             - title: SingleList
-              link: /reactivesearch/singlelist/
+              link: /reactivesearch/list/singlelist/
             - title: MultiList
-              link: /reactivesearch/multilist/
+              link: /reactivesearch/list/multilist/
             - title: SingleDropdownList
-              link: /reactivesearch/singledropdownlist/
+              link: /reactivesearch/list/singledropdownlist/
             - title: MultiDropdownList
-              link: /reactivesearch/multidropdownlist/
+              link: /reactivesearch/list/multidropdownlist/
             - title: SingleDataList
-              link: /reactivesearch/singledatalist/
+              link: /reactivesearch/list/singledatalist/
             - title: MultiDataList
-              link: /reactivesearch/multidatalist/
+              link: /reactivesearch/list/multidatalist/
             - title: ToggleButton
-              link: /reactivesearch/selectedfitler/
+              link: /reactivesearch/list/togglebutton/
             - title: TagCloud
-              link: /reactivesearch/tagcloud/
-      - group: Interactive Examples
+              link: /reactivesearch/list/tagcloud/
+      - group: Range Components
         items:
-            - title: Javascript / Node.js
-              link: /examples/js/
-            - title: Go
-              link: /examples/go/
-            - title: Python
-              link: /examples/python/
-            - title: Php
-              link: /examples/php/
-      - group: Javascript
+            - title: SingleRange
+              link: /reactivesearch/range/singlerange/
+            - title: MultiRange
+              link: /reactivesearch/range/multirange/
+            - title: SingleDropdownRange
+              link: /reactivesearch/range/singledropdownrange/
+            - title: MultiDropdownRange
+              link: /reactivesearch/range/multidropdownrange/
+            - title: RangeSlider
+              link: /reactivesearch/range/rangeslider/
+            - title: DynamicRangeSlider
+              link: /reactivesearch/range/dynamicrangeslider/
+            - title: RangeInput
+              link: /reactivesearch/range/rangeinput/
+            - title: NumberBox
+              link: /reactivesearch/range/numberbox/
+            - title: DatePicker
+              link: /reactivesearch/range/datepicker/
+            - title: DateRange
+              link: /reactivesearch/range/daterange/
+            - title: RatingsFilter
+              link: /reactivesearch/range/ratingsfilter/
+      - group: Search Components
         items:
-            - title: QuickStart
-              link: /javascript/quickstart/
-            - title: API Reference
-              link: /javascript/apireference/
-            - title: Webhooks Guide
-              link: /javascript/webhooks/
-      - group: REST
+            - title: DataSearch
+              link: /reactivesearch/search/datasearch/
+            - title: CategorySearch
+              link: /reactivesearch/search/categorysearch/
+      - group: Result Components
         items:
-            - title: Quickstart
-              link: /rest/quickstart/
-            - title: ABC - Appbase via command line
-              link: /rest/abc/
-      - group: Golang
+            - title: ReactiveList
+              link: /reactivesearch/result/quickstart/
+            - title: ResultList
+              link: /reactivesearch/result/resultlist/
+            - title: ResultCard
+              link: /reactivesearch/result/resultcard/
+      - group: Map Components
         items:
-            - title: QuickStart
-              link: /go/quickstart/
-            - title: Queries with Go
-              link: /go/queries/
-      - group: Interactive Examples
+            - title: GeoDistanceSlider
+              link: /reactivesearch/map/quickstart/
+            - title: GeoDistanceDropdown
+              link: /reactivesearch/map/geodistancedropdown/
+            - title: ReactiveGoogleMap
+              link: /reactivesearch/map/reactivegooglemap/
+            - title: ReactiveOpenStreetMap
+              link: /reactivesearch/map/reactiveopenstreetmap/
+      - group: Themes
         items:
-            - title: Javascript / Node.js
-              link: /examples/js/
-            - title: Go
-              link: /examples/go/
-            - title: Python
-              link: /examples/python/
-            - title: Php
-              link: /examples/php/
+            - title: Themes
+              link: /reactivesearch/themes/overview/
+            - title: Style
+              link: /reactivesearch/themes/style/
+            - title: Classname Injection
+              link: /reactivesearch/themes/classnameinjection/
+      - group: Advanced
+        items:
+            - title: Custom Suggestions
+              link: /reactivesearch/advanced/customsuggestions/
+            - title: Custom Queries
+              link: /reactivesearch/advanced/customqueries/
+            - title: React Prop
+              link: /reactivesearch/advanced/reactprop/
+            - title: Reactive Component
+              link: /reactivesearch/advanced/reactivecomponent/
+            - title: Server Side Rendering
+              link: /reactivesearch/advanced/ssr/
+            - title: Components Usage
+              link: /reactivesearch/advanced/usage/
+            - title: Migration Guide
+              link: /reactivesearch/advanced/migration/
+            - title: Advanced Guides
+              link: /reactivesearch/advanced/guides/
+            - title: Search and Click Analytics
+              link: /reactivesearch/advanced/analytics/
+            - title: Writing and Editing Data
+              link: /reactivesearch/advanced/data/
+            - title: Typescript Support
+              link: /reactivesearch/advanced/typescript/
+            - title: Comparision with Other Projects
+              link: /reactivesearch/advanced/comparison/

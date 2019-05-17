@@ -33,7 +33,7 @@ export const getPostHeaderConfig = ({ pathname }) => {
 
 	if (pathname.match(/^\/reactivesearch\//i)) {
 		postHeaderConfig.title = `ReactiveSearch`;
-		postHeaderConfig.mainLink = `/reactivesearch/quickstart/`;
+		postHeaderConfig.mainLink = `/reactivesearch/overview/quickstart/`;
 		postHeaderConfig.bgClass = `bg-concepts`;
 	}
 
