@@ -65,8 +65,8 @@ const plugins = [
 	{
 		resolve: `gatsby-plugin-manifest`,
 		options: {
-			name: `Ghost Docs`,
-			short_name: `Ghost`,
+			name: `Appbase Docs`,
+			short_name: `Appbase`,
 			start_url: `/`,
 			background_color: `#343f44`,
 			theme_color: `#343f44`,

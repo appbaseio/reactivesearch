@@ -1,33 +1,33 @@
 {
-  "settings": {
-    "title": "Ghost",
-    "description": "The professional publishing platform",
-    "logo": "https://demo.ghost.io/content/images/2014/09/Ghost-Transparent-for-DARK-BG.png",
-    "icon": "https://demo.ghost.io/content/images/2017/07/favicon.png",
-    "cover_image": "https://demo.ghost.io/content/images/2017/07/blog-cover.jpg",
-    "facebook": "ghost",
-    "twitter": "@tryghost",
-    "lang": "en",
-    "timezone": "Etc/UTC",
-    "navigation": [
-      {
-        "label": "Home",
-        "url": "/"
-      },
-      {
-        "label": "About",
-        "url": "/about/"
-      },
-      {
-        "label": "Getting Started",
-        "url": "/tag/getting-started/"
-      },
-      {
-        "label": "Try Ghost",
-        "url": "https://ghost.org"
-      }
-    ],
-    "codeinjection_head": null,
-    "codeinjection_foot": null
-  }
+	"settings": {
+		"title": "Appbase",
+		"description": "The professional publishing platform",
+		"logo": "https://demo.ghost.io/content/images/2014/09/Ghost-Transparent-for-DARK-BG.png",
+		"icon": "https://demo.ghost.io/content/images/2017/07/favicon.png",
+		"cover_image": "https://demo.ghost.io/content/images/2017/07/blog-cover.jpg",
+		"facebook": "ghost",
+		"twitter": "@tryghost",
+		"lang": "en",
+		"timezone": "Etc/UTC",
+		"navigation": [
+			{
+				"label": "Home",
+				"url": "/"
+			},
+			{
+				"label": "About",
+				"url": "/about/"
+			},
+			{
+				"label": "Getting Started",
+				"url": "/tag/getting-started/"
+			},
+			{
+				"label": "Try Ghost",
+				"url": "https://ghost.org"
+			}
+		],
+		"codeinjection_head": null,
+		"codeinjection_foot": null
+	}
 }
