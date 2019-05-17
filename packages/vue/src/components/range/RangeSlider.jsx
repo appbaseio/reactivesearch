@@ -1,12 +1,11 @@
 import VueTypes from 'vue-types';
+import VueSlider from 'vue-slider-component'
 import { Actions, helper } from '@appbaseio/reactivecore';
-import NoSSR from 'vue-no-ssr';
 import Container from '../../styles/Container';
 import { connect } from '../../utils/index';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
-import { getComponents } from './addons/ssr';
 
 const { addComponent, removeComponent, watchComponent, updateQuery, setQueryListener, setQueryOptions } = Actions;
 
@@ -14,7 +13,9 @@ const { checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
 
 const RangeSlider = {
 	name: 'RangeSlider',
-	components: getComponents(),
+
+	components: { VueSlider },
+
 	data() {
 		const state = {
 			currentValue: this.$props.range ? [this.$props.range.start, this.$props.range.end] : [],
@@ -169,9 +170,8 @@ const RangeSlider = {
 					</Title>
 				)}
 				{this.$props.range ? (
-					<NoSSR>
 						<Slider class={getClassName(this.$props.innerClass, 'slider')}>
-							<vue-slider
+							<VueSlider
 								ref="slider"
 								value={this.currentValue}
 								min={this.$props.range.start}
@@ -203,7 +203,6 @@ const RangeSlider = {
 								</div>
 							)}
 						</Slider>
-					</NoSSR>
 				) : null}
 			</Container>
 		);
