@@ -24,15 +24,6 @@ const DynamicRangeSlider = {
 
 	components: { VueSlider },
 
-	data() {
-		const state = {
-			currentValue: null,
-			stats: [],
-		};
-		this.locked = false;
-		return state;
-	},
-
 	props: {
 		beforeValueChange: types.func,
 		className: VueTypes.string.def(''),
@@ -51,6 +42,45 @@ const DynamicRangeSlider = {
 		URLParams: VueTypes.bool.def(false),
 		sliderOptions: VueTypes.object.def({}),
 		nestedField: types.string,
+	},
+
+	data() {
+		const state = {
+			currentValue: null,
+			stats: [],
+		};
+		this.locked = false;
+		return state;
+	},
+
+	created() {
+		const onQueryChange = (...args) => {
+			this.$emit('queryChange', ...args);
+		};
+		this.setQueryListener(this.componentId, onQueryChange, null);
+	},
+
+	beforeMount() {
+		this.updateRangeQueryOptions();
+		this.addComponent(this.componentId);
+		this.setReact();
+		const { selectedValue } = this;
+
+		if (Array.isArray(selectedValue)) {
+			this.handleChange(selectedValue);
+		} else if (selectedValue) {
+			this.handleChange(DynamicRangeSlider.parseValue(selectedValue, this.$props));
+		}
+	},
+
+	beforeUpdate() {
+		if (!this.currentValue) {
+			this.setRange(this.range);
+		}
+	},
+
+	beforeDestroy() {
+		this.removeComponent(this.componentId);
 	},
 
 	methods: {
@@ -188,36 +218,6 @@ const DynamicRangeSlider = {
 			}
 		},
 
-	},
-
-	created() {
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-		};
-		this.setQueryListener(this.componentId, onQueryChange, null);
-	},
-
-	beforeMount() {
-		this.updateRangeQueryOptions();
-		this.addComponent(this.componentId);
-		this.setReact();
-		const { selectedValue } = this;
-
-		if (Array.isArray(selectedValue)) {
-			this.handleChange(selectedValue);
-		} else if (selectedValue) {
-			this.handleChange(DynamicRangeSlider.parseValue(selectedValue, this.$props));
-		}
-	},
-
-	beforeUpdate() {
-		if (!this.currentValue) {
-			this.setRange(this.range);
-		}
-	},
-
-	beforeDestroy() {
-		this.removeComponent(this.componentId);
 	},
 
 	render() {
