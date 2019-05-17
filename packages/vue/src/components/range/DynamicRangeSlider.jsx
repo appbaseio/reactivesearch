@@ -88,10 +88,9 @@ const DynamicRangeSlider = {
 
 	methods: {
 		setDefaultValue({ start, end }) {
-			if (this.$props.defaultSelected) {
+			if (this.defaultSelected) {
 				const { start: defaultStart, end: defaultEnd } = this.defaultSelected(start, end);
-				this.currentValue = [defaultStart, defaultEnd];
-				this.handleChange(this.currentValue);
+				this.handleChange([defaultStart, defaultEnd]);
 			} else {
 				this.currentValue = [start, end];
 			}
@@ -214,7 +213,7 @@ const DynamicRangeSlider = {
 		},
 
 		range(newValue, oldValue) {
-			if (isEqual(newValue, oldValue)) return;
+			if (isEqual(newValue, oldValue) || !this.currentValue) return;
 
 			const [currentStart, currentEnd] = this.currentValue || []
 			const { start: oldStart, end: oldEnd } = oldValue || {}
