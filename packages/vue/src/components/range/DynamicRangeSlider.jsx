@@ -1,4 +1,5 @@
 import VueTypes from 'vue-types';
+import VueSlider from 'vue-slider-component'
 import { Actions, helper } from '@appbaseio/reactivecore';
 import NoSSR from 'vue-no-ssr';
 import Container from '../../styles/Container';
@@ -6,7 +7,6 @@ import { connect } from '../../utils/index';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
-import { getComponents } from './addons/ssr';
 
 const {
 	addComponent,
@@ -21,7 +21,7 @@ const { checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
 
 const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
-	components: getComponents(),
+	components: { VueSlider },
 	data() {
 		const state = {
 			currentValue: null,
@@ -105,10 +105,6 @@ const DynamicRangeSlider = {
 			}
 
 			this.setQueryOptions(this.componentId, queryOptions);
-		},
-
-		handleSlider(values) {
-			this.handleChange(values.currentValue);
 		},
 
 		handleChange(currentValue, props = this.$props) {
@@ -240,14 +236,12 @@ const DynamicRangeSlider = {
 						{this.$props.title}
 					</Title>
 				)}
-				<NoSSR>
 					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
-						<vue-slider
-							ref="slider"
+						<VueSlider
 							value={this.currentValue}
 							min={this.range.start}
 							max={this.range.end}
-							onDrag-end={this.handleSlider}
+							onChange={this.handleChange}
 							dotSize={20}
 							height={4}
 							enable-cross={false}
@@ -275,7 +269,6 @@ const DynamicRangeSlider = {
 							</div>
 						) : null}
 					</Slider>
-				</NoSSR>
 			</Container>
 		);
 	},
