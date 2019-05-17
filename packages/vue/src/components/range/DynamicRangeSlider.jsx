@@ -146,7 +146,7 @@ const DynamicRangeSlider = {
 
 			const performUpdate = () => {
 				this.currentValue = normalizedValue;
-				this.updateQueryHandler([normalizedValue[0], normalizedValue[1]], this.$props);
+				this.updateQueryHandler(normalizedValue, this.$props);
 				this.locked = false;
 				this.$emit('valueChange', { start: normalizedValue[0], end: normalizedValue[1] });
 			};
@@ -187,20 +187,13 @@ const DynamicRangeSlider = {
 				componentType: 'DYNAMICRANGESLIDER',
 			});
 		},
+	},
 
-		getRangeLabels() {
-			let { start: startLabel, end: endLabel } = this.range;
+	computed: {
+		labels() {
+			if (!this.rangeLabels) return null;
 
-			if (this.rangeLabels) {
-				const rangeLabels = this.rangeLabels(this.range.start, this.range.end);
-				startLabel = rangeLabels.start;
-				endLabel = rangeLabels.end;
-			}
-
-			return {
-				startLabel,
-				endLabel,
-			};
+			return this.rangeLabels(this.range.start, this.range.end)
 		},
 	},
 
@@ -209,17 +202,15 @@ const DynamicRangeSlider = {
 			this.setReact();
 		},
 
-		selectedValue(newVal) {
-			if (!isEqual(this.currentValue, newVal)) {
-				let value = newVal;
-				if (!value) {
-					value = {
-						start: this.range.start,
-						end: this.range.end
-					};
-				}
-				this.handleChange(DynamicRangeSlider.parseValue(value, this.$props));
-			}
+		selectedValue(newValue) {
+			if (isEqual(newValue, this.currentValue)) return;
+
+			const value = newValue || {
+				start: this.range.start,
+				end: this.range.end
+			};
+
+			this.handleChange(DynamicRangeSlider.parseValue(value, this.$props));
 		},
 
 		range(newValue, oldValue) {
@@ -240,7 +231,6 @@ const DynamicRangeSlider = {
 			return null;
 		}
 
-		const { startLabel, endLabel } = this.getRangeLabels();
 		return (
 			<Container class={this.className}>
 				{this.title && (
@@ -257,26 +247,17 @@ const DynamicRangeSlider = {
 							dotSize={20}
 							height={4}
 							enable-cross={false}
+							lazy
 							{...{ props: this.sliderOptions }}
 						/>
 
-						{this.rangeLabels ? (
+						{this.labels ? (
 							<div class="label-container">
-								<label
-									class={
-										getClassName(this.innerClass, 'label')
-										|| 'range-label-left'
-									}
-								>
-									{startLabel}
+								<label class={getClassName(this.innerClass, 'label') || 'range-label-left'}>
+									{this.labels.start}
 								</label>
-								<label
-									class={
-										getClassName(this.innerClass, 'label')
-										|| 'range-label-right'
-									}
-								>
-									{endLabel}
+								<label class={getClassName(this.innerClass, 'label') || 'range-label-right'}>
+									{this.labels.end}
 								</label>
 							</div>
 						) : null}
@@ -288,6 +269,7 @@ const DynamicRangeSlider = {
 
 DynamicRangeSlider.defaultQuery = (values, props) => {
 	let query = null;
+
 	if (Array.isArray(values) && values.length) {
 		query = {
 			range: {
@@ -322,6 +304,7 @@ const mapStateToProps = (state, props) => {
 
 	let options = componentId && componentId[props.dataField];
 	let range = state.aggregations[`${props.componentId}__range__internal`];
+
 	if (props.nestedField) {
 		options = options && componentId[props.dataField][props.nestedField] && componentId[props.dataField][props.nestedField].buckets
 			? componentId[props.dataField][props.nestedField].buckets
@@ -337,6 +320,7 @@ const mapStateToProps = (state, props) => {
 			? { start: internalRange.min.value, end: internalRange.max.value }
 			: null;
 	}
+
 	return {
 		options,
 		range,
