@@ -25,6 +25,9 @@ export interface SingleDataList extends CommonProps {
 	showCount?: boolean;
 	render?: (...args: any[]) => any;
 	renderItem?: (...args: any[]) => any;
+	children?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
+	renderNoResults?: (...args: any[]) => any;
 }
 
 declare const SingleDataList: React.ComponentType<SingleDataList>;

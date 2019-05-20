@@ -923,6 +923,9 @@ CategorySearch.propTypes = {
 	suggestions: types.suggestions,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
+	isLoading: types.bool,
+	// eslint-disable-next-line
+	error: types.any,
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
@@ -936,8 +939,6 @@ CategorySearch.propTypes = {
 	defaultQuery: types.func,
 	dataField: types.dataFieldArray,
 	debounce: types.number,
-	// eslint-disable-next-line
-	error: types.any,
 	defaultValue: types.categorySearchValue,
 	value: types.categorySearchValue,
 	defaultSuggestions: types.suggestions,
@@ -950,7 +951,6 @@ CategorySearch.propTypes = {
 	icon: types.children,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
-	isLoading: types.bool,
 	loader: types.title,
 	nestedField: types.string,
 	onError: types.func,

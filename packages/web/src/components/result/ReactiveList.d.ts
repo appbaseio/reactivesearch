@@ -4,11 +4,6 @@ import * as types from '../../types';
 
 declare namespace ReactiveListTree {
 	interface ReactiveListProps extends CommonProps {
-		componentId: string;
-		URLParams?: boolean;
-		className?: string;
-		style?: types.style;
-		// non-common props
 		children?: (data: any) => any;
 		dataField: string;
 		defaultQuery?: (...args: any[]) => any;
@@ -39,6 +34,9 @@ declare namespace ReactiveListTree {
 		defaultPage?: number;
 		listClass?: string;
 		scrollTarget?: string;
+		onData?: (...args: any[]) => any;
+		renderNoResults?: types.title;
+		scrollOnChange?: boolean;
 	}
 
 	interface CommonWrapperProps extends React.HTMLAttributes<HTMLDivElement> {

@@ -3,16 +3,17 @@ import { CommonProps } from '../../';
 import * as types from '../../types';
 
 export interface RangeInputProps extends CommonProps {
-	className: string;
-	defaultValue: types.range;
-	value: types.range;
-	innerClass: types.style;
-	onValueChange: (...args: any[]) => any;
-	onChange: (...args: any[]) => any;
+	className?: string;
+	defaultValue?: types.range;
+	value?: types.range;
+	innerClass?: types.style;
+	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
 	range: types.range;
-	stepValue: number;
+	stepValue?: number;
 	style: types.style;
-	themePreset: types.themePreset;
+	themePreset?: types.themePreset;
+	selectedValue?: types.selectedValue;
 }
 
 declare const RangeInput: React.ComponentType<RangeInputProps>;

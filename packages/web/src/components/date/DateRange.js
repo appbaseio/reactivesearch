@@ -516,6 +516,7 @@ DateRange.propTypes = {
 	updateComponentProps: types.funcRequired,
 	// component props
 	autoFocusEnd: types.bool,
+	beforeValueChange: types.func,
 	className: types.string,
 	componentId: types.stringRequired,
 	dataField: types.dataFieldArray,

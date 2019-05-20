@@ -500,6 +500,7 @@ DynamicRangeSlider.propTypes = {
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
+	isLoading: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -511,7 +512,6 @@ DynamicRangeSlider.propTypes = {
 	filterLabel: types.string,
 	innerClass: types.style,
 	interval: types.number,
-	isLoading: types.bool,
 	loader: types.title,
 	nestedField: types.string,
 	onDrag: types.func,

@@ -764,6 +764,7 @@ ReactiveList.propTypes = {
 	config: types.props,
 	analytics: types.props,
 	queryLog: types.props,
+	error: types.title,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -771,7 +772,6 @@ ReactiveList.propTypes = {
 	dataField: types.stringRequired,
 	defaultPage: types.number,
 	defaultQuery: types.func,
-	error: types.title,
 	excludeFields: types.excludeFields,
 	innerClass: types.style,
 	infiniteScroll: types.bool,

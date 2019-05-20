@@ -49,6 +49,9 @@ export interface DataSearchProps extends CommonProps {
 	theme?: types.style;
 	loader?: types.title;
 	themePreset?: types.themePreset;
+	clearIcon?: types.children;
+	showClear?: boolean;
+	strictSelection?: boolean;
 }
 
 declare const DataSearch: React.ComponentType<DataSearchProps>;

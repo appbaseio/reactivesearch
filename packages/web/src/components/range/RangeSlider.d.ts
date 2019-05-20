@@ -24,6 +24,9 @@ export interface RangeSliderProps extends CommonProps {
 	snap?: boolean;
 	stepValue?: number;
 	title?: types.title;
+	showFilter?: boolean;
+	tooltipTrigger?: types.tooltipTrigger;
+	renderTooltipData?: (...args: any[]) => any;
 }
 
 declare const RangeSlider: React.ComponentType<RangeSliderProps>;

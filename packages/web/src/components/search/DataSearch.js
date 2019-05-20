@@ -785,6 +785,8 @@ DataSearch.propTypes = {
 	suggestions: types.suggestions,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
+	error: types.title,
+	isLoading: types.bool,
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
@@ -801,9 +803,7 @@ DataSearch.propTypes = {
 	value: types.string,
 	defaultSuggestions: types.suggestions,
 	downShiftProps: types.props,
-	// eslint-disable-next-line
 	children: types.func,
-	error: types.title,
 	fieldWeights: types.fieldWeights,
 	filterLabel: types.string,
 	fuzziness: types.fuzziness,
@@ -812,7 +812,6 @@ DataSearch.propTypes = {
 	icon: types.children,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
-	isLoading: types.bool,
 	loader: types.title,
 	nestedField: types.string,
 	onError: types.func,
