@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch-vue",
-	"version": "1.0.0-beta.13",
+	"version": "1.0.0-beta.15",
 	"private": false,
 	"main": "dist/@appbaseio/reactivesearch-vue.cjs.js",
 	"jsnext:main": "dist/@appbaseio/reactivesearch-vue.es.js",
@@ -29,6 +29,9 @@
 		"version-upgrade": "nps upgrade-vue -c ../../package-scripts.js",
 		"postpublish": "yarn run version-upgrade"
 	},
+	"files": [
+		"dist"
+	],
 	"dependencies": {
 		"@appbaseio/reactivecore": "^8.2.7",
 		"appbase-js": "^4.0.2-beta.06",
