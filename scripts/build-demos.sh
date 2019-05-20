@@ -2,10 +2,9 @@
 
 echo Building Demos
 
-for d in site/demos/*/ ; do
-    var=`pwd`
+for d in $1/site/demos/*/ ; do
     echo $d
-    cd $var/$d
+    cd $d
     yarn build
     cd ../../../
 done

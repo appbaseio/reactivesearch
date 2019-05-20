@@ -23,8 +23,7 @@
 		"prepublish": "yarn run build",
 		"postpublish": "yarn run version-upgrade",
 		"test": "jest --watch",
-		"typescript": "tsc -p tsconfig.json",
-		"build-example": "scripts/build-example.sh 3.0.0-rc.0"
+		"typescript": "tsc -p tsconfig.json"
 	},
 	"repository": {
 		"type": "git",

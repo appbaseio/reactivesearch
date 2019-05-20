@@ -15470,7 +15470,7 @@ npmlog@^2.0.4:
 
 nps-utils@^1.7.0:
   version "1.7.0"
-  resolved "https://registry.yarnpkg.com/nps-utils/-/nps-utils-1.7.0.tgz#88ef27925ee7cd916f15a25f1b1a6648e9b21a7d"
+  resolved "https://registry.npmjs.org/nps-utils/-/nps-utils-1.7.0.tgz#88ef27925ee7cd916f15a25f1b1a6648e9b21a7d"
   integrity sha512-wq/gUxTR3sgLYTLHlUKwMG2paUV3QdfwMj5aifWpQ60Vv9RQzA6pXDkwrAlMA8SNqoz8FwaGPc1X/7I+qjuYwg==
   dependencies:
     any-shell-escape "^0.1.1"

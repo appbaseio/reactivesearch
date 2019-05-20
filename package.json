@@ -8,7 +8,6 @@
 		"lint:ts": "tslint -c tslint.json 'packages/web/**/**/*.{ts,tsx}'",
 		"lint:ts-fix": "tslint -c tslint.json --fix 'packages/web/**/**/*.{ts,tsx}'",
 		"deploy-site": "scripts/deploy-site.sh",
-		"build-demos": "scripts/build-demos.sh",
 		"native:publish-stories": "cd packages/native/examples/datasearch/ && exp publish && cd .. && cd datepicker/ && exp publish && cd .. && cd daterange/ && exp publish && cd .. && cd multidropdownlist/ && exp publish && cd .. && cd multidropdownrange/ && exp publish && cd .. && cd singledropdownlist/ && exp publish && cd .. && cd singledropdownrange/ && exp publish && cd .. && cd textfield/ && exp publish && cd ../../../../"
 	},
 	"author": "metagrover",
@@ -44,6 +43,7 @@
 		"husky": "^1.2.0",
 		"lint-staged": "^7.0.0",
 		"nps": "^5.9.5",
+		"nps-utils": "^1.7.0",
 		"prettier": "^1.15.2"
 	}
 }
