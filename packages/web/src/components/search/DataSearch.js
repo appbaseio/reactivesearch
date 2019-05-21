@@ -203,6 +203,7 @@ class DataSearch extends Component {
 				pre_tags: ['<mark>'],
 				post_tags: ['</mark>'],
 				fields,
+				...props.highlightField && { require_field_match: false },
 			},
 		};
 	};
