@@ -92,7 +92,7 @@ class CategorySearch extends Component {
 			...props,
 			componentType: componentTypes.categorySearch,
 		});
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 
 		if (props.highlight) {
 			const queryOptions = CategorySearch.highlightQuery(props) || {};
