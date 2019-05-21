@@ -1168,7 +1168,7 @@ const mapDispatchtoProps = dispatch => ({
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => <CategorySearch ref={props.myForwardedRef} {...props} />);
+)(withTheme(props => <CategorySearch ref={props.myForwardedRef} {...props} />));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
