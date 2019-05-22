@@ -19,6 +19,6 @@ export interface SelectedFiltersProps {
 	onClear?: (...args: any[]) => any;
 }
 
-declare const SelectedFilters: React.ComponentType<SelectedFiltersProps>;
+declare const SelectedFilters: React.ComponentClass<SelectedFiltersProps>;
 
 export default SelectedFilters;

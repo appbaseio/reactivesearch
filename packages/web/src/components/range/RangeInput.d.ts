@@ -16,6 +16,6 @@ export interface RangeInputProps extends CommonProps {
 	selectedValue?: types.selectedValue;
 }
 
-declare const RangeInput: React.ComponentType<RangeInputProps>;
+declare const RangeInput: React.ComponentClass<RangeInputProps>;
 
 export default RangeInput;

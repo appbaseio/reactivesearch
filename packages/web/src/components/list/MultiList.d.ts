@@ -40,6 +40,6 @@ export interface MultiList extends CommonProps {
 	renderNoResults?: (...args: any[]) => any;
 }
 
-declare const MultiList: React.ComponentType<MultiList>;
+declare const MultiList: React.ComponentClass<MultiList>;
 
 export default MultiList;

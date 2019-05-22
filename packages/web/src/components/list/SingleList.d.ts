@@ -39,6 +39,6 @@ export interface SingleList extends CommonProps {
 	renderNoResults?: (...args: any[]) => any;
 }
 
-declare const SingleList: React.ComponentType<SingleList>;
+declare const SingleList: React.ComponentClass<SingleList>;
 
 export default SingleList;

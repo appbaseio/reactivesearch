@@ -25,6 +25,6 @@ export interface DatePickerProps extends CommonProps {
 	parseDate?: (...args: any[]) => any;
 }
 
-declare const DatePicker: React.ComponentType<DatePickerProps>;
+declare const DatePicker: React.ComponentClass<DatePickerProps>;
 
 export default DatePicker;

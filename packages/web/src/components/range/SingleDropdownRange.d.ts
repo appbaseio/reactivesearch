@@ -21,6 +21,6 @@ export interface SingleDropdownRangeProps extends CommonProps {
 	themePreset?: types.themePreset;
 }
 
-declare const SingleDropdownRange: React.ComponentType<SingleDropdownRangeProps>;
+declare const SingleDropdownRange: React.ComponentClass<SingleDropdownRangeProps>;
 
 export default SingleDropdownRange;

@@ -60,6 +60,6 @@ export interface CategorySearchProps extends CommonProps {
 	strictSelection?: boolean;
 }
 
-declare const CategorySearch: React.ComponentType<CategorySearchProps>;
+declare const CategorySearch: React.ComponentClass<CategorySearchProps>;
 
 export default CategorySearch;

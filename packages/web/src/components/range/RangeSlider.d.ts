@@ -29,6 +29,6 @@ export interface RangeSliderProps extends CommonProps {
 	renderTooltipData?: (...args: any[]) => any;
 }
 
-declare const RangeSlider: React.ComponentType<RangeSliderProps>;
+declare const RangeSlider: React.ComponentClass<RangeSliderProps>;
 
 export default RangeSlider;

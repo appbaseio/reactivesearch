@@ -21,6 +21,6 @@ export interface MultiDropdownRangeProps extends CommonProps {
 	themePreset?: types.themePreset;
 }
 
-declare const MultiDropdownRange: React.ComponentType<MultiDropdownRangeProps>;
+declare const MultiDropdownRange: React.ComponentClass<MultiDropdownRangeProps>;
 
 export default MultiDropdownRange;

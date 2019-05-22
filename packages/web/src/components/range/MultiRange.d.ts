@@ -22,6 +22,6 @@ export interface MultiRangeProps extends CommonProps {
 	title?: types.title;
 }
 
-declare const MultiRange: React.ComponentType<MultiRangeProps>;
+declare const MultiRange: React.ComponentClass<MultiRangeProps>;
 
 export default MultiRange;

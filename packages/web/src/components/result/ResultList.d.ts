@@ -23,10 +23,10 @@ declare namespace ResultListTree {
 	}
 
 	class ResultList extends React.Component<ResultListProps, any> {
-		static Image: React.ComponentType<ImageProps>;
-		static Content: React.ComponentType<DescriptionProps>;
-		static Title: React.ComponentType<TitleProps>;
-		static Description: React.ComponentType<DescriptionProps>;
+		static Image: React.ComponentClass<ImageProps>;
+		static Content: React.ComponentClass<DescriptionProps>;
+		static Title: React.ComponentClass<TitleProps>;
+		static Description: React.ComponentClass<DescriptionProps>;
 	}
 }
 

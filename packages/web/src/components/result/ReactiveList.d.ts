@@ -44,8 +44,8 @@ declare namespace ReactiveListTree {
 	}
 
 	class ReactiveList extends React.Component<ReactiveListProps, any> {
-		static ResultListWrapper: React.ComponentType<CommonWrapperProps>;
-		static ResultCardsWrapper: React.ComponentType<CommonWrapperProps>;
+		static ResultListWrapper: React.ComponentClass<CommonWrapperProps>;
+		static ResultCardsWrapper: React.ComponentClass<CommonWrapperProps>;
 	}
 }
 

@@ -53,7 +53,6 @@ export interface DataSearchProps extends CommonProps {
 	showClear?: boolean;
 	strictSelection?: boolean;
 }
-
-declare const DataSearch: React.ComponentType<DataSearchProps>;
+declare const DataSearch: React.ComponentClass<DataSearchProps>;
 
 export default DataSearch;

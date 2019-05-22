@@ -9,6 +9,6 @@ export interface StateProviderProps {
 	strict?: boolean;
 }
 
-declare const StateProvider: React.ComponentType<StateProviderProps>;
+declare const StateProvider: React.ComponentClass<StateProviderProps>;
 
 export default StateProvider;

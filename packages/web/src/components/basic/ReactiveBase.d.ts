@@ -25,6 +25,6 @@ export interface ReactiveBaseProps {
 	analytics?: boolean;
 }
 
-declare const ReactiveBase: React.ComponentType<ReactiveBaseProps>;
+declare const ReactiveBase: React.ComponentClass<ReactiveBaseProps>;
 
 export default ReactiveBase;

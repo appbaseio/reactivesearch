@@ -39,6 +39,6 @@ export interface MultiDropdownList extends CommonProps {
 	showSearch?: boolean;
 }
 
-declare const MultiDropdownList: React.ComponentType<MultiDropdownList>;
+declare const MultiDropdownList: React.ComponentClass<MultiDropdownList>;
 
 export default MultiDropdownList;

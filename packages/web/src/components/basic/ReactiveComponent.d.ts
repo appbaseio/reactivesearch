@@ -19,6 +19,6 @@ export interface ReactiveComponentProps {
 	URLParams?: boolean;
 }
 
-declare const ReactiveComponent: React.ComponentType<ReactiveComponentProps>;
+declare const ReactiveComponent: React.ComponentClass<ReactiveComponentProps>;
 
 export default ReactiveComponent;
