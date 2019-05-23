@@ -69,7 +69,7 @@ export type supportedOrientations
 
 export type sortBy = 'asc' | 'desc';
 
-export interface sortOptions {
+export interface sortOption {
 	label: string;
 	dataField: string;
 	sortBy: string;
