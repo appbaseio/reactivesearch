@@ -55,12 +55,7 @@ class RatingsFilter extends Component {
 		const hasMounted = false;
 
 		if (currentValue) {
-			this.setValue({
-				value: currentValue,
-				props,
-				hasMounted,
-				includeUnrated: currentValue[2],
-			});
+			this.setValue({ value: currentValue, props, hasMounted });
 		}
 	}
 
@@ -82,17 +77,11 @@ class RatingsFilter extends Component {
 		) {
 			const { value, onChange } = this.props;
 			if (value === undefined) {
-				this.setValue({
-					value: this.props.selectedValue || null,
-					includeUnrated: this.props.selectedValue && this.props.selectedValue[2],
-				});
+				this.setValue({ value: this.props.selectedValue || null });
 			} else if (onChange) {
 				onChange(this.props.selectedValue || null);
 			} else {
-				this.setValue({
-					value: this.state.currentValue,
-					includeUnrated: this.state.currentValue[2],
-				});
+				this.setValue({ value: this.state.currentValue });
 			}
 		}
 	}
@@ -110,7 +99,7 @@ class RatingsFilter extends Component {
 	// parses range label to get start and end
 	static parseValue = (value) => {
 		if (Array.isArray(value)) return value;
-		return value ? [value.start, value.end, value.includeUnrated] : null;
+		return value ? [value.start, value.end] : null;
 	};
 
 	static defaultQuery = (value, props, includeNullValues = false) => {
@@ -210,10 +199,10 @@ class RatingsFilter extends Component {
 		});
 	};
 
-	handleClick = (selectedItem) => {
+	handleClick = (selectedItem, params) => {
 		const { value, onChange } = this.props;
 		if (value === undefined) {
-			this.setValue({ value: selectedItem, includeUnrated: selectedItem[2] });
+			this.setValue({ value: selectedItem, includeUnrated: params.includeUnrated });
 		} else if (onChange) {
 			onChange(selectedItem);
 		}
@@ -230,7 +219,7 @@ class RatingsFilter extends Component {
 				<ul className={ratingsList}>
 					{this.props.data.map((item) => {
 						const {
-							start, end, label, includeUnrated,
+							start, end, label, ...rest
 						} = item;
 						return (
 							<li
@@ -241,11 +230,9 @@ class RatingsFilter extends Component {
 										? 'active'
 										: ''
 								}
-								onClick={() => this.handleClick([start, end, includeUnrated])}
+								onClick={() => this.handleClick([start, end], rest)}
 								onKeyPress={e =>
-									handleA11yAction(e, () =>
-										this.handleClick([start, end, includeUnrated]),
-									)
+									handleA11yAction(e, () => this.handleClick([start, end], rest))
 								}
 								key={`${this.props.componentId}-${start}-${end}`}
 							>
