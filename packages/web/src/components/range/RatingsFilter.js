@@ -55,7 +55,12 @@ class RatingsFilter extends Component {
 		const hasMounted = false;
 
 		if (currentValue) {
-			this.setValue({ value: currentValue, props, hasMounted });
+			this.setValue({
+				value: currentValue,
+				props,
+				hasMounted,
+				includeUnrated: this.getIncludeUnratedFromData(currentValue),
+			});
 		}
 	}
 
@@ -77,11 +82,17 @@ class RatingsFilter extends Component {
 		) {
 			const { value, onChange } = this.props;
 			if (value === undefined) {
-				this.setValue({ value: this.props.selectedValue || null });
+				this.setValue({
+					value: this.props.selectedValue || null,
+					includeUnrated: this.getIncludeUnratedFromData(this.props.selectedValue),
+				});
 			} else if (onChange) {
 				onChange(this.props.selectedValue || null);
 			} else {
-				this.setValue({ value: this.state.currentValue });
+				this.setValue({
+					value: this.state.currentValue,
+					includeUnrated: this.getIncludeUnratedFromData(this.state.currentValue),
+				});
 			}
 		}
 	}
@@ -95,6 +106,14 @@ class RatingsFilter extends Component {
 			props.watchComponent(props.componentId, props.react);
 		}
 	}
+
+	getIncludeUnratedFromData = (range) => {
+		if (!this.props.data || !range) return false;
+		const dataObj = this.props.data.find(
+			data => data.start === range[0] && data.end === range[1],
+		);
+		return dataObj && dataObj.includeUnrated;
+	};
 
 	// parses range label to get start and end
 	static parseValue = (value) => {
