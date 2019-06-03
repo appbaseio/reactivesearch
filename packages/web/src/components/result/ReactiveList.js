@@ -39,6 +39,7 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	getValidPropsKeys,
+	ReactReduxContext,
 } from '../../utils';
 
 class ReactiveList extends Component {
@@ -73,6 +74,8 @@ class ReactiveList extends Component {
 
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
+
+	static contextType = ReactReduxContext;
 
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
@@ -578,9 +581,9 @@ class ReactiveList extends Component {
 		const {
 			config,
 			analytics: { searchId },
-			searchState,
 		} = this.props;
 		const { url, app, credentials } = config;
+		const searchState = getSearchState(this.context.store.getState(), true);
 		if (config.analytics && searchId) {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
@@ -837,7 +840,6 @@ const mapStateToProps = (state, props) => ({
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults,
-	searchState: getSearchState(state, true),
 });
 
 const mapDispatchtoProps = dispatch => ({

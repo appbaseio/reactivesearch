@@ -1,23 +1,19 @@
 /* eslint-disable global-require */
 
 import React, { Component } from 'react';
-import { createProvider } from 'react-redux';
+import { Provider } from 'react-redux';
 import Appbase from 'appbase-js';
 import { ThemeProvider } from 'emotion-theming';
 
-import configureStore, { storeKey } from '@appbaseio/reactivecore';
+import configureStore from '@appbaseio/reactivecore';
 import { checkSomePropChange } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import URLParamsProvider from './URLParamsProvider';
 
 import getTheme from '../../styles/theme';
-import { composeThemeObject } from '../../utils';
+import { composeThemeObject, ReactReduxContext } from '../../utils';
 
 const URLSearchParams = require('url-search-params');
-
-/* use a custom store key so reactivesearch does not interfere
-   with a different redux store in a nested context */
-const Provider = createProvider(storeKey);
 
 class ReactiveBase extends Component {
 	constructor(props) {
@@ -122,7 +118,7 @@ class ReactiveBase extends Component {
 
 		return (
 			<ThemeProvider theme={theme} key={this.state.key}>
-				<Provider store={this.store}>
+				<Provider context={ReactReduxContext} store={this.store}>
 					<URLParamsProvider
 						headers={this.props.headers}
 						style={this.props.style}

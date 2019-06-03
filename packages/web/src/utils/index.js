@@ -1,12 +1,11 @@
+import React from 'react';
 import { connect as connectToStore } from 'react-redux';
-import { storeKey } from '@appbaseio/reactivecore';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
 
-export const connect = (...args) =>
-	connectToStore(...args, null, {
-		storeKey,
-	});
+export const ReactReduxContext = React.createContext(null);
+
+export const connect = (...args) => connectToStore(...args, null, { context: ReactReduxContext });
 
 export const composeThemeObject = (ownTheme = {}, userTheme = {}) => ({
 	typography: {
