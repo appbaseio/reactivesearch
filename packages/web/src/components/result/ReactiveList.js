@@ -162,7 +162,7 @@ class ReactiveList extends Component {
 			checkSomePropChange(
 				this.props,
 				prevProps,
-				['hits', 'streamHits', 'promotedResults'],
+				['hits', 'streamHits', 'promotedResults', 'total', 'size', 'time'],
 				() => {
 					this.props.onData(this.getData());
 				},
