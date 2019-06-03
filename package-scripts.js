@@ -18,9 +18,11 @@ module.exports = {
 			'deploy-storybook': `${path.resolve(
 				`${__dirname}/scripts/deploy-storybook.sh`,
 			)} ${__dirname}`,
+			'build-umd': packageJSON.scripts['build:umd'],
 			// Updates version + deploy storybook + build demos
 			default: series.nps(
 				'upgrade.version-update',
+				'upgrade.build-umd',
 				'upgrade.deploy-storybook',
 				'upgrade.build-demos',
 			),
