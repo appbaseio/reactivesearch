@@ -218,17 +218,18 @@ class MultiDropdownList extends Component {
 		} else if (value) {
 			let listQuery;
 			if (props.queryFormat === 'or') {
+				let should = [
+					{
+						[type]: {
+							[props.dataField]: value.filter(
+								item => item !== props.missingLabel,
+							),
+						},
+					},
+				];
 				if (props.showMissing) {
 					const hasMissingTerm = value.includes(props.missingLabel);
-					let should = [
-						{
-							[type]: {
-								[props.dataField]: value.filter(
-									item => item !== props.missingLabel,
-								),
-							},
-						},
-					];
+
 					if (hasMissingTerm) {
 						should = should.concat({
 							bool: {
@@ -238,18 +239,13 @@ class MultiDropdownList extends Component {
 							},
 						});
 					}
-					listQuery = {
-						bool: {
-							should,
-						},
-					};
-				} else {
-					listQuery = {
-						[type]: {
-							[props.dataField]: value,
-						},
-					};
 				}
+
+				listQuery = {
+					bool: {
+						should,
+					},
+				};
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
 				const queryArray = value.map(item => ({
