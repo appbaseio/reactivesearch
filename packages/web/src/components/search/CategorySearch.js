@@ -21,6 +21,7 @@ import {
 	checkSomePropChange,
 	getOptionsFromQuery,
 	getClassName,
+	getSearchState,
 	isEqual,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -34,7 +35,12 @@ import CancelSvg from '../shared/CancelSvg';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
-import { connect, isFunction, getComponent, hasCustomRenderer, isIdentical, getValidPropsKeys } from '../../utils';
+import {
+	connect,
+	isFunction, getComponent, hasCustomRenderer, isIdentical, getValidPropsKeys,
+	ReactReduxContext,
+	withClickIds,
+} from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 
@@ -101,6 +107,8 @@ class CategorySearch extends Component {
 			this.setValue(currentValue, true, props, currentCategory, cause, hasMounted);
 		}
 	}
+
+	static contextType = ReactReduxContext;
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
@@ -564,7 +572,8 @@ class CategorySearch extends Component {
 		} else if (onChange) {
 			onChange(currentValue);
 		}
-
+		// Record analytics for selected suggestions
+		this.triggerClickAnalytics(suggestion._click_id);
 		// onValueSelected is user interaction driven:
 		// it should be triggered irrespective of controlled (or)
 		// uncontrolled component behavior
@@ -721,6 +730,7 @@ class CategorySearch extends Component {
 			rawSuggestions: this.props.suggestions || [],
 			categories: this.filteredCategories,
 			rawCategories: this.props.categories,
+			triggerClickAnalytics: this.triggerClickAnalytics,
 		};
 		return getComponent(data, this.props);
 	};
@@ -781,8 +791,34 @@ class CategorySearch extends Component {
 			}
 			finalSuggestionsList = [...categorySuggestions, ...suggestionsList];
 		}
-		return finalSuggestionsList;
+		return withClickIds(finalSuggestionsList);
 	}
+
+	triggerClickAnalytics = (searchPosition) => {
+		// click analytics would only work client side and after javascript loads
+		const {
+			config,
+			analytics: { searchId },
+		} = this.props;
+		const { url, app, credentials } = config;
+		const searchState = getSearchState(this.context.store.getState(), true);
+		if (config.analytics && searchId) {
+			fetch(`${url}/${app}/_analytics`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Basic ${btoa(credentials)}`,
+					'X-Search-Id': searchId,
+					'X-Search-Click': true,
+					'X-Search-ClickPosition': searchPosition + 1,
+					'X-Search-Conversion': true,
+					...(config.searchStateHeader && {
+						'X-Search-State': JSON.stringify(searchState),
+					}),
+				},
+			});
+		}
+	};
 
 	render() {
 		const { currentValue } = this.state;
@@ -925,6 +961,8 @@ CategorySearch.propTypes = {
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
+	config: types.props,
+	analytics: types.props,
 	// eslint-disable-next-line
 	error: types.any,
 	// component props
@@ -1016,6 +1054,8 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
+	analytics: state.analytics,
+	config: state.config,
 });
 
 const mapDispatchtoProps = dispatch => ({

@@ -69,5 +69,13 @@ export const isIdentical = (a, b) => {
 	}
 	return false;
 };
+/**
+ * Adds click ids in the hits(useful for trigger analytics)
+ */
+export const withClickIds = (results = []) =>
+	results.map((result, index) => ({
+		...result,
+		_click_id: index,
+	}));
 export const getValidPropsKeys = (props = {}) =>
 	Object.keys(props).filter(i => validProps.includes(i));

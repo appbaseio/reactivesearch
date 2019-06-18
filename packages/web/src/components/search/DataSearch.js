@@ -20,6 +20,7 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
+	getSearchState,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -39,6 +40,8 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isIdentical,
+	ReactReduxContext,
+	withClickIds,
 	getValidPropsKeys,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
@@ -85,6 +88,8 @@ class DataSearch extends Component {
 			this.setValue(currentValue, true, props, cause, hasMounted);
 		}
 	}
+
+	static contextType = ReactReduxContext;
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
@@ -481,7 +486,8 @@ class DataSearch extends Component {
 		} else if (onChange) {
 			onChange(suggestion.value);
 		}
-
+		// Record analytics for selected suggestions
+		this.triggerClickAnalytics(suggestion._click_id);
 		// onValueSelected is user interaction driven:
 		// it should be triggered irrespective of controlled (or)
 		// uncontrolled component behavior
@@ -635,6 +641,7 @@ class DataSearch extends Component {
 			data: this.parsedSuggestions,
 			rawData: this.props.suggestions || [],
 			value: currentValue,
+			triggerClickAnalytics: this.triggerClickAnalytics,
 		};
 		return getComponent(data, this.props);
 	};
@@ -648,12 +655,38 @@ class DataSearch extends Component {
 		} else if (currentValue) {
 			suggestionsList = this.state.suggestions;
 		}
-		return suggestionsList;
+		return withClickIds(suggestionsList);
 	}
 
 	get hasCustomRenderer() {
 		return hasCustomRenderer(this.props);
 	}
+
+	triggerClickAnalytics = (searchPosition) => {
+		// click analytics would only work client side and after javascript loads
+		const {
+			config,
+			analytics: { searchId },
+		} = this.props;
+		const { url, app, credentials } = config;
+		const searchState = getSearchState(this.context.store.getState(), true);
+		if (config.analytics && searchId) {
+			fetch(`${url}/${app}/_analytics`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Basic ${btoa(credentials)}`,
+					'X-Search-Id': searchId,
+					'X-Search-Click': true,
+					'X-Search-ClickPosition': searchPosition + 1,
+					'X-Search-Conversion': true,
+					...(config.searchStateHeader && {
+						'X-Search-State': JSON.stringify(searchState),
+					}),
+				},
+			});
+		}
+	};
 
 	render() {
 		const { currentValue } = this.state;
@@ -788,6 +821,8 @@ DataSearch.propTypes = {
 	updateComponentProps: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
+	config: types.props,
+	analytics: types.props,
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
@@ -869,6 +904,8 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId] || false,
 	error: state.error[props.componentId],
+	analytics: state.analytics,
+	config: state.config,
 });
 
 const mapDispatchtoProps = dispatch => ({
