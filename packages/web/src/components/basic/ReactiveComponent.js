@@ -29,7 +29,10 @@ class ReactiveComponent extends Component {
 		this.defaultQuery = null;
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 
-		this.setQuery = (obj) => {
+		this.setQuery = ({ options, ...obj }) => {
+			if (options) {
+				props.setQueryOptions(props.componentId, options, false);
+			}
 			this.props.updateQuery({
 				...obj,
 				componentId: props.componentId,
@@ -51,16 +54,15 @@ class ReactiveComponent extends Component {
 
 		this.setReact(props);
 
-		// set query for internal component if customQuery is absent
-		if (!props.customQuery && this.internalComponent && props.defaultQuery) {
+		if (this.internalComponent && props.defaultQuery) {
 			this.defaultQuery = props.defaultQuery();
 			const { query } = this.defaultQuery || {};
-			const customQueryOptions = this.defaultQuery
+			const defaultQueryOptions = this.defaultQuery
 				? getOptionsFromQuery(this.defaultQuery)
 				: null;
 
-			if (customQueryOptions) {
-				props.setQueryOptions(this.internalComponent, customQueryOptions, false);
+			if (defaultQueryOptions) {
+				props.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
 			}
 
 			props.updateQuery({
@@ -84,7 +86,14 @@ class ReactiveComponent extends Component {
 		const initialValue = selectedValue || value || defaultValue || null;
 
 		if (customQuery) {
-			const { query } = customQuery(this.props) || {};
+			const calcCustomQuery = customQuery(this.props);
+			const { query } = calcCustomQuery || {};
+			const customQueryOptions = calcCustomQuery
+				? getOptionsFromQuery(calcCustomQuery)
+				: null;
+			if (customQueryOptions) {
+				this.props.setQueryOptions(componentId, customQueryOptions, false);
+			}
 			this.props.updateQuery({
 				componentId,
 				query,
@@ -100,29 +109,43 @@ class ReactiveComponent extends Component {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
 			this.props.updateComponentProps(this.props.componentId, this.props);
 		});
-		if (!this.props.customQuery) {
-			// only consider hits and defaultQuery when customQuery is absent
-			if (
-				this.props.onData
-				&& (!isEqual(prevProps.hits, this.props.hits)
-					|| !isEqual(prevProps.aggregations, this.props.aggregations))
-			) {
-				this.props.onData(this.getData());
+		// only consider hits and defaultQuery when customQuery is absent
+		if (
+			this.props.onData
+			&& (!isEqual(prevProps.hits, this.props.hits)
+				|| !isEqual(prevProps.aggregations, this.props.aggregations))
+		) {
+			this.props.onData(this.getData());
+		}
+
+		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
+			this.defaultQuery = this.props.defaultQuery();
+			const { query, ...queryOptions } = this.defaultQuery || {};
+
+			if (queryOptions) {
+				this.props.setQueryOptions(this.internalComponent, queryOptions, false);
 			}
 
-			if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
-				this.defaultQuery = this.props.defaultQuery();
-				const { query, ...queryOptions } = this.defaultQuery || {};
+			this.props.updateQuery({
+				componentId: this.internalComponent,
+				query: query || null,
+			});
+		}
 
-				if (queryOptions) {
-					this.props.setQueryOptions(this.internalComponent, queryOptions, false);
-				}
+		if (
+			this.props.customQuery
+			&& !isEqual(this.props.customQuery(this.props), prevProps.customQuery(this.props))
+		) {
+			const { query, ...queryOptions } = this.props.customQuery(this.props) || {};
 
-				this.props.updateQuery({
-					componentId: this.internalComponent,
-					query: query || null,
-				});
+			if (queryOptions) {
+				this.props.setQueryOptions(this.props.componentId, queryOptions, false);
 			}
+
+			this.props.updateQuery({
+				componentId: this.props.componentId,
+				query: query || null,
+			});
 		}
 
 		checkPropChange(this.props.react, prevProps.react, () => {
