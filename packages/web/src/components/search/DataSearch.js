@@ -85,6 +85,9 @@ class DataSearch extends Component {
 		const cause = null;
 
 		if (currentValue) {
+			if (props.onChange) {
+				props.onChange(currentValue);
+			}
 			this.setValue(currentValue, true, props, cause, hasMounted);
 		}
 	}
@@ -141,7 +144,6 @@ class DataSearch extends Component {
 				this.updateQuery(this.state.currentValue, this.props);
 			},
 		);
-
 		if (this.props.value !== prevProps.value) {
 			this.setValue(this.props.value, true, this.props);
 		} else if (
@@ -338,9 +340,9 @@ class DataSearch extends Component {
 					() => {
 						if (isDefaultValue) {
 							if (this.props.autosuggest) {
-								this.setState({
-									isOpen: false,
-								});
+								// this.setState({
+								// 	isOpen: false,
+								// });
 								this.updateDefaultQuery(value, props);
 							}
 							// in case of strict selection only SUGGESTION_SELECT should be able
@@ -481,6 +483,9 @@ class DataSearch extends Component {
 
 	onSuggestionSelected = (suggestion) => {
 		const { value, onChange } = this.props;
+		this.setState({
+			isOpen: false,
+		});
 		if (value === undefined) {
 			this.setValue(suggestion.value, true, this.props, causes.SUGGESTION_SELECT);
 		} else if (onChange) {

@@ -104,6 +104,9 @@ class CategorySearch extends Component {
 		const cause = null;
 
 		if (currentValue) {
+			if (props.onChange) {
+				props.onChange(currentValue);
+			}
 			this.setValue(currentValue, true, props, currentCategory, cause, hasMounted);
 		}
 	}
@@ -405,9 +408,9 @@ class CategorySearch extends Component {
 					() => {
 						if (isDefaultValue) {
 							if (this.props.autosuggest) {
-								this.setState({
-									isOpen: false,
-								});
+								// this.setState({
+								// 	isOpen: false,
+								// });
 								this.updateDefaultQuery(value, props);
 							}
 							// in case of strict selection only SUGGESTION_SELECT should be able
@@ -560,7 +563,9 @@ class CategorySearch extends Component {
 			term: suggestion.value,
 			category: suggestion.category || null,
 		};
-
+		this.setState({
+			isOpen: false,
+		});
 		if (value === undefined) {
 			this.setValue(
 				currentValue.term,
