@@ -432,8 +432,8 @@ class ReactiveList extends Component {
 		if (props.sortOptions) {
 			options.sort = [
 				{
-					[props.sortOptions[this.sortOptionIndex].dataField]: {
-						order: props.sortOptions[this.sortOptionIndex].sortBy,
+					[props.sortOptions[0].dataField]: {
+						order: props.sortOptions[0].sortBy,
 					},
 				},
 			];
