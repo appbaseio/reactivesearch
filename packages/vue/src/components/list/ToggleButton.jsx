@@ -31,6 +31,7 @@ const ToggleButton = {
 		showFilter: types.bool,
 		title: types.title,
 		URLParams: types.bool,
+		renderItem: types.func
 	},
 	data() {
 		const props = this.$props;
@@ -195,7 +196,25 @@ const ToggleButton = {
 				this.$emit('change', item);
 			}
 		},
+
+		renderButton(item) {
+			const renderItem = this.$scopedSlots.renderItem || this.renderItem;
+			const isSelected = this.$data.currentValue.some(value => value.value === item.value);
+
+			return (
+				<Button
+					class={`${getClassName(this.$props.innerClass, 'button')} ${isSelected ? 'active' : ''}`}
+					onClick={() => this.handleClick(item)}
+					key={item.value}
+					primary={isSelected}
+					large
+				>
+					{renderItem ? renderItem({ item, isSelected }) : item.label}
+				</Button>
+			);
+		},
 	},
+
 	render() {
 		return (
 			<Container class={toggleButtons}>
@@ -204,24 +223,7 @@ const ToggleButton = {
 						{this.$props.title}
 					</Title>
 				)}
-				{this.$props.data.map(item => {
-					const isSelected = this.$data.currentValue.some(
-						value => value.value === item.value,
-					);
-					return (
-						<Button
-							class={`${getClassName(this.$props.innerClass, 'button')} ${
-								isSelected ? 'active' : ''
-							}`}
-							onClick={() => this.handleClick(item)}
-							key={item.value}
-							primary={isSelected}
-							large
-						>
-							{item.label}
-						</Button>
-					);
-				})}
+				{this.$props.data.map(item => this.renderButton(item))}
 			</Container>
 		);
 	},

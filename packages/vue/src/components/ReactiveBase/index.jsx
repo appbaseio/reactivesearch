@@ -34,6 +34,7 @@ const ReactiveBase = {
 		className: types.string,
 		initialState: VueTypes.object.def({}),
 		transformRequest: types.func,
+		transformResponse: types.func,
 	},
 	provide() {
 		return {
@@ -82,6 +83,7 @@ const ReactiveBase = {
 				credentials,
 				type: props.type ? props.type : '*',
 				transformRequest: props.transformRequest,
+				transformResponse: props.transformResponse,
 				analytics: props.analytics,
 			};
 			let queryParams = '';
@@ -119,6 +121,11 @@ const ReactiveBase = {
 
 			if (this.$props.transformRequest) {
 				appbaseRef.transformRequest = this.$props.transformRequest;
+			}
+
+
+			if (this.$props.transformResponse) {
+				appbaseRef.transformResponse = this.$props.transformResponse;
 			}
 
 			const initialState = {
