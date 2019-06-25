@@ -108,15 +108,16 @@ const DataSearch = {
 	beforeMount() {
 		this.addComponent(this.$props.componentId, 'DATASEARCH');
 		this.addComponent(this.internalComponent);
-
 		if (this.$props.highlight) {
 			const queryOptions = DataSearch.highlightQuery(this.$props) || {};
 			queryOptions.size = 20;
-			this.setQueryOptions(this.$props.componentId, queryOptions);
+			this.queryOptions = queryOptions;
+			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		} else {
-			this.setQueryOptions(this.$props.componentId, {
+			this.queryOptions = {
 				size: 20,
-			});
+			}
+			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		}
 
 		this.setReact(this.$props);
@@ -175,7 +176,8 @@ const DataSearch = {
 		updateQueryOptions() {
 			const queryOptions = DataSearch.highlightQuery(this.$props) || {};
 			queryOptions.size = 20;
-			this.setQueryOptions(this.$props.componentId, queryOptions);
+			this.queryOptions = queryOptions;
+			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		},
 		setReact(props) {
 			const { react } = this.$props;
@@ -259,12 +261,11 @@ const DataSearch = {
 					query = [queryTobeSet];
 				}
 				customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
+				this.setQueryOptions(componentId, {
+					...this.queryOptions,
+					...customQueryOptions,
+				});
 			}
-
-			this.setQueryOptions(componentId, {
-				...this.queryOptions,
-				...customQueryOptions,
-			});
 			this.updateQuery({
 				componentId,
 				query,

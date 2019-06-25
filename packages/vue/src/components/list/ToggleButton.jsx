@@ -31,7 +31,7 @@ const ToggleButton = {
 		showFilter: types.bool,
 		title: types.title,
 		URLParams: types.bool,
-		renderItem: types.func
+		renderItem: types.func,
 	},
 	data() {
 		const props = this.$props;
@@ -167,15 +167,15 @@ const ToggleButton = {
 
 			const { customQuery } = props;
 			let query = ToggleButton.defaultQuery(value, props);
-			let customQueryOptions;
 
 			if (customQuery) {
 				({ query } = customQuery(value, props) || {});
-				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				this.setQueryOptions(
+					props.componentId,
+					getOptionsFromQuery(customQuery(value, props)),
+				);
 			}
 
-			this.queryOptions = { ...this.queryOptions, ...customQueryOptions };
-			this.setQueryOptions(props.componentId, this.queryOptions);
 			this.updateQueryHandler({
 				componentId: props.componentId,
 				query,
@@ -203,7 +203,9 @@ const ToggleButton = {
 
 			return (
 				<Button
-					class={`${getClassName(this.$props.innerClass, 'button')} ${isSelected ? 'active' : ''}`}
+					class={`${getClassName(this.$props.innerClass, 'button')} ${
+						isSelected ? 'active' : ''
+					}`}
 					onClick={() => this.handleClick(item)}
 					key={item.value}
 					primary={isSelected}
