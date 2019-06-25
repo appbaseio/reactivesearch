@@ -8,6 +8,7 @@ import Downshift from '../basic/DownShift.jsx';
 import Container from '../../styles/Container';
 import types from '../../utils/vueTypes';
 import SuggestionWrapper from './addons/SuggestionWrapper.jsx';
+import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 
@@ -525,14 +526,10 @@ const DataSearch = {
 																),
 															}}
 														>
-															{typeof item.label === 'string' ? (
-																<div
-																	class="trim"
-																	domPropsInnerHTML={item.label}
-																/>
-															) : (
-																item.label
-															)}
+															<SuggestionItem
+																currentValue={this.currentValue}
+																suggestion={item}
+															/>
 														</li>
 													))}
 											</ul>
@@ -699,7 +696,7 @@ DataSearch.highlightQuery = props => {
 			pre_tags: ['<mark>'],
 			post_tags: ['</mark>'],
 			fields,
-			...props.highlightField && { require_field_match: false },
+			...(props.highlightField && { require_field_match: false }),
 		},
 	};
 };
