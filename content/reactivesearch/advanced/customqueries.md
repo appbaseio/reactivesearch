@@ -1,10 +1,10 @@
 ---
 title: 'Custom Queries'
 meta_title: 'Custom Queries'
-meta_description: 'CustomQuery is used to change the component's behavior for its subscribers. It gets triggered after an interaction on the component.'
+meta_description: 'CustomQuery is used to change the component behavior for its subscribers. It gets triggered after an interaction on the component.'
 keywords:
     - reactivesearch
-    - customquery
+    - customqueries
     - appbase
     - elasticsearch
 sidebar: 'web-reactivesearch'
