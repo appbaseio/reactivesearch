@@ -68,7 +68,7 @@
       - group: Result Components
         items:
             - title: ReactiveList
-              link: /reactivesearch/result/quickstart/
+              link: /reactivesearch/result/reactivelist/
             - title: ResultList
               link: /reactivesearch/result/resultlist/
             - title: ResultCard
@@ -76,7 +76,7 @@
       - group: Map Components
         items:
             - title: GeoDistanceSlider
-              link: /reactivesearch/map/quickstart/
+              link: /reactivesearch/map/geodistanceslider/
             - title: GeoDistanceDropdown
               link: /reactivesearch/map/geodistancedropdown/
             - title: ReactiveGoogleMap
@@ -86,11 +86,11 @@
       - group: Themes
         items:
             - title: Themes
-              link: /reactivesearch/themes/overview/
-            - title: Style
-              link: /reactivesearch/themes/style/
+              link: /reactivesearch/theming/overview/
+            - title: Customizing Style
+              link: /reactivesearch/theming/style/
             - title: Classname Injection
-              link: /reactivesearch/themes/classnameinjection/
+              link: /reactivesearch/theming/classnameinjection/
       - group: Advanced
         items:
             - title: Custom Suggestions

@@ -1,7 +1,7 @@
 ---
 title: 'RatingsFilter'
 meta_title: 'RatingsFilter'
-meta_description: 'SingleRange creates a numeric range selector UI component that is connected to a database field.'
+meta_description: '`RatingsFilter` creates a Ratings Filter UI component. It is used for filtering results based on a ratings score.'
 keywords:
     - reactivesearch
     - ratingsfilter

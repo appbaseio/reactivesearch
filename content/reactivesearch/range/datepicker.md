@@ -1,7 +1,7 @@
 ---
 title: 'DatePicker'
 meta_title: 'DatePicker'
-meta_description: 'SingleRange creates a numeric range selector UI component that is connected to a database field.'
+meta_description: 'S`DatePicker` creates a calender view based UI component that is connected to a database date field. It is used for filtering results by a date like property.'
 keywords:
     - reactivesearch
     - datepicker

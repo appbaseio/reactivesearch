@@ -1,7 +1,7 @@
 ---
 title: 'DateRange'
 meta_title: 'DateRange'
-meta_description: 'SingleRange creates a numeric range selector UI component that is connected to a database field.'
+meta_description: '`DateRange` creates a calendar view based UI component that is connected to date fields. It is used for filtering results by a date like property.'
 keywords:
     - reactivesearch
     - daterange

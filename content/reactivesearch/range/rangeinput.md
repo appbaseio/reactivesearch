@@ -1,7 +1,7 @@
 ---
 title: 'RangeInput'
 meta_title: 'RangeInput'
-meta_description: 'SingleRange creates a numeric range selector UI component that is connected to a database field.'
+meta_description: '`RangeInput` creates a numeric range slider UI component with input fields. It works in the same way as RangeSlider.'
 keywords:
     - reactivesearch
     - rangeinput

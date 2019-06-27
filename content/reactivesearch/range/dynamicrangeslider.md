@@ -1,7 +1,7 @@
 ---
 title: 'DynamicRangeSlider'
 meta_title: 'DynamicRangeSlider'
-meta_description: 'SingleRange creates a numeric range selector UI component that is connected to a database field.'
+meta_description: '`DynamicRangeSlider` creates a numeric range slider UI component. It is used for granular filtering of numeric data.'
 keywords:
     - reactivesearch
     - dynamicrangeslider

@@ -1,7 +1,7 @@
 ---
 title: 'SingleDropdownRange'
 meta_title: 'SingleDropdownRange'
-meta_description: 'SingleRange creates a numeric range selector UI component that is connected to a database field.'
+meta_description: '`SingleDropdownRange` creates a dropdown based numeric range UI component.'
 keywords:
     - reactivesearch
     - singledropdownrange
