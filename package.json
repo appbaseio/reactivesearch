@@ -79,6 +79,7 @@
 		"react": "16.8.4",
 		"react-autosuggest": "9.4.3",
 		"react-dom": "16.8.4",
+		"react-dropdown": "^1.6.4",
 		"react-helmet": "5.2.0",
 		"react-modal": "3.8.1",
 		"tocbot": "4.5.0"

@@ -14,7 +14,6 @@ const PrevNextSection = ({ sidebar, location, next }) => {
 
 	if (sidebar) {
 		const sidebarfile = getSidebarFile(sidebar);
-		console.log(sidebarfile);
 		if (!sidebarfile) {
 			return null;
 		}

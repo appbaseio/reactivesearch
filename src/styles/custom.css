@@ -21,6 +21,12 @@ kbd {
     display: inline-block;
 }
 
+.post-header {
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 /* Custom typography for UI */
 .lh-h1 { line-height: var(--vr-8); }
 .lh-h2 { line-height: var(--vr-5); }

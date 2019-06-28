@@ -13,7 +13,7 @@ const Logo = ({ height, theme }) => {
 			y="0px"
 			width="150px"
 			viewBox="0 0 189 40"
-			style={{ 'enable-background': 'new 0 0 189 40' }}
+			style={{ enableBackground: 'new 0 0 189 40' }}
 			xmlSpace="preserve"
 		>
 			<title>0BA2BF95-0ED3-4D35-A8D2-345C03475D56@3x</title>
