@@ -65,9 +65,7 @@ const ReactiveBase = {
 	methods: {
 		updateState(props) {
 			this.setStore(props);
-			this.setState(state => ({
-				key: `${state.key}-0`,
-			}));
+			this.key = `${state.key}-0`;
 		},
 		setStore(props) {
 			const credentials
