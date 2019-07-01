@@ -1,16 +1,13 @@
 ---
-id: reactivecomponent
 title: 'Reactive Component'
-layout: docs
-sectionid: reactivecomponent
-permalink: advanced/reactivecomponent.html
-prev: advanced/react.html
-prevTitle: 'React Prop'
-next: advanced/writingdata.html
-nextTitle: 'Writing Data'
-redirect_from:
-    - 'advanced/reactivecomponent'
-    - 'reactivecomponent'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 We have built this library keeping you, the developer, in mind. If you're here, it is obvious that you want to create a custom component that is reactive in nature. Perhaps, you already have a component in your design kit and want it to work seamlessly with Reactivesearch.
@@ -143,11 +140,11 @@ Now, the components which will have `myColorPicker` present in their `react` pro
 #### Child Component
 
 -   **hits** `Array`
-     `hits` prop is an array of results from the Elasticsearch query of the component.
+    `hits` prop is an array of results from the Elasticsearch query of the component.
 -   **aggregations** `Object`
-     `aggregations` prop contains the results from `aggs` Elasticsearch query of the component.
+    `aggregations` prop contains the results from `aggs` Elasticsearch query of the component.
 -   **setQuery** `function`
-     `setQuery` function sets the query of the component. It takes an object param of shape:
+    `setQuery` function sets the query of the component. It takes an object param of shape:
 
 ```javascript
     {
@@ -164,19 +161,19 @@ Now, the components which will have `myColorPicker` present in their `react` pro
 #### ReactiveComponent
 
 -   **className** `String`
-     CSS class to be injected on the component container.
+    CSS class to be injected on the component container.
 -   **style** `Object`
-     CSS styles to be applied to the **DataSearch** component.
+    CSS styles to be applied to the **DataSearch** component.
 -   **defaultQuery** `Function`
-     **returns** the default query to be applied to the component, as defined in Elasticsearch Query DSL.
+    **returns** the default query to be applied to the component, as defined in Elasticsearch Query DSL.
 -   **onQueryChange** `Function`
-     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
+    is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **onAllData** `Function`
-     callback function which provides `hits` and `aggregations` as function params.
+    callback function which provides `hits` and `aggregations` as function params.
 -   **showFilter** `Boolean` [optional]
-     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+    show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **filterLabel** `String` [optional]
-     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
+    An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **react** `Object`
     `react` prop is available in components whose data view should reactively update when on or more dependent components change their states, e.g. [`ReactiveMap`](/map-components/reactivemap.html), [`ReactiveList`](/basic-components/reactivelist.html).
 
@@ -191,7 +188,7 @@ Now, the components which will have `myColorPicker` present in their `react` pro
         -   `Object` is used for nesting other key clauses.
 
 -   **URLParams** `Boolean` [optional]
-     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
+    enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
 
 ### Examples
 

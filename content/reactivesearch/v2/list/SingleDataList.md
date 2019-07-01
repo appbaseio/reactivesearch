@@ -1,17 +1,13 @@
 ---
-id: singledatalist
 title: 'SingleDataList'
-layout: docs
-sectionid: docs
-permalink: list-components/singledatalist.html
-prev: list-components/multidropdownlist.html
-prevTitle: 'MultiDropdownList'
-next: list-components/multidatalist.html
-nextTitle: 'MultiDataList'
-redirect_from:
-    - 'basic-components/singledatalist.html'
-    - 'list-components/singledatalist'
-    - 'singledatalist'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 ![Image to be displayed](https://i.imgur.com/pb7g1Su.png)
@@ -88,29 +84,29 @@ Example uses:
 ## Props
 
 -   **componentId** `String`
-     unique identifier of the component, can be referenced in other components' `react` prop.
+    unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String`
-     data field to be connected to the component's UI view.
+    data field to be connected to the component's UI view.
 -   **data** `Object Array`
-     collection of UI `labels` with associated `value` to be matched against the database field.
+    collection of UI `labels` with associated `value` to be matched against the database field.
 -   **title** `String or JSX` [optional]
-     title of the component to be shown in the UI.
+    title of the component to be shown in the UI.
 -   **showSearch** `Boolean` [optional]
-     whether to display a searchbox to filter the data list. Defaults to `false`.
+    whether to display a searchbox to filter the data list. Defaults to `false`.
 -   **showRadio** `Boolean` [optional]
-     whether to display a radio button beside the list item. Defaults to `true`.
+    whether to display a radio button beside the list item. Defaults to `true`.
 -   **placeholder** `String` [optional]
-     placeholder to be displayed in the searchbox. Defaults to "Search".
+    placeholder to be displayed in the searchbox. Defaults to "Search".
 -   **defaultSelected** `String` [optional]
-     default selected value pre-selects an option from the list.
+    default selected value pre-selects an option from the list.
 -   **selectAllLabel** `String` [optional]
-     if provided displays an additional option to selct all list values.
+    if provided displays an additional option to selct all list values.
 -   **showFilter** `Boolean` [optional]
-     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+    show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **filterLabel** `String` [optional]
-     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
+    An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **URLParams** `Boolean` [optional]
-     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
+    enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
 
 ## Demo
 
@@ -181,18 +177,18 @@ Read more about it [here](/theming/class.html).
 ```
 
 -   **className** `String`
-     CSS class to be injected on the component container.
+    CSS class to be injected on the component container.
 -   **style** `Object`
     CSS styles to be applied to the **SingleDataList** component.
 -   **customQuery** `Function`
     takes **value** and **props** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
     `Note:` customQuery is called on value changes in the **SingleDataList** component as long as the component is a part of `react` dependency of at least one other component.
 -   **beforeValueChange** `Function`
-     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
+    is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 -   **onValueChange** `Function`
-     is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a list item is selected in a "Discounted Price" SingleDataList.
+    is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a list item is selected in a "Discounted Price" SingleDataList.
 -   **onQueryChange** `Function`
-     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
+    is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
 
 ## Examples
 

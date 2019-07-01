@@ -1,13 +1,13 @@
 ---
-id: geodistancedropdown
 title: 'GeoDistanceDropdown'
-layout: docs
-sectionid: docs
-permalink: map-components/geodistancedropdown.html
-prev: map-components/geodistanceslider.html
-prevTitle: 'GeoDistanceSlider'
-next: map-components/reactivemap.html
-nextTitle: 'ReactiveMap'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 ![Image to be displayed](https://i.imgur.com/zRnIUWY.png)
@@ -66,17 +66,17 @@ Example uses:
 ## Props
 
 -   **componentId** `String`
-     unique identifier of the component, can be referenced in other components' `react` prop.
+    unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String`
-     data field to be connected to the component's UI view.
+    data field to be connected to the component's UI view.
 -   **data** `Object Array`
-     collection of UI `labels` with associated `distance` value.
+    collection of UI `labels` with associated `distance` value.
 -   **title** `String or JSX` [optional]
-     title of the component to be shown in the UI.
+    title of the component to be shown in the UI.
 -   **defaultSelected** `Object` [optional]
-     pre-select values of the search query with `label` and `location` keys.
+    pre-select values of the search query with `label` and `location` keys.
 -   **placeholder** `String` [optional]
-     set the placeholder to show in the location search box, useful when no option is `defaultSelected`.
+    set the placeholder to show in the location search box, useful when no option is `defaultSelected`.
 -   **showIcon** `Boolean` [optional]
     whether to display a search or custom icon in the input box. Defaults to `true`.
 -   **iconPosition** `String` [optional]
@@ -84,16 +84,16 @@ Example uses:
 -   **icon** `JSX` [optional]
     displays a custom search icon instead of the default 🔍
 -   **unit** `String` [optional]
-     unit for distance measurement, uses `mi` (for miles) by default. Distance units can be specified from the following:
-     ![screenshot](https://i.imgur.com/STbeagk.png)
+    unit for distance measurement, uses `mi` (for miles) by default. Distance units can be specified from the following:
+    ![screenshot](https://i.imgur.com/STbeagk.png)
 -   **autoLocation** `Boolean` [optional]
-     when enabled, preset the user's current location in the location search box. Defaults to `true`.
+    when enabled, preset the user's current location in the location search box. Defaults to `true`.
 -   **showFilter** `Boolean` [optional]
-     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+    show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **filterLabel** `String` [optional]
-     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
+    An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **URLParams** `Boolean` [optional]
-     enable creating a URL query string parameter based on the selected value from the dropdown. This is useful for sharing URLs with the component state. Defaults to `false`.
+    enable creating a URL query string parameter based on the selected value from the dropdown. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **countries** `String Array` [optional]
     restricts predictions to specified country (ISO 3166-1 Alpha-2 country code, case insensitive). For example, 'us', 'in', or 'au'. You can provide an array of up to five country code strings.
 
@@ -178,22 +178,22 @@ Read more about it [here](/theming/class.html).
 ```
 
 -   **className** `String`
-     CSS class to be injected on the component container.
+    CSS class to be injected on the component container.
 -   **style** `Object`
-     CSS styles to be applied to the **GeoDistanceDropdown** component.
+    CSS styles to be applied to the **GeoDistanceDropdown** component.
 -   **customQuery** `Function`
-     takes **location**, **distance** and **props** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
+    takes **location**, **distance** and **props** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
     `Note:` customQuery is called on value changes in the **GeoDistanceDropdown** component as long as the component is a part of `react` dependency of at least one other component.
 -   **beforeValueChange** `Function`
-     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called every time before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
+    is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called every time before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 -   **onValueChange** `Function`
-     is a callback function which accepts component's current **value** as a parameter. It is called every time the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a user searches within a specific location area.
+    is a callback function which accepts component's current **value** as a parameter. It is called every time the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a user searches within a specific location area.
 -   **onQueryChange** `Function`
-     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
+    is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **react** `Object`
-     specify dependent components to reactively update **GeoDistanceDropdown's** options. Read more about it [here](/advanced/react.html).
+    specify dependent components to reactively update **GeoDistanceDropdown's** options. Read more about it [here](/advanced/react.html).
     -   **key** `String`
-         one of `and`, `or`, `not` defines the combining clause.
+        one of `and`, `or`, `not` defines the combining clause.
         -   **and** clause implies that the results will be filtered by matches from **all** of the associated component states.
         -   **or** clause implies that the results will be filtered by matches from **at least one** of the associated component states.
         -   **not** clause implies that the results will be filtered by an **inverse** match of the associated component states.

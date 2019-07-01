@@ -1,16 +1,13 @@
 ---
-id: reactivesearch
 title: 'ReactiveSearch Quickstart'
-layout: tutorial
-sectionid: getting-started
-permalink: getting-started/reactivesearch.html
-next: getting-started/data.html
-nextTitle: 'Importing Data'
-redirect_from:
-    - 'getting-started/'
-    - 'getting-started/reactivesearch'
-    - 'install'
-    - 'quickstart'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 ### Step 0: Create Boilerplate with CRA

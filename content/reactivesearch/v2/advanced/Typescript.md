@@ -1,16 +1,13 @@
 ---
-id: typescript
 title: 'TypeScript Support'
-layout: docs
-sectionid: docs
-permalink: advanced/typescript.html
-prev: advanced/ssr.html
-prevTitle: 'Server Side Rendering'
-next: advanced/analytics.html
-nextTitle: 'Analytics'
-redirect_from:
-    - 'typescript'
-    - 'advanced/typescript'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 Add static typing to JavaScript to improve developer productivity and code quality with <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a>.

@@ -1,16 +1,13 @@
 ---
-id: ssr
 title: 'Server Side Rendering'
-layout: docs
-sectionid: docs
-permalink: advanced/ssr.html
-prev: advanced/guides.html
-prevTitle: 'Advanced Guides'
-next: advanced/typescript.html
-nextTitle: 'TypeScript Support'
-redirect_from:
-    - 'ssr'
-    - 'advanced/ssr'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 Server Side Rendering enables us to pre-render the results on the server enabling better SEO for the app, and faster delivery of relevant results on an initial render to the users.

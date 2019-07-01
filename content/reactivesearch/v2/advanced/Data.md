@@ -1,13 +1,13 @@
 ---
-id: writingdata
 title: 'Writing and Editing Data'
-layout: tutorial
-sectionid: writingdata
-permalink: advanced/writingdata.html
-prev: advanced/reactivecomponent.html
-prevTitle: 'Reactive Component'
-next: advanced/guides.html
-nextTitle: 'Advanced Guides'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 Writing and updating data is a common operation that is triggered from app UIs.

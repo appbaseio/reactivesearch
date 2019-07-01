@@ -1,16 +1,13 @@
 ---
-id: componentsindex
 title: 'Components Overview'
-layout: tutorial
-sectionid: getting-started
-permalink: getting-started/componentsindex.html
-prev: getting-started/reactivebase.html
-prevTitle: 'Base Component'
-next: list-components/singlelist.html
-nextTitle: 'Single List'
-redirect_from:
-    - 'componentsindex'
-    - 'components'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 **ReactiveSearch** provides React UI components for Elasticsearch. This document explains the different kinds of components offered by the library and walks throughs scenarios of when to use which component.

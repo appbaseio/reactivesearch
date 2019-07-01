@@ -1,16 +1,13 @@
 ---
-id: guides
 title: 'Advanced Guides'
-layout: docs
-sectionid: docs
-permalink: advanced/guides.html
-prev: advanced/writingdata.html
-prevTitle: 'Writing and Editing Data'
-next: advanced/comparison.html
-nextTitle: 'Comparison'
-redirect_from:
-    - 'guides'
-    - 'advanced/guides'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 ## beforeValueChange

@@ -1,13 +1,13 @@
 ---
-id: reactivebase
 title: 'ReactiveBase'
-layout: tutorial
-sectionid: getting-started
-permalink: getting-started/reactivebase.html
-prev: getting-started/data.html
-prevTitle: 'Importing Data'
-next: getting-started/componentsindex.html
-nextTitle: 'Components Overview'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 **ReactiveBase** is a container component that wraps all the `ReactiveSearch` components together. It binds the backend app (data source) with the UI view components (elements wrapped within ReactiveBase), allowing a UI component to be reactively updated every time there is a change in the data source or in other UI components.
@@ -29,15 +29,15 @@ This is the first component you will need to add when using `ReactiveSearch`.
 ### Props
 
 -   **app** `String`
-     app name as it appears on the dashboard. Refers to an index if you're using your own Elasticsearch cluster. (Multiple indexes can be connected to by specifiying comma separated index names)
+    app name as it appears on the dashboard. Refers to an index if you're using your own Elasticsearch cluster. (Multiple indexes can be connected to by specifiying comma separated index names)
 -   **type** `String` [optional]
-     types on which the queries should run on. Multiple types can be passed as comma separated values. The default behavior here is to search on all the app types.
+    types on which the queries should run on. Multiple types can be passed as comma separated values. The default behavior here is to search on all the app types.
 -   **credentials** `String` [optional]
-     app credentials as they appear on the dashboard. It should be a string of the format "username:password" and is used for authenticating the app. If you are not using an appbase.io app, credentials may not be necessary - although having an open-access Elasticsearch cluster is not recommended.
+    app credentials as they appear on the dashboard. It should be a string of the format "username:password" and is used for authenticating the app. If you are not using an appbase.io app, credentials may not be necessary - although having an open-access Elasticsearch cluster is not recommended.
 -   **url** `String` [optional]
-     URL where Elasticsearch cluster is hosted, only needed if your app uses a non appbase.io URL.
+    URL where Elasticsearch cluster is hosted, only needed if your app uses a non appbase.io URL.
 -   **headers** `Object` [optional]
-     set custom headers to be sent with each server request as key/value pairs. For example:
+    set custom headers to be sent with each server request as key/value pairs. For example:
 
 ```js{4-6}
 <ReactiveBase
@@ -53,13 +53,13 @@ This is the first component you will need to add when using `ReactiveSearch`.
 ```
 
 -   **analytics** `Boolean` [optional]
-     allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`. Check the [analytics recipe](/advanced/analytics.html) for click analytics implementation.
+    allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`. Check the [analytics recipe](/advanced/analytics.html) for click analytics implementation.
 -   **theme** `Object` [optional]
-     allows over-writing of default styles by providing the respective key/values. You can read more about its usage [here](/theming/themes.html)
+    allows over-writing of default styles by providing the respective key/values. You can read more about its usage [here](/theming/themes.html)
 -   **themePreset** `String` [optional]
-     allows over-writing of default styles by providing a preset value. Supported values are `light` (default) and `dark`. You can read more about its usage [here](/theming/themes.html)
+    allows over-writing of default styles by providing a preset value. Supported values are `light` (default) and `dark`. You can read more about its usage [here](/theming/themes.html)
 -   **transformRequest** `Function` [optional]
-     Enables transformation of network request before execution. This function will give you the the request object as the param and expect an updated request in return, for execution. Note that this is an experimental API and will likely change in the future.
+    Enables transformation of network request before execution. This function will give you the the request object as the param and expect an updated request in return, for execution. Note that this is an experimental API and will likely change in the future.
 
 ### Connect to Elasticsearch
 

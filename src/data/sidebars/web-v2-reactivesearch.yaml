@@ -17,8 +17,8 @@
               link: /reactivesearch/v2/base/TextField/
             - title: ToggleButton
               link: /reactivesearch/v2/base/ToggleButton/
-            - title: TextField
-              link: /reactivesearch/v2/base/TextField/
+            - title: TagCloud
+              link: /reactivesearch/v2/base/TagCloud/
             - title: DataController
               link: /reactivesearch/v2/base/DataController/
             - title: SelectedFilters
@@ -86,7 +86,7 @@
       - group: Themes
         items:
             - title: Themes
-              link: /reactivesearch/v2/theming/Overview/
+              link: /reactivesearch/v2/theming/Themes/
             - title: Customizing Style
               link: /reactivesearch/v2/theming/Style/
             - title: Classname Injection

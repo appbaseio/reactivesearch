@@ -1,17 +1,13 @@
 ---
-id: singledropdownlist
 title: 'SingleDropdownList'
-layout: docs
-sectionid: docs
-permalink: list-components/singledropdownlist.html
-prev: list-components/multilist.html
-prevTitle: 'MultiList'
-next: list-components/multidropdownlist.html
-nextTitle: 'MultiDropdownList'
-redirect_from:
-    - 'basic-components/singledropdownlist.html'
-    - 'list-components/singledropdownlist'
-    - 'singledropdownlist'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 ![Image to be displayed](https://i.imgur.com/B2FPkeH.png)
@@ -61,25 +57,25 @@ Example uses:
 ## Props
 
 -   **componentId** `String`
-     unique identifier of the component, can be referenced in other components' `react` prop.
+    unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String`
-     data field to be connected to the component's UI view. This field is used for doing an aggregation and returns the result. We're using a `.raw` multifield here. You can use a field of type `keyword` or `not_analyzed` depending on your Elasticsearch cluster.
+    data field to be connected to the component's UI view. This field is used for doing an aggregation and returns the result. We're using a `.raw` multifield here. You can use a field of type `keyword` or `not_analyzed` depending on your Elasticsearch cluster.
 -   **title** `String or JSX` [optional]
-     title of the component to be shown in the UI.
+    title of the component to be shown in the UI.
 -   **loader** `String or JSX` [optional]
-     to display an optional loader while fetching the options.
+    to display an optional loader while fetching the options.
 -   **size** `Number` [optional]
-     control how many items to display in the List. Defaults to 100.
+    control how many items to display in the List. Defaults to 100.
 -   **sortBy** `String` [optional]
-     property that decides on how to sort the list items, accepts one of `count`, `asc` or `desc` as valid values. `count` sorts the list based on the count occurences, with highest value at the top. `asc` sorts the list in the ascending order of the list item (Alphabetical). `desc` sorts the list in the descending order of the term. Defaulted to `count`.
+    property that decides on how to sort the list items, accepts one of `count`, `asc` or `desc` as valid values. `count` sorts the list based on the count occurences, with highest value at the top. `asc` sorts the list in the ascending order of the list item (Alphabetical). `desc` sorts the list in the descending order of the term. Defaulted to `count`.
 -   **defaultSelected** `string` [optional]
-     default selected value pre-selects an option from the list.
+    default selected value pre-selects an option from the list.
 -   **showCount** `Boolean` [optional]
-     show count of number of occurences besides an item. Defaults to `true`.
+    show count of number of occurences besides an item. Defaults to `true`.
 -   **showSearch** `Boolean` [optional]
-     whether to show a searchbox to filter the list items locally. Defaults to false.
+    whether to show a searchbox to filter the list items locally. Defaults to false.
 -   **renderListItem** `Function` [optional]
-     customize the rendered list via a function which receives the item label and count and expects a JSX or String back. For example:
+    customize the rendered list via a function which receives the item label and count and expects a JSX or String back. For example:
 
 ```js
 renderListItem={(label, count) => (
@@ -93,21 +89,21 @@ renderListItem={(label, count) => (
 ```
 
 -   **showMissing** `Boolean` [optional]
-     defaults to `false`. When set to `true` it also retrives the aggregations for missing fields under the label specified by `missingLabel`.
+    defaults to `false`. When set to `true` it also retrives the aggregations for missing fields under the label specified by `missingLabel`.
 -   **missingLabel** `String` [optional]
-     defaults to `N/A`. Specify a custom label to show when `showMissing` is set to `true`.
+    defaults to `N/A`. Specify a custom label to show when `showMissing` is set to `true`.
 -   **placeholder** `String` [optional]
-     placeholder to be displayed in the dropdown searchbox.
+    placeholder to be displayed in the dropdown searchbox.
 -   **selectAllLabel** `String` [optional]
-     if provided, shows an extra option to select all the options in the list with the provided string value.
+    if provided, shows an extra option to select all the options in the list with the provided string value.
 -   **showFilter** `Boolean` [optional]
-     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+    show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **filterLabel** `String` [optional]
-     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
+    An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **URLParams** `Boolean` [optional]
-     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
+    enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **showLoadMore** `Boolean` [optional]
-     defaults to `false` and works only with elasticsearch >= 6 since it uses [composite aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). This adds a "Load More" button to load the aggs on demand combined with the `size` prop. Composite aggregations are in beta and this is an experimental API which might change in a future release.
+    defaults to `false` and works only with elasticsearch >= 6 since it uses [composite aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). This adds a "Load More" button to load the aggs on demand combined with the `size` prop. Composite aggregations are in beta and this is an experimental API which might change in a future release.
 
 ## Demo
 
@@ -184,24 +180,24 @@ Read more about it [here](/theming/class.html).
 ```
 
 -   **className** `String`
-     CSS class to be injected on the component container.
+    CSS class to be injected on the component container.
 -   **style** `Object`
     CSS styles to be applied to the **SingleDropdownList** component.
 -   **customQuery** `Function`
     takes **value** and **props** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
     `Note:` customQuery is called on value changes in the **SingleDropdownList** component as long as the component is a part of `react` dependency of at least one other component.
 -   **beforeValueChange** `Function`
-     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
+    is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 -   **onValueChange** `Function`
-     is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a list item is selected in a "Discounted Price" SingleDropdownList.
+    is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a list item is selected in a "Discounted Price" SingleDropdownList.
 -   **onQueryChange** `Function`
-     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
+    is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **transformData** `Function` [optional]
-     allows transforming the data to render inside the list. You can change the order, remove, or add items, tranform their values with this method. It provides the data as param which is an array of objects of shape `{ key: <string>, doc_count: <number> }` and expects you to return the array of objects of same shape.
+    allows transforming the data to render inside the list. You can change the order, remove, or add items, tranform their values with this method. It provides the data as param which is an array of objects of shape `{ key: <string>, doc_count: <number> }` and expects you to return the array of objects of same shape.
 -   **react** `Object`
-     specify dependent components to reactively update **SingleDropdownList's** options.
+    specify dependent components to reactively update **SingleDropdownList's** options.
     -   **key** `String`
-         one of `and`, `or`, `not` defines the combining clause.
+        one of `and`, `or`, `not` defines the combining clause.
         -   **and** clause implies that the results will be filtered by matches from **all** of the associated component states.
         -   **or** clause implies that the results will be filtered by matches from **at least one** of the associated component states.
         -   **not** clause implies that the results will be filtered by an **inverse** match of the associated component states.

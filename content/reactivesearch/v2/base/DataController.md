@@ -1,17 +1,13 @@
 ---
-id: datacontroller
 title: 'DataController'
-layout: docs
-sectionid: docs
-permalink: base-components/datacontroller.html
-prev: base-components/tagcloud.html
-prevTitle: 'TagCloud'
-next: base-components/selectedfilters.html
-nextTitle: 'SelectedFilters'
-redirect_from:
-    - 'basic-components/datacontroller.html'
-    - 'base-components/datacontroller'
-    - 'datacontroller'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 ![Image to be displayed](https://imgur.com/l0bUQ8u.png)
@@ -53,17 +49,17 @@ Example uses:
 ## Props
 
 -   **componentId** `String`
-     unique id of the sensor, can be referenced in another component's **react** prop.
+    unique id of the sensor, can be referenced in another component's **react** prop.
 -   **title** `String or JSX` [optional]
-     Sets the title of the component to be shown in the UI, applicable when **visible** is set to `true`.
+    Sets the title of the component to be shown in the UI, applicable when **visible** is set to `true`.
 -   **defaultSelected** `any` [optional]
-     pre-select a value in the data controller.
+    pre-select a value in the data controller.
 -   **showFilter** `Boolean` [optional]
-     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+    show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **filterLabel** `String` [optional]
-     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
+    An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **URLParams** `Boolean` [optional]
-     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
+    enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
 
 ## Demo
 
@@ -122,18 +118,18 @@ Example uses:
 ```
 
 -   **className** `String`
-     CSS class to be injected on the component container.
+    CSS class to be injected on the component container.
 -   **style** `Object`
-     CSS styles to be applied to the **DataController** component. This prop is only applicable when **visible** prop is set to `true`.
+    CSS styles to be applied to the **DataController** component. This prop is only applicable when **visible** prop is set to `true`.
 -   **customQuery** `Function`
-     takes **value** and **props** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
+    takes **value** and **props** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
     `Note:` customQuery is called on value changes in the **DataController** component as long as the component is a part of `react` dependency of at least one other component.
 -   **beforeValueChange** `Function`
-     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
+    is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 -   **onValueChange** `Function`
-     is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a user searches for a product via a DataController.
+    is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a user searches for a product via a DataController.
 -   **onQueryChange** `Function`
-     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
+    is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
 
 ## Examples
 

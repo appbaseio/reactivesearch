@@ -1,16 +1,13 @@
 ---
-id: customsuggestions
 title: 'Custom Suggestions'
-layout: docs
-sectionid: docs
-permalink: advanced/customsuggestions.html
-prev: theming/class.html
-prevTitle: 'Theming: ClassName Injection'
-next: advanced/customquery.html
-nextTitle: 'Custom Query'
-redirect_from:
-    - 'advanced'
-    - 'reactive-manual/v2/advanced'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 Recipe for rendering custom suggestions with `DataSearch` and `CategorySearch` components using the `renderSuggestions` prop.

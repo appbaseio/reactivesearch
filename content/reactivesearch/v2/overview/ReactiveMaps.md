@@ -1,16 +1,13 @@
 ---
-id: reactivemaps
 title: 'ReactiveMaps Quickstart'
-layout: tutorial
-sectionid: getting-started
-permalink: getting-started/reactivemaps.html
-next: getting-started/data.html
-nextTitle: 'Importing Data'
-redirect_from:
-    - 'getting-started/maps'
-    - 'getting-started/reactivemaps'
-    - 'quickstart/maps'
-    - 'quickstart/reactivemaps'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 ReactiveMaps is a complimentary library to ReactiveSearch. Map components require ReactiveSearch architecture and its root component to begin with. If you wish to build anything on reactivemaps, you'll need to install reactivesearch along with it.

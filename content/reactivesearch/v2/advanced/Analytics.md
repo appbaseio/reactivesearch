@@ -1,14 +1,13 @@
 ---
-id: analytics
 title: 'Analytics'
-layout: docs
-sectionid: docs
-permalink: advanced/analytics.html
-prev: advanced/typescript.html
-prevTitle: 'TypeScript Support'
-redirect_from:
-    - 'analytics'
-    - 'advanced/analytics'
+meta_title: 'Search and Analytics Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 You can take advantage of search and click analytics when using [Appbase.io](https://appbase.io) as a backend with ReactiveSearch. Search analytics work out of the box with `analytics` prop in `ReactiveBase`. This recipe explains how to implement click analytics for your app.

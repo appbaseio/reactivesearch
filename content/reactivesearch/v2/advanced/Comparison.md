@@ -1,14 +1,13 @@
 ---
-id: comparison
 title: 'Comparison with Other Projects'
-layout: docs
-sectionid: docs
-permalink: advanced/comparison.html
-prev: advanced/guides.html
-prevTitle: 'Advanced Guides'
-redirect_from:
-    - 'comparison'
-    - 'advanced/comparison'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 ### Comparison

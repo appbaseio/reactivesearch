@@ -1,14 +1,13 @@
 ---
-id: geodistanceslider
 title: 'GeoDistanceSlider'
-layout: docs
-sectionid: docs
-permalink: map-components/geodistanceslider.html
-next: map-components/geodistancedropdown.html
-nextTitle: 'GeoDistanceDropdown'
-redirect_from:
-    - 'map-components'
-    - 'reactive-manual/v2/map-components'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 ![Image to be displayed](https://i.imgur.com/VVWxKNE.png)

@@ -1,13 +1,13 @@
 ---
-id: customquery
 title: 'Custom Queries'
-layout: docs
-sectionid: docs
-permalink: advanced/customquery.html
-prev: theming/customsuggestions.html
-prevTitle: 'Custom Suggestions'
-next: advanced/react.html
-nextTitle: 'React Prop'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 ### Data Aware UI components

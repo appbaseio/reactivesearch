@@ -1,13 +1,13 @@
 ---
-id: data
 title: 'Importing Data'
-layout: tutorial
-sectionid: getting-started
-permalink: getting-started/data.html
-prev: getting-started/reactivesearch.html
-prevTitle: 'ReactiveSearch Quickstart'
-next: getting-started/reactivebase.html
-nextTitle: 'Base Component'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 The first step in getting started with building a custom project for **ReactiveSearch** is to add your own data. In this guide, we explain how you can import your data with the correct schema.

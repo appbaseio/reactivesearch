@@ -13,7 +13,7 @@ const PostHeader = ({ location }) => {
 
 	const switchDocs = value => {
 		if (location.pathname.includes('/reactivesearch')) {
-			if (value.value === 'v0.10 - Native') {
+			if (value.value === 'v0.12 - Native') {
 				window.location.href = `${window.location.origin}/reactivesearch/native`;
 			} else if (value.value === 'v1 - Vue') {
 				window.location.href = `${window.location.origin}/reactivesearch/vue`;
@@ -22,9 +22,25 @@ const PostHeader = ({ location }) => {
 					window.location.origin
 				}/reactivesearch/v3/overview/quickstart`;
 			} else if (value.value === 'v2 - Web') {
-				window.location.href = `${window.location.origin}/reactivesearch/v2`;
+				window.location.href = `${
+					window.location.origin
+				}/reactivesearch/v2/overview/QuickStart`;
 			}
 		}
+	};
+
+	const getValue = () => {
+		if (location.pathname.startsWith('/reactivesearch/v2')) {
+			return 'v2 - Web';
+		}
+		if (location.pathname.startsWith('/reactivesearch/vue')) {
+			return 'v1 - Vue';
+		}
+		if (location.pathname.startsWith('/reactivesearch/native')) {
+			return 'v0.12 - Native';
+		}
+
+		return 'v3 - Web';
 	};
 
 	if (title) {
@@ -53,7 +69,7 @@ const PostHeader = ({ location }) => {
 					</h1>
 					<Dropdown
 						options={['v3 - Web', 'v2 - Web', 'v0.10 - Native', 'v1 - Vue']}
-						value="v3 - Web"
+						value={getValue()}
 						onChange={switchDocs}
 					/>
 				</div>

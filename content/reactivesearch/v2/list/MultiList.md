@@ -1,17 +1,13 @@
 ---
-id: multilist
 title: 'MultiList'
-layout: docs
-sectionid: docs
-permalink: list-components/multilist.html
-prev: list-components/singlelist.html
-prevTitle: 'SingleList'
-next: list-components/singledropdownlist.html
-nextTitle: 'SingleDropdownList'
-redirect_from:
-    - 'basic-components/multilist.html'
-    - 'list-components/multilist'
-    - 'multilist'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 ![Image to be displayed](https://i.imgur.com/2OFmUsk.png)
@@ -60,31 +56,31 @@ Example uses:
 ## Props
 
 -   **componentId** `String`
-     unique identifier of the component, can be referenced in other components' `react` prop.
+    unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String`
-     data field to be connected to the component's UI view. This field is used for doing an aggregation and returns the result. We're using a `.raw` multifield here. You can use a field of type `keyword` or `not_analyzed` depending on your Elasticsearch cluster.
+    data field to be connected to the component's UI view. This field is used for doing an aggregation and returns the result. We're using a `.raw` multifield here. You can use a field of type `keyword` or `not_analyzed` depending on your Elasticsearch cluster.
 -   **title** `String or JSX` [optional]
-     title of the component to be shown in the UI. Defaults to no title being shown.
+    title of the component to be shown in the UI. Defaults to no title being shown.
 -   **loader** `String or JSX` [optional]
-     to display an optional loader while fetching the options.
+    to display an optional loader while fetching the options.
 -   **size** `Number` [optional]
-     number of list items to be displayed. Defaults to showing a `100` items. Max value for this prop can be `1000`.
+    number of list items to be displayed. Defaults to showing a `100` items. Max value for this prop can be `1000`.
 -   **sortBy** `String` [optional]
-     sort the list items by one of `count`, `asc`, or `desc`. Defaults to `count`, which sorts the list by the frequency of count value, most first.
+    sort the list items by one of `count`, `asc`, or `desc`. Defaults to `count`, which sorts the list by the frequency of count value, most first.
 -   **defaultSelected** `Array` [optional]
-     pre-select one or more list items. Accepts an `Array` object containing the items that should be selected. It is important for the passed value(s) to exactly match the field value(s) as stored in the DB.
+    pre-select one or more list items. Accepts an `Array` object containing the items that should be selected. It is important for the passed value(s) to exactly match the field value(s) as stored in the DB.
 -   **queryFormat** `String` [optional]
-     queries the selected items from the list in one of two modes: `or`, `and`.
+    queries the selected items from the list in one of two modes: `or`, `and`.
     -   Defaults to `or` which queries for results where any of the selected list items are present.
     -   In `and` mode, the applied query filters results where all of the selected items are present.
 -   **selectAllLabel** `String` [optional]
-     add an extra `Select all` item to the list with the provided label string.
+    add an extra `Select all` item to the list with the provided label string.
 -   **showCheckbox** `Boolean` [optional]
-     show checkbox icon for each list item. Defaults to `true`.
+    show checkbox icon for each list item. Defaults to `true`.
 -   **showCount** `Boolean` [optional]
-     show a count of the number of occurences besides each list item. Defaults to `true`.
+    show a count of the number of occurences besides each list item. Defaults to `true`.
 -   **renderListItem** `Function` [optional]
-     customize the rendered list via a function which receives the item label and count and expects a JSX or String back. For example:
+    customize the rendered list via a function which receives the item label and count and expects a JSX or String back. For example:
 
 ```js
 renderListItem={(label, count) => (
@@ -98,23 +94,23 @@ renderListItem={(label, count) => (
 ```
 
 -   **transformData** `Function` [optional]
-     allows transforming the data to render inside the list. You can change the order, remove, or add items, tranform their values with this method. It provides the data as param which is an array of objects of shape `{ key: <string>, doc_count: <number> }` and expects you to return the array of objects of same shape.
+    allows transforming the data to render inside the list. You can change the order, remove, or add items, tranform their values with this method. It provides the data as param which is an array of objects of shape `{ key: <string>, doc_count: <number> }` and expects you to return the array of objects of same shape.
 -   **showMissing** `Boolean` [optional]
-     defaults to `false`. When set to `true` it also retrives the aggregations for missing fields under the label specified by `missingLabel`.
+    defaults to `false`. When set to `true` it also retrives the aggregations for missing fields under the label specified by `missingLabel`.
 -   **missingLabel** `String` [optional]
-     defaults to `N/A`. Specify a custom label to show when `showMissing` is set to `true`.
+    defaults to `N/A`. Specify a custom label to show when `showMissing` is set to `true`.
 -   **showSearch** `Boolean` [optional]
-     whether to show a searchbox to filter the list items locally. Defaults to true.
+    whether to show a searchbox to filter the list items locally. Defaults to true.
 -   **placeholder** `String` [optional]
-     placeholder to be displayed in the searchbox, only applicable when the `showSearch` prop is set to `true`. When applicable, the default placeholder value is set to "Search".
+    placeholder to be displayed in the searchbox, only applicable when the `showSearch` prop is set to `true`. When applicable, the default placeholder value is set to "Search".
 -   **showFilter** `Boolean` [optional]
-     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+    show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **filterLabel** `String` [optional]
-     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
+    An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **URLParams** `Boolean` [optional]
-     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
+    enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **showLoadMore** `Boolean` [optional]
-     defaults to `false` and works only with elasticsearch >= 6 since it uses [composite aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). This adds a "Load More" button to load the aggs on demand combined with the `size` prop. Composite aggregations are in beta and this is an experimental API which might change in a future release.
+    defaults to `false` and works only with elasticsearch >= 6 since it uses [composite aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). This adds a "Load More" button to load the aggs on demand combined with the `size` prop. Composite aggregations are in beta and this is an experimental API which might change in a future release.
 
 ## Demo
 
@@ -192,23 +188,23 @@ Read more about it [here](/theming/class.html).
 ```
 
 -   **className** `String`
-     CSS class to be injected on the component container.
+    CSS class to be injected on the component container.
 -   **style** `Object`
-     CSS styles to be applied to the **MultiList** component.
+    CSS styles to be applied to the **MultiList** component.
 -   **customQuery** `Function`
-     takes **value** and **props** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
+    takes **value** and **props** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
     `Note:` customQuery is called on value changes in the **MultiList** component as long as the component is a part of `react` dependency of at least one other component.
     `Note:` When extending with customQuery, the `queryFormat` prop has no affect.
 -   **beforeValueChange** `Function`
-     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called every time before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
+    is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called every time before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 -   **onValueChange** `Function`
-     is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when list item(s) is/are selected in a "Discounted Price" MultiList.
+    is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when list item(s) is/are selected in a "Discounted Price" MultiList.
 -   **onQueryChange** `Function`
-     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
+    is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **react** `Object`
-     specify dependent components to reactively update **MultiList's** options.
+    specify dependent components to reactively update **MultiList's** options.
     -   **key** `String`
-         one of `and`, `or`, `not` defines the combining clause.
+        one of `and`, `or`, `not` defines the combining clause.
         -   **and** clause implies that the results will be filtered by matches from **all** of the associated component states.
         -   **or** clause implies that the results will be filtered by matches from **at least one** of the associated component states.
         -   **not** clause implies that the results will be filtered by an **inverse** match of the associated component states.

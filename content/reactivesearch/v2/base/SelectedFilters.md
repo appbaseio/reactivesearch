@@ -1,17 +1,13 @@
 ---
-id: selectedfilters
 title: 'SelectedFilters'
-layout: docs
-sectionid: docs
-permalink: base-components/selectedfilters.html
-prev: basic-components/datacontroller.html
-prevTitle: 'DataController'
-next: list-components/singlelist.html
-nextTitle: 'List Components: SingleList'
-redirect_from:
-    - 'basic-components/selectedfilters.html'
-    - 'base-components/selectedfilters'
-    - 'selectedfilters'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 ![Image to be displayed](https://i.imgur.com/6GqSVW2.png)
@@ -40,11 +36,11 @@ Example uses:
 ### Props
 
 -   **showClearAll** `boolean` [optional] (defaults to `true`)
-     When set to `true`, displays an additional button to clear all the filters
+    When set to `true`, displays an additional button to clear all the filters
 -   **clearAllLabel** `string` [optional] (defaults to `'Clear All'`)
-     Sets the label for the clear all button.
+    Sets the label for the clear all button.
 -   **onClear** `function` [optional]
-     Gets triggered when the `clear all` button is clicked.
+    Gets triggered when the `clear all` button is clicked.
 
 Most ReactiveSearch filter components have a prop `showFilter` (defaults to `true`) which can be used to control whether the component's selected state appears in the SelectedFilters component. There is also a `filterLabel` prop which controls how that component is displayed.
 
@@ -77,11 +73,11 @@ Read more about it [here](/theming/class.html).
 ```
 
 -   **className** `String`
-     CSS class to be injected on the component container.
+    CSS class to be injected on the component container.
 -   **style** `Object`
-     CSS styles to be applied to the **SelectedFilters** component.
+    CSS styles to be applied to the **SelectedFilters** component.
 -   **render** `Function`
-     Enables custom rendering for **SelectedFilters** component. It provides an object as a param which contains all the props needed to render the custom selected-filters, including the functions to clear and update the component values. [Check the usage here](https://github.com/appbaseio/reactivesearch/blob/dev/packages/web/examples/CustomSelectedFilters/src/index.js).
+    Enables custom rendering for **SelectedFilters** component. It provides an object as a param which contains all the props needed to render the custom selected-filters, including the functions to clear and update the component values. [Check the usage here](https://github.com/appbaseio/reactivesearch/blob/dev/packages/web/examples/CustomSelectedFilters/src/index.js).
 
 ### Examples
 

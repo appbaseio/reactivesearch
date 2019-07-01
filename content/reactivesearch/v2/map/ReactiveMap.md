@@ -1,11 +1,13 @@
 ---
-id: reactivemap
 title: 'ReactiveMap'
-layout: docs
-sectionid: docs
-permalink: map-components/reactivemap.html
-prev: map-components/geodistancedropdown.html
-prevTitle: 'GeoDistanceDropdown'
+meta_title: 'Importing Data'
+meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+keywords:
+    - reactivesearch
+    - importing
+    - appbase
+    - elasticsearch
+sidebar: 'web-v2-reactivesearch'
 ---
 
 ![ReactiveMap Image](https://i.imgur.com/Q87ks8I.png)
