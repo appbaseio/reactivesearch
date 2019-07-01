@@ -240,9 +240,7 @@ class DataSearch extends Component {
 		}
 
 		if (value === '') {
-			finalQuery = {
-				match_all: {},
-			};
+			finalQuery = null;
 		}
 
 		if (finalQuery && props.nestedField) {

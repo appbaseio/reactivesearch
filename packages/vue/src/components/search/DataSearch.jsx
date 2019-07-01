@@ -605,9 +605,7 @@ DataSearch.defaultQuery = (value, props) => {
 	}
 
 	if (value === '') {
-		finalQuery = {
-			match_all: {},
-		};
+		finalQuery = null;
 	}
 
 	if (finalQuery && props.nestedField) {
