@@ -21,7 +21,7 @@ const ToggleButton = {
 		componentId: types.stringRequired,
 		data: types.data,
 		dataField: types.stringRequired,
-		defaultValue: types.stringOrArray,
+		defaultSelected: types.stringOrArray,
 		value: types.stringOrArray,
 		filterLabel: types.string,
 		nestedField: types.string,
@@ -35,7 +35,7 @@ const ToggleButton = {
 	},
 	data() {
 		const props = this.$props;
-		const value = this.selectedValue || props.value || props.defaultValue || [];
+		const value = this.selectedValue || props.value || props.defaultSelected || [];
 		const currentValue = ToggleButton.parseValue(value, props);
 		this.__state = {
 			currentValue,
@@ -65,6 +65,9 @@ const ToggleButton = {
 		this.removeComponent(this.$props.componentId);
 	},
 	watch: {
+		defaultSelected(newVal) {
+			this.setValue(ToggleButton.parseValue(newVal, this.$props));
+		},
 		react() {
 			this.setReact(this.$props);
 		},
