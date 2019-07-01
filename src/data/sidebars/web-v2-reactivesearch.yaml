@@ -1,0 +1,115 @@
+- groups:
+      - group: Getting Started
+        items:
+            - title: QuickStart
+              link: /reactivesearch/v2/overview/QuickStart/
+            - title: ReactiveMaps QuickStart
+              link: /reactivesearch/v2/overview/ReactiveMaps/
+            - title: Importing Data
+              link: /reactivesearch/v2/overview/Importing/
+            - title: ReactiveBase
+              link: /reactivesearch/v2/overview/ReactiveBase/
+            - title: Components Overview
+              link: /reactivesearch/v2/overview/Components/
+      - group: Base Components
+        items:
+            - title: TextField
+              link: /reactivesearch/v2/base/TextField/
+            - title: ToggleButton
+              link: /reactivesearch/v2/base/ToggleButton/
+            - title: TextField
+              link: /reactivesearch/v2/base/TextField/
+            - title: DataController
+              link: /reactivesearch/v2/base/DataController/
+            - title: SelectedFilters
+              link: /reactivesearch/v2/base/SelectedFilters/
+      - group: List Components
+        items:
+            - title: SingleList
+              link: /reactivesearch/v2/list/SingleList/
+            - title: MultiList
+              link: /reactivesearch/v2/list/MultiList/
+            - title: SingleDropdownList
+              link: /reactivesearch/v2/list/SingleDropdownList/
+            - title: MultiDropdownList
+              link: /reactivesearch/v2/list/MultiDropdownList/
+            - title: SingleDataList
+              link: /reactivesearch/v2/list/SingleDataList/
+            - title: MultiDataList
+              link: /reactivesearch/v2/list/MultiDataList/
+      - group: Range Components
+        items:
+            - title: SingleRange
+              link: /reactivesearch/v2/range/SingleRange/
+            - title: MultiRange
+              link: /reactivesearch/v2/range/MultiRange/
+            - title: SingleDropdownRange
+              link: /reactivesearch/v2/range/SingleDropdownRange/
+            - title: MultiDropdownRange
+              link: /reactivesearch/v2/range/MultiDropdownRange/
+            - title: RangeSlider
+              link: /reactivesearch/v2/range/RangeSlider/
+            - title: DynamicRangeSlider
+              link: /reactivesearch/v2/range/DynamicRangeSlider/
+            - title: RangeInput
+              link: /reactivesearch/v2/range/RangeInput/
+            - title: NumberBox
+              link: /reactivesearch/v2/range/NumberBox/
+            - title: DatePicker
+              link: /reactivesearch/v2/range/DatePicker/
+            - title: DateRange
+              link: /reactivesearch/v2/range/DateRange/
+            - title: RatingsFilter
+              link: /reactivesearch/v2/range/RatingsFilter/
+      - group: Search Components
+        items:
+            - title: DataSearch
+              link: /reactivesearch/v2/search/DataSearch/
+            - title: CategorySearch
+              link: /reactivesearch/v2/search/CategorySearch/
+      - group: Result Components
+        items:
+            - title: ReactiveList
+              link: /reactivesearch/v2/result/ReactiveList/
+            - title: ResultList
+              link: /reactivesearch/v2/result/ResultList/
+            - title: ResultCard
+              link: /reactivesearch/v2/result/ResultCard/
+      - group: Map Components
+        items:
+            - title: GeoDistanceSlider
+              link: /reactivesearch/v2/map/GeoDistanceSlider/
+            - title: GeoDistanceDropdown
+              link: /reactivesearch/v2/map/GeoDistanceDropdown/
+            - title: ReactiveMap
+              link: /reactivesearch/v2/map/ReactiveMap/
+      - group: Themes
+        items:
+            - title: Themes
+              link: /reactivesearch/v2/theming/Overview/
+            - title: Customizing Style
+              link: /reactivesearch/v2/theming/Style/
+            - title: Classname Injection
+              link: /reactivesearch/v2/theming/ClassnameInjection/
+      - group: Advanced
+        items:
+            - title: Custom Suggestions
+              link: /reactivesearch/v2/advanced/CustomSuggestions/
+            - title: Custom Queries
+              link: /reactivesearch/v2/advanced/CustomQueries/
+            - title: React Prop
+              link: /reactivesearch/v2/advanced/ReactProp/
+            - title: Reactive Component
+              link: /reactivesearch/v2/advanced/ReactiveComponent/
+            - title: Server Side Rendering
+              link: /reactivesearch/v2/advanced/SSR/
+            - title: Advanced Guides
+              link: /reactivesearch/v2/advanced/Guides/
+            - title: Search and Click Analytics
+              link: /reactivesearch/v2/advanced/Analytics/
+            - title: Writing and Editing Data
+              link: /reactivesearch/v2/advanced/Data/
+            - title: Typescript Support
+              link: /reactivesearch/v2/advanced/Typescript/
+            - title: Comparision with Other Projects
+              link: /reactivesearch/v2/advanced/Comparison/
