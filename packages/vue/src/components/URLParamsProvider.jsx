@@ -6,8 +6,6 @@ import Base from '../styles/Base';
 const { setHeaders, setValue } = Actions;
 const { isEqual } = helper;
 
-const URLSearchParams = require('url-search-params');
-
 const URLParamsProvider = {
 	name: 'URLParamsProvider',
 	props: {

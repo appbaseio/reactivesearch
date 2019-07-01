@@ -40,7 +40,7 @@
 		"emotion": "9.2.12",
 		"polished": "^2.2.0",
 		"redux": "^4.0.0",
-		"url-search-params": "^1.1.0",
+		"url-search-params-polyfill": "^7.0.0",
 		"vue": "^2.5.17",
 		"vue-emotion": "0.4.2",
 		"vue-highlight-words": "^1.2.0",

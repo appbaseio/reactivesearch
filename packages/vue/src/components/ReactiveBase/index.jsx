@@ -7,7 +7,7 @@ import types from '../../utils/vueTypes';
 import URLParamsProvider from '../URLParamsProvider.jsx';
 import getTheme from '../../styles/theme';
 
-const URLSearchParams = require('url-search-params');
+import 'url-search-params-polyfill';
 
 const ReactiveBase = {
 	name: 'ReactiveBase',

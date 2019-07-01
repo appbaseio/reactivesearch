@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import Appbase from 'appbase-js';
+import 'url-search-params-polyfill';
 import { ThemeProvider } from 'emotion-theming';
 
 import configureStore from '@appbaseio/reactivecore';
@@ -13,7 +14,6 @@ import URLParamsProvider from './URLParamsProvider';
 import getTheme from '../../styles/theme';
 import { composeThemeObject, ReactReduxContext } from '../../utils';
 
-const URLSearchParams = require('url-search-params');
 
 class ReactiveBase extends Component {
 	constructor(props) {
