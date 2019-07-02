@@ -11,7 +11,7 @@
 		"react-dom": "^16.8.6",
 		"react-scripts": "3.0.0",
 		"typescript": "3.4.5",
-		"@appbaseio/reactivesearch": "3.0.0-rc.18"
+		"@appbaseio/reactivesearch": "3.0.0-rc.19"
 	},
 	"scripts": {
 		"start": "react-scripts start",
