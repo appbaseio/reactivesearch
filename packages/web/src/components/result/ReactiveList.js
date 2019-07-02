@@ -248,7 +248,7 @@ class ReactiveList extends Component {
 				if (this.props.onPageChange) {
 					this.props.onPageChange(this.state.currentPage + 1, totalPages);
 				} else if (this.props.scrollOnChange && this.props.pagination) {
-					this.domNode.scrollTo(0, 0);
+					this.scrollToTop();
 				}
 			}
 
@@ -272,7 +272,7 @@ class ReactiveList extends Component {
 				) {
 					// query has changed
 					if (this.props.scrollOnChange) {
-						this.domNode.scrollTo(0, 0);
+						this.scrollToTop();
 					}
 					// eslint-disable-next-line
 					this.setState({
@@ -419,6 +419,15 @@ class ReactiveList extends Component {
 			props.watchComponent(props.componentId, {
 				and: this.internalComponent,
 			});
+		}
+	};
+
+	scrollToTop = () => {
+		if (this.domNode === window) {
+			document.documentElement.scrollTop = 0;
+			document.body.scrollTop = 0;
+		} else {
+			this.domNode.scrollTop = 0;
 		}
 	};
 
