@@ -44,7 +44,7 @@
 		"react-day-picker": "^7.0.5",
 		"react-emotion": "^9.0.0",
 		"react-highlight-words": "^0.14.0",
-		"react-redux": "^7.0.3",
+		"react-redux": "^6.0.1",
 		"rheostat": "^2.1.1",
 		"url-search-params-polyfill": "^7.0.0",
 		"xdate": "^0.8.2"
