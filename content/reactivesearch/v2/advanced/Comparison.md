@@ -1,10 +1,10 @@
 ---
 title: 'Comparison with Other Projects'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'Comparison with Other Projects'
+meta_description: '`ReactiveSearch` compares with other projects that have similar aims.'
 keywords:
     - reactivesearch
-    - importing
+    - comparison
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

@@ -1,10 +1,10 @@
 ---
 title: 'RatingsFilter'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'RatingsFilter'
+meta_description: '`RatingsFilter` creates a Ratings Filter UI component.'
 keywords:
     - reactivesearch
-    - importing
+    - ratingsfilter
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

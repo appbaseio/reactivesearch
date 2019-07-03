@@ -1,10 +1,10 @@
 ---
 title: 'DynamicRangeSlider'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'DynamicRangeSlider'
+meta_description: '`DynamicRangeSlider` creates a numeric range slider UI component.'
 keywords:
     - reactivesearch
-    - importing
+    - dynamicrangeslider
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'
@@ -63,25 +63,25 @@ While `DynamicRangeSlider` only requires the above props to be used, it comes wi
 ## Props
 
 -   **componentId** `String`
-     unique identifier of the component, can be referenced in other components' `react` prop.
+    unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String`
-     DB data field to be mapped with the component's UI view.The selected range creates a database query on this field.
+    DB data field to be mapped with the component's UI view.The selected range creates a database query on this field.
 -   **title** `String or JSX` [optional]
-     title of the component to be shown in the UI.
+    title of the component to be shown in the UI.
 -   **defaultSelected** `Function` [optional]
-     a function that accepts `min` and `max` range values as parameters and returns an object representing current selection from the range with `start` and `end` keys.
+    a function that accepts `min` and `max` range values as parameters and returns an object representing current selection from the range with `start` and `end` keys.
 -   **rangeLabels** `Function` [optional]
-     a function that accepts `min` and `max` range values as parameters and returns an object representing labels with `start` and `end` keys.
+    a function that accepts `min` and `max` range values as parameters and returns an object representing labels with `start` and `end` keys.
 -   **showFilter** `Boolean` [optional]
-     show the selected item as a filter in the selected filters view. Defaults to `true`.
+    show the selected item as a filter in the selected filters view. Defaults to `true`.
 -   **snap** `Boolean` [optional]
-     makes the slider snap on to points depending on the `stepValue` when the slider is released. Defaults to `true`. When set to `false`, `stepValue` is ignored.
+    makes the slider snap on to points depending on the `stepValue` when the slider is released. Defaults to `true`. When set to `false`, `stepValue` is ignored.
 -   **stepValue** `Number` [optional]
-     step value specifies the slider stepper. Value should be an integer greater than or equal to `1` and less than `Math.floor((range.end - range.start) / 2)`. Defaults to 1.
+    step value specifies the slider stepper. Value should be an integer greater than or equal to `1` and less than `Math.floor((range.end - range.start) / 2)`. Defaults to 1.
 -   **tooltipTrigger** `String` [optional]
-     trigger the tooltip according to the value specified. Can be `hover`, `focus`, `always` and `none`. Defaults to `none`.
+    trigger the tooltip according to the value specified. Can be `hover`, `focus`, `always` and `none`. Defaults to `none`.
 -   **renderTooltipData** `Function` [optional]
-     customize the rendered tooltip content via a function which receives the tooltip content and expects a JSX or String back. For example:
+    customize the rendered tooltip content via a function which receives the tooltip content and expects a JSX or String back. For example:
 
     ```js
     renderTooltipData={data => (
@@ -95,13 +95,13 @@ While `DynamicRangeSlider` only requires the above props to be used, it comes wi
     ```
 
 -   **showHistogram** `Boolean` [optional]
-     whether to display the range histogram or not. Defaults to `true`.
+    whether to display the range histogram or not. Defaults to `true`.
 -   **interval** `Number` [optional]
-     set the histogram bar interval, applicable when _showHistogram_ is `true`. Defaults to `Math.ceil((props.range.end - props.range.start) / 100) || 1`.
+    set the histogram bar interval, applicable when _showHistogram_ is `true`. Defaults to `Math.ceil((props.range.end - props.range.start) / 100) || 1`.
 -   **loader** `String or JSX` [optional]
-     to display an optional loader while fetching the histogram stats.
+    to display an optional loader while fetching the histogram stats.
 -   **URLParams** `Boolean` [optional]
-     enable creating a URL query string parameter based on the selected range of the slider. This is useful for sharing URLs with the component state. Defaults to `false`.
+    enable creating a URL query string parameter based on the selected range of the slider. This is useful for sharing URLs with the component state. Defaults to `false`.
 
 ## Demo
 
@@ -174,22 +174,22 @@ Read more about it [here](/theming/class.html).
 ```
 
 -   **className** `String`
-     CSS class to be injected on the component container.
+    CSS class to be injected on the component container.
 -   **style** `Object`
-     CSS styles to be applied to the **DynamicRangeSlider** component.
+    CSS styles to be applied to the **DynamicRangeSlider** component.
 -   **customQuery** `Function`
-     takes **value** and **props** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
+    takes **value** and **props** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
     `Note:` customQuery is called on value changes in the **DynamicRangeSlider** component as long as the component is a part of `react` dependency of at least one other component.
 -   **beforeValueChange** `Function`
-     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
+    is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 -   **onValueChange** `Function`
-     is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a user selects a particular range in a DynamicRangeSlider.
+    is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a user selects a particular range in a DynamicRangeSlider.
 -   **onQueryChange** `Function`
-     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
+    is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **react** `Object`
-     specify dependent components to reactively update **DynamicRangeSlider's** data view.
+    specify dependent components to reactively update **DynamicRangeSlider's** data view.
     -   **key** `String`
-         one of `and`, `or`, `not` defines the combining clause.
+        one of `and`, `or`, `not` defines the combining clause.
         -   **and** clause implies that the results will be filtered by matches from **all** of the associated component states.
         -   **or** clause implies that the results will be filtered by matches from **at least one** of the associated component states.
         -   **not** clause implies that the results will be filtered by an **inverse** match of the associated component states.

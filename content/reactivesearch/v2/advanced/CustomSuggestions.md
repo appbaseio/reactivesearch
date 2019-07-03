@@ -1,10 +1,10 @@
 ---
 title: 'Custom Suggestions'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'Custom Suggestions'
+meta_description: 'Recipe for rendering custom suggestions with `DataSearch` and `CategorySearch` components using the `renderSuggestions` prop.'
 keywords:
     - reactivesearch
-    - importing
+    - customsuggestions
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

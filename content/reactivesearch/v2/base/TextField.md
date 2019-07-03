@@ -1,10 +1,10 @@
 ---
 title: 'TextField'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'TextField'
+meta_description: '`TextField` creates a simple text input field component that is optionally data connected.'
 keywords:
     - reactivesearch
-    - importing
+    - textfield
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

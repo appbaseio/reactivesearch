@@ -1,10 +1,10 @@
 ---
 title: 'SingleDataList'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'SingleDataList'
+meta_description: '`SingleDataList` creates a radio select list UI component.'
 keywords:
     - reactivesearch
-    - importing
+    - singledatalist
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

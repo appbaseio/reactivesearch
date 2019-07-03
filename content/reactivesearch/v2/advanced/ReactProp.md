@@ -1,10 +1,10 @@
 ---
 title: 'React Prop'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'React Prop'
+meta_description: 'This allows almost all ReactiveSearch components to watch each other and update their data reactively.'
 keywords:
     - reactivesearch
-    - importing
+    - reactprop
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

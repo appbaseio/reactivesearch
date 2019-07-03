@@ -1,10 +1,10 @@
 ---
 title: 'ResultList'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'ResultList'
+meta_description: '`ResultList` creates a result list UI component to display results in a list layout, suited for data that needs a compact display.'
 keywords:
     - reactivesearch
-    - importing
+    - resultlist
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

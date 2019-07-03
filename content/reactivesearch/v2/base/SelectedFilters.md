@@ -1,10 +1,10 @@
 ---
 title: 'SelectedFilters'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'SelectedFilters'
+meta_description: '`SelectedFilters` creates a selectable filter UI view displaying the current selected values from other components.'
 keywords:
     - reactivesearch
-    - importing
+    - selectedfilters
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

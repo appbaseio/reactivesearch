@@ -1,10 +1,10 @@
 ---
 title: 'Server Side Rendering'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'Server Side Rendering'
+meta_description: 'Server Side Rendering enables us to pre-render the results on the server enabling better SEO for the app, and faster delivery of relevant results on an initial render to the users.'
 keywords:
     - reactivesearch
-    - importing
+    - ssr
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

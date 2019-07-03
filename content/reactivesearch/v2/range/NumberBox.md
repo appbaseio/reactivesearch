@@ -1,10 +1,10 @@
 ---
 title: 'NumberBox'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'NumberBox'
+meta_description: '`NumberBox` creates a box (or button) based numeric UI component.'
 keywords:
     - reactivesearch
-    - importing
+    - numberbox
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

@@ -1,10 +1,10 @@
 ---
 title: 'ToggleButton'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'ToggleButton'
+meta_description: '`ToggleButton` creates a toggle button UI component that is connected to a database field.'
 keywords:
     - reactivesearch
-    - importing
+    - togglebutton
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

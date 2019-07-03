@@ -1,10 +1,10 @@
 ---
 title: 'TagCloud'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'TagCloud'
+meta_description: '`TagCloud` creates a tag cloud UI component, also known as word cloud or weighted list in visual design.'
 keywords:
     - reactivesearch
-    - importing
+    - tagcloud
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

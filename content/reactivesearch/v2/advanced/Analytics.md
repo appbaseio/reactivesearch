@@ -1,10 +1,10 @@
 ---
 title: 'Analytics'
 meta_title: 'Search and Analytics Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_description: 'Search analytics work out of the box with `analytics` prop in `ReactiveBase`.'
 keywords:
     - reactivesearch
-    - importing
+    - analytics
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

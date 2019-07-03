@@ -1,10 +1,10 @@
 ---
 title: 'DatePicker'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'DatePicker'
+meta_description: '`DatePicker` creates a calender view based UI component that is connected to a database date field.'
 keywords:
     - reactivesearch
-    - importing
+    - datepicker
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

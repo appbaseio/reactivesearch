@@ -1,10 +1,10 @@
 ---
 title: 'SingleRange'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'SingleRange'
+meta_description: '`SingleRange` creates a numeric range selector UI component that is connected to a database field.'
 keywords:
     - reactivesearch
-    - importing
+    - singlerange
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

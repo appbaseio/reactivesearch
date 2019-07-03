@@ -1,10 +1,10 @@
 ---
 title: 'ReactiveMap'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'ReactiveMap'
+meta_description: '`ReactiveMap` creates a data-driven map UI component.'
 keywords:
     - reactivesearch
-    - importing
+    - reactivemap
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

@@ -1,10 +1,10 @@
 ---
 title: 'Custom Queries'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'Custom Queries'
+meta_description: 'Customize query using Custom Queries.'
 keywords:
     - reactivesearch
-    - importing
+    - customqueries
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'

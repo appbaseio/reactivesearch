@@ -1,10 +1,10 @@
 ---
 title: 'MultiRange'
-meta_title: 'Importing Data'
-meta_description: 'Bring your data from JSON or CSV files into appbase.io via the Import GUI.'
+meta_title: 'MultiRange'
+meta_description: '`MultiRange` creates a multiple checkbox based numeric range UI component.'
 keywords:
     - reactivesearch
-    - importing
+    - multirange
     - appbase
     - elasticsearch
 sidebar: 'web-v2-reactivesearch'
