@@ -1,0 +1,71 @@
+- groups:
+      - group: Getting Started
+        items:
+            - title: QuickStart
+              link: /reactivesearch/vue/overview/QuickStart/
+            - title: Importing Data
+              link: /reactivesearch/vue/overview/Importing/
+            - title: ReactiveBase
+              link: /reactivesearch/vue/overview/ReactiveBase/
+            - title: Components Overview
+              link: /reactivesearch/vue/overview/Components/
+      - group: Base Components
+        items:
+            - title: SelectedFilters
+              link: /reactivesearch/vue/base/SelectedFilters/
+      - group: List Components
+        items:
+            - title: SingleList
+              link: /reactivesearch/vue/list/SingleList/
+            - title: MultiList
+              link: /reactivesearch/vue/list/MultiList/
+            - title: SingleDropdownList
+              link: /reactivesearch/vue/list/SingleDropdownList/
+            - title: MultiDropdownList
+              link: /reactivesearch/vue/list/MultiDropdownList/
+            - title: ToggleButton
+              link: /reactivesearch/vue/list/ToggleButton/
+      - group: Range Components
+        items:
+            - title: SingleRange
+              link: /reactivesearch/vue/range/SingleRange/
+            - title: MultiRange
+              link: /reactivesearch/vue/range/MultiRange/
+            - title: RangeSlider
+              link: /reactivesearch/vue/range/RangeSlider/
+            - title: DynamicRangeSlider
+              link: /reactivesearch/vue/range/DynamicRangeSlider/
+      - group: Search Components
+        items:
+            - title: DataSearch
+              link: /reactivesearch/vue/search/DataSearch/
+      - group: Result Components
+        items:
+            - title: ReactiveList
+              link: /reactivesearch/vue/result/ReactiveList/
+            - title: ResultList
+              link: /reactivesearch/vue/result/ResultList/
+            - title: ResultCard
+              link: /reactivesearch/vue/result/ResultCard/
+      - group: Theming
+        items:
+            - title: Customizing Style
+              link: /reactivesearch/vue/theming/Style/
+            - title: Classname Injection
+              link: /reactivesearch/vue/theming/ClassnameInjection/
+      - group: Advanced
+        items:
+            - title: Custom Queries
+              link: /reactivesearch/vue/advanced/CustomQueries/
+            - title: React Prop
+              link: /reactivesearch/vue/advanced/ReactProp/
+            - title: Reactive Component
+              link: /reactivesearch/vue/advanced/ReactiveComponent/
+            - title: Server Side Rendering
+              link: /reactivesearch/vue/advanced/SSR/
+            - title: Advanced Guides
+              link: /reactivesearch/vue/advanced/Guides/
+            - title: Search and Click Analytics
+              link: /reactivesearch/vue/advanced/Analytics/
+            - title: Writing and Editing Data
+              link: /reactivesearch/vue/advanced/Data/

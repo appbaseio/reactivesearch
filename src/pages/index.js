@@ -138,7 +138,7 @@ const HomePage = ({ data, location }) => {
 								React
 							</Box>
 							<Box
-								to="/integrations/disqus/"
+								to="/reactivesearch/vue/overview/QuickStart/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
