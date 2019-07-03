@@ -151,7 +151,7 @@ const HomePage = ({ data, location }) => {
 								Vue
 							</Box>
 							<Box
-								to="/integrations/slack/"
+								to="/reactivesearch/native/overview/QuickStart/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"

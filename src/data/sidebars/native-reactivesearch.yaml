@@ -1,0 +1,49 @@
+- groups:
+      - group: Getting Started
+        items:
+            - title: ReactiveSearch Native QuickStart
+              link: /reactivesearch/native/overview/QuickStart/
+            - title: Importing Data
+              link: /reactivesearch/native/overview/Importing/
+            - title: ReactiveBase
+              link: /reactivesearch/native/overview/ReactiveBase/
+            - title: ReactiveMaps Native
+              link: /reactivesearch/native/overview/ReactiveMaps/
+            - title: Components Overview
+              link: /reactivesearch/native/overview/Components/
+      - group: Components
+        items:
+            - title: SelectedFilters
+              link: /reactivesearch/native/components/SelectedFilters/
+            - title: TextField
+              link: /reactivesearch/native/components/TextField/
+            - title: SingleDropdownList
+              link: /reactivesearch/native/components/SingleDropdownList/
+            - title: MultiDropdownList
+              link: /reactivesearch/native/components/MultiDropdownList/
+            - title: SingleDropdownRange
+              link: /reactivesearch/native/components/SingleDropdownRange/
+            - title: MultiDropdownRange
+              link: /reactivesearch/native/components/MultiDropdownRange/
+            - title: DatePicker
+              link: /reactivesearch/native/components/DatePicker/
+            - title: DateRange
+              link: /reactivesearch/native/components/DateRange/
+            - title: ReactiveList
+              link: /reactivesearch/native/components/ReactiveList/
+            - title: ReactiveMap
+              link: /reactivesearch/native/components/ReactiveMap/
+      - group: Advanced
+        items:
+            - title: Performance
+              link: /reactivesearch/native/advanced/Performance/
+            - title: innerProps
+              link: /reactivesearch/native/advanced/innerProps/
+            - title: Reactive Component
+              link: /reactivesearch/native/advanced/ReactiveComponent/
+            - title: Theming
+              link: /reactivesearch/native/advanced/Theming/
+            - title: Style
+              link: /reactivesearch/native/advanced/Style/
+            - title: Advanced Guides
+              link: /reactivesearch/native/advanced/Guides/
