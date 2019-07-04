@@ -175,6 +175,7 @@ class CategorySearch extends Component {
 				'dataField',
 				'categoryField',
 				'nestedField',
+				'searchOperators',
 			],
 			() => {
 				this.updateQuery(this.state.currentValue, this.props);
