@@ -231,12 +231,19 @@ class DataSearch extends Component {
 			} else {
 				fields = [props.dataField];
 			}
-			finalQuery = {
-				bool: {
-					should: DataSearch.shouldQuery(value, fields, props),
-					minimum_should_match: '1',
-				},
-			};
+
+			if (props.searchOperators) {
+				finalQuery = {
+					simple_query_string: DataSearch.shouldQuery(value, fields, props),
+				};
+			} else {
+				finalQuery = {
+					bool: {
+						should: DataSearch.shouldQuery(value, fields, props),
+						minimum_should_match: '1',
+					},
+				};
+			}
 		}
 
 		if (value === '') {
@@ -264,6 +271,14 @@ class DataSearch extends Component {
 						: ''
 				}`,
 		);
+
+		if (props.searchOperators) {
+			return {
+				query: value,
+				fields,
+				default_operator: props.queryFormat,
+			};
+		}
 
 		if (props.queryFormat === 'and') {
 			return [
@@ -908,6 +923,7 @@ DataSearch.propTypes = {
 	themePreset: types.themePreset,
 	URLParams: types.bool,
 	strictSelection: types.bool,
+	searchOperators: types.bool,
 };
 
 DataSearch.defaultProps = {
@@ -924,6 +940,7 @@ DataSearch.defaultProps = {
 	URLParams: false,
 	showClear: false,
 	strictSelection: false,
+	searchOperators: false,
 };
 
 const mapStateToProps = (state, props) => ({

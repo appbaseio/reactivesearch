@@ -288,12 +288,18 @@ class CategorySearch extends Component {
 			} else {
 				fields = [props.dataField];
 			}
-			finalQuery = {
-				bool: {
-					should: CategorySearch.shouldQuery(value, fields, props),
-					minimum_should_match: '1',
-				},
-			};
+			if (props.searchOperators) {
+				finalQuery = {
+					simple_query_string: CategorySearch.shouldQuery(value, fields, props),
+				};
+			} else {
+				finalQuery = {
+					bool: {
+						should: CategorySearch.shouldQuery(value, fields, props),
+						minimum_should_match: '1',
+					},
+				};
+			}
 
 			if (category && category !== '*') {
 				finalQuery = [
@@ -332,6 +338,14 @@ class CategorySearch extends Component {
 						: ''
 				}`,
 		);
+
+		if (props.searchOperators) {
+			return {
+				query: value,
+				fields,
+				default_operator: props.queryFormat,
+			};
+		}
 
 		if (props.queryFormat === 'and') {
 			return [
@@ -1056,6 +1070,7 @@ CategorySearch.propTypes = {
 	themePreset: types.themePreset,
 	URLParams: types.bool,
 	strictSelection: types.bool,
+	searchOperators: types.bool,
 };
 
 CategorySearch.defaultProps = {
@@ -1072,6 +1087,7 @@ CategorySearch.defaultProps = {
 	style: {},
 	URLParams: false,
 	strictSelection: false,
+	searchOperators: false,
 };
 
 const mapStateToProps = (state, props) => ({
