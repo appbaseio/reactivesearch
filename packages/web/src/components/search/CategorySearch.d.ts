@@ -58,6 +58,7 @@ export interface CategorySearchProps extends CommonProps {
 	clearIcon?: types.children;
 	showClear?: boolean;
 	strictSelection?: boolean;
+	showVoiceSearch?: boolean;
 }
 
 declare const CategorySearch: React.ComponentClass<CategorySearchProps>;
