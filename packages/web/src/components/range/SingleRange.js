@@ -190,20 +190,34 @@ class SingleRange extends Component {
 	};
 
 	render() {
+		const { title } = this.props;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+					<Title
+						id={title}
+						className={getClassName(this.props.innerClass, 'title') || null}
+					>
 						{this.props.title}
 					</Title>
 				)}
-				<UL className={getClassName(this.props.innerClass, 'list') || null}>
+				<UL
+					className={getClassName(this.props.innerClass, 'list') || null}
+					role="radiogroup"
+					aria-labelledby={title}
+				>
 					{this.props.data.map((item) => {
 						const selected
 							= !!this.state.currentValue
 							&& this.state.currentValue.label === item.label;
 						return (
-							<li key={item.label} className={`${selected ? 'active' : ''}`}>
+							<li
+								key={item.label}
+								role="radio"
+								aria-checked={selected}
+								tabIndex={selected ? '0' : '-1'}
+								className={`${selected ? 'active' : ''}`}
+							>
 								<Radio
 									className={getClassName(this.props.innerClass, 'radio')}
 									id={`${this.props.componentId}-${item.label}`}
