@@ -590,6 +590,7 @@ class ReactiveList extends Component {
 		const {
 			config,
 			analytics: { searchId },
+			headers,
 		} = this.props;
 		const { url, app, credentials } = config;
 		const searchState = getSearchState(this.context.store.getState(), true);
@@ -597,6 +598,7 @@ class ReactiveList extends Component {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
 				headers: {
+					...headers,
 					'Content-Type': 'application/json',
 					Authorization: `Basic ${btoa(credentials)}`,
 					'X-Search-Id': searchId,
@@ -777,6 +779,7 @@ ReactiveList.propTypes = {
 	analytics: types.props,
 	queryLog: types.props,
 	error: types.title,
+	headers: types.headers,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -849,6 +852,7 @@ const mapStateToProps = (state, props) => ({
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults,
+	headers: state.appbaseRef.headers,
 });
 
 const mapDispatchtoProps = dispatch => ({

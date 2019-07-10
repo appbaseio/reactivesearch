@@ -861,6 +861,7 @@ class CategorySearch extends Component {
 		const {
 			config,
 			analytics: { searchId },
+			headers,
 		} = this.props;
 		const { url, app, credentials } = config;
 		const searchState = getSearchState(this.context.store.getState(), true);
@@ -868,6 +869,7 @@ class CategorySearch extends Component {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
 				headers: {
+					...headers,
 					'Content-Type': 'application/json',
 					Authorization: `Basic ${btoa(credentials)}`,
 					'X-Search-Id': searchId,
@@ -1032,6 +1034,7 @@ CategorySearch.propTypes = {
 	isLoading: types.bool,
 	config: types.props,
 	analytics: types.props,
+	headers: types.headers,
 	// eslint-disable-next-line
 	error: types.any,
 	// component props
@@ -1129,6 +1132,7 @@ const mapStateToProps = (state, props) => ({
 	error: state.error[props.componentId],
 	analytics: state.analytics,
 	config: state.config,
+	headers: state.appbaseRef.headers,
 });
 
 const mapDispatchtoProps = dispatch => ({
