@@ -332,6 +332,7 @@ class SingleList extends Component {
 					className={getClassName(this.props.innerClass, 'input') || null}
 					onChange={this.handleInputChange}
 					value={this.state.searchTerm}
+					aria-labelledby={this.props.title}
 					placeholder={this.props.placeholder}
 					style={{
 						margin: '0 0 8px',
@@ -420,7 +421,10 @@ class SingleList extends Component {
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+					<Title
+						id={this.props.title}
+						className={getClassName(this.props.innerClass, 'title') || null}
+					>
 						{this.props.title}
 					</Title>
 				)}
@@ -428,13 +432,19 @@ class SingleList extends Component {
 				{this.hasCustomRenderer ? (
 					this.getComponent()
 				) : (
-					<UL className={getClassName(this.props.innerClass, 'list') || null}>
+					<UL
+						className={getClassName(this.props.innerClass, 'list') || null}
+						role="radiogroup"
+						aria-labelledby={this.props.title}
+					>
 						{selectAllLabel ? (
 							<li
 								key={selectAllLabel}
 								className={`${
 									this.state.currentValue === selectAllLabel ? 'active' : ''
 								}`}
+								role="radio"
+								aria-checked={this.state.currentValue === selectAllLabel}
 							>
 								<Radio
 									className={getClassName(this.props.innerClass, 'radio')}
@@ -458,7 +468,13 @@ class SingleList extends Component {
 							? this.listItems.map((item) => {
 								const isChecked = this.state.currentValue === String(item.key);
 								return (
-									<li key={item.key} className={`${isChecked ? 'active' : ''}`}>
+									<li
+										key={item.key}
+										className={`${isChecked ? 'active' : ''}`}
+										role="radio"
+										aria-checked={isChecked}
+										tabIndex={isChecked ? '0' : '-1'}
+									>
 										<Radio
 											className={getClassName(this.props.innerClass, 'radio')}
 											id={`${this.props.componentId}-${item.key}`}
