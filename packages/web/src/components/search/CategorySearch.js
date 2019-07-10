@@ -903,7 +903,7 @@ class CategorySearch extends Component {
 									innerRef={(c) => {
 										this._inputRef = c;
 									}}
-									aria-labelledBy={this.props.title}
+									aria-label={this.props.componentId}
 									showClear={this.props.showClear}
 									id={`${this.props.componentId}-input`}
 									showIcon={this.props.showIcon}
@@ -977,7 +977,7 @@ class CategorySearch extends Component {
 							innerRef={(c) => {
 								this._inputRef = c;
 							}}
-							aria-labelledBy={this.props.title}
+							aria-label={this.props.componentId}
 							className={getClassName(this.props.innerClass, 'input')}
 							placeholder={this.props.placeholder}
 							value={this.state.currentValue ? this.state.currentValue : ''}

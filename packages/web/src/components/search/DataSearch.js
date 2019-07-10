@@ -761,7 +761,7 @@ class DataSearch extends Component {
 						}) => (
 							<div className={suggestionsContainer}>
 								<Input
-									aria-labelledBy={this.props.title}
+									aria-label={this.props.componentId}
 									id={`${this.props.componentId}-input`}
 									showIcon={this.props.showIcon}
 									showClear={this.props.showClear}
@@ -831,7 +831,7 @@ class DataSearch extends Component {
 				) : (
 					<div className={suggestionsContainer}>
 						<Input
-							aria-labelledBy={this.props.title}
+							aria-label={this.props.componentId}
 							className={getClassName(this.props.innerClass, 'input') || null}
 							placeholder={this.props.placeholder}
 							value={this.state.currentValue ? this.state.currentValue : ''}
