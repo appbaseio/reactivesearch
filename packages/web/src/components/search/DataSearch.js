@@ -604,7 +604,14 @@ class DataSearch extends Component {
 				</InputIcon>
 			)}
 			{this.props.showVoiceSearch
-				&& <Mic iconPosition={this.props.iconPosition} onResult={this.handleVoiceResults} />}
+				&& (
+					<Mic
+						getInstance={this.props.getMicInstance}
+						render={this.props.renderMic}
+						iconPosition={this.props.iconPosition}
+						onResult={this.handleVoiceResults}
+						className={getClassName(this.props.innerClass, 'mic') || null}
+					/>)}
 			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
 				{this.renderIcon()}
 			</InputIcon>
@@ -941,6 +948,9 @@ DataSearch.propTypes = {
 	URLParams: types.bool,
 	strictSelection: types.bool,
 	searchOperators: types.bool,
+	// Mic props
+	getMicInstance: types.func,
+	renderMic: types.func,
 };
 
 DataSearch.defaultProps = {

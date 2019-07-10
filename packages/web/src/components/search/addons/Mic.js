@@ -1,10 +1,11 @@
 import React from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import MicImage from '../../../styles/MicImage';
+import { getComponent, hasCustomRenderer } from '../../../utils';
 
 const STATUS = {
 	initial: 'INITIAL',
-	started: 'STARTED',
+	stopped: 'STOPPED',
 	allowed: 'ALLOWED',
 	deined: 'DENIED',
 };
@@ -26,7 +27,7 @@ class Mic extends React.Component {
 			const { status } = this.state;
 			if (status === STATUS.initial) {
 				this.setState({
-					status: STATUS.started,
+					status: STATUS.stopped,
 				});
 			}
 			const {
@@ -103,19 +104,36 @@ class Mic extends React.Component {
 		const { status } = this.state;
 		switch (status) {
 			case STATUS.allowed:
-				return 'https://raw.githubusercontent.com/googlearchive/webplatform-samples/master/webspeechdemo/mic-animate.gif';
-			case STATUS.started:
+				return 'https://gist.githubusercontent.com/bietkul/20f702276adff150f3cc4502254665d2/raw/02a339636df69878b48608468f4f25333d3ef8c9/animation.gif';
+			case STATUS.stopped:
 			case STATUS.deined:
-				return 'https://raw.githubusercontent.com/googlearchive/webplatform-samples/master/webspeechdemo/mic-slash.gif';
+				return 'https://gist.githubusercontent.com/bietkul/20f702276adff150f3cc4502254665d2/raw/02a339636df69878b48608468f4f25333d3ef8c9/mute.gif';
 			default:
-				return 'https://raw.githubusercontent.com/googlearchive/webplatform-samples/master/webspeechdemo/mic.gif';
+				return 'https://gist.githubusercontent.com/bietkul/20f702276adff150f3cc4502254665d2/raw/02a339636df69878b48608468f4f25333d3ef8c9/mic.gif';
 		}
 	}
 
+	getComponent() {
+		const { status } = this.state;
+		const data = {
+			handleClick: this.handleClick,
+			status,
+		};
+		return getComponent(data, this.props);
+	}
+
+	get hasCustomRenderer() {
+		return hasCustomRenderer(this.props);
+	}
+
 	render() {
-		const { iconPosition } = this.props;
+		const { iconPosition, className } = this.props;
+		if (this.hasCustomRenderer) {
+			return this.getComponent();
+		}
 		return (
 			<MicImage
+				className={className}
 				iconPosition={iconPosition}
 				onClick={this.handleClick}
 				alt="voice search"
@@ -138,6 +156,8 @@ Mic.propTypes = {
 	onNoMatch: types.func,
 	onError: types.func,
 	getInstance: types.func,
+	render: types.func,
+	className: types.string,
 };
 
 export default Mic;
