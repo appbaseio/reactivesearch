@@ -248,6 +248,9 @@ class DatePicker extends Component {
 							numberOfMonths: this.props.numberOfMonths,
 							initialMonth: this.props.initialMonth,
 						}}
+						inputProps={{
+							'aria-label': `${this.props.componentId}-input`,
+						}}
 						key={this.state.key}
 						clickUnselectsDay={this.props.clickUnselectsDay}
 						onDayChange={this.handleDayPicker}
