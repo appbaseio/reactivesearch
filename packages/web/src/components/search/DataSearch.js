@@ -46,6 +46,7 @@ import {
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
+import Mic from './addons/Mic';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -564,6 +565,19 @@ class DataSearch extends Component {
 		}
 	};
 
+	handleVoiceResults = ({ results }) => {
+		if (results
+			&& results[0]
+			&& results[0].isFinal
+			&& results[0][0]
+			&& results[0][0].transcript
+			&& results[0][0].transcript.trim()
+		) {
+			this.isPending = false;
+			this.setValue(results[0][0].transcript.trim(), true);
+		}
+	}
+
 	renderIcon = () => {
 		if (this.props.showIcon) {
 			return this.props.icon || <SearchSvg />;
@@ -589,6 +603,8 @@ class DataSearch extends Component {
 					{this.renderCancelIcon()}
 				</InputIcon>
 			)}
+			{this.props.showVoiceSearch
+				&& <Mic iconPosition={this.props.iconPosition} onResult={this.handleVoiceResults} />}
 			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
 				{this.renderIcon()}
 			</InputIcon>
@@ -917,6 +933,7 @@ DataSearch.propTypes = {
 	showClear: types.bool,
 	showFilter: types.bool,
 	showIcon: types.bool,
+	showVoiceSearch: types.bool,
 	style: types.style,
 	title: types.title,
 	theme: types.style,
@@ -936,6 +953,7 @@ DataSearch.defaultProps = {
 	queryFormat: 'or',
 	showFilter: true,
 	showIcon: true,
+	showVoiceSearch: false,
 	style: {},
 	URLParams: false,
 	showClear: false,

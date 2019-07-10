@@ -35,6 +35,7 @@ import CancelSvg from '../shared/CancelSvg';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
+import Mic from './addons/Mic';
 import {
 	connect,
 	isFunction, getComponent, hasCustomRenderer, isIdentical, getValidPropsKeys,
@@ -657,6 +658,19 @@ class CategorySearch extends Component {
 		}
 	};
 
+	handleVoiceResults = ({ results }) => {
+		if (results
+			&& results[0]
+			&& results[0].isFinal
+			&& results[0][0]
+			&& results[0][0].transcript
+			&& results[0][0].transcript.trim()
+		) {
+			this.isPending = false;
+			this.setValue(results[0][0].transcript.trim(), true);
+		}
+	}
+
 	renderIcon = () => {
 		if (this.props.showIcon) {
 			return this.props.icon || <SearchSvg />;
@@ -682,6 +696,8 @@ class CategorySearch extends Component {
 					{this.renderCancelIcon()}
 				</InputIcon>
 			)}
+			{this.props.showVoiceSearch
+				&& <Mic iconPosition={this.props.iconPosition} onResult={this.handleVoiceResults} />}
 			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
 				{this.renderIcon()}
 			</InputIcon>
@@ -1064,6 +1080,7 @@ CategorySearch.propTypes = {
 	renderNoSuggestion: types.title,
 	showClear: types.bool,
 	showFilter: types.bool,
+	showVoiceSearch: types.bool,
 	showIcon: types.bool,
 	style: types.style,
 	title: types.title,
@@ -1089,6 +1106,7 @@ CategorySearch.defaultProps = {
 	URLParams: false,
 	strictSelection: false,
 	searchOperators: false,
+	showVoiceSearch: false,
 };
 
 const mapStateToProps = (state, props) => ({
