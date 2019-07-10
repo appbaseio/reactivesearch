@@ -741,7 +741,7 @@ class DataSearch extends Component {
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
-					<Title id={this.props.title} className={getClassName(this.props.innerClass, 'title') || null}>
+					<Title className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
 					</Title>
 				)}
