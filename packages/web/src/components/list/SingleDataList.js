@@ -287,6 +287,7 @@ class SingleDataList extends Component {
 					style={{
 						margin: '0 0 8px',
 					}}
+					aria-label={`${this.props.componentId}-search`}
 					themePreset={this.props.themePreset}
 				/>
 			);
@@ -354,19 +355,27 @@ class SingleDataList extends Component {
 				{this.hasCustomRenderer ? (
 					this.getComponent()
 				) : (
-					<UL className={getClassName(this.props.innerClass, 'list') || null}>
+					<UL
+						className={getClassName(this.props.innerClass, 'list') || null}
+						aria-label={`${this.props.componentId}-items`}
+						role="radiogroup"
+					>
 						{selectAllLabel && (
 							<li
 								key={selectAllLabel}
 								className={`${
 									this.state.currentValue === selectAllLabel ? 'active' : ''
 								}`}
+								role="radio"
+								aria-checked={this.state.currentValue === selectAllLabel}
 							>
 								<Radio
 									className={getClassName(this.props.innerClass, 'radio')}
 									id={`${this.props.componentId}-${selectAllLabel}`}
-									name={this.props.componentId}
 									value={selectAllLabel}
+									tabIndex={
+										this.state.currentValue === selectAllLabel ? '-1' : '0'
+									}
 									onChange={this.handleClick}
 									checked={this.state.currentValue === selectAllLabel}
 									show={this.props.showRadio}
@@ -386,11 +395,13 @@ class SingleDataList extends Component {
 									className={`${
 										this.state.currentValue === item.label ? 'active' : ''
 									}`}
+									role="radio"
+									aria-checked={this.state.currentValue === item.label}
 								>
 									<Radio
 										className={getClassName(this.props.innerClass, 'radio')}
 										id={`${this.props.componentId}-${item.label}`}
-										name={this.props.componentId}
+										tabIndex={this.state.currentValue === item.label ? '-1' : '0'}
 										value={item.label}
 										onClick={this.handleClick}
 										readOnly

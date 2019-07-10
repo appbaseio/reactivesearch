@@ -229,9 +229,7 @@ class MultiList extends Component {
 				let should = [
 					{
 						[type]: {
-							[props.dataField]: value.filter(
-								item => item !== props.missingLabel,
-							),
+							[props.dataField]: value.filter(item => item !== props.missingLabel),
 						},
 					},
 				];
@@ -442,6 +440,7 @@ class MultiList extends Component {
 					style={{
 						margin: '0 0 8px',
 					}}
+					aria-label={`${this.props.componentId}-search`}
 					themePreset={this.props.themePreset}
 				/>
 			);
@@ -536,13 +535,20 @@ class MultiList extends Component {
 				{this.hasCustomRenderer ? (
 					this.getComponent()
 				) : (
-					<UL className={getClassName(this.props.innerClass, 'list') || null}>
+					<UL
+						className={getClassName(this.props.innerClass, 'list') || null}
+						role="listbox"
+						aria-label={`${this.props.componentId}-items`}
+					>
 						{selectAllLabel ? (
 							<li
 								key={selectAllLabel}
 								className={`${
 									this.state.currentValue[selectAllLabel] ? 'active' : ''
 								}`}
+								role="option"
+								aria-checked={!!this.state.currentValue[selectAllLabel]}
+								aria-selected={!!this.state.currentValue[selectAllLabel]}
 							>
 								<Checkbox
 									className={
@@ -570,13 +576,16 @@ class MultiList extends Component {
 									className={`${
 										this.state.currentValue[item.key] ? 'active' : ''
 									}`}
+									role="option"
+									aria-checked={!!this.state.currentValue[item.key]}
+									aria-selected={!!this.state.currentValue[item.key]}
 								>
 									<Checkbox
 										className={
 											getClassName(this.props.innerClass, 'checkbox') || null
 										}
 										id={`${this.props.componentId}-${item.key}`}
-										name={this.props.componentId}
+										name={`${this.props.componentId}-${item.key}`}
 										value={item.key}
 										onChange={this.handleClick}
 										checked={!!this.state.currentValue[item.key]}

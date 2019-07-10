@@ -336,6 +336,7 @@ class SingleList extends Component {
 					style={{
 						margin: '0 0 8px',
 					}}
+					aria-label={`${this.props.componentId}-search`}
 					themePreset={this.props.themePreset}
 				/>
 			);
@@ -428,19 +429,27 @@ class SingleList extends Component {
 				{this.hasCustomRenderer ? (
 					this.getComponent()
 				) : (
-					<UL className={getClassName(this.props.innerClass, 'list') || null}>
+					<UL
+						className={getClassName(this.props.innerClass, 'list') || null}
+						role="radiogroup"
+						aria-label={`${this.props.componentId}-items`}
+					>
 						{selectAllLabel ? (
 							<li
 								key={selectAllLabel}
 								className={`${
 									this.state.currentValue === selectAllLabel ? 'active' : ''
 								}`}
+								role="radio"
+								aria-checked={this.state.currentValue === selectAllLabel}
 							>
 								<Radio
 									className={getClassName(this.props.innerClass, 'radio')}
 									id={`${this.props.componentId}-${selectAllLabel}`}
-									name={this.props.componentId}
 									value={selectAllLabel}
+									tabIndex={
+										this.state.currentValue === selectAllLabel ? '-1' : '0'
+									}
 									onClick={this.handleClick}
 									readOnly
 									checked={this.state.currentValue === selectAllLabel}
@@ -458,11 +467,11 @@ class SingleList extends Component {
 							? this.listItems.map((item) => {
 								const isChecked = this.state.currentValue === String(item.key);
 								return (
-									<li key={item.key} className={`${isChecked ? 'active' : ''}`}>
+									<li key={item.key} className={`${isChecked ? 'active' : ''}`} role="radio" aria-checked={isChecked}>
 										<Radio
 											className={getClassName(this.props.innerClass, 'radio')}
 											id={`${this.props.componentId}-${item.key}`}
-											name={this.props.componentId}
+											tabIndex={isChecked ? '-1' : '0'}
 											value={item.key}
 											readOnly
 											onClick={this.handleClick}
