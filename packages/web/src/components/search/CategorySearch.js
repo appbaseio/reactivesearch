@@ -880,7 +880,7 @@ class CategorySearch extends Component {
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+					<Title id={this.props.title} className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
 					</Title>
 				)}
@@ -903,6 +903,7 @@ class CategorySearch extends Component {
 									innerRef={(c) => {
 										this._inputRef = c;
 									}}
+									aria-labelledBy={this.props.title}
 									showClear={this.props.showClear}
 									id={`${this.props.componentId}-input`}
 									showIcon={this.props.showIcon}
@@ -976,6 +977,7 @@ class CategorySearch extends Component {
 							innerRef={(c) => {
 								this._inputRef = c;
 							}}
+							aria-labelledBy={this.props.title}
 							className={getClassName(this.props.innerClass, 'input')}
 							placeholder={this.props.placeholder}
 							value={this.state.currentValue ? this.state.currentValue : ''}

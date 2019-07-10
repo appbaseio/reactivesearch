@@ -741,7 +741,7 @@ class DataSearch extends Component {
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+					<Title id={this.props.title} className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
 					</Title>
 				)}
@@ -761,6 +761,7 @@ class DataSearch extends Component {
 						}) => (
 							<div className={suggestionsContainer}>
 								<Input
+									aria-labelledBy={this.props.title}
 									id={`${this.props.componentId}-input`}
 									showIcon={this.props.showIcon}
 									showClear={this.props.showClear}
@@ -830,6 +831,7 @@ class DataSearch extends Component {
 				) : (
 					<div className={suggestionsContainer}>
 						<Input
+							aria-labelledBy={this.props.title}
 							className={getClassName(this.props.innerClass, 'input') || null}
 							placeholder={this.props.placeholder}
 							value={this.state.currentValue ? this.state.currentValue : ''}
