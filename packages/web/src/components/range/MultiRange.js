@@ -240,16 +240,23 @@ class MultiRange extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				<UL className={getClassName(this.props.innerClass, 'list') || null}>
+				<UL
+					className={getClassName(this.props.innerClass, 'list') || null}
+					role="listbox"
+					aria-label={`${this.props.componentId}-items`}
+				>
 					{this.props.data.map(item => (
 						<li
 							key={item.label}
 							className={`${this.state.selectedValues[item.label] ? 'active' : ''}`}
+							role="option"
+							aria-checked={!!this.state.currentValue[item.label]}
+							aria-selected={!!this.state.currentValue[item.label]}
 						>
 							<Checkbox
 								className={getClassName(this.props.innerClass, 'checkbox') || null}
 								id={`${this.props.componentId}-${item.label}`}
-								name={this.props.componentId}
+								name={`${this.props.componentId}-${item.label}`}
 								value={item.label}
 								onChange={this.handleClick}
 								checked={!!this.state.selectedValues[item.label]}
