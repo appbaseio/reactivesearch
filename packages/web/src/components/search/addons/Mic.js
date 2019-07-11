@@ -7,7 +7,7 @@ const STATUS = {
 	initial: 'INITIAL',
 	stopped: 'STOPPED',
 	allowed: 'ALLOWED',
-	deined: 'DENIED',
+	denied: 'DENIED',
 };
 
 class Mic extends React.Component {
@@ -106,7 +106,7 @@ class Mic extends React.Component {
 			case STATUS.allowed:
 				return 'https://gist.githubusercontent.com/bietkul/20f702276adff150f3cc4502254665d2/raw/02a339636df69878b48608468f4f25333d3ef8c9/animation.gif';
 			case STATUS.stopped:
-			case STATUS.deined:
+			case STATUS.denied:
 				return 'https://gist.githubusercontent.com/bietkul/20f702276adff150f3cc4502254665d2/raw/02a339636df69878b48608468f4f25333d3ef8c9/mute.gif';
 			default:
 				return 'https://gist.githubusercontent.com/bietkul/20f702276adff150f3cc4502254665d2/raw/02a339636df69878b48608468f4f25333d3ef8c9/mic.gif';
