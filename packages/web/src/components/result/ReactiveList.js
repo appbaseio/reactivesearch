@@ -697,7 +697,7 @@ class ReactiveList extends Component {
 			innerClass: this.props.innerClass,
 			fragmentName: this.props.componentId,
 		};
-		const paginationElement = typeof renderPagination === 'function'
+		const paginationElement = renderPagination
 			? renderPagination(paginationProps)
 			: <Pagination {...paginationProps} />;
 
