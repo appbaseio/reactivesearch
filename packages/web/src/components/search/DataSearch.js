@@ -43,6 +43,7 @@ import {
 	ReactReduxContext,
 	withClickIds,
 	getValidPropsKeys,
+	handleCaretPosition,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -505,6 +506,8 @@ class DataSearch extends Component {
 			this.setValue(inputValue);
 		} else if (onChange) {
 			this.isPending = true;
+			// handle caret position in controlled components
+			handleCaretPosition(e);
 			onChange(inputValue, this.triggerQuery, e);
 		}
 	};

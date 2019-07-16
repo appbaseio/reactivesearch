@@ -41,6 +41,7 @@ import {
 	isFunction, getComponent, hasCustomRenderer, isIdentical, getValidPropsKeys,
 	ReactReduxContext,
 	withClickIds,
+	handleCaretPosition,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -585,6 +586,8 @@ class CategorySearch extends Component {
 				term: inputValue,
 				// category: null,
 			};
+			// handle caret position in controlled components
+			handleCaretPosition(e);
 			onChange(currentValue, () => this.triggerQuery(currentValue), e);
 		} else {
 			this.setValue(inputValue);
