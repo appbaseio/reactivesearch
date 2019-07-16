@@ -4,7 +4,7 @@ const right = css`
 	right: 35px;
 `;
 
-const MicImage = styled.img`
+const MicIcon = styled.div`
 	height: 40px;
 	position: absolute;
 	top: calc(50% - 20px);
@@ -18,4 +18,4 @@ const MicImage = styled.img`
 	}};
 `;
 
-export default MicImage;
+export default MicIcon;

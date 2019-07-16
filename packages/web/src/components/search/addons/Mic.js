@@ -1,12 +1,15 @@
 import React from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import MicImage from '../../../styles/MicImage';
+import MicIcon from '../../../styles/MicIcon';
 import { getComponent, hasCustomRenderer } from '../../../utils';
+import MicSvg from '../../shared/MicSvg';
+import MuteSvg from '../../shared/MuteSvg';
+import ListenSvg from '../../shared/ListenSvg';
 
 const STATUS = {
-	initial: 'INITIAL',
+	inactive: 'INACTIVE',
 	stopped: 'STOPPED',
-	allowed: 'ALLOWED',
+	active: 'ACTIVE',
 	denied: 'DENIED',
 };
 
@@ -14,7 +17,7 @@ class Mic extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			status: STATUS.initial,
+			status: STATUS.inactive,
 		};
 		window.SpeechRecognition
 			= window.webkitSpeechRecognition || window.SpeechRecognition || null;
@@ -25,9 +28,9 @@ class Mic extends React.Component {
 		this.results = [];
 		if (window.SpeechRecognition) {
 			const { status } = this.state;
-			if (status === STATUS.initial) {
+			if (status === STATUS.active) {
 				this.setState({
-					status: STATUS.stopped,
+					status: STATUS.inactive,
 				});
 			}
 			const {
@@ -37,7 +40,7 @@ class Mic extends React.Component {
 			if (this.instance) {
 				this.setState(
 					{
-						status: STATUS.initial,
+						status: STATUS.inactive,
 					},
 					() => {
 						this.instance.stop();
@@ -56,12 +59,12 @@ class Mic extends React.Component {
 			this.instance.start();
 			this.instance.onstart = () => {
 				this.setState({
-					status: STATUS.allowed,
+					status: STATUS.active,
 				});
 			};
 			this.instance.onresult = ({ results, timeStamp }) => {
 				this.setState({
-					status: STATUS.initial,
+					status: STATUS.inactive,
 				});
 				if (onResult) {
 					onResult({ results, timeStamp });
@@ -72,11 +75,11 @@ class Mic extends React.Component {
 			this.instance.onerror = (e) => {
 				if (e.error === 'no-speech' || e.error === 'audio-capture') {
 					this.setState({
-						status: STATUS.initial,
+						status: STATUS.inactive,
 					});
 				} else if (e.error === 'not-allowed') {
 					this.setState({
-						status: STATUS.deined,
+						status: STATUS.denied,
 					});
 				}
 				console.error(e);
@@ -88,28 +91,29 @@ class Mic extends React.Component {
 			/* Below Two methods run when Continuous is False */
 			this.instance.onspeechend = () => {
 				this.setState({
-					status: STATUS.initial,
+					status: STATUS.inactive,
 				});
 			};
 
 			this.instance.onaudioend = () => {
 				this.setState({
-					status: STATUS.initial,
+					status: STATUS.inactive,
 				});
 			};
 		}
 	};
 
-	get Image() {
+	get Icon() {
 		const { status } = this.state;
+		const { className } = this.props;
 		switch (status) {
-			case STATUS.allowed:
-				return 'https://gist.githubusercontent.com/bietkul/20f702276adff150f3cc4502254665d2/raw/02a339636df69878b48608468f4f25333d3ef8c9/animation.gif';
+			case STATUS.active:
+				return <ListenSvg className={className} onClick={this.handleClick} />;
 			case STATUS.stopped:
 			case STATUS.denied:
-				return 'https://gist.githubusercontent.com/bietkul/20f702276adff150f3cc4502254665d2/raw/02a339636df69878b48608468f4f25333d3ef8c9/mute.gif';
+				return <MuteSvg className={className} onClick={this.handleClick} />;
 			default:
-				return 'https://gist.githubusercontent.com/bietkul/20f702276adff150f3cc4502254665d2/raw/02a339636df69878b48608468f4f25333d3ef8c9/mic.gif';
+				return <MicSvg className={className} onClick={this.handleClick} />;
 		}
 	}
 
@@ -127,19 +131,11 @@ class Mic extends React.Component {
 	}
 
 	render() {
-		const { iconPosition, className } = this.props;
+		const { iconPosition } = this.props;
 		if (this.hasCustomRenderer) {
 			return this.getComponent();
 		}
-		return (
-			<MicImage
-				className={className}
-				iconPosition={iconPosition}
-				onClick={this.handleClick}
-				alt="voice search"
-				src={this.Image}
-			/>
-		);
+		return <MicIcon iconPosition={iconPosition}>{this.Icon}</MicIcon>;
 	}
 }
 
