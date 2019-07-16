@@ -1,19 +1,23 @@
 import React from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import MicImage from '../../../styles/MicImage';
+import MicIcon from '../../../styles/MicIcon';
+import { getComponent, hasCustomRenderer } from '../../../utils';
+import MicSvg from '../../shared/MicSvg';
+import MuteSvg from '../../shared/MuteSvg';
+import ListenSvg from '../../shared/ListenSvg';
 
 const STATUS = {
-	initial: 'INITIAL',
-	started: 'STARTED',
-	allowed: 'ALLOWED',
-	deined: 'DENIED',
+	inactive: 'INACTIVE',
+	stopped: 'STOPPED',
+	active: 'ACTIVE',
+	denied: 'DENIED',
 };
 
 class Mic extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			status: STATUS.initial,
+			status: STATUS.inactive,
 		};
 		window.SpeechRecognition
 			= window.webkitSpeechRecognition || window.SpeechRecognition || null;
@@ -24,9 +28,9 @@ class Mic extends React.Component {
 		this.results = [];
 		if (window.SpeechRecognition) {
 			const { status } = this.state;
-			if (status === STATUS.initial) {
+			if (status === STATUS.active) {
 				this.setState({
-					status: STATUS.started,
+					status: STATUS.inactive,
 				});
 			}
 			const {
@@ -36,7 +40,7 @@ class Mic extends React.Component {
 			if (this.instance) {
 				this.setState(
 					{
-						status: STATUS.initial,
+						status: STATUS.inactive,
 					},
 					() => {
 						this.instance.stop();
@@ -55,12 +59,12 @@ class Mic extends React.Component {
 			this.instance.start();
 			this.instance.onstart = () => {
 				this.setState({
-					status: STATUS.allowed,
+					status: STATUS.active,
 				});
 			};
 			this.instance.onresult = ({ results, timeStamp }) => {
 				this.setState({
-					status: STATUS.initial,
+					status: STATUS.inactive,
 				});
 				if (onResult) {
 					onResult({ results, timeStamp });
@@ -71,11 +75,11 @@ class Mic extends React.Component {
 			this.instance.onerror = (e) => {
 				if (e.error === 'no-speech' || e.error === 'audio-capture') {
 					this.setState({
-						status: STATUS.initial,
+						status: STATUS.inactive,
 					});
 				} else if (e.error === 'not-allowed') {
 					this.setState({
-						status: STATUS.deined,
+						status: STATUS.denied,
 					});
 				}
 				console.error(e);
@@ -87,41 +91,51 @@ class Mic extends React.Component {
 			/* Below Two methods run when Continuous is False */
 			this.instance.onspeechend = () => {
 				this.setState({
-					status: STATUS.initial,
+					status: STATUS.inactive,
 				});
 			};
 
 			this.instance.onaudioend = () => {
 				this.setState({
-					status: STATUS.initial,
+					status: STATUS.inactive,
 				});
 			};
 		}
 	};
 
-	get Image() {
+	get Icon() {
 		const { status } = this.state;
+		const { className } = this.props;
 		switch (status) {
-			case STATUS.allowed:
-				return 'https://raw.githubusercontent.com/googlearchive/webplatform-samples/master/webspeechdemo/mic-animate.gif';
-			case STATUS.started:
-			case STATUS.deined:
-				return 'https://raw.githubusercontent.com/googlearchive/webplatform-samples/master/webspeechdemo/mic-slash.gif';
+			case STATUS.active:
+				return <ListenSvg className={className} onClick={this.handleClick} />;
+			case STATUS.stopped:
+			case STATUS.denied:
+				return <MuteSvg className={className} onClick={this.handleClick} />;
 			default:
-				return 'https://raw.githubusercontent.com/googlearchive/webplatform-samples/master/webspeechdemo/mic.gif';
+				return <MicSvg className={className} onClick={this.handleClick} />;
 		}
+	}
+
+	getComponent() {
+		const { status } = this.state;
+		const data = {
+			handleClick: this.handleClick,
+			status,
+		};
+		return getComponent(data, this.props);
+	}
+
+	get hasCustomRenderer() {
+		return hasCustomRenderer(this.props);
 	}
 
 	render() {
 		const { iconPosition } = this.props;
-		return (
-			<MicImage
-				iconPosition={iconPosition}
-				onClick={this.handleClick}
-				alt="voice search"
-				src={this.Image}
-			/>
-		);
+		if (this.hasCustomRenderer) {
+			return this.getComponent();
+		}
+		return <MicIcon iconPosition={iconPosition}>{this.Icon}</MicIcon>;
 	}
 }
 
@@ -138,6 +152,8 @@ Mic.propTypes = {
 	onNoMatch: types.func,
 	onError: types.func,
 	getInstance: types.func,
+	render: types.func,
+	className: types.string,
 };
 
 export default Mic;

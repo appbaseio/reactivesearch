@@ -11,6 +11,8 @@ export interface DataSearchProps extends CommonProps {
 	customHighlight?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
 	defaultQuery?: (...args: any[]) => any;
+	getMicInstance?: (...args: any[]) => any;
+	renderMic?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;
 	debounce?: number;
 	defaultValue?: string;
