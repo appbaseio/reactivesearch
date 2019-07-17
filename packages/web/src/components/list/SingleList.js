@@ -418,6 +418,8 @@ class SingleList extends Component {
 			return null;
 		}
 
+		const isAllChecked = this.state.currentValue === selectAllLabel;
+
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -437,22 +439,18 @@ class SingleList extends Component {
 						{selectAllLabel ? (
 							<li
 								key={selectAllLabel}
-								className={`${
-									this.state.currentValue === selectAllLabel ? 'active' : ''
-								}`}
+								className={`${isAllChecked ? 'active' : ''}`}
 								role="radio"
-								aria-checked={this.state.currentValue === selectAllLabel}
+								aria-checked={isAllChecked}
 							>
 								<Radio
 									className={getClassName(this.props.innerClass, 'radio')}
 									id={`${this.props.componentId}-${selectAllLabel}`}
 									value={selectAllLabel}
-									tabIndex={
-										this.state.currentValue === selectAllLabel ? '-1' : '0'
-									}
+									tabIndex={isAllChecked ? '-1' : '0'}
 									onClick={this.handleClick}
 									readOnly
-									checked={this.state.currentValue === selectAllLabel}
+									checked={isAllChecked}
 									show={this.props.showRadio}
 								/>
 								<label
