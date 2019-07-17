@@ -245,31 +245,38 @@ class MultiRange extends Component {
 					role="listbox"
 					aria-label={`${this.props.componentId}-items`}
 				>
-					{this.props.data.map(item => (
-						<li
-							key={item.label}
-							className={`${this.state.selectedValues[item.label] ? 'active' : ''}`}
-							role="option"
-							aria-checked={!!this.state.currentValue[item.label]}
-							aria-selected={!!this.state.currentValue[item.label]}
-						>
-							<Checkbox
-								className={getClassName(this.props.innerClass, 'checkbox') || null}
-								id={`${this.props.componentId}-${item.label}`}
-								name={`${this.props.componentId}-${item.label}`}
-								value={item.label}
-								onChange={this.handleClick}
-								checked={!!this.state.selectedValues[item.label]}
-								show={this.props.showCheckbox}
-							/>
-							<label
-								className={getClassName(this.props.innerClass, 'label') || null}
-								htmlFor={`${this.props.componentId}-${item.label}`}
+					{this.props.data.map((item) => {
+						const isChecked = !!this.state.selectedValues[item.label];
+						return (
+							<li
+								key={item.label}
+								className={`${
+									this.state.selectedValues[item.label] ? 'active' : ''
+								}`}
+								role="option"
+								aria-checked={isChecked}
+								aria-selected={isChecked}
 							>
-								<span>{item.label}</span>
-							</label>
-						</li>
-					))}
+								<Checkbox
+									className={
+										getClassName(this.props.innerClass, 'checkbox') || null
+									}
+									id={`${this.props.componentId}-${item.label}`}
+									name={`${this.props.componentId}-${item.label}`}
+									value={item.label}
+									onChange={this.handleClick}
+									checked={isChecked}
+									show={this.props.showCheckbox}
+								/>
+								<label
+									className={getClassName(this.props.innerClass, 'label') || null}
+									htmlFor={`${this.props.componentId}-${item.label}`}
+								>
+									<span>{item.label}</span>
+								</label>
+							</li>
+						);
+					})}
 				</UL>
 			</Container>
 		);
