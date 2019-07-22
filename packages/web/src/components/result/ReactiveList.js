@@ -66,7 +66,6 @@ class ReactiveList extends Component {
 		this.state = {
 			from: this.initialFrom,
 			currentPage,
-			size: props.size,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.sortOptionIndex = this.props.defaultSortOption
@@ -158,7 +157,7 @@ class ReactiveList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const totalPages = Math.ceil(this.props.total / this.state.size) || 0;
+		const totalPages = Math.ceil(this.props.total / this.props.size) || 0;
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
 			this.props.updateComponentProps(this.props.componentId, this.props);
 		});
@@ -359,8 +358,8 @@ class ReactiveList extends Component {
 	}
 	// Calculate results
 	getAllData = () => {
-		const { promotedResults } = this.props;
-		const { currentPage, size } = this.state;
+		const { size, promotedResults } = this.props;
+		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
 		let filteredResults = results;
@@ -389,8 +388,8 @@ class ReactiveList extends Component {
 		};
 	};
 	get stats() {
-		const { total, time } = this.props;
-		const { currentPage, size } = this.state;
+		const { total, size, time } = this.props;
+		const { currentPage } = this.state;
 		const { filteredResults } = this.getAllData();
 		return {
 			numberOfResults: total,
@@ -466,7 +465,7 @@ class ReactiveList extends Component {
 
 	loadMore = () => {
 		if (this.props.hits && this.props.total !== this.props.hits.length) {
-			const value = this.state.from + this.state.size;
+			const value = this.state.from + this.props.size;
 			const options = getQueryOptions(this.props);
 
 			this.setState({
@@ -483,29 +482,6 @@ class ReactiveList extends Component {
 		}
 	};
 
-	setSize = (size) => {
-		const from = this.state.currentPage * size;
-		const options = getQueryOptions(this.props);
-		options.size = size;
-		options.from = from;
-		this.setState(
-			{
-				from,
-				size,
-			},
-			() => {
-				this.props.loadMore(
-					this.props.componentId,
-					{
-						...options,
-						from,
-					},
-					false,
-				);
-			},
-		);
-	}
-
 	setPage = (page) => {
 		// onPageClick will be called everytime a pagination button is clicked
 		if (page !== this.state.currentPage) {
@@ -513,7 +489,7 @@ class ReactiveList extends Component {
 			if (onPageClick) {
 				onPageClick(page + 1);
 			}
-			const value = this.state.size * page;
+			const value = this.props.size * page;
 			const options = getQueryOptions(this.props);
 			options.from = this.state.from;
 			this.setState(
@@ -683,10 +659,11 @@ class ReactiveList extends Component {
 	render() {
 		const {
 			renderItem,
-			renderPagination,
+			size,
 			error,
+			renderPagination,
 		} = this.props;
-		const { currentPage, size } = this.state;
+		const { currentPage } = this.state;
 		const { filteredResults } = this.getAllData();
 		const paginationProps = {
 			pages: this.props.pages,
