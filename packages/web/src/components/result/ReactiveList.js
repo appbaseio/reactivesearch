@@ -681,7 +681,6 @@ class ReactiveList extends Component {
 			totalPages: Math.ceil(this.props.total / size),
 			currentPage: this.state.currentPage,
 			setPage: this.setPage,
-			setSize: this.setSize,
 			innerClass: this.props.innerClass,
 			fragmentName: this.props.componentId,
 		};
