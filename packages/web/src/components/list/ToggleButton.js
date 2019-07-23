@@ -18,6 +18,7 @@ import {
 	checkSomePropChange,
 	getClassName,
 	getOptionsFromQuery,
+	handleA11yAction,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -269,7 +270,9 @@ class ToggleButton extends Component {
 								isSelected ? 'active' : ''
 							}`}
 							onClick={() => this.handleClick(item)}
+							onKeyPress={e => handleA11yAction(e, () => this.handleClick(item))}
 							key={item.value}
+							tabIndex="0"
 							primary={isSelected}
 							large
 						>

@@ -424,6 +424,9 @@ class DateRange extends Component {
 								selectedDays,
 								modifiers,
 							}}
+							inputProps={{
+								'aria-label': `${this.props.componentId}-start-input`,
+							}}
 							onDayChange={this.handleStartDate}
 							classNames={{
 								container:
@@ -475,6 +478,9 @@ class DateRange extends Component {
 								},
 								selectedDays,
 								modifiers,
+							}}
+							inputProps={{
+								'aria-label': `${this.props.componentId}-end-input`,
 							}}
 							onDayChange={this.handleEndDate}
 							classNames={{

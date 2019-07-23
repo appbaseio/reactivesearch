@@ -35,11 +35,13 @@ import CancelSvg from '../shared/CancelSvg';
 import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
+import Mic from './addons/Mic';
 import {
 	connect,
 	isFunction, getComponent, hasCustomRenderer, isIdentical, getValidPropsKeys,
 	ReactReduxContext,
 	withClickIds,
+	handleCaretPosition,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -72,6 +74,11 @@ class CategorySearch extends Component {
 			suggestions: [],
 			isOpen: false,
 		};
+		/**
+		 * To regulate the query execution based on the input handler,
+		 * the component query will only get executed when it sets to `true`.
+		 * */
+		this.isPending = false;
 
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
@@ -104,8 +111,12 @@ class CategorySearch extends Component {
 		const cause = null;
 
 		if (currentValue) {
+			const calcValue = {
+				term: currentValue,
+				category: currentCategory,
+			};
 			if (props.onChange) {
-				props.onChange(currentValue);
+				props.onChange(calcValue, () => this.triggerQuery(calcValue));
 			}
 			this.setValue(currentValue, true, props, currentCategory, cause, hasMounted);
 		}
@@ -166,6 +177,7 @@ class CategorySearch extends Component {
 				'dataField',
 				'categoryField',
 				'nestedField',
+				'searchOperators',
 			],
 			() => {
 				this.updateQuery(this.state.currentValue, this.props);
@@ -192,16 +204,18 @@ class CategorySearch extends Component {
 					this.props.selectedCategory,
 				);
 			} else if (onChange) {
-				// value prop exists
-				onChange({
+				const currentValue = {
 					term: this.props.selectedValue || '',
 					category: this.props.selectedCategory || null,
-				});
+				};
+				// value prop exists
+				onChange(currentValue, () => this.triggerQuery(currentValue));
 			} else {
 				// value prop exists and onChange is not defined:
 				// we need to put the current value back into the store
 				// if the clear action was triggered by interacting with
 				// selected-filters component
+				this.isPending = false;
 				this.setValue(
 					this.state.currentValue,
 					true,
@@ -277,12 +291,18 @@ class CategorySearch extends Component {
 			} else {
 				fields = [props.dataField];
 			}
-			finalQuery = {
-				bool: {
-					should: CategorySearch.shouldQuery(value, fields, props),
-					minimum_should_match: '1',
-				},
-			};
+			if (props.searchOperators) {
+				finalQuery = {
+					simple_query_string: CategorySearch.shouldQuery(value, fields, props),
+				};
+			} else {
+				finalQuery = {
+					bool: {
+						should: CategorySearch.shouldQuery(value, fields, props),
+						minimum_should_match: '1',
+					},
+				};
+			}
 
 			if (category && category !== '*') {
 				finalQuery = [
@@ -297,9 +317,7 @@ class CategorySearch extends Component {
 		}
 
 		if (value === '') {
-			finalQuery = {
-				match_all: {},
-			};
+			finalQuery = null;
 		}
 
 		if (finalQuery && props.nestedField) {
@@ -323,6 +341,14 @@ class CategorySearch extends Component {
 						: ''
 				}`,
 		);
+
+		if (props.searchOperators) {
+			return {
+				query: value,
+				fields,
+				default_operator: props.queryFormat,
+			};
+		}
 
 		if (props.queryFormat === 'and') {
 			return [
@@ -495,16 +521,18 @@ class CategorySearch extends Component {
 			...this.queryOptions,
 			...customQueryOptions,
 		});
-		props.updateQuery({
-			componentId: props.componentId,
-			query,
-			value,
-			label: filterLabel,
-			showFilter,
-			URLParams,
-			componentType: componentTypes.categorySearch,
-			category,
-		});
+		if (!this.isPending) {
+			props.updateQuery({
+				componentId: props.componentId,
+				query,
+				value,
+				label: filterLabel,
+				showFilter,
+				URLParams,
+				componentType: componentTypes.categorySearch,
+				category,
+			});
+		}
 	};
 
 	handleFocus = (event) => {
@@ -517,19 +545,24 @@ class CategorySearch extends Component {
 	};
 
 	clearValue = () => {
+		this.isPending = false;
 		this.setValue('', true);
 		this.onValueSelected(null, causes.CLEAR_VALUE, null);
 	};
 
 	handleKeyDown = (event, highlightedIndex) => {
+		const { value, onChange } = this.props;
+		if (value !== undefined && onChange) {
+			this.isPending = true;
+		}
 		// if a suggestion was selected, delegate the handling to suggestion handler
 		if (event.key === 'Enter' && highlightedIndex === null) {
 			this.setValue(event.target.value, true);
-			const value = {
+			const currentValue = {
 				term: event.target.value,
 				category: null,
 			};
-			this.onValueSelected(value, causes.ENTER_PRESS);
+			this.onValueSelected(currentValue, causes.ENTER_PRESS);
 		}
 		if (this.props.onKeyDown) {
 			this.props.onKeyDown(event);
@@ -548,14 +581,24 @@ class CategorySearch extends Component {
 		if (value === undefined) {
 			this.setValue(inputValue);
 		} else if (onChange) {
-			onChange({
+			this.isPending = true;
+			const currentValue = {
 				term: inputValue,
 				// category: null,
-			});
+			};
+			// handle caret position in controlled components
+			handleCaretPosition(e);
+			onChange(currentValue, () => this.triggerQuery(currentValue), e);
 		} else {
 			this.setValue(inputValue);
 		}
 	};
+
+	triggerQuery = (value) => {
+		const { term: currentValue, category: currentCategory = null } = value;
+		this.isPending = false;
+		this.setValue(currentValue, true, this.props, currentCategory);
+	}
 
 	onSuggestionSelected = (suggestion) => {
 		const { value, onChange } = this.props;
@@ -575,7 +618,8 @@ class CategorySearch extends Component {
 				causes.SUGGESTION_SELECT,
 			);
 		} else if (onChange) {
-			onChange(currentValue);
+			this.isPending = false;
+			onChange(currentValue, () => this.triggerQuery(currentValue));
 		}
 		// Record analytics for selected suggestions
 		this.triggerClickAnalytics(suggestion._click_id);
@@ -612,9 +656,23 @@ class CategorySearch extends Component {
 	handleSearchIconClick = () => {
 		const { currentValue } = this.state;
 		if (currentValue.trim()) {
+			this.isPending = false;
 			this.setValue(currentValue, true);
 		}
 	};
+
+	handleVoiceResults = ({ results }) => {
+		if (results
+			&& results[0]
+			&& results[0].isFinal
+			&& results[0][0]
+			&& results[0][0].transcript
+			&& results[0][0].transcript.trim()
+		) {
+			this.isPending = false;
+			this.setValue(results[0][0].transcript.trim(), true);
+		}
+	}
 
 	renderIcon = () => {
 		if (this.props.showIcon) {
@@ -641,6 +699,15 @@ class CategorySearch extends Component {
 					{this.renderCancelIcon()}
 				</InputIcon>
 			)}
+			{this.props.showVoiceSearch
+				&& (
+					<Mic
+						getInstance={this.props.getMicInstance}
+						render={this.props.renderMic}
+						iconPosition={this.props.iconPosition}
+						onResult={this.handleVoiceResults}
+						className={getClassName(this.props.innerClass, 'mic') || null}
+					/>)}
 			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
 				{this.renderIcon()}
 			</InputIcon>
@@ -804,6 +871,7 @@ class CategorySearch extends Component {
 		const {
 			config,
 			analytics: { searchId },
+			headers,
 		} = this.props;
 		const { url, app, credentials } = config;
 		const searchState = getSearchState(this.context.store.getState(), true);
@@ -811,6 +879,7 @@ class CategorySearch extends Component {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
 				headers: {
+					...headers,
 					'Content-Type': 'application/json',
 					Authorization: `Basic ${btoa(credentials)}`,
 					'X-Search-Id': searchId,
@@ -824,6 +893,13 @@ class CategorySearch extends Component {
 			});
 		}
 	};
+
+	withTriggerQuery = (func) => {
+		if (func) {
+			return e => func(e, () => this.triggerQuery(this.props.value));
+		}
+		return undefined;
+	}
 
 	render() {
 		const { currentValue } = this.state;
@@ -855,6 +931,7 @@ class CategorySearch extends Component {
 									innerRef={(c) => {
 										this._inputRef = c;
 									}}
+									aria-label={this.props.componentId}
 									showClear={this.props.showClear}
 									id={`${this.props.componentId}-input`}
 									showIcon={this.props.showIcon}
@@ -867,11 +944,11 @@ class CategorySearch extends Component {
 												? ''
 												: this.state.currentValue,
 										onChange: this.onInputChange,
-										onBlur: this.props.onBlur,
+										onBlur: this.withTriggerQuery(this.props.onBlur),
 										onFocus: this.handleFocus,
-										onKeyPress: this.props.onKeyPress,
+										onKeyPress: this.withTriggerQuery(this.props.onKeyPress),
 										onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
-										onKeyUp: this.props.onKeyUp,
+										onKeyUp: this.withTriggerQuery(this.props.onKeyUp),
 									})}
 									themePreset={themePreset}
 								/>
@@ -928,15 +1005,16 @@ class CategorySearch extends Component {
 							innerRef={(c) => {
 								this._inputRef = c;
 							}}
+							aria-label={this.props.componentId}
 							className={getClassName(this.props.innerClass, 'input')}
 							placeholder={this.props.placeholder}
 							value={this.state.currentValue ? this.state.currentValue : ''}
 							onChange={this.onInputChange}
-							onBlur={this.props.onBlur}
-							onFocus={this.props.onFocus}
-							onKeyPress={this.props.onKeyPress}
-							onKeyDown={this.props.onKeyDown}
-							onKeyUp={this.props.onKeyUp}
+							onBlur={this.withTriggerQuery(this.props.onBlur)}
+							onFocus={this.withTriggerQuery(this.props.onFocus)}
+							onKeyPress={this.withTriggerQuery(this.props.onKeyPress)}
+							onKeyDown={this.withTriggerQuery(this.props.onKeyDown)}
+							onKeyUp={this.withTriggerQuery(this.props.onKeyUp)}
 							autoFocus={this.props.autoFocus}
 							iconPosition={this.props.iconPosition}
 							showClear={this.props.showClear}
@@ -968,6 +1046,7 @@ CategorySearch.propTypes = {
 	isLoading: types.bool,
 	config: types.props,
 	analytics: types.props,
+	headers: types.headers,
 	// eslint-disable-next-line
 	error: types.any,
 	// component props
@@ -1016,6 +1095,7 @@ CategorySearch.propTypes = {
 	renderNoSuggestion: types.title,
 	showClear: types.bool,
 	showFilter: types.bool,
+	showVoiceSearch: types.bool,
 	showIcon: types.bool,
 	style: types.style,
 	title: types.title,
@@ -1023,6 +1103,10 @@ CategorySearch.propTypes = {
 	themePreset: types.themePreset,
 	URLParams: types.bool,
 	strictSelection: types.bool,
+	searchOperators: types.bool,
+	// Mic props
+	getMicInstance: types.func,
+	renderMic: types.func,
 };
 
 CategorySearch.defaultProps = {
@@ -1039,6 +1123,8 @@ CategorySearch.defaultProps = {
 	style: {},
 	URLParams: false,
 	strictSelection: false,
+	searchOperators: false,
+	showVoiceSearch: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -1061,6 +1147,7 @@ const mapStateToProps = (state, props) => ({
 	error: state.error[props.componentId],
 	analytics: state.analytics,
 	config: state.config,
+	headers: state.appbaseRef.headers,
 });
 
 const mapDispatchtoProps = dispatch => ({

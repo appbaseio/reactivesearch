@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch-vue",
-	"version": "1.0.0-beta.15",
+	"version": "1.0.0-beta.17",
 	"private": false,
 	"main": "dist/@appbaseio/reactivesearch-vue.cjs.js",
 	"jsnext:main": "dist/@appbaseio/reactivesearch-vue.es.js",
@@ -33,16 +33,17 @@
 		"dist"
 	],
 	"dependencies": {
-		"@appbaseio/reactivecore": "^8.2.8",
+		"@appbaseio/reactivecore": "^8.2.9",
 		"appbase-js": "^4.0.2-beta.06",
 		"babel-helper-vue-jsx-merge-props": "^2.0.3",
 		"compute-scroll-into-view": "^1.0.11",
 		"emotion": "9.2.12",
 		"polished": "^2.2.0",
 		"redux": "^4.0.0",
-		"url-search-params": "^1.1.0",
+		"url-search-params-polyfill": "^7.0.0",
 		"vue": "^2.5.17",
 		"vue-emotion": "0.4.2",
+		"vue-highlight-words": "^1.2.0",
 		"vue-no-ssr": "^1.1.0",
 		"vue-slider-component": "^2.8.2",
 		"vue-types": "^1.3.3"

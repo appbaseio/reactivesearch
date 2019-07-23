@@ -8,6 +8,7 @@ import Downshift from '../basic/DownShift.jsx';
 import Container from '../../styles/Container';
 import types from '../../utils/vueTypes';
 import SuggestionWrapper from './addons/SuggestionWrapper.jsx';
+import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 
@@ -107,15 +108,16 @@ const DataSearch = {
 	beforeMount() {
 		this.addComponent(this.$props.componentId, 'DATASEARCH');
 		this.addComponent(this.internalComponent);
-
 		if (this.$props.highlight) {
 			const queryOptions = DataSearch.highlightQuery(this.$props) || {};
 			queryOptions.size = 20;
-			this.setQueryOptions(this.$props.componentId, queryOptions);
+			this.queryOptions = queryOptions;
+			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		} else {
-			this.setQueryOptions(this.$props.componentId, {
+			this.queryOptions = {
 				size: 20,
-			});
+			}
+			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		}
 
 		this.setReact(this.$props);
@@ -174,7 +176,8 @@ const DataSearch = {
 		updateQueryOptions() {
 			const queryOptions = DataSearch.highlightQuery(this.$props) || {};
 			queryOptions.size = 20;
-			this.setQueryOptions(this.$props.componentId, queryOptions);
+			this.queryOptions = queryOptions;
+			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		},
 		setReact(props) {
 			const { react } = this.$props;
@@ -258,12 +261,11 @@ const DataSearch = {
 					query = [queryTobeSet];
 				}
 				customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
+				this.setQueryOptions(componentId, {
+					...this.queryOptions,
+					...customQueryOptions,
+				});
 			}
-
-			this.setQueryOptions(componentId, {
-				...this.queryOptions,
-				...customQueryOptions,
-			});
 			this.updateQuery({
 				componentId,
 				query,
@@ -525,14 +527,10 @@ const DataSearch = {
 																),
 															}}
 														>
-															{typeof item.label === 'string' ? (
-																<div
-																	class="trim"
-																	domPropsInnerHTML={item.label}
-																/>
-															) : (
-																item.label
-															)}
+															<SuggestionItem
+																currentValue={this.currentValue}
+																suggestion={item}
+															/>
 														</li>
 													))}
 											</ul>
@@ -607,9 +605,7 @@ DataSearch.defaultQuery = (value, props) => {
 	}
 
 	if (value === '') {
-		finalQuery = {
-			match_all: {},
-		};
+		finalQuery = null;
 	}
 
 	if (finalQuery && props.nestedField) {
@@ -699,7 +695,7 @@ DataSearch.highlightQuery = props => {
 			pre_tags: ['<mark>'],
 			post_tags: ['</mark>'],
 			fields,
-			...props.highlightField && { require_field_match: false },
+			...(props.highlightField && { require_field_match: false }),
 		},
 	};
 };

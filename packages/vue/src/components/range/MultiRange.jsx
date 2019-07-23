@@ -54,7 +54,7 @@ const MultiRange = {
 		handleClick(e) {
 			this.selectItem(e.target.value);
 		},
-		selectItem(item, isDefaultValue = false, props = this.$props) {
+		selectItem(item, isDefaultValue = false, props = this.$props, reset = false) {
 			// ignore state updates when component is locked
 			if (props.beforeValueChange && this.locked) {
 				return;
@@ -67,9 +67,15 @@ const MultiRange = {
 				selectedValues = {};
 			} else if (isDefaultValue) {
 				currentValue = MultiRange.parseValue(item, props);
+				let values = {};
 				currentValue.forEach(value => {
-					selectedValues = { ...selectedValues, [value.label]: true };
+					values[[value.label]] = true;
 				});
+				if(reset) {
+					selectedValues = values;
+				} else {
+					selectedValues = { ...selectedValues, ...values };
+				}
 			} else if (selectedValues[item]) {
 				currentValue = currentValue.filter(value => value.label !== item);
 				const { [item]: del, ...selected } = selectedValues;
@@ -127,7 +133,7 @@ const MultiRange = {
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
 		},
 		defaultSelected(newVal) {
-			this.selectItem(newVal);
+			this.selectItem(newVal, true, undefined, true);
 		},
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {

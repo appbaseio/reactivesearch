@@ -248,7 +248,7 @@ class ReactiveList extends Component {
 				if (this.props.onPageChange) {
 					this.props.onPageChange(this.state.currentPage + 1, totalPages);
 				} else if (this.props.scrollOnChange && this.props.pagination) {
-					this.domNode.scrollTo(0, 0);
+					this.scrollToTop();
 				}
 			}
 
@@ -272,7 +272,7 @@ class ReactiveList extends Component {
 				) {
 					// query has changed
 					if (this.props.scrollOnChange) {
-						this.domNode.scrollTo(0, 0);
+						this.scrollToTop();
 					}
 					// eslint-disable-next-line
 					this.setState({
@@ -422,6 +422,15 @@ class ReactiveList extends Component {
 		}
 	};
 
+	scrollToTop = () => {
+		if (this.domNode === window) {
+			document.documentElement.scrollTop = 0;
+			document.body.scrollTop = 0;
+		} else {
+			this.domNode.scrollTop = 0;
+		}
+	};
+
 	// only used for SSR
 	static generateQueryOptions = (props) => {
 		// simulate default (includeFields and excludeFields) props to generate consistent query
@@ -432,8 +441,8 @@ class ReactiveList extends Component {
 		if (props.sortOptions) {
 			options.sort = [
 				{
-					[props.sortOptions[this.sortOptionIndex].dataField]: {
-						order: props.sortOptions[this.sortOptionIndex].sortBy,
+					[props.sortOptions[0].dataField]: {
+						order: props.sortOptions[0].sortBy,
 					},
 				},
 			];
@@ -581,6 +590,7 @@ class ReactiveList extends Component {
 		const {
 			config,
 			analytics: { searchId },
+			headers,
 		} = this.props;
 		const { url, app, credentials } = config;
 		const searchState = getSearchState(this.context.store.getState(), true);
@@ -588,6 +598,7 @@ class ReactiveList extends Component {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
 				headers: {
+					...headers,
 					'Content-Type': 'application/json',
 					Authorization: `Basic ${btoa(credentials)}`,
 					'X-Search-Id': searchId,
@@ -770,6 +781,7 @@ ReactiveList.propTypes = {
 	analytics: types.props,
 	queryLog: types.props,
 	error: types.title,
+	headers: types.headers,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -843,6 +855,7 @@ const mapStateToProps = (state, props) => ({
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults,
+	headers: state.appbaseRef.headers,
 });
 
 const mapDispatchtoProps = dispatch => ({
