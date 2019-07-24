@@ -524,7 +524,7 @@ class MultiList extends Component {
 
 		const listItems = this.listItems;
 
-		const isAllChecked = selectAllLabel ? !!this.state.currentValue[selectAllLabel] : null;
+		const isAllChecked = selectAllLabel ? !!this.state.currentValue[selectAllLabel] : false;
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
