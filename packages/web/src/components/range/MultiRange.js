@@ -251,7 +251,7 @@ class MultiRange extends Component {
 							<li
 								key={item.label}
 								className={`${
-									this.state.selectedValues[item.label] ? 'active' : ''
+									isChecked ? 'active' : ''
 								}`}
 								role="option"
 								aria-checked={isChecked}
