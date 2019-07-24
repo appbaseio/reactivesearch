@@ -6,6 +6,7 @@ export interface ReactiveBaseProps {
 	app: string;
 	children?: types.children;
 	credentials?: string;
+	as?: string;
 	headers?: types.headers;
 	queryParams?: string;
 	theme?: types.style;

@@ -14,7 +14,6 @@ import URLParamsProvider from './URLParamsProvider';
 import getTheme from '../../styles/theme';
 import { composeThemeObject, ReactReduxContext } from '../../utils';
 
-
 class ReactiveBase extends Component {
 	constructor(props) {
 		super(props);
@@ -122,6 +121,7 @@ class ReactiveBase extends Component {
 					<URLParamsProvider
 						headers={this.props.headers}
 						style={this.props.style}
+						as={this.props.as}
 						className={this.props.className}
 						getSearchParams={this.props.getSearchParams}
 						setSearchParams={this.props.setSearchParams}
@@ -141,11 +141,13 @@ ReactiveBase.defaultProps = {
 	analytics: false,
 	searchStateHeader: false,
 	graphQLUrl: '',
+	as: 'div',
 };
 
 ReactiveBase.propTypes = {
 	app: types.stringRequired,
 	searchStateHeader: types.bool,
+	as: types.string,
 	children: types.children,
 	credentials: types.string,
 	headers: types.headers,
