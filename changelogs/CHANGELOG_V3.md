@@ -4,6 +4,9 @@
 
 <details>
     <summary>The following changes have been included in the <code>next</code> branch and will be out in the next release. <b>Click to expand</b></summary>
+
+- Add support for custom pagination [#1026](https://github.com/appbaseio/reactivesearch/issues/1026)
+- Custom tag for ReactiveBase [[422d37ad]](https://github.com/appbaseio/reactivesearch/commit/422d37ad)
 </details>
 
 ## v3.0.0-rc.21
