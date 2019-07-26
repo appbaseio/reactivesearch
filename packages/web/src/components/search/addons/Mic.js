@@ -24,10 +24,24 @@ class Mic extends React.Component {
 		this.results = [];
 	}
 
+	stopMic = () => {
+		if (this.instance) {
+			this.setState(
+				{
+					status: STATUS.inactive,
+				},
+				() => {
+					this.instance.stop();
+					this.instance = null;
+				},
+			);
+		}
+	};
+
 	handleClick = () => {
 		this.results = [];
-		if (window.SpeechRecognition) {
-			const { status } = this.state;
+		const { status } = this.state;
+		if (window.SpeechRecognition && status !== STATUS.denied) {
 			if (status === STATUS.active) {
 				this.setState({
 					status: STATUS.inactive,
@@ -38,15 +52,7 @@ class Mic extends React.Component {
 			} = this.props;
 			const { SpeechRecognition } = window;
 			if (this.instance) {
-				this.setState(
-					{
-						status: STATUS.inactive,
-					},
-					() => {
-						this.instance.stop();
-						this.instance = null;
-					},
-				);
+				this.stopMic();
 				return;
 			}
 			this.instance = new SpeechRecognition();
@@ -63,9 +69,7 @@ class Mic extends React.Component {
 				});
 			};
 			this.instance.onresult = ({ results, timeStamp }) => {
-				this.setState({
-					status: STATUS.inactive,
-				});
+				this.stopMic();
 				if (onResult) {
 					onResult({ results, timeStamp });
 				}
