@@ -668,9 +668,26 @@ class ReactiveList extends Component {
 	}
 
 	render() {
-		const { renderItem, size, error } = this.props;
+		const {
+			renderItem,
+			size,
+			error,
+			renderPagination,
+		} = this.props;
 		const { currentPage } = this.state;
 		const { filteredResults } = this.getAllData();
+		const paginationProps = {
+			pages: this.props.pages,
+			totalPages: Math.ceil(this.props.total / size),
+			currentPage: this.state.currentPage,
+			setPage: this.setPage,
+			innerClass: this.props.innerClass,
+			fragmentName: this.props.componentId,
+		};
+		const paginationElement = renderPagination
+			? renderPagination(paginationProps)
+			: <Pagination {...paginationProps} />;
+
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.isLoading && this.props.pagination && this.props.loader}
@@ -687,16 +704,8 @@ class ReactiveList extends Component {
 					: null}
 				{this.props.pagination
 				&& (this.props.paginationAt === 'top' || this.props.paginationAt === 'both')
-					? (
-						<Pagination
-							pages={this.props.pages}
-							totalPages={Math.ceil(this.props.total / this.props.size)}
-							currentPage={this.state.currentPage}
-							setPage={this.setPage}
-							innerClass={this.props.innerClass}
-							fragmentName={this.props.componentId}
-						/>
-					) : null}
+					? paginationElement
+					: null}
 				{this.hasCustomRenderer ? (
 					this.getComponent()
 				) : (
@@ -729,16 +738,8 @@ class ReactiveList extends Component {
 					: null}
 				{this.props.pagination
 				&& (this.props.paginationAt === 'bottom' || this.props.paginationAt === 'both')
-					? (
-						<Pagination
-							pages={this.props.pages}
-							totalPages={Math.ceil(this.props.total / this.props.size)}
-							currentPage={this.state.currentPage}
-							setPage={this.setPage}
-							innerClass={this.props.innerClass}
-							fragmentName={this.props.componentId}
-						/>
-					) : null}
+					? paginationElement
+					: null}
 				{this.props.config.url.endsWith('appbase.io') && filteredResults.length ? (
 					<Flex
 						direction="row-reverse"
@@ -795,6 +796,7 @@ ReactiveList.propTypes = {
 	render: types.func,
 	renderItem: types.func,
 	renderError: types.title,
+	renderPagination: types.func,
 	onData: types.func,
 	renderNoResults: types.title,
 	onPageChange: types.func,

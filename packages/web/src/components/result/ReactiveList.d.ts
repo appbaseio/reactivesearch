@@ -16,6 +16,7 @@ declare namespace ReactiveListTree {
 		render?: (data: any) => any;
 		renderItem?: (data: any) => any;
 		renderResultStats?: (...args: any[]) => any;
+		renderPagination?: (data: any) => any;
 		renderError?: types.title;
 		onError?: (...args: any[]) => any;
 		onNoResults?: types.title;
