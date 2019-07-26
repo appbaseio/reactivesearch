@@ -735,7 +735,8 @@ class DataSearch extends Component {
 			headers,
 		} = this.props;
 		const { url, app, credentials } = config;
-		const searchState = getSearchState(this.context.store.getState(), true);
+		const searchState = this.context && this.context.store
+			? getSearchState(this.context.store.getState(), true) : null;
 		if (config.analytics && searchId) {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
@@ -747,7 +748,7 @@ class DataSearch extends Component {
 					'X-Search-Click': true,
 					'X-Search-ClickPosition': searchPosition + 1,
 					'X-Search-Conversion': true,
-					...(config.searchStateHeader && {
+					...(config.searchStateHeader && searchState && {
 						'X-Search-State': JSON.stringify(searchState),
 					}),
 				},
