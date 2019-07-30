@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { SearchModal } from '../common/search';
 import { NavBar } from '../common';
 import { Spirit } from '../../styles/spirit-styles';
 import HomeHeaderBox from './HomeHeaderBox';
@@ -9,20 +8,39 @@ import HomeHeaderBox from './HomeHeaderBox';
 // somewhere in it. You can optionally set the theme of the navbar to `dark` or `light`.
 const HomeHeader = () => (
 	<div className="gh-bg-home bb b--whitegrey">
-		<header className="top-0 left-0 right-0 z-9999">
-			<NavBar theme="light" />
+		<header className="top-0 left-0 right-0 bg-white fixed z-999">
+			<NavBar theme="dark" />
 		</header>
 		<div
 			className={`${
 				Spirit.page.xl
 			} pb5 pt10 pt15-ns pt20-l pb10-ns pb15-l flex flex-column items-center bt bn-ns b--white-10`}
 		>
-			<h1 className="ma0 pa0 f2 f1-ns f-headline-l white header-heading-shadow">
+			<h1 className="ma0 mt8 pt5 pa0 f2 f1-ns f-headline-l white header-heading-shadow">
 				Appbase Documentation
 			</h1>
-			<SearchModal isHome />
+			<section className="grid-12 gutter-row-20 gutter-36-ns mt10 mt20-ns mt25-l miw-100 miw-auto-ns home-main-box-margin-ns">
+				<HomeHeaderBox
+					to="/concepts/introduction/"
+					title="Core Concepts"
+					icon="blocks"
+					color="purple"
+				>
+					Learn about the basic fundamentals of organizing data with appbase.io.
+				</HomeHeaderBox>
 
-			<section className="grid-12 gutter-row-20 gutter-36-ns mt10 mt20-ns mt25-l miw-100 miw-auto-ns home-main-box-margin-ns z-999">
+				<HomeHeaderBox to="/api/" title="APIs" icon="rocket" color="blue">
+					Check out the API provided by Appbase.
+				</HomeHeaderBox>
+
+				<HomeHeaderBox
+					to="/examples/js"
+					title="Examples"
+					icon="typing"
+					color="tutorial-green"
+				>
+					Check the interactive examples for better understanding.
+				</HomeHeaderBox>
 				<HomeHeaderBox
 					to="/concepts/introduction/"
 					title="Core Concepts"

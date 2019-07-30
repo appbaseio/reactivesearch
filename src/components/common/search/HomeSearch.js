@@ -4,6 +4,7 @@ import * as JsSearch from 'js-search';
 import Autosuggest from 'react-autosuggest';
 import data from '../../../data/search.index.json';
 import { Spirit } from '../../../styles/spirit-styles';
+import Icon from '../Icon.js';
 
 const search = new JsSearch.Search('url');
 search.tokenizer = new JsSearch.StopWordsTokenizer(new JsSearch.SimpleTokenizer());
@@ -93,10 +94,10 @@ class AutoComplete extends React.Component {
 		const inputTheme = `input-reset form-text b--transparent search-modal-field-bg br-pill flex-auto whitney lh-normal pa2 pl8 plr3 w-100 dark-placeholder`;
 
 		const theme = {
-			input: inputTheme,
+			input: `${inputTheme} home-input`,
 			inputOpen: inputTheme,
 			inputFocused: inputTheme,
-			suggestionsContainerOpen: `pa11 pt3 pb3 mt10 bt b--whitegrey nl10 nr10 nb10 search-modal-result-container`,
+			suggestionsContainerOpen: `fixed home-search`,
 			suggestionsList: `list pa0 ma0 pt1 flex-auto`,
 			sectionContainer: `pb4 mb4`,
 			sectionTitle: `f8 lh-h4 fw5 midgrey w30 tr mt2 sticky top-2 pr2`,
@@ -104,6 +105,7 @@ class AutoComplete extends React.Component {
 
 		return (
 			<>
+				<Icon name="search" className=" w3 h-auto absolute top-3 right-3 left-3-l" />
 				<Autosuggest
 					suggestions={hits}
 					onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}

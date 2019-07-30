@@ -4,7 +4,9 @@ import { Link } from 'gatsby';
 
 import { Spirit } from '../../styles/spirit-styles';
 import Logo from './Logo';
-import { SearchModal } from './search';
+import DropdownLink from './DropdownLink';
+import Icon from './Icon';
+import Search from './search/HomeSearch';
 
 const NavBar = ({ theme }) => {
 	// Theme definitions
@@ -34,52 +36,301 @@ const NavBar = ({ theme }) => {
 		>
 			<div className="flex items-center pt3 pb3 nudge-bottom--2 w-sidebar-l pr8">
 				<Link to="/" className="nudge-top--3">
-					<Logo theme={`${themeClasses[theme].logoTheme}`} />
+					<Logo theme="light" />
 				</Link>
 			</div>
 			{/* navbar-container wrapper element and bottom padding is needed to hide the horizontal scrollbar on smaller screensizes */}
 			<div className="navbar-container">
 				<div className="dn flex-ns flex-auto items-center overflow-x-auto mr12 mr0-l ml5 ml0-l pb20">
-					<Link
-						to="/concepts/introduction/"
-						className={`${themeClasses[theme].menuItem} nowrap f8 pa3 mr1 mr3-l nl3`}
-					>
-						Concepts
-					</Link>
-					<Link
-						to="/javascript/quickstart"
-						className={`${themeClasses[theme].menuItem} nowrap f8 pa3 mr1 mr3-l`}
-					>
-						Javascript
-					</Link>
-					<Link
-						to="/rest/quickstart"
-						className={`${themeClasses[theme].menuItem} nowrap f8 pa3 mr1 mr3-l`}
-					>
-						REST
-					</Link>
-					<Link
-						to="/examples/js"
-						className={`${themeClasses[theme].menuItem} nowrap f8 pa3 mr1 mr3-l`}
-					>
-						Examples
-					</Link>
-					{/* <Link
-						to="/api/"
-						className={`${themeClasses[theme].menuItem} nowrap f8 pa3 mr1 mr3-l`}
-					>
-						API Reference
-					</Link> */}
-					{/* <Link
-						to="/faq/"
-						className={`${themeClasses[theme].menuItem} nowrap f8 pa3 mr1 mr3-l`}
-					>
-						FAQ
-					</Link> */}
+					<DropdownLink>
+						<DropdownLink.Item>
+							{value => (
+								<React.Fragment>
+									<span
+										className={`${
+											themeClasses[theme].menuItem
+										} nowrap f8 pa3 mr1 mr3-l nl3 ${
+											value.selectedKey === 'guides' ? 'fw6 darkgrey' : 'fw3'
+										}`}
+										onClick={() => {
+											value.selectedKey === 'guides' ||
+												value.handleKey('guides');
+										}}
+									>
+										Guides
+									</span>
+
+									{value.selectedKey === 'guides' ? (
+										<div className="dropdown-content">
+											<div
+												className={`${
+													Spirit.page.xl
+												} pt2 pb2 grid-dropdown grid-dropdown-4`}
+											>
+												<div>
+													<h2 className="f2 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey">
+														Guides
+													</h2>
+													<p className="f5 lh-h5 lh-h4-l fw4 ma0 pa0 mt0 mt2-ns middarkgrey mb2">
+														Discover how to integrate and adapt
+														Appbaseio's technology into popular
+														frameworks and platforms.
+													</p>
+												</div>
+												<div>
+													{/* <h2 className="f3 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns middarkgrey mb2">
+														Clients
+													</h2> */}
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="check"
+															className="dropdown-content-icon mr2"
+														/>
+														Getting Started
+													</Link>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="sync"
+															className="dropdown-content-icon mr2"
+														/>
+														Importing and Managing Data
+													</Link>
+												</div>
+												<div>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="search"
+															className="dropdown-content-icon mr2"
+														/>
+														Search Relevancy
+													</Link>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="lotus"
+															className="dropdown-content-icon mr2"
+														/>
+														Building UI
+													</Link>
+												</div>
+												<div>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="terminal"
+															className="dropdown-content-icon mr2"
+														/>
+														Actionable Analytics
+													</Link>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="shield"
+															className="dropdown-content-icon mr2"
+														/>
+														Security
+													</Link>
+												</div>
+											</div>
+										</div>
+									) : null}
+								</React.Fragment>
+							)}
+						</DropdownLink.Item>
+						<DropdownLink.Item>
+							{value => (
+								<React.Fragment>
+									<span
+										className={`${
+											themeClasses[theme].menuItem
+										} nowrap f8 pa3 mr1 mr3-l nl3 ${
+											value.selectedKey === 'api' ? 'fw6 darkgrey' : 'fw3'
+										}`}
+										onClick={() => {
+											value.selectedKey === 'api' || value.handleKey('api');
+										}}
+									>
+										API Reference
+									</span>
+
+									{value.selectedKey === 'api' ? (
+										<div className="dropdown-content">
+											<div
+												className={`${
+													Spirit.page.xl
+												} pt2 pb2 grid-dropdown grid-dropdown-4`}
+											>
+												<div>
+													<h2 className="f2 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey">
+														API Reference
+													</h2>
+													<p className="f5 lh-h5 lh-h4-l fw4 ma0 pa0 mt0 mt2-ns middarkgrey mb2">
+														Discover how to integrate and adapt
+														Appbaseio's technology into popular
+														frameworks and platforms.
+													</p>
+												</div>
+												<div>
+													<h2 className="f4 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey mb2">
+														Reactivesearch
+													</h2>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="repo"
+															className="dropdown-content-icon mr2"
+														/>
+														React
+													</Link>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="sdks"
+															className="dropdown-content-icon mr2"
+														/>
+														Vue
+													</Link>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="signal-tower"
+															className="dropdown-content-icon mr2"
+														/>
+														Native
+													</Link>
+												</div>
+												<div>
+													<h2 className="f4 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey mb2">
+														Clients
+													</h2>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="javascript-logo"
+															className="dropdown-content-icon mr2"
+														/>
+														Javascript
+													</Link>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="python-logo"
+															className="dropdown-content-icon mr2"
+														/>
+														Python
+													</Link>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="server"
+															className="dropdown-content-icon mr2"
+														/>
+														Swift
+													</Link>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="android-logo"
+															className="dropdown-content-icon mr2"
+														/>
+														Android
+													</Link>
+												</div>
+												<div>
+													<h2 className="f4 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey mb2">
+														Examples
+													</h2>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="terminal"
+															className="dropdown-content-icon mr2"
+														/>
+														Swift
+													</Link>
+													<Link
+														to="/concepts/introduction/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="shield"
+															className="dropdown-content-icon mr2"
+														/>
+														Android
+													</Link>
+												</div>
+											</div>
+										</div>
+									) : null}
+								</React.Fragment>
+							)}
+						</DropdownLink.Item>
+					</DropdownLink>
 				</div>
 			</div>
-			<div className="relative pl3">
-				<SearchModal theme={themeClasses[theme]} />
+			<div className="relative">
+				<Search />
 			</div>
 		</nav>
 	);
