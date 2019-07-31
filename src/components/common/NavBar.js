@@ -329,7 +329,7 @@ const NavBar = ({ theme }) => {
 					</DropdownLink>
 				</div>
 			</div>
-			<div className="relative">
+			<div className="relative home-search-container">
 				<Search />
 			</div>
 		</nav>

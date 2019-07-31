@@ -1328,3 +1328,69 @@ to be custom HTML.
 	overflow-y: scroll;
 	border-radius: 5px;
 }
+
+.home-search-container {
+	width: 30%;
+}
+
+.guide-box-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 20px;
+}
+
+.guide-box {
+	display: grid;
+	align-items: flex-start;
+	width: 100%;
+	transition: all ease 0.2s;
+	box-shadow: 0;
+	grid-gap: 5px;
+}
+
+.guide-box-links {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-gap: 0 5px;
+	flex-wrap: wrap;
+	align-items: flex-start;
+}
+
+.guide-box:hover {
+	box-shadow: 0 2px 6px 0 rgba(40, 48, 52, 0.15);
+}
+
+.guide-title {
+	display: flex;
+	align-items: center;
+}
+
+.guide-title .guide-index {
+	background-image: linear-gradient(#e5eff5, #fff);
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
+	padding: 5px 10px;
+}
+
+.guide-box:hover .guide-title .guide-index {
+	box-shadow: 0 2px 6px 0 rgba(40, 48, 52, 0.15);
+}
+
+.guide-link {
+	display: flex;
+	align-items: center;
+}
+
+.link-dot {
+	width: 8px;
+	height: 8px;
+	margin-right: 10px;
+	background-image: linear-gradient(180deg, #5468ff, #3eb0ef);
+	border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+	.guide-box-container {
+		grid-template-columns: 1fr;
+	}
+}

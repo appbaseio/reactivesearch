@@ -54,6 +54,7 @@ class AutoComplete extends React.Component {
 		this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
 		this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
 		this.renderSuggestion = this.renderSuggestion.bind(this);
+		this.getSuggestionValue = this.getSuggestionValue.bind(this);
 	}
 
 	onChange(event, { newValue }) {
@@ -73,6 +74,10 @@ class AutoComplete extends React.Component {
 		this.setState({
 			hits: [],
 		});
+	}
+
+	getSuggestionValue(hit) {
+		return hit.title;
 	}
 
 	renderSuggestion(hit) {

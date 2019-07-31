@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 
 import { Icon, Box } from '../components/common';
 import { Layout } from '../components/common/layout';
-import { HomeHeader, HomeAPIBox, HomeFAQLink } from '../components/home';
+import { HomeHeader, GuideBox } from '../components/home';
 import { Spirit } from '../styles/spirit-styles';
+import guides from '../utils/guides';
 
 const HomePage = ({ data, location }) => {
 	// Add meta title and description for this page here to overwrite the site meta data as set in the config
@@ -19,81 +20,31 @@ const HomePage = ({ data, location }) => {
 				mainClass="bg-whitegrey-l2 pb-vw6 pb-vw3-ns"
 				header={<HomeHeader />}
 			>
-				<div className="pt-vw3 home-main-box-padding-ns">
-					<div className={`${Spirit.page.xl} grid-12 gutter-row-20 gutter-40-ns`}>
-						<section className="col-12 col-6-ns flex flex-column justify-between mt4 mt0-ns">
-							<Link
-								to="/api/"
-								className={`${Spirit.h3} link darkgrey hover-midgrey flex-grow-0`}
-							>
-								API Reference
-							</Link>
-
-							<Box
-								className="mt5 tdn flex-auto flex flex-column items-stretch"
-								elevation="1"
-							>
-								<HomeAPIBox
-									to="/javascript/quickstart"
-									title="Javascript Quick Start"
-									icon="sdks"
-								>
-									Quick start with the JavaScript APIs for indexing, querying and
-									streaming data.
-								</HomeAPIBox>
-								<HomeAPIBox
-									to="/rest/quickstart"
-									title="Rest API Quick Start"
-									icon="rest-api"
-								>
-									Get started with the REST APIs for indexing, querying and
-									streaming data.
-								</HomeAPIBox>
-								<HomeAPIBox to="/go/quickstart" title="GO QuickStart" icon="tools">
-									Quick start with the Go APIs for indexing, querying and
-									streaming data.
-								</HomeAPIBox>
-							</Box>
-						</section>
-
-						<section className="col-12 col-6-ns mt0-ns bt bn-ns b--whitegrey nl5 nr5 nl0-ns nr0-ns ml0-ns mr0-ns pl5 pr5 pl0-ns pr0-ns pt5 pt0-ns ">
-							<Link to="/faq/" className={`${Spirit.h3} link darkgrey hover-midgrey`}>
-								Latest Releases
-							</Link>
-							<div className="mt3 mt7-ns">
-								<HomeFAQLink to="/faq/upgrade-to-ghost-2-0/" title="Dashboard 2.0">
-									We are super excited to announce the launch of Appbase.io 2.0,
-									the open core search stack for building modern apps.
-								</HomeFAQLink>
-
-								<HomeFAQLink
-									to="/faq/reactivesearch-vue/"
-									title="Vue.JS Components for building Search UIs"
-								>
-									Since we launched the first ReactiveSearch UI components for
-									React in 2017, they have been downloaded over 100,000 times and
-									helped save thousands of developer hours. One of the most
-									frequent requests we have received is adding support for Vue.JS.
-								</HomeFAQLink>
-
-								<HomeFAQLink
-									to="/faq/dejavu/"
-									title="Dejavu 3.0: The missing Web UI for Elasticsearch"
-								>
-									It’s been an amazing journey thus far: Since our first release
-									in 2015, we have crossed a lifetime total of 475,000 Docker
-									pulls, have over 11K active Chrome extension installations, and
-									over 5,100+ stars 🌟 on our Github repository.
-								</HomeFAQLink>
-
-								<Link
-									to="/faq/"
-									className={`${Spirit.p} midgrey fw5 link hover-blue`}
-								>
-									More updates...
-								</Link>
-							</div>
-						</section>
+				<div className="pt-vw3 ">
+					<div
+						className={`${
+							Spirit.page.xl
+						} col-12 mt-vw3-ns bt bn-ns b--whitegrey pt0-ns`}
+					>
+						<span className={`${Spirit.h3} link darkgrey hover-midgrey`}>Guides</span>
+						<p
+							className={`${
+								Spirit.p
+							} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
+						>
+							All libraries and tools, integrated with Appbase.
+						</p>
+						<div className="guide-box-container mt5">
+							{guides.map((item, index) => (
+								<GuideBox
+									index={index}
+									title={item.title}
+									links={item.links}
+									key={item.title}
+									description={item.description}
+								/>
+							))}
+						</div>
 					</div>
 
 					<section
