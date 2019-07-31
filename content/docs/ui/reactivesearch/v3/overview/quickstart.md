@@ -7,7 +7,8 @@ keywords:
     - quickstart
     - appbase
     - elasticsearch
-sidebar: 'web-reactivesearch'
+sidebar: 'docs'
+nestedSidebar: 'web-reactivesearch'
 ---
 
 ### Step 0: Create Boilerplate with CRA

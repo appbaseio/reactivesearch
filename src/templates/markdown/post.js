@@ -66,7 +66,7 @@ class Post extends React.Component {
 
 		const sideBarLayout = {};
 
-		const { sidebar } = post.frontmatter || ``;
+		const { sidebar, nestedSidebar } = post.frontmatter || ``;
 		const toc = post.frontmatter.toc !== false;
 
 		if (sidebar && toc) {
@@ -74,7 +74,11 @@ class Post extends React.Component {
 
 			sideBarLayout.leftSidebar = (
 				<div className="nr3 sticky top-20">
-					<SidebarNav location={location} sidebar={sidebar} />
+					<SidebarNav
+						location={location}
+						sidebar={sidebar}
+						nestedSidebar={nestedSidebar}
+					/>
 				</div>
 			);
 			sideBarLayout.rightSidebar = (
@@ -87,7 +91,7 @@ class Post extends React.Component {
 			// Layout #2: navigation left only, either TOC or sidebar
 
 			sideBarLayout.leftSidebar = sidebar ? (
-				<SidebarNav location={location} sidebar={sidebar} />
+				<SidebarNav location={location} sidebar={sidebar} nestedSidebar={nestedSidebar} />
 			) : (
 				<div className="nr3 sticky top-25">
 					<TOC

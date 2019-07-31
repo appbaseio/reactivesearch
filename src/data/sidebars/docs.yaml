@@ -1,0 +1,41 @@
+- groups:
+      - group: Getting Started
+        items:
+            - title: QuickStart
+              link: /docs/gettingstarted/QuickStart/
+            - title: How Appbaseio Works
+              link: /docs/gettingstarted/Working/
+      - group: Managing Data
+        items:
+            - title: Data Model
+              link: /docs/data/Model/
+            - title: Data Browser
+              link: /docs/data/Browser/
+            - title: Importing Data
+              link: /docs/data/Import/
+      - group: Search Relevancy
+        items:
+            - title: Mappings
+              link: /docs/search/Mappings
+            - title: Search Preview
+              link: /docs/search/Preview
+            - title: Query Rules
+              link: /docs/search/Rules
+      - group: Building Search UI
+        items:
+            - title: Overview
+              link: /docs/ui/reactivesearch/v3/overview/quickstart/
+      - group: Actionable Analytics
+        items:
+            - title: Overview
+              link: /docs/analytics/Overview/
+            - title: Implement Analytics
+              link: /docs/analytics/Implement/
+      - group: Security
+        items:
+            - title: Search Template
+              link: /docs/security/Template/
+            - title: Role Based Access
+              link: /docs/security/Role/
+            - title: API Credentials
+              link: /docs/security/Credentials/

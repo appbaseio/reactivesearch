@@ -26,6 +26,7 @@ export const markdownFields = graphql`
 				description
 			}
 			sidebar
+			nestedSidebar
 			toc
 			keywords
 		}

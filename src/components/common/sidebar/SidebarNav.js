@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import SidebarLink from './SidebarLink';
 import SidebarList from './SidebarList';
 import getSidebarFile from './getSidebarFile';
+import NestedSidebar from './NestedSidebar';
 
-const SidebarNav = ({ sidebar, location }) => {
+const SidebarNav = ({ sidebar, nestedSidebar, location }) => {
 	const sidebarfile = getSidebarFile(sidebar);
+	const nestedSidebarFile = nestedSidebar ? getSidebarFile(nestedSidebar) : null;
 
 	if (!sidebar || !sidebarfile || !sidebarfile.groups) {
 		return null;
@@ -22,11 +24,27 @@ const SidebarNav = ({ sidebar, location }) => {
 						<>
 							<h4 className="f5 fw5 link pa0 ma0">
 								{group.items[0].link ? (
-									<SidebarLink
-										link={group.items[0].link}
-										title={group.group}
-										linkClasses="link sidebarlink-active blue fw6"
-									/>
+									<Fragment>
+										{nestedSidebar ? (
+											<Fragment>
+												<SidebarLink
+													link={group.items[0].link}
+													title={group.group}
+													linkClasses="link sidebarlink-active blue fw6"
+												/>
+												<NestedSidebar
+													nestedSidebar={nestedSidebarFile}
+													location={location}
+												/>
+											</Fragment>
+										) : (
+											<SidebarLink
+												link={group.items[0].link}
+												title={group.group}
+												linkClasses="link sidebarlink-active blue fw6"
+											/>
+										)}
+									</Fragment>
 								) : (
 									group.group
 								)}
@@ -57,10 +75,12 @@ const SidebarNav = ({ sidebar, location }) => {
 
 SidebarNav.defaultProps = {
 	location: { pathname: `/` },
+	nestedSidebar: null,
 };
 
 SidebarNav.propTypes = {
 	sidebar: PropTypes.string.isRequired,
+	nestedSidebar: PropTypes.string,
 	location: PropTypes.shape({
 		pathname: PropTypes.string.isRequired,
 	}).isRequired,
