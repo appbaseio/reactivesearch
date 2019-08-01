@@ -2,118 +2,118 @@
       - group: Getting Started
         items:
             - title: QuickStart
-              link: /docs/ui/reactivesearch/v3/overview/quickstart/
+              link: /docs/reactivesearch/v3/overview/quickstart/
             - title: ReactiveMaps QuickStart
-              link: /docs/ui/reactivesearch/v3/overview/reactivemaps/
+              link: /docs/reactivesearch/v3/overview/reactivemaps/
             - title: Importing Data
-              link: /docs/ui/reactivesearch/v3/overview/importing/
+              link: /docs/reactivesearch/v3/overview/importing/
             - title: ReactiveBase
-              link: /docs/ui/reactivesearch/v3/overview/reactivebase/
+              link: /docs/reactivesearch/v3/overview/reactivebase/
             - title: Components Overview
-              link: /docs/ui/reactivesearch/v3/overview/components/
+              link: /docs/reactivesearch/v3/overview/components/
       - group: Base Components
         items:
             - title: SelectedFilters
-              link: /docs/ui/reactivesearch/v3/base/selectedfilters/
+              link: /docs/reactivesearch/v3/base/selectedfilters/
             - title: StateProvider
-              link: /docs/ui/reactivesearch/v3/base/stateprovider/
+              link: /docs/reactivesearch/v3/base/stateprovider/
       - group: List Components
         items:
             - title: SingleList
-              link: /docs/ui/reactivesearch/v3/list/singlelist/
+              link: /docs/reactivesearch/v3/list/singlelist/
             - title: MultiList
-              link: /docs/ui/reactivesearch/v3/list/multilist/
+              link: /docs/reactivesearch/v3/list/multilist/
             - title: SingleDropdownList
-              link: /docs/ui/reactivesearch/v3/list/singledropdownlist/
+              link: /docs/reactivesearch/v3/list/singledropdownlist/
             - title: MultiDropdownList
-              link: /docs/ui/reactivesearch/v3/list/multidropdownlist/
+              link: /docs/reactivesearch/v3/list/multidropdownlist/
             - title: SingleDataList
-              link: /docs/ui/reactivesearch/v3/list/singledatalist/
+              link: /docs/reactivesearch/v3/list/singledatalist/
             - title: MultiDataList
-              link: /docs/ui/reactivesearch/v3/list/multidatalist/
+              link: /docs/reactivesearch/v3/list/multidatalist/
             - title: ToggleButton
-              link: /docs/ui/reactivesearch/v3/list/togglebutton/
+              link: /docs/reactivesearch/v3/list/togglebutton/
             - title: TagCloud
-              link: /docs/ui/reactivesearch/v3/list/tagcloud/
+              link: /docs/reactivesearch/v3/list/tagcloud/
       - group: Range Components
         items:
             - title: SingleRange
-              link: /docs/ui/reactivesearch/v3/range/singlerange/
+              link: /docs/reactivesearch/v3/range/singlerange/
             - title: MultiRange
-              link: /docs/ui/reactivesearch/v3/range/multirange/
+              link: /docs/reactivesearch/v3/range/multirange/
             - title: SingleDropdownRange
-              link: /docs/ui/reactivesearch/v3/range/singledropdownrange/
+              link: /docs/reactivesearch/v3/range/singledropdownrange/
             - title: MultiDropdownRange
-              link: /docs/ui/reactivesearch/v3/range/multidropdownrange/
+              link: /docs/reactivesearch/v3/range/multidropdownrange/
             - title: RangeSlider
-              link: /docs/ui/reactivesearch/v3/range/rangeslider/
+              link: /docs/reactivesearch/v3/range/rangeslider/
             - title: DynamicRangeSlider
-              link: /docs/ui/reactivesearch/v3/range/dynamicrangeslider/
+              link: /docs/reactivesearch/v3/range/dynamicrangeslider/
             - title: RangeInput
-              link: /docs/ui/reactivesearch/v3/range/rangeinput/
+              link: /docs/reactivesearch/v3/range/rangeinput/
             - title: NumberBox
-              link: /docs/ui/reactivesearch/v3/range/numberbox/
+              link: /docs/reactivesearch/v3/range/numberbox/
             - title: DatePicker
-              link: /docs/ui/reactivesearch/v3/range/datepicker/
+              link: /docs/reactivesearch/v3/range/datepicker/
             - title: DateRange
-              link: /docs/ui/reactivesearch/v3/range/daterange/
+              link: /docs/reactivesearch/v3/range/daterange/
             - title: RatingsFilter
-              link: /docs/ui/reactivesearch/v3/range/ratingsfilter/
+              link: /docs/reactivesearch/v3/range/ratingsfilter/
       - group: Search Components
         items:
             - title: DataSearch
-              link: /docs/ui/reactivesearch/v3/search/datasearch/
+              link: /docs/reactivesearch/v3/search/datasearch/
             - title: CategorySearch
-              link: /docs/ui/reactivesearch/v3/search/categorysearch/
+              link: /docs/reactivesearch/v3/search/categorysearch/
       - group: Result Components
         items:
             - title: ReactiveList
-              link: /docs/ui/reactivesearch/v3/result/reactivelist/
+              link: /docs/reactivesearch/v3/result/reactivelist/
             - title: ResultList
-              link: /docs/ui/reactivesearch/v3/result/resultlist/
+              link: /docs/reactivesearch/v3/result/resultlist/
             - title: ResultCard
-              link: /docs/ui/reactivesearch/v3/result/resultcard/
+              link: /docs/reactivesearch/v3/result/resultcard/
       - group: Map Components
         items:
             - title: GeoDistanceSlider
-              link: /docs/ui/reactivesearch/v3/map/geodistanceslider/
+              link: /docs/reactivesearch/v3/map/geodistanceslider/
             - title: GeoDistanceDropdown
-              link: /docs/ui/reactivesearch/v3/map/geodistancedropdown/
+              link: /docs/reactivesearch/v3/map/geodistancedropdown/
             - title: ReactiveGoogleMap
-              link: /docs/ui/reactivesearch/v3/map/reactivegooglemap/
+              link: /docs/reactivesearch/v3/map/reactivegooglemap/
             - title: ReactiveOpenStreetMap
-              link: /docs/ui/reactivesearch/v3/map/reactiveopenstreetmap/
+              link: /docs/reactivesearch/v3/map/reactiveopenstreetmap/
       - group: Themes
         items:
             - title: Themes
-              link: /docs/ui/reactivesearch/v3/theming/overview/
+              link: /docs/reactivesearch/v3/theming/overview/
             - title: Customizing Style
-              link: /docs/ui/reactivesearch/v3/theming/style/
+              link: /docs/reactivesearch/v3/theming/style/
             - title: Classname Injection
-              link: /docs/ui/reactivesearch/v3/theming/classnameinjection/
+              link: /docs/reactivesearch/v3/theming/classnameinjection/
       - group: Advanced
         items:
             - title: Custom Suggestions
-              link: /docs/ui/reactivesearch/v3/advanced/customsuggestions/
+              link: /docs/reactivesearch/v3/advanced/customsuggestions/
             - title: Custom Queries
-              link: /docs/ui/reactivesearch/v3/advanced/customqueries/
+              link: /docs/reactivesearch/v3/advanced/customqueries/
             - title: React Prop
-              link: /docs/ui/reactivesearch/v3/advanced/reactprop/
+              link: /docs/reactivesearch/v3/advanced/reactprop/
             - title: Reactive Component
-              link: /docs/ui/reactivesearch/v3/advanced/reactivecomponent/
+              link: /docs/reactivesearch/v3/advanced/reactivecomponent/
             - title: Server Side Rendering
-              link: /docs/ui/reactivesearch/v3/advanced/ssr/
+              link: /docs/reactivesearch/v3/advanced/ssr/
             - title: Components Usage
-              link: /docs/ui/reactivesearch/v3/advanced/usage/
+              link: /docs/reactivesearch/v3/advanced/usage/
             - title: Migration Guide
-              link: /docs/ui/reactivesearch/v3/advanced/migration/
+              link: /docs/reactivesearch/v3/advanced/migration/
             - title: Advanced Guides
-              link: /docs/ui/reactivesearch/v3/advanced/guides/
+              link: /docs/reactivesearch/v3/advanced/guides/
             - title: Search and Click Analytics
-              link: /docs/ui/reactivesearch/v3/advanced/analytics/
+              link: /docs/reactivesearch/v3/advanced/analytics/
             - title: Writing and Editing Data
-              link: /docs/ui/reactivesearch/v3/advanced/data/
+              link: /docs/reactivesearch/v3/advanced/data/
             - title: Typescript Support
-              link: /docs/ui/reactivesearch/v3/advanced/typescript/
+              link: /docs/reactivesearch/v3/advanced/typescript/
             - title: Comparision with Other Projects
-              link: /docs/ui/reactivesearch/v3/advanced/comparison/
+              link: /docs/reactivesearch/v3/advanced/comparison/

@@ -9,6 +9,10 @@ export const getPostHeaderConfig = ({ pathname }) => {
 		postHeaderConfig.title = `Javascript API Reference`;
 		postHeaderConfig.mainLink = `/javascript/quickstart`;
 	}
+	if (pathname.match(/^\/docs\//i)) {
+		postHeaderConfig.title = `QuickStart`;
+		postHeaderConfig.mainLink = `/docs/gettingstarted/QuickStart/`;
+	}
 
 	if (pathname.match(/^\/examples\//i)) {
 		postHeaderConfig.title = `Interactive Examples`;

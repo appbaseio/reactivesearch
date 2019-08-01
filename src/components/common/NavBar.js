@@ -82,7 +82,7 @@ const NavBar = ({ theme }) => {
 														Clients
 													</h2> */}
 													<Link
-														to="/concepts/introduction/"
+														to="/docs/gettingstarted/QuickStart/"
 														className={`${
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
@@ -94,7 +94,7 @@ const NavBar = ({ theme }) => {
 														Getting Started
 													</Link>
 													<Link
-														to="/concepts/introduction/"
+														to="/docs/data/model"
 														className={`${
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
@@ -108,7 +108,7 @@ const NavBar = ({ theme }) => {
 												</div>
 												<div>
 													<Link
-														to="/concepts/introduction/"
+														to="/docs/search/Preview/"
 														className={`${
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
@@ -120,7 +120,7 @@ const NavBar = ({ theme }) => {
 														Search Relevancy
 													</Link>
 													<Link
-														to="/concepts/introduction/"
+														to="/docs/reactivesearch/v3/overview/quickstart/"
 														className={`${
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
@@ -134,7 +134,7 @@ const NavBar = ({ theme }) => {
 												</div>
 												<div>
 													<Link
-														to="/concepts/introduction/"
+														to="/docs/analytics/Overview"
 														className={`${
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
@@ -146,7 +146,7 @@ const NavBar = ({ theme }) => {
 														Actionable Analytics
 													</Link>
 													<Link
-														to="/concepts/introduction/"
+														to="/docs/security/Credentials"
 														className={`${
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
@@ -202,7 +202,7 @@ const NavBar = ({ theme }) => {
 														Reactivesearch
 													</h2>
 													<Link
-														to="/concepts/introduction/"
+														to="/docs/reactivesearch/v3/overview/quickstart/"
 														className={`${
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
@@ -214,7 +214,7 @@ const NavBar = ({ theme }) => {
 														React
 													</Link>
 													<Link
-														to="/concepts/introduction/"
+														to="/docs/reactivesearch/vue/overview/QuickStart/"
 														className={`${
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
@@ -226,7 +226,7 @@ const NavBar = ({ theme }) => {
 														Vue
 													</Link>
 													<Link
-														to="/concepts/introduction/"
+														to="/docs/reactivesearch/native/overview/QuickStart/"
 														className={`${
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
@@ -243,7 +243,7 @@ const NavBar = ({ theme }) => {
 														Clients
 													</h2>
 													<Link
-														to="/concepts/introduction/"
+														to="/api/javascript/quickstart/"
 														className={`${
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
@@ -255,7 +255,36 @@ const NavBar = ({ theme }) => {
 														Javascript
 													</Link>
 													<Link
-														to="/concepts/introduction/"
+														to="/api/go/quickstart/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="ruby-logo"
+															className="dropdown-content-icon mr2"
+														/>
+														Golang
+													</Link>
+													<Link
+														to="/api/rest/quickstart/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="server"
+															className="dropdown-content-icon mr2"
+														/>
+														REST
+													</Link>
+												</div>
+												<div>
+													<h2 className="f4 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey mb2">
+														Examples
+													</h2>
+													<Link
+														to="/api/examples/python/"
 														className={`${
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
@@ -267,48 +296,19 @@ const NavBar = ({ theme }) => {
 														Python
 													</Link>
 													<Link
-														to="/concepts/introduction/"
+														to="/api/examples/js/"
 														className={`${
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="server"
+															name="javascript-logo"
 															className="dropdown-content-icon mr2"
 														/>
-														Swift
+														Javascript
 													</Link>
 													<Link
-														to="/concepts/introduction/"
-														className={`${
-															themeClasses[theme].menuItem
-														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
-													>
-														<Icon
-															name="android-logo"
-															className="dropdown-content-icon mr2"
-														/>
-														Android
-													</Link>
-												</div>
-												<div>
-													<h2 className="f4 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey mb2">
-														Examples
-													</h2>
-													<Link
-														to="/concepts/introduction/"
-														className={`${
-															themeClasses[theme].menuItem
-														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
-													>
-														<Icon
-															name="terminal"
-															className="dropdown-content-icon mr2"
-														/>
-														Swift
-													</Link>
-													<Link
-														to="/concepts/introduction/"
+														to="/api/examples/go/"
 														className={`${
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
@@ -317,7 +317,19 @@ const NavBar = ({ theme }) => {
 															name="shield"
 															className="dropdown-content-icon mr2"
 														/>
-														Android
+														Go
+													</Link>
+													<Link
+														to="/api/examples/php/"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="android-logo"
+															className="dropdown-content-icon mr2"
+														/>
+														PHP
 													</Link>
 												</div>
 											</div>

@@ -110,8 +110,6 @@ class Post extends React.Component {
 		return (
 			<>
 				<Layout>
-					<PostHeader location={location} />
-
 					<div
 						className={`${Spirit.page.xl} flex flex-column flex-row-ns ${
 							sideBarLayout.justification

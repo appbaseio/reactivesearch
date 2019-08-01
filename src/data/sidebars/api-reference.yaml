@@ -2,30 +2,30 @@
       - group: Javascript
         items:
             - title: QuickStart
-              link: /javascript/quickstart/
+              link: /api/javascript/quickstart/
             - title: API Reference
-              link: /javascript/apireference/
+              link: /api/javascript/apireference/
             - title: Webhooks Guide
-              link: /javascript/webhooks/
+              link: /api/javascript/webhooks/
       - group: REST
         items:
             - title: Quickstart
-              link: /rest/quickstart/
+              link: /api/rest/quickstart/
             - title: ABC - Appbase via command line
-              link: /rest/abc/
+              link: /api/rest/abc/
       - group: Golang
         items:
             - title: QuickStart
-              link: /go/quickstart/
+              link: /api/go/quickstart/
             - title: Queries with Go
-              link: /go/queries/
+              link: /api/go/queries/
       - group: Interactive Examples
         items:
             - title: Javascript / Node.js
-              link: /examples/js/
+              link: /api/examples/js/
             - title: Go
-              link: /examples/go/
+              link: /api/examples/go/
             - title: Python
-              link: /examples/python/
+              link: /api/examples/python/
             - title: Php
-              link: /examples/php/
+              link: /api/examples/php/

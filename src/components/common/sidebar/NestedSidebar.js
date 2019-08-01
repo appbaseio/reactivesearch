@@ -11,31 +11,33 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 	}
 
 	const switchDocs = value => {
-		if (location.pathname.startsWith('/docs/ui/reactivesearch/v3')) {
-			if (value.value === 'v0.12 - Native') {
-				window.location.href = `${window.location.origin}/docs/ui/reactivesearch/native`;
-			} else if (value.value === 'v1 - Vue') {
-				window.location.href = `${window.location.origin}/docs/ui/reactivesearch/vue`;
-			} else if (value.value === 'v3 - Web') {
-				window.location.href = `${
-					window.location.origin
-				}/docs/ui/reactivesearch/v3/overview/quickstart`;
-			} else if (value.value === 'v2 - Web') {
-				window.location.href = `${
-					window.location.origin
-				}/docs/ui/reactivesearch/v2/overview/QuickStart`;
-			}
+		if (value.value === 'v0.10 - Native') {
+			window.location.href = `${
+				window.location.origin
+			}/docs/reactivesearch/native/overview/QuickStart`;
+		} else if (value.value === 'v1 - Vue') {
+			window.location.href = `${
+				window.location.origin
+			}/docs/reactivesearch/vue/overview/QuickStart`;
+		} else if (value.value === 'v3 - Web') {
+			window.location.href = `${
+				window.location.origin
+			}/docs/reactivesearch/v3/overview/quickstart`;
+		} else if (value.value === 'v2 - Web') {
+			window.location.href = `${
+				window.location.origin
+			}/docs/reactivesearch/v2/overview/QuickStart`;
 		}
 	};
 
 	const getValue = () => {
-		if (location.pathname.startsWith('/docs/ui/reactivesearch/v2')) {
+		if (location.pathname.startsWith('/docs/reactivesearch/v2')) {
 			return 'v2 - Web';
 		}
-		if (location.pathname.startsWith('/docs/ui/reactivesearch/vue')) {
+		if (location.pathname.startsWith('/docs/reactivesearch/vue')) {
 			return 'v1 - Vue';
 		}
-		if (location.pathname.startsWith('/docs/ui/reactivesearch/native')) {
+		if (location.pathname.startsWith('/docs/reactivesearch/native')) {
 			return 'v0.12 - Native';
 		}
 
@@ -49,7 +51,7 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 				value={getValue()}
 				onChange={switchDocs}
 			/>
-			<nav className="pl3 relative" data-cy="sidebar">
+			<nav className="pl5 relative" data-cy="sidebar">
 				{nestedSidebar.groups.map((group, i) => (
 					<div key={i} className="mt1">
 						{group.items.some(item => item.link === location.pathname) ? (
@@ -95,7 +97,7 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 };
 
 NestedSidebar.propTypes = {
-	nestedSidebar: PropTypes.string.isRequired,
+	nestedSidebar: PropTypes.object.isRequired,
 	location: PropTypes.shape({
 		pathname: PropTypes.string.isRequired,
 	}).isRequired,

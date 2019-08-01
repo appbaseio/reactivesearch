@@ -37,10 +37,10 @@ const APIPage = () => {
 							</p>
 						</div>
 						<div className={sectionStyles.cardContainer}>
-							<APICard to="/rest/quickstart/" icon="content-api-logo">
+							<APICard to="/api/rest/quickstart/" icon="content-api-logo">
 								Quick Start
 							</APICard>
-							<APICard to="/rest/abc/" icon="ghost-cli-logo">
+							<APICard to="/api/rest/abc/" icon="ghost-cli-logo">
 								Command Line
 							</APICard>
 						</div>
@@ -56,16 +56,16 @@ const APIPage = () => {
 							</p>
 						</div>
 						<div className={sectionStyles.cardContainer}>
-							<APICard to="/javascript/quickstart" icon="javascript-logo">
+							<APICard to="/api/javascript/quickstart" icon="javascript-logo">
 								JavaScript
 							</APICard>
-							<APICard to="/examples/php" icon="php-logo">
+							<APICard to="/api/examples/php" icon="php-logo">
 								PHP
 							</APICard>
-							<APICard to="/examples/python" icon="python-logo">
+							<APICard to="/api/examples/python" icon="python-logo">
 								Python
 							</APICard>
-							<APICard to="/go/quickstart" icon="ruby-logo">
+							<APICard to="/api/go/quickstart" icon="ruby-logo">
 								Golang
 							</APICard>
 							<APICard icon="apple-logo" iconClass="stroke-midlightgrey o-30">

@@ -22,9 +22,6 @@
             - title: Query Rules
               link: /docs/search/Rules
       - group: Building Search UI
-        items:
-            - title: Overview
-              link: /docs/ui/reactivesearch/v3/overview/quickstart/
       - group: Actionable Analytics
         items:
             - title: Overview
@@ -33,9 +30,9 @@
               link: /docs/analytics/Implement/
       - group: Security
         items:
+            - title: API Credentials
+              link: /docs/security/Credentials/
             - title: Search Template
               link: /docs/security/Template/
             - title: Role Based Access
               link: /docs/security/Role/
-            - title: API Credentials
-              link: /docs/security/Credentials/
