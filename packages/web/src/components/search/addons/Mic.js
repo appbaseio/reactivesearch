@@ -22,6 +22,12 @@ class Mic extends React.Component {
 		window.SpeechRecognition
 			= window.webkitSpeechRecognition || window.SpeechRecognition || null;
 		this.results = [];
+
+		if (!window.SpeechRecognition) {
+			console.error(
+				'SpeechRecognition is not supported in this browser. Please check the browser compatibility at https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition#Browser_compatibility.',
+			);
+		}
 	}
 
 	stopMic = () => {
@@ -69,7 +75,9 @@ class Mic extends React.Component {
 				});
 			};
 			this.instance.onresult = ({ results, timeStamp }) => {
-				this.stopMic();
+				if (results && results[0] && results[0].isFinal) {
+					this.stopMic();
+				}
 				if (onResult) {
 					onResult({ results, timeStamp });
 				}
@@ -91,25 +99,17 @@ class Mic extends React.Component {
 					onError(e);
 				}
 			};
-
-			/* Below Two methods run when Continuous is False */
-			this.instance.onspeechend = () => {
-				this.setState({
-					status: STATUS.inactive,
-				});
-			};
-
-			this.instance.onaudioend = () => {
-				this.setState({
-					status: STATUS.inactive,
-				});
-			};
 		}
 	};
 
 	get Icon() {
 		const { status } = this.state;
 		const { className } = this.props;
+
+		if (!window.SpeechRecognition) {
+			return <MuteSvg className={className} onClick={this.handleClick} />;
+		}
+
 		switch (status) {
 			case STATUS.active:
 				return <ListenSvg className={className} onClick={this.handleClick} />;
