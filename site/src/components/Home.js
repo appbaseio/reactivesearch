@@ -21,7 +21,6 @@ import ActionCard from '../styles/ActionCard';
 import ImageCard from '../styles/ImageCard';
 import BannerRow from './BannerRow';
 import Footer from './Footer';
-import Testimonials from './Testimonials';
 import SupportGrid from './SupportGrid';
 import { tabPadding, tabJustifyCenter } from '../styles/base';
 import H1 from '../styles/H1';
@@ -305,9 +304,9 @@ class HomePage extends Component {
 											uppercase
 											primary={!isVue}
 											href={config.banner6.button.href}
-											{...config.banner6.button.openWithNewTab && {
+											{...(config.banner6.button.openWithNewTab && {
 												target: '_blank',
-											}}
+											})}
 										>
 											{config.banner6.button.title}
 										</Button>
@@ -488,12 +487,7 @@ class HomePage extends Component {
 							</Layout>
 						</Section>
 					)}
-					<Section style={{ backgroundColor: '#fff' }}>
-						<Layout>
-							<H2>See what our users say</H2>
-							<Testimonials />
-						</Layout>
-					</Section>
+					<AppbaseUsers />
 					<Section>
 						<Layout>
 							<H2>Get started in minutes</H2>
@@ -517,8 +511,7 @@ class HomePage extends Component {
 							<SupportGrid configName={config.name} />
 						</Layout>
 					</Section>
-					{config.name === 'web' && <DownloadStats />}
-					<AppbaseUsers />
+					{config.name === 'web' && <DownloadStats style={{ marginBottom: 30 }} />}
 					<Footer configName={config.name} footerConfig={config.footer} />
 					<a
 						href={config.producthunt}
