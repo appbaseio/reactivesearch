@@ -310,7 +310,7 @@ class TagCloud extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				<TagList className={getClassName(this.props.innerClass, 'list') || null}>
+				<TagList role="menu" className={getClassName(this.props.innerClass, 'list') || null}>
 					{this.state.options.map((item) => {
 						// eslint-disable-next-line
 						const size = (item.doc_count / highestCount) * (max - min) + min;

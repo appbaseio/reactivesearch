@@ -368,6 +368,7 @@ class MultiDataList extends Component {
 					style={{
 						margin: '0 0 8px',
 					}}
+					aria-label={`${this.props.componentId}-search`}
 					themePreset={this.props.themePreset}
 				/>
 			);
@@ -424,6 +425,8 @@ class MultiDataList extends Component {
 
 		const listItems = this.listItems;
 
+		const isAllChecked = selectAllLabel ? !!this.state.currentValue[selectAllLabel] : false;
+
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -435,13 +438,18 @@ class MultiDataList extends Component {
 				{this.hasCustomRenderer ? (
 					this.getComponent()
 				) : (
-					<UL className={getClassName(this.props.innerClass, 'list') || null}>
+					<UL
+						className={getClassName(this.props.innerClass, 'list') || null}
+						role="listbox"
+						aria-label={`${this.props.componentId}-items`}
+					>
 						{selectAllLabel ? (
 							<li
 								key={selectAllLabel}
-								className={`${
-									this.state.currentValue[selectAllLabel] ? 'active' : ''
-								}`}
+								className={`${isAllChecked ? 'active' : ''}`}
+								role="option"
+								aria-checked={isAllChecked}
+								aria-selected={isAllChecked}
 							>
 								<Checkbox
 									className={
@@ -451,7 +459,7 @@ class MultiDataList extends Component {
 									name={selectAllLabel}
 									value={selectAllLabel}
 									onChange={this.handleClick}
-									checked={!!this.state.currentValue[selectAllLabel]}
+									checked={isAllChecked}
 									show={this.props.showCheckbox}
 								/>
 								<label
@@ -463,52 +471,58 @@ class MultiDataList extends Component {
 							</li>
 						) : null}
 						{listItems.length
-							? listItems.map(item => (
-								<li
-									key={item.label}
-									className={`${
-										this.state.currentValue[item.label] ? 'active' : ''
-									}`}
-								>
-									<Checkbox
-										className={
-											getClassName(this.props.innerClass, 'checkbox') || null
-										}
-										id={`${this.props.componentId}-${item.label}`}
-										name={this.props.componentId}
-										value={item.label}
-										onChange={this.handleClick}
-										checked={!!this.state.currentValue[item.label]}
-										show={this.props.showCheckbox}
-									/>
-									<label
-										className={
-											getClassName(this.props.innerClass, 'label') || null
-										}
-										htmlFor={`${this.props.componentId}-${item.label}`}
+							? listItems.map((item) => {
+								const isChecked = !!this.state.currentValue[item.label];
+								return (
+									<li
+										key={item.label}
+										className={`${
+											isChecked ? 'active' : ''
+										}`}
+										role="option"
+										aria-checked={isChecked}
+										aria-selected={isChecked}
 									>
-										{renderItem ? (
-											renderItem(item.label, item.count, this.state.currentValue === item.label)
-										) : (
-											<span>
-												<span>{item.label}</span>
-												{showCount && item.count && (
-													<span
-														className={
-															getClassName(
-																this.props.innerClass,
-																'count',
-															) || null
-														}
-													>
-														{item.count}
-													</span>
-												)}
-											</span>
-										)}
-									</label>
-								</li>
-							)) // prettier-ignore
+										<Checkbox
+											className={
+												getClassName(this.props.innerClass, 'checkbox') || null
+											}
+											id={`${this.props.componentId}-${item.label}`}
+											name={`${this.props.componentId}-${item.label}`}
+											value={item.label}
+											onChange={this.handleClick}
+											checked={isChecked}
+											show={this.props.showCheckbox}
+										/>
+										<label
+											className={
+												getClassName(this.props.innerClass, 'label') || null
+											}
+											htmlFor={`${this.props.componentId}-${item.label}`}
+										>
+											{renderItem ? (
+												renderItem(item.label, item.count, this.state.currentValue === item.label)
+											) : (
+												<span>
+													<span>{item.label}</span>
+													{showCount && item.count && (
+														<span
+															className={
+																getClassName(
+																	this.props.innerClass,
+																	'count',
+																) || null
+															}
+														>
+															{item.count}
+														</span>
+													)}
+												</span>
+											)}
+										</label>
+									</li>
+								);
+							}) // prettier-ignore
 							: this.props.renderNoResults && this.props.renderNoResults()}
 					</UL>
 				)}

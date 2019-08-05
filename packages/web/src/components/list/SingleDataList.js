@@ -287,6 +287,7 @@ class SingleDataList extends Component {
 					style={{
 						margin: '0 0 8px',
 					}}
+					aria-label={`${this.props.componentId}-search`}
 					themePreset={this.props.themePreset}
 				/>
 			);
@@ -343,6 +344,7 @@ class SingleDataList extends Component {
 
 		const listItems = this.listItems;
 
+		const isAllChecked = this.state.currentValue === selectAllLabel;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -354,21 +356,25 @@ class SingleDataList extends Component {
 				{this.hasCustomRenderer ? (
 					this.getComponent()
 				) : (
-					<UL className={getClassName(this.props.innerClass, 'list') || null}>
+					<UL
+						className={getClassName(this.props.innerClass, 'list') || null}
+						aria-label={`${this.props.componentId}-items`}
+						role="radiogroup"
+					>
 						{selectAllLabel && (
 							<li
 								key={selectAllLabel}
-								className={`${
-									this.state.currentValue === selectAllLabel ? 'active' : ''
-								}`}
+								className={`${isAllChecked ? 'active' : ''}`}
+								role="radio"
+								aria-checked={isAllChecked}
 							>
 								<Radio
 									className={getClassName(this.props.innerClass, 'radio')}
 									id={`${this.props.componentId}-${selectAllLabel}`}
-									name={this.props.componentId}
 									value={selectAllLabel}
+									tabIndex={isAllChecked ? '-1' : '0'}
 									onChange={this.handleClick}
-									checked={this.state.currentValue === selectAllLabel}
+									checked={isAllChecked}
 									show={this.props.showRadio}
 								/>
 								<label
@@ -380,51 +386,56 @@ class SingleDataList extends Component {
 							</li>
 						)}
 						{listItems.length
-							? listItems.map(item => (
-								<li
-									key={item.label}
-									className={`${
-										this.state.currentValue === item.label ? 'active' : ''
-									}`}
-								>
-									<Radio
-										className={getClassName(this.props.innerClass, 'radio')}
-										id={`${this.props.componentId}-${item.label}`}
-										name={this.props.componentId}
-										value={item.label}
-										onClick={this.handleClick}
-										readOnly
-										checked={this.state.currentValue === item.label}
-										show={this.props.showRadio}
-									/>
-									<label
-										className={
-											getClassName(this.props.innerClass, 'label') || null
-										}
-										htmlFor={`${this.props.componentId}-${item.label}`}
+							? listItems.map((item) => {
+								const isChecked = this.state.currentValue === item.label;
+								return (
+									<li
+										key={item.label}
+										className={`${
+											isChecked ? 'active' : ''
+										}`}
+										role="radio"
+										aria-checked={isChecked}
 									>
-										{renderItem ? (
-											renderItem(item.label, item.count, this.state.currentValue === item.label)
-										) : (
-											<span>
-												{item.label}
-												{showCount && item.count && (
-													<span
-														className={
-															getClassName(
-																this.props.innerClass,
-																'count',
-															) || null
-														}
-													>
+										<Radio
+											className={getClassName(this.props.innerClass, 'radio')}
+											id={`${this.props.componentId}-${item.label}`}
+											tabIndex={isChecked ? '-1' : '0'}
+											value={item.label}
+											onClick={this.handleClick}
+											readOnly
+											checked={isChecked}
+											show={this.props.showRadio}
+										/>
+										<label
+											className={
+												getClassName(this.props.innerClass, 'label') || null
+											}
+											htmlFor={`${this.props.componentId}-${item.label}`}
+										>
+											{renderItem ? (
+												renderItem(item.label, item.count, isChecked)
+											) : (
+												<span>
+													{item.label}
+													{showCount && item.count && (
+														<span
+															className={
+																getClassName(
+																	this.props.innerClass,
+																	'count',
+																) || null
+															}
+														>
 																&nbsp;({item.count})
-													</span>
-												)}
-											</span>
-										)}
-									</label>
-								</li>
-							)) // prettier-ignore
+														</span>
+													)}
+												</span>
+											)}
+										</label>
+									</li>
+								);
+							}) // prettier-ignore
 							: this.props.renderNoResults && this.props.renderNoResults()}
 					</UL>
 				)}

@@ -229,9 +229,7 @@ class MultiList extends Component {
 				let should = [
 					{
 						[type]: {
-							[props.dataField]: value.filter(
-								item => item !== props.missingLabel,
-							),
+							[props.dataField]: value.filter(item => item !== props.missingLabel),
 						},
 					},
 				];
@@ -442,6 +440,7 @@ class MultiList extends Component {
 					style={{
 						margin: '0 0 8px',
 					}}
+					aria-label={`${this.props.componentId}-search`}
 					themePreset={this.props.themePreset}
 				/>
 			);
@@ -525,6 +524,8 @@ class MultiList extends Component {
 
 		const listItems = this.listItems;
 
+		const isAllChecked = selectAllLabel ? !!this.state.currentValue[selectAllLabel] : false;
+
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -536,13 +537,18 @@ class MultiList extends Component {
 				{this.hasCustomRenderer ? (
 					this.getComponent()
 				) : (
-					<UL className={getClassName(this.props.innerClass, 'list') || null}>
+					<UL
+						className={getClassName(this.props.innerClass, 'list') || null}
+						role="listbox"
+						aria-label={`${this.props.componentId}-items`}
+					>
 						{selectAllLabel ? (
 							<li
 								key={selectAllLabel}
-								className={`${
-									this.state.currentValue[selectAllLabel] ? 'active' : ''
-								}`}
+								className={`${isAllChecked ? 'active' : ''}`}
+								role="option"
+								aria-checked={isAllChecked}
+								aria-selected={isAllChecked}
 							>
 								<Checkbox
 									className={
@@ -552,7 +558,7 @@ class MultiList extends Component {
 									name={selectAllLabel}
 									value={selectAllLabel}
 									onChange={this.handleClick}
-									checked={!!this.state.currentValue[selectAllLabel]}
+									checked={isAllChecked}
 									show={this.props.showCheckbox}
 								/>
 								<label
@@ -564,56 +570,62 @@ class MultiList extends Component {
 							</li>
 						) : null}
 						{listItems.length
-							? listItems.map(item => (
-								<li
-									key={item.key}
-									className={`${
-										this.state.currentValue[item.key] ? 'active' : ''
-									}`}
-								>
-									<Checkbox
-										className={
-											getClassName(this.props.innerClass, 'checkbox') || null
-										}
-										id={`${this.props.componentId}-${item.key}`}
-										name={this.props.componentId}
-										value={item.key}
-										onChange={this.handleClick}
-										checked={!!this.state.currentValue[item.key]}
-										show={this.props.showCheckbox}
-									/>
-									<label
-										className={
-											getClassName(this.props.innerClass, 'label') || null
-										}
-										htmlFor={`${this.props.componentId}-${item.key}`}
+							? listItems.map((item) => {
+								const isChecked = !!this.state.currentValue[item.key];
+								return (
+									<li
+										key={item.key}
+										className={`${
+											isChecked ? 'active' : ''
+										}`}
+										role="option"
+										aria-checked={isChecked}
+										aria-selected={isChecked}
 									>
-										{renderItem ? (
-											renderItem(
-												item.key,
-												item.doc_count,
-												!!this.state.currentValue[item.key],
-											)
-										) : (
-											<span>
-												<span>{item.key}</span>
-												{this.props.showCount && (
-													<span
-														className={
-															getClassName(
-																this.props.innerClass,
-																'count',
-															) || null
-														}
-													>
-														{item.doc_count}
-													</span>
-												)}
-											</span>
-										)}
-									</label>
-								</li>
-							)) // prettier-ignore
+										<Checkbox
+											className={
+												getClassName(this.props.innerClass, 'checkbox') || null
+											}
+											id={`${this.props.componentId}-${item.key}`}
+											name={`${this.props.componentId}-${item.key}`}
+											value={item.key}
+											onChange={this.handleClick}
+											checked={isChecked}
+											show={this.props.showCheckbox}
+										/>
+										<label
+											className={
+												getClassName(this.props.innerClass, 'label') || null
+											}
+											htmlFor={`${this.props.componentId}-${item.key}`}
+										>
+											{renderItem ? (
+												renderItem(
+													item.key,
+													item.doc_count,
+													isChecked,
+												)
+											) : (
+												<span>
+													<span>{item.key}</span>
+													{this.props.showCount && (
+														<span
+															className={
+																getClassName(
+																	this.props.innerClass,
+																	'count',
+																) || null
+															}
+														>
+															{item.doc_count}
+														</span>
+													)}
+												</span>
+											)}
+										</label>
+									</li>
+								);
+							}) // prettier-ignore
 							: this.props.renderNoResults && this.props.renderNoResults()}
 						{showLoadMore && !isLastBucket && (
 							<div css={loadMoreContainer}>
