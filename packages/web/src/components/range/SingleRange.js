@@ -197,17 +197,26 @@ class SingleRange extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				<UL className={getClassName(this.props.innerClass, 'list') || null}>
+				<UL
+					className={getClassName(this.props.innerClass, 'list') || null}
+					aria-label={`${this.props.componentId}-items`}
+					role="radiogroup"
+				>
 					{this.props.data.map((item) => {
 						const selected
 							= !!this.state.currentValue
 							&& this.state.currentValue.label === item.label;
 						return (
-							<li key={item.label} className={`${selected ? 'active' : ''}`}>
+							<li
+								key={item.label}
+								className={`${selected ? 'active' : ''}`}
+								role="radio"
+								aria-checked={selected}
+							>
 								<Radio
 									className={getClassName(this.props.innerClass, 'radio')}
 									id={`${this.props.componentId}-${item.label}`}
-									name={this.props.componentId}
+									tabIndex={selected ? '-1' : '0'}
 									value={item.label}
 									onChange={this.handleClick}
 									checked={selected}

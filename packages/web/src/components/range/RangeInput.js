@@ -142,6 +142,7 @@ class RangeInput extends Component {
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
 							innerRef={this.startInputRef}
+							aria-label={`${this.props.componentId}-start-input`}
 						/>
 						{!this.state.isStartValid && (
 							<Content alert>Input range is invalid</Content>
@@ -160,6 +161,7 @@ class RangeInput extends Component {
 							alert={!this.state.isEndValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
+							aria-label={`${this.props.componentId}-end-input`}
 							innerRef={this.endInputRef}
 						/>
 						{!this.state.isEndValid && <Content alert>Input range is invalid</Content>}
@@ -182,6 +184,7 @@ RangeInput.propTypes = {
 	stepValue: types.number,
 	style: types.style,
 	themePreset: types.themePreset,
+	componentId: types.stringRequired,
 };
 
 RangeInput.defaultProps = {
