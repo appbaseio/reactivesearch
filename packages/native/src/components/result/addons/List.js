@@ -19,7 +19,7 @@ class List extends Component {
 				style={{ width: '100%' }}
 				data={this.props.data || []}
 				keyExtractor={item => item._id}
-				renderItem={({ item }) => this.props.onData(item)}
+				renderItem={({ item, index }) => this.props.onData(item, index)}
 				onEndReachedThreshold={0.5}
 				onEndReached={this.props.onEndReached}
 				{...getInnerKey(this.props.innerProps, 'flatList')}
