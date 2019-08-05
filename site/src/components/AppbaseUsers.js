@@ -39,6 +39,7 @@ const AppbaseUsers = ({
 			{imageConfig.map((image, index) => (
 				<img
 					style={imageStyle}
+					title={image.alt}
 					// eslint-disable-next-line
 					key={index}
 					srcSet={image.srcSet}
@@ -53,17 +54,17 @@ AppbaseUsers.defaultProps = {
 	imageConfig: [
 		{
 			srcSet:
-				'../../reactivesearch/images/testimonials/dol/grey@1x.png 1x, ../../reactivesearch/images/testimonials/dol/grey@2x.png 2x,../../reactivesearch/images/testimonials/dol/grey@3x.png 3x',
+				'../../reactivesearch/images/testimonials/dol/logo@1x.png 1x, ../../reactivesearch/images/testimonials/dol/logo@2x.png 2x,../../reactivesearch/images/testimonials/dol/logo@3x.png 3x',
 			alt: 'US Department of Labor',
 		},
 		{
 			srcSet:
-				'../../reactivesearch/images/testimonials/fbresearch/grey@1x.png 1x, ../../reactivesearch/images/testimonials/fbresearch/grey@2x.png 2x,../../reactivesearch/images/testimonials/fbresearch/grey@3x.png 3x',
+				'../../reactivesearch/images/testimonials/fbresearch/logo@1x.png 1x, ../../reactivesearch/images/testimonials/fbresearch/logo@2x.png 2x,../../reactivesearch/images/testimonials/fbresearch/logo@3x.png 3x',
 			alt: 'Facebook Research',
 		},
 		{
 			srcSet:
-				'../../reactivesearch/images/testimonials/rumbleon/rumbleon-grey@1x.png 1x, ../../reactivesearch/images/testimonials/rumbleon/rumbleon-grey@2x.png 2x,../../reactivesearch/images/testimonials/rumbleon/rumbleon-grey@3x.png 3x',
+				'../../reactivesearch/images/testimonials/rumbleon/rumbleon@1x.png 1x, ../../reactivesearch/images/testimonials/rumbleon/rumbleon@2x.png 2x,../../reactivesearch/images/testimonials/rumbleon/rumbleon@3x.png 3x',
 			alt: 'RumbleOn',
 		},
 		{
