@@ -1,8 +1,6 @@
 import React from 'react';
 import { css, cx } from 'react-emotion';
-import {
- string, object, shape, arrayOf,
-} from 'prop-types';
+import { string, object, shape, arrayOf } from 'prop-types';
 import { media } from '../utils';
 import SubHeading from './SubHeading';
 
@@ -51,12 +49,17 @@ const AppbaseUsers = ({
 	</React.Fragment>
 );
 AppbaseUsers.defaultProps = {
-	title: 'You are in good company',
+	title: 'ReactiveSearch is used by these awesome folks',
 	imageConfig: [
 		{
 			srcSet:
-				'../../reactivesearch/images/testimonials/kwiat/kwiat-grey@1x.png 1x, ../../reactivesearch/images/testimonials/kwiat/kwiat-grey@2x.png 2x,../../reactivesearch/images/testimonials/kwiat/kwiat-grey@3x.png 3x',
-			alt: 'Kwiat',
+				'../../reactivesearch/images/testimonials/dol/grey@1x.png 1x, ../../reactivesearch/images/testimonials/dol/grey@2x.png 2x,../../reactivesearch/images/testimonials/dol/grey@3x.png 3x',
+			alt: 'US Department of Labor',
+		},
+		{
+			srcSet:
+				'../../reactivesearch/images/testimonials/fbresearch/grey@1x.png 1x, ../../reactivesearch/images/testimonials/fbresearch/grey@2x.png 2x,../../reactivesearch/images/testimonials/fbresearch/grey@3x.png 3x',
+			alt: 'Facebook Research',
 		},
 		{
 			srcSet:
@@ -65,23 +68,18 @@ AppbaseUsers.defaultProps = {
 		},
 		{
 			srcSet:
-				'../../reactivesearch/images/testimonials/inquisithealth/inquisithealth-grey@2x.png 1x, ../../reactivesearch/images/testimonials/inquisithealth/inquisithealth-grey@2x.png 2x,../../reactivesearch/images/testimonials/inquisithealth/inquisithealth-grey@3x.png 3x',
-			alt: 'InquisitHealth',
+				'../../reactivesearch/images/testimonials/betagov/logo@1x.png 1x, ../../reactivesearch/images/testimonials/betagov/logo@2x.png 2x,../../reactivesearch/images/testimonials/betagov/logo@3x.png 3x',
+			alt: 'beta.gouv.fr',
 		},
 		{
 			srcSet:
-				'../../reactivesearch/images/testimonials/hiredb/hiredb-grey@1x.png 1x, ../../reactivesearch/images/testimonials/hiredb/hiredb-grey@2x.png 2x,../../reactivesearch/images/testimonials/hiredb/hiredb-grey@3x.png 3x',
-			alt: 'hiredb',
+				'../../reactivesearch/images/testimonials/nasa/Nasa@1x.png 1x, ../../reactivesearch/images/testimonials/nasa/Nasa@2x.png 2x,../../reactivesearch/images/testimonials/nasa/Nasa@3x.png 3x',
+			alt: 'Nasa',
 		},
 		{
 			srcSet:
-				'../../reactivesearch/images/testimonials/shopelect/shopelect-grey@1x.png 1x, ../../reactivesearch/images/testimonials/shopelect/shopelect-grey@2x.png 2x,../../reactivesearch/images/testimonials/shopelect/shopelect-grey@3x.png 3x',
-			alt: 'shopelect',
-		},
-		{
-			srcSet:
-				'../../reactivesearch/images/testimonials/lyearn/lyearn-grey@1x.png 1x, ../../reactivesearch/images/testimonials/lyearn/lyearn-grey@2x.png 2x,../../reactivesearch/images/testimonials/lyearn/lyearn-grey@3x.png 3x',
-			alt: 'lyearn',
+				'../../reactivesearch/images/testimonials/reactioncommerce/logo@1x.png 1x, ../../reactivesearch/images/testimonials/reactioncommerce/logo@2x.png 2x,../../reactivesearch/images/testimonials/reactioncommerce/logo@3x.png 3x',
+			alt: 'ReactionCommerce',
 		},
 	],
 	className: null,
@@ -93,12 +91,10 @@ AppbaseUsers.propTypes = {
 	className: string,
 	style: object,
 	imageStyle: object,
-	imageConfig: arrayOf(
-		shape({
+	imageConfig: arrayOf(shape({
 			srcSet: string,
 			alt: string,
-		}),
-	),
+		})),
 };
 
 export default AppbaseUsers;
