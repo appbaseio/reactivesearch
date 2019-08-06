@@ -682,6 +682,7 @@ class ReactiveList extends Component {
 			totalPages: Math.ceil(this.props.total / size),
 			currentPage: this.state.currentPage,
 			setPage: this.setPage,
+			showEndPage: this.props.showEndPage,
 			innerClass: this.props.innerClass,
 			fragmentName: this.props.componentId,
 		};
@@ -704,7 +705,7 @@ class ReactiveList extends Component {
 					? this.renderNoResults()
 					: null}
 				{this.props.pagination
-				&& (this.props.paginationAt === 'top' || this.props.paginationAt === 'both')
+					&& (this.props.paginationAt === 'top' || this.props.paginationAt === 'both')
 					? paginationElement
 					: null}
 				{this.hasCustomRenderer ? (
@@ -733,12 +734,12 @@ class ReactiveList extends Component {
 								color: '#666',
 							}}
 						>
-								Loading...
+							Loading...
 						</div>
 					) // prettier-ignore
 					: null}
 				{this.props.pagination
-				&& (this.props.paginationAt === 'bottom' || this.props.paginationAt === 'both')
+					&& (this.props.paginationAt === 'bottom' || this.props.paginationAt === 'both')
 					? paginationElement
 					: null}
 				{this.props.config.url.endsWith('appbase.io') && filteredResults.length ? (
@@ -805,6 +806,7 @@ ReactiveList.propTypes = {
 	pages: types.number,
 	pagination: types.bool,
 	paginationAt: types.paginationAt,
+	showEndPage: types.bool,
 	react: types.react,
 	renderResultStats: types.func,
 	scrollOnChange: types.bool,
@@ -828,6 +830,7 @@ ReactiveList.defaultProps = {
 	infiniteScroll: true,
 	pagination: false,
 	paginationAt: 'bottom',
+	showEndPage: false,
 	includeFields: ['*'],
 	excludeFields: [],
 	showResultStats: true,
