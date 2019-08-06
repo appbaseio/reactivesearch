@@ -214,7 +214,7 @@ kbd {
 
 /* Overriding max page width */
 .mw-xl {
-	max-width: 128rem;
+	max-width: 90%;
 }
 .mw-m {
 	max-width: 80rem;
@@ -1248,6 +1248,7 @@ to be custom HTML.
 	position: fixed;
 	width: 100%;
 	left: 0;
+	z-index: 2;
 	top: 75px;
 	background: white;
 	padding: 10px 40px;
@@ -1285,6 +1286,10 @@ to be custom HTML.
 	grid-gap: 8px;
 }
 
+.mobile-nav {
+	display: none;
+}
+
 .grid-dropdown > div > a {
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -1309,7 +1314,9 @@ to be custom HTML.
 	padding: 10px;
 	transition: all ease 0.2s;
 	border-radius: 5px;
+	border: 1px solid #e5e5e5;
 	background: #e5eff5;
+	background-image: linear-gradient(#e5eff5, #fff);
 	box-shadow: 0;
 }
 
@@ -1324,6 +1331,7 @@ to be custom HTML.
 	background: white;
 	width: 100%;
 	height: 220px;
+	z-index: 999;
 	box-shadow: 0 0px 4px rgba(0, 0, 0, 0.2);
 	overflow-y: scroll;
 	border-radius: 5px;
@@ -1393,4 +1401,56 @@ to be custom HTML.
 	.guide-box-container {
 		grid-template-columns: 1fr;
 	}
+}
+
+@media (max-width: 700px) {
+	.mobile-nav {
+		display: block;
+	}
+
+	.home-search-container {
+		display: none;
+	}
+
+	.mobile-sidebar .home-search-container {
+		width: 100%;
+		display: block;
+	}
+}
+
+.mobile-sidebar {
+	width: 0;
+	background: white;
+	position: fixed;
+	top: 75px;
+	left: 0;
+	opacity: 0;
+	height: calc(100vh - 75px);
+	transition: all ease 0.1s;
+	overflow: scroll;
+}
+
+.mobile-sidebar.open {
+	width: 100%;
+	animation: opaque 0.1s forwards;
+	animation-delay: 0.1s;
+}
+
+@keyframes opaque {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.mobile-links-container {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.hamburger {
+	width: 24px;
+	height: 24px;
 }

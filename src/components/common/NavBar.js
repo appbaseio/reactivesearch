@@ -7,6 +7,7 @@ import Logo from './Logo';
 import DropdownLink from './DropdownLink';
 import Icon from './Icon';
 import Search from './search/HomeSearch';
+import MobileNav from './MobileNav';
 
 const NavBar = ({ theme }) => {
 	// Theme definitions
@@ -52,16 +53,18 @@ const NavBar = ({ theme }) => {
 										} nowrap f8 pa3 mr1 mr3-l nl3 ${
 											value.selectedKey === 'guides' ? 'fw6 darkgrey' : 'fw3'
 										}`}
-										onClick={() => {
-											value.selectedKey === 'guides' ||
-												value.handleKey('guides');
+										onMouseEnter={() => {
+											value.handleKey('guides');
 										}}
 									>
 										Guides
 									</span>
 
 									{value.selectedKey === 'guides' ? (
-										<div className="dropdown-content">
+										<div
+											className="dropdown-content"
+											onMouseLeave={() => value.handleKey(null)}
+										>
 											<div
 												className={`${
 													Spirit.page.xl
@@ -88,7 +91,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="check"
+															name="Getting-Started"
 															className="dropdown-content-icon mr2"
 														/>
 														Getting Started
@@ -100,7 +103,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="sync"
+															name="import"
 															className="dropdown-content-icon mr2"
 														/>
 														Importing and Managing Data
@@ -126,7 +129,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="lotus"
+															name="Building-UI"
 															className="dropdown-content-icon mr2"
 														/>
 														Building UI
@@ -140,7 +143,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="terminal"
+															name="Analytics"
 															className="dropdown-content-icon mr2"
 														/>
 														Actionable Analytics
@@ -152,7 +155,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="shield"
+															name="Security"
 															className="dropdown-content-icon mr2"
 														/>
 														Security
@@ -173,15 +176,18 @@ const NavBar = ({ theme }) => {
 										} nowrap f8 pa3 mr1 mr3-l nl3 ${
 											value.selectedKey === 'api' ? 'fw6 darkgrey' : 'fw3'
 										}`}
-										onClick={() => {
-											value.selectedKey === 'api' || value.handleKey('api');
+										onMouseEnter={() => {
+											value.handleKey('api');
 										}}
 									>
 										API Reference
 									</span>
 
 									{value.selectedKey === 'api' ? (
-										<div className="dropdown-content">
+										<div
+											className="dropdown-content"
+											onMouseLeave={() => value.handleKey(null)}
+										>
 											<div
 												className={`${
 													Spirit.page.xl
@@ -208,7 +214,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="repo"
+															name="gatsby-logo"
 															className="dropdown-content-icon mr2"
 														/>
 														React
@@ -232,7 +238,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="signal-tower"
+															name="native-bw"
 															className="dropdown-content-icon mr2"
 														/>
 														Native
@@ -249,7 +255,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="javascript-logo"
+															name="Js"
 															className="dropdown-content-icon mr2"
 														/>
 														Javascript
@@ -344,6 +350,7 @@ const NavBar = ({ theme }) => {
 			<div className="relative home-search-container">
 				<Search />
 			</div>
+			<MobileNav />
 		</nav>
 	);
 };

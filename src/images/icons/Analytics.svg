@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
+    <title>97C4D579-B3BD-45FB-A782-BC79C2F515E1</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="Docs" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Docs-Icon" transform="translate(-54.000000, -25.000000)">
+            <g id="Analytics" transform="translate(54.000000, 25.000000)">
+                <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,23 C24,23.5522847 23.5522847,24 23,24 L1,24 C0.44771525,24 6.76353751e-17,23.5522847 0,23 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z" id="Rectangle-14" fill="#E5EFFA"></path>
+                <polygon id="Fill-1" fill="#151617" points="6.16666667 7.2146856 6.17188147 18.3015359 6.94444444 18.3015359 6.93922964 7.2146856"></polygon>
+                <polygon id="Fill-2" fill="#151617" points="5 16.910214 5 17.644383 19 17.6392451 19 16.9052596"></polygon>
+                <polygon id="Fill-3" fill="#151617" points="9.276967 12.3684211 8.11111111 12.3687291 8.11192189 16.7448093 9.27777778 16.7445013"></polygon>
+                <polygon id="Fill-4" fill="#151617" points="11.5326839 9.91816849 10.3666667 9.91870174 10.3673161 16.79535 11.5333333 16.7948168"></polygon>
+                <polygon id="Fill-5" fill="#151617" points="13.5552141 11.4386508 12.3888889 11.4395088 12.3893158 16.7528365 13.5555556 16.7519786"></polygon>
+                <polygon id="Fill-5" fill="#151617" points="15.5774363 9.15792733 14.4111111 9.15916383 14.411538 16.8166068 15.5777778 16.8153703"></polygon>
+                <polygon id="Fill-5" fill="#151617" points="17.9107696 13.1323963 16.7444444 13.1329911 16.7448713 16.8166068 17.9111111 16.816012"></polygon>
+                <path d="" id="Path-2" stroke="#979797" fill-rule="nonzero" transform="translate(0.792835, 5.354482) rotate(-3.000000) translate(-0.792835, -5.354482) "></path>
+                <polyline id="Path-3" stroke="#151617" stroke-width="0.5" fill-rule="nonzero" transform="translate(12.295314, 7.989697) rotate(-3.000000) translate(-12.295314, -7.989697) " points="7.2585669 10.2795262 10.8288154 6.89274206 14.2821426 7.78442921 17.3320608 5.69986826"></polyline>
+                <ellipse id="Oval" fill="#151617" fill-rule="nonzero" transform="translate(7.615254, 10.335345) rotate(-3.000000) translate(-7.615254, -10.335345) " cx="7.61525425" cy="10.3353445" rx="1" ry="1"></ellipse>
+                <ellipse id="Oval-Copy-5" fill="#151617" fill-rule="nonzero" transform="translate(10.991955, 7.020036) rotate(-3.000000) translate(-10.991955, -7.020036) " cx="10.9919553" cy="7.02003555" rx="1" ry="1"></ellipse>
+                <ellipse id="Oval-Copy-6" fill="#151617" fill-rule="nonzero" transform="translate(14.422979, 7.618788) rotate(-3.000000) translate(-14.422979, -7.618788) " cx="14.4229794" cy="7.61878767" rx="1" ry="1"></ellipse>
+                <ellipse id="Oval-Copy-7" fill="#151617" fill-rule="nonzero" transform="translate(17.254568, 5.654871) rotate(-3.000000) translate(-17.254568, -5.654871) " cx="17.2545682" cy="5.65487082" rx="1" ry="1"></ellipse>
+            </g>
+        </g>
+    </g>
+</svg>

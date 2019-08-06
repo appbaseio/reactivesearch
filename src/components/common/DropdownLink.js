@@ -4,20 +4,12 @@ const DropdownContext = React.createContext();
 
 class DropdownLink extends React.Component {
 	state = {
-		open: false,
 		selectedKey: null,
-	};
-
-	handleShowOverlay = () => {
-		this.setState({
-			open: true,
-		});
 	};
 
 	handleCloseOverlay = () => {
 		this.setState({
 			selectedKey: null,
-			open: false,
 		});
 	};
 
@@ -31,8 +23,6 @@ class DropdownLink extends React.Component {
 				const { selectedKey } = this.state;
 				if (selectedKey === prevKey) {
 					this.handleCloseOverlay();
-				} else {
-					this.handleShowOverlay();
 				}
 			},
 		);
@@ -43,7 +33,7 @@ class DropdownLink extends React.Component {
 	);
 
 	render() {
-		const { selectedKey, open } = this.state;
+		const { selectedKey } = this.state;
 		return (
 			<DropdownContext.Provider
 				value={{
@@ -51,9 +41,6 @@ class DropdownLink extends React.Component {
 					handleKey: this.handleKey,
 				}}
 			>
-				{open && (
-					<div className="dropdown-header-overlay" onClick={this.handleCloseOverlay} />
-				)}
 				{this.props.children}
 			</DropdownContext.Provider>
 		);
