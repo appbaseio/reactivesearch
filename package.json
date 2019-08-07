@@ -51,6 +51,8 @@
 		"prettier": "^1.16.4"
 	},
 	"dependencies": {
+		"@appbaseio/designkit": "^0.9.10",
+		"emotion": "^10.0.14",
 		"gatsby": "2.1.34",
 		"gatsby-image": "2.0.33",
 		"gatsby-plugin-catch-links": "2.0.13",
