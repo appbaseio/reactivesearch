@@ -91,7 +91,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="Getting-Started"
+															name="gettingStarted"
 															className="dropdown-content-icon mr2"
 														/>
 														Getting Started
@@ -103,10 +103,10 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="import"
+															name="importData"
 															className="dropdown-content-icon mr2"
 														/>
-														Importing and Managing Data
+														Managing Data
 													</Link>
 												</div>
 												<div>
@@ -117,7 +117,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="search"
+															name="searchRelevancy"
 															className="dropdown-content-icon mr2"
 														/>
 														Search Relevancy
@@ -129,7 +129,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="Building-UI"
+															name="buildingUI"
 															className="dropdown-content-icon mr2"
 														/>
 														Building UI
@@ -143,7 +143,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="Analytics"
+															name="analytics"
 															className="dropdown-content-icon mr2"
 														/>
 														Actionable Analytics
@@ -155,7 +155,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="Security"
+															name="security"
 															className="dropdown-content-icon mr2"
 														/>
 														Security
@@ -214,7 +214,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="gatsby-logo"
+															name="reactBw"
 															className="dropdown-content-icon mr2"
 														/>
 														React
@@ -226,7 +226,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="sdks"
+															name="vueBw"
 															className="dropdown-content-icon mr2"
 														/>
 														Vue
@@ -238,7 +238,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="native-bw"
+															name="nativeBw"
 															className="dropdown-content-icon mr2"
 														/>
 														Native
@@ -255,7 +255,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="Js"
+															name="jsBw"
 															className="dropdown-content-icon mr2"
 														/>
 														Javascript
@@ -267,7 +267,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="ruby-logo"
+															name="goBw"
 															className="dropdown-content-icon mr2"
 														/>
 														Golang
@@ -279,7 +279,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="server"
+															name="rest"
 															className="dropdown-content-icon mr2"
 														/>
 														REST
@@ -296,7 +296,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="python-logo"
+															name="pythonBw"
 															className="dropdown-content-icon mr2"
 														/>
 														Python
@@ -308,7 +308,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="javascript-logo"
+															name="jsBw"
 															className="dropdown-content-icon mr2"
 														/>
 														Javascript
@@ -320,7 +320,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="shield"
+															name="goBw"
 															className="dropdown-content-icon mr2"
 														/>
 														Go
@@ -332,7 +332,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="android-logo"
+															name="phpBw"
 															className="dropdown-content-icon mr2"
 														/>
 														PHP

@@ -17,9 +17,14 @@ search.addDocuments(data);
 const getSuggestions = value => {
 	const inputValue = value.trim().toLowerCase();
 	const inputLength = inputValue.length;
-	let topResults = search.search(inputValue).slice(0, 8);
+	const searchValue = search.search(inputValue);
+	let topResults = searchValue.filter(item => !item.heading).slice(0, 8);
+	const withHeading = searchValue.filter(item => item.heading);
+	if (topResults.length < 8) {
+		topResults = [...topResults, ...withHeading.slice(0, 8 - topResults.length)];
+	}
 	const exactMatchIndex = topResults.findIndex(
-		item => item.title.toLowerCase() === inputValue && !item.heading.length,
+		item => item.title.toLowerCase() === inputValue && !item.heading,
 	);
 	if (exactMatchIndex > 0) {
 		topResults = [
@@ -31,13 +36,59 @@ const getSuggestions = value => {
 	return inputLength === 0 ? [] : topResults;
 };
 
+const getValue = url => {
+	if (url.startsWith('/docs/reactivesearch/v2')) {
+		return 'reactBw';
+	}
+	if (url.startsWith('/docs/reactivesearch/v3')) {
+		return 'reactBw';
+	}
+	if (url.startsWith('/docs/reactivesearch/vue')) {
+		return 'vueBw';
+	}
+	if (url.startsWith('/docs/reactivesearch/native')) {
+		return 'nativeBw';
+	}
+	if (url.startsWith('/docs/gettingstarted')) {
+		return 'gettingStarted';
+	}
+	if (url.startsWith('/docs/analytics')) {
+		return 'analytics';
+	}
+	if (url.startsWith('/api/js')) {
+		return 'jsBw';
+	}
+	if (url.startsWith('/api/rest')) {
+		return 'rest';
+	}
+	if (url.startsWith('/docs/data')) {
+		return 'importData';
+	}
+	if (url.startsWith('/docs/security')) {
+		return 'security';
+	}
+
+	return 'buildingUI';
+};
+
 const HitTemplate = ({ hit }) => (
-	<Link to={hit.url} className="tdn db pt3 pb3 blue search-result pl5 pr5 br3 br--left">
-		<h4 className={`${Spirit.h5} dib`}>{hit.title}</h4>
-		<p
-			className={`${Spirit.small} midgrey nudge-bottom--2`}
-			dangerouslySetInnerHTML={{ __html: hit.heading }}
-		/>
+	<Link
+		to={hit.url}
+		className="tdn db pt3 pb3 blue search-result pl5 pr5 br3 br--left suggestion"
+	>
+		<div className="suggestion-container">
+			<div className="suggestion-content-icon">
+				<Icon name={getValue(hit.url)} />
+			</div>
+
+			<div>
+				<h4 className={`${Spirit.h5} dib`}>{hit.title}</h4>
+				<p
+					className={`${Spirit.small} midgrey nudge-bottom--2`}
+					dangerouslySetInnerHTML={{ __html: hit.tag || hit.heading }}
+				/>
+			</div>
+		</div>
 	</Link>
 );
 

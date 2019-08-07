@@ -9,8 +9,7 @@ const search = new JsSearch.Search('url');
 search.tokenizer = new JsSearch.StopWordsTokenizer(new JsSearch.SimpleTokenizer());
 
 search.addIndex('title');
-search.addIndex('heading');
-search.addIndex('tokens');
+search.addIndex('tag');
 search.addDocuments(data);
 
 const getSuggestions = value => {
@@ -32,10 +31,10 @@ const getSuggestions = value => {
 
 const HitTemplate = ({ hit }) => (
 	<Link to={hit.url} className="tdn db pt3 pb3 blue search-result pl5 pr5 br3 br--left">
-		<h4 className={`${Spirit.h5} dib`}>{hit.title}</h4>
+		<h4 className={`${Spirit.h5} dib`}>{hit.mate_title || hit.title}</h4>
 		<p
 			className={`${Spirit.small} midgrey nudge-bottom--2`}
-			dangerouslySetInnerHTML={{ __html: hit.heading }}
+			dangerouslySetInnerHTML={{ __html: hit.tag || hit.heading }}
 		/>
 	</Link>
 );

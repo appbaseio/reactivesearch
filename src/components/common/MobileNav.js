@@ -58,7 +58,7 @@ class MobileNav extends React.Component {
 									} nowrap f5 pa3 mr3 mr3-l nl3 dropdown-link`}
 								>
 									<Icon
-										name="Getting-Started"
+										name="gettingStarted"
 										className="dropdown-content-icon mr2"
 									/>
 									Getting Started
@@ -99,7 +99,7 @@ class MobileNav extends React.Component {
 										themeClasses.dark.menuItem
 									} nowrap f5 pa3 mr3 mr3-l nl3 dropdown-link`}
 								>
-									<Icon name="Analytics" className="dropdown-content-icon mr2" />
+									<Icon name="analytics" className="dropdown-content-icon mr2" />
 									Actionable Analytics
 								</Link>
 								<Link
@@ -108,7 +108,7 @@ class MobileNav extends React.Component {
 										themeClasses.dark.menuItem
 									} nowrap f5 pa3 mr3 mr3-l nl3 dropdown-link`}
 								>
-									<Icon name="Security" className="dropdown-content-icon mr2" />
+									<Icon name="security" className="dropdown-content-icon mr2" />
 									Security
 								</Link>
 							</div>
@@ -166,7 +166,7 @@ class MobileNav extends React.Component {
 										themeClasses.dark.menuItem
 									} nowrap f5 pa3 mr3 mr3-l nl3 dropdown-link`}
 								>
-									<Icon name="Js" className="dropdown-content-icon mr2" />
+									<Icon name="search" className="dropdown-content-icon mr2" />
 									Javascript
 								</Link>
 								<Link
@@ -175,7 +175,7 @@ class MobileNav extends React.Component {
 										themeClasses.dark.menuItem
 									} nowrap f5 pa3 mr3 mr3-l nl3 dropdown-link`}
 								>
-									<Icon name="ruby-logo" className="dropdown-content-icon mr2" />
+									<Icon name="search" className="dropdown-content-icon mr2" />
 									Golang
 								</Link>
 								<Link

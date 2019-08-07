@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="16px" height="7px" viewBox="0 0 16 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
     <title>9EA49CBC-9D54-45B2-8C06-4EAE323998CC</title>
     <desc>Created with sketchtool.</desc>
-    <g id="Docs" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Docs-Icon" transform="translate(-180.000000, -151.000000)">
-            <g id="Rest" transform="translate(180.000000, 151.000000)">
-                <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,23 C24,23.5522847 23.5522847,24 23,24 L1,24 C0.44771525,24 6.76353751e-17,23.5522847 0,23 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z" id="Rectangle-14" fill="#E5EFFA"></path>
-                <text id="REST" font-family="UbuntuMono-Bold, Ubuntu Mono" font-size="8" font-weight="bold" fill="#151617">
+    <g id="Docs" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="UbuntuMono-Bold, Ubuntu Mono" font-size="8" font-weight="bold">
+        <g id="Docs-Icon" transform="translate(-184.000000, -160.000000)" fill="#151617">
+            <g id="rest" transform="translate(180.000000, 151.000000)">
+                <text id="REST">
                     <tspan x="4" y="15">REST</tspan>
                 </text>
             </g>

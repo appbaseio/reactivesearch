@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="14px" height="10px" viewBox="0 0 14 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
     <title>F72E2B71-A6BE-43B8-B147-CF83B76F72CB</title>
     <desc>Created with sketchtool.</desc>
@@ -15,9 +15,8 @@
         <polygon id="path-6" points="5 16.7222222 19.0717949 16.7222222 19.0717949 6.72222222 5 6.72222222"></polygon>
     </defs>
     <g id="Docs" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Docs-Icon" transform="translate(-54.000000, -67.000000)">
+        <g id="Docs-Icon" transform="translate(-59.000000, -74.000000)">
             <g id="php" transform="translate(54.000000, 67.000000)">
-                <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,23 C24,23.5522847 23.5522847,24 23,24 L1,24 C0.44771525,24 6.76353751e-17,23.5522847 0,23 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z" id="Rectangle-14" fill="#E5EFFA"></path>
                 <mask id="mask-2" fill="white">
                     <use xlink:href="#path-1"></use>
                 </mask>

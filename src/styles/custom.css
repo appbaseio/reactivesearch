@@ -1303,7 +1303,6 @@ to be custom HTML.
 
 .dropdown-link:hover .dropdown-content-icon {
 	stroke: white;
-	background: #3eb0ef;
 	fill: white;
 	box-shadow: 0 2px 6px 0 rgba(40, 48, 52, 0.15);
 }
@@ -1453,4 +1452,24 @@ to be custom HTML.
 .hamburger {
 	width: 24px;
 	height: 24px;
+}
+
+.suggestion-container {
+	align-items: center;
+	display: flex;
+}
+
+.suggestion:hover .suggestion-content-icon {
+	box-shadow: 0 2px 6px 0 rgba(40, 48, 52, 0.15);
+}
+
+.suggestion-content-icon {
+	padding: 10px;
+	transition: all ease 0.2s;
+	margin-right: 10px;
+	border-radius: 5px;
+	border: 1px solid #e5e5e5;
+	background: #e5eff5;
+	background-image: linear-gradient(#e5eff5, #fff);
+	box-shadow: 0;
 }
