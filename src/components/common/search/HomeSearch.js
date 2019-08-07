@@ -53,19 +53,19 @@ const getValue = url => {
 		return 'gettingStarted';
 	}
 	if (url.startsWith('/docs/analytics')) {
-		return 'analytics';
+		return 'Analytics';
 	}
 	if (url.startsWith('/api/js')) {
 		return 'jsBw';
 	}
 	if (url.startsWith('/api/rest')) {
-		return 'rest';
+		return 'Rest';
 	}
 	if (url.startsWith('/docs/data')) {
 		return 'importData';
 	}
 	if (url.startsWith('/docs/security')) {
-		return 'security';
+		return 'Security';
 	}
 
 	return 'buildingUI';
