@@ -143,7 +143,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="analytics"
+															name="Analytics"
 															className="dropdown-content-icon mr2"
 														/>
 														Actionable Analytics

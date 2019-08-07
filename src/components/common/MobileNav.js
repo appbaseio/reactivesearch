@@ -99,7 +99,7 @@ class MobileNav extends React.Component {
 										themeClasses.dark.menuItem
 									} nowrap f5 pa3 mr3 mr3-l nl3 dropdown-link`}
 								>
-									<Icon name="analytics" className="dropdown-content-icon mr2" />
+									<Icon name="Analytics" className="dropdown-content-icon mr2" />
 									Actionable Analytics
 								</Link>
 								<Link
