@@ -20,7 +20,7 @@ export default {
 		title: 'React + ElasticSearch = ❤️',
 		description: 'UI components for building data-driven search experiences.',
 		image: {
-			src: '../../reactivesearch/images/browser.png',
+			src: '../../reactivesearch/images/browser@2x.png',
 			alt: 'Reactive Search Components',
 		},
 		button: {

@@ -273,6 +273,9 @@ const Section = styled('div')`
 	p {
 		font-size: 18px;
 	}
+	@media (max-width: 576px) {
+		padding: 40px 0;
+	}
 `;
 
 const vcenter = css`
