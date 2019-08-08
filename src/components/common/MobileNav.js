@@ -5,13 +5,13 @@ import Icon from './Icon';
 import MobileLinks from './MobileLinks';
 
 const getValue = () => {
-	if (window.location.pathname.startsWith('/docs/reactivesearch/v2')) {
+	if (window && window.location.pathname.startsWith('/docs/reactivesearch/v2')) {
 		return 'v2 - Web';
 	}
-	if (window.location.pathname.startsWith('/docs/reactivesearch/vue')) {
+	if (window && window.location.pathname.startsWith('/docs/reactivesearch/vue')) {
 		return 'v1 - Vue';
 	}
-	if (window.location.pathname.startsWith('/docs/reactivesearch/native')) {
+	if (window && window.location.pathname.startsWith('/docs/reactivesearch/native')) {
 		return 'v0.12 - Native';
 	}
 

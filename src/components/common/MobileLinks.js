@@ -44,6 +44,8 @@ class MobileLinks extends React.Component {
 											<div className="link-dot" />
 											<Link
 												className={`${Spirit.p} link ${
+													window &&
+													window.location &&
 													window.location.pathname === link.link
 														? 'blue fw6 active-link'
 														: 'hover-blue'
