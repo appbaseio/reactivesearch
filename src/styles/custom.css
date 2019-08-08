@@ -1446,7 +1446,7 @@ to be custom HTML.
 
 .mobile-links-container {
 	display: flex;
-	flex-wrap: wrap;
+	flex-direction: column;
 }
 
 .hamburger {
@@ -1472,4 +1472,21 @@ to be custom HTML.
 	background: #e5eff5;
 	background-image: linear-gradient(#e5eff5, #fff);
 	box-shadow: 0;
+}
+
+.active-link {
+	color: var(--blue);
+}
+
+.between {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.footer ul h4 {
+	color: white;
+	font-size: 1.2rem;
+	letter-spacing: 0.15rem;
+	font-weight: 600;
 }

@@ -1,5 +1,6 @@
 - groups:
       - group: Javascript
+        icon: js-bw
         items:
             - title: QuickStart
               link: /api/javascript/quickstart/
@@ -8,18 +9,21 @@
             - title: Webhooks Guide
               link: /api/javascript/webhooks/
       - group: REST
+        icon: rest
         items:
             - title: Quickstart
               link: /api/rest/quickstart/
             - title: ABC - Appbase via command line
               link: /api/rest/abc/
       - group: Golang
+        icon: go-bw
         items:
             - title: QuickStart
               link: /api/go/quickstart/
             - title: Queries with Go
               link: /api/go/queries/
       - group: Interactive Examples
+        icon: github
         items:
             - title: Javascript / Node.js
               link: /api/examples/js/

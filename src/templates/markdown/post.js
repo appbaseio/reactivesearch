@@ -1,44 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import url from 'url';
 
 import { Layout } from '../../components/common/layout';
 import { Spirit } from '../../styles/spirit-styles';
 import { SidebarNav } from '../../components/common/sidebar';
 import { PrevNextSection } from '../../components/common/prev-next';
-import { PostHeader, Icon, TOC } from '../../components/common';
+import { Icon, TOC } from '../../components/common';
 
 const getGitHubLink = absoluteFilePath => {
-	let contentFilePath = ``;
+	const splitPath = absoluteFilePath.split('/content')[1];
 
-	// testing only for `/content` doesn't work as we have a URL that contains
-	// `/content` twice. Therefore we're testing for each API version docs and
-	// the local content files.
-	const gitHubRepos = [
-		{
-			regex: /^(?:\S*\/content\/api\/v0\.11\/)(\S*)/i,
-			url: `https://github.com/TryGhost/docs-api/blob/v0.11/`,
-		},
-		{
-			regex: /^(?:\S*\/content\/api\/v2\/)(\S*)/i,
-			url: `https://github.com/TryGhost/docs-api/blob/master/`,
-		},
-		{
-			regex: /^(?:\S*\/content\/)(\S*)/i,
-			url: `https://github.com/TryGhost/docs/blob/master/content/`,
-		},
-	];
-
-	// Using for...of here as we need to stop iterating as soon as we have a match
-	for (const repo of gitHubRepos) {
-		if (repo.regex.test(absoluteFilePath)) {
-			contentFilePath = url.resolve(repo.url, repo.regex.exec(absoluteFilePath)[1]);
-			break;
-		}
-	}
-
-	return contentFilePath;
+	return `https://github.com/jyash97/Docs/tree/v2/content${splitPath}`;
 };
 
 class Post extends React.Component {

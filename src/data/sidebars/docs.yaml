@@ -1,11 +1,13 @@
 - groups:
       - group: Getting Started
+        icon: gettingStarted
         items:
             - title: QuickStart
               link: /docs/gettingstarted/QuickStart/
             - title: How Appbaseio Works
               link: /docs/gettingstarted/Working/
       - group: Managing Data
+        icon: importData
         items:
             - title: Data Model
               link: /docs/data/Model/
@@ -14,6 +16,7 @@
             - title: Importing Data
               link: /docs/data/Import/
       - group: Search Relevancy
+        icon: search
         items:
             - title: Mappings
               link: /docs/search/Mappings
@@ -23,12 +26,14 @@
               link: /docs/search/Rules
       - group: Building Search UI
       - group: Actionable Analytics
+        icon: analytics
         items:
             - title: Overview
               link: /docs/analytics/Overview/
             - title: Implement Analytics
               link: /docs/analytics/Implement/
       - group: Security
+        icon: security
         items:
             - title: API Credentials
               link: /docs/security/Credentials/

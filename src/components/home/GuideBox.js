@@ -15,7 +15,7 @@ const GuideBox = ({ links, description, title, color, index }) => (
 		</div>
 		<div className="guide-box-links">
 			{links.map(item => (
-				<div className="guide-link">
+				<div className="guide-link" key={item.title}>
 					<div className="link-dot" />
 					<Link className={`${Spirit.p} midlightgrey link hover-blue`} to={item.link}>
 						{item.title}
