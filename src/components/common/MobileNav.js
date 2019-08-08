@@ -7,8 +7,8 @@ import Icon from './Icon';
 import MobileLinks from './MobileLinks';
 
 const getValue = () => {
-	const path = globalHistory.location.pathname;
-	if (window) {
+	if (globalHistory) {
+		const path = globalHistory.location && globalHistory.location.pathname;
 		if (path && path.startsWith('/docs/reactivesearch/v2')) {
 			return 'v2 - Web';
 		}
