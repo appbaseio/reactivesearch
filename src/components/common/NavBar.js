@@ -143,7 +143,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="Analytics"
+															name="analytics"
 															className="dropdown-content-icon mr2"
 														/>
 														Actionable Analytics
@@ -155,7 +155,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="Security"
+															name="security"
 															className="dropdown-content-icon mr2"
 														/>
 														Security
@@ -213,9 +213,14 @@ const NavBar = ({ theme }) => {
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
-														<Icon
-															name="reactBw"
+														<img
 															className="dropdown-content-icon mr2"
+															src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K"
+															alt="React"
+															style={{
+																filter:
+																	'grayscale(1) saturate(1) hue-rotate(180deg)',
+															}}
 														/>
 														React
 													</Link>
@@ -226,7 +231,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="vueBw"
+															name="vue-bw"
 															className="dropdown-content-icon mr2"
 														/>
 														Vue
@@ -237,9 +242,14 @@ const NavBar = ({ theme }) => {
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
-														<Icon
-															name="nativeBw"
+														<img
 															className="dropdown-content-icon mr2"
+															src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K"
+															alt="React"
+															style={{
+																filter:
+																	'grayscale(1) saturate(1) hue-rotate(180deg)',
+															}}
 														/>
 														Native
 													</Link>
@@ -255,7 +265,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="jsBw"
+															name="js-bw"
 															className="dropdown-content-icon mr2"
 														/>
 														Javascript
@@ -267,7 +277,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="goBw"
+															name="go-bw"
 															className="dropdown-content-icon mr2"
 														/>
 														Golang
@@ -279,7 +289,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="Rest"
+															name="rest"
 															className="dropdown-content-icon mr2"
 														/>
 														REST
@@ -296,7 +306,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="pythonBw"
+															name="python-bw"
 															className="dropdown-content-icon mr2"
 														/>
 														Python
@@ -308,7 +318,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="jsBw"
+															name="js-bw"
 															className="dropdown-content-icon mr2"
 														/>
 														Javascript
@@ -320,7 +330,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="goBw"
+															name="go-bw"
 															className="dropdown-content-icon mr2"
 														/>
 														Go
@@ -332,7 +342,7 @@ const NavBar = ({ theme }) => {
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
 														<Icon
-															name="phpBw"
+															name="php-bw"
 															className="dropdown-content-icon mr2"
 														/>
 														PHP

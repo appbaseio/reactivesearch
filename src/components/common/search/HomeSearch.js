@@ -38,25 +38,25 @@ const getSuggestions = value => {
 
 const getValue = url => {
 	if (url.startsWith('/docs/reactivesearch/v2')) {
-		return 'reactBw';
+		return 'React-bw';
 	}
 	if (url.startsWith('/docs/reactivesearch/v3')) {
-		return 'reactBw';
+		return 'React-bw';
 	}
 	if (url.startsWith('/docs/reactivesearch/vue')) {
-		return 'vueBw';
+		return 'Vue-bw';
 	}
 	if (url.startsWith('/docs/reactivesearch/native')) {
-		return 'nativeBw';
+		return 'native-bw';
 	}
 	if (url.startsWith('/docs/gettingstarted')) {
 		return 'gettingStarted';
 	}
 	if (url.startsWith('/docs/analytics')) {
-		return 'Analytics';
+		return 'analytics';
 	}
 	if (url.startsWith('/api/js')) {
-		return 'jsBw';
+		return 'js-bw';
 	}
 	if (url.startsWith('/api/rest')) {
 		return 'Rest';
