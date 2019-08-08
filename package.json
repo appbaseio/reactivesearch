@@ -52,6 +52,7 @@
 	},
 	"dependencies": {
 		"@appbaseio/designkit": "^0.9.10",
+		"@reach/router": "^1.2.1",
 		"emotion": "^10.0.14",
 		"gatsby": "2.1.34",
 		"gatsby-image": "2.0.33",

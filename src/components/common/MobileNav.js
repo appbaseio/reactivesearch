@@ -1,18 +1,21 @@
 import React from 'react';
 import ReactDropdown from 'react-dropdown';
+import { globalHistory } from '@reach/router';
 import Search from './search/HomeSearch';
 import Icon from './Icon';
+
 import MobileLinks from './MobileLinks';
 
 const getValue = () => {
+	const path = globalHistory.location.pathname;
 	if (window) {
-		if (window && window.location.pathname.startsWith('/docs/reactivesearch/v2')) {
+		if (path && path.startsWith('/docs/reactivesearch/v2')) {
 			return 'v2 - Web';
 		}
-		if (window && window.location.pathname.startsWith('/docs/reactivesearch/vue')) {
+		if (path && path.startsWith('/docs/reactivesearch/vue')) {
 			return 'v1 - Vue';
 		}
-		if (window && window.location.pathname.startsWith('/docs/reactivesearch/native')) {
+		if (path && path.startsWith('/docs/reactivesearch/native')) {
 			return 'v0.12 - Native';
 		}
 	}
