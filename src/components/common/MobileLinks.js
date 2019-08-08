@@ -27,10 +27,9 @@ class MobileLinks extends React.Component {
 						return null;
 					}
 					return (
-						<React.Fragment>
+						<div key={item.group}>
 							<div
 								className="middarkgrey-d2 link hover-blue nowrap fw6 nowrap f5 pa3 pb1 mr3 mr3-l nl3 dropdown-link"
-								key={item.group}
 								onClick={() => this.toggleLinks(item.group)}
 							>
 								{item.icon && (
@@ -41,7 +40,7 @@ class MobileLinks extends React.Component {
 							{item.group === open ? (
 								<div className="guide-box-links pl3 pa2">
 									{item.items.map(link => (
-										<div className="guide-link">
+										<div key={link.link} className="guide-link">
 											<div className="link-dot" />
 											<Link
 												className={`${Spirit.p} link ${
@@ -57,7 +56,7 @@ class MobileLinks extends React.Component {
 									))}
 								</div>
 							) : null}
-						</React.Fragment>
+						</div>
 					);
 				})}
 			</div>

@@ -12,9 +12,6 @@ require(`dotenv`).config({
 });
 
 const plugins = [
-	/**
-	 *  Content Plugins
-	 */
 	{
 		resolve: `gatsby-source-filesystem`,
 		options: {
@@ -107,6 +104,16 @@ const plugins = [
 		resolve: `gatsby-plugin-google-analytics`,
 		options: {
 			trackingId: `UA-54082612-5`,
+		},
+	},
+
+	{
+		resolve: 'gatsby-plugin-page-progress',
+		options: {
+			excludePaths: ['/'],
+			height: 3,
+			prependToBody: false,
+			color: `#3eb0ef`,
 		},
 	},
 ];

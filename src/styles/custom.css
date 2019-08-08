@@ -1490,3 +1490,7 @@ to be custom HTML.
 	letter-spacing: 0.15rem;
 	font-weight: 600;
 }
+
+#gatsby-plugin-page-progress {
+	top: 75px !important;
+}

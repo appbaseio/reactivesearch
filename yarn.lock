@@ -6945,6 +6945,11 @@ gatsby-plugin-page-creator@^2.0.10:
     parse-filepath "^1.0.1"
     slash "^1.0.0"
 
+gatsby-plugin-page-progress@^2.0.9:
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-page-progress/-/gatsby-plugin-page-progress-2.0.9.tgz#7309bff27f58aaaf2d9c17c39821fc5a02e7e27e"
+  integrity sha512-Ywb0N5z0YtiygTgy8sLlpcSh1ODUX9lC59rPqYrFgWfOFiDTUjBwQurVvXSOZy4+IqCw4pQmWfD2kbBhPe2Sig==
+
 gatsby-plugin-postcss@2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-postcss/-/gatsby-plugin-postcss-2.0.6.tgz#812e48605f15c2e54da318ed0ebf26769447767c"
