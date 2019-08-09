@@ -29,7 +29,6 @@ import queries from '../styles/mediaQueries';
 import { getButtonStyle, getLinkStyle } from '../styles/utils';
 import DiscoverRS from './DiscoverRS';
 import AppbaseUsers from './AppbaseUsers';
-import DownloadStats from './DownloadStats';
 
 const button = {
 	fontSize: '14px',
@@ -47,6 +46,12 @@ const description = css`
 		font-size: 12px;
 	`};
 `;
+const bannerTitle = css`
+	padding-bottom: 50px
+	${queries.small`
+		paddin-bottom: 10px;
+	`};
+`;
 class HomePage extends Component {
 	constructor(props) {
 		super(props);
@@ -60,7 +65,7 @@ class HomePage extends Component {
 		// To fetch reactive search github stars
 		fetch('https://api.github.com/repos/appbaseio/reactivesearch')
 			.then(res => res.json())
-			.then((res) => {
+			.then(res => {
 				this.setState({
 					githubStarCount: res.stargazers_count,
 				});
@@ -123,7 +128,7 @@ class HomePage extends Component {
 								>
 									<img
 										src="images/support.svg"
-										onError={(e) => {
+										onError={e => {
 											e.target.src = '/images/support.svg';
 										}}
 										style={{ marginRight: 8 }}
@@ -278,19 +283,13 @@ class HomePage extends Component {
 							<Layout>
 								<div className={titleRow}>
 									{config.banner6.button ? (
-										<H3
-											style={{
-												paddingBottom: 50,
-											}}
-										>
-											{config.banner6.title}
-										</H3>
+										<H3 className={bannerTitle}>{config.banner6.title}</H3>
 									) : (
 										<H2
 											style={{
 												margin: '0 auto',
-												paddingBottom: 50,
 											}}
+											className={bannerTitle}
 										>
 											{config.banner6.title}
 										</H2>
@@ -376,13 +375,12 @@ class HomePage extends Component {
 										smSize={1}
 										gutter="15px"
 										smGutter="0px"
-										style={{ marginBottom: '50px' }}
 									>
 										{config.banner6.demos.map((
 											d,
 											index, // eslint-disable-line
 										) =>
-											(Object.keys(d).length ? ( // eslint-disable-next-line
+											Object.keys(d).length ? ( // eslint-disable-next-line
 												<ImageCard key={index} src={d.src}>
 													<div>
 														<Title>{d.title}</Title>
@@ -404,7 +402,8 @@ class HomePage extends Component {
 												</ImageCard>
 											) : (
 												<div />
-											)))}
+											),
+										)}
 									</Grid>
 								)}
 							</Layout>
@@ -461,7 +460,7 @@ class HomePage extends Component {
 									style={{ marginBottom: '50px' }}
 								>
 									{config.banner7.articles.map((d, index) =>
-										(Object.keys(d).length ? (
+										Object.keys(d).length ? (
 											// eslint-disable-next-line
 											<ImageCard key={index} src={d.src}>
 												<div>
@@ -482,7 +481,8 @@ class HomePage extends Component {
 											</ImageCard>
 										) : (
 											<div />
-										)))}
+										),
+									)}
 								</Grid>
 							</Layout>
 						</Section>
@@ -511,7 +511,6 @@ class HomePage extends Component {
 							<SupportGrid configName={config.name} />
 						</Layout>
 					</Section>
-					{config.name === 'web' && <DownloadStats style={{ marginBottom: 30 }} />}
 					<Footer configName={config.name} footerConfig={config.footer} />
 					<a
 						href={config.producthunt}
