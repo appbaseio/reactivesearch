@@ -142,7 +142,7 @@ const banner = (image, bgColor) => css`
 		height: calc(100% - 100px);
 		background-image: url(${image});
 		background-size: contain;
-		background-position: top center;
+		background-position: top right;
 		background-repeat: no-repeat;
 
 		.pulsating-circle {
