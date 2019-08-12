@@ -434,9 +434,9 @@ class CategorySearch extends Component {
 					() => {
 						if (isDefaultValue) {
 							if (this.props.autosuggest) {
-								// this.setState({
-								// 	isOpen: false,
-								// });
+								this.setState({
+									isOpen: false,
+								});
 								this.updateDefaultQuery(value, props);
 							}
 							// in case of strict selection only SUGGESTION_SELECT should be able
