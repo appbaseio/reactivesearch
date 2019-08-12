@@ -6,7 +6,7 @@
     "author": "Divyanshu Maithani <div.blackcat@gmail.com>",
     "license": "Apache-2.0",
     "dependencies": {
-        "@appbaseio/reactivesearch": "3.0.0-rc.23",
+        "@appbaseio/reactivesearch": "3.0.0-rc.24",
         "prop-types": "^15.6.0",
         "react": "^16.2.0",
         "react-dom": "^16.2.0"
