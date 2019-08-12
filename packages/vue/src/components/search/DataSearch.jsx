@@ -35,6 +35,11 @@ const DataSearch = {
 		this.locked = false;
 		return this.__state;
 	},
+	inject: {
+		theme: {
+			from: 'theme_reactivesearch',
+		}
+	},
 	created() {
 		this.currentValue = this.selectedValue || '';
 		this.handleTextChange = debounce(value => {

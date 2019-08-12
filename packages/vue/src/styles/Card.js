@@ -1,5 +1,5 @@
 import { css } from 'emotion';
-import styled from 'vue-emotion';
+import styled from '@appbaseio/vue-emotion';
 import { lighten } from 'polished';
 
 import Title from './Title';
@@ -20,8 +20,7 @@ const Image = styled('div')`
 	width: calc(100% + 20px);
 	height: 220px;
 	margin: -10px -10px 0;
-	background-color: ${({ theme: { colors } }) =>
-		colors.backgroundColor || '#fcfcfc'};
+	background-color: ${({ theme: { colors } }) => colors.backgroundColor || '#fcfcfc'};
 	background-size: contain;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -36,9 +35,7 @@ const Card = styled('a')`
 	max-width: 250px;
 	border-radius: 0.25rem;
 	background-color: ${({ theme }) =>
-		(theme.colors.backgroundColor
-			? lighten(0.1, theme.colors.backgroundColor)
-			: '#fff')};
+		theme.colors.backgroundColor ? lighten(0.1, theme.colors.backgroundColor) : '#fff'};
 	height: 300px;
 	display: flex;
 	flex-direction: column;
@@ -46,7 +43,7 @@ const Card = styled('a')`
 	margin: 8px;
 	padding: 10px;
 	overflow: hidden;
-	box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
+	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 	color: ${({ theme }) => theme.colors.textColor};
 	${props => (props.href ? 'cursor: pointer' : null)};
 	transition: all 0.3s ease;
@@ -63,7 +60,7 @@ const Card = styled('a')`
 	}
 
 	p {
-		margin: 0
+		margin: 0;
 	}
 
 	article {
@@ -71,8 +68,9 @@ const Card = styled('a')`
 		font-size: 0.9rem;
 	}
 
-	&:hover, &:focus {
-		box-shadow: 0 0 8px 1px rgba(0,0,0,.3);
+	&:hover,
+	&:focus {
+		box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.3);
 	}
 
 	@media (max-width: 420px) {
@@ -84,7 +82,8 @@ const Card = styled('a')`
 		box-shadow: none;
 		border: 1px solid #eee;
 
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			box-shadow: 0;
 		}
 	}

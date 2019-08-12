@@ -1,5 +1,5 @@
 import { css } from 'emotion';
-import styled from 'vue-emotion';
+import styled from '@appbaseio/vue-emotion';
 import { lighten } from 'polished';
 
 import Title from './Title';
@@ -35,25 +35,21 @@ const ListItem = styled('a')`
 	text-decoration: none;
 	border-radius: 0;
 	background-color: ${({ theme }) =>
-		(theme.colors.backgroundColor
-			? lighten(0.1, theme.colors.backgroundColor)
-			: '#fff')};
+		theme.colors.backgroundColor ? lighten(0.1, theme.colors.backgroundColor) : '#fff'};
 	display: flex;
 	flex-direction: row;
 	margin: 0;
 	padding: 10px;
 	border-bottom: 1px solid ${({ theme }) =>
-		(theme.colors.backgroundColor
+		theme.colors.backgroundColor
 			? lighten(0.3, theme.colors.backgroundColor)
-			: lighten(0.68, theme.colors.textColor))};
+			: lighten(0.68, theme.colors.textColor)};
 	color: ${({ theme }) => theme.colors.textColor};
 	${props => (props.href ? 'cursor: pointer' : null)}; all 0.3s ease;
 
 	&:hover, &:focus {
 		background-color: ${({ theme }) =>
-		(theme.colors.backgroundColor
-			? lighten(0.2, theme.colors.backgroundColor)
-			: '#fdfefd')};
+		theme.colors.backgroundColor ? lighten(0.2, theme.colors.backgroundColor) : '#fdfefd'};
 	}
 
 	&:last-child {
@@ -75,7 +71,7 @@ const ListItem = styled('a')`
 	}
 
 	article {
-		width: ${(props) => {
+		width: ${props => {
 		if (props.image) {
 			return props.small ? 'calc(100% - 100px)' : 'calc(100% - 160px)';
 		}

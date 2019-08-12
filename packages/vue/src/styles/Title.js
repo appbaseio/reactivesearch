@@ -1,4 +1,4 @@
-import styled from 'vue-emotion';
+import styled from '@appbaseio/vue-emotion';
 
 const Title = styled('h2')`
 	margin: 0 0 8px;

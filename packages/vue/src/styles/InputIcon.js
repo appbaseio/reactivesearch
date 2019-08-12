@@ -1,4 +1,4 @@
-import styled, { css } from 'vue-emotion';
+import styled, { css } from '@appbaseio/vue-emotion';
 
 const left = css`
 	padding-left: 12px;

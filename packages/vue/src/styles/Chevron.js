@@ -1,5 +1,5 @@
 import { css } from 'emotion';
-import styled from 'vue-emotion';
+import styled from '@appbaseio/vue-emotion';
 
 const open = css`
 	top: 0.55em;

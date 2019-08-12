@@ -1,4 +1,4 @@
-import styled from 'vue-emotion';
+import styled from '@appbaseio/vue-emotion';
 
 const PoweredByImage = styled('img')`
 	width: 110px;

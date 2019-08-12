@@ -15,7 +15,11 @@ const Dropdown = {
 		};
 		return this.__state;
 	},
-	inject: ['theme'],
+	inject: {
+		theme: {
+			from: 'theme_reactivesearch',
+		},
+	},
 	props: {
 		innerClass: types.style,
 		items: types.data,
@@ -246,7 +250,8 @@ const Dropdown = {
 
 			if (highlighted) {
 				return isDark ? '#555' : '#eee';
-			} else if (selected) {
+			}
+			if (selected) {
 				return isDark ? '#686868' : '#fafafa';
 			}
 
@@ -262,10 +267,12 @@ const Dropdown = {
 			if (Array.isArray(value) && value.length) {
 				const arrayToRender = value.map(item => this.renderToString(item));
 				return arrayToRender.join(', ');
-			} else if (value && typeof value === 'object') {
+			}
+			if (value && typeof value === 'object') {
 				if (value[this.$props.labelField]) {
 					return value[this.$props.labelField];
-				} else if (Object.keys(value).length) {
+				}
+				if (Object.keys(value).length) {
 					return this.renderToString(Object.keys(value));
 				}
 

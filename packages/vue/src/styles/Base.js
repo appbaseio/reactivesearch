@@ -1,4 +1,4 @@
-import styled from 'vue-emotion';
+import styled from '@appbaseio/vue-emotion';
 
 const Base = styled('div')`
 	font-family: ${({ theme }) => theme.typography.fontFamily};

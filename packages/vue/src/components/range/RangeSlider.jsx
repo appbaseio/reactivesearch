@@ -8,13 +8,25 @@ import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
 import { getComponents } from './addons/ssr';
 
-const { addComponent, removeComponent, watchComponent, updateQuery, setQueryListener, setQueryOptions } = Actions;
+const {
+	addComponent,
+	removeComponent,
+	watchComponent,
+	updateQuery,
+	setQueryListener,
+	setQueryOptions,
+} = Actions;
 
 const { checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
 
 const RangeSlider = {
 	name: 'RangeSlider',
 	components: getComponents(),
+	inject: {
+		theme: {
+			from: 'theme_reactivesearch',
+		},
+	},
 	data() {
 		const state = {
 			currentValue: this.$props.range ? [this.$props.range.start, this.$props.range.end] : [],
@@ -239,7 +251,8 @@ RangeSlider.defaultQuery = (values, props) => {
 RangeSlider.parseValue = (value, props) => {
 	if (value) {
 		return [value.start, value.end];
-	} else if (props.range) {
+	}
+	if (props.range) {
 		return [props.range.start, props.range.end];
 	}
 	return [];

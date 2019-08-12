@@ -1,5 +1,5 @@
 import { css } from 'emotion';
-import styled from 'vue-emotion';
+import styled from '@appbaseio/vue-emotion';
 
 const small = css`
 	min-height: 0;

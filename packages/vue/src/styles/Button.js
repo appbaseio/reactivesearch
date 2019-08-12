@@ -1,5 +1,5 @@
 import { css } from 'emotion';
-import styled from 'vue-emotion';
+import styled from '@appbaseio/vue-emotion';
 import { darken, lighten, rgba } from 'polished';
 
 const filters = ({ colors: { borderColor } }) => css`
@@ -119,16 +119,13 @@ const Button = styled('a')`
 	&:hover,
 	&:focus {
 		background-color: ${({ theme }) =>
-		theme.colors.backgroundColor
-			? darken(0.1, theme.colors.backgroundColor)
-			: '#ccc'};
+		theme.colors.backgroundColor ? darken(0.1, theme.colors.backgroundColor) : '#ccc'};
 	}
 
 	&:focus {
 		outline: 0;
 		border-color: ${({ theme }) => rgba(theme.colors.primaryColor, 0.6)};
-		box-shadow: ${({ theme }) =>
-		`0 0 0 2px ${rgba(theme.colors.primaryColor, 0.3)}`};
+		box-shadow: ${({ theme }) => `0 0 0 2px ${rgba(theme.colors.primaryColor, 0.3)}`};
 	}
 
 	${props => (props.primary ? primary : null)};
@@ -139,14 +136,8 @@ const Button = styled('a')`
 const loadMoreContainer = css({
 	margin: '5px 0',
 	display: 'flex',
-	justifyContent: 'center'
+	justifyContent: 'center',
 });
 
-export {
-	pagination,
-	filters,
-	toggleButtons,
-	numberBoxContainer,
-	loadMoreContainer
-};
+export { pagination, filters, toggleButtons, numberBoxContainer, loadMoreContainer };
 export default Button;

@@ -18,7 +18,11 @@ const SelectedFilters = {
 		showClearAll: VueTypes.bool.def(true),
 		title: types.title,
 	},
-	inject: ['theme'],
+	inject: {
+		theme: {
+			from: 'theme_reactivesearch',
+		},
+	},
 	render() {
 		if (this.$scopedSlots.default) {
 			return this.$scopedSlots.default(this.$props);

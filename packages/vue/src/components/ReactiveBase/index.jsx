@@ -38,7 +38,10 @@ const ReactiveBase = {
 	},
 	provide() {
 		return {
-			theme: composeThemeObject(getTheme(this.$props.themePreset), this.$props.theme),
+			theme_reactivesearch: composeThemeObject(
+				getTheme(this.$props.themePreset),
+				this.$props.theme,
+			),
 			store: this.store,
 		};
 	},
@@ -120,7 +123,6 @@ const ReactiveBase = {
 			if (this.$props.transformRequest) {
 				appbaseRef.transformRequest = this.$props.transformRequest;
 			}
-
 
 			if (this.$props.transformResponse) {
 				appbaseRef.transformResponse = this.$props.transformResponse;

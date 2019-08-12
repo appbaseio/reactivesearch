@@ -42,7 +42,7 @@
 		"redux": "^4.0.0",
 		"url-search-params-polyfill": "^7.0.0",
 		"vue": "^2.5.17",
-		"vue-emotion": "0.4.2",
+		"@appbaseio/vue-emotion": "0.4.4",
 		"vue-highlight-words": "^1.2.0",
 		"vue-no-ssr": "^1.1.0",
 		"vue-slider-component": "^2.8.2",

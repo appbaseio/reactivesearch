@@ -1,5 +1,5 @@
 import Highlight from 'vue-highlight-words';
-import { css, cx } from 'vue-emotion';
+import { css, cx } from '@appbaseio/vue-emotion';
 import types from '../../../utils/vueTypes';
 
 import Flex from '../../../styles/Flex';
