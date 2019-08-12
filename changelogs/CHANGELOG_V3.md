@@ -6,6 +6,21 @@
     <summary>The following changes have been included in the <code>next</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v3.0.0-rc.25
+
+-   Controlled behavior when autoSuggest is enabled [[a1277381]](https://github.com/appbaseio/reactivesearch/commit/a1277381)
+
+## v3.0.0-rc.24
+
+-   Introduce new prop in ReactiveList to render last pages in pagination [#1022](https://github.com/appbaseio/reactivesearch/pull/1022)
+-   Add triggerQuery in missing handlers [[e3d02fd2]](https://github.com/appbaseio/reactivesearch/commit/e3d02fd2)
+
+## v3.0.0-rc.23
+
+-   Fix voice search results & icon [#1072](https://github.com/appbaseio/reactivesearch/pull/1072)
+-   Accessibility enhancements in list components [#1041](https://github.com/appbaseio/reactivesearch/pull/1041)
+-   Range components accessibility [#1044](https://github.com/appbaseio/reactivesearch/pull/1044)
+
 ## v3.0.0-rc.22
 
 -   Add support for custom pagination [#1026](https://github.com/appbaseio/reactivesearch/issues/1026)
