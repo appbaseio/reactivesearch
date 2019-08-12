@@ -1495,3 +1495,35 @@ to be custom HTML.
 #gatsby-plugin-page-progress {
 	top: 75px !important;
 }
+
+.home-header {
+	align-items: center;
+	justify-content: space-between;
+}
+
+.home-header-graphics {
+	max-width: 40%;
+	margin-top: 40px;
+}
+
+.home-header-graphics div {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 20px;
+	margin-bottom: 20px;
+}
+
+.home-header-graphics div:last-child {
+	padding-left: 10px;
+}
+
+.home-header-graphics div img:last-child {
+	margin-top: 20px;
+}
+
+.home-header-graphics div img {
+	background: white;
+	border-radius: 5px;
+	padding: 20px;
+	max-width: 150px;
+}

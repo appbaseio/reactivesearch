@@ -13,11 +13,27 @@ const HomeHeader = () => (
 		<div
 			className={`${
 				Spirit.page.xl
-			} pb5 pt10 pt15-ns pt20-l pb10-ns pb15-l flex items-between flex-column bt bn-ns b--white-10`}
+			} pb5 pt10 pt15-ns pt20-l pb10-ns pb15-l flex items-between bt bn-ns b--white-10 home-header`}
 		>
-			<h1 className="ma0 mt8 pt5 pa0 f2 f1-ns f-headline-l white header-heading-shadow">
-				Appbase Documentation
-			</h1>
+			<div>
+				<h1 className="ma0 mt8 pt5 pa0 f2 f1-ns f-headline-l white header-heading-shadow">
+					Appbase Documentation
+				</h1>
+				<p className={`${Spirit.sectionSubHeading} f2 lightgrey`}>
+					Appbase.io is a hosted Elasticsearch service with built-in publish/subscribe
+					support for streaming document updates and query results.
+				</p>
+			</div>
+			<div className="home-header-graphics">
+				<div>
+					<img src="images/searcUI@3x.png" />
+					<img src="images/search-relevancy@3x.png" />
+				</div>
+				<div>
+					<img src="images/search-relevancy@3x.png" />
+					<img src="images/analytics@3x.png" />
+				</div>
+			</div>
 		</div>
 	</div>
 );
