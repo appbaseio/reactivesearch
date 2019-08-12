@@ -467,7 +467,7 @@ class DataSearch extends Component {
 			isOpen: true,
 		});
 		if (this.props.onFocus) {
-			this.props.onFocus(event);
+			this.props.onFocus(event, this.triggerQuery);
 		}
 	};
 
@@ -489,7 +489,7 @@ class DataSearch extends Component {
 			this.onValueSelected(event.target.value, causes.ENTER_PRESS);
 		}
 		if (this.props.onKeyDown) {
-			this.props.onKeyDown(event);
+			this.props.onKeyDown(event, this.triggerQuery);
 		}
 	};
 

@@ -540,7 +540,7 @@ class CategorySearch extends Component {
 			isOpen: true,
 		});
 		if (this.props.onFocus) {
-			this.props.onFocus(event);
+			this.props.onFocus(event, this.triggerQuery);
 		}
 	};
 
@@ -565,7 +565,7 @@ class CategorySearch extends Component {
 			this.onValueSelected(currentValue, causes.ENTER_PRESS);
 		}
 		if (this.props.onKeyDown) {
-			this.props.onKeyDown(event);
+			this.props.onKeyDown(event, this.triggerQuery);
 		}
 	};
 
