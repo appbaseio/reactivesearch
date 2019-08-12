@@ -4,37 +4,41 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Button, { pagination } from '../../../styles/Button';
 
-function getStartPage(totalPages, currentPage) {
+function getStartPage(totalPages, currentPage, showEndPage) {
 	const midValue = parseInt(totalPages / 2, 10);
-	const start = currentPage - midValue;
+	const start = currentPage - (showEndPage ? Math.ceil(midValue / 2) - 1 : midValue);
 	return start > 1 ? start : 2;
 }
 
-export default function Pagination(props) {
-	const start = getStartPage(props.pages, props.currentPage);
-	const pages = [];
-
-	const onPrevPage = (e) => {
-		e.preventDefault();
-		if (props.currentPage) {
-			props.setPage(props.currentPage - 1);
+const buildPaginationDOM = (props, position) => {
+	const {
+		pages,
+		currentPage,
+		setPage,
+		totalPages,
+		innerClass,
+		fragmentName,
+		showEndPage,
+	} = props;
+	let start
+		= position === 'start'
+			? getStartPage(pages, currentPage, showEndPage)
+			: Math.ceil(totalPages - ((pages - 1) / 2)) + 1;
+	const paginationButtons = [];
+	if (start <= totalPages) {
+		let totalPagesToShow = pages < totalPages ? start + (pages - 1) : totalPages + 1;
+		if (showEndPage) {
+			totalPagesToShow
+				= position === 'start'
+					? start + (Math.ceil(pages / 2) - (pages % 2))
+					: totalPages + 1;
 		}
-	};
-
-	const onNextPage = (e) => {
-		e.preventDefault();
-		if (props.currentPage < props.totalPages - 1) {
-			props.setPage(props.currentPage + 1);
+		if (currentPage > (totalPages - pages) + 2) {
+			start = (totalPages - pages) + 2;
 		}
-	};
-
-	if (start <= props.totalPages) {
-		const totalPagesToShow
-			= props.pages < props.totalPages ? start + (props.pages - 1) : props.totalPages + 1;
-
 		for (let i = start; i < totalPagesToShow; i += 1) {
-			const primary = props.currentPage === i - 1;
-			const innerClassName = getClassName(props.innerClass, 'button');
+			const primary = currentPage === i - 1;
+			const innerClassName = getClassName(innerClass, 'button');
 			const className
 				= innerClassName || primary ? `${innerClassName} ${primary ? 'active' : ''}` : null;
 			const pageBtn = (
@@ -43,53 +47,79 @@ export default function Pagination(props) {
 					primary={primary}
 					key={i - 1}
 					tabIndex="0"
-					onKeyPress={event => handleA11yAction(event, () => props.setPage(i - 1))}
+					onKeyPress={event => handleA11yAction(event, () => setPage(i - 1))}
 					onClick={(e) => {
 						e.preventDefault();
-						props.setPage(i - 1);
+						setPage(i - 1);
 					}}
-					href={`?${props.fragmentName}=${i}`}
+					href={`?${fragmentName}=${i}`}
 				>
 					{i}
 				</Button>
 			);
-			if (i <= props.totalPages + 1) {
-				pages.push(pageBtn);
+			if (i <= totalPages + 1) {
+				paginationButtons.push(pageBtn);
 			}
 		}
 	}
+	return paginationButtons;
+};
 
-	if (!props.totalPages) {
+export default function Pagination(props) {
+	const {
+		pages,
+		currentPage,
+		setPage,
+		totalPages,
+		innerClass,
+		fragmentName,
+		showEndPage,
+	} = props;
+
+	if (!totalPages) {
 		return null;
 	}
 
-	const innerClassName = getClassName(props.innerClass, 'button');
-	const primary = props.currentPage === 0;
+	const onPrevPage = (e) => {
+		e.preventDefault();
+		if (currentPage) {
+			setPage(currentPage - 1);
+		}
+	};
+
+	const onNextPage = (e) => {
+		e.preventDefault();
+		if (currentPage < totalPages - 1) {
+			setPage(currentPage + 1);
+		}
+	};
+
+	const innerClassName = getClassName(innerClass, 'button');
+	const primary = currentPage === 0;
 	const className
 		= innerClassName || primary ? `${innerClassName} ${primary ? 'active' : ''}` : null;
 
 	let prevHrefProp = {};
 	let nextHrefProp = {};
 
-	if (props.currentPage >= 1) {
+	if (currentPage >= 1) {
 		prevHrefProp = {
-			href: `?${props.fragmentName}=${props.currentPage}`,
+			href: `?${fragmentName}=${currentPage}`,
 			rel: 'prev',
 		};
 	}
 
-	if (props.currentPage < props.totalPages - 1) {
+	if (currentPage < totalPages - 1) {
 		nextHrefProp = {
-			href: `?${props.fragmentName}=${props.currentPage + 2}`,
+			href: `?${fragmentName}=${currentPage + 2}`,
 			rel: 'next',
 		};
 	}
-
 	return (
-		<div className={`${pagination} ${getClassName(props.innerClass, 'pagination')}`}>
+		<div className={`${pagination} ${getClassName(innerClass, 'pagination')}`}>
 			<Button
-				className={getClassName(props.innerClass, 'button') || null}
-				disabled={props.currentPage === 0}
+				className={getClassName(innerClass, 'button') || null}
+				disabled={currentPage === 0}
 				onKeyPress={event => handleA11yAction(event, onPrevPage)}
 				onClick={onPrevPage}
 				tabIndex="0"
@@ -101,22 +131,27 @@ export default function Pagination(props) {
 				<Button
 					className={className}
 					primary={primary}
-					onKeyPress={event => handleA11yAction(event, () => props.setPage(0))}
+					onKeyPress={event => handleA11yAction(event, () => setPage(0))}
 					onClick={(e) => {
 						e.preventDefault();
-						props.setPage(0);
+						setPage(0);
 					}}
 					tabIndex="0"
-					href={`?${props.fragmentName}=1`}
+					href={`?${fragmentName}=1`}
 				>
 					1
 				</Button>
 			}
-			{props.currentPage >= props.pages ? <span>...</span> : null}
-			{pages}
+			{showEndPage && currentPage >= Math.floor(pages / 2) + !!(pages % 2)
+				? <span>...</span> : null}
+			{currentPage <= (totalPages - pages) + 2 && buildPaginationDOM(props, 'start')}
+			{showEndPage && pages > 2 && currentPage <= totalPages - Math.ceil(pages * 0.75) ? (
+				<span>...</span>
+			) : null}
+			{showEndPage && buildPaginationDOM(props, 'end')}
 			<Button
-				className={getClassName(props.innerClass, 'button') || null}
-				disabled={props.currentPage >= props.totalPages - 1}
+				className={getClassName(innerClass, 'button') || null}
+				disabled={currentPage >= totalPages - 1}
 				onKeyPress={event => handleA11yAction(event, onNextPage)}
 				onClick={onNextPage}
 				tabIndex="0"
@@ -135,4 +170,5 @@ Pagination.propTypes = {
 	setPage: types.func,
 	totalPages: types.number,
 	fragmentName: types.string,
+	showEndPage: types.bool,
 };

@@ -23,6 +23,7 @@ declare namespace ReactiveListTree {
 		pages?: number;
 		pagination?: boolean;
 		paginationAt?: types.paginationAt;
+		showEndPage?: boolean;
 		react?: types.react;
 		showResultStats?: boolean;
 		showLoader?: boolean;
