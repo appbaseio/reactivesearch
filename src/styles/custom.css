@@ -1322,18 +1322,19 @@ to be custom HTML.
 .home-input {
 	background: #e5eff5;
 	border-radius: 2px;
+	padding: 15px;
 }
 
 .home-search {
-	top: 40px;
+	top: 50px;
 	position: absolute;
 	background: white;
 	width: 100%;
 	height: 220px;
 	z-index: 999;
-	box-shadow: 0 0px 4px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0px 2px rgba(0, 0, 0, 0.2);
 	overflow-y: scroll;
-	border-radius: 5px;
+	border-radius: 2px;
 }
 
 .home-search-container {

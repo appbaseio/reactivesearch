@@ -161,7 +161,7 @@ class AutoComplete extends React.Component {
 
 		return (
 			<>
-				<Icon name="search" className=" w3 h-auto absolute top-3 right-3 left-3-l" />
+				<Icon name="search" className="w3 absolute top-3 right-3" />
 				<Autosuggest
 					suggestions={hits}
 					onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}

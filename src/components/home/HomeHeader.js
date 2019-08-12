@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { NavBar } from '../common';
+import { NavBar, Icon } from '../common';
 import { Spirit } from '../../styles/spirit-styles';
 
 // Custom headings must be React components. You should include the <NavBar /> component
@@ -13,7 +13,7 @@ const HomeHeader = () => (
 		<div
 			className={`${
 				Spirit.page.xl
-			} pb5 pt10 pt15-ns pt20-l pb10-ns pb15-l flex flex-column items-center bt bn-ns b--white-10`}
+			} pb5 pt10 pt15-ns pt20-l pb10-ns pb15-l flex items-between flex-column bt bn-ns b--white-10`}
 		>
 			<h1 className="ma0 mt8 pt5 pa0 f2 f1-ns f-headline-l white header-heading-shadow">
 				Appbase Documentation

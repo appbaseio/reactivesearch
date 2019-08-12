@@ -1,14 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="232px" height="140px" viewBox="0 0 232 140" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
-    <title>4F73EA08-4CD5-46D9-8C89-886E88FB1A6A</title>
+    <title>8E8247CB-DF27-4CAB-97DF-9FCBACA39F5D</title>
     <desc>Created with sketchtool.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="252" height="165"></rect>
+    </defs>
     <g id="Docs" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Docs-Icon" transform="translate(-12.000000, -25.000000)">
-            <g id="Search-relevancy" transform="translate(12.000000, 25.000000)">
-                <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,23 C24,23.5522847 23.5522847,24 23,24 L1,24 C0.44771525,24 6.76353751e-17,23.5522847 0,23 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z" id="Rectangle-14" fill="#E5EFFA"></path>
-                <path d="M14,15.2009569 L17.8181818,18.8181818" id="Line-5-Copy-3" stroke="#151617" stroke-linecap="round" stroke-linejoin="round"></path>
-                <circle id="Oval-6-Copy-3" stroke="#151617" cx="10.5" cy="10.5" r="5.5"></circle>
+        <g id="Docs-home-page-cards" transform="translate(-105.000000, -140.000000)">
+            <g id="search-relevancy" transform="translate(95.000000, 128.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Mask"></g>
+                <rect id="Rectangle" fill="#3F3D56" fill-rule="nonzero" mask="url(#mask-2)" x="169.62069" y="58.3309353" width="48.5775862" height="11.0791367" rx="5.53956835"></rect>
+                <rect id="Rectangle" fill="#000000" fill-rule="nonzero" opacity="0.1" mask="url(#mask-2)" x="172.594828" y="59.3381295" width="42.6293103" height="8.05755396" rx="4.02877698"></rect>
+                <rect id="Rectangle" fill="#1890FF" fill-rule="nonzero" mask="url(#mask-2)" x="198.37069" y="60.3453237" width="14.8706897" height="7.05035971" rx="3.52517986"></rect>
+                <ellipse id="Oval" fill="#FFFFFF" fill-rule="nonzero" mask="url(#mask-2)" cx="206.797414" cy="63.8705036" rx="2.47844828" ry="2.51798561"></ellipse>
+                <rect id="Rectangle" fill="#3F3D56" fill-rule="nonzero" mask="url(#mask-2)" x="169.62069" y="132.863309" width="48.5775862" height="11.0791367" rx="5.53956835"></rect>
+                <rect id="Rectangle" fill="#000000" fill-rule="nonzero" opacity="0.1" mask="url(#mask-2)" x="172.594828" y="134.877698" width="42.6293103" height="8.05755396" rx="4.02877698"></rect>
+                <rect id="Rectangle" fill="#1890FF" fill-rule="nonzero" mask="url(#mask-2)" x="198.37069" y="134.877698" width="14.8706897" height="7.05035971" rx="3.52517986"></rect>
+                <ellipse id="Oval" fill="#FFFFFF" fill-rule="nonzero" mask="url(#mask-2)" cx="206.797414" cy="138.402878" rx="2.47844828" ry="2.51798561"></ellipse>
+                <rect id="Rectangle" fill="#1890FF" fill-rule="nonzero" mask="url(#mask-2)" x="15.9568966" y="50.2733813" width="28.75" height="7.05035971" rx="2"></rect>
+                <rect id="Rectangle" fill="#1890FF" fill-rule="nonzero" mask="url(#mask-2)" x="15.9568966" y="60.3453237" width="78.3189655" height="7.05035971" rx="2"></rect>
+                <rect id="Rectangle" fill="#1890FF" fill-rule="nonzero" mask="url(#mask-2)" x="15.9568966" y="70.4172662" width="78.3189655" height="7.05035971" rx="2"></rect>
+                <g id="Group" opacity="0.5" mask="url(#mask-2)" fill="#1890FF" fill-rule="nonzero">
+                    <g transform="translate(14.965517, 88.546763)" id="Rectangle">
+                        <rect x="0" y="0.0348525272" width="28.4734182" height="6.75188504" rx="2"></rect>
+                        <rect x="0" y="9.53058198" width="59.0177589" height="6.75188504" rx="2"></rect>
+                        <rect x="0" y="19.023143" width="79.066127" height="6.75188504" rx="2"></rect>
+                    </g>
+                </g>
+                <rect id="Rectangle" fill="#1890FF" fill-rule="nonzero" mask="url(#mask-2)" x="15.9568966" y="125.81295" width="28.75" height="7.05035971" rx="2"></rect>
+                <rect id="Rectangle" fill="#1890FF" fill-rule="nonzero" mask="url(#mask-2)" x="15.9568966" y="134.877698" width="78.3189655" height="7.05035971" rx="2"></rect>
+                <rect id="Rectangle" fill="#1890FF" fill-rule="nonzero" mask="url(#mask-2)" x="15.9568966" y="144.94964" width="48.5775862" height="7.05035971" rx="2"></rect>
+                <path d="M11,82.5035971 L240.008621,82.5035971" id="Path" stroke="#3F3D56" opacity="0.7" stroke-linecap="round" mask="url(#mask-2)"></path>
+                <path d="M11,120.776978 L240.008621,120.776978" id="Path" stroke="#3F3D56" opacity="0.7" stroke-linecap="round" mask="url(#mask-2)"></path>
+                <rect id="Rectangle" fill="#3F3D56" fill-rule="nonzero" mask="url(#mask-2)" x="169.62069" y="96.6043165" width="48.5775862" height="11.0791367" rx="5.53956835"></rect>
+                <rect id="Rectangle" fill="#000000" fill-rule="nonzero" opacity="0.1" mask="url(#mask-2)" x="172.594828" y="97.6115108" width="42.6293103" height="8.05755396" rx="4.02877698"></rect>
+                <rect id="Rectangle" fill="#1890FF" fill-rule="nonzero" mask="url(#mask-2)" transform="translate(182.012931, 102.143885) rotate(180.000000) translate(-182.012931, -102.143885) " x="174.577586" y="98.618705" width="14.8706897" height="7.05035971" rx="3.52517986"></rect>
+                <ellipse id="Oval" fill="#FFFFFF" fill-rule="nonzero" mask="url(#mask-2)" cx="181.021552" cy="102.143885" rx="2.47844828" ry="2.51798561"></ellipse>
+                <g id="Group" opacity="0.5" mask="url(#mask-2)" fill="#1890FF" fill-rule="nonzero">
+                    <g transform="translate(16.948276, 12.000000)" id="Rectangle">
+                        <rect x="0" y="0.0348525272" width="28.4734182" height="6.75188504" rx="2"></rect>
+                        <rect x="0" y="9.53058198" width="59.0177589" height="6.75188504" rx="2"></rect>
+                        <rect x="0" y="19.023143" width="79.066127" height="6.75188504" rx="2"></rect>
+                    </g>
+                </g>
+                <path d="M11.9913793,45.2374101 L241,45.2374101" id="Path" stroke="#3F3D56" opacity="0.7" stroke-linecap="round" mask="url(#mask-2)"></path>
+                <rect id="Rectangle" fill="#3F3D56" fill-rule="nonzero" mask="url(#mask-2)" x="170.612069" y="19.0503597" width="48.5775862" height="11.0791367" rx="5.53956835"></rect>
+                <rect id="Rectangle" fill="#000000" fill-rule="nonzero" opacity="0.1" mask="url(#mask-2)" x="174.577586" y="21.0647482" width="42.6293103" height="8.05755396" rx="4.02877698"></rect>
+                <rect id="Rectangle" fill="#1890FF" fill-rule="nonzero" mask="url(#mask-2)" transform="translate(183.004310, 24.589928) rotate(180.000000) translate(-183.004310, -24.589928) " x="175.568966" y="21.0647482" width="14.8706897" height="7.05035971" rx="3.52517986"></rect>
+                <ellipse id="Oval" fill="#FFFFFF" fill-rule="nonzero" mask="url(#mask-2)" cx="182.012931" cy="24.5899281" rx="2.47844828" ry="2.51798561"></ellipse>
             </g>
         </g>
     </g>
