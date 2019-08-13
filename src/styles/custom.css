@@ -1330,7 +1330,7 @@ to be custom HTML.
 	position: absolute;
 	background: white;
 	width: 100%;
-	height: 220px;
+	max-height: 60vh;
 	z-index: 999;
 	box-shadow: 0 0px 2px rgba(0, 0, 0, 0.2);
 	overflow-y: scroll;
@@ -1460,6 +1460,10 @@ to be custom HTML.
 	display: flex;
 }
 
+.suggestion-container .full-width {
+	width: 100%;
+}
+
 .suggestion:hover .suggestion-content-icon {
 	box-shadow: 0 2px 6px 0 rgba(40, 48, 52, 0.15);
 }
@@ -1473,6 +1477,16 @@ to be custom HTML.
 	background: #e5eff5;
 	background-image: linear-gradient(#e5eff5, #fff);
 	box-shadow: 0;
+}
+
+.suggestion-section {
+	border-radius: 2px;
+	padding: 2px 8px;
+	margin-bottom: 5px;
+	font-size: 10px;
+	display: block;
+	width: max-content;
+	background: #3eb0ef33;
 }
 
 .active-link {
@@ -1598,4 +1612,8 @@ to be custom HTML.
 
 .timeline-steps .timeline .item svg circle {
 	fill: #f8fafc;
+}
+
+.capitalize {
+	text-transform: capitalize;
 }
