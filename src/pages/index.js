@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link, graphql } from 'gatsby';
+import { Link, graphql, navigate } from 'gatsby';
 
 import PropTypes from 'prop-types';
 
+import TimelineOption from '@appbaseio/designkit/lib/molecules/TimelineOption';
 import { Icon, Box } from '../components/common';
 import { Layout } from '../components/common/layout';
 import { HomeHeader, GuideBox } from '../components/home';
@@ -26,10 +27,10 @@ const HomePage = ({ data, location }) => {
 							Spirit.page.xl
 						} col-12 mt-vw3-ns bt bn-ns b--whitegrey pt0-ns`}
 					>
-						<span className={`${Spirit.h3} link darkgrey hover-midgrey`}>Guides</span>
+						<span className={`${Spirit.h2} link darkgrey hover-midgrey`}>Guides</span>
 						<p
 							className={`${
-								Spirit.p
+								Spirit.h4
 							} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
 						>
 							All libraries and tools, integrated with Appbase.
@@ -47,6 +48,169 @@ const HomePage = ({ data, location }) => {
 						</div>
 					</div>
 
+					<div
+						className={`${
+							Spirit.page.xl
+						} col-12 mt-vw3-ns bt bn-ns b--whitegrey pt0-ns`}
+					>
+						<span className={`${Spirit.h3} fw6 link darkgrey hover-midgrey`}>
+							Guides
+						</span>
+						<p
+							className={`${
+								Spirit.h4
+							} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
+						>
+							All libraries and tools, integrated with Appbase.
+						</p>
+						<div className="mt5 timeline-steps">
+							<TimelineOption
+								onClick={info => navigate(info.link)}
+								primaryColor="#3eb0ef"
+								items={{
+									'1': {
+										title: 'Getting Started',
+										subtitle:
+											'Short description about how to get started with appbase io',
+										icon: <div className="dropdown-content-icon">1</div>,
+										chapters: [
+											{
+												title: 'Quick Start',
+												description: 'Quick start with Appbaseio',
+												link: '/docs/gettingstarted/QuickStart',
+												duration: 3,
+											},
+											{
+												title: 'How Appbaseio Works',
+												description: 'Take a look at how things work',
+												link: '/docs/gettingstarted/Working',
+												duration: 3,
+											},
+										],
+									},
+									'2': {
+										title: 'Managing Data',
+										subtitle:
+											'Short description about how to get started with appbase io',
+										icon: <div className="dropdown-content-icon">2</div>,
+										chapters: [
+											{
+												title: 'Data Model',
+												description:
+													'Take a look at the data model of Appbaseio',
+												link: '/docs/data/Model',
+												duration: 2,
+											},
+											{
+												title: 'Data Browser',
+												description:
+													'Data Browser is a WYSIWYG GUI for adding, modifying and viewing your appbase.io apps data.',
+												link: '/docs/data/Browser',
+												duration: 4,
+											},
+											{
+												title: 'Importing Data',
+												description: 'Learn how to import data.',
+												link: '/docs/data/Import',
+												duration: 4,
+											},
+										],
+									},
+									'3': {
+										title: 'Search Relevancy',
+										subtitle:
+											'Development Setup, eslint, prettier, babel ,webpack ',
+										icon: <div className="dropdown-content-icon">3</div>,
+										chapters: [
+											{
+												title: 'Search Preview',
+												description:
+													'Take a look at the data model of Appbaseio',
+												link: '/docs/search/Preview',
+												duration: 8,
+											},
+											{
+												title: 'Query Rules',
+												description:
+													'Data Browser is a WYSIWYG GUI for adding, modifying and viewing your appbase.io apps data.',
+												link: '/docs/search/Rules',
+												duration: 7,
+											},
+										],
+									},
+									'4': {
+										title: 'Building Search UI',
+										subtitle:
+											'Development Setup, eslint, prettier, babel ,webpack ',
+										icon: <div className="dropdown-content-icon">4</div>,
+										chapters: [
+											{
+												title: 'ReactiveSearch QuickStart',
+												description:
+													'Take a look at the data model of Appbaseio',
+												link: '/docs/reactivesearch/v3/overview/quickstart',
+												duration: 8,
+											},
+											{
+												title: 'Vue ReactiveSearch QuickStart',
+												description:
+													'Take a look at the data model of Appbaseio',
+												link:
+													'/docs/reactivesearch/vue/overview/QuickStart',
+												duration: 8,
+											},
+											{
+												title: 'Native ReactiveSearch QuickStart',
+												description:
+													'Take a look at the data model of Appbaseio',
+												link:
+													'/docs/reactivesearch/native/overview/QuickStart',
+												duration: 8,
+											},
+										],
+									},
+									'5': {
+										title: 'Actionable Analytics',
+										subtitle:
+											'Development Setup, eslint, prettier, babel ,webpack ',
+										icon: <div className="dropdown-content-icon">5</div>,
+										chapters: [
+											{
+												title: 'Analytics',
+												description:
+													'Take a look at the data model of Appbaseio',
+												link: '/docs/analytics/Overview',
+												duration: 8,
+											},
+											{
+												title: 'Implement Analytics',
+												description:
+													'Data Browser is a WYSIWYG GUI for adding, modifying and viewing your appbase.io apps data.',
+												link: '/docs/analytics/Implement',
+												duration: 7,
+											},
+										],
+									},
+									'6': {
+										title: 'Security',
+										subtitle:
+											'Development Setup, eslint, prettier, babel ,webpack ',
+										icon: <div className="dropdown-content-icon">6</div>,
+										chapters: [
+											{
+												title: 'Credentials',
+												description:
+													'Take a look at the data model of Appbaseio',
+												link: '/docs/security/Credentials',
+												duration: 17,
+											},
+										],
+									},
+								}}
+							/>
+						</div>
+					</div>
+
 					<section
 						className={`${
 							Spirit.page.xl
@@ -54,13 +218,13 @@ const HomePage = ({ data, location }) => {
 					>
 						<Link
 							to="/integrations/"
-							className={`${Spirit.h3} link darkgrey hover-midgrey`}
+							className={`${Spirit.h3} fw6 link darkgrey hover-midgrey`}
 						>
 							Integrations
 						</Link>
 						<p
 							className={`${
-								Spirit.p
+								Spirit.h4
 							} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
 						>
 							All libraries and tools, integrated with Appbase.

@@ -5,7 +5,7 @@ import { Link } from 'gatsby';
 import { Spirit } from '../../styles/spirit-styles';
 
 const GuideBox = ({ links, description, title, color, index }) => (
-	<div className="guide-box pa5 br4 bg-white db br4 bb b--whitegrey">
+	<div className="guide-box br4 db br4 mt6 mb2">
 		<div>
 			<div className="guide-title mb3">
 				<h2 className="guide-index mr2 mb0 mt0 middarkgrey">{index + 1}</h2>
