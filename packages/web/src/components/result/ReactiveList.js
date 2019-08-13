@@ -705,7 +705,7 @@ class ReactiveList extends Component {
 					? this.renderNoResults()
 					: null}
 				{this.props.pagination
-					&& (this.props.paginationAt === 'top' || this.props.paginationAt === 'both')
+					&& (['top', 'both'].indexOf(this.props.paginationAt) !== -1)
 					? paginationElement
 					: null}
 				{this.hasCustomRenderer ? (
@@ -739,7 +739,7 @@ class ReactiveList extends Component {
 					) // prettier-ignore
 					: null}
 				{this.props.pagination
-					&& (this.props.paginationAt === 'bottom' || this.props.paginationAt === 'both')
+					&& (['bottom', 'both'].indexOf(this.props.paginationAt) !== -1)
 					? paginationElement
 					: null}
 				{this.props.config.url.endsWith('appbase.io') && filteredResults.length ? (
