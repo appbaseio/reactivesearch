@@ -584,7 +584,7 @@ GeoDistanceSlider.propTypes = {
 	value: types.selectedValue,
 	unit: types.string,
 	URLParams: types.bool,
-	...this.props.serviceOptions,
+	serviceOptions: types.props,
 };
 
 GeoDistanceSlider.defaultProps = {
