@@ -317,6 +317,7 @@ class GeoDistanceSlider extends Component {
 				{
 					input: value,
 					componentRestrictions: { country: restrictedCountries },
+					...this.props.serviceOptions,
 				},
 				(res) => {
 					const suggestionsList
@@ -530,6 +531,7 @@ GeoDistanceSlider.propTypes = {
 	range: types.range,
 	rangeLabels: types.rangeLabels,
 	react: types.react,
+	serviceOptions: types.props,
 	showFilter: types.bool,
 	showIcon: types.bool,
 	tooltipTrigger: types.tooltipTrigger,
