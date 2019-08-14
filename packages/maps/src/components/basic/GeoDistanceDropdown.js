@@ -353,6 +353,7 @@ class GeoDistanceDropdown extends Component {
 				{
 					input: value,
 					componentRestrictions: { country: restrictedCountries },
+					...this.props.serviceOptions,
 				},
 				(res) => {
 					const suggestionsList
@@ -568,6 +569,7 @@ GeoDistanceDropdown.propTypes = {
 	title: types.title,
 	unit: types.string,
 	URLParams: types.bool,
+	serviceOptions: types.props,
 };
 
 GeoDistanceDropdown.defaultProps = {
