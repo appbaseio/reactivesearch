@@ -315,7 +315,6 @@ class GeoDistanceDropdown extends Component {
 				{
 					input: value,
 					componentRestrictions: { country: restrictedCountries },
-					...this.props.serviceOptions,
 				},
 				(res) => {
 					const suggestionsList
@@ -499,7 +498,6 @@ GeoDistanceDropdown.propTypes = {
 	onValueChange: types.func,
 	placeholder: types.string,
 	react: types.react,
-	serviceOptions: types.props,
 	showFilter: types.bool,
 	showIcon: types.bool,
 	style: types.style,
