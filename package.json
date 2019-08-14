@@ -51,7 +51,7 @@
 		"prettier": "^1.16.4"
 	},
 	"dependencies": {
-		"@appbaseio/designkit": "^0.9.10",
+		"@appbaseio/designkit": "^0.9.11",
 		"@reach/router": "^1.2.1",
 		"emotion": "^10.0.14",
 		"gatsby": "2.1.34",

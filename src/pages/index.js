@@ -4,6 +4,9 @@ import { Link, graphql, navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 
 import TimelineOption from '@appbaseio/designkit/lib/molecules/TimelineOption';
+import Grid from '@appbaseio/designkit/lib/atoms/Grid';
+import { Card } from '@appbaseio/designkit';
+import { Title } from '@appbaseio/designkit/lib/atoms/typography';
 import { Icon, Box } from '../components/common';
 import { Layout } from '../components/common/layout';
 import { HomeHeader, GuideBox } from '../components/home';
@@ -22,32 +25,6 @@ const HomePage = ({ data, location }) => {
 				header={<HomeHeader />}
 			>
 				<div className="pt-vw3 ">
-					<div
-						className={`${
-							Spirit.page.xl
-						} col-12 mt-vw3-ns bt bn-ns b--whitegrey pt0-ns`}
-					>
-						<span className={`${Spirit.h2} link darkgrey hover-midgrey`}>Guides</span>
-						<p
-							className={`${
-								Spirit.h4
-							} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
-						>
-							All libraries and tools, integrated with Appbase.
-						</p>
-						<div className="guide-box-container mt5">
-							{guides.map((item, index) => (
-								<GuideBox
-									index={index}
-									title={item.title}
-									links={item.links}
-									key={item.title}
-									description={item.description}
-								/>
-							))}
-						</div>
-					</div>
-
 					<div
 						className={`${
 							Spirit.page.xl
@@ -216,27 +193,15 @@ const HomePage = ({ data, location }) => {
 							Spirit.page.xl
 						} col-12 mt8 mt-vw3-ns bt bn-ns b--whitegrey pt5 pt0-ns`}
 					>
-						<Link
-							to="/integrations/"
-							className={`${Spirit.h3} fw6 link darkgrey hover-midgrey`}
-						>
+						<h3 className={`${Spirit.h3} fw6 link darkgrey hover-midgrey`}>
 							Integrations
-						</Link>
+						</h3>
 						<p
 							className={`${
 								Spirit.h4
 							} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
 						>
 							All libraries and tools, integrated with Appbase.
-							<Link
-								to="/integrations/"
-								className="blue link din nb1 mt2 mt0-ns hover-underline-blue"
-							>
-								<span className="flex items-center fw5">
-									Browse all integrations{' '}
-									<Icon name="arrow-right" className="w3 h3 ml1 fill-blue" />
-								</span>
-							</Link>
 						</p>
 						<div className="grid-integrations-index mt4 mt6-l f8">
 							<Box
@@ -279,7 +244,7 @@ const HomePage = ({ data, location }) => {
 								React Native
 							</Box>
 							<Box
-								to="/integrations/unsplash/"
+								to="/api/javascript/quickstart"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
@@ -292,33 +257,25 @@ const HomePage = ({ data, location }) => {
 								Javascript
 							</Box>
 							<Box
-								to="/integrations/google-analytics/"
+								href="https://github.com/appbaseio/appbase-droid"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
 							>
-								<img
-									className="w10 mb1"
-									src="https://arc-site.netlify.com/static/svg/navbar/ClusterEdition.svg"
-									alt="Google Analytics"
-								/>
-								Clusters
+								<Icon name="android-logo" className="w10 mb1" />
+								Android
 							</Box>
 							<Box
-								to="/integrations/mailchimp/"
+								to="/api/rest/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
 							>
-								<img
-									className="w10 mb1"
-									src="https://miro.medium.com/max/790/1*uHzooF1EtgcKn9_XiSST4w.png"
-									alt="REST APi"
-								/>
+								<Icon name="rest" className="w10 mb1" />
 								REST API
 							</Box>
 							<Box
-								to="/integrations/google-amp/"
+								href="https://github.com/appbaseio/appbase-swift"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
@@ -331,7 +288,7 @@ const HomePage = ({ data, location }) => {
 								Swift
 							</Box>
 							<Box
-								to="/integrations/"
+								to="/api/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn"
 								elevation="2"
 								radius="4"
@@ -340,6 +297,75 @@ const HomePage = ({ data, location }) => {
 								See More
 							</Box>
 						</div>
+					</section>
+					<section
+						className={`${
+							Spirit.page.xl
+						} col-12 mt8 mt-vw3-ns bt bn-ns b--whitegrey pt5 pt0-ns`}
+					>
+						<h3 className={`${Spirit.h3} fw6 link darkgrey hover-midgrey`}>
+							Need Help?
+						</h3>
+						<p
+							className={`${
+								Spirit.h4
+							} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
+						>
+							All libraries and tools, integrated with Appbase.
+						</p>
+						<Grid
+							className="mt5"
+							size={4}
+							lgSize={2}
+							smSize={1}
+							gutter="20px"
+							lgGutter="12px"
+						>
+							<Card className="br2 shadow-2 box-shadow-hover" big>
+								<img src="https://i.imgur.com/5pu5hmQ.png" alt="Documentation" />
+								<h3 className={`${Spirit.h4} fw6 darkgrey hover-midgrey`}>
+									Documentation
+								</h3>
+								<p className={`${Spirit.p} f5-l grey`}>
+									Dive in to learn all about{' '}
+									<span style={{ color: '#0033FF' }}>Reactive X</span> development
+									for all platforms.
+								</p>
+							</Card>
+							<Card className="br2 shadow-2 box-shadow-hover" big>
+								<img src="https://i.imgur.com/5pu5hmQ.png" alt="Documentation" />
+								<h3 className={`${Spirit.h4} fw6 darkgrey hover-midgrey`}>
+									Documentation
+								</h3>
+								<p className={`${Spirit.p} f5-l grey`}>
+									Dive in to learn all about{' '}
+									<span style={{ color: '#0033FF' }}>Reactive X</span> development
+									for all platforms.
+								</p>
+							</Card>
+							<Card className="br2 shadow-2 box-shadow-hover" big>
+								<img src="https://i.imgur.com/5pu5hmQ.png" alt="Documentation" />
+								<h3 className={`${Spirit.h4} fw6 darkgrey hover-midgrey`}>
+									Documentation
+								</h3>
+								<p className={`${Spirit.p} f5-l grey`}>
+									Dive in to learn all about{' '}
+									<span style={{ color: '#0033FF' }}>Reactive X</span> development
+									for all platforms.
+								</p>
+							</Card>
+							<Card className="br2 shadow-2 box-shadow-hover" big>
+								<img src="https://i.imgur.com/5pu5hmQ.png" alt="Documentation" />
+								<h3 className={`${Spirit.h4} fw6 darkgrey hover-midgrey`}>
+									Documentation
+								</h3>
+								<p className={`${Spirit.p} f5-l grey`}>
+									Dive in to learn all about{' '}
+									<span style={{ color: '#0033FF' }}>Reactive X</span> development
+									for all platforms.
+								</p>
+							</Card>
+						</Grid>
 					</section>
 				</div>
 			</Layout>

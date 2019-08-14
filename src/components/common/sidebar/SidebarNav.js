@@ -84,6 +84,24 @@ const SidebarNav = ({ sidebar, nestedSidebar, location }) => {
 					)}
 				</div>
 			))}
+			<div className="sticky-nav">
+				<a
+					target="_blank"
+					rel="noopener noreferrer"
+					className="midgrey hover-blue-l2 link fw6 "
+					href="https://appbase.io"
+				>
+					Appbaseio
+				</a>
+				<a
+					target="_blank"
+					rel="noopener noreferrer"
+					className="midgrey hover-blue-l2 link fw6"
+					href="https://dashboard.appbase.io"
+				>
+					Dashboard
+				</a>
+			</div>
 		</nav>
 	);
 };

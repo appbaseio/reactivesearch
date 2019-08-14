@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import SidebarLink from './SidebarLink';
 import SidebarList from './SidebarList';
+import Icon from '../Icon';
 
 const NestedSidebar = ({ nestedSidebar, location }) => {
 	if (!nestedSidebar || !nestedSidebar.groups) {
@@ -11,19 +12,19 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 	}
 
 	const switchDocs = value => {
-		if (value.value === 'v0.10 - Native') {
+		if (value.value === 'Native') {
 			window.location.href = `${
 				window.location.origin
 			}/docs/reactivesearch/native/overview/QuickStart`;
-		} else if (value.value === 'v1 - Vue') {
+		} else if (value.value === 'Vue') {
 			window.location.href = `${
 				window.location.origin
 			}/docs/reactivesearch/vue/overview/QuickStart`;
-		} else if (value.value === 'v3 - Web') {
+		} else if (value.value === 'React - v3') {
 			window.location.href = `${
 				window.location.origin
 			}/docs/reactivesearch/v3/overview/quickstart`;
-		} else if (value.value === 'v2 - Web') {
+		} else if (value.value === 'React - v2') {
 			window.location.href = `${
 				window.location.origin
 			}/docs/reactivesearch/v2/overview/QuickStart`;
@@ -32,23 +33,27 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 
 	const getValue = () => {
 		if (location.pathname.startsWith('/docs/reactivesearch/v2')) {
-			return 'v2 - Web';
+			return 'React - v2';
 		}
 		if (location.pathname.startsWith('/docs/reactivesearch/vue')) {
-			return 'v1 - Vue';
+			return 'Vue';
 		}
 		if (location.pathname.startsWith('/docs/reactivesearch/native')) {
-			return 'v0.12 - Native';
+			return 'Native';
 		}
 
-		return 'v3 - Web';
+		return 'React - v3';
 	};
 
 	return (
 		<Fragment>
 			<Dropdown
-				options={['v3 - Web', 'v2 - Web', 'v0.10 - Native', 'v1 - Vue']}
+				options={['React - v3', 'React - v2', 'Native', 'Vue']}
 				value={getValue()}
+				className="version-switcher shadow-3 br2"
+				menuClassName="br2 shadow-3"
+				arrowOpen={<Icon className="inline middarkgrey w2" name="arrow-up-small" />}
+				arrowClosed={<Icon className="inline middarkgrey w2" name="arrow-down-small" />}
 				onChange={switchDocs}
 			/>
 			<nav className="pl5 relative" data-cy="sidebar">

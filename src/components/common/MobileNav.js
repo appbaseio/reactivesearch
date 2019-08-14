@@ -10,26 +10,26 @@ const getValue = () => {
 	if (globalHistory) {
 		const path = globalHistory.location && globalHistory.location.pathname;
 		if (path && path.startsWith('/docs/reactivesearch/v2')) {
-			return 'v2 - Web';
+			return 'React - v2';
 		}
 		if (path && path.startsWith('/docs/reactivesearch/vue')) {
-			return 'v1 - Vue';
+			return 'Vue';
 		}
 		if (path && path.startsWith('/docs/reactivesearch/native')) {
-			return 'v0.12 - Native';
+			return 'Native';
 		}
 	}
 
-	return 'v3 - Web';
+	return 'React - v3';
 };
 
 const getFileName = value => {
 	switch (value) {
-		case 'v0.10 - Native':
+		case 'Native':
 			return 'native-reactivesearch';
-		case 'v1 - Vue':
+		case 'Vue':
 			return 'vue-reactivesearch';
-		case 'v2 - Web':
+		case 'React - v2':
 			return 'web-v2-reactivesearch';
 		default:
 			return 'web-reactivesearch';
@@ -76,9 +76,9 @@ class MobileNav extends React.Component {
 				</div>
 				<div className={`mobile-sidebar pa5 pb10 ${open ? 'open' : ''}`}>
 					<div className="mobile-nav-container">
-						<div className="relative home-search-container mb5">
+						{/* <div className="relative home-search-container mb5">
 							<Search />
-						</div>
+						</div> */}
 						<h2 className="f4 mb2 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey">
 							Guides
 						</h2>
@@ -112,8 +112,16 @@ class MobileNav extends React.Component {
 							frameworks and platforms.
 						</p>
 						<ReactDropdown
-							options={['v3 - Web', 'v2 - Web', 'v0.10 - Native', 'v1 - Vue']}
+							options={['React - v3', 'React - v2', 'Native', 'Vue']}
 							value={rs}
+							className="version-switcher shadow-3 br2"
+							menuClassName="br2 shadow-3"
+							arrowOpen={
+								<Icon className="inline middarkgrey w2" name="arrow-up-small" />
+							}
+							arrowClosed={
+								<Icon className="inline middarkgrey w2" name="arrow-down-small" />
+							}
 							onChange={this.switchDocs}
 						/>
 						<div className="mt5 mb3">

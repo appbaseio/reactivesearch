@@ -35,7 +35,7 @@ const NavBar = ({ theme }) => {
 			} flex flex-auto flex-nowrap items-center justify-between pt2 pb2`}
 			data-cy="header-navigation"
 		>
-			<div className="flex items-center pt3 pb3 nudge-bottom--2 w-sidebar-l pr8">
+			<div className="flex items-center pt3 pb3 nudge-bottom--2 w-sidebar-l pr8 nav-logo">
 				<Link to="/" className="nudge-top--3">
 					<Logo theme="light" />
 				</Link>
@@ -213,14 +213,9 @@ const NavBar = ({ theme }) => {
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
-														<img
+														<Icon
+															name="react-bw"
 															className="dropdown-content-icon mr2"
-															src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K"
-															alt="React"
-															style={{
-																filter:
-																	'grayscale(1) saturate(1) hue-rotate(180deg)',
-															}}
 														/>
 														React
 													</Link>
@@ -242,14 +237,9 @@ const NavBar = ({ theme }) => {
 															themeClasses[theme].menuItem
 														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 													>
-														<img
+														<Icon
+															name="react-bw"
 															className="dropdown-content-icon mr2"
-															src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K"
-															alt="React"
-															style={{
-																filter:
-																	'grayscale(1) saturate(1) hue-rotate(180deg)',
-															}}
 														/>
 														Native
 													</Link>

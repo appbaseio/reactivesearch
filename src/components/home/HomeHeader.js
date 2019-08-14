@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { NavBar, Icon } from '../common';
+import { NavBar } from '../common';
 import { Spirit } from '../../styles/spirit-styles';
 
 // Custom headings must be React components. You should include the <NavBar /> component
@@ -15,23 +15,31 @@ const HomeHeader = () => (
 				Spirit.page.xl
 			} pb5 pt10 pt15-ns pt20-l pb10-ns pb15-l flex items-between bt bn-ns b--white-10 home-header`}
 		>
-			<div>
+			<div className="pr3">
 				<h1 className="ma0 mt8 pt5 pa0 f2 f1-ns f-headline-l white header-heading-shadow">
 					Appbase Documentation
 				</h1>
-				<p className={`${Spirit.sectionSubHeading} f2 lightgrey`}>
+				<p className={`${Spirit.sectionSubHeading} f1 white`}>
 					Appbase.io is a hosted Elasticsearch service with built-in publish/subscribe
 					support for streaming document updates and query results.
 				</p>
 			</div>
 			<div className="home-header-graphics">
-				<div>
-					<img src="images/searcUI@3x.png" />
-					<img src="images/search-relevancy@3x.png" />
+				<div className="graphic">
+					<img src="images/app-cluster@3x.png" />
+					<p className={`${Spirit.p} middarkgrey text-center`}>App Cluster</p>
 				</div>
-				<div>
-					<img src="images/search-relevancy@3x.png" />
-					<img src="images/analytics@3x.png" />
+				<div className="graphic">
+					<img src="images/home-search-relevancy@3x.png" />
+					<p className={`${Spirit.p} middarkgrey text-center`}>Set Search relevancy</p>
+				</div>
+				<div className="graphic">
+					<img src="images/home-search@3x.png" />
+					<p className={`${Spirit.p} middarkgrey text-center`}>Build Search UI</p>
+				</div>
+				<div className="graphic">
+					<img src="images/home-analytics@3x.png" />
+					<p className={`${Spirit.p} middarkgrey text-center`}>Actionable Analytics</p>
 				</div>
 			</div>
 		</div>
