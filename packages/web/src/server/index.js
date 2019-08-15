@@ -140,7 +140,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 						queryOptions = queryOptionsReducer(queryOptions, {
 							type: 'SET_QUERY_OPTIONS',
 							component: internalComponent,
-							options: { aggs, size: size || 100 },
+							options: { aggs, size: typeof size === 'undefined' ? 100 : size },
 						});
 					}
 
