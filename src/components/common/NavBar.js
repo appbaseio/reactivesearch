@@ -284,6 +284,37 @@ const NavBar = ({ theme }) => {
 														/>
 														REST
 													</Link>
+													<a
+														href="https://github.com/appbaseio/appbase-droid"
+														target="_blank"
+														rel="noopener noreferrer"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<Icon
+															name="android-logo"
+															style={{ filter: 'grayscale(1)' }}
+															className="dropdown-content-icon mr2"
+														/>
+														Android
+													</a>
+													<a
+														href="https://github.com/appbaseio/appbase-swift"
+														target="_blank"
+														rel="noopener noreferrer"
+														className={`${
+															themeClasses[theme].menuItem
+														} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+													>
+														<img
+															style={{ filter: 'grayscale(1)' }}
+															className="dropdown-content-icon mr2"
+															src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Swift_logo.svg/1138px-Swift_logo.svg.png"
+															alt="Swift"
+														/>
+														Swift
+													</a>
 												</div>
 												<div>
 													<h2 className="f4 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey mb2">

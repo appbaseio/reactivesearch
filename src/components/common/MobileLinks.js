@@ -1,13 +1,35 @@
 import React from 'react';
+import { globalHistory } from '@reach/router';
 import { Link } from 'gatsby';
 import getSidebarFile from './sidebar/getSidebarFile';
 import Icon from './Icon';
 import { Spirit } from '../../styles/spirit-styles';
 
 class MobileLinks extends React.Component {
-	state = {
-		open: null,
-	};
+	constructor(props) {
+		super();
+		const link = globalHistory && globalHistory.location && globalHistory.location.pathname;
+		const { file } = props;
+		this.sidebarFile = getSidebarFile(file);
+		const items = this.sidebarFile.groups
+			.filter(item => !!item.items)
+			.reduce((agg, item) => {
+				const parsedItems = item.items.map(links => ({
+					...links,
+					topic: item.group,
+				}));
+
+				return [...parsedItems, ...agg];
+			}, []);
+		let group = null;
+		if (link) {
+			group = items.find(item => item.link === link);
+		}
+
+		this.state = {
+			open: group ? group.topic : null,
+		};
+	}
 
 	toggleLinks = link => {
 		this.setState(prevState => ({
@@ -18,11 +40,10 @@ class MobileLinks extends React.Component {
 	render() {
 		const { file } = this.props;
 		const { open } = this.state;
-		const sidebarFile = getSidebarFile(file);
 
 		return (
 			<div>
-				{sidebarFile.groups.map(item => {
+				{this.sidebarFile.groups.map(item => {
 					if (!item.items) {
 						return null;
 					}

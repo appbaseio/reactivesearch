@@ -198,7 +198,7 @@ const HomePage = ({ data, location }) => {
 						</p>
 						<div className="grid-integrations-index mt4 mt6-l f8">
 							<Box
-								to="/reactivesearch/v3/overview/quickstart/"
+								to="/docs/reactivesearch/v3/overview/quickstart/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
@@ -211,7 +211,7 @@ const HomePage = ({ data, location }) => {
 								React
 							</Box>
 							<Box
-								to="/reactivesearch/vue/overview/QuickStart/"
+								to="/docs/reactivesearch/vue/overview/QuickStart/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
@@ -224,7 +224,7 @@ const HomePage = ({ data, location }) => {
 								Vue
 							</Box>
 							<Box
-								to="/reactivesearch/native/overview/QuickStart/"
+								to="/docs/reactivesearch/native/overview/QuickStart/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
@@ -237,7 +237,7 @@ const HomePage = ({ data, location }) => {
 								React Native
 							</Box>
 							<Box
-								to="/api/javascript/quickstart"
+								to="/api/javascript/quickstart/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
@@ -259,7 +259,7 @@ const HomePage = ({ data, location }) => {
 								Android
 							</Box>
 							<Box
-								to="/api/rest/quickstart"
+								to="/api/rest/quickstart/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
@@ -285,7 +285,7 @@ const HomePage = ({ data, location }) => {
 								Swift
 							</Box>
 							<Box
-								to="/api/examples/python"
+								to="/api/examples/python/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn"
 								elevation="2"
 								radius="4"
