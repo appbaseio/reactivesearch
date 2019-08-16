@@ -74,6 +74,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			credentials,
 			transformRequest: settings.transformRequest || null,
 			type: settings.type ? settings.type : '*',
+			transformResponse: settings.transformResponse || null,
 		};
 		const appbaseRef = Appbase(config);
 
@@ -264,35 +265,55 @@ export default function initReactivesearch(componentCollection, searchState, set
 			queryLog,
 		};
 
+		const handleTransformResponse = (res, component) => {
+			if (config.transformResponse && typeof config.transformResponse === 'function') {
+				return config.transformResponse(res, component);
+			}
+			return new Promise(resolveTransformResponse => resolveTransformResponse(res));
+		};
+
+		const handleResponse = (res) => {
+			const allPromises = orderOfQueries.map((component, index) => (
+				new Promise((responseResolve, responseReject) => {
+					handleTransformResponse(res.responses[index], component)
+						.then((response) => {
+							if (response.aggregations) {
+								aggregations = {
+									...aggregations,
+									[component]: response.aggregations,
+								};
+							}
+							hits = {
+								...hits,
+								[component]: {
+									hits: response.hits.hits,
+									total: response.hits.total,
+									time: response.took,
+								},
+							};
+							responseResolve();
+						}).catch(err => responseReject(err));
+				})
+			));
+
+			Promise.all(allPromises)
+				.then(() => {
+					state = {
+						...state,
+						hits,
+						aggregations,
+					};
+					resolve(state);
+				});
+		};
+
 		appbaseRef
 			.msearch({
 				type: config.type === '*' ? '' : config.type,
 				body: config.transformRequest ? config.transformRequest(finalQuery) : finalQuery,
 			})
 			.then((res) => {
-				orderOfQueries.forEach((component, index) => {
-					const response = res.responses[index];
-					if (response.aggregations) {
-						aggregations = {
-							...aggregations,
-							[component]: response.aggregations,
-						};
-					}
-					hits = {
-						...hits,
-						[component]: {
-							hits: response.hits.hits,
-							total: response.hits.total,
-							time: response.took,
-						},
-					};
-				});
-				state = {
-					...state,
-					hits,
-					aggregations,
-				};
-				resolve(state);
+				handleResponse(res);
 			})
 			.catch(err => reject(err));
 	});
