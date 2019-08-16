@@ -5,6 +5,7 @@ import queryReducer from '@appbaseio/reactivecore/lib/reducers/queryReducer';
 import queryOptionsReducer from '@appbaseio/reactivecore/lib/reducers/queryOptionsReducer';
 import dependencyTreeReducer from '@appbaseio/reactivecore/lib/reducers/dependencyTreeReducer';
 import { buildQuery, pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
+import fetchGraphQL from '@appbaseio/reactivecore/lib/utils/graphQL';
 
 const componentsWithHighlightQuery = ['DataSearch', 'CategorySearch'];
 
@@ -75,6 +76,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			transformRequest: settings.transformRequest || null,
 			type: settings.type ? settings.type : '*',
 			transformResponse: settings.transformResponse || null,
+			graphQLUrl: settings.graphQLUrl || '',
 		};
 		const appbaseRef = Appbase(config);
 
@@ -307,14 +309,23 @@ export default function initReactivesearch(componentCollection, searchState, set
 				});
 		};
 
-		appbaseRef
-			.msearch({
-				type: config.type === '*' ? '' : config.type,
-				body: config.transformRequest ? config.transformRequest(finalQuery) : finalQuery,
-			})
-			.then((res) => {
-				handleResponse(res);
-			})
-			.catch(err => reject(err));
+		const requestQuery = config.transformRequest ? config.transformRequest(finalQuery) : finalQuery;
+		if (config.graphQLUrl) {
+			fetchGraphQL(config.graphQLUrl, config.url, config.credentials, config.app, requestQuery)
+				.then((res) => {
+					handleResponse(res);
+				})
+				.catch(err => reject(err));
+		} else {
+			appbaseRef
+				.msearch({
+					type: config.type === '*' ? '' : config.type,
+					body: requestQuery,
+				})
+				.then((res) => {
+					handleResponse(res);
+				})
+				.catch(err => reject(err));
+		}
 	});
 }
