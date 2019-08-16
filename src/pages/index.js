@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, graphql, navigate } from 'gatsby';
+import { graphql, navigate } from 'gatsby';
 
 import PropTypes from 'prop-types';
 
@@ -9,9 +9,10 @@ import { Card } from '@appbaseio/designkit';
 import { Title } from '@appbaseio/designkit/lib/atoms/typography';
 import { Icon, Box } from '../components/common';
 import { Layout } from '../components/common/layout';
-import { HomeHeader, GuideBox } from '../components/home';
+import { HomeHeader } from '../components/home';
 import { Spirit } from '../styles/spirit-styles';
-import guides from '../utils/guides';
+
+const imagePrefix = 'https://opensource.appbase.io/reactivesearch/images/support';
 
 const HomePage = ({ data, location }) => {
 	// Add meta title and description for this page here to overwrite the site meta data as set in the config
@@ -26,9 +27,7 @@ const HomePage = ({ data, location }) => {
 			>
 				<div className="pt-vw3 ">
 					<div className={`${Spirit.page.xl} col-12 mt-vw3-ns b--whitegrey pt0-ns`}>
-						<span className={`${Spirit.h3} fw6 link darkgrey hover-midgrey`}>
-							Guides
-						</span>
+						<span className={`${Spirit.h3} fw6 link darkgrey `}>Guides</span>
 						<p
 							className={`${
 								Spirit.h4
@@ -189,9 +188,7 @@ const HomePage = ({ data, location }) => {
 							Spirit.page.xl
 						} col-12 mt8 mt-vw3-ns bt bn-ns b--whitegrey pt5 pt0-ns`}
 					>
-						<h3 className={`${Spirit.h3} fw6 link darkgrey hover-midgrey`}>
-							Integrations
-						</h3>
+						<h3 className={`${Spirit.h3} fw6 link darkgrey `}>Integrations</h3>
 						<p
 							className={`${
 								Spirit.h4
@@ -262,12 +259,16 @@ const HomePage = ({ data, location }) => {
 								Android
 							</Box>
 							<Box
-								to="/api/rest/"
+								to="/api/rest/quickstart"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
 							>
-								<Icon name="rest" className="w10 mb1" />
+								<img
+									className="w15 mb1"
+									src="https://miro.medium.com/max/790/1*uHzooF1EtgcKn9_XiSST4w.png"
+									alt="REST APi"
+								/>
 								REST API
 							</Box>
 							<Box
@@ -284,24 +285,22 @@ const HomePage = ({ data, location }) => {
 								Swift
 							</Box>
 							<Box
-								to="/api/"
+								to="/api/examples/python"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn"
 								elevation="2"
 								radius="4"
 							>
-								<Icon name="more" className="w8 nudge-top--6" />
-								See More
+								<Icon name="python" className="w10 h-auto nudge-top--6" />
+								Python
 							</Box>
 						</div>
 					</section>
 					<section
 						className={`${
 							Spirit.page.xl
-						} col-12 mt8 mt-vw3-ns bt bn-ns b--whitegrey pt5 pt0-ns`}
+						} col-12 mt9 mt-vw3-ns bt bn-ns b--whitegrey pt5 pt0-ns`}
 					>
-						<h3 className={`${Spirit.h3} fw6 link darkgrey hover-midgrey`}>
-							Need Help?
-						</h3>
+						<h3 className={`${Spirit.h3} fw6 link darkgrey `}>Need Help?</h3>
 						<p
 							className={`${
 								Spirit.h4
@@ -310,55 +309,56 @@ const HomePage = ({ data, location }) => {
 							All libraries and tools, integrated with Appbase.
 						</p>
 						<Grid
-							className="mt5"
 							size={4}
 							lgSize={2}
 							smSize={1}
 							gutter="20px"
 							lgGutter="12px"
+							smGutter="0px"
+							className="mt5"
 						>
-							<Card className="br2 shadow-2 box-shadow-hover" big>
-								<img src="https://i.imgur.com/5pu5hmQ.png" alt="Documentation" />
-								<h3 className={`${Spirit.h4} fw6 darkgrey hover-midgrey`}>
-									Documentation
-								</h3>
-								<p className={`${Spirit.p} f5-l grey`}>
+							<Card big href="https://opensource.appbase.io/reactive-manual">
+								<img src={`${imagePrefix}/Documentation.svg`} alt="Documentation" />
+								<h3>Documentation</h3>
+								<p>
 									Dive in to learn all about{' '}
-									<span style={{ color: '#0033FF' }}>Reactive X</span> development
-									for all platforms.
+									<span
+										style={{
+											color: '#0033FF',
+										}}
+									>
+										Reactive X
+									</span>{' '}
+									development for all platforms.
 								</p>
 							</Card>
-							<Card className="br2 shadow-2 box-shadow-hover" big>
-								<img src="https://i.imgur.com/5pu5hmQ.png" alt="Documentation" />
-								<h3 className={`${Spirit.h4} fw6 darkgrey hover-midgrey`}>
-									Documentation
-								</h3>
-								<p className={`${Spirit.p} f5-l grey`}>
-									Dive in to learn all about{' '}
-									<span style={{ color: '#0033FF' }}>Reactive X</span> development
-									for all platforms.
+							<Card big href="https://medium.appbase.io">
+								<img src={`${imagePrefix}/Tutorials.svg`} alt="Tutorials" />
+								<h3>Tutorials</h3>
+								<p>Go from scratch to a full app with these tutorial guides.</p>
+							</Card>
+							<Card big href="https://appbase.io/support">
+								<img src={`${imagePrefix}/Support.png`} alt="Support" />
+								<h3>Support</h3>
+								<p>
+									Get first-class support from appbase.io for your{' '}
+									<span
+										style={{
+											color: '#0033FF',
+										}}
+									>
+										Reactive X
+									</span>{' '}
+									app.
 								</p>
 							</Card>
-							<Card className="br2 shadow-2 box-shadow-hover" big>
-								<img src="https://i.imgur.com/5pu5hmQ.png" alt="Documentation" />
-								<h3 className={`${Spirit.h4} fw6 darkgrey hover-midgrey`}>
-									Documentation
-								</h3>
-								<p className={`${Spirit.p} f5-l grey`}>
-									Dive in to learn all about{' '}
-									<span style={{ color: '#0033FF' }}>Reactive X</span> development
-									for all platforms.
-								</p>
-							</Card>
-							<Card className="br2 shadow-2 box-shadow-hover" big>
-								<img src="https://i.imgur.com/5pu5hmQ.png" alt="Documentation" />
-								<h3 className={`${Spirit.h4} fw6 darkgrey hover-midgrey`}>
-									Documentation
-								</h3>
-								<p className={`${Spirit.p} f5-l grey`}>
-									Dive in to learn all about{' '}
-									<span style={{ color: '#0033FF' }}>Reactive X</span> development
-									for all platforms.
+							<Card big href="https://gitter.im/appbaseio/reactivesearch">
+								<img src={`${imagePrefix}/Gitter.svg`} alt="Gitter" />
+								<h3>Gitter</h3>
+								<p>
+									Join our community on Gitter. We
+									{"'"}
+									re always around and happy to help.
 								</p>
 							</Card>
 						</Grid>

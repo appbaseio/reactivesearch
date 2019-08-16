@@ -36,13 +36,26 @@ const getFileName = value => {
 	}
 };
 
+const getVersionName = value => {
+	switch (value) {
+		case 'Native':
+			return 'Native';
+		case 'Vue':
+			return 'Vue';
+		case 'React - v2':
+			return 'v2';
+		default:
+			return 'v3';
+	}
+};
+
 const getIconName = value => {
 	switch (value) {
 		case 'v0.10 - Native':
 			return 'native-bw';
 		case 'v1 - Vue':
 			return 'vue-bw';
-		case 'v2 - Web':
+		case 'React - v2':
 			return 'react-bw';
 		default:
 			return 'react-bw';
@@ -104,7 +117,7 @@ class MobileNav extends React.Component {
 							</div>
 						</div>
 						<h2 className="f4 mt6 mb2 lh-h5 lh-h4-l fw6 ma0 pa0 darkgrey between">
-							<span className="middarkgrey">ReactiveSearch</span>
+							<span className="middarkgrey">ReactiveSearch {getVersionName(rs)}</span>
 							<Icon className="dropdown-content-icon ml2" name={getIconName(rs)} />
 						</h2>
 						<p className="f5 lh-h5 lh-h4-l fw4 ma0 pa0 mt0 mt2-ns middarkgrey mb2">

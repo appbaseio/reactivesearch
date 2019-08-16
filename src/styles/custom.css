@@ -1454,8 +1454,8 @@ to be custom HTML.
 	}
 
 	.mobile-sidebar {
-		top: 65px;
-		height: calc(100vh - 65px);
+		top: 64px;
+		height: calc(100vh - 64px);
 	}
 	.mw-xl {
 		max-width: none;
@@ -1534,6 +1534,12 @@ to be custom HTML.
 
 #gatsby-plugin-page-progress {
 	top: 75px !important;
+}
+
+@media (max-width: 500px) {
+	#gatsby-plugin-page-progress {
+		top: 64px !important;
+	}
 }
 
 .home-header {
