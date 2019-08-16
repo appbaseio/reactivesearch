@@ -1440,9 +1440,14 @@ to be custom HTML.
 		width: 100px;
 	}
 
+	.home-input {
+		margin-right: 5px;
+	}
+
 	.home-search {
 		position: fixed;
-		top: 65px;
+		top: 64px;
+		border-radius: 0;
 		left: 0;
 		width: 100%;
 		box-shadow: 0 2px 1px rgba(0, 0, 0, 0.03), 0 10px 32px -5px rgba(0, 0, 0, 0.1);
@@ -1450,6 +1455,10 @@ to be custom HTML.
 
 	.mobile-sidebar {
 		top: 65px;
+		height: calc(100vh - 65px);
+	}
+	.mw-xl {
+		max-width: none;
 	}
 }
 
@@ -1594,24 +1603,36 @@ to be custom HTML.
 @media (max-width: 768px) {
 	.home-header-graphics {
 		grid-gap: 20px;
+		justify-content: center;
 	}
 	.home-header-graphics .graphic img {
 		width: 100%;
 		max-height: none;
 	}
+	.home-search-container {
+		margin-right: 10px;
+	}
+	.home-search-container .top-3 {
+		top: 0.6rem;
+	}
+	.home-input {
+		padding: 8px;
+	}
+	.nav-logo {
+		padding-right: 2rem;
+	}
 }
 
 @media (max-width: 420px) {
 	.home-header-graphics {
-		grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
+		display: none;
 	}
-
-	.home-header-graphics .graphic {
-		align-items: center;
+	.nav-logo {
+		padding-right: 1rem;
 	}
 }
 
-.timeline-steps .topic {
+.timeline-steps .topics .topic {
 	grid-template-columns: 0.05fr 1fr;
 	grid-gap: 15px;
 	margin-bottom: 0;
@@ -1621,6 +1642,14 @@ to be custom HTML.
 	margin-bottom: 20px;
 }
 
+@media (max-width: 768px) {
+	.timeline-steps .topics .topic {
+		margin-top: 10px;
+	}
+	.timeline-steps .topic.active {
+		margin-bottom: 10px;
+	}
+}
 .timeline-steps .topic.active .content h2 {
 	color: #3eb0ef;
 }

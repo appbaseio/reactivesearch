@@ -25,11 +25,7 @@ const HomePage = ({ data, location }) => {
 				header={<HomeHeader />}
 			>
 				<div className="pt-vw3 ">
-					<div
-						className={`${
-							Spirit.page.xl
-						} col-12 mt-vw3-ns bt bn-ns b--whitegrey pt0-ns`}
-					>
+					<div className={`${Spirit.page.xl} col-12 mt-vw3-ns b--whitegrey pt0-ns`}>
 						<span className={`${Spirit.h3} fw6 link darkgrey hover-midgrey`}>
 							Guides
 						</span>
