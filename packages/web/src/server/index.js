@@ -101,7 +101,11 @@ export default function initReactivesearch(componentCollection, searchState, set
 			const isResultComponent = resultComponents.includes(componentType);
 			const internalComponent = `${component.componentId}__internal`;
 			const label = component.filterLabel || component.componentId;
-			const value = getValue(searchState, label, component.value || component.defaultValue);
+			const value = getValue(
+				searchState,
+				component.componentId,
+				component.value || component.defaultValue,
+			);
 
 			// [1] set selected values
 			let showFilter = component.showFilter !== undefined ? component.showFilter : true;
