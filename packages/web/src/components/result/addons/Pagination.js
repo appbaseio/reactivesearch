@@ -1,5 +1,5 @@
 import React from 'react';
-import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
+import { getClassName, handleA11yAction, isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Button, { pagination } from '../../../styles/Button';
@@ -23,7 +23,7 @@ const buildPaginationDOM = (props, position) => {
 	let start
 		= position === 'start'
 			? getStartPage(pages, currentPage, showEndPage)
-			: Math.ceil(totalPages - ((pages - 1) / 2)) + 1;
+			: Math.ceil(totalPages - (pages - 1) / 2) + 1;
 	const paginationButtons = [];
 	if (start <= totalPages) {
 		let totalPagesToShow = pages < totalPages ? start + (pages - 1) : totalPages + 1;
@@ -33,8 +33,8 @@ const buildPaginationDOM = (props, position) => {
 					? start + (Math.ceil(pages / 2) - (pages % 2))
 					: totalPages + 1;
 		}
-		if (currentPage > (totalPages - pages) + 2) {
-			start = (totalPages - pages) + 2;
+		if (currentPage > totalPages - pages + 2) {
+			start = totalPages - pages + 2;
 		}
 		for (let i = start; i < totalPagesToShow; i += 1) {
 			const primary = currentPage === i - 1;
@@ -65,7 +65,7 @@ const buildPaginationDOM = (props, position) => {
 	return paginationButtons;
 };
 
-export default function Pagination(props) {
+function Pagination(props) {
 	const {
 		pages,
 		currentPage,
@@ -142,9 +142,10 @@ export default function Pagination(props) {
 					1
 				</Button>
 			}
-			{showEndPage && currentPage >= Math.floor(pages / 2) + !!(pages % 2)
-				? <span>...</span> : null}
-			{currentPage <= (totalPages - pages) + 2 && buildPaginationDOM(props, 'start')}
+			{showEndPage && currentPage >= Math.floor(pages / 2) + !!(pages % 2) ? (
+				<span>...</span>
+			) : null}
+			{currentPage <= totalPages - pages + 2 && buildPaginationDOM(props, 'start')}
 			{showEndPage && pages > 2 && currentPage <= totalPages - Math.ceil(pages * 0.75) ? (
 				<span>...</span>
 			) : null}
@@ -162,6 +163,12 @@ export default function Pagination(props) {
 		</div>
 	);
 }
+
+function areEqual(prevProps, nextProps) {
+	return isEqual(prevProps, nextProps);
+}
+
+export default React.memo(Pagination, areEqual);
 
 Pagination.propTypes = {
 	currentPage: types.number,
