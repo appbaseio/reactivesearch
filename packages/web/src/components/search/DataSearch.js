@@ -746,7 +746,9 @@ class DataSearch extends Component {
 					Authorization: `Basic ${btoa(credentials)}`,
 					'X-Search-Id': searchId,
 					'X-Search-Click': true,
-					'X-Search-ClickPosition': searchPosition + 1,
+					...(searchPosition !== undefined && {
+						'X-Search-ClickPosition': searchPosition + 1,
+					}),
 					'X-Search-Conversion': true,
 					...(config.searchStateHeader && searchState && {
 						'X-Search-State': JSON.stringify(searchState),
