@@ -92,7 +92,7 @@ class CategorySearch extends Component {
 			...props,
 			componentType: componentTypes.categorySearch,
 		});
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 
 		if (props.highlight) {
 			const queryOptions = CategorySearch.highlightQuery(props) || {};
@@ -1172,7 +1172,7 @@ const mapDispatchtoProps = dispatch => ({
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => <CategorySearch ref={props.myForwardedRef} {...props} />);
+)(withTheme(props => <CategorySearch ref={props.myForwardedRef} {...props} />));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
