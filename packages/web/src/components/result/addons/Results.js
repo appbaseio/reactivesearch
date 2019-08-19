@@ -11,7 +11,7 @@ const Results = (props) => {
 		<div className={`${props.listClass} ${getClassName(props.innerClass, 'list')}`}>
 			{props.filteredResults.map((item, index) =>
 				props.renderItem(item, () => {
-					this.triggerClickAnalytics(props.base + index);
+					props.triggerClickAnalytics(props.base + index);
 				}),
 			)}
 		</div>
@@ -25,6 +25,7 @@ Results.propTypes = {
 	base: types.number,
 	getComponent: types.func,
 	listClass: types.string,
+	triggerClickAnalytics: types.func,
 };
 
 function areEqual(prevProps, nextProps) {
