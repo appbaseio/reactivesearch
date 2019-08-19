@@ -152,7 +152,7 @@ class DataSearch extends Component {
 			},
 		);
 		if (this.props.value !== prevProps.value) {
-			this.setValue(this.props.value, true, this.props);
+			this.setValue(this.props.value, true, this.props, undefined, undefined, false);
 		} else if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
@@ -344,7 +344,14 @@ class DataSearch extends Component {
 		return parsedSuggestions;
 	};
 
-	setValue = (value, isDefaultValue = false, props = this.props, cause, hasMounted = true) => {
+	setValue = (
+		value,
+		isDefaultValue = false,
+		props = this.props,
+		cause,
+		hasMounted = true,
+		toggleIsOpen = true,
+	) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -361,9 +368,11 @@ class DataSearch extends Component {
 					() => {
 						if (isDefaultValue) {
 							if (this.props.autosuggest) {
-								this.setState({
-									isOpen: false,
-								});
+								if (toggleIsOpen) {
+									this.setState({
+										isOpen: false,
+									});
+								}
 								this.updateDefaultQuery(value, props);
 							}
 							// in case of strict selection only SUGGESTION_SELECT should be able

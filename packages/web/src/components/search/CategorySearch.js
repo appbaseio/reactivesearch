@@ -186,7 +186,7 @@ class CategorySearch extends Component {
 
 		if (!isEqual(this.props.value, prevProps.value)) {
 			const { term: currentValue, category: currentCategory = null } = this.props.value;
-			this.setValue(currentValue, true, this.props, currentCategory);
+			this.setValue(currentValue, true, this.props, currentCategory, undefined, undefined, false);
 		} else if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
@@ -408,7 +408,6 @@ class CategorySearch extends Component {
 		}
 		return parsedSuggestions;
 	};
-
 	setValue = (
 		value,
 		isDefaultValue = false,
@@ -416,6 +415,7 @@ class CategorySearch extends Component {
 		category,
 		cause,
 		hasMounted = true,
+		toggleIsOpen = true,
 	) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
@@ -434,9 +434,11 @@ class CategorySearch extends Component {
 					() => {
 						if (isDefaultValue) {
 							if (this.props.autosuggest) {
-								this.setState({
-									isOpen: false,
-								});
+								if (toggleIsOpen) {
+									this.setState({
+										isOpen: false,
+									});
+								}
 								this.updateDefaultQuery(value, props);
 							}
 							// in case of strict selection only SUGGESTION_SELECT should be able
