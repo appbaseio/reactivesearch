@@ -490,6 +490,7 @@ class MultiDropdownList extends Component {
 					renderItem={this.props.renderItem}
 					hasCustomRenderer={this.hasCustomRenderer}
 					customRenderer={this.getComponent}
+					customLabelRenderer={this.props.renderLabel}
 					renderNoResults={this.props.renderNoResults}
 					showSearch={this.props.showSearch}
 					transformData={this.props.transformData}
@@ -543,6 +544,7 @@ MultiDropdownList.propTypes = {
 	render: types.func,
 	renderItem: types.func,
 	renderNoResults: types.func,
+	renderLabel: types.func,
 	renderError: types.title,
 	transformData: types.func,
 	selectAllLabel: types.string,

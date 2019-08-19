@@ -19,6 +19,7 @@ export interface MultiDropdownList extends CommonProps {
 	react?: types.react;
 	render?: (...args: any[]) => any;
 	renderItem?: (...args: any[]) => any;
+	renderLabel?: (...args: any[]) => any;
 	renderError?: types.title;
 	transformData?: (...args: any[]) => any;
 	selectAllLabel?: string;

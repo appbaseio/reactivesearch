@@ -379,6 +379,7 @@ class SingleDropdownList extends Component {
 					renderItem={this.props.renderItem}
 					hasCustomRenderer={this.hasCustomRenderer}
 					customRenderer={this.getComponent}
+					customLabelRenderer={this.props.renderLabel}
 					renderNoResults={this.props.renderNoResults}
 					showSearch={this.props.showSearch}
 					transformData={this.props.transformData}
@@ -430,6 +431,7 @@ SingleDropdownList.propTypes = {
 	react: types.react,
 	render: types.func,
 	renderItem: types.func,
+	renderLabel: types.func,
 	renderError: types.title,
 	renderNoResults: types.func,
 	transformData: types.func,
