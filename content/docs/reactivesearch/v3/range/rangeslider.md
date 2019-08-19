@@ -131,7 +131,7 @@ While `RangeSlider` only requires the above props to be used, it comes with many
 -   `slider`
 -   `label`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
 ## Extending
 

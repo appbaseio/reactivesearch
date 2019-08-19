@@ -175,10 +175,10 @@ http.cors.allow-headers: X-Requested-With, X-Auth-Token, Content-Type, Content-L
 
 Once you have added the **ReactiveBase** component, you can get started with adding other components as its children.
 
--   List specific components can be found [here](/list-components/singlelist.html).
--   Range specific components can be found [here](/list-components/singlerange.html).
--   Search specific components can be found [here](/search-components/datasearch.html).
+-   List specific components can be found [here](/docs/reactivesearch/v3/list/singlelist/).
+-   Range specific components can be found [here](/docs/reactivesearch/v3/range/singlerange/).
+-   Search specific components can be found [here](/docs/reactivesearch/v3/search/datasearch/).
 -   Result specific components can be found
-    [here](/result-components/reactivelist.html).
+    [here](/docs/reactivesearch/v3/result/reactivelist/).
 
-You can read more about when to use which components in the overview guide [here](/getting-started/ComponentsIndex.html).
+You can read more about when to use which components in the overview guide [here](/docs/reactivesearch/v3/overview/components/).

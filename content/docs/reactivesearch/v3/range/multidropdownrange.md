@@ -17,7 +17,7 @@ nestedSidebar: 'web-reactivesearch'
 
 > Note
 >
-> It is exactly like the [MultiRange](/basic-components/multirange.html) component but displayed in a dropdown, ideal for showing additional UI filters while conserving screen space
+> It is exactly like the [MultiRange](/docs/reactivesearch/v3/range/multirange) component but displayed in a dropdown, ideal for showing additional UI filters while conserving screen space
 
 Example uses:
 
@@ -105,7 +105,7 @@ Example uses:
 -   `list`
 -   `icon`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v3/theming/class).
 
 ## Extending
 

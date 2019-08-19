@@ -96,8 +96,7 @@ class MobileNav extends React.Component {
 							Guides
 						</h2>
 						<p className="f5 lh-h5 lh-h4-l fw4 ma0 pa0 mt0 mt2-ns middarkgrey mb2">
-							Discover how to integrate and adapt Appbaseio's technology into popular
-							frameworks and platforms.
+							Step wise guide from making your search app to securing it.
 						</p>
 						<div className="mt5 mb3">
 							<div className="mobile-links-container">
@@ -121,8 +120,8 @@ class MobileNav extends React.Component {
 							<Icon className="dropdown-content-icon ml2" name={getIconName(rs)} />
 						</h2>
 						<p className="f5 lh-h5 lh-h4-l fw4 ma0 pa0 mt0 mt2-ns middarkgrey mb2">
-							Discover how to integrate and adapt Appbaseio's technology into popular
-							frameworks and platforms.
+							Read about ReactiveSearch Libraries and how to integrate and adapt it in
+							your app.
 						</p>
 						<ReactDropdown
 							options={['React - v3', 'React - v2', 'Native', 'Vue']}

@@ -75,9 +75,8 @@ const NavBar = ({ theme }) => {
 														Guides
 													</h2>
 													<p className="f5 lh-h5 lh-h4-l fw4 ma0 pa0 mt0 mt2-ns middarkgrey mb2">
-														Discover how to integrate and adapt
-														Appbaseio's technology into popular
-														frameworks and platforms.
+														Step wise guide from making your search app
+														to securing it.
 													</p>
 												</div>
 												<div>

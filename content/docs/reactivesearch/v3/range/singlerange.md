@@ -17,7 +17,7 @@ nestedSidebar: 'web-reactivesearch'
 
 > Note
 >
-> It is similar to a [SingleList](/basic-components/singlelist.html), except it is suited for numeric data.
+> It is similar to a [SingleList](/docs/reactivesearch/v3/list/singlelist), except it is suited for numeric data.
 
 Example uses:
 
@@ -105,7 +105,7 @@ Example uses:
 -   `radio`
 -   `label`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
 ## Extending
 

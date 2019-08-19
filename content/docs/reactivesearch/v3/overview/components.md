@@ -35,25 +35,25 @@ The components can also be used with `Numeric` datatype fields.
 
 <p>
 
-**[SingleList](/list-components/singlelist.html)** is useful for displaying a list of values where only one item can be selected at a time, and the values are retrieved by a database query on the field specified in the **dataField** prop.
+**[SingleList](/docs/reactivesearch/v3/list/singlelist/)** is useful for displaying a list of values where only one item can be selected at a time, and the values are retrieved by a database query on the field specified in the **dataField** prop.
 
 </p>
 
 <p>
 
-**[MultiList](/list-components/multilist.html)** is useful for displaying a list of values where multiple values can be selected at a time. Similar to SingleList, these values are retrieved by a database query on the field specified in the **dataField** prop.
+**[MultiList](/docs/reactivesearch/v3/list/multilist/)** is useful for displaying a list of values where multiple values can be selected at a time. Similar to SingleList, these values are retrieved by a database query on the field specified in the **dataField** prop.
 
 </p>
 
 <p>
 
-**[SingleDataList](/list-components/singledatalist.html)** is useful for displaying a list of user defined values where only one value item can be selected at a time. Unlike SingleList and MultiList where the values are auto-fetched, here the **data** prop allows curation of which values to display.
+**[SingleDataList](/docs/reactivesearch/v3/list/singledatalist/)** is useful for displaying a list of user defined values where only one value item can be selected at a time. Unlike SingleList and MultiList where the values are auto-fetched, here the **data** prop allows curation of which values to display.
 
 </p>
 
 <p>
 
-**[MultiDataList](/list-components/multidatalist.html)** is useful for displaying a list of user defined values where multiple value items can be selected at a time. Similar to the SingleDataList component, the **data** prop allows curation of which values to display.
+**[MultiDataList](/docs/reactivesearch/v3/list/multidatalist/)** is useful for displaying a list of user defined values where multiple value items can be selected at a time. Similar to the SingleDataList component, the **data** prop allows curation of which values to display.
 
 </p>
 
@@ -63,13 +63,13 @@ The components can also be used with `Numeric` datatype fields.
 
 <p>
 
-**[SingleDropdownList](/list-components/singledropdownlist.html)** displays a dropdown list UI where only one item can be selected at a time. It is similar to SingleList but is presented in a dropdown format to save space.
+**[SingleDropdownList](/docs/reactivesearch/v3/list/singledropdownlist/)** displays a dropdown list UI where only one item can be selected at a time. It is similar to SingleList but is presented in a dropdown format to save space.
 
 </p>
 
 <p>
 
-**[MultiDropdownList](/list-components/multidropdownlist.html)** displays a dropdown list UI where multiple items can be selected at a time. It is similar to MultiList.
+**[MultiDropdownList](/docs/reactivesearch/v3/list/multidropdownlist/)** displays a dropdown list UI where multiple items can be selected at a time. It is similar to MultiList.
 
 </p>
 <br>
@@ -80,13 +80,13 @@ The components can also be used with `Numeric` datatype fields.
 
 <p>
 
-**[ToggleButton](/list-components/togglebutton.html)** component applies on a String or Text datatype field where you want users to select a choice (or choices) amongst a small number of total choices.
+**[ToggleButton](/docs/reactivesearch/v3/list/togglebutton/)** component applies on a String or Text datatype field where you want users to select a choice (or choices) amongst a small number of total choices.
 
 </p>
 
 <p>
 
-**[TagCloud](/list-components/tagcloud.html)** is useful for showing a weighted tag cloud of items based on the frequency of occurrences.
+**[TagCloud](/docs/reactivesearch/v3/list/tagcloud/)** is useful for showing a weighted tag cloud of items based on the frequency of occurrences.
 
 </p>
 
@@ -96,7 +96,7 @@ The following are all the possible UI components for a numeric datatype field in
 
 <p>
 
-**[SingleRange](/range-components/singlerange.html)** displays a curated list of items where only one item can be selected at a time. Each item represents a range of values, specified in the **data** prop of the component.
+**[SingleRange](/docs/reactivesearch/v3/range/singlerange/)** displays a curated list of items where only one item can be selected at a time. Each item represents a range of values, specified in the **data** prop of the component.
 
 </p>
 
@@ -106,7 +106,7 @@ The following are all the possible UI components for a numeric datatype field in
 
 <p>
 
-**[MultiRange](/range-components/multirange.html)** displays a curated list of items where multiple items can be selected at a time. Each item represents a range of values, specified in the **data** prop of the component.
+**[MultiRange](/docs/reactivesearch/v3/range/multirange/)** displays a curated list of items where multiple items can be selected at a time. Each item represents a range of values, specified in the **data** prop of the component.
 
 </p>
 
@@ -116,13 +116,13 @@ The following are all the possible UI components for a numeric datatype field in
 
 <p>
 
-**[SingleDropdownRange](/range-components/singledropdownrange.html)** displays a dropdown list UI where only one item can be selected at a time. Each item in this dropdown list represents a range, specified in the **data** prop of the component.
+**[SingleDropdownRange](/docs/reactivesearch/v3/range/singledropdownrange/)** displays a dropdown list UI where only one item can be selected at a time. Each item in this dropdown list represents a range, specified in the **data** prop of the component.
 
 </p>
 
 <p>
 
-**[MultiDropdownRange](/range-components/multidropdownrange.html)** displays a dropdown list UI where only multiple items can be selected at a time. Each item in this dropdown list represents a range, specified in the **data** prop of the component.
+**[MultiDropdownRange](/docs/reactivesearch/v3/range/multidropdownrange/)** displays a dropdown list UI where only multiple items can be selected at a time. Each item in this dropdown list represents a range, specified in the **data** prop of the component.
 
 </p>
 
@@ -130,7 +130,7 @@ The following are all the possible UI components for a numeric datatype field in
 
 <p>
 
-**[RangeSlider](/range-components/rangeslider.html)** component applies on a numeric datatype (ideally an integer) field and displays a slider UI.
+**[RangeSlider](/docs/reactivesearch/v3/range/rangeslider/)** component applies on a numeric datatype (ideally an integer) field and displays a slider UI.
 
 </p>
 
@@ -142,7 +142,7 @@ The following are all the possible UI components for a numeric datatype field in
 
 <p>
 
-**[DynamicRangeSlider](/range-components/dynamicrangeslider.html)** is a more specific version of the [RangeSlider](/range-components/rangeslider.html) component where the available range is dynamically set based on the sub-set of data filtered by other components in the view.
+**[DynamicRangeSlider](/docs/reactivesearch/v3/range/dynamicrangeslider/)** is a more specific version of the [RangeSlider](/docs/reactivesearch/v3/range/rangeslider/) component where the available range is dynamically set based on the sub-set of data filtered by other components in the view.
 
 </p>
 
@@ -150,7 +150,7 @@ The following are all the possible UI components for a numeric datatype field in
 
 <p>
 
-**[RangeInput](/range-components/rangeinput.html)** component displays a [RangeSlider](/range-components/rangeslider.html) with input controls.
+**[RangeInput](/docs/reactivesearch/v3/range/rangeinput/)** component displays a [RangeSlider](/docs/reactivesearch/v3/range/rangeslider/) with input controls.
 
 </p>
 
@@ -158,7 +158,7 @@ The following are all the possible UI components for a numeric datatype field in
 
 <p>
 
-**[NumberBox](/range-components/numberbox.html)** component applies on a numeric datatype field where you want to display a selectable field value that can be incrementally increased or decreased, e.g. no of guests field in a hotel booking app.
+**[NumberBox](/docs/reactivesearch/v3/range/numberbox/)** component applies on a numeric datatype field where you want to display a selectable field value that can be incrementally increased or decreased, e.g. no of guests field in a hotel booking app.
 
 </p>
 
@@ -166,7 +166,7 @@ The following are all the possible UI components for a numeric datatype field in
 
 <p>
 
-**[DatePicker](/range-components/datepicker.html)** and **[DateRange](/range-components/daterange.html)** components are useful for showing selectable date fields. They apply to Date datatype field, and internally apply a date range query on the database.
+**[DatePicker](/docs/reactivesearch/v3/range/datepicker/)** and **[DateRange](/docs/reactivesearch/v3/range/daterange/)** components are useful for showing selectable date fields. They apply to Date datatype field, and internally apply a date range query on the database.
 
 </p>
 
@@ -174,7 +174,7 @@ The following are all the possible UI components for a numeric datatype field in
 
 <p>
 
-**[RatingsFilter](/range-components/ratingsfilter.html)** is useful for showing a UI selection choice based on ratings score. To be applied on a numeric datatype field.
+**[RatingsFilter](/docs/reactivesearch/v3/range/ratingsfilter/)** is useful for showing a UI selection choice based on ratings score. To be applied on a numeric datatype field.
 
 </p>
 
@@ -186,7 +186,7 @@ The following are UI components that represent searchbar UIs. The datatype for t
 
 <p>
 
-**[DataSearch](/search-components/datasearch.html)** displays a search input box. It supports autosuggestions, highlighting of results and querying against more than one fields via props.
+**[DataSearch](/docs/reactivesearch/v3/search/datasearch/)** displays a search input box. It supports autosuggestions, highlighting of results and querying against more than one fields via props.
 
 </p>
 
@@ -194,7 +194,7 @@ The following are UI components that represent searchbar UIs. The datatype for t
 
 <p>
 
-**[CategorySearch](/search-components/categorysearch.html)** is a more specific version of the [DataSearch](/basic-components/datasearch.html) component. The main difference is that it can show suggestions within specific categories besides the general auto-suggestions that appear in the search dropdown.
+**[CategorySearch](/docs/reactivesearch/v3/search/categorysearch/)** is a more specific version of the [DataSearch](/docs/reactivesearch/v3/basic/datasearch/) component. The main difference is that it can show suggestions within specific categories besides the general auto-suggestions that appear in the search dropdown.
 
 </p>
 
@@ -204,13 +204,13 @@ Result components are used for displaying the results (aka hits).
 
 > How do result components fetch results by combining queries from multiple components?
 >
-> They do this via [**react**](/advanced/react.html) prop, which allows each component to specify their dependent components using a DSL that mirrors Elasticsearch's compound query DSL for bool clause.
+> They do this via [**react**](/docs/reactivesearch/v3/advanced/react/) prop, which allows each component to specify their dependent components using a DSL that mirrors Elasticsearch's compound query DSL for bool clause.
 
 ### ReactiveList
 
 <p>
 
-**[ReactiveList](/result-components/reactivelist.html)** displays the results in a configurable list layout. Reactivesearch also provides two components which can be used with `ReactiveList` to display a decorated list and card based layout.
+**[ReactiveList](/docs/reactivesearch/v3/result/reactivelist/)** displays the results in a configurable list layout. Reactivesearch also provides two components which can be used with `ReactiveList` to display a decorated list and card based layout.
 
 </p>
 
@@ -218,7 +218,7 @@ Result components are used for displaying the results (aka hits).
 
 <p>
 
-**[ResultList](/result-components/resultlist.html)** displays a particular result list item.
+**[ResultList](/docs/reactivesearch/v3/result/resultlist/)** displays a particular result list item.
 
 </p>
 
@@ -226,7 +226,7 @@ Result components are used for displaying the results (aka hits).
 
 <p>
 
-**[ResultCard](/result-components/resultcard.html)** displays a particular result card item.
+**[ResultCard](/docs/reactivesearch/v3/result/resultcard/)** displays a particular result card item.
 
 </p>
 
@@ -234,7 +234,7 @@ Result components are used for displaying the results (aka hits).
 
 <p>
 
-**[ReactiveComponent](/advanced/reactivecomponent.html)** is a wrapper component that allows you to connect custom component(s) (passed as children) with the Reactivesearch ecosystem, e.g. if we are building an e-commerce store where we have a react component called `ColorPicker` which renders the `colors` passed to it as tiles, allowing us to filter the products by their colors.
+**[ReactiveComponent](/docs/reactivesearch/v3/advanced/reactivecomponent/)** is a wrapper component that allows you to connect custom component(s) (passed as children) with the Reactivesearch ecosystem, e.g. if we are building an e-commerce store where we have a react component called `ColorPicker` which renders the `colors` passed to it as tiles, allowing us to filter the products by their colors.
 
 </p>
 
@@ -246,7 +246,7 @@ Map components are useful for displaying geospatial data.
 
 <p>
 
-**[GeoDistanceSlider](/map-components/geodistanceslider.html)** displays a places search UI component to then filter by a distance range slider based on the selected location.
+**[GeoDistanceSlider](/docs/reactivesearch/v3/map/geodistanceslider/)** displays a places search UI component to then filter by a distance range slider based on the selected location.
 
 </p>
 
@@ -254,7 +254,7 @@ Map components are useful for displaying geospatial data.
 
 <p>
 
-**[GeoDistanceDropdown](/map-components/geodistancedropdown.html)** displays a places search UI component to then filter by a distance range dropdown based on the selected location.
+**[GeoDistanceDropdown](/docs/reactivesearch/v3/map/geodistancedropdown/)** displays a places search UI component to then filter by a distance range dropdown based on the selected location.
 
 </p>
 
@@ -266,7 +266,7 @@ Map components are useful for displaying geospatial data.
 
 <p>
 
-**[ReactiveMap](/map-components/reactivemap.html)** displays results on a map UI component. It can also be classified as a result component.
+**[ReactiveMap](/docs/reactivesearch/v3/map/reactivemap/)** displays results on a map UI component. It can also be classified as a result component.
 
 </p>
 
@@ -276,4 +276,4 @@ Map components are useful for displaying geospatial data.
 
 ### SelectedFilters
 
-**[SelectedFilters](/base-components/selectedfilters.html)** is a selection component to render the selected values from other components with a "Clear All" option.
+**[SelectedFilters](/docs/reactivesearch/v3/base/selectedfilters/)** is a selection component to render the selected values from other components with a "Clear All" option.

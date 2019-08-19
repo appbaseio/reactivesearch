@@ -84,7 +84,7 @@ Example uses:
     can be used to render an error message in case of any error.
     `js renderError={(error) => <div> Something went wrong!<br/>Error details<br/>{error} </div> }`
 -   **onChange** `function` [optional]
-    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` props and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` props and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms/#controlled-components) behavior.
 -   **onError** `Function` [optional]
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
 
@@ -102,7 +102,7 @@ Example uses:
 -   `list`
 -   `input`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
 ## Extending
 

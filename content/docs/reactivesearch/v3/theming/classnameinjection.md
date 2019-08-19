@@ -19,7 +19,7 @@ The `innerClass` prop accepts an object with keys as defined in the **Styles** s
 
 ## Examples
 
-Here's an example of how to use `innerClass` with a [DataSearch](search-components/DataSearch.html) component:
+Here's an example of how to use `innerClass` with a [DataSearch](/docs/reactivesearch/v3/search/DataSearch/) component:
 
 ![DataSearch annotated image](https://imgur.com/f20AvrZ.png)
 

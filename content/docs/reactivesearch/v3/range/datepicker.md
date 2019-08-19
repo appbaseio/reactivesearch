@@ -117,7 +117,7 @@ Example uses:
 -   `daypicker-overlay-wrapper`
 -   `daypicker-overlay`
 
-Read more about it [here](/theming/class.html). This component uses [React Day Picker Input](http://react-day-picker.js.org/docs/input) which you may refer to in order to customize the calendar fully.
+Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/). This component uses [React Day Picker Input](http://react-day-picker.js.org/docs/input) which you may refer to in order to customize the calendar fully.
 
 ## Extending
 

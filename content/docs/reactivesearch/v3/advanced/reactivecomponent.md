@@ -195,7 +195,7 @@ Check demo [here](https://codesandbox.io/s/3ylrrr0r5q).
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **react** `Object`
-    `react` prop is available in components whose data view should reactively update when on or more dependent components change their states, e.g. [`ReactiveMap`](/map-components/reactivemap.html), [`ReactiveList`](/basic-components/reactivelist.html).
+    `react` prop is available in components whose data view should reactively update when on or more dependent components change their states, e.g. [`ReactiveMap`](/docs/reactivesearch/v3/map/reactivemap/), [`ReactiveList`](/docs/reactivesearch/v3/result/reactivelist/).
 
     -   **key** `String`
         one of `and`, `or`, `not` defines the combining clause.

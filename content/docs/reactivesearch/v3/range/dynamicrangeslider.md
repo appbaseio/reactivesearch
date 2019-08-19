@@ -22,7 +22,7 @@ Example uses:
 
 > Note
 >
-> This component behaves similar to the [RangeSlider](/range-components/rangeslider.html) except that the range is computed dynamically based on actual data.
+> This component behaves similar to the [RangeSlider](/docs/reactivesearch/v3/range/rangeslider/) except that the range is computed dynamically based on actual data.
 
 ## Usage
 
@@ -124,7 +124,7 @@ While `DynamicRangeSlider` only requires the above props to be used, it comes wi
 -   `slider`
 -   `label`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
 ## Extending
 

@@ -17,7 +17,7 @@ nestedSidebar: 'web-reactivesearch'
 
 > Note
 >
-> This component is exactly like the [SingleRange](/basic-components/singlerange.html) component except the UI is based on a dropdown, ideal for showing additional UI filters while conserving screen space.
+> This component is exactly like the [SingleRange](/docs/reactivesearch/v3/range/singlerange/) component except the UI is based on a dropdown, ideal for showing additional UI filters while conserving screen space.
 
 Example uses:
 
@@ -105,7 +105,7 @@ Example uses:
 -   `list`
 -   `icon`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
 ## Extending
 

@@ -17,7 +17,7 @@ nestedSidebar: 'web-reactivesearch'
 
 > Note
 >
-> It is similar to a [MultiList](/basic-components/multilist.html) component but for numeric data fields.
+> It is similar to a [MultiList](/docs/reactivesearch/v3/list/multilist) component but for numeric data fields.
 
 Example uses:
 
@@ -105,7 +105,7 @@ Example uses:
 -   `checkbox`
 -   `label`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
 ## Extending
 

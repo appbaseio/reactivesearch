@@ -107,7 +107,7 @@ Example uses:
     when set adds the current page number to the url. Only works when `pagination` is enabled.
 -   **defaultQuery** `Function` [optional]
     applies a default query to the result component. This query will be run when no other components are being watched (via React prop), as well as in conjunction with the query generated from the React prop. The function should return a query.
-    Read more about it [here](/advanced/customquery.html#when-to-use-default-query).
+    Read more about it [here](/docs/reactivesearch/v3/advanced/customquery#when-to-use-default-query).
 -   **renderItem** `Function` [optional]
     returns a list element object to be rendered based on the `res` data object. This callback function prop is called for each data item rendered in the **ReactiveList** component's view. For example,
     ```js
@@ -190,10 +190,10 @@ Example uses:
 
 -   **ResultCardsWrapper**
     A wrapper component for `ResultCard` components to render a card based layout.
-    Read more about the usage [here](/result-components/resultcard.html#usage).
+    Read more about the usage [here](/docs/reactivesearch/v3/result/resultcard#usage).
 -   **ResultListWrapper**
     A wrapper component for `ResultList` components to render a list based layout.
-    Read more about the usage [here](/result-components/resultlist.html#usage).
+    Read more about the usage [here](/docs/reactivesearch/v3/result/resultlist#usage).
 
 ## Demo
 
@@ -215,7 +215,7 @@ Example uses:
 -   `list`
 -   `poweredBy`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
 ## Extending
 
@@ -269,7 +269,7 @@ Read more about it [here](/theming/class.html).
     -   **`streamData`**: `array`
         An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
     -   **`promotedData`**: `array`
-        An array of promoted results obtained from the applied query. [Read More](https://docs.appbase.io/concepts/query-rules.html#part-1-introduction)
+        An array of promoted results obtained from the applied query. [Read More](docs/search/Rules#part-1-introduction)
         > Note:
         >
         > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerAnalytics to register the click analytics info.
@@ -290,7 +290,7 @@ Read more about it [here](/theming/class.html).
     -   **`handleLoadMore`**: `function`
         A callback function to be called to load the next page of results into the view. The callback function is only applicable in the case of infinite loading view (i.e. `infiniteScroll` prop set to `true`).
     -   **`triggerAnalytics`**: `function`
-        A function which can be called to register a click analytics. [Read More](/advanced/analytics.html)
+        A function which can be called to register a click analytics. [Read More](docs/reactivesearch/v3/advanced/analytics/)
 
 ```js
 <ReactiveList
@@ -340,7 +340,7 @@ Or you can also use render function as children
 
 > Note
 >
-> The `streamResults` parameter will be `[]` unless `stream` prop is set to `true`. Check the [handling streaming](/advanced/guides.html#handling-stream-updates) guide for more info.
+> The `streamResults` parameter will be `[]` unless `stream` prop is set to `true`. Check the [handling streaming](/docs/reactivesearch/v3/advanced/guides#handling-stream-updates) guide for more info.
 
 -   **onQueryChange** `Function`
     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.

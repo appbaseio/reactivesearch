@@ -43,7 +43,7 @@ const HomePage = ({ data, location }) => {
 									'1': {
 										title: 'Getting Started',
 										subtitle:
-											'Short description about how to get started with appbase io',
+											'Build amazing search Ux with reactive UI components.',
 										icon: <div className="dropdown-content-icon">1</div>,
 										chapters: [
 											{
@@ -63,7 +63,7 @@ const HomePage = ({ data, location }) => {
 									'2': {
 										title: 'Managing Data',
 										subtitle:
-											'Short description about how to get started with appbase io',
+											"Appbase's data schema, data browser and how to import data to ElasticSearch.",
 										icon: <div className="dropdown-content-icon">2</div>,
 										chapters: [
 											{
@@ -91,90 +91,95 @@ const HomePage = ({ data, location }) => {
 									'3': {
 										title: 'Search Relevancy',
 										subtitle:
-											'Development Setup, eslint, prettier, babel ,webpack ',
+											'Visually create, update and manage results for your Search.',
 										icon: <div className="dropdown-content-icon">3</div>,
 										chapters: [
 											{
+												title: 'Mappings',
+												description:
+													'Mappings define how the JSON data indexed into appbase.io is stored as.',
+												link: '/docs/search/Mappings',
+												duration: 3,
+											},
+											{
 												title: 'Search Preview',
 												description:
-													'Take a look at the data model of Appbaseio',
+													'Search Preview offers a drag and drop interface for building and testing your search UX visually.',
 												link: '/docs/search/Preview',
-												duration: 8,
+												duration: 1,
 											},
 											{
 												title: 'Query Rules',
 												description:
 													'Data Browser is a WYSIWYG GUI for adding, modifying and viewing your appbase.io apps data.',
 												link: '/docs/search/Rules',
-												duration: 7,
+												duration: 5,
 											},
 										],
 									},
 									'4': {
 										title: 'Building Search UI',
-										subtitle:
-											'Development Setup, eslint, prettier, babel ,webpack ',
+										subtitle: 'UI Components for making your Search Experience',
 										icon: <div className="dropdown-content-icon">4</div>,
 										chapters: [
 											{
 												title: 'ReactiveSearch QuickStart',
-												description:
-													'Take a look at the data model of Appbaseio',
 												link: '/docs/reactivesearch/v3/overview/quickstart',
 												duration: 8,
 											},
 											{
 												title: 'Vue ReactiveSearch QuickStart',
-												description:
-													'Take a look at the data model of Appbaseio',
 												link:
 													'/docs/reactivesearch/vue/overview/QuickStart',
 												duration: 8,
 											},
 											{
 												title: 'Native ReactiveSearch QuickStart',
-												description:
-													'Take a look at the data model of Appbaseio',
+												description: '',
 												link:
 													'/docs/reactivesearch/native/overview/QuickStart',
-												duration: 8,
+												duration: 6,
 											},
 										],
 									},
 									'5': {
 										title: 'Actionable Analytics',
 										subtitle:
-											'Development Setup, eslint, prettier, babel ,webpack ',
+											'Analytics offers actionable insights into how your search is performing.',
 										icon: <div className="dropdown-content-icon">5</div>,
 										chapters: [
 											{
 												title: 'Analytics',
-												description:
-													'Take a look at the data model of Appbaseio',
 												link: '/docs/analytics/Overview',
-												duration: 8,
+												duration: 1,
 											},
 											{
 												title: 'Implement Analytics',
-												description:
-													'Data Browser is a WYSIWYG GUI for adding, modifying and viewing your appbase.io apps data.',
 												link: '/docs/analytics/Implement',
-												duration: 7,
+												duration: 2,
 											},
 										],
 									},
 									'6': {
 										title: 'Security',
 										subtitle:
-											'Development Setup, eslint, prettier, babel ,webpack ',
+											'Securely access and query the index using Appbase.',
 										icon: <div className="dropdown-content-icon">6</div>,
 										chapters: [
 											{
 												title: 'Credentials',
-												description:
-													'Take a look at the data model of Appbaseio',
 												link: '/docs/security/Credentials',
-												duration: 17,
+												duration: 5,
+											},
+											{
+												title: 'Search Template',
+												link: '/docs/security/Template',
+												duration: 1,
+											},
+											{
+												title: 'Role Based Access',
+												link: '/docs/security/Role',
+												duration: 4,
 											},
 										],
 									},
@@ -194,7 +199,7 @@ const HomePage = ({ data, location }) => {
 								Spirit.h4
 							} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
 						>
-							All libraries and tools, integrated with Appbase.
+							All libraries and frameworks, integrated with Appbase.
 						</p>
 						<div className="grid-integrations-index mt4 mt6-l f8">
 							<Box
@@ -306,7 +311,7 @@ const HomePage = ({ data, location }) => {
 								Spirit.h4
 							} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
 						>
-							All libraries and tools, integrated with Appbase.
+							Resources to get help with Reactive Search.
 						</p>
 						<Grid
 							size={4}

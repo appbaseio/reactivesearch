@@ -17,7 +17,7 @@ nestedSidebar: 'web-reactivesearch'
 
 > Note
 >
-> This component is exactly like the [MultiList](/list-components/multilist.html) component except the UI is based on a dropdown, ideal for showing additional UI filters while conserving screen space.
+> This component is exactly like the [MultiList](/docs/reactivesearch/v3/list/multilist/) component except the UI is based on a dropdown, ideal for showing additional UI filters while conserving screen space.
 
 Example uses:
 
@@ -100,7 +100,7 @@ Example uses:
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **showLoadMore** `Boolean` [optional]
-    defaults to `false` and works only with elasticsearch >= 6 since it uses [composite aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). This adds a "Load More" button to load the aggs on demand combined with the `size` prop. Composite aggregations are in beta and this is an experimental API which might change in a future release.
+    defaults to `false` and works only with elasticsearch >= 6 since it uses [composite aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation/). This adds a "Load More" button to load the aggs on demand combined with the `size` prop. Composite aggregations are in beta and this is an experimental API which might change in a future release.
     `Note`: Composite aggregations do not support sorting by `count`. Hence with `showLoadMore`, you can only sort by: `asc` or `desc` order. `sortBy` prop defaults to `asc` when `showLoadMore` prop is used.
 -   **renderItem** `Function` [optional]
     customize the rendered list via a function which receives the item label, count & isSelected and expects a JSX or String back. For example:
@@ -190,7 +190,7 @@ Or you can also use render function as children
     ```
 
 -   **onChange** `function` [optional]
-    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` props and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` props and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms/#controlled-components) behavior.
 -   **onError** `Function` [optional]
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
 
@@ -210,7 +210,7 @@ Or you can also use render function as children
 -   `icon`
 -   `count`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
 ## Extending
 
@@ -286,7 +286,7 @@ Read more about it [here](/theming/class.html).
     `Note:` customQuery is called on value changes in the **MultiDropdownList** component as long as the component is a part of `react` dependency of at least one other component.
 -   **defaultQuery** `Function`
     takes **value** and **props** as parameters and **returns** the data query to be applied to the source component, as defined in Elasticsearch Query DSL, which doesn't get leaked to other components.
-    Read more about it [here](/advanced/customquery.html#when-to-use-default-query).
+    Read more about it [here](/docs/reactivesearch/v3/advanced/customquery/#when-to-use-default-query).
 -   **beforeValueChange** `Function`
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 -   **onValueChange** `Function`

@@ -13,7 +13,7 @@ nestedSidebar: 'web-reactivesearch'
 
 ![Image to be displayed](https://imgur.com/N5WZEPi.png)
 
-`RangeInput` creates a numeric range slider UI component with input fields. It works in the same way as [RangeSlider](range-components/RangeSlider.html).
+`RangeInput` creates a numeric range slider UI component with input fields. It works in the same way as [RangeSlider](/docs/reactivesearch/v3/range/rangeslider/).
 
 Example uses:
 
@@ -36,7 +36,7 @@ Example uses:
 />
 ```
 
-`RangeInput` provides all the props supported by [RangeSlider](range-components/RangeSlider.html).
+`RangeInput` provides all the props supported by [RangeSlider](/docs/reactivesearch/v3/range/rangeslider/).
 
 ### Usage With All Props
 
@@ -114,7 +114,7 @@ Example uses:
 -   `slider-container`
 -   `input-container`
 
-The other `innerClass` properties are the same as supported by [RangeSlider](range-components/RangeSlider.html#styles).
+The other `innerClass` properties are the same as supported by [RangeSlider](/docs/reactivesearch/v3/range/RangeSlider#styles).
 
 ## Extending
 

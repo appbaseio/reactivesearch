@@ -17,7 +17,7 @@ nestedSidebar: 'web-reactivesearch'
 
 > Note
 >
-> This component behaves similar to the [MultiList](/list-components/multilist.html) component except the list items are user defined with the `data` prop, ideal for showing curated items in a list layout.
+> This component behaves similar to the [MultiList](/docs/reactivesearch/v3/list/multilist/) component except the list items are user defined with the `data` prop, ideal for showing curated items in a list layout.
 
 Example uses:
 
@@ -186,7 +186,7 @@ Or you can also use render function as children
     ```
 
 -   **onChange** `function` [optional]
-    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` props and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` props and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms/#controlled-components) behavior.
 -   **onError** `Function` [optional]
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
 
@@ -207,7 +207,7 @@ Or you can also use render function as children
 -   `label`
 -   `count`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
 ## Extending
 
@@ -277,7 +277,7 @@ Read more about it [here](/theming/class.html).
     `Note:` customQuery is called on value changes in the **MultiDataList** component as long as the component is a part of `react` dependency of at least one other component.
 -   **defaultQuery** `Function`
     takes **value** and **props** as parameters and **returns** the data query to be applied to the source component, as defined in Elasticsearch Query DSL, which doesn't get leaked to other components.
-    Read more about it [here](/advanced/customquery.html#when-to-use-default-query).
+    Read more about it [here](/docs/reactivesearch/v3/advanced/customquery/#when-to-use-default-query).
 -   **beforeValueChange** `Function`
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 -   **onValueChange** `Function`

@@ -281,7 +281,7 @@ Or you can also use render function as children
 -   `input`
 -   `list`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
 ## Extending
 
@@ -311,7 +311,7 @@ Read more about it [here](/theming/class.html).
 />
 ```
 
--   it's also possible to take control of rendering individual suggestions with `parseSuggestion` prop or the entire suggestions rendering using the `render` prop. Check the [custom suggestions](/advanced/customsuggestions.html) recipe for more info.
+-   it's also possible to take control of rendering individual suggestions with `parseSuggestion` prop or the entire suggestions rendering using the `render` prop. Check the [custom suggestions](/docs/reactivesearch/v3/advanced/customsuggestions/) recipe for more info.
 
 6. add the following [synthetic events](https://reactjs.org/events.html) to the underlying `input` element:
 
@@ -389,7 +389,7 @@ Read more about it [here](/theming/class.html).
     `Note:` customQuery is called on value changes in the **CategorySearch** component as long as the component is a part of `react` dependency of at least one other component.
 -   **defaultQuery** `Function`
     takes **value**, **props** and **category** as parameters and **returns** the data query to be applied to the source component, as defined in Elasticsearch Query DSL, which doesn't get leaked to other components.<br/>
-    Read more about it [here](/advanced/customquery.html#when-to-use-default-query).
+    Read more about it [here](/docs/reactivesearch/v3/advanced/customquery#when-to-use-default-query).
 -   **beforeValueChange** `Function`
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 -   **onValueChange** `Function`

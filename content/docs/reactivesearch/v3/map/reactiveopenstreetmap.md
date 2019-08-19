@@ -84,7 +84,7 @@ Example uses:
 -   **stream** `Boolean` [optional]
     whether to stream new result (aka realtime view) updates in the UI. Defaults to `false`.
 -   **react** `Object`
-    specify dependent components to reactively update **GeoDistanceDropdown's** options. Read more about it [here](/advanced/react.html).
+    specify dependent components to reactively update **GeoDistanceDropdown's** options. Read more about it [here](/docs/reactivesearch/v3/advanced/react/).
     -   **key** `String`
         one of `and`, `or`, `not` defines the combining clause.
         -   **and** clause implies that the results will be filtered by matches from **all** of the associated component states.
