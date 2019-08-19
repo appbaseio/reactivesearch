@@ -77,6 +77,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			type: settings.type ? settings.type : '*',
 			transformResponse: settings.transformResponse || null,
 			graphQLUrl: settings.graphQLUrl || '',
+			headers: settings.headers || {},
 		};
 		const appbaseRef = Appbase(config);
 
@@ -275,43 +276,52 @@ export default function initReactivesearch(componentCollection, searchState, set
 		};
 
 		const handleResponse = (res) => {
-			const allPromises = orderOfQueries.map((component, index) => (
-				new Promise((responseResolve, responseReject) => {
-					handleTransformResponse(res.responses[index], component)
-						.then((response) => {
-							if (response.aggregations) {
-								aggregations = {
-									...aggregations,
-									[component]: response.aggregations,
+			const allPromises = orderOfQueries.map(
+				(component, index) =>
+					new Promise((responseResolve, responseReject) => {
+						handleTransformResponse(res.responses[index], component)
+							.then((response) => {
+								if (response.aggregations) {
+									aggregations = {
+										...aggregations,
+										[component]: response.aggregations,
+									};
+								}
+								hits = {
+									...hits,
+									[component]: {
+										hits: response.hits.hits,
+										total: response.hits.total,
+										time: response.took,
+									},
 								};
-							}
-							hits = {
-								...hits,
-								[component]: {
-									hits: response.hits.hits,
-									total: response.hits.total,
-									time: response.took,
-								},
-							};
-							responseResolve();
-						}).catch(err => responseReject(err));
-				})
-			));
+								responseResolve();
+							})
+							.catch(err => responseReject(err));
+					}),
+			);
 
-			Promise.all(allPromises)
-				.then(() => {
-					state = {
-						...state,
-						hits,
-						aggregations,
-					};
-					resolve(state);
-				});
+			Promise.all(allPromises).then(() => {
+				state = {
+					...state,
+					hits,
+					aggregations,
+				};
+				resolve(state);
+			});
 		};
 
-		const requestQuery = config.transformRequest ? config.transformRequest(finalQuery) : finalQuery;
+		const requestQuery = config.transformRequest
+			? config.transformRequest(finalQuery)
+			: finalQuery;
 		if (config.graphQLUrl) {
-			fetchGraphQL(config.graphQLUrl, config.url, config.credentials, config.app, requestQuery)
+			fetchGraphQL(
+				config.graphQLUrl,
+				config.url,
+				config.credentials,
+				config.app,
+				requestQuery,
+			)
 				.then((res) => {
 					handleResponse(res);
 				})
