@@ -5,6 +5,7 @@ import queryReducer from '@appbaseio/reactivecore/lib/reducers/queryReducer';
 import queryOptionsReducer from '@appbaseio/reactivecore/lib/reducers/queryOptionsReducer';
 import dependencyTreeReducer from '@appbaseio/reactivecore/lib/reducers/dependencyTreeReducer';
 import { buildQuery, pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
+import fetchGraphQL from '@appbaseio/reactivecore/lib/utils/graphQL';
 
 const componentsWithHighlightQuery = ['DataSearch', 'CategorySearch'];
 
@@ -74,6 +75,9 @@ export default function initReactivesearch(componentCollection, searchState, set
 			credentials,
 			transformRequest: settings.transformRequest || null,
 			type: settings.type ? settings.type : '*',
+			transformResponse: settings.transformResponse || null,
+			graphQLUrl: settings.graphQLUrl || '',
+			headers: settings.headers || {},
 		};
 		const appbaseRef = Appbase(config);
 
@@ -97,7 +101,11 @@ export default function initReactivesearch(componentCollection, searchState, set
 			const isResultComponent = resultComponents.includes(componentType);
 			const internalComponent = `${component.componentId}__internal`;
 			const label = component.filterLabel || component.componentId;
-			const value = getValue(searchState, label, component.value || component.defaultValue);
+			const value = getValue(
+				searchState,
+				component.componentId,
+				component.value || component.defaultValue,
+			);
 
 			// [1] set selected values
 			let showFilter = component.showFilter !== undefined ? component.showFilter : true;
@@ -264,36 +272,74 @@ export default function initReactivesearch(componentCollection, searchState, set
 			queryLog,
 		};
 
-		appbaseRef
-			.msearch({
-				type: config.type === '*' ? '' : config.type,
-				body: config.transformRequest ? config.transformRequest(finalQuery) : finalQuery,
-			})
-			.then((res) => {
-				orderOfQueries.forEach((component, index) => {
-					const response = res.responses[index];
-					if (response.aggregations) {
-						aggregations = {
-							...aggregations,
-							[component]: response.aggregations,
-						};
-					}
-					hits = {
-						...hits,
-						[component]: {
-							hits: response.hits.hits,
-							total: response.hits.total,
-							time: response.took,
-						},
-					};
-				});
+		const handleTransformResponse = (res, component) => {
+			if (config.transformResponse && typeof config.transformResponse === 'function') {
+				return config.transformResponse(res, component);
+			}
+			return new Promise(resolveTransformResponse => resolveTransformResponse(res));
+		};
+
+		const handleResponse = (res) => {
+			const allPromises = orderOfQueries.map(
+				(component, index) =>
+					new Promise((responseResolve, responseReject) => {
+						handleTransformResponse(res.responses[index], component)
+							.then((response) => {
+								if (response.aggregations) {
+									aggregations = {
+										...aggregations,
+										[component]: response.aggregations,
+									};
+								}
+								hits = {
+									...hits,
+									[component]: {
+										hits: response.hits.hits,
+										total: response.hits.total,
+										time: response.took,
+									},
+								};
+								responseResolve();
+							})
+							.catch(err => responseReject(err));
+					}),
+			);
+
+			Promise.all(allPromises).then(() => {
 				state = {
 					...state,
 					hits,
 					aggregations,
 				};
 				resolve(state);
-			})
-			.catch(err => reject(err));
+			});
+		};
+
+		const requestQuery = config.transformRequest
+			? config.transformRequest(finalQuery)
+			: finalQuery;
+		if (config.graphQLUrl) {
+			fetchGraphQL(
+				config.graphQLUrl,
+				config.url,
+				config.credentials,
+				config.app,
+				requestQuery,
+			)
+				.then((res) => {
+					handleResponse(res);
+				})
+				.catch(err => reject(err));
+		} else {
+			appbaseRef
+				.msearch({
+					type: config.type === '*' ? '' : config.type,
+					body: requestQuery,
+				})
+				.then((res) => {
+					handleResponse(res);
+				})
+				.catch(err => reject(err));
+		}
 	});
 }
