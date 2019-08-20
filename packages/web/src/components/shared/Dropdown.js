@@ -73,6 +73,12 @@ class Dropdown extends Component {
 	};
 
 	renderToString = (value) => {
+		if (this.props.customLabelRenderer) {
+			const customLabel = this.props.customLabelRenderer(value);
+			if (typeof customLabel === 'string') {
+				return customLabel;
+			}
+		}
 		if (Array.isArray(value) && value.length) {
 			const arrayToRender = value.map(item => this.renderToString(item));
 			return arrayToRender.join(', ');
@@ -143,9 +149,13 @@ class Dropdown extends Component {
 							small={this.props.small}
 							themePreset={this.props.themePreset}
 						>
-							<div>
-								{selectedItem ? this.renderToString(selectedItem) : placeholder}
-							</div>
+							{this.props.customLabelRenderer
+								? this.props.customLabelRenderer(selectedItem)
+								: (
+									<div>
+										{selectedItem ? this.renderToString(selectedItem) : placeholder}
+									</div>
+								)}
 							<Chevron open={isOpen} />
 						</Select>
 						{
@@ -198,7 +208,11 @@ class Dropdown extends Component {
 													}}
 												>
 													{renderItem ? (
-														renderItem(item[labelField], item.doc_count, selected && this.props.multi)
+														renderItem(
+															item[labelField],
+															item.doc_count,
+															selected && this.props.multi,
+														)
 													) : (
 														<div>
 															{typeof item[labelField] === 'string' ? (
@@ -269,6 +283,7 @@ Dropdown.propTypes = {
 	transformData: types.func,
 	renderNoResults: types.func,
 	customRenderer: types.func,
+	customLabelRenderer: types.func,
 	selectedItem: types.selectedValue,
 	showCount: types.bool,
 	single: types.bool,
@@ -276,6 +291,8 @@ Dropdown.propTypes = {
 	theme: types.style,
 	themePreset: types.themePreset,
 	showSearch: types.bool,
+	footer: types.children,
+	componentId: types.string,
 };
 
 export default withTheme(Dropdown);

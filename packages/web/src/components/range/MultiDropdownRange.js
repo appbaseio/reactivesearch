@@ -243,6 +243,7 @@ class MultiDropdownRange extends Component {
 					keyField="label"
 					multi
 					returnsObject
+					customLabelRenderer={this.props.renderLabel}
 					themePreset={this.props.themePreset}
 				/>
 			</Container>
@@ -283,6 +284,7 @@ MultiDropdownRange.propTypes = {
 	themePreset: types.themePreset,
 	URLParams: types.bool,
 	includeNullValues: types.bool,
+	renderLabel: types.func,
 };
 
 MultiDropdownRange.defaultProps = {
