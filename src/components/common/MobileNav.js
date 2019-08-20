@@ -51,9 +51,9 @@ const getVersionName = value => {
 
 const getIconName = value => {
 	switch (value) {
-		case 'v0.10 - Native':
+		case 'Native':
 			return 'native-bw';
-		case 'v1 - Vue':
+		case 'Vue':
 			return 'vue-bw';
 		case 'React - v2':
 			return 'react-bw';

@@ -20,9 +20,23 @@ const HomeHeader = () => (
 					Appbase Documentation
 				</h1>
 				<p className={`${Spirit.sectionSubHeading} f1 white`}>
-					Appbase.io is a hosted Elasticsearch service with built-in publish/subscribe
-					support for streaming document updates and query results.
+					Appbase.io offers the search stack for building modern apps. Import data
+					instantly from your favorite sources. Deploy in minutes with a fully managed
+					backend. Build amazing search Ux with reactive UI components.
 				</p>
+				<div className="mt5">
+					<a
+						href="https://dashboard.appbase.io"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="link button-header pa2 mr4 shadow-3 pl4 pr4 br2 fw5 f5 blue"
+					>
+						Sign Up
+					</a>
+					<a className="link button-header pa2 f5 fw5 shadow-3 pl4 pr4 br2 blue">
+						Watch Video
+					</a>
+				</div>
 			</div>
 			<div className="home-header-graphics">
 				<div className="graphic">

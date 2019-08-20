@@ -10,8 +10,8 @@ class MobileLinks extends React.Component {
 		super();
 		const link = globalHistory && globalHistory.location && globalHistory.location.pathname;
 		const { file } = props;
-		this.sidebarFile = getSidebarFile(file);
-		const items = this.sidebarFile.groups
+		const sidebarFile = getSidebarFile(file);
+		const items = sidebarFile.groups
 			.filter(item => !!item.items)
 			.reduce((agg, item) => {
 				const parsedItems = item.items.map(links => ({
@@ -38,12 +38,13 @@ class MobileLinks extends React.Component {
 	};
 
 	render() {
-		const { file } = this.props;
 		const { open } = this.state;
+		const { file } = this.props;
+		const sidebarFile = getSidebarFile(file);
 
 		return (
 			<div>
-				{this.sidebarFile.groups.map(item => {
+				{sidebarFile.groups.map(item => {
 					if (!item.items) {
 						return null;
 					}

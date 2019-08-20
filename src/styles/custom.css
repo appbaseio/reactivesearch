@@ -1330,7 +1330,7 @@ to be custom HTML.
 	position: absolute;
 	background: white;
 	width: 100%;
-	max-height: 60vh;
+	max-height: 70vh;
 	z-index: 999;
 	box-shadow: 0 0px 2px rgba(0, 0, 0, 0.2);
 	overflow-y: scroll;
@@ -1718,4 +1718,11 @@ to be custom HTML.
 
 .version-switcher .Dropdown-option.is-selected {
 	background-color: #3eb0ef33;
+}
+
+.button-header {
+	background: white;
+	outline: none;
+	cursor: pointer;
+	border: 0;
 }
