@@ -64,10 +64,13 @@ class DynamicRangeSlider extends Component {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
 			this.props.updateComponentProps(this.props.componentId, this.props);
 		});
-		if (!isEqual(this.props.range, prevProps.range) && this.props.range) {
+		if (
+			!isEqual(this.props.range, prevProps.range)
+			&& this.props.range
+			&& this.props.range.start
+		) {
 			// when range prop is changed
 			// it will happen due to initial mount (or) due to subscription
-
 			this.updateQueryOptions(this.props, this.props.range);
 			// floor and ceil to take edge cases into account
 			this.updateRange({
@@ -140,9 +143,7 @@ class DynamicRangeSlider extends Component {
 			const upperLimit = Math.floor((nextState.range.end - nextState.range.start) / 2);
 			if (nextProps.stepValue < 1 || nextProps.stepValue > upperLimit) {
 				console.warn(
-					`stepValue for DynamicRangeSlider ${
-						nextProps.componentId
-					} should be greater than 0 and less than or equal to ${upperLimit}`,
+					`stepValue for DynamicRangeSlider ${nextProps.componentId} should be greater than 0 and less than or equal to ${upperLimit}`,
 				);
 				return false;
 			}
@@ -241,9 +242,7 @@ class DynamicRangeSlider extends Component {
 			return min;
 		} else if (props.interval < min) {
 			console.error(
-				`${
-					props.componentId
-				}: interval prop's value should be greater than or equal to ${min}`,
+				`${props.componentId}: interval prop's value should be greater than or equal to ${min}`,
 			);
 			return min;
 		}
@@ -271,10 +270,13 @@ class DynamicRangeSlider extends Component {
 			return;
 		}
 		// always keep the values within range
-		const normalizedValue = [
+		let normalizedValue = [
 			currentValue[0] < props.range.start ? props.range.start : currentValue[0],
 			currentValue[1] > props.range.end ? props.range.end : currentValue[1],
 		];
+		if (props.range.start === null) {
+			normalizedValue = [currentValue[0], currentValue[1]];
+		}
 		this.locked = true;
 		const performUpdate = () => {
 			this.setState(
@@ -436,7 +438,7 @@ class DynamicRangeSlider extends Component {
 	}
 
 	render() {
-		if (!this.state.currentValue || !this.state.range) {
+		if (!this.state.currentValue || !this.state.range || this.props.range.start === null) {
 			return null;
 		}
 
