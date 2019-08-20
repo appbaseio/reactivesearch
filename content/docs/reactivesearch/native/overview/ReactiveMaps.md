@@ -70,7 +70,7 @@ And now, you're all set. You can read more about it in detail [here](https://doc
 
 ### Step 3: Adding the first component
 
-Lets add our first ReactiveSearch component: [ReactiveBase](/getting-started/reactivebase.html), it is a backend connector where we can configure the Elasticsearch index / authorization setup.
+Lets add our first ReactiveSearch component: [ReactiveBase](/docs/reactivesearch/native/overview/ReactiveBase/), it is a backend connector where we can configure the Elasticsearch index / authorization setup.
 
 We will demonstrate creating an index using [appbase.io](https://appbase.io) service, although you can use any Elasticsearch backend within ReactiveBase.
 
@@ -115,7 +115,7 @@ Next we will look at Reactivemap component:
 />
 ```
 
-For its prop usage, check out Reactivemaps [docs](/components/reactivemap.html).
+For its prop usage, check out Reactivemaps [docs](/docs/reactivesearch/native/components/ReactiveMap/).
 
 Finally, your app should look like this:
 
@@ -153,4 +153,4 @@ If you have followed along so far, you should be able to see the final app:
 
 ![Image](https://www.dropbox.com/s/6x5h8e5n5qyei4a/Screenshot%202019-04-06%2014.58.39.png?raw=1)
 
-You can [try the demo here](https://snack.expo.io/@lakhansamani/earthquake-reporter) instantly, and check out [Reactivemaps documentation](/components/reactivemap.html) for further customisations.
+You can [try the demo here](https://snack.expo.io/@lakhansamani/earthquake-reporter) instantly, and check out [Reactivemaps documentation](/docs/reactivesearch/native/components/ReactiveMap/) for further customisations.

@@ -91,14 +91,14 @@ Example uses:
 
 ## Styles
 
-`SingleDropdownList` component supports `style` prop. Read more about it [here](/advanced/style.html).
+`SingleDropdownList` component supports `style` prop. Read more about it [here](/docs/reactivesearch/native/advanced/Style).
 
 It also supports an `innerStyle` prop with the following keys:
 
 -   `label`
 -   `title`
 
-Read more about it [here](/advanced/style.html#innerstyle)
+Read more about it [here](/docs/reactivesearch/native/advanced/Style#innerstyle)
 
 ## Extending
 

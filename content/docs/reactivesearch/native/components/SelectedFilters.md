@@ -59,7 +59,7 @@ As an example, check [SingleDropdownList usage](/components/singledropdownlist.h
 
 ### Styles
 
-`SelectedFilters` component supports `style` prop. Read more about it [here](/advanced/style.html).
+`SelectedFilters` component supports `style` prop. Read more about it [here](/docs/reactivesearch/native/advanced/Style/).
 
 ## Extending
 

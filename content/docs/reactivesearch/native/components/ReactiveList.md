@@ -97,7 +97,7 @@ Example uses:
 -   **onAllData** `Function` [optional]
     works like **onData** prop but all the data objects are passed to the callback function.
 -   **innerProps** `Object` [optional]
-    specifies additional props for the internal components. Accepts an object with the specified keys. Read more about the usage [here](/advanced/innerprops.html)
+    specifies additional props for the internal components. Accepts an object with the specified keys. Read more about the usage [here](/docs/reactivesearch/native/advanced/innerProps/)
 
 <br />
 
@@ -114,7 +114,7 @@ Example uses:
 
 ## Styles
 
-`ReactiveList` component supports `style` prop. Read more about it [here](/advanced/style.html).
+`ReactiveList` component supports `style` prop. Read more about it [here](/docs/reactivesearch/native/advanced/Style/).
 
 It also supports an `innerStyle` prop with the following keys:
 
@@ -122,7 +122,7 @@ It also supports an `innerStyle` prop with the following keys:
 -   `button`
 -   `icon`
 
-Read more about it [here](/advanced/style.html#innerstyle)
+Read more about it [here](/docs/reactivesearch/native/advanced/Style#innerstyle)
 
 ## Extending
 

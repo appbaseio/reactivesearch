@@ -55,7 +55,7 @@ nestedSidebar: 'native-reactivesearch'
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **innerProps** `Object` [optional]
-    specifies additional props for the internal components. Accepts an object with the specified keys. Read more about the usage [here](/advanced/innerprops.html)
+    specifies additional props for the internal components. Accepts an object with the specified keys. Read more about the usage [here](/docs/reactivesearch/native/advanced/innerProps/)
 
 <br />
 
@@ -76,7 +76,7 @@ nestedSidebar: 'native-reactivesearch'
 
 ## Styles
 
-`TextField` component supports `style` prop. Read more about it [here](/advanced/style.html).
+`TextField` component supports `style` prop. Read more about it [here](/docs/reactivesearch/native/advanced/Style/).
 
 It also supports an `innerStyle` prop with the following keys
 
@@ -84,7 +84,7 @@ It also supports an `innerStyle` prop with the following keys
 -   `icon`
 -   `input`
 
-Read more about it [here](/advanced/style.html#innerstyle)
+Read more about it [here](/docs/reactivesearch/native/advanced/Style#innerstyle)
 
 ## Extending
 

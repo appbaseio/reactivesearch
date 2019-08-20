@@ -141,11 +141,11 @@ Now, the components which will have `myColorPicker` present in their `react` pro
 #### Child Component
 
 -   **hits** `Array`
-     `hits` prop is an array of results from the Elasticsearch query of the component.
+    `hits` prop is an array of results from the Elasticsearch query of the component.
 -   **aggregations** `Object`
-     `aggregations` prop contains the results from `aggs` Elasticsearch query of the component.
+    `aggregations` prop contains the results from `aggs` Elasticsearch query of the component.
 -   **setQuery** `function`
-     `setQuery` function sets the query of the component. It takes an object param of shape:
+    `setQuery` function sets the query of the component. It takes an object param of shape:
 
 ```javascript
     {
@@ -160,13 +160,13 @@ Now, the components which will have `myColorPicker` present in their `react` pro
 #### ReactiveComponent
 
 -   **className** `String`
-     CSS class to be injected on the component container.
+    CSS class to be injected on the component container.
 -   **style** `Object`
-     CSS styles to be applied to the **DataSearch** component.
+    CSS styles to be applied to the **DataSearch** component.
 -   **defaultQuery** `Function`
-     **returns** the default query to be applied to the component, as defined in Elasticsearch Query DSL.
+    **returns** the default query to be applied to the component, as defined in Elasticsearch Query DSL.
 -   **react** `Object`
-    `react` prop is available in components whose data view should reactively update when on or more dependent components change their states, e.g. [`ReactiveMap`](/map-components/reactivemap.html), [`ReactiveList`](/basic-components/reactivelist.html).
+    `react` prop is available in components whose data view should reactively update when on or more dependent components change their states, e.g. [`ReactiveMap`](/docs/reactivesearch/v3/map/reactivemap/), [`ReactiveList`](/docs/reactivesearch/v3/result/reactivelist/).
     -   **key** `String`
         one of `and`, `or`, `not` defines the combining clause.
         -   **and** clause implies that the results will be filtered by matches from **all** of the associated component states.

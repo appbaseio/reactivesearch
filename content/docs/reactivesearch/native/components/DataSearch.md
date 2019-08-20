@@ -113,7 +113,7 @@ Example uses:
 
 ## Styles
 
-`DataSearch` component supports `style` prop. Read more about it [here](/advanced/style.html).
+`DataSearch` component supports `style` prop. Read more about it [here](/docs/reactivesearch/native/advanced/Style/).
 
 It also supports an `innerStyle` prop with the following keys:
 
@@ -124,7 +124,7 @@ It also supports an `innerStyle` prop with the following keys:
 -   `right`
 -   `input`
 
-Read more about it [here](/advanced/style.html#innerstyle)
+Read more about it [here](/docs/reactivesearch/native/advanced/Style#innerstyle)
 
 ## Extending
 

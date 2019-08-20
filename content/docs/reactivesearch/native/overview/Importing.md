@@ -102,7 +102,7 @@ Dejavu provides a GUI for setting the mapping of a new field, as well as viewing
 
 We recommend adding the following custom analyzers to your Elasticsearch index. We will use them when specifying mappings for a `$dataField` to be used for searching.
 
-The `autosuggest_analyzer` indexes the field by breaking each word into tokens of length [1, 20] always beginning with the first character of the word. This allows for fast suggestions retrieval in a [`DataSearch`](/search-components/datasearch.html) or [`CategorySearch`](/search-components/categorysearch.html) UI.
+The `autosuggest_analyzer` indexes the field by breaking each word into tokens of length [1, 20] always beginning with the first character of the word. This allows for fast suggestions retrieval in a [`DataSearch`](/docs/reactivesearch/native/components/DataSearch/) UI.
 
 > **Note**
 >

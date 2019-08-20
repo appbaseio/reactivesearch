@@ -30,7 +30,7 @@ innerProps={{
 
 ## Examples
 
-This example uses the `innerProps` prop to pass some additional props to the internal [Icon](http://docs.nativebase.io/Components.html#icon-def-headref) component of [TextField](/components/TextField.html).
+This example uses the `innerProps` prop to pass some additional props to the internal [Icon](http://docs.nativebase.io/Components.html#icon-def-headref) component of [TextField](/docs/reactivesearch/native/components/TextField/).
 
 ```js{3-8}
 <TextField
