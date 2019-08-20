@@ -164,7 +164,7 @@ Example uses:
 -   `list`
 -   `poweredBy`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v2/theming/ClassnameInjection/).
 
 ## Extending
 
@@ -221,7 +221,7 @@ onAllData(results, streamResults, loadMoreData) {
 
 > Note
 >
-> The `streamResults` parameter will be `[]` unless `stream` prop is set to `true`. Check the [handling streaming](/advanced/guides.html#handling-stream-updates) guide for more info.
+> The `streamResults` parameter will be `[]` unless `stream` prop is set to `true`. Check the [handling streaming](/docs/reactivesearch/v2/advanced/Guides#handling-stream-updates) guide for more info.
 
 -   **onQueryChange** `Function`
     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.

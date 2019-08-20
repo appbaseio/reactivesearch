@@ -14,7 +14,7 @@ Themes can be used to change the default styles for all the ReactiveSearch compo
 
 ## Usage
 
-[ReactiveBase](/getting-started/reactivebase.html) acts as the theme provider for all the child ReactiveSearch components. It supports a `theme` prop which accepts an object with the following defaults:
+[ReactiveBase](/docs/reactivesearch/v2/overview/ReactiveBase/) acts as the theme provider for all the child ReactiveSearch components. It supports a `theme` prop which accepts an object with the following defaults:
 
 ```js
 {
@@ -33,7 +33,7 @@ Themes can be used to change the default styles for all the ReactiveSearch compo
 };
 ```
 
-[ReactiveBase](/getting-started/reactivebase.html) also supports a `themePreset` prop which defaults to `light` with the above defaults. You may pass a `themePreset` of `dark` which applies the following defaults instead:
+[ReactiveBase](/docs/reactivesearch/v2/overview/ReactiveBase/) also supports a `themePreset` prop which defaults to `light` with the above defaults. You may pass a `themePreset` of `dark` which applies the following defaults instead:
 
 ```js
 {

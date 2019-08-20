@@ -63,7 +63,7 @@ this.customQuery=function() {
 
 ### Extending a Custom Query
 
-When you pass a function to the `customQuery` prop, it receives two parameters, `value` (current value of the component) and `props` (current props of the component). Using these parameters, you can construct a query as per your needs. For example, if you wish to use a [**TextField**](/basic-components/textfield.html) component to search on any model of a specific car you may write your component as:
+When you pass a function to the `customQuery` prop, it receives two parameters, `value` (current value of the component) and `props` (current props of the component). Using these parameters, you can construct a query as per your needs. For example, if you wish to use a [**TextField**](/docs/reactivesearch/v2/base/TextField/) component to search on any model of a specific car you may write your component as:
 
 ```js{1-5,12-13}
 const myQuery = (value, props) => ({
@@ -84,7 +84,7 @@ const myQuery = (value, props) => ({
 
 ### Data Controller Component
 
-Reactive Maps UI library comes with a specific component that is designed to be truly customizable, [**DataController**](/basic-components/datacontroller.html). It's a UI optional component that requires defining the `customQuery` prop.
+Reactive Maps UI library comes with a specific component that is designed to be truly customizable, [**DataController**](/docs/reactivesearch/v2/base/DataController/). It's a UI optional component that requires defining the `customQuery` prop.
 
 For example, let's say you want to apply a query filter to represent an end-user's global preferences within the UI without adding a widget. Data Controller allows you to define a query without needing a UI widget.
 

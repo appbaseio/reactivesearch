@@ -17,7 +17,7 @@ nestedSidebar: 'web-v2-reactivesearch'
 
 > Note
 >
-> This component behaves similar to the [MultiList](/list-components/multilist.html) component except the list items are user defined with the `data` prop, ideal for showing curated items in a list layout.
+> This component behaves similar to the [MultiList](/docs/reactivesearch/v2/list/MultiList/) component except the list items are user defined with the `data` prop, ideal for showing curated items in a list layout.
 
 Example uses:
 
@@ -125,7 +125,7 @@ Example uses:
 -   `checkbox`
 -   `label`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v2/theming/Classnameinjection).
 
 ## Extending
 

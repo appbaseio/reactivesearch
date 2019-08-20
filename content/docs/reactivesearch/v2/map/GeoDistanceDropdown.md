@@ -116,7 +116,7 @@ Example uses:
 -   `icon`
 -   `count`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v2/theming/ClassnameInjection/).
 
 ## Extending
 
@@ -192,7 +192,7 @@ Read more about it [here](/theming/class.html).
 -   **onQueryChange** `Function`
     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **react** `Object`
-    specify dependent components to reactively update **GeoDistanceDropdown's** options. Read more about it [here](/advanced/react.html).
+    specify dependent components to reactively update **GeoDistanceDropdown's** options. Read more about it [here](/docs/reactivesearch/v2/advanced/ReactProp/).
     -   **key** `String`
         one of `and`, `or`, `not` defines the combining clause.
         -   **and** clause implies that the results will be filtered by matches from **all** of the associated component states.

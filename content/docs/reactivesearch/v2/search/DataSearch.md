@@ -161,7 +161,7 @@ Example uses:
 -   `input`
 -   `list`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v2/theming/ClassnameInjection/).
 
 ## Extending
 
@@ -184,7 +184,7 @@ Read more about it [here](/theming/class.html).
 />
 ```
 
--   it's also possible to take control of the entire suggestions rendering using the `renderSuggestions` prop. Check the [custom suggestions](/advanced/customsuggestions.html) recipe for more info.
+-   it's also possible to take control of the entire suggestions rendering using the `renderSuggestions` prop. Check the [custom suggestions](/docs/reactivesearch/v2/advanced/CustomSuggestions/) recipe for more info.
 
 6. add the following [synthetic events](https://reactjs.org/events.html) to the underlying `input` element:
     - onBlur

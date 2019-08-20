@@ -43,7 +43,7 @@ npm install @appbaseio/reactivesearch
 
 ### Step 2: Adding the first component
 
-Lets add our first ReactiveSearch component: [ReactiveBase](/getting-started/reactivebase.html), it is a backend connector where we can configure the Elasticsearch index / authorization setup.
+Lets add our first ReactiveSearch component: [ReactiveBase](/docs/reactivesearch/v2/overview/ReactiveBase/), it is a backend connector where we can configure the Elasticsearch index / authorization setup.
 
 We will demonstrate creating an index using [appbase.io](https://appbase.io) service, although you can use any Elasticsearch backend within ReactiveBase.
 
@@ -80,7 +80,7 @@ This is how the app should look after running the `yarn start` command.
 
 ### Step 3: Adding Filters and Result Components
 
-For this app, we will be using [CategorySearch](/search-components/categorysearch.html) and [SingleRange](/basic-components/singlerange.html) components for filtering the dataset. And [ResultCard](/search-components/resultcard.html) component for showing the search results.
+For this app, we will be using [CategorySearch](/docs/reactivesearch/v2/search/CategorySearch/) and [SingleRange](/docs/reactivesearch/v2/basic/SingleRange/) components for filtering the dataset. And [ResultCard](/docs/reactivesearch/v2/result/ResultCard/) component for showing the search results.
 
 Lets add them within the ReactiveBase component. But before we do that, we will look at the important props for each.
 
@@ -93,13 +93,13 @@ Lets add them within the ReactiveBase component. But before we do that, we will 
 />
 ```
 
-The [**CategorySearch**](/search-components/categorysearch.html) component we describe above creates a searchbox UI component that queries on the `name` field in the dataset and shows categorizations using the `brand.raw` field in the dataset. Here is how it will look visually.
+The [**CategorySearch**](/docs/reactivesearch/v2/search/CategorySearch/) component we describe above creates a searchbox UI component that queries on the `name` field in the dataset and shows categorizations using the `brand.raw` field in the dataset. Here is how it will look visually.
 
 `Note:` If you cloned your own dataset, the field will be called `brand.keyword` instead of `brand.raw`.
 
 ![](https://i.imgur.com/lPLu1qj.png)
 
-Next, we will look at the [**SingleRange**](/basic-components/singlerange.html) component for creating a ratings based filter.
+Next, we will look at the [**SingleRange**](/docs/reactivesearch/v2/range/SingleRange/) component for creating a ratings based filter.
 
 ```js
 <SingleRange
@@ -118,7 +118,7 @@ Next, we will look at the [**SingleRange**](/basic-components/singlerange.html) 
 
 **SingleRange** filters the DB by `rating` field based on the UI choice the user makes. We also set the _4 stars and up_ option to be default selected when the UI loads up first.
 
-Finally, we need a component to show the matching results. [**ResultCard**](/search-components/resultcard.html) does exactly this.
+Finally, we need a component to show the matching results. [**ResultCard**](/docs/reactivesearch/v2/result/ResultCard/) does exactly this.
 
 ```js
 <ResultCard

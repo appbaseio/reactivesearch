@@ -22,7 +22,7 @@ Example uses:
 
 > Note
 >
-> An alternative layout to ResultList is a [**ResultCard**](/search-components/resultcard.html), which displays result data in a card layout.
+> An alternative layout to ResultList is a [**ResultCard**](/docs/reactivesearch/v2/result/ResultCard/), which displays result data in a card layout.
 
 ## Usage
 
@@ -122,7 +122,7 @@ Example uses:
 -   **onResultStats** `Function` [optional]
     renders custom result stats using a function that takes two parameters for `total_results` and `time_taken` and expects it to return a string or JSX.
 -   **react** `Object`
-    a dependency object defining how this component should react based on the state changes in the sensor components. You can read more about how to specify this prop over [here](/advanced/react.html).
+    a dependency object defining how this component should react based on the state changes in the sensor components. You can read more about how to specify this prop over [here](/docs/reactivesearch/v2/advanced/ReactProp/).
 -   **URLParams** `Boolean` [optional]
     when set adds the current page number to the url. Only works when `pagination` is enabled.
 -   **onData** `Function` [optional]
@@ -180,7 +180,7 @@ Example uses:
 -   `title`
 -   `poweredBy`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v2/theming/ClassnameInjection/).
 
 ## Extending
 

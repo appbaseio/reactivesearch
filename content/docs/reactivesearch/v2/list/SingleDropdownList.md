@@ -17,7 +17,7 @@ nestedSidebar: 'web-v2-reactivesearch'
 
 > Note
 >
-> This component is exactly like the [SingleList](/list-components/singlelist.html) component except the UI is based on a dropdown, ideal for showing additional UI filters while conserving screen space.
+> This component is exactly like the [SingleList](/docs/reactivesearch/v2/list/SingleList/) component except the UI is based on a dropdown, ideal for showing additional UI filters while conserving screen space.
 
 Example uses:
 
@@ -122,7 +122,7 @@ renderListItem={(label, count) => (
 -   `icon`
 -   `count`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v2/theming/ClassnameInjection/).
 
 ## Extending
 

@@ -54,11 +54,11 @@ This is the first component you will need to add when using `ReactiveSearch`.
 ```
 
 -   **analytics** `Boolean` [optional]
-    allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`. Check the [analytics recipe](/advanced/analytics.html) for click analytics implementation.
+    allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`. Check the [analytics recipe](/docs/reactivesearch/v2/advanced/Analytics/) for click analytics implementation.
 -   **theme** `Object` [optional]
-    allows over-writing of default styles by providing the respective key/values. You can read more about its usage [here](/theming/themes.html)
+    allows over-writing of default styles by providing the respective key/values. You can read more about its usage [here](/docs/reactivesearch/v2/theming/Themes/)
 -   **themePreset** `String` [optional]
-    allows over-writing of default styles by providing a preset value. Supported values are `light` (default) and `dark`. You can read more about its usage [here](/theming/themes.html)
+    allows over-writing of default styles by providing a preset value. Supported values are `light` (default) and `dark`. You can read more about its usage [here](/docs/reactivesearch/v2/theming/Themes/)
 -   **transformRequest** `Function` [optional]
     Enables transformation of network request before execution. This function will give you the the request object as the param and expect an updated request in return, for execution. Note that this is an experimental API and will likely change in the future.
 
@@ -104,10 +104,10 @@ http.cors.allow-headers: X-Requested-With, X-Auth-Token, Content-Type, Content-L
 
 Once you have added the **ReactiveBase** component, you can get started with adding other components as its children.
 
--   List specific components can be found [here](/list-components/singlelist.html).
--   Range specific components can be found [here](/list-components/singlerange.html).
--   Search specific components can be found [here](/search-components/datasearch.html).
+-   List specific components can be found [here](/docs/reactivesearch/v2/list/SingleList/).
+-   Range specific components can be found [here](/docs/reactivesearch/v2/range/SingleRange/).
+-   Search specific components can be found [here](/docs/reactivesearch/v2/search/DataSearch/).
 -   Result specific components can be found
-    [here](/result-components/resultlist.html).
+    [here](/docs/reactivesearch/v2/result/ResultList/).
 
-You can read more about when to use which components in the overview guide [here](/getting-started/ComponentsIndex.html).
+You can read more about when to use which components in the overview guide [here](/docs/reactivesearch/v2/overview/Components/).

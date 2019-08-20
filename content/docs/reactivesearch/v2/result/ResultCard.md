@@ -22,7 +22,7 @@ Example uses:
 
 > Note
 >
-> An alternative layout to ResultCard is a [**ResultList**](/search-components/resultlist.html), which displays result data in a list format.
+> An alternative layout to ResultCard is a [**ResultList**](/docs/reactivesearch/v2/result/ResultList/), which displays result data in a list format.
 
 ## Usage
 
@@ -178,7 +178,7 @@ Example uses:
 -   `title`
 -   `poweredBy`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v2/theming/ClassnameInjection/).
 
 ## Extending
 

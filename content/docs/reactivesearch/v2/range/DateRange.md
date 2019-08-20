@@ -126,7 +126,7 @@ Example uses:
 -   `daypicker-overlay-wrapper`
 -   `daypicker-overlay`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v2/theming/ClassnameInjection/).
 
 ## Extending
 

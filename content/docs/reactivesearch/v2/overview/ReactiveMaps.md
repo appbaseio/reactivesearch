@@ -101,7 +101,7 @@ This is how the app should look after running the `yarn start` command.
 
 ### Step 3: Adding Filters and Map Components
 
-For this app, we will be using [SingleList](/list-components/singlelist.html) component for filtering the dataset. And [ReactiveMap](/map-components/reactivemap.html) component for showing the search results.
+For this app, we will be using [SingleList](/docs/reactivesearch/v2/list/SingleList/) component for filtering the dataset. And [ReactiveMap](/docs/reactivesearch/v2/map/ReactiveMap/) component for showing the search results.
 
 Lets add them within the ReactiveBase component. But before we do that, we will look at the important props for each.
 
@@ -111,7 +111,7 @@ Lets add them within the ReactiveBase component. But before we do that, we will 
 
 **SingleList** creates a radio-buttons list UI component that is connected to the database field passed as `dataField` prop to the SingleList component.
 
-Next, we will look at the [**ReactiveMap**](/map-components/reactivemap.html) component for creating a map component.
+Next, we will look at the [**ReactiveMap**](/docs/reactivesearch/v2/map/ReactiveMap/) component for creating a map component.
 
 ```js
 <ReactiveMap
@@ -138,7 +138,7 @@ onData={(result) => ({
 })}
 ```
 
-You can also customise it to render any kind of marker pins. Refer [ReactiveMap's documentation](/map-components/reactivemap.html) for the same.
+You can also customise it to render any kind of marker pins. Refer [ReactiveMap's documentation](/docs/reactivesearch/v2/map/ReactiveMap/) for the same.
 
 Now, we will put all three components together to create the UI view.
 

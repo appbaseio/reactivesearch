@@ -13,7 +13,7 @@ nestedSidebar: 'web-v2-reactivesearch'
 
 ![Image to be displayed](https://i.imgur.com/2OFmUsk.png)
 
-`MultiList` creates a multiple selection based list UI component that is connected to a database field. It is similar to a [SingleList](/basic-components/singlelist.html) except it can support multiple item selections.
+`MultiList` creates a multiple selection based list UI component that is connected to a database field. It is similar to a [SingleList](/docs/reactivesearch/v2/list/SingleList/) except it can support multiple item selections.
 
 Example uses:
 
@@ -130,7 +130,7 @@ renderListItem={(label, count) => (
 -   `label`
 -   `count`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v2/theming/ClassnameInjection/).
 
 ## Extending
 

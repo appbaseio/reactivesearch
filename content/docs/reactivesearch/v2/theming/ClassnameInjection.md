@@ -18,7 +18,7 @@ The `innerClass` prop accepts an object with keys as defined in the **Styles** s
 
 ## Examples
 
-Here's an example of how to use `innerClass` with a [TextField](base-components/textfield.html) component:
+Here's an example of how to use `innerClass` with a [TextField](/docs/reactivesearch/v2/base/TextField/) component:
 
 ![TextField annotated image](https://imgur.com/f20AvrZ.png)
 

@@ -27,7 +27,7 @@ You can pass the style object via the `style` prop like:
 }
 ```
 
-Alternatively, you can also add a `className` to any component which gets applied to the component at the root level. You may also inject `className` to the inner levels using the `innerClass` prop. You can read more about it in the [next section](/theming/class.html).
+Alternatively, you can also add a `className` to any component which gets applied to the component at the root level. You may also inject `className` to the inner levels using the `innerClass` prop. You can read more about it in the [next section](/docs/reactivesearch/v2/theming/ClassnameInjection/).
 
 ## Examples
 

@@ -17,7 +17,7 @@ nestedSidebar: 'web-v2-reactivesearch'
 
 > Note
 >
-> This component is exactly like the [MultiList](/list-components/multilist.html) component except the UI is based on a dropdown, ideal for showing additional UI filters while conserving screen space.
+> This component is exactly like the [MultiList](/docs/reactivesearch/v2/list/MultiList/) component except the UI is based on a dropdown, ideal for showing additional UI filters while conserving screen space.
 
 Example uses:
 
@@ -128,7 +128,7 @@ renderListItem={(label, count) => (
 -   `icon`
 -   `count`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v2/theming/Classnameinjection).
 
 ## Extending
 

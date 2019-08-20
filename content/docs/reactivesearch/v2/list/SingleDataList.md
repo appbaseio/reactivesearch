@@ -17,7 +17,7 @@ nestedSidebar: 'web-v2-reactivesearch'
 
 > Note
 >
-> This component is like the [SingleList](/list-components/singlelist.html) component except the filters are set based on the `data` prop, ideal for showing custom UI filters in a list layout.
+> This component is like the [SingleList](/docs/reactivesearch/v2/list/SingleList/) component except the filters are set based on the `data` prop, ideal for showing custom UI filters in a list layout.
 
 Example uses:
 
@@ -125,7 +125,7 @@ Example uses:
 -   `radio`
 -   `label`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/v2/theming/ClassnameInjection/).
 
 ## Extending
 
