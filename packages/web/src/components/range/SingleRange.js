@@ -26,7 +26,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import { connect, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
 
 class SingleRange extends Component {
 	constructor(props) {
@@ -100,15 +100,7 @@ class SingleRange extends Component {
 	static defaultQuery = (value, props) => {
 		let query = null;
 		if (value) {
-			query = {
-				range: {
-					[props.dataField]: {
-						gte: value.start,
-						lte: value.end,
-						boost: 2.0,
-					},
-				},
-			};
+			query = getRangeQueryWithNullValues([value.start, value.end], props);
 		}
 
 		if (query && props.nestedField) {
@@ -267,6 +259,7 @@ SingleRange.propTypes = {
 	style: types.style,
 	title: types.title,
 	URLParams: types.bool,
+	includeNullValues: types.bool,
 };
 
 SingleRange.defaultProps = {
@@ -275,6 +268,7 @@ SingleRange.defaultProps = {
 	showRadio: true,
 	style: {},
 	URLParams: false,
+	includeNullValues: false,
 };
 
 const mapStateToProps = (state, props) => ({

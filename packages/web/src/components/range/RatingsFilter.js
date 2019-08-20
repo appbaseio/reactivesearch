@@ -28,7 +28,12 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import StarRating from './addons/StarRating';
 import { ratingsList } from '../../styles/ratingsList';
-import { connect, getNullValuesQuery, getValidPropsKeys } from '../../utils';
+import {
+	connect,
+	getNullValuesQuery,
+	getRangeQueryWithNullValues,
+	getValidPropsKeys,
+} from '../../utils';
 
 class RatingsFilter extends Component {
 	constructor(props) {
@@ -140,7 +145,7 @@ class RatingsFilter extends Component {
 						should: [rangeQuery, nullQuery],
 					},
 				};
-			} else query = rangeQuery;
+			} else query = getRangeQueryWithNullValues(value, props);
 		}
 
 		if (query && props.nestedField) {
@@ -291,12 +296,14 @@ RatingsFilter.propTypes = {
 	style: types.style,
 	title: types.title,
 	URLParams: types.bool,
+	includeNullValues: types.bool,
 };
 
 RatingsFilter.defaultProps = {
 	className: null,
 	style: {},
 	URLParams: false,
+	includeNullValues: false,
 };
 
 const mapStateToProps = (state, props) => ({

@@ -29,7 +29,7 @@ import SliderHandle from './addons/SliderHandle';
 import Slider from '../../styles/Slider';
 import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
-import { connect, getNullValuesQuery, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
 
 class DynamicRangeSlider extends Component {
 	constructor(props) {
@@ -192,22 +192,7 @@ class DynamicRangeSlider extends Component {
 	static defaultQuery = (value, props) => {
 		let query = null;
 		if (Array.isArray(value) && value.length) {
-			const rangeQuery = {
-				range: {
-					[props.dataField]: {
-						gte: value[0],
-						lte: value[1],
-						boost: 2.0,
-					},
-				},
-			};
-			if (props.includeNullValues) {
-				query = {
-					bool: {
-						should: [rangeQuery, getNullValuesQuery(props.dataField)],
-					},
-				};
-			} else query = rangeQuery;
+			query = getRangeQueryWithNullValues(value, props);
 		}
 
 		if (query && props.nestedField) {

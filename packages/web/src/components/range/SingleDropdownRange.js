@@ -26,7 +26,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Dropdown from '../shared/Dropdown';
-import { connect, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
 
 class SingleDropdownRange extends Component {
 	constructor(props) {
@@ -101,15 +101,7 @@ class SingleDropdownRange extends Component {
 	static defaultQuery = (value, props) => {
 		let query = null;
 		if (value) {
-			query = {
-				range: {
-					[props.dataField]: {
-						gte: value.start,
-						lte: value.end,
-						boost: 2.0,
-					},
-				},
-			};
+			query = getRangeQueryWithNullValues([value.start, value.end], props);
 		}
 
 		if (query && props.nestedField) {
@@ -246,6 +238,7 @@ SingleDropdownRange.propTypes = {
 	title: types.title,
 	themePreset: types.themePreset,
 	URLParams: types.bool,
+	includeNullValues: types.bool,
 };
 
 SingleDropdownRange.defaultProps = {
@@ -254,6 +247,7 @@ SingleDropdownRange.defaultProps = {
 	showFilter: true,
 	style: {},
 	URLParams: false,
+	includeNullValues: false,
 };
 
 const mapStateToProps = (state, props) => ({
