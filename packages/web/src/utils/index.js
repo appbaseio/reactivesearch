@@ -93,3 +93,13 @@ export const handleCaretPosition = (e) => {
 		});
 	}
 };
+// elastic search query for including null values
+export const getNullValuesQuery = fieldName => ({
+	bool: {
+		must_not: {
+			exists: {
+				field: fieldName,
+			},
+		},
+	},
+});

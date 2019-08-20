@@ -28,7 +28,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import StarRating from './addons/StarRating';
 import { ratingsList } from '../../styles/ratingsList';
-import { connect, getValidPropsKeys } from '../../utils';
+import { connect, getNullValuesQuery, getValidPropsKeys } from '../../utils';
 
 class RatingsFilter extends Component {
 	constructor(props) {
@@ -134,7 +134,7 @@ class RatingsFilter extends Component {
 				},
 			};
 			if (includeNullValues) {
-				const nullQuery = RatingsFilter.getNullValuesQuery(props.dataField);
+				const nullQuery = getNullValuesQuery(props.dataField);
 				query = {
 					bool: {
 						should: [rangeQuery, nullQuery],
@@ -156,16 +156,6 @@ class RatingsFilter extends Component {
 
 		return query;
 	};
-
-	static getNullValuesQuery = fieldName => ({
-		bool: {
-			must_not: {
-				exists: {
-					field: fieldName,
-				},
-			},
-		},
-	});
 
 	setValue = ({
 		value, props = this.props, hasMounted = true, includeUnrated = false,
