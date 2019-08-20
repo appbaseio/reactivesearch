@@ -208,6 +208,7 @@ class SingleDropdownRange extends Component {
 					keyField="label"
 					returnsObject
 					themePreset={this.props.themePreset}
+					customLabelRenderer={this.props.renderLabel}
 				/>
 			</Container>
 		);
@@ -246,6 +247,7 @@ SingleDropdownRange.propTypes = {
 	title: types.title,
 	themePreset: types.themePreset,
 	URLParams: types.bool,
+	renderLabel: types.func,
 };
 
 SingleDropdownRange.defaultProps = {
