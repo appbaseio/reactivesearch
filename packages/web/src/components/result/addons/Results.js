@@ -2,21 +2,34 @@ import React from 'react';
 import { getClassName, isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-const Results = (props) => {
-	if (props.hasCustomRender) {
-		return props.getComponent();
+class Results extends React.Component {
+	shouldComponentUpdate(nextProps) {
+		/*
+			Use shouldComponentUpdate because PureComponent uses shallow comparison of objects.
+			If props contain complex data structures, it may produce false-negatives for
+			deeper differences.
+		*/
+		return !isEqual(nextProps, this.props);
 	}
 
-	return (
-		<div className={`${props.listClass} ${getClassName(props.innerClass, 'list')}`}>
-			{props.filteredResults.map((item, index) =>
-				props.renderItem(item, () => {
-					props.triggerClickAnalytics(props.base + index);
-				}),
-			)}
-		</div>
-	);
-};
+	render() {
+		if (this.props.hasCustomRender) {
+			return this.props.getComponent();
+		}
+
+		return (
+			<div
+				className={`${this.props.listClass} ${getClassName(this.props.innerClass, 'list')}`}
+			>
+				{this.props.filteredResults.map((item, index) =>
+					this.props.renderItem(item, () => {
+						this.props.triggerClickAnalytics(this.props.base + index);
+					}),
+				)}
+			</div>
+		);
+	}
+}
 
 Results.propTypes = {
 	hasCustomRender: types.boolRequired,
@@ -28,8 +41,4 @@ Results.propTypes = {
 	triggerClickAnalytics: types.func,
 };
 
-function areEqual(prevProps, nextProps) {
-	return isEqual(prevProps, nextProps);
-}
-
-export default React.memo(Results, areEqual);
+export default Results;
