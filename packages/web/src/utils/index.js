@@ -93,3 +93,34 @@ export const handleCaretPosition = (e) => {
 		});
 	}
 };
+// elastic search query for including null values
+export const getNullValuesQuery = fieldName => ({
+	bool: {
+		must_not: {
+			exists: {
+				field: fieldName,
+			},
+		},
+	},
+});
+
+export const getRangeQueryWithNullValues = (value, props) => {
+	let query = null;
+	const rangeQuery = {
+		range: {
+			[props.dataField]: {
+				gte: value[0],
+				lte: value[1],
+				boost: 2.0,
+			},
+		},
+	};
+	if (props.includeNullValues) {
+		query = {
+			bool: {
+				should: [rangeQuery, getNullValuesQuery(props.dataField)],
+			},
+		};
+	} else query = rangeQuery;
+	return query;
+};

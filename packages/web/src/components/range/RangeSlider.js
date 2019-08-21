@@ -29,7 +29,7 @@ import SliderHandle from './addons/SliderHandle';
 import Slider from '../../styles/Slider';
 import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
-import { connect, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
 
 class RangeSlider extends Component {
 	constructor(props) {
@@ -114,9 +114,7 @@ class RangeSlider extends Component {
 		const upperLimit = Math.floor((nextProps.range.end - nextProps.range.start) / 2);
 		if (nextProps.stepValue < 1 || nextProps.stepValue > upperLimit) {
 			console.warn(
-				`stepValue for RangeSlider ${
-					nextProps.componentId
-				} should be greater than 0 and less than or equal to ${upperLimit}`,
+				`stepValue for RangeSlider ${nextProps.componentId} should be greater than 0 and less than or equal to ${upperLimit}`,
 			);
 			return false;
 		}
@@ -148,15 +146,7 @@ class RangeSlider extends Component {
 	static defaultQuery = (value, props) => {
 		let query = null;
 		if (Array.isArray(value) && value.length) {
-			query = {
-				range: {
-					[props.dataField]: {
-						gte: value[0],
-						lte: value[1],
-						boost: 2.0,
-					},
-				},
-			};
+			query = getRangeQueryWithNullValues(value, props);
 		}
 
 		if (query && props.nestedField) {
@@ -197,9 +187,7 @@ class RangeSlider extends Component {
 			return min;
 		} else if (props.interval < min) {
 			console.error(
-				`${
-					props.componentId
-				}: interval prop's value should be greater than or equal to ${min}`,
+				`${props.componentId}: interval prop's value should be greater than or equal to ${min}`,
 			);
 			return min;
 		}
@@ -443,6 +431,7 @@ RangeSlider.propTypes = {
 	style: types.style,
 	title: types.title,
 	URLParams: types.bool,
+	includeNullValues: types.bool,
 };
 
 RangeSlider.defaultProps = {
@@ -459,6 +448,7 @@ RangeSlider.defaultProps = {
 	showFilter: true,
 	style: {},
 	URLParams: false,
+	includeNullValues: false,
 };
 
 const mapStateToProps = (state, props) => ({

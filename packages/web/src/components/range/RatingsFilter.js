@@ -28,7 +28,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import StarRating from './addons/StarRating';
 import { ratingsList } from '../../styles/ratingsList';
-import { connect, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
 
 class RatingsFilter extends Component {
 	constructor(props) {
@@ -121,26 +121,13 @@ class RatingsFilter extends Component {
 		return value ? [value.start, value.end] : null;
 	};
 
-	static defaultQuery = (value, props, includeNullValues = false) => {
+	static defaultQuery = (value, props, includeUnrated = false) => {
 		let query = null;
 		if (value) {
-			const rangeQuery = {
-				range: {
-					[props.dataField]: {
-						gte: value[0],
-						lte: value[1],
-						boost: 2.0,
-					},
-				},
-			};
-			if (includeNullValues) {
-				const nullQuery = RatingsFilter.getNullValuesQuery(props.dataField);
-				query = {
-					bool: {
-						should: [rangeQuery, nullQuery],
-					},
-				};
-			} else query = rangeQuery;
+			query = getRangeQueryWithNullValues(value, {
+				dataField: props.dataField,
+				includeNullValues: props.includeNullValues || includeUnrated,
+			});
 		}
 
 		if (query && props.nestedField) {
@@ -156,16 +143,6 @@ class RatingsFilter extends Component {
 
 		return query;
 	};
-
-	static getNullValuesQuery = fieldName => ({
-		bool: {
-			must_not: {
-				exists: {
-					field: fieldName,
-				},
-			},
-		},
-	});
 
 	setValue = ({
 		value, props = this.props, hasMounted = true, includeUnrated = false,
@@ -197,9 +174,9 @@ class RatingsFilter extends Component {
 		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
-	updateQuery = (value, props, includeNullValues) => {
+	updateQuery = (value, props, includeUnrated) => {
 		const { customQuery } = props;
-		let query = RatingsFilter.defaultQuery(value, props, includeNullValues);
+		let query = RatingsFilter.defaultQuery(value, props, includeUnrated);
 		let customQueryOptions;
 		if (customQuery) {
 			({ query } = customQuery(value, props) || {});
@@ -301,12 +278,14 @@ RatingsFilter.propTypes = {
 	style: types.style,
 	title: types.title,
 	URLParams: types.bool,
+	includeNullValues: types.bool,
 };
 
 RatingsFilter.defaultProps = {
 	className: null,
 	style: {},
 	URLParams: false,
+	includeNullValues: false,
 };
 
 const mapStateToProps = (state, props) => ({

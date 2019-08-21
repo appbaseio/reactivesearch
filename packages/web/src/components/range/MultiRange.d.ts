@@ -20,6 +20,7 @@ export interface MultiRangeProps extends CommonProps {
 	showFilter?: boolean;
 	supportedOrientations?: types.supportedOrientations;
 	title?: types.title;
+	includeNullValues?: boolean;
 }
 
 declare const MultiRange: React.ComponentClass<MultiRangeProps>;

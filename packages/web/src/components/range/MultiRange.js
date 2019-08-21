@@ -26,7 +26,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
 
 class MultiRange extends Component {
 	constructor(props) {
@@ -110,15 +110,9 @@ class MultiRange extends Component {
 	static defaultQuery = (values, props) => {
 		const generateRangeQuery = (dataField, items) => {
 			if (items.length > 0) {
-				return items.map(value => ({
-					range: {
-						[dataField]: {
-							gte: value.start,
-							lte: value.end,
-							boost: 2.0,
-						},
-					},
-				}));
+				return items.map(value =>
+					getRangeQueryWithNullValues([value.start, value.end], props),
+				);
 			}
 			return null;
 		};
@@ -250,9 +244,7 @@ class MultiRange extends Component {
 						return (
 							<li
 								key={item.label}
-								className={`${
-									isChecked ? 'active' : ''
-								}`}
+								className={`${isChecked ? 'active' : ''}`}
 								role="option"
 								aria-checked={isChecked}
 								aria-selected={isChecked}
@@ -316,6 +308,7 @@ MultiRange.propTypes = {
 	supportedOrientations: types.supportedOrientations,
 	title: types.title,
 	URLParams: types.bool,
+	includeNullValues: types.bool,
 };
 
 MultiRange.defaultProps = {
@@ -324,6 +317,7 @@ MultiRange.defaultProps = {
 	showFilter: true,
 	style: {},
 	URLParams: false,
+	includeNullValues: false,
 };
 
 const mapStateToProps = (state, props) => ({

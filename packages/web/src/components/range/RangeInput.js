@@ -185,6 +185,7 @@ RangeInput.propTypes = {
 	style: types.style,
 	themePreset: types.themePreset,
 	componentId: types.stringRequired,
+	includeNullValues: types.bool,
 };
 
 RangeInput.defaultProps = {
@@ -193,6 +194,7 @@ RangeInput.defaultProps = {
 		end: 10,
 	},
 	stepValue: 1,
+	includeNullValues: false,
 };
 
 const mapStateToProps = state => ({

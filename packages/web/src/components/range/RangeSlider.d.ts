@@ -27,6 +27,7 @@ export interface RangeSliderProps extends CommonProps {
 	showFilter?: boolean;
 	tooltipTrigger?: types.tooltipTrigger;
 	renderTooltipData?: (...args: any[]) => any;
+	includeNullValues?: boolean;
 }
 
 declare const RangeSlider: React.ComponentClass<RangeSliderProps>;

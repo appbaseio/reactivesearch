@@ -26,7 +26,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Dropdown from '../shared/Dropdown';
-import { connect, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
 
 class MultiDropdownRange extends Component {
 	constructor(props) {
@@ -108,15 +108,9 @@ class MultiDropdownRange extends Component {
 	static defaultQuery = (values, props) => {
 		const generateRangeQuery = (dataField, items) => {
 			if (items.length > 0) {
-				return items.map(value => ({
-					range: {
-						[dataField]: {
-							gte: value.start,
-							lte: value.end,
-							boost: 2.0,
-						},
-					},
-				}));
+				return items.map(value =>
+					getRangeQueryWithNullValues([value.start, value.end], props),
+				);
 			}
 			return null;
 		};
@@ -289,6 +283,7 @@ MultiDropdownRange.propTypes = {
 	title: types.title,
 	themePreset: types.themePreset,
 	URLParams: types.bool,
+	includeNullValues: types.bool,
 	renderLabel: types.func,
 };
 
@@ -298,6 +293,7 @@ MultiDropdownRange.defaultProps = {
 	showFilter: true,
 	style: {},
 	URLParams: false,
+	includeNullValues: false,
 };
 
 const mapStateToProps = (state, props) => ({
