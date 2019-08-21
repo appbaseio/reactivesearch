@@ -28,12 +28,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import StarRating from './addons/StarRating';
 import { ratingsList } from '../../styles/ratingsList';
-import {
-	connect,
-	getNullValuesQuery,
-	getRangeQueryWithNullValues,
-	getValidPropsKeys,
-} from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
 
 class RatingsFilter extends Component {
 	constructor(props) {
@@ -129,23 +124,10 @@ class RatingsFilter extends Component {
 	static defaultQuery = (value, props, includeNullValues = false) => {
 		let query = null;
 		if (value) {
-			const rangeQuery = {
-				range: {
-					[props.dataField]: {
-						gte: value[0],
-						lte: value[1],
-						boost: 2.0,
-					},
-				},
-			};
-			if (includeNullValues) {
-				const nullQuery = getNullValuesQuery(props.dataField);
-				query = {
-					bool: {
-						should: [rangeQuery, nullQuery],
-					},
-				};
-			} else query = getRangeQueryWithNullValues(value, props);
+			query = getRangeQueryWithNullValues(value, {
+				dataField: props.dataField,
+				includeNullValues: props.includeNullValues || includeNullValues,
+			});
 		}
 
 		if (query && props.nestedField) {

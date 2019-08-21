@@ -20,6 +20,7 @@ export interface SingleDropdownRangeProps extends CommonProps {
 	title?: types.title;
 	themePreset?: types.themePreset;
 	renderLabel?: (...args: any[]) => any;
+	includeNullValues?: boolean;
 }
 
 declare const SingleDropdownRange: React.ComponentClass<SingleDropdownRangeProps>;
