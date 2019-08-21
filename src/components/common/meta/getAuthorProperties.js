@@ -13,11 +13,7 @@ export const getAuthorProperties = (primaryAuthor, fetchAuthorData) => {
 			primaryAuthor.facebook ? `https://www.facebook.com/${primaryAuthor.facebook}/` : null,
 		);
 	} else {
-		authorProfiles.push(
-			`https://ghost.org/`,
-			`https://twitter.com/ghost/`,
-			`https://www.facebook.com/ghost/`,
-		);
+		authorProfiles.push(`https://appbase.io/`, `https://twitter.com/appbaseio/`);
 	}
 
 	authorProfiles = _.compact(authorProfiles);

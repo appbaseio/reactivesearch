@@ -4,7 +4,7 @@ meta_title: 'API Credentials - Core Concepts'
 meta_description: 'API credentials allow secure access to the appbase.io APIs.'
 keywords:
     - concepts
-    - ghost
+    - appbaseio
     - credentials
     - api
 sidebar: 'docs'

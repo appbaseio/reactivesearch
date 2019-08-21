@@ -1,12 +1,12 @@
 ---
-title: 'Pages'
-meta_title: 'Using Pages in Ghost - Core Concepts'
-meta_description: 'Decide whether your content is a page or a post with one click - Learn more about static content with Ghost!'
+title: 'Query Rules'
+meta_title: 'Query Rules'
+meta_description: 'Query Rules are essentially `If-This-Then-That`'
 keywords:
     - concepts
-    - ghost
-    - publishing
-    - pages
+    - appbaseio
+    - elasticsearch
+    - queryrules
 sidebar: 'docs'
 ---
 

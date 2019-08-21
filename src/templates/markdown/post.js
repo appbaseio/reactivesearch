@@ -150,7 +150,6 @@ class Post extends React.Component {
 									/>
 								</div>
 							</div>
-							{/* <FeedbackForm location={location} /> */}
 						</div>
 						{sideBarLayout.rightSidebar ? (
 							<div className="order-3 w-sidebar flex-shrink-0 dn db-l pt10 pl7">
