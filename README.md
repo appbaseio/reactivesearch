@@ -87,7 +87,7 @@ Sensor components can be configured to create a combined query context and rende
 
 ### Ease of Use
 
-* One step installation with [npm i @appbaseio/reactivesearch](https://opensource.appbase.io/reactive-manual/v1/getting-started/reactivesearch.html),
+* One step installation with [npm i @appbaseio/reactivesearch](https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html),
 * A UMD build that works directly in the browser. Installation steps [here](https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html#reactivesearch-as-umd),
 * Styled and scoped components that can be easily extended,
 * See the [reactivesearch starter app](https://github.com/appbaseio-apps/reactivesearch-starter-app).
