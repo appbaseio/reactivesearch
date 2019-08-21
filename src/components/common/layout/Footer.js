@@ -10,15 +10,18 @@ const Footer = () => (
 					list: [
 						{
 							title: 'Apps',
-							href: '/apps',
+							openWithTab: true,
+							href: 'https://appbase.io/apps',
 						},
 						{
 							title: 'Clusters',
-							href: '/clusters',
+							openWithTab: true,
+							href: 'https://appbase.io/clusters',
 						},
 						{
 							title: 'Tools',
-							href: '/tools',
+							openWithTab: true,
+							href: 'https://appbase.io/tools',
 						},
 					],
 				},
@@ -27,19 +30,23 @@ const Footer = () => (
 					list: [
 						{
 							title: 'Search Preview',
-							href: '/features/search',
+							openWithTab: true,
+							href: 'https://appbase.io/features/search',
 						},
 						{
 							title: 'Analytics',
-							href: '/features/analytics',
+							openWithTab: true,
+							href: 'https://appbase.io/features/analytics',
 						},
 						{
 							title: 'Security',
-							href: '/features/security',
+							openWithTab: true,
+							href: 'https://appbase.io/features/security',
 						},
 						{
 							title: 'Apps vs Clusters',
-							href: '/features/price-comparison',
+							openWithTab: true,
+							href: 'https://appbase.io/features/price-comparison',
 						},
 					],
 				},
@@ -48,39 +55,23 @@ const Footer = () => (
 					list: [
 						{
 							title: 'Realtime Search',
-							href: '/usecases/realtime-search',
+							openWithTab: true,
+							href: 'https://appbase.io/usecases/realtime-search',
 						},
 						{
 							title: 'Geo Apps',
-							href: '/usecases/geo-apps',
+							openWithTab: true,
+							href: 'https://appbase.io/usecases/geo-apps',
 						},
 						{
 							title: 'Feeds',
-							href: '/usecases/feeds',
+							openWithTab: true,
+							href: 'https://appbase.io/usecases/feeds',
 						},
 						{
 							title: 'Why Appbase.io',
-							href: '/usecases/why-appbase',
-						},
-					],
-				},
-				{
-					title: 'Docs',
-					list: [
-						{
-							title: 'JS Quick Start',
-							href: 'http://docs.appbase.io/javascript/quickstart.html',
 							openWithTab: true,
-						},
-						{
-							title: 'JS API Reference',
-							href: 'https://docs.appbase.io/javascript/api-reference.html',
-							openWithTab: true,
-						},
-						{
-							title: 'REST APIs',
-							href: 'https://rest.appbase.io',
-							openWithTab: true,
+							href: 'https://appbase.io/usecases/why-appbase',
 						},
 					],
 				},
@@ -89,15 +80,18 @@ const Footer = () => (
 					list: [
 						{
 							title: 'Terms of Service',
-							href: '/tos',
+							openWithTab: true,
+							href: 'https://appbase.io/tos',
 						},
 						{
 							title: 'Privacy Policy',
-							href: '/privacy',
+							openWithTab: true,
+							href: 'https://appbase.io/privacy',
 						},
 						{
 							title: 'Cookies Policy',
-							href: '/cookie',
+							openWithTab: true,
+							href: 'https://appbase.io/cookie',
 						},
 					],
 				},
