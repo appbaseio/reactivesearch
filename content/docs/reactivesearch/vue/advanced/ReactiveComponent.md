@@ -187,7 +187,7 @@ export default {
 -   **defaultQuery** `Function`
     **returns** the default query to be applied to the component, as defined in Elasticsearch Query DSL.
 -   **react** `Object`
-    `react` prop is available in components whose data view should reactively update when on or more dependent components change their states, e.g. [`ReactiveMap`](/map-components/reactivemap.html), [`ReactiveList`](/basic-components/reactivelist.html).
+    `react` prop is available in components whose data view should reactively update when on or more dependent components change their states, e.g. [`ReactiveList`](/docs/reactivesearch/vue/result/ReactiveList).
 
     -   **key** `String`
         one of `and`, `or`, `not` defines the combining clause.

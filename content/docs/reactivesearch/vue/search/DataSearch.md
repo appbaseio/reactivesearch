@@ -162,7 +162,7 @@ or
 -   `title`
 -   `input`
 
-Read more about it [here](/theming/class.html).
+Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 ## Extending
 

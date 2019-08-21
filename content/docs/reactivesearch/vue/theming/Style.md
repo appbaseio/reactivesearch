@@ -11,7 +11,7 @@ sidebar: 'docs'
 nestedSidebar: 'vue-reactivesearch'
 ---
 
-You can add a `className` to any component which gets applied to the component at the root level. You may also inject `class` to the inner levels using the `innerClass` prop. You can read more about it in the [next section](/theming/class.html).
+You can add a `className` to any component which gets applied to the component at the root level. You may also inject `class` to the inner levels using the `innerClass` prop. You can read more about it in the [next section](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 ## Examples
 

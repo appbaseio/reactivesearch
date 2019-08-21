@@ -78,7 +78,7 @@ new Vue({
 
 ### Step 2: Adding the first component
 
-Lets add our first ReactiveSearch component: [ReactiveBase](/getting-started/reactivebase.html), it is a backend connector where we can configure the Elasticsearch index / authorization setup.
+Lets add our first ReactiveSearch component: [ReactiveBase](/docs/reactivesearch/vue/overview/ReactiveBase/), it is a backend connector where we can configure the Elasticsearch index / authorization setup.
 
 We will be using `kebab-case` here. You can read more about component naming convention [here](https://vuejs.org/v2/guide/components-registration.html#Name-Casing).
 
@@ -128,7 +128,7 @@ This is how the app should look after running the `yarn run serve` command.
 
 ### Step 3: Adding Filters and Result Components
 
-For this app, we will be using [multi-list](/search-components/multilist.html) and [single-range](/basic-components/singlerange.html) components for filtering the dataset. And [reactive-list](/search-components/reactivelist.html) component for showing the search results.
+For this app, we will be using [multi-list](/docs/reactivesearch/vue/search/MultiList/) and [single-range](/docs/reactivesearch/vue/basic/SingleRange/) components for filtering the dataset. And [reactive-list](/docs/reactivesearch/vue/search/ReactiveList/) component for showing the search results.
 
 Lets add them within the ReactiveBase component. But before we do that, we will look at the important props for each.
 
@@ -142,7 +142,7 @@ Lets add them within the ReactiveBase component. But before we do that, we will 
 />
 ```
 
-The [**multi-list**](/search-components/multilist.html) creates a multiple selection based list UI component that is connected to a database field and shows items using the `author.raw` field in the dataset. Here is how it will look visually.
+The [**multi-list**](/docs/reactivesearch/vue/search/MultiList/) creates a multiple selection based list UI component that is connected to a database field and shows items using the `author.raw` field in the dataset. Here is how it will look visually.
 
 ![](https://i.imgur.com/WOvQKGj.png)
 
@@ -166,7 +166,7 @@ Next, we will look at the [**single-range**](/basic-components/singlerange.html)
 
 **single-range** filters the DB by `rating` field based on the UI choice the user makes. We also set the _Rating > 4_ option to be default selected when the UI loads up first.
 
-Finally, we need a component to show the matching results. [**reactive-list**](/search-components/reactivelist.html) does exactly this.
+Finally, we need a component to show the matching results. [**reactive-list**](/docs/reactivesearch/vue/result/ReactiveList/) does exactly this.
 
 ```js
 <reactive-list

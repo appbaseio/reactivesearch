@@ -1,14 +1,11 @@
----
+/---
 title: 'ReactiveBase'
 meta_title: 'ReactiveBase'
 meta_description: 'ReactiveBase is a container component that wraps all the `ReactiveSearch` components together.'
-keywords:
-    - reactivesearch
-    - reactivebase
-    - appbase
-    - elasticsearch
+keywords: - reactivesearch - reactivebase - appbase - elasticsearch
 sidebar: 'docs'
 nestedSidebar: 'vue-reactivesearch'
+
 ---
 
 **ReactiveBase** is a container component that wraps all the `ReactiveSearch` components together. It binds the backend app (data source) with the UI view components (elements wrapped within ReactiveBase), allowing a UI component to be reactively updated every time there is a change in the data source or in other UI components.
@@ -93,10 +90,10 @@ http.cors.allow-headers: X-Requested-With, X-Auth-Token, Content-Type, Content-L
 
 Once you have added the **ReactiveBase** component, you can get started with adding other components as its children.
 
--   List specific components can be found [here](/list-components/singlelist.html).
--   Range specific components can be found [here](/list-components/singlerange.html).
--   Search specific components can be found [here](/search-components/datasearch.html).
+-   List specific components can be found [here](/docs/reactivesearch/vue/list/SingleList/).
+-   Range specific components can be found [here](/docs/reactivesearch/vue/range/SingleRange/).
+-   Search specific components can be found [here](/docs/reactivesearch/vue/search/DataSearch/).
 -   Result specific components can be found
-    [here](/result-components/resultlist.html).
+    [here](/docs/reactivesearch/vue/result/ResultList/).
 
-You can read more about when to use which components in the overview guide [here](/getting-started/ComponentsIndex.html).
+You can read more about when to use which components in the overview guide [here](/docs/reactivesearch/vue/overview/Components/).

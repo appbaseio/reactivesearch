@@ -33,14 +33,14 @@ The components can also be used with `Numeric` datatype fields.
 <p>
 <img src="https://imgur.com/p2PBKh6.png" style="float:left">
 
-**[SingleList](/list-components/singlelist.html)** is useful for displaying a list of values where only one item can be selected at a time, and the values are retrieved by a database query on the field specified in the **dataField** prop.
+**[SingleList](/docs/reactivesearch/vue/list/SingleList/)** is useful for displaying a list of values where only one item can be selected at a time, and the values are retrieved by a database query on the field specified in the **dataField** prop.
 
 </p>
 
 <p>
 <img src="https://imgur.com/waVNdgr.png" style="float:left">
 
-**[MultiList](/list-components/multilist.html)** is useful for displaying a list of values where multiple values can be selected at a time. Similar to SingleList, these values are retrieved by a database query on the field specified in the **dataField** prop.
+**[MultiList](/docs/reactivesearch/vue/list/MultiList/)** is useful for displaying a list of values where multiple values can be selected at a time. Similar to SingleList, these values are retrieved by a database query on the field specified in the **dataField** prop.
 
 </p>
 
@@ -51,7 +51,7 @@ The following are all the possible UI components for a numeric datatype field in
 <p>
 <img src="https://imgur.com/tPi76EU.png" style="float:left">
 
-**[SingleRange](/range-components/singlerange.html)** displays a curated list of items where only one item can be selected at a time. Each item represents a range of values, specified in the **data** prop of the component.
+**[SingleRange](/docs/reactivesearch/vue/range/SingleRange/)** displays a curated list of items where only one item can be selected at a time. Each item represents a range of values, specified in the **data** prop of the component.
 
 </p>
 
@@ -64,7 +64,7 @@ The following are UI components that represent searchbar UIs. The datatype for t
 <p>
 <img src="https://imgur.com/kbnVVkZ.png" style="float:left">
 
-**[DataSearch](/search-components/datasearch.html)** displays a search input box.
+**[DataSearch](/docs/reactivesearch/vue/search/DataSearch/)** displays a search input box.
 
 </p>
 
@@ -74,14 +74,14 @@ Result components are used for displaying the results (aka hits).
 
 > How do result components fetch results by combining queries from multiple components?
 >
-> They do this via [**react**](advanced/react.html) prop, which allows each component to specify their dependent components using a DSL that mirrors Elasticsearch's compound query DSL for bool clause.
+> They do this via [**react**](/docs/reactivesearch/vue/advanced/ReactProp/) prop, which allows each component to specify their dependent components using a DSL that mirrors Elasticsearch's compound query DSL for bool clause.
 
 ### ReactiveList
 
 <p>
 <img src="https://imgur.com/PCBwK7t.png" style="float:left">
 
-**[ReactiveList](/result-components/reactivelist.html)** displays the results in a configurable list layout. This is a more flexible display component (used internally by both ResultList and ResultCard) that allows more customization than ResultList and ResultCard.
+**[ReactiveList](/docs/reactivesearch/vue/result/ReactiveList/)** displays the results in a configurable list layout. This is a more flexible display component (used internally by both ResultList and ResultCard) that allows more customization than ResultList and ResultCard.
 
 </p>
 
@@ -91,4 +91,4 @@ Result components are used for displaying the results (aka hits).
 
 ### SelectedFilters
 
-**[SelectedFilters](/base-components/selectedfilters.html)** is a selection component to render the selected values from other components with a "Clear All" option.
+**[SelectedFilters](/docs/reactivesearch/vue/base/SelectedFilters/)** is a selection component to render the selected values from other components with a "Clear All" option.
