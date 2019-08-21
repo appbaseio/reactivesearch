@@ -127,9 +127,9 @@ Example uses:
     You can pass a callback using `innerRef` which gets passed to the inner input element as [`ref`](https://reactjs.org/docs/refs-and-the-dom.html).
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
--   **renderNoSuggestion** `String|scoped-slot` [optional]
+-   **renderNoSuggestion** `String|slot-scope` [optional]
     can we used to render a message when there is no suggestions found.
--   **renderError** `String|Function|scoped-slot` [optional]
+-   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
 
 ```js
@@ -144,7 +144,7 @@ Example uses:
 or
 
 ```html
-<template slot="renderError" scoped-slot="error">
+<template slot="renderError" slot-scope="error">
 	<div>Something went wrong!<br />Error details<br />{{ error }}</div>
 </template>
 ```
@@ -187,12 +187,12 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 -   it's also possible to take control of rendering individual suggestions with `renderSuggestion` prop or the entire suggestions rendering using the `renderAllSuggestions` prop.
 
-`renderAllSuggestions` can be used as a `scoped-slot` or `Function` which receives some parameters which you may use to build your own custom suggestions rendering
+`renderAllSuggestions` can be used as a `slot-scope` or `Function` which receives some parameters which you may use to build your own custom suggestions rendering
 
 ```html
 <template
 	slot="renderAllSuggestions"
-	scoped-slot="{
+	slot-scope="{
         currentValue,       // the current value in the search
         isOpen,             // isOpen from downshift
         getItemProps,       // item props to be passed to suggestions

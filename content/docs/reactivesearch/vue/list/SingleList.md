@@ -90,8 +90,8 @@ Example uses:
     placeholder to be displayed in the searchbox, only applicable when the `showSearch` prop is set to true. When applicable, the default placeholder value is set to "Search".
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
--   **renderItem** `Function|scoped-slot` [optional]
-    customize the rendered list via a function or scoped-slot which receives the item label, count and isChecked & expects a JSX or String back. For example:
+-   **renderItem** `Function|slot-scope` [optional]
+    customize the rendered list via a function or slot-scope which receives the item label, count and isChecked & expects a JSX or String back. For example:
 
 ```js
 renderItem={({ label, count }) => (
@@ -107,7 +107,7 @@ renderItem={({ label, count }) => (
 or
 
 ```html
-<template slot="renderItem" scoped-slot="{ label, count }">
+<template slot="renderItem" slot-scope="{ label, count }">
 	<div>
 		{{label}}
 		<span :style="{ marginLeft: 5, color: 'dodgerblue' }">
@@ -117,7 +117,7 @@ or
 </template>
 ```
 
--   **renderError** `String|Function|scoped-slot` [optional]
+-   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
 
 ```js
@@ -132,7 +132,7 @@ or
 or
 
 ```html
-<template slot="renderError" scoped-slot="error">
+<template slot="renderError" slot-scope="error">
 	<div>Something went wrong!<br />Error details<br />{{ error }}</div>
 </template>
 ```

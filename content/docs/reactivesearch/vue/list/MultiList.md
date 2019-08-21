@@ -85,8 +85,8 @@ Example uses:
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
--   **renderItem** `Function|scoped-slot` [optional]
-    customize the rendered list via a function or scoped-slot which receives the item label, count and isChecked & expects a JSX or String back. For example:
+-   **renderItem** `Function|slot-scope` [optional]
+    customize the rendered list via a function or slot-scope which receives the item label, count and isChecked & expects a JSX or String back. For example:
 
 ```js
 renderItem={({ label, count }) => (
@@ -102,7 +102,7 @@ renderItem={({ label, count }) => (
 or
 
 ```html
-<template slot="renderItem" scoped-slot="{ label, count }">
+<template slot="renderItem" slot-scope="{ label, count }">
 	<div>
 		{{label}}
 		<span :style="{ marginLeft: 5, color: 'dodgerblue' }">
@@ -112,7 +112,7 @@ or
 </template>
 ```
 
--   **renderError** `String|Function|scoped-slot` [optional]
+-   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
 
 ```js
@@ -127,7 +127,7 @@ or
 or
 
 ```html
-<template slot="renderError" scoped-slot="error">
+<template slot="renderError" slot-scope="error">
 	<div>Something went wrong!<br />Error details<br />{{ error }}</div>
 </template>
 ```

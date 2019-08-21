@@ -96,7 +96,7 @@ Example uses:
     -   `sortBy` - specified as either `asc` or `desc`.
 -   **size** `Number` [optional]
     number of results to show per view. Defaults to 10.
--   **loader** `String|scoped-slot` [optional]
+-   **loader** `String|slot-scope` [optional]
     display to show the user while the data is loading, accepts `String` or `JSX` markup.
 -   **showResultStats** `Boolean` [optional]
     whether to show result stats in the form of results found and time taken. Defaults to `true`.
@@ -104,7 +104,7 @@ Example uses:
     a dependency object defining how this component should react based on the state changes in the sensor components.
 -   **URLParams** `Boolean` [optional]
     when set adds the current page number to the url. Only works when `pagination` is enabled.
--   **renderData** `Function|scoped-slot` [optional]
+-   **renderData** `Function|slot-scope` [optional]
     returns a list element object to be rendered based on the `res` data object. This callback function prop is called for each data item rendered in the ResultList component’s view.
 
     ```js
@@ -135,7 +135,7 @@ Example uses:
     />
     ```
 
--   **renderResultStats** `Function|scoped-slot` [optional]
+-   **renderResultStats** `Function|slot-scope` [optional]
     renders custom result stats using a callback function that takes `stats` object as parameter and expects it to return a string or html. `stats` object contains following properties
     -   `totalResults` - Total number of results found
     -   `totalPages` - Total number of pages found based on current page size
@@ -211,8 +211,8 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 -   **className** `String`
     CSS class to be injected on the component container.
--   **renderData** `Function|scoped-slot` [optional]
-    a callback function or scoped-slot where user can define how to render the view based on the data changes.
+-   **renderData** `Function|slot-scope` [optional]
+    a callback function or slot-scope where user can define how to render the view based on the data changes.
 
 > Note
 >
