@@ -172,6 +172,40 @@ Example uses:
     ```
 -   **renderNoResults** `Function` [optional]
     show custom message or component when no results found.
+-   **renderPagination** `String or JSX or Function` [optional]
+    can be used to render custom pagination.
+
+    -   **`pages`**: `number`
+        Number of pages to be displayed
+    -   **`totalPages`**: `number`
+        Total number of pages found based on current page size
+    -   **`currentPage`**: `number`
+        Current page number for which data is being rendered
+    -   **`setPage`**: `function`
+        Function use to set the currentPage
+    -   **`fragmentName`**: `string`
+        `componentId` of the Result component for setting url params for eg:
+
+        ```jsx
+        <a href={`?${fragmentName}=${pageNumber}`}>{pageNumber}</a>
+        ```
+
+    ```js
+    renderPagination={({ pages, totalPages, currentPage, setPage, setSize }) => {
+          const selectPage = Number.isFinite(totalPages) && (
+            <select
+                value={currentPage + 1}
+                onChange={e => setPage(parseInt(e.target.value, 10))}
+            >
+              {new Array(totalPages).fill(0).map((_, i) => (
+                <option value={i}>{i + 1}</option>
+              ))}
+            </select>
+          );
+          return selectPage;
+    }
+    ```
+
 -   **onData** `Function` [optional]
     gets triggered after data changes, which returns an object with these properties: `data`,
     `streamData`, `promotedData`, `rawData` & `resultStats`.

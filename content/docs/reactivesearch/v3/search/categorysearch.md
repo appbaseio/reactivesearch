@@ -150,6 +150,11 @@ Example uses:
     Sets a maximum edit distance on the search parameters, can be **0**, **1**, **2** or **"AUTO"**. Useful for showing the correct results for an incorrect search parameter by taking the fuzziness into account. For example, with a substitution of one character, **fox** can become **box**. Read more about it in the elastic search [docs](https://www.elastic.co/guide/en/elasticsearch/guide/current/fuzziness.html).
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+-   **showVoiceSearch** `Boolean` [optional]
+    show an option in search bar to enable the voice to text search. Defaults to `false`.
+-   **searchOperators** `Boolean` [optional]
+    Defaults to `false`, if set to `true` than you can use special characters in the search query to enable the advanced search.<br/>
+    Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html).
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **URLParams** `Boolean` [optional]
@@ -254,6 +259,7 @@ Or you can also use render function as children
     ```
 -   **renderNoSuggestion** `String or JSX or Function` [optional]
     can we used to render a message when there is no suggestions found.
+
     ```js
     renderNoSuggestion={() => (
             <div>
@@ -261,6 +267,33 @@ Or you can also use render function as children
             </div>
         )
     }
+    ```
+
+-   **getMicInstance** `Function` [optional]
+    You can pass a callback function to get the instance of `SpeechRecognition` object, which can be used to override the default configurations.
+-   **renderMic** `String or JSX or Function` [optional]
+    can we used to render the custom mic option.<br/>
+    It accepts an object with the following properties:
+    -   **`handleClick`**: `function`
+        needs to be called when the mic option is clicked.
+    -   **`status`**: `string`
+        is a constant which can have one of these values:<br/>
+        `INACTIVE` - mic is in inactive state i.e not listening<br/>
+        `STOPPED` - mic has been stopped by the user<br/>
+        `ACTIVE` - mic is listening<br/>
+        `DENIED` - permission is not allowed<br/>
+    ```js
+    	renderMic = {({ handleClick, status }) => {
+    				switch(status) {
+    					case 'ACTIVE':
+    						return <img src="/active_mic.png" onClick={handleClick} />
+    					case 'DENIED':
+    					case 'STOPPED':
+    						return <img src="/mute_mic.png" onClick={handleClick} />
+    					default:
+    						return <img src="/inactive_mic.png" onClick={handleClick} />
+    				}
+    	}}
     ```
 -   **onSuggestions** `Function` [optional]
     You can pass a callback function to listen for the changes in suggestions.The function receives `suggestions` list.

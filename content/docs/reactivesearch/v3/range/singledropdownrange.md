@@ -89,6 +89,15 @@ Example uses:
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
+-   **renderLabel** `Function` [optional]
+    can be used to change the label of the dropdown. Useful for adding highlighting/styling to or translating the label.
+    ```js
+    renderLabel={(items) => Object.values(items).map((item) => (
+      <div>
+        <MyTranslationComponent key={item} />
+      </div>
+    ))}
+    ```
 
 ## Demo
 

@@ -105,6 +105,8 @@ Example uses:
     enable creating a URL query string parameter based on the selected location from the slider. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **countries** `String Array` [optional]
     restricts predictions to specified country (ISO 3166-1 Alpha-2 country code, case insensitive). For example, 'us', 'in', or 'au'. You can provide an array of up to five country code strings.
+-   **serviceOptions** `Object` [optional]
+    allows to add more options to AutoCompletionRequest, available from [Google Places library](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest)
 -   **tooltipTrigger** `String` [optional]
     trigger the tooltip according to the value specified. Can be `hover`, `focus`, `always` and `none`. Defaults to `none`.
 -   **renderTooltipData** `Function` [optional]

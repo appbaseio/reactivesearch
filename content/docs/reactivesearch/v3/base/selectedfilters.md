@@ -42,6 +42,17 @@ Example uses:
     Sets the label for the clear all button.
 -   **onChange** `function` [optional]
     Provides access to the current selected values. This enables you to retrieve the selected filters and current search state in a convenient way.
+-   **onClear** `function` [optional]
+    a callback function which will be called when a particular filter(value) has been removed from the selected filters, provides the `component` and `value`. <br/><br/>
+    Example:
+
+```jsx
+<SelectedFilters
+	onClear={(component, value) => {
+		console.log(`${component} has been removed with value as ${value}`);
+	}}
+/>
+```
 
 Most ReactiveSearch filter components have a prop `showFilter` (defaults to `true`) which can be used to control whether the component's selected state appears in the SelectedFilters component. There is also a `filterLabel` prop which controls how that component is displayed.
 
