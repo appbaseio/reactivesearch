@@ -41,7 +41,7 @@ const HomeHeader = () => (
 			<div className="home-header-graphics">
 				<div className="graphic">
 					<img src="images/app-cluster@3x.png" />
-					<p className={`${Spirit.p} middarkgrey text-center`}>App Cluster</p>
+					<p className={`${Spirit.p} middarkgrey text-center`}>Host an App</p>
 				</div>
 				<div className="graphic">
 					<img src="images/home-search-relevancy@3x.png" />
