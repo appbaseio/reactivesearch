@@ -121,12 +121,12 @@ class RatingsFilter extends Component {
 		return value ? [value.start, value.end] : null;
 	};
 
-	static defaultQuery = (value, props, includeNullValues = false) => {
+	static defaultQuery = (value, props, includeUnrated = false) => {
 		let query = null;
 		if (value) {
 			query = getRangeQueryWithNullValues(value, {
 				dataField: props.dataField,
-				includeNullValues: props.includeNullValues || includeNullValues,
+				includeNullValues: props.includeNullValues || includeUnrated,
 			});
 		}
 
@@ -174,9 +174,9 @@ class RatingsFilter extends Component {
 		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
-	updateQuery = (value, props, includeNullValues) => {
+	updateQuery = (value, props, includeUnrated) => {
 		const { customQuery } = props;
-		let query = RatingsFilter.defaultQuery(value, props, includeNullValues);
+		let query = RatingsFilter.defaultQuery(value, props, includeUnrated);
 		let customQueryOptions;
 		if (customQuery) {
 			({ query } = customQuery(value, props) || {});
