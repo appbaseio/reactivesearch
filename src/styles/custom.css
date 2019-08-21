@@ -624,8 +624,8 @@ kbd {
 .gh-bg-home {
 	/* background: url(../images/bg-home.svg) no-repeat, radial-gradient(ellipse at top, rgba(252,253,255,1) 0%,rgba(228,233,245,1) 100%); */
 	/* background: url(../images/bg-home.svg) no-repeat, linear-gradient(60deg, rgba(75, 55, 172, 1) 0%, rgba(99, 199, 193, 1) 100%);; */
-	background: url(../images/bg-home.svg) no-repeat,
-		linear-gradient(60deg, #562db5 0%, #19afc9 100%);
+	background: linear-gradient(60deg, rgba(62, 176, 239, 0.1) 0%, rgba(199, 244, 255, 0.3) 100%),
+		url(../images/banner.png) no-repeat;
 	background-size: cover;
 }
 
@@ -1545,6 +1545,7 @@ to be custom HTML.
 .home-header {
 	align-items: center;
 	justify-content: space-between;
+	min-height: 100vh;
 }
 
 .home-header-graphics {
@@ -1608,13 +1609,9 @@ to be custom HTML.
 
 @media (max-width: 768px) {
 	.home-header-graphics {
-		grid-gap: 20px;
-		justify-content: center;
+		display: none;
 	}
-	.home-header-graphics .graphic img {
-		width: 100%;
-		max-height: none;
-	}
+
 	.home-search-container {
 		margin-right: 10px;
 	}
@@ -1630,9 +1627,6 @@ to be custom HTML.
 }
 
 @media (max-width: 420px) {
-	.home-header-graphics {
-		display: none;
-	}
 	.nav-logo {
 		padding-right: 1rem;
 	}
@@ -1725,4 +1719,9 @@ to be custom HTML.
 	outline: none;
 	cursor: pointer;
 	border: 0;
+	font-size: 1.7rem;
+}
+
+.bg-blue {
+	background: #3eb0ef;
 }

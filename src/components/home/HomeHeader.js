@@ -16,26 +16,26 @@ const HomeHeader = () => (
 			} pb5 pt10 pt15-ns pt20-l pb10-ns pb15-l flex items-between bt bn-ns b--white-10 home-header`}
 		>
 			<div className="pr3">
-				<h1 className="ma0 mt8 pt5 pa0 f2 f1-ns f-headline-l white header-heading-shadow">
+				<h1 className="ma0 mt0 pt0 pa0 f2 lh-1-65 f1-ns f-headline-l darkgrey header-heading-shadow">
 					Appbase Documentation
 				</h1>
-				<p className={`${Spirit.sectionSubHeading} f1 white`}>
+				<p className={`${Spirit.sectionSubHeading} f1 darkgrey`}>
 					Appbase.io offers the search stack for building modern apps. Import data
 					instantly from your favorite sources. Deploy in minutes with a fully managed
 					backend. Build amazing search Ux with reactive UI components.
 				</p>
-				<div className="mt5">
+				<div className="mt8">
 					<a
 						href="https://dashboard.appbase.io"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="link button-header pa2 mr4 shadow-3 pl4 pr4 br2 fw5 f5 blue"
+						className="link button-header pa3 shadow-3 white bg-blue pl4 pr4 br2 fw5 f5 blue"
 					>
 						Sign Up
 					</a>
-					<a className="link button-header pa2 f5 fw5 shadow-3 pl4 pr4 br2 blue">
+					{/* <a className="link button-header pa2 f5 fw5 shadow-3 bg-white pl4 pr4 br2 blue">
 						Watch Video
-					</a>
+					</a> */}
 				</div>
 			</div>
 			<div className="home-header-graphics">

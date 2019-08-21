@@ -49,15 +49,15 @@ const HomePage = ({ data, location }) => {
 											{
 												title: 'Quick Start',
 												description: 'Quick start with Appbaseio',
-												link: '/docs/gettingstarted/QuickStart',
+												link: '/docs/gettingstarted/QuickStart/',
 												duration: 3,
 											},
-											{
-												title: 'How Appbaseio Works',
-												description: 'Take a look at how things work',
-												link: '/docs/gettingstarted/Working',
-												duration: 3,
-											},
+											// {
+											// 	title: 'How Appbaseio Works',
+											// 	description: 'Take a look at how things work',
+											// 	link: '/docs/gettingstarted/Working',
+											// 	duration: 3,
+											// },
 										],
 									},
 									'2': {
@@ -70,22 +70,22 @@ const HomePage = ({ data, location }) => {
 												title: 'Data Model',
 												description:
 													'Take a look at the data model of Appbaseio',
-												link: '/docs/data/Model',
+												link: '/docs/data/Model/',
 												duration: 2,
 											},
 											{
 												title: 'Data Browser',
 												description:
 													'Data Browser is a WYSIWYG GUI for adding, modifying and viewing your appbase.io apps data.',
-												link: '/docs/data/Browser',
+												link: '/docs/data/Browser/',
 												duration: 4,
 											},
-											{
-												title: 'Importing Data',
-												description: 'Learn how to import data.',
-												link: '/docs/data/Import',
-												duration: 4,
-											},
+											// {
+											// 	title: 'Importing Data',
+											// 	description: 'Learn how to import data.',
+											// 	link: '/docs/data/Import/',
+											// 	duration: 4,
+											// },
 										],
 									},
 									'3': {
@@ -98,21 +98,21 @@ const HomePage = ({ data, location }) => {
 												title: 'Mappings',
 												description:
 													'Mappings define how the JSON data indexed into appbase.io is stored as.',
-												link: '/docs/search/Mappings',
+												link: '/docs/search/Mappings/',
 												duration: 3,
 											},
 											{
 												title: 'Search Preview',
 												description:
 													'Search Preview offers a drag and drop interface for building and testing your search UX visually.',
-												link: '/docs/search/Preview',
+												link: '/docs/search/Preview/',
 												duration: 1,
 											},
 											{
 												title: 'Query Rules',
 												description:
 													'Data Browser is a WYSIWYG GUI for adding, modifying and viewing your appbase.io apps data.',
-												link: '/docs/search/Rules',
+												link: '/docs/search/Rules/',
 												duration: 5,
 											},
 										],
@@ -124,20 +124,21 @@ const HomePage = ({ data, location }) => {
 										chapters: [
 											{
 												title: 'ReactiveSearch QuickStart',
-												link: '/docs/reactivesearch/v3/overview/quickstart',
+												link:
+													'/docs/reactivesearch/v3/overview/quickstart/',
 												duration: 8,
 											},
 											{
 												title: 'Vue ReactiveSearch QuickStart',
 												link:
-													'/docs/reactivesearch/vue/overview/QuickStart',
+													'/docs/reactivesearch/vue/overview/QuickStart/',
 												duration: 8,
 											},
 											{
 												title: 'Native ReactiveSearch QuickStart',
 												description: '',
 												link:
-													'/docs/reactivesearch/native/overview/QuickStart',
+													'/docs/reactivesearch/native/overview/QuickStart/',
 												duration: 6,
 											},
 										],
@@ -150,12 +151,12 @@ const HomePage = ({ data, location }) => {
 										chapters: [
 											{
 												title: 'Analytics',
-												link: '/docs/analytics/Overview',
+												link: '/docs/analytics/Overview/',
 												duration: 1,
 											},
 											{
 												title: 'Implement Analytics',
-												link: '/docs/analytics/Implement',
+												link: '/docs/analytics/Implement/',
 												duration: 2,
 											},
 										],
@@ -168,17 +169,17 @@ const HomePage = ({ data, location }) => {
 										chapters: [
 											{
 												title: 'Credentials',
-												link: '/docs/security/Credentials',
+												link: '/docs/security/Credentials/',
 												duration: 5,
 											},
 											{
 												title: 'Search Template',
-												link: '/docs/security/Template',
+												link: '/docs/security/Template/',
 												duration: 1,
 											},
 											{
 												title: 'Role Based Access',
-												link: '/docs/security/Role',
+												link: '/docs/security/Role/',
 												duration: 4,
 											},
 										],
