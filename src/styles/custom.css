@@ -624,8 +624,7 @@ kbd {
 .gh-bg-home {
 	/* background: url(../images/bg-home.svg) no-repeat, radial-gradient(ellipse at top, rgba(252,253,255,1) 0%,rgba(228,233,245,1) 100%); */
 	/* background: url(../images/bg-home.svg) no-repeat, linear-gradient(60deg, rgba(75, 55, 172, 1) 0%, rgba(99, 199, 193, 1) 100%);; */
-	background: linear-gradient(60deg, rgba(62, 176, 239, 0.1) 0%, rgba(199, 244, 255, 0.3) 100%),
-		url(../images/banner.png) no-repeat;
+	background: url(../images/banner.png) no-repeat;
 	background-size: cover;
 }
 
@@ -1561,8 +1560,8 @@ to be custom HTML.
 }
 
 .home-header-graphics .graphic {
-	padding: 20px;
-	padding-bottom: 10px;
+	padding: 15px;
+	padding-bottom: 7px;
 	width: 100%;
 	border-radius: 4px;
 	background: #fff;
@@ -1573,7 +1572,7 @@ to be custom HTML.
 }
 
 .home-header-graphics .graphic img {
-	max-width: 150px;
+	max-width: 160px;
 	max-height: 100px;
 }
 
@@ -1596,7 +1595,7 @@ to be custom HTML.
 
 @media (max-width: 1052px) {
 	.home-header-graphics .graphic img {
-		max-width: 120px;
+		max-width: 140px;
 		max-height: 100px;
 	}
 }
@@ -1724,4 +1723,8 @@ to be custom HTML.
 
 .bg-blue {
 	background: #3eb0ef;
+}
+
+.bg-green {
+	background: #00f68e;
 }
