@@ -385,7 +385,8 @@ class MultiDataList extends Component {
 		if (value === undefined) {
 			this.setValue(currentValue);
 		} else if (onChange) {
-			onChange(currentValue);
+			this.setValue(currentValue);
+			onChange(Object.keys(this.state.currentValue));
 		}
 	};
 
