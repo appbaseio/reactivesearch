@@ -11,7 +11,7 @@ import { Icon, TOC } from '../../components/common';
 const getGitHubLink = absoluteFilePath => {
 	const splitPath = absoluteFilePath.split('/content')[1];
 
-	return `https://github.com/jyash97/Docs/tree/v2/content${splitPath}`;
+	return `https://github.com/appbaseio/Docs/tree/v2/content${splitPath}`;
 };
 
 class Post extends React.Component {
