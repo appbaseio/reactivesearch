@@ -165,8 +165,6 @@ class Pagination extends React.PureComponent {
 	}
 }
 
-export default Pagination;
-
 Pagination.propTypes = {
 	currentPage: types.number,
 	innerClass: types.style,
@@ -176,3 +174,5 @@ Pagination.propTypes = {
 	fragmentName: types.string,
 	showEndPage: types.bool,
 };
+
+export default Pagination;

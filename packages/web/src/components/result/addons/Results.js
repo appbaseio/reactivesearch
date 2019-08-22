@@ -9,7 +9,8 @@ class Results extends React.Component {
 			If props contain complex data structures, it may produce false-negatives for
 			deeper differences.
 		*/
-		return !isEqual(nextProps, this.props);
+
+		return !isEqual(nextProps.filteredResults, this.props.filteredResults);
 	}
 
 	render() {
@@ -38,6 +39,7 @@ Results.propTypes = {
 	base: types.number,
 	getComponent: types.func,
 	listClass: types.string,
+	filteredResults: types.hits,
 	triggerClickAnalytics: types.func,
 };
 
