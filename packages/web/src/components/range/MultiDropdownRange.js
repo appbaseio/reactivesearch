@@ -59,7 +59,12 @@ class MultiDropdownRange extends Component {
 		const hasMounted = false;
 
 		if (value.length) {
-			this.selectItem(value, true, props, hasMounted);
+			this.selectItem({
+				item: value,
+				isDefaultValue: true,
+				props,
+				hasMounted,
+			});
 		}
 	}
 
@@ -74,19 +79,25 @@ class MultiDropdownRange extends Component {
 		});
 
 		if (!isEqual(this.props.value, prevProps.value)) {
-			this.selectItem(this.props.value, true);
+			this.selectItem({
+				item: this.props.value,
+				isDefaultValue: true,
+			});
 		} else if (
 			!isEqual(this.state.currentValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
 			const { value, onChange } = this.props;
 			if (value === undefined) {
-				this.selectItem(this.props.selectedValue || null);
+				this.selectItem({ item: this.props.selectedValue || null });
 			} else if (onChange) {
 				onChange(this.props.selectedValue || null);
 			} else {
 				const selectedValuesArray = Object.keys(this.selectedValues);
-				this.selectItem(selectedValuesArray, true);
+				this.selectItem({
+					item: selectedValuesArray,
+					isDefaultValue: true,
+				});
 			}
 		}
 	}
@@ -141,7 +152,13 @@ class MultiDropdownRange extends Component {
 		return query;
 	};
 
-	selectItem = (item, isDefaultValue = false, props = this.props, hasMounted = true) => {
+	selectItem = ({
+		item,
+		isDefaultValue = false,
+		props = this.props,
+		hasMounted = true,
+		callback = () => {},
+	}) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -177,6 +194,7 @@ class MultiDropdownRange extends Component {
 			const handleUpdates = () => {
 				this.updateQuery(currentValue, props);
 				this.locked = false;
+				callback();
 				if (props.onValueChange) props.onValueChange(currentValue);
 			};
 
@@ -220,9 +238,12 @@ class MultiDropdownRange extends Component {
 		const { value, onChange } = this.props;
 
 		if (value === undefined) {
-			this.selectItem(items);
+			this.selectItem({ item: items });
 		} else if (onChange) {
-			onChange(items);
+			this.selectItem({
+				item: items,
+				callback: () => onChange(this.state.currentValue.map(obj => obj.label)),
+			});
 		}
 	};
 
