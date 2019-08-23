@@ -624,7 +624,8 @@ kbd {
 .gh-bg-home {
 	/* background: url(../images/bg-home.svg) no-repeat, radial-gradient(ellipse at top, rgba(252,253,255,1) 0%,rgba(228,233,245,1) 100%); */
 	/* background: url(../images/bg-home.svg) no-repeat, linear-gradient(60deg, rgba(75, 55, 172, 1) 0%, rgba(99, 199, 193, 1) 100%);; */
-	background: url(../images/banner.png) no-repeat;
+	background: linear-gradient(to right, rgba(199, 244, 255, 0.8), rgba(199, 244, 255, 0)),
+		url(../images/banner.png) no-repeat;
 	background-size: cover;
 }
 
@@ -1396,6 +1397,12 @@ to be custom HTML.
 	border-radius: 2px;
 }
 
+@media (max-width: 1240px) {
+	.home-search-container {
+		width: 40%;
+	}
+}
+
 @media (max-width: 768px) {
 	.guide-box-container {
 		grid-template-columns: 1fr;
@@ -1544,7 +1551,6 @@ to be custom HTML.
 .home-header {
 	align-items: center;
 	justify-content: space-between;
-	min-height: 100vh;
 }
 
 .home-header-graphics {
@@ -1631,6 +1637,10 @@ to be custom HTML.
 	}
 }
 
+.timeline-steps > div {
+	padding-bottom: 0;
+}
+
 .timeline-steps .topics .topic {
 	grid-template-columns: 0.05fr 1fr;
 	grid-gap: 15px;
@@ -1639,6 +1649,10 @@ to be custom HTML.
 
 .timeline-steps .topic.active {
 	margin-bottom: 20px;
+}
+
+.timeline-steps .topic:last-child {
+	margin-bottom: 0px;
 }
 
 @media (max-width: 768px) {
@@ -1654,21 +1668,16 @@ to be custom HTML.
 }
 
 .timeline-steps .dropdown-content-icon {
-	padding: 15px;
-	font-size: 16px;
-	font-weight: 600;
-	color: #54666d;
+	padding: 10px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	transition: ease 0.2s all;
 	letter-spacing: 0.5px;
 }
 
 .timeline-steps .topic.active .dropdown-content-icon {
-	color: #ffffff;
-	background-image: linear-gradient(#3eb0ef, #3eb0ef);
-	background: #3eb0ef;
-	border-color: #c5d2d9;
+	border-color: var(--black-10);
 	box-shadow: 0 2px 6px 0 rgba(40, 48, 52, 0.15);
 }
 
@@ -1687,13 +1696,13 @@ to be custom HTML.
 	padding-bottom: 10px;
 	margin-top: 10px;
 	flex-wrap: wrap;
-	flex-direction: column;
+	justify-content: space-between;
 	background: #f8fafc;
 	border-top: 1px solid #c5d2d9;
 }
 
 .sticky-nav a {
-	margin-top: 15px;
+	margin-top: 10px;
 }
 
 .version-switcher .Dropdown-control {
@@ -1727,4 +1736,47 @@ to be custom HTML.
 
 .bg-green {
 	background: #00f68e;
+}
+
+@media (max-width: 1240px) {
+	.header-title {
+		margin-top: 50px;
+	}
+}
+
+@media (max-width: 66rem) {
+	.home-title {
+		font-size: 2rem;
+	}
+
+	.home-header {
+		padding: 60px 10px !important;
+	}
+
+	.home-section {
+		margin: 40px auto;
+	}
+
+	.integration-home {
+		margin-top: 0;
+		padding-top: 0;
+	}
+}
+
+.sticky-cta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	position: fixed;
+	left: 0;
+	width: 100%;
+	background: white;
+	bottom: 0;
+	box-shadow: 0 -2px 4px 0 rgba(2, 19, 27, 0.15);
+}
+
+.signup-btn {
+	color: var(--darkgrey);
+	font-size: 1.6rem;
+	font-weight: 600;
 }

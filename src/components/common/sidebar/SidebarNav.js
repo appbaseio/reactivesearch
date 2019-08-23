@@ -88,15 +88,15 @@ const SidebarNav = ({ sidebar, nestedSidebar, location }) => {
 				<a
 					target="_blank"
 					rel="noopener noreferrer"
-					className="midgrey hover-blue-l2 link fw6 "
+					className="midgrey hover-blue-l2 link"
 					href="https://appbase.io"
 				>
-					Appbaseio
+					Appbase.io
 				</a>
 				<a
 					target="_blank"
 					rel="noopener noreferrer"
-					className="midgrey hover-blue-l2 link fw6"
+					className="midgrey hover-blue-l2 link"
 					href="https://dashboard.appbase.io"
 				>
 					Dashboard

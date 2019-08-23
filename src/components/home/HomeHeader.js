@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Button } from '@appbaseio/designkit';
 import { NavBar } from '../common';
 import { Spirit } from '../../styles/spirit-styles';
 
@@ -16,23 +17,29 @@ const HomeHeader = () => (
 			} pb5 pt10 pt15-ns pt20-l pb10-ns pb15-l flex items-between bt bn-ns b--white-10 home-header`}
 		>
 			<div className="pr3">
-				<h1 className="ma0 mt0 pt0 pa0 f2 lh-1-65 f1-ns f-headline-l darkgrey header-heading-shadow">
-					Appbase Documentation
+				<h1 className="ma0 mt0 pt0 pa0 f2 lh-1-65 f1-ns f-headline-l darkgrey header-heading-shadow header-title">
+					Appbase.io Docs
 				</h1>
-				<p className={`${Spirit.sectionSubHeading} f1 darkgrey`}>
+				<p
+					className={`${Spirit.sectionSubHeading} lh-1-65 f1 darkgrey`}
+					style={{ lineHeight: '1.6' }}
+				>
 					Appbase.io offers the search stack for building modern apps. Import data
 					instantly from your favorite sources. Deploy in minutes with a fully managed
 					backend. Build amazing search Ux with reactive UI components.
 				</p>
 				<div className="mt8">
-					<a
-						href="https://dashboard.appbase.io"
+					<Button
+						success
+						uppercase
+						shadow
+						href="https://dashboard.appbase.io/signup"
 						target="_blank"
-						rel="noopener noreferrer"
-						className="link button-header pa3 shadow-3 darkgrey bg-green pl4 pr4 br2 fw5 f5 blue"
+						style={{ background: '#00f68e' }}
+						className="signup-btn"
 					>
-						Sign Up
-					</a>
+						SignUp for free
+					</Button>
 					{/* <a className="link button-header pa2 f5 fw5 shadow-3 bg-white pl4 pr4 br2 blue">
 						Watch Video
 					</a> */}

@@ -134,7 +134,7 @@ const NavBar = ({ theme }) => {
 																name="buildingUI"
 																className="dropdown-content-icon mr2"
 															/>
-															Building UI
+															Building Search UI
 														</Link>
 													</div>
 													<div>

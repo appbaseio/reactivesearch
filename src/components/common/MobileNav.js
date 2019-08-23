@@ -141,6 +141,24 @@ class MobileNav extends React.Component {
 								<MobileLinks file={getFileName(rs)} />
 							</div>
 						</div>
+						<div className="sticky-cta pa3 pl5 pr5">
+							<a
+								target="_blank"
+								rel="noopener noreferrer"
+								className="midgrey hover-blue-l2 link"
+								href="https://appbase.io"
+							>
+								Appbase.io
+							</a>
+							<a
+								target="_blank"
+								rel="noopener noreferrer"
+								className="midgrey hover-blue-l2 link"
+								href="https://dashboard.appbase.io"
+							>
+								Dashboard
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import TimelineOption from '@appbaseio/designkit/lib/molecules/TimelineOption';
 import Grid from '@appbaseio/designkit/lib/atoms/Grid';
 import { Card } from '@appbaseio/designkit';
-import { Title } from '@appbaseio/designkit/lib/atoms/typography';
 import { Icon, Box } from '../components/common';
 import { Layout } from '../components/common/layout';
 import { HomeHeader } from '../components/home';
@@ -26,8 +25,8 @@ const HomePage = ({ data, location }) => {
 				header={<HomeHeader />}
 			>
 				<div className="pt-vw3 ">
-					<div className={`${Spirit.page.xl} col-12 mt-vw3-ns b--whitegrey pt0-ns`}>
-						<span className={`${Spirit.h3} fw6 link darkgrey `}>Guides</span>
+					<div className={`${Spirit.page.xl} col-12 home-section`}>
+						<span className={`${Spirit.h3} fw6 link darkgrey home-title`}>Guides</span>
 						<p
 							className={`${
 								Spirit.h4
@@ -44,7 +43,12 @@ const HomePage = ({ data, location }) => {
 										title: 'Getting Started',
 										subtitle:
 											'Build amazing search Ux with reactive UI components.',
-										icon: <div className="dropdown-content-icon">1</div>,
+										icon: (
+											<Icon
+												name="gettingStarted"
+												className="dropdown-content-icon"
+											/>
+										),
 										chapters: [
 											{
 												title: 'Quick Start',
@@ -64,7 +68,12 @@ const HomePage = ({ data, location }) => {
 										title: 'Managing Data',
 										subtitle:
 											"Appbase's data schema, data browser and how to import data to ElasticSearch.",
-										icon: <div className="dropdown-content-icon">2</div>,
+										icon: (
+											<Icon
+												name="importData"
+												className="dropdown-content-icon"
+											/>
+										),
 										chapters: [
 											{
 												title: 'Data Model',
@@ -92,7 +101,12 @@ const HomePage = ({ data, location }) => {
 										title: 'Search Relevancy',
 										subtitle:
 											'Visually create, update and manage results for your Search.',
-										icon: <div className="dropdown-content-icon">3</div>,
+										icon: (
+											<Icon
+												name="searchRelevancy"
+												className="dropdown-content-icon"
+											/>
+										),
 										chapters: [
 											{
 												title: 'Mappings',
@@ -120,7 +134,12 @@ const HomePage = ({ data, location }) => {
 									'4': {
 										title: 'Building Search UI',
 										subtitle: 'UI Components for making your Search Experience',
-										icon: <div className="dropdown-content-icon">4</div>,
+										icon: (
+											<Icon
+												name="buildingUI"
+												className="dropdown-content-icon"
+											/>
+										),
 										chapters: [
 											{
 												title: 'ReactiveSearch QuickStart',
@@ -147,7 +166,12 @@ const HomePage = ({ data, location }) => {
 										title: 'Actionable Analytics',
 										subtitle:
 											'Analytics offers actionable insights into how your search is performing.',
-										icon: <div className="dropdown-content-icon">5</div>,
+										icon: (
+											<Icon
+												name="analytics"
+												className="dropdown-content-icon"
+											/>
+										),
 										chapters: [
 											{
 												title: 'Analytics',
@@ -165,7 +189,12 @@ const HomePage = ({ data, location }) => {
 										title: 'Security',
 										subtitle:
 											'Securely access and query the index using Appbase.',
-										icon: <div className="dropdown-content-icon">6</div>,
+										icon: (
+											<Icon
+												name="security"
+												className="dropdown-content-icon"
+											/>
+										),
 										chapters: [
 											{
 												title: 'Credentials',
@@ -190,11 +219,11 @@ const HomePage = ({ data, location }) => {
 					</div>
 
 					<section
-						className={`${
-							Spirit.page.xl
-						} col-12 mt8 mt-vw3-ns bt bn-ns b--whitegrey pt5 pt0-ns`}
+						className={`${Spirit.page.xl} col-12 mt8 pt5 home-section integration-home`}
 					>
-						<h3 className={`${Spirit.h3} fw6 link darkgrey `}>Integrations</h3>
+						<h3 className={`${Spirit.h3} fw6 link darkgrey home-title`}>
+							Integrations
+						</h3>
 						<p
 							className={`${
 								Spirit.h4
@@ -301,12 +330,8 @@ const HomePage = ({ data, location }) => {
 							</Box>
 						</div>
 					</section>
-					<section
-						className={`${
-							Spirit.page.xl
-						} col-12 mt9 mt-vw3-ns bt bn-ns b--whitegrey pt5 pt0-ns`}
-					>
-						<h3 className={`${Spirit.h3} fw6 link darkgrey `}>Need Help?</h3>
+					<section className={`${Spirit.page.xl} col-12 mt10 pt8 home-section`}>
+						<h3 className={`${Spirit.h3} fw6 link darkgrey home-title`}>Need Help?</h3>
 						<p
 							className={`${
 								Spirit.h4
