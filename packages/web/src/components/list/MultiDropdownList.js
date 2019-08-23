@@ -415,8 +415,11 @@ class MultiDropdownList extends Component {
 		if (value === undefined) {
 			this.setValue(currentValue);
 		} else if (onChange) {
-			this.setValue(currentValue);
-			onChange(Object.keys(this.state.currentValue));
+			const newValue = Object.assign([], this.props.value);
+			const currentValueIndex = newValue.indexOf(currentValue);
+			if (currentValueIndex > -1) newValue.splice(currentValueIndex, 1);
+			else newValue.push(currentValue);
+			onChange(newValue);
 		}
 	};
 

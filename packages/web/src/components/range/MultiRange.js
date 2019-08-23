@@ -157,11 +157,7 @@ class MultiRange extends Component {
 	};
 
 	selectItem = ({
-		item,
-		isDefaultValue = false,
-		props = this.props,
-		hasMounted = true,
-		callback = () => {},
+		item, isDefaultValue = false, props = this.props, hasMounted = true,
 	}) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
@@ -176,9 +172,11 @@ class MultiRange extends Component {
 		} else if (isDefaultValue) {
 			// checking if the items in defaultSeleted exist in the data prop
 			currentValue = MultiRange.parseValue(item, props);
-			currentValue.forEach((value) => {
-				selectedValues = { ...selectedValues, [value.label]: true };
-			});
+			selectedValues = item.reduce((accObj, valKey) => {
+				// eslint-disable-next-line no-param-reassign
+				accObj[valKey] = true;
+				return accObj;
+			}, {});
 		} else if (selectedValues[item]) {
 			currentValue = currentValue.filter(value => value.label !== item);
 			const { [item]: del, ...selected } = selectedValues;
@@ -193,7 +191,6 @@ class MultiRange extends Component {
 			const handleUpdates = () => {
 				this.updateQuery(currentValue, props);
 				this.locked = false;
-				callback();
 				if (props.onValueChange) props.onValueChange(currentValue);
 			};
 
@@ -242,10 +239,11 @@ class MultiRange extends Component {
 		if (value === undefined) {
 			this.selectItem({ item: rangeValue });
 		} else if (onChange) {
-			this.selectItem({
-				item: rangeValue,
-				callback: () => onChange(Object.keys(this.state.selectedValues)),
-			});
+			const newValue = Object.assign([], this.props.value);
+			const currentValueIndex = newValue.indexOf(rangeValue);
+			if (currentValueIndex > -1) newValue.splice(currentValueIndex, 1);
+			else newValue.push(rangeValue);
+			onChange(newValue);
 		}
 	};
 
