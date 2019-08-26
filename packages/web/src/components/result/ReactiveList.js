@@ -648,7 +648,7 @@ class ReactiveList extends Component {
 			_click_id: base + index,
 		}));
 	};
-	getData() {
+	getData = () => {
 		const {
 			results, streamResults, filteredResults, promotedResults,
 		} = this.getAllData();
@@ -660,7 +660,7 @@ class ReactiveList extends Component {
 			resultStats: this.stats,
 		};
 	}
-	getComponent() {
+	getComponent = () => {
 		const { error, isLoading } = this.props;
 		const data = {
 			error,
