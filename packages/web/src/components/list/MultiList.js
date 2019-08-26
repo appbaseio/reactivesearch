@@ -40,6 +40,7 @@ import {
 	isEvent,
 	isIdentical,
 	getValidPropsKeys,
+	parseValueArray,
 } from '../../utils';
 
 class MultiList extends Component {
@@ -457,11 +458,7 @@ class MultiList extends Component {
 		if (value === undefined) {
 			this.setValue(currentValue);
 		} else if (onChange) {
-			const newValue = Object.assign([], this.props.value);
-			const currentValueIndex = newValue.indexOf(currentValue);
-			if (currentValueIndex > -1) newValue.splice(currentValueIndex, 1);
-			else newValue.push(currentValue);
-			onChange(newValue);
+			onChange(parseValueArray(this.props.value, currentValue));
 		}
 	};
 

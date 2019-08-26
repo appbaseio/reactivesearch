@@ -26,7 +26,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Dropdown from '../shared/Dropdown';
-import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys, parseValueArray } from '../../utils';
 
 class MultiDropdownRange extends Component {
 	constructor(props) {
@@ -234,11 +234,7 @@ class MultiDropdownRange extends Component {
 		if (value === undefined) {
 			this.selectItem({ item: items });
 		} else if (onChange) {
-			const newValue = Object.assign([], this.props.value);
-			const currentValueIndex = newValue.indexOf(items.label);
-			if (currentValueIndex > -1) newValue.splice(currentValueIndex, 1);
-			else newValue.push(items.label);
-			onChange(newValue);
+			onChange(parseValueArray(this.props.value, items.label));
 		}
 	};
 

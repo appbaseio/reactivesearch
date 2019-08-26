@@ -29,7 +29,14 @@ import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect, getComponent, hasCustomRenderer, isEvent, getValidPropsKeys } from '../../utils';
+import {
+	connect,
+	getComponent,
+	hasCustomRenderer,
+	isEvent,
+	getValidPropsKeys,
+	parseValueArray,
+} from '../../utils';
 import { getAggsQuery } from './utils';
 
 class MultiDataList extends Component {
@@ -385,11 +392,7 @@ class MultiDataList extends Component {
 		if (value === undefined) {
 			this.setValue(currentValue);
 		} else if (onChange) {
-			const newValue = Object.assign([], this.props.value);
-			const currentValueIndex = newValue.indexOf(currentValue);
-			if (currentValueIndex > -1) newValue.splice(currentValueIndex, 1);
-			else newValue.push(currentValue);
-			onChange(newValue);
+			onChange(parseValueArray(this.props.value, currentValue));
 		}
 	};
 
