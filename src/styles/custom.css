@@ -1776,7 +1776,7 @@ to be custom HTML.
 }
 
 .signup-btn {
-	color: var(--darkgrey);
-	font-size: 1.6rem;
-	font-weight: 600;
+	color: var(--darkgrey) !important;
+	font-size: 1.6rem !important;
+	font-weight: 600 !important;
 }
