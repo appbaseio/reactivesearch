@@ -329,7 +329,8 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
     > Note:
     >
-    > All these events accepts the `triggerQuery` as a second parameter which can be used to trigger the `DataSearch` query with the current selected value (useful to customize the search query execution).
+    > 1. All these events accepts the `triggerQuery` as a second parameter which can be used to trigger the `DataSearch` query with the current selected value (useful to customize the search query execution).
+	> 2. There is a known [issue](https://github.com/appbaseio/reactivesearch/issues/1087) with `onKeyPress` when `autosuggest` is set to true, it is recommended to use `onKeyDown` for the consistency.
 
 ```js
 <DataSearch
