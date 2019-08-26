@@ -26,7 +26,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Dropdown from '../shared/Dropdown';
-import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys, parseValueArray } from '../../utils';
 
 class MultiDropdownRange extends Component {
 	constructor(props) {
@@ -59,7 +59,12 @@ class MultiDropdownRange extends Component {
 		const hasMounted = false;
 
 		if (value.length) {
-			this.selectItem(value, true, props, hasMounted);
+			this.selectItem({
+				item: value,
+				isDefaultValue: true,
+				props,
+				hasMounted,
+			});
 		}
 	}
 
@@ -74,19 +79,25 @@ class MultiDropdownRange extends Component {
 		});
 
 		if (!isEqual(this.props.value, prevProps.value)) {
-			this.selectItem(this.props.value, true);
+			this.selectItem({
+				item: this.props.value,
+				isDefaultValue: true,
+			});
 		} else if (
 			!isEqual(this.state.currentValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
 			const { value, onChange } = this.props;
 			if (value === undefined) {
-				this.selectItem(this.props.selectedValue || null);
+				this.selectItem({ item: this.props.selectedValue || null });
 			} else if (onChange) {
 				onChange(this.props.selectedValue || null);
 			} else {
 				const selectedValuesArray = Object.keys(this.selectedValues);
-				this.selectItem(selectedValuesArray, true);
+				this.selectItem({
+					item: selectedValuesArray,
+					isDefaultValue: true,
+				});
 			}
 		}
 	}
@@ -141,7 +152,9 @@ class MultiDropdownRange extends Component {
 		return query;
 	};
 
-	selectItem = (item, isDefaultValue = false, props = this.props, hasMounted = true) => {
+	selectItem = ({
+		item, isDefaultValue = false, props = this.props, hasMounted = true,
+	}) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -218,11 +231,10 @@ class MultiDropdownRange extends Component {
 
 	handleChange = (items) => {
 		const { value, onChange } = this.props;
-
 		if (value === undefined) {
-			this.selectItem(items);
+			this.selectItem({ item: items });
 		} else if (onChange) {
-			onChange(items);
+			onChange(parseValueArray(this.props.value, items.label));
 		}
 	};
 

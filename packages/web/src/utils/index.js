@@ -124,3 +124,12 @@ export const getRangeQueryWithNullValues = (value, props) => {
 	} else query = rangeQuery;
 	return query;
 };
+
+// parses current array (i.e. this.props.value) for `onChange` callback for multi-* components
+export function parseValueArray(originalArr = [], currentValue) {
+	const newValue = Object.assign([], originalArr);
+	const currentValueIndex = newValue.indexOf(currentValue);
+	if (currentValueIndex > -1) newValue.splice(currentValueIndex, 1);
+	else newValue.push(currentValue);
+	return newValue;
+}

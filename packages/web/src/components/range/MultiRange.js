@@ -26,7 +26,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys, parseValueArray } from '../../utils';
 
 class MultiRange extends Component {
 	constructor(props) {
@@ -60,7 +60,12 @@ class MultiRange extends Component {
 		const hasMounted = false;
 
 		if (value.length) {
-			this.selectItem(value, true, props, hasMounted);
+			this.selectItem({
+				item: value,
+				isDefaultValue: true,
+				props,
+				hasMounted,
+			});
 		}
 	}
 
@@ -75,7 +80,10 @@ class MultiRange extends Component {
 		});
 
 		if (!isEqual(this.props.value, prevProps.value)) {
-			this.selectItem(this.props.value, true);
+			this.selectItem({
+				item: this.props.value,
+				isDefaultValue: true,
+			});
 		} else if (
 			!isEqual(this.state.currentValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
@@ -83,12 +91,17 @@ class MultiRange extends Component {
 			const { value, onChange } = this.props;
 
 			if (value === undefined) {
-				this.selectItem(this.props.selectedValue || null);
+				this.selectItem({ item: this.props.selectedValue || null });
 			} else if (onChange) {
-				onChange(this.props.selectedValue || null);
+				this.selectItem({
+					item: this.props.selectedValue || null,
+				});
 			} else {
 				const selectedValuesArray = Object.keys(this.state.selectedValues);
-				this.selectItem(selectedValuesArray, true);
+				this.selectItem({
+					item: selectedValuesArray,
+					isDefaultValue: true,
+				});
 			}
 		}
 	}
@@ -143,7 +156,9 @@ class MultiRange extends Component {
 		return query;
 	};
 
-	selectItem = (item, isDefaultValue = false, props = this.props, hasMounted = true) => {
+	selectItem = ({
+		item, isDefaultValue = false, props = this.props, hasMounted = true,
+	}) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -157,9 +172,11 @@ class MultiRange extends Component {
 		} else if (isDefaultValue) {
 			// checking if the items in defaultSeleted exist in the data prop
 			currentValue = MultiRange.parseValue(item, props);
-			currentValue.forEach((value) => {
-				selectedValues = { ...selectedValues, [value.label]: true };
-			});
+			selectedValues = item.reduce((accObj, valKey) => {
+				// eslint-disable-next-line no-param-reassign
+				accObj[valKey] = true;
+				return accObj;
+			}, {});
 		} else if (selectedValues[item]) {
 			currentValue = currentValue.filter(value => value.label !== item);
 			const { [item]: del, ...selected } = selectedValues;
@@ -220,9 +237,9 @@ class MultiRange extends Component {
 
 		const { value: rangeValue } = e.target;
 		if (value === undefined) {
-			this.selectItem(rangeValue);
+			this.selectItem({ item: rangeValue });
 		} else if (onChange) {
-			onChange(rangeValue);
+			onChange(parseValueArray(this.props.value, rangeValue));
 		}
 	};
 

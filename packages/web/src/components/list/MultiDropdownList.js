@@ -38,6 +38,7 @@ import {
 	isEvent,
 	isIdentical,
 	getValidPropsKeys,
+	parseValueArray,
 } from '../../utils';
 
 class MultiDropdownList extends Component {
@@ -221,9 +222,7 @@ class MultiDropdownList extends Component {
 				let should = [
 					{
 						[type]: {
-							[props.dataField]: value.filter(
-								item => item !== props.missingLabel,
-							),
+							[props.dataField]: value.filter(item => item !== props.missingLabel),
 						},
 					},
 				];
@@ -417,7 +416,7 @@ class MultiDropdownList extends Component {
 		if (value === undefined) {
 			this.setValue(currentValue);
 		} else if (onChange) {
-			onChange(currentValue);
+			onChange(parseValueArray(this.props.value, currentValue));
 		}
 	};
 
