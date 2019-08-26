@@ -33,7 +33,7 @@
 		"dist"
 	],
 	"dependencies": {
-		"@appbaseio/reactivecore": "^8.2.9",
+		"@appbaseio/reactivecore": "^8.2.10",
 		"appbase-js": "^4.0.2-beta.06",
 		"babel-helper-vue-jsx-merge-props": "^2.0.3",
 		"compute-scroll-into-view": "^1.0.11",
