@@ -21,9 +21,6 @@ class RangeInput extends Component {
 			isStartValid: true,
 			isEndValid: true,
 		};
-
-		this.startInputRef = React.createRef();
-		this.endInputRef = React.createRef();
 	}
 
 	componentDidUpdate(prevProps) {
@@ -65,8 +62,7 @@ class RangeInput extends Component {
 		}
 
 		const currentValue = {
-			start: this.state.start,
-			end: this.state.end,
+			...this.value,
 			[name]: value,
 		};
 
@@ -80,6 +76,17 @@ class RangeInput extends Component {
 		}
 	};
 
+	get isControlled() {
+		return !!(this.props.value && this.props.onChange);
+	}
+
+	get value() {
+		return {
+			start: this.isControlled ? this.props.value.start : this.state.start,
+			end: this.isControlled ? this.props.value.end : this.state.end,
+		};
+	}
+
 	handleSliderChange = (sliderValue) => {
 		const [start, end] = sliderValue || [this.props.range.start, this.props.range.end];
 		const { value, onChange } = this.props;
@@ -92,10 +99,7 @@ class RangeInput extends Component {
 	};
 
 	handleSlider = ({ start, end }) => {
-		if (
-			document.activeElement !== this.startInputRef.current
-			&& document.activeElement !== this.endInputRef.current
-		) {
+		if (!this.isControlled) {
 			this.setState({
 				start,
 				end,
@@ -114,18 +118,13 @@ class RangeInput extends Component {
 			className, style, themePreset, ...rest
 		} = this.props;
 
-		const value = {
-			start: this.props.onChange ? Number(this.props.value.start) : Number(this.state.start),
-			end: this.props.onChange ? Number(this.props.value.end) : Number(this.state.end),
-		};
-
 		return (
 			<Container style={style} className={className}>
 				<RangeSlider
 					{...rest}
 					value={{
-						start: this.state.isStartValid ? value.start : this.props.range.start,
-						end: this.state.isEndValid ? value.end : this.props.range.end,
+						start: this.state.isStartValid ? +this.value.start : this.props.range.start,
+						end: this.state.isEndValid ? +this.value.end : this.props.range.end,
 					}}
 					onChange={this.handleSliderChange}
 					className={getClassName(this.props.innerClass, 'slider-container') || null}
@@ -136,12 +135,12 @@ class RangeInput extends Component {
 							name="start"
 							type="number"
 							onChange={this.handleInputChange}
-							value={value.start}
+							value={this.value.start}
 							step={this.props.stepValue}
 							alert={!this.state.isStartValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
-							innerRef={this.startInputRef}
+							max={this.value.end}
 							aria-label={`${this.props.componentId}-start-input`}
 						/>
 						{!this.state.isStartValid && (
@@ -156,13 +155,13 @@ class RangeInput extends Component {
 							name="end"
 							type="number"
 							onChange={this.handleInputChange}
-							value={value.end}
+							value={this.value.end}
 							step={this.props.stepValue}
+							min={this.value.start}
 							alert={!this.state.isEndValid}
 							className={getClassName(this.props.innerClass, 'input') || null}
 							themePreset={themePreset}
 							aria-label={`${this.props.componentId}-end-input`}
-							innerRef={this.endInputRef}
 						/>
 						{!this.state.isEndValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
