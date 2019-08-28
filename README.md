@@ -168,17 +168,17 @@ You can check out the quickstart guide with React Native [here](https://docs.app
 
 ## 7. Docs Manual
 
-The official docs for the Web library are at [opensource.appbase.io/reactive-manual](https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/).
+The official docs for the Web library are at [docs.appbase.io/docs/reactivesearch/v3](https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/).
 
 The components are divided into four sections:
 
--   Generic UI components are at [reactive-manual/base-components](https://docs.appbase.io/docs/reactivesearch/v3/base/selectedfilters/).
--   List based UI components are at [reactive-manual/list-components](https://docs.appbase.io/docs/reactivesearch/v3/list/singlelist/).
--   Range based UI components are at [reactive-manual/range-components](https://docs.appbase.io/docs/reactivesearch/v3/range/singlerange/).
--   Search UI components are at [reactive-manual/search-components](https://docs.appbase.io/docs/reactivesearch/v3/search/datasearch/).
--   Result components are at [reactive-manual/result-components](https://docs.appbase.io/docs/reactivesearch/v3/result/reactivelist/).
+-   Generic UI components are at [/reactivesearch/v3/base](https://docs.appbase.io/docs/reactivesearch/v3/base/selectedfilters/).
+-   List based UI components are at [reactivesearch/v3/list](https://docs.appbase.io/docs/reactivesearch/v3/list/singlelist/).
+-   Range based UI components are at [reactivesearch/v3/range](https://docs.appbase.io/docs/reactivesearch/v3/range/singlerange/).
+-   Search UI components are at [reactivesearch/v3/search](https://docs.appbase.io/docs/reactivesearch/v3/search/datasearch/).
+-   Result components are at [reactivesearch/v3/result](https://docs.appbase.io/docs/reactivesearch/v3/result/reactivelist/).
 
-Docs for React Native version of the library are available at [opensource.appbase.io/reactive-manual/native](https://docs.appbase.io/docs/reactivesearch/native/overview/QuickStart/).
+Docs for React Native version of the library are available at [docs.appbase.io/docs/reactivesearch/native](https://docs.appbase.io/docs/reactivesearch/native/overview/QuickStart/).
 
 [⬆ Back to Top](#reactive-search)
 
