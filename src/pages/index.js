@@ -348,7 +348,7 @@ const HomePage = ({ data, location }) => {
 							smGutter="0px"
 							className="mt5"
 						>
-							<Card big href="https://opensource.appbase.io/reactive-manual">
+							<Card big href="/docs/reactivesearch/v3/overview/quickstart/">
 								<img src={`${imagePrefix}/Documentation.svg`} alt="Documentation" />
 								<h3>Documentation</h3>
 								<p>

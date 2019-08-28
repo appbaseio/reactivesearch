@@ -17,6 +17,8 @@
               link: /docs/reactivesearch/native/components/SelectedFilters/
             - title: TextField
               link: /docs/reactivesearch/native/components/TextField/
+            - title: DataSearch
+              link: /docs/reactivesearch/native/components/DataSearch/
             - title: SingleDropdownList
               link: /docs/reactivesearch/native/components/SingleDropdownList/
             - title: MultiDropdownList

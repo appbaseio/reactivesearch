@@ -55,7 +55,7 @@ const NavBar = ({ theme }) => {
 												value.selectedKey === 'guides'
 													? 'fw6 darkgrey'
 													: 'fw3'
-											}`}
+											} cursor-pointer`}
 											onMouseEnter={() => {
 												value.handleKey('guides');
 											}}
@@ -175,7 +175,7 @@ const NavBar = ({ theme }) => {
 										<span
 											className={`${
 												themeClasses[theme].menuItem
-											} nowrap f8 pa3 mr1 mr3-l nl3 ${
+											} nowrap f8 pa3 mr1 mr3-l nl3 cursor-pointer ${
 												value.selectedKey === 'api' ? 'fw6 darkgrey' : 'fw3'
 											}`}
 											onMouseEnter={() => {

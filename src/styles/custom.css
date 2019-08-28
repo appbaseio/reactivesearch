@@ -1780,3 +1780,7 @@ to be custom HTML.
 	font-size: 1.6rem !important;
 	font-weight: 600 !important;
 }
+
+.cursor-pointer {
+	cursor: pointer;
+}

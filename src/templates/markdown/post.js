@@ -80,6 +80,8 @@ class Post extends React.Component {
 			sideBarLayout.justification = `justify-center`;
 		}
 
+		const isRSDocs = location.pathname.startsWith('/docs/reactivesearch');
+
 		return (
 			<>
 				<Layout>
@@ -142,13 +144,15 @@ class Post extends React.Component {
 										}}
 									/>
 								</article>
-								<div className="mw-content pl5 pr5 pl15-ns pr15-ns bt b--whitegrey mt5">
-									<PrevNextSection
-										location={location}
-										sidebar={sidebar}
-										next={post.frontmatter.next}
-									/>
-								</div>
+								{isRSDocs ? null : (
+									<div className="mw-content pl5 pr5 pl15-ns pr15-ns bt b--whitegrey mt5">
+										<PrevNextSection
+											location={location}
+											sidebar={sidebar}
+											next={post.frontmatter.next}
+										/>
+									</div>
+								)}
 							</div>
 						</div>
 						{sideBarLayout.rightSidebar ? (

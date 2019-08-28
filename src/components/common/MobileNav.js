@@ -136,7 +136,7 @@ class MobileNav extends React.Component {
 							}
 							onChange={this.switchDocs}
 						/>
-						<div className="mt5 mb3">
+						<div className="mt5 mb10">
 							<div className="mobile-links-container">
 								<MobileLinks file={getFileName(rs)} />
 							</div>
