@@ -34,7 +34,7 @@ import {
     ResultCard
 } from '@appbaseio/reactivesearch';
 
-const { ResultCardWrapper } = ReactiveList;
+const { ResultCardsWrapper } = ReactiveList;
 
 
 <ReactiveList
@@ -44,7 +44,7 @@ const { ResultCardWrapper } = ReactiveList;
     componentId="SearchResult"
 >
     {({ data, error, loading, ... }) => (
-        <ResultCardWrapper>
+        <ResultCardsWrapper>
             {
                 data.map(item => (
                     <ResultCard key={item._id}>
@@ -68,7 +68,7 @@ const { ResultCardWrapper } = ReactiveList;
                     </ResultCard>
                 ))
             }
-        </ResultCardWrapper>
+        </ResultCardsWrapper>
     )}
 </ReactiveList>
 ```

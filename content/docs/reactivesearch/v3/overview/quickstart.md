@@ -130,7 +130,7 @@ Finally, we need a component to show the matching results. [**ResultCard**](/doc
 		and: ['searchbox', 'ratingsfilter'],
 	}}
 	render={({ data }) => (
-		<ReactiveList.ResultCardWrapper>
+		<ReactiveList.ResultCardsWrapper>
 			{data.map(item => (
 				<ResultCard key={item._id}>
 					<ResultCard.Image
@@ -147,7 +147,7 @@ Finally, we need a component to show the matching results. [**ResultCard**](/doc
 					</ResultCard.Description>
 				</ResultCard>
 			))}
-		</ReactiveList.ResultCardWrapper>
+		</ReactiveList.ResultCardsWrapper>
 	)}
 />
 ```
@@ -206,7 +206,7 @@ class App extends Component {
 						and: ['searchbox', 'ratingsfilter'],
 					}}
 					render={({ data }) => (
-						<ReactiveList.ResultCardWrapper>
+						<ReactiveList.ResultCardsWrapper>
 							{data.map(item => (
 								<ResultCard key={item._id}>
 									<ResultCard.Image src="https://bit.do/demoimg" />
@@ -220,7 +220,7 @@ class App extends Component {
 									</ResultCard.Description>
 								</ResultCard>
 							))}
-						</ReactiveList.ResultCardWrapper>
+						</ReactiveList.ResultCardsWrapper>
 					)}
 				/>
 			</ReactiveBase>
@@ -302,7 +302,7 @@ class App extends Component {
 							textAlign: 'center',
 						}}
 						render={({ data }) => (
-							<ReactiveList.ResultCardWrapper>
+							<ReactiveList.ResultCardsWrapper>
 								{data.map(item => (
 									<ResultCard key={item._id}>
 										<ResultCard.Image src="https://www.enterprise.com/content/dam/global-vehicle-images/cars/FORD_FOCU_2012-1.png" />
@@ -316,7 +316,7 @@ class App extends Component {
 										</ResultCard.Description>
 									</ResultCard>
 								))}
-							</ReactiveList.ResultCardWrapper>
+							</ReactiveList.ResultCardsWrapper>
 						)}
 					/>
 				</div>
