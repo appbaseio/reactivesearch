@@ -10,7 +10,12 @@ class Results extends React.Component {
 			deeper differences.
 		*/
 
-		return !isEqual(nextProps.filteredResults, this.props.filteredResults);
+		return !(
+			isEqual(nextProps.filteredResults, this.props.filteredResults)
+			&& isEqual(nextProps.hasCustomRender, this.props.hasCustomRender)
+			&& isEqual(nextProps.getComponent, this.props.getComponent)
+			&& isEqual(nextProps.renderItem, this.props.renderItem)
+		);
 	}
 
 	render() {
