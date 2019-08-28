@@ -30,8 +30,7 @@ export default {
 		},
 		link: {
 			title: 'Docs',
-			href:
-				'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
+			href: 'https://docs.appbase.io/docs/reactivesearch/native/overview/QuickStart/',
 		},
 	},
 	banner2: {
@@ -48,12 +47,11 @@ export default {
 			'Build the perfect search experience using our UI components or by creating your own. Over 10 prebuilt components with customizable queries and configurable styles.',
 		button: {
 			title: 'View Components',
-			href: 'https://opensource.appbase.io/reactive-manual/native/components/textfield.html',
+			href: 'https://docs.appbase.io/docs/reactivesearch/native/components/TextField/',
 		},
 		link: {
 			title: 'Creating your components',
-			href:
-				'https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html',
+			href: 'https://docs.appbase.io/docs/reactivesearch/native/advanced/ReactiveComponent/',
 		},
 		sketch: {
 			href: '../../resources/ReactiveSearchNative_Playground.sketch',
@@ -86,7 +84,7 @@ export default {
 				description:
 					'Already have your own components? Bring them to Reactivesearch Native.',
 				href:
-					'https://opensource.appbase.io/reactive-manual/native/advanced/reactivecomponent.html',
+					'https://docs.appbase.io/docs/reactivesearch/native/advanced/ReactiveComponent/',
 			},
 			{
 				image: {
@@ -95,7 +93,7 @@ export default {
 				},
 				title: 'Configurable styles',
 				description: 'Styled components with rich theming and style injection support.',
-				href: 'https://opensource.appbase.io/reactive-manual/native/advanced/style.html',
+				href: 'https://docs.appbase.io/docs/reactivesearch/native/advanced/Style/',
 			},
 			{
 				image: {
@@ -114,8 +112,7 @@ export default {
 				},
 				title: 'Elasticsearch compatible',
 				description: 'Connect to an ES index hosted anywhere. Supports v2, v5 and v6.',
-				href:
-					'https://opensource.appbase.io/reactive-manual/getting-started/native/reactivebase.html',
+				href: 'https://docs.appbase.io/docs/reactivesearch/native/overview/ReactiveBase/',
 			},
 			{
 				image: {
@@ -126,7 +123,7 @@ export default {
 				description:
 					'Components come with good query defaults, that can be customized with Elasticsearch query DSL.',
 				href:
-					'https://opensource.appbase.io/reactive-manual/native/advanced/customquery.html',
+					'https://docs.appbase.io/docs/reactivesearch/native/advanced/Guides/#custom-queries',
 			},
 		],
 	},
@@ -142,8 +139,7 @@ export default {
 			},
 			link: {
 				title: 'Learn More',
-				href:
-					'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
+				href: 'https://docs.appbase.io/docs/reactivesearch/native/overview/QuickStart/',
 			},
 		},
 		{

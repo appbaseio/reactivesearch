@@ -12,7 +12,7 @@ export default {
 			Use our step-by-step guide to learn all about Reactive Search Vue, or check out our{' '}
 			<a
 				rel="noopener noreferrer"
-				href="https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html"
+				href="https://docs.appbase.io/docs/reactivesearch/vue/overview/QuickStart/"
 				target="_blank"
 			>
 				docs
@@ -43,8 +43,7 @@ export default {
 			links: [
 				{
 					title: 'READ MORE',
-					href:
-						'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivebase.html',
+					href: 'https://docs.appbase.io/docs/reactivesearch/vue/overview/ReactiveBase/',
 				},
 			],
 		},
@@ -61,7 +60,7 @@ export default {
 				{
 					title: 'Read more',
 					href:
-						'https://opensource.appbase.io/reactive-manual/getting-started/data.html#importing-custom-data',
+						'https://docs.appbase.io/docs/reactivesearch/vue/overview/Importing/#importing-custom-data',
 				},
 			],
 		},
@@ -72,7 +71,7 @@ export default {
 					Add UI components for{' '}
 					<a
 						rel="noopener noreferrer"
-						href="https://opensource.appbase.io/reactive-manual/vue/search-components/datasearch.html"
+						href="https://docs.appbase.io/docs/reactivesearch/vue/search/DataSearch/"
 						target="_blank"
 					>
 						Search
@@ -80,7 +79,7 @@ export default {
 					,{' '}
 					<a
 						rel="noopener noreferrer"
-						href="https://opensource.appbase.io/reactive-manual/vue/list-components/singlelist.html"
+						href="https://docs.appbase.io/docs/reactivesearch/vue/list/SingleList/"
 						target="_blank"
 					>
 						Lists
@@ -88,7 +87,7 @@ export default {
 					,{' '}
 					<a
 						rel="noopener noreferrer"
-						href="https://opensource.appbase.io/reactive-manual/vue/range-components/singlerange.html"
+						href="https://docs.appbase.io/docs/reactivesearch/vue/range/SingleRange/"
 						target="_blank"
 					>
 						Ranges
@@ -96,7 +95,7 @@ export default {
 					, and{' '}
 					<a
 						rel="noopener noreferrer"
-						href="https://opensource.appbase.io/reactive-manual/vue/result-components/resultlist.html"
+						href="https://docs.appbase.io/docs/reactivesearch/vue/result/ReactiveList/"
 						target="_blank"
 					>
 						Results
@@ -107,7 +106,7 @@ export default {
 					Or add in your own{' '}
 					<a
 						rel="noopener noreferrer"
-						href="https://opensource.appbase.io/reactive-manual/vue/advanced/reactivecomponent.html"
+						href="https://docs.appbase.io/docs/reactivesearch/vue/advanced/ReactiveComponent/"
 						target="_blank"
 					>
 						UI components
@@ -118,8 +117,7 @@ export default {
 			links: [
 				{
 					title: 'COMPONENTS OVERVIEW',
-					href:
-						'https://opensource.appbase.io/reactive-manual/vue/getting-started/componentsindex.html',
+					href: 'https://docs.appbase.io/docs/reactivesearch/vue/overview/Components/',
 				},
 			],
 		},
@@ -174,7 +172,7 @@ export default {
 					<li>
 						<a
 							rel="noopener noreferrer"
-							href="https://opensource.appbase.io/reactivesearch"
+							href="https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/"
 							target="_blank"
 						>
 							React.JS
@@ -183,7 +181,7 @@ export default {
 					<li>
 						<a
 							rel="noopener noreferrer"
-							href="https://opensource.appbase.io/reactivesearch/native"
+							href="https://docs.appbase.io/docs/reactivesearch/native/overview/QuickStart/"
 							target="_blank"
 						>
 							React Native
@@ -192,7 +190,7 @@ export default {
 					<li>
 						<a
 							rel="noopener noreferrer"
-							href="https://opensource.appbase.io/reactivemaps"
+							href="https://docs.appbase.io/docs/reactivesearch/v3/overview/reactivemaps/"
 							target="_blank"
 						>
 							Maps
@@ -215,7 +213,7 @@ export default {
 			},
 			link: {
 				title: 'Docs',
-				href: 'https://opensource.appbase.io/reactive-manual/vue',
+				href: 'https://docs.appbase.io/docs/reactivesearch/vue/overview/QuickStart/',
 			},
 		},
 		{
