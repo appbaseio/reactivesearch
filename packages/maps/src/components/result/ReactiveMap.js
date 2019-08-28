@@ -22,6 +22,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import { connect, isFunction } from '@appbaseio/reactivesearch/lib/utils';
 import Pagination from '@appbaseio/reactivesearch/lib/components/result/addons/Pagination';
 import { Checkbox } from '@appbaseio/reactivesearch/lib/styles/FormControlList';
+import geohash from 'ngeohash';
 
 const Standard = require('./addons/styles/Standard');
 const BlueEssence = require('./addons/styles/BlueEssence');
@@ -35,6 +36,35 @@ const MAP_CENTER = {
 	lat: 37.7749,
 	lng: 122.4194,
 };
+
+function getLocationObject(location) {
+	const resultType = Array.isArray(location) ? 'array' : typeof location;
+	switch (resultType) {
+		case 'string': {
+			if (location.indexOf(',') > -1) {
+				const locationSplit = location.split(',');
+				return ({
+					lat: parseFloat(locationSplit[0]),
+					lng: parseFloat(locationSplit[1]),
+				});
+			}
+			const locationDecode = geohash.decode(location);
+			return ({
+				lat: locationDecode.latitude,
+				lng: locationDecode.longitude,
+			});
+		}
+		case 'array': {
+			return ({
+				lat: location[1],
+				lng: location[0],
+			});
+		}
+		default: {
+			return location;
+		}
+	}
+}
 
 function getPrecision(a) {
 	if (isNaN(a)) return 0; // eslint-disable-line
@@ -334,15 +364,11 @@ class ReactiveMap extends Component {
 					let lat = 0.0;
 					let lng = 0.0;
 
-					if (Array.isArray(location)) {
-						lat = (location[0] * Math.PI) / 180;
-						lng = (location[1] * Math.PI) / 180;
-					} else {
-						lat = (location.lat * Math.PI) / 180;
-						lng
-							= ((location.lng !== undefined ? location.lng : location.lon) * Math.PI)
+					const locationObj = getLocationObject(location);
+					lat = (locationObj.lat * Math.PI) / 180;
+					lng
+							= ((locationObj.lng !== undefined ? locationObj.lng : locationObj.lon) * Math.PI)
 							/ 180;
-					}
 
 					const a = Math.cos(lat) * Math.cos(lng);
 					const b = Math.cos(lat) * Math.sin(lng);
@@ -696,8 +722,12 @@ class ReactiveMap extends Component {
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 		}
 
-		const resultsToRender = this.addNoise([...streamResults, ...filteredResults]);
+		filteredResults = [...streamResults, ...filteredResults].map(item => ({
+			...item,
+			[this.props.dataField]: getLocationObject(item[this.props.dataField]),
+		}));
 
+		const resultsToRender = this.addNoise(filteredResults);
 		return resultsToRender;
 	};
 
@@ -816,6 +846,7 @@ class ReactiveMap extends Component {
 			handleZoomChange: this.handleZoomChange,
 			handleOpenStreetOnDragEnd: this.handleOpenStreetOnDragEnd,
 		};
+
 		return (
 			<div style={{ ...style, ...this.props.style }} className={this.props.className}>
 				{this.renderError()}
