@@ -2,8 +2,7 @@ export default {
 	name: 'vue',
 	githubCount: '2432',
 	producthunt: 'https://www.producthunt.com/posts/reactivesearch-for-vue',
-	gettingStart:
-		'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
+	gettingStart: 'https://docs.appbase.io/docs/reactivesearch/vue/overview/QuickStart/',
 	urls: {
 		github: 'https://github.com/appbaseio/reactivesearch/tree/dev/packages/vue',
 		support: 'https://appbase.io/pricing#support',
@@ -35,22 +34,22 @@ export default {
 			list: [
 				{
 					title: 'React',
-					href: 'https://opensource.appbase.io/reactivesearch',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/',
 					openWithTab: true,
 				},
 				{
 					title: 'React Native',
-					href: 'https://opensource.appbase.io/reactivesearch/native',
+					href: 'https://docs.appbase.io/docs/reactivesearch/native/overview/QuickStart/',
 					openWithTab: true,
 				},
 				{
 					title: 'Vue.JS',
-					href: 'https://opensource.appbase.io/reactivesearch/vue',
+					href: 'https://docs.appbase.io/docs/reactivesearch/vue/overview/QuickStart/',
 					openWithTab: true,
 				},
 				{
 					title: 'ReactiveMaps',
-					href: 'https://opensource.appbase.io/reactivemaps',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/reactivemaps/',
 					openWithTab: true,
 				},
 			],
@@ -60,26 +59,22 @@ export default {
 			list: [
 				{
 					title: 'Search Preview',
-					href:
-						'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
+					href: 'https://docs.appbase.io/docs/search/Preview',
 					openWithTab: true,
 				},
 				{
 					title: 'Base Components',
-					href:
-						'https://opensource.appbase.io/reactive-manual/vue/base-components/textfield.html',
+					href: 'https://docs.appbase.io/docs/reactivesearch/vue/base/SelectedFilters/',
 					openWithTab: true,
 				},
 				{
 					title: 'Search Components',
-					href:
-						'https://opensource.appbase.io/reactive-manual/vue/search-components/datasearch.html',
+					href: 'https://docs.appbase.io/docs/reactivesearch/vue/search/DataSearch/',
 					openWithTab: true,
 				},
 				{
 					title: 'Result Components',
-					href:
-						'https://opensource.appbase.io/reactive-manual/vue/result-components/resultlist.html',
+					href: 'https://docs.appbase.io/docs/reactivesearch/vue/result/ReactiveList/',
 					openWithTab: true,
 				},
 			],

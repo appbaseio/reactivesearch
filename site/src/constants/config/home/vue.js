@@ -30,8 +30,7 @@ export default {
 		},
 		link: {
 			title: 'LEARN MORE',
-			href:
-				'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
+			href: 'https://docs.appbase.io/docs/reactivesearch/vue/overview/QuickStart/',
 		},
 	},
 	banner2: {
@@ -47,12 +46,11 @@ export default {
 			'Build the perfect search experience using our UI components or by creating your own. Over 10 prebuilt components with customizable queries and configurable styles.',
 		button: {
 			title: 'View Components',
-			href:
-				'https://opensource.appbase.io/reactive-manual/vue/getting-started/componentsindex.html',
+			href: 'https://docs.appbase.io/docs/reactivesearch/vue/overview/Components/',
 		},
 		link: {
 			title: 'Creating your components',
-			href: 'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent',
+			href: 'https://docs.appbase.io/docs/reactivesearch/vue/advanced/ReactiveComponent/',
 		},
 		sketch: {
 			href:
@@ -71,7 +69,7 @@ export default {
 				title: 'Launch and iterate faster',
 				description:
 					'10+ well-designed and performance optimized UI components. Ship faster and solve fewer edge cases.',
-				href: 'https://opensource.appbase.io/reactive-manual/vue/',
+				href: 'https://docs.appbase.io/docs/reactivesearch/vue/overview/Components/',
 			},
 			{
 				image: {
@@ -80,8 +78,7 @@ export default {
 				},
 				title: 'Works with existing UIs',
 				description: 'Already have your own components? Bring them to ReactiveSearch.',
-				href:
-					'https://opensource.appbase.io/reactive-manual/vue/advanced/reactivecomponent.html',
+				href: 'https://docs.appbase.io/docs/reactivesearch/vue/advanced/ReactiveComponent/',
 			},
 			{
 				image: {
@@ -90,7 +87,7 @@ export default {
 				},
 				title: 'Configurable styles',
 				description: 'Styled components with rich theming and css class-injection support.',
-				href: 'https://opensource.appbase.io/reactive-manual/vue/theming/style.html',
+				href: 'https://docs.appbase.io/docs/reactivesearch/vue/theming/Style/',
 			},
 			{
 				image: {
@@ -99,8 +96,7 @@ export default {
 				},
 				title: 'Elasticsearch compatible',
 				description: 'Connect to an ES index hosted anywhere. Supports v2, v5 and v6.',
-				href:
-					'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html',
+				href: 'https://docs.appbase.io/docs/reactivesearch/vue/overview/QuickStart/',
 			},
 			{
 				image: {
@@ -110,7 +106,7 @@ export default {
 				title: 'Customizable queries',
 				description:
 					'Components come with good query defaults, that can be customized with Elasticsearch query DSL.',
-				href: 'https://opensource.appbase.io/reactive-manual/vue/advanced/customquery.html',
+				href: 'https://docs.appbase.io/docs/reactivesearch/vue/advanced/CustomQueries/',
 			},
 			{
 				image: {
@@ -121,7 +117,7 @@ export default {
 				description:
 					'Use appbase.io to get security out of the box, or set up a middleware proxy with authorization rules.',
 				href:
-					'https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivebase.html#connect-to-elasticsearch',
+					'https://docs.appbase.io/docs/reactivesearch/vue/overview/ReactiveBase/#connect-to-elasticsearch',
 			},
 		],
 	},
@@ -137,7 +133,7 @@ export default {
 			},
 			link: {
 				title: 'Docs',
-				href: 'https://opensource.appbase.io/reactive-manual/vue',
+				href: 'https://docs.appbase.io/docs/reactivesearch/vue/overview/QuickStart/',
 			},
 		},
 		{
