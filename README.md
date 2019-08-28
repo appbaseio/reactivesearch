@@ -172,7 +172,7 @@ The official docs for the Web library are at [docs.appbase.io/docs/reactivesearc
 
 The components are divided into four sections:
 
--   Generic UI components are at [/reactivesearch/v3/base](https://docs.appbase.io/docs/reactivesearch/v3/base/selectedfilters/).
+-   Generic UI components are at [reactivesearch/v3/base](https://docs.appbase.io/docs/reactivesearch/v3/base/selectedfilters/).
 -   List based UI components are at [reactivesearch/v3/list](https://docs.appbase.io/docs/reactivesearch/v3/list/singlelist/).
 -   Range based UI components are at [reactivesearch/v3/range](https://docs.appbase.io/docs/reactivesearch/v3/range/singlerange/).
 -   Search UI components are at [reactivesearch/v3/search](https://docs.appbase.io/docs/reactivesearch/v3/search/datasearch/).
