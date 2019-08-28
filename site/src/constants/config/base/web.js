@@ -1,11 +1,10 @@
 export default {
 	name: 'web',
 	githubCount: '2432',
-	gettingStart:
-		'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+	gettingStart: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/',
 	producthunt: 'https://www.producthunt.com/posts/reactive-search-2-0',
 	urls: {
-		github: 'https://github.com/appbaseio/reactivesearch/tree/dev/packages/web',
+		github: 'https://github.com/appbaseio/reactivesearch/tree/next/packages/web',
 		support: 'https://appbase.io/pricing#support',
 	},
 	header: {
@@ -34,22 +33,22 @@ export default {
 			list: [
 				{
 					title: 'React',
-					href: 'https://opensource.appbase.io/reactivesearch',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/',
 					openWithTab: true,
 				},
 				{
 					title: 'React Native',
-					href: 'https://opensource.appbase.io/reactivesearch/native',
+					href: 'https://docs.appbase.io/docs/reactivesearch/native/overview/QuickStart/',
 					openWithTab: true,
 				},
 				{
 					title: 'Vue.JS',
-					href: 'https://opensource.appbase.io/reactivesearch/vue',
+					href: 'https://docs.appbase.io/docs/reactivesearch/vue/overview/QuickStart/',
 					openWithTab: true,
 				},
 				{
 					title: 'ReactiveMaps',
-					href: 'https://opensource.appbase.io/reactivemaps',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/reactivemaps/',
 					openWithTab: true,
 				},
 			],
@@ -59,32 +58,27 @@ export default {
 			list: [
 				{
 					title: 'Search Preview',
-					href:
-						'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/',
 					openWithTab: true,
 				},
 				{
 					title: 'Base Components',
-					href:
-						'https://opensource.appbase.io/reactive-manual/base-components/textfield.html',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/base/selectedfilters/',
 					openWithTab: true,
 				},
 				{
 					title: 'Map Components',
-					href:
-						'https://opensource.appbase.io/reactive-manual/map-components/geodistanceslider.html',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/map/geodistanceslider/',
 					openWithTab: true,
 				},
 				{
 					title: 'Search Components',
-					href:
-						'https://opensource.appbase.io/reactive-manual/search-components/datasearch.html',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/search/datasearch/',
 					openWithTab: true,
 				},
 				{
 					title: 'Result Components',
-					href:
-						'https://opensource.appbase.io/reactive-manual/result-components/resultlist.html',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/result/reactivelist/',
 					openWithTab: true,
 				},
 			],

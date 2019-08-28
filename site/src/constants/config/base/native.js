@@ -1,8 +1,7 @@
 export default {
 	name: 'native',
 	githubCount: '2432',
-	gettingStart:
-		'https://opensource.appbase.io/reactive-manual/native/getting-started/reactivesearch.html',
+	gettingStart: 'https://docs.appbase.io/docs/reactivesearch/native/overview/QuickStart/',
 	producthunt: 'https://www.producthunt.com/posts/reactivesearch-native',
 	urls: {
 		github: 'https://github.com/appbaseio/reactivesearch/tree/dev/packages/native',
@@ -34,22 +33,22 @@ export default {
 			list: [
 				{
 					title: 'React',
-					href: 'https://opensource.appbase.io/reactivesearch',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/',
 					openWithTab: true,
 				},
 				{
 					title: 'React Native',
-					href: 'https://opensource.appbase.io/reactivesearch/native',
+					href: 'https://docs.appbase.io/docs/reactivesearch/native/overview/QuickStart/',
 					openWithTab: true,
 				},
 				{
 					title: 'Vue.JS',
-					href: 'https://opensource.appbase.io/reactivesearch/vue',
+					href: 'https://docs.appbase.io/docs/reactivesearch/vue/overview/QuickStart/',
 					openWithTab: true,
 				},
 				{
 					title: 'ReactiveMaps',
-					href: 'https://opensource.appbase.io/reactivemaps',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/reactivemaps/',
 					openWithTab: true,
 				},
 			],
@@ -59,32 +58,31 @@ export default {
 			list: [
 				{
 					title: 'Search Preview',
-					href:
-						'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+					href: 'https://docs.appbase.io/docs/search/Preview',
 					openWithTab: true,
 				},
 				{
 					title: 'Base Components',
 					href:
-						'https://opensource.appbase.io/reactive-manual/native/base-components/textfield.html',
+						'https://docs.appbase.io/docs/reactivesearch/native/components/TextField/',
 					openWithTab: true,
 				},
 				{
 					title: 'Map Components',
 					href:
-						'https://opensource.appbase.io/reactive-manual/map-components/geodistanceslider.html',
+						'https://docs.appbase.io/docs/reactivesearch/native/components/ReactiveMap/',
 					openWithTab: true,
 				},
 				{
 					title: 'Search Components',
 					href:
-						'https://opensource.appbase.io/reactive-manual/native/search-components/datasearch.html',
+						'https://docs.appbase.io/docs/reactivesearch/native/components/DataSearch/',
 					openWithTab: true,
 				},
 				{
 					title: 'Result Components',
 					href:
-						'https://opensource.appbase.io/reactive-manual/native/result-components/resultlist.html',
+						'https://docs.appbase.io/docs/reactivesearch/native/components/ReactiveList/',
 					openWithTab: true,
 				},
 			],

@@ -12,7 +12,7 @@ export default {
 			Use our step-by-step guide to learn all about Reactive Maps, or check out our{' '}
 			<a
 				rel="noopener noreferrer"
-				href="https://opensource.appbase.io/reactive-manual/"
+				href="https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/"
 				target="_blank"
 			>
 				docs
@@ -48,7 +48,7 @@ export default {
 			links: [
 				{
 					title: 'Step-by-step installation guide',
-					href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/reactivemaps/',
 				},
 			],
 		},
@@ -66,11 +66,11 @@ export default {
 			links: [
 				{
 					title: 'DEJAVU',
-					href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html',
+					href: 'https://dejavu.appbase.io/',
 				},
 				{
 					title: 'IMPORT DATA',
-					href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html',
+					href: 'https://importer.appbase.io/',
 				},
 			],
 		},
@@ -82,7 +82,7 @@ export default {
 			links: [
 				{
 					title: 'COMPONENT DOCS',
-					href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/map/geodistanceslider/',
 				},
 			],
 		},
@@ -94,7 +94,8 @@ export default {
 			links: [
 				{
 					title: 'QUICK START WITH REACT NATIVE',
-					href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html',
+					href:
+						'https://docs.appbase.io/docs/reactivesearch/native/overview/ReactiveMaps/',
 				},
 			],
 		},
@@ -107,11 +108,11 @@ export default {
 				'Go from scratch to creating a data-driven Maps application with our quickstart guide for beginners.',
 			button: {
 				title: 'Get Started',
-				href: 'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+				href: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/',
 			},
 			link: {
 				title: 'Learn More',
-				href: 'https://opensource.appbase.io/reactive-manual',
+				href: 'https://docs.appbase.io/',
 			},
 		},
 		{
