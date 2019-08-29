@@ -2,7 +2,7 @@ export default {
 	name: 'web',
 	githubCount: '2432',
 	gettingStart: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/',
-	producthunt: 'https://www.producthunt.com/posts/reactive-search-3-0',
+	producthunt: 'https://www.producthunt.com/posts/reactivesearch-3-0',
 	urls: {
 		github: 'https://github.com/appbaseio/reactivesearch/tree/next/packages/web',
 		support: 'https://appbase.io/pricing#support',
