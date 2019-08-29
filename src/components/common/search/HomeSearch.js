@@ -12,7 +12,6 @@ search.tokenizer = new JsSearch.StopWordsTokenizer(new JsSearch.SimpleTokenizer(
 
 search.addIndex('title');
 search.addIndex('heading');
-search.addIndex('tokens');
 search.addDocuments(data);
 
 const getSuggestions = value => {

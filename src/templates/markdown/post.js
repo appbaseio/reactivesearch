@@ -50,6 +50,7 @@ class Post extends React.Component {
 					<SidebarNav
 						location={location}
 						sidebar={sidebar}
+						style={{ overflow: 'scroll', height: '86vh' }}
 						nestedSidebar={nestedSidebar}
 					/>
 				</div>

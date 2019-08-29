@@ -20,7 +20,7 @@ const getLink = url => {
 	return '/docs/reactivesearch/v3/overview/quickstart/';
 };
 
-const SidebarNav = ({ sidebar, nestedSidebar, location }) => {
+const SidebarNav = ({ sidebar, nestedSidebar, location, style }) => {
 	const sidebarfile = getSidebarFile(sidebar);
 	const nestedSidebarFile = nestedSidebar ? getSidebarFile(nestedSidebar) : null;
 
@@ -29,7 +29,7 @@ const SidebarNav = ({ sidebar, nestedSidebar, location }) => {
 	}
 
 	return (
-		<nav className="mt5 mb5 mt10-ns mb0-ns relative" data-cy="sidebar">
+		<nav className="mt5 mb5 mt10-ns mb0-ns relative" data-cy="sidebar" style={style}>
 			{sidebarfile.groups.map((group, i) => (
 				<div key={i} className="mt1">
 					{group.items ? (
@@ -109,10 +109,12 @@ const SidebarNav = ({ sidebar, nestedSidebar, location }) => {
 SidebarNav.defaultProps = {
 	location: { pathname: `/` },
 	nestedSidebar: null,
+	style: {},
 };
 
 SidebarNav.propTypes = {
 	sidebar: PropTypes.string.isRequired,
+	style: PropTypes.object,
 	nestedSidebar: PropTypes.string,
 	location: PropTypes.shape({
 		pathname: PropTypes.string.isRequired,

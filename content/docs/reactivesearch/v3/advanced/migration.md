@@ -33,7 +33,7 @@ In **v3**, you will need to use `renderItem` & `render` to custom render the res
 
 **v2.x:**
 
-```js{6}
+```jsx
 <ReactiveList
 	react={{
 		and: ['CitySensor', 'SearchSensor'],
@@ -45,7 +45,7 @@ In **v3**, you will need to use `renderItem` & `render` to custom render the res
 
 **v3.x:**
 
-```js{6}
+```jsx
 <ReactiveList
 	react={{
 		and: ['CitySensor', 'SearchSensor'],
@@ -57,11 +57,85 @@ In **v3**, you will need to use `renderItem` & `render` to custom render the res
 
 > Note: We have removed support for `onAllData` prop from all the result components.
 
+We have changed the usage of `ResultList` and `ResultCard` to be more flexible in order to customize the layout. You can check more about ResultList and ResultCard [here](/docs/reactivesearch/v3/result/reactivelist/#sub-components).
+
+**v2.x:**
+
+```jsx
+<ResultList
+	componentId="SearchResult"
+	dataField="original_title"
+	size={3}
+	onData={data => ({
+		title: (
+			<div
+				className="book-title"
+				dangerouslySetInnerHTML={{
+					__html: data.original_title,
+				}}
+			/>
+		),
+		image: data.image,
+		description: (
+			<div className="flex column justify-space-between">
+				by <span className="authors-list">{item.authors}</span>
+			</div>
+		),
+	})}
+	className="result-list-container"
+	pagination
+	URLParams
+	react={{
+		and: 'BookSensor',
+	}}
+/>
+```
+
+**v3.x:**
+
+```jsx
+<ReactiveList
+	componentId="SearchResult"
+	dataField="original_title"
+	size={3}
+	className="result-list-container"
+	pagination
+	URLParams
+	react={{
+		and: 'BookSensor',
+	}}
+	render={({ data }) => (
+		<ReactiveList.ResultListWrapper>
+			{data.map(item => (
+				<ResultList key={item._id}>
+					<ResultList.Image src={item.image} />
+					<ResultList.Content>
+						<ResultList.Title>
+							<div
+								className="book-title"
+								dangerouslySetInnerHTML={{
+									__html: item.original_title,
+								}}
+							/>
+						</ResultList.Title>
+						<ResultList.Description>
+							<div className="flex column justify-space-between">
+								by <span className="authors-list">{item.authors}</span>
+							</div>
+						</ResultList.Description>
+					</ResultList.Content>
+				</ResultList>
+			))}
+		</ReactiveList.ResultListWrapper>
+	)}
+/>
+```
+
 -   #### Error handling and rendering control
 
 We have added the support for `renderError` in all the data driven components which can be used to display error message whenever there is an error while fetching the data for that particular component.
 
-```js{4-6}
+```jsx
 <DataSearch
 	componentId="SearchSensor"
 	dataField={['group_venue', 'group_city']}
@@ -85,42 +159,41 @@ In **v3**, we have added support for `parseSuggestion` & `render` to customise t
 
 **v2.x:**
 
-```js
+```jsx
 <DataSearch
-  ...
-  onSuggestion={(suggestion) => ({
-    label: (
-            <div>
-                {suggestion._source.original_title} by
-                <span style={{ color: 'dodgerblue', marginLeft: 5 }}>
-                    {suggestion._source.authors}
-                </span>
-            </div>
-        ),
-    value: suggestion._source.original_title,
-    source: suggestion._source // for onValueSelected to work with onSuggestion
-  })}/>
+	onSuggestion={suggestion => ({
+		label: (
+			<div>
+				{suggestion._source.original_title} by
+				<span style={{ color: 'dodgerblue', marginLeft: 5 }}>
+					{suggestion._source.authors}
+				</span>
+			</div>
+		),
+		value: suggestion._source.original_title,
+		source: suggestion._source, // for onValueSelected to work with onSuggestion
+	})}
+/>
 ```
 
 **v3.x:**
 
-```js{3,15}
+```jsx
 <DataSearch
-  ...
-  parseSuggestion={(suggestion) => ({
-    label: (
-            <div>
-                {suggestion._source.original_title} by
-                <span style={{ color: 'dodgerblue', marginLeft: 5 }}>
-                    {suggestion._source.authors}
-                </span>
-            </div>
-        ),
-    value: suggestion._source.original_title,
-    source: suggestion._source  // for onValueSelected to work with parseSuggestion
-  })}
-  renderNoSuggestion={() => <div>No Suggestions for the search term!</div>}
-  />
+	parseSuggestion={suggestion => ({
+		label: (
+			<div>
+				{suggestion._source.original_title} by
+				<span style={{ color: 'dodgerblue', marginLeft: 5 }}>
+					{suggestion._source.authors}
+				</span>
+			</div>
+		),
+		value: suggestion._source.original_title,
+		source: suggestion._source, // for onValueSelected to work with parseSuggestion
+	})}
+	renderNoSuggestion={() => <div>No Suggestions for the search term!</div>}
+/>
 ```
 
 We also added support for `renderNoSuggestion` to give feedback to the user when there are no suggestions for a given search query. Please check the relevant search component docs for further details.
@@ -133,7 +206,7 @@ In **v3**, we have added support for `renderItem` to provide custom rendering fo
 
 **v2.x**:
 
-```js
+```jsx
 <MultiList
 	componentId="CitySensor"
 	dataField="group.group_city.raw"
@@ -149,7 +222,7 @@ In **v3**, we have added support for `renderItem` to provide custom rendering fo
 
 **v3.x**:
 
-```js{5-11}
+```jsx
 <MultiList
 	componentId="CitySensor"
 	dataField="group.group_city.raw"
@@ -159,6 +232,51 @@ In **v3**, we have added support for `renderItem` to provide custom rendering fo
 			{label}
 			<span style={{ marginLeft: 5, color: 'dodgerblue' }}>{count}</span>
 		</div>
+	)}
+/>
+```
+
+-   #### ReactiveComponent
+
+In **v3** we have introduced `render` prop and have deprecated the use of Child component.
+
+> We've removed support of `onAllData`. Although onData still exists to enable side-effects handling on new data transmissions. They act as callback props which gets triggered whenever there is a change in the data.
+
+**v2.x**
+
+```jsx
+<ReactiveComponent
+	componentId="myColorPicker"
+	defaultQuery={() => ({
+		aggs: {
+			color: {
+				terms: {
+					field: 'color',
+				},
+			},
+		},
+	})}
+>
+	<ColorPickerWrapper />
+</ReactiveComponent>
+```
+
+**v3.x**
+
+```jsx
+<ReactiveComponent
+	componentId="myColorPicker"
+	defaultQuery={() => ({
+		aggs: {
+			color: {
+				terms: {
+					field: 'color',
+				},
+			},
+		},
+	})}
+	render={({ aggregations, setQuery }) => (
+		<ColorPickerWrapper aggregations={aggregations} setQuery={setQuery} />
 	)}
 />
 ```
