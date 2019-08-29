@@ -9,7 +9,7 @@
 <p align="center">
 Read how to build an e-commerce search UI</p>
 <p align="center">
-a.) <a href="https://codeburst.io/how-to-build-an-e-commerce-search-ui-with-react-and-elasticsearch-a581c823b2c3"> with React</a>, or b.) <a href="https://hackernoon.com/building-an-e-commerce-search-app-with-react-native-2c87760a2315">with React Native</a>.</p>
+a.) <a href="https://codeburst.io/how-to-build-a-yelp-like-search-app-using-react-and-elasticsearch-36a432bf6f92"> with React</a>, or b.) <a href="https://hackernoon.com/building-an-e-commerce-search-app-with-react-native-2c87760a2315">with React Native</a>.</p>
 <br/>
 <p align="center">
   <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/web" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/Uo97x64.png" alt="web" title="web" /></a>
