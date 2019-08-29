@@ -266,7 +266,7 @@ Map components are useful for displaying geospatial data.
 
 <p>
 
-**[ReactiveMap](/docs/reactivesearch/v3/map/reactivemap/)** displays results on a map UI component. It can also be classified as a result component.
+**[ReactiveMap](/docs/reactivesearch/v3/map/reactivegooglemap/)** displays results on a map UI component. It can also be classified as a result component.
 
 </p>
 
