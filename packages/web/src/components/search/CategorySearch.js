@@ -685,11 +685,13 @@ class CategorySearch extends Component {
 			&& results[0][0].transcript.trim()
 		) {
 			this.isPending = false;
-			this._inputRef.focus();
 			this.setValue(results[0][0].transcript.trim(), true);
-			this.setState({
-				isOpen: true,
-			});
+			if (this.props.autosuggest) {
+				this._inputRef.focus();
+				this.setState({
+					isOpen: true,
+				});
+			}
 		}
 	};
 
