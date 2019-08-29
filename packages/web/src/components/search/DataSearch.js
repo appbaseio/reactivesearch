@@ -586,7 +586,11 @@ class DataSearch extends Component {
 			&& results[0][0].transcript.trim()
 		) {
 			this.isPending = false;
+			this._inputRef.focus();
 			this.setValue(results[0][0].transcript.trim(), true);
+			this.setState({
+				isOpen: true,
+			});
 		}
 	}
 
