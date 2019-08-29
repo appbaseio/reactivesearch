@@ -52,6 +52,11 @@ class Dropdown extends Component {
 				isOpen,
 			});
 		}
+		if (type === Downshift.stateChangeTypes.keyDownEscape) {
+			this.setState({
+				isOpen: false,
+			});
+		}
 	};
 
 	getBackgroundColor = (highlighted, selected) => {
