@@ -1,10 +1,10 @@
 import React from 'react';
-import Link from 'gatsby-link';
+import { navigate, Link } from 'gatsby';
 import * as JsSearch from 'js-search';
 import Autosuggest from 'react-autosuggest';
 import data from '../../../data/search.index.json';
 import { Spirit } from '../../../styles/spirit-styles';
-import Icon from '../Icon.js';
+import Icon from '../Icon';
 import sidebar from '../../../data/sidebars/all-sidebar';
 
 const search = new JsSearch.Search('url');
@@ -12,6 +12,7 @@ search.tokenizer = new JsSearch.StopWordsTokenizer(new JsSearch.SimpleTokenizer(
 
 search.addIndex('title');
 search.addIndex('heading');
+search.addIndex('tokens');
 search.addDocuments(data);
 
 const getSuggestions = value => {
@@ -177,11 +178,17 @@ class AutoComplete extends React.Component {
 		});
 	}
 
-	getSuggestionValue(hit) {
+	getSuggestionValue = hit => {
 		return hit.title;
 	}
 
-	renderSuggestion(hit) {
+	suggestionSelected = (event, { suggestion }) => {
+		if (event.key === 'Enter') {
+			navigate(suggestion.url);
+		}
+	}
+
+	renderSuggestion = hit => {
 		return <HitTemplate hit={hit} />;
 	}
 
@@ -204,6 +211,7 @@ class AutoComplete extends React.Component {
 			inputOpen: inputTheme,
 			inputFocused: inputTheme,
 			suggestionsContainerOpen: `fixed home-search`,
+			suggestionHighlighted: 'highlighted-suggestion',
 			suggestionsList: `list pa0 ma0 pt1 flex-auto`,
 			sectionContainer: `pb4 mb4`,
 			sectionTitle: `f8 lh-h4 fw5 midgrey w30 tr mt2 sticky top-2 pr2`,
@@ -217,6 +225,7 @@ class AutoComplete extends React.Component {
 					onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
 					onSuggestionsClearRequested={this.onSuggestionsClearRequested}
 					getSuggestionValue={this.getSuggestionValue}
+					onSuggestionSelected={this.suggestionSelected}
 					renderSuggestion={this.renderSuggestion}
 					inputProps={inputProps}
 					theme={theme}

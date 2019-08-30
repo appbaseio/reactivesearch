@@ -1784,3 +1784,7 @@ to be custom HTML.
 .cursor-pointer {
 	cursor: pointer;
 }
+
+.highlighted-suggestion {
+	background: var(--whitegrey);
+}
