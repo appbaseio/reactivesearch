@@ -52,6 +52,7 @@ const buildPaginationDOM = (props, position) => {
 						e.preventDefault();
 						setPage(i - 1);
 					}}
+					alt={`Page ${i}`}
 					href={`?${fragmentName}=${i}`}
 				>
 					{i}
@@ -105,6 +106,7 @@ class Pagination extends React.PureComponent {
 		if (currentPage >= 1) {
 			prevHrefProp = {
 				href: `?${fragmentName}=${currentPage}`,
+				alt: `Page ${currentPage}`,
 				rel: 'prev',
 			};
 		}
@@ -113,6 +115,7 @@ class Pagination extends React.PureComponent {
 			nextHrefProp = {
 				href: `?${fragmentName}=${currentPage + 2}`,
 				rel: 'next',
+				alt: `Page ${currentPage + 2}`,
 			};
 		}
 		return (
@@ -122,7 +125,7 @@ class Pagination extends React.PureComponent {
 					disabled={currentPage === 0}
 					onKeyPress={event => handleA11yAction(event, onPrevPage)}
 					onClick={onPrevPage}
-					tabIndex="0"
+					tabIndex={currentPage === 0 ? '-1' : '0'}
 					{...prevHrefProp}
 				>
 					Prev
@@ -138,6 +141,7 @@ class Pagination extends React.PureComponent {
 						}}
 						tabIndex="0"
 						href={`?${fragmentName}=1`}
+						alt="Page 1"
 					>
 						1
 					</Button>
@@ -155,7 +159,7 @@ class Pagination extends React.PureComponent {
 					disabled={currentPage >= totalPages - 1}
 					onKeyPress={event => handleA11yAction(event, onNextPage)}
 					onClick={onNextPage}
-					tabIndex="0"
+					tabIndex={currentPage >= totalPages - 1 ? '-1' : '0'}
 					{...nextHrefProp}
 				>
 					Next
