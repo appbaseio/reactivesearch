@@ -200,7 +200,6 @@ class AutoComplete extends React.Component {
 			placeholder: `Search documentation...`,
 			onChange: this.onChange,
 			value,
-			autoFocus: true,
 			'data-cy': `search-input`,
 		};
 
