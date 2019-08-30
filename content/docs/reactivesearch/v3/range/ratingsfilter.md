@@ -53,6 +53,7 @@ Example uses:
 		end: 5,
 	}}
 	URLParams={false}
+    includeNullValues
 />
 ```
 
@@ -71,6 +72,24 @@ Example uses:
 		{ start: 2, end: 5, label: '2 stars and up' },
 		{ start: 1, end: 5, label: '> 1 stars' },
 	]}
+/>
+```
+
+### Usage with Custom Data
+Let's say you want data for `ratings with 4 stars and up` and also include `unrated results`
+```js
+<RatingsFilter
+    componentId="RatingsSensor"
+    dataField="average_rating_rounded"
+    title="RatingsFilter"
+    icon={<Star style={{ color: 'yellow' }} />}
+    dimmedIcon={<Star style={{ color: 'grey' }} />}
+    data={[
+        { start: 4, end: 5, label: '4 stars and up', includeUnrated: true },
+        { start: 3, end: 5, label: '3 stars and up' },
+        { start: 2, end: 5, label: '2 stars and up' },
+        { start: 1, end: 5, label: '> 1 stars' },
+    ]}
 />
 ```
 
@@ -98,6 +117,9 @@ Example uses:
     is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string parameter based on the selected rating. This is useful for sharing URLs with the component state. Defaults to `false`.
+-   **includeNullValues** `Boolean` [optional]
+    If you have sparse data or document or items not having the value in the specified field or mapping, then this prop enables you to show that data. Defaults to `false`.
+
 
 ## Demo
 

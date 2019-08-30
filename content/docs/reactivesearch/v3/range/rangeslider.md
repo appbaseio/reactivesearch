@@ -65,6 +65,7 @@ While `RangeSlider` only requires the above props to be used, it comes with many
 		and: ['CategoryFilter', 'SearchFilter'],
 	}}
 	URLParams={false}
+    includeNullValues
 />
 ```
 
@@ -116,6 +117,9 @@ While `RangeSlider` only requires the above props to be used, it comes with many
     set the histogram bar interval, applicable when _showHistogram_ is `true`. Defaults to `Math.ceil((props.range.end - props.range.start) / 100) || 1`.
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
+-   **includeNullValues** `Boolean` [optional]
+    If you have sparse data or document or items not having the value in the specified field or mapping, then this prop enables you to show that data. Defaults to `false`.
+
 
 ## Demo
 

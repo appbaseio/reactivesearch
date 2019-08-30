@@ -54,6 +54,22 @@ Example uses:
 />
 ```
 
+### Usage as a controlled component
+```js
+function Index(props) {
+	const [values, setValues] = useState([]);
+	return (
+		<MultiList
+			componentId="BookSensor"
+			dataField="original_series.raw"
+			size={100}
+			value={values}
+			onChange={setValues}
+		/>
+	);
+}
+```
+
 ## Props
 
 -   **componentId** `String`

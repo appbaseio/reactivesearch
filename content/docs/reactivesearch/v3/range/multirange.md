@@ -60,7 +60,41 @@ Example uses:
 	showFilter={true}
 	filterLabel="Prices"
 	URLParams={false}
+    includeNullValues
 />
+```
+
+### Usage as a controlled component
+```js
+function Index(props) {
+	const [values, setValues] = useState([]);
+	return (
+		<MultiRange
+			title="MultiRange"
+			componentId="BookSensor"
+			dataField="average_rating"
+			data={[
+				{
+					start: 0,
+					end: 3,
+					label: 'Rating < 3',
+				},
+				{
+					start: 3,
+					end: 4,
+					label: 'Rating 3 to 4',
+				},
+				{
+					start: 4,
+					end: 5,
+					label: 'Rating > 4',
+				},
+			]}
+			value={values}
+			onChange={setValues}
+		/>
+	);
+}
 ```
 
 ## Props
@@ -89,6 +123,9 @@ Example uses:
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string parameter based on the selected values of the ranges. This is useful for sharing URLs with the component state. Defaults to `false`.
+-   **includeNullValues** `Boolean` [optional]
+    If you have sparse data or document or items not having the value in the specified field or mapping, then this prop enables you to show that data. Defaults to `false`.
+
 
 ## Demo
 

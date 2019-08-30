@@ -82,6 +82,40 @@ Example uses:
 />
 ```
 
+### Usage as a controlled component
+```js
+function Index(props) {
+	const [values, setValues] = useState([]);
+	return (
+		<MultiDataList
+			title="MultiDataList"
+			componentId="CitySensor"
+			dataField="group.group_topics.topic_name_raw.raw"
+			data={[
+				{
+					label: 'Open Source',
+					value: 'Open Source',
+				},
+				{
+					label: 'Social',
+					value: 'Social',
+				},
+				{
+					label: 'Adventure',
+					value: 'Adventure',
+				},
+				{
+					label: 'Music',
+					value: 'Music',
+				},
+			]}
+			value={values}
+			onChange={setValues}
+		/>
+	);
+}
+```
+
 ## Props
 
 -   **componentId** `String`
