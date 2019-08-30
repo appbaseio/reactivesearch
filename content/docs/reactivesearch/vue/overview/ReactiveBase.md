@@ -51,6 +51,8 @@ This is the first component you will need to add when using `ReactiveSearch`.
 	</reactive-base>
 </template>
 ```
+-   **analytics** `Boolean` [optional]
+    allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`. Check the [analytics recipe](/advanced/analytics.html) for click analytics implementation.
 
 ### Connect to Elasticsearch
 
