@@ -60,6 +60,7 @@ Example uses:
 	showFilter={false}
 	filterLabel="Price"
 	URLParams={false}
+    includeNullValues
 />
 ```
 
@@ -98,6 +99,9 @@ Example uses:
       </div>
     ))}
     ```
+-   **includeNullValues** `Boolean` [optional]
+    If you have sparse data or document or items not having the value in the specified field or mapping, then this prop enables you to show that data. Defaults to `false`.
+
 
 ## Demo
 
