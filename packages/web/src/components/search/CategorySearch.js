@@ -38,7 +38,11 @@ import Container from '../../styles/Container';
 import Mic from './addons/Mic';
 import {
 	connect,
-	isFunction, getComponent, hasCustomRenderer, isIdentical, getValidPropsKeys,
+	isFunction,
+	getComponent,
+	hasCustomRenderer,
+	isIdentical,
+	getValidPropsKeys,
 	ReactReduxContext,
 	withClickIds,
 	handleCaretPosition,
@@ -186,7 +190,15 @@ class CategorySearch extends Component {
 
 		if (!isEqual(this.props.value, prevProps.value)) {
 			const { term: currentValue, category: currentCategory = null } = this.props.value;
-			this.setValue(currentValue, true, this.props, currentCategory, undefined, undefined, false);
+			this.setValue(
+				currentValue,
+				true,
+				this.props,
+				currentCategory,
+				undefined,
+				undefined,
+				false,
+			);
 		} else if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
@@ -276,7 +288,7 @@ class CategorySearch extends Component {
 				pre_tags: ['<mark>'],
 				post_tags: ['</mark>'],
 				fields,
-				...props.highlightField && { require_field_match: false },
+				...(props.highlightField && { require_field_match: false }),
 			},
 		};
 	};
@@ -600,7 +612,7 @@ class CategorySearch extends Component {
 		const { term: currentValue, category: currentCategory = null } = value;
 		this.isPending = false;
 		this.setValue(currentValue, true, this.props, currentCategory);
-	}
+	};
 
 	onSuggestionSelected = (suggestion) => {
 		const { value, onChange } = this.props;
@@ -664,7 +676,8 @@ class CategorySearch extends Component {
 	};
 
 	handleVoiceResults = ({ results }) => {
-		if (results
+		if (
+			results
 			&& results[0]
 			&& results[0].isFinal
 			&& results[0][0]
@@ -673,8 +686,14 @@ class CategorySearch extends Component {
 		) {
 			this.isPending = false;
 			this.setValue(results[0][0].transcript.trim(), true);
+			if (this.props.autosuggest) {
+				this._inputRef.focus();
+				this.setState({
+					isOpen: true,
+				});
+			}
 		}
-	}
+	};
 
 	renderIcon = () => {
 		if (this.props.showIcon) {
@@ -701,15 +720,15 @@ class CategorySearch extends Component {
 					{this.renderCancelIcon()}
 				</InputIcon>
 			)}
-			{this.props.showVoiceSearch
-				&& (
-					<Mic
-						getInstance={this.props.getMicInstance}
-						render={this.props.renderMic}
-						iconPosition={this.props.iconPosition}
-						onResult={this.handleVoiceResults}
-						className={getClassName(this.props.innerClass, 'mic') || null}
-					/>)}
+			{this.props.showVoiceSearch && (
+				<Mic
+					getInstance={this.props.getMicInstance}
+					render={this.props.renderMic}
+					iconPosition={this.props.iconPosition}
+					onResult={this.handleVoiceResults}
+					className={getClassName(this.props.innerClass, 'mic') || null}
+				/>
+			)}
 			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
 				{this.renderIcon()}
 			</InputIcon>
@@ -876,8 +895,10 @@ class CategorySearch extends Component {
 			headers,
 		} = this.props;
 		const { url, app, credentials } = config;
-		const searchState = this.context && this.context.store
-			? getSearchState(this.context.store.getState(), true) : null;
+		const searchState
+			= this.context && this.context.store
+				? getSearchState(this.context.store.getState(), true)
+				: null;
 		if (config.analytics && searchId) {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
@@ -891,7 +912,8 @@ class CategorySearch extends Component {
 						'X-Search-ClickPosition': searchPosition + 1,
 					}),
 					'X-Search-Conversion': true,
-					...(config.searchStateHeader && searchState && {
+					...(config.searchStateHeader
+						&& searchState && {
 						'X-Search-State': JSON.stringify(searchState),
 					}),
 				},
@@ -904,7 +926,7 @@ class CategorySearch extends Component {
 			return e => func(e, () => this.triggerQuery(this.props.value));
 		}
 		return undefined;
-	}
+	};
 
 	render() {
 		const { currentValue } = this.state;
