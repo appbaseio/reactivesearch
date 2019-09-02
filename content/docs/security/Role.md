@@ -1,7 +1,7 @@
 ---
-title: 'Role Based Access'
-meta_title: 'Role Based Accesss'
-meta_description: 'API credentials allow secure access to the appbase.io APIs.'
+title: 'Role Based Access Control'
+meta_title: 'Role Based Access Control'
+meta_description: 'Role Based Access Control allow secure access to the appbase.io APIs.'
 keywords:
     - security
     - appbaseio
@@ -10,9 +10,15 @@ keywords:
 sidebar: 'docs'
 ---
 
-## Introduction
+## Why Role Based Access Control System?
 
-Essential entities in any [Role Based Access Control (RBAC)](https://en.wikipedia.org/wiki/Role-based_access_control) system are the **user**, the **service** that user wants to access (in our case _appbase application / elasticsearch indexes_), and the **[identity provider (IdP)](https://en.wikipedia.org/wiki/Identity_provider)**. To access the service, the user first needs to authenticate against the IdP. The IdP verifies the user credentials and hands out a signed token. The user then sends this token to the service with each request. The service uses the information in the token to verify the user’s identity and to assign roles and permissions.
+Prior to this, appbase.io apps can be secured using [HTTP Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) based API Credentials that only had read access and additional restrictive ACL settings. But that came with the downside of exposing the API credentials publicly. To reduce the vulnerability of data being hacked or misused, we also introduced IP limits which adds more security against network spoofing and un-necessary API calls. However for sensitive data, users had to rely on a backend service that would authorize client requests.
+
+We observed that in majority of the scenarios, our users would use an Identity Provider (think Firebase Auth, Auth0, PassPort.JS) to know their users and then maintain a map of what credentials got assigned to these users. The Role Based Access Control UI allows users to do this from the appbase.io dashboard and completely eliminates the need for a separate backend service.
+
+## What is Role Based Access Control?
+
+In general “Role Based Access Control” is an approach to restricting system access based on roles and privileges. Essential entities in any [Role Based Access Control (RBAC)](https://en.wikipedia.org/wiki/Role-based_access_control) system are the **user**, the **service** that user wants to access (in our case _appbase application / elasticsearch indexes_), and the **[identity provider (IdP)](https://en.wikipedia.org/wiki/Identity_provider)**. To access the service, the user first needs to authenticate against the IdP. The IdP verifies the user credentials and hands out a signed token. The user then sends this token to the service with each request. The service uses the information in the token to verify the user’s identity and to assign roles and permissions.
 
 You can now secure your Appbase applications by providing role based access to the various users that are going to use appbase application / elasticsearch index. We are supporting role base access using [JSON Web Tokens (JWT)](https://jwt.io/introduction/).
 
