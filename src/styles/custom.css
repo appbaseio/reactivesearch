@@ -1781,10 +1781,34 @@ to be custom HTML.
 	font-weight: 600 !important;
 }
 
+.video-btn {
+	color: var(--darkgrey) !important;
+	font-size: 1.6rem !important;
+	background: transparent !important;
+	border: 0 !important;
+	font-weight: 600 !important;
+}
+
 .cursor-pointer {
 	cursor: pointer;
 }
 
 .highlighted-suggestion {
 	background: var(--whitegrey);
+}
+
+.home-modal {
+	padding: 0;
+	width: 60%;
+	background: transparent;
+}
+
+.iframe {
+	width: 100%;
+	height: 400px;
+}
+
+.close-icon {
+	fill: white;
+	stroke: white;
 }
