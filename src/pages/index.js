@@ -28,9 +28,7 @@ const HomePage = ({ data, location }) => {
 					<div className={`${Spirit.page.xl} col-12 home-section`}>
 						<span className={`${Spirit.h3} fw6 link darkgrey home-title`}>Guides</span>
 						<p
-							className={`${
-								Spirit.h4
-							} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
+							className={`${Spirit.h4} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
 						>
 							All libraries and tools, integrated with Appbase.
 						</p>
@@ -56,12 +54,25 @@ const HomePage = ({ data, location }) => {
 												link: '/docs/gettingstarted/QuickStart/',
 												duration: 3,
 											},
-											// {
-											// 	title: 'How Appbaseio Works',
-											// 	description: 'Take a look at how things work',
-											// 	link: '/docs/gettingstarted/Working',
-											// 	duration: 3,
-											// },
+											{
+												title: 'Cluster',
+												link: '/docs/gettingstarted/Cluster/',
+												duration: 5,
+												description:
+													'Now you can host your own dedicated ElasticSearch clusters to meet your business needs using appbase.io clusters. ',
+											},
+											{
+												title: 'Open Distro',
+												link: '/docs/gettingstarted/OpenDistro/',
+												duration: 2,
+												description:
+													'Now with the appbase.io clusters you can host an open distro flavour of elasticsearch.',
+											},
+											{
+												title: 'Why Appbase Cluster',
+												link: '/docs/gettingstarted/WhyAppbase/',
+												duration: 2,
+											},
 										],
 									},
 									'2': {
@@ -225,9 +236,7 @@ const HomePage = ({ data, location }) => {
 							Integrations
 						</h3>
 						<p
-							className={`${
-								Spirit.h4
-							} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
+							className={`${Spirit.h4} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
 						>
 							All libraries and frameworks, integrated with Appbase.
 						</p>
@@ -333,9 +342,7 @@ const HomePage = ({ data, location }) => {
 					<section className={`${Spirit.page.xl} col-12 mt10 pt8 home-section`}>
 						<h3 className={`${Spirit.h3} fw6 link darkgrey home-title`}>Need Help?</h3>
 						<p
-							className={`${
-								Spirit.h4
-							} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
+							className={`${Spirit.h4} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
 						>
 							Resources to get help with Reactive Search.
 						</p>

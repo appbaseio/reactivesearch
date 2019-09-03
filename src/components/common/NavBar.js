@@ -99,7 +99,7 @@ const NavBar = ({ theme }) => {
 															Getting Started
 														</Link>
 														<Link
-															to="/docs/data/model"
+															to="/docs/data/Model/"
 															className={`${
 																themeClasses[theme].menuItem
 															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
