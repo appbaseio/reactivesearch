@@ -211,10 +211,6 @@ class ReactiveMap extends Component {
 
 			updatedState.from = 0;
 			updatedState.currentPage = 0;
-			// this.setState({
-			// 	from: 0,
-			// 	currentPage: 0,
-			// });
 			this.props.setQueryOptions(this.props.componentId, options, true);
 		}
 
@@ -274,29 +270,15 @@ class ReactiveMap extends Component {
 				this.props.onPageChange();
 			}
 			updatedState.from = 0;
-			// this.setState({
-			// 	from: 0,
-			// });
 		}
 
 		if (this.props.pagination && this.props.total !== prevProps.total) {
 			updatedState.totalPages = Math.ceil(this.props.total / this.props.size);
 			updatedState.currentPage = prevProps.total ? 0 : this.state.currentPage;
-
-			// this.setState({
-			// 	totalPages: Math.ceil(this.props.total / this.props.size),
-			// 	currentPage: prevProps.total ? 0 : this.state.currentPage,
-			// });
 		}
 
 		if (this.props.searchAsMove !== prevProps.searchAsMove) {
 			updatedState.searchAsMove = this.props.searchAsMove;
-
-			// this.setState({
-			// 	searchAsMove: this.props.searchAsMove,
-			// });
-			// no need to execute the map query since the component will
-			// get re-rendered and the new query will be automatically evaluated
 		}
 
 		if (
@@ -305,9 +287,6 @@ class ReactiveMap extends Component {
 			this.props.defaultZoom
 		) {
 			updatedState.zoom = this.props.defaultZoom;
-			// this.setState({
-			// 	zoom: this.props.defaultZoom,
-			// });
 		}
 
 		if (this.props.defaultMapStyle !== prevProps.defaultMapStyle) {
@@ -315,12 +294,6 @@ class ReactiveMap extends Component {
 				style.label === this.props.defaultMapStyle,
 			)
 			|| this.mapStyles[0];
-
-			// this.setState({
-			// 	currentMapStyle:
-			// 		this.mapStyles.find(style => style.label === this.props.defaultMapStyle)
-			// 		|| this.mapStyles[0],
-			// });
 		}
 
 		this.updateState(updatedState);
