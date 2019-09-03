@@ -4,8 +4,12 @@
         items:
             - title: QuickStart
               link: /docs/gettingstarted/QuickStart/
-            # - title: How Appbaseio Works
-            #   link: /docs/gettingstarted/Working/
+            - title: Clusters
+              link: /docs/gettingstarted/Cluster/
+            - title: Open Distro
+              link: /docs/gettingstarted/OpenDistro/
+            - title: Why Appbase Cluster
+              link: /docs/gettingstarted/WhyAppbase/
       - group: Managing Data
         icon: importData
         items:
@@ -13,8 +17,6 @@
               link: /docs/data/Model/
             - title: Data Browser
               link: /docs/data/Browser/
-            # - title: Importing Data
-            #   link: /docs/data/Import/
       - group: Search Relevancy
         icon: search
         items:
