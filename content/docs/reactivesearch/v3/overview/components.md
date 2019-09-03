@@ -276,4 +276,4 @@ Map components are useful for displaying geospatial data.
 
 ### SelectedFilters
 
-**[SelectedFilters](/docs/reactivesearch/v3/base/selectedfilters/)** is a selection component to render the selected values from other components with a "Clear All" option.
+**[SelectedFilters](/docs/reactivesearch/v3/advanced/selectedfilters/)** is a selection component to render the selected values from other components with a "Clear All" option.

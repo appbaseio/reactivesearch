@@ -11,12 +11,6 @@
               link: /docs/reactivesearch/v3/overview/reactivebase/
             - title: Components Overview
               link: /docs/reactivesearch/v3/overview/components/
-      - group: Base Components
-        items:
-            - title: SelectedFilters
-              link: /docs/reactivesearch/v3/base/selectedfilters/
-            - title: StateProvider
-              link: /docs/reactivesearch/v3/base/stateprovider/
       - group: List Components
         items:
             - title: SingleList
@@ -93,6 +87,10 @@
               link: /docs/reactivesearch/v3/theming/classnameinjection/
       - group: Advanced
         items:
+            - title: SelectedFilters
+              link: /docs/reactivesearch/v3/advanced/selectedfilters/
+            - title: StateProvider
+              link: /docs/reactivesearch/v3/advanced/stateprovider/
             - title: Custom Suggestions
               link: /docs/reactivesearch/v3/advanced/customsuggestions/
             - title: Custom Queries

@@ -21,8 +21,6 @@
               link: /docs/reactivesearch/v2/base/TagCloud/
             - title: DataController
               link: /docs/reactivesearch/v2/base/DataController/
-            - title: SelectedFilters
-              link: /docs/reactivesearch/v2/base/SelectedFilters/
       - group: List Components
         items:
             - title: SingleList
@@ -93,6 +91,8 @@
               link: /docs/reactivesearch/v2/theming/ClassnameInjection/
       - group: Advanced
         items:
+            - title: SelectedFilters
+              link: /docs/reactivesearch/v2/advanced/SelectedFilters/
             - title: Custom Suggestions
               link: /docs/reactivesearch/v2/advanced/CustomSuggestions/
             - title: Custom Queries

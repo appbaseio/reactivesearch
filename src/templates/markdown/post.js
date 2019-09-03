@@ -145,15 +145,15 @@ class Post extends React.Component {
 										}}
 									/>
 								</article>
-								{isRSDocs ? null : (
-									<div className="mw-content pl5 pr5 pl15-ns pr15-ns bt b--whitegrey mt5">
-										<PrevNextSection
-											location={location}
-											sidebar={sidebar}
-											next={post.frontmatter.next}
-										/>
-									</div>
-								)}
+
+								<div className="mw-content pl5 pr5 pl15-ns pr15-ns bt b--whitegrey mt5">
+									<PrevNextSection
+										location={location}
+										sidebar={sidebar}
+										next={post.frontmatter.next}
+										nestedSidebar={nestedSidebar}
+									/>
+								</div>
 							</div>
 						</div>
 						{sideBarLayout.rightSidebar ? (

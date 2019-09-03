@@ -9,7 +9,7 @@ const PrevNext = ({ prev, next }) => (
 		{prev ? (
 			<Link
 				to={prev.link}
-				className="col-6 flex pa10 pl0 tdn justify-start items-center blue nudge-left--1 prevnext-hover ba b--transparent"
+				className="prev-next-step-grid-column col-6 col-6-m col-6-ns flex pa10 pl0 tdn justify-start items-center blue nudge-left--1 prevnext-hover ba b--transparent"
 			>
 				<Icon name="arrow-left" className="w5 h5 fill-blue" />
 				<div className="ml4">
@@ -25,7 +25,7 @@ const PrevNext = ({ prev, next }) => (
 		{next ? (
 			<Link
 				to={next.link}
-				className="col-6 flex pr0 pa10 tdn justify-end items-center blue prevnext-hover ba b--transparent"
+				className="prev-next-step-grid-column col-6 col-6-m col-6-ns flex pr0 pa10 tdn justify-end items-center blue prevnext-hover ba b--transparent"
 			>
 				<div className="tr mr4">
 					{next.group ? (

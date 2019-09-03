@@ -9,10 +9,6 @@
               link: /docs/reactivesearch/vue/overview/ReactiveBase/
             - title: Components Overview
               link: /docs/reactivesearch/vue/overview/Components/
-      - group: Base Components
-        items:
-            - title: SelectedFilters
-              link: /docs/reactivesearch/vue/base/SelectedFilters/
       - group: List Components
         items:
             - title: SingleList
@@ -55,6 +51,8 @@
               link: /docs/reactivesearch/vue/theming/ClassnameInjection/
       - group: Advanced
         items:
+            - title: SelectedFilters
+              link: /docs/reactivesearch/vue/advanced/SelectedFilters/
             - title: Custom Queries
               link: /docs/reactivesearch/vue/advanced/CustomQueries/
             - title: React Prop
