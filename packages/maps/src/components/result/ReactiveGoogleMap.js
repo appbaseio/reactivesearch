@@ -59,8 +59,6 @@ class ReactiveGoogleMap extends Component {
 	}
 
 	handleStyleChange = (newStyle) => {
-		this.setState({});
-
 		this.setState(prevState => ({
 			currentMapStyle:
 				this.mapStyles.find(style => style.label === newStyle) || this.mapStyles[0],
@@ -84,7 +82,6 @@ class ReactiveGoogleMap extends Component {
 		if (typeof window === 'undefined' || (window && typeof window.google === 'undefined')) {
 			return null;
 		}
-		// const markers = this.getMarkers(params);
 
 		const style = {
 			width: '100%',
@@ -93,7 +90,6 @@ class ReactiveGoogleMap extends Component {
 		};
 
 		const markerProps = {
-			showMarkers: params.showMarkers,
 			resultsToRender: params.resultsToRender,
 			getPosition: params.getPosition,
 			renderData: params.renderData,
@@ -135,7 +131,9 @@ class ReactiveGoogleMap extends Component {
 							<GoogleMapMarkers {...markerProps} />
 						</MarkerClusterer>
 					) : (
-						<GoogleMapMarkers {...markerProps} />
+						<React.Fragment>
+							{this.props.showMarkers && <GoogleMapMarkers {...markerProps} />}
+						</React.Fragment>
 					)}
 					{this.props.showMarkers && this.props.markers}
 					{params.renderSearchAsMove()}

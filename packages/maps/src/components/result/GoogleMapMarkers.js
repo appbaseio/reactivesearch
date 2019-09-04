@@ -3,19 +3,17 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import GoogleMapMarker from './GoogleMapMarker';
 
-const GoogleMapMarkers = ({ showMarkers, resultsToRender, ...rest }) => (
+const GoogleMapMarkers = ({ resultsToRender, ...rest }) => (
 	<div>
-		{showMarkers
-			&& resultsToRender.map(marker => (
-				<React.Fragment key={marker._id}>
-					<GoogleMapMarker {...rest} marker={marker} />
-				</React.Fragment>
-			))}
+		{resultsToRender.map(marker => (
+			<React.Fragment key={marker._id}>
+				<GoogleMapMarker {...rest} marker={marker} />
+			</React.Fragment>
+		))}
 	</div>
 );
 
 GoogleMapMarkers.propTypes = {
-	showMarkers: types.bool,
 	resultsToRender: types.hits,
 	getPosition: types.func,
 	renderData: types.func,
