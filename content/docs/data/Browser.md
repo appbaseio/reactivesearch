@@ -5,14 +5,14 @@ meta_description: 'Data Browser is a WYSIWYG GUI for adding, modifying and viewi
 keywords:
     - dataschema
     - appbase
-    - databroswer
+    - databrowser
     - elasticsearch
 sidebar: 'docs'
 ---
 
 Data Browser is a WYSIWYG GUI for adding, modifying and viewing your appbase.io app's data.
 
-Data is stored as JSON documents in a **type**. You can read more about the data schema [here](/concepts/datamodel.html#appbase-data-schema).
+Data is stored as JSON documents. You can read more about the data schema [here](/docs/data/Model).
 
 ## Installation
 
@@ -24,13 +24,13 @@ The data browser is available within appbase.io app dashboard. But it can also b
 
 ## Creating An App
 
-You can go to the [appbase.io dashboard](https://dashboard.appbase.io) and create an app. In the below gif, we create an app called `newstreamingapp`.
+You can go to the [appbase.io dashboard](https://dashboard.appbase.io) and create an app. In the below GIF, we create an app called `newstreamingapp`.
 
 ![](https://i.imgur.com/r6hWKAG.gif)
 
 ## Adding Your First Data
 
-You can access the databrowser [from the dashboard](http://dashboard.appbase.io/browser/) or independently via [dejavu app](https://opensource.appbase.io/dejavu/live/).
+You can access the databrowser [from the dashboard](https://dashboard.appbase.io/app?view=browse) or independently via [dejavu app](https://dejavu.appbase.io).
 
 ![](https://i.imgur.com/Bh59Ej1.gif)
 
@@ -76,7 +76,7 @@ The import view lets you set the data mappings via a GUI and index data. Current
 
 Once your data is imported, you can view the data via the [browser view](https://dashboard.appbase.io/browser).
 
-#### Setting a Unique Document Id
+#### Setting a Unique Document ID
 
 When importing a frequently changing dataset, we recommend setting a **Unique Id** field. This can be enabled by selecting the checkbox for "Does the data have unique id?" question followed by selecting an id column (a **Mark as Id column** label should appear in the active column).
 
