@@ -220,6 +220,25 @@ ReactiveGoogleMap.propTypes = {
 
 ReactiveGoogleMap.defaultProps = {
 	autoClosePopover: true,
+	size: 10,
+	style: {},
+	className: null,
+	pages: 5,
+	pagination: false,
+	defaultMapStyle: 'Standard',
+	autoCenter: false,
+	streamAutoCenter: false,
+	defaultZoom: 8,
+	mapProps: {},
+	markerProps: {},
+	markers: null,
+	showMapStyles: false,
+	showSearchAsMove: true,
+	searchAsMove: false,
+	showMarkers: true,
+	showMarkerClusters: true,
+	unit: 'mi',
+	defaultRadius: 100,
 };
 
 export default ReactiveGoogleMap;
