@@ -45,6 +45,6 @@ Tou can add or edit any ElasticSearch configurations or options available via op
 
 Once the configuration is updated successfully, you will have to manually restart the ElasticSearch [pods](https://kubernetes.io/docs/concepts/workloads/pods/pod/) from [Kubernetes Dashboard](/concepts/clusters.html#accessing-kubernetes-dashboard). All the ElasticSearch pods have a `elasticsearch-` prefix followed by the node number, e.g. `elasticsearch-0`, `elasticsearch-1`. You can delete these pods in sequence (i.e. delete a pod, wait for it to be spinned up with the new configuration, then delete the next one and so on..) which will trigger a restart.
 
-`Note`: This will not cause any data loss. And doing the pod restarts in sequence will also ensure that your users don't see any issues with accessing the search service.
-
 <div style="border: 1px solid #dfdfdf; border-radius: 5px;overflow:hidden;margin-top:10px;"><img src="https://i.imgur.com/rSkRn9T.png" alt="cluster creation gif" style="width:100%;" /></div>
+
+`Note`: This will not cause any data loss. And doing the pod restarts in sequence will also ensure that your users don't see any issues with accessing the search service.
