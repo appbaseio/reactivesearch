@@ -225,4 +225,25 @@ ReactiveOpenStreetMap.propTypes = {
 	unit: types.string,
 };
 
+ReactiveOpenStreetMap.defaultProps = {
+	size: 10,
+	style: {},
+	className: null,
+	pages: 5,
+	pagination: false,
+	autoCenter: false,
+	streamAutoCenter: false,
+	defaultZoom: 8,
+	mapProps: {},
+	markerProps: {},
+	markers: null,
+	showMapStyles: false,
+	showSearchAsMove: true,
+	searchAsMove: false,
+	showMarkers: true,
+	showMarkerClusters: true,
+	unit: 'mi',
+	defaultRadius: 100,
+};
+
 export default ReactiveOpenStreetMap;
