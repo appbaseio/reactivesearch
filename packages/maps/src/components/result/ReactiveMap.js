@@ -299,26 +299,26 @@ class ReactiveMap extends Component {
 		this.updateState(updatedState);
 	}
 
-	shouldComponentUpdate(prevProps, nextState) {
+	shouldComponentUpdate(nextProps, nextState) {
 		if (
-			this.props.showSearchAsMove !== prevProps.showSearchAsMove
+			this.props.showSearchAsMove !== nextProps.showSearchAsMove
 			|| this.state.searchAsMove !== nextState.searchAsMove
-			|| this.props.showMapStyles !== prevProps.showMapStyles
-			|| this.props.autoCenter !== prevProps.autoCenter
-			|| this.props.isLoading !== prevProps.isLoading
-			|| this.props.error !== prevProps.error
-			|| this.props.streamAutoCenter !== prevProps.streamAutoCenter
-			|| this.props.defaultZoom !== prevProps.defaultZoom
-			|| this.props.showMarkerClusters !== prevProps.showMarkerClusters
+			|| this.props.showMapStyles !== nextProps.showMapStyles
+			|| this.props.autoCenter !== nextProps.autoCenter
+			|| this.props.isLoading !== nextProps.isLoading
+			|| this.props.error !== nextProps.error
+			|| this.props.streamAutoCenter !== nextProps.streamAutoCenter
+			|| this.props.defaultZoom !== nextProps.defaultZoom
+			|| this.props.showMarkerClusters !== nextProps.showMarkerClusters
 			|| !isEqual(this.state.currentMapStyle, nextState.currentMapStyle)
-			|| this.props.updaterKey !== prevProps.updaterKey
+			|| this.props.updaterKey !== nextProps.updaterKey
 		) {
 			return true;
 		}
 
 		if (
-			isEqual(this.props.hits, prevProps.hits)
-			&& isEqual(this.props.streamHits, prevProps.streamHits)
+			isEqual(this.props.hits, nextProps.hits)
+			&& isEqual(this.props.streamHits, nextProps.streamHits)
 		) {
 			return false;
 		}
