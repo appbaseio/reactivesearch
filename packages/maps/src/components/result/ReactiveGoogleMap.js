@@ -73,9 +73,10 @@ class ReactiveGoogleMap extends Component {
 	};
 
 	setMapStyle = (currentMapStyle) => {
-		this.setState({
+		this.setState(prevState => ({
 			currentMapStyle,
-		});
+			updaterKey: prevState.updaterKey + 1,
+		}));
 	};
 
 	renderMap = (params) => {
