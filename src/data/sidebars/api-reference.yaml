@@ -1,4 +1,13 @@
 - groups:
+      - group: SearchBase
+        icon: js-bw
+        items:
+            - title: QuickStart
+              link: /api/searchbase/quickstart/
+            - title: API Reference
+              link: /api/searchbase/apireference/
+            - title: Library Integration
+              link: /api/searchbase/integrations/
       - group: Javascript
         icon: js-bw
         items:
