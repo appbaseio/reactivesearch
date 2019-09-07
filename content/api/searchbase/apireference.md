@@ -156,36 +156,53 @@ transformResponse: (response: any) => Promise<any>;
 ```
 
 ##Setters
+###Note
+Most of the methods accepts `options` as the second parameter which has the following shape:
 
 ```typescript
-  setHeaders: (headers: Object, options?: Options) => void;
+{
+    triggerQuery?: boolean, // defaults to `true`
+    triggerSuggestionsQuery?: boolean, // defaults to `false`
+    stateChanges?: boolean // defaults to `true`
+};
 
-  setSize: (size: number, options?: Options) => void;
+```
+-   **triggerQuery**
+    `true` means executes the `results` query after making the changes
+-   **triggerSuggestionsQuery**
+    `true` means executes the `suggestions` query after making the changes
+-   **stateChanges**
+    `true` means invoke the subscribed functions to `subscribeToStateChanges` method i.e trigger the re-render after making changes
 
-  setFrom: (from: number, options?: Options) => void;
+```typescript
+setHeaders: (headers: Object, options?: Options) => void;
 
-  setFuzziness: (fuzziness: number | string, options?: Options) => void;
+setSize: (size: number, options?: Options) => void;
 
-  setIncludeFields: (includeFields: Array<string>, options?: Options) => void;
+setFrom: (from: number, options?: Options) => void;
 
-  setExcludeFields: (excludeFields: Array<string>, options?: Options) => void;
+setFuzziness: (fuzziness: number | string, options?: Options) => void;
 
-  setSortBy: (sortBy: string, options?: Options) => void;
+setIncludeFields: (includeFields: Array<string>, options?: Options) => void;
 
-  setSortByField: (sortByField: string, options?: Options) => void;
+setExcludeFields: (excludeFields: Array<string>, options?: Options) => void;
 
-  setNestedField: (nestedField: string, options?: Options) => void;
+setSortBy: (sortBy: string, options?: Options) => void;
 
-  setDataField: (
-    dataField: string | Array<string | DataField>,
-    options?: Options
-  ) => void;
+setSortByField: (sortByField: string, options?: Options) => void;
 
-  setResults: (results: Array<Object>, options?: Option) => void;
+setNestedField: (nestedField: string, options?: Options) => void;
 
-  setSuggestions: (suggestions: Array<Suggestion>, options?: Option) => void;
+setDataField: (
+dataField: string | Array<string | DataField>,
+options?: Options
+) => void;
 
-  setValue: (value: string, options?: Options) => void;
+setResults: (results: Array<Object>, options?: Option) => void;
+
+setSuggestions: (suggestions: Array<Suggestion>, options?: Option) => void;
+
+setValue: (value: string, options?: Options) => void;
 ```
 
 ##Getters

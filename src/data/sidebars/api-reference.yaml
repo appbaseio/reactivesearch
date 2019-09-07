@@ -6,7 +6,7 @@
               link: /api/searchbase/quickstart/
             - title: API Reference
               link: /api/searchbase/apireference/
-            - title: Library Integration
+            - title: Library Integrations
               link: /api/searchbase/integrations/
       - group: Javascript
         icon: js-bw
