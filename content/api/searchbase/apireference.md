@@ -3,11 +3,9 @@ title: 'API Reference'
 meta_title: 'API Reference to SearchBase'
 meta_description: 'SearchBase is a lightweight & platform agnostic search library with some common utilities.'
 keywords:
-    - quickstart
-    - javascript
-    - appbase
-    - elasticsearch
+    - apireference
     - searchbase
+    - elasticsearch
     - search library
 sidebar: 'api-reference'
 ---
@@ -167,6 +165,7 @@ Most of the methods accepts `options` as the second parameter which has the foll
 };
 
 ```
+
 -   **triggerQuery**
     `true` means executes the `results` query after making the changes
 -   **triggerSuggestionsQuery**

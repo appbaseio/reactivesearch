@@ -3,11 +3,9 @@ title: 'Library Integrations'
 meta_title: 'Integrations with React and Vanilla JS'
 meta_description: 'SearchBase is a lightweight & platform agnostic search library with some common utilities.'
 keywords:
-    - quickstart
-    - javascript
-    - appbase
-    - elasticsearch
+    - integrations
     - searchbase
+    - elasticsearch
     - search library
 sidebar: 'api-reference'
 ---
