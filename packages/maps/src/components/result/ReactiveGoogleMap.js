@@ -125,6 +125,7 @@ class ReactiveGoogleMap extends Component {
 					options={{
 						styles: this.state.currentMapStyle.value,
 						...getInnerKey(this.props.mapProps, 'options'),
+						...this.props.mapOptions,
 					}}
 				>
 					{this.props.showMarkers && this.props.showMarkerClusters ? (
@@ -191,6 +192,7 @@ ReactiveGoogleMap.propTypes = {
 	innerRef: types.func,
 	loader: types.title,
 	mapProps: types.props,
+	mapOptions: types.props,
 	markerProps: types.props,
 	markers: types.children,
 	renderAllData: types.func,
