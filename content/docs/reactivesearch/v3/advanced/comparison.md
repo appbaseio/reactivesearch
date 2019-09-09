@@ -1,7 +1,7 @@
 ---
 title: 'Comparison'
 meta_title: 'Comparison'
-meta_description: 'Here, we share how ReactiveSearch compares with other projects that have similar aims.'
+meta_description: 'Here we share how ReactiveSearch compares with other projects that have similar aims.'
 keywords:
     - reactivesearch
     - comparison
@@ -13,7 +13,7 @@ nestedSidebar: 'web-reactivesearch'
 
 ### Comparison
 
-Here, we share how `ReactiveSearch` compares with other projects that have similar aims.
+Here we share how `ReactiveSearch` compares with other projects that have similar aims.
 
 <br />
 
@@ -26,4 +26,8 @@ Here, we share how `ReactiveSearch` compares with other projects that have simil
 |              **Types of Components** |                              Lists, Ranges, Search, Dates, Maps, Result Displays. Can use your own UI components.                               | Lists, Ranges, Search*, Result*. Can't use your own UI components. (Only one component for Search and Result, resulting in more code to be written for customizability) |                   Lists, Range, Search, Result. Can use your own UI components.                   |
 | **Supported Distribution Platforms** |                                         React, Vue, React Native, Android (coming soon).                                         |                                                                             React for Web.                                                                              | React, Vue, Angular, vanilla JS for Web, React Native for mobile but latter has no UI components. |
 
-The reason this page exists is because we often get asked about it. We welcome contributionstoon this page, and would like to add that our ideas on how other projects compare is based on cursory knowledge. If you are building a project or you know of another project that is in the similar space, let us know and we will update the comparisons.
+If you are interested in migrating to ReactiveSearch from a similar library, you can check out our migration guides:
+1. [Migrating from SearchKit](https://medium.appbase.io/migrating-from-searchkit-to-reactivesearch-10090f8e1d4d) and 
+2. [Migrating from InstantSearch](https://medium.appbase.io/migrating-from-instantsearch-to-reactivesearch-eb0d08680cea).
+
+The reason this page exists is because we often get asked about it. We welcome contributions to this page, and would like to add that our ideas on how other projects compare is based on cursory knowledge (and may not be up to date). If you are building a project or you know of another project that is in the similar space, let us know and we will update the comparisons.
