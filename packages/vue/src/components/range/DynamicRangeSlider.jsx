@@ -185,16 +185,15 @@ const DynamicRangeSlider = {
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {
 				let value = newVal;
-				if(!value){
+				if (!value) {
 					value = {
 						start: this.range.start,
-						end: this.range.end
+						end: this.range.end,
 					};
 				}
 				this.handleChange(DynamicRangeSlider.parseValue(value, this.$props));
 			}
 		},
-
 	},
 
 	created() {
@@ -242,7 +241,7 @@ const DynamicRangeSlider = {
 				)}
 				<NoSSR>
 					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
-						<vue-slider
+						<vue-slider-component
 							ref="slider"
 							value={this.currentValue}
 							min={this.range.start}
@@ -309,7 +308,7 @@ DynamicRangeSlider.defaultQuery = (values, props) => {
 	return query;
 };
 
-DynamicRangeSlider.parseValue = (value, props) => [value.start, value.end]
+DynamicRangeSlider.parseValue = value => [value.start, value.end];
 
 const mapStateToProps = (state, props) => {
 	let options

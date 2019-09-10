@@ -183,7 +183,7 @@ const RangeSlider = {
 				{this.$props.range ? (
 					<NoSSR>
 						<Slider class={getClassName(this.$props.innerClass, 'slider')}>
-							<vue-slider
+							<vue-slider-component
 								ref="slider"
 								value={this.currentValue}
 								min={this.$props.range.start}
