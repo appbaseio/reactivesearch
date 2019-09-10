@@ -38,7 +38,8 @@ class App extends React.Component {
 			dataField: 'location',
 			defaultMapStyle: 'Light Monochrome',
 			title: 'Reactive Maps',
-			defaultZoom: 13,
+			defaultZoom: 3,
+			size: 50,
 			react: {
 				and: 'places',
 			},

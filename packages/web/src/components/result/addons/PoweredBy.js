@@ -25,7 +25,7 @@ class PoweredBy extends React.PureComponent {
 }
 
 PoweredBy.propTypes = {
-	show: types.number,
+	show: types.bool,
 	innerClass: types.style,
 };
 

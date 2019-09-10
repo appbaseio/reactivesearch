@@ -742,7 +742,7 @@ class ReactiveList extends Component {
 					: null}
 
 				<PoweredBy
-					show={this.props.config.url.endsWith('appbase.io') && filteredResults.length}
+					show={!!(this.props.config.url.endsWith('appbase.io') && filteredResults.length)}
 					innerClass={this.props.innerClass}
 				/>
 			</div>
