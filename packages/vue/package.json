@@ -33,7 +33,7 @@
 		"dist"
 	],
 	"dependencies": {
-		"@appbaseio/reactivecore": "8.2.10",
+		"@appbaseio/reactivecore": "8.2.11",
 		"@appbaseio/vue-emotion": "0.4.4",
 		"@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
 		"appbase-js": "^4.0.2-beta.06",
