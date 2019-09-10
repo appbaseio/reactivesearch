@@ -415,6 +415,10 @@ class SingleList extends Component {
 		}
 
 		if (!this.hasCustomRenderer && this.state.options.length === 0) {
+			if (this.props.renderNoResults && !this.props.isLoading) {
+				return this.props.renderNoResults();
+			}
+
 			return null;
 		}
 
