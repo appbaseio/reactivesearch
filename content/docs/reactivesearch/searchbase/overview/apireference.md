@@ -7,7 +7,8 @@ keywords:
     - searchbase
     - elasticsearch
     - search library
-sidebar: 'api-reference'
+sidebar: 'docs'
+nestedSidebar: 'searchbase-reactivesearch'
 ---
 
 [searchbase](https://github.com/appbaseio/searchbase) - A lightweight & platform agnostic search library with some common utilities.

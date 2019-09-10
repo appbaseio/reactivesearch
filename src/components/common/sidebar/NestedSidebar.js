@@ -28,6 +28,8 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 			window.location.href = `${
 				window.location.origin
 			}/docs/reactivesearch/v2/overview/QuickStart`;
+		} else if (value.value === 'SearchBase') {
+			window.location.href = `${window.location.origin}/docs/reactivesearch/searchbase/overview/QuickStart`;
 		}
 	};
 
@@ -41,6 +43,9 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 		if (location.pathname.startsWith('/docs/reactivesearch/native')) {
 			return 'Native';
 		}
+		if (location.pathname.startsWith('/docs/reactivesearch/searchbase')) {
+			return 'SearchBase';
+		}
 
 		return 'React - v3';
 	};
@@ -48,7 +53,7 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 	return (
 		<Fragment>
 			<Dropdown
-				options={['React - v3', 'React - v2', 'Native', 'Vue']}
+				options={['React - v3', 'React - v2', 'Native', 'Vue', 'SearchBase']}
 				value={getValue()}
 				className="version-switcher shadow-3 br2"
 				menuClassName="br2 shadow-3"
