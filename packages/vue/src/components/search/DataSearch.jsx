@@ -498,8 +498,9 @@ const DataSearch = {
 											currentValue: this.$data.currentValue,
 											isOpen,
 											getItemProps,
+											getItemEvents,
 											highlightedIndex,
-											suggestions: this.props.suggestions,
+											suggestions: this.suggestions,
 											parsedSuggestions: this.suggestionsList,
 										})}
 									{this.renderErrorComponent()}
