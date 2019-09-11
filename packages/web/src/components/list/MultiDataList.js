@@ -427,7 +427,7 @@ class MultiDataList extends Component {
 		const { options } = this.state;
 
 		if (!this.hasCustomRenderer && options.length === 0) {
-			return null;
+			return this.props.renderNoResults ? this.props.renderNoResults() : null;
 		}
 
 		const listItems = this.listItems;
