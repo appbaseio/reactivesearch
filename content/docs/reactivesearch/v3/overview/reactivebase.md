@@ -72,8 +72,11 @@ This is the first component you will need to add when using `ReactiveSearch`.
     Enables you to customise setting of the query params string in the url by providing the updated query-params-string as the function parameter. If this function is not set, the library will set the `window.history` via `pushState` method.
 -   **transformRequest** `Function` [optional]
     Enables transformation of network request before execution. This function will give you the the request object as the param and expect an updated request in return, for execution. Note that this is an experimental API and will likely change in the future.
-	
-If you need to include credentials (credentials are cookies, authorization headers or TLS client certificates), you can do it this way: 
+	> Note:
+    >
+    > From v3.0.1 it is possible to define `transformRequest` as an `async` method which will return a promise which resolves the modified request options.
+
+If you need to include credentials (credentials are cookies, authorization headers or TLS client certificates), you can do it this way:
 
 ```js{3-6}
 <ReactiveBase
@@ -87,6 +90,23 @@ If you need to include credentials (credentials are cookies, authorization heade
     <Component2 .. />
 </ReactiveBase>
 ```
+
+You can also modify the request `URL` in that way:
+
+```js{3-6}
+<ReactiveBase
+  app="appname"
+  transformRequest={props => ({
+    ...props,
+    url: props.url.replace('_msearch', '_search')
+  })}
+>
+    <Component1 .. />
+    <Component2 .. />
+</ReactiveBase>
+```
+
+The above example will change the default `_msearch` request to `_search` request.
 
 -   **graphQLUrl** `String` [optional]
     Allows user to query from GraphqQL server instead of `ElasticSearch` REST api. [graphql-compose-elasticsearch](https://github.com/graphql-compose/graphql-compose-elasticsearch) helps in transforming `GraphQL` queries into `ElasticSearch` rest api. Here is an example of `GraphQL` server which acts as proxy for `ElasticSearch`.
