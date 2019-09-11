@@ -6,6 +6,18 @@
     <summary>The following changes have been included in the <code>next</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+## v3.0.1
+- Add support for async `transformRequest` in SSR [#1114](https://github.com/appbaseio/reactivesearch/issues/1114)
+- Allow to modify url in `transformRequest` [[52b76018]](https://github.com/appbaseio/reactivesearch/commit/52b76018)
+- Trigger renderNoResults when no items returned from msearch [#1145](https://github.com/appbaseio/reactivesearch/issues/1145) [#1137](https://github.com/appbaseio/reactivesearch/issues/1137)
+- SSR v7 total object -> value [#1147](https://github.com/appbaseio/reactivesearch/issues/1147) [#1139](https://github.com/appbaseio/reactivesearch/issues/1139)
+- Prop validation in PoweredBy [#1144](https://github.com/appbaseio/reactivesearch/issues/1144)
+- Make selectedfilters accessible [#1132](https://github.com/appbaseio/reactivesearch/issues/1132)
+- Close dropdown on escape key [#1126](https://github.com/appbaseio/reactivesearch/issues/1126)
+- Focus input after mic has stopped listening [#1125](https://github.com/appbaseio/reactivesearch/issues/1125)
+- TabIndex and alt attribute on pagination [#1131](https://github.com/appbaseio/reactivesearch/issues/1131)
+- Force ReactiveList to re-render if customRender changes [#1124](https://github.com/appbaseio/reactivesearch/issues/1124)
+
 ## v3.0.0-rc.25
 
 -   Controlled behavior when autoSuggest is enabled [[a1277381]](https://github.com/appbaseio/reactivesearch/commit/a1277381)
