@@ -267,7 +267,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 		appbaseRef
 			.msearch({
 				type: config.type === '*' ? '' : config.type,
-				body: config.transformRequest ? config.transformRequest(finalQuery) : finalQuery,
+				body: finalQuery,
 			})
 			.then(res => {
 				orderOfQueries.forEach((component, index) => {

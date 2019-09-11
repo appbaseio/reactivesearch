@@ -295,7 +295,10 @@ export default function initReactivesearch(componentCollection, searchState, set
 									...hits,
 									[component]: {
 										hits: response.hits.hits,
-										total: typeof response.hits.total === 'object' ? response.hits.total.value : response.hits.total,
+										total:
+											typeof response.hits.total === 'object'
+												? response.hits.total.value
+												: response.hits.total,
 										time: response.took,
 									},
 								};
@@ -315,26 +318,36 @@ export default function initReactivesearch(componentCollection, searchState, set
 			});
 		};
 
-		const requestQuery = config.transformRequest
-			? config.transformRequest(finalQuery)
-			: finalQuery;
 		if (config.graphQLUrl) {
-			fetchGraphQL(
-				config.graphQLUrl,
-				config.url,
-				config.credentials,
-				config.app,
-				requestQuery,
-			)
-				.then((res) => {
-					handleResponse(res);
+			const handleTransformRequest = (res) => {
+				if (config.transformRequest && typeof config.transformRequest === 'function') {
+					const transformRequestPromise = config.transformRequest(res);
+					return transformRequestPromise instanceof Promise
+						? transformRequestPromise
+						: Promise.resolve(transformRequestPromise);
+				}
+				return Promise.resolve(res);
+			};
+			handleTransformRequest(finalQuery)
+				.then((requestQuery) => {
+					fetchGraphQL(
+						config.graphQLUrl,
+						config.url,
+						config.credentials,
+						config.app,
+						requestQuery,
+					)
+						.then((res) => {
+							handleResponse(res);
+						})
+						.catch(err => reject(err));
 				})
 				.catch(err => reject(err));
 		} else {
 			appbaseRef
 				.msearch({
 					type: config.type === '*' ? '' : config.type,
-					body: requestQuery,
+					body: finalQuery,
 				})
 				.then((res) => {
 					handleResponse(res);
