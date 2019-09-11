@@ -66,9 +66,9 @@ You can start by pasting the public key in the text area provided for _Public Ke
 
 ![](https://www.dropbox.com/s/n1vqfle2t3vrma8/Screenshot%202019-06-19%2017.56.04.png?dl=1)
 
-#### 2. Mapping roles to [API Credentials](/security/Credentials.html)
+#### 2. Mapping roles to [API Credentials](/docs/security/Credentials)
 
-Once the _Public Key_ and _Role Key_ is configured, you can set up the actual roles that a user can have in your application in **Map Roles to API Credential** section. Each credentials created in [API Credentials](/security/Credentials.html) section can have a unique role name, which would be the value encoded in our JWT.
+Once the _Public Key_ and _Role Key_ is configured, you can set up the actual roles that a user can have in your application in **Map Roles to API Credential** section. Each credentials created in [API Credentials](/docs/security/Credentials) section can have a unique role name, which would be the value encoded in our JWT.
 
 ![](https://www.dropbox.com/s/oxxtdl8koww9mro/Screenshot%202019-06-19%2018.25.59.png?dl=1)
 
