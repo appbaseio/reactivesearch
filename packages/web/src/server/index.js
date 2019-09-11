@@ -295,7 +295,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 									...hits,
 									[component]: {
 										hits: response.hits.hits,
-										total: response.hits.total,
+										total: typeof response.hits.total === 'object' ? response.hits.total.value : response.hits.total,
 										time: response.took,
 									},
 								};
