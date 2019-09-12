@@ -34,9 +34,8 @@ const ToggleButton = {
 		renderItem: types.func,
 	},
 	data() {
-		const props = this.$props;
-		const value = this.selectedValue || props.value || props.defaultSelected || [];
-		const currentValue = ToggleButton.parseValue(value, props);
+		const value = this.selectedValue || this.value || this.defaultSelected || [];
+		const currentValue = ToggleButton.parseValue(value, this.$props);
 		this.__state = {
 			currentValue,
 		};
@@ -45,73 +44,72 @@ const ToggleButton = {
 		return this.__state;
 	},
 	beforeMount() {
-		const props = this.$props;
 		const hasMounted = false;
-		if (this.$data.currentValue.length) {
-			this.handleToggle(this.$data.currentValue, true, props, hasMounted);
+		if (this.currentValue.length) {
+			this.handleToggle(this.currentValue, true, hasMounted);
 		}
-		this.addComponent(props.componentId);
-		this.setReact(props);
+		this.addComponent(this.componentId);
+		this.setReact();
 	},
 	created() {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
+		this.setQueryListener(this.componentId, onQueryChange, e => {
 			this.$emit('error', e);
 		});
 	},
 	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
+		this.removeComponent(this.componentId);
 	},
 	watch: {
 		defaultSelected(newVal) {
-			this.setValue(ToggleButton.parseValue(newVal, this.$props));
+			this.setValue(ToggleButton.parseValue(newVal));
 		},
 		react() {
-			this.setReact(this.$props);
+			this.setReact();
 		},
 		dataField() {
-			this.updateQuery(this.$data.currentValue, this.$props);
+			this.updateQuery(this.currentValue);
 		},
 		nestedField() {
-			this.updateQuery(this.$data.currentValue, this.$props);
+			this.updateQuery(this.currentValue);
 		},
 		value(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
-				this.handleToggle(newVal, true, this.$props);
+				this.handleToggle(newVal, true);
 			}
 		},
 		selectedValue(newVal, oldVal) {
-			if (this.$props.multiSelect) {
+			if (this.multiSelect) {
 				// for multiselect selectedValue will be an array
-				if (!isEqual(this.$data.currentValue, newVal) && !isEqual(oldVal, newVal)) {
-					this.handleToggle(newVal || [], true, this.$props);
+				if (!isEqual(this.currentValue, newVal) && !isEqual(oldVal, newVal)) {
+					this.handleToggle(newVal || [], true);
 				}
 			} else {
 				// else selectedValue will be a string
-				const currentValue = this.$data.currentValue[0]
-					? this.$data.currentValue[0].value
+				const currentValue = this.currentValue[0]
+					? this.currentValue[0].value
 					: null;
 
 				if (
 					!isEqual(currentValue, this.selectedValue)
 					&& !isEqual(oldVal, this.selectedValue)
 				) {
-					this.handleToggle(this.selectedValue || [], true, this.$props);
+					this.handleToggle(this.selectedValue || [], true);
 				}
 			}
 		},
 	},
 	methods: {
-		handleToggle(value, isDefaultValue = false, props = this.$props, hasMounted = true) {
-			const { currentValue } = this.$data;
+		handleToggle(value, isDefaultValue = false, hasMounted = true) {
+			const { currentValue } = this;
 			const toggleValue = value;
 			let finalValue = [];
 
 			if (isDefaultValue) {
-				finalValue = ToggleButton.parseValue(toggleValue, props);
-			} else if (this.$props.multiSelect) {
+				finalValue = ToggleButton.parseValue(toggleValue, this.$props);
+			} else if (this.multiSelect) {
 				finalValue = currentValue.some(item => item.value === toggleValue.value)
 					? currentValue.filter(item => item.value !== toggleValue.value)
 					: currentValue.concat(toggleValue);
@@ -121,18 +119,18 @@ const ToggleButton = {
 					: [toggleValue];
 			}
 
-			this.setValue(finalValue, props, hasMounted);
+			this.setValue(finalValue, hasMounted);
 		},
 
-		setReact(props) {
-			if (props.react) {
-				this.watchComponent(props.componentId, props.react);
+		setReact() {
+			if (this.react) {
+				this.watchComponent(this.componentId, this.react);
 			}
 		},
 
-		setValue(value, props = this.$props, hasMounted = true) {
+		setValue(value, hasMounted = true) {
 			// ignore state updates when component is locked
-			if (props.beforeValueChange && this.locked) {
+			if (this.beforeValueChange && this.locked) {
 				return;
 			}
 
@@ -140,7 +138,7 @@ const ToggleButton = {
 
 			const performUpdate = () => {
 				const handleUpdates = () => {
-					this.updateQuery(value, props);
+					this.updateQuery(value);
 					this.locked = false;
 					this.$emit('valueChange', value);
 				};
@@ -154,45 +152,45 @@ const ToggleButton = {
 			};
 
 			checkValueChange(
-				props.componentId,
-				props.multiSelect ? value : value[0],
-				props.beforeValueChange,
+				this.componentId,
+				this.multiSelect ? value : value[0],
+				this.beforeValueChange,
 				performUpdate,
 			);
 		},
 
-		updateQuery(value, props) {
+		updateQuery(value) {
 			let filterValue = value;
 
-			if (!props.multiSelect) {
+			if (!this.multiSelect) {
 				filterValue = value[0] ? value[0].value : null;
 			}
 
-			const { customQuery } = props;
-			let query = ToggleButton.defaultQuery(value, props);
+			const { customQuery } = this;
+			let query = ToggleButton.defaultQuery(value, this.$props);
 
 			if (customQuery) {
-				({ query } = customQuery(value, props) || {});
+				({ query } = customQuery(value, this.$props) || {});
 				this.setQueryOptions(
-					props.componentId,
-					getOptionsFromQuery(customQuery(value, props)),
+					this.componentId,
+					getOptionsFromQuery(customQuery(value, this.$props)),
 				);
 			}
 
 			this.updateQueryHandler({
-				componentId: props.componentId,
+				componentId: this.componentId,
 				query,
 				value: filterValue,
 				// sets a string in URL not array
-				label: props.filterLabel,
-				showFilter: props.showFilter,
-				URLParams: props.URLParams,
+				label: this.filterLabel,
+				showFilter: this.showFilter,
+				URLParams: this.URLParams,
 				componentType: 'TOGGLEBUTTON',
 			});
 		},
 
 		handleClick(item) {
-			const { value } = this.$props;
+			const { value } = this;
 			if (value === undefined) {
 				this.handleToggle(item);
 			} else {
@@ -202,11 +200,10 @@ const ToggleButton = {
 
 		renderButton(item) {
 			const renderItem = this.$scopedSlots.renderItem || this.renderItem;
-			const isSelected = this.$data.currentValue.some(value => value.value === item.value);
-
+			const isSelected = this.currentValue.some(value => value.value === item.value);
 			return (
 				<Button
-					class={`${getClassName(this.$props.innerClass, 'button')} ${
+					class={`${getClassName(this.innerClass, 'button')} ${
 						isSelected ? 'active' : ''
 					}`}
 					onClick={() => this.handleClick(item)}
@@ -223,12 +220,12 @@ const ToggleButton = {
 	render() {
 		return (
 			<Container class={toggleButtons}>
-				{this.$props.title && (
-					<Title class={getClassName(this.$props.innerClass, 'title')}>
-						{this.$props.title}
+				{this.title && (
+					<Title class={getClassName(this.innerClass, 'title')}>
+						{this.title}
 					</Title>
 				)}
-				{this.$props.data.map(item => this.renderButton(item))}
+				{this.data.map(item => this.renderButton(item))}
 			</Container>
 		);
 	},
