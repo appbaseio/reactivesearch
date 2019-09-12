@@ -196,6 +196,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
         currentValue,       // the current value in the search
         isOpen,             // isOpen from downshift
         getItemProps,       // item props to be passed to suggestions
+		getItemEvents,      // item events to be passed to suggestions
         highlightedIndex,   // index value which should be highlighted
         suggestions,        // unmodified suggestions from Elasticsearch
         parsedSuggestions,  // suggestions parsed by ReactiveSearch
