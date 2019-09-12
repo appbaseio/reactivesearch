@@ -15,6 +15,7 @@ export interface SingleDropdownRangeProps extends CommonProps {
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
 	placeholder?: string;
+	searchPlaceholder?: string;
 	react?: types.react;
 	showFilter?: boolean;
 	title?: types.title;

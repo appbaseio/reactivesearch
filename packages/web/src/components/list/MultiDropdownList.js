@@ -486,6 +486,7 @@ class MultiDropdownList extends Component {
 					onChange={this.handleChange}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
+					searchPlaceholder={this.props.searchPlaceholder}
 					labelField="key"
 					multi
 					showCount={this.props.showCount}
@@ -542,6 +543,7 @@ MultiDropdownList.propTypes = {
 	onChange: types.func,
 	onError: types.func,
 	placeholder: types.string,
+	searchPlaceholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
 	render: types.func,

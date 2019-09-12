@@ -252,6 +252,7 @@ class MultiDropdownRange extends Component {
 					onChange={this.handleChange}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
+					searchPlaceholder={this.props.searchPlaceholder}
 					keyField="label"
 					multi
 					returnsObject
@@ -289,6 +290,7 @@ MultiDropdownRange.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.string,
+	searchPlaceholder: types.string,
 	react: types.react,
 	showFilter: types.bool,
 	style: types.style,
