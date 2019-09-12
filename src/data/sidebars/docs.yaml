@@ -2,14 +2,8 @@
       - group: Getting Started
         icon: gettingStarted
         items:
-            - title: QuickStart
+            - title: Overview
               link: /docs/gettingstarted/QuickStart/
-            - title: Clusters
-              link: /docs/gettingstarted/Cluster/
-            - title: Open Distro
-              link: /docs/gettingstarted/OpenDistro/
-            - title: Why Appbase Cluster
-              link: /docs/gettingstarted/WhyAppbase/
       - group: Managing Data
         icon: importData
         items:
@@ -43,3 +37,12 @@
               link: /docs/security/Template/
             - title: Role Based Access Control
               link: /docs/security/Role/
+      - group: Hosting
+        icon: rocket
+        items:
+            - title: Clusters
+              link: /docs/hosting/Cluster/
+            - title: Why Appbase Cluster
+              link: /docs/hosting/WhyAppbase/
+            - title: Open Distro
+              link: /docs/hosting/OpenDistro/

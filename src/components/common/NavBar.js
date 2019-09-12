@@ -31,9 +31,7 @@ const NavBar = ({ theme }) => {
 	return (
 		<nav className="shadow-3 on-white">
 			<div
-				className={`${
-					Spirit.page.xl
-				} flex flex-auto flex-nowrap items-center justify-between pt2 pb2`}
+				className={`${Spirit.page.xl} flex flex-auto flex-nowrap items-center justify-between pt2 pb2`}
 				data-cy="header-navigation"
 			>
 				<div className="flex items-center pt3 pb3 nudge-bottom--2 w-sidebar-l pr8 nav-logo">
@@ -69,9 +67,7 @@ const NavBar = ({ theme }) => {
 												onMouseLeave={() => value.handleKey(null)}
 											>
 												<div
-													className={`${
-														Spirit.page.xl
-													} pt2 pb2 grid-dropdown grid-dropdown-4`}
+													className={`${Spirit.page.xl} pt2 pb2 grid-dropdown grid-dropdown-4`}
 												>
 													<div>
 														<h2 className="f2 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey">
@@ -88,9 +84,7 @@ const NavBar = ({ theme }) => {
 													</h2> */}
 														<Link
 															to="/docs/gettingstarted/QuickStart/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="gettingStarted"
@@ -100,9 +94,7 @@ const NavBar = ({ theme }) => {
 														</Link>
 														<Link
 															to="/docs/data/Model/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="importData"
@@ -114,9 +106,7 @@ const NavBar = ({ theme }) => {
 													<div>
 														<Link
 															to="/docs/search/Preview/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="searchRelevancy"
@@ -126,9 +116,7 @@ const NavBar = ({ theme }) => {
 														</Link>
 														<Link
 															to="/docs/reactivesearch/v3/overview/quickstart/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="buildingUI"
@@ -136,13 +124,21 @@ const NavBar = ({ theme }) => {
 															/>
 															Building Search UI
 														</Link>
+														<Link
+															to="/docs/hosting/Cluster/"
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+														>
+															<Icon
+																name="rocket"
+																className="dropdown-content-icon mr2"
+															/>
+															Hosting
+														</Link>
 													</div>
 													<div>
 														<Link
 															to="/docs/analytics/Overview"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="analytics"
@@ -152,9 +148,7 @@ const NavBar = ({ theme }) => {
 														</Link>
 														<Link
 															to="/docs/security/Credentials"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="security"
@@ -191,9 +185,7 @@ const NavBar = ({ theme }) => {
 												onMouseLeave={() => value.handleKey(null)}
 											>
 												<div
-													className={`${
-														Spirit.page.xl
-													} pt2 pb2 grid-dropdown grid-dropdown-4`}
+													className={`${Spirit.page.xl} pt2 pb2 grid-dropdown grid-dropdown-4`}
 												>
 													<div>
 														<h2 className="f2 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey">
@@ -211,9 +203,7 @@ const NavBar = ({ theme }) => {
 														</h2>
 														<Link
 															to="/docs/reactivesearch/v3/overview/quickstart/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="react-bw"
@@ -223,9 +213,7 @@ const NavBar = ({ theme }) => {
 														</Link>
 														<Link
 															to="/docs/reactivesearch/vue/overview/QuickStart/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="vue-bw"
@@ -235,9 +223,7 @@ const NavBar = ({ theme }) => {
 														</Link>
 														<Link
 															to="/docs/reactivesearch/native/overview/QuickStart/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="react-bw"
@@ -252,9 +238,7 @@ const NavBar = ({ theme }) => {
 														</h2>
 														<Link
 															to="/api/javascript/quickstart/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="js-bw"
@@ -264,9 +248,7 @@ const NavBar = ({ theme }) => {
 														</Link>
 														<Link
 															to="/api/go/quickstart/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="go-bw"
@@ -276,9 +258,7 @@ const NavBar = ({ theme }) => {
 														</Link>
 														<Link
 															to="/api/rest/quickstart/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="rest"
@@ -290,9 +270,7 @@ const NavBar = ({ theme }) => {
 															href="https://github.com/appbaseio/appbase-droid"
 															target="_blank"
 															rel="noopener noreferrer"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="android-logo"
@@ -305,9 +283,7 @@ const NavBar = ({ theme }) => {
 															href="https://github.com/appbaseio/appbase-swift"
 															target="_blank"
 															rel="noopener noreferrer"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<img
 																style={{ filter: 'grayscale(1)' }}
@@ -324,9 +300,7 @@ const NavBar = ({ theme }) => {
 														</h2>
 														<Link
 															to="/api/examples/python/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="python-bw"
@@ -336,9 +310,7 @@ const NavBar = ({ theme }) => {
 														</Link>
 														<Link
 															to="/api/examples/js/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="js-bw"
@@ -348,9 +320,7 @@ const NavBar = ({ theme }) => {
 														</Link>
 														<Link
 															to="/api/examples/go/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="go-bw"
@@ -360,9 +330,7 @@ const NavBar = ({ theme }) => {
 														</Link>
 														<Link
 															to="/api/examples/php/"
-															className={`${
-																themeClasses[theme].menuItem
-															} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="php-bw"

@@ -48,29 +48,11 @@ const HomePage = ({ data, location }) => {
 										),
 										chapters: [
 											{
-												title: 'Quick Start',
-												description: 'Quick start with Appbaseio',
+												title: 'Overview',
+												description:
+													'Overview and Quickstart with appbase.io',
 												link: '/docs/gettingstarted/QuickStart/',
 												duration: 3,
-											},
-											{
-												title: 'Cluster',
-												link: '/docs/gettingstarted/Cluster/',
-												duration: 5,
-												description:
-													'Now you can host your own dedicated ElasticSearch clusters to meet your business needs using appbase.io clusters. ',
-											},
-											{
-												title: 'Open Distro',
-												link: '/docs/gettingstarted/OpenDistro/',
-												duration: 2,
-												description:
-													'Now with the appbase.io clusters you can host an open distro flavour of elasticsearch.',
-											},
-											{
-												title: 'Why Appbase Cluster',
-												link: '/docs/gettingstarted/WhyAppbase/',
-												duration: 2,
 											},
 										],
 									},
@@ -220,6 +202,36 @@ const HomePage = ({ data, location }) => {
 												title: 'Role Based Access',
 												link: '/docs/security/Role/',
 												duration: 4,
+											},
+										],
+									},
+									'7': {
+										title: 'Hosting',
+										icon: (
+											<Icon
+												name="rocket"
+												className="dropdown-content-icon"
+											/>
+										),
+										chapters: [
+											{
+												title: 'Cluster',
+												link: '/docs/hosting/Cluster/',
+												duration: 5,
+												description:
+													'Now you can host your own dedicated ElasticSearch clusters to meet your business needs using appbase.io clusters. ',
+											},
+											{
+												title: 'Open Distro',
+												link: '/docs/hosting/OpenDistro/',
+												duration: 2,
+												description:
+													'Now with the appbase.io clusters you can host an open distro flavour of elasticsearch.',
+											},
+											{
+												title: 'Why Appbase Cluster',
+												link: '/docs/hosting/WhyAppbase/',
+												duration: 2,
 											},
 										],
 									},
