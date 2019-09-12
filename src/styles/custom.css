@@ -1819,3 +1819,10 @@ to be custom HTML.
 	fill: white;
 	stroke: white;
 }
+
+.community-icons {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+
+}

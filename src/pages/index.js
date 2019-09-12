@@ -30,7 +30,7 @@ const HomePage = ({ data, location }) => {
 						<p
 							className={`${Spirit.h4} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
 						>
-							All libraries and tools, integrated with Appbase.
+							Appbase.io features organized by guides and chapters
 						</p>
 						<div className="mt5 timeline-steps">
 							<TimelineOption
@@ -39,8 +39,7 @@ const HomePage = ({ data, location }) => {
 								items={{
 									'1': {
 										title: 'Getting Started',
-										subtitle:
-											'Build amazing search Ux with reactive UI components.',
+										subtitle: 'Overview and Quickstart with appbase.io',
 										icon: (
 											<Icon
 												name="gettingStarted"
@@ -238,7 +237,7 @@ const HomePage = ({ data, location }) => {
 						<p
 							className={`${Spirit.h4} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
 						>
-							All libraries and frameworks, integrated with Appbase.
+							Getting started guides for your favourite libraries and frameworks
 						</p>
 						<div className="grid-integrations-index mt4 mt6-l f8">
 							<Box
@@ -344,60 +343,60 @@ const HomePage = ({ data, location }) => {
 						<p
 							className={`${Spirit.h4} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
 						>
-							Resources to get help with Reactive Search.
+							Resources to get help with appbase.io
 						</p>
 						<Grid
-							size={4}
-							lgSize={2}
+							size={3}
+							lgSize={3}
 							smSize={1}
 							gutter="20px"
 							lgGutter="12px"
 							smGutter="0px"
 							className="mt5"
 						>
-							<Card big href="/docs/reactivesearch/v3/overview/quickstart/">
-								<img src={`${imagePrefix}/Documentation.svg`} alt="Documentation" />
-								<h3>Documentation</h3>
-								<p>
-									Dive in to learn all about{' '}
-									<span
-										style={{
-											color: '#0033FF',
-										}}
-									>
-										Reactive X
-									</span>{' '}
-									development for all platforms.
-								</p>
-							</Card>
-							<Card big href="https://medium.appbase.io">
+							<Card href="https://medium.appbase.io/tagged/appbase">
 								<img src={`${imagePrefix}/Tutorials.svg`} alt="Tutorials" />
 								<h3>Tutorials</h3>
 								<p>Go from scratch to a full app with these tutorial guides.</p>
 							</Card>
-							<Card big href="https://appbase.io/support">
+							<Card href=" https://appbase.io/pricing/#support">
 								<img src={`${imagePrefix}/Support.png`} alt="Support" />
 								<h3>Support</h3>
 								<p>
-									Get first-class support from appbase.io for your{' '}
-									<span
-										style={{
-											color: '#0033FF',
-										}}
-									>
-										Reactive X
-									</span>{' '}
+									Get first-class support from appbase.io team for your search
 									app.
 								</p>
 							</Card>
-							<Card big href="https://gitter.im/appbaseio/reactivesearch">
+							<Card>
 								<img src={`${imagePrefix}/Gitter.svg`} alt="Gitter" />
-								<h3>Gitter</h3>
-								<p>
-									Join our community on Gitter. We
-									{"'"}
-									re always around and happy to help.
-								</p>
+								<h3>Community</h3>
+								<p>We are always around and happy to help.</p>
+								<div className="community-icons pr-3 pl-3">
+									<a
+										href="https://github.com/appbaseio"
+										target="_blank"
+										title="Github"
+										rel="noopener noreferrer"
+									>
+										<Icon name="github-outline" />
+									</a>
+									<a
+										href="https://stackoverflow.com/questions/tagged/reactivesearch"
+										target="_blank"
+										title="StackOverflow"
+										rel="noopener noreferrer"
+									>
+										<Icon name="stackoverflow" />
+									</a>
+									<a
+										href="https://gitter.im/appbaseio/reactivesearch"
+										target="_blank"
+										title="Gitter"
+										rel="noopener noreferrer"
+									>
+										<Icon name="gitter" />
+									</a>
+								</div>
 							</Card>
 						</Grid>
 					</section>
