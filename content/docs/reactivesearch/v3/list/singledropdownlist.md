@@ -84,7 +84,9 @@ Example uses:
 -   **missingLabel** `String` [optional]
     defaults to `N/A`. Specify a custom label to show when `showMissing` is set to `true`.
 -   **placeholder** `String` [optional]
-    placeholder to be displayed in the dropdown searchbox.
+    placeholder to be displayed in the select box. It'll be only applicable when no value is selected.
+-   **searchPlaceholder** `String` [optional]
+    placeholder to be displayed in the search box. Defaults to `Type here to search...`.
 -   **selectAllLabel** `String` [optional]
     if provided, shows an extra option to select all the options in the list with the provided string value.
 -   **showFilter** `Boolean` [optional]
