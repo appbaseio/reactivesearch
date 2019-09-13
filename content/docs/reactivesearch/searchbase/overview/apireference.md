@@ -221,7 +221,7 @@ setValue: (value: string, options?: Options) => void;
     Returns `true` if mic is active
 -   **minInactive** `boolean`
     Returns `true` if mic is inactive
--   **micDenied**
+-   **micDenied** `boolean`
     Returns `true` if it doesn't have access to the mic
 -   **micInstance**
     Returns the current mic instance. Can be used to set mic language and other properties of mic
