@@ -12,6 +12,7 @@ import {
 	setQueryListener,
 	setComponentProps,
 	updateComponentProps,
+	setSuggestionsSearchValue,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	debounce,
@@ -501,6 +502,7 @@ class CategorySearch extends Component {
 			}
 			defaultQueryOptions = getOptionsFromQuery(defaultQueryTobeSet);
 		}
+		props.setSuggestionsSearchValue(value);
 		props.setQueryOptions(this.internalComponent, {
 			...this.queryOptions,
 			...this.getAggsQuery(props.categoryField), // default aggs query options
@@ -511,6 +513,7 @@ class CategorySearch extends Component {
 			query,
 			value,
 			category,
+			componentType: componentTypes.categorySearch,
 		});
 	};
 
@@ -891,7 +894,7 @@ class CategorySearch extends Component {
 		// click analytics would only work client side and after javascript loads
 		const {
 			config,
-			analytics: { searchId },
+			analytics: { suggestionsSearchId },
 			headers,
 		} = this.props;
 		const { url, app, credentials } = config;
@@ -899,14 +902,14 @@ class CategorySearch extends Component {
 			= this.context && this.context.store
 				? getSearchState(this.context.store.getState(), true)
 				: null;
-		if (config.analytics && searchId) {
+		if (config.analytics && suggestionsSearchId) {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
 				headers: {
 					...headers,
 					'Content-Type': 'application/json',
 					Authorization: `Basic ${btoa(credentials)}`,
-					'X-Search-Id': searchId,
+					'X-Search-Id': suggestionsSearchId,
 					'X-Search-Click': true,
 					...(searchPosition !== undefined && {
 						'X-Search-ClickPosition': searchPosition + 1,
@@ -1063,6 +1066,7 @@ CategorySearch.propTypes = {
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
+	setSuggestionsSearchValue: types.funcRequired,
 	options: types.options,
 	categories: types.data,
 	selectedValue: types.selectedValue,
@@ -1178,6 +1182,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
+	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
 	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
 	updateComponentProps: (component, options) =>
 		dispatch(updateComponentProps(component, options)),
