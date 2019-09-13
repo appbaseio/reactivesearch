@@ -83,7 +83,9 @@ Example uses:
 -   **onChange** `function` [optional]
     is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
 -   **placeholder** `String` [optional]
-    set the placeholder to show for the dropdown UI, useful when no option is `defaultSelected`. The default placeholder value is set to "Select a value".
+    placeholder to be displayed in the select box. It'll be only applicable when no value is selected. Defaults to `Select a value`.
+-   **searchPlaceholder** `String` [optional]
+    placeholder to be displayed in the search box. Defaults to `Type here to search...`.
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **filterLabel** `String` [optional]

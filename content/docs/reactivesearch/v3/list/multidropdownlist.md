@@ -108,7 +108,9 @@ function Index(props) {
 -   **missingLabel** `String` [optional]
     defaults to `N/A`. Specify a custom label to show when `showMissing` is set to `true`.
 -   **placeholder** `String` [optional]
-    placeholder to be displayed in the dropdown searchbox.
+    placeholder to be displayed in the select box. It'll be only applicable when no value is selected.
+-   **searchPlaceholder** `String` [optional]
+    placeholder to be displayed in the search box. Defaults to `Type here to search...`.
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **filterLabel** `String` [optional]

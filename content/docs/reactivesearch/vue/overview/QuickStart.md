@@ -33,6 +33,26 @@ or
 npm install @appbaseio/reactivesearch-vue
 ```
 
+### Step 2: ReactiveSearch as UMD
+
+It is also possible to run ReactiveSearch without relying on a Node.JS environment tooling for the build setup. Here, I am using `v1.0.0-beta.19`, this can be replaced with the version you are using.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@appbaseio/reactivesearch-vue@1.0.0-beta.19/dist/@appbaseio/reactivesearch-vue.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-slider-component@2.8.2/dist/index.js"></script>
+```
+
+> Note:
+>
+> You can remove `vue-slider-component` script if not using any slider component from ReactiveSearch.
+
+You can also use the minified version.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@appbaseio/reactivesearch-vue@1.0.0-beta.19/dist/@appbaseio/reactivesearch-vue.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-slider-component@2.8.2/dist/index.js"></script>
+```
+
 #### Use ReactiveSearch's Components
 
 ### Fully Import
@@ -64,7 +84,7 @@ import App from './App';
 
 Vue.config.productionTip = false;
 
-Vue.component(ReactiveBase.name, ReactiveBase);
+Vue.use(ReactiveBase);
 
 /* eslint-disable no-new */
 new Vue({
