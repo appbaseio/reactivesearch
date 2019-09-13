@@ -232,7 +232,7 @@ const NavBar = ({ theme }) => {
 															Native
 														</Link>
 														<Link
-															to="/docs/reactivesearch/searchbase/quickstart/"
+															to="/docs/reactivesearch/searchbase/overview/QuickStart/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
