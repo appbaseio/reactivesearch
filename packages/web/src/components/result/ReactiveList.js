@@ -608,7 +608,6 @@ class ReactiveList extends Component {
 					'X-Search-Id': searchId,
 					'X-Search-Click': true,
 					'X-Search-ClickPosition': searchPosition + 1,
-					'X-Search-Conversion': true,
 					...(config.searchStateHeader
 						&& searchState && {
 						'X-Search-State': JSON.stringify(searchState),
