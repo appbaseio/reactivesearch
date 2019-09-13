@@ -231,6 +231,16 @@ const NavBar = ({ theme }) => {
 															/>
 															Native
 														</Link>
+														<Link
+															to="/docs/reactivesearch/searchbase/overview/QuickStart/"
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+														>
+															<Icon
+																name="js-bw"
+																className="dropdown-content-icon mr2"
+															/>
+															SearchBase
+														</Link>
 													</div>
 													<div>
 														<h2 className="f4 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey mb2">

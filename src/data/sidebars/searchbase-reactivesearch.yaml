@@ -1,0 +1,13 @@
+- groups:
+      - group: Getting Started
+        items:
+            - title: QuickStart
+              link: /docs/reactivesearch/searchbase/overview/QuickStart/
+            - title: API Reference
+              link: /docs/reactivesearch/searchbase/overview/apireference/
+      - group: Integrations
+        items:
+            - title: React JS
+              link: /docs/reactivesearch/searchbase/integrations/react/
+            - title: Vanilla JS
+              link: /docs/reactivesearch/searchbase/integrations/vanilla/

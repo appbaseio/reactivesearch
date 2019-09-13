@@ -18,6 +18,9 @@ const getValue = () => {
 		if (path && path.startsWith('/docs/reactivesearch/native')) {
 			return 'Native';
 		}
+		if (path && path.startsWith('/docs/reactivesearch/searchbase')) {
+			return 'SearchBase';
+		}
 	}
 
 	return 'React - v3';
@@ -31,6 +34,8 @@ const getFileName = value => {
 			return 'vue-reactivesearch';
 		case 'React - v2':
 			return 'web-v2-reactivesearch';
+		case 'SearchBase':
+			return 'searchbase-reactivesearch';
 		default:
 			return 'web-reactivesearch';
 	}
@@ -44,6 +49,8 @@ const getVersionName = value => {
 			return 'Vue';
 		case 'React - v2':
 			return 'v2';
+		case 'SearchBase':
+			return 'SearchBase';
 		default:
 			return 'v3';
 	}
@@ -124,7 +131,7 @@ class MobileNav extends React.Component {
 							your app.
 						</p>
 						<ReactDropdown
-							options={['React - v3', 'React - v2', 'Native', 'Vue']}
+							options={['React - v3', 'React - v2', 'Native', 'Vue', 'SearchBase']}
 							value={rs}
 							className="version-switcher shadow-3 br2"
 							menuClassName="br2 shadow-3"
