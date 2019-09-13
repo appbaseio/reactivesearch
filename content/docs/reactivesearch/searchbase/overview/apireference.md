@@ -207,14 +207,15 @@ setValue: (value: string, options?: Options) => void;
 
 ##Getters
 
-```typescript
-micStatus: MicStatusField;
-micInstance: any;
-micActive: boolean;
-micInactive: boolean;
-micDenied: boolean;
-query: Object;
-suggestionsQuery: Object;
-requestPending: boolean;
-suggestionsRequestPending: boolean;
-```
+-   **query** `Object`
+    The ElasticSearch query that is to be executed
+-   **suggestionsQuery** `Object`
+    The query executed for getting suggestions
+-   **requestPending** `boolean`
+    Useful for getting the status of the API, whether it has been executed or not
+-   **suggestionsRequestPending** `boolean`
+    Useful for telling whether suggestions has been fetched or not
+-   **micStatus** `MicStatusField`
+    Returns the current status of the mic. Can be `INACTIVE`, `ACTIVE` or `DENIED`
+-   **micInstance**
+    Returns the current mic instance. Can be used to set mic language and other properties of mic
