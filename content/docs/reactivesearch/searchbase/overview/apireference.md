@@ -217,5 +217,11 @@ setValue: (value: string, options?: Options) => void;
     Useful for telling whether suggestions has been fetched or not
 -   **micStatus** `MicStatusField`
     Returns the current status of the mic. Can be `INACTIVE`, `ACTIVE` or `DENIED`
+-   **micActive** `boolean`
+    Returns `true` if mic is active
+-   **minInactive** `boolean`
+    Returns `true` if mic is inactive
+-   **micDenied**
+    Returns `true` if it doesn't have access to the mic
 -   **micInstance**
     Returns the current mic instance. Can be used to set mic language and other properties of mic
