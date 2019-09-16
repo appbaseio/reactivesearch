@@ -197,6 +197,7 @@ class SingleDropdownRange extends Component {
 					onChange={this.handleChange}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
+					searchPlaceholder={this.props.searchPlaceholder}
 					keyField="label"
 					returnsObject
 					themePreset={this.props.themePreset}
@@ -233,6 +234,7 @@ SingleDropdownRange.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.string,
+	searchPlaceholder: types.string,
 	react: types.react,
 	showFilter: types.bool,
 	style: types.style,

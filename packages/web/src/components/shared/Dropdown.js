@@ -182,7 +182,7 @@ class Dropdown extends Component {
 											}}
 											showIcon={false}
 											className={getClassName(this.props.innerClass, 'input')}
-											placeholder="Type here to search..."
+											placeholder={this.props.searchPlaceholder}
 											value={this.state.searchTerm}
 											onChange={this.handleInputChange}
 											themePreset={themePreset}
@@ -272,6 +272,7 @@ Dropdown.defaultProps = {
 	keyField: 'key',
 	labelField: 'label',
 	small: false,
+	searchPlaceholder: 'Type here to search...',
 };
 
 Dropdown.propTypes = {
@@ -283,6 +284,7 @@ Dropdown.propTypes = {
 	hasCustomRenderer: types.bool,
 	onChange: types.func,
 	placeholder: types.string,
+	searchPlaceholder: types.string,
 	returnsObject: types.bool,
 	renderItem: types.func,
 	transformData: types.func,
