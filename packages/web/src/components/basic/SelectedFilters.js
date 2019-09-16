@@ -89,11 +89,11 @@ class SelectedFilters extends Component {
 	hasFilters = () =>
 		Object.keys(this.props.selectedValues)
 			.filter(id => this.props.components.includes(id))
-			.reduce((boolAcc, component) => {
-				const { label, value } = this.props.selectedValues[component];
+			.some((component) => {
+				const { value } = this.props.selectedValues[component];
 				const isArray = Array.isArray(value);
-				return boolAcc && label && ((isArray && value.length) || (!isArray && value));
-			}, true);
+				return (isArray && value.length) || (!isArray && value);
+			});
 
 	render() {
 		if (this.props.render) {
