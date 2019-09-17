@@ -24,15 +24,15 @@ The data browser is available within appbase.io app dashboard. But it can also b
 
 ## Creating An App
 
-You can go to the [appbase.io dashboard](https://dashboard.appbase.io) and create an app. In the below GIF, we create an app called `newstreamingapp`.
+You can go to the [appbase.io dashboard](https://dashboard.appbase.io) and create an app. In the below GIF, we create an app called `demostreamingapp`.
 
-![](https://i.imgur.com/r6hWKAG.gif)
+![](https://www.dropbox.com/s/vr01bg1mlyrej87/create_app_new.gif?raw=1)
 
 ## Adding Your First Data
 
 You can access the databrowser [from the dashboard](https://dashboard.appbase.io/app?view=browse) or independently via [dejavu app](https://dejavu.appbase.io).
 
-![](https://i.imgur.com/Bh59Ej1.gif)
+![](https://www.dropbox.com/s/yiztpv6uz11v0kl/add_data.gif?raw=1)
 
 Follow the above steps to add your first data.
 
@@ -42,7 +42,7 @@ Dejavu now also supports adding new fields, including setting the appropriate ma
 
 You have to first be in the **Editing** mode. And then select the `+` button near the field name headers in the column display on the top right.
 
-![](https://i.imgur.com/Z7QaURd.png)
+![](https://www.dropbox.com/s/m1mg8l4qp8j2zd2/adding_field.gif?raw=1)
 
 You can pick from the one of the available data types or set your own mapping.
 
@@ -56,21 +56,21 @@ The data browser allows adding data as a single JSON object or multiple JSON obj
 
 Existing data records can be updated easily. Select a record from the view and tap the **Update** button.
 
-![](https://i.imgur.com/9BTvUDI.png)
+![](https://i.imgur.com/ErYSZhC.png)
 
 ### Deleting Data
 
 Data records can also be deleted easily. Select a record (or multiple) from the view and tap the **Delete** button.
 
-![](https://i.imgur.com/k74fwaQ.png)
+![](https://i.imgur.com/eDeAIXY.png)
 
 ## Importing Data
 
-You can directly import JSON or CSV data files into appbase.io using the **data import** functionality.
+You can directly import JSON or CSV data files into appbase.io using the **[data import](https://importer.appbase.io)** functionality.
 
-Here is an example showing import of a JSON file when creating a new app.
+Here is a pic showing import of a JSON file when creating a new app.
 
-![](https://i.imgur.com/KylC3QX.gif)
+![](https://i.imgur.com/5rDcX0Z.png)
 
 The import view lets you set the data mappings via a GUI and index data. Currently, it supports up to 100,000 records at a time (or up to 100 MB of data).
 
