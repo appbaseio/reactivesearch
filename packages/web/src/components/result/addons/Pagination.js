@@ -36,6 +36,7 @@ const buildPaginationDOM = (props, position) => {
 		if (currentPage > (totalPages - pages) + 2) {
 			start = (totalPages - pages) + 2;
 		}
+		if (totalPages <= pages) start = 2;
 		for (let i = start; i < totalPagesToShow; i += 1) {
 			const primary = currentPage === i - 1;
 			const innerClassName = getClassName(innerClass, 'button');
@@ -149,7 +150,7 @@ class Pagination extends React.PureComponent {
 				{showEndPage && currentPage >= Math.floor(pages / 2) + !!(pages % 2) ? (
 					<span>...</span>
 				) : null}
-				{currentPage <= (totalPages - pages) + 2 && buildPaginationDOM(this.props, 'start')}
+				{(currentPage <= (totalPages - pages) + 2 || totalPages <= pages) && buildPaginationDOM(this.props, 'start')}
 				{showEndPage && pages > 2 && currentPage <= totalPages - Math.ceil(pages * 0.75) ? (
 					<span>...</span>
 				) : null}
