@@ -1,11 +1,27 @@
-categories:
-    - title: 🚀 Features
-      label: feature
-    - title: 🐛 Bug Fixes
-      label: fix
-    - title: 🔧 Maintenance
-      label: chore
-template: |
+--- 
+categories: 
+  - 
+    labels: 
+      - feature
+      - enhancement
+    title: "🚀 Features"
+  - 
+    labels: 
+      - fix
+      - bugfix
+      - bug
+    title: "🐛 Bug Fixes"
+  - 
+    label: chore
+    title: "🧰 Maintenance"
+change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
+exclude-labels: 
+  - vue
+  - maps
+  - native
+name-template: "v$NEXT_PATCH_VERSION 🌈"
+tag-template: v$NEXT_PATCH_VERSION
+template: |-
     ## Changes
-
+    
     $CHANGES
