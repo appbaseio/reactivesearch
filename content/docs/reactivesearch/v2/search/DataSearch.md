@@ -76,7 +76,7 @@ Example uses:
 -   **showIcon** `Boolean` [optional]
     whether to display a search or custom icon in the input box. Defaults to `true`.
 -   **iconPosition** `String` [optional]
-    sets the position of the search icon. Can be `left` or `right`. Defaults to `right`.
+    sets the position of the search icon. Can be `left` or `right`. Defaults to `left`.
 -   **icon** `JSX` [optional]
     displays a custom search icon instead of the default 🔍
 -   **showClear** `Boolean` [optional]
