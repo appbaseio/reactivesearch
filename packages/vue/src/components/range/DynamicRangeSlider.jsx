@@ -243,7 +243,7 @@ const DynamicRangeSlider = {
 					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
 						<vue-slider-component
 							ref="slider"
-							value={this.currentValue}
+							value={[Math.max(this.range.start, this.currentValue[0]), Math.min(this.range.end, this.currentValue[1])]}
 							min={this.range.start}
 							max={this.range.end}
 							onDrag-end={this.handleSlider}
