@@ -223,6 +223,8 @@ const searchbase = new Searchbase({
 -   **sortBy** `string`
     sort the results by either `asc` or `desc` order.
     It is an alternative to `sortOptions`, both can’t be used together.
+-   **sortByField** `string`
+    data field which is useful for providing a sorting context to the results query.
 -   **nestedField** `string`
     use to set the `nested` mapping field that allows arrays of objects to be indexed in a way that they can be queried independently of each other. Applicable only when dataField is a part of `nested` type.
 -   **sortOptions** `Array<SortOption>`
@@ -238,6 +240,70 @@ const searchbase = new Searchbase({
     -   `dataField` - data field to use for applying the sorting criteria on.
     -   `sortBy` - specified as either `asc` or `desc`.
 
+### An example with all properties
+```js
+const searchbase = new Searchbase({
+    index: "appname",
+    url: "https://scalr.api.appbase.io",
+    credentials: "abcdef123:abcdef12-ab12-ab12-ab12-abcdef123456",
+    analytics: true,
+    headers: {
+        secret: "searchbase-is-awesome",
+    },
+    value: "",
+    suggestions: [{
+        label: "Harry Potter",
+        value: "harry"
+    }],
+    results: [],
+    fuzziness: "AUTO",
+    searchOperators: true,
+    queryFormat: "or",
+    size: 10,
+    from: 0,
+    dataField: "original_title",
+    includeFields: ["*"],
+    excludeFields: [],
+    sortBy: "asc",
+    nestedField: "",
+    sortOptions: [],
+    sortByField: "",
+    transformQuery: (query) => Promise.resolve({
+        ...query,
+        timeout: "1s"
+    }),
+    transformSuggestionsQuery: (query) => Promise.resolve({
+        ...query,
+        timeout: "1s"
+    }),
+    transformRequest: (request) => Promise.resolve({
+        ...request,
+        credentials: "true"
+    }),
+    transformResponse: response => Promise.resolve({
+        ...response,
+        hits: {
+            ...response.hits,
+            hits: [
+                {
+                    _id: "promoted",
+                    _source: {
+                        original_title: "Harry potter and the cursed child"
+                    }
+                },
+                ...response.hits
+            ]
+        }
+    }),
+    beforeValueChange:  value => new Promise((resolve, reject) => {
+        if(/[^a-zA-Z0-9]/.test(value)) {
+            resolve(value)
+        } else {
+            reject('Special characters not allowed.')
+        }
+    }),
+)}
+```
 ##Subsrcibe
 
 ```js
