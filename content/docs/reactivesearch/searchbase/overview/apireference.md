@@ -48,7 +48,7 @@ const searchbase = new SearchBase(props);
     Field weights set the search weight for the database fields, useful when dataField is an Array of more than one field. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.<br/>
     You can define the `dataField` as an array of objects of the `DataField` type to define the field weights.<br/>
     The `DataField` type has the following shape:
-    ```typescript
+    ```ts
     type DataField = {
     	field: string;
     	weight: number;
@@ -75,7 +75,7 @@ const searchbase = new Searchbase({
     Initial value of the search input which will be used to build the search query
 -   **suggestions** `Array<Suggestion>`
     where a `Suggestion` is of type:
-    ```typescript
+    ```ts
     type Suggestion = {
     	label: string;
     	value: string;
@@ -91,7 +91,7 @@ const searchbase = new Searchbase({
     Defaults to `false`, if set to `true` than you can use special characters in the search query to enable the advanced search.<br/>
     Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html).
 -   **queryFormat** `QueryFormat` 
-    ```typescript
+    ```ts
     type QueryFormat = 'or' | 'and';
     ```
     Sets the query format, can be **or** or **and**. Defaults to **or**.
@@ -228,7 +228,7 @@ const searchbase = new Searchbase({
 -   **nestedField** `string`
     use to set the `nested` mapping field that allows arrays of objects to be indexed in a way that they can be queried independently of each other. Applicable only when dataField is a part of `nested` type.
 -   **sortOptions** `Array<SortOption>`
-    ```typescript
+    ```ts
     type SortOption = {
     	label: string;
     	dataField: string;
@@ -304,122 +304,9 @@ const searchbase = new Searchbase({
     }),
 )}
 ```
-##Subsrcibe
 
-```js
-const searchbase = new SearchBase(props)
-searchbase.subscribeToStateChanges(({results, suggestions}), {
-    console.log('prev value', results.prev, suggestions.prev);
-    console.log('next value', results.next, suggestions.next);
-}, ['results', 'suggestions'])
-```
-
-##Unsubscribe
-
-```js
-const searchbase = new SearchBase(props);
-searchbase.unsubscribeToStateChanges(() => {});
-```
-
-##Callback of change events
-
-```typescript
-  // called when value changes
-  onValueChange: (next: string, prev: string) => void;
-
-  // called when results change
-  onResults: (next: string, prev: string) => void;
-
-  // called when suggestions change
-  onSuggestions: (next: string, prev: string) => void;
-
-  // called when there is an error while fetching results
-  onError: (error: any) => void;
-
-  // called when there is an error while fetching suggestions
-  onSuggestionsError: (error: any) => void;
-
-  // called when request status changes
-  onRequestStatusChange: (next: string, prev: string) => void;
-
-  // called when suggestions request status changes
-  onSuggestionsRequestStatusChange: (next: string, prev: string) => void;
-
-  // called when query changes
-  onQueryChange: (next: string, prev: string) => void;
-
-  // called when suggestions query changes
-  onSuggestionsQueryChange: (next: string, prev: string) => void;
-
-  // called when mic status changes
-  onMicStatusChange: (next: string, prev: string) => void;
-```
-
-##Callback to create the side effects while querying
-
-```typescript
-transformQuery: (query: Object) => Promise<Object>;
-
-transformSuggestionsQuery: (query: Object) => Promise<Object>;
-
-transformRequest: (requestOptions: Object) => Promise<Object>;
-
-transformResponse: (response: any) => Promise<any>;
-```
-
-##Setters
-###Note
-Most of the methods accepts `options` as the second parameter which has the following shape:
-
-```typescript
-{
-    triggerQuery?: boolean, // defaults to `true`
-    triggerSuggestionsQuery?: boolean, // defaults to `false`
-    stateChanges?: boolean // defaults to `true`
-};
-
-```
-
--   **triggerQuery**
-    `true` means executes the `results` query after making the changes
--   **triggerSuggestionsQuery**
-    `true` means executes the `suggestions` query after making the changes
--   **stateChanges**
-    `true` means invoke the subscribed functions to `subscribeToStateChanges` method i.e trigger the re-render after making changes
-
-```typescript
-setHeaders: (headers: Object, options?: Options) => void;
-
-setSize: (size: number, options?: Options) => void;
-
-setFrom: (from: number, options?: Options) => void;
-
-setFuzziness: (fuzziness: number | string, options?: Options) => void;
-
-setIncludeFields: (includeFields: Array<string>, options?: Options) => void;
-
-setExcludeFields: (excludeFields: Array<string>, options?: Options) => void;
-
-setSortBy: (sortBy: string, options?: Options) => void;
-
-setSortByField: (sortByField: string, options?: Options) => void;
-
-setNestedField: (nestedField: string, options?: Options) => void;
-
-setDataField: (
-dataField: string | Array<string | DataField>,
-options?: Options
-) => void;
-
-setResults: (results: Array<Object>, options?: Option) => void;
-
-setSuggestions: (suggestions: Array<Suggestion>, options?: Option) => void;
-
-setValue: (value: string, options?: Options) => void;
-```
-
-##Getters
-
+##Getter properties
+These properties are automatically calculated or managed by the `Searchbase` class, users are not expected to modify these properties.
 -   **query** `Object`
     The ElasticSearch query that is to be executed
 -   **suggestionsQuery** `Object`
@@ -438,3 +325,160 @@ setValue: (value: string, options?: Options) => void;
     Returns `true` if it doesn't have access to the mic
 -   **micInstance**
     Returns the current mic instance. Can be used to set mic language and other properties of mic
+
+##Setters
+> Note:   
+> All of the methods accepts options as the second parameter which has the following shape:
+>
+```ts
+{
+    triggerQuery?: boolean, // defaults to `true`
+    triggerSuggestionsQuery?: boolean, // defaults to `false`
+    stateChanges?: boolean // defaults to `true`
+};
+```
+
+-   **triggerQuery**
+    `true` means executes the `results` query after making the changes
+-   **triggerSuggestionsQuery**
+    `true` means executes the `suggestions` query after making the changes
+-   **stateChanges**
+    `true` means invoke the subscribed functions to `subscribeToStateChanges` method i.e trigger the re-render after making changes
+
+The following methods of `Searchbase` class can be used to set or update the search properties:
+-   **setHeaders** `(headers: Object, options?: Options) => void`
+can be used to set the `headers` property
+-   **setSize** `(size: number, options?: Options) => void`
+can be used to set the `size` property
+-   **setFrom** `(from: number, options?: Options) => void`
+can be used to set the `from` property, useful while implementing pagination
+-   **setFuzziness** `(fuzziness: number | string, options?: Options) => void`
+can be used to set the `fuzziness` property
+-   **setIncludeFields** `(includeFields: Array<string>, options?: Options) => void`
+can be used to set the `includeFields` property
+-   **setExcludeFields** `(excludeFields: Array<string>, options?: Options) => void`
+can be used to set the `excludeFields` property
+-   **setSortBy** `(sortBy: string, options?: Options) => void`
+can be used to set the `sortBy` property
+-   **setSortByField** `(sortByField: string, options?: Options) => void`
+can be used to set the `sortByField` property
+-   **setNestedField** `(nestedField: string, options?: Options) => void`
+can be used to set the `nestedField` property
+-   **setDataField** `(
+        dataField: string | Array<string | DataField>,
+        options?: Options
+    ) => void`
+can be used to set the `dataField` property
+-   **setResults** `(results: Array<Object>, options?: Option) => void`
+can be used to set the custom `results`
+-   **setSuggestions** `(suggestions: Array<Suggestion>, options?: Option) => void`
+can be used to set the custom `suggestions`
+-   **setValue** `(value: string, options?: Options) => void`
+can be used to set the `value` property
+
+
+##Callback of change events
+You can define the following events callback to listen for the search state changes, the callback function accepts the updated value as the first param and the previous value as the second param.
+These callback functions may be used in the following scenarios:
+1. Perform side-effects for e.g make a network request.
+2. Update the UI, however it is recommended to use the [`subscribeToStateChanges`](#subsrcibe-to-the-properties-changes) to update the UI which uses `Searchbase` properties.
+
+
+- **onValueChange** `(next: string, prev: string) => void`
+can be used to listen for the `value` property changes. <br/>
+```js
+    const searchbase = new Searchbase({
+        index: "appname",
+        url: "https://scalr.api.appbase.io",
+        credentials: "abcdef123:abcdef12-ab12-ab12-ab12-abcdef123456"
+    });
+    searchbase.onValueChange = (nextValue, prevValue) =>  {
+        // do something with the updated or previous values
+    };
+```
+- **onResults** `(next: string, prev: string) => void`;
+can be used to listen for the `results` property changes.
+- **onSuggestions:** `(next: string, prev: string) => void`;
+can be used to listen for the `suggestions` property changes.
+- **onError** `(error: any) => void`;
+called when there is an error while fetching results
+- **onSuggestionsError** `(error: any) => void`;
+called when there is an error while fetching suggestions
+- **onRequestStatusChange** `(next: string, prev: string) => void`;
+called when request status changes
+- **onSuggestionsRequestStatusChange** `(next: string, prev: string) => void`;
+called when suggestions request status changes
+- **onQueryChange** `(next: string, prev: string) => void`;
+called when query changes
+- **onSuggestionsQueryChange** `(next: string, prev: string) => void`;
+called when suggestions query changes
+- **onMicStatusChange** `(next: string, prev: string) => void`;
+called when mic status changes
+
+##Subscribe to the properties changes
+Although we have events callback which can be used to update the UI based on a particular property changes but `subscribeToStateChanges` method gives you more control over the UI rendering logic and updates the UI more effectively by reducing the un-necessary updates.
+
+### How does it work?
+1. This method is controlled by the `stateChanges` property which can be defined in the [setters](#setters) while updating a particular property. If `stateChanges` is set to `true` then only the subscribed functions will be called unlike events callback which gets called every time when a property changes it's value.<br/>
+So basically, `subscribeToStateChanges` provides more control over the events callback in a way that you can define whether to update the UI or not while setting a particular property's value.<br/>
+2. You can define the properties for which you want to update the UI.
+3. It allows you to to register the multiple callback functions for search state updates but it is not possible with the events callback.
+
+### Usage
+```ts
+subscribeToStateChanges(
+    fn: Function,
+    propertiesToSubscribe?: string | Array<string>
+): void
+```
+You can use the `subscribeToStateChanges` method of `Searchbase` class to subscribe to the state changes of the properties. <br/>
+The common use-case is to subscribe a component or DOM element to a particular or a set of properties changes & update the UI accordingly. <br/>
+The callback function accepts an object in the following shape:
+```js
+{
+    [propertyName]: { // property name for example, `results` 
+        prev: any; // previous value of the property
+        next: any; // next value of the property
+    }
+}
+```
+Let's check this example to bind a React component with the `results` property changes.
+```js
+import React from 'react';
+
+class Results extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            results: []
+        }
+        const searchbase = new Searchbase(config);
+        searchbase.subscribeToStateChanges(this.stateChangeHandler, 'results');
+    }
+    stateChangeHandler = ({ results }) => {
+        console.log('prev value', results.prev, suggestions.prev);
+        console.log('next value', results.next, suggestions.next);
+        // Update the component state based on the value changes
+        this.setState({
+            results: results.next
+        });
+    }
+    render() {
+        return (
+            <div id="results">
+                {this.state.results.map(result => <Results {..results} />)}
+            </div>
+        )
+    }
+}
+```
+
+##Unsubscribe to the properties changes
+It is recommended to unsubscribe the callback functions after the component has been unmounted.
+
+For example in `React` we can use the `componentWillUnmount` life cycle method to unsubscribe the changes.
+```js
+componentWillUnmount() {
+    searchbase.unsubscribeToStateChanges(this.stateChangeHandler);
+}
+```
