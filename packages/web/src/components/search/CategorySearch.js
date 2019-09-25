@@ -723,15 +723,15 @@ class CategorySearch extends Component {
 					{this.renderCancelIcon()}
 				</InputIcon>
 			)}
-			{this.props.showVoiceSearch && (
-				<Mic
-					getInstance={this.props.getMicInstance}
-					render={this.props.renderMic}
-					iconPosition={this.props.iconPosition}
-					onResult={this.handleVoiceResults}
-					className={getClassName(this.props.innerClass, 'mic') || null}
-				/>
-			)}
+			{this.props.showVoiceSearch
+				&& (
+					<Mic
+						getInstance={this.props.getMicInstance}
+						render={this.props.renderMic}
+						iconPosition={this.props.iconPosition}
+						onResult={this.handleVoiceResults}
+						className={getClassName(this.props.innerClass, 'mic') || null}
+					/>)}
 			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
 				{this.renderIcon()}
 			</InputIcon>
