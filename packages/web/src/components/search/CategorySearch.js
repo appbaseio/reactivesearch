@@ -914,7 +914,7 @@ class CategorySearch extends Component {
 					...(searchPosition !== undefined && {
 						'X-Search-ClickPosition': searchPosition + 1,
 					}),
-					...(config.searchStateHeader
+					...(config.analyticsConfig.searchStateHeader
 						&& searchState && {
 						'X-Search-State': JSON.stringify(searchState),
 					}),

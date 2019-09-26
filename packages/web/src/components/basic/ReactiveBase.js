@@ -25,6 +25,16 @@ class ReactiveBase extends Component {
 		this.setStore(props);
 	}
 
+	componentDidMount() {
+		const { searchStateHeader } = this.props;
+		// TODO: Remove in 4.0
+		if (searchStateHeader !== undefined) {
+			console.warn(
+				'Warning(ReactiveSearch): The `searchStateHeader` prop has been marked as deprecated, please use the `analyticsConfig` prop instead.',
+			);
+		}
+	}
+
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(
 			this.props,
@@ -55,6 +65,13 @@ class ReactiveBase extends Component {
 		const credentials
 			= props.url && props.url.trim() !== '' && !props.credentials ? null : props.credentials;
 
+		const analyticsConfig = {
+			...props.analyticsConfig,
+			searchStateHeader:
+				props.searchStateHeader !== undefined
+					? props.searchStateHeader
+					: props.analyticsConfig && props.analyticsConfig.searchStateHeader,
+		};
 		const config = {
 			url: props.url && props.url.trim() !== '' ? props.url : 'https://scalr.api.appbase.io',
 			app: props.app,
@@ -62,7 +79,7 @@ class ReactiveBase extends Component {
 			type: this.type,
 			transformRequest: props.transformRequest,
 			analytics: props.analytics,
-			searchStateHeader: props.searchStateHeader,
+			analyticsConfig,
 			graphQLUrl: props.graphQLUrl,
 			transformResponse: props.transformResponse,
 		};
@@ -139,9 +156,13 @@ ReactiveBase.defaultProps = {
 	themePreset: 'light',
 	initialState: {},
 	analytics: false,
-	searchStateHeader: false,
 	graphQLUrl: '',
 	as: 'div',
+	analyticsConfig: {
+		searchStateHeader: false,
+		emptyQuery: true,
+		suggestionAnalytics: true,
+	},
 };
 
 ReactiveBase.propTypes = {
@@ -162,6 +183,7 @@ ReactiveBase.propTypes = {
 	className: types.string,
 	initialState: types.children,
 	analytics: types.bool,
+	analyticsConfig: types.analyticsConfig,
 	graphQLUrl: types.string,
 	transformResponse: types.func,
 	getSearchParams: types.func,

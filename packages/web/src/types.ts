@@ -60,8 +60,8 @@ export type selectedValue = string | string[] | object[] | object | number | num
 
 export type suggestions = object[];
 
-export type supportedOrientations
-= | 'portrait'
+export type supportedOrientations =
+	| 'portrait'
 	| 'portrait-upside-down'
 	| 'landscape'
 	| 'landscape-left'
@@ -87,8 +87,8 @@ export type style = object;
 
 export type themePreset = 'light' | 'dark';
 
-export type queryFormatDate
-= | 'date'
+export type queryFormatDate =
+	| 'date'
 	| 'basic_date'
 	| 'basic_date_time'
 	| 'basic_date_time_no_millis'
@@ -115,8 +115,8 @@ export interface location {
 	lng: number;
 }
 
-export type unit
-= | 'mi'
+export type unit =
+	| 'mi'
 	| 'miles'
 	| 'yd'
 	| 'yards'
@@ -135,3 +135,11 @@ export type unit
 	| 'NM'
 	| 'nmi'
 	| 'nauticalmiles';
+
+export interface analyticsConfig {
+	searchStateHeader: boolean;
+	emptyQuery: boolean;
+	suggestionAnalytics: boolean;
+	userId: string;
+	customEvents: object;
+}
