@@ -767,7 +767,7 @@ class DataSearch extends Component {
 					...(searchPosition !== undefined && {
 						'X-Search-ClickPosition': searchPosition + 1,
 					}),
-					...(config.searchStateHeader && searchState && {
+					...(config.analyticsConfig.searchStateHeader && searchState && {
 						'X-Search-State': JSON.stringify(searchState),
 					}),
 				},

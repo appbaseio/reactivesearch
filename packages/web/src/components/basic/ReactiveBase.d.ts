@@ -22,6 +22,7 @@ export interface ReactiveBaseProps {
 	getSearchParams?: () => string;
 	setSearchParams?: (newURL: string) => void;
 	searchStateHeader?: boolean;
+	analyticsConfig?: types.analyticsConfig;
 	initialState?: types.children;
 	analytics?: boolean;
 }
