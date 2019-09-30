@@ -9,7 +9,7 @@ keywords:
 sidebar: 'docs'
 ---
 
-[Appbase.io](https://appbase.io) provides a search stack for building modern apps - a hosted (or managed) developer-first search service. We supercharge [ElasticSearch](https://github.com/elastic/elasticsearch), an Apache 2.0 licensed search engine: to offer a streamlined development experience, out of the box search and click analytics and an enterprise grade security.
+[Appbase.io](https://appbase.io) provides a search stack for building modern apps - a hosted (or managed) developer-first search service. It supercharges [ElasticSearch](https://github.com/elastic/elasticsearch), an Apache 2.0 licensed search engine: to offer a streamlined development experience, out of the box actionable analytics and enterprise grade security.
 
 With appbase.io, you can:
 
