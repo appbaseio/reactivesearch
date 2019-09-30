@@ -24,6 +24,7 @@ class Main extends Component {
 							dataField={['original_title', 'original_title.search']}
 							categoryField="authors.raw"
 							componentId="BookSensor"
+							categorySuggestionsListSize={3}
 						/>
 					</div>
 
