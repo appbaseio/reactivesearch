@@ -54,7 +54,7 @@ This is the first component you will need to add when using `ReactiveSearch`.
 ```
 
 -   **analytics** `Boolean` [optional]
-    allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`. Check the [analytics recipe](/advanced/analytics.html) for click analytics implementation.
+    allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`. Check the [analytics recipe](/docs/reactivesearch/v3/advanced/analytics/) for click analytics implementation.
 -   **as** `String` [optional]
     allows to use the custom html element tag, defaults to `div`.
 -   **searchStateHeader** `Boolean` [optional]
