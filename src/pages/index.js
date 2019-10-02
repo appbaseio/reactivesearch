@@ -81,6 +81,13 @@ const HomePage = ({ data, location }) => {
 												link: '/docs/data/Browser/',
 												duration: 4,
 											},
+											{
+												title: 'Zapier Integration',
+												description:
+													'Automate your appbase.io database operations with Zapier',
+												link: '/docs/data/Zapier/',
+												duration: 2,
+											},
 											// {
 											// 	title: 'Importing Data',
 											// 	description: 'Learn how to import data.',

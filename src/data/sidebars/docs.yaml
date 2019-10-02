@@ -11,6 +11,8 @@
               link: /docs/data/Model/
             - title: Data Browser
               link: /docs/data/Browser/
+            - title: Zapier
+              link: /docs/data/Zapier/
       - group: Search Relevancy
         icon: search
         items:
