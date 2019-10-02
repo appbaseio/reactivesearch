@@ -80,3 +80,6 @@ yarn-error.log
 # Cypress
 test/cypress/screenshots
 test/cypress/videos
+
+# search index
+src/data/search.index.json
