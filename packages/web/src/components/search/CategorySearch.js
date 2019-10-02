@@ -539,7 +539,7 @@ class CategorySearch extends Component {
 
 		if (this.state.currentValue && this.state.suggestions.length && filteredCategories.length) {
 			const categorySuggestions = [];
-			let totalSuggestions
+			const totalSuggestions
 				= filteredCategories.length >= categorySuggestionsListSize
 					? categorySuggestionsListSize
 					: filteredCategories.length;
@@ -550,7 +550,7 @@ class CategorySearch extends Component {
 				// no source object exists for category based suggestions
 				source: null,
 			});
-			for (let j = 0; j < totalSuggestions; j++) {
+			for (let j = 0; j < totalSuggestions; j += 1) {
 				categorySuggestions.push({
 					label: `${this.state.currentValue} in ${filteredCategories[j].key}`,
 					value: this.state.currentValue,

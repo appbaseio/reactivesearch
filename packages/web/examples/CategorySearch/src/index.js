@@ -24,7 +24,6 @@ class Main extends Component {
 							dataField={['original_title', 'original_title.search']}
 							categoryField="authors.raw"
 							componentId="BookSensor"
-							categorySuggestionsListSize={3}
 						/>
 					</div>
 
@@ -67,9 +66,8 @@ class Main extends Component {
 								{Array(data.average_rating_rounded)
 									.fill('x')
 									.map((item, index) => (
-										<i className="fas fa-star" key={index} />
-									)) // eslint-disable-line
-								}
+										<i className="fas fa-star" key={index} /> // eslint-disable-line
+									))}
 							</span>
 							<span className="avg-rating">({data.average_rating} avg)</span>
 						</div>
