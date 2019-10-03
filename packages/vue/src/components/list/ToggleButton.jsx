@@ -4,6 +4,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { toggleButtons } from '../../styles/Button';
 import { connect } from '../../utils/index';
+import { handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
 
 const {
 	addComponent,
@@ -213,6 +214,8 @@ const ToggleButton = {
 					key={item.value}
 					primary={isSelected}
 					large
+					tabIndex={isSelected ? "-1" : "0"}
+					onKeypress={(e) => handleA11yAction(e, () => this.handleClick(item))}
 				>
 					{renderItem ? renderItem({ item, isSelected }) : item.label}
 				</Button>
