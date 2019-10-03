@@ -4,7 +4,6 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { toggleButtons } from '../../styles/Button';
 import { connect } from '../../utils/index';
-import { handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
 
 const {
 	addComponent,
@@ -14,7 +13,7 @@ const {
 	setQueryListener,
 	setQueryOptions,
 } = Actions;
-const { isEqual, checkValueChange, getClassName, getOptionsFromQuery } = helper;
+const { isEqual, checkValueChange, getClassName, getOptionsFromQuery, handleA11yAction } = helper;
 
 const ToggleButton = {
 	name: 'ToggleButton',
