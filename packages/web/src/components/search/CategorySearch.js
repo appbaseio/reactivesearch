@@ -841,6 +841,7 @@ class CategorySearch extends Component {
 	}
 
 	get parsedSuggestions() {
+		const { categorySuggestionsListSize } = this.props;
 		let finalSuggestionsList = [];
 		let suggestionsList = [];
 
@@ -858,32 +859,25 @@ class CategorySearch extends Component {
 		}
 
 		if (this.state.currentValue && this.state.suggestions.length && filteredCategories.length) {
-			let categorySuggestions = [
-				{
-					label: `${this.state.currentValue} in all categories`,
+			const categorySuggestions = [];
+			let totalSuggestions
+				= filteredCategories.length >= categorySuggestionsListSize
+					? categorySuggestionsListSize
+					: filteredCategories.length;
+			categorySuggestions.push({
+				label: `${this.state.currentValue} in all categories`,
+				value: this.state.currentValue,
+				category: '*',
+				// no source object exists for category based suggestions
+				source: null,
+			});
+			for (let j = 0; j < totalSuggestions; j++) {
+				categorySuggestions.push({
+					label: `${this.state.currentValue} in ${filteredCategories[j].key}`,
 					value: this.state.currentValue,
-					category: '*',
-					// no source object exists for category based suggestions
+					category: filteredCategories[j].key,
 					source: null,
-				},
-				{
-					label: `${this.state.currentValue} in ${filteredCategories[0].key}`,
-					value: this.state.currentValue,
-					category: filteredCategories[0].key,
-					source: null,
-				},
-			];
-
-			if (filteredCategories.length > 1) {
-				categorySuggestions = [
-					...categorySuggestions,
-					{
-						label: `${this.state.currentValue} in ${filteredCategories[1].key}`,
-						value: this.state.currentValue,
-						category: filteredCategories[1].key,
-						source: null,
-					},
-				];
+				});
 			}
 			finalSuggestionsList = [...categorySuggestions, ...suggestionsList];
 		}
@@ -1084,6 +1078,7 @@ CategorySearch.propTypes = {
 	autosuggest: types.bool,
 	beforeValueChange: types.func,
 	categoryField: types.string,
+	categorySuggestionsListSize: types.number,
 	className: types.string,
 	clearIcon: types.children,
 	componentId: types.stringRequired,
@@ -1142,6 +1137,7 @@ CategorySearch.propTypes = {
 CategorySearch.defaultProps = {
 	autosuggest: true,
 	className: null,
+	categorySuggestionsListSize: 2,
 	debounce: 0,
 	downShiftProps: {},
 	iconPosition: 'left',

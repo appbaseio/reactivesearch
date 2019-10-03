@@ -13,6 +13,7 @@ export interface CategorySearchProps extends CommonProps {
 	autosuggest?: boolean;
 	beforeValueChange?: (...args: any[]) => any;
 	categoryField?: string;
+	categorySuggestionsListSize?: number;
 	children?: (data: any) => any;
 	customHighlight?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
