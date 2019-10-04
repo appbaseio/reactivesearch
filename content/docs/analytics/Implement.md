@@ -75,7 +75,7 @@ Since these events record what happens after a search query is fired, they shoul
 ## Advanced Analytics
 ### How to implement custom events
 Apart from the pre-defined search headers you can also set custom events with the help of `X-Search-CustomEvent` header. Custom events allows you to build your own analytics on top of the appbase.io analytics.<br/>
-For example, with every search query you may want to record the user's platform.<br/>
+For example, you might be interested to know the platform used by a user to make the search request.<br/>
 There can be a plenty of scenarios, the choice is yours that how you want to use it.
 
 `X-Search-CustomEvent` -> It accepts the value in the following format: "key1=value1,key2=value2,..." where key represents the event name and value represents the event value.<br/>
@@ -94,7 +94,7 @@ You can disable this behavior in `ReactiveSearch` by defining the `analyticsConf
 If you're not using the `ReactiveSearch` then just don't send the `X-Search-Query` header while performing a `match_all` request.
 
 ### How An Analytics Session Works
-An analytics session is driven by the `X-Search-Query` header, it's the user's responsibility to set this header to initiate an analytics session. One analytics session can be considered as one search count.<br/>
+An analytics session is driven by the `X-Search-Query` header, it's the user's responsibility to set this header to trigger an analytics session. One analytics session can be considered as one search count.<br/>
 Don't worry `ReactiveSearch` handles it for you, just you need to set the `analytics` prop as `true` in `ReactiveBase` component.
 
 #### How we count searches
