@@ -72,3 +72,31 @@ The above endpoints accepts the following values as headers:
 
 Since these events record what happens after a search query is fired, they should also be accompanied with a `X-Search-Id` header.
 
+## Advanced Analytics
+### How to implement custom events
+Apart from the pre-defined search headers you can also set custom events with the help of `X-Search-CustomEvent` header. Custom events allows you to build your own analytics on top of the appbase.io analytics.<br/>
+For example, with every search query you may want to record the user's platform.<br/>
+There can be a plenty of scenarios, the choice is yours that how you want to use it.
+
+`X-Search-CustomEvent` -> It accepts the value in the following format: "key1=value1,key2=value2,..." where key represents the event name and value represents the event value.<br/>
+For e.g `X-Search-CustomEvent="platform=android"`
+
+### How to filter using custom events
+You can use the custom events as a query param to filter out the analytics APIs. <br/>
+Let's check the below example to get the `popular searches` filtered by the custom event named `platform` having value as `android`.
+```
+curl --location --request GET "http://{{USERNAME}}:{{PASSWORD}}@{{CLUSTER_URL}}/_analytics/popular-searches?platform=android"
+```
+
+### How to enable / disable Empty Query
+By default, the ReactiveSearch shows you the default UI even if the search hasn't been performed. Technically it calls the `match_all` query which can be considered as the empty query. By default we record the analytics for empty queries too, you can find it out in the Appbase.io dashboard with the `<empty_query>` key.<br/>
+You can disable this behavior in `ReactiveSearch` by defining the `analyticsConfig` prop in the `ReactiveBase` and set the `emptyQuery` as `false`. 
+If you're not using the `ReactiveSearch` then just don't send the `X-Search-Query` header while performing a `match_all` request.
+
+### How An Analytics Session Works
+An analytics session is driven by the `X-Search-Query` header, it's the user's responsibility to set this header to initiate an analytics session. One analytics session can be considered as one search count.<br/>
+Don't worry `ReactiveSearch` handles it for you, just you need to set the `analytics` prop as `true` in `ReactiveBase` component.
+
+#### How we count searches
+- When a user types something equals to `b→bo→boo→book`, we understand the context and instead of creating the different search sessions we count it as one search with key as `book`.
+- A search context is only valid for a maximum of `30s` i.e `b→bo→boo...30 seconds...->book` will be recorded as two different searches with keys as `boo` & `book`.
