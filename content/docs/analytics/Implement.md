@@ -10,18 +10,19 @@ keywords:
 sidebar: 'docs'
 ---
 
+## Usage with ReactiveSearch
 If you are using **ReactiveSearch** library for building your search UIs, then all you have to do is set the `analytics` prop in the `<ReactiveBase>` component.
 
 This will start auto-recording search analytics. You can see how to set the click analytics in the [reactive manual docs](https://opensource.appbase.io/reactive-manual/advanced/analytics.html).
 
-### Analytics via API
+## Analytics via API
 
 If you intend to build your own search UI, here's how you can implement analytics on your own. There are two types of analytics:
 
 1. Search Analytics and
 2. Click Analytics.
 
-**Search Analytics**
+### Search Analytics
 
 When using the REST API to make a search query, you can pass along the following headers:
 
@@ -33,12 +34,36 @@ Whenever, a `X-Search-Query` header is passed, the API returns a response header
 
 `X-Search-Filters` -> This header should contain value in the format: "key1=value1,key2=value2,..." where key represents the filter component and value represents the selected value. (If the same filter has multiple values selected, they should be passed as "key1=value1,key1=value2,...").
 
-**Click Analytics**
+### Click Analytics
 
 Typically, click analytics are recorded when a user clicks on a result item on the search page or triggers a conversion event (like buying the item found via search results).
 
-There is a [POST /:app/\_analytics](https://rest.appbase.io/#fe48f095-2122-bacb-6574-d081448dd0f9) endpoint which can be used to record click analytics. It accepts the following values as headers:
+#### Hosted [appbase.io](http://appbase.io)
+There is a [POST /:app/\_analytics](https://rest.appbase.io/#fe48f095-2122-bacb-6574-d081448dd0f9) endpoint which can be used to record click analytics.
 
+For example:
+```
+curl --location --request POST "https://scalr.api.appbase.io/{{APP_NAME}}/_analytics" \
+  --header "X-Search-Id: {{SEARCH_ID}} \
+  --header "X-Search-Click: true" \
+  --header "X-Search-ClickPosition: 5" \
+  --header "X-Search-Conversion: true" \
+  --header "Authorization: {{APP_CREDENTIALS}}"
+```
+#### Clusters or via Arc
+If you're using [appbase.io](http://appbase.io) clusters or `Arc` then you just need to change the URL to your cluster/Arc URL.<br/>
+Check the API docs [here](https://arc-api.appbase.io/?version=latest#ca047056-d009-414b-915a-1bc290134490).
+
+For example:
+```
+curl --location --request POST "http://{{USERNAME}}:{{PASSWORD}}@{{CLUSTER_URL}}/{{INDEX}}/_analytics" \
+  --header "X-Search-Id: {{SEARCH_ID}}" \
+  --header "X-Search-Click: true" \
+  --header "X-Search-ClickPosition: 5" \
+  --header "X-Search-Conversion: true"
+```
+
+The above endpoints accepts the following values as headers:
 `X-Search-Click` -> value is of type true / false,
 
 `X-Search-ClickPosition` -> value is of type Number (e.g. 1, 2 denoting the result item being clicked)
@@ -46,3 +71,4 @@ There is a [POST /:app/\_analytics](https://rest.appbase.io/#fe48f095-2122-bacb-
 `X-Search-Conversion` -> value is of type true / false.
 
 Since these events record what happens after a search query is fired, they should also be accompanied with a `X-Search-Id` header.
+
