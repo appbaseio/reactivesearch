@@ -1,6 +1,7 @@
 import React from 'react';
 
 const SliderHandle = ({
+	// eslint-disable-next-line react/prop-types
 	className, style, tooltipTrigger, renderTooltipData, ...passProps
 }) => {
 	if (tooltipTrigger) {
@@ -17,11 +18,18 @@ const SliderHandle = ({
 				break;
 			case 'none':
 			default:
-				return <button style={style} className={className} {...passProps} />;
+				return (
+					<button
+						style={style}
+						aria-label="slider-button"
+						className={className}
+						{...passProps}
+					/>
+				);
 		}
 		const tooltipContent = passProps['aria-valuenow'];
 		return (
-			<button style={style} className={className} {...passProps}>
+			<button style={style} className={className} aria-label="slider-button" {...passProps}>
 				<span className={tooltipClassname}>
 					{renderTooltipData ? renderTooltipData(tooltipContent) : tooltipContent}
 				</span>

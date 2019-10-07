@@ -1,23 +1,18 @@
 /* eslint-disable global-require */
 
 import React, { Component } from 'react';
-import { createProvider } from 'react-redux';
+import { Provider } from 'react-redux';
 import Appbase from 'appbase-js';
+import 'url-search-params-polyfill';
 import { ThemeProvider } from 'emotion-theming';
 
-import configureStore, { storeKey } from '@appbaseio/reactivecore';
+import configureStore from '@appbaseio/reactivecore';
 import { checkSomePropChange } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import URLParamsProvider from './URLParamsProvider';
 
 import getTheme from '../../styles/theme';
-import { composeThemeObject } from '../../utils';
-
-const URLSearchParams = require('url-search-params');
-
-/* use a custom store key so reactivesearch does not interfere
-   with a different redux store in a nested context */
-const Provider = createProvider(storeKey);
+import { composeThemeObject, ReactReduxContext } from '../../utils';
 
 class ReactiveBase extends Component {
 	constructor(props) {
@@ -28,6 +23,16 @@ class ReactiveBase extends Component {
 		};
 
 		this.setStore(props);
+	}
+
+	componentDidMount() {
+		const { searchStateHeader } = this.props;
+		// TODO: Remove in 4.0
+		if (searchStateHeader !== undefined) {
+			console.warn(
+				'Warning(ReactiveSearch): The `searchStateHeader` prop has been marked as deprecated, please use the `analyticsConfig` prop instead.',
+			);
+		}
 	}
 
 	componentDidUpdate(prevProps) {
@@ -60,6 +65,13 @@ class ReactiveBase extends Component {
 		const credentials
 			= props.url && props.url.trim() !== '' && !props.credentials ? null : props.credentials;
 
+		const analyticsConfig = {
+			...props.analyticsConfig,
+			searchStateHeader:
+				props.searchStateHeader !== undefined
+					? props.searchStateHeader
+					: props.analyticsConfig && props.analyticsConfig.searchStateHeader,
+		};
 		const config = {
 			url: props.url && props.url.trim() !== '' ? props.url : 'https://scalr.api.appbase.io',
 			app: props.app,
@@ -67,7 +79,7 @@ class ReactiveBase extends Component {
 			type: this.type,
 			transformRequest: props.transformRequest,
 			analytics: props.analytics,
-			searchStateHeader: props.searchStateHeader,
+			analyticsConfig,
 			graphQLUrl: props.graphQLUrl,
 			transformResponse: props.transformResponse,
 		};
@@ -122,10 +134,11 @@ class ReactiveBase extends Component {
 
 		return (
 			<ThemeProvider theme={theme} key={this.state.key}>
-				<Provider store={this.store}>
+				<Provider context={ReactReduxContext} store={this.store}>
 					<URLParamsProvider
 						headers={this.props.headers}
 						style={this.props.style}
+						as={this.props.as}
 						className={this.props.className}
 						getSearchParams={this.props.getSearchParams}
 						setSearchParams={this.props.setSearchParams}
@@ -143,13 +156,19 @@ ReactiveBase.defaultProps = {
 	themePreset: 'light',
 	initialState: {},
 	analytics: false,
-	searchStateHeader: false,
 	graphQLUrl: '',
+	as: 'div',
+	analyticsConfig: {
+		searchStateHeader: false,
+		emptyQuery: true,
+		suggestionAnalytics: true,
+	},
 };
 
 ReactiveBase.propTypes = {
 	app: types.stringRequired,
 	searchStateHeader: types.bool,
+	as: types.string,
 	children: types.children,
 	credentials: types.string,
 	headers: types.headers,
@@ -164,6 +183,7 @@ ReactiveBase.propTypes = {
 	className: types.string,
 	initialState: types.children,
 	analytics: types.bool,
+	analyticsConfig: types.analyticsConfig,
 	graphQLUrl: types.string,
 	transformResponse: types.func,
 	getSearchParams: types.func,

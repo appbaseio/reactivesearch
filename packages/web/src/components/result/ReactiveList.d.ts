@@ -4,11 +4,6 @@ import * as types from '../../types';
 
 declare namespace ReactiveListTree {
 	interface ReactiveListProps extends CommonProps {
-		componentId: string;
-		URLParams?: boolean;
-		className?: string;
-		style?: types.style;
-		// non-common props
 		children?: (data: any) => any;
 		dataField: string;
 		defaultQuery?: (...args: any[]) => any;
@@ -21,23 +16,29 @@ declare namespace ReactiveListTree {
 		render?: (data: any) => any;
 		renderItem?: (data: any) => any;
 		renderResultStats?: (...args: any[]) => any;
+		renderPagination?: (data: any) => any;
 		renderError?: types.title;
 		onError?: (...args: any[]) => any;
 		onNoResults?: types.title;
 		pages?: number;
 		pagination?: boolean;
 		paginationAt?: types.paginationAt;
+		showEndPage?: boolean;
 		react?: types.react;
 		showResultStats?: boolean;
+		showLoader?: boolean;
 		size?: number;
 		sortBy?: types.sortBy;
-		sortOptions?: types.sortOptions;
+		sortOptions?: types.sortOption[];
 		stream?: boolean;
 		onPageChange?: (...args: any[]) => any;
 		onPageClick?: (...args: any[]) => any;
 		defaultPage?: number;
 		listClass?: string;
 		scrollTarget?: string;
+		onData?: (...args: any[]) => any;
+		renderNoResults?: types.title;
+		scrollOnChange?: boolean;
 	}
 
 	interface CommonWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -45,8 +46,8 @@ declare namespace ReactiveListTree {
 	}
 
 	class ReactiveList extends React.Component<ReactiveListProps, any> {
-		static ResultListWrapper: React.ComponentType<CommonWrapperProps>;
-		static ResultCardsWrapper: React.ComponentType<CommonWrapperProps>;
+		static ResultListWrapper: React.ComponentClass<CommonWrapperProps>;
+		static ResultCardsWrapper: React.ComponentClass<CommonWrapperProps>;
 	}
 }
 

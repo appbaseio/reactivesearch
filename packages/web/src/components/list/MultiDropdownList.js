@@ -38,6 +38,7 @@ import {
 	isEvent,
 	isIdentical,
 	getValidPropsKeys,
+	parseValueArray,
 } from '../../utils';
 
 class MultiDropdownList extends Component {
@@ -218,17 +219,16 @@ class MultiDropdownList extends Component {
 		} else if (value) {
 			let listQuery;
 			if (props.queryFormat === 'or') {
+				let should = [
+					{
+						[type]: {
+							[props.dataField]: value.filter(item => item !== props.missingLabel),
+						},
+					},
+				];
 				if (props.showMissing) {
 					const hasMissingTerm = value.includes(props.missingLabel);
-					let should = [
-						{
-							[type]: {
-								[props.dataField]: value.filter(
-									item => item !== props.missingLabel,
-								),
-							},
-						},
-					];
+
 					if (hasMissingTerm) {
 						should = should.concat({
 							bool: {
@@ -238,18 +238,13 @@ class MultiDropdownList extends Component {
 							},
 						});
 					}
-					listQuery = {
-						bool: {
-							should,
-						},
-					};
-				} else {
-					listQuery = {
-						[type]: {
-							[props.dataField]: value,
-						},
-					};
 				}
+
+				listQuery = {
+					bool: {
+						should,
+					},
+				};
 			} else {
 				// adds a sub-query with must as an array of objects for each term/value
 				const queryArray = value.map(item => ({
@@ -421,7 +416,7 @@ class MultiDropdownList extends Component {
 		if (value === undefined) {
 			this.setValue(currentValue);
 		} else if (onChange) {
-			onChange(currentValue);
+			onChange(parseValueArray(this.props.value, currentValue));
 		}
 	};
 
@@ -459,6 +454,10 @@ class MultiDropdownList extends Component {
 		}
 
 		if (!this.hasCustomRenderer && this.state.options.length === 0) {
+			if (this.props.renderNoResults && !this.props.isLoading) {
+				return this.props.renderNoResults();
+			}
+
 			return null;
 		}
 
@@ -487,6 +486,7 @@ class MultiDropdownList extends Component {
 					onChange={this.handleChange}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
+					searchPlaceholder={this.props.searchPlaceholder}
 					labelField="key"
 					multi
 					showCount={this.props.showCount}
@@ -494,6 +494,7 @@ class MultiDropdownList extends Component {
 					renderItem={this.props.renderItem}
 					hasCustomRenderer={this.hasCustomRenderer}
 					customRenderer={this.getComponent}
+					customLabelRenderer={this.props.renderLabel}
 					renderNoResults={this.props.renderNoResults}
 					showSearch={this.props.showSearch}
 					transformData={this.props.transformData}
@@ -522,6 +523,8 @@ MultiDropdownList.propTypes = {
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
+	isLoading: types.bool,
+	error: types.title,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -531,22 +534,22 @@ MultiDropdownList.propTypes = {
 	defaultQuery: types.func,
 	dataField: types.stringRequired,
 	defaultValue: types.stringArray,
-	error: types.title,
 	value: types.stringArray,
 	filterLabel: types.string,
 	innerClass: types.style,
-	isLoading: types.bool,
 	loader: types.title,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
 	onError: types.func,
 	placeholder: types.string,
+	searchPlaceholder: types.string,
 	queryFormat: types.queryFormatSearch,
 	react: types.react,
 	render: types.func,
 	renderItem: types.func,
 	renderNoResults: types.func,
+	renderLabel: types.func,
 	renderError: types.title,
 	transformData: types.func,
 	selectAllLabel: types.string,

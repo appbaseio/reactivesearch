@@ -20,9 +20,9 @@ declare namespace ResultCardTree {
 	}
 
 	class ResultCard extends React.Component<ResultCardProps, any> {
-		static Image: React.ComponentType<ImageProps>;
-		static Title: React.ComponentType<TitleProps>;
-		static Description: React.ComponentType<DescriptionProps>;
+		static Image: React.ComponentClass<ImageProps>;
+		static Title: React.ComponentClass<TitleProps>;
+		static Description: React.ComponentClass<DescriptionProps>;
 	}
 }
 

@@ -52,6 +52,11 @@ class Dropdown extends Component {
 				isOpen,
 			});
 		}
+		if (type === Downshift.stateChangeTypes.keyDownEscape) {
+			this.setState({
+				isOpen: false,
+			});
+		}
 	};
 
 	getBackgroundColor = (highlighted, selected) => {
@@ -73,6 +78,12 @@ class Dropdown extends Component {
 	};
 
 	renderToString = (value) => {
+		if (this.props.customLabelRenderer) {
+			const customLabel = this.props.customLabelRenderer(value);
+			if (typeof customLabel === 'string') {
+				return customLabel;
+			}
+		}
 		if (Array.isArray(value) && value.length) {
 			const arrayToRender = value.map(item => this.renderToString(item));
 			return arrayToRender.join(', ');
@@ -143,9 +154,13 @@ class Dropdown extends Component {
 							small={this.props.small}
 							themePreset={this.props.themePreset}
 						>
-							<div>
-								{selectedItem ? this.renderToString(selectedItem) : placeholder}
-							</div>
+							{this.props.customLabelRenderer
+								? this.props.customLabelRenderer(selectedItem)
+								: (
+									<div>
+										{selectedItem ? this.renderToString(selectedItem) : placeholder}
+									</div>
+								)}
 							<Chevron open={isOpen} />
 						</Select>
 						{
@@ -167,7 +182,7 @@ class Dropdown extends Component {
 											}}
 											showIcon={false}
 											className={getClassName(this.props.innerClass, 'input')}
-											placeholder="Type here to search..."
+											placeholder={this.props.searchPlaceholder}
 											value={this.state.searchTerm}
 											onChange={this.handleInputChange}
 											themePreset={themePreset}
@@ -198,7 +213,11 @@ class Dropdown extends Component {
 													}}
 												>
 													{renderItem ? (
-														renderItem(item[labelField], item.doc_count, selected && this.props.multi)
+														renderItem(
+															item[labelField],
+															item.doc_count,
+															selected && this.props.multi,
+														)
 													) : (
 														<div>
 															{typeof item[labelField] === 'string' ? (
@@ -253,6 +272,7 @@ Dropdown.defaultProps = {
 	keyField: 'key',
 	labelField: 'label',
 	small: false,
+	searchPlaceholder: 'Type here to search...',
 };
 
 Dropdown.propTypes = {
@@ -264,11 +284,13 @@ Dropdown.propTypes = {
 	hasCustomRenderer: types.bool,
 	onChange: types.func,
 	placeholder: types.string,
+	searchPlaceholder: types.string,
 	returnsObject: types.bool,
 	renderItem: types.func,
 	transformData: types.func,
 	renderNoResults: types.func,
 	customRenderer: types.func,
+	customLabelRenderer: types.func,
 	selectedItem: types.selectedValue,
 	showCount: types.bool,
 	single: types.bool,
@@ -276,6 +298,8 @@ Dropdown.propTypes = {
 	theme: types.style,
 	themePreset: types.themePreset,
 	showSearch: types.bool,
+	footer: types.children,
+	componentId: types.string,
 };
 
 export default withTheme(Dropdown);

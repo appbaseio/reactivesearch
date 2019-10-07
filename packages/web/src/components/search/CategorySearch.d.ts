@@ -17,6 +17,8 @@ export interface CategorySearchProps extends CommonProps {
 	customHighlight?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
 	defaultQuery?: (...args: any[]) => any;
+	getMicInstance?: (...args: any[]) => any;
+	renderMic?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;
 	debounce?: number;
 	defaultValue?: categorySearchValue;
@@ -55,8 +57,13 @@ export interface CategorySearchProps extends CommonProps {
 	loader?: types.title;
 	theme?: types.style;
 	themePreset?: types.themePreset;
+	clearIcon?: types.children;
+	showClear?: boolean;
+	strictSelection?: boolean;
+	searchOperators?: boolean;
+	showVoiceSearch?: boolean;
 }
 
-declare const CategorySearch: React.ComponentType<CategorySearchProps>;
+declare const CategorySearch: React.ComponentClass<CategorySearchProps>;
 
 export default CategorySearch;

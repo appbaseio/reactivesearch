@@ -1,4 +1,4 @@
-import styled from 'vue-emotion';
+import styled from '@appbaseio/vue-emotion';
 
 const Slider = styled('div')`
 	margin-top: 30px;
@@ -84,7 +84,7 @@ const Slider = styled('div')`
 		position: absolute;
 	}
 
-	.vue-slider-dot-tooltip-inner-top::after {
+	.vue-slider-dot -tooltip-inner-top::after {
 		top: 100%;
 		left: 50%;
 		transform: translate(-50%, 0);
@@ -140,12 +140,12 @@ const Slider = styled('div')`
 		opacity: 1;
 	}
 
-	.label-container{
+	.label-container {
 		margin: 10px 0;
 		width: 100%;
 	}
 
-	.range-label-right{
+	.range-label-right {
 		float: right;
 	}
 `;

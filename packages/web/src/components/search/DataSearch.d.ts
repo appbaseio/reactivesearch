@@ -11,6 +11,8 @@ export interface DataSearchProps extends CommonProps {
 	customHighlight?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
 	defaultQuery?: (...args: any[]) => any;
+	getMicInstance?: (...args: any[]) => any;
+	renderMic?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;
 	debounce?: number;
 	defaultValue?: string;
@@ -49,8 +51,12 @@ export interface DataSearchProps extends CommonProps {
 	theme?: types.style;
 	loader?: types.title;
 	themePreset?: types.themePreset;
+	clearIcon?: types.children;
+	showClear?: boolean;
+	strictSelection?: boolean;
+	searchOperators?: boolean;
+	showVoiceSearch?: boolean;
 }
-
-declare const DataSearch: React.ComponentType<DataSearchProps>;
+declare const DataSearch: React.ComponentClass<DataSearchProps>;
 
 export default DataSearch;

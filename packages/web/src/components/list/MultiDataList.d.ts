@@ -26,8 +26,11 @@ export interface MultiDataList extends CommonProps {
 	showCount?: boolean;
 	render?: (...args: any[]) => any;
 	renderItem?: (...args: any[]) => any;
+	children?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
+	renderNoResults?: (...args: any[]) => any;
 }
 
-declare const MultiDataList: React.ComponentType<MultiDataList>;
+declare const MultiDataList: React.ComponentClass<MultiDataList>;
 
 export default MultiDataList;

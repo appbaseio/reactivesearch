@@ -6,6 +6,7 @@ export interface ReactiveBaseProps {
 	app: string;
 	children?: types.children;
 	credentials?: string;
+	as?: string;
 	headers?: types.headers;
 	queryParams?: string;
 	theme?: types.style;
@@ -17,10 +18,15 @@ export interface ReactiveBaseProps {
 	className?: string;
 	graphQLUrl?: string;
 	transformResponse?: (...args: any[]) => any;
+	transformRequest?: (...args: any[]) => any;
 	getSearchParams?: () => string;
-	setSearchParams?: () => string;
+	setSearchParams?: (newURL: string) => void;
+	searchStateHeader?: boolean;
+	analyticsConfig?: types.analyticsConfig;
+	initialState?: types.children;
+	analytics?: boolean;
 }
 
-declare const ReactiveBase: React.ComponentType<ReactiveBaseProps>;
+declare const ReactiveBase: React.ComponentClass<ReactiveBaseProps>;
 
 export default ReactiveBase;

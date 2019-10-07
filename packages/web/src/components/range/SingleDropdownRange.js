@@ -26,7 +26,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Dropdown from '../shared/Dropdown';
-import { connect, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
 
 class SingleDropdownRange extends Component {
 	constructor(props) {
@@ -101,15 +101,7 @@ class SingleDropdownRange extends Component {
 	static defaultQuery = (value, props) => {
 		let query = null;
 		if (value) {
-			query = {
-				range: {
-					[props.dataField]: {
-						gte: value.start,
-						lte: value.end,
-						boost: 2.0,
-					},
-				},
-			};
+			query = getRangeQueryWithNullValues([value.start, value.end], props);
 		}
 
 		if (query && props.nestedField) {
@@ -205,9 +197,11 @@ class SingleDropdownRange extends Component {
 					onChange={this.handleChange}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
+					searchPlaceholder={this.props.searchPlaceholder}
 					keyField="label"
 					returnsObject
 					themePreset={this.props.themePreset}
+					customLabelRenderer={this.props.renderLabel}
 				/>
 			</Container>
 		);
@@ -240,12 +234,15 @@ SingleDropdownRange.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	placeholder: types.string,
+	searchPlaceholder: types.string,
 	react: types.react,
 	showFilter: types.bool,
 	style: types.style,
 	title: types.title,
 	themePreset: types.themePreset,
 	URLParams: types.bool,
+	includeNullValues: types.bool,
+	renderLabel: types.func,
 };
 
 SingleDropdownRange.defaultProps = {
@@ -254,6 +251,7 @@ SingleDropdownRange.defaultProps = {
 	showFilter: true,
 	style: {},
 	URLParams: false,
+	includeNullValues: false,
 };
 
 const mapStateToProps = (state, props) => ({

@@ -578,7 +578,6 @@ const ReactiveList = {
 						'X-Search-Id': searchId,
 						'X-Search-Click': true,
 						'X-Search-ClickPosition': searchPosition + 1,
-						'X-Search-Conversion': true,
 					},
 				});
 			}
@@ -649,8 +648,8 @@ ReactiveList.generateQueryOptions = props => {
 	if (props.sortOptions) {
 		options.sort = [
 			{
-				[props.sortOptions[this.sortOptionIndex].dataField]: {
-					order: props.sortOptions[this.sortOptionIndex].sortBy,
+				[props.sortOptions[0].dataField]: {
+					order: props.sortOptions[0].sortBy,
 				},
 			},
 		];

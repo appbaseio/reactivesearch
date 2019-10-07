@@ -16,9 +16,11 @@ export interface SingleDropdownList extends CommonProps {
 	onChange?: (...args: any[]) => any;
 	onError?: (...args: any[]) => any;
 	placeholder?: string;
+	searchPlaceholder?: string;
 	react?: types.react;
 	render?: (...args: any[]) => any;
 	renderItem?: (...args: any[]) => any;
+	renderLabel?: (...args: any[]) => any;
 	renderError?: types.title;
 	transformData?: (...args: any[]) => any;
 	selectAllLabel?: string;
@@ -33,8 +35,10 @@ export interface SingleDropdownList extends CommonProps {
 	showLoadMore?: boolean;
 	loadMoreLabel?: types.title;
 	nestedField?: string;
+	renderNoResults?: (...args: any[]) => any;
+	showSearch?: boolean;
 }
 
-declare const SingleDropdownList: React.ComponentType<SingleDropdownList>;
+declare const SingleDropdownList: React.ComponentClass<SingleDropdownList>;
 
 export default SingleDropdownList;

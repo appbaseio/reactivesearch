@@ -20,7 +20,7 @@ export default {
 		title: 'React + ElasticSearch = ❤️',
 		description: 'UI components for building data-driven search experiences.',
 		image: {
-			src: '../../reactivesearch/images/browser.png',
+			src: '../../reactivesearch/images/browser@2x.png',
 			alt: 'Reactive Search Components',
 		},
 		button: {
@@ -29,8 +29,7 @@ export default {
 		},
 		link: {
 			title: 'Docs',
-			href:
-				'https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html',
+			href: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/',
 		},
 	},
 	banner2: {
@@ -47,12 +46,11 @@ export default {
 			'Build the perfect search experience using our UI components or by creating your own. 30+ pre-built components with customizable queries and configurable styles.',
 		button: {
 			title: 'View Components',
-			href:
-				'https://opensource.appbase.io/reactive-manual/getting-started/componentsindex.html',
+			href: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/components/',
 		},
 		link: {
 			title: 'Creating your components',
-			href: 'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent',
+			href: 'https://docs.appbase.io/docs/reactivesearch/v3/advanced/reactivecomponent/',
 		},
 		sketch: {
 			href:
@@ -81,8 +79,7 @@ export default {
 				},
 				title: 'Works with existing UIs',
 				description: 'Already have your own components? Bring them to ReactiveSearch.',
-				href:
-					'https://opensource.appbase.io/reactive-manual/advanced/reactivecomponent.html',
+				href: 'https://docs.appbase.io/docs/reactivesearch/v3/advanced/reactivecomponent/',
 			},
 			{
 				image: {
@@ -91,7 +88,7 @@ export default {
 				},
 				title: 'Configurable styles',
 				description: 'Styled components with rich theming and CSS class-injection support.',
-				href: 'https://opensource.appbase.io/reactive-manual/theming/themes.html',
+				href: 'https://docs.appbase.io/docs/reactivesearch/v3/theming/overview/',
 			},
 			{
 				image: {
@@ -109,8 +106,7 @@ export default {
 				},
 				title: 'Elasticsearch compatible',
 				description: 'Connect to an ES index hosted anywhere. Supports v2, v5 and v6.',
-				href:
-					'https://opensource.appbase.io/reactive-manual/getting-started/reactivebase.html',
+				href: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/reactivebase/',
 			},
 			{
 				image: {
@@ -120,7 +116,7 @@ export default {
 				title: 'Customizable queries',
 				description:
 					'Components come with good query defaults, that can be customized with Elasticsearch query DSL.',
-				href: 'https://opensource.appbase.io/reactive-manual/advanced/customquery.html',
+				href: 'https://docs.appbase.io/docs/reactivesearch/v3/advanced/customqueries/',
 			},
 		],
 	},
@@ -136,7 +132,7 @@ export default {
 			},
 			link: {
 				title: 'Docs',
-				href: 'https://opensource.appbase.io/reactive-manual/',
+				href: 'https://docs.appbase.io/',
 			},
 		},
 		{

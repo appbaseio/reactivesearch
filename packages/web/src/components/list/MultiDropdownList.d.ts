@@ -15,10 +15,12 @@ export interface MultiDropdownList extends CommonProps {
 	onChange?: (...args: any[]) => any;
 	onError?: (...args: any[]) => any;
 	placeholder?: string;
+	searchPlaceholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	render?: (...args: any[]) => any;
 	renderItem?: (...args: any[]) => any;
+	renderLabel?: (...args: any[]) => any;
 	renderError?: types.title;
 	transformData?: (...args: any[]) => any;
 	selectAllLabel?: string;
@@ -34,8 +36,11 @@ export interface MultiDropdownList extends CommonProps {
 	showLoadMore?: boolean;
 	loadMoreLabel?: types.title;
 	nestedField?: string;
+	children?: (...args: any[]) => any;
+	renderNoResults?: (...args: any[]) => any;
+	showSearch?: boolean;
 }
 
-declare const MultiDropdownList: React.ComponentType<MultiDropdownList>;
+declare const MultiDropdownList: React.ComponentClass<MultiDropdownList>;
 
 export default MultiDropdownList;

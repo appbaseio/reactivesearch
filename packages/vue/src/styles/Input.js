@@ -1,5 +1,5 @@
 import { css } from 'emotion';
-import styled from 'vue-emotion';
+import styled from '@appbaseio/vue-emotion';
 
 const alertBorder = ({ theme }) => css`
 	border: 1px solid ${theme.colors.alertColor};

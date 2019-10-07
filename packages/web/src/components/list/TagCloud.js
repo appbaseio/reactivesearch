@@ -310,7 +310,7 @@ class TagCloud extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				<TagList className={getClassName(this.props.innerClass, 'list') || null}>
+				<TagList role="menu" className={getClassName(this.props.innerClass, 'list') || null}>
 					{this.state.options.map((item) => {
 						// eslint-disable-next-line
 						const size = (item.doc_count / highestCount) * (max - min) + min;
@@ -354,6 +354,8 @@ TagCloud.propTypes = {
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
+	error: types.title,
+	isLoading: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -361,11 +363,9 @@ TagCloud.propTypes = {
 	customQuery: types.func,
 	dataField: types.stringRequired,
 	defaultValue: types.stringOrArray,
-	error: types.title,
 	value: types.stringOrArray,
 	filterLabel: types.string,
 	innerClass: types.style,
-	isLoading: types.bool,
 	loader: types.title,
 	multiSelect: types.bool,
 	onError: types.func,

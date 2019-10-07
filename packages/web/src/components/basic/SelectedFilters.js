@@ -3,7 +3,7 @@ import { withTheme } from 'emotion-theming';
 
 import { setValue, clearValues } from '@appbaseio/reactivecore/lib/actions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
+import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
@@ -67,6 +67,10 @@ class SelectedFilters extends Component {
 						<Button
 							className={getClassName(this.props.innerClass, 'button') || null}
 							key={`${component}-${index + 1}`}
+							tabIndex="0"
+							onKeyPress={event =>
+								handleA11yAction(event, () => this.remove(component, value))
+							}
 							onClick={() => this.remove(component, value)}
 						>
 							<span>
@@ -81,6 +85,16 @@ class SelectedFilters extends Component {
 			.filter(Boolean);
 	};
 
+	// determines whether any filter has been applied regardless of `showFilter=false`
+	hasFilters = () =>
+		Object.keys(this.props.selectedValues)
+			.filter(id => this.props.components.includes(id))
+			.some((component) => {
+				const { value } = this.props.selectedValues[component];
+				const isArray = Array.isArray(value);
+				return (isArray && value.length) || (!isArray && value);
+			});
+
 	render() {
 		if (this.props.render) {
 			return this.props.render(this.props);
@@ -88,7 +102,7 @@ class SelectedFilters extends Component {
 
 		const { theme } = this.props;
 		const filtersToRender = this.renderFilters();
-		const hasValues = !!filtersToRender.length;
+		const hasFilters = this.hasFilters();
 
 		return (
 			<Container
@@ -96,16 +110,18 @@ class SelectedFilters extends Component {
 				className={`${filters(theme)}
 				${this.props.className || ''}`}
 			>
-				{this.props.title && hasValues && (
+				{this.props.title && hasFilters && (
 					<Title className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
 					</Title>
 				)}
 				{filtersToRender}
-				{this.props.showClearAll && hasValues ? (
+				{this.props.showClearAll && hasFilters ? (
 					<Button
 						className={getClassName(this.props.innerClass, 'button') || null}
 						onClick={this.clearValues}
+						tabIndex="0"
+						onKeyPress={event => handleA11yAction(event, this.clearValues)}
 					>
 						{this.props.clearAllLabel}
 					</Button>

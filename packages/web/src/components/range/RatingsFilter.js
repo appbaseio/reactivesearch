@@ -28,7 +28,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import StarRating from './addons/StarRating';
 import { ratingsList } from '../../styles/ratingsList';
-import { connect, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
 
 class RatingsFilter extends Component {
 	constructor(props) {
@@ -55,7 +55,12 @@ class RatingsFilter extends Component {
 		const hasMounted = false;
 
 		if (currentValue) {
-			this.setValue(currentValue, props, hasMounted);
+			this.setValue({
+				value: currentValue,
+				props,
+				hasMounted,
+				includeUnrated: this.getIncludeUnratedFromData(currentValue),
+			});
 		}
 	}
 
@@ -70,18 +75,24 @@ class RatingsFilter extends Component {
 		});
 
 		if (!isEqual(this.props.value, prevProps.value)) {
-			this.setValue(this.props.value);
+			this.setValue({ value: this.props.value });
 		} else if (
 			!isEqual(this.state.currentValue, this.props.selectedValue)
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
 			const { value, onChange } = this.props;
 			if (value === undefined) {
-				this.setValue(this.props.selectedValue || null);
+				this.setValue({
+					value: this.props.selectedValue || null,
+					includeUnrated: this.getIncludeUnratedFromData(this.props.selectedValue),
+				});
 			} else if (onChange) {
 				onChange(this.props.selectedValue || null);
 			} else {
-				this.setValue(this.state.currentValue);
+				this.setValue({
+					value: this.state.currentValue,
+					includeUnrated: this.getIncludeUnratedFromData(this.state.currentValue),
+				});
 			}
 		}
 	}
@@ -96,24 +107,27 @@ class RatingsFilter extends Component {
 		}
 	}
 
+	getIncludeUnratedFromData = (range) => {
+		if (!this.props.data || !range) return false;
+		const dataObj = this.props.data.find(
+			data => data.start === range[0] && data.end === range[1],
+		);
+		return dataObj && dataObj.includeUnrated;
+	};
+
 	// parses range label to get start and end
 	static parseValue = (value) => {
 		if (Array.isArray(value)) return value;
 		return value ? [value.start, value.end] : null;
 	};
 
-	static defaultQuery = (value, props) => {
+	static defaultQuery = (value, props, includeUnrated = false) => {
 		let query = null;
 		if (value) {
-			query = {
-				range: {
-					[props.dataField]: {
-						gte: value[0],
-						lte: value[1],
-						boost: 2.0,
-					},
-				},
-			};
+			query = getRangeQueryWithNullValues(value, {
+				dataField: props.dataField,
+				includeNullValues: props.includeNullValues || includeUnrated,
+			});
 		}
 
 		if (query && props.nestedField) {
@@ -130,7 +144,9 @@ class RatingsFilter extends Component {
 		return query;
 	};
 
-	setValue = (value, props = this.props, hasMounted = true) => {
+	setValue = ({
+		value, props = this.props, hasMounted = true, includeUnrated = false,
+	}) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -139,7 +155,7 @@ class RatingsFilter extends Component {
 		this.locked = true;
 		const performUpdate = () => {
 			const handleUpdates = () => {
-				this.updateQuery(value, props);
+				this.updateQuery(value, props, includeUnrated);
 				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);
 			};
@@ -158,9 +174,9 @@ class RatingsFilter extends Component {
 		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
-	updateQuery = (value, props) => {
+	updateQuery = (value, props, includeUnrated) => {
 		const { customQuery } = props;
-		let query = RatingsFilter.defaultQuery(value, props);
+		let query = RatingsFilter.defaultQuery(value, props, includeUnrated);
 		let customQueryOptions;
 		if (customQuery) {
 			({ query } = customQuery(value, props) || {});
@@ -179,11 +195,10 @@ class RatingsFilter extends Component {
 		});
 	};
 
-	handleClick = (selectedItem) => {
+	handleClick = (selectedItem, params) => {
 		const { value, onChange } = this.props;
-
 		if (value === undefined) {
-			this.setValue(selectedItem);
+			this.setValue({ value: selectedItem, includeUnrated: params.includeUnrated });
 		} else if (onChange) {
 			onChange(selectedItem);
 		}
@@ -198,29 +213,34 @@ class RatingsFilter extends Component {
 					</Title>
 				)}
 				<ul className={ratingsList}>
-					{this.props.data.map(item => (
-						<li
-							role="menuitem"
-							tabIndex="0"
-							className={
-								this.state.currentValue && this.state.currentValue[0] === item.start
-									? 'active'
-									: ''
-							}
-							onClick={() => this.handleClick([item.start, item.end])}
-							onKeyPress={e =>
-								handleA11yAction(e, () => this.handleClick([item.start, item.end]))
-							}
-							key={`${this.props.componentId}-${item.start}-${item.end}`}
-						>
-							<StarRating
-								icon={this.props.icon}
-								dimmedIcon={this.props.dimmedIcon}
-								stars={item.start}
-							/>
-							{item.label ? <span>{item.label}</span> : null}
-						</li>
-					))}
+					{this.props.data.map((item) => {
+						const {
+							start, end, label, ...rest
+						} = item;
+						return (
+							<li
+								role="menuitem"
+								tabIndex="0"
+								className={
+									this.state.currentValue && this.state.currentValue[0] === start
+										? 'active'
+										: ''
+								}
+								onClick={() => this.handleClick([start, end], rest)}
+								onKeyPress={e =>
+									handleA11yAction(e, () => this.handleClick([start, end], rest))
+								}
+								key={`${this.props.componentId}-${start}-${end}`}
+							>
+								<StarRating
+									icon={this.props.icon}
+									dimmedIcon={this.props.dimmedIcon}
+									stars={start}
+								/>
+								{label ? <span>{label}</span> : null}
+							</li>
+						);
+					})}
 				</ul>
 			</Container>
 		);
@@ -258,12 +278,14 @@ RatingsFilter.propTypes = {
 	style: types.style,
 	title: types.title,
 	URLParams: types.bool,
+	includeNullValues: types.bool,
 };
 
 RatingsFilter.defaultProps = {
 	className: null,
 	style: {},
 	URLParams: false,
+	includeNullValues: false,
 };
 
 const mapStateToProps = (state, props) => ({

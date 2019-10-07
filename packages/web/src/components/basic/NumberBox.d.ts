@@ -16,6 +16,6 @@ export interface NumberBoxProps extends CommonProps {
 	title?: types.title;
 }
 
-declare const NumberBox: React.ComponentType<NumberBoxProps>;
+declare const NumberBox: React.ComponentClass<NumberBoxProps>;
 
 export default NumberBox;

@@ -23,11 +23,7 @@ import {
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import {
-	getAggsQuery,
-	getCompositeAggsQuery,
-	updateInternalQuery,
-} from './utils';
+import { getAggsQuery, getCompositeAggsQuery, updateInternalQuery } from './utils';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
@@ -344,6 +340,10 @@ class SingleDropdownList extends Component {
 		}
 
 		if (!this.hasCustomRenderer && this.state.options.length === 0) {
+			if (this.props.renderNoResults && !this.props.isLoading) {
+				return this.props.renderNoResults();
+			}
+
 			return null;
 		}
 
@@ -373,12 +373,14 @@ class SingleDropdownList extends Component {
 					onChange={this.handleChange}
 					selectedItem={this.state.currentValue}
 					placeholder={this.props.placeholder}
+					searchPlaceholder={this.props.searchPlaceholder}
 					labelField="key"
 					showCount={this.props.showCount}
 					themePreset={this.props.themePreset}
 					renderItem={this.props.renderItem}
 					hasCustomRenderer={this.hasCustomRenderer}
 					customRenderer={this.getComponent}
+					customLabelRenderer={this.props.renderLabel}
 					renderNoResults={this.props.renderNoResults}
 					showSearch={this.props.showSearch}
 					transformData={this.props.transformData}
@@ -407,6 +409,8 @@ SingleDropdownList.propTypes = {
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
+	error: types.title,
+	isLoading: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -416,20 +420,20 @@ SingleDropdownList.propTypes = {
 	defaultQuery: types.func,
 	dataField: types.stringRequired,
 	defaultValue: types.string,
-	error: types.title,
 	value: types.string,
 	filterLabel: types.string,
 	innerClass: types.style,
-	isLoading: types.bool,
 	loader: types.title,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
 	onError: types.func,
 	placeholder: types.string,
+	searchPlaceholder: types.string,
 	react: types.react,
 	render: types.func,
 	renderItem: types.func,
+	renderLabel: types.func,
 	renderError: types.title,
 	renderNoResults: types.func,
 	transformData: types.func,

@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch",
-	"version": "3.0.0-rc.10",
+	"version": "3.0.2",
 	"description": "A React UI components library for building search experiences",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
@@ -23,8 +23,7 @@
 		"prepublish": "yarn run build",
 		"postpublish": "yarn run version-upgrade",
 		"test": "jest --watch",
-		"typescript": "tsc -p tsconfig.json",
-		"build-example": "scripts/build-example.sh 3.0.0-rc.0"
+		"typescript": "tsc -p tsconfig.json"
 	},
 	"repository": {
 		"type": "git",
@@ -33,8 +32,8 @@
 	"author": "metagrover",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/reactivecore": "^8.2.7",
-		"appbase-js": "^4.0.2-beta.06",
+		"@appbaseio/reactivecore": "8.2.13",
+		"appbase-js": "^4.0.2-beta.08",
 		"cross-env": "^5.2.0",
 		"downshift": "^1.31.2",
 		"emotion": "^9.0.0",
@@ -45,9 +44,9 @@
 		"react-day-picker": "^7.0.5",
 		"react-emotion": "^9.0.0",
 		"react-highlight-words": "^0.14.0",
-		"react-redux": "^5.0.7",
+		"react-redux": "^6.0.1",
 		"rheostat": "^2.1.1",
-		"url-search-params": "^0.10.0",
+		"url-search-params-polyfill": "^7.0.0",
 		"xdate": "^0.8.2"
 	},
 	"peerDependencies": {

@@ -142,7 +142,7 @@ const banner = (image, bgColor) => css`
 		height: calc(100% - 100px);
 		background-image: url(${image});
 		background-size: contain;
-		background-position: top center;
+		background-position: top right;
 		background-repeat: no-repeat;
 
 		.pulsating-circle {
@@ -272,6 +272,9 @@ const Section = styled('div')`
 
 	p {
 		font-size: 18px;
+	}
+	@media (max-width: 576px) {
+		padding: 40px 0;
 	}
 `;
 

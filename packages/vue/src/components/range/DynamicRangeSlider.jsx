@@ -323,7 +323,7 @@ DynamicRangeSlider.defaultQuery = (values, props) => {
 	return query;
 };
 
-DynamicRangeSlider.parseValue = (value, props) => [value.start, value.end];
+DynamicRangeSlider.parseValue = value => [value.start, value.end];
 
 const mapStateToProps = (state, props) => {
 	const componentId = state.aggregations[props.componentId];

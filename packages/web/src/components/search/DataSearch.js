@@ -11,6 +11,7 @@ import {
 	setQueryListener,
 	setComponentProps,
 	updateComponentProps,
+	setSuggestionsSearchValue,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -20,6 +21,7 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
+	getSearchState,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -39,10 +41,14 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isIdentical,
+	ReactReduxContext,
+	withClickIds,
 	getValidPropsKeys,
+	handleCaretPosition,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
+import Mic from './addons/Mic';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -56,6 +62,11 @@ class DataSearch extends Component {
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
+		/**
+		 * To regulate the query execution based on the input handler,
+		 * the component query will only get executed when it sets to `true`.
+		 * */
+		this.isPending = false;
 		this.queryOptions = {
 			size: 20,
 		};
@@ -82,9 +93,14 @@ class DataSearch extends Component {
 		const cause = null;
 
 		if (currentValue) {
+			if (props.onChange) {
+				props.onChange(currentValue, this.triggerQuery);
+			}
 			this.setValue(currentValue, true, props, cause, hasMounted);
 		}
 	}
+
+	static contextType = ReactReduxContext;
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
@@ -131,14 +147,13 @@ class DataSearch extends Component {
 		checkSomePropChange(
 			this.props,
 			prevProps,
-			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'nestedField'],
+			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'nestedField', 'searchOperators'],
 			() => {
 				this.updateQuery(this.state.currentValue, this.props);
 			},
 		);
-
 		if (this.props.value !== prevProps.value) {
-			this.setValue(this.props.value, true, this.props);
+			this.setValue(this.props.value, true, this.props, undefined, undefined, false);
 		} else if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
@@ -152,12 +167,13 @@ class DataSearch extends Component {
 				this.setValue(this.props.selectedValue || '', true, this.props);
 			} else if (onChange) {
 				// value prop exists
-				onChange(this.props.selectedValue || '');
+				onChange(this.props.selectedValue || '', this.triggerQuery);
 			} else {
 				// value prop exists and onChange is not defined:
 				// we need to put the current value back into the store
 				// if the clear action was triggered by interacting with
 				// selected-filters component
+				this.isPending = false;
 				this.setValue(this.state.currentValue, true, this.props);
 			}
 		}
@@ -203,6 +219,7 @@ class DataSearch extends Component {
 				pre_tags: ['<mark>'],
 				post_tags: ['</mark>'],
 				fields,
+				...props.highlightField && { require_field_match: false },
 			},
 		};
 	};
@@ -217,18 +234,23 @@ class DataSearch extends Component {
 			} else {
 				fields = [props.dataField];
 			}
-			finalQuery = {
-				bool: {
-					should: DataSearch.shouldQuery(value, fields, props),
-					minimum_should_match: '1',
-				},
-			};
+
+			if (props.searchOperators) {
+				finalQuery = {
+					simple_query_string: DataSearch.shouldQuery(value, fields, props),
+				};
+			} else {
+				finalQuery = {
+					bool: {
+						should: DataSearch.shouldQuery(value, fields, props),
+						minimum_should_match: '1',
+					},
+				};
+			}
 		}
 
 		if (value === '') {
-			finalQuery = {
-				match_all: {},
-			};
+			finalQuery = null;
 		}
 
 		if (finalQuery && props.nestedField) {
@@ -252,6 +274,14 @@ class DataSearch extends Component {
 						: ''
 				}`,
 		);
+
+		if (props.searchOperators) {
+			return {
+				query: value,
+				fields,
+				default_operator: props.queryFormat,
+			};
+		}
 
 		if (props.queryFormat === 'and') {
 			return [
@@ -315,7 +345,14 @@ class DataSearch extends Component {
 		return parsedSuggestions;
 	};
 
-	setValue = (value, isDefaultValue = false, props = this.props, cause, hasMounted = true) => {
+	setValue = (
+		value,
+		isDefaultValue = false,
+		props = this.props,
+		cause,
+		hasMounted = true,
+		toggleIsOpen = true,
+	) => {
 		// ignore state updates when component is locked
 		if (props.beforeValueChange && this.locked) {
 			return;
@@ -332,9 +369,11 @@ class DataSearch extends Component {
 					() => {
 						if (isDefaultValue) {
 							if (this.props.autosuggest) {
-								this.setState({
-									isOpen: false,
-								});
+								if (toggleIsOpen) {
+									this.setState({
+										isOpen: false,
+									});
+								}
 								this.updateDefaultQuery(value, props);
 							}
 							// in case of strict selection only SUGGESTION_SELECT should be able
@@ -387,6 +426,7 @@ class DataSearch extends Component {
 			}
 			defaultQueryOptions = getOptionsFromQuery(defaultQueryTobeSet);
 		}
+		props.setSuggestionsSearchValue(value);
 		props.setQueryOptions(this.internalComponent, {
 			...this.queryOptions,
 			...defaultQueryOptions,
@@ -395,6 +435,7 @@ class DataSearch extends Component {
 			componentId: this.internalComponent,
 			query,
 			value,
+			componentType: componentTypes.dataSearch,
 		});
 	};
 
@@ -420,15 +461,17 @@ class DataSearch extends Component {
 			...this.queryOptions,
 			...customQueryOptions,
 		});
-		props.updateQuery({
-			componentId: props.componentId,
-			query,
-			value,
-			label: filterLabel,
-			showFilter,
-			URLParams,
-			componentType: componentTypes.dataSearch,
-		});
+		if (!this.isPending) {
+			props.updateQuery({
+				componentId: props.componentId,
+				query,
+				value,
+				label: filterLabel,
+				showFilter,
+				URLParams,
+				componentType: componentTypes.dataSearch,
+			});
+		}
 	};
 
 	handleFocus = (event) => {
@@ -436,16 +479,21 @@ class DataSearch extends Component {
 			isOpen: true,
 		});
 		if (this.props.onFocus) {
-			this.props.onFocus(event);
+			this.props.onFocus(event, this.triggerQuery);
 		}
 	};
 
 	clearValue = () => {
+		this.isPending = false;
 		this.setValue('', true);
 		this.onValueSelected(null, causes.CLEAR_VALUE);
 	};
 
 	handleKeyDown = (event, highlightedIndex) => {
+		const { value, onChange } = this.props;
+		if (value !== undefined && onChange) {
+			this.isPending = true;
+		}
 		// if a suggestion was selected, delegate the handling
 		// to suggestion handler
 		if (event.key === 'Enter' && highlightedIndex === null) {
@@ -453,7 +501,7 @@ class DataSearch extends Component {
 			this.onValueSelected(event.target.value, causes.ENTER_PRESS);
 		}
 		if (this.props.onKeyDown) {
-			this.props.onKeyDown(event);
+			this.props.onKeyDown(event, this.triggerQuery);
 		}
 	};
 
@@ -469,18 +517,31 @@ class DataSearch extends Component {
 		if (value === undefined) {
 			this.setValue(inputValue);
 		} else if (onChange) {
-			onChange(inputValue);
+			this.isPending = true;
+			// handle caret position in controlled components
+			handleCaretPosition(e);
+			onChange(inputValue, this.triggerQuery, e);
 		}
 	};
 
+	triggerQuery = () => {
+		this.isPending = false;
+		this.setValue(this.props.value, true, this.props);
+	}
+
 	onSuggestionSelected = (suggestion) => {
 		const { value, onChange } = this.props;
+		this.setState({
+			isOpen: false,
+		});
 		if (value === undefined) {
 			this.setValue(suggestion.value, true, this.props, causes.SUGGESTION_SELECT);
 		} else if (onChange) {
-			onChange(suggestion.value);
+			this.isPending = false;
+			onChange(suggestion.value, this.triggerQuery);
 		}
-
+		// Record analytics for selected suggestions
+		this.triggerClickAnalytics(suggestion._click_id);
 		// onValueSelected is user interaction driven:
 		// it should be triggered irrespective of controlled (or)
 		// uncontrolled component behavior
@@ -514,9 +575,29 @@ class DataSearch extends Component {
 	handleSearchIconClick = () => {
 		const { currentValue } = this.state;
 		if (currentValue.trim()) {
+			this.isPending = false;
 			this.setValue(currentValue, true);
 		}
 	};
+
+	handleVoiceResults = ({ results }) => {
+		if (results
+			&& results[0]
+			&& results[0].isFinal
+			&& results[0][0]
+			&& results[0][0].transcript
+			&& results[0][0].transcript.trim()
+		) {
+			this.isPending = false;
+			this.setValue(results[0][0].transcript.trim(), true);
+			if (this.props.autosuggest) {
+				this._inputRef.focus();
+				this.setState({
+					isOpen: true,
+				});
+			}
+		}
+	}
 
 	renderIcon = () => {
 		if (this.props.showIcon) {
@@ -543,6 +624,15 @@ class DataSearch extends Component {
 					{this.renderCancelIcon()}
 				</InputIcon>
 			)}
+			{this.props.showVoiceSearch
+				&& (
+					<Mic
+						getInstance={this.props.getMicInstance}
+						render={this.props.renderMic}
+						iconPosition={this.props.iconPosition}
+						onResult={this.handleVoiceResults}
+						className={getClassName(this.props.innerClass, 'mic') || null}
+					/>)}
 			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
 				{this.renderIcon()}
 			</InputIcon>
@@ -634,6 +724,7 @@ class DataSearch extends Component {
 			data: this.parsedSuggestions,
 			rawData: this.props.suggestions || [],
 			value: currentValue,
+			triggerClickAnalytics: this.triggerClickAnalytics,
 		};
 		return getComponent(data, this.props);
 	};
@@ -647,11 +738,48 @@ class DataSearch extends Component {
 		} else if (currentValue) {
 			suggestionsList = this.state.suggestions;
 		}
-		return suggestionsList;
+		return withClickIds(suggestionsList);
 	}
 
 	get hasCustomRenderer() {
 		return hasCustomRenderer(this.props);
+	}
+
+	triggerClickAnalytics = (searchPosition) => {
+		// click analytics would only work client side and after javascript loads
+		const {
+			config,
+			analytics: { suggestionsSearchId },
+			headers,
+		} = this.props;
+		const { url, app, credentials } = config;
+		const searchState = this.context && this.context.store
+			? getSearchState(this.context.store.getState(), true) : null;
+		if (config.analytics && suggestionsSearchId) {
+			fetch(`${url}/${app}/_analytics`, {
+				method: 'POST',
+				headers: {
+					...headers,
+					'Content-Type': 'application/json',
+					Authorization: `Basic ${btoa(credentials)}`,
+					'X-Search-Id': suggestionsSearchId,
+					'X-Search-Click': true,
+					...(searchPosition !== undefined && {
+						'X-Search-ClickPosition': searchPosition + 1,
+					}),
+					...(config.analyticsConfig.searchStateHeader && searchState && {
+						'X-Search-State': JSON.stringify(searchState),
+					}),
+				},
+			});
+		}
+	};
+
+	withTriggerQuery = (func) => {
+		if (func) {
+			return e => func(e, this.triggerQuery);
+		}
+		return undefined;
 	}
 
 	render() {
@@ -681,6 +809,7 @@ class DataSearch extends Component {
 						}) => (
 							<div className={suggestionsContainer}>
 								<Input
+									aria-label={this.props.componentId}
 									id={`${this.props.componentId}-input`}
 									showIcon={this.props.showIcon}
 									showClear={this.props.showClear}
@@ -696,11 +825,11 @@ class DataSearch extends Component {
 												? ''
 												: this.state.currentValue,
 										onChange: this.onInputChange,
-										onBlur: this.props.onBlur,
+										onBlur: this.withTriggerQuery(this.props.onBlur),
 										onFocus: this.handleFocus,
-										onKeyPress: this.props.onKeyPress,
+										onKeyPress: this.withTriggerQuery(this.props.onKeyPress),
 										onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
-										onKeyUp: this.props.onKeyUp,
+										onKeyUp: this.withTriggerQuery(this.props.onKeyUp),
 									})}
 									themePreset={themePreset}
 								/>
@@ -750,15 +879,16 @@ class DataSearch extends Component {
 				) : (
 					<div className={suggestionsContainer}>
 						<Input
+							aria-label={this.props.componentId}
 							className={getClassName(this.props.innerClass, 'input') || null}
 							placeholder={this.props.placeholder}
 							value={this.state.currentValue ? this.state.currentValue : ''}
 							onChange={this.onInputChange}
-							onBlur={this.props.onBlur}
-							onFocus={this.props.onFocus}
-							onKeyPress={this.props.onKeyPress}
-							onKeyDown={this.props.onKeyDown}
-							onKeyUp={this.props.onKeyUp}
+							onBlur={this.withTriggerQuery(this.props.onBlur)}
+							onFocus={this.withTriggerQuery(this.props.onFocus)}
+							onKeyPress={this.withTriggerQuery(this.props.onKeyPress)}
+							onKeyDown={this.withTriggerQuery(this.props.onKeyDown)}
+							onKeyUp={this.withTriggerQuery(this.props.onKeyUp)}
 							autoFocus={this.props.autoFocus}
 							iconPosition={this.props.iconPosition}
 							showIcon={this.props.showIcon}
@@ -785,6 +915,12 @@ DataSearch.propTypes = {
 	suggestions: types.suggestions,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
+	setSuggestionsSearchValue: types.funcRequired,
+	error: types.title,
+	isLoading: types.bool,
+	config: types.props,
+	analytics: types.props,
+	headers: types.headers,
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
@@ -801,9 +937,7 @@ DataSearch.propTypes = {
 	value: types.string,
 	defaultSuggestions: types.suggestions,
 	downShiftProps: types.props,
-	// eslint-disable-next-line
 	children: types.func,
-	error: types.title,
 	fieldWeights: types.fieldWeights,
 	filterLabel: types.string,
 	fuzziness: types.fuzziness,
@@ -812,7 +946,6 @@ DataSearch.propTypes = {
 	icon: types.children,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
-	isLoading: types.bool,
 	loader: types.title,
 	nestedField: types.string,
 	onError: types.func,
@@ -836,12 +969,17 @@ DataSearch.propTypes = {
 	showClear: types.bool,
 	showFilter: types.bool,
 	showIcon: types.bool,
+	showVoiceSearch: types.bool,
 	style: types.style,
 	title: types.title,
 	theme: types.style,
 	themePreset: types.themePreset,
 	URLParams: types.bool,
 	strictSelection: types.bool,
+	searchOperators: types.bool,
+	// Mic props
+	getMicInstance: types.func,
+	renderMic: types.func,
 };
 
 DataSearch.defaultProps = {
@@ -854,10 +992,12 @@ DataSearch.defaultProps = {
 	queryFormat: 'or',
 	showFilter: true,
 	showIcon: true,
+	showVoiceSearch: false,
 	style: {},
 	URLParams: false,
 	showClear: false,
 	strictSelection: false,
+	searchOperators: false,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -869,10 +1009,14 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId] || false,
 	error: state.error[props.componentId],
+	analytics: state.analytics,
+	config: state.config,
+	headers: state.appbaseRef.headers,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
 	updateComponentProps: (component, options) =>
 		dispatch(updateComponentProps(component, options)),
 	addComponent: component => dispatch(addComponent(component)),

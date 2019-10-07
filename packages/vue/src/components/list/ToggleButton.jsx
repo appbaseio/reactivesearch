@@ -21,7 +21,7 @@ const ToggleButton = {
 		componentId: types.stringRequired,
 		data: types.data,
 		dataField: types.stringRequired,
-		defaultValue: types.stringOrArray,
+		defaultSelected: types.stringOrArray,
 		value: types.stringOrArray,
 		filterLabel: types.string,
 		nestedField: types.string,
@@ -31,10 +31,11 @@ const ToggleButton = {
 		showFilter: types.bool,
 		title: types.title,
 		URLParams: types.bool,
+		renderItem: types.func,
 	},
 	data() {
 		const props = this.$props;
-		const value = this.selectedValue || props.value || props.defaultValue || [];
+		const value = this.selectedValue || props.value || props.defaultSelected || [];
 		const currentValue = ToggleButton.parseValue(value, props);
 		this.__state = {
 			currentValue,
@@ -64,6 +65,9 @@ const ToggleButton = {
 		this.removeComponent(this.$props.componentId);
 	},
 	watch: {
+		defaultSelected(newVal) {
+			this.setValue(ToggleButton.parseValue(newVal, this.$props));
+		},
 		react() {
 			this.setReact(this.$props);
 		},
@@ -166,15 +170,15 @@ const ToggleButton = {
 
 			const { customQuery } = props;
 			let query = ToggleButton.defaultQuery(value, props);
-			let customQueryOptions;
 
 			if (customQuery) {
 				({ query } = customQuery(value, props) || {});
-				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				this.setQueryOptions(
+					props.componentId,
+					getOptionsFromQuery(customQuery(value, props)),
+				);
 			}
 
-			this.queryOptions = { ...this.queryOptions, ...customQueryOptions };
-			this.setQueryOptions(props.componentId, this.queryOptions);
 			this.updateQueryHandler({
 				componentId: props.componentId,
 				query,
@@ -195,7 +199,27 @@ const ToggleButton = {
 				this.$emit('change', item);
 			}
 		},
+
+		renderButton(item) {
+			const renderItem = this.$scopedSlots.renderItem || this.renderItem;
+			const isSelected = this.$data.currentValue.some(value => value.value === item.value);
+
+			return (
+				<Button
+					class={`${getClassName(this.$props.innerClass, 'button')} ${
+						isSelected ? 'active' : ''
+					}`}
+					onClick={() => this.handleClick(item)}
+					key={item.value}
+					primary={isSelected}
+					large
+				>
+					{renderItem ? renderItem({ item, isSelected }) : item.label}
+				</Button>
+			);
+		},
 	},
+
 	render() {
 		return (
 			<Container class={toggleButtons}>
@@ -204,24 +228,7 @@ const ToggleButton = {
 						{this.$props.title}
 					</Title>
 				)}
-				{this.$props.data.map(item => {
-					const isSelected = this.$data.currentValue.some(
-						value => value.value === item.value,
-					);
-					return (
-						<Button
-							class={`${getClassName(this.$props.innerClass, 'button')} ${
-								isSelected ? 'active' : ''
-							}`}
-							onClick={() => this.handleClick(item)}
-							key={item.value}
-							primary={isSelected}
-							large
-						>
-							{item.label}
-						</Button>
-					);
-				})}
+				{this.$props.data.map(item => this.renderButton(item))}
 			</Container>
 		);
 	},

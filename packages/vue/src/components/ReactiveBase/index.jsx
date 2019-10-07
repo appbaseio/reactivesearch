@@ -7,7 +7,7 @@ import types from '../../utils/vueTypes';
 import URLParamsProvider from '../URLParamsProvider.jsx';
 import getTheme from '../../styles/theme';
 
-const URLSearchParams = require('url-search-params');
+import 'url-search-params-polyfill';
 
 const ReactiveBase = {
 	name: 'ReactiveBase',
@@ -34,10 +34,14 @@ const ReactiveBase = {
 		className: types.string,
 		initialState: VueTypes.object.def({}),
 		transformRequest: types.func,
+		transformResponse: types.func,
 	},
 	provide() {
 		return {
-			theme: composeThemeObject(getTheme(this.$props.themePreset), this.$props.theme),
+			theme_reactivesearch: composeThemeObject(
+				getTheme(this.$props.themePreset),
+				this.$props.theme,
+			),
 			store: this.store,
 		};
 	},
@@ -64,9 +68,7 @@ const ReactiveBase = {
 	methods: {
 		updateState(props) {
 			this.setStore(props);
-			this.setState(state => ({
-				key: `${state.key}-0`,
-			}));
+			this.key = `${state.key}-0`;
 		},
 		setStore(props) {
 			const credentials
@@ -82,6 +84,7 @@ const ReactiveBase = {
 				credentials,
 				type: props.type ? props.type : '*',
 				transformRequest: props.transformRequest,
+				transformResponse: props.transformResponse,
 				analytics: props.analytics,
 			};
 			let queryParams = '';
@@ -119,6 +122,10 @@ const ReactiveBase = {
 
 			if (this.$props.transformRequest) {
 				appbaseRef.transformRequest = this.$props.transformRequest;
+			}
+
+			if (this.$props.transformResponse) {
+				appbaseRef.transformResponse = this.$props.transformResponse;
 			}
 
 			const initialState = {

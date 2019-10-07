@@ -1,11 +1,11 @@
 import { css } from 'emotion';
-import styled from 'vue-emotion';
+import styled from '@appbaseio/vue-emotion';
 import { lighten } from 'polished';
 
 const item = {
 	width: '15px',
 	height: '15px',
-	scale: '4px'
+	scale: '4px',
 };
 
 const vh = css`
@@ -79,8 +79,7 @@ const formItem = ({ theme }) => css`
 
 		&::before {
 			background-color: #fff;
-			border: 1px solid
-				${theme.colors.borderColor || lighten(0.1, theme.colors.textColor)};
+			border: 1px solid ${theme.colors.borderColor || lighten(0.1, theme.colors.textColor)};
 			box-sizing: content-box;
 			content: '';
 			color: ${theme.colors.primaryColor};

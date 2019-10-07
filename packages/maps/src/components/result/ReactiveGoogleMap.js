@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
+import { withGoogleMap, GoogleMap } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
-import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
-import { getInnerKey, isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+import { getInnerKey } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
-import { MapPin, MapPinArrow, mapPinWrapper } from './addons/styles/MapPin';
 
 import ReactiveMap from './ReactiveMap';
+import GoogleMapMarkers from './GoogleMapMarkers';
 
 const Standard = require('./addons/styles/Standard');
 const BlueEssence = require('./addons/styles/BlueEssence');
@@ -48,53 +47,23 @@ class ReactiveGoogleMap extends Component {
 
 		this.state = {
 			currentMapStyle,
-			markerOnTop: null,
-			openMarkers: {},
 			mapRef: null,
 			updaterKey: 0,
 		};
 	}
 
-	componentWillUpdate(nextProps, nextState) {
-		if (
-			!isEqual(this.state.openMarkers, nextState.openMarkers)
-			|| !isEqual(this.state.currentMapStyle, nextState.currentMapStyle)
-		) {
-			this.handleUpdaterKey();
-		}
-
-		if (this.props.defaultMapStyle !== nextProps.defaultMapStyle) {
-			this.handleStyleChange(nextProps.defaultMapStyle);
+	componentDidUpdate(prevProps) {
+		if (this.props.defaultMapStyle !== prevProps.defaultMapStyle) {
+			this.handleStyleChange(this.props.defaultMapStyle);
 		}
 	}
 
 	handleStyleChange = (newStyle) => {
-		this.setState({
+		this.setState(prevState => ({
 			currentMapStyle:
 				this.mapStyles.find(style => style.label === newStyle) || this.mapStyles[0],
-		});
-	};
-
-	openMarkerInfo = (id, autoClosePopover, handlePreserveCenter) => {
-		const openMarkers = autoClosePopover
-			? { [id]: true }
-			: { ...this.state.openMarkers, [id]: true };
-		this.setState({
-			openMarkers,
-		});
-
-		handlePreserveCenter(true);
-	};
-
-	closeMarkerInfo = (id, autoClosePopover, handlePreserveCenter) => {
-		const { [id]: del, ...activeMarkers } = this.state.openMarkers;
-		const openMarkers = autoClosePopover ? {} : activeMarkers;
-
-		this.setState({
-			openMarkers,
-		});
-
-		handlePreserveCenter(true);
+			updaterKey: prevState.updaterKey + 1,
+		}));
 	};
 
 	handleUpdaterKey = () => {
@@ -103,192 +72,33 @@ class ReactiveGoogleMap extends Component {
 		}));
 	};
 
-	renderPopover = (item, params, includeExternalSettings = false) => {
-		let additionalProps = {};
-
-		if (includeExternalSettings) {
-			// to render pop-over correctly with MarkerWithLabel
-			additionalProps = {
-				position: params.getPosition(item),
-				defaultOptions: {
-					pixelOffset: new window.google.maps.Size(0, -30),
-				},
-			};
-		}
-
-		if (item._id in this.state.openMarkers) {
-			return (
-				<InfoWindow
-					zIndex={500}
-					key={`${item._id}-InfoWindow`}
-					onCloseClick={() =>
-						this.closeMarkerInfo(
-							item._id,
-							params.autoClosePopover,
-							params.handlePreserveCenter,
-						)
-					}
-					{...additionalProps}
-				>
-					<div>{params.onPopoverClick(item)}</div>
-				</InfoWindow>
-			);
-		}
-		return null;
-	};
-
-	increaseMarkerZIndex = (id, handlePreserveCenter) => {
-		this.setState({
-			markerOnTop: id,
-		});
-
-		handlePreserveCenter(true);
-	};
-
-	removeMarkerZIndex = (handlePreserveCenter) => {
-		this.setState({
-			markerOnTop: null,
-		});
-
-		handlePreserveCenter(true);
-	};
-
-	getMarkers = (params) => {
-		let markers = [];
-		if (params.showMarkers) {
-			markers = params.resultsToRender.map((item) => {
-				const markerProps = {
-					position: params.getPosition(item),
-				};
-
-				if (this.state.markerOnTop === item._id) {
-					markerProps.zIndex = window.google.maps.Marker.MAX_ZINDEX + 1;
-				}
-
-				if (params.renderData) {
-					const data = params.renderData(item);
-
-					if ('label' in data) {
-						return (
-							<MarkerWithLabel
-								key={item._id}
-								labelAnchor={new window.google.maps.Point(0, 30)}
-								icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
-								onClick={() =>
-									this.openMarkerInfo(
-										item._id,
-										params.autoClosePopover,
-										params.handlePreserveCenter,
-									)
-								}
-								onMouseOver={() =>
-									this.increaseMarkerZIndex(item._id, params.handlePreserveCenter)
-								}
-								onFocus={() =>
-									this.increaseMarkerZIndex(item._id, params.handlePreserveCenter)
-								}
-								onMouseOut={() =>
-									this.removeMarkerZIndex(params.handlePreserveCenter)
-								}
-								onBlur={() => this.removeMarkerZIndex(params.handlePreserveCenter)}
-								{...markerProps}
-								{...this.props.markerProps}
-							>
-								<div className={mapPinWrapper}>
-									<MapPin>{data.label}</MapPin>
-									<MapPinArrow />
-									{params.onPopoverClick
-										? this.renderPopover(item, params, true)
-										: null}
-								</div>
-							</MarkerWithLabel>
-						);
-					} else if ('icon' in data) {
-						markerProps.icon = data.icon;
-					} else {
-						return (
-							<MarkerWithLabel
-								key={item._id}
-								labelAnchor={new window.google.maps.Point(0, 30)}
-								icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
-								onClick={() =>
-									this.openMarkerInfo(
-										item._id,
-										params.autoClosePopover,
-										params.handlePreserveCenter,
-									)
-								}
-								onMouseOver={() =>
-									this.increaseMarkerZIndex(item._id, params.handlePreserveCenter)
-								}
-								onFocus={() =>
-									this.increaseMarkerZIndex(item._id, params.handlePreserveCenter)
-								}
-								onMouseOut={() =>
-									this.removeMarkerZIndex(params.handlePreserveCenter)
-								}
-								onBlur={() => this.removeMarkerZIndex(params.handlePreserveCenter)}
-								{...markerProps}
-								{...this.props.markerProps}
-							>
-								<div className={mapPinWrapper}>
-									{data.custom}
-									{params.onPopoverClick
-										? this.renderPopover(item, params, true)
-										: null}
-								</div>
-							</MarkerWithLabel>
-						);
-					}
-				} else if (params.defaultPin) {
-					markerProps.icon = params.defaultPin;
-				}
-
-				return (
-					<Marker
-						key={item._id}
-						onClick={() =>
-							this.openMarkerInfo(
-								item._id,
-								params.autoClosePopover || false,
-								params.handlePreserveCenter,
-							)
-						}
-						onMouseOver={() =>
-							this.increaseMarkerZIndex(item._id, params.handlePreserveCenter)
-						}
-						onFocus={() =>
-							this.increaseMarkerZIndex(item._id, params.handlePreserveCenter)
-						}
-						onMouseOut={() => this.removeMarkerZIndex(params.handlePreserveCenter)}
-						onBlur={() => this.removeMarkerZIndex(params.handlePreserveCenter)}
-						{...markerProps}
-						{...params.markerProps}
-					>
-						{params.onPopoverClick ? this.renderPopover(item, params) : null}
-					</Marker>
-				);
-			});
-		}
-		return markers;
-	};
-
 	setMapStyle = (currentMapStyle) => {
-		this.setState({
+		this.setState(prevState => ({
 			currentMapStyle,
-		});
+			updaterKey: prevState.updaterKey + 1,
+		}));
 	};
 
 	renderMap = (params) => {
 		if (typeof window === 'undefined' || (window && typeof window.google === 'undefined')) {
 			return null;
 		}
-		const markers = this.getMarkers(params);
 
 		const style = {
 			width: '100%',
 			height: '100%',
 			position: 'relative',
+		};
+
+		const markerProps = {
+			resultsToRender: params.resultsToRender,
+			getPosition: params.getPosition,
+			renderData: params.renderData,
+			defaultPin: params.defaultPin,
+			autoClosePopover: params.autoClosePopover,
+			handlePreserveCenter: params.handlePreserveCenter,
+			onPopoverClick: params.onPopoverClick,
+			markerProps: this.props.markerProps,
 		};
 
 		return (
@@ -315,14 +125,17 @@ class ReactiveGoogleMap extends Component {
 					options={{
 						styles: this.state.currentMapStyle.value,
 						...getInnerKey(this.props.mapProps, 'options'),
+						...this.props.mapOptions,
 					}}
 				>
 					{this.props.showMarkers && this.props.showMarkerClusters ? (
 						<MarkerClusterer averageCenter enableRetinaIcons gridSize={60}>
-							{markers}
+							<GoogleMapMarkers {...markerProps} />
 						</MarkerClusterer>
 					) : (
-						markers
+						<React.Fragment>
+							{this.props.showMarkers && <GoogleMapMarkers {...markerProps} />}
+						</React.Fragment>
 					)}
 					{this.props.showMarkers && this.props.markers}
 					{params.renderSearchAsMove()}
@@ -379,6 +192,7 @@ ReactiveGoogleMap.propTypes = {
 	innerRef: types.func,
 	loader: types.title,
 	mapProps: types.props,
+	mapOptions: types.props,
 	markerProps: types.props,
 	markers: types.children,
 	renderAllData: types.func,
@@ -405,6 +219,29 @@ ReactiveGoogleMap.propTypes = {
 	renderMap: types.func,
 	updaterKey: types.number,
 	mapRef: types.any, // eslint-disable-line
+};
+
+ReactiveGoogleMap.defaultProps = {
+	autoClosePopover: true,
+	size: 10,
+	style: {},
+	className: null,
+	pages: 5,
+	pagination: false,
+	defaultMapStyle: 'Standard',
+	autoCenter: false,
+	streamAutoCenter: false,
+	defaultZoom: 8,
+	mapProps: {},
+	markerProps: {},
+	markers: null,
+	showMapStyles: false,
+	showSearchAsMove: true,
+	searchAsMove: false,
+	showMarkers: true,
+	showMarkerClusters: true,
+	unit: 'mi',
+	defaultRadius: 100,
 };
 
 export default ReactiveGoogleMap;

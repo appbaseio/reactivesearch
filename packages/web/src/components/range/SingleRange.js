@@ -26,7 +26,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import { connect, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
 
 class SingleRange extends Component {
 	constructor(props) {
@@ -100,15 +100,7 @@ class SingleRange extends Component {
 	static defaultQuery = (value, props) => {
 		let query = null;
 		if (value) {
-			query = {
-				range: {
-					[props.dataField]: {
-						gte: value.start,
-						lte: value.end,
-						boost: 2.0,
-					},
-				},
-			};
+			query = getRangeQueryWithNullValues([value.start, value.end], props);
 		}
 
 		if (query && props.nestedField) {
@@ -197,17 +189,26 @@ class SingleRange extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				<UL className={getClassName(this.props.innerClass, 'list') || null}>
+				<UL
+					className={getClassName(this.props.innerClass, 'list') || null}
+					aria-label={`${this.props.componentId}-items`}
+					role="radiogroup"
+				>
 					{this.props.data.map((item) => {
 						const selected
 							= !!this.state.currentValue
 							&& this.state.currentValue.label === item.label;
 						return (
-							<li key={item.label} className={`${selected ? 'active' : ''}`}>
+							<li
+								key={item.label}
+								className={`${selected ? 'active' : ''}`}
+								role="radio"
+								aria-checked={selected}
+							>
 								<Radio
 									className={getClassName(this.props.innerClass, 'radio')}
 									id={`${this.props.componentId}-${item.label}`}
-									name={this.props.componentId}
+									tabIndex={selected ? '-1' : '0'}
 									value={item.label}
 									onChange={this.handleClick}
 									checked={selected}
@@ -258,6 +259,7 @@ SingleRange.propTypes = {
 	style: types.style,
 	title: types.title,
 	URLParams: types.bool,
+	includeNullValues: types.bool,
 };
 
 SingleRange.defaultProps = {
@@ -266,6 +268,7 @@ SingleRange.defaultProps = {
 	showRadio: true,
 	style: {},
 	URLParams: false,
+	includeNullValues: false,
 };
 
 const mapStateToProps = (state, props) => ({

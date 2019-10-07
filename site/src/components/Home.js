@@ -21,7 +21,6 @@ import ActionCard from '../styles/ActionCard';
 import ImageCard from '../styles/ImageCard';
 import BannerRow from './BannerRow';
 import Footer from './Footer';
-import Testimonials from './Testimonials';
 import SupportGrid from './SupportGrid';
 import { tabPadding, tabJustifyCenter } from '../styles/base';
 import H1 from '../styles/H1';
@@ -30,7 +29,6 @@ import queries from '../styles/mediaQueries';
 import { getButtonStyle, getLinkStyle } from '../styles/utils';
 import DiscoverRS from './DiscoverRS';
 import AppbaseUsers from './AppbaseUsers';
-import DownloadStats from './DownloadStats';
 
 const button = {
 	fontSize: '14px',
@@ -46,6 +44,12 @@ const description = css`
 	margin-left: 7px !important;
 	${queries.small`
 		font-size: 12px;
+	`};
+`;
+const bannerTitle = css`
+	padding-bottom: 50px
+	${queries.small`
+		paddin-bottom: 10px;
 	`};
 `;
 class HomePage extends Component {
@@ -279,19 +283,13 @@ class HomePage extends Component {
 							<Layout>
 								<div className={titleRow}>
 									{config.banner6.button ? (
-										<H3
-											style={{
-												paddingBottom: 50,
-											}}
-										>
-											{config.banner6.title}
-										</H3>
+										<H3 className={bannerTitle}>{config.banner6.title}</H3>
 									) : (
 										<H2
 											style={{
 												margin: '0 auto',
-												paddingBottom: 50,
 											}}
+											className={bannerTitle}
 										>
 											{config.banner6.title}
 										</H2>
@@ -305,9 +303,9 @@ class HomePage extends Component {
 											uppercase
 											primary={!isVue}
 											href={config.banner6.button.href}
-											{...config.banner6.button.openWithNewTab && {
+											{...(config.banner6.button.openWithNewTab && {
 												target: '_blank',
-											}}
+											})}
 										>
 											{config.banner6.button.title}
 										</Button>
@@ -377,7 +375,6 @@ class HomePage extends Component {
 										smSize={1}
 										gutter="15px"
 										smGutter="0px"
-										style={{ marginBottom: '50px' }}
 									>
 										{config.banner6.demos.map((
 											d,
@@ -488,12 +485,7 @@ class HomePage extends Component {
 							</Layout>
 						</Section>
 					)}
-					<Section style={{ backgroundColor: '#fff' }}>
-						<Layout>
-							<H2>See what our users say</H2>
-							<Testimonials />
-						</Layout>
-					</Section>
+					<AppbaseUsers />
 					<Section>
 						<Layout>
 							<H2>Get started in minutes</H2>
@@ -517,8 +509,6 @@ class HomePage extends Component {
 							<SupportGrid configName={config.name} />
 						</Layout>
 					</Section>
-					{config.name === 'web' && <DownloadStats />}
-					<AppbaseUsers />
 					<Footer configName={config.name} footerConfig={config.footer} />
 					<a
 						href={config.producthunt}

@@ -3,11 +3,6 @@ import { CommonProps } from '../../';
 import * as types from '../../types';
 
 export interface DatePickerProps extends CommonProps {
-	componentId: string;
-	className?: string;
-	onQueryChange?: (...args: any[]) => any;
-	style?: types.style;
-	// non-common props
 	clickUnselectsDay?: boolean;
 	dataField: string;
 	dayPickerInputProps?: types.props;
@@ -26,11 +21,10 @@ export interface DatePickerProps extends CommonProps {
 	showFilter?: boolean;
 	theme?: types.style;
 	title?: string;
-	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
 	parseDate?: (...args: any[]) => any;
 }
 
-declare const DatePicker: React.ComponentType<DatePickerProps>;
+declare const DatePicker: React.ComponentClass<DatePickerProps>;
 
 export default DatePicker;

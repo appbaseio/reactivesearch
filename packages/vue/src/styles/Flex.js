@@ -1,4 +1,4 @@
-import styled from 'vue-emotion';
+import styled from '@appbaseio/vue-emotion';
 import { css } from 'emotion';
 import { lighten } from 'polished';
 
@@ -26,12 +26,8 @@ const border = ({ theme: { colors } }) => css`
 
 const Flex = styled('div')`
 	display: ${props => (props.inline ? 'inline-flex' : 'flex')};
-	${props =>
-		(props.labelPosition === 'left' || props.iconPosition === 'right')
-		&& leftLabel};
-	${props =>
-		(props.labelPosition === 'right' || props.iconPosition === 'left')
-		&& rightLabel};
+	${props => (props.labelPosition === 'left' || props.iconPosition === 'right') && leftLabel};
+	${props => (props.labelPosition === 'right' || props.iconPosition === 'left') && rightLabel};
 	${props => props.labelPosition === 'top' && topLabel};
 	${props => props.labelPosition === 'bottom' && bottomLabel};
 	${props => props.showBorder && border};
@@ -65,8 +61,7 @@ const Flex = styled('div')`
 
 	svg.cancel-icon {
 		cursor: pointer;
-		fill: ${({ theme: { colors } }) =>
-		colors.borderColor || lighten(0.3, colors.textColor)};
+		fill: ${({ theme: { colors } }) => colors.borderColor || lighten(0.3, colors.textColor)};
 		flex-basis: 30px;
 
 		&:hover {

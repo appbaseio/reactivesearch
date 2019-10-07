@@ -424,6 +424,9 @@ class DateRange extends Component {
 								selectedDays,
 								modifiers,
 							}}
+							inputProps={{
+								'aria-label': `${this.props.componentId}-start-input`,
+							}}
 							onDayChange={this.handleStartDate}
 							classNames={{
 								container:
@@ -476,6 +479,9 @@ class DateRange extends Component {
 								selectedDays,
 								modifiers,
 							}}
+							inputProps={{
+								'aria-label': `${this.props.componentId}-end-input`,
+							}}
 							onDayChange={this.handleEndDate}
 							classNames={{
 								container:
@@ -516,6 +522,7 @@ DateRange.propTypes = {
 	updateComponentProps: types.funcRequired,
 	// component props
 	autoFocusEnd: types.bool,
+	beforeValueChange: types.func,
 	className: types.string,
 	componentId: types.stringRequired,
 	dataField: types.dataFieldArray,

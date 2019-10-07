@@ -4,9 +4,7 @@ export type children = any;
 
 export type data = any[];
 
-export type dataFieldArray =
-	| string
-	| string[];
+export type dataFieldArray = string | string[];
 
 export interface dataNumberBox {
 	label?: string;
@@ -14,9 +12,7 @@ export interface dataNumberBox {
 	end: number;
 }
 
-export type date =
-	| string
-	| string[];
+export type date = string | string[];
 
 export type dateObject = object;
 
@@ -24,34 +20,21 @@ export type fieldWeights = number[];
 
 export type filterLabel = string;
 
-export type fuzziness =
-	| 0
-	| 1
-	| 2
-	| 'AUTO';
+export type fuzziness = 0 | 1 | 2 | 'AUTO';
 
 export type headers = object;
 
 export type hits = object[];
 
-export type iconPosition =
-	| 'left'
-	| 'right';
+export type iconPosition = 'left' | 'right';
 
-export type labelPosition =
-	| 'left'
-	| 'right'
-	| 'top'
-	| 'bottom';
+export type labelPosition = 'left' | 'right' | 'top' | 'bottom';
 
-export type options =
-	| object
-	| object[];
+export type options = object | object[];
 
-export type paginationAt =
-	| 'top'
-	| 'bottom'
-	| 'both';
+export type paginationAt = 'top' | 'bottom' | 'both';
+
+export type tooltipTrigger = 'hover' | 'none' | 'focus' | 'always';
 
 export interface range {
 	start: number;
@@ -63,10 +46,7 @@ export interface rangeLabels {
 	end: string;
 }
 
-type reactKeyType =
-	| string
-	| string[]
-	| object;
+type reactKeyType = string | string[] | object;
 
 export interface react {
 	and?: reactKeyType;
@@ -76,13 +56,7 @@ export interface react {
 
 export type selectedValues = object;
 
-export type selectedValue =
-	| string
-	| string[]
-	| object[]
-	| object
-	| number
-	| number[];
+export type selectedValue = string | string[] | object[] | object | number | number[];
 
 export type suggestions = object[];
 
@@ -93,34 +67,25 @@ export type supportedOrientations =
 	| 'landscape-left'
 	| 'landscape-right';
 
-export type sortBy =
-	| 'asc'
-	| 'desc';
+export type sortBy = 'asc' | 'desc';
 
-export interface sortOptions {
+export interface sortOption {
 	label: string;
 	dataField: string;
 	sortBy: string;
 }
 
-export type sortByWithCount =
-	| 'asc'
-	| 'desc'
-	| 'count';
+export type sortByWithCount = 'asc' | 'desc' | 'count';
 
 export type stats = object[];
 
 export type stringArray = string[];
 
-export type stringOrArray =
-	| string
-	| string[];
+export type stringOrArray = string | string[];
 
 export type style = object;
 
-export type themePreset =
-	| 'light'
-	| 'dark';
+export type themePreset = 'light' | 'dark';
 
 export type queryFormatDate =
 	| 'date'
@@ -133,26 +98,17 @@ export type queryFormatDate =
 	| 'epoch_millis'
 	| 'epoch_second';
 
-export type queryFormatSearch =
-	| 'and'
-	| 'or';
+export type queryFormatSearch = 'and' | 'or';
 
-export type queryFormatNumberBox =
-	| 'exact'
-	| 'lte'
-	| 'gte';
+export type queryFormatNumberBox = 'exact' | 'lte' | 'gte';
 
 export type params = object;
 
 export type props = object;
 
-export type rangeLabelsAlign =
-	| 'left'
-	| 'right';
+export type rangeLabelsAlign = 'left' | 'right';
 
-export type title =
-	| string
-	| any;
+export type title = string | any;
 
 export interface location {
 	lat: number;
@@ -179,3 +135,11 @@ export type unit =
 	| 'NM'
 	| 'nmi'
 	| 'nauticalmiles';
+
+export interface analyticsConfig {
+	searchStateHeader: boolean;
+	emptyQuery: boolean;
+	suggestionAnalytics: boolean;
+	userId: string;
+	customEvents: object;
+}

@@ -1,7 +1,9 @@
 import { Component } from 'react';
-import { oneOfType, arrayOf, string, bool } from 'prop-types';
+import { oneOfType, arrayOf, string, bool, func } from 'prop-types';
 import { getSearchState } from '@appbaseio/reactivecore/lib/utils/helper';
 import { connect, getComponent } from '../../utils';
+
+const defaultKeys = ['hits', 'value', 'aggregations', 'error'];
 
 const filterProps = props => ({
 	...props,
@@ -25,24 +27,47 @@ const filterByComponentIds = (state, props = {}) => {
 	return state;
 };
 
+const filterByKeys = (state, allowedKeys) =>
+	Object.keys(state).reduce(
+		(components, componentId) => ({
+			...components,
+			[componentId]: Object.keys(state[componentId])
+				.filter(key => allowedKeys.includes(key))
+				.reduce((obj, key) => {
+					// eslint-disable-next-line
+					obj[key] = state[componentId][key];
+					return obj;
+				}, {}),
+		}),
+		{},
+	);
 class StateProvider extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			searchState: getSearchState(filterProps(props)),
+			searchState: filterByKeys(getSearchState(filterProps(props)), props.includeKeys),
 		};
 	}
 	static getDerivedStateFromProps(props) {
 		return {
-			searchState: getSearchState(filterProps(props)),
+			searchState: filterByKeys(getSearchState(filterProps(props)), props.includeKeys),
 		};
+	}
+	isStateChanged(prevState, nextState) {
+		return JSON.stringify(nextState) !== JSON.stringify(prevState);
 	}
 	shouldComponentUpdate(nextProps, nextState) {
 		// Only apply when componentIds is defined
-		if (!nextProps.strict || JSON.stringify(nextState) !== JSON.stringify(this.state)) {
+		if (!nextProps.strict || this.isStateChanged(this.state, nextState)) {
 			return true;
 		}
 		return false;
+	}
+	componentDidUpdate(prevProps, prevState) {
+		const { onChange } = this.props;
+		if (onChange && this.isStateChanged(prevState, this.state)) {
+			onChange(prevState.searchState, this.state.searchState);
+		}
 	}
 	render() {
 		const { searchState } = this.state;
@@ -51,9 +76,13 @@ class StateProvider extends Component {
 }
 StateProvider.defaultProps = {
 	strict: true,
+	includeKeys: defaultKeys,
 };
 StateProvider.propTypes = {
+	onChange: func,
+	render: func,
 	componentIds: oneOfType([string, arrayOf(string)]),
+	includeKeys: arrayOf(string),
 	strict: bool,
 };
 

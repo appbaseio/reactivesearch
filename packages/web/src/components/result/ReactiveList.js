@@ -39,7 +39,9 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	getValidPropsKeys,
+	ReactReduxContext,
 } from '../../utils';
+import Results from './addons/Results';
 
 class ReactiveList extends Component {
 	static ResultCardsWrapper = ({ children, ...rest }) => (
@@ -73,6 +75,8 @@ class ReactiveList extends Component {
 
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
+
+	static contextType = ReactReduxContext;
 
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
@@ -162,7 +166,7 @@ class ReactiveList extends Component {
 			checkSomePropChange(
 				this.props,
 				prevProps,
-				['hits', 'streamHits', 'promotedResults'],
+				['hits', 'streamHits', 'promotedResults', 'total', 'size', 'time'],
 				() => {
 					this.props.onData(this.getData());
 				},
@@ -245,7 +249,7 @@ class ReactiveList extends Component {
 				if (this.props.onPageChange) {
 					this.props.onPageChange(this.state.currentPage + 1, totalPages);
 				} else if (this.props.scrollOnChange && this.props.pagination) {
-					this.domNode.scrollTo(0, 0);
+					this.scrollToTop();
 				}
 			}
 
@@ -269,7 +273,7 @@ class ReactiveList extends Component {
 				) {
 					// query has changed
 					if (this.props.scrollOnChange) {
-						this.domNode.scrollTo(0, 0);
+						this.scrollToTop();
 					}
 					// eslint-disable-next-line
 					this.setState({
@@ -403,6 +407,10 @@ class ReactiveList extends Component {
 		return infiniteScroll && !pagination;
 	}
 
+	get hasCustomRenderer() {
+		return hasCustomRenderer(this.props);
+	}
+
 	setReact = (props) => {
 		const { react } = props;
 		if (react) {
@@ -412,6 +420,15 @@ class ReactiveList extends Component {
 			props.watchComponent(props.componentId, {
 				and: this.internalComponent,
 			});
+		}
+	};
+
+	scrollToTop = () => {
+		if (this.domNode === window) {
+			document.documentElement.scrollTop = 0;
+			document.body.scrollTop = 0;
+		} else {
+			this.domNode.scrollTop = 0;
 		}
 	};
 
@@ -425,8 +442,8 @@ class ReactiveList extends Component {
 		if (props.sortOptions) {
 			options.sort = [
 				{
-					[props.sortOptions[this.sortOptionIndex].dataField]: {
-						order: props.sortOptions[this.sortOptionIndex].sortBy,
+					[props.sortOptions[0].dataField]: {
+						order: props.sortOptions[0].sortBy,
 					},
 				},
 			];
@@ -574,20 +591,25 @@ class ReactiveList extends Component {
 		const {
 			config,
 			analytics: { searchId },
-			searchState,
+			headers,
 		} = this.props;
 		const { url, app, credentials } = config;
+		const searchState
+			= this.context && this.context.store
+				? getSearchState(this.context.store.getState(), true)
+				: null;
 		if (config.analytics && searchId) {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
 				headers: {
+					...headers,
 					'Content-Type': 'application/json',
 					Authorization: `Basic ${btoa(credentials)}`,
 					'X-Search-Id': searchId,
 					'X-Search-Click': true,
 					'X-Search-ClickPosition': searchPosition + 1,
-					'X-Search-Conversion': true,
-					...(config.searchStateHeader && {
+					...(config.analyticsConfig.searchStateHeader
+						&& searchState && {
 						'X-Search-State': JSON.stringify(searchState),
 					}),
 				},
@@ -625,7 +647,7 @@ class ReactiveList extends Component {
 			_click_id: base + index,
 		}));
 	};
-	getData() {
+	getData = () => {
 		const {
 			results, streamResults, filteredResults, promotedResults,
 		} = this.getAllData();
@@ -637,7 +659,7 @@ class ReactiveList extends Component {
 			resultStats: this.stats,
 		};
 	}
-	getComponent() {
+	getComponent = () => {
 		const { error, isLoading } = this.props;
 		const data = {
 			error,
@@ -650,9 +672,28 @@ class ReactiveList extends Component {
 	}
 
 	render() {
-		const { renderItem, size, error } = this.props;
+		const {
+			renderItem, size, error, renderPagination,
+		} = this.props;
 		const { currentPage } = this.state;
 		const { filteredResults } = this.getAllData();
+		const paginationProps = {
+			pages: this.props.pages,
+			totalPages: Math.ceil(this.props.total / size),
+			currentPage: this.state.currentPage,
+			setPage: this.setPage,
+			showEndPage: this.props.showEndPage,
+			innerClass: this.props.innerClass,
+			fragmentName: this.props.componentId,
+		};
+		const paginationElement = renderPagination ? (
+			renderPagination(paginationProps)
+		) : (
+			<Pagination {...paginationProps} />
+		);
+
+		const base = currentPage * size;
+
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.isLoading && this.props.pagination && this.props.loader}
@@ -667,35 +708,22 @@ class ReactiveList extends Component {
 				{!this.props.isLoading && !error && filteredResults.length === 0
 					? this.renderNoResults()
 					: null}
-				{this.props.pagination
-				&& (this.props.paginationAt === 'top' || this.props.paginationAt === 'both')
-					? (
-						<Pagination
-							pages={this.props.pages}
-							totalPages={Math.ceil(this.props.total / this.props.size)}
-							currentPage={this.state.currentPage}
-							setPage={this.setPage}
-							innerClass={this.props.innerClass}
-							fragmentName={this.props.componentId}
-						/>
-					) : null}
-				{hasCustomRenderer(this.props) ? (
-					this.getComponent()
-				) : (
-					<div
-						className={`${this.props.listClass} ${getClassName(
-							this.props.innerClass,
-							'list',
-						)}`}
-					>
-						{filteredResults.map((item, index) =>
-							renderItem(item, () => {
-								this.triggerClickAnalytics(currentPage * size + index);
-							}),
-						)}
-					</div>
-				)}
-				{this.props.isLoading && this.showInfiniteScroll
+				{this.props.pagination && ['top', 'both'].indexOf(this.props.paginationAt) !== -1
+					? paginationElement
+					: null}
+
+				<Results
+					base={base}
+					hasCustomRender={this.hasCustomRenderer}
+					getComponent={this.getComponent}
+					listClass={this.props.listClass}
+					innerClass={this.props.innerClass}
+					renderItem={renderItem}
+					triggerClickAnalytics={this.triggerClickAnalytics}
+					filteredResults={filteredResults}
+				/>
+
+				{this.props.showLoader && this.props.isLoading && this.showInfiniteScroll
 					? this.props.loader || (
 						<div
 							style={{
@@ -704,30 +732,18 @@ class ReactiveList extends Component {
 								color: '#666',
 							}}
 						>
-								Loading...
+							Loading...
 						</div>
 					) // prettier-ignore
 					: null}
-				{this.props.pagination
-				&& (this.props.paginationAt === 'bottom' || this.props.paginationAt === 'both')
-					? (
-						<Pagination
-							pages={this.props.pages}
-							totalPages={Math.ceil(this.props.total / this.props.size)}
-							currentPage={this.state.currentPage}
-							setPage={this.setPage}
-							innerClass={this.props.innerClass}
-							fragmentName={this.props.componentId}
-						/>
-					) : null}
-				{this.props.config.url.endsWith('appbase.io') && filteredResults.length ? (
-					<Flex
-						direction="row-reverse"
-						className={getClassName(this.props.innerClass, 'poweredBy')}
-					>
-						<PoweredBy />
-					</Flex>
-				) : null}
+				{this.props.pagination && ['bottom', 'both'].indexOf(this.props.paginationAt) !== -1
+					? paginationElement
+					: null}
+
+				<PoweredBy
+					show={!!(this.props.config.url.endsWith('appbase.io') && filteredResults.length)}
+					innerClass={this.props.innerClass}
+				/>
 			</div>
 		);
 	}
@@ -759,6 +775,8 @@ ReactiveList.propTypes = {
 	config: types.props,
 	analytics: types.props,
 	queryLog: types.props,
+	error: types.title,
+	headers: types.headers,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -766,7 +784,6 @@ ReactiveList.propTypes = {
 	dataField: types.stringRequired,
 	defaultPage: types.number,
 	defaultQuery: types.func,
-	error: types.title,
 	excludeFields: types.excludeFields,
 	innerClass: types.style,
 	infiniteScroll: types.bool,
@@ -775,6 +792,7 @@ ReactiveList.propTypes = {
 	render: types.func,
 	renderItem: types.func,
 	renderError: types.title,
+	renderPagination: types.func,
 	onData: types.func,
 	renderNoResults: types.title,
 	onPageChange: types.func,
@@ -782,10 +800,12 @@ ReactiveList.propTypes = {
 	pages: types.number,
 	pagination: types.bool,
 	paginationAt: types.paginationAt,
+	showEndPage: types.bool,
 	react: types.react,
 	renderResultStats: types.func,
 	scrollOnChange: types.bool,
 	scrollTarget: types.string,
+	showLoader: types.bool,
 	showResultStats: types.bool,
 	size: types.number,
 	sortBy: types.sortBy,
@@ -804,12 +824,14 @@ ReactiveList.defaultProps = {
 	infiniteScroll: true,
 	pagination: false,
 	paginationAt: 'bottom',
+	showEndPage: false,
 	includeFields: ['*'],
 	excludeFields: [],
 	showResultStats: true,
 	size: 10,
 	style: {},
 	URLParams: false,
+	showLoader: true,
 	renderNoResults: () => 'No Results found.',
 	scrollOnChange: true,
 	defaultSortOption: null,
@@ -830,7 +852,7 @@ const mapStateToProps = (state, props) => ({
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults,
-	searchState: getSearchState(state, true),
+	headers: state.appbaseRef.headers,
 });
 
 const mapDispatchtoProps = dispatch => ({

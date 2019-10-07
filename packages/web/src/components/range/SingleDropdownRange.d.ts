@@ -15,12 +15,15 @@ export interface SingleDropdownRangeProps extends CommonProps {
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
 	placeholder?: string;
+	searchPlaceholder?: string;
 	react?: types.react;
 	showFilter?: boolean;
 	title?: types.title;
 	themePreset?: types.themePreset;
+	renderLabel?: (...args: any[]) => any;
+	includeNullValues?: boolean;
 }
 
-declare const SingleDropdownRange: React.ComponentType<SingleDropdownRangeProps>;
+declare const SingleDropdownRange: React.ComponentClass<SingleDropdownRangeProps>;
 
 export default SingleDropdownRange;

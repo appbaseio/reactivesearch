@@ -1,12 +1,11 @@
+import React from 'react';
 import { connect as connectToStore } from 'react-redux';
-import { storeKey } from '@appbaseio/reactivecore';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
 
-export const connect = (...args) =>
-	connectToStore(...args, null, {
-		storeKey,
-	});
+export const ReactReduxContext = React.createContext(null);
+
+export const connect = (...args) => connectToStore(...args, null, { context: ReactReduxContext });
 
 export const composeThemeObject = (ownTheme = {}, userTheme = {}) => ({
 	typography: {
@@ -70,5 +69,67 @@ export const isIdentical = (a, b) => {
 	}
 	return false;
 };
+/**
+ * Adds click ids in the hits(useful for trigger analytics)
+ */
+export const withClickIds = (results = []) =>
+	results.map((result, index) => ({
+		...result,
+		_click_id: index,
+	}));
 export const getValidPropsKeys = (props = {}) =>
 	Object.keys(props).filter(i => validProps.includes(i));
+/**
+ * Handles the caret position for input components
+ * @param {HTMLInputElement} e
+ */
+export const handleCaretPosition = (e) => {
+	if (window) {
+		const caret = e.target.selectionStart;
+		const element = e.target;
+		window.requestAnimationFrame(() => {
+			element.selectionStart = caret;
+			element.selectionEnd = caret;
+		});
+	}
+};
+// elastic search query for including null values
+export const getNullValuesQuery = fieldName => ({
+	bool: {
+		must_not: {
+			exists: {
+				field: fieldName,
+			},
+		},
+	},
+});
+
+export const getRangeQueryWithNullValues = (value, props) => {
+	let query = null;
+	const rangeQuery = {
+		range: {
+			[props.dataField]: {
+				gte: value[0],
+				lte: value[1],
+				boost: 2.0,
+			},
+		},
+	};
+	if (props.includeNullValues) {
+		query = {
+			bool: {
+				should: [rangeQuery, getNullValuesQuery(props.dataField)],
+			},
+		};
+	} else query = rangeQuery;
+	return query;
+};
+
+// parses current array (i.e. this.props.value) for `onChange` callback for multi-* components
+export function parseValueArray(originalArr = [], currentValue) {
+	const newValue = Object.assign([], originalArr);
+	const currentValueIndex = newValue.indexOf(currentValue);
+	if (currentValueIndex > -1) newValue.splice(currentValueIndex, 1);
+	else newValue.push(currentValue);
+	return newValue;
+}
