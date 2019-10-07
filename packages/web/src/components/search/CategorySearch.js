@@ -723,15 +723,15 @@ class CategorySearch extends Component {
 					{this.renderCancelIcon()}
 				</InputIcon>
 			)}
-			{this.props.showVoiceSearch
-				&& (
-					<Mic
-						getInstance={this.props.getMicInstance}
-						render={this.props.renderMic}
-						iconPosition={this.props.iconPosition}
-						onResult={this.handleVoiceResults}
-						className={getClassName(this.props.innerClass, 'mic') || null}
-					/>)}
+			{this.props.showVoiceSearch && (
+				<Mic
+					getInstance={this.props.getMicInstance}
+					render={this.props.renderMic}
+					iconPosition={this.props.iconPosition}
+					onResult={this.handleVoiceResults}
+					className={getClassName(this.props.innerClass, 'mic') || null}
+				/>
+			)}
 			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
 				{this.renderIcon()}
 			</InputIcon>
@@ -860,25 +860,26 @@ class CategorySearch extends Component {
 
 		if (this.state.currentValue && this.state.suggestions.length && filteredCategories.length) {
 			const categorySuggestions = [];
-			let totalSuggestions
+			const size
 				= filteredCategories.length >= categorySuggestionsListSize
 					? categorySuggestionsListSize
 					: filteredCategories.length;
-			categorySuggestions.push({
-				label: `${this.state.currentValue} in all categories`,
-				value: this.state.currentValue,
-				category: '*',
-				// no source object exists for category based suggestions
-				source: null,
-			});
-			for (let j = 0; j < totalSuggestions; j++) {
-				categorySuggestions.push({
-					label: `${this.state.currentValue} in ${filteredCategories[j].key}`,
+			categorySuggestions.push(
+				{
+					label: `${this.state.currentValue} in all categories`,
 					value: this.state.currentValue,
-					category: filteredCategories[j].key,
+					category: '*',
+					// no source object exists for category based suggestions
 					source: null,
-				});
-			}
+				},
+				...filteredCategories.slice(0, size).map(item => ({
+					label: `${this.state.currentValue} in ${item.key}`,
+					value: this.state.currentValue,
+					category: item.key,
+					source: null,
+				})),
+			);
+
 			finalSuggestionsList = [...categorySuggestions, ...suggestionsList];
 		}
 		return withClickIds(finalSuggestionsList);
@@ -987,8 +988,9 @@ class CategorySearch extends Component {
 										...rest,
 									})}
 								{!this.hasCustomRenderer
-									&& isOpen
-									&& finalSuggestionsList.length ? (
+								&& isOpen
+								&& finalSuggestionsList.length ? (
+										// eslint-disable-next-line react/jsx-indent
 										<ul
 											className={`${suggestions(
 												themePreset,
