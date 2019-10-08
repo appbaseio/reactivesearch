@@ -8,6 +8,7 @@ import { ThemeProvider } from 'emotion-theming';
 
 import configureStore from '@appbaseio/reactivecore';
 import { checkSomePropChange } from '@appbaseio/reactivecore/lib/utils/helper';
+import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import URLParamsProvider from './URLParamsProvider';
 
@@ -47,6 +48,11 @@ class ReactiveBase extends Component {
 				}));
 			},
 		);
+		checkSomePropChange(this.props, prevProps, ['analyticsConfig'], () => {
+			if (this.store) {
+				this.store.dispatch(updateAnalyticsConfig(this.props.analyticsConfig));
+			}
+		});
 	}
 
 	componentDidCatch() {
@@ -131,7 +137,6 @@ class ReactiveBase extends Component {
 
 	render() {
 		const theme = composeThemeObject(getTheme(this.props.themePreset), this.props.theme);
-
 		return (
 			<ThemeProvider theme={theme} key={this.state.key}>
 				<Provider context={ReactReduxContext} store={this.store}>
