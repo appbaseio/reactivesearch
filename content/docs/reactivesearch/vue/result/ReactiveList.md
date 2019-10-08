@@ -77,6 +77,8 @@ Results.." sortBy="desc" :stream="true" :pagination="false" :pages="5" :size="10
     display to show the user while the data is loading, accepts `String` or `JSX` markup.
 -   **showResultStats** `Boolean` [optional]
     whether to show result stats in the form of results found and time taken. Defaults to `true`.
+-   **showEndPage** `Boolean` [optional]
+    whether to show end pages in pagination. Defaults to `false`.
 -   **react** `Object` [optional]
     a dependency object defining how this component should react based on the state changes in the sensor components.
 -   **URLParams** `Boolean` [optional]
