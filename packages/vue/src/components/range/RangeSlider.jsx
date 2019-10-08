@@ -1,12 +1,11 @@
 import VueTypes from 'vue-types';
+import VueSlider from 'vue-slider-component';
 import { Actions, helper } from '@appbaseio/reactivecore';
-import NoSSR from 'vue-no-ssr';
 import Container from '../../styles/Container';
 import { connect } from '../../utils/index';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
-import { getComponents } from './addons/ssr';
 
 const {
 	addComponent,
@@ -21,7 +20,7 @@ const { checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
 
 const RangeSlider = {
 	name: 'RangeSlider',
-	components: getComponents(),
+	components: { VueSlider },
 	inject: {
 		theme: {
 			from: 'theme_reactivesearch',
@@ -181,41 +180,39 @@ const RangeSlider = {
 					</Title>
 				)}
 				{this.$props.range ? (
-					<NoSSR>
-						<Slider class={getClassName(this.$props.innerClass, 'slider')}>
-							<vue-slider-component
-								ref="slider"
-								value={this.currentValue}
-								min={this.$props.range.start}
-								max={this.$props.range.end}
-								onDrag-end={this.handleSlider}
-								dotSize={20}
-								height={4}
-								enable-cross={false}
-								{...{ props: this.$props.sliderOptions }}
-							/>
-							{this.$props.rangeLabels && (
-								<div class="label-container">
-									<label
-										class={
-											getClassName(this.$props.innerClass, 'label')
-											|| 'range-label-left'
-										}
-									>
-										{this.$props.rangeLabels.start}
-									</label>
-									<label
-										class={
-											getClassName(this.$props.innerClass, 'label')
-											|| 'range-label-right'
-										}
-									>
-										{this.$props.rangeLabels.end}
-									</label>
-								</div>
-							)}
-						</Slider>
-					</NoSSR>
+					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
+						<vue-slider-component
+							ref="slider"
+							value={this.currentValue}
+							min={this.$props.range.start}
+							max={this.$props.range.end}
+							onDrag-end={this.handleSlider}
+							dotSize={20}
+							height={4}
+							enable-cross={false}
+							{...{ props: this.$props.sliderOptions }}
+						/>
+						{this.$props.rangeLabels && (
+							<div class="label-container">
+								<label
+									class={
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-left'
+									}
+								>
+									{this.$props.rangeLabels.start}
+								</label>
+								<label
+									class={
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-right'
+									}
+								>
+									{this.$props.rangeLabels.end}
+								</label>
+							</div>
+						)}
+					</Slider>
 				) : null}
 			</Container>
 		);

@@ -18,7 +18,7 @@ module.exports = {
 	/*
 	 ** Plugins to load before mounting the App
 	 */
-	plugins: ['~/plugins/reactivesearch-vue'],
+	plugins: [{ src: '~/plugins/reactivesearch-vue', ssr: false }],
 	build: {
 		babel: {
 			presets: [],

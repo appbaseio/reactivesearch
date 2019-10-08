@@ -63,13 +63,10 @@ const DynamicRangeSlider = {
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
 		this.addComponent(this.$props.internalRangeComponent);
-
-		if (Array.isArray(this.$props.selectedValue)) {
-			this.handleChange(this.$props.selectedValue);
-		} else if (this.$props.selectedValue) {
-			this.handleChange(
-				DynamicRangeSlider.parseValue(this.$props.selectedValue, this.$props),
-			);
+		if (Array.isArray(this.selectedValue)) {
+			this.handleChange(this.selectedValue);
+		} else if (this.selectedValue) {
+			this.handleChange(DynamicRangeSlider.parseValue(this.selectedValue, this.$props));
 		}
 
 		// get range before executing other queries
@@ -142,8 +139,8 @@ const DynamicRangeSlider = {
 
 			// Always keep the values within range
 			const normalizedValue = [
-				currentValue[0] < this.range.start ? this.range.start : currentValue[0],
-				currentValue[1] > this.range.end ? this.range.end : currentValue[1],
+				this.range ? Math.max(this.range.start, currentValue[0]) : currentValue[0],
+				this.range ? Math.min(this.range.end, currentValue[1]) : currentValue[1],
 			];
 
 			this.locked = true;
@@ -177,7 +174,7 @@ const DynamicRangeSlider = {
 				);
 			}
 
-			const { start, end } = this.range;
+			const { start, end } = this.range || { start: value[0], end: value[1] };
 			const [currentStart, currentEnd] = value;
 			// check if the slider is at its initial position
 			const isInitialValue = currentStart === start && currentEnd === end;
