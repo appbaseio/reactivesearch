@@ -13,7 +13,7 @@ const {
 	setQueryListener,
 	setQueryOptions,
 } = Actions;
-const { isEqual, checkValueChange, getClassName, getOptionsFromQuery } = helper;
+const { isEqual, checkValueChange, getClassName, getOptionsFromQuery, handleA11yAction } = helper;
 
 const ToggleButton = {
 	name: 'ToggleButton',
@@ -213,6 +213,8 @@ const ToggleButton = {
 					key={item.value}
 					primary={isSelected}
 					large
+					tabIndex={isSelected ? "-1" : "0"}
+					onKeypress={(e) => handleA11yAction(e, () => this.handleClick(item))}
 				>
 					{renderItem ? renderItem({ item, isSelected }) : item.label}
 				</Button>

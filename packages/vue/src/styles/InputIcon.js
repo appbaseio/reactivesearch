@@ -18,7 +18,8 @@ const clear = css`
 
 const InputIcon = styled('div')`
 	position: absolute;
-	top: calc(50% - 8px);
+	top: calc(50%);
+	transform: translateY(-50%);
 	${({ iconPosition }) => {
 		if (iconPosition === 'left') {
 			return left;

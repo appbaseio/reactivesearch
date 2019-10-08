@@ -14,7 +14,7 @@ Currently the initial setup is a bit manual which we're planning to improve. We 
 
 3. `cd` into the project directory
 
-4. Checkout the `dev` branch (should be default)
+4. Checkout the `next` branch (should be default)
 
 5. Fetch the submodules. In case you don't have `ssh` setup for github, change the URLs in `.gitmodules` to use `https` instead
 
@@ -24,7 +24,7 @@ git submodule sync
 git submodule update --remote
 ```
 
-6. The submodules will be fetched into `/packages`. Defaults to `dev` in `/packages/playground` and `master` in `/packages/reactivecore` & `/packages/vue-playground`.
+6. The submodules will be fetched into `/packages`. Defaults to `next` in `/packages/playground` and `master` in `/packages/reactivecore` & `/packages/vue-playground`.
 
 7. You can then install the dependencies, we recommend `yarn`. Run this from the project root:
 
@@ -71,7 +71,6 @@ yarn storybook
 ```
 
 **Note:** If you see any errors about missing dependencies, please try running `yarn` inside the sub-directory you're at.
-
 
 ## Native
 

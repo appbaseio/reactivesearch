@@ -7,7 +7,7 @@ import Title from '../../styles/Title';
 import { connect } from '../../utils/index';
 
 const { patchValue, clearValues } = Actions;
-const { getClassName } = helper;
+const { getClassName, handleA11yAction } = helper;
 
 const SelectedFilters = {
 	name: 'SelectedFilters',
@@ -43,8 +43,10 @@ const SelectedFilters = {
 						{...{
 							on: {
 								click: this.clearValues,
+								keypress: () => handleA11yAction(event, () => this.clearValues())
 							},
 						}}
+						tabIndex="0"
 					>
 						{this.$props.clearAllLabel}
 					</Button>
@@ -103,8 +105,10 @@ const SelectedFilters = {
 								{...{
 									on: {
 										click: () => this.remove(component, value),
+										keypress: (event) => handleA11yAction(event, () => this.remove(component, value)),
 									},
 								}}
+								tabIndex="0"
 							>
 								<span>
 									{selectedValues[component].label}: {valueToRender}
