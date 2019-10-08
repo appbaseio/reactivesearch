@@ -81,6 +81,7 @@ const ReactiveList = {
 		paginationAt: types.paginationAt.def('bottom'),
 		react: types.react,
 		showResultStats: VueTypes.bool.def(true),
+		showEndPage: VueTypes.bool.def(false),
 		size: VueTypes.number.def(10),
 		sortBy: types.sortBy,
 		sortOptions: types.sortOptions,
@@ -398,6 +399,7 @@ const ReactiveList = {
 							totalPages={Math.ceil(this.$data.total / this.$props.size)}
 							currentPage={this.$currentPage}
 							setPage={this.setPage}
+							showEndPage={this.$props.showEndPage}
 							innerClass={this.$props.innerClass}
 						/>
 					) : null}
