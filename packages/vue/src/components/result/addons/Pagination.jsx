@@ -3,11 +3,12 @@ import Button, { pagination } from '../../../styles/Button';
 import types from '../../../utils/vueTypes';
 
 const { getClassName, handleA11yAction } = helper;
-function getStartPage(totalPages, currentPage) {
+function getStartPage(totalPages, currentPage, showEndPage) {
 	const midValue = parseInt(totalPages / 2, 10);
-	const start = currentPage - midValue;
+	const start = currentPage - (showEndPage ? Math.ceil(midValue / 2) - 1 : midValue);
 	return start > 1 ? start : 2;
 }
+
 const Pagination = {
 	name: 'Pagination',
 	functional: true,
@@ -16,12 +17,11 @@ const Pagination = {
 		innerClass: types.style,
 		pages: types.number,
 		setPage: types.func,
-		totalPages: types.number
+		totalPages: types.number,
+		showEndPage: types.bool,
 	},
 	render(createElement, context) {
 		const { props } = context;
-		const start = getStartPage(props.pages, props.currentPage);
-		const pages = [];
 
 		const onPrevPage = () => {
 			if (props.currentPage) {
@@ -35,39 +35,6 @@ const Pagination = {
 			}
 		};
 
-		if (start <= props.totalPages) {
-			const calcPages = start + props.pages;
-			// eslint-disable-next-line
-			const totalPagesToShow =
-				props.pages < props.totalPages ? calcPages - 1 : props.totalPages + 1;
-			for (let i = start; i < totalPagesToShow; i += 1) {
-				const primary = props.currentPage === i - 1;
-				const innerClassName = getClassName(props.innerClass, 'button');
-				const className
-					= innerClassName || primary
-						? `${innerClassName} ${primary ? 'active' : ''}`
-						: '';
-				const pageBtn = (
-					<Button
-						class={className}
-						primary={primary}
-						key={i - 1}
-						tabIndex="0"
-						onKeyPress={event =>
-							handleA11yAction(event, () => props.setPage(i - 1))
-						}
-						onClick={() => props.setPage(i - 1)}
-					>
-						{i}
-					</Button>
-				);
-
-				if (i <= props.totalPages + 1) {
-					pages.push(pageBtn);
-				}
-			}
-		}
-
 		if (!props.totalPages) {
 			return null;
 		}
@@ -75,13 +42,56 @@ const Pagination = {
 		const innerClassName = getClassName(props.innerClass, 'button');
 		const primary = props.currentPage === 0;
 		const className
-			= innerClassName || primary
-				? `${innerClassName} ${primary ? 'active' : ''}`
-				: '';
+			= innerClassName || primary ? `${innerClassName} ${primary ? 'active' : ''}` : '';
+
+		const buildPaginationDOM = position => {
+			const { pages, currentPage, totalPages, setPage, showEndPage } = props;
+			let start
+				= position === 'start'
+					? getStartPage(pages, currentPage, showEndPage)
+					: Math.ceil(totalPages - (pages - 1) / 2) + 1;
+			const paginationButtons = [];
+			if (start <= totalPages) {
+				let totalPagesToShow = pages < totalPages ? start + (pages - 1) : totalPages + 1;
+				if (showEndPage) {
+					totalPagesToShow
+						= position === 'start'
+							? start + (Math.ceil(pages / 2) - (pages % 2))
+							: totalPages + 1;
+				}
+				if (currentPage > totalPages - pages + 2) {
+					start = totalPages - pages + 2;
+				}
+				if (totalPages <= pages) start = 2;
+				for (let i = start; i < totalPagesToShow; i += 1) {
+					const activeButton = currentPage === i - 1;
+					const classNameBtn
+						= innerClassName || activeButton
+							? `${innerClassName} ${activeButton ? 'active' : ''}`
+							: '';
+
+					const pageBtn = (
+						<Button
+							class={classNameBtn}
+							primary={activeButton}
+							tabIndex="0"
+							onKeyPress={event => handleA11yAction(event, () => setPage(i - 1))}
+							alt={`page-${i}`}
+							onClick={() => setPage(i - 1)}
+						>
+							{i}
+						</Button>
+					);
+					if (i <= totalPages + 1) {
+						paginationButtons.push(pageBtn);
+					}
+				}
+			}
+			return paginationButtons;
+		};
+
 		return (
-			<div
-				class={`${pagination} ${getClassName(props.innerClass, 'pagination')}`}
-			>
+			<div class={`${pagination} ${getClassName(props.innerClass, 'pagination')}`}>
 				<Button
 					class={getClassName(props.innerClass, 'button') || ''}
 					disabled={props.currentPage === 0}
@@ -95,17 +105,26 @@ const Pagination = {
 					<Button
 						class={className}
 						primary={primary}
-						onKeyPress={event =>
-							handleA11yAction(event, () => props.setPage(0))
-						}
+						onKeyPress={event => handleA11yAction(event, () => props.setPage(0))}
 						onClick={() => props.setPage(0)}
 						tabIndex="0"
 					>
 						1
 					</Button>
 				}
-				{props.currentPage >= props.pages ? <span>...</span> : null}
-				{pages}
+				{props.showEndPage
+				&& props.currentPage >= Math.floor(props.pages / 2) + !!(props.pages % 2) ? (
+						<span>...</span>
+					) : null}
+				{(props.currentPage <= props.totalPages - props.pages + 2
+					|| props.totalPages <= props.pages)
+					&& buildPaginationDOM('start')}
+				{props.showEndPage
+				&& props.pages > 2
+				&& props.currentPage <= props.totalPages - Math.ceil(props.pages * 0.75) ? (
+						<span>...</span>
+					) : null}
+				{props.showEndPage && buildPaginationDOM('end')}
 				<Button
 					class={getClassName(props.innerClass, 'button') || ''}
 					disabled={props.currentPage >= props.totalPages - 1}
@@ -117,7 +136,7 @@ const Pagination = {
 				</Button>
 			</div>
 		);
-	}
+	},
 };
 Pagination.install = function(Vue) {
 	Vue.component(Pagination.name, Pagination);

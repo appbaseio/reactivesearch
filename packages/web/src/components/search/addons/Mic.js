@@ -46,8 +46,8 @@ class Mic extends React.Component {
 
 	handleClick = () => {
 		this.results = [];
-		const { status } = this.state;
-		if (window.SpeechRecognition && status !== STATUS.denied) {
+		if (window.SpeechRecognition) {
+			const { status } = this.state;
 			if (status === STATUS.active) {
 				this.setState({
 					status: STATUS.inactive,
@@ -58,7 +58,15 @@ class Mic extends React.Component {
 			} = this.props;
 			const { SpeechRecognition } = window;
 			if (this.instance) {
-				this.stopMic();
+				this.setState(
+					{
+						status: STATUS.inactive,
+					},
+					() => {
+						this.instance.stop();
+						this.instance = null;
+					},
+				);
 				return;
 			}
 			this.instance = new SpeechRecognition();
@@ -75,9 +83,9 @@ class Mic extends React.Component {
 				});
 			};
 			this.instance.onresult = ({ results, timeStamp }) => {
-				if (results && results[0] && results[0].isFinal) {
-					this.stopMic();
-				}
+				this.setState({
+					status: STATUS.inactive,
+				});
 				if (onResult) {
 					onResult({ results, timeStamp });
 				}
@@ -99,17 +107,25 @@ class Mic extends React.Component {
 					onError(e);
 				}
 			};
+
+			/* Below Two methods run when Continuous is False */
+			this.instance.onspeechend = () => {
+				this.setState({
+					status: STATUS.inactive,
+				});
+			};
+
+			this.instance.onaudioend = () => {
+				this.setState({
+					status: STATUS.inactive,
+				});
+			};
 		}
 	};
 
 	get Icon() {
 		const { status } = this.state;
 		const { className } = this.props;
-
-		if (!window.SpeechRecognition) {
-			return <MuteSvg className={className} onClick={this.handleClick} />;
-		}
-
 		switch (status) {
 			case STATUS.active:
 				return <ListenSvg className={className} onClick={this.handleClick} />;
