@@ -1,7 +1,7 @@
 ---
 title: 'Quickstart'
 meta_title: 'Quickstart to SearchBase'
-meta_description: 'SearchBase is a lightweight & platform agnostic search library with some common utilities.'
+meta_description: 'SearchBase is a lightweight & platform agnostic search library for ElasticSearch.'
 keywords:
     - quickstart
     - searchbase
