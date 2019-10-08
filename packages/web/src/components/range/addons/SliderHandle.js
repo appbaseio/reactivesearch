@@ -1,6 +1,7 @@
 import React from 'react';
 
 const SliderHandle = ({
+	// eslint-disable-next-line react/prop-types
 	className, style, tooltipTrigger, renderTooltipData, ...passProps
 }) => {
 	if (tooltipTrigger) {
