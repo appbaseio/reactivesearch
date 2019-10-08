@@ -89,10 +89,11 @@ class Main extends React.Component {
 															<span className="stars">
 																{Array(item.average_rating_rounded)
 																	.fill('x')
+																	// eslint-disable-next-line no-shadow
 																	.map((item, index) => (
 																		<i
 																			className="fas fa-star"
-																			key={index}
+																			key={index.toString()}
 																		/>
 																	)) // eslint-disable-line
 																}
