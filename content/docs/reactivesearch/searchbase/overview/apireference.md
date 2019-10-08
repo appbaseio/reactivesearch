@@ -309,6 +309,31 @@ const searchbase = new Searchbase({
 
 ##Getter properties
 These properties are automatically calculated or managed by the `Searchbase` class. The library user is not expected to modify these properties.
+-   **suggestions** `Results`
+    It is an object which contains the following properties of `suggestions` query response.
+    -   **`data`**: `Array<Suggestion>`
+    `data` property contains the parsed suggestions results, a `Suggestion` object has the following format:
+        ```ts
+        type Suggestion = {
+            label: string;
+            value: string;
+            source?: any;
+        };
+        ```
+    -   **`raw`**: `Object`
+    Response returned by ES query in the raw form.
+    -   **`numberOfResults`**: `number` Total number of results found
+    -   **`time`**: `number` Total time taken by request (in ms)
+    -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
+    -   **`rawData`**: `Array<Object>`  An array of original hits obtained from the applied query.
+-   **results** `Results`
+    It is an object which contains the following details of `results` query response.
+    -   **`data`**: `Array<Object>` contains the parsed hits
+    -   **`raw`**: `Object` Response returned by ES query in the raw form.
+    -   **`numberOfResults`**: `number` Total number of results found
+    -   **`time`**: `number` Total time taken by request (in ms)
+    -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
+    -   **`rawData`**: `Array<Object>`  An array of original hits obtained from the applied query.
 -   **query** `Object`
     The ElasticSearch query that is to be executed
 -   **suggestionsQuery** `Object`
