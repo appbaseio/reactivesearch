@@ -65,7 +65,7 @@ class HomePage extends Component {
 		// To fetch reactive search github stars
 		fetch('https://api.github.com/repos/appbaseio/reactivesearch')
 			.then(res => res.json())
-			.then(res => {
+			.then((res) => {
 				this.setState({
 					githubStarCount: res.stargazers_count,
 				});
@@ -128,7 +128,7 @@ class HomePage extends Component {
 								>
 									<img
 										src="images/support.svg"
-										onError={e => {
+										onError={(e) => {
 											e.target.src = '/images/support.svg';
 										}}
 										style={{ marginRight: 8 }}
@@ -380,7 +380,7 @@ class HomePage extends Component {
 											d,
 											index, // eslint-disable-line
 										) =>
-											Object.keys(d).length ? ( // eslint-disable-next-line
+											(Object.keys(d).length ? ( // eslint-disable-next-line
 												<ImageCard key={index} src={d.src}>
 													<div>
 														<Title>{d.title}</Title>
@@ -402,8 +402,7 @@ class HomePage extends Component {
 												</ImageCard>
 											) : (
 												<div />
-											),
-										)}
+											)))}
 									</Grid>
 								)}
 							</Layout>
@@ -460,7 +459,7 @@ class HomePage extends Component {
 									style={{ marginBottom: '50px' }}
 								>
 									{config.banner7.articles.map((d, index) =>
-										Object.keys(d).length ? (
+										(Object.keys(d).length ? (
 											// eslint-disable-next-line
 											<ImageCard key={index} src={d.src}>
 												<div>
@@ -481,8 +480,7 @@ class HomePage extends Component {
 											</ImageCard>
 										) : (
 											<div />
-										),
-									)}
+										)))}
 								</Grid>
 							</Layout>
 						</Section>
