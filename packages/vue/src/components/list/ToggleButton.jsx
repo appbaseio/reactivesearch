@@ -196,7 +196,7 @@ const ToggleButton = {
 			if (value === undefined) {
 				this.handleToggle(item);
 			} else {
-				this.$emit('change', item);
+				this.$emit('change', item.value);
 			}
 		},
 

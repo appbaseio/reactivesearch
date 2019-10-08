@@ -47,6 +47,7 @@ const SingleDropdownList = {
 		dataField: types.stringRequired,
 		defaultQuery: types.func,
 		defaultSelected: types.string,
+		value: types.string,
 		filterLabel: types.string,
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Select a value'),
@@ -84,6 +85,8 @@ const SingleDropdownList = {
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
+		} else if (this.$props.value) {
+			this.setValue(this.$props.value);
 		} else if (this.$props.defaultSelected) {
 			this.setValue(this.$props.defaultSelected);
 		}
@@ -135,6 +138,9 @@ const SingleDropdownList = {
 		defaultSelected(newVal) {
 			this.setValue(newVal);
 		},
+		value(newVal) {
+			this.setValue(newVal);
+		},
 		selectedValue(newVal) {
 			if (this.$data.currentValue !== newVal) {
 				this.setValue(newVal || '');
@@ -183,7 +189,7 @@ const SingleDropdownList = {
 								key: String(item.key),
 							})),
 					]}
-					handleChange={this.setValue}
+					handleChange={this.handleChange}
 					selectedItem={this.$data.currentValue}
 					placeholder={this.$props.placeholder}
 					labelField="key"
@@ -235,6 +241,15 @@ const SingleDropdownList = {
 			};
 
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
+		},
+
+		handleChange(item) {
+			const { value } = this.$props;
+			if ( value === undefined ) {
+				this.setValue(item);
+			} else {
+				this.$emit('change', item);
+			}
 		},
 
 		updateQueryHandler(value, props) {
