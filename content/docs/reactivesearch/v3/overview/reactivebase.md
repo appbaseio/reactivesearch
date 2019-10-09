@@ -30,13 +30,13 @@ This is the first component you will need to add when using `ReactiveSearch`.
 ### Props
 
 -   **app** `String`
-    app name as it appears on the dashboard. Refers to an index if you're using your own Elasticsearch cluster. (Multiple indexes can be connected to by specifiying comma separated index names)
+    app name as it appears on the dashboard. Refers to an index if you're using your own Elasticsearch cluster. (Multiple indexes can be connected to by specifying comma-separated index names)
 -   **type** `String` [optional]
-    types on which the queries should run on. Multiple types can be passed as comma separated values. The default behavior here is to search on all the app types.
+    types on which the queries should run on. Multiple types can be passed as comma-separated values. The default behavior here is to search on all the app types.
 -   **credentials** `String` [optional]
     app credentials as they appear on the dashboard. It should be a string of the format "username:password" and is used for authenticating the app. If you are not using an appbase.io app, credentials may not be necessary - although having an open-access Elasticsearch cluster is not recommended.
 -   **url** `String` [optional]
-    URL where Elasticsearch cluster is hosted, only needed if your app uses a non appbase.io URL.
+    URL where the Elasticsearch cluster is hosted, only needed if your app uses a non-appbase.io URL.
 -   **headers** `Object` [optional]
     set custom headers to be sent with each server request as key/value pairs. For example:
 
@@ -54,24 +54,28 @@ This is the first component you will need to add when using `ReactiveSearch`.
 ```
 
 -   **analytics** `Boolean` [optional]
-    allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`. Check the [analytics recipe](/docs/reactivesearch/v3/advanced/analytics/) for click analytics implementation.
+    allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`.<br/>
+    Check the [analytics recipe](/docs/reactivesearch/v3/advanced/analytics/) for click analytics implementation.
+-   **analyticsConfig** `Object` [optional]
+    allows you to customize the analytics experience when appbase.io is used as a backend.<br/>
+    [Read more](/docs/reactivesearch/v3/advanced/analytics/#configure-the-analytics-experience)
+- **searchStateHeader**
+    Defaults to `false`. Allows recording some **advanced** search analytics (and click analytics) when setting to `true` and appbase.io is used as a backend.
+    > Note:
+    > 1. This prop has been marked as deprecated. Please use the `analyticsConfig` prop instead.
+    > 2. You must use the react version >= 16.6 to make it work with click analytics.
 -   **as** `String` [optional]
     allows to use the custom html element tag, defaults to `div`.
--   **searchStateHeader** `Boolean` [optional]
-    Defaults to `false`. Allows recording some **advanced** search analytics (and click analytics) when set to `true` and appbase.io is used as a backend.
-    > Note:
-    >
-    > You must use the react version >= 16.6 to make it work with click analytics.
 -   **theme** `Object` [optional]
     allows over-writing of default styles by providing the respective key/values. You can read more about its usage [here](/theming/themes.html)
 -   **themePreset** `String` [optional]
     allows over-writing of default styles by providing a preset value. Supported values are `light` (default) and `dark`. You can read more about its usage [here](/theming/themes.html)
 -   **getSearchParams** `Function` [optional]
-    Enables you to customise the evaluation of query-params-string from the url (or) any other source. If this function is not set, the library will use `window.location.search` as the search query-params-string for parsing selected-values. This can come handy if the URL is using hash values.
+    Enables you to customize the evaluation of query-params-string from the url (or) any other source. If this function is not set, the library will use `window.location.search` as the search query-params-string for parsing selected-values. This can come handy if the URL is using hash values.
 -   **setSearchParams** `Function` [optional]
-    Enables you to customise setting of the query params string in the url by providing the updated query-params-string as the function parameter. If this function is not set, the library will set the `window.history` via `pushState` method.
+    Enables you to customize setting of the query params string in the url by providing the updated query-params-string as the function parameter. If this function is not set, the library will set the `window.history` via `pushState` method.
 -   **transformRequest** `Function` [optional]
-    Enables transformation of network request before execution. This function will give you the the request object as the param and expect an updated request in return, for execution. Note that this is an experimental API and will likely change in the future.
+    Enables transformation of network request before execution. This function will give you the request object as the param and expect an updated request in return, for execution. Note that this is an experimental API and will likely change in the future.
 	> Note:
     >
     > From v3.0.1 it is possible to define `transformRequest` as an `async` method which will return a promise which resolves the modified request options.
@@ -112,7 +116,7 @@ The above example will change the default `_msearch` request to `_search` reques
     Allows user to query from GraphqQL server instead of `ElasticSearch` REST api. [graphql-compose-elasticsearch](https://github.com/graphql-compose/graphql-compose-elasticsearch) helps in transforming `GraphQL` queries into `ElasticSearch` rest api. Here is an example of `GraphQL` server which acts as proxy for `ElasticSearch`.
     -   [GraphQL Server for books application](https://github.com/appbaseio-apps/graphql-elasticsearch-server)
 -   **tranformResponse** `Function` [optional]
-    Enables transformation of search network response before rendering them. This asynchronous function will give you elasticsearch response object and componentId as params and expects an updated response in return in similar structure of elasticsearch. You can use `componentId` to conditionally tranform response for particular reactivesearch component only.
+    Enables transformation of search network response before rendering them. This asynchronous function will give you elasticsearch response object and componentId as params and expects an updated response in return in the similar structure of elasticsearch. You can use `componentId` to conditionally transform response for a particular reactivesearch component only.
 
 ```js{7-34}
     <ReactiveBase
