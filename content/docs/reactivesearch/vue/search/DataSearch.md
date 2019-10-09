@@ -60,9 +60,9 @@ Example uses:
 -   **componentId** `String`
     unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String or Array`
-    database field(s) to be connected to the component's UI view. DataSearch accepts an Array in addition to String, useful for applying search across multiple fields.
+    database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
 -   **nestedField** `String` [optional]
-    use to set the `nested` mapping field that allows arrays of objects to be indexed in a way that they can be queried independently of each other. Applicable only when dataField is a part of `nested` type.
+    Set the path of the `nested` type under which the `dataField` is present. Only applicable only when the field(s) specified in the `dataField` is(are) present under a [`nested` type](https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html) mapping.
 -   **title** `String or JSX` [optional]
     set the title of the component to be shown in the UI.
 -   **defaultSelected** `string` [optional]
@@ -70,25 +70,25 @@ Example uses:
 -   **fieldWeights** `Array` [optional]
     set the search weight for the database fields, useful when dataField is an Array of more than one field. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.
 -   **placeholder** `String` [optional]
-    set the placeholder text to be shown in the searchbox input field. Defaults to "Search".
+    set placeholder text to be shown in the component's input field. Defaults to "Search".
 -   **autosuggest** `Boolean` [optional]
     set whether the autosuggest functionality should be enabled or disabled. Defaults to `true`. When set to `false`, it searches as user types, unless `debounce` is also set.
 -   **showIcon** `Boolean` [optional]
     whether to display a search or custom icon in the input box. Defaults to `true`.
 -   **iconPosition** `String` [optional]
-    sets the position of the search icon. Can be `left` or `right`. Defaults to `right`.
+    sets the position of the search icon. Can be set to either `left` or `right`. Defaults to `right`.
 -   **icon** `JSX` [optional]
-    displays a custom search icon instead of the default 🔍
+    set a custom search icon instead of the default icon 🔍
 -   **showClear** `Boolean` [optional]
-    show a clear text icon. Defaults to `false`.
+    show a clear text `X` icon. Defaults to `false`.
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **clearIcon** `JSX` [optional]
-    allows setting a custom icon for clearing text instead of the default cross.
+    set a custom icon for clearing text instead of the default cross.
 -   **debounce** `Number` [optional]
-    sets the milliseconds to wait before executing the query. Defaults to `0`, i.e. no debounce.
+    set the milliseconds to wait before executing the query. Defaults to `0`, i.e. no debounce.
 -   **highlight** `Boolean` [optional]
     whether highlighting should be enabled in the returned results.
 -   **highlightField** `String or Array` [optional]
@@ -126,9 +126,9 @@ Example uses:
 -   **innerRef** `Function` [optional]
     You can pass a callback using `innerRef` which gets passed to the inner input element as [`ref`](https://reactjs.org/docs/refs-and-the-dom.html).
 -   **URLParams** `Boolean` [optional]
-    enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
+    enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **renderNoSuggestion** `String|slot-scope` [optional]
-    can we used to render a message when there is no suggestions found.
+    can be used to render a message when there is no suggestions found.
 -   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
 
@@ -157,7 +157,7 @@ or
 
 ## Styles
 
-`DataSearch` component supports `innerClass` prop with the following keys:
+`DataSearch` component supports an `innerClass` prop to provide styles to the sub-components of DataSearch. These are the supported keys:
 
 -   `title`
 -   `input`
@@ -166,7 +166,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 ## Extending
 
-`DataSearch` component can be extended to
+`DataSearch` component can be extended to:
 
 1. customize the look and feel with `className`,
 2. update the underlying DB query with `customQuery`,
