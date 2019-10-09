@@ -64,7 +64,7 @@ Example uses:
 -   **componentId** `String`
     unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String or Array`
-    data field(s) on which the search query will be applied to. If you want to search across multiple fields, pass them as an `Array`.
+    database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
 -   **categoryField** `String` [optional]
     data field which has the category values mapped.
 -   **title** `String or JSX` [optional]
@@ -76,25 +76,25 @@ Example uses:
 -   **fieldWeights** `Array` [optional]
     set the search weight for the database fields, useful when dataField is an Array of more than one field. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.
 -   **placeholder** `String` [optional]
-    Sets the placeholder text to be shown in the searhbox input field. Defaults to "Search".
+    set placeholder text to be shown in the component's input field. Defaults to "Search".
 -   **showIcon** `Boolean` [optional]
     whether to display a search or custom icon in the input box. Defaults to `true`.
 -   **iconPosition** `String` [optional]
-    sets the position of the search icon. Can be `left` or `right`. Defaults to `right`.
+    sets the position of the search icon. Can be set to either `left` or `right`. Defaults to `right`.
 -   **icon** `JSX` [optional]
-    displays a custom search icon instead of the default 🔍
+    set a custom search icon instead of the default icon 🔍
 -   **showClear** `Boolean` [optional]
-    show a clear text icon. Defaults to `false`.
+    show a clear text `X` icon. Defaults to `false`.
 -   **clearIcon** `JSX` [optional]
-    allows setting a custom icon for clearing text instead of the default cross.
+    set a custom icon for clearing text instead of the default cross.
 -   **autosuggest** `Boolean` [optional]
     set whether the autosuggest functionality should be enabled or disabled. Defaults to `true`.
 -   **strictSelection** `Boolean` [optional]
-    defaults to `false`. When set to `true` the component will only set its value and fire the query if the value was selected from the suggestion. Otherwise the value will be cleared on selection. This is only relevant with `autosuggest`.
+    defaults to `false`. When set to `true`, the component will only set its value and fire the query if the value was selected from the suggestion. Otherwise the value will be cleared on selection. This is only relevant with `autosuggest`.
 -   **defaultSuggestions** `Array` [optional]
     preset search suggestions to be shown on focus when the search box does not have any search query text set. Accepts an array of objects each having a **label** and **value** property. The label can contain either String or an HTML element.
 -   **debounce** `Number` [optional]
-    sets the milliseconds to wait before executing the query. Defaults to `0`, i.e. no debounce.
+    set the milliseconds to wait before executing the query. Defaults to `0`, i.e. no debounce.
 -   **highlight** `Boolean` [optional]
     Whether highlighting should be enabled in the returned results. Defaults to `false`.
 -   **highlightField** `String` or `Array` [optional]
@@ -149,7 +149,7 @@ Example uses:
 -   **innerRef** `Function` [optional]
     You can pass a callback using `innerRef` which gets passed to the inner input element as [`ref`](https://reactjs.org/docs/refs-and-the-dom.html).
 -   **URLParams** `Boolean` [optional]
-    enable creating a URL query string parameter based on the current value of the search. This is useful for sharing URLs with the component state. Defaults to `false`.
+    enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
 
 ## Demo
 
@@ -159,7 +159,7 @@ Example uses:
 
 ## Styles
 
-`CategorySearch` component supports `innerClass` prop with the following keys:
+`CategorySearch` component supports an `innerClass` prop to provide styles to the sub-components of CategorySearch. These are the supported keys:
 
 -   `title`
 -   `input`

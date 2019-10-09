@@ -62,23 +62,23 @@ Example uses:
 -   **componentId** `String`
     unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String or Array`
-    database field(s) to be connected to the component's UI view. DataSearch accepts an Array in addition to String, useful for applying search across multiple fields.
+    database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
 -   **title** `String or JSX` [optional]
     set the title of the component to be shown in the UI.
 -   **defaultSelected** `string` [optional]
     preset the search query text in the search box.
 -   **downShiftProps** `Object` [optional]
-    allow passing props directly to `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
+    allow passing props directly to the underlying `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
 -   **fieldWeights** `Array` [optional]
     set the search weight for the database fields, useful when dataField is an Array of more than one field. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.
 -   **placeholder** `String` [optional]
-    set the placeholder text to be shown in the searchbox input field. Defaults to "Search".
+    set placeholder text to be shown in the component's input field. Defaults to "Search".
 -   **showIcon** `Boolean` [optional]
     whether to display a search or custom icon in the input box. Defaults to `true`.
 -   **iconPosition** `String` [optional]
-    sets the position of the search icon. Can be `left` or `right`. Defaults to `left`.
+    sets the position of the search icon. Can be set to either `left` or `right`. Defaults to `right`.
 -   **icon** `JSX` [optional]
-    displays a custom search icon instead of the default 🔍
+    set a custom search icon instead of the default 🔍
 -   **showClear** `Boolean` [optional]
     show a clear text icon. Defaults to `false`.
 -   **clearIcon** `JSX` [optional]
@@ -90,7 +90,7 @@ Example uses:
 -   **defaultSuggestions** `Array` [optional]
     preset search suggestions to be shown on focus when the search box does not have any search query text set. Accepts an array of objects each having a **label** and **value** property. The label can contain either String or an HTML element.
 -   **debounce** `Number` [optional]
-    sets the milliseconds to wait before executing the query. Defaults to `0`, i.e. no debounce.
+    set the milliseconds to wait before executing the query. Defaults to `0`, i.e. no debounce.
 -   **highlight** `Boolean` [optional]
     whether highlighting should be enabled in the returned results.
 -   **highlightField** `String or Array` [optional]
@@ -145,7 +145,7 @@ Example uses:
 -   **innerRef** `Function` [optional]
     You can pass a callback using `innerRef` which gets passed to the inner input element as [`ref`](https://reactjs.org/docs/refs-and-the-dom.html).
 -   **URLParams** `Boolean` [optional]
-    enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
+    enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
 
 ## Demo
 
@@ -155,7 +155,7 @@ Example uses:
 
 ## Styles
 
-`DataSearch` component supports `innerClass` prop with the following keys:
+`DataSearch` component supports an `innerClass` prop to provide styles to the sub-components of DataSearch. These are the supported keys:
 
 -   `title`
 -   `input`

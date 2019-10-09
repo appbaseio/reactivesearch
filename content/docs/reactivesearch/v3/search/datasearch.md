@@ -62,29 +62,29 @@ Example uses:
 -   **componentId** `String`
     unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String or Array`
-    database field(s) to be connected to the component's UI view. DataSearch accepts an Array in addition to String, useful for applying search across multiple fields.
+    database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
 -   **nestedField** `String` [optional]
-    use to set the `nested` mapping field that allows arrays of objects to be indexed in a way that they can be queried independently of each other. Applicable only when dataField is a part of `nested` type.
+    Set the path of the `nested` type under which the `dataField` is present. Only applicable only when the field(s) specified in the `dataField` is(are) present under a [`nested` type](https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html) mapping.
 -   **title** `String or JSX` [optional]
     set the title of the component to be shown in the UI.
 -   **defaultValue** `string` [optional]
     set the initial search query text on mount.
 -   **value** `string` [optional]
-    controls the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with `onChange` function.
+    sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `onChange` prop.
 -   **downShiftProps** `Object` [optional]
-    allow passing props directly to `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
+    allow passing props directly to the underlying `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
 -   **fieldWeights** `Array` [optional]
     set the search weight for the database fields, useful when dataField is an Array of more than one field. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.
 -   **placeholder** `String` [optional]
-    set the placeholder text to be shown in the searchbox input field. Defaults to "Search".
+    set placeholder text to be shown in the component's input field. Defaults to "Search".
 -   **showIcon** `Boolean` [optional]
     whether to display a search or custom icon in the input box. Defaults to `true`.
 -   **iconPosition** `String` [optional]
-    sets the position of the search icon. Can be `left` or `right`. Defaults to `right`.
+    sets the position of the search icon. Can be set to either `left` or `right`. Defaults to `right`.
 -   **icon** `JSX` [optional]
-    displays a custom search icon instead of the default 🔍
+    set a custom search icon instead of the default 🔍
 -   **showClear** `Boolean` [optional]
-    show a clear text icon. Defaults to `false`.
+    show a clear text `X` icon. Defaults to `false`.
 -   **clearIcon** `JSX` [optional]
     allows setting a custom icon for clearing text instead of the default cross.
 -   **autosuggest** `Boolean` [optional]
@@ -94,7 +94,7 @@ Example uses:
 -   **defaultSuggestions** `Array` [optional]
     preset search suggestions to be shown on focus when the search box does not have any search query text set. Accepts an array of objects each having a **label** and **value** property. The label can contain either String or an HTML element.
 -   **debounce** `Number` [optional]
-    sets the milliseconds to wait before executing the query. Defaults to `0`, i.e. no debounce.
+    set the milliseconds to wait before executing the query. Defaults to `0`, i.e. no debounce.
 -   **highlight** `Boolean` [optional]
     whether highlighting should be enabled in the returned results.
 -   **highlightField** `String or Array` [optional]
@@ -132,25 +132,25 @@ Example uses:
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **showVoiceSearch** `Boolean` [optional]
-    show an option in search bar to enable the voice to text search. Defaults to `false`.
+    show a voice icon in the searchbox to enable users to set voice input. Defaults to `false`.
 -   **searchOperators** `Boolean` [optional]
-    Defaults to `false`, if set to `true` than you can use special characters in the search query to enable the advanced search.<br/>
+    Defaults to `false`. If set to `true` than you can use special characters in the search query to enable an advanced search behavior.<br/>
     Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html).
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **URLParams** `Boolean` [optional]
-    enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
+    enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **render** `Function` [optional]
-    You can render custom suggestions by using `render` prop.
+    You can render suggestions in a custom layout by using the `render` prop.
     <br/>
-    It accepts an object with these properties:
-    -   **`loading`**: `boolean`
-        indicates that the query is still in progress
-    -   **`error`**: `object`
-        An object containing the error info
-    -   **`data`**: `array`
-        An array of parsed suggestions obtained from the applied query.
-    -   **`rawData`**: `array`
+    It accepts an object with these properties: It accepts an object with these properties:
+    -   **`loading`**: `boolean` - **`loading`**: `boolean`
+        indicates that the query is still in progress indicates that the query is still in progress.
+    -   **`error`**: `object` - **`error`**: `object`
+        An object containing the error info An object containing the error info.
+    -   **`data`**: `array` - **`data`**: `array`
+        An array of parsed suggestions obtained from the applied query. An array of parsed suggestions obtained from the applied query.
+    -   **`rawData`**: `array` - **`rawData`**: `array`
         An array of original suggestions obtained from the applied query.
     -   **`value`**: `string`
         current search input value i.e the search query being used to obtain suggestions.
@@ -253,24 +253,28 @@ Or you can also use render function as children
 -   **onChange** `function` [optional]
     is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
 
-        	```js
-        	<DataSearch
-        		value={this.state.value}
-        		onChange={(value, triggerQuery, event) => {
-        			this.setState({
-        				value,
-        			}, () => triggerQuery())
-        		}}
-        	/>
-        	```
-        	> Note:
-        	>
-        	> If you're using the controlled behavior than it's your responsibility to call the `triggerQuery` method to update the query i.e execute the search query and update the query results in connected components by `react` prop. It is not mandatory to call the `triggerQuery` in `onChange` you can also call it in other input handlers like `onBlur` or `onKeyPress`.
+    ```js
+    <DataSearch
+    	value={this.state.value}
+    	onChange={(value, triggerQuery, event) => {
+    		this.setState(
+    			{
+    				value,
+    			},
+    			() => triggerQuery(),
+    		);
+    	}}
+    />
+    ```
+
+> Note:
+>
+> If you're using the controlled behavior than it's your responsibility to call the `triggerQuery` method to update the query i.e execute the search query and update the query results in connected components by `react` prop. It is not mandatory to call the `triggerQuery` in `onChange` you can also call it in other input handlers like `onBlur` or `onKeyPress`.
 
 -   **onSuggestions** `Function` [optional]
-    You can pass a callback function to listen for the changes in suggestions.The function receives `suggestions` list.
+    You can pass a callback function to listen for the changes in suggestions. The function receives `suggestions` list.
 -   **onError** `Function` [optional]
-    gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
+    You can pass a callback function that gets triggered in case of an error and provides the `error` object which can be used for debugging or giving feedback to the user if needed.
 
 ## Demo
 
@@ -280,7 +284,7 @@ Or you can also use render function as children
 
 ## Styles
 
-`DataSearch` component supports `innerClass` prop with the following keys:
+`DataSearch` component supports an `innerClass` prop to provide styles to the sub-components of DataSearch. These are the supported keys:
 
 -   `title`
 -   `input`
@@ -290,7 +294,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
 ## Extending
 
-`DataSearch` component can be extended to
+`DataSearch` component can be extended to:
 
 1. customize the look and feel with `className`, `style`,
 2. update the underlying DB query with `customQuery`,
@@ -330,7 +334,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
     > Note:
     >
     > 1. All these events accepts the `triggerQuery` as a second parameter which can be used to trigger the `DataSearch` query with the current selected value (useful to customize the search query execution).
-	> 2. There is a known [issue](https://github.com/appbaseio/reactivesearch/issues/1087) with `onKeyPress` when `autosuggest` is set to true, it is recommended to use `onKeyDown` for the consistency.
+    > 2. There is a known [issue](https://github.com/appbaseio/reactivesearch/issues/1087) with `onKeyPress` when `autosuggest` is set to true. It is recommended to use `onKeyDown` for the consistency.
 
 ```js
 <DataSearch
@@ -394,7 +398,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
     takes **value** and **props** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
     `Note:` customQuery is called on value changes in the **DataSearch** component as long as the component is a part of `react` dependency of at least one other component.
 -   **defaultQuery** `Function`
-    takes **value** and **props** as parameters and **returns** the data query to be applied to the source component, as defined in Elasticsearch Query DSL, which doesn't get leaked to other components.<br/>
+    is a callback function that takes **value** and **props** as parameters and **returns** the data query to be applied to the source component, as defined in Elasticsearch Query DSL, which doesn't get leaked to other components.<br/>
     Read more about it [here](/docs/reactivesearch/v3/advanced/customquery#when-to-use-default-query).
 -   **beforeValueChange** `Function`
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
