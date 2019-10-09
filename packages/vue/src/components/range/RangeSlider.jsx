@@ -49,6 +49,7 @@ const RangeSlider = {
 		data: types.data,
 		dataField: types.stringRequired,
 		defaultSelected: types.range,
+		value: types.range,
 		filterLabel: types.string,
 		innerClass: types.style,
 		react: types.react,
@@ -68,7 +69,13 @@ const RangeSlider = {
 		},
 
 		handleSlider(values) {
-			this.handleChange(values.currentValue);
+			const { value } = this.$props
+
+			if (value === undefined) {
+				this.handleChange(values.currentValue);
+			} else {
+				this.$emit('change', {start: values.currentValue[0], end: values.currentValue[1]});
+			}
 		},
 
 		handleChange(currentValue, props = this.$props) {
@@ -131,6 +138,10 @@ const RangeSlider = {
 			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
 		},
 
+		value(newVal) {
+			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
+		},
+
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {
 				this.handleChange(RangeSlider.parseValue(newVal, this.$props));
@@ -155,13 +166,15 @@ const RangeSlider = {
 		this.addComponent(this.$props.componentId);
 		this.setReact(this.$props);
 
-		const { defaultSelected } = this.$props;
+		const { defaultSelected, value } = this.$props;
 		const { selectedValue } = this;
 		if (this.$props.range) {
 			if (Array.isArray(selectedValue)) {
 				this.handleChange(selectedValue);
 			} else if (selectedValue) {
 				this.handleChange(RangeSlider.parseValue(selectedValue, this.$props));
+			} else if (value) {
+				this.handleChange(RangeSlider.parseValue(value, this.$props));
 			} else if (defaultSelected) {
 				this.handleChange(RangeSlider.parseValue(defaultSelected, this.$props));
 			}

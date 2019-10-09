@@ -34,6 +34,7 @@ const SingleRange = {
 		data: types.data,
 		dataField: types.stringRequired,
 		defaultSelected: types.string,
+		value: types.string,
 		filterLabel: types.string,
 		innerClass: types.style,
 		react: types.react,
@@ -55,6 +56,8 @@ const SingleRange = {
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
+		} else if (this.$props.value) {
+			this.setValue(this.$props.value);
 		} else if (this.$props.defaultSelected) {
 			this.setValue(this.$props.defaultSelected);
 		}
@@ -71,6 +74,9 @@ const SingleRange = {
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
 		},
 		defaultSelected(newVal) {
+			this.setValue(newVal);
+		},
+		value(newVal) {
 			this.setValue(newVal);
 		},
 		selectedValue(newVal) {
@@ -100,7 +106,7 @@ const SingleRange = {
 									id={`${this.$props.componentId}-${item.label}`}
 									name={this.$props.componentId}
 									value={item.label}
-									onClick={this.handleClick}
+									onChange={this.handleChange}
 									type="radio"
 									checked={selected}
 									show={this.$props.showRadio}
@@ -171,8 +177,14 @@ const SingleRange = {
 			});
 		},
 
-		handleClick(e) {
-			this.setValue(e.target.value);
+		handleChange(e) {
+			const { value } = this.$props;
+
+			if (value === undefined) {
+				this.setValue(e.target.value);
+			} else {
+				this.$emit('change', e.target.value);
+			}
 		},
 	},
 };
