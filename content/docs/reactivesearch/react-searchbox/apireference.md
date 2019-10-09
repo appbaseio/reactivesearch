@@ -65,6 +65,16 @@ Example uses of searchbox UI:
 
 ## Props
 
+-   **app** `string` [required]
+    refers to an `index` if you’re using your own Elasticsearch cluster. If you're using an appbase.io hosted app, then the app name can be used.
+
+    > Note: Multiple indexes can be connected to by specifying comma separated index names.
+
+-   **url** `string` [required]
+    URL for the Elasticsearch cluster. Defaults to `https://scalr.api.appbase.io`
+-   **credentials** `string` [optional]
+    Basic auth credentials for authentication purposes. It should be a string of the format `username:password`.
+    If you are using an appbase.io app, you will find credentials under your [API credentials page](https://dashboard.appbase.io/app?view=credentials). If you are not using an appbase.io app, credentials may not be necessary - although having an open access to your Elasticsearch cluster is not recommended.
 -   **dataField** `string | Array<string | DataField>` [required]
     database field(s) to be queried against. Accepts a String or an Array of either String or `DataField` type. The latter is useful for searching across multiple fields with field weights.<br/>
     Think of field weights as a way to apply weighted search. To use field weights, you can define the `dataField` prop as an array of objects of `DataField` type.<br/>
@@ -75,6 +85,23 @@ Example uses of searchbox UI:
     	weight: number;
     };
     ```
+-   **analytics** `boolean` [optional]
+    records search and click analytics when set to true and appbase.io is used as a backend. Defaults to false.
+    Search analytics get recorded with no code changes required. For recording click analytic, you have to call the `triggerClickAnalytics` function (inside `render`) by using the `_click_id` property of the data item as an argument. Example:
+
+    ```js
+    <SearchBox
+    	render={({ data, triggerClickAnalytics }) => {
+    		return data.map(item => (
+    			<div>
+    				key={item._id}
+    				onClick={() => triggerClickAnalytics(item._click_id)}
+    			</div>
+    		));
+    	}}
+    />
+    ```
+
 -   **nestedField** `String` [optional]
     Set the path of the `nested` type under which the `dataField` is present. Only applicable only when the field(s) specified in the `dataField` is(are) present under a [`nested` type](https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html) mapping.
 -   **title** `String or JSX` [optional]
