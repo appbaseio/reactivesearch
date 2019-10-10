@@ -9,6 +9,8 @@
               link: /docs/reactivesearch/v3/overview/importing/
             - title: ReactiveBase
               link: /docs/reactivesearch/v3/overview/reactivebase/
+            - title: ReactiveComponent
+              link: /docs/reactivesearch/v3/overview/reactivecomponent/
             - title: Components Overview
               link: /docs/reactivesearch/v3/overview/components/
       - group: List Components
