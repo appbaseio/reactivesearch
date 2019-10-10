@@ -73,6 +73,10 @@ const searchbase = new Searchbase({
     }
 })
 ```
+-   **highlight** `Boolean` [optional]
+    whether highlighting should be enabled in the returned results.
+-   **highlightField** `String or Array` [optional]
+    when highlighting is enabled, this prop allows specifying the fields which should be returned with the matching highlights. When not specified, it defaults to applying highlights on the field(s) specified in the **dataField** prop.
 -   **value** `string`
     Initial value of the search input which will be used to build out the search query.
 -   **suggestions** `Array<Suggestion>`
@@ -252,6 +256,8 @@ const searchbase = new Searchbase({
     headers: {
         secret: "searchbase-is-awesome",
     },
+    highlight: true,
+    highlightFields: ["original_title", "original_title.raw"],
     value: "",
     suggestions: [{
         label: "Harry Potter",
