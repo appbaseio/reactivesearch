@@ -1,15 +1,8 @@
 import React from 'react';
-import Highlight from 'react-highlight-words';
 import { css, cx } from 'react-emotion';
 
 import Flex from '../../../styles/Flex';
-
-const highlightStyle = {
-	fontWeight: 600,
-	padding: 0,
-	backgroundColor: 'transparent',
-	color: 'inherit',
-};
+import Highlight from './Highlight';
 
 const SuggestionItem = ({ currentValue, suggestion }) => {
 	const {
@@ -19,12 +12,7 @@ const SuggestionItem = ({ currentValue, suggestion }) => {
 		// label has highest precedence
 		return typeof label === 'string' ? (
 			<div className="trim">
-				<Highlight
-					searchWords={currentValue.split(' ')}
-					textToHighlight={label}
-					autoEscape
-					highlightStyle={highlightStyle}
-				/>
+				<Highlight searchWords={currentValue.split(' ')} textToHighlight={label} />
 			</div>
 		) : (
 			label
@@ -49,7 +37,6 @@ const SuggestionItem = ({ currentValue, suggestion }) => {
 							<Highlight
 								searchWords={currentValue.split(' ')}
 								textToHighlight={title}
-								highlightStyle={highlightStyle}
 								className={css({ fontSize: '1rem' })}
 							/>
 						</div>
@@ -59,7 +46,6 @@ const SuggestionItem = ({ currentValue, suggestion }) => {
 							<Highlight
 								searchWords={currentValue.split(' ')}
 								textToHighlight={description}
-								highlightStyle={highlightStyle}
 							/>
 						</div>
 					)}
