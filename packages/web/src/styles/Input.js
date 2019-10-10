@@ -146,6 +146,13 @@ const suggestions = (themePreset, theme) => css`
 		&:focus {
 			background-color: #eee;
 		}
+
+		.highlight-class {
+			font-weight: 600;
+			padding: 0;
+			background-color: transparent;
+			color: inherit;
+		}
 	}
 
 	${themePreset === 'dark' && dark(theme)}
