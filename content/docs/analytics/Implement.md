@@ -50,12 +50,9 @@ curl --location --request POST "https://scalr.api.appbase.io/{APP_NAME}/_analyti
     --header "Authorization: replace-with-basic-auth-credentials"
 ```
 #### Clusters or via Arc
-If you're using [appbase.io](http://appbase.io) clusters or `Arc` then you just need to change the URL to your cluster/Arc URL.<br/>
-Check the API docs [here](https://arc-api.appbase.io/?version=latest#ca047056-d009-414b-915a-1bc290134490).
-
-For example:
+If you're using [appbase.io](http://appbase.io) clusters or `Arc`, then you just need to change the URL to your cluster/Arc URL. Check the API docs over [here](https://arc-api.appbase.io/?version=latest#ca047056-d009-414b-915a-1bc290134490). For example:
 ```
-curl --location --request POST "http://{USERNAME}:{PASSWORD}@{CLUSTER_URL}/{INDEX}/_analytics" \
+curl --location --request POST "https://{USERNAME}:{PASSWORD}@{CLUSTER_URL}/{INDEX}/_analytics" \
   --header "X-Search-Id: replace-with-real-search-id" \
   --header "X-Search-Click: true" \
   --header "X-Search-ClickPosition: 5" \
@@ -63,6 +60,7 @@ curl --location --request POST "http://{USERNAME}:{PASSWORD}@{CLUSTER_URL}/{INDE
 ```
 
 The above endpoints accept the following values as headers:
+
 `X-Search-Click` -> value is of type true / false,
 
 `X-Search-ClickPosition` -> value is of type Number (e.g. 1, 2 denoting the result item being clicked)
@@ -73,12 +71,9 @@ Since these events record what happens after a search query is fired, they shoul
 
 ## Advanced Analytics
 ### How to implement custom events
-Apart from the pre-defined search headers you can also set custom events with the help of `X-Search-CustomEvent` header. Custom events allow you to build your own analytics on top of the appbase.io analytics.<br/>
-For example, you might be interested to know the platform used by a user to make the search request.<br/>
-There can be plenty of scenarios the choice is yours that how you want to use it.
+Apart from the pre-defined search headers you can also set custom events with the help of `X-Search-CustomEvent` header. Custom events allow you to build your own analytics on top of the appbase.io analytics. For example, you might be interested to know the platform used by a user to make the search request. There can be plenty of scenarios the choice is yours that how you want to use it.
 
-`X-Search-CustomEvent` -> It accepts the value in the following format: "key1=value1,key2=value2,..." where key represents the event name and value represents the event value.<br/>
-For e.g `X-Search-CustomEvent="platform=android"`
+`X-Search-CustomEvent` -> It accepts the value in the following format: "key1=value1,key2=value2,..." where key represents the event name and value represents the event value. For e.g `X-Search-CustomEvent="platform=android"`
 
 ### How to filter using custom events
 You can use the custom events as a query param to filter out the analytics APIs. <br/>
@@ -89,14 +84,15 @@ curl --location --request GET "http://{{USERNAME}}:{{PASSWORD}}@{{CLUSTER_URL}}/
 You can also use the appbase.io dashboard to filter out the analytics stats by custom events.
 
 ### How to enable / disable Empty Query
-By default, the ReactiveSearch shows you the default UI even if the search hasn't been performed. Technically it calls the `match_all` query which can be considered as the empty query. By default we record the analytics for empty queries too, you can find it out in the Appbase.io dashboard with the `<empty_query>` key.<br/>
+By default, the ReactiveSearch shows you the default UI even if the search hasn't been performed. Technically it calls the `match_all` query which can be considered as the empty query. By default we record the analytics for empty queries too, you can find it out in the Appbase.io dashboard with the `<empty_query>` key.
+
 You can disable this behavior in `ReactiveSearch` by defining the `analyticsConfig` prop in the `ReactiveBase` and set the `emptyQuery` as `false`. 
 If you're not using the `ReactiveSearch` then just don't send the `X-Search-Query` header while performing a `match_all` request.
 
 ### How An Analytics Session Works
-An analytics session is driven by the `X-Search-Query` header. It's the user's responsibility to set this header to trigger an analytics session. One analytics session can be considered as one search count.<br/>
-Don't worry `ReactiveSearch` handles it well, you just need to set the `analytics` prop as `true` in the `ReactiveBase` component.<br/>
-[Read more about how to configure analytics in ReactiveSearch](/docs/reactivesearch/v3/advanced/analytics).
+An analytics session is driven by the `X-Search-Query` header. It's the user's responsibility to set this header to trigger an analytics session. One analytics session can be considered as one search count.
+
+Don't worry `ReactiveSearch` handles it well, you just need to set the `analytics` prop as `true` in the `ReactiveBase` component. [Read more about how to configure analytics in ReactiveSearch](/docs/reactivesearch/v3/advanced/analytics).
 
 #### How we count searches
 - When a user types something equals to `b→bo→boo→book`, we understand the context and instead of creating the different search sessions we count it as one search with key as `book`.
