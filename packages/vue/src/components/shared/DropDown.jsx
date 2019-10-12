@@ -168,6 +168,7 @@ const Dropdown = {
 															count: item.doc_count,
 															isChecked:
 																selected && this.$props.multi,
+															data: itemsToRender,
 														})
 													) : (
 														<div>
