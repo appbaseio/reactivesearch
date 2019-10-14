@@ -34,6 +34,7 @@ const SingleRange = {
 		data: types.data,
 		dataField: types.stringRequired,
 		defaultSelected: types.string,
+		defaultValue: types.string,
 		value: types.string,
 		filterLabel: types.string,
 		innerClass: types.style,
@@ -58,7 +59,11 @@ const SingleRange = {
 			this.setValue(this.selectedValue);
 		} else if (this.$props.value) {
 			this.setValue(this.$props.value);
+		} else if (this.$props.defaultValue) {
+			this.setValue(this.$props.defaultValue);
 		} else if (this.$props.defaultSelected) {
+			/* TODO: Remove this before next release */
+			console.warn("defaultSelected prop will be deprecated in the next release. Please replace it with defaultValue before upgrading to the next major version.");
 			this.setValue(this.$props.defaultSelected);
 		}
 	},
@@ -74,6 +79,9 @@ const SingleRange = {
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
 		},
 		defaultSelected(newVal) {
+			this.setValue(newVal);
+		},
+		defaultValue(newVal) {
 			this.setValue(newVal);
 		},
 		value(newVal) {

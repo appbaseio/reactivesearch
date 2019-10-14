@@ -49,6 +49,7 @@ const RangeSlider = {
 		data: types.data,
 		dataField: types.stringRequired,
 		defaultSelected: types.range,
+		defaultValue: types.range,
 		value: types.range,
 		filterLabel: types.string,
 		innerClass: types.style,
@@ -138,6 +139,10 @@ const RangeSlider = {
 			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
 		},
 
+		defaultValue(newVal) {
+			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
+		},
+
 		value(newVal) {
 			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
 		},
@@ -166,7 +171,7 @@ const RangeSlider = {
 		this.addComponent(this.$props.componentId);
 		this.setReact(this.$props);
 
-		const { defaultSelected, value } = this.$props;
+		const { defaultSelected, value, defaultValue } = this.$props;
 		const { selectedValue } = this;
 		if (this.$props.range) {
 			if (Array.isArray(selectedValue)) {
@@ -175,7 +180,11 @@ const RangeSlider = {
 				this.handleChange(RangeSlider.parseValue(selectedValue, this.$props));
 			} else if (value) {
 				this.handleChange(RangeSlider.parseValue(value, this.$props));
+			} else if (defaultValue) {
+				this.handleChange(RangeSlider.parseValue(defaultValue, this.$props));
 			} else if (defaultSelected) {
+				/* TODO: Remove this before next release */
+				console.warn("defaultSelected prop will be deprecated in the next release. Please replace it with defaultValue before upgrading to the next major version.");
 				this.handleChange(RangeSlider.parseValue(defaultSelected, this.$props));
 			}
 		}

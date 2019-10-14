@@ -36,6 +36,7 @@ const MultiRange = {
 		data: types.data,
 		dataField: types.stringRequired,
 		defaultSelected: types.stringArray,
+		defaultValue: types.stringArray,
 		value: types.stringArray,
 		filterLabel: types.string,
 		innerClass: types.style,
@@ -143,6 +144,9 @@ const MultiRange = {
 		defaultSelected(newVal) {
 			this.selectItem(newVal, true, undefined, true);
 		},
+		defaultValue(newVal) {
+			this.selectItem(newVal, true, undefined, true);
+		},
 		value(newVal) {
 			this.selectItem(newVal, true, undefined, true);
 		},
@@ -167,7 +171,11 @@ const MultiRange = {
 			this.selectItem(this.selectedValue, true);
 		} else if (this.$props.value) {
 			this.selectItem(this.$props.value, true);
+		} else if (this.$props.defaultValue) {
+			this.selectItem(this.$props.defaultValue, true);
 		} else if (this.$props.defaultSelected) {
+			/* TODO: Remove this before next release */
+			console.warn("defaultSelected prop will be deprecated in the next release. Please replace it with defaultValue before upgrading to the next major version.");
 			this.selectItem(this.$props.defaultSelected, true);
 		}
 	},
