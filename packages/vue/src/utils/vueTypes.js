@@ -147,7 +147,8 @@ const types = {
 		'NM',
 		'nmi',
 		'nauticalmiles'
-	])
+	]),
+	value: VueTypes.string.def(undefined)
 };
 
 export default types;

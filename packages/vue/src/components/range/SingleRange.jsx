@@ -35,7 +35,7 @@ const SingleRange = {
 		dataField: types.stringRequired,
 		defaultSelected: types.string,
 		defaultValue: types.string,
-		value: types.string,
+		value: types.value,
 		filterLabel: types.string,
 		innerClass: types.style,
 		react: types.react,
