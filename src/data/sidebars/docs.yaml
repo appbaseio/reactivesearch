@@ -30,6 +30,8 @@
               link: /docs/analytics/Overview/
             - title: Implement Analytics
               link: /docs/analytics/Implement/
+            - title: Integrate Google Analytics
+              link: /docs/analytics/GoogleAnalytics/
       - group: Security
         icon: security
         items:
