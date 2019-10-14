@@ -22,6 +22,7 @@ const ToggleButton = {
 		data: types.data,
 		dataField: types.stringRequired,
 		defaultSelected: types.stringOrArray,
+		defaultValue: types.stringOrArray,
 		value: types.stringOrArray,
 		filterLabel: types.string,
 		nestedField: types.string,
@@ -35,7 +36,11 @@ const ToggleButton = {
 	},
 	data() {
 		const props = this.$props;
-		const value = this.selectedValue || props.value || props.defaultSelected || [];
+		const value = this.selectedValue || props.value || props.defaultValue || props.defaultSelected || [];
+		if (props.defaultSelected) {
+			/* TODO: Remove this before next release */
+			console.warn("defaultSelected prop will be deprecated in the next release. Please replace it with defaultValue before upgrading to the next major version.");
+		}
 		const currentValue = ToggleButton.parseValue(value, props);
 		this.__state = {
 			currentValue,
@@ -66,6 +71,9 @@ const ToggleButton = {
 	},
 	watch: {
 		defaultSelected(newVal) {
+			this.setValue(ToggleButton.parseValue(newVal, this.$props));
+		},
+		defaultValue(newVal) {
 			this.setValue(ToggleButton.parseValue(newVal, this.$props));
 		},
 		react() {

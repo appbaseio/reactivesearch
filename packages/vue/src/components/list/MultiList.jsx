@@ -29,6 +29,7 @@ const MultiList = {
 	name: 'MultiList',
 	props: {
 		defaultSelected: types.stringArray,
+		defaultValue: types.stringArray,
 		value: types.stringArray,
 		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		showCheckbox: VueTypes.bool.def(true),
@@ -89,7 +90,11 @@ const MultiList = {
 			this.setValue(this.selectedValue);
 		} else if (this.$props.value) {
 			this.setValue(this.$props.value, true);
+		} else if (this.$props.defaultValue) {
+			this.setValue(this.$props.defaultValue, true);
 		} else if (this.$props.defaultSelected) {
+			/* TODO: Remove this before next release */
+			console.warn("defaultSelected prop will be deprecated in the next release. Please replace it with defaultValue before upgrading to the next major version.");
 			this.setValue(this.$props.defaultSelected, true);
 		}
 	},
@@ -122,6 +127,11 @@ const MultiList = {
 			}
 		},
 		value(newVal, oldVal) {
+			if (!isEqual(oldVal, newVal)) {
+				this.setValue(newVal, true);
+			}
+		},
+		defaultValue(newVal, oldVal) {
 			if (!isEqual(oldVal, newVal)) {
 				this.setValue(newVal, true);
 			}

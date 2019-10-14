@@ -47,6 +47,7 @@ const MultiDropdownList = {
 		customQuery: types.func,
 		dataField: types.stringRequired,
 		defaultSelected: types.stringArray,
+		defaultValue: types.stringArray,
 		value: types.stringArray,
 		defaultQuery: types.func,
 		filterLabel: types.string,
@@ -88,7 +89,11 @@ const MultiDropdownList = {
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue, true);
+		} else if (this.$props.defaultValue) {
+			this.setValue(this.$props.defaultValue, true);
 		} else if (this.$props.defaultSelected) {
+			/* TODO: Remove this before next release */
+			console.warn("defaultSelected prop will be deprecated in the next release. Please replace it with defaultValue before upgrading to the next major version.");
 			this.setValue(this.$props.defaultSelected, true);
 		}
 	},
@@ -150,6 +155,9 @@ const MultiDropdownList = {
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
 		},
 		defaultSelected(newVal) {
+			this.setValue(newVal, true);
+		},
+		defaultValue(newVal) {
 			this.setValue(newVal, true);
 		},
 		value(newVal) {

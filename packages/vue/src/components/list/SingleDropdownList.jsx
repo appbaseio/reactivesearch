@@ -47,7 +47,8 @@ const SingleDropdownList = {
 		dataField: types.stringRequired,
 		defaultQuery: types.func,
 		defaultSelected: types.string,
-		value: types.string,
+		defaultValue: types.string,
+		value: types.value,
 		filterLabel: types.string,
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Select a value'),
@@ -87,7 +88,11 @@ const SingleDropdownList = {
 			this.setValue(this.selectedValue);
 		} else if (this.$props.value) {
 			this.setValue(this.$props.value);
+		} else if (this.$props.defaultValue) {
+			this.setValue(this.$props.defaultValue);
 		} else if (this.$props.defaultSelected) {
+			/* TODO: Remove this before next release */
+			console.warn("defaultSelected prop will be deprecated in the next release. Please replace it with defaultValue before upgrading to the next major version.");
 			this.setValue(this.$props.defaultSelected);
 		}
 	},
@@ -136,6 +141,9 @@ const SingleDropdownList = {
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
 		},
 		defaultSelected(newVal) {
+			this.setValue(newVal);
+		},
+		defaultValue(newVal) {
 			this.setValue(newVal);
 		},
 		value(newVal) {
