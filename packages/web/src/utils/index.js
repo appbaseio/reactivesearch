@@ -133,3 +133,8 @@ export function parseValueArray(originalArr = [], currentValue) {
 	else newValue.push(currentValue);
 	return newValue;
 }
+
+// escapes regex for special characters: \ => \\, $ => \$
+export function escapeRegExp(string) {
+	return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}

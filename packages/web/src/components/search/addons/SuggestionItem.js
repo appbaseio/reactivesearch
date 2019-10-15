@@ -12,7 +12,11 @@ const SuggestionItem = ({ currentValue, suggestion }) => {
 		// label has highest precedence
 		return typeof label === 'string' ? (
 			<div className="trim">
-				<Highlight searchWords={currentValue.split(' ')} textToHighlight={label} />
+				<Highlight
+					autoEscape
+					searchWords={currentValue.split(' ')}
+					textToHighlight={label}
+				/>
 			</div>
 		) : (
 			label

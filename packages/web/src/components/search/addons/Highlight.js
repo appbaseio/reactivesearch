@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectGlobal } from 'emotion';
 
+import { escapeRegExp } from '../../../utils';
+
 // eslint-disable-next-line no-unused-expressions
 injectGlobal` 
 	.highlight-class {
@@ -12,8 +14,9 @@ injectGlobal`
 	}`;
 
 const Highlight = (props) => {
-	const { textToHighlight, searchWords } = props;
-	const stringToReplace = searchWords.join('|');
+	const { textToHighlight, searchWords, autoEscape } = props;
+	const modSearchWords = searchWords.map(word => (autoEscape ? escapeRegExp(word) : word));
+	const stringToReplace = modSearchWords.join('|');
 	return (
 		<div
 			dangerouslySetInnerHTML={{
@@ -29,6 +32,13 @@ const Highlight = (props) => {
 Highlight.propTypes = {
 	searchWords: PropTypes.arrayOf(PropTypes.string),
 	textToHighlight: PropTypes.string,
+	autoEscape: PropTypes.bool,
+};
+
+Highlight.defaultProps = {
+	searchWords: [],
+	textToHighlight: '',
+	autoEscape: false,
 };
 
 export default Highlight;
