@@ -1,5 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { injectGlobal } from 'emotion';
+
+// eslint-disable-next-line no-unused-expressions
+injectGlobal` 
+	.highlight-class {
+			font-weight: 600;
+			padding: 0;
+			background-color: transparent;
+			color: inherit;
+	}`;
 
 const Highlight = (props) => {
 	const { textToHighlight, searchWords } = props;
