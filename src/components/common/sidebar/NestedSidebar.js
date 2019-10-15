@@ -24,6 +24,8 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/searchbase/overview/QuickStart`;
 		} else if (value.value === 'React SearchBox') {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/react-searchbox/quickstart`;
+		} else if (value.value === 'Searchbox') {
+			window.location.href = `${window.location.origin}/docs/reactivesearch/searchbox/Quickstart`;
 		}
 	};
 
@@ -42,6 +44,9 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 		}
 		if (location.pathname.startsWith('/docs/reactivesearch/react-searchbox')) {
 			return 'React SearchBox';
+		}
+		if (location.pathname.startsWith('/docs/reactivesearch/searchbox')) {
+			return 'Searchbox';
 		}
 
 		return 'React - v3';
@@ -117,6 +122,7 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 					'Native',
 					'Vue',
 					'SearchBase',
+					'Searchbox',
 					'React SearchBox',
 				]}
 				value={getValue()}

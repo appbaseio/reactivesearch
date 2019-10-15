@@ -1,0 +1,5 @@
+- items:
+  - title: Getting Started
+    link: /docs/reactivesearch/searchbox/Quickstart/
+  - title: API Reference
+    link: /docs/reactivesearch/searchbox/api/

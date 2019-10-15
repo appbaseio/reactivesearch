@@ -24,6 +24,9 @@ const getValue = () => {
 		if (path && path.startsWith('/docs/reactivesearch/react-searchbox')) {
 			return 'React SearchBox';
 		}
+		if (path && path.startsWith('/docs/reactivesearch/searchbox')) {
+			return 'Searchbox';
+		}
 	}
 
 	return 'React - v3';
@@ -39,6 +42,10 @@ const getFileName = value => {
 			return 'web-v2-reactivesearch';
 		case 'SearchBase':
 			return 'searchbase-reactivesearch';
+		case 'Searchbox':
+			return 'searchbox';
+		case 'React Searchbox':
+			return 'react-searchbox-reactivesearch';
 		default:
 			return 'web-reactivesearch';
 	}
