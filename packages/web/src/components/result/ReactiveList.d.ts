@@ -35,7 +35,7 @@ declare namespace ReactiveListTree {
 		onPageClick?: (...args: any[]) => any;
 		defaultPage?: number;
 		listClass?: string;
-		scrollTarget?: string;
+		scrollTarget?: string | Element | HTMLDocument;
 		onData?: (...args: any[]) => any;
 		renderNoResults?: types.title;
 		scrollOnChange?: boolean;

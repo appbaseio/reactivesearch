@@ -150,8 +150,10 @@ class ReactiveList extends Component {
 		this.domNode = window;
 		if (this.showInfiniteScroll) {
 			const { scrollTarget } = this.props;
-			if (scrollTarget) {
+			if (typeof scrollTarget === 'string' || scrollTarget instanceof String) {
 				this.domNode = document.getElementById(scrollTarget);
+			} else if (scrollTarget instanceof Element || scrollTarget instanceof HTMLDocument) {
+				this.domNode = scrollTarget;
 			}
 			this.domNode.addEventListener('scroll', this.scrollHandler);
 		}
