@@ -72,8 +72,8 @@ Example uses:
     fields to be included in search results.
 -   **stream** `Boolean` [optional]
     whether to stream new result updates in the UI. Defaults to `false`. `stream: true` is appended to the streaming hit objects, which can be used to selectively react to streaming changes (eg. showing fade in animation on new streaming hits, Twitter/Facebook like streams, showing the count of new feed items available like _2 New Tweets_)
--   **scrollTarget** `String` [optional]
-    accepts `id` of the container you wish to apply infinite loading on. **Note:** The container should be scrollable.
+-   **scrollTarget** `String` or `Object` [optional]
+    accepts `id` or the dom node of the container you wish to apply infinite loading on. **Note:** The container should be scrollable.
 -   **scrollOnChange** `Boolean` [optional]
     Enables you to customise the window scrolling experience on query change. Defaults to `true` i.e. The window will scroll to top in case of the query change, which can be triggered by change in pagination, change in filters or search value, etc. When set to `false`, scroll position will stay intact.
 -   **pagination** `Boolean` [optional]
