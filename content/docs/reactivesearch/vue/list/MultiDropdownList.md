@@ -81,7 +81,7 @@ Example uses:
 -   **showSearch** `Boolean` [optional]
     whether to show a searchbox to filter the list items locally. Defaults to false.
 -   **renderItem** `Function|slot-scope` [optional]
-    customize the rendered list via a function or slot-scope which receives the item label, count and isChecked & expects a JSX or String back. For example:
+    customize the rendered list via a function or slot-scope which receives the item `label`, `count`, `isChecked` and `data` & expects a JSX or String back. For example:
 
 ```js
     renderItem={({ label, count }) => (

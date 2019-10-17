@@ -121,7 +121,7 @@ function Index(props) {
     defaults to `false` and works only with elasticsearch >= 6 since it uses [composite aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation/). This adds a "Load More" button to load the aggs on demand combined with the `size` prop. Composite aggregations are in beta and this is an experimental API which might change in a future release.
     `Note`: Composite aggregations do not support sorting by `count`. Hence with `showLoadMore`, you can only sort by: `asc` or `desc` order. `sortBy` prop defaults to `asc` when `showLoadMore` prop is used.
 -   **renderItem** `Function` [optional]
-    customize the rendered list via a function which receives the item label, count & isSelected and expects a JSX or String back. For example:
+    customize the rendered list via a function which receives the item `label`, `count`, `isSelected` and `data` & expects a JSX or String back. For example:
     ```js
     renderItem={(label, count, isSelected) => (
         <div>
