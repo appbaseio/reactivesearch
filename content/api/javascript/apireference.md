@@ -147,7 +147,7 @@ appbaseRef
 
 ### bulk()
 
-Apply many index / delete operations together, useful when importing data for the first time.
+Apply many index / update / delete operations in bulk.
 
 ```js
 appbaseRef
@@ -162,6 +162,14 @@ appbaseRef
 				by: 'Ev',
 				using: ['appbase.io', 'javascript', 'streams'],
 				test: true,
+			},
+			// action#2 description
+			{ update: {_id: 2} },
+			// JSON data to update under the `doc` key, this only modifies the mentioned fields
+			{
+				doc: {
+					msg: 'editing my second tweet!'
+				}
 			},
 			// action#2 description
 			{ delete: { _id: 2 } },
