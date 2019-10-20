@@ -841,6 +841,7 @@ class CategorySearch extends Component {
 	}
 
 	get parsedSuggestions() {
+		const { categorySuggestionsListSize } = this.props;
 		let finalSuggestionsList = [];
 		let suggestionsList = [];
 
@@ -858,7 +859,12 @@ class CategorySearch extends Component {
 		}
 
 		if (this.state.currentValue && this.state.suggestions.length && filteredCategories.length) {
-			let categorySuggestions = [
+			const categorySuggestions = [];
+			const size
+				= filteredCategories.length >= categorySuggestionsListSize
+					? categorySuggestionsListSize
+					: filteredCategories.length;
+			categorySuggestions.push(
 				{
 					label: `${this.state.currentValue} in all categories`,
 					value: this.state.currentValue,
@@ -866,25 +872,14 @@ class CategorySearch extends Component {
 					// no source object exists for category based suggestions
 					source: null,
 				},
-				{
-					label: `${this.state.currentValue} in ${filteredCategories[0].key}`,
+				...filteredCategories.slice(0, size).map(item => ({
+					label: `${this.state.currentValue} in ${item.key}`,
 					value: this.state.currentValue,
-					category: filteredCategories[0].key,
+					category: item.key,
 					source: null,
-				},
-			];
+				})),
+			);
 
-			if (filteredCategories.length > 1) {
-				categorySuggestions = [
-					...categorySuggestions,
-					{
-						label: `${this.state.currentValue} in ${filteredCategories[1].key}`,
-						value: this.state.currentValue,
-						category: filteredCategories[1].key,
-						source: null,
-					},
-				];
-			}
 			finalSuggestionsList = [...categorySuggestions, ...suggestionsList];
 		}
 		return withClickIds(finalSuggestionsList);
@@ -1068,6 +1063,16 @@ CategorySearch.propTypes = {
 	setSuggestionsSearchValue: types.funcRequired,
 	options: types.options,
 	categories: types.data,
+	categorySuggestionsListSize(props, propName, componentName) {
+		if (props[propName] !== null) {
+			const value = props[propName];
+			if (typeof value !== 'number') {
+				return new Error(`${propName} of type ${typeof (propName)} ${componentName} , expected number`);
+			}
+			return (value >= 1 && value <= 10) ? null : new Error(`${propName} in ${componentName} is not within 1 to 10`);
+		}
+		return null;
+	},
 	selectedValue: types.selectedValue,
 	selectedCategory: types.selectedValue,
 	suggestions: types.suggestions,
@@ -1142,6 +1147,7 @@ CategorySearch.propTypes = {
 CategorySearch.defaultProps = {
 	autosuggest: true,
 	className: null,
+	categorySuggestionsListSize: 2,
 	debounce: 0,
 	downShiftProps: {},
 	iconPosition: 'left',
