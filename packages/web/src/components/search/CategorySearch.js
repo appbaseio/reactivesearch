@@ -1090,7 +1090,6 @@ CategorySearch.propTypes = {
 	autosuggest: types.bool,
 	beforeValueChange: types.func,
 	categoryField: types.string,
-	categorySuggestionsListSize: types.number,
 	className: types.string,
 	clearIcon: types.children,
 	componentId: types.stringRequired,
