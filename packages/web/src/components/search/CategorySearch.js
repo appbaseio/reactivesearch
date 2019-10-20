@@ -1067,7 +1067,7 @@ CategorySearch.propTypes = {
 		if (props[propName] !== null) {
 			const value = props[propName];
 			if (typeof value !== 'number') {
-				return new Error(`${propName} of type ${typeof (propName)} ${componentName} , expected number`);
+				return new Error(`${propName} of type ${typeof (propName)} supplied to ${componentName} , expected number`);
 			}
 			return (value >= 1 && value <= 10) ? null : new Error(`${propName} in ${componentName} is not within 1 to 10`);
 		}
