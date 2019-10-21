@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import { MapPin, mapPinWrapper } from './addons/styles/MapPin';
+import { connect, ReactReduxContext } from '@appbaseio/reactivesearch/lib/utils';
 
+import { MapPin, mapPinWrapper } from './addons/styles/MapPin';
 import ReactiveMap from './ReactiveMap';
+import { triggerClickAnalytics } from '../utils';
 
 let OpenStreetMap;
 let OpenStreetLayer;
@@ -13,6 +15,8 @@ let Icon;
 let DivIcon;
 
 class ReactiveOpenStreetMap extends Component {
+	static contextType = ReactReduxContext;
+
 	componentDidMount() {
 		/* eslint-disable */
 		OpenStreetMap = require('react-leaflet').Map;
@@ -24,6 +28,19 @@ class ReactiveOpenStreetMap extends Component {
 		this.forceUpdate();
 	}
 
+	triggerAnalytics = searchPosition => {
+		// click analytics would only work client side and after javascript loads
+		const { config, analytics, headers } = this.props;
+
+		triggerClickAnalytics({
+			config,
+			headers,
+			analytics,
+			searchPosition: searchPosition + 1,
+			context: this.context,
+		});
+	};
+
 	getMarkers = ({
 		showMarkers,
 		renderData,
@@ -33,10 +50,11 @@ class ReactiveOpenStreetMap extends Component {
 		getPosition,
 	}) => {
 		if (showMarkers) {
-			const markers = resultsToRender.map(item => {
+			const markers = resultsToRender.map((item, index) => {
 				const position = getPosition(item);
 				const openStreetMarkerProps = {
 					riseOnHover: true,
+					onClick: () => this.triggerAnalytics(index),
 				};
 
 				const openStreetPopupPorops = {
@@ -223,6 +241,9 @@ ReactiveOpenStreetMap.propTypes = {
 	showMarkers: types.bool,
 	style: types.style,
 	unit: types.string,
+	config: types.props,
+	analytics: types.props,
+	headers: types.headers,
 };
 
 ReactiveOpenStreetMap.defaultProps = {
@@ -246,4 +267,13 @@ ReactiveOpenStreetMap.defaultProps = {
 	defaultRadius: 100,
 };
 
-export default ReactiveOpenStreetMap;
+const mapStateToProps = state => ({
+	config: state.config,
+	headers: state.appbaseRef.headers,
+	analytics: state.analytics,
+});
+
+export default connect(
+	mapStateToProps,
+	null,
+)(ReactiveOpenStreetMap);

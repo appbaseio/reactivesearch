@@ -5,9 +5,9 @@ import GoogleMapMarker from './GoogleMapMarker';
 
 const GoogleMapMarkers = ({ resultsToRender, ...rest }) => (
 	<div>
-		{resultsToRender.map(marker => (
+		{resultsToRender.map((marker, index) => (
 			<React.Fragment key={marker._id}>
-				<GoogleMapMarker {...rest} marker={marker} />
+				<GoogleMapMarker {...rest} index={index} marker={marker} />
 			</React.Fragment>
 		))}
 	</div>

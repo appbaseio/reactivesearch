@@ -19,10 +19,11 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { connect, isFunction } from '@appbaseio/reactivesearch/lib/utils';
+import { connect, isFunction, ReactReduxContext } from '@appbaseio/reactivesearch/lib/utils';
 import Pagination from '@appbaseio/reactivesearch/lib/components/result/addons/Pagination';
 import { Checkbox } from '@appbaseio/reactivesearch/lib/styles/FormControlList';
 import geohash from 'ngeohash';
+import { triggerClickAnalytics } from '../utils';
 
 const Standard = require('./addons/styles/Standard');
 const BlueEssence = require('./addons/styles/BlueEssence');
@@ -43,22 +44,22 @@ function getLocationObject(location) {
 		case 'string': {
 			if (location.indexOf(',') > -1) {
 				const locationSplit = location.split(',');
-				return ({
+				return {
 					lat: parseFloat(locationSplit[0]),
 					lng: parseFloat(locationSplit[1]),
-				});
+				};
 			}
 			const locationDecode = geohash.decode(location);
-			return ({
+			return {
 				lat: locationDecode.latitude,
 				lng: locationDecode.longitude,
-			});
+			};
 		}
 		case 'array': {
-			return ({
+			return {
 				lat: location[1],
 				lng: location[0],
-			});
+			};
 		}
 		default: {
 			return location;
@@ -90,6 +91,8 @@ function withDistinctLat(loc, count) {
 }
 
 class ReactiveMap extends Component {
+	static contextType = ReactReduxContext;
+
 	constructor(props) {
 		super(props);
 
@@ -290,10 +293,9 @@ class ReactiveMap extends Component {
 		}
 
 		if (this.props.defaultMapStyle !== prevProps.defaultMapStyle) {
-			updatedState.currentMapStyle = this.mapStyles.find(style =>
-				style.label === this.props.defaultMapStyle,
-			)
-			|| this.mapStyles[0];
+			updatedState.currentMapStyle
+				= this.mapStyles.find(style => style.label === this.props.defaultMapStyle)
+				|| this.mapStyles[0];
 		}
 
 		this.updateState(updatedState);
@@ -334,7 +336,7 @@ class ReactiveMap extends Component {
 		this.setState({
 			...newState,
 		});
-	}
+	};
 
 	setReact = (props) => {
 		const { react } = props;
@@ -364,8 +366,9 @@ class ReactiveMap extends Component {
 					const locationObj = getLocationObject(location);
 					lat = (locationObj.lat * Math.PI) / 180;
 					lng
-							= ((locationObj.lng !== undefined ? locationObj.lng : locationObj.lon) * Math.PI)
-							/ 180;
+						= ((locationObj.lng !== undefined ? locationObj.lng : locationObj.lon)
+							* Math.PI)
+						/ 180;
 
 					const a = Math.cos(lat) * Math.cos(lng);
 					const b = Math.cos(lat) * Math.sin(lng);
@@ -806,6 +809,29 @@ class ReactiveMap extends Component {
 		return this.props.loader && this.props.isLoading;
 	}
 
+	triggerAnalytics = (searchPosition) => {
+		// click analytics would only work client side and after javascript loads
+		const { config, analytics, headers } = this.props;
+
+		triggerClickAnalytics({
+			config,
+			headers,
+			analytics,
+			searchPosition,
+			context: this.context,
+		});
+	};
+
+	withClickIds = (hits) => {
+		const { currentPage, size } = this.props;
+		const base = currentPage * size;
+
+		return hits.map((hit, index) => ({
+			...hit,
+			_click_id: base + index + 1,
+		}));
+	};
+
 	render() {
 		const style = {
 			width: '100%',
@@ -851,11 +877,12 @@ class ReactiveMap extends Component {
 				{!this.shouldRenderLoader
 					&& (this.props.renderAllData
 						? this.props.renderAllData(
-							parseHits(this.props.hits),
-							parseHits(this.props.streamHits),
+							this.withClickIds(parseHits(this.props.hits)),
+							this.withClickIds(parseHits(this.props.streamHits)),
 							this.loadMore,
 							() => this.props.renderMap(mapParams),
 							this.renderPagination,
+							this.triggerAnalytics,
 						) // prettier-ignore
 						: this.props.renderMap(mapParams))}
 			</div>
@@ -882,6 +909,9 @@ ReactiveMap.propTypes = {
 	time: types.number,
 	total: types.number,
 	url: types.string,
+	config: types.props,
+	analytics: types.props,
+	headers: types.headers,
 	// component props
 	autoCenter: types.bool,
 	center: types.location,
@@ -940,6 +970,9 @@ const mapStateToProps = (state, props) => ({
 	error: state.error[props.componentId],
 	isLoading: state.isLoading[props.componentId] || false,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	config: state.config,
+	headers: state.appbaseRef.headers,
+	analytics: state.analytics,
 });
 
 const mapDispatchtoProps = dispatch => ({
