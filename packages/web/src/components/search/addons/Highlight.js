@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectGlobal } from 'emotion';
+import { css } from 'emotion';
 
 import { escapeRegExp } from '../../../utils';
 
-// eslint-disable-next-line no-unused-expressions
-injectGlobal` 
-	.highlight-class {
-			font-weight: 600;
-			padding: 0;
-			background-color: transparent;
-			color: inherit;
-	}`;
+const highlightedStyling = css`
+	.highlight {
+		font-weight: 600;
+		padding: 0;
+		background-color: transparent;
+		color: inherit;
+	}
+`;
 
 const Highlight = (props) => {
 	const { textToHighlight, searchWords, autoEscape } = props;
@@ -19,10 +19,11 @@ const Highlight = (props) => {
 	const stringToReplace = modSearchWords.join('|');
 	return (
 		<div
+			className={highlightedStyling}
 			dangerouslySetInnerHTML={{
 				__html: textToHighlight.replace(
 					new RegExp(stringToReplace, 'ig'),
-					matched => `<mark class="highlight-class">${matched}</mark>`,
+					matched => `<mark class="highlight">${matched}</mark>`,
 				),
 			}}
 		/>
