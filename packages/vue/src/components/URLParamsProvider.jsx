@@ -13,6 +13,7 @@ const URLParamsProvider = {
 		headers: types.headers,
 		getSearchParams: types.func,
 		setSearchParams: types.func,
+		as: types.string.def('div'),
 	},
 	mounted() {
 		this.init();
@@ -204,7 +205,7 @@ const URLParamsProvider = {
 	},
 	render() {
 		const children = this.$slots.default;
-		return <Base class={this.$props.className}>{children}</Base>;
+		return <Base as={this.$props.as} class={this.$props.className}>{children}</Base>;
 	},
 };
 
@@ -217,7 +218,7 @@ const mapDispatchtoProps = {
 	setValue,
 };
 
-URLParamsProvider.install = function(Vue) {
+URLParamsProvider.install = function (Vue) {
 	Vue.component(URLParamsProvider.name, URLParamsProvider);
 };
 export default connect(

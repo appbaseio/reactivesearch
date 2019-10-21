@@ -35,6 +35,7 @@ const ReactiveBase = {
 		initialState: VueTypes.object.def({}),
 		transformRequest: types.func,
 		transformResponse: types.func,
+		as: VueTypes.string.def('div'),
 	},
 	provide() {
 		return {
@@ -147,14 +148,14 @@ const ReactiveBase = {
 		const { headers, style, className } = this.$props;
 		return (
 			<Provider store={this.store}>
-				<URLParamsProvider headers={headers} style={style} className={className}>
+				<URLParamsProvider as={this.$props.as} headers={headers} style={style} className={className}>
 					{children}
 				</URLParamsProvider>
 			</Provider>
 		);
 	},
 };
-ReactiveBase.install = function(Vue) {
+ReactiveBase.install = function (Vue) {
 	Vue.component(ReactiveBase.name, ReactiveBase);
 };
 

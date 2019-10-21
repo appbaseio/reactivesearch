@@ -1,6 +1,11 @@
 import styled from '@appbaseio/vue-emotion';
 
-const Base = styled('div')`
+const Base = ({ data: { attrs: { as: T = 'div' } }, data: props, children }) => {
+	delete props.attrs.as;
+	return (<T {...props}>{children}</T>);
+}
+
+export default styled(Base)`
 	font-family: ${({ theme }) => theme.typography.fontFamily};
 	font-size: ${({ theme }) => theme.typography.fontSize};
 	color: ${({ theme }) => theme.colors.textColor};
@@ -19,5 +24,3 @@ const Base = styled('div')`
 		box-sizing: border-box;
 	}
 `;
-
-export default Base;
