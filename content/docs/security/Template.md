@@ -1,7 +1,7 @@
 ---
-title: 'Search Template'
-meta_title: 'Search Template'
-meta_description: 'API credentials allow secure access to the appbase.io APIs.'
+title: 'Search Templates'
+meta_title: 'Search Templates'
+meta_description: 'Search Templates prevent script injections by only passing the parameters to your search query rather than passing the query itself over a network request.'
 keywords:
     - security
     - appbaseio
@@ -10,7 +10,7 @@ keywords:
 sidebar: 'docs'
 ---
 
-Search Templates prevent script injections by only passing the parameters to your search query rather than the query itself over the network.
+Search Templates prevent script injections by only passing the parameters to your search query rather than passing the query itself over a network request.
 
 ![](https://i.imgur.com/uzf1AtQ.png)
 

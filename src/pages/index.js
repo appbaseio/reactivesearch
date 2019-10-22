@@ -54,6 +54,12 @@ const HomePage = ({ data, location }) => {
 												link: '/docs/gettingstarted/QuickStart/',
 												duration: 3,
 											},
+											{
+												title: 'Why Appbase.io',
+												description: 'Benefits of using appbase.io',
+												link: '/docs/gettingstarted/WhyAppbase/',
+												duration: 6,
+											},
 										],
 									},
 									'2': {
@@ -222,23 +228,25 @@ const HomePage = ({ data, location }) => {
 										),
 										chapters: [
 											{
-												title: 'Cluster',
+												title: 'Clusters',
 												link: '/docs/hosting/Cluster/',
 												duration: 5,
 												description:
 													'Now you can host your own dedicated ElasticSearch clusters to meet your business needs using appbase.io clusters. ',
 											},
 											{
-												title: 'Open Distro',
+												title: 'Bring your own Cluster',
+												link: '/docs/hosting/BYOC/',
+												duration: 10,
+												description:
+													'Install appbase.io as a cloud-native software for your own ElasticSearch cluster.',
+											},
+											{
+												title: 'Open Distro for ElasticSearch',
 												link: '/docs/hosting/OpenDistro/',
 												duration: 2,
 												description:
 													'Now with the appbase.io clusters you can host an open distro flavour of elasticsearch.',
-											},
-											{
-												title: 'Why Appbase Cluster',
-												link: '/docs/hosting/WhyAppbase/',
-												duration: 2,
 											},
 										],
 									},
