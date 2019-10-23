@@ -4,6 +4,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { toggleButtons } from '../../styles/Button';
 import { connect } from '../../utils/index';
+import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -39,7 +40,7 @@ const ToggleButton = {
 		const value = this.selectedValue || props.value || props.defaultValue || props.defaultSelected || [];
 		if (props.defaultSelected) {
 			/* TODO: Remove this before next release */
-			console.warn("defaultSelected prop will be deprecated in the next release. Please replace it with defaultValue before upgrading to the next major version.");
+			deprecatePropWarning('defaultSelected', 'defaultValue');
 		}
 		const currentValue = ToggleButton.parseValue(value, props);
 		this.__state = {

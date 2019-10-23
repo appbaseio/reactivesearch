@@ -7,6 +7,8 @@ import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
 import { connect, isFunction } from '../../utils/index';
+import { deprecatePropWarning } from '../shared/utils';
+import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 
 const {
 	addComponent,
@@ -92,7 +94,7 @@ const SingleDropdownList = {
 			this.setValue(this.$props.defaultValue);
 		} else if (this.$props.defaultSelected) {
 			/* TODO: Remove this before next release */
-			console.warn("defaultSelected prop will be deprecated in the next release. Please replace it with defaultValue before upgrading to the next major version.");
+			deprecatePropWarning('defaultSelected', 'defaultValue');
 			this.setValue(this.$props.defaultSelected);
 		}
 	},
@@ -146,8 +148,10 @@ const SingleDropdownList = {
 		defaultValue(newVal) {
 			this.setValue(newVal);
 		},
-		value(newVal) {
-			this.setValue(newVal);
+		value(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.setValue(newVal);
+			}
 		},
 		selectedValue(newVal) {
 			if (this.$data.currentValue !== newVal) {

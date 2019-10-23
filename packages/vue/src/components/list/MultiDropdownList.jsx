@@ -7,6 +7,7 @@ import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
 import { connect, isFunction, parseValueArray } from '../../utils/index';
+import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -89,11 +90,13 @@ const MultiDropdownList = {
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue, true);
+		} else if (this.$props.value) {
+			this.setValue(this.$props.value, true);
 		} else if (this.$props.defaultValue) {
 			this.setValue(this.$props.defaultValue, true);
 		} else if (this.$props.defaultSelected) {
 			/* TODO: Remove this before next release */
-			console.warn("defaultSelected prop will be deprecated in the next release. Please replace it with defaultValue before upgrading to the next major version.");
+			deprecatePropWarning('defaultSelected', 'defaultValue');
 			this.setValue(this.$props.defaultSelected, true);
 		}
 	},
@@ -160,8 +163,10 @@ const MultiDropdownList = {
 		defaultValue(newVal) {
 			this.setValue(newVal, true);
 		},
-		value(newVal) {
-			this.setValue(newVal, true);
+		value(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.setValue(newVal, true);
+			}
 		},
 	},
 
@@ -279,8 +284,7 @@ const MultiDropdownList = {
 			} else if (isDefaultValue) {
 				finalValues = value;
 				currentValue = {};
-
-				if (value && value.length) {
+				if (Array.isArray(value)) {
 					value.forEach(item => {
 						currentValue[item] = true;
 					});
