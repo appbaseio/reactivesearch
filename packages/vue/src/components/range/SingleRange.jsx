@@ -5,6 +5,7 @@ import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
 import { connect } from '../../utils/index';
 import types from '../../utils/vueTypes';
+import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -63,7 +64,7 @@ const SingleRange = {
 			this.setValue(this.$props.defaultValue);
 		} else if (this.$props.defaultSelected) {
 			/* TODO: Remove this before next release */
-			console.warn("defaultSelected prop will be deprecated in the next release. Please replace it with defaultValue before upgrading to the next major version.");
+			deprecatePropWarning('defaultSelected', 'defaultValue');
 			this.setValue(this.$props.defaultSelected);
 		}
 	},
@@ -84,8 +85,10 @@ const SingleRange = {
 		defaultValue(newVal) {
 			this.setValue(newVal);
 		},
-		value(newVal) {
-			this.setValue(newVal);
+		value(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.setValue(newVal);
+			}
 		},
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {

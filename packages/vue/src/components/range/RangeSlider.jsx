@@ -7,6 +7,7 @@ import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
 import { getComponents } from './addons/ssr';
+import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -143,8 +144,10 @@ const RangeSlider = {
 			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
 		},
 
-		value(newVal) {
-			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
+		value(newVal,oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.handleChange(RangeSlider.parseValue(newVal, this.$props));
+			}
 		},
 
 		selectedValue(newVal) {
@@ -184,7 +187,7 @@ const RangeSlider = {
 				this.handleChange(RangeSlider.parseValue(defaultValue, this.$props));
 			} else if (defaultSelected) {
 				/* TODO: Remove this before next release */
-				console.warn("defaultSelected prop will be deprecated in the next release. Please replace it with defaultValue before upgrading to the next major version.");
+				deprecatePropWarning('defaultSelected', 'defaultValue');
 				this.handleChange(RangeSlider.parseValue(defaultSelected, this.$props));
 			}
 		}

@@ -5,6 +5,7 @@ import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { connect, parseValueArray } from '../../utils/index';
 import types from '../../utils/vueTypes';
+import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -147,8 +148,10 @@ const MultiRange = {
 		defaultValue(newVal) {
 			this.selectItem(newVal, true, undefined, true);
 		},
-		value(newVal) {
-			this.selectItem(newVal, true, undefined, true);
+		value(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.selectItem(newVal, true, undefined, true);
+			}
 		},
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {
@@ -175,7 +178,7 @@ const MultiRange = {
 			this.selectItem(this.$props.defaultValue, true);
 		} else if (this.$props.defaultSelected) {
 			/* TODO: Remove this before next release */
-			console.warn("defaultSelected prop will be deprecated in the next release. Please replace it with defaultValue before upgrading to the next major version.");
+			deprecatePropWarning('defaultSelected', 'defaultValue');
 			this.selectItem(this.$props.defaultSelected, true);
 		}
 	},
