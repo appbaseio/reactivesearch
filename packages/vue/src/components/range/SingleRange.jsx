@@ -5,6 +5,7 @@ import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
 import { connect } from '../../utils/index';
 import types from '../../utils/vueTypes';
+import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -34,6 +35,8 @@ const SingleRange = {
 		data: types.data,
 		dataField: types.stringRequired,
 		defaultSelected: types.string,
+		defaultValue: types.string,
+		value: types.value,
 		filterLabel: types.string,
 		innerClass: types.style,
 		react: types.react,
@@ -55,7 +58,13 @@ const SingleRange = {
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
+		} else if (this.$props.value) {
+			this.setValue(this.$props.value);
+		} else if (this.$props.defaultValue) {
+			this.setValue(this.$props.defaultValue);
 		} else if (this.$props.defaultSelected) {
+			/* TODO: Remove this before next release */
+			deprecatePropWarning('defaultSelected', 'defaultValue');
 			this.setValue(this.$props.defaultSelected);
 		}
 	},
@@ -72,6 +81,14 @@ const SingleRange = {
 		},
 		defaultSelected(newVal) {
 			this.setValue(newVal);
+		},
+		defaultValue(newVal) {
+			this.setValue(newVal);
+		},
+		value(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.setValue(newVal);
+			}
 		},
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {
@@ -100,7 +117,7 @@ const SingleRange = {
 									id={`${this.$props.componentId}-${item.label}`}
 									name={this.$props.componentId}
 									value={item.label}
-									onClick={this.handleClick}
+									onChange={this.handleChange}
 									type="radio"
 									checked={selected}
 									show={this.$props.showRadio}
@@ -171,8 +188,14 @@ const SingleRange = {
 			});
 		},
 
-		handleClick(e) {
-			this.setValue(e.target.value);
+		handleChange(e) {
+			const { value } = this.$props;
+
+			if (value === undefined) {
+				this.setValue(e.target.value);
+			} else {
+				this.$emit('change', e.target.value);
+			}
 		},
 	},
 };

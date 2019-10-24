@@ -3,8 +3,9 @@ import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect } from '../../utils/index';
+import { connect, parseValueArray } from '../../utils/index';
 import types from '../../utils/vueTypes';
+import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -35,7 +36,9 @@ const MultiRange = {
 		customQuery: types.func,
 		data: types.data,
 		dataField: types.stringRequired,
-		defaultSelected: types.string,
+		defaultSelected: types.stringArray,
+		defaultValue: types.stringArray,
+		value: types.stringArray,
 		filterLabel: types.string,
 		innerClass: types.style,
 		react: types.react,
@@ -52,7 +55,14 @@ const MultiRange = {
 			}
 		},
 		handleClick(e) {
-			this.selectItem(e.target.value);
+			const { value } = this.$props;
+
+			if (value === undefined) {
+				this.selectItem(e.target.value);
+			} else {
+				const values = parseValueArray(this.selectedValues, e.target.value);
+				this.$emit('change', values);
+			}
 		},
 		selectItem(item, isDefaultValue = false, props = this.$props, reset = false) {
 			// ignore state updates when component is locked
@@ -135,6 +145,14 @@ const MultiRange = {
 		defaultSelected(newVal) {
 			this.selectItem(newVal, true, undefined, true);
 		},
+		defaultValue(newVal) {
+			this.selectItem(newVal, true, undefined, true);
+		},
+		value(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.selectItem(newVal, true, undefined, true);
+			}
+		},
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {
 				this.selectItem(newVal);
@@ -154,7 +172,13 @@ const MultiRange = {
 		this.setReact(this.$props);
 		if (this.selectedValue) {
 			this.selectItem(this.selectedValue, true);
+		} else if (this.$props.value) {
+			this.selectItem(this.$props.value, true);
+		} else if (this.$props.defaultValue) {
+			this.selectItem(this.$props.defaultValue, true);
 		} else if (this.$props.defaultSelected) {
+			/* TODO: Remove this before next release */
+			deprecatePropWarning('defaultSelected', 'defaultValue');
 			this.selectItem(this.$props.defaultSelected, true);
 		}
 	},

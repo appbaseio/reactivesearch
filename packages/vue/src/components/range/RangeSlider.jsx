@@ -7,6 +7,7 @@ import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
 import { getComponents } from './addons/ssr';
+import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -49,6 +50,8 @@ const RangeSlider = {
 		data: types.data,
 		dataField: types.stringRequired,
 		defaultSelected: types.range,
+		defaultValue: types.range,
+		value: types.range,
 		filterLabel: types.string,
 		innerClass: types.style,
 		react: types.react,
@@ -68,7 +71,13 @@ const RangeSlider = {
 		},
 
 		handleSlider(values) {
-			this.handleChange(values.currentValue);
+			const { value } = this.$props
+
+			if (value === undefined) {
+				this.handleChange(values.currentValue);
+			} else {
+				this.$emit('change', {start: values.currentValue[0], end: values.currentValue[1]});
+			}
 		},
 
 		handleChange(currentValue, props = this.$props) {
@@ -131,6 +140,16 @@ const RangeSlider = {
 			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
 		},
 
+		defaultValue(newVal) {
+			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
+		},
+
+		value(newVal,oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.handleChange(RangeSlider.parseValue(newVal, this.$props));
+			}
+		},
+
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {
 				this.handleChange(RangeSlider.parseValue(newVal, this.$props));
@@ -155,14 +174,20 @@ const RangeSlider = {
 		this.addComponent(this.$props.componentId);
 		this.setReact(this.$props);
 
-		const { defaultSelected } = this.$props;
+		const { defaultSelected, value, defaultValue } = this.$props;
 		const { selectedValue } = this;
 		if (this.$props.range) {
 			if (Array.isArray(selectedValue)) {
 				this.handleChange(selectedValue);
 			} else if (selectedValue) {
 				this.handleChange(RangeSlider.parseValue(selectedValue, this.$props));
+			} else if (value) {
+				this.handleChange(RangeSlider.parseValue(value, this.$props));
+			} else if (defaultValue) {
+				this.handleChange(RangeSlider.parseValue(defaultValue, this.$props));
 			} else if (defaultSelected) {
+				/* TODO: Remove this before next release */
+				deprecatePropWarning('defaultSelected', 'defaultValue');
 				this.handleChange(RangeSlider.parseValue(defaultSelected, this.$props));
 			}
 		}
