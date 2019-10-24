@@ -4,6 +4,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { toggleButtons } from '../../styles/Button';
 import { connect } from '../../utils/index';
+import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -22,6 +23,7 @@ const ToggleButton = {
 		data: types.data,
 		dataField: types.stringRequired,
 		defaultSelected: types.stringOrArray,
+		defaultValue: types.stringOrArray,
 		value: types.stringOrArray,
 		filterLabel: types.string,
 		nestedField: types.string,
@@ -35,7 +37,11 @@ const ToggleButton = {
 	},
 	data() {
 		const props = this.$props;
-		const value = this.selectedValue || props.value || props.defaultSelected || [];
+		const value = this.selectedValue || props.value || props.defaultValue || props.defaultSelected || [];
+		if (props.defaultSelected) {
+			/* TODO: Remove this before next release */
+			deprecatePropWarning('defaultSelected', 'defaultValue');
+		}
 		const currentValue = ToggleButton.parseValue(value, props);
 		this.__state = {
 			currentValue,
@@ -66,6 +72,9 @@ const ToggleButton = {
 	},
 	watch: {
 		defaultSelected(newVal) {
+			this.setValue(ToggleButton.parseValue(newVal, this.$props));
+		},
+		defaultValue(newVal) {
 			this.setValue(ToggleButton.parseValue(newVal, this.$props));
 		},
 		react() {
@@ -196,7 +205,7 @@ const ToggleButton = {
 			if (value === undefined) {
 				this.handleToggle(item);
 			} else {
-				this.$emit('change', item);
+				this.$emit('change', item.value);
 			}
 		},
 

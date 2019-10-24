@@ -7,6 +7,8 @@ import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
 import { connect, isFunction } from '../../utils/index';
+import { deprecatePropWarning } from '../shared/utils';
+import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 
 const {
 	addComponent,
@@ -47,6 +49,8 @@ const SingleDropdownList = {
 		dataField: types.stringRequired,
 		defaultQuery: types.func,
 		defaultSelected: types.string,
+		defaultValue: types.string,
+		value: types.value,
 		filterLabel: types.string,
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Select a value'),
@@ -84,7 +88,13 @@ const SingleDropdownList = {
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
+		} else if (this.$props.value) {
+			this.setValue(this.$props.value);
+		} else if (this.$props.defaultValue) {
+			this.setValue(this.$props.defaultValue);
 		} else if (this.$props.defaultSelected) {
+			/* TODO: Remove this before next release */
+			deprecatePropWarning('defaultSelected', 'defaultValue');
 			this.setValue(this.$props.defaultSelected);
 		}
 	},
@@ -135,6 +145,14 @@ const SingleDropdownList = {
 		defaultSelected(newVal) {
 			this.setValue(newVal);
 		},
+		defaultValue(newVal) {
+			this.setValue(newVal);
+		},
+		value(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.setValue(newVal);
+			}
+		},
 		selectedValue(newVal) {
 			if (this.$data.currentValue !== newVal) {
 				this.setValue(newVal || '');
@@ -183,7 +201,7 @@ const SingleDropdownList = {
 								key: String(item.key),
 							})),
 					]}
-					handleChange={this.setValue}
+					handleChange={this.handleChange}
 					selectedItem={this.$data.currentValue}
 					placeholder={this.$props.placeholder}
 					labelField="key"
@@ -235,6 +253,15 @@ const SingleDropdownList = {
 			};
 
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
+		},
+
+		handleChange(item) {
+			const { value } = this.$props;
+			if ( value === undefined ) {
+				this.setValue(item);
+			} else {
+				this.$emit('change', item);
+			}
 		},
 
 		updateQueryHandler(value, props) {

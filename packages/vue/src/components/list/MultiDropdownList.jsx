@@ -6,7 +6,8 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
-import { connect, isFunction } from '../../utils/index';
+import { connect, isFunction, parseValueArray } from '../../utils/index';
+import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -47,6 +48,8 @@ const MultiDropdownList = {
 		customQuery: types.func,
 		dataField: types.stringRequired,
 		defaultSelected: types.stringArray,
+		defaultValue: types.stringArray,
+		value: types.stringArray,
 		defaultQuery: types.func,
 		filterLabel: types.string,
 		innerClass: types.style,
@@ -87,7 +90,13 @@ const MultiDropdownList = {
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue, true);
+		} else if (this.$props.value) {
+			this.setValue(this.$props.value, true);
+		} else if (this.$props.defaultValue) {
+			this.setValue(this.$props.defaultValue, true);
 		} else if (this.$props.defaultSelected) {
+			/* TODO: Remove this before next release */
+			deprecatePropWarning('defaultSelected', 'defaultValue');
 			this.setValue(this.$props.defaultSelected, true);
 		}
 	},
@@ -151,6 +160,14 @@ const MultiDropdownList = {
 		defaultSelected(newVal) {
 			this.setValue(newVal, true);
 		},
+		defaultValue(newVal) {
+			this.setValue(newVal, true);
+		},
+		value(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.setValue(newVal, true);
+			}
+		},
 	},
 
 	render() {
@@ -194,7 +211,7 @@ const MultiDropdownList = {
 								key: String(item.key),
 							})),
 					]}
-					handleChange={this.setValue}
+					handleChange={this.handleChange}
 					selectedItem={this.$data.currentValue}
 					placeholder={this.$props.placeholder}
 					labelField="key"
@@ -231,6 +248,17 @@ const MultiDropdownList = {
 			}
 		},
 
+		handleChange(item) {
+			const { value } = this.$props;
+
+			if (value === undefined) {
+				this.setValue(item);
+			} else {
+				const values = parseValueArray(this.currentValue, item);
+				this.$emit('change', values);
+			}
+		},
+
 		setValue(value, isDefaultValue = false, props = this.$props) {
 			// ignore state updates when component is locked
 			if (props.beforeValueChange && this.locked) {
@@ -256,8 +284,7 @@ const MultiDropdownList = {
 			} else if (isDefaultValue) {
 				finalValues = value;
 				currentValue = {};
-
-				if (value) {
+				if (Array.isArray(value)) {
 					value.forEach(item => {
 						currentValue[item] = true;
 					});

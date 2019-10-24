@@ -7,6 +7,8 @@ import { connect, isFunction } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Radio } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
+import { deprecatePropWarning } from '../shared/utils';
+import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 
 const {
 	addComponent,
@@ -33,6 +35,8 @@ const SingleList = {
 		customQuery: types.func,
 		dataField: types.stringRequired,
 		defaultSelected: types.string,
+		defaultValue: types.string,
+		value: types.value,
 		defaultQuery: types.func,
 		filterLabel: types.string,
 		innerClass: types.style,
@@ -83,7 +87,13 @@ const SingleList = {
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
+		} else if (this.$props.value) {
+			this.setValue(this.$props.value);
+		} else if (this.$props.defaultValue) {
+			this.setValue(this.$props.defaultValue);
 		} else if (this.$props.defaultSelected) {
+			/* TODO: Remove this before next release */
+			deprecatePropWarning('defaultSelected', 'defaultValue');
 			this.setValue(this.$props.defaultSelected);
 		}
 	},
@@ -114,6 +124,14 @@ const SingleList = {
 		defaultSelected(newVal) {
 			this.setValue(newVal);
 		},
+		defaultValue(newVal) {
+			this.setValue(newVal);
+		},
+		value(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.setValue(newVal);
+			}
+		},
 		selectedValue(newVal) {
 			if (this.$data.currentValue !== newVal) {
 				this.setValue(newVal || '');
@@ -137,6 +155,7 @@ const SingleList = {
 		if (this.$props.transformData) {
 			itemsToRender = this.$props.transformData(itemsToRender);
 		}
+
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -191,7 +210,7 @@ const SingleList = {
 							<li
 								key={item.key}
 								class={`${
-									this.$data.currentValue === String(item.key) ? 'active' : ''
+									this.currentValue === String(item.key) ? 'active' : ''
 								}`}
 							>
 								<Radio
@@ -205,7 +224,7 @@ const SingleList = {
 									show={this.$props.showRadio}
 									{...{
 										domProps: {
-											checked: this.$data.currentValue === String(item.key),
+											checked: this.currentValue === String(item.key),
 										},
 									}}
 								/>
@@ -217,7 +236,7 @@ const SingleList = {
 										renderItemCalc({
 											label: item.key,
 											count: item.doc_count,
-											isChecked: this.$data.currentValue === String(item.key),
+											isChecked: this.currentValue === String(item.key),
 										})
 									) : (
 										<span>
@@ -346,7 +365,12 @@ const SingleList = {
 		},
 
 		handleClick(e) {
-			this.setValue(e.target.value);
+			const { value } = this.$props;
+			if ( value === undefined ) {
+				this.setValue(e.target.value);
+			} else {
+				this.$emit('change', e.target.value);
+			}
 		},
 	},
 };

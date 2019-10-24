@@ -3,10 +3,11 @@ import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
-import { connect, isFunction } from '../../utils/index';
+import { connect, isFunction, parseValueArray } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
+import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -29,6 +30,8 @@ const MultiList = {
 	name: 'MultiList',
 	props: {
 		defaultSelected: types.stringArray,
+		defaultValue: types.stringArray,
+		value: types.stringArray,
 		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		showCheckbox: VueTypes.bool.def(true),
 		beforeValueChange: types.func,
@@ -86,8 +89,14 @@ const MultiList = {
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
+		} else if (this.$props.value) {
+			this.setValue(this.$props.value, true);
+		} else if (this.$props.defaultValue) {
+			this.setValue(this.$props.defaultValue, true);
 		} else if (this.$props.defaultSelected) {
-			this.setValue(this.$props.defaultSelected);
+			/* TODO: Remove this before next release */
+			deprecatePropWarning('defaultSelected', 'defaultValue');
+			this.setValue(this.$props.defaultSelected, true);
 		}
 	},
 	beforeDestroy() {
@@ -114,6 +123,16 @@ const MultiList = {
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
 		},
 		defaultSelected(newVal, oldVal) {
+			if (!isEqual(oldVal, newVal)) {
+				this.setValue(newVal, true);
+			}
+		},
+		value(newVal, oldVal) {
+			if (!isEqual(oldVal, newVal)) {
+				this.setValue(newVal, true);
+			}
+		},
+		defaultValue(newVal, oldVal) {
 			if (!isEqual(oldVal, newVal)) {
 				this.setValue(newVal, true);
 			}
@@ -297,7 +316,7 @@ const MultiList = {
 				finalValues = value;
 				currentValue = {};
 
-				if (value) {
+				if (value && value.length) {
 					value.forEach(item => {
 						currentValue[item] = true;
 					});
@@ -405,7 +424,13 @@ const MultiList = {
 		},
 
 		handleClick(e) {
-			this.setValue(e.target.value);
+			const { value } = this.$props
+			if (value === undefined) {
+				this.setValue(e.target.value);
+			} else {
+				const values = parseValueArray(this.currentValue, e.target.value);
+				this.$emit('change', values);
+			}
 		},
 	},
 };
