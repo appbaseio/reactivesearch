@@ -11,6 +11,8 @@ import SuggestionWrapper from './addons/SuggestionWrapper.jsx';
 import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
+import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -30,6 +32,7 @@ const DataSearch = {
 			currentValue: '',
 			isOpen: false,
 			normalizedSuggestions: [],
+			isPending: false,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
@@ -84,6 +87,8 @@ const DataSearch = {
 		dataField: types.dataFieldArray,
 		debounce: VueTypes.number.def(0),
 		defaultSelected: types.string,
+		defaultValue: types.string,
+		value: types.value,
 		defaultSuggestions: types.suggestions,
 		fieldWeights: types.fieldWeights,
 		filterLabel: types.string,
@@ -129,7 +134,13 @@ const DataSearch = {
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue, true);
+		} else if (this.$props.value) {
+			this.setValue(this.$props.value, true);
+		} else if (this.$props.defaultValue) {
+			this.setValue(this.$props.defaultValue, true);
 		} else if (this.$props.defaultSelected) {
+			/* TODO: Remove this before next release */
+			deprecatePropWarning('defaultSelected', 'defaultValue');
 			this.setValue(this.$props.defaultSelected, true);
 		}
 	},
@@ -162,6 +173,14 @@ const DataSearch = {
 		},
 		defaultSelected(newVal) {
 			this.setValue(newVal, true, this.$props);
+		},
+		defaultValue(newVal) {
+			this.setValue(newVal, true, this.$props);
+		},
+		value(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.setValue(newVal, true, this.$props);
+			}
 		},
 		suggestions(newVal) {
 			if (Array.isArray(newVal) && this.$data.currentValue.trim().length) {
@@ -271,15 +290,17 @@ const DataSearch = {
 					...customQueryOptions,
 				});
 			}
-			this.updateQuery({
-				componentId,
-				query,
-				value,
-				label: filterLabel,
-				showFilter,
-				URLParams,
-				componentType: 'DATASEARCH',
-			});
+			if (!this.isPending) {
+				this.updateQuery({
+					componentId,
+					query,
+					value,
+					label: filterLabel,
+					showFilter,
+					URLParams,
+					componentType: 'DATASEARCH',
+				});
+			}
 		},
 		// need to review
 		handleFocus(event) {
@@ -289,13 +310,26 @@ const DataSearch = {
 				this.$emit('focus', event);
 			}
 		},
+		triggerQuery () {
+			const { value } = this.$props;
+			if (value !== undefined) {
+				this.isPending = false;
+				this.setValue(this.$props.value, true);
+			}
+		},
 
 		clearValue() {
+			this.isPending = false;
 			this.setValue('', true);
 			this.onValueSelectedHandler(null, causes.CLEAR_VALUE);
 		},
 
 		handleKeyDown(event, highlightedIndex) {
+			const { value } = this.$props;
+			if (value !== undefined) {
+				this.isPending = true;
+			}
+
 			// if a suggestion was selected, delegate the handling to suggestion handler
 			if (event.key === 'Enter' && highlightedIndex === null) {
 				this.setValue(event.target.value, true);
@@ -308,17 +342,30 @@ const DataSearch = {
 		},
 
 		onInputChange(e) {
-			const { value } = e.target;
+			const { value: inputValue } = e.target;
 
 			if (!this.$data.isOpen) {
 				this.isOpen = true;
 			}
 
-			this.setValue(value);
+			const { value } = this.$props;
+
+			if (value === undefined) {
+				this.setValue(inputValue);
+			} else {
+				this.isPending = true;
+				this.$emit('change', inputValue, this.triggerQuery, e);
+			}
+
 		},
 
 		onSuggestionSelected(suggestion) {
-			this.setValue(suggestion.value, true, this.$props, causes.SUGGESTION_SELECT);
+			const { value } = this.$props;
+			if (value === undefined) {
+				this.setValue(suggestion.value, true, this.$props, causes.SUGGESTION_SELECT);
+			} else {
+				this.$emit('change', suggestion.value, this.triggerQuery);
+			}
 			this.onValueSelectedHandler(
 				suggestion.value,
 				causes.SUGGESTION_SELECT,
@@ -469,16 +516,16 @@ const DataSearch = {
 											on: getInputEvents({
 												onInput: this.onInputChange,
 												onBlur: e => {
-													this.$emit('blur', e);
+													this.$emit('blur', e, this.triggerQuery);
 												},
 												onFocus: this.handleFocus,
 												onKeyPress: e => {
-													this.$emit('keyPress', e);
+													this.$emit('keyPress', e, this.triggerQuery);
 												},
 												onKeyDown: e =>
 													this.handleKeyDown(e, highlightedIndex),
 												onKeyUp: e => {
-													this.$emit('keyUp', e);
+													this.$emit('keyUp', e, this.triggerQuery);
 												},
 											}),
 										}}
@@ -555,20 +602,20 @@ const DataSearch = {
 							{...{
 								on: {
 									blur: e => {
-										this.$emit('blur', e);
+										this.$emit('blur', e, this.triggerQuery);
 									},
 									keypress: e => {
-										this.$emit('keyPress', e);
+										this.$emit('keyPress', e, this.triggerQuery);
 									},
 									input: this.onInputChange,
 									focus: e => {
-										this.$emit('focus', e);
+										this.$emit('focus', e, this.triggerQuery);
 									},
 									keydown: e => {
-										this.$emit('keyDown', e);
+										this.$emit('keyDown', e, this.triggerQuery);
 									},
 									keyup: e => {
-										this.$emit('keyUp', e);
+										this.$emit('keyUp', e, this.triggerQuery);
 									},
 								},
 							}}
