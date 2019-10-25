@@ -12,7 +12,10 @@ search.tokenizer = new JsSearch.StopWordsTokenizer(new JsSearch.SimpleTokenizer(
 
 search.addIndex('title');
 search.addIndex('heading');
+search.addIndex('meta_description');
+search.addIndex('meta_title');
 search.addIndex('tokens');
+
 search.addDocuments(data);
 
 const getSuggestions = value => {
@@ -43,8 +46,10 @@ const getSuggestions = value => {
 const getSection = url => {
 	const isHavingHash = url.indexOf('#');
 	let link = url;
+	let subSection = '';
 	if (isHavingHash) {
 		link = url.split('#')[0];
+		subSection = url.split('#')[1];
 	}
 	if (link.startsWith('/docs/reactivesearch')) {
 		const linkTags = link.split('/');
@@ -62,15 +67,19 @@ const getSection = url => {
 		}
 
 		if (['components', 'advanced', 'overview'].indexOf(sectionName.toLowerCase()) !== -1) {
-			return `${techName} ${sectionName}`;
+			return subSection
+				? `${techName} > ${sectionName} > ${subSection}`
+				: `${techName} > ${sectionName}`;
 		}
 
-		return `${techName} ${sectionName} Components`;
+		return subSection
+			? `${techName} > ${sectionName} Components > ${subSection}`
+			: `${techName} > ${sectionName} Components`;
 	}
 	const foundItem = sidebar.find(item => item.link === link || link.startsWith(item.link));
 
 	if (foundItem) {
-		return foundItem.topic;
+		return subSection ? `${foundItem.topic} > ${subSection}` : foundItem.topic;
 	}
 
 	return '';
@@ -111,12 +120,29 @@ const getValue = url => {
 	return 'buildingUI';
 };
 
-const HitTemplate = ({ hit }) => {
+const HitTemplate = ({ hit, currentValue }) => {
 	const sectionName = getSection(hit.url);
+
+	const highlightedTitle = hit.title.replace(new RegExp(currentValue, 'ig'), matched => {
+		return `<mark>${matched}</mark>`;
+	});
+	const tokens = hit.tokens.filter(item => item.includes(currentValue));
+	let highlightedToken =
+		tokens[0] &&
+		tokens[0].replace(new RegExp(currentValue, 'ig'), matched => {
+			return `<mark>${matched}</mark>`;
+		});
+	if (highlightedToken && highlightedToken.startsWith('#')) {
+		highlightedToken = highlightedToken
+			.split('&gt;')
+			.slice(1)
+			.join('&gt;');
+	}
+
 	return (
 		<Link
 			to={hit.url}
-			className="tdn db pt3 pb3 blue search-result pl5 pr5 br3 br--left suggestion"
+			className="tdn db pt3 pb3 blue search-result pl5 pr5 br3 br--left suggestion break-word"
 		>
 			<div className="suggestion-container">
 				<div className="suggestion-content-icon">
@@ -124,18 +150,21 @@ const HitTemplate = ({ hit }) => {
 				</div>
 
 				<div className="full-width">
-					<h4 className={`${Spirit.h5} dib`}>{hit.title}</h4>
-					{sectionName ? (
+					<div className="wrap-between mb2">
 						<div
-							className={`${
-								Spirit.small
-							} midgrey nudge-bottom--2 capitalize suggestion-section`}
-							dangerouslySetInnerHTML={{ __html: getSection(hit.url) }}
+							className={`${Spirit.h5} dib`}
+							dangerouslySetInnerHTML={{ __html: highlightedTitle }}
 						/>
-					) : null}
+						{sectionName ? (
+							<div
+								className={`${Spirit.small} midgrey capitalize suggestion-section`}
+								dangerouslySetInnerHTML={{ __html: getSection(hit.url) }}
+							/>
+						) : null}
+					</div>
 					<p
-						className={`${Spirit.small} midgrey nudge-bottom--2`}
-						dangerouslySetInnerHTML={{ __html: hit.heading }}
+						className={`${Spirit.small} midgrey mt1 truncate-3`}
+						dangerouslySetInnerHTML={{ __html: highlightedToken }}
 					/>
 				</div>
 			</div>
@@ -180,17 +209,18 @@ class AutoComplete extends React.Component {
 
 	getSuggestionValue = hit => {
 		return hit.title;
-	}
+	};
 
 	suggestionSelected = (event, { suggestion }) => {
 		if (event.key === 'Enter') {
 			navigate(suggestion.url);
 		}
-	}
+	};
 
 	renderSuggestion = hit => {
-		return <HitTemplate hit={hit} />;
-	}
+		const { value } = this.state;
+		return <HitTemplate hit={hit} currentValue={value} />;
+	};
 
 	render() {
 		// Don't show sections with no results

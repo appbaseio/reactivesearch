@@ -1521,7 +1521,6 @@ to be custom HTML.
 .suggestion-section {
 	border-radius: 2px;
 	padding: 2px 8px;
-	margin-bottom: 5px;
 	font-size: 10px;
 	display: block;
 	width: max-content;
@@ -1824,5 +1823,24 @@ to be custom HTML.
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
+}
 
+.truncate-3 {
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wrap-between {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.break-word {
+	word-break: break-all;
 }

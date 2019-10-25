@@ -34,14 +34,13 @@ const StopWords = {
 	to: true,
 };
 
-const TOKENIZER_REGEX = /[^a-zа-яё0-9\-\.']+/i;
+const TOKENIZER_REGEX = '.';
 
 function tokenize(text) {
 	const uniqueWords = {};
 
 	return text
-		.split(TOKENIZER_REGEX) // Split words at boundaries
-		.map(word => word.toLowerCase())
+		.split(TOKENIZER_REGEX)
 		.filter(word => {
 			// remove empty tokens and stop-words
 			return word != '' && StopWords[word] === undefined;
