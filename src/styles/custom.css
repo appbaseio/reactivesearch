@@ -1844,3 +1844,12 @@ to be custom HTML.
 .break-word {
 	word-break: break-all;
 }
+
+.link-icon {
+	fill: #5d7079;
+	margin-left: 5px;
+}
+
+.link-faq:hover .link-icon,.link-faq:active .link-icon {
+	fill: #3eb0ef;
+}

@@ -123,11 +123,10 @@ class MobileNav extends React.Component {
 							</div>
 						</div>
 						<h2 className="f4 mt6 mb2 lh-h5 lh-h4-l fw6 ma0 pa0 darkgrey">
-							API Reference
+							APIs and Integrations
 						</h2>
 						<p className="f5 lh-h5 lh-h4-l fw4 ma0 pa0 mt0 mt2-ns middarkgrey mb2">
-							Discover how to integrate and adapt Appbaseio's technology into popular
-							frameworks and platforms.
+							Clients, tools and libraries for working with appbase.io
 						</p>
 						<div className="mt5 mb3">
 							<div className="mobile-links-container">
