@@ -47,7 +47,7 @@
 		"react-native": "~0.59.1"
 	},
 	"dependencies": {
-		"@appbaseio/reactivecore": "8.2.14",
+		"@appbaseio/reactivecore": "8.2.15",
 		"@ptomasroos/react-native-multi-slider": "^0.0.13",
 		"appbase-js": "^4.0.2-beta.08",
 		"hoist-non-react-statics": "^3.3.0",
