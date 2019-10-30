@@ -179,6 +179,7 @@ class AutoComplete extends React.Component {
 		this.state = {
 			value: '',
 			hits: [],
+			hasMounted: false,
 		};
 
 		this.onChange = this.onChange.bind(this);
@@ -186,6 +187,12 @@ class AutoComplete extends React.Component {
 		this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
 		this.renderSuggestion = this.renderSuggestion.bind(this);
 		this.getSuggestionValue = this.getSuggestionValue.bind(this);
+	}
+
+	componentDidMount () {
+		this.setState({
+			hasMounted: true,
+		});
 	}
 
 	onChange(event, { newValue }) {
@@ -224,7 +231,7 @@ class AutoComplete extends React.Component {
 
 	render() {
 		// Don't show sections with no results
-		const { hits, value } = this.state;
+		const { hits, value, hasMounted } = this.state;
 
 		const inputProps = {
 			placeholder: `Search documentation...`,
@@ -245,6 +252,10 @@ class AutoComplete extends React.Component {
 			sectionContainer: `pb4 mb4`,
 			sectionTitle: `f8 lh-h4 fw5 midgrey w30 tr mt2 sticky top-2 pr2`,
 		};
+
+		if (!hasMounted) {
+			return null;
+		}
 
 		return (
 			<>
