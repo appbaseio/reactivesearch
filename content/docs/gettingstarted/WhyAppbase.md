@@ -23,14 +23,12 @@ Appbaseio.io's dashboard provides a powerful interface for developing search app
 
 #### Development Experience 🕵️‍♂️
 
-// TODO: Link to specific doc sections
-
 -   **Import Data** allows importing data into ElasticSearch from sources such as `JSON`, `CSV`, `SQL` or another ElasticSearch index. [The CLI tool](https://github.com/appbaseio/abc) supports more sources such as `MongoDB`, `Firestore`, `Kafka`, `Redis` to name a few.
--   **Browse Data** allows Viewing, Filtering, Adding, Editing and Exporting the search data of your search app.
--   **App Settings** allows changing mappings of your data on the fly.
--   **Search Preview** allows visually testing search relevancy with zero lines of code.
+-   **[Browse Data](/docs/data/Browser/)** allows Viewing, Filtering, Adding, Editing and Exporting the search data of your search app.
+-   **[App Settings](/docs/search/Mappings)** allows changing mappings of your data on the fly.
+-   **[Search Preview](/docs/search/Preview)** allows visually testing search relevancy with zero lines of code.
 -   **Query Explorer** provides a UI to create search queries effectively.
--   **Query Rules** allows setting "If This, Then That" style rules for search queries.
+-   **[Query Rules](/docs/search/Rules)** allows setting "If This, Then That" style rules for search queries.
 -   **Search Templates** allow creating API endpoints that abstract the Query DSL logic with templates to prevent script injections.
 
 
