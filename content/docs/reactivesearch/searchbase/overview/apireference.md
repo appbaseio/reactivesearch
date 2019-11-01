@@ -340,6 +340,20 @@ These properties are automatically calculated or managed by the `Searchbase` cla
     -   **`time`**: `number` Total time taken by request (in ms)
     -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
     -   **`rawData`**: `Array<Object>`  An array of original hits obtained from the applied query.
+-   **analyticsInstance** `Object`
+    An instance of the [Appbase.io analytics library](https://github.com/appbaseio/analytics) which can be used to record click events, custom events & conversions for the appbase.io applications. For example, check how it can be used to record a click event.
+    ```js
+    const searchbase = new Searchbase(config);
+
+    // Record a result click at first position
+    searchbase.analyticsInstance.registerClick(1);
+
+    // Record a suggestion click at first position
+    searchbase.analyticsInstance.registerClick(1, true);
+
+    // Record conversion
+    searchbase.analyticsInstance.registerConversion();
+    ```
 -   **query** `Object`
     The ElasticSearch query that is to be executed
 -   **suggestionsQuery** `Object`
