@@ -194,7 +194,7 @@ Please check the [contribution guide](.github/CONTRIBUTING.md).
 
 -   [**arc**](https://github.com/appbaseio/arc) API Gateway for ElasticSearch (Out of the box Security, Rate Limit Features, Record Analytics and Request Logs).
 
--   **searchbox** A lightweight and performance focused searchbox UI libraries to query and display results from your ElasticSearch app (aka index)
+-   **searchbox** A lightweight and performance focused searchbox UI libraries to query and display results from your ElasticSearch app (aka index).
     -   [**Vanilla**](https://github.com/appbaseio/searchbox) - (~16kB Minified + Gzipped)
     -   [**React**](https://github.com/appbaseio/react-searchbox) - (~30kB Minified + Gzipped)
     -   [**Vue**](https://github.com/appbaseio/vue-searchbox) - (~22kB Minified + Gzipped)
