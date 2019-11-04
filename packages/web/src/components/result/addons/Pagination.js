@@ -33,7 +33,7 @@ const buildPaginationDOM = (props, position) => {
 					? start + (Math.ceil(pages / 2) - (pages % 2))
 					: totalPages + 1;
 		}
-		if (currentPage > (totalPages - pages) + 2) {
+		if (showEndPage && currentPage > (totalPages - pages) + 2) {
 			start = (totalPages - pages) + 2;
 		}
 		if (totalPages <= pages) start = 2;
@@ -68,6 +68,18 @@ const buildPaginationDOM = (props, position) => {
 };
 
 class Pagination extends React.PureComponent {
+	buildIntermediatePaginationDOM() {
+		const {
+			showEndPage, currentPage, totalPages, pages,
+		} = this.props;
+		// build pagination dom every time when there is no showEndPage
+		if (!showEndPage) return buildPaginationDOM(this.props, 'start');
+		// last two pages are computed dynamically if showEndPage
+		if (currentPage <= (totalPages - pages) + 2 || totalPages <= pages) {
+			return buildPaginationDOM(this.props, 'start');
+		}
+		return null;
+	}
 	render() {
 		const {
 			pages,
@@ -150,7 +162,7 @@ class Pagination extends React.PureComponent {
 				{showEndPage && currentPage >= Math.floor(pages / 2) + !!(pages % 2) ? (
 					<span>...</span>
 				) : null}
-				{(currentPage <= (totalPages - pages) + 2 || totalPages <= pages) && buildPaginationDOM(this.props, 'start')}
+				{this.buildIntermediatePaginationDOM()}
 				{showEndPage && pages > 2 && currentPage <= totalPages - Math.ceil(pages * 0.75) ? (
 					<span>...</span>
 				) : null}
