@@ -105,7 +105,6 @@ Example uses of searchbox UI:
 -   **analyticsConfig** `object` [optional]
     Set the `analyticsConfig` prop to customize the analytics experience when appbase.io is used as a backend. It accepts an object which has the following properties:
 
-    -   **searchStateHeader** `Boolean` If `true` then appbase.io will record the search state with every search request made from `SearchBox`. Defaults to `false`.
     -   **emptyQuery** `Boolean` If `false` then appbase.io will not record the analytics for the empty queries i.e `match_all` queries. Defaults to `true`.
     -   **suggestionAnalytics** `Boolean` If `false` then appbase.io will not record the click analytics for the suggestions. Defaults to `true`.
     -   **userId** `String` It allows you to define the user id which will be used to record the appbase.io analytics.
