@@ -101,7 +101,7 @@ Example uses:
     componentId="title"
     highlight="true"
     :dataField="['title', 'text']"
-    :customHighlight=`(props) => ({
+    :customHighlight="(props) => ({
         highlight: {
             pre_tags: ['<mark>'],
             post_tags: ['</mark>'],
@@ -111,7 +111,7 @@ Example uses:
             },
             number_of_fragments: 0,
         },
-    })`
+    })"
 />
 ```
 
