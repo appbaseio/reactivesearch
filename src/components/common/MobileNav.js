@@ -12,6 +12,9 @@ const getValue = () => {
 		if (path && path.startsWith('/docs/reactivesearch/v2')) {
 			return 'React - v2';
 		}
+		if (path && path.startsWith('/docs/reactivesearch/vue-searchbox')) {
+			return 'Vue SearchBox';
+		}
 		if (path && path.startsWith('/docs/reactivesearch/vue')) {
 			return 'Vue';
 		}
@@ -46,6 +49,8 @@ const getFileName = value => {
 			return 'searchbox';
 		case 'React Searchbox':
 			return 'react-searchbox-reactivesearch';
+		case 'Vue SearchBox':
+			return 'vue-searchbox-reactivesearch';
 		default:
 			return 'web-reactivesearch';
 	}
@@ -149,6 +154,7 @@ class MobileNav extends React.Component {
 								'Vue',
 								'SearchBase',
 								'React SearchBox',
+								'Vue SearchBox',
 							]}
 							value={rs}
 							className="version-switcher shadow-3 br2"

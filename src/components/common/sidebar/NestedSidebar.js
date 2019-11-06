@@ -26,12 +26,17 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/react-searchbox/quickstart`;
 		} else if (value.value === 'Searchbox') {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/searchbox/Quickstart`;
+		} else if (value.value === 'Vue SearchBox') {
+			window.location.href = `${window.location.origin}/docs/reactivesearch/vue-searchbox/quickstart`;
 		}
 	};
 
 	const getValue = () => {
 		if (location.pathname.startsWith('/docs/reactivesearch/v2')) {
 			return 'React - v2';
+		}
+		if (location.pathname.startsWith('/docs/reactivesearch/vue-searchbox')) {
+			return 'Vue SearchBox';
 		}
 		if (location.pathname.startsWith('/docs/reactivesearch/vue')) {
 			return 'Vue';
@@ -124,6 +129,7 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 					'SearchBase',
 					'Searchbox',
 					'React SearchBox',
+					'Vue SearchBox',
 				]}
 				value={getValue()}
 				className="version-switcher shadow-3 br2"

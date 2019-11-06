@@ -1,0 +1,5 @@
+- items:
+  - title: Getting Started
+    link: /docs/reactivesearch/vue-searchbox/quickstart/
+  - title: API Reference
+    link: /docs/reactivesearch/vue-searchbox/apireference/
