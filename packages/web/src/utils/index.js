@@ -138,3 +138,15 @@ export function parseValueArray(originalArr = [], currentValue) {
 export function escapeRegExp(string) {
 	return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
+
+export function parseCompAggToHits(aggFieldName, buckets = []) {
+	return buckets.map((bucket) => {
+		// eslint-disable-next-line camelcase
+		const { doc_count, key, [aggFieldName]: hitsData } = bucket;
+		return {
+			_doc_count: doc_count,
+			_key: key[aggFieldName],
+			...hitsData.hits.hits[0],
+		};
+	});
+}

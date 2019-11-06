@@ -81,24 +81,27 @@ const getAggsQuery = (query, props) => {
 	return { ...clonedQuery, ...extractQueryFromDefaultQuery(props.defaultQuery) };
 };
 
-const getCompositeAggsQuery = (query, props, after) => {
+const getCompositeAggsQuery = (query, props, after, showTopHits = false) => {
 	const clonedQuery = query;
 	// missing label not available in composite aggs
 	const {
-		dataField, size, sortBy, showMissing,
+		dataField, size, sortBy, showMissing, aggregationField,
 	} = props;
+
+	// first preference will be given to aggregationField
+	const finalField = aggregationField || dataField;
 
 	// composite aggs only allows asc and desc
 	const order = sortBy === 'count' ? {} : { order: sortBy };
 
 	clonedQuery.aggs = {
-		[dataField]: {
+		[finalField]: {
 			composite: {
 				sources: [
 					{
-						[dataField]: {
+						[finalField]: {
 							terms: {
-								field: dataField,
+								field: finalField,
 								...order,
 								...(showMissing ? { missing_bucket: true } : {}),
 							},
@@ -108,6 +111,15 @@ const getCompositeAggsQuery = (query, props, after) => {
 				size,
 				...after,
 			},
+			...(showTopHits
+				? {
+					aggs: {
+						[finalField]: {
+							top_hits: { size: 1 },
+						},
+					},
+				}
+				: {}),
 		},
 	};
 	clonedQuery.size = 0;

@@ -45,15 +45,19 @@ import {
 	withClickIds,
 	getValidPropsKeys,
 	handleCaretPosition,
+	parseCompAggToHits,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import Mic from './addons/Mic';
+import { getCompositeAggsQuery } from '../list/utils';
 
 class DataSearch extends Component {
 	constructor(props) {
 		super(props);
 		const currentValue = props.selectedValue || props.value || props.defaultValue || '';
+
+		this.shouldGenerateAggsQuery = !!props.aggregationField;
 
 		this.state = {
 			currentValue,
@@ -70,7 +74,9 @@ class DataSearch extends Component {
 		this.queryOptions = {
 			size: 20,
 		};
-
+		if (this.shouldGenerateAggsQuery) {
+			this.queryOptions = getCompositeAggsQuery(this.queryOptions, props, null, true);
+		}
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
 		props.setComponentProps(props.componentId, {
@@ -80,8 +86,11 @@ class DataSearch extends Component {
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 
 		if (props.highlight) {
-			const queryOptions = DataSearch.highlightQuery(props) || {};
+			let queryOptions = DataSearch.highlightQuery(props) || {};
 			queryOptions.size = 20;
+			if (this.shouldGenerateAggsQuery) {
+				queryOptions = getCompositeAggsQuery(queryOptions, props, null, true);
+			}
 			this.queryOptions = queryOptions;
 			props.setQueryOptions(props.componentId, queryOptions);
 		} else {
@@ -109,10 +118,13 @@ class DataSearch extends Component {
 		checkSomePropChange(
 			this.props,
 			prevProps,
-			['highlight', 'dataField', 'highlightField'],
+			['highlight', 'dataField', 'highlightField', 'aggregationField'],
 			() => {
-				const queryOptions = DataSearch.highlightQuery(this.props) || {};
+				let queryOptions = DataSearch.highlightQuery(this.props) || {};
 				queryOptions.size = 20;
+				if (this.shouldGenerateAggsQuery) {
+					queryOptions = getCompositeAggsQuery(queryOptions, this.props, null, true);
+				}
 				this.queryOptions = queryOptions;
 				this.props.setQueryOptions(this.props.componentId, queryOptions);
 			},
@@ -147,7 +159,14 @@ class DataSearch extends Component {
 		checkSomePropChange(
 			this.props,
 			prevProps,
-			['fieldWeights', 'fuzziness', 'queryFormat', 'dataField', 'nestedField', 'searchOperators'],
+			[
+				'fieldWeights',
+				'fuzziness',
+				'queryFormat',
+				'dataField',
+				'nestedField',
+				'searchOperators',
+			],
 			() => {
 				this.updateQuery(this.state.currentValue, this.props);
 			},
@@ -219,7 +238,7 @@ class DataSearch extends Component {
 				pre_tags: ['<mark>'],
 				post_tags: ['</mark>'],
 				fields,
-				...props.highlightField && { require_field_match: false },
+				...(props.highlightField && { require_field_match: false }),
 			},
 		};
 	};
@@ -527,7 +546,7 @@ class DataSearch extends Component {
 	triggerQuery = () => {
 		this.isPending = false;
 		this.setValue(this.props.value, true, this.props);
-	}
+	};
 
 	onSuggestionSelected = (suggestion) => {
 		const { value, onChange } = this.props;
@@ -581,7 +600,8 @@ class DataSearch extends Component {
 	};
 
 	handleVoiceResults = ({ results }) => {
-		if (results
+		if (
+			results
 			&& results[0]
 			&& results[0].isFinal
 			&& results[0][0]
@@ -597,7 +617,7 @@ class DataSearch extends Component {
 				});
 			}
 		}
-	}
+	};
 
 	renderIcon = () => {
 		if (this.props.showIcon) {
@@ -624,15 +644,15 @@ class DataSearch extends Component {
 					{this.renderCancelIcon()}
 				</InputIcon>
 			)}
-			{this.props.showVoiceSearch
-				&& (
-					<Mic
-						getInstance={this.props.getMicInstance}
-						render={this.props.renderMic}
-						iconPosition={this.props.iconPosition}
-						onResult={this.handleVoiceResults}
-						className={getClassName(this.props.innerClass, 'mic') || null}
-					/>)}
+			{this.props.showVoiceSearch && (
+				<Mic
+					getInstance={this.props.getMicInstance}
+					render={this.props.renderMic}
+					iconPosition={this.props.iconPosition}
+					onResult={this.handleVoiceResults}
+					className={getClassName(this.props.innerClass, 'mic') || null}
+				/>
+			)}
 			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
 				{this.renderIcon()}
 			</InputIcon>
@@ -753,8 +773,10 @@ class DataSearch extends Component {
 			headers,
 		} = this.props;
 		const { url, app, credentials } = config;
-		const searchState = this.context && this.context.store
-			? getSearchState(this.context.store.getState(), true) : null;
+		const searchState
+			= this.context && this.context.store
+				? getSearchState(this.context.store.getState(), true)
+				: null;
 		if (config.analytics && suggestionsSearchId) {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
@@ -767,7 +789,8 @@ class DataSearch extends Component {
 					...(searchPosition !== undefined && {
 						'X-Search-ClickPosition': searchPosition + 1,
 					}),
-					...(config.analyticsConfig.searchStateHeader && searchState && {
+					...(config.analyticsConfig.searchStateHeader
+						&& searchState && {
 						'X-Search-State': JSON.stringify(searchState),
 					}),
 				},
@@ -780,7 +803,7 @@ class DataSearch extends Component {
 			return e => func(e, this.triggerQuery);
 		}
 		return undefined;
-	}
+	};
 
 	render() {
 		const { currentValue } = this.state;
@@ -932,6 +955,8 @@ DataSearch.propTypes = {
 	customQuery: types.func,
 	defaultQuery: types.func,
 	dataField: types.dataFieldArray,
+	aggregationField: types.string,
+	size: types.number,
 	debounce: types.number,
 	defaultValue: types.string,
 	value: types.string,
@@ -998,21 +1023,34 @@ DataSearch.defaultProps = {
 	showClear: false,
 	strictSelection: false,
 	searchOperators: false,
+	size: 20,
 };
 
-const mapStateToProps = (state, props) => ({
-	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
-	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
-	themePreset: state.config.themePreset,
-	isLoading: state.isLoading[props.componentId] || false,
-	error: state.error[props.componentId],
-	analytics: state.analytics,
-	config: state.config,
-	headers: state.appbaseRef.headers,
-});
+const mapStateToProps = (state, props) => {
+	const stateAggs = state.aggregations[props.componentId];
+	const computeSuggestions = () => {
+		if (props.aggregationField) {
+			return parseCompAggToHits(
+				props.aggregationField,
+				stateAggs && stateAggs[props.aggregationField].buckets,
+			);
+		}
+		return state.hits[props.componentId] && state.hits[props.componentId].hits;
+	};
+	return {
+		selectedValue:
+			(state.selectedValues[props.componentId]
+				&& state.selectedValues[props.componentId].value)
+			|| null,
+		suggestions: computeSuggestions(),
+		themePreset: state.config.themePreset,
+		isLoading: state.isLoading[props.componentId] || false,
+		error: state.error[props.componentId],
+		analytics: state.analytics,
+		config: state.config,
+		headers: state.appbaseRef.headers,
+	};
+};
 
 const mapDispatchtoProps = dispatch => ({
 	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
