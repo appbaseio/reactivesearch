@@ -17,19 +17,19 @@ You can take advantage of search and click analytics when using [Appbase.io](htt
 
 Click analytics have to be wired into the result components. Its supported in `ReactiveList`, however when using `ReactiveList`, the `renderItem` or `render` prop receives a method called `triggerAnalytics` to make click analytics work which you have to invoke with `onClick`.
 
-```js
+```jsx
 <ReactiveList
     ...
     renderItem={(data, triggerAnalytics) => (
         <div onClick={triggerAnalytics}>...</div>
     )}
->
+/>
 ```
 
 When rendering your component using `render` you have to call the `triggerAnalytics` function by using the `_click_id` property of the result items as an argument.
 Example:
 
-```js
+```jsx
 <ReactiveList
     ...
     render={({
@@ -46,8 +46,51 @@ Example:
                 </div>
             ))
     }
->
+/>
 ```
+
+## Click Analytics in Map Component
+
+When rendering results using `renderAllData` in `ReactiveGoogleMap` you may have to call the `triggerAnalytics` function by using the `_click_id` property of the result items as an argument. Example:
+
+```jsx
+<ReactiveGoogleMap
+    ...
+    renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination, triggerAnalytics) => {
+        return(
+            <>
+				{hits.map(hit => (
+					<div onClick={() => triggerAnalytics(hit._click_id)}>
+						{JSON.stringify(hit)}
+					</div>
+				))}
+                {renderMap()}
+            </>
+        )
+    }
+/>
+```
+
+Similarily, in `OpenStreetMap`:
+
+```jsx
+<ReactiveOpenStreetMap
+    ...
+    renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination, triggerAnalytics) => {
+        return(
+            <>
+				{hits.map(hit => (
+					<div onClick={() => triggerAnalytics(hit._click_id)}>
+						{JSON.stringify(hit)}
+					</div>
+				))}
+                {renderMap()}
+            </>
+        )
+    }
+/>
+```
+
 ## Configure the analytics experience
 You can define the `analyticsConfig` prop in `Reactivebase` to customize the analytics experience when appbase.io is used as a backend. It accepts an object which has the following properties:
 - **searchStateHeader** `Boolean` If `true` then appbase.io will record the search state with every search request made from `ReactiveSearch`. Defaults to `false`.
