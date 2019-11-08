@@ -22,6 +22,7 @@ import {
 	checkSomePropChange,
 	getOptionsFromQuery,
 	getSearchState,
+	getCompositeAggsQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -124,7 +125,11 @@ class ReactiveList extends Component {
 		// and only executing it with setReact() at core
 		const execute = false;
 
-		this.props.setQueryOptions(this.props.componentId, options, execute);
+		this.props.setQueryOptions(
+			this.props.componentId,
+			{ ...options, ...this.getAggsQuery() },
+			execute,
+		);
 
 		if (this.defaultQuery) {
 			this.props.updateQuery(
@@ -199,7 +204,11 @@ class ReactiveList extends Component {
 					},
 				];
 			}
-			this.props.setQueryOptions(this.props.componentId, options, true);
+			this.props.setQueryOptions(
+				this.props.componentId,
+				{ ...options, ...this.getAggsQuery() },
+				true,
+			);
 		}
 
 		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
@@ -357,6 +366,21 @@ class ReactiveList extends Component {
 			this.domNode.removeEventListener('scroll', this.scrollHandler);
 		}
 	}
+
+	getAggsQuery = () => {
+		const { size, aggregationField, afterKey } = this.props;
+		const queryOptions = { size };
+		if (aggregationField) {
+			queryOptions.aggs = getCompositeAggsQuery(
+				{},
+				this.props,
+				afterKey ? { after: afterKey } : null,
+				true,
+			).aggs;
+		}
+		return queryOptions;
+	};
+
 	// Calculate results
 	getAllData = () => {
 		const { size, promotedResults } = this.props;
@@ -476,7 +500,7 @@ class ReactiveList extends Component {
 	loadMore = () => {
 		if (this.props.hits && this.props.total !== this.props.hits.length) {
 			const value = this.state.from + this.props.size;
-			const options = getQueryOptions(this.props);
+			const options = { ...getQueryOptions(this.props), ...this.getAggsQuery() };
 
 			this.setState({
 				from: value,
@@ -658,18 +682,19 @@ class ReactiveList extends Component {
 			rawData: this.withClickIds(results),
 			resultStats: this.stats,
 		};
-	}
+	};
 	getComponent = () => {
-		const { error, isLoading } = this.props;
+		const { error, isLoading, aggregationData } = this.props;
 		const data = {
 			error,
 			loading: isLoading,
 			loadMore: this.loadMore,
+			aggregationData,
 			triggerAnalytics: this.triggerClickAnalytics,
 			...this.getData(),
 		};
 		return getComponent(data, this.props);
-	}
+	};
 
 	render() {
 		const {
@@ -741,7 +766,9 @@ class ReactiveList extends Component {
 					: null}
 
 				<PoweredBy
-					show={!!(this.props.config.url.endsWith('appbase.io') && filteredResults.length)}
+					show={
+						!!(this.props.config.url.endsWith('appbase.io') && filteredResults.length)
+					}
 					innerClass={this.props.innerClass}
 				/>
 			</div>
@@ -782,6 +809,8 @@ ReactiveList.propTypes = {
 	componentId: types.stringRequired,
 	children: types.func,
 	dataField: types.stringRequired,
+	aggregationField: types.string,
+	aggregationData: types.hits,
 	defaultPage: types.number,
 	defaultQuery: types.func,
 	excludeFields: types.excludeFields,
@@ -814,6 +843,7 @@ ReactiveList.propTypes = {
 	style: types.style,
 	URLParams: types.bool,
 	defaultSortOption: types.string,
+	afterKey: types.props,
 };
 
 ReactiveList.defaultProps = {
@@ -843,6 +873,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value - 1)
 		|| -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	aggregationData: state.compositeAggregations[props.componentId] || [],
 	isLoading: state.isLoading[props.componentId] || false,
 	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
@@ -853,6 +884,10 @@ const mapStateToProps = (state, props) => ({
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults,
 	headers: state.appbaseRef.headers,
+	afterKey:
+		state.aggregations[props.componentId]
+		&& state.aggregations[props.componentId][props.aggregationField]
+		&& state.aggregations[props.componentId][props.aggregationField].after_key,
 });
 
 const mapDispatchtoProps = dispatch => ({
