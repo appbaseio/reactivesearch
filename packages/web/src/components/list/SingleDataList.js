@@ -19,6 +19,7 @@ import {
 	checkSomePropChange,
 	getQueryOptions,
 	getOptionsFromQuery,
+	getAggsQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -27,7 +28,6 @@ import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import { getAggsQuery } from './utils';
 import { connect, getComponent, hasCustomRenderer, isEvent, getValidPropsKeys } from '../../utils';
 
 class SingleDataList extends Component {
