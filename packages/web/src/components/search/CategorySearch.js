@@ -48,6 +48,7 @@ import {
 	ReactReduxContext,
 	withClickIds,
 	handleCaretPosition,
+	getHits,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -89,7 +90,7 @@ class CategorySearch extends Component {
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
 		this.queryOptions = {
-			size: 20,
+			size: props.size,
 		};
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
@@ -101,7 +102,7 @@ class CategorySearch extends Component {
 
 		if (props.highlight) {
 			const queryOptions = CategorySearch.highlightQuery(props) || {};
-			queryOptions.size = 20;
+			queryOptions.size = props.size;
 			this.queryOptions = queryOptions;
 			props.setQueryOptions(props.componentId, queryOptions);
 		} else {
@@ -138,7 +139,7 @@ class CategorySearch extends Component {
 			['highlight', 'dataField', 'highlightField'],
 			() => {
 				const queryOptions = CategorySearch.highlightQuery(this.props) || {};
-				queryOptions.size = 20;
+				queryOptions.size = this.props.size;
 				this.queryOptions = queryOptions;
 				this.props.setQueryOptions(this.props.componentId, queryOptions);
 			},
@@ -255,10 +256,10 @@ class CategorySearch extends Component {
 
 	getCombinedAggsQuery = () => {
 		const { categoryField, aggregationField } = this.props;
-		let aggsQuery = this.getAggsQuery(categoryField);
+		const aggsQuery = this.getAggsQuery(categoryField);
 		if (aggregationField) {
 			const compositeAggsQuery = getCompositeAggsQuery({}, this.props, null, true);
-			aggsQuery = { aggs: { ...aggsQuery.aggs, ...compositeAggsQuery.aggs } };
+			aggsQuery.aggs = { ...aggsQuery.aggs, ...compositeAggsQuery.aggs };
 		}
 		return aggsQuery;
 	};
@@ -1167,38 +1168,31 @@ CategorySearch.defaultProps = {
 	strictSelection: false,
 	searchOperators: false,
 	showVoiceSearch: false,
+	size: 20,
 };
 
-const mapStateToProps = (state, props) => {
-	const getSuggestionHits = () => {
-		if (props.aggregationField) {
-			return state.compositeAggregations[props.componentId];
-		}
-		return state.hits[props.componentId] && state.hits[props.componentId].hits;
-	};
-	return {
-		categories:
-			(state.aggregations[props.componentId]
-				&& state.aggregations[props.componentId][props.categoryField]
-				&& state.aggregations[props.componentId][props.categoryField].buckets)
-			|| [],
-		selectedValue:
-			(state.selectedValues[props.componentId]
-				&& state.selectedValues[props.componentId].value)
-			|| null,
-		selectedCategory:
-			(state.selectedValues[props.componentId]
-				&& state.selectedValues[props.componentId].category)
-			|| null,
-		suggestions: getSuggestionHits(),
-		themePreset: state.config.themePreset,
-		isLoading: state.isLoading[props.componentId],
-		error: state.error[props.componentId],
-		analytics: state.analytics,
-		config: state.config,
-		headers: state.appbaseRef.headers,
-	};
-};
+const mapStateToProps = (state, props) => ({
+	categories:
+		(state.aggregations[props.componentId]
+			&& state.aggregations[props.componentId][props.categoryField]
+			&& state.aggregations[props.componentId][props.categoryField].buckets)
+		|| [],
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
+	selectedCategory:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].category)
+		|| null,
+	suggestions: getHits(state, props),
+	themePreset: state.config.themePreset,
+	isLoading: state.isLoading[props.componentId],
+	error: state.error[props.componentId],
+	analytics: state.analytics,
+	config: state.config,
+	headers: state.appbaseRef.headers,
+});
 
 const mapDispatchtoProps = dispatch => ({
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
