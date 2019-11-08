@@ -139,10 +139,3 @@ export function escapeRegExp(string) {
 	return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
-// returns top hits if aggregation field is present
-export function getHits(state, props) {
-	if (props.aggregationField) {
-		return state.compositeAggregations[props.componentId];
-	}
-	return state.hits[props.componentId] && state.hits[props.componentId].hits;
-}
