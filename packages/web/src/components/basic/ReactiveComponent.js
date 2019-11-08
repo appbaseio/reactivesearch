@@ -21,7 +21,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { connect, getComponent, hasCustomRenderer, getValidPropsKeys } from '../../utils';
+import { connect, getComponent, hasCustomRenderer, getValidPropsKeys, getHits } from '../../utils';
 
 class ReactiveComponent extends Component {
 	constructor(props) {
@@ -274,27 +274,17 @@ ReactiveComponent.propTypes = {
 	onData: types.func,
 };
 
-const mapStateToProps = (state, props) => {
-	const getHits = () => {
-		if (props.aggregationField) {
-			// in case of aggregationField hits will be top hits from aggregation
-			return state.compositeAggregations[props.componentId] || [];
-		}
-		return (state.hits[props.componentId] && state.hits[props.componentId].hits) || [];
-	};
-	return {
-		aggregations:
-			(state.aggregations[props.componentId] && state.aggregations[props.componentId])
-			|| null,
-		hits: getHits(),
-		selectedValue:
-			(state.selectedValues[props.componentId]
-				&& state.selectedValues[props.componentId].value)
-			|| null,
-		isLoading: state.isLoading[props.componentId],
-		error: state.error[props.componentId],
-	};
-};
+const mapStateToProps = (state, props) => ({
+	aggregations:
+		(state.aggregations[props.componentId] && state.aggregations[props.componentId]) || null,
+	hits: getHits(state, props),
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
+	isLoading: state.isLoading[props.componentId],
+	error: state.error[props.componentId],
+});
 
 const mapDispatchtoProps = dispatch => ({
 	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
