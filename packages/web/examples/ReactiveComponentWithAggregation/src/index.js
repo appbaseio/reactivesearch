@@ -23,24 +23,9 @@ class Main extends Component {
 						<SelectedFilters />
 						<ReactiveComponent
 							componentId="CarSensor"
-							// either use customQuery or defaultQuery
-							// customQuery={() => ({
-							// 	query: {
-							// 		term: {
-							// 			'brand.keyword': 'Nissan',
-							// 		},
-							// 	},
-							// })}
 							defaultQuery={() => ({
 								query: { match_all: {} },
 							})}
-							// customQuery={() => ({
-							// 	query: {
-							// 		term: {
-							// 			'brand.keyword': 'Nissan',
-							// 		},
-							// 	},
-							// })}
 							aggregationField="brand.keyword"
 						>
 							{props => <CustomComponent {...props} />}
