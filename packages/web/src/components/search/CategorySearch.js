@@ -90,7 +90,7 @@ class CategorySearch extends Component {
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
 		this.queryOptions = {
-			size: 20,
+			size: props.size,
 		};
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
@@ -102,7 +102,7 @@ class CategorySearch extends Component {
 
 		if (props.highlight) {
 			const queryOptions = CategorySearch.highlightQuery(props) || {};
-			queryOptions.size = 20;
+			queryOptions.size = props.size;
 			this.queryOptions = queryOptions;
 			props.setQueryOptions(props.componentId, queryOptions);
 		} else {
@@ -139,7 +139,7 @@ class CategorySearch extends Component {
 			['highlight', 'dataField', 'highlightField'],
 			() => {
 				const queryOptions = CategorySearch.highlightQuery(this.props) || {};
-				queryOptions.size = 20;
+				queryOptions.size = this.props.size;
 				this.queryOptions = queryOptions;
 				this.props.setQueryOptions(this.props.componentId, queryOptions);
 			},
@@ -256,10 +256,10 @@ class CategorySearch extends Component {
 
 	getCombinedAggsQuery = () => {
 		const { categoryField, aggregationField } = this.props;
-		let aggsQuery = this.getAggsQuery(categoryField);
+		const aggsQuery = this.getAggsQuery(categoryField);
 		if (aggregationField) {
 			const compositeAggsQuery = getCompositeAggsQuery({}, this.props, null, true);
-			aggsQuery = { aggs: { ...aggsQuery.aggs, ...compositeAggsQuery.aggs } };
+			aggsQuery.aggs = { ...aggsQuery.aggs, ...compositeAggsQuery.aggs };
 		}
 		return aggsQuery;
 	};
@@ -1168,6 +1168,7 @@ CategorySearch.defaultProps = {
 	strictSelection: false,
 	searchOperators: false,
 	showVoiceSearch: false,
+	size: 20,
 };
 
 const mapStateToProps = (state, props) => ({
