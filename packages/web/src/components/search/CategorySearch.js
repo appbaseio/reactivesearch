@@ -48,7 +48,6 @@ import {
 	ReactReduxContext,
 	withClickIds,
 	handleCaretPosition,
-	getHits,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -825,13 +824,14 @@ class CategorySearch extends Component {
 	};
 
 	getComponent = (downshiftProps = {}) => {
-		const { error, isLoading } = this.props;
+		const { error, isLoading, aggregationData } = this.props;
 		const { currentValue } = this.state;
 		const data = {
 			error,
 			loading: isLoading,
 			downshiftProps,
 			data: this.parsedSuggestions,
+			aggregationData,
 			value: currentValue,
 			suggestions: this.state.suggestions,
 			rawSuggestions: this.props.suggestions || [],
@@ -1082,6 +1082,7 @@ CategorySearch.propTypes = {
 	selectedValue: types.selectedValue,
 	selectedCategory: types.selectedValue,
 	suggestions: types.suggestions,
+	aggregationData: types.suggestions,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
@@ -1185,7 +1186,8 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].category)
 		|| null,
-	suggestions: getHits(state, props),
+	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	aggregationData: state.compositeAggregations[props.componentId] || [],
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
