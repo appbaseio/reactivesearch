@@ -48,6 +48,7 @@ import {
 	ReactReduxContext,
 	withClickIds,
 	handleCaretPosition,
+	getHits,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -1169,36 +1170,28 @@ CategorySearch.defaultProps = {
 	showVoiceSearch: false,
 };
 
-const mapStateToProps = (state, props) => {
-	const getSuggestionHits = () => {
-		if (props.aggregationField) {
-			return state.compositeAggregations[props.componentId];
-		}
-		return state.hits[props.componentId] && state.hits[props.componentId].hits;
-	};
-	return {
-		categories:
-			(state.aggregations[props.componentId]
-				&& state.aggregations[props.componentId][props.categoryField]
-				&& state.aggregations[props.componentId][props.categoryField].buckets)
-			|| [],
-		selectedValue:
-			(state.selectedValues[props.componentId]
-				&& state.selectedValues[props.componentId].value)
-			|| null,
-		selectedCategory:
-			(state.selectedValues[props.componentId]
-				&& state.selectedValues[props.componentId].category)
-			|| null,
-		suggestions: getSuggestionHits(),
-		themePreset: state.config.themePreset,
-		isLoading: state.isLoading[props.componentId],
-		error: state.error[props.componentId],
-		analytics: state.analytics,
-		config: state.config,
-		headers: state.appbaseRef.headers,
-	};
-};
+const mapStateToProps = (state, props) => ({
+	categories:
+		(state.aggregations[props.componentId]
+			&& state.aggregations[props.componentId][props.categoryField]
+			&& state.aggregations[props.componentId][props.categoryField].buckets)
+		|| [],
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
+	selectedCategory:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].category)
+		|| null,
+	suggestions: getHits(state, props),
+	themePreset: state.config.themePreset,
+	isLoading: state.isLoading[props.componentId],
+	error: state.error[props.componentId],
+	analytics: state.analytics,
+	config: state.config,
+	headers: state.appbaseRef.headers,
+});
 
 const mapDispatchtoProps = dispatch => ({
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
