@@ -20,6 +20,7 @@ import {
 	checkSomePropChange,
 	getQueryOptions,
 	getOptionsFromQuery,
+	getAggsQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
@@ -37,7 +38,6 @@ import {
 	getValidPropsKeys,
 	parseValueArray,
 } from '../../utils';
-import { getAggsQuery } from './utils';
 
 class MultiDataList extends Component {
 	constructor(props) {
