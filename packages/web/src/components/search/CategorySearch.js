@@ -24,6 +24,7 @@ import {
 	getClassName,
 	getSearchState,
 	isEqual,
+	getCompositeAggsQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -47,6 +48,7 @@ import {
 	ReactReduxContext,
 	withClickIds,
 	handleCaretPosition,
+	getHits,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -88,9 +90,8 @@ class CategorySearch extends Component {
 		this.internalComponent = `${props.componentId}__internal`;
 		this.locked = false;
 		this.queryOptions = {
-			size: 20,
+			size: props.size,
 		};
-
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
 		props.setComponentProps(props.componentId, {
@@ -101,7 +102,7 @@ class CategorySearch extends Component {
 
 		if (props.highlight) {
 			const queryOptions = CategorySearch.highlightQuery(props) || {};
-			queryOptions.size = 20;
+			queryOptions.size = props.size;
 			this.queryOptions = queryOptions;
 			props.setQueryOptions(props.componentId, queryOptions);
 		} else {
@@ -109,8 +110,7 @@ class CategorySearch extends Component {
 		}
 
 		this.setReact(props);
-
-		const aggsQuery = this.getAggsQuery(props.categoryField);
+		const aggsQuery = this.getCombinedAggsQuery();
 		props.setQueryOptions(this.internalComponent, aggsQuery, false);
 		const hasMounted = false;
 		const cause = null;
@@ -139,7 +139,7 @@ class CategorySearch extends Component {
 			['highlight', 'dataField', 'highlightField'],
 			() => {
 				const queryOptions = CategorySearch.highlightQuery(this.props) || {};
-				queryOptions.size = 20;
+				queryOptions.size = this.props.size;
 				this.queryOptions = queryOptions;
 				this.props.setQueryOptions(this.props.componentId, queryOptions);
 			},
@@ -253,6 +253,16 @@ class CategorySearch extends Component {
 			},
 		},
 	});
+
+	getCombinedAggsQuery = () => {
+		const { categoryField, aggregationField } = this.props;
+		const aggsQuery = this.getAggsQuery(categoryField);
+		if (aggregationField) {
+			const compositeAggsQuery = getCompositeAggsQuery({}, this.props, null, true);
+			aggsQuery.aggs = { ...aggsQuery.aggs, ...compositeAggsQuery.aggs };
+		}
+		return aggsQuery;
+	};
 
 	setReact = (props) => {
 		const { react } = props;
@@ -503,9 +513,10 @@ class CategorySearch extends Component {
 			defaultQueryOptions = getOptionsFromQuery(defaultQueryTobeSet);
 		}
 		props.setSuggestionsSearchValue(value);
+		const aggsQuery = this.getCombinedAggsQuery();
 		props.setQueryOptions(this.internalComponent, {
 			...this.queryOptions,
-			...this.getAggsQuery(props.categoryField), // default aggs query options
+			...aggsQuery,
 			...defaultQueryOptions,
 		});
 		props.updateQuery({
@@ -723,15 +734,15 @@ class CategorySearch extends Component {
 					{this.renderCancelIcon()}
 				</InputIcon>
 			)}
-			{this.props.showVoiceSearch
-				&& (
-					<Mic
-						getInstance={this.props.getMicInstance}
-						render={this.props.renderMic}
-						iconPosition={this.props.iconPosition}
-						onResult={this.handleVoiceResults}
-						className={getClassName(this.props.innerClass, 'mic') || null}
-					/>)}
+			{this.props.showVoiceSearch && (
+				<Mic
+					getInstance={this.props.getMicInstance}
+					render={this.props.renderMic}
+					iconPosition={this.props.iconPosition}
+					onResult={this.handleVoiceResults}
+					className={getClassName(this.props.innerClass, 'mic') || null}
+				/>
+			)}
 			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
 				{this.renderIcon()}
 			</InputIcon>
@@ -1091,6 +1102,8 @@ CategorySearch.propTypes = {
 	customQuery: types.func,
 	defaultQuery: types.func,
 	dataField: types.dataFieldArray,
+	aggregationField: types.string,
+	size: types.number,
 	debounce: types.number,
 	defaultValue: types.categorySearchValue,
 	value: types.categorySearchValue,
@@ -1155,6 +1168,7 @@ CategorySearch.defaultProps = {
 	strictSelection: false,
 	searchOperators: false,
 	showVoiceSearch: false,
+	size: 20,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -1171,7 +1185,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].category)
 		|| null,
-	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	suggestions: getHits(state, props),
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
