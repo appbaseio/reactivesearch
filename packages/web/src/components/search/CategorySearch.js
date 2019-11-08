@@ -24,6 +24,7 @@ import {
 	getClassName,
 	getSearchState,
 	isEqual,
+	getCompositeAggsQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -47,11 +48,9 @@ import {
 	ReactReduxContext,
 	withClickIds,
 	handleCaretPosition,
-	parseCompAggToHits,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
-import { getCompositeAggsQuery } from '../list/utils';
 
 const Text = withTheme(props => (
 	<span
@@ -74,8 +73,6 @@ class CategorySearch extends Component {
 		// add preference to selected-X value from URL/SSR
 		currentValue = props.selectedValue || currentValue;
 		currentCategory = props.selectedCategory || currentCategory;
-
-		this.shouldGenerateAggsQuery = !!props.aggregationField;
 
 		this.state = {
 			currentValue,
@@ -112,11 +109,7 @@ class CategorySearch extends Component {
 		}
 
 		this.setReact(props);
-		let aggsQuery = this.getAggsQuery(props.categoryField);
-		if (this.shouldGenerateAggsQuery) {
-			this.queryOptions = getCompositeAggsQuery({ ...this.queryOptions }, props, null, true);
-			aggsQuery = { aggs: { ...aggsQuery.aggs, ...this.queryOptions.aggs } };
-		}
+		const aggsQuery = this.getCombinedAggsQuery();
 		props.setQueryOptions(this.internalComponent, aggsQuery, false);
 		const hasMounted = false;
 		const cause = null;
@@ -259,6 +252,16 @@ class CategorySearch extends Component {
 			},
 		},
 	});
+
+	getCombinedAggsQuery = () => {
+		const { categoryField, aggregationField } = this.props;
+		let aggsQuery = this.getAggsQuery(categoryField);
+		if (aggregationField) {
+			const compositeAggsQuery = getCompositeAggsQuery({}, this.props, null, true);
+			aggsQuery = { aggs: { ...aggsQuery.aggs, ...compositeAggsQuery.aggs } };
+		}
+		return aggsQuery;
+	};
 
 	setReact = (props) => {
 		const { react } = props;
@@ -509,10 +512,7 @@ class CategorySearch extends Component {
 			defaultQueryOptions = getOptionsFromQuery(defaultQueryTobeSet);
 		}
 		props.setSuggestionsSearchValue(value);
-		let aggsQuery = this.getAggsQuery(props.categoryField);
-		if (this.shouldGenerateAggsQuery) {
-			aggsQuery = { aggs: { ...this.queryOptions.aggs, ...aggsQuery.aggs } };
-		}
+		const aggsQuery = this.getCombinedAggsQuery();
 		props.setQueryOptions(this.internalComponent, {
 			...this.queryOptions,
 			...aggsQuery,
@@ -1170,15 +1170,11 @@ CategorySearch.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => {
-	const stateAggs = state.aggregations[props.componentId];
-	const computeSuggestions = () => {
+	const getSuggestionHits = () => {
 		if (props.aggregationField) {
-			return parseCompAggToHits(
-				props.aggregationField,
-				stateAggs && stateAggs[props.aggregationField].buckets,
-			);
+			return state.compositeAggregations[props.componentId];
 		}
-		return (state.hits[props.componentId] && state.hits[props.componentId].hits) || [];
+		return state.hits[props.componentId] && state.hits[props.componentId].hits;
 	};
 	return {
 		categories:
@@ -1194,7 +1190,7 @@ const mapStateToProps = (state, props) => {
 			(state.selectedValues[props.componentId]
 				&& state.selectedValues[props.componentId].category)
 			|| null,
-		suggestions: computeSuggestions(),
+		suggestions: getSuggestionHits(),
 		themePreset: state.config.themePreset,
 		isLoading: state.isLoading[props.componentId],
 		error: state.error[props.componentId],
