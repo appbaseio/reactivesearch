@@ -46,6 +46,7 @@ import {
 	withClickIds,
 	getValidPropsKeys,
 	handleCaretPosition,
+	getHits,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -78,9 +79,8 @@ class DataSearch extends Component {
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 
 		if (props.highlight) {
-			let queryOptions = DataSearch.highlightQuery(props) || {};
-			queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
-			this.queryOptions = queryOptions;
+			const queryOptions = DataSearch.highlightQuery(props) || {};
+			this.queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
 			props.setQueryOptions(props.componentId, queryOptions);
 		} else {
 			props.setQueryOptions(props.componentId, this.queryOptions);
@@ -109,9 +109,8 @@ class DataSearch extends Component {
 			prevProps,
 			['highlight', 'dataField', 'highlightField', 'aggregationField'],
 			() => {
-				let queryOptions = DataSearch.highlightQuery(this.props) || {};
-				queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
-				this.queryOptions = queryOptions;
+				const queryOptions = DataSearch.highlightQuery(this.props) || {};
+				this.queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
 				this.props.setQueryOptions(this.props.componentId, queryOptions);
 			},
 		);
@@ -191,8 +190,9 @@ class DataSearch extends Component {
 
 	// returns size and aggs property
 	getBasicQueryOptions = () => {
-		let queryOptions = { size: 20 };
-		if (this.props.aggregationField) {
+		const { aggregationField, size } = this.props;
+		let queryOptions = { size };
+		if (aggregationField) {
 			queryOptions = getCompositeAggsQuery({ ...queryOptions }, this.props, null, true);
 		}
 		return queryOptions;
@@ -1021,27 +1021,19 @@ DataSearch.defaultProps = {
 	size: 20,
 };
 
-const mapStateToProps = (state, props) => {
-	const getSuggestionHits = () => {
-		if (props.aggregationField) {
-			return state.compositeAggregations[props.componentId];
-		}
-		return state.hits[props.componentId] && state.hits[props.componentId].hits;
-	};
-	return {
-		selectedValue:
-			(state.selectedValues[props.componentId]
-				&& state.selectedValues[props.componentId].value)
-			|| null,
-		suggestions: getSuggestionHits(),
-		themePreset: state.config.themePreset,
-		isLoading: state.isLoading[props.componentId] || false,
-		error: state.error[props.componentId],
-		analytics: state.analytics,
-		config: state.config,
-		headers: state.appbaseRef.headers,
-	};
-};
+const mapStateToProps = (state, props) => ({
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
+	suggestions: getHits(state, props),
+	themePreset: state.config.themePreset,
+	isLoading: state.isLoading[props.componentId] || false,
+	error: state.error[props.componentId],
+	analytics: state.analytics,
+	config: state.config,
+	headers: state.appbaseRef.headers,
+});
 
 const mapDispatchtoProps = dispatch => ({
 	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
