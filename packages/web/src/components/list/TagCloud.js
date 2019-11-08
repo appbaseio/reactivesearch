@@ -20,6 +20,7 @@ import {
 	getClassName,
 	handleA11yAction,
 	getOptionsFromQuery,
+	getAggsQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
@@ -30,7 +31,6 @@ import Title from '../../styles/Title';
 import TagList from '../../styles/TagList';
 import Container from '../../styles/Container';
 import { connect, isFunction, getValidPropsKeys } from '../../utils';
-import { getAggsQuery } from './utils';
 
 class TagCloud extends Component {
 	constructor(props) {

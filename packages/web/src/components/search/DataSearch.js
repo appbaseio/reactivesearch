@@ -23,6 +23,7 @@ import {
 	getClassName,
 	getSearchState,
 	getOptionsFromQuery,
+	getCompositeAggsQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -45,19 +46,15 @@ import {
 	withClickIds,
 	getValidPropsKeys,
 	handleCaretPosition,
-	parseCompAggToHits,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import Mic from './addons/Mic';
-import { getCompositeAggsQuery } from '../list/utils';
 
 class DataSearch extends Component {
 	constructor(props) {
 		super(props);
 		const currentValue = props.selectedValue || props.value || props.defaultValue || '';
-
-		this.shouldGenerateAggsQuery = !!props.aggregationField;
 
 		this.state = {
 			currentValue,
@@ -71,12 +68,7 @@ class DataSearch extends Component {
 		 * the component query will only get executed when it sets to `true`.
 		 * */
 		this.isPending = false;
-		this.queryOptions = {
-			size: 20,
-		};
-		if (this.shouldGenerateAggsQuery) {
-			this.queryOptions = getCompositeAggsQuery(this.queryOptions, props, null, true);
-		}
+		this.queryOptions = this.getBasicQueryOptions();
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
 		props.setComponentProps(props.componentId, {
@@ -87,10 +79,7 @@ class DataSearch extends Component {
 
 		if (props.highlight) {
 			let queryOptions = DataSearch.highlightQuery(props) || {};
-			queryOptions.size = 20;
-			if (this.shouldGenerateAggsQuery) {
-				queryOptions = getCompositeAggsQuery(queryOptions, props, null, true);
-			}
+			queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
 			this.queryOptions = queryOptions;
 			props.setQueryOptions(props.componentId, queryOptions);
 		} else {
@@ -121,10 +110,7 @@ class DataSearch extends Component {
 			['highlight', 'dataField', 'highlightField', 'aggregationField'],
 			() => {
 				let queryOptions = DataSearch.highlightQuery(this.props) || {};
-				queryOptions.size = 20;
-				if (this.shouldGenerateAggsQuery) {
-					queryOptions = getCompositeAggsQuery(queryOptions, this.props, null, true);
-				}
+				queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
 				this.queryOptions = queryOptions;
 				this.props.setQueryOptions(this.props.componentId, queryOptions);
 			},
@@ -202,6 +188,15 @@ class DataSearch extends Component {
 		this.props.removeComponent(this.props.componentId);
 		this.props.removeComponent(this.internalComponent);
 	}
+
+	// returns size and aggs property
+	getBasicQueryOptions = () => {
+		let queryOptions = { size: 20 };
+		if (this.props.aggregationField) {
+			queryOptions = getCompositeAggsQuery({ ...queryOptions }, this.props, null, true);
+		}
+		return queryOptions;
+	};
 
 	setReact = (props) => {
 		const { react } = props;
@@ -1027,13 +1022,9 @@ DataSearch.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => {
-	const stateAggs = state.aggregations[props.componentId];
-	const computeSuggestions = () => {
+	const getSuggestionHits = () => {
 		if (props.aggregationField) {
-			return parseCompAggToHits(
-				props.aggregationField,
-				stateAggs && stateAggs[props.aggregationField].buckets,
-			);
+			return state.compositeAggregations[props.componentId];
 		}
 		return state.hits[props.componentId] && state.hits[props.componentId].hits;
 	};
@@ -1042,7 +1033,7 @@ const mapStateToProps = (state, props) => {
 			(state.selectedValues[props.componentId]
 				&& state.selectedValues[props.componentId].value)
 			|| null,
-		suggestions: computeSuggestions(),
+		suggestions: getSuggestionHits(),
 		themePreset: state.config.themePreset,
 		isLoading: state.isLoading[props.componentId] || false,
 		error: state.error[props.componentId],
