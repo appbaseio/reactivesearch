@@ -685,7 +685,7 @@ class ReactiveList extends Component {
 		} = this.getAllData();
 		return {
 			data: this.withClickIds(filteredResults),
-			aggregationData: this.withClickIds(aggregationData),
+			aggregationData: this.withClickIds(aggregationData || []),
 			streamData: this.withClickIds(streamResults),
 			promotedData: this.withClickIds(promotedResults),
 			rawData: this.withClickIds(results),
