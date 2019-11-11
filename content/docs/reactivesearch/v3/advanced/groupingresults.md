@@ -29,7 +29,7 @@ Grouping records usually refers to the process of combining multiple records int
 <!-- TODO: examples won't work unless @appbaseio/reactivecore is updated -->
 ## How?
 
-Let's take example of `carstore-dataset`. We have different brands of cars, but we only want to show distinct brands.
+Let's take example of [carstore-dataset](https://dejavu.appbase.io/?appname=carstore-dataset-latest&url=https://B86d2y2OE:4fecb2c5-5c5f-49e5-9e0b-0faba74597c6@scalr.api.appbase.io&mode=view). We have different brands of cars, but we only want to show distinct brands.
 This can be achieved by defining `aggregationField` prop in `ReactiveList` as `brand.keyword`.
 
 ###Without aggregationField
