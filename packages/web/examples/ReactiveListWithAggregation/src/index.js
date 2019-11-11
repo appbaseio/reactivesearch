@@ -22,7 +22,7 @@ const Main = () => (
 					title="DataSearch"
 					dataField="brand"
 					aggregationField="brand.keyword"
-					componentId="BookSensor"
+					componentId="CarSensor"
 					URLParams
 				/>
 			</div>
@@ -37,20 +37,20 @@ const Main = () => (
 					className="result-list-container"
 					pagination
 					react={{
-						and: 'BookSensor',
+						and: 'CarSensor',
 					}}
-					render={({ data }) => (
+					render={({ aggregationData }) => (
 						<ReactiveList.ResultCardsWrapper>
-							{data.map(item => (
+							{aggregationData.map(item => (
 								<ResultCard key={item._id}>
-									<ResultCard.Image src={item.image} />
+									<ResultCard.Image src={item._source.image} />
 									<ResultCard.Title
 										dangerouslySetInnerHTML={{
-											__html: item.name,
+											__html: item._source.brand,
 										}}
 									/>
 									<ResultCard.Description>
-										{`${item.brand} ${'★'.repeat(item.rating)}`}
+										{`${item._source.brand} ${'★'.repeat(item._source.rating)}`}
 									</ResultCard.Description>
 								</ResultCard>
 							))}
