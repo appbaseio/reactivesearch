@@ -31,10 +31,7 @@ Appbaseio.io's dashboard provides a powerful interface for developing search app
 -   **[Query Rules](/docs/search/Rules)** allows setting "If This, Then That" style rules for search queries.
 -   **Search Templates** allow creating API endpoints that abstract the Query DSL logic with templates to prevent script injections.
 
-// TODO: Replace image with a GIF showing the above views
-
-![](https://i.imgur.com/tqXCEQU.png)
-**Image:** appbase.io develop dashboard
+<iframe width="100%" style="border-radius: 3px;" height="315" src="https://www.youtube.com/embed/Lk3TUcnrKpQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 #### Actionable Analytics 📈
 
