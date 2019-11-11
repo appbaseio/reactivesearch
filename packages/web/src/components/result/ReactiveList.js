@@ -391,7 +391,7 @@ class ReactiveList extends Component {
 
 	// Calculate results
 	getAllData = () => {
-		const { size, promotedResults } = this.props;
+		const { size, promotedResults, aggregationData } = this.props;
 		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
@@ -415,6 +415,7 @@ class ReactiveList extends Component {
 			streamResults,
 			filteredResults,
 			promotedResults,
+			aggregationData,
 			loadMore: this.loadMore,
 			base,
 			triggerClickAnalytics: this.triggerClickAnalytics,
