@@ -73,7 +73,7 @@ Example uses:
     You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using render prop as shown:
 
     ```javascript
-    <DataSearch
+    <CategorySearch
         aggregationField="original_title.keyword"
         render={({aggregationData}) => {...}}
     />

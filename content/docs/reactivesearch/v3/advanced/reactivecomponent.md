@@ -186,7 +186,7 @@ Check demo [here](https://codesandbox.io/s/3ylrrr0r5q).
     You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `render` or `onData` prop as shown:
 
     ```javascript
-    <DataSearch
+    <ReactiveComponent
         aggregationField="original_title.keyword"
         render={({aggregationData}) => {...}}
         onData={({aggregationData}) => {...}}
