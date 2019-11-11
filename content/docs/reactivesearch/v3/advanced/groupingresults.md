@@ -1,0 +1,44 @@
+---
+title: 'Grouping Results'
+meta_title: 'Grouping Results'
+meta_description: 'Recipe for rendering distinct results with `Search`, `Result` and `Reactive` components using the `render` prop.'
+keywords:
+    - reactivesearch
+    - groupingresults
+    - appbase
+    - elasticsearch
+sidebar: 'docs'
+nestedSidebar: 'web-reactivesearch'
+---
+
+Read more about `aggregationField` prop for different components:
+
+-   **DataSearch** for [React](/docs/reactivesearch/v3/search/datasearch/#props) and [Vue](/docs/reactivesearch/vue/search/DataSearch#props)
+-   **CategorySearch** for [React](/docs/reactivesearch/v3/search/categorysearch/#props)
+-   **ReactiveList** for [React](/docs/reactivesearch/v3/result/reactivelist#props) and [Vue](/docs/reactivesearch/vue/result/ReactiveList#props)
+-   **ReactiveComponent** for [React](/docs/reactivesearch/v3/advanced/reactivecomponent#props) and [Vue](/docs/reactivesearch/vue/advanced/ReactiveComponent#props)
+
+## Why?
+
+Grouping records usually refers to the process of combining multiple records into a single result, or consolidating many similar records into two or three results. This kind of de-duplication or aggregation of results has three primary use cases:
+
+-   **Item Variations**: where any item with variations is displayed only once. A t-shirt that comes in five colors should only appear once in the results, with all five color options displayed somewhere in the description.
+-   **Large Records**: where you first break up large record into smaller sub-records, and then during the search, if several of these sub-records match, you display the most relevant one.
+-   **Grouping by attribute**: where you group records depending on the value of one of their attributes.
+
+<!-- TODO: examples won't work unless @appbaseio/reactivecore is updated -->
+## How?
+
+Let's take example of `carstore-dataset`. We have different brands of cars, but we only want to show distinct brands.
+
+###Without aggregationField
+
+<br />
+
+<iframe src="https://codesandbox.io/embed/github/appbaseio/reactivesearch/tree/2a31d9aef9f299c33dc1e3d7fc3b7a914e435600/packages/web/examples/DataSearchWithAggregation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+###With aggregationField
+
+<br />
+
+<iframe src="https://codesandbox.io/embed/github/appbaseio/reactivesearch/tree/2a31d9aef9f299c33dc1e3d7fc3b7a914e435600/packages/web/examples/ReactiveListWithAggregation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
