@@ -681,10 +681,11 @@ class ReactiveList extends Component {
 	};
 	getData = () => {
 		const {
-			results, streamResults, filteredResults, promotedResults,
+			results, streamResults, filteredResults, promotedResults, aggregationData,
 		} = this.getAllData();
 		return {
 			data: this.withClickIds(filteredResults),
+			aggregationData: this.withClickIds(aggregationData),
 			streamData: this.withClickIds(streamResults),
 			promotedData: this.withClickIds(promotedResults),
 			rawData: this.withClickIds(results),
