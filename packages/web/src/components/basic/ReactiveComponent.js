@@ -21,7 +21,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { connect, getComponent, hasCustomRenderer, getValidPropsKeys, getHits } from '../../utils';
+import { connect, getComponent, hasCustomRenderer, getValidPropsKeys } from '../../utils';
 
 class ReactiveComponent extends Component {
 	constructor(props) {
@@ -207,9 +207,10 @@ class ReactiveComponent extends Component {
 	};
 
 	getData() {
-		const { hits, aggregations } = this.props;
+		const { hits, aggregations, aggregationData } = this.props;
 		return {
 			data: parseHits(hits),
+			aggregationData,
 			rawData: hits,
 			aggregations,
 		};
@@ -252,6 +253,7 @@ ReactiveComponent.propTypes = {
 	aggregationField: types.string,
 	size: types.number,
 	aggregations: types.selectedValues,
+	aggregationData: types.selectedValues,
 	hits: types.data,
 	isLoading: types.bool,
 	selectedValue: types.selectedValue,
@@ -277,7 +279,8 @@ ReactiveComponent.propTypes = {
 const mapStateToProps = (state, props) => ({
 	aggregations:
 		(state.aggregations[props.componentId] && state.aggregations[props.componentId]) || null,
-	hits: getHits(state, props),
+	aggregationData: state.compositeAggregations[props.componentId] || [],
+	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
