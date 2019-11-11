@@ -207,9 +207,10 @@ class ReactiveComponent extends Component {
 	};
 
 	getData() {
-		const { hits, aggregations } = this.props;
+		const { hits, aggregations, aggregationData } = this.props;
 		return {
 			data: parseHits(hits),
+			aggregationData,
 			rawData: hits,
 			aggregations,
 		};
@@ -252,6 +253,7 @@ ReactiveComponent.propTypes = {
 	aggregationField: types.string,
 	size: types.number,
 	aggregations: types.selectedValues,
+	aggregationData: types.selectedValues,
 	hits: types.data,
 	isLoading: types.bool,
 	selectedValue: types.selectedValue,
@@ -274,27 +276,18 @@ ReactiveComponent.propTypes = {
 	onData: types.func,
 };
 
-const mapStateToProps = (state, props) => {
-	const getHits = () => {
-		if (props.aggregationField) {
-			// in case of aggregationField hits will be top hits from aggregation
-			return state.compositeAggregations[props.componentId] || [];
-		}
-		return (state.hits[props.componentId] && state.hits[props.componentId].hits) || [];
-	};
-	return {
-		aggregations:
-			(state.aggregations[props.componentId] && state.aggregations[props.componentId])
-			|| null,
-		hits: getHits(),
-		selectedValue:
-			(state.selectedValues[props.componentId]
-				&& state.selectedValues[props.componentId].value)
-			|| null,
-		isLoading: state.isLoading[props.componentId],
-		error: state.error[props.componentId],
-	};
-};
+const mapStateToProps = (state, props) => ({
+	aggregations:
+		(state.aggregations[props.componentId] && state.aggregations[props.componentId]) || null,
+	aggregationData: state.compositeAggregations[props.componentId] || [],
+	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
+	isLoading: state.isLoading[props.componentId],
+	error: state.error[props.componentId],
+});
 
 const mapDispatchtoProps = dispatch => ({
 	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),

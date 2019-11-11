@@ -24,6 +24,7 @@ const Main = () => (
 					aggregationField="original_title.keyword"
 					categoryField="title.keyword"
 					componentId="BookSensor"
+					highlight
 				/>
 			</div>
 
