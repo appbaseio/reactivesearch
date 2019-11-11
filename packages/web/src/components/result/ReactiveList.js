@@ -693,12 +693,11 @@ class ReactiveList extends Component {
 		};
 	};
 	getComponent = () => {
-		const { error, isLoading, aggregationData } = this.props;
+		const { error, isLoading } = this.props;
 		const data = {
 			error,
 			loading: isLoading,
 			loadMore: this.loadMore,
-			aggregationData,
 			triggerAnalytics: this.triggerClickAnalytics,
 			...this.getData(),
 		};
