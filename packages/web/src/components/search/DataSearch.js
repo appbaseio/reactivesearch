@@ -46,7 +46,6 @@ import {
 	withClickIds,
 	getValidPropsKeys,
 	handleCaretPosition,
-	getHits,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -191,9 +190,9 @@ class DataSearch extends Component {
 	// returns size and aggs property
 	getBasicQueryOptions = () => {
 		const { aggregationField, size } = this.props;
-		let queryOptions = { size };
+		const queryOptions = { size };
 		if (aggregationField) {
-			queryOptions = getCompositeAggsQuery({ ...queryOptions }, this.props, null, true);
+			queryOptions.aggs = getCompositeAggsQuery({}, this.props, null, true).aggs;
 		}
 		return queryOptions;
 	};
@@ -730,13 +729,14 @@ class DataSearch extends Component {
 	};
 
 	getComponent = (downshiftProps = {}) => {
-		const { error, isLoading } = this.props;
+		const { error, isLoading, aggregationData } = this.props;
 		const { currentValue } = this.state;
 		const data = {
 			error,
 			loading: isLoading,
 			downshiftProps,
 			data: this.parsedSuggestions,
+			aggregationData,
 			rawData: this.props.suggestions || [],
 			value: currentValue,
 			triggerClickAnalytics: this.triggerClickAnalytics,
@@ -931,6 +931,7 @@ DataSearch.propTypes = {
 	options: types.options,
 	selectedValue: types.selectedValue,
 	suggestions: types.suggestions,
+	aggregationData: types.suggestions,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	setSuggestionsSearchValue: types.funcRequired,
@@ -1026,7 +1027,8 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
-	suggestions: getHits(state, props),
+	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	aggregationData: state.compositeAggregations[props.componentId] || [],
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId] || false,
 	error: state.error[props.componentId],
