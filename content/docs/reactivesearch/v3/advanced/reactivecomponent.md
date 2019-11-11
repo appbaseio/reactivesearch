@@ -181,6 +181,21 @@ Check demo [here](https://codesandbox.io/s/3ylrrr0r5q).
     CSS class to be injected on the component container.
 -   **style** `Object`
     CSS styles to be applied to the **DataSearch** component.
+-   **aggregationField** `String` [optional]
+    One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
+    You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using render prop as shown:
+
+    ```javascript
+    <DataSearch
+        aggregationField="original_title.keyword"
+        render={({aggregationData}) => {...}}
+    />
+    ```
+
+    > If you are using an app with elastic search version less than 6, then you have to handle error manually using **renderError** prop.
+
+    > It is possible to override this query by providing `defaultQuery` or `customQuery`.
+
 -   **defaultQuery** `Function`
     **returns** the default query to be applied to the component, as defined in Elasticsearch Query DSL.
 -   **customQuery** `Function`
