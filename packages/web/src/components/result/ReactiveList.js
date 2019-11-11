@@ -58,6 +58,13 @@ class ReactiveList extends Component {
 	constructor(props) {
 		super(props);
 
+		// no support for pagination and aggregationField together
+		if (props.pagination && props.aggregationField) {
+			console.warn(
+				'Pagination is not supported when aggregationField is present. The list will be rendered with infinite scroll',
+			);
+		}
+
 		let currentPage = 0;
 		if (this.props.defaultPage >= 0) {
 			currentPage = this.props.defaultPage;
@@ -65,6 +72,7 @@ class ReactiveList extends Component {
 			currentPage = Math.max(this.props.currentPage - 1, 0);
 		}
 		this.initialFrom = currentPage * props.size; // used for page resetting on query change
+		this.shouldRenderPagination = props.pagination && !props.aggregationField;
 		this.state = {
 			from: this.initialFrom,
 			currentPage,
@@ -252,7 +260,7 @@ class ReactiveList extends Component {
 		if (!isEqual(prevProps.react, this.props.react)) {
 			this.setReact(this.props);
 		}
-		if (this.props.pagination) {
+		if (this.shouldRenderPagination) {
 			// called when page is changed
 			if (this.props.isLoading && (this.props.hits || prevProps.hits)) {
 				if (this.props.onPageChange) {
@@ -427,8 +435,8 @@ class ReactiveList extends Component {
 
 	get showInfiniteScroll() {
 		// Pagination has higher priority then infinite scroll
-		const { pagination, infiniteScroll } = this.props;
-		return infiniteScroll && !pagination;
+		const { infiniteScroll } = this.props;
+		return infiniteScroll && !this.shouldRenderPagination;
 	}
 
 	get hasCustomRenderer() {
@@ -721,7 +729,7 @@ class ReactiveList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.isLoading && this.props.pagination && this.props.loader}
+				{this.props.isLoading && this.shouldRenderPagination && this.props.loader}
 				{this.renderError()}
 				<Flex
 					labelPosition={this.props.sortOptions ? 'right' : 'left'}
@@ -733,7 +741,8 @@ class ReactiveList extends Component {
 				{!this.props.isLoading && !error && filteredResults.length === 0
 					? this.renderNoResults()
 					: null}
-				{this.props.pagination && ['top', 'both'].indexOf(this.props.paginationAt) !== -1
+				{this.shouldRenderPagination
+				&& ['top', 'both'].indexOf(this.props.paginationAt) !== -1
 					? paginationElement
 					: null}
 
@@ -761,7 +770,8 @@ class ReactiveList extends Component {
 						</div>
 					) // prettier-ignore
 					: null}
-				{this.props.pagination && ['bottom', 'both'].indexOf(this.props.paginationAt) !== -1
+				{this.shouldRenderPagination
+				&& ['bottom', 'both'].indexOf(this.props.paginationAt) !== -1
 					? paginationElement
 					: null}
 
