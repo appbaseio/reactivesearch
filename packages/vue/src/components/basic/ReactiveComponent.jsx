@@ -97,6 +97,11 @@ const ReactiveComponent = {
 				this.$emit('allData', parseHits(newVal), oldVal);
 			}
 		},
+		aggregationData(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.$emit('allData', newVal, oldVal);
+			}
+		},
 		defaultQuery(newVal, oldVal) {
 			if (newVal && !isEqual(newVal(), oldVal)) {
 				this.$defaultQuery = newVal();
@@ -126,6 +131,7 @@ const ReactiveComponent = {
 			const dom = this.$scopedSlots.default;
 			const propsToBePassed = {
 				aggregations: this.aggregations,
+				aggregationData: this.aggregationData,
 				hits: this.hits,
 				selectedValue: this.selectedValue,
 				setQuery: this.setQuery,
