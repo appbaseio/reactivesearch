@@ -53,7 +53,7 @@ Now, let's assume that we have all these hex-codes stored as `keywords` in an El
 </reactive-component>
 ```
 
-The above snippet runs the `defaultQuery` passed to the ReactiveComponent when the component gets mounted and consequently pass the query results to the `ColorPickerWraper` component (i.e. child component of ReactiveComponent) as the following two props: `hits` and `aggregations`.
+The above snippet runs the `defaultQuery` passed to the ReactiveComponent when the component gets mounted and consequently pass the query results to the `ColorPickerWraper` component (i.e. child component of ReactiveComponent) as the following props: `hits`, `aggregationData` and `aggregations`.
 
 ```javascript
 <template>
@@ -163,6 +163,8 @@ export default {
     `hits` prop is an array of results from the Elasticsearch query of the component.
 -   **aggregations** `Object`
     `aggregations` prop contains the results from `aggs` Elasticsearch query of the component.
+-   **aggregationData** `Array`
+    `aggregationData` prop contains the results from `composite aggs` Elasticsearch query of the component.
 -   **setQuery** `function`
     `setQuery` function sets the query of the component. It takes an object param of shape:
 
@@ -184,6 +186,26 @@ export default {
 
 -   **className** `String`
     CSS class to be injected on the component container.
+-   **aggregationField** `String` [optional]
+    One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
+    You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `slot-scope` as shown:
+
+    ```html
+    <reactive-component componentId="myColorPicker" aggregationField="color">
+    	<div slot-scope="{ aggregationData, ...rest }">
+    		<color-picker-wrapper
+    			:aggregationData="aggregationData"
+    			:hits="hits"
+    			:setQuery="setQuery"
+    		/>
+    	</div>
+    </reactive-component>
+    ```
+
+    > If you are using an app with elastic search version less than 6, then you need to catch error using **error** event.
+
+    > It is possible to override this query by providing `defaultQuery`.
+
 -   **defaultQuery** `Function`
     **returns** the default query to be applied to the component, as defined in Elasticsearch Query DSL.
 -   **react** `Object`

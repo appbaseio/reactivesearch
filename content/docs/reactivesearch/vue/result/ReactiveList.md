@@ -52,6 +52,26 @@ Results.." sortBy="desc" :stream="true" :pagination="false" :pages="5" :size="10
     unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String`
     data field to be connected to the component's UI view. It is useful for providing a **sorting** context i.e. results would be sorted based on the `dataField`.
+-   **aggregationField** `String` [optional]
+    One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
+    You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `renderAllData` slot as shown:
+
+    ```html
+    <template
+    	slot="renderAllData"
+    	slot-scope="{
+            ...
+            aggregationData
+        }"
+    >
+    	...
+    </template>
+    ```
+
+    > If you are using an app with elastic search version less than 6, then you have to handle error manually using **renderError** slot.
+
+    > It is possible to override this query by providing `defaultQuery`.
+
 -   **excludeFields** `String Array` [optional]
     fields to be excluded in search results.
 -   **includeFields** `String Array` [optional]
@@ -108,9 +128,10 @@ Results.." sortBy="desc" :stream="true" :pagination="false" :pages="5" :size="10
 
 -   **renderAllData** `Function|slot-scope` [optional]
     works like **renderData** but all the data objects are passed to the callback function or slot.
-    It accepts an object with these properties: `results`, `streamResults`, `loadMore`, `base` & `triggerClickAnalytics`.
+    It accepts an object with these properties: `results`, `aggregationData`, `streamResults`, `loadMore`, `base` & `triggerClickAnalytics`.
 
     -   **`results`**: An array of results obtained from the applied query.
+    -   **`aggregationData`**: An array of aggregated data obtained by applying the composite aggregations query.
     -   **`streamResults`**: An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
     -   **`loadMore`**: A callback function to be called to load the next page of results into the view. The callback function is only applicable in the case of infinite loading view (i.e. `pagination` prop set to `false`).
     -   **`base`**: An internally calculated value, useful to calculate analytics. [Read More](/docs/reactivesearch/vue/advanced/Analytics/)
