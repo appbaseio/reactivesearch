@@ -11,11 +11,13 @@ const {
 	setQueryOptions,
 	setQueryListener,
 } = Actions;
-const { pushToAndClause, parseHits, isEqual } = helper;
+const { pushToAndClause, parseHits, isEqual, getCompositeAggsQuery } = helper;
 const ReactiveComponent = {
 	name: 'ReactiveComponent',
 	props: {
 		componentId: types.stringRequired,
+		aggregationField: types.string,
+		size: VueTypes.number.def(20),
 		defaultQuery: types.func,
 		filterLabel: types.string,
 		react: types.react,
@@ -62,8 +64,12 @@ const ReactiveComponent = {
 			const { query, ...queryOptions } = this.$defaultQuery || {};
 
 			if (queryOptions) {
-				this.setQueryOptions(this.internalComponent, queryOptions, false);
-			}
+				this.setQueryOptions(
+					this.internalComponent,
+					{ ...queryOptions, ...this.getAggsQuery() },
+					false,
+				);
+			} else this.setQueryOptions(this.internalComponent, this.getAggsQuery(), false);
 
 			this.updateQuery({
 				componentId: this.internalComponent,
@@ -97,8 +103,12 @@ const ReactiveComponent = {
 				const { query, ...queryOptions } = this.$defaultQuery || {};
 
 				if (queryOptions) {
-					this.setQueryOptions(this.internalComponent, queryOptions, false);
-				}
+					this.setQueryOptions(
+						this.internalComponent,
+						{ ...queryOptions, ...this.getAggsQuery() },
+						false,
+					);
+				} else this.setQueryOptions(this.internalComponent, this.getAggsQuery(), false);
 
 				this.updateQuery({
 					componentId: this.internalComponent,
@@ -146,12 +156,19 @@ const ReactiveComponent = {
 				});
 			}
 		},
+		getAggsQuery() {
+			if (this.aggregationField) {
+				return { aggs: getCompositeAggsQuery({}, this.$props, null, true).aggs };
+			}
+			return {};
+		},
 	},
 };
 
 const mapStateToProps = (state, props) => ({
 	aggregations:
 		(state.aggregations[props.componentId] && state.aggregations[props.componentId]) || null,
+	aggregationData: state.compositeAggregations[props.componentId] || [],
 	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	error: state.error[props.componentId],
 	isLoading: state.isLoading[props.componentId],

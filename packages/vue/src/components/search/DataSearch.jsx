@@ -1,4 +1,6 @@
 import { Actions, helper, suggestions as getSuggestions, causes } from '@appbaseio/reactivecore';
+import { isEqual, getCompositeAggsQuery } from '@appbaseio/reactivecore/lib/utils/helper';
+
 import VueTypes from 'vue-types';
 import { connect, isFunction } from '../../utils/index';
 import Title from '../../styles/Title';
@@ -11,7 +13,6 @@ import SuggestionWrapper from './addons/SuggestionWrapper.jsx';
 import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
-import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import { deprecatePropWarning } from '../shared/utils';
 
 const {
@@ -41,7 +42,7 @@ const DataSearch = {
 	inject: {
 		theme: {
 			from: 'theme_reactivesearch',
-		}
+		},
 	},
 	created() {
 		this.currentValue = this.selectedValue || '';
@@ -85,6 +86,8 @@ const DataSearch = {
 		customHighlight: types.func,
 		customQuery: types.func,
 		dataField: types.dataFieldArray,
+		aggregationField: types.string,
+		size: VueTypes.number.def(20),
 		debounce: VueTypes.number.def(0),
 		defaultSelected: types.string,
 		defaultValue: types.string,
@@ -120,13 +123,10 @@ const DataSearch = {
 		this.addComponent(this.internalComponent);
 		if (this.$props.highlight) {
 			const queryOptions = DataSearch.highlightQuery(this.$props) || {};
-			queryOptions.size = 20;
-			this.queryOptions = queryOptions;
+			this.queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
 			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		} else {
-			this.queryOptions = {
-				size: 20,
-			}
+			this.queryOptions = this.getBasicQueryOptions();
 			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		}
 
@@ -199,10 +199,19 @@ const DataSearch = {
 	methods: {
 		updateQueryOptions() {
 			const queryOptions = DataSearch.highlightQuery(this.$props) || {};
-			queryOptions.size = 20;
-			this.queryOptions = queryOptions;
+			this.queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
 			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		},
+		// returns size and aggs property
+		getBasicQueryOptions() {
+			const { aggregationField, size } = this.$props;
+			const queryOptions = { size };
+			if (aggregationField) {
+				queryOptions.aggs = getCompositeAggsQuery({}, this.$props, null, true).aggs;
+			}
+			return queryOptions;
+		},
+
 		setReact(props) {
 			const { react } = this.$props;
 
@@ -310,7 +319,7 @@ const DataSearch = {
 				this.$emit('focus', event);
 			}
 		},
-		triggerQuery () {
+		triggerQuery() {
 			const { value } = this.$props;
 			if (value !== undefined) {
 				this.isPending = false;
@@ -356,7 +365,6 @@ const DataSearch = {
 				this.isPending = true;
 				this.$emit('change', inputValue, this.triggerQuery, e);
 			}
-
 		},
 
 		onSuggestionSelected(suggestion) {
@@ -549,6 +557,7 @@ const DataSearch = {
 											highlightedIndex,
 											suggestions: this.suggestions,
 											parsedSuggestions: this.suggestionsList,
+											aggregationData: this.aggregationData,
 										})}
 									{this.renderErrorComponent()}
 									{!renderAllSuggestions
@@ -759,6 +768,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	aggregationData: state.compositeAggregations[props.componentId] || [],
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
