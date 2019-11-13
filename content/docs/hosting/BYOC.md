@@ -28,7 +28,7 @@ You can install [Arc](https://arc-site.netlify.com) on any server environment. W
 		<img class="w10 mb1" src="/images/arc.svg" />
 		using appbase.io
 	</a>
-		<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem;height: 120px;width:120px;" href="#using-amiamazon-machine-images">
+		<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem;height: 120px;width:120px;" href="#using-ami">
 		<img class="w10 mb1" src="/images/awscart.jpg" />
 		AWS Marketplace
 	</a>
