@@ -24,7 +24,7 @@ This diagram highlights how Arc works. It directly interacts with an underlying 
 You can install [Arc](https://arc-site.netlify.com) on any server environment. We have created quickstart recipes to make the installation process seamless for the following platforms:
 
 <div class="grid-integrations-index mt4 mt6-l f8">
-	<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem; height: 120px;width:120px;" href="#using-arc-clusters-hosted-via-appbaseio">
+	<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem; height: 120px;width:120px;" href="#using-appbaseio">
 		<img class="w10 mb1" src="/images/arc.svg" />
 		using appbase.io
 	</a>
