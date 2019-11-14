@@ -73,7 +73,7 @@ class HomeHeader extends React.Component {
 						<div className="graphic">
 							<img src="images/app-cluster@3x.png" />
 							<p className={`${Spirit.p} middarkgrey text-center`}>
-								Host an App or a Cluster
+								Host Anywhere
 							</p>
 						</div>
 						<div className="graphic">

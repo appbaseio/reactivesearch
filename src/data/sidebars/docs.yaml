@@ -46,6 +46,8 @@
       - group: Hosting
         icon: rocket
         items:
+            - title: Apps
+              link: /docs/hosting/Apps/
             - title: Clusters
               link: /docs/hosting/Cluster/
             - title: Bring Your Own Cluster
