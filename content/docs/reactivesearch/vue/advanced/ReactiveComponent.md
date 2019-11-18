@@ -202,7 +202,7 @@ export default {
     </reactive-component>
     ```
 
-    > If you are using an app with elastic search version less than 6, then you need to catch error using **error** event.
+    > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to catch this error using **error** event.
 
     > It is possible to override this query by providing `defaultQuery`.
 

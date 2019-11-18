@@ -68,7 +68,7 @@ Results.." sortBy="desc" :stream="true" :pagination="false" :pages="5" :size="10
     </template>
     ```
 
-    > If you are using an app with elastic search version less than 6, then you have to handle error manually using **renderError** slot.
+    > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** slot.
 
     > It is possible to override this query by providing `defaultQuery`.
 

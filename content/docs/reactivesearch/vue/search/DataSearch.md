@@ -77,7 +77,7 @@ Example uses:
     </template>
     ```
 
-    > If you are using an app with elastic search version less than 6, then you have to handle error manually using **renderError** slot.
+    > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** slot.
 
     > It is possible to override this query by providing `customQuery`.
 
@@ -220,6 +220,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
         highlightedIndex,   // index value which should be highlighted
         suggestions,        // unmodified suggestions from Elasticsearch
         parsedSuggestions,  // suggestions parsed by ReactiveSearch
+        aggregationData,    // composite aggregations parsed by ReactiveSearch
     }"
 >
 	...

@@ -79,7 +79,7 @@ Example uses:
     />
     ```
 
-    > If you are using an app with elastic search version less than 6, then you have to handle error manually using **renderError** prop.
+    > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** prop.
 
     > It is possible to override this query by providing `defaultQuery` or `customQuery`.
 
@@ -183,7 +183,7 @@ Example uses:
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **render** `Function` [optional]
-    You can render suggestions in a custom layout by using the `render` prop.
+    You can render suggestions or composite aggregations in a custom layout by using the `render` prop.
     <br/>
     It accepts an object with these properties:
     -   **`loading`**: `boolean`
@@ -192,6 +192,8 @@ Example uses:
         An object containing the error info.
     -   **`data`**: `array`
         An array of parsed suggestions (original suggestions + category suggestions) obtained from the applied query.
+    -   **`aggregationData`**: `array`
+        An array of composite aggregations (shaped in the form of hits) obtained from `composite aggs` query. 
     -   **`categories`**: `array`
         An array of parsed category suggestions.
     -   **`rawCategories`**: `array`
@@ -214,6 +216,7 @@ Example uses:
 		value,
 		categories,
 		suggestions,
+        aggregationData,
 		downshiftProps: { isOpen, getItemProps },
 	}) => {
 		if (loading) {
@@ -260,6 +263,7 @@ Or you can also use render function as children
                 categories,
                 rawCategories,
                 suggestions,
+                aggregationData,
                 rawSuggestions
                 value,
                 downshiftProps
