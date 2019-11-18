@@ -1082,7 +1082,7 @@ CategorySearch.propTypes = {
 	selectedValue: types.selectedValue,
 	selectedCategory: types.selectedValue,
 	suggestions: types.suggestions,
-	aggregationData: types.suggestions,
+	aggregationData: types.aggregationData,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,

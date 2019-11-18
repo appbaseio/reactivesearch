@@ -253,7 +253,7 @@ ReactiveComponent.propTypes = {
 	aggregationField: types.string,
 	size: types.number,
 	aggregations: types.selectedValues,
-	aggregationData: types.selectedValues,
+	aggregationData: types.aggregationData,
 	hits: types.data,
 	isLoading: types.bool,
 	selectedValue: types.selectedValue,

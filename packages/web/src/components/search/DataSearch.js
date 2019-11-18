@@ -931,7 +931,7 @@ DataSearch.propTypes = {
 	options: types.options,
 	selectedValue: types.selectedValue,
 	suggestions: types.suggestions,
-	aggregationData: types.suggestions,
+	aggregationData: types.aggregationData,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	setSuggestionsSearchValue: types.funcRequired,
