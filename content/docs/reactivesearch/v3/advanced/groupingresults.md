@@ -26,7 +26,6 @@ Grouping records usually refers to the process of combining multiple records int
 -   **Large Records**: where you first break up large record into smaller sub-records, and then during the search, if several of these sub-records match, you display the most relevant one.
 -   **Grouping by attribute**: where you group records depending on the value of one of their attributes.
 
-<!-- TODO: examples won't work unless @appbaseio/reactivecore is updated -->
 ## How?
 
 Let's take example of [carstore-dataset](https://dejavu.appbase.io/?appname=carstore-dataset-latest&url=https://B86d2y2OE:4fecb2c5-5c5f-49e5-9e0b-0faba74597c6@scalr.api.appbase.io&mode=view). We have different brands of cars, but we only want to show distinct brands.
@@ -36,10 +35,10 @@ This can be achieved by defining `aggregationField` prop in `ReactiveList` as `b
 
 <br />
 
-<iframe src="https://codesandbox.io/embed/github/appbaseio/reactivesearch/tree/2a31d9aef9f299c33dc1e3d7fc3b7a914e435600/packages/web/examples/DataSearchWithAggregation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+<iframe src="https://codesandbox.io/embed/github/appbaseio/reactivesearch/tree/next/packages/web/examples/DataSearchWithAggregation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
 ###With aggregationField
 
 <br />
 
-<iframe src="https://codesandbox.io/embed/github/appbaseio/reactivesearch/tree/2a31d9aef9f299c33dc1e3d7fc3b7a914e435600/packages/web/examples/ReactiveListWithAggregation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+<iframe src="https://codesandbox.io/embed/github/appbaseio/reactivesearch/tree/next/packages/web/examples/ReactiveListWithAggregation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
