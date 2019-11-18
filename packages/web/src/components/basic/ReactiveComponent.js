@@ -17,6 +17,7 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	getOptionsFromQuery,
+	getCompositeAggsQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -31,7 +32,11 @@ class ReactiveComponent extends Component {
 
 		this.setQuery = ({ options, ...obj }) => {
 			if (options) {
-				props.setQueryOptions(props.componentId, options, false);
+				props.setQueryOptions(
+					props.componentId,
+					{ ...options, ...this.getAggsQuery() },
+					false,
+				);
 			}
 			this.props.updateQuery({
 				...obj,
@@ -62,8 +67,12 @@ class ReactiveComponent extends Component {
 				: null;
 
 			if (defaultQueryOptions) {
-				props.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
-			}
+				props.setQueryOptions(
+					this.internalComponent,
+					{ ...defaultQueryOptions, ...this.getAggsQuery() },
+					false,
+				);
+			} else this.props.setQueryOptions(this.internalComponent, this.getAggsQuery());
 
 			props.updateQuery({
 				componentId: this.internalComponent,
@@ -92,8 +101,12 @@ class ReactiveComponent extends Component {
 				? getOptionsFromQuery(calcCustomQuery)
 				: null;
 			if (customQueryOptions) {
-				this.props.setQueryOptions(componentId, customQueryOptions, false);
-			}
+				this.props.setQueryOptions(
+					componentId,
+					{ ...customQueryOptions, ...this.getAggsQuery() },
+					false,
+				);
+			} else this.props.setQueryOptions(componentId, this.getAggsQuery(), false);
 			this.props.updateQuery({
 				componentId,
 				query,
@@ -123,8 +136,12 @@ class ReactiveComponent extends Component {
 			const { query, ...queryOptions } = this.defaultQuery || {};
 
 			if (queryOptions) {
-				this.props.setQueryOptions(this.internalComponent, queryOptions, false);
-			}
+				this.props.setQueryOptions(
+					this.internalComponent,
+					{ ...queryOptions, ...this.getAggsQuery() },
+					false,
+				);
+			} else this.props.setQueryOptions(this.internalComponent, this.getAggsQuery(), false);
 
 			this.props.updateQuery({
 				componentId: this.internalComponent,
@@ -139,8 +156,12 @@ class ReactiveComponent extends Component {
 			const { query, ...queryOptions } = this.props.customQuery(this.props) || {};
 
 			if (queryOptions) {
-				this.props.setQueryOptions(this.props.componentId, queryOptions, false);
-			}
+				this.props.setQueryOptions(
+					this.props.componentId,
+					{ ...queryOptions, ...this.getAggsQuery() },
+					false,
+				);
+			} else this.props.setQueryOptions(this.props.componentId, this.getAggsQuery(), false);
 
 			this.props.updateQuery({
 				componentId: this.props.componentId,
@@ -161,6 +182,13 @@ class ReactiveComponent extends Component {
 		}
 	}
 
+	getAggsQuery = () => {
+		if (this.props.aggregationField) {
+			return getCompositeAggsQuery({}, this.props, null, true);
+		}
+		return {};
+	};
+
 	setReact = (props) => {
 		const { react } = props;
 
@@ -179,9 +207,10 @@ class ReactiveComponent extends Component {
 	};
 
 	getData() {
-		const { hits, aggregations } = this.props;
+		const { hits, aggregations, aggregationData } = this.props;
 		return {
 			data: parseHits(hits),
+			aggregationData,
 			rawData: hits,
 			aggregations,
 		};
@@ -210,6 +239,7 @@ class ReactiveComponent extends Component {
 ReactiveComponent.defaultProps = {
 	showFilter: true,
 	URLParams: false,
+	size: 20,
 };
 
 ReactiveComponent.propTypes = {
@@ -220,7 +250,10 @@ ReactiveComponent.propTypes = {
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
+	aggregationField: types.string,
+	size: types.number,
 	aggregations: types.selectedValues,
+	aggregationData: types.aggregationData,
 	hits: types.data,
 	isLoading: types.bool,
 	selectedValue: types.selectedValue,
@@ -246,6 +279,7 @@ ReactiveComponent.propTypes = {
 const mapStateToProps = (state, props) => ({
 	aggregations:
 		(state.aggregations[props.componentId] && state.aggregations[props.componentId]) || null,
+	aggregationData: state.compositeAggregations[props.componentId] || [],
 	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	selectedValue:
 		(state.selectedValues[props.componentId]
