@@ -1,5 +1,4 @@
 {
-	"prettier.eslintIntegration": true,
 	"files.trimTrailingWhitespace": true,
 	"files.insertFinalNewline": true,
 	"files.trimFinalNewlines": true,
@@ -10,5 +9,9 @@
 	"editor.formatOnSave": true,
 	"[javascript]": {
 		"editor.formatOnSave": true
+	},
+	"eslint.autoFixOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.tslint": true
 	}
 }
