@@ -22,6 +22,7 @@ import {
 	checkSomePropChange,
 	getOptionsFromQuery,
 	getSearchState,
+	getCompositeAggsQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -57,6 +58,13 @@ class ReactiveList extends Component {
 	constructor(props) {
 		super(props);
 
+		// no support for pagination and aggregationField together
+		if (props.pagination && props.aggregationField) {
+			console.warn(
+				'Pagination is not supported when aggregationField is present. The list will be rendered with infinite scroll',
+			);
+		}
+
 		let currentPage = 0;
 		if (this.props.defaultPage >= 0) {
 			currentPage = this.props.defaultPage;
@@ -64,6 +72,7 @@ class ReactiveList extends Component {
 			currentPage = Math.max(this.props.currentPage - 1, 0);
 		}
 		this.initialFrom = currentPage * props.size; // used for page resetting on query change
+		this.shouldRenderPagination = props.pagination && !props.aggregationField;
 		this.state = {
 			from: this.initialFrom,
 			currentPage,
@@ -124,7 +133,11 @@ class ReactiveList extends Component {
 		// and only executing it with setReact() at core
 		const execute = false;
 
-		this.props.setQueryOptions(this.props.componentId, options, execute);
+		this.props.setQueryOptions(
+			this.props.componentId,
+			{ ...options, ...this.getAggsQuery() },
+			execute,
+		);
 
 		if (this.defaultQuery) {
 			this.props.updateQuery(
@@ -201,7 +214,11 @@ class ReactiveList extends Component {
 					},
 				];
 			}
-			this.props.setQueryOptions(this.props.componentId, options, true);
+			this.props.setQueryOptions(
+				this.props.componentId,
+				{ ...options, ...this.getAggsQuery() },
+				true,
+			);
 		}
 
 		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
@@ -245,7 +262,7 @@ class ReactiveList extends Component {
 		if (!isEqual(prevProps.react, this.props.react)) {
 			this.setReact(this.props);
 		}
-		if (this.props.pagination) {
+		if (this.shouldRenderPagination) {
 			// called when page is changed
 			if (this.props.isLoading && (this.props.hits || prevProps.hits)) {
 				if (this.props.onPageChange) {
@@ -359,9 +376,24 @@ class ReactiveList extends Component {
 			this.domNode.removeEventListener('scroll', this.scrollHandler);
 		}
 	}
+
+	getAggsQuery = () => {
+		const { size, aggregationField, afterKey } = this.props;
+		const queryOptions = { size };
+		if (aggregationField) {
+			queryOptions.aggs = getCompositeAggsQuery(
+				{},
+				this.props,
+				afterKey ? { after: afterKey } : null,
+				true,
+			).aggs;
+		}
+		return queryOptions;
+	};
+
 	// Calculate results
 	getAllData = () => {
-		const { size, promotedResults } = this.props;
+		const { size, promotedResults, aggregationData } = this.props;
 		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
@@ -385,6 +417,7 @@ class ReactiveList extends Component {
 			streamResults,
 			filteredResults,
 			promotedResults,
+			aggregationData,
 			loadMore: this.loadMore,
 			base,
 			triggerClickAnalytics: this.triggerClickAnalytics,
@@ -405,8 +438,8 @@ class ReactiveList extends Component {
 
 	get showInfiniteScroll() {
 		// Pagination has higher priority then infinite scroll
-		const { pagination, infiniteScroll } = this.props;
-		return infiniteScroll && !pagination;
+		const { infiniteScroll } = this.props;
+		return infiniteScroll && !this.shouldRenderPagination;
 	}
 
 	get hasCustomRenderer() {
@@ -478,7 +511,7 @@ class ReactiveList extends Component {
 	loadMore = () => {
 		if (this.props.hits && this.props.total !== this.props.hits.length) {
 			const value = this.state.from + this.props.size;
-			const options = getQueryOptions(this.props);
+			const options = { ...getQueryOptions(this.props), ...this.getAggsQuery() };
 
 			this.setState({
 				from: value,
@@ -651,16 +684,17 @@ class ReactiveList extends Component {
 	};
 	getData = () => {
 		const {
-			results, streamResults, filteredResults, promotedResults,
+			results, streamResults, filteredResults, promotedResults, aggregationData,
 		} = this.getAllData();
 		return {
 			data: this.withClickIds(filteredResults),
+			aggregationData: this.withClickIds(aggregationData || []),
 			streamData: this.withClickIds(streamResults),
 			promotedData: this.withClickIds(promotedResults),
 			rawData: this.withClickIds(results),
 			resultStats: this.stats,
 		};
-	}
+	};
 	getComponent = () => {
 		const { error, isLoading } = this.props;
 		const data = {
@@ -671,7 +705,7 @@ class ReactiveList extends Component {
 			...this.getData(),
 		};
 		return getComponent(data, this.props);
-	}
+	};
 
 	render() {
 		const {
@@ -698,7 +732,7 @@ class ReactiveList extends Component {
 
 		return (
 			<div style={this.props.style} className={this.props.className}>
-				{this.props.isLoading && this.props.pagination && this.props.loader}
+				{this.props.isLoading && this.shouldRenderPagination && this.props.loader}
 				{this.renderError()}
 				<Flex
 					labelPosition={this.props.sortOptions ? 'right' : 'left'}
@@ -710,7 +744,8 @@ class ReactiveList extends Component {
 				{!this.props.isLoading && !error && filteredResults.length === 0
 					? this.renderNoResults()
 					: null}
-				{this.props.pagination && ['top', 'both'].indexOf(this.props.paginationAt) !== -1
+				{this.shouldRenderPagination
+				&& ['top', 'both'].indexOf(this.props.paginationAt) !== -1
 					? paginationElement
 					: null}
 
@@ -738,12 +773,15 @@ class ReactiveList extends Component {
 						</div>
 					) // prettier-ignore
 					: null}
-				{this.props.pagination && ['bottom', 'both'].indexOf(this.props.paginationAt) !== -1
+				{this.shouldRenderPagination
+				&& ['bottom', 'both'].indexOf(this.props.paginationAt) !== -1
 					? paginationElement
 					: null}
 
 				<PoweredBy
-					show={!!(this.props.config.url.endsWith('appbase.io') && filteredResults.length)}
+					show={
+						!!(this.props.config.url.endsWith('appbase.io') && filteredResults.length)
+					}
 					innerClass={this.props.innerClass}
 				/>
 			</div>
@@ -784,6 +822,8 @@ ReactiveList.propTypes = {
 	componentId: types.stringRequired,
 	children: types.func,
 	dataField: types.stringRequired,
+	aggregationField: types.string,
+	aggregationData: types.aggregationData,
 	defaultPage: types.number,
 	defaultQuery: types.func,
 	excludeFields: types.excludeFields,
@@ -816,6 +856,7 @@ ReactiveList.propTypes = {
 	style: types.style,
 	URLParams: types.bool,
 	defaultSortOption: types.string,
+	afterKey: types.props,
 };
 
 ReactiveList.defaultProps = {
@@ -845,6 +886,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value - 1)
 		|| -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	aggregationData: state.compositeAggregations[props.componentId] || [],
 	isLoading: state.isLoading[props.componentId] || false,
 	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
@@ -855,6 +897,10 @@ const mapStateToProps = (state, props) => ({
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults,
 	headers: state.appbaseRef.headers,
+	afterKey:
+		state.aggregations[props.componentId]
+		&& state.aggregations[props.componentId][props.aggregationField]
+		&& state.aggregations[props.componentId][props.aggregationField].after_key,
 });
 
 const mapDispatchtoProps = dispatch => ({

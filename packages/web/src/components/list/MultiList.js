@@ -22,11 +22,13 @@ import {
 	checkSomePropChange,
 	getClassName,
 	getOptionsFromQuery,
+	getAggsQuery,
+	getCompositeAggsQuery,
+	updateInternalQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { getAggsQuery, getCompositeAggsQuery, updateInternalQuery } from './utils';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Button, { loadMoreContainer } from '../../styles/Button';

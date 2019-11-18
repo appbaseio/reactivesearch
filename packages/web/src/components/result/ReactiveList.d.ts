@@ -6,6 +6,7 @@ declare namespace ReactiveListTree {
 	interface ReactiveListProps extends CommonProps {
 		children?: (data: any) => any;
 		dataField: string;
+		aggregationField: string;
 		defaultQuery?: (...args: any[]) => any;
 		defaultSortOption?: string;
 		excludeFields?: Array<string>;
