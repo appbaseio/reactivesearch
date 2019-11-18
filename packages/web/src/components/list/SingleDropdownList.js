@@ -44,10 +44,13 @@ class SingleDropdownList extends Component {
 
 		const defaultValue = props.defaultValue || props.value;
 		const currentValue = props.selectedValue || defaultValue;
+		const dataField = props.dataField;
 
 		this.state = {
 			currentValue: currentValue || '',
-			options: [],
+			options: props.options && props.options[dataField]
+				? props.options[dataField].buckets
+				: [],
 			after: {}, // for composite aggs
 			isLastBucket: false,
 		};

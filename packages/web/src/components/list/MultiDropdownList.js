@@ -51,10 +51,13 @@ class MultiDropdownList extends Component {
 		currentValueArray.forEach((item) => {
 			currentValue[item] = true;
 		});
+		const dataField = props.dataField;
 
 		this.state = {
 			currentValue,
-			options: [],
+			options: props.options && props.options[dataField]
+				? props.options[dataField].buckets
+				: [],
 			after: {}, // for composite aggs
 			isLastBucket: false,
 		};
