@@ -26,6 +26,7 @@ const {
 	getClassName,
 	parseHits,
 	getOptionsFromQuery,
+	getCompositeAggsQuery,
 } = helper;
 
 const ReactiveList = {
@@ -45,12 +46,19 @@ const ReactiveList = {
 		return this.__state;
 	},
 	created() {
+		// no support for pagination and aggregationField together
+		if (this.pagination && this.aggregationField) {
+			console.warn(
+				'Pagination is not supported when aggregationField is present. The list will be rendered with infinite scroll',
+			);
+		}
 		if (this.defaultPage >= 0) {
 			this.$currentPage = this.defaultPage;
 			this.from = this.$currentPage * this.$props.size;
 		}
 		this.isLoading = true;
 		this.internalComponent = `${this.$props.componentId}__internal`;
+		this.shouldRenderPagination = this.pagination && !this.aggregationField;
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
@@ -66,6 +74,7 @@ const ReactiveList = {
 		className: types.string,
 		componentId: types.stringRequired,
 		dataField: types.stringRequired,
+		aggregationField: types.string,
 		defaultQuery: types.func,
 		excludeFields: types.excludeFields.def([]),
 		innerClass: types.style,
@@ -161,7 +170,11 @@ const ReactiveList = {
 				if (queryOptions) {
 					options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
 				}
-				this.setQueryOptions(this.$props.componentId, options, !query);
+				this.setQueryOptions(
+					this.$props.componentId,
+					{ ...options, ...this.getAggsQuery() },
+					!query,
+				);
 
 				this.updateQuery(
 					{
@@ -191,7 +204,7 @@ const ReactiveList = {
 		hits(newVal, oldVal) {
 			this.$emit('data', this.getAllData());
 			this.$emit('resultStats', this.stats);
-			if (this.$props.pagination) {
+			if (this.shouldRenderPagination) {
 				// called when page is changed
 				if (this.isLoading && (oldVal || newVal)) {
 					if (this.hasPageChangeListener) {
@@ -216,7 +229,7 @@ const ReactiveList = {
 			}
 		},
 		total(newVal, oldVal) {
-			if (this.$props.pagination && newVal !== oldVal) {
+			if (this.shouldRenderPagination && newVal !== oldVal) {
 				const currentPage = this.$data.total ? 0 : this.$currentPage;
 				this.$currentPage = currentPage;
 				this.$emit('pageChange', currentPage + 1, this.totalPages);
@@ -288,7 +301,11 @@ const ReactiveList = {
 		// and only executing it with setReact() at core
 
 		const execute = false;
-		this.setQueryOptions(this.$props.componentId, options, execute);
+		this.setQueryOptions(
+			this.$props.componentId,
+			{ ...options, ...this.getAggsQuery() },
+			execute,
+		);
 
 		if (this.$defaultQuery) {
 			this.updateQuery(
@@ -310,7 +327,7 @@ const ReactiveList = {
 
 		this.setReact(this.$props);
 
-		if (!this.$props.pagination) {
+		if (!this.shouldRenderPagination) {
 			window.addEventListener('scroll', this.scrollHandler);
 		}
 	},
@@ -338,7 +355,7 @@ const ReactiveList = {
 		return (
 			<div style={this.$props.style} class={this.$props.className}>
 				{this.isLoading
-					&& this.$props.pagination
+					&& this.shouldRenderPagination
 					&& (this.$scopedSlots.loader || this.$props.loader)}
 				{this.renderErrorComponent()}
 				<Flex
@@ -351,7 +368,7 @@ const ReactiveList = {
 				{!this.isLoading && results.length === 0 && streamResults.length === 0
 					? this.renderNoResult()
 					: null}
-				{this.$props.pagination
+				{this.shouldRenderPagination
 				&& (this.$props.paginationAt === 'top' || this.$props.paginationAt === 'both') ? (
 						<Pagination
 							pages={this.$props.pages}
@@ -379,7 +396,7 @@ const ReactiveList = {
 						)}
 					</div>
 				)}
-				{this.isLoading && !this.$props.pagination
+				{this.isLoading && !this.shouldRenderPagination
 					? this.$props.loader || (
 						<div
 							style={{
@@ -392,7 +409,7 @@ const ReactiveList = {
 						</div>
 					  )
 					: null}
-				{this.$props.pagination
+				{this.shouldRenderPagination
 				&& (this.$props.paginationAt === 'bottom' || this.$props.paginationAt === 'both') ? (
 						<Pagination
 							pages={this.$props.pages}
@@ -444,7 +461,25 @@ const ReactiveList = {
 					},
 				];
 			}
-			this.setQueryOptions(this.$props.componentId, options, true);
+			this.setQueryOptions(
+				this.$props.componentId,
+				{ ...options, ...this.getAggsQuery() },
+				true,
+			);
+		},
+		getAggsQuery() {
+			const { size, aggregationField } = this.$props;
+			const { afterKey } = this.$data;
+			const queryOptions = { size };
+			if (aggregationField) {
+				queryOptions.aggs = getCompositeAggsQuery(
+					{},
+					this.$props,
+					afterKey ? { after: afterKey } : null,
+					true,
+				).aggs;
+			}
+			return queryOptions;
 		},
 		setReact(props) {
 			const { react } = props;
@@ -469,9 +504,9 @@ const ReactiveList = {
 		},
 
 		loadMore() {
-			if (this.hits && !this.$props.pagination && this.total !== this.hits.length) {
+			if (this.hits && !this.shouldRenderPagination && this.total !== this.hits.length) {
 				const value = this.$data.from + this.$props.size;
-				const options = getQueryOptions(this.$props);
+				const options = { ...getQueryOptions(this.$props), ...this.getAggsQuery() };
 				this.from = value;
 				this.isLoading = true;
 				this.loadMoreAction(
@@ -603,12 +638,13 @@ const ReactiveList = {
 		// Shape of the object to be returned in onData & renderAllData
 		getAllData() {
 			const { size } = this.$props;
-			const { hits, streamHits } = this.$data;
+			const { hits, streamHits, aggregationData } = this.$data;
 			const results = parseHits(hits) || [];
 			const streamResults = parseHits(streamHits) || [];
 			return {
 				results,
 				streamResults,
+				aggregationData,
 				loadMore: this.loadMore,
 				base: this.$currentPage * size,
 				triggerClickAnalytics: this.triggerClickAnalytics,
@@ -622,12 +658,17 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value - 1)
 		|| -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	aggregationData: state.compositeAggregations[props.componentId] || [],
 	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	analytics: state.analytics,
 	config: state.config,
 	error: state.error[props.componentId],
+	afterKey:
+		state.aggregations[props.componentId]
+		&& state.aggregations[props.componentId][props.aggregationField]
+		&& state.aggregations[props.componentId][props.aggregationField].after_key,
 });
 const mapDispatchtoProps = {
 	addComponent,
