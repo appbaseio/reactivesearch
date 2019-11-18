@@ -217,7 +217,6 @@ class Dropdown extends Component {
 															item[labelField],
 															item.doc_count,
 															selected && this.props.multi,
-															item,
 														)
 													) : (
 														<div>
