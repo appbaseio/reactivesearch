@@ -201,84 +201,72 @@ Now that all our configurations are complete, in order to access all the Arc Ser
 
 We have containerized Arc with its configuring dashboard into one docker compose file. This setup enables you to run Arc with single command, i.e. `docker-compose up -d` 😎.
 
-The dockerized Arc comes with 3 different services:
+Dockerize setup for Arc comes with 3 different services
 
-#### **Arc**
+#### Arc
 
-Allows you to access all [Appbase.io features](https://docs.appbase.io/docs/gettingstarted/WhyAppbase/) such search preview, actionable analytics and granular security with an ElasticSearch cluster hosted anywhere.
+Allows you to access all [Appbase.io](https://docs.appbase.io/docs/gettingstarted/WhyAppbase/) features like search preview, actionable analytics and granular security with any ElasticSearch cluster hosted anywhere.
 
-> **Note:** Make sure your arc container has complete access to ElasticSearch.
+> **Note:** Make sure your arc container have complete access to ElasticSearch. You can use ElasticSearch URL with Basic Auth in configuring dashboard or IP restricted ElasticSearch URL where IP of your ARC cluster hosted using docker setup is white listed.
 
-#### **Configure**
+#### Configure
 
-This service comes with an intuitive UI which allows you to set your ElasticSearch cluster URL and other environment variables that are required by the Arc service.
+This service comes with simple user interface which allows you to set credentials and other environment variables. Also it watches for environment variable file changes, so that if any variable in file is changed it can restart arc service.
 
-#### **Watcher**
+#### Nginx
 
-This service keeps an eye on the environment variable changes made by the Configure service and is responsible for restarting the Arc service.
+This service helps in setting up reverse proxy for Arc Service and serving Configuration service. It also helps in serving data using with TLS certificate, which is recommended for production.
 
 ## Quick Start 🚀
 
-The steps described here assume that [Docker](https://docs.docker.com/install/) is installed on the system.
+The steps described here assumes a that you have [docker](https://docs.docker.com/install/) installed.
 
-**Step 1:** Get Arc ID following the steps mentioned [here](/docs/hosting/BYOC/#how-to-create-arc-instance).
+-   **Step 1:** Get Arc ID following the steps mentioned [here](https://docs.appbase.io/docs/hosting/BYOC/#using-ami)
 
-**Step 2:** Clone the repository
+-   **Step 2:** Clone the repository
 
-```bash
-git clone https://github.com/appbaseio/arc-dockerized.git && cd arc-dockerized
-```
+    ```bash
+    git clone https://github.com/appbaseio/arc-dockerized.git && cd arc-dockerized
+    ```
 
-**Step 3:** Build and run docker containers
+-   **Step 3:** Build and run docker containers
 
-We highly recommend using Arc with [SSL](https://en.wikipedia.org/wiki/Transport_Layer_Security) so that we can easily bind this with Arc Dashboard. To simplify the process of docker build and deployment, we have created three versions:
+    We highly recommend using Arc with [SSL](https://en.wikipedia.org/wiki/Transport_Layer_Security) so that we can easily bind this with Arc Dashboard. To simplify the process of docker build, test and deployment we have created 2 versions:
 
-1 - Install Arc _(If you have your own Nginx / SSL setup)_
+    1 - **Install Arc + Nginx with SSL setup _(Recommended for production)_**
 
-```bash
-docker-compose up -d
-```
+    -   Change [SSL](https://en.wikipedia.org/wiki/Transport_Layer_Security) certificate and keys with production files. Please obtain [SSL](https://en.wikipedia.org/wiki/Transport_Layer_Security) certificate and key for your domain using [Let's Encrypt](https://letsencrypt.org/) or any other provider. Update the files in [nginx/certs](https://github.com/appbaseio/arc-dockerized/tree/master/nginx/certs)
+    -   In case you are using different name then mentioned in [nginx/certs](https://github.com/appbaseio/arc-dockerized/tree/master/nginx/certs) folder, then please update them in `docker-compose.yaml` file as well
 
-2 - Install Arc + Nginx with TLS setup _(Recommended for production)_
+    ![](https://i.imgur.com/piUKTLl.png)
 
--   Change the [TLS certificate](https://en.wikipedia.org/wiki/Transport_Layer_Security) and keys with production files. Please obtain your TLS certificate and key for your domain using [Let's Encrypt](https://letsencrypt.org/) or any other provider. Update the key files in [nginx/certs](https://github.com/appbaseio/arc-dockerized/tree/master/nginx/certs) directory.
--   In case you are using different name than the mentioned in [nginx/certs](https://github.com/appbaseio/arc-dockerized/tree/master/nginx/certs) directory, then update them in `docker-compose-with-tls.yaml` file as well.
+    Also, make sure you update file names in [nginx/default.conf](https://github.com/appbaseio/arc-dockerized/blob/master/nginx/default.conf) file
 
-![](https://i.imgur.com/piUKTLl.png)
+    ![](https://i.imgur.com/LW8zOyB.png)
 
-Also, make sure you update the key file names in [nginx/default.conf](https://github.com/appbaseio/arc-dockerized/blob/master/nginx/default.conf) file.
+    ```bash
+    docker-compose up -d
+    ```
 
-![](https://i.imgur.com/LW8zOyB.png)
+    2 - **Install Arc + ElasticSearch _(If you want to deploy Arc Along with ElasticSearch.)_**
 
-```bash
-docker-compose -f docker-compose-with-tls.yaml up -d
-```
+    ```
+    docker-compose -f docker-compose-with-elasticsearch.yaml up -d
+    ```
 
-3 - Install Arc + ElasticSearch _(If you want to deploy Arc Along with ElasticSearch)_
+    🔥 Thats all, our containers should be up and running. Next let us configure environment variables required by Arc service.
 
-```
-docker-compose -f docker-compose-with-elasticsearch.yaml up -d
-```
+-   **Step 4:** Open configuration service URL in your browser, i.e. [http://localhost_OR_cluster_url](http://localhost/CLUStER_URL)
 
-🔥 Thats all, our containers should be up and running. Next, let us configure the environment variables required by the Arc service.
+    > **Note:** If you are running this setup on an virtual machine, make sure ports `80` and `443` are set in your inbound rules for the cluster.
 
-**Step 4:** Open the configuration service URL in your browser, http://localhost:8080.
+-   **Step 5:** Set credentials
 
-> **Note:** If you are running this setup on an virtual machine, make sure port `8080` is accessible in your inbound rules from the environment where you are running it from.
+-   **Step 6:** Configure ElasticSearch URL and ARC ID obtained above.
 
-**Step 5:** Set credentials
+    > **NOte:** Once you save the configuration, it may take 5-10s to restart the arc service.
 
-![](https://i.imgur.com/huRzI3e.png)
-
-**Step 6:** Configure ElasticSearch URL and ARC ID obtained above.
-
-![](https://i.imgur.com/iVmzscW.png)
-
-> **Note:** Once you save the configuration, it may take 5-10s to restart the arc service.
-
-**Step 7:** Start using Arc Services using [Arc Dashboard](https://arc-dashboard.appbase.io/). Here you will have to input the Cluster URL. It should be either http://localhost:8000, http://my-ip:8000 or https://my-domain depending on how and where you're running Arc. The credentials would be the same as configured in _Step 5_.
-
-> **Note:** The Arc service is exposed via port `8000`, so make sure port `8000` is set in your inbound rules for the cluster. Also, we highly recommend using Arc with TLS certificate.
+-   **Step 7:** Start using Arc Services using [Arc Dashboard](https://arc-dashboard.appbase.io/). Here you will have to input Arc Cluster URL which will be [http(s)://localhost_OR_cluster_url](<http(s)://localhost_OR_cluster_url>) and credentials would be the one that you configured initially on _Step 5_.
 
 ---
 
