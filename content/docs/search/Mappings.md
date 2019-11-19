@@ -10,9 +10,15 @@ keywords:
 sidebar: 'docs'
 ---
 
-Mappings define how the JSON data indexed into appbase.io is stored as.
+Mapping is the process of defining how a JSON document, and the fields it contains, are stored and indexed in an ElasticSearch / Appbase.io. Each index has one mapping type which determines how the document will be indexed. There are various [field types](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html) offered by ElasticSearch which you can assign to the fields that will be stored in ElasticSearch.
 
-![](https://i.imgur.com/Q7jRhby.png)
+Mappings are immutable in ElasticSearch. Once a mapping is generated for a field, it can be only modified by creating new indexing and migrating the data to the new index with newly defined mapping. This is the biggest pain while using ElasticSearch.
+
+_For example if I want to change `long` field to a `string` field then you will have to create new index. Add mapping for that field + add setting which will convert existing `long` data into `string`. And now you will have to migrate existing data to new index 😞_
+
+This is no longer going to be pain, if you are using Appbase.io. We have **App Settings** which now allows you to change your data type for fields which are already indexed + add new fields with correct mappings.
+
+![](https://i.imgur.com/ajFgt2r.gif)
 
 ## Mapping Types
 
@@ -36,15 +42,15 @@ Beyond the primitive data types, there are also specialized data types that are 
 
 There are three ways you can set mappings.
 
-1. [**Data Browser**](https://dashboard.appbase.io/app?view=browse): The data browser UI can be used to set mappings via the `Add New Field` UI button.
-
-![](https://i.imgur.com/jCpD3UB.png)
-
-The UI supports adding all the primitive types. You can set your own mapping object for creating a specialized type or if you want to set any non-default options within a type.
-
-2. [**Manage Mappings**](https://dashboard.appbase.io/app?view=mappings): The Mappings UI can be used to `Add New Field`.
+1. [**App Settings**](https://dashboard.appbase.io/app?view=settings): The App Settings UI can be used to `Add New Field`.
 
 ![](https://i.imgur.com/jq3gVWZ.png)
+
+2. [**Data Browser**](https://dashboard.appbase.io/app?view=browse): The data browser UI can be used to set mappings via the `Add New Field` UI button.
+
+![](https://i.imgur.com/51KlukI.png)
+
+The UI supports adding all the primitive types. You can set your own mapping object for creating a specialized type or if you want to set any non-default options within a type.
 
 3. [**REST API**](https://rest.appbase.io): You can use the APIs to set the mappings using the [PUT `/_mapping`](https://rest.appbase.io/#5c5e8488-a1a0-6bdb-a840-73b40a8d990a) endpoint.
 
@@ -54,7 +60,7 @@ The UI supports adding all the primitive types. You can set your own mapping obj
 
 ## Editing Mappings
 
-If you are on a paid plan on appbase.io, you can edit the mappings via the [**Mappings UI**](https://dashboard.appbase.io/app?view=mappings). As mappings are immutable, we provide this functionality by reindexing an app.
+If you are on a paid plan on appbase.io, you can edit the mappings via the [**App Settings UI**](https://dashboard.appbase.io/app?view=settings). As mappings are immutable, we provide this functionality by reindexing an app.
 
 You can do the following:
 
