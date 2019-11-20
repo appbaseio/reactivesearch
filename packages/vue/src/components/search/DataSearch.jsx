@@ -208,6 +208,7 @@ const DataSearch = {
 		getComponent(downShiftProps = {}) {
 			const data = {
 				...downShiftProps,
+				loading: this.isLoading,
 				currentValue: this.$data.currentValue,
 				suggestions: this.suggestions,
 				parsedSuggestions: this.suggestionsList,
