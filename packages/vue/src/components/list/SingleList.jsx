@@ -395,11 +395,11 @@ const SingleList = {
 			if (isEvent(e)) {
 				currentValue = e.target.value;
 			}
-			const { value, onChange } = this.$props;
+			const { value } = this.$props;
 			if (value === undefined) {
 				this.setValue(currentValue);
-			} else if (onChange) {
-				onChange(currentValue);
+			} else {
+				this.$emit('change', e.target.value);
 			}
 		},
 	},

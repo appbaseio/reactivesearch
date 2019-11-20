@@ -442,11 +442,12 @@ const MultiList = {
 			if (isEvent(e)) {
 				currentValue = e.target.value;
 			}
-			const { value, onChange } = this.$props;
+			const { value } = this.$props;
 			if (value === undefined) {
 				this.setValue(currentValue);
-			} else if (onChange) {
-				onChange(parseValueArray(value, currentValue));
+			} else {
+				const values = parseValueArray(this.currentValue, e.target.value);
+				this.$emit('change', values);
 			}
 		},
 		getComponent() {
