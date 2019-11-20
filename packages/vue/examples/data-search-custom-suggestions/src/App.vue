@@ -10,7 +10,7 @@
 			>
 				<div
 					class="suggestions"
-					slot="renderAllSuggestions"
+					slot="render"
 					slot-scope="{ suggestions, isOpen, highlightedIndex, getItemProps, getItemEvents }"
 				>
 					<ul v-if="isOpen">
