@@ -62,6 +62,7 @@ const MultiDropdownList = {
 		placeholder: VueTypes.string.def('Select values'),
 		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		react: types.react,
+		render: types.func,
 		renderItem: types.func,
 		renderError: types.title,
 		transformData: types.func,
