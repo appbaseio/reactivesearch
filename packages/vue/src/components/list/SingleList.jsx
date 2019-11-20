@@ -399,7 +399,7 @@ const SingleList = {
 			if (value === undefined) {
 				this.setValue(currentValue);
 			} else {
-				this.$emit('change', e.target.value);
+				this.$emit('change', currentValue);
 			}
 		},
 	},

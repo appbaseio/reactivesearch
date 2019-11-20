@@ -259,7 +259,6 @@ const MultiDropdownList = {
 
 		handleChange(item) {
 			const { value } = this.$props;
-
 			if (value === undefined) {
 				this.setValue(item);
 			} else {
