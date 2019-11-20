@@ -4,7 +4,7 @@ import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
-import { connect, getComponent, hasCustomRenderer, isFunction } from '../../utils/index';
+import { connect, getComponent, hasCustomRenderer, isEvent, isFunction } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Radio } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
@@ -391,11 +391,15 @@ const SingleList = {
 		},
 
 		handleClick(e) {
-			const { value } = this.$props;
+			let currentValue = e;
+			if (isEvent(e)) {
+				currentValue = e.target.value;
+			}
+			const { value, onChange } = this.$props;
 			if (value === undefined) {
-				this.setValue(e.target.value);
-			} else {
-				this.$emit('change', e.target.value);
+				this.setValue(currentValue);
+			} else if (onChange) {
+				onChange(currentValue);
 			}
 		},
 	},

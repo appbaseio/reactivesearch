@@ -8,6 +8,7 @@ import {
 	hasCustomRenderer,
 	getComponent,
 	isFunction,
+	isEvent,
 	parseValueArray,
 } from '../../utils/index';
 import types from '../../utils/vueTypes';
@@ -437,12 +438,15 @@ const MultiList = {
 		},
 
 		handleClick(e) {
-			const { value } = this.$props;
+			let currentValue = e;
+			if (isEvent(e)) {
+				currentValue = e.target.value;
+			}
+			const { value, onChange } = this.$props;
 			if (value === undefined) {
-				this.setValue(e.target.value);
-			} else {
-				const values = parseValueArray(this.currentValue, e.target.value);
-				this.$emit('change', values);
+				this.setValue(currentValue);
+			} else if (onChange) {
+				onChange(parseValueArray(value, currentValue));
 			}
 		},
 		getComponent() {
