@@ -446,7 +446,7 @@ const MultiList = {
 			if (value === undefined) {
 				this.setValue(currentValue);
 			} else {
-				const values = parseValueArray(currentValue, e.target.value);
+				const values = parseValueArray(value, currentValue);
 				this.$emit('change', values);
 			}
 		},
