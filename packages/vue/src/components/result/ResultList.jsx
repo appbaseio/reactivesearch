@@ -1,112 +1,62 @@
 import VueTypes from 'vue-types';
-import { helper } from '@appbaseio/reactivecore';
-import ReactiveList, { RLConnected } from './ReactiveList.jsx';
-import Title from '../../styles/Title';
-import ListItem, { container, Image } from '../../styles/ListItem';
+import ListItem from '../../styles/ListItem';
 import types from '../../utils/vueTypes';
-
-const { getClassName } = helper;
+import ResultListContent from './addons/ResultListContent.jsx';
+import ResultListDescription from './addons/ResultListDescription.jsx';
+import ResultListImage from './addons/ResultListImage.jsx';
+import ResultListTitle from './addons/ResultListTitle.jsx';
 
 const ResultList = {
 	name: 'ResultList',
 	props: {
-		currentPage: VueTypes.number.def(0),
-		includeFields: types.includeFields.def(['*']),
-		// component props
-		className: types.string,
-		componentId: types.stringRequired,
-		dataField: types.stringRequired,
-		defaultQuery: types.func,
-		excludeFields: types.excludeFields.def([]),
-		innerClass: types.style,
-		listClass: VueTypes.string.def(''),
-		loader: types.title,
-		renderAllData: types.func,
-		renderData: types.func,
-		onResultStats: types.func,
-		onNoResults: VueTypes.string.def('No Results found.'),
-		pages: VueTypes.number.def(5),
-		pagination: VueTypes.bool.def(false),
-		paginationAt: types.paginationAt.def('bottom'),
-		react: types.react,
-		showResultStats: VueTypes.bool.def(true),
-		size: VueTypes.number.def(10),
-		sortBy: types.sortBy,
-		sortOptions: types.sortOptions,
-		stream: types.bool,
-		URLParams: VueTypes.bool.def(false),
+		href: types.string,
 		target: VueTypes.string.def('_blank'),
 	},
+	components: {
+		ResultListContent,
+		ResultListDescription,
+		ResultListImage,
+		ResultListTitle,
+	},
+	data() {
+		this.__state = {
+			hasImage: false,
+			isSmall: false,
+		};
+		return this.__state;
+	},
+	mounted() {
+		const children = this.$slots.default;
+
+		const ImageChild = children.find(
+			o => o.componentOptions && o.componentOptions.tag === ResultListImage.name,
+		);
+		if (ImageChild.componentOptions && ImageChild.componentOptions.propsData) {
+			this.hasImage = true;
+			if (ImageChild.componentOptions.propsData.small) {
+				this.isSmall = true;
+			}
+		}
+	},
 	render() {
-		const { renderData, ...props } = this.$props;
-		const onResultStats = this.$props.onResultStats || this.$scopedSlots.onResultStats;
+		const { href, target, ...props } = this.$props;
+		const { hasImage, isSmall } = this;
+		const children = this.$slots.default;
 		return (
-			<RLConnected
-				{...{
-					props: {
-						...props,
-						renderData: this.renderAsList,
-						onResultStats,
-						listClass: container,
-					},
-				}}
-			/>
+			<ListItem
+				href={href}
+				image={hasImage}
+				small={isSmall}
+				target={target}
+				rel={target === '_blank' ? 'noopener noreferrer' : null}
+				{...props}
+			>
+				{children}
+			</ListItem>
 		);
 	},
-	methods: {
-		renderAsList({ item, triggerClickAnalytics }) {
-			const renderData = this.$props.renderData || this.$scopedSlots.renderData;
-			const result = renderData(item);
-			if (result) {
-				return (
-					<ListItem
-						key={item._id}
-						href={result.url}
-						className={getClassName(this.$props.innerClass, 'listItem')}
-						target={this.$props.target}
-						rel={this.$props.target === '_blank' ? 'noopener noreferrer' : null}
-						{...{
-							on: {
-								click: triggerClickAnalytics,
-							},
-						}}
-						{...result.containerProps}
-						image={!!result.image}
-						small={result.image_size === 'small'}
-					>
-						{result.image ? (
-							<Image
-								src={result.image}
-								small={result.image_size === 'small'}
-								className={getClassName(this.$props.innerClass, 'image')}
-							/>
-						) : null}
-						<article>
-							{typeof result.title === 'string' ? (
-								<Title
-									{...{ domProps: { innerHTML: result.title } }}
-									className={getClassName(this.$props.innerClass, 'title')}
-								/>
-							) : (
-								<Title className={getClassName(this.$props.innerClass, 'title')}>
-									{result.title}
-								</Title>
-							)}
-							{typeof result.description === 'string' ? (
-								<div {...{ domProps: { innerHTML: result.description } }} />
-							) : (
-								<div>{result.description}</div>
-							)}
-						</article>
-					</ListItem>
-				);
-			}
-
-			return null;
-		},
-	},
 };
-ResultList.generateQueryOptions = props => ReactiveList.generateQueryOptions(props);
+
 ResultList.install = function(Vue) {
 	Vue.component(ResultList.name, ResultList);
 };

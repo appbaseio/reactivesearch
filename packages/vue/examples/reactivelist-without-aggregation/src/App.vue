@@ -9,8 +9,8 @@
 				dataField="brand.raw"
 				className="result-list-container"
 			>
-				<div slot="renderAllData" slot-scope="{ results }">
-					<div v-bind:key="result._id" v-for="result in results">
+				<div slot="render" slot-scope="{ data }">
+					<div v-bind:key="result._id" v-for="result in data">
 						<h3>{{ result.brand }}</h3>
 						<img :src="result.image" width="500" />
 					</div>

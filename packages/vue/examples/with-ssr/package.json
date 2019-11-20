@@ -11,9 +11,15 @@
 		"generate": "nuxt generate"
 	},
 	"dependencies": {
+		"@appbaseio/reactivesearch-vue": "1.0.0-beta.22",
+		"@commitlint/cli": "^7.5.2",
 		"cross-env": "^5.2.0",
+		"eslint-plugin-import": "^2.14.0",
+		"eslint-plugin-jsx-a11y": "^6.0.3",
+		"eslint-plugin-react": "^7.5.1",
+		"nps": "^5.9.5",
 		"nuxt": "^2.4.0",
-		"@appbaseio/reactivesearch-vue": "1.0.0-beta.22"
+		"prettier": "^1.15.2"
 	},
 	"devDependencies": {
 		"@babel/plugin-syntax-dynamic-import": "^7.2.0",

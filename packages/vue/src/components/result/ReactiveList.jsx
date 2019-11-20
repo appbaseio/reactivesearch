@@ -2,7 +2,9 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
-import { connect, isFunction } from '../../utils/index';
+import ResultListWrapper from './addons/ResultListWrapper.jsx';
+import ResultCardsWrapper from './addons/ResultCardsWrapper.jsx';
+import { connect, isFunction, hasCustomRenderer, getComponent } from '../../utils/index';
 import Flex from '../../styles/Flex';
 import types from '../../utils/vueTypes';
 import { resultStats, sortOptions } from '../../styles/results';
@@ -31,6 +33,10 @@ const {
 
 const ReactiveList = {
 	name: 'ReactiveList',
+	components: {
+		ResultListWrapper,
+		ResultCardsWrapper,
+	},
 	data() {
 		const props = this.$props;
 		let $currentPage = 0;
@@ -80,8 +86,8 @@ const ReactiveList = {
 		innerClass: types.style,
 		listClass: VueTypes.string.def(''),
 		loader: types.title,
-		renderAllData: types.func,
-		renderData: types.func,
+		render: types.func,
+		renderItem: types.func,
 		renderNoResults: VueTypes.any.def('No Results found.'),
 		renderError: types.title,
 		renderResultStats: types.func,
@@ -108,21 +114,18 @@ const ReactiveList = {
 			return this.$listeners && this.$listeners.resultStats;
 		},
 		stats() {
-			const results = parseHits(this.$data.hits) || [];
-			const streamResults = parseHits(this.$data.streamHits) || [];
-			let filteredResults = results;
-
-			if (streamResults.length) {
-				const ids = streamResults.map(item => item._id);
-				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-			}
+			const { total, size, time, currentPage } = this;
+			const { filteredResults } = this.getAllData();
 			return {
-				totalResults: this.$data.total,
-				totalPages: Math.ceil(this.$data.total / this.$props.size),
-				displayedResults: [...streamResults, ...filteredResults].length,
-				time: this.$data.time,
-				currentPage: this.$data.currentPage,
+				numberOfResults: total,
+				numberOfPages: Math.ceil(total / size),
+				time,
+				currentPage,
+				displayedResults: filteredResults.length,
 			};
+		},
+		hasCustomRender() {
+			return hasCustomRenderer(this);
 		},
 	},
 	watch: {
@@ -345,7 +348,7 @@ const ReactiveList = {
 		const streamResults = parseHits(this.$data.streamHits) || [];
 		let filteredResults = results;
 
-		const renderData = this.$scopedSlots.renderData || this.$props.renderData;
+		const renderItem = this.$scopedSlots.renderItem || this.$props.renderItem;
 
 		if (streamResults.length) {
 			const ids = streamResults.map(item => item._id);
@@ -378,8 +381,8 @@ const ReactiveList = {
 							innerClass={this.$props.innerClass}
 						/>
 					) : null}
-				{this.$scopedSlots.renderAllData ? (
-					this.$scopedSlots.renderAllData(this.getAllData())
+				{this.hasCustomRender ? (
+					this.getComponent()
 				) : (
 					<div
 						class={`${this.$props.listClass} ${getClassName(
@@ -388,7 +391,7 @@ const ReactiveList = {
 						)}`}
 					>
 						{[...streamResults, ...filteredResults].map((item, index) =>
-							renderData({
+							renderItem({
 								item,
 								triggerClickAnalytics: () =>
 									this.triggerClickAnalytics(this.$currentPage * size + index),
@@ -557,7 +560,7 @@ const ReactiveList = {
 				= this.$scopedSlots.renderResultStats || this.$props.renderResultStats;
 			if (renderResultStats && this.$data.total) {
 				return renderResultStats(this.stats);
-			} else if (this.$data.total) {
+			} else if (this.stats.numberOfResults) {
 				return (
 					<p
 						class={`${resultStats} ${getClassName(
@@ -565,7 +568,7 @@ const ReactiveList = {
 							'resultStats',
 						)}`}
 					>
-						{this.$data.total} results found in {this.$data.time}
+						{this.stats.numberOfResults} results found in {this.stats.time}
 						ms
 					</p>
 				);
@@ -635,20 +638,71 @@ const ReactiveList = {
 				</select>
 			);
 		},
-		// Shape of the object to be returned in onData & renderAllData
+		withClickIds(results) {
+			const { base } = this.getAllData();
+			return results.map((result, index) => ({
+				...result,
+				_click_id: base + index,
+			}));
+		},
+		// Shape of the object to be returned in onData & render
 		getAllData() {
-			const { size } = this.$props;
-			const { hits, streamHits, aggregationData } = this.$data;
+			const { size, promotedResults, aggregationData, currentPage, hits, streamHits } = this;
 			const results = parseHits(hits) || [];
 			const streamResults = parseHits(streamHits) || [];
+			let filteredResults = results;
+			const base = currentPage * size;
+			if (streamResults.length) {
+				const ids = streamResults.map(item => item._id);
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+			}
+
+			if (promotedResults.length) {
+				const ids = promotedResults.map(item => item._id).filter(Boolean);
+				if (ids) {
+					filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+				}
+
+				filteredResults = [...streamResults, ...promotedResults, ...filteredResults];
+			}
 			return {
 				results,
 				streamResults,
+				filteredResults,
+				promotedResults,
 				aggregationData,
 				loadMore: this.loadMore,
-				base: this.$currentPage * size,
+				base,
 				triggerClickAnalytics: this.triggerClickAnalytics,
 			};
+		},
+		getData() {
+			const {
+				results,
+				streamResults,
+				filteredResults,
+				promotedResults,
+				aggregationData,
+			} = this.getAllData();
+			return {
+				data: this.withClickIds(filteredResults),
+				aggregationData: this.withClickIds(aggregationData || []),
+				streamData: this.withClickIds(streamResults),
+				promotedData: this.withClickIds(promotedResults),
+				rawData: this.withClickIds(results),
+				resultStats: this.stats,
+			};
+		},
+		getComponent() {
+			const { error, isLoading } = this;
+			const data = {
+				error,
+				loading: isLoading,
+				loadMore: this.loadMore,
+				triggerAnalytics: this.triggerClickAnalytics,
+				...this.getData(),
+			};
+			return getComponent(data, this);
 		},
 	},
 };
@@ -659,6 +713,7 @@ const mapStateToProps = (state, props) => ({
 		|| -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	aggregationData: state.compositeAggregations[props.componentId] || [],
+	promotedResults: state.promotedResults,
 	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
@@ -708,10 +763,7 @@ ReactiveList.generateQueryOptions = props => {
 
 	return options;
 };
-export const RLConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(ReactiveList);
+export const RLConnected = connect(mapStateToProps, mapDispatchtoProps)(ReactiveList);
 
 ReactiveList.install = function(Vue) {
 	Vue.component(ReactiveList.name, RLConnected);

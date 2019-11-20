@@ -1,6 +1,9 @@
 <template>
 	<div id="app">
-		<ReactiveBase app="good-books-ds" credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d">
+		<ReactiveBase
+			app="good-books-ds"
+			credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d"
+		>
 			<DataSearch
 				class="result-list-container"
 				categoryField="authors.raw"
@@ -11,20 +14,28 @@
 				<div
 					class="suggestions"
 					slot="renderAllSuggestions"
-					slot-scope="{ suggestions, isOpen, highlightedIndex, getItemProps, getItemEvents }"
+					slot-scope="{
+						suggestions,
+						isOpen,
+						highlightedIndex,
+						getItemProps,
+						getItemEvents,
+					}"
 				>
 					<ul v-if="isOpen">
 						<li
 							style="{ background-color: highlightedIndex ? 'grey' : 'transparent' }"
 							v-for="suggestion in (suggestions || []).map(s => ({
-                  label: s._source.authors,
-                  value: s._source.authors,
-                  key: s._id,
-              }))"
+								label: s._source.authors,
+								value: s._source.authors,
+								key: s._id,
+							}))"
 							v-bind="getItemProps({ item: suggestion })"
 							v-on="getItemEvents({ item: suggestion })"
 							:key="suggestion._id"
-						>{{suggestion.label}}</li>
+						>
+							{{ suggestion.label }}
+						</li>
 					</ul>
 				</div>
 			</DataSearch>
@@ -35,9 +46,9 @@
 				:pagination="true"
 				:from="0"
 				:size="5"
-				:react="{and: ['BookSensor']}"
+				:react="{ and: ['BookSensor'] }"
 			>
-				<div slot="renderData" slot-scope="{ item }">
+				<div slot="renderItem" slot-scope="{ item }">
 					<div class="flex book-content" key="item._id">
 						<img :src="item.image" alt="Book Cover" class="book-image" />
 						<div class="flex column justify-center ml20">
@@ -51,15 +62,21 @@
 									<div class="ratings-list flex align-center">
 										<span class="stars">
 											<i
-												v-for="(item, index) in Array(item.average_rating_rounded).fill('x')"
+												v-for="(item, index) in Array(
+													item.average_rating_rounded,
+												).fill('x')"
 												class="fas fa-star"
 												:key="index"
 											/>
 										</span>
-										<span class="avg-rating">({{item.average_rating}} avg)</span>
+										<span class="avg-rating"
+											>({{ item.average_rating }} avg)</span
+										>
 									</div>
 								</div>
-								<span class="pub-year">Pub {{item.original_publication_year}}</span>
+								<span class="pub-year"
+									>Pub {{ item.original_publication_year }}</span
+								>
 							</div>
 						</div>
 					</div>

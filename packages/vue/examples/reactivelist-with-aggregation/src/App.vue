@@ -10,7 +10,7 @@
 				aggregationField="brand.keyword"
 				className="result-list-container"
 			>
-				<div slot="renderAllData" slot-scope="{ aggregationData }">
+				<div slot="render" slot-scope="{ aggregationData }">
 					<div v-bind:key="result._source._id" v-for="result in aggregationData">
 						<h3>{{ result._source.brand }}</h3>
 						<img :src="result._source.image" width="500" />
