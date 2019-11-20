@@ -1,14 +1,14 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
+import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '../../utils/vueTypes';
 import { getAggsQuery, getCompositeAggsQuery } from './utils';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
-import { connect, isFunction } from '../../utils/index';
+import { connect, getComponent, hasCustomRenderer, isFunction } from '../../utils/index';
 import { deprecatePropWarning } from '../shared/utils';
-import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 
 const {
 	addComponent,
@@ -55,6 +55,7 @@ const SingleDropdownList = {
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Select a value'),
 		react: types.react,
+		render: types.func,
 		renderItem: types.func,
 		renderError: types.title,
 		transformData: types.func,
@@ -171,7 +172,7 @@ const SingleDropdownList = {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
 		}
 
-		if (this.$data.modifiedOptions.length === 0) {
+		if (!this.hasCustomRenderer && this.$data.modifiedOptions.length === 0) {
 			return null;
 		}
 
@@ -206,6 +207,8 @@ const SingleDropdownList = {
 					placeholder={this.$props.placeholder}
 					labelField="key"
 					showCount={this.$props.showCount}
+					hasCustomRenderer={this.hasCustomRenderer}
+					customRenderer={this.getComponent}
 					renderItem={renderItemCalc}
 					themePreset={this.themePreset}
 					showSearch={this.$props.showSearch}
@@ -257,7 +260,7 @@ const SingleDropdownList = {
 
 		handleChange(item) {
 			const { value } = this.$props;
-			if ( value === undefined ) {
+			if (value === undefined) {
 				this.setValue(item);
 			} else {
 				this.$emit('change', item);
@@ -315,6 +318,22 @@ const SingleDropdownList = {
 
 		handleLoadMore() {
 			this.updateQueryOptions(this.$props, true);
+		},
+		getComponent(items, downShiftProps = {}) {
+			const { currentValue } = this.$data;
+			const data = {
+				error: this.error,
+				value: currentValue,
+				data: items || [],
+				handleChange: this.handleChange,
+				downShiftProps,
+			};
+			return getComponent(data, this);
+		},
+	},
+	computed: {
+		hasCustomRenderer() {
+			return hasCustomRenderer(this);
 		},
 	},
 };
