@@ -1,18 +1,39 @@
 <template>
-  <div class="container">
-    <ReactiveBase v-bind="components.settings" :initialState="store">
-      <nav class="nav">
-        <div class="title">Airbeds</div>
-        <DataSearch v-bind="components.datasearch"/>
-      </nav>
-      <ResultCard v-bind="components.resultcard"/>
-    </ReactiveBase>
-  </div>
+	<div class="container">
+		<ReactiveBase v-bind="components.settings" :initialState="store">
+			<nav class="nav">
+				<div class="title">Airbeds</div>
+				<DataSearch v-bind="components.datasearch" />
+			</nav>
+			<ReactiveList v-bind="components.result">
+				<div slot="render" slot-scope="{ data }">
+					<ResultCardsWrapper>
+						<ResultCard
+							v-bind:key="result._id"
+							v-for="result in data"
+							:href="result.listing_url"
+						>
+							<ResultCardImage :src="result.image" />
+							<ResultCardTitle>
+								{{ result.name }}
+							</ResultCardTitle>
+							<ResultCardDescription>
+								<div className="price">{{ result.price }}</div>
+								<p className="info">
+									{{ result.room_type }} · {{ result.accommodates }} guests
+								</p>
+							</ResultCardDescription>
+						</ResultCard>
+					</ResultCardsWrapper>
+				</div>
+			</ReactiveList>
+		</ReactiveBase>
+	</div>
 </template>
 
 <script>
 import './styles/airbnb.css';
-import { initReactivesearch, DataSearch, ResultCard } from '@appbaseio/reactivesearch-vue';
+import { initReactivesearch, DataSearch, ReactiveList } from '@appbaseio/reactivesearch-vue';
 
 const components = {
 	settings: {
@@ -35,22 +56,11 @@ const components = {
 		highlight: true,
 		URLParams: true,
 	},
-	resultcard: {
+	result: {
 		className: 'right-col',
 		componentId: 'SearchResult',
 		dataField: 'name',
 		size: 12,
-		renderData: item => ({
-			title: item.name,
-			image: item.image,
-			url: item.listing_url,
-			description: `<div>
-								<div className="price">${item.price}</div>
-								<p className="info">
-									${item.room_type} · ${item.accommodates} guests
-								</p>
-							</div>`,
-		}),
 		pagination: true,
 		URLParams: true,
 		react: {
@@ -81,8 +91,8 @@ export default {
 						source: DataSearch,
 					},
 					{
-						...components.resultcard,
-						source: ResultCard,
+						...components.result,
+						source: ReactiveList,
 					},
 				],
 				query,

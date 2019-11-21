@@ -69,7 +69,7 @@ const ReactiveBase = {
 	methods: {
 		updateState(props) {
 			this.setStore(props);
-			this.key = `${state.key}-0`;
+			this.key = `${this.state.key}-0`;
 		},
 		setStore(props) {
 			const credentials
@@ -148,14 +148,19 @@ const ReactiveBase = {
 		const { headers, style, className } = this.$props;
 		return (
 			<Provider store={this.store}>
-				<URLParamsProvider as={this.$props.as} headers={headers} style={style} className={className}>
+				<URLParamsProvider
+					as={this.$props.as}
+					headers={headers}
+					style={style}
+					className={className}
+				>
 					{children}
 				</URLParamsProvider>
 			</Provider>
 		);
 	},
 };
-ReactiveBase.install = function (Vue) {
+ReactiveBase.install = function(Vue) {
 	Vue.component(ReactiveBase.name, ReactiveBase);
 };
 
