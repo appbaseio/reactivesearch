@@ -72,7 +72,6 @@ const ReactiveList = {
 		}
 		this.isLoading = true;
 		this.internalComponent = `${this.$props.componentId}__internal`;
-		this.shouldRenderPagination = this.pagination && !this.aggregationField;
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 		};
@@ -112,6 +111,9 @@ const ReactiveList = {
 		URLParams: VueTypes.bool.def(false),
 	},
 	computed: {
+		shouldRenderPagination() {
+			return this.pagination && !this.aggregationField;
+		},
 		totalPages() {
 			return Math.ceil(this.total / this.$props.size) || 0;
 		},
@@ -252,7 +254,7 @@ const ReactiveList = {
 		},
 		pagination(newVal, oldVal) {
 			if (newVal !== oldVal) {
-				if (newVal) {
+				if (!newVal) {
 					window.addEventListener('scroll', this.scrollHandler);
 				} else {
 					window.removeEventListener('scroll', this.scrollHandler);
@@ -540,7 +542,7 @@ const ReactiveList = {
 			}
 		},
 		setPage(page) {
-			// pageClick will be called everytime a pagination button is clicked
+			// pageClick will be called every time a pagination button is clicked
 			if (page !== this.$currentPage) {
 				this.$emit('pageClick', page + 1);
 				const value = this.$props.size * page;
