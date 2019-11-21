@@ -61,6 +61,26 @@ Example uses:
     unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String or Array`
     database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
+-   **aggregationField** `String` [optional]
+    One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
+    You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `renderAllSuggestions` slot as shown:
+
+    ```html
+    <template
+    	slot="renderAllSuggestions"
+    	slot-scope="{
+            ...
+            aggregationData
+        }"
+    >
+    	...
+    </template>
+    ```
+
+    > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** slot.
+
+    > It is possible to override this query by providing `customQuery`.
+
 -   **nestedField** `String` [optional]
     Set the path of the `nested` type under which the `dataField` is present. Only applicable only when the field(s) specified in the `dataField` is(are) present under a [`nested` type](https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html) mapping.
 -   **title** `String or JSX` [optional]
@@ -200,6 +220,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
         highlightedIndex,   // index value which should be highlighted
         suggestions,        // unmodified suggestions from Elasticsearch
         parsedSuggestions,  // suggestions parsed by ReactiveSearch
+        aggregationData,    // composite aggregations parsed by ReactiveSearch
     }"
 >
 	...

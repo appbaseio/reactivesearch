@@ -181,6 +181,22 @@ Check demo [here](https://codesandbox.io/s/3ylrrr0r5q).
     CSS class to be injected on the component container.
 -   **style** `Object`
     CSS styles to be applied to the **DataSearch** component.
+-   **aggregationField** `String` [optional]
+    One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
+    You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `render` or `onData` prop as shown:
+
+    ```javascript
+    <ReactiveComponent
+        aggregationField="original_title.keyword"
+        render={({aggregationData}) => {...}}
+        onData={({aggregationData}) => {...}}
+    />
+    ```
+
+    > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** prop.
+
+    > It is possible to override this query by providing `defaultQuery` or `customQuery`.
+
 -   **defaultQuery** `Function`
     **returns** the default query to be applied to the component, as defined in Elasticsearch Query DSL.
 -   **customQuery** `Function`
@@ -189,7 +205,7 @@ Check demo [here](https://codesandbox.io/s/3ylrrr0r5q).
 -   **onQueryChange** `Function`
     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **onData** `Function`
-    callback function which provides `data`, `rawData` and `aggregations` as function params.
+    callback function which provides `data`, `rawData`, `aggregationData` and `aggregations` as function params.
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **filterLabel** `String` [optional]

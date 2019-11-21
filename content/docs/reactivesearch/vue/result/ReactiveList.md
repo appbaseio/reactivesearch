@@ -60,6 +60,26 @@ Example uses:
     unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String`
     data field to be connected to the component's UI view. It is useful for providing a **sorting** context i.e. results would be sorted based on the `dataField`.
+-   **aggregationField** `String` [optional]
+    One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
+    You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `renderAllData` slot as shown:
+
+    ```html
+    <template
+    	slot="renderAllData"
+    	slot-scope="{
+            ...
+            aggregationData
+        }"
+    >
+    	...
+    </template>
+    ```
+
+    > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** slot.
+
+    > It is possible to override this query by providing `defaultQuery`.
+
 -   **excludeFields** `String Array` [optional]
     fields to be excluded in search results.
 -   **includeFields** `String Array` [optional]
@@ -113,13 +133,14 @@ Example uses:
     	</a>
     </div>
     ```
+
 -   **render** `Function|slot-scope` [optional]
     A function or slot returning the UI you want to render based on your results. This function receives a list of parameters and expects to return a `JSX`.
     Read more about it [here](#extending).
     > Note:
     >
     > Either `renderItem` or `render` is required in ReactiveList for rendering the data.
- 
+
 -   **renderResultStats** `Function|slot-scope` [optional]
     renders custom result stats using a callback function that takes `stats` object as parameter and expects it to return a string or html. `stats` object contains following properties
     -   **`numberOfResults`**: `number`

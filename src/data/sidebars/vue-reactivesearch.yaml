@@ -55,6 +55,8 @@
               link: /docs/reactivesearch/vue/advanced/SelectedFilters/
             - title: Custom Queries
               link: /docs/reactivesearch/vue/advanced/CustomQueries/
+            - title: Grouping Results
+              link: /docs/reactivesearch/vue/advanced/groupingresults/
             - title: React Prop
               link: /docs/reactivesearch/vue/advanced/ReactProp/
             - title: Reactive Component

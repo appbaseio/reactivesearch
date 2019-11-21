@@ -68,6 +68,21 @@ Example uses:
     unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String or Array`
     database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
+-   **aggregationField** `String` [optional]
+    One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
+    You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using render prop as shown:
+
+    ```javascript
+    <CategorySearch
+        aggregationField="original_title.keyword"
+        render={({aggregationData}) => {...}}
+    />
+    ```
+
+    > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** prop.
+
+    > It is possible to override this query by providing `defaultQuery` or `customQuery`.
+
 -   **nestedField** `String` [optional]
     Set the path of the `nested` type under which the `dataField` is present. Only applicable only when the field(s) specified in the `dataField` is(are) present under a [`nested` type](https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html) mapping.
 -   **categoryField** `String` [optional]
@@ -168,7 +183,7 @@ Example uses:
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **render** `Function` [optional]
-    You can render suggestions in a custom layout by using the `render` prop.
+    You can render suggestions or composite aggregations in a custom layout by using the `render` prop.
     <br/>
     It accepts an object with these properties:
     -   **`loading`**: `boolean`
@@ -177,6 +192,8 @@ Example uses:
         An object containing the error info.
     -   **`data`**: `array`
         An array of parsed suggestions (original suggestions + category suggestions) obtained from the applied query.
+    -   **`aggregationData`**: `array`
+        An array of composite aggregations (shaped in the form of hits) obtained from `composite aggs` query. 
     -   **`categories`**: `array`
         An array of parsed category suggestions.
     -   **`rawCategories`**: `array`
@@ -199,6 +216,7 @@ Example uses:
 		value,
 		categories,
 		suggestions,
+        aggregationData,
 		downshiftProps: { isOpen, getItemProps },
 	}) => {
 		if (loading) {
@@ -245,6 +263,7 @@ Or you can also use render function as children
                 categories,
                 rawCategories,
                 suggestions,
+                aggregationData,
                 rawSuggestions
                 value,
                 downshiftProps

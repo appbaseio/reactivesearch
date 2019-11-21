@@ -93,6 +93,8 @@
               link: /docs/reactivesearch/v3/advanced/selectedfilters/
             - title: StateProvider
               link: /docs/reactivesearch/v3/advanced/stateprovider/
+            - title: Grouping Results
+              link: /docs/reactivesearch/v3/advanced/groupingresults/
             - title: Custom Suggestions
               link: /docs/reactivesearch/v3/advanced/customsuggestions/
             - title: Custom Queries
