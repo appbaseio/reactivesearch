@@ -3,7 +3,14 @@ import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
-import { connect, isFunction, getValidPropsKeys } from '../../utils/index';
+import {
+	connect,
+	getComponent,
+	hasCustomRenderer,
+	isEvent,
+	isFunction,
+	getValidPropsKeys,
+} from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Radio } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
@@ -44,6 +51,7 @@ const SingleList = {
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Search'),
 		react: types.react,
+		render: types.func,
 		renderItem: types.func,
 		transformData: types.func,
 		selectAllLabel: types.string,
@@ -157,7 +165,7 @@ const SingleList = {
 		if (renderErrorCalc && this.error) {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
 		}
-		if (this.modifiedOptions.length === 0) {
+		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0) {
 			return null;
 		}
 
@@ -175,100 +183,110 @@ const SingleList = {
 					</Title>
 				)}
 				{this.renderSearch()}
-				<UL class={getClassName(this.$props.innerClass, 'list') || ''}>
-					{selectAllLabel ? (
-						<li
-							key={selectAllLabel}
-							class={`${this.$data.currentValue === selectAllLabel ? 'active' : ''}`}
-						>
-							<Radio
-								class={getClassName(this.$props.innerClass, 'radio')}
-								id={`${this.$props.componentId}-${selectAllLabel}`}
-								name={this.$props.componentId}
-								value={selectAllLabel}
-								onClick={this.handleClick}
-								readOnly
-								show={this.$props.showRadio}
-								{...{
-									domProps: {
-										checked: this.$data.currentValue === selectAllLabel,
-									},
-								}}
-							/>
-							<label
-								class={getClassName(this.$props.innerClass, 'label') || null}
-								for={`${this.$props.componentId}-${selectAllLabel}`}
-							>
-								{selectAllLabel}
-							</label>
-						</li>
-					) : null}
-					{itemsToRender
-						.filter(item => {
-							if (String(item.key).length) {
-								if (this.$props.showSearch && this.$data.searchTerm) {
-									return String(item.key)
-										.toLowerCase()
-										.includes(this.$data.searchTerm.toLowerCase());
-								}
-
-								return true;
-							}
-
-							return false;
-						})
-						.map(item => (
+				{this.hasCustomRenderer ? (
+					this.getComponent()
+				) : (
+					<UL class={getClassName(this.$props.innerClass, 'list') || ''}>
+						{selectAllLabel ? (
 							<li
-								key={item.key}
-								class={`${this.currentValue === String(item.key) ? 'active' : ''}`}
+								key={selectAllLabel}
+								class={`${
+									this.$data.currentValue === selectAllLabel ? 'active' : ''
+								}`}
 							>
 								<Radio
 									class={getClassName(this.$props.innerClass, 'radio')}
-									id={`${this.$props.componentId}-${item.key}`}
+									id={`${this.$props.componentId}-${selectAllLabel}`}
 									name={this.$props.componentId}
-									value={item.key}
-									readOnly
+									value={selectAllLabel}
 									onClick={this.handleClick}
-									type="radio"
+									readOnly
 									show={this.$props.showRadio}
 									{...{
 										domProps: {
-											checked: this.currentValue === String(item.key),
+											checked: this.$data.currentValue === selectAllLabel,
 										},
 									}}
 								/>
 								<label
 									class={getClassName(this.$props.innerClass, 'label') || null}
-									for={`${this.$props.componentId}-${item.key}`}
+									for={`${this.$props.componentId}-${selectAllLabel}`}
 								>
-									{renderItemCalc ? (
-										renderItemCalc({
-											label: item.key,
-											count: item.doc_count,
-											isChecked: this.currentValue === String(item.key),
-										})
-									) : (
-										<span>
-											{item.key}
-											{this.$props.showCount && (
-												<span
-													class={
-														getClassName(
-															this.$props.innerClass,
-															'count',
-														) || null
-													}
-												>
-													&nbsp;(
-													{item.doc_count})
-												</span>
-											)}
-										</span>
-									)}
+									{selectAllLabel}
 								</label>
 							</li>
-						))}
-				</UL>
+						) : null}
+						{itemsToRender
+							.filter(item => {
+								if (String(item.key).length) {
+									if (this.$props.showSearch && this.$data.searchTerm) {
+										return String(item.key)
+											.toLowerCase()
+											.includes(this.$data.searchTerm.toLowerCase());
+									}
+
+									return true;
+								}
+
+								return false;
+							})
+							.map(item => (
+								<li
+									key={item.key}
+									class={`${
+										this.currentValue === String(item.key) ? 'active' : ''
+									}`}
+								>
+									<Radio
+										class={getClassName(this.$props.innerClass, 'radio')}
+										id={`${this.$props.componentId}-${item.key}`}
+										name={this.$props.componentId}
+										value={item.key}
+										readOnly
+										onClick={this.handleClick}
+										type="radio"
+										show={this.$props.showRadio}
+										{...{
+											domProps: {
+												checked: this.currentValue === String(item.key),
+											},
+										}}
+									/>
+									<label
+										class={
+											getClassName(this.$props.innerClass, 'label') || null
+										}
+										for={`${this.$props.componentId}-${item.key}`}
+									>
+										{renderItemCalc ? (
+											renderItemCalc({
+												label: item.key,
+												count: item.doc_count,
+												isChecked: this.currentValue === String(item.key),
+											})
+										) : (
+											<span>
+												{item.key}
+												{this.$props.showCount && (
+													<span
+														class={
+															getClassName(
+																this.$props.innerClass,
+																'count',
+															) || null
+														}
+													>
+														&nbsp;(
+														{item.doc_count})
+													</span>
+												)}
+											</span>
+										)}
+									</label>
+								</li>
+							))}
+					</UL>
+				)}
 			</Container>
 		);
 	},
@@ -373,13 +391,39 @@ const SingleList = {
 			return null;
 		},
 
+		getComponent() {
+			const { currentValue, modifiedOptions } = this.$data;
+			const { transformData } = this.$props;
+			let itemsToRender = modifiedOptions;
+			if (transformData) {
+				itemsToRender = transformData(itemsToRender);
+			}
+			const data = {
+				error: this.error,
+				loading: this.isLoading,
+				value: currentValue,
+				data: itemsToRender,
+				handleChange: this.handleClick,
+			};
+			return getComponent(data, this);
+		},
+
 		handleClick(e) {
+			let currentValue = e;
+			if (isEvent(e)) {
+				currentValue = e.target.value;
+			}
 			const { value } = this.$props;
 			if (value === undefined) {
-				this.setValue(e.target.value);
+				this.setValue(currentValue);
 			} else {
-				this.$emit('change', e.target.value);
+				this.$emit('change', currentValue);
 			}
+		},
+	},
+	computed: {
+		hasCustomRenderer() {
+			return hasCustomRenderer(this);
 		},
 	},
 };
@@ -435,6 +479,7 @@ const mapStateToProps = (state, props) => ({
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
+	isLoading: state.isLoading[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)

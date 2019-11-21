@@ -61,3 +61,6 @@ export const hasCustomRenderer = (_ref = {}) => {
 
 export const getValidPropsKeys = (props = {}) =>
 	Object.keys(props).filter(i => validProps.includes(i));
+
+export const isEvent = candidate =>
+	!!(candidate && candidate.stopPropagation && candidate.preventDefault);

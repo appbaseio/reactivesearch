@@ -1,8 +1,12 @@
 import { Actions, helper, suggestions as getSuggestions, causes } from '@appbaseio/reactivecore';
-import { isEqual, getCompositeAggsQuery } from '@appbaseio/reactivecore/lib/utils/helper';
-
 import VueTypes from 'vue-types';
-import { connect, isFunction, getValidPropsKeys } from '../../utils/index';
+import {
+	connect,
+	getComponent,
+	hasCustomRenderer,
+	isFunction,
+	getValidPropsKeys,
+} from '../../utils/index';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import InputIcon from '../../styles/InputIcon';
@@ -31,6 +35,8 @@ const {
 	getClassName,
 	getOptionsFromQuery,
 	checkSomePropChange,
+	isEqual,
+	getCompositeAggsQuery,
 } = helper;
 
 const DataSearch = {
@@ -82,6 +88,9 @@ const DataSearch = {
 			}
 			return suggestionsList;
 		},
+		hasCustomRenderer() {
+			return hasCustomRenderer(this);
+		},
 	},
 	props: {
 		options: types.options,
@@ -110,8 +119,8 @@ const DataSearch = {
 		iconPosition: VueTypes.oneOf(['left', 'right']).def('left'),
 		innerClass: types.style,
 		innerRef: types.func,
-		renderAllSuggestions: types.func,
-		renderSuggestion: types.func,
+		render: types.func,
+		parseSuggestion: types.func,
 		renderNoSuggestion: types.title,
 		renderError: types.title,
 		placeholder: VueTypes.string.def('Search'),
@@ -219,6 +228,19 @@ const DataSearch = {
 			this.queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
 			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		},
+		getComponent(downshiftProps = {}) {
+			const { currentValue } = this.$data;
+			const data = {
+				error: this.error,
+				loading: this.isLoading,
+				downshiftProps,
+				data: this.suggestionsList,
+				aggregationData: this.aggregationData,
+				rawData: this.suggestions || [],
+				value: currentValue,
+			};
+			return getComponent(data, this);
+		},
 		// returns size and aggs property
 		getBasicQueryOptions() {
 			const { aggregationField, size } = this.$props;
@@ -242,7 +264,7 @@ const DataSearch = {
 			}
 		},
 		onSuggestions(results) {
-			const { renderSuggestion } = this.$props;
+			const { parseSuggestion } = this.$props;
 			const fields = Array.isArray(this.$props.dataField)
 				? this.$props.dataField
 				: [this.$props.dataField];
@@ -253,8 +275,8 @@ const DataSearch = {
 				this.$data.currentValue.toLowerCase(),
 			);
 
-			if (renderSuggestion) {
-				return parsedSuggestions.map(suggestion => renderSuggestion(suggestion));
+			if (parseSuggestion) {
+				return parsedSuggestions.map(suggestion => parseSuggestion(suggestion));
 			}
 
 			return parsedSuggestions;
@@ -502,8 +524,6 @@ const DataSearch = {
 	},
 	render() {
 		const { theme } = this.$props;
-		const renderAllSuggestions
-			= this.$scopedSlots.renderAllSuggestions || this.$props.renderAllSuggestions;
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -565,19 +585,15 @@ const DataSearch = {
 										themePreset={this.themePreset}
 									/>
 									{this.renderIcons()}
-									{renderAllSuggestions
-										&& renderAllSuggestions({
-											currentValue: this.$data.currentValue,
+									{this.hasCustomRenderer
+										&& this.getComponent({
 											isOpen,
 											getItemProps,
 											getItemEvents,
 											highlightedIndex,
-											suggestions: this.suggestions,
-											parsedSuggestions: this.suggestionsList,
-											aggregationData: this.aggregationData,
 										})}
 									{this.renderErrorComponent()}
-									{!renderAllSuggestions
+									{!this.hasCustomRenderer
 									&& isOpen
 									&& this.suggestionsList.length ? (
 											<ul

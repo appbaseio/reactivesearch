@@ -28,6 +28,9 @@ const Dropdown = {
 		multi: types.bool, // change event
 		placeholder: types.string,
 		returnsObject: types.bool,
+		customLabelRenderer: types.func,
+		hasCustomRenderer: types.bool,
+		customRenderer: types.func,
 		renderItem: types.func,
 		handleChange: types.func,
 		transformData: types.func,
@@ -50,6 +53,9 @@ const Dropdown = {
 			renderItem,
 			transformData,
 			footer,
+			customLabelRenderer,
+			hasCustomRenderer,
+			customRenderer,
 		} = this.$props;
 		let itemsToRender = items;
 
@@ -86,12 +92,27 @@ const Dropdown = {
 								small={this.$props.small}
 								themePreset={this.$props.themePreset}
 							>
-								<div>
-									{selectedItem ? this.renderToString(selectedItem) : placeholder}
-								</div>
+								{customLabelRenderer ? (
+									customLabelRenderer(selectedItem)
+								) : (
+									<div>
+										{selectedItem
+											? this.renderToString(selectedItem)
+											: placeholder}
+									</div>
+								)}
 								<Chevron open={isOpen} />
 							</Select>
-							{isOpen && itemsToRender.length ? (
+							{/* eslint-disable-next-line no-nested-ternary */}
+							{hasCustomRenderer ? (
+								customRenderer(itemsToRender, {
+									getItemProps,
+									isOpen,
+									highlightedIndex,
+									getButtonProps,
+									getItemEvents,
+								})
+							) : isOpen && itemsToRender.length ? (
 								<ul
 									class={`${suggestions(themePreset, this.theme)} ${
 										this.$props.small ? 'small' : ''
@@ -264,6 +285,13 @@ const Dropdown = {
 		},
 
 		renderToString(value) {
+			const { customLabelRenderer } = this.$props;
+			if (customLabelRenderer) {
+				const customLabel = customLabelRenderer(value);
+				if (typeof customLabel === 'string') {
+					return customLabel;
+				}
+			}
 			if (Array.isArray(value) && value.length) {
 				const arrayToRender = value.map(item => this.renderToString(item));
 				return arrayToRender.join(', ');
