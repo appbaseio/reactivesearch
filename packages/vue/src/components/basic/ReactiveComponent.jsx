@@ -122,17 +122,17 @@ const ReactiveComponent = {
 	watch: {
 		hits(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
-				this.$emit('data', parseHits(newVal), oldVal);
+				this.$emit('data', this.getData());
 			}
 		},
 		aggregations(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
-				this.$emit('data', parseHits(newVal), oldVal);
+				this.$emit('data', this.getData());
 			}
 		},
 		aggregationData(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
-				this.$emit('data', newVal, oldVal);
+				this.$emit('data', this.getData());
 			}
 		},
 		defaultQuery(newVal, oldVal) {
