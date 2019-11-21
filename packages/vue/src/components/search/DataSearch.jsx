@@ -206,13 +206,15 @@ const DataSearch = {
 			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		},
 		getComponent(downShiftProps = {}) {
+			const { currentValue } = this.$data;
 			const data = {
-				...downShiftProps,
+				error: this.error,
 				loading: this.isLoading,
-				currentValue: this.$data.currentValue,
-				suggestions: this.suggestions,
-				parsedSuggestions: this.suggestionsList,
+				downShiftProps,
+				data: this.suggestionsList,
 				aggregationData: this.aggregationData,
+				rawData: this.suggestions || [],
+				value: currentValue,
 			};
 			return getComponent(data, this);
 		},
@@ -789,10 +791,7 @@ const mapDispatchtoProps = {
 	watchComponent,
 	setQueryListener,
 };
-const DSConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(DataSearch);
+const DSConnected = connect(mapStateToProps, mapDispatchtoProps)(DataSearch);
 
 DataSearch.install = function(Vue) {
 	Vue.component(DataSearch.name, DSConnected);
