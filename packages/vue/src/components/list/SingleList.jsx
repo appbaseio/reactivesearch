@@ -8,7 +8,6 @@ import types from '../../utils/vueTypes';
 import { UL, Radio } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
 import { deprecatePropWarning } from '../shared/utils';
-import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 
 const {
 	addComponent,
@@ -24,6 +23,7 @@ const {
 	checkValueChange,
 	getClassName,
 	getOptionsFromQuery,
+	isEqual,
 } = helper;
 
 const SingleList = {
@@ -209,9 +209,7 @@ const SingleList = {
 						.map(item => (
 							<li
 								key={item.key}
-								class={`${
-									this.currentValue === String(item.key) ? 'active' : ''
-								}`}
+								class={`${this.currentValue === String(item.key) ? 'active' : ''}`}
 							>
 								<Radio
 									class={getClassName(this.$props.innerClass, 'radio')}
@@ -366,7 +364,7 @@ const SingleList = {
 
 		handleClick(e) {
 			const { value } = this.$props;
-			if ( value === undefined ) {
+			if (value === undefined) {
 				this.setValue(e.target.value);
 			} else {
 				this.$emit('change', e.target.value);
@@ -443,10 +441,7 @@ const mapDispatchtoProps = {
 	watchComponent,
 };
 
-const ListConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(SingleList);
+const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleList);
 
 SingleList.install = function(Vue) {
 	Vue.component(SingleList.name, ListConnected);

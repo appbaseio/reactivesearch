@@ -8,7 +8,6 @@ import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
 import { connect, isFunction } from '../../utils/index';
 import { deprecatePropWarning } from '../shared/utils';
-import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 
 const {
 	addComponent,
@@ -25,6 +24,7 @@ const {
 	checkPropChange,
 	getClassName,
 	getOptionsFromQuery,
+	isEqual,
 } = helper;
 const SingleDropdownList = {
 	name: 'SingleDropdownList',
@@ -257,7 +257,7 @@ const SingleDropdownList = {
 
 		handleChange(item) {
 			const { value } = this.$props;
-			if ( value === undefined ) {
+			if (value === undefined) {
 				this.setValue(item);
 			} else {
 				this.$emit('change', item);
@@ -388,10 +388,7 @@ const mapDispatchtoProps = {
 	watchComponent,
 };
 
-const ListConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(SingleDropdownList);
+const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList);
 
 SingleDropdownList.install = function(Vue) {
 	Vue.component(SingleDropdownList.name, ListConnected);
