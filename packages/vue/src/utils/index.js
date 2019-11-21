@@ -57,3 +57,6 @@ export const hasCustomRenderer = (_ref = {}) => {
 	const { render } = _ref.$scopedSlots || _ref.$props;
 	return Boolean(render);
 };
+
+export const isEvent = candidate =>
+	!!(candidate && candidate.stopPropagation && candidate.preventDefault);

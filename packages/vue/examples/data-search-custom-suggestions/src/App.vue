@@ -13,7 +13,7 @@
 			>
 				<div
 					class="suggestions"
-					slot="renderAllSuggestions"
+					slot="render"
 					slot-scope="{
 						suggestions,
 						isOpen,
