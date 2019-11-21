@@ -4,7 +4,13 @@ import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
 import ResultListWrapper from './addons/ResultListWrapper.jsx';
 import ResultCardsWrapper from './addons/ResultCardsWrapper.jsx';
-import { connect, isFunction, hasCustomRenderer, getComponent } from '../../utils/index';
+import {
+	connect,
+	isFunction,
+	hasCustomRenderer,
+	getComponent,
+	getValidPropsKeys,
+} from '../../utils/index';
 import Flex from '../../styles/Flex';
 import types from '../../utils/vueTypes';
 import { resultStats, sortOptions } from '../../styles/results';
@@ -19,6 +25,7 @@ const {
 	loadMore,
 	setValue,
 	setQueryListener,
+	updateComponentProps,
 } = Actions;
 
 const {
@@ -29,6 +36,7 @@ const {
 	parseHits,
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
+	checkSomePropChange,
 } = helper;
 
 const ReactiveList = {
@@ -333,6 +341,14 @@ const ReactiveList = {
 		if (!this.shouldRenderPagination) {
 			window.addEventListener('scroll', this.scrollHandler);
 		}
+
+		const propsKeys = getValidPropsKeys(this.$props);
+		this.updateComponentProps(this.componentId, this.$props);
+		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
+			checkSomePropChange(newVal, oldVal, propsKeys, () => {
+				this.updateComponentProps(this.componentId, this.$props);
+			});
+		});
 	},
 
 	beforeDestroy() {
@@ -735,6 +751,7 @@ const mapDispatchtoProps = {
 	setStreaming,
 	updateQuery,
 	watchComponent,
+	updateComponentProps,
 };
 // Only used for SSR
 ReactiveList.generateQueryOptions = props => {

@@ -6,7 +6,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
-import { connect, isFunction } from '../../utils/index';
+import { connect, isFunction, getValidPropsKeys } from '../../utils/index';
 import { deprecatePropWarning } from '../shared/utils';
 
 const {
@@ -16,6 +16,7 @@ const {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	updateComponentProps,
 } = Actions;
 const {
 	getQueryOptions,
@@ -25,6 +26,7 @@ const {
 	getClassName,
 	getOptionsFromQuery,
 	isEqual,
+	checkSomePropChange,
 } = helper;
 const SingleDropdownList = {
 	name: 'SingleDropdownList',
@@ -78,6 +80,15 @@ const SingleDropdownList = {
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
 			this.$emit('error', e);
+		});
+	},
+	mounted() {
+		const propsKeys = getValidPropsKeys(this.$props);
+		this.updateComponentProps(this.componentId, this.$props);
+		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
+			checkSomePropChange(newVal, oldVal, propsKeys, () => {
+				this.updateComponentProps(this.componentId, this.$props);
+			});
 		});
 	},
 	beforeMount() {
@@ -386,6 +397,7 @@ const mapDispatchtoProps = {
 	setQueryListener,
 	updateQuery,
 	watchComponent,
+	updateComponentProps,
 };
 
 const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList);

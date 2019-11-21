@@ -3,7 +3,7 @@ import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
-import { connect, isFunction, parseValueArray } from '../../utils/index';
+import { connect, isFunction, parseValueArray, getValidPropsKeys } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
@@ -16,6 +16,7 @@ const {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	updateComponentProps,
 } = Actions;
 const {
 	isEqual,
@@ -24,6 +25,7 @@ const {
 	checkValueChange,
 	getClassName,
 	getOptionsFromQuery,
+	checkSomePropChange,
 } = helper;
 
 const MultiList = {
@@ -79,6 +81,15 @@ const MultiList = {
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
 			this.$emit('error', e);
+		});
+	},
+	mounted() {
+		const propsKeys = getValidPropsKeys(this.$props);
+		this.updateComponentProps(this.componentId, this.$props);
+		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
+			checkSomePropChange(newVal, oldVal, propsKeys, () => {
+				this.updateComponentProps(this.componentId, this.$props);
+			});
 		});
 	},
 	beforeMount() {
@@ -392,8 +403,10 @@ const MultiList = {
 			if (props.defaultQuery) {
 				const value = Object.keys(this.$data.currentValue);
 				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
-				this.setQueryOptions(this.internalComponent,
-					{ ...queryOptions, ...defaultQueryOptions });
+				this.setQueryOptions(this.internalComponent, {
+					...queryOptions,
+					...defaultQueryOptions,
+				});
 			} else {
 				this.setQueryOptions(this.internalComponent, queryOptions);
 			}
@@ -424,7 +437,7 @@ const MultiList = {
 		},
 
 		handleClick(e) {
-			const { value } = this.$props
+			const { value } = this.$props;
 			if (value === undefined) {
 				this.setValue(e.target.value);
 			} else {
@@ -539,12 +552,10 @@ const mapDispatchtoProps = {
 	setQueryListener,
 	updateQuery,
 	watchComponent,
+	updateComponentProps,
 };
 
-const ListConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(MultiList);
+const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(MultiList);
 
 MultiList.install = function(Vue) {
 	Vue.component(MultiList.name, ListConnected);

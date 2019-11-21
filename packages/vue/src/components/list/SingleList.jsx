@@ -3,7 +3,7 @@ import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
-import { connect, isFunction } from '../../utils/index';
+import { connect, isFunction, getValidPropsKeys } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Radio } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
@@ -16,6 +16,7 @@ const {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	updateComponentProps,
 } = Actions;
 const {
 	getQueryOptions,
@@ -24,6 +25,7 @@ const {
 	getClassName,
 	getOptionsFromQuery,
 	isEqual,
+	checkSomePropChange,
 } = helper;
 
 const SingleList = {
@@ -77,6 +79,15 @@ const SingleList = {
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
 			this.$emit('error', e);
+		});
+	},
+	mounted() {
+		const propsKeys = getValidPropsKeys(this.$props);
+		this.updateComponentProps(this.componentId, this.$props);
+		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
+			checkSomePropChange(newVal, oldVal, propsKeys, () => {
+				this.updateComponentProps(this.componentId, this.$props);
+			});
 		});
 	},
 	beforeMount() {
@@ -439,6 +450,7 @@ const mapDispatchtoProps = {
 	setQueryListener,
 	updateQuery,
 	watchComponent,
+	updateComponentProps,
 };
 
 const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleList);

@@ -18,6 +18,7 @@ import ResultCard from './components/result/ResultCard.jsx';
 import ResultList from './components/result/ResultList.jsx';
 import RangeSlider from './components/range/RangeSlider.jsx';
 import DynamicRangeSlider from './components/range/DynamicRangeSlider.jsx';
+import StateProvider from './components/basic/StateProvider.jsx';
 import initReactivesearch from './server/index';
 import version from './components/Version/index';
 
@@ -38,6 +39,7 @@ const components = [
 	ToggleButton,
 	SingleDropdownList,
 	MultiDropdownList,
+	StateProvider,
 ];
 
 const install = function(Vue) {
@@ -70,6 +72,7 @@ export {
 	SingleDropdownList,
 	MultiDropdownList,
 	ToggleButton,
+	StateProvider,
 	initReactivesearch,
 };
 

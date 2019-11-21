@@ -6,7 +6,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
-import { connect, isFunction, parseValueArray } from '../../utils/index';
+import { connect, isFunction, parseValueArray, getValidPropsKeys } from '../../utils/index';
 import { deprecatePropWarning } from '../shared/utils';
 
 const {
@@ -16,6 +16,7 @@ const {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	updateComponentProps,
 } = Actions;
 const {
 	isEqual,
@@ -25,6 +26,7 @@ const {
 	checkPropChange,
 	getClassName,
 	getOptionsFromQuery,
+	checkSomePropChange,
 } = helper;
 const MultiDropdownList = {
 	name: 'MultiDropdownList',
@@ -81,7 +83,15 @@ const MultiDropdownList = {
 			this.$emit('error', e);
 		});
 	},
-
+	mounted() {
+		const propsKeys = getValidPropsKeys(this.$props);
+		this.updateComponentProps(this.componentId, this.$props);
+		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
+			checkSomePropChange(newVal, oldVal, propsKeys, () => {
+				this.updateComponentProps(this.componentId, this.$props);
+			});
+		});
+	},
 	beforeMount() {
 		this.addComponent(this.internalComponent);
 		this.addComponent(this.$props.componentId);
@@ -493,12 +503,10 @@ const mapDispatchtoProps = {
 	setQueryListener,
 	updateQuery,
 	watchComponent,
+	updateComponentProps,
 };
 
-const ListConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(MultiDropdownList);
+const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList);
 
 MultiDropdownList.install = function(Vue) {
 	Vue.component(MultiDropdownList.name, ListConnected);

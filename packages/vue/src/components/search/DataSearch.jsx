@@ -2,7 +2,7 @@ import { Actions, helper, suggestions as getSuggestions, causes } from '@appbase
 import { isEqual, getCompositeAggsQuery } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import VueTypes from 'vue-types';
-import { connect, isFunction } from '../../utils/index';
+import { connect, isFunction, getValidPropsKeys } from '../../utils/index';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import InputIcon from '../../styles/InputIcon';
@@ -22,8 +22,16 @@ const {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	updateComponentProps,
 } = Actions;
-const { debounce, pushToAndClause, checkValueChange, getClassName, getOptionsFromQuery } = helper;
+const {
+	debounce,
+	pushToAndClause,
+	checkValueChange,
+	getClassName,
+	getOptionsFromQuery,
+	checkSomePropChange,
+} = helper;
 
 const DataSearch = {
 	name: 'DataSearch',
@@ -143,6 +151,15 @@ const DataSearch = {
 			deprecatePropWarning('defaultSelected', 'defaultValue');
 			this.setValue(this.$props.defaultSelected, true);
 		}
+	},
+	mounted() {
+		const propsKeys = getValidPropsKeys(this.$props);
+		this.updateComponentProps(this.componentId, this.$props);
+		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
+			checkSomePropChange(newVal, oldVal, propsKeys, () => {
+				this.updateComponentProps(this.componentId, this.$props);
+			});
+		});
 	},
 	beforeDestroy() {
 		this.removeComponent(this.$props.componentId);
@@ -780,11 +797,9 @@ const mapDispatchtoProps = {
 	updateQuery,
 	watchComponent,
 	setQueryListener,
+	updateComponentProps,
 };
-const DSConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(DataSearch);
+const DSConnected = connect(mapStateToProps, mapDispatchtoProps)(DataSearch);
 
 DataSearch.install = function(Vue) {
 	Vue.component(DataSearch.name, DSConnected);

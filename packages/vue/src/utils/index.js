@@ -1,3 +1,4 @@
+import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
 import connectToStore from './connector';
 
 // TODO
@@ -57,3 +58,6 @@ export const hasCustomRenderer = (_ref = {}) => {
 	const { render } = _ref.$scopedSlots || _ref.$props;
 	return Boolean(render);
 };
+
+export const getValidPropsKeys = (props = {}) =>
+	Object.keys(props).filter(i => validProps.includes(i));
