@@ -34,7 +34,7 @@ For example, let's suppose that we are building an e-commerce store where we hav
 
 Now, let's assume that we have all these hex-codes stored as `keywords` in an Elasticsearch index. To display each unique color tile, we can run a `terms` aggregations query. The `defaultQuery` prop of ReactiveComponent allows us to do this and pass the results to a child component.
 
-```javascript
+```html
 <reactive-component
     componentId="myColorPicker"   // a unique id we will refer to later
     :defaultQuery=`() => ({

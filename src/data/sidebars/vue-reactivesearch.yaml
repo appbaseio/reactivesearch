@@ -53,6 +53,8 @@
         items:
             - title: SelectedFilters
               link: /docs/reactivesearch/vue/advanced/SelectedFilters/
+            - title: StateProvider
+              link: /docs/reactivesearch/vue/advanced/StateProvider/
             - title: Custom Queries
               link: /docs/reactivesearch/vue/advanced/CustomQueries/
             - title: Grouping Results
