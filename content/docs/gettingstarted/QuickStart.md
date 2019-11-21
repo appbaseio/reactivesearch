@@ -47,3 +47,26 @@ appbase.io offers the following advantages over running your own Elasticsearch c
 4. **An Active Ecosystem** - From UI toolkits to build [search interfaces](https://opensource.appbase.io/reactivesearch) and [map UIs](https://opensource.appbase.io/reactivemaps), to the [leading Elasticsearch data browser](https://opensource.appbase.io/dejavu/) to a [GUI for writing queries](https://opensource.appbase.io/mirage/) to [backend data connectors](https://medium.appbase.io/abc-import-import-your-mongodb-sql-json-csv-data-into-elasticsearch-a202cafafc0d) to import data from SQL, MongoDB, JSON, CSV sources into Elasticsearch, we are actively working on open-standards to improve accessibility of building apps with appbase.io and Elasticsearch.
 5. **No Vendor Lock-in** - Hosted APIs often come with a huge lock-in cost. appbase.io is offered as [a hosted API](https://appbase.io) as well as a [cloud native software](https://github.com/appbaseio/arc), offering a consistent experience without becoming a walled garden.
 6. **Built-in Realtime Streaming** - appbase.io for clusters offering a realtime pub/sub API for the entire Elasticsearch Query DSL.
+
+## Choose your hosting
+
+<div class="grid-integrations-index mt4 mt6-l f8">
+	<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc tooltip-wrapper" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem; height: 120px;width:120px;" href="/docs/hosting/Apps">
+		<img class="w10 mb1" src="/images/apps.png" />
+		Apps
+	</a>
+	<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem;height: 120px;width:120px;" href="/docs/hosting/Cluster">
+		<img class="w10 mb1" src="/images/clusters.png" />
+		Clusters
+	</a>
+	<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem; height: 120px;width:120px;" href="/docs/hosting/BYOC">
+		<img class="w10 mb1" src="/images/arc.svg" />
+		Bring Your Own Cluster
+	</a>
+</div>
+
+| Hosting                                     | Description                                                                                                                                                                                                      |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Apps](/docs/hosting/Apps)                  | Easy to get started. No credit card required. Multi-tenant setup                                                                                                                                                 |
+| [Clusters](/docs/hosting/Clusters)          | Free 14-day trial. Flexibility of deploying in 16 regions across North America, South America, Europe, Asia and Australia                                                                                        |
+| [Bring Your Own Cluster](docs/hosting/BYOC) | Already have an ElasticSearch cluster with AWS or Elastic Cloud or hosting it yourself? You can provision the appbase.io docker container or image as a hosted service from the dashboard or deploy it yourself. |

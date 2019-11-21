@@ -319,7 +319,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
         An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
     -   **`promotedData`**: `array`
         An array of promoted results obtained from the applied query. [Read More](docs/search/Rules#part-1-introduction)
-        > Note:
+        > Note: 
         >
         > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerAnalytics to register the click analytics info.
     -   **`rawData`**: `array`
@@ -336,7 +336,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
             Time taken to find total results (in ms)
         -   **`displayedResults`**: `number`
             Number of results displayed in current view
-    -   **`handleLoadMore`**: `function`
+    -   **`loadMore`**: `function`
         A callback function to be called to load the next page of results into the view. The callback function is only applicable in the case of infinite loading view (i.e. `infiniteScroll` prop set to `true`).
     -   **`triggerAnalytics`**: `function`
         A function which can be called to register a click analytics. [Read More](docs/reactivesearch/v3/advanced/analytics/)

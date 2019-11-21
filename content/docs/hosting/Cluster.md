@@ -1,7 +1,7 @@
 ---
 title: 'Clusters'
 meta_title: 'Clusters'
-meta_description: 'It allows you to fully manage and scale your ElasticSearch clusters using kubernetes orchestration.'
+meta_description: 'Appbase.io Clusters provide a fully managed ElasticSearch cluster in 16 global geographic regions.'
 keywords:
     - clusters
     - appbaseio
@@ -10,7 +10,13 @@ keywords:
 sidebar: 'docs'
 ---
 
-Now you can host dedicated ElasticSearch clusters to meet your business needs using [Appbase.io](https://appbase.io/clusters/) clusters. It allows you to fully manage and scale your ElasticSearch clusters using [kubernetes](https://kubernetes.io/) orchestration. You can Visualize with Kibana and choose from addons available in ElasticSearch ecosystem. Along ElasticSearch addons you can leverage other Appbase.io features like [Realtime Search](https://appbase.io/usecases/realtime-search/), [Data browser](/docs/data/Browser), [Search Preview](/docs/search/Preview), [Analytics](/docs/analytics/Overview/), [Mappings](/docs/search/Mappings), [Security](/docs/security/Credentials).
+You can run dedicated ElasticSearch clusters to meet your business needs using [Appbase.io](https://appbase.io/clusters/) clusters. Clusters offer fully managed ElasticSearch hosting that's powered via Kubernetes and available in over 16+ global geographic regions. You can visualize your ElasticSearch data with either Kibana or Grafana and choose from any of the plugins available as part of the ElasticSearch ecosystem. You also get the following Appbase.io features out of the box:
+  - [Realtime Search](https://appbase.io/usecases/realtime-search/),
+  - [Data browser](/docs/data/Browser),
+  - [Search Preview](/docs/search/Preview),
+  - [Actionable Analytics](/docs/analytics/Overview/),
+  - [Editable Mappings](/docs/search/Mappings),
+  - [Enhanced Security](/docs/security/Credentials).
 
 ## Getting started
 

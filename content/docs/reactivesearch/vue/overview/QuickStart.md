@@ -35,10 +35,10 @@ npm install @appbaseio/reactivesearch-vue
 
 ### Step 2: ReactiveSearch as UMD
 
-It is also possible to run ReactiveSearch without relying on a Node.JS environment tooling for the build setup. Here, I am using `v1.0.0-beta.19`, this can be replaced with the version you are using.
+It is also possible to run ReactiveSearch without relying on a Node.JS environment tooling for the build setup. Here, I am using `v1.0.0`, this can be replaced with the version you are using.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@appbaseio/reactivesearch-vue@1.0.0-beta.19/dist/@appbaseio/reactivesearch-vue.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@appbaseio/reactivesearch-vue@1.0.0/dist/@appbaseio/reactivesearch-vue.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue-slider-component@2.8.2/dist/index.js"></script>
 ```
 
@@ -110,7 +110,7 @@ We will demonstrate creating an index using [appbase.io](https://appbase.io) ser
 
 We will update our `src/App.vue` file to add ReactiveBase component.
 
-```js
+```html
 <template>
   <div id="app">
     <reactive-base
@@ -152,7 +152,7 @@ For this app, we will be using [multi-list](/docs/reactivesearch/vue/search/Mult
 
 Lets add them within the ReactiveBase component. But before we do that, we will look at the important props for each.
 
-```js
+```html
 <multi-list
 	componentId="Authors"
 	dataField="authors.raw"
@@ -168,7 +168,7 @@ The [**multi-list**](/docs/reactivesearch/vue/search/MultiList/) creates a multi
 
 Next, we will look at the [**single-range**](/basic-components/singlerange.html) component for creating a ratings based filter.
 
-```js
+```html
 <single-range
   componentId="Ratings"
   dataField="average_rating"
@@ -188,7 +188,7 @@ Next, we will look at the [**single-range**](/basic-components/singlerange.html)
 
 Finally, we need a component to show the matching results. [**reactive-list**](/docs/reactivesearch/vue/result/ReactiveList/) does exactly this.
 
-```js
+```html
 <reactive-list
   componentId="SearchResult"
   dataField="original_title.raw"
@@ -199,7 +199,7 @@ Finally, we need a component to show the matching results. [**reactive-list**](/
   :size="5"
   :react="{and: ['Ratings','Authors']}"
 >
-  <div slot="renderData" slot-scope="{ item }">
+  <div slot="renderItem" slot-scope="{ item }">
     <div class="flex book-content" key="item._id">
       <img :src="item.image" alt="Book Cover" class="book-image" />
       <div class="flex column justify-center ml20">
@@ -224,7 +224,7 @@ Finally, we need a component to show the matching results. [**reactive-list**](/
 </reactive-list>
 ```
 
-The `:react` prop here specifies that it should construct a query based on the current selected values of searchbox and ratingsfilter components. Every time the user changes the input value, a new query is fired -- you don't need to write a manual query for any of the UI components here, although you can override it via `:customQuery` prop.
+The `react` prop here specifies that it should construct a query based on the current selected values of searchbox and ratingsfilter components. Every time the user changes the input value, a new query is fired -- you don't need to write a manual query for any of the UI components here, although you can override it via `customQuery` prop.
 
 This is how the app looks after adding ReactiveList component:
 
@@ -232,7 +232,7 @@ This is how the app looks after adding ReactiveList component:
 
 Now, we will put all three components together to create the UI view.
 
-```js
+```html
 <template>
   <div id="app">
     <reactive-base app="good-books-yj" credentials="gBgUqs2tV:3456f3bf-ea9e-4ebc-9c93-08eb13e5c87c" >
@@ -265,7 +265,7 @@ Now, we will put all three components together to create the UI view.
         :size="5"
         :react="{and: ['Ratings','Authors']}"
       >
-        <div slot="renderData" slot-scope="{ item }">
+        <div slot="renderItem" slot-scope="{ item }">
           <div class="flex book-content" key="item._id">
             <img :src="item.image" alt="Book Cover" class="book-image" />
             <div class="flex column justify-center ml20">

@@ -225,25 +225,32 @@ const HomePage = ({ data, location }) => {
 										),
 										chapters: [
 											{
+												title: 'Apps',
+												link: '/docs/hosting/Apps',
+												duration: 1,
+												description:
+													'Apps let you get the best of ElasticSearch without running a dedicated cluster.',
+											},
+											{
 												title: 'Clusters',
 												link: '/docs/hosting/Cluster/',
 												duration: 5,
 												description:
-													'Now you can host your own dedicated ElasticSearch clusters to meet your business needs using appbase.io clusters. ',
+													'Fully managed ElasticSearch clusters available in over 16 global regions.',
 											},
 											{
 												title: 'Bring your own Cluster',
 												link: '/docs/hosting/BYOC/',
 												duration: 10,
 												description:
-													'Install appbase.io as a cloud-native software for your own ElasticSearch cluster.',
+													'Run appbase.io with your own ElasticSearch cluster hosted anywhere.',
 											},
 											{
 												title: 'Open Distro for ElasticSearch',
 												link: '/docs/hosting/OpenDistro/',
 												duration: 2,
 												description:
-													'Now with the appbase.io clusters you can host an open distro flavour of elasticsearch.',
+													'Run Open Distro for ElasticSearch with Appbase.io Clusters.',
 											},
 										],
 									},

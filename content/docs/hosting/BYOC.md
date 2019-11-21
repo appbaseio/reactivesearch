@@ -10,10 +10,10 @@ keywords:
 sidebar: 'docs'
 ---
 
-Already have ElasticSearch hosted with AWS, Elastic Cloud or hosting it yourself?
-You can now access all of [Appbase.io](https://arc-site.netlify.com) features like [search preview](/docs/search/Preview), [actionable analytics](/docs/analytics/Overview/) and [granular security](/docs/security/Credentials/) with any ElasticSearch cluster hosted anywhere with our `Bring Your Own Cluster` deployment mode.
+Already have ElasticSearch hosted with AWS, Elastic Cloud or planning to hosting it yourself?
+You can now access all of Appbase.io features such as [search preview](/docs/search/Preview), [actionable analytics](/docs/analytics/Overview/) and [granular security](/docs/security/Credentials/) with an ElasticSearch cluster hosted anywhere with the `Bring Your Own Cluster` deployment mode.
 
-> 🆕 We're making Appbase.io available as a cloud-native software under the codename [Arc](https://arc-site.netlify.com).
+> 🆕 We're making Appbase.io available as a cloud-native software under the codename [Arc](https://arc-dashboard.appbase.io).
 
 ![](/images/byoc.png)
 
@@ -21,14 +21,14 @@ This diagram highlights how Arc works. It directly interacts with an underlying 
 
 ## Quickstart Recipes
 
-You can install [Arc](https://arc-site.netlify.com) on any server environment. We have created quickstart recipes to make the installation process seamless for the following platforms:
+You can install [Arc](https://arc-dashboard.appbase.io) on any server environment. We have created quickstart recipes to make the installation process seamless for the following platforms:
 
 <div class="grid-integrations-index mt4 mt6-l f8">
-	<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem; height: 120px;width:120px;" href="#using-arc-clusters-hosted-via-appbaseio">
+	<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem; height: 120px;width:120px;" href="#using-appbaseio">
 		<img class="w10 mb1" src="/images/arc.svg" />
 		using appbase.io
 	</a>
-		<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem;height: 120px;width:120px;" href="#using-amiamazon-machine-images">
+		<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem;height: 120px;width:120px;" href="#using-ami">
 		<img class="w10 mb1" src="/images/awscart.jpg" />
 		AWS Marketplace
 	</a>
@@ -71,6 +71,7 @@ Now that the Arc Cluster is deployed, we can access the **Arc Dashboard** using 
 ![](https://i.imgur.com/uIfTi2G.png)
 
 This will give you access to all the Appbase.io features such as:
+
 -   Better dev tools: The Dejavu data browser, search preview, query rules
 -   Actionable Search and Click Analytics
 -   Fine-grained Security Permissions.
@@ -96,66 +97,87 @@ With Appbase.io Dashboard you can easily share cluster with your team members. E
 
 ![](https://i.imgur.com/qmKcffi.png)
 
----
-
 ### Using AMI
 
-Arc is also available via an Amazon Machine Image (AMI) on the AWS Marketplace. Arc works running a `systemd` service. With the AMI, you can seamlessly deploy Arc on an AWS EC2 instance.
+Now you can deploy Arc using Amazon Machine Image (AMI) on the AWS Marketplace. With the AMI, you can install Arc with one click on an AWS EC2 instance.
 
-Before Creating an AWS EC2 Machine using AMI, let's create an [Arc instance](https://arc-dashboard.appbase.io/install) which will give us access to [Arc Dashboard](https://arc-dashboard.appbase.io).
+Here are the steps that you can follow to install Arc using AMI
 
-Here are the steps that you can follow to deploy Get Arc ID:
+**Step 1 -** Create an [Arc instance](/docs/hosting/BYOC/#how-to-create-arc-instance).
 
--   **Step 1 -** Go to [Arc Dashboard](https://arc-dashboard.appbase.io/install).
-
-![](https://i.imgur.com/YZubabh.png)
-
--   **Step 2 -** Enter your email address
-
--   **Step 3 -** You will receive an OTP on entered email address. Enter OTP to verify the email address
-
--   **Step 4-** You will receive an email with `ARC_ID` which we can use while creating EC2 machine.
-
-Here are the steps that you can follow to install Arc Middleware using AMI
-
-**Step 1 -** Select ARC [Amazon Machine Image](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) from AWS Marketplace
+**Step 2 -** Select Arc AMI from [AWS Marketplace]()
 
 // TODO Add Marketplace Link + image of marketplace
 
-**Step 2 -** Select EC2 Instance Type required for Deploying Arc. We recommend using `t2 medium`.
+**Step 3 -** Select EC2 Instance based on your traffic for Deploying Arc. We recommend using the [t2 medium](https://aws.amazon.com/ec2/pricing/on-demand/) size.
 
-**Step 3 -** Enter env variables in `User Data` Section while configuring `EC2` instance. Here is sample script which you can enter in `User Data` Section.
+That's all you need to follow in order to deploy an Arc cluster 🚀. Once the EC2 machine is created and _running_ successfully, you can get Public DNS / IP address from the EC2 dashboard. This URL becomes your end point for accessing the Arc services. You can also point your domain to this DNS or IP.
+
+## ![](https://i.imgur.com/PDs8DK0.png)
+
+> **Note:** We highly recommend using cluster with [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) certificate, as you will be using this cluster URL on [Arc Dashboard](https://arc-dashboard.appbase.io) which is secured with TLS certificate. So to avoid unsafe script errors, it is better to setup TLS for your domain or EC2 public DNS.
+
+#### **Adding TLS Certificate**
+
+For setting up TLS, you may also want to point EC2 public DNS to your domain. For more information on how to register/point domain to EC2 instance you can check [docs](https://aws.amazon.com/getting-started/tutorials/get-a-domain/).
+
+Now, let's add TLS certificate to EC2 public DNS / custom domain
+
+**Step 1-** Get TLS certificate with `.pem` & `.key` file.
+
+> **Note:** You can obtain a free certificate using [https://letsencrypt.org/](https://letsencrypt.org/) or even use a self-signed version.
+
+**Step 2-** Access your EC2 instance using `ssh`. From EC2 dashboard you can select instance and click on **Connect** to get `ssh` login details about your machine.
+
+![EC2 Connect Screenshot](https://i.imgur.com/NRW1P6c.png)
+
+**Step 3-** Copy `.pem` file content to `/etc/pki/nginx/server.crt` using `vim`/`nano` editor
 
 ```bash
-#!/bin/bash
-#!/bin/bash
-echo ES_CLUSTER_URL='https://search-test.us-east-1.es.amazonaws.com' >> /etc/systemd/system/arc.env
-
-echo USERNAME='admin' >> /etc/systemd/system/arc.env
-echo PASSWORD='admin' >> /etc/systemd/system/arc.env
-echo ARC_ID='YOUR ARC ID' >> /etc/systemd/system/arc.env
+# Open the file
+sudo vim /etc/pki/nginx/server.crt
+# Paste the code
+cmd/ctrl + v
+# Save the file
+:wq
 ```
 
-![](https://i.imgur.com/T00tC8W.png)
+**Step 4-** Copy `.key` file content to`/etc/pki/nginx/private/server.key` using similar approach mentioned above.
 
-#### **Environment Variables**
+**Step 5-** Open `sudo vim /etc/nginx/nginx.conf`.
 
-| **Variable**             | **Description**                                                                                                                                       |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ES_CLUSTER_URL`         | ElasticSearch Cluster URL                                                                                                                             |
-| `USERNAME`               | Username used for Basic Auth with ARC Cluster URL                                                                                                     |
-| `PASSWORD`               | Password used for Basic Auth with ARC Cluster URL                                                                                                     |
-| `JWT_RSA_PUBLIC_KEY_LOC` | When Role Based Access control is used for security. This Env helps in specifying the location of public key file that is used for verifying location |
-| `JWT_ROLE_KEY`           | Field used for getting the role from JWT token.                                                                                                       |
-| `ARC_ID`                 | Used for accessing the Arc Dashboard (This is to be set once the Arc Middleware is deployed and you have signed up for arc dashboard)                 |
+**Step 6-** Configuration for TLS is already present in `nginx.conf` in commented form. You can uncomment it.
 
-> **Note:** Make sure ElasticSearch cluster URL is open till the deployment is completed so that we can Verify ElasticSearch cluster.
+-   Uncomment lines `L125` - `L213`.
+-   Comment out or remove the server listening for PORT 80.
+
+**Step 7-** Restart nginx service using following command
+
+```bash
+sudo systemctl restart nginx
+```
+
+#### **Configuring Arc**
+
+Once your EC2 machine is up and running, you can open the EC2 public DNS. You might come across following page initially.
+
+![](https://i.imgur.com/huRzI3e.png)
+
+You can start configuring Arc by clicking on _configure page_ link OR opening `http://public-dns/configure` URI directly.
+
+**Step 1:** Setup Arc credentials. This are the master credentials that will be used for accessing the Arc Service from Arc Dashboard. Your initial user name is `ec2-user` and your initial password is your EC2 instance id.
+
+![](https://i.imgur.com/OkyeFJS.png)
+
+**Step 2:** Once you login, you can reset your username and password. Enter the your ElasticSearch URL, ARC_ID obtained while setting [Arc instance](/docs/hosting/BYOC/#how-to-create-arc-instance) and save the details.
+
+![](https://i.imgur.com/iVmzscW.png)
+
+Hold tight for 5-10s till the Arc service restarts with your new configurations.
 
 #### **Getting Arc URL**
 
-Once the EC2 machine is created successfully, you can get Public DNS / IP address from the EC2 dashboard. This can be used with `USERNAME` and `PASSWORD` to access ElasticSearch data using Arc.
-
-![](https://i.imgur.com/PDs8DK0.png)
+Once EC2 machine is up and running, your EC2 public DNS becomes the Arc URL. This can be used with the configured `USERNAME` and `PASSWORD` to test the Arc connection.
 
 **Example**
 
@@ -163,104 +185,105 @@ Once the EC2 machine is created successfully, you can get Public DNS / IP addres
 curl -u="USERNAME:PASSWORD" http://EC2-PUBLIC-[IP/DNS]
 ```
 
-You can also point your domain to EC2 instance in order to access data using your domain. For more information on how to register/point domain to EC2 instance you can check [docs](https://aws.amazon.com/getting-started/tutorials/get-a-domain/).
-
 #### **Accessing Arc Dashboard**
 
-Alright now in order to access all the Arc Services, let us Sign in to [Arc dashboard](https://arc-dashboard.appbase.io/login) and start accessing data from there.
+Now that all our configurations are complete, in order to access all the Arc Services, let us sign in to the [Arc dashboard](https://arc-dashboard.appbase.io/login).
 
--   **Step 1 -** Sign in into [Arc dashboard](https://arc-dashboard.appbase.io/login) using your EC2 Public Domains / Domain with Username and Password set in the ENV
+-   **Step 1 -** Sign in into [Arc dashboard](https://arc-dashboard.appbase.io/login) using your EC2 Public IP / Domain with Username and Password configured above.
 
 ![](https://i.imgur.com/qVSHx0F.png)
 
-And we are ready with our Arc Setup using AMI from AWS marketplace.
+🔥 Hurray! You can now start accessing all the Appbase.io services using [Arc Dashboard](https://arc-dashboard.appbase.io).
 
-#### **Changing Environment Variables**
-
-In order to update any environment variable here, you need to do `ssh` login into your EC2 machine. You can connect with EC2 machine via `ssh` using `.pem` key file that you must created / used while configure and creating and EC2 using Arc AMI.
-
-You can click on **Connect** button from EC2 Dashboard and see the instructions to do ssh connection.
-
-![](https://i.imgur.com/cS8LKkF.png)
-
-Now in order to change Environment variables, please follow this steps
-
--   **Step 1 -** Connect via `SSH`
-
-```bash
-ssh -i "test.pem" ec2-user@ec2-1-2-3-4.compute-1.amazonaws.com
-```
-
--   **Step 2 -** Open `/etc/systemd/system/arc.env` file using VIM editor with root permissions
-
-```bash
-sudo vim /etc/systemd/system/arc.env
-```
-
--   **Step 3 -** Edit / Add Variables and save the file.
-
--   **Step 4 -** Restart Arc Service
-
-```bash
-systemctl restart arc
-```
+---
 
 ### Using Docker
 
-[Arc](https://arc-site.netlify.com) is available as Docker Image as well, which can easily help you deploy and get started with your current docker based infrastructure. Based on your ElasticSearch version you can get a docker image and run it with required [Environment Variables](/docs/hosting/BringYourOwnCluster/#environment-variables).
+We have containerized Arc with its configuring dashboard into one docker compose file. This setup enables you to run Arc with single command, i.e. `docker-compose up -d` 😎.
 
-#### **Available Docker Images**
+Dockerize setup for Arc comes with 3 different services
 
-// TODO Add correct images links
+#### Arc
 
-| **ElasticSearch Version** | **Docker Image** |
-| ------------------------- | ---------------- |
-| ElasticSearch V7          | Docker Image     |
+Allows you to access all [Appbase.io](https://docs.appbase.io/docs/gettingstarted/WhyAppbase/) features like search preview, actionable analytics and granular security with any ElasticSearch cluster hosted anywhere.
 
-Before Deploying Arc Image, let's create an [Arc instance](https://arc-dashboard.appbase.io/install) which will give us access to [Arc Dashboard](https://arc-dashboard.appbase.io).
+> **Note:** Make sure your arc container have complete access to ElasticSearch. You can use ElasticSearch URL with Basic Auth in configuring dashboard or IP restricted ElasticSearch URL where IP of your ARC cluster hosted using docker setup is white listed.
 
-Here are the steps that you can follow to deploy Get Arc ID:
+#### Configure
 
--   **Step 1 -** Go to [Arc Dashboard](https://arc-dashboard.appbase.io/login) and Select [Install A New Arc Instance](https://arc-dashboard.appbase.io/install)
+This service comes with simple user interface which allows you to set credentials and other environment variables. Also it watches for environment variable file changes, so that if any variable in file is changed it can restart arc service.
+
+#### Nginx
+
+This service helps in setting up reverse proxy for Arc Service and serving Configuration service. It also helps in serving data using with TLS certificate, which is recommended for production.
+
+## Quick Start 🚀
+
+The steps described here assumes a that you have [docker](https://docs.docker.com/install/) installed.
+
+-   **Step 1:** Get Arc ID following the steps mentioned [here](https://docs.appbase.io/docs/hosting/BYOC/#using-ami)
+
+-   **Step 2:** Clone the repository
+
+    ```bash
+    git clone https://github.com/appbaseio/arc-dockerized.git && cd arc-dockerized
+    ```
+
+-   **Step 3:** Build and run docker containers
+
+    We highly recommend using Arc with [SSL](https://en.wikipedia.org/wiki/Transport_Layer_Security) so that we can easily bind this with Arc Dashboard. To simplify the process of docker build, test and deployment we have created 2 versions:
+
+    1 - **Install Arc + Nginx with SSL setup _(Recommended for production)_**
+
+    -   Change [SSL](https://en.wikipedia.org/wiki/Transport_Layer_Security) certificate and keys with production files. Please obtain [SSL](https://en.wikipedia.org/wiki/Transport_Layer_Security) certificate and key for your domain using [Let's Encrypt](https://letsencrypt.org/) or any other provider. Update the files in [nginx/certs](https://github.com/appbaseio/arc-dockerized/tree/master/nginx/certs)
+    -   In case you are using different name then mentioned in [nginx/certs](https://github.com/appbaseio/arc-dockerized/tree/master/nginx/certs) folder, then please update them in `docker-compose.yaml` file as well
+
+    ![](https://i.imgur.com/piUKTLl.png)
+
+    Also, make sure you update file names in [nginx/default.conf](https://github.com/appbaseio/arc-dockerized/blob/master/nginx/default.conf) file
+
+    ![](https://i.imgur.com/LW8zOyB.png)
+
+    ```bash
+    docker-compose up -d
+    ```
+
+    2 - **Install Arc + ElasticSearch _(If you want to deploy Arc Along with ElasticSearch.)_**
+
+    ```
+    docker-compose -f docker-compose-with-elasticsearch.yaml up -d
+    ```
+
+    🔥 Thats all, our containers should be up and running. Next let us configure environment variables required by Arc service.
+
+-   **Step 4:** Open configuration service URL in your browser, i.e. [http://localhost_OR_cluster_url](http://localhost/CLUStER_URL)
+
+    > **Note:** If you are running this setup on an virtual machine, make sure ports `80` and `443` are set in your inbound rules for the cluster.
+
+-   **Step 5:** Set credentials
+
+-   **Step 6:** Configure ElasticSearch URL and ARC ID obtained above.
+
+    > **NOte:** Once you save the configuration, it may take 5-10s to restart the arc service.
+
+-   **Step 7:** Start using Arc Services using [Arc Dashboard](https://arc-dashboard.appbase.io/). Here you will have to input Arc Cluster URL which will be [http(s)://localhost_OR_cluster_url](<http(s)://localhost_OR_cluster_url>) and credentials would be the one that you configured initially on _Step 5_.
+
+---
+
+### How to create Arc instance?
+
+Creating an Arc instance will enable you to access [Arc Dashboard](https://arc-dashboard.appbase.io). While following instance creation process, you will get an `ARC_ID`. This will be helpful while configuring Arc, with any of the deployment options listed below.
+
+Follow the steps listed below to successfully create an Arc instance.
+
+**Step 1 -** Go to [Arc Dashboard](https://arc-dashboard.appbase.io/install).
 
 ![](https://i.imgur.com/YZubabh.png)
 
--   **Step 2 -** Enter your email address
+**Step 2 -** Enter your email address
 
--   **Step 3 -** You will receive an OTP on entered email address. Enter OTP to verify the email address
+**Step 3 -** You will receive an OTP on entered email address. Enter OTP to verify the email address
 
--   **Step 4-** You will receive an email with `ARC_ID` which we can use while creating deploying Arc Image on Docker Container.
+**Step 4-** You will receive an email with `ARC_ID` which can be used with Arc configuration.
 
-#### **Deploying Arc Docker Image**
-
--   **Step 1 -** Pull docker image
-
-```bash
-docker pull appbaseio/arc:DOCKER_IMAGE_VERSION
-```
-
--   **Step 2 -** Create file with [Environment Variables](/docs/hosting/BringYourOwnCluster/#environment-variables)
-
-Sample `env` file
-
-```bash
-# env
-
-ES_CLUSTER_URL=http://elasticsearch:9200
-
-USERNAME=foo
-PASSWORD=bar
-ARC_ID=YOUR ARC ID
-```
-
-> **Note:** Make sure your docker container can access ElasticSearch cluster.
-
--   **Step 3 -** Run Docker container
-
-```bash
-docker run --rm -d --name arc -p 8000:8000 --net=arc --env-file=env appbaseio/arc:DOCKER_IMAGE_VERSION
-```
-
--   **Step 4 -** Expose your Arc service with public URL
-
--   **Step 5 -** Follow steps listed [here](/docs/hosting/BringYourOwnCluster/#accessing-arc-dashboard-1) to access Arc Dashboard. Only difference here will be instead of AWS EC2 url it will be public URL that you have exposed your container with.
+---

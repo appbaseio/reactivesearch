@@ -105,7 +105,7 @@ Set the props for all the components we are going to use:
 		dataField: 'original_title.raw',
 		from: 0,
 		size: 5,
-		renderData: ({ data }) => `<div>${data.original_title}</div>`,
+		renderItem: ({ data }) => `<div>${data.original_title}</div>`,
 		react: {
 			and: ['BookSensor'],
 		},

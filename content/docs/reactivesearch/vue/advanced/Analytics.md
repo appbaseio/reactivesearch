@@ -15,12 +15,12 @@ You can take advantage of search and click analytics when using [Appbase.io](htt
 
 ## Click Analytics
 
-Click analytics have to be wired into the result components. Its supported in `ReactiveList`.When using `ReactiveList`, the `renderData` or `renderAllData` prop|slot-scope receives an extra property to make click analytics work which you have to invoke with `onClick`.
+Click analytics have to be wired into the result components. Its supported in `ReactiveList`.When using `ReactiveList`, the `renderItem` or `renderAllData` prop|slot-scope receives an extra property to make click analytics work which you have to invoke with `onClick`.
 
 ```html
 <reactive-list
     ...
-    <div slot="renderData" slot-scope="{ item,  triggerClickAnalytics}">
+    <div slot="renderItem" slot-scope="{ item,  triggerClickAnalytics}">
         <div onClick="triggerClickAnalytics">{{ item.title }}</div>
     </div>
 >

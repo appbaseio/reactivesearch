@@ -27,11 +27,9 @@ Example uses:
 ```html
 <template>
     <reactive-list
-        :react=`{
-            "and": ["CitySensor", "SearchSensor"]
-        }`
+        :react="{ and: ['CitySensor', 'SearchSensor']}"
     >
-         <div slot="renderData" slot-scope="{ item }">
+         <div slot="renderItem" slot-scope="{ item }">
             {{ item.title }}
          </div>
     </reactive-list>
@@ -41,9 +39,19 @@ Example uses:
 ### Usage With All Props
 
 ```html
-<reactive-list componentId="SearchResult" dataField="ratings" paginationAt="bottom" loader="Loading
-Results.." sortBy="desc" :stream="true" :pagination="false" :pages="5" :size="10"
-:showResultStats="true" :react=`{ and: ["CitySensor", "SearchSensor"] }` />
+<reactive-list
+    componentId="SearchResult"
+    dataField="ratings"
+    paginationAt="bottom"
+    loader="Loading Results.."
+    sortBy="desc"
+    :stream="true"
+    :pagination="false"
+    :pages="5"
+    :size="10"
+    :showResultStats="true"
+    :react="{ and: ['CitySensor', 'SearchSensor'] }"
+/>
 ```
 
 ## Props
@@ -103,11 +111,11 @@ Results.." sortBy="desc" :stream="true" :pagination="false" :pages="5" :size="10
     a dependency object defining how this component should react based on the state changes in the sensor components.
 -   **URLParams** `Boolean` [optional]
     when set adds the current page number to the url. Only works when `pagination` is enabled.
--   **renderData** `Function|slot-scope` [optional]
+-   **renderItem** `Function|slot-scope` [optional]
     returns a list element object to be rendered based on the `res` data object. This callback function prop or slot is called for each data item rendered in the **ReactiveList** component's view. For example,
 
     ```html
-    <div slot="renderData" slot-scope="{ item }">
+    <div slot="renderItem" slot-scope="{ item }">
     	<a class="full_row single-record single_record_for_clone" key="item._id">
     		<div class="text-container full_row" :style="{ paddingLeft: '10px' }">
     			<div class="text-head text-overflow full_row">
@@ -126,46 +134,36 @@ Results.." sortBy="desc" :stream="true" :pagination="false" :pages="5" :size="10
     </div>
     ```
 
--   **renderAllData** `Function|slot-scope` [optional]
-    works like **renderData** but all the data objects are passed to the callback function or slot.
-    It accepts an object with these properties: `results`, `aggregationData`, `streamResults`, `loadMore`, `base` & `triggerClickAnalytics`.
-
-    -   **`results`**: An array of results obtained from the applied query.
-    -   **`aggregationData`**: An array of aggregated data obtained by applying the composite aggregations query.
-    -   **`streamResults`**: An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
-    -   **`loadMore`**: A callback function to be called to load the next page of results into the view. The callback function is only applicable in the case of infinite loading view (i.e. `pagination` prop set to `false`).
-    -   **`base`**: An internally calculated value, useful to calculate analytics. [Read More](/docs/reactivesearch/vue/advanced/Analytics/)
-    -   **`triggerClickAnalytics`**: A function which can be called to register a click analytics. [Read More](/docs/reactivesearch/vue/advanced/Analytics/)
+-   **render** `Function|slot-scope` [optional]
+    A function or slot returning the UI you want to render based on your results. This function receives a list of parameters and expects to return a `JSX`.
+    Read more about it [here](#extending).
+    > Note:
+    >
+    > Either `renderItem` or `render` is required in ReactiveList for rendering the data.
 
 -   **renderResultStats** `Function|slot-scope` [optional]
     renders custom result stats using a callback function that takes `stats` object as parameter and expects it to return a string or html. `stats` object contains following properties
-    -   `totalResults` - Total number of results found
-    -   `totalPages` - Total number of pages found based on current page size
-    -   `currentPage` - Current page number for which data is being rendered
-    -   `displayedResults` - Number of results displayed in current view
-    -   `time` - Time taken to find total results
-    ```js
-    :renderResultStats="
-            function(stats){
-                return (
-                    `Showing ${stats.displayedResults} of total ${stats.totalResults} in ${stats.time} ms`
-                )
-            }
-        "
+    -   **`numberOfResults`**: `number`
+        Total number of results found
+    -   **`numberOfPages`**: `number`
+        Total number of pages found based on current page size
+    -   **`currentPage`**: `number`
+        Current page number for which data is being rendered
+    -   **`time`**: `number`
+        Time taken to find total results (in ms)
+    -   **`displayedResults`**: `number`
+        Number of results displayed in current view
+
+    ```html
+    <div
+        slot="renderResultStats"
+        slot-scope="{ numberOfResults, time, displayedResults }"
+    >
+        Showing {{displayedResults}} of total {{numberOfResults}} in {{time}} ms
+    </div>
     ```
 -   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
-
-```js
-    :renderError="error => (
-            <div>
-                Something went wrong!<br/>Error details<br/>{error}
-            </div>
-        )
-    "
-```
-
-or
 
 ```html
 <template slot="renderError" slot-scope="error">
@@ -173,10 +171,29 @@ or
 </template>
 ```
 
+or
+
+```js
+:renderError="error => (
+        <div>
+            Something went wrong!<br/>Error details<br/>{error}
+        </div>
+    )
+"
+```
+
 -   **renderNoResults** `String|Function|slot-scope` [optional]
     show custom message or component when no results found.
 -   **defaultQuery** `Function` [optional]
     applies a default query to the result component. This query will be run when no other components are being watched (via React prop), as well as in conjunction with the query generated from the React prop. The function should return a query.
+
+## Sub Components
+-   **ResultCardsWrapper**
+    A wrapper component for `ResultCard` components to render a card based layout.
+    Read more about the usage [here](/docs/reactivesearch/vue/result/ResultCard#usage).
+-   **ResultListWrapper**
+    A wrapper component for `ResultList` components to render a list based layout.
+    Read more about the usage [here](/docs/reactivesearch/vue/result/ResultList#usage).
 
 ## Demo
 
@@ -205,15 +222,15 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 `ReactiveList` component can be extended to
 
 1. customize the look and feel with `className`,
-2. render individual result data items using `renderData`,
-3. render the entire result data using `renderAllData`.
+2. render individual result data items using `renderItem`,
+3. render the entire result data using `render`.
 4. connect with external interfaces using `queryChange`.
 
 ```js
 <ReactiveList
   ...
   className="custom-class"
-  :renderData=`
+  :renderItem=`
     function({ item }) {
       return(
         <div>
@@ -234,17 +251,61 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 -   **className** `String`
     CSS class to be injected on the component container.
--   **renderData** `Function|slot-scope` [optional]
+-   **renderItem** `Function|slot-scope` [optional]
     a callback function or slot-scope where user can define how to render the view based on the data changes.
--   **renderAllData** `Function|slot-scope` [optional]
-    an alternative callback function or slot-scope to `renderData`, where user can define how to render the view based on all the data changes.
+-   **render** `Function` [optional]
+    an alternative callback function or slot to `renderItem`, where user can define how to render the view based on all the data changes.
     <br/>
-    It accepts an object with these properties: `results`, `streamResults`, `loadMore`, `base` & `triggerClickAnalytics`.
-    -   **`results`**: An array of results obtained from the applied query.
-    -   **`streamResults`**: An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
-    -   **`loadMore`**: A callback function to be called to load the next page of results into the view. The callback function is only applicable in the case of infinite loading view (i.e. `pagination` prop set to `false`).
-    -   **`base`**: An internally calculated value, useful to calculate analytics. [Read More](/docs/reactivesearch/vue/advanced/Analytics/)
-    -   **`triggerClickAnalytics`**: A function which can be called to register a click analytics. [Read More](/docs/reactivesearch/vue/advanced/Analytics/)
+    It accepts an object with these properties:
+    -   **`loading`**: `boolean`
+        indicates that the query is still in progress
+    -   **`error`**: `object`
+        An object containing the error info
+    -   **`data`**: `array`
+        An array of results obtained from the applied query.
+    -   **`streamData`**: `array`
+        An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
+    -   **`promotedData`**: `array`
+        An array of promoted results obtained from the applied query. [Read More](docs/search/Rules#part-1-introduction)
+        > Note: 
+        >
+        > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerAnalytics to register the click analytics info.
+    -   **`rawData`**: `array`
+        An array of original hits obtained from the applied query.
+    -   **`resultStats`**: `object`
+        An object with the following properties which can be helpful to render custom stats:
+        -   **`numberOfResults`**: `number`
+            Total number of results found
+        -   **`numberOfPages`**: `number`
+            Total number of pages found based on current page size
+        -   **`currentPage`**: `number`
+            Current page number for which data is being rendered
+        -   **`time`**: `number`
+            Time taken to find total results (in ms)
+        -   **`displayedResults`**: `number`
+            Number of results displayed in current view
+    -   **`loadMore`**: `function`
+        A callback function to be called to load the next page of results into the view. The callback function is only applicable in the case of infinite loading view (i.e. `infiniteScroll` prop set to `true`).
+    -   **`triggerAnalytics`**: `function`
+        A function which can be called to register a click analytics. [Read More](docs/reactivesearch/v3/advanced/analytics/)
+
+```html
+<reactive-list>
+    <div slot="render" slot-scope="{ loading, error, data }">
+        <div v-if="loading">Fetching Results.</div>
+        <div v-if="Boolean(error)">Something went wrong! Error details {JSON.stringify(error)}</div>
+        <ul
+            v-bind:key="result._id"
+            v-for="result in data"
+        >
+            <li>
+                {result.title}
+                <!-- Render UI -->
+            </li>
+        </ul>
+    </div>
+</reactive-list>
+```
 
 > Note
 >
@@ -261,25 +322,16 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
     accepts a function which is invoked with the updated page value when a pagination button is clicked. For example if 'Next' is clicked with the current page number as '1', you would receive the value '2' as the function parameter.
 
 -   **data** `Function` [optional]
-    gets triggered after data changes, which returns an object with these properties: `results`, `streamResults`, `loadMore`, `base` & `triggerClickAnalytics`.
+    gets triggered after data changes, which returns an object with these properties: `data`,
+    `streamData`, `promotedData`, `rawData` & `resultStats`.
 
--   **resultStats** `Function` [optional]
-    gets triggered after stats changes, which returns an object with these properties:
-    -   `totalResults` - Total number of results found
-    -   `totalPages` - Total number of pages found based on current page size
-    -   `currentPage` - Current page number for which data is being rendered
-    -   `displayedResults` - Number of results displayed in current view
-    -   `time` - Time taken to find total results
-
-*   **error**
+-   **error**
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
 
 > Note:
 >
 > The fundamental difference between `pageChange` and `pageClick` is that `pageClick` is only called on a manual interaction with the pagination buttons, whereas, `pageChange` would also be invoked if some other side effects caused the results to update which includes updating filters, queries or changing pages. The behaviour of these two may change in the future versions as we come up with a better API.
 
--   **error**
-    invoked when query listener throws any error
 
 ## Examples
 
