@@ -11,7 +11,7 @@ const {
 	setQueryOptions,
 	setQueryListener,
 } = Actions;
-const { pushToAndClause, parseHits, isEqual, getCompositeAggsQuery } = helper;
+const { pushToAndClause, parseHits, isEqual, getCompositeAggsQuery, getOptionsFromQuery } = helper;
 const ReactiveComponent = {
 	name: 'ReactiveComponent',
 	props: {
@@ -19,6 +19,7 @@ const ReactiveComponent = {
 		aggregationField: types.string,
 		size: VueTypes.number.def(20),
 		defaultQuery: types.func,
+		customQuery: types.func,
 		filterLabel: types.string,
 		react: types.react,
 		showFilter: VueTypes.bool.def(true),
@@ -35,7 +36,39 @@ const ReactiveComponent = {
 			this.$emit('error', e);
 		});
 
-		this.setQuery = obj => {
+		const { customQuery, componentId, filterLabel, showFilter, URLParams } = props;
+
+		if (customQuery) {
+			const calcCustomQuery = customQuery(props);
+			const { query } = calcCustomQuery || {};
+			const customQueryOptions = calcCustomQuery
+				? getOptionsFromQuery(calcCustomQuery)
+				: null;
+			if (customQueryOptions) {
+				this.setQueryOptions(
+					componentId,
+					{ ...customQueryOptions, ...this.getAggsQuery() },
+					false,
+				);
+			} else this.setQueryOptions(componentId, this.getAggsQuery(), false);
+			this.updateQuery({
+				componentId,
+				query,
+				value: this.selectedValue || null,
+				label: filterLabel,
+				showFilter,
+				URLParams,
+			});
+		}
+
+		this.setQuery = ({ options, ...obj }) => {
+			if (options) {
+				this.setQueryOptions(
+					props.componentId,
+					{ ...options, ...this.getAggsQuery() },
+					false,
+				);
+			}
 			this.updateQuery({
 				...obj,
 				componentId: props.componentId,
@@ -89,17 +122,17 @@ const ReactiveComponent = {
 	watch: {
 		hits(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
-				this.$emit('allData', parseHits(newVal), oldVal);
+				this.$emit('data', this.getData());
 			}
 		},
 		aggregations(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
-				this.$emit('allData', parseHits(newVal), oldVal);
+				this.$emit('data', this.getData());
 			}
 		},
 		aggregationData(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
-				this.$emit('allData', newVal, oldVal);
+				this.$emit('data', this.getData());
 			}
 		},
 		defaultQuery(newVal, oldVal) {
@@ -121,6 +154,26 @@ const ReactiveComponent = {
 				});
 			}
 		},
+		customQuery(newVal, oldVal) {
+			if (newVal && !isEqual(newVal, oldVal)) {
+				const { componentId } = this.$props;
+				this.$customQuery = newVal(this.$props);
+				const { query, ...queryOptions } = this.$customQuery || {};
+
+				if (queryOptions) {
+					this.setQueryOptions(
+						componentId,
+						{ ...queryOptions, ...this.getAggsQuery() },
+						false,
+					);
+				} else this.setQueryOptions(componentId, this.getAggsQuery(), false);
+
+				this.updateQuery({
+					componentId,
+					query: query || null,
+				});
+			}
+		},
 		react() {
 			this.setReact(this.$props);
 		},
@@ -129,15 +182,13 @@ const ReactiveComponent = {
 	render() {
 		try {
 			const dom = this.$scopedSlots.default;
+			const { error, isLoading, selectedValue } = this;
 			const propsToBePassed = {
-				aggregations: this.aggregations,
-				aggregationData: this.aggregationData,
-				hits: this.hits,
-				selectedValue: this.selectedValue,
+				error,
+				loading: isLoading,
+				...this.getData(),
+				value: selectedValue,
 				setQuery: this.setQuery,
-				error: this.error,
-				isLoading: this.isLoading,
-				...this.$props,
 			};
 			return <div>{dom(propsToBePassed)}</div>;
 		} catch (e) {
@@ -168,6 +219,15 @@ const ReactiveComponent = {
 			}
 			return {};
 		},
+		getData() {
+			const { hits, aggregations, aggregationData } = this;
+			return {
+				data: parseHits(hits),
+				aggregationData,
+				rawData: hits,
+				aggregations,
+			};
+		},
 	},
 };
 
@@ -192,10 +252,7 @@ const mapDispatchtoProps = {
 	updateQuery,
 	watchComponent,
 };
-const RcConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(ReactiveComponent);
+const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(ReactiveComponent);
 
 ReactiveComponent.install = function(Vue) {
 	Vue.component(ReactiveComponent.name, RcConnected);
