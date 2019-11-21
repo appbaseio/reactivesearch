@@ -6,7 +6,13 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
-import { connect, isFunction, parseValueArray } from '../../utils/index';
+import {
+	connect,
+	hasCustomRenderer,
+	getComponent,
+	isFunction,
+	parseValueArray,
+} from '../../utils/index';
 import { deprecatePropWarning } from '../shared/utils';
 
 const {
@@ -56,6 +62,7 @@ const MultiDropdownList = {
 		placeholder: VueTypes.string.def('Select values'),
 		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		react: types.react,
+		render: types.func,
 		renderItem: types.func,
 		renderError: types.title,
 		transformData: types.func,
@@ -181,7 +188,7 @@ const MultiDropdownList = {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
 		}
 
-		if (this.$data.modifiedOptions.length === 0) {
+		if (!this.hasCustomRenderer && this.$data.modifiedOptions.length === 0) {
 			return null;
 		}
 
@@ -211,6 +218,8 @@ const MultiDropdownList = {
 								key: String(item.key),
 							})),
 					]}
+					hasCustomRenderer={this.hasCustomRenderer}
+					customRenderer={this.getComponent}
 					handleChange={this.handleChange}
 					selectedItem={this.$data.currentValue}
 					placeholder={this.$props.placeholder}
@@ -250,7 +259,6 @@ const MultiDropdownList = {
 
 		handleChange(item) {
 			const { value } = this.$props;
-
 			if (value === undefined) {
 				this.setValue(item);
 			} else {
@@ -383,6 +391,24 @@ const MultiDropdownList = {
 		handleLoadMore() {
 			this.updateQueryOptions(this.$props, true);
 		},
+		getComponent(items, downshiftProps = {}) {
+			const { currentValue } = this.$data;
+			const data = {
+				error: this.error,
+				loading: this.isLoading,
+				value: currentValue,
+				data: items || [],
+				handleChange: this.handleChange,
+				downshiftProps,
+			};
+			return getComponent(data, this);
+		},
+	},
+
+	computed: {
+		hasCustomRenderer() {
+			return hasCustomRenderer(this);
+		},
 	},
 };
 
@@ -478,6 +504,7 @@ const mapStateToProps = (state, props) => ({
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
+	isLoading: state.isLoading[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
