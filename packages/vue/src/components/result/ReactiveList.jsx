@@ -214,7 +214,6 @@ const ReactiveList = {
 		},
 		hits(newVal, oldVal) {
 			this.$emit('data', this.getAllData());
-			this.$emit('resultStats', this.stats);
 			if (this.shouldRenderPagination) {
 				// called when page is changed
 				if (this.isLoading && (oldVal || newVal)) {
