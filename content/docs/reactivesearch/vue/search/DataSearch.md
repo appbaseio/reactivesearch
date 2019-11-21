@@ -26,13 +26,16 @@ Example uses:
 
 ```html
 <template>
-	<data-search componentId="SearchSensor" :dataField="['group_venue', 'group_city']" />
+	<data-search
+        componentId="SearchSensor"
+        :dataField="['group_venue', 'group_city']"
+    />
 </template>
 ```
 
 ### Usage With All Props
 
-```js
+```html
 <data-search
   componentId="SearchSensor"
   title="Search"
@@ -47,9 +50,9 @@ Example uses:
   :fieldWeights="[1, 3]"
   :fuzziness="0"
   :debounce="100"
-  :react=`{
+  :react="{
     and: ['CategoryFilter', 'SearchFilter']
-  }`
+  }"
   :dataField="['group_venue', 'group_city']"
   :URLParams="false"
 />
@@ -116,23 +119,33 @@ Example uses:
 -   **customHighlight** `Function` [optional]
     a function which returns the custom [highlight settings](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-highlighting.html). It receives the `props` and expects you to return an object with the `highlight` key. Check out the <a href="https://opensource.appbase.io/reactivesearch/demos/technews/" target="_blank">technews demo</a> where the `DataSearch` component uses a `customHighlight` as given below,
 
-```js
-<data-search
-    componentId="title"
-    highlight="true"
-    :dataField="['title', 'text']"
-    :customHighlight="(props) => ({
-        highlight: {
-            pre_tags: ['<mark>'],
-            post_tags: ['</mark>'],
-            fields: {
-                text: {},
-                title: {},
+```html
+<template>
+    <data-search
+        componentId="title"
+        highlight="true"
+        :dataField="['title', 'text']"
+        :customHighlight="getCustomHighlight"
+    />
+</template>
+<script>
+export default {
+	name: 'app',
+	methods: {
+		getCustomHighlight: (props) => ({
+            highlight: {
+                pre_tags: ['<mark>'],
+                post_tags: ['</mark>'],
+                fields: {
+                    text: {},
+                    title: {},
+                },
+                number_of_fragments: 0,
             },
-            number_of_fragments: 0,
-        },
-    })"
-/>
+        }),
+	},
+};
+</script>
 ```
 
 -   **queryFormat** `String` [optional]
@@ -151,22 +164,12 @@ Example uses:
     can be used to render a message when there is no suggestions found.
 -   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
-
-```js
-    renderError={error => (
-            <div>
-                Something went wrong!<br/>Error details<br/>{error}
-            </div>
-        )
-    }
-```
-
-or
-
 ```html
-<template slot="renderError" slot-scope="error">
-	<div>Something went wrong!<br />Error details<br />{{ error }}</div>
-</template>
+    <template slot="renderError" slot-scope="error">
+        <div>
+            Something went wrong!<br />Error details<br />{{ error }}
+        </div>
+    </template>
 ```
 
 ## Demo
@@ -194,15 +197,24 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 4. specify how search suggestions should be filtered using `react` prop.
 5. use your own function to render suggestions using `renderSuggestion` prop. It expects an object back for each `suggestion` having keys `label` and `value`. The query is run against the `value` key and `label` is used for rendering the suggestions. `label` can be either `String` or JSX. For example,
 
-```js
-<data-search
-  ...
-  :renderSuggestion="suggestion => ({
-    label: `${suggestion._source.original_title} by ${suggestion._source.authors}`,
-    value: suggestion._source.original_title,
-    source: suggestion._source  // for onValueSelected to work with renderSuggestion
-  })"
-/>
+```html
+<template>
+    <data-search
+        :renderSuggestion="parseSuggestion"
+    />
+</template>
+<script>
+export default {
+	name: 'app',
+	methods: {
+		parseSuggestion: suggestion => ({
+            label: `${suggestion._source.original_title} by ${suggestion._source.authors}`,
+            value: suggestion._source.original_title,
+            source: suggestion._source  // for onValueSelected to work with renderSuggestion
+        }),
+	},
+};
+</script>
 ```
 
 -   it's also possible to take control of rendering individual suggestions with `renderSuggestion` prop or the entire suggestions rendering using the `renderAllSuggestions` prop.
@@ -229,50 +241,55 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 The `suggestions` parameter receives all the unparsed suggestions from elasticsearch, however `parsedSuggestions` are also passed which can also be used for suggestions rendering.
 
-```js
-<data-search
-  ...
-  className="custom-class"
-  :customQuery=`
-    function(value, props) {
-      return {
-        query: {
-            match: {
-                data_field: "this is a test"
-            }
-        }
-      }
-    }
-  `
-  :beforeValueChange=`
-    function(value) {
-      // called before the value is set
-      // returns a promise
-      return new Promise((resolve, reject) => {
-        // update state or component props
-        resolve()
-        // or reject()
-      })
-    }
-  `
-  @valueChange=`
-    function(value) {
-      console.log("current value: ", value)
-      // set the state
-      // use the value with other js code
-    }`
-  @queryChange=`
-    function(prevQuery, nextQuery) {
-      // use the query with other js code
-      console.log('prevQuery', prevQuery);
-      console.log('nextQuery', nextQuery);
-    }`
-  // specify how and which suggestions are filtered using `react` prop.
-  :react=`{
-    "and": ["pricingFilter", "dateFilter"],
-    "or": ["searchFilter"]
-  }`
+```html
+<template>
+    <data-search
+        className="custom-class"
+        :customQuery="getCustomQuery"
+        :beforeValueChange="handleBeforeValueChange"
+        :react="{
+            and: ['pricingFilter', 'dateFilter'],
+            or: ['searchFilter']
+        }"
+        @valueChange="handleValueChange"
+        @queryChange="handleQueryChange"
 />
+</template>
+<script>
+export default {
+	name: 'app',
+	methods: {
+		getCustomQuery: (value, props) => {
+            return {
+                query: {
+                    match: {
+                        data_field: "this is a test"
+                    }
+                }
+            }
+        },
+        handleBeforeValueChange: (value) => {
+            // called before the value is set
+            // returns a promise
+            return new Promise((resolve, reject) => {
+                // update state or component props
+                resolve()
+                // or reject()
+            })
+        },
+        handleValueChange: (value) => {
+            console.log("current value: ", value)
+            // set the state
+            // use the value with other js code
+        },
+        handleQueryChange: (prevQuery, nextQuery) => {
+            // use the query with other js code
+            console.log('prevQuery', prevQuery);
+            console.log('nextQuery', nextQuery);
+        }
+	},
+};
+</script>
 ```
 
 -   **className** `String`

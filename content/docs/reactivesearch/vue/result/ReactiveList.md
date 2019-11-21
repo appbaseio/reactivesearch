@@ -171,17 +171,6 @@ Example uses:
 </template>
 ```
 
-or
-
-```js
-:renderError="error => (
-        <div>
-            Something went wrong!<br/>Error details<br/>{error}
-        </div>
-    )
-"
-```
-
 -   **renderNoResults** `String|Function|slot-scope` [optional]
     show custom message or component when no results found.
 -   **defaultQuery** `Function` [optional]
@@ -226,27 +215,25 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 3. render the entire result data using `render`.
 4. connect with external interfaces using `queryChange`.
 
-```js
-<ReactiveList
-  ...
-  className="custom-class"
-  :renderItem=`
-    function({ item }) {
-      return(
-        <div>
-          { item.data }
-        </div>
-      )
-    }
-  `
-  @queryChange=`
-    function(prevQuery, nextQuery) {
-      // use the query with other js code
-      console.log('prevQuery', prevQuery);
-      console.log('nextQuery', nextQuery);
-    }
-  `
-/>
+```html
+<template>
+    <reactive-list
+        className="custom-class"
+        @queryChange="handleQueryChange"
+    />
+</template>
+<script>
+export default {
+	name: 'app',
+	methods: {
+		handleQueryChange: (prevQuery, nextQuery) => {
+            // use the query with other js code
+            console.log('prevQuery', prevQuery);
+            console.log('nextQuery', nextQuery);
+        }
+	},
+};
+</script>
 ```
 
 -   **className** `String`
