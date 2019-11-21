@@ -156,8 +156,9 @@ const ReactiveComponent = {
 		},
 		customQuery(newVal, oldVal) {
 			if (newVal && !isEqual(newVal, oldVal)) {
-				const { customQuery, componentId } = this.$props;
-				const { query, ...queryOptions } = customQuery(this.$props) || {};
+				const { componentId } = this.$props;
+				this.$customQuery = newVal(this.$props);
+				const { query, ...queryOptions } = this.$customQuery || {};
 
 				if (queryOptions) {
 					this.setQueryOptions(
