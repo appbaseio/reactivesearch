@@ -29,6 +29,8 @@ const Dropdown = {
 		placeholder: types.string,
 		returnsObject: types.bool,
 		customLabelRenderer: types.func,
+		hasCustomRenderer: types.bool,
+		customRenderer: types.func,
 		renderItem: types.func,
 		handleChange: types.func,
 		transformData: types.func,
@@ -52,6 +54,8 @@ const Dropdown = {
 			transformData,
 			footer,
 			customLabelRenderer,
+			hasCustomRenderer,
+			customRenderer,
 		} = this.$props;
 		let itemsToRender = items;
 
@@ -99,7 +103,16 @@ const Dropdown = {
 								)}
 								<Chevron open={isOpen} />
 							</Select>
-							{isOpen && itemsToRender.length ? (
+							{/* eslint-disable-next-line no-nested-ternary */}
+							{hasCustomRenderer ? (
+								customRenderer(itemsToRender, {
+									getItemProps,
+									isOpen,
+									highlightedIndex,
+									getButtonProps,
+									getItemEvents,
+								})
+							) : isOpen && itemsToRender.length ? (
 								<ul
 									class={`${suggestions(themePreset, this.theme)} ${
 										this.$props.small ? 'small' : ''

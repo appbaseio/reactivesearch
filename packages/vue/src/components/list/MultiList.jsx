@@ -3,7 +3,14 @@ import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
-import { connect, isFunction, parseValueArray } from '../../utils/index';
+import {
+	connect,
+	hasCustomRenderer,
+	getComponent,
+	isFunction,
+	isEvent,
+	parseValueArray,
+} from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
@@ -44,6 +51,7 @@ const MultiList = {
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Search'),
 		react: types.react,
+		render: types.func,
 		renderItem: types.func,
 		renderError: types.title,
 		transformData: types.func,
@@ -162,7 +170,7 @@ const MultiList = {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
 		}
 
-		if (this.modifiedOptions.length === 0) {
+		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0) {
 			return null;
 		}
 
@@ -179,97 +187,101 @@ const MultiList = {
 					</Title>
 				)}
 				{this.renderSearch()}
-				<UL class={getClassName(this.$props.innerClass, 'list')}>
-					{selectAllLabel ? (
-						<li
-							key={selectAllLabel}
-							class={`${this.currentValue[selectAllLabel] ? 'active' : ''}`}
-						>
-							<Checkbox
-								type="checkbox"
-								class={getClassName(this.$props.innerClass, 'checkbox')}
-								id={`${this.$props.componentId}-${selectAllLabel}`}
-								name={selectAllLabel}
-								value={selectAllLabel}
-								onClick={this.handleClick}
-								{...{
-									domProps: {
-										checked: !!this.currentValue[selectAllLabel],
-									},
-								}}
-								show={this.$props.showCheckbox}
-							/>
-							<label
-								class={getClassName(this.$props.innerClass, 'label')}
-								for={`${this.$props.componentId}-${selectAllLabel}`}
-							>
-								{selectAllLabel}
-							</label>
-						</li>
-					) : null}
-					{itemsToRender
-						.filter(item => {
-							if (String(item.key).length) {
-								if (this.$props.showSearch && this.$data.searchTerm) {
-									return String(item.key)
-										.toLowerCase()
-										.includes(this.$data.searchTerm.toLowerCase());
-								}
-
-								return true;
-							}
-
-							return false;
-						})
-						.map(item => (
+				{this.hasCustomRenderer ? (
+					this.getComponent()
+				) : (
+					<UL class={getClassName(this.$props.innerClass, 'list')}>
+						{selectAllLabel ? (
 							<li
-								key={item.key}
-								class={`${this.$data.currentValue[item.key] ? 'active' : ''}`}
+								key={selectAllLabel}
+								class={`${this.currentValue[selectAllLabel] ? 'active' : ''}`}
 							>
 								<Checkbox
 									type="checkbox"
 									class={getClassName(this.$props.innerClass, 'checkbox')}
-									id={`${this.$props.componentId}-${item.key}`}
-									name={this.$props.componentId}
-									value={item.key}
+									id={`${this.$props.componentId}-${selectAllLabel}`}
+									name={selectAllLabel}
+									value={selectAllLabel}
 									onClick={this.handleClick}
-									show={this.$props.showCheckbox}
 									{...{
 										domProps: {
-											checked: !!this.$data.currentValue[item.key],
+											checked: !!this.currentValue[selectAllLabel],
 										},
 									}}
+									show={this.$props.showCheckbox}
 								/>
 								<label
 									class={getClassName(this.$props.innerClass, 'label')}
-									for={`${this.$props.componentId}-${item.key}`}
+									for={`${this.$props.componentId}-${selectAllLabel}`}
 								>
-									{renderItemCalc ? (
-										renderItemCalc({
-											label: item.key,
-											count: item.doc_count,
-											isChecked: !!this.$data.currentValue[item.key],
-										})
-									) : (
-										<span>
-											{item.key}
-											{this.$props.showCount && (
-												<span
-													class={getClassName(
-														this.$props.innerClass,
-														'count',
-													)}
-												>
-													&nbsp;(
-													{item.doc_count})
-												</span>
-											)}
-										</span>
-									)}
+									{selectAllLabel}
 								</label>
 							</li>
-						))}
-				</UL>
+						) : null}
+						{itemsToRender
+							.filter(item => {
+								if (String(item.key).length) {
+									if (this.$props.showSearch && this.$data.searchTerm) {
+										return String(item.key)
+											.toLowerCase()
+											.includes(this.$data.searchTerm.toLowerCase());
+									}
+
+									return true;
+								}
+
+								return false;
+							})
+							.map(item => (
+								<li
+									key={item.key}
+									class={`${this.$data.currentValue[item.key] ? 'active' : ''}`}
+								>
+									<Checkbox
+										type="checkbox"
+										class={getClassName(this.$props.innerClass, 'checkbox')}
+										id={`${this.$props.componentId}-${item.key}`}
+										name={this.$props.componentId}
+										value={item.key}
+										onClick={this.handleClick}
+										show={this.$props.showCheckbox}
+										{...{
+											domProps: {
+												checked: !!this.$data.currentValue[item.key],
+											},
+										}}
+									/>
+									<label
+										class={getClassName(this.$props.innerClass, 'label')}
+										for={`${this.$props.componentId}-${item.key}`}
+									>
+										{renderItemCalc ? (
+											renderItemCalc({
+												label: item.key,
+												count: item.doc_count,
+												isChecked: !!this.$data.currentValue[item.key],
+											})
+										) : (
+											<span>
+												{item.key}
+												{this.$props.showCount && (
+													<span
+														class={getClassName(
+															this.$props.innerClass,
+															'count',
+														)}
+													>
+														&nbsp;(
+														{item.doc_count})
+													</span>
+												)}
+											</span>
+										)}
+									</label>
+								</li>
+							))}
+					</UL>
+				)}
 			</Container>
 		);
 	},
@@ -392,8 +404,10 @@ const MultiList = {
 			if (props.defaultQuery) {
 				const value = Object.keys(this.$data.currentValue);
 				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
-				this.setQueryOptions(this.internalComponent,
-					{ ...queryOptions, ...defaultQueryOptions });
+				this.setQueryOptions(this.internalComponent, {
+					...queryOptions,
+					...defaultQueryOptions,
+				});
 			} else {
 				this.setQueryOptions(this.internalComponent, queryOptions);
 			}
@@ -424,13 +438,38 @@ const MultiList = {
 		},
 
 		handleClick(e) {
-			const { value } = this.$props
+			let currentValue = e;
+			if (isEvent(e)) {
+				currentValue = e.target.value;
+			}
+			const { value } = this.$props;
 			if (value === undefined) {
-				this.setValue(e.target.value);
+				this.setValue(currentValue);
 			} else {
-				const values = parseValueArray(this.currentValue, e.target.value);
+				const values = parseValueArray(value, currentValue);
 				this.$emit('change', values);
 			}
+		},
+		getComponent() {
+			const { currentValue, modifiedOptions } = this.$data;
+			const { transformData } = this.$props;
+			let itemsToRender = modifiedOptions;
+			if (transformData) {
+				itemsToRender = transformData(itemsToRender);
+			}
+			const data = {
+				error: this.error,
+				loading: this.isLoading,
+				value: currentValue,
+				data: itemsToRender,
+				handleChange: this.handleClick,
+			};
+			return getComponent(data, this);
+		},
+	},
+	computed: {
+		hasCustomRenderer() {
+			return hasCustomRenderer(this);
 		},
 	},
 };
@@ -524,6 +563,7 @@ const mapStateToProps = (state, props) => ({
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
+	isLoading: state.isLoading[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
