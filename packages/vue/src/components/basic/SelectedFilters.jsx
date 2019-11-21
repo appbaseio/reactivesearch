@@ -43,7 +43,8 @@ const SelectedFilters = {
 						{...{
 							on: {
 								click: this.clearValues,
-								keypress: () => handleA11yAction(event, () => this.clearValues())
+								keypress: event =>
+									handleA11yAction(event, () => this.clearValues()),
 							},
 						}}
 						tabIndex="0"
@@ -105,7 +106,10 @@ const SelectedFilters = {
 								{...{
 									on: {
 										click: () => this.remove(component, value),
-										keypress: (event) => handleA11yAction(event, () => this.remove(component, value)),
+										keypress: event =>
+											handleA11yAction(event, () =>
+												this.remove(component, value),
+											),
 									},
 								}}
 								tabIndex="0"
@@ -123,6 +127,11 @@ const SelectedFilters = {
 				.filter(Boolean);
 		},
 	},
+	watch: {
+		selectedValues(newVal) {
+			this.$emit('change', newVal);
+		},
+	},
 };
 
 const mapStateToProps = state => ({
@@ -135,10 +144,7 @@ const mapDispatchtoProps = {
 	patchValue,
 };
 
-const RcConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(SelectedFilters);
+const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(SelectedFilters);
 
 SelectedFilters.install = function(Vue) {
 	Vue.component(SelectedFilters.name, RcConnected);
