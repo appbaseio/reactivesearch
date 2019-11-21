@@ -319,7 +319,7 @@ const SingleDropdownList = {
 		handleLoadMore() {
 			this.updateQueryOptions(this.$props, true);
 		},
-		getComponent(items, downShiftProps = {}) {
+		getComponent(items, downshiftProps = {}) {
 			const { currentValue } = this.$data;
 			const data = {
 				error: this.error,
@@ -327,7 +327,7 @@ const SingleDropdownList = {
 				value: currentValue,
 				data: items || [],
 				handleChange: this.handleChange,
-				downShiftProps,
+				downshiftProps,
 			};
 			return getComponent(data, this);
 		},

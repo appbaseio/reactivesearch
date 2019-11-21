@@ -205,12 +205,12 @@ const DataSearch = {
 			this.queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
 			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		},
-		getComponent(downShiftProps = {}) {
+		getComponent(downshiftProps = {}) {
 			const { currentValue } = this.$data;
 			const data = {
 				error: this.error,
 				loading: this.isLoading,
-				downShiftProps,
+				downshiftProps,
 				data: this.suggestionsList,
 				aggregationData: this.aggregationData,
 				rawData: this.suggestions || [],
