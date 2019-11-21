@@ -1,6 +1,7 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+
 import types from '../../utils/vueTypes';
 import { getAggsQuery, getCompositeAggsQuery } from './utils';
 import Title from '../../styles/Title';
@@ -55,6 +56,7 @@ const SingleDropdownList = {
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Select a value'),
 		react: types.react,
+		renderLabel: types.func,
 		render: types.func,
 		renderItem: types.func,
 		renderError: types.title,
@@ -162,11 +164,12 @@ const SingleDropdownList = {
 	},
 
 	render() {
-		const { showLoadMore, loadMoreLabel, renderItem, renderError } = this.$props;
+		const { showLoadMore, loadMoreLabel, renderItem, renderError, renderLabel } = this.$props;
 		const { isLastBucket } = this.$data;
 		let selectAll = [];
 		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
 		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
+		const renderLabelCalc = this.$scopedSlots.renderLabel || renderLabel;
 
 		if (renderErrorCalc && this.error) {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
@@ -221,6 +224,7 @@ const SingleDropdownList = {
 							</div>
 						)
 					}
+					customLabelRenderer={renderLabelCalc}
 				/>
 			</Container>
 		);
@@ -409,10 +413,7 @@ const mapDispatchtoProps = {
 	watchComponent,
 };
 
-const ListConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(SingleDropdownList);
+const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList);
 
 SingleDropdownList.install = function(Vue) {
 	Vue.component(SingleDropdownList.name, ListConnected);
