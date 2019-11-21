@@ -106,7 +106,7 @@ const DataSearch = {
 		innerClass: types.style,
 		innerRef: types.func,
 		render: types.func,
-		renderSuggestion: types.func,
+		parseSuggestion: types.func,
 		renderNoSuggestion: types.title,
 		renderError: types.title,
 		placeholder: VueTypes.string.def('Search'),
@@ -241,7 +241,7 @@ const DataSearch = {
 			}
 		},
 		onSuggestions(results) {
-			const { renderSuggestion } = this.$props;
+			const { parseSuggestion } = this.$props;
 			const fields = Array.isArray(this.$props.dataField)
 				? this.$props.dataField
 				: [this.$props.dataField];
@@ -252,8 +252,8 @@ const DataSearch = {
 				this.$data.currentValue.toLowerCase(),
 			);
 
-			if (renderSuggestion) {
-				return parsedSuggestions.map(suggestion => renderSuggestion(suggestion));
+			if (parseSuggestion) {
+				return parsedSuggestions.map(suggestion => parseSuggestion(suggestion));
 			}
 
 			return parsedSuggestions;
