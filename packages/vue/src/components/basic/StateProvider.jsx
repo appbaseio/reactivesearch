@@ -129,7 +129,7 @@ const StateProvider = {
 	render() {
 		const { searchState } = this;
 		const dom = this.$scopedSlots.default;
-		return dom({ searchState });
+		return dom ? dom({ searchState }) : null;
 	},
 };
 
