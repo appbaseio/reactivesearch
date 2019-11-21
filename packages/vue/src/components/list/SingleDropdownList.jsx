@@ -1,5 +1,7 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
+import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+
 import types from '../../utils/vueTypes';
 import { getAggsQuery, getCompositeAggsQuery } from './utils';
 import Title from '../../styles/Title';
@@ -8,7 +10,6 @@ import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
 import { connect, isFunction } from '../../utils/index';
 import { deprecatePropWarning } from '../shared/utils';
-import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 
 const {
 	addComponent,
@@ -55,6 +56,7 @@ const SingleDropdownList = {
 		innerClass: types.style,
 		placeholder: VueTypes.string.def('Select a value'),
 		react: types.react,
+		renderLabel: types.func,
 		renderItem: types.func,
 		renderError: types.title,
 		transformData: types.func,
@@ -161,11 +163,12 @@ const SingleDropdownList = {
 	},
 
 	render() {
-		const { showLoadMore, loadMoreLabel, renderItem, renderError } = this.$props;
+		const { showLoadMore, loadMoreLabel, renderItem, renderError, renderLabel } = this.$props;
 		const { isLastBucket } = this.$data;
 		let selectAll = [];
 		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
 		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
+		const renderLabelCalc = this.$scopedSlots.renderLabel || renderLabel;
 
 		if (renderErrorCalc && this.error) {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
@@ -218,6 +221,7 @@ const SingleDropdownList = {
 							</div>
 						)
 					}
+					customLabelRenderer={renderLabelCalc}
 				/>
 			</Container>
 		);
@@ -257,7 +261,7 @@ const SingleDropdownList = {
 
 		handleChange(item) {
 			const { value } = this.$props;
-			if ( value === undefined ) {
+			if (value === undefined) {
 				this.setValue(item);
 			} else {
 				this.$emit('change', item);
@@ -388,10 +392,7 @@ const mapDispatchtoProps = {
 	watchComponent,
 };
 
-const ListConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(SingleDropdownList);
+const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList);
 
 SingleDropdownList.install = function(Vue) {
 	Vue.component(SingleDropdownList.name, ListConnected);

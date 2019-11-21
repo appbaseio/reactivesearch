@@ -56,6 +56,7 @@ const MultiDropdownList = {
 		placeholder: VueTypes.string.def('Select values'),
 		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		react: types.react,
+		renderLabel: types.func,
 		renderItem: types.func,
 		renderError: types.title,
 		transformData: types.func,
@@ -171,9 +172,10 @@ const MultiDropdownList = {
 	},
 
 	render() {
-		const { showLoadMore, loadMoreLabel, renderItem, renderError } = this.$props;
+		const { showLoadMore, loadMoreLabel, renderItem, renderError, renderLabel } = this.$props;
 		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
 		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
+		const renderLabelCalc = this.$scopedSlots.renderLabel || renderLabel;
 		const { isLastBucket } = this.$data;
 		let selectAll = [];
 
@@ -229,6 +231,7 @@ const MultiDropdownList = {
 							</div>
 						)
 					}
+					customLabelRenderer={renderLabelCalc}
 				/>
 			</Container>
 		);
@@ -495,10 +498,7 @@ const mapDispatchtoProps = {
 	watchComponent,
 };
 
-const ListConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(MultiDropdownList);
+const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList);
 
 MultiDropdownList.install = function(Vue) {
 	Vue.component(MultiDropdownList.name, ListConnected);
