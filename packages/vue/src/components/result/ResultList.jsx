@@ -31,7 +31,7 @@ const ResultList = {
 		const ImageChild = children.find(
 			o => o.componentOptions && o.componentOptions.tag === ResultListImage.name,
 		);
-		if (ImageChild.componentOptions && ImageChild.componentOptions.propsData) {
+		if (ImageChild && ImageChild.componentOptions && ImageChild.componentOptions.propsData) {
 			this.hasImage = true;
 			if (ImageChild.componentOptions.propsData.small) {
 				this.isSmall = true;
@@ -59,6 +59,10 @@ const ResultList = {
 
 ResultList.install = function(Vue) {
 	Vue.component(ResultList.name, ResultList);
+	Vue.component(ResultListContent.name, ResultListContent);
+	Vue.component(ResultListDescription.name, ResultListDescription);
+	Vue.component(ResultListImage.name, ResultListImage);
+	Vue.component(ResultListTitle.name, ResultListTitle);
 };
 
 export default ResultList;

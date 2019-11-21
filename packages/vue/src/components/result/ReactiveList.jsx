@@ -783,5 +783,7 @@ export const RLConnected = connect(mapStateToProps, mapDispatchtoProps)(Reactive
 
 ReactiveList.install = function(Vue) {
 	Vue.component(ReactiveList.name, RLConnected);
+	Vue.component(ResultListWrapper.name, ResultListWrapper);
+	Vue.component(ResultCardsWrapper.name, ResultCardsWrapper);
 };
 export default ReactiveList;

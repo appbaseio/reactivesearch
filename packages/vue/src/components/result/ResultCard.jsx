@@ -34,6 +34,9 @@ const ResultCard = {
 
 ResultCard.install = function(Vue) {
 	Vue.component(ResultCard.name, ResultCard);
+	Vue.component(ResultCardTitle.name, ResultCardTitle);
+	Vue.component(ResultCardImage.name, ResultCardImage);
+	Vue.component(ResultCardDescription.name, ResultCardDescription);
 };
 
 export default ResultCard;
