@@ -26,7 +26,7 @@ export default {
 		},
 		button: {
 			title: 'Get Started',
-			href: './quickstart',
+			href: './vue/quickstart',
 		},
 		link: {
 			title: 'LEARN MORE',
@@ -129,7 +129,7 @@ export default {
 				'Go from scratch to creating a data-driven search app with our beginner friendly quick start guide.',
 			button: {
 				title: 'Get Started',
-				href: './quickstart',
+				href: './vue/quickstart',
 			},
 			link: {
 				title: 'Docs',
@@ -167,7 +167,12 @@ export default {
 				href: 'https://codesandbox.io/s/y2rvj53koz/',
 				description: 'An e-commerce search experience for a books dataset.',
 			},
-			{},
+			{
+				src: 'https://i.imgur.com/3DoPCSV.jpg',
+				title: 'Movie App',
+				href: 'https://sleepy-edison-c6bc3b.netlify.com/',
+				description: 'An app showing the use of Vue Router and ReactiveSearch.',
+			},
 		],
 	},
 	banner7: {
