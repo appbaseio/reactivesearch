@@ -14,6 +14,12 @@
 						<CustomComponent :aggregations="aggregations" :setQuery="setQuery" />
 					</div>
 				</ReactiveComponent>
+				<DynamicRangeSlider
+					componentId="Pricing"
+					dataField="price"
+					tooltipTrigger="hover"
+					:react="{ and: 'CarSensor' }"
+				/>
 			</div>
 
 			<div class="col">
@@ -25,7 +31,7 @@
 					:size="20"
 					:pagination="true"
 					:react="{
-						and: 'CarSensor',
+						and: ['CarSensor', 'Pricing'],
 					}"
 				>
 					<div slot="renderItem" slot-scope="{ item }">
