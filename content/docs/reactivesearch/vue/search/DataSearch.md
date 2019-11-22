@@ -160,7 +160,7 @@ export default {
     You can pass a callback using `innerRef` which gets passed to the inner input element as [`ref`](https://reactjs.org/docs/refs-and-the-dom.html).
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
--   **render** `Function` [optional]
+-   **render** `Function|slot-scope` [optional]
     You can render suggestions in a custom layout by using the `render` as a `prop` or a `slot`.
     <br/>
     It accepts an object with these properties:
@@ -176,13 +176,13 @@ export default {
         current search input value i.e the search query being used to obtain suggestions.
     -   **`downshiftProps`**: `object`
         provides the following control props from `downshift` which can be used to bind list items with click/mouse events.
-        -   **isOpen** `Boolean`
+        -   **isOpen** `boolean`
             Whether the menu should be considered open or closed. Some aspects of the downshift component respond differently based on this value (for example, if isOpen is true when the user hits "Enter" on the input field, then the item at the highlightedIndex item is selected).
-        -   **getItemProps** `Function`
+        -   **getItemProps** `function`
             Returns the props you should apply to any menu item elements you render.
-        -   **getItemEvents** `Function`
+        -   **getItemEvents** `function`
             Returns the events you should apply to any menu item elements you render.
-        -   **highlightedIndex** `Number`
+        -   **highlightedIndex** `number`
             The index that should be highlighted.
 
 You can use `DataSearch` with `render slot` as shown:
@@ -227,14 +227,22 @@ You can use `DataSearch` with `render slot` as shown:
 Or you can also use render as prop.
 
 ```html
-<DataSearch
-	:render="function({
-          error,
-          loading,
-          downshiftProps: { isOpen, highlightedIndex, getItemProps, getItemEvents },
-          data: suggestions,
-    }) {...}"
-/>
+<template>
+	<DataSearch :render="render" />
+</template>
+<script>
+	export default {
+		name: 'app',
+		methods: {
+			render({
+				error,
+				loading,
+				downshiftProps: { isOpen, highlightedIndex, getItemProps, getItemEvents },
+				data: suggestions,
+			}) {...},
+		},
+	};
+</script>
 ```
 
 -   **renderNoSuggestion** `String|slot-scope` [optional]
