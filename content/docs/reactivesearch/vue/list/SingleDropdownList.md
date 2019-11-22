@@ -83,7 +83,7 @@ Example uses:
 
 ```html
 <template>
-	<MultiDropdownList :renderItem="renderItem" />
+	<SingleDropdownList :renderItem="renderItem" />
 </template>
 <script>
 	export default {
@@ -191,7 +191,7 @@ Or you can also use render as a function
 
 ```html
 <template>
-	<MultiDropdownList :render="render" />
+	<SingleDropdownList :render="render" />
 </template>
 <script>
 	export default {
