@@ -88,11 +88,11 @@ const HomePage = ({ data, location }) => {
 												duration: 4,
 											},
 											{
-												title: 'Zapier Integration',
+												title: 'Importing Data',
 												description:
-													'Automate your appbase.io database operations with Zapier',
-												link: '/docs/data/Zapier/',
-												duration: 2,
+													'Import through GUI and command line sources such as Dashboard, ABC CLI, Rest APIs, and Zapier.',
+												link: '/docs/data/Import/',
+												duration: 9,
 											},
 											// {
 											// 	title: 'Importing Data',

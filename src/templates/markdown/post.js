@@ -56,7 +56,7 @@ class Post extends React.Component {
 				</div>
 			);
 			sideBarLayout.rightSidebar = (
-				<div className="nr3 sticky top-25">
+				<div className="nr3 sticky top-25 overflow-sidebar-scroll">
 					<TOC className="pr4" listClasses="mt2" />
 				</div>
 			);

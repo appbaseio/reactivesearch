@@ -26,8 +26,8 @@ const guides = [
 				link: '/docs/data/Browser/',
 			},
 			{
-				title: 'Zapier Integration',
-				link: '/docs/data/Zapier/',
+				title: 'Importing Data',
+				link: '/docs/data/Import/',
 			},
 		],
 	},
