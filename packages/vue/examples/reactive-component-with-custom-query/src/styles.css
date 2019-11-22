@@ -1,0 +1,151 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.row.dark {
+  background: #303030;
+}
+
+.col {
+  width: calc(100% - 400px);
+  padding: 15px;
+}
+
+.row > .col:first-child {
+  border-right: 1px solid #ccc;
+  max-width: 400px;
+}
+
+.result-list-container {
+  max-width: 800px;
+  margin: 100px auto;
+}
+
+.row > .col:last-child {
+  background: #fafafa;
+}
+
+.row.dark > .col:last-child {
+  background: #303030;
+}
+
+.flex {
+  display: flex;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.authors-list {
+  color: #9d9d9d;
+  font-weight: bold;
+}
+
+.dark .authors-list {
+  color: #fafafa;
+}
+
+.ratings-list {
+  padding: 10px 0;
+}
+
+.avg-rating {
+  color: #6b6b6b;
+  margin-left: 5px;
+}
+
+.dark .avg-rating {
+  color: #fafafa;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.stars {
+  color: gold;
+}
+
+.location {
+  color: salmon;
+  margin-right: 5px;
+}
+
+.meetup-location {
+  margin: 4px 0;
+}
+
+.book-title {
+  white-space: normal;
+  margin-top: 4px;
+}
+
+.book-title-card {
+  white-space: normal;
+  margin-top: 4px;
+  max-height: 45px;
+}
+
+.book-image {
+  height: 150px;
+  width: 110px;
+  background-size: cover;
+}
+
+.book-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.book-content {
+  background: white;
+  margin: 10px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.meetup-title {
+  white-space: normal;
+}
+
+.meetup-topics {
+  height: 35px;
+  overflow: hidden;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.meetup-topic {
+  background-color: #dedede;
+  color: #555;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 4px;
+}
+
+.meetup-topic:first-child {
+  margin-left: 0;
+}
+
+.col .meetup-list-image {
+  background-size: cover;
+}
+.ml20 {
+  margin-left: 20px;
+}
