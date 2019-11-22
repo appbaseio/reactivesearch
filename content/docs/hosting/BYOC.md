@@ -93,7 +93,7 @@ You can update your ElasticSearch cluster URL at any point using the Appbase.io 
 
 #### **Sharing Cluster**
 
-With Appbase.io Dashboard you can easily share cluster with your team members. Each user can have a **Viewer** or **Admin** role.
+With Appbase.io Dashboard, you can easily share the cluster with your team members. Each user can have a **Viewer** or an **Admin** role.
 
 ![](https://i.imgur.com/qmKcffi.png)
 
@@ -105,17 +105,17 @@ Here are the steps that you can follow to install Arc using AMI
 
 **Step 1 -** Create an [Arc instance](/docs/hosting/BYOC/#how-to-create-arc-instance).
 
-**Step 2 -** Select Arc AMI from [AWS Marketplace]()
+**Step 2 -** Select Arc AMI from [AWS Marketplace](https://aws.amazon.com/marketplace/pp/B081K85XFZ?qid=1574427631010)
 
-// TODO Add Marketplace Link + image of marketplace
+![](https://i.imgur.com/ILM9BaS.png)
 
-**Step 3 -** Select EC2 Instance based on your traffic for Deploying Arc. We recommend using the [t2 medium](https://aws.amazon.com/ec2/pricing/on-demand/) size.
+**Step 3 -** Select an EC2 Instance for Deploying Arc. We recommend using the [t2 medium](https://aws.amazon.com/ec2/pricing/on-demand/) instance size.
 
 That's all you need to follow in order to deploy an Arc cluster 🚀. Once the EC2 machine is created and _running_ successfully, you can get Public DNS / IP address from the EC2 dashboard. This URL becomes your end point for accessing the Arc services. You can also point your domain to this DNS or IP.
 
 ## ![](https://i.imgur.com/PDs8DK0.png)
 
-> **Note:** We highly recommend using cluster with [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) certificate, as you will be using this cluster URL on [Arc Dashboard](https://arc-dashboard.appbase.io) which is secured with TLS certificate. So to avoid unsafe script errors, it is better to setup TLS for your domain or EC2 public DNS.
+> **Note:** We highly recommend using the cluster with [TLS security](https://en.wikipedia.org/wiki/Transport_Layer_Security) enabled, as Arc is intended to be used as a frontend for ElasticSearch.
 
 #### **Adding TLS Certificate**
 
@@ -125,7 +125,7 @@ Now, let's add TLS certificate to EC2 public DNS / custom domain
 
 **Step 1-** Get TLS certificate with `.pem` & `.key` file.
 
-> **Note:** You can obtain a free certificate using [https://letsencrypt.org/](https://letsencrypt.org/) or even use a self-signed version.
+> **Note:** You can obtain a free certificate using [https://letsencrypt.org/](https://letsencrypt.org/) or [use a self-signed certificate](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-18-04) as well.
 
 **Step 2-** Access your EC2 instance using `ssh`. From EC2 dashboard you can select instance and click on **Connect** to get `ssh` login details about your machine.
 
@@ -147,6 +147,8 @@ cmd/ctrl + v
 **Step 5-** Open `sudo vim /etc/nginx/nginx.conf`.
 
 **Step 6-** Configuration for TLS is already present in `nginx.conf` in commented form. You can uncomment it.
+
+![](https://i.imgur.com/PybxA1K.png)
 
 -   Uncomment lines `L125` - `L213`.
 -   Comment out or remove the server listening for PORT 80.
