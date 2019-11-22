@@ -19,74 +19,75 @@ With `ReactiveComponent`, you can convert any Vue Component into a Reactivesearc
 >
 > `ReactiveComponent` is a wrapper component that allows you to connect custom component(s) (passed as children) with the Vue ecosystem.
 
-### Usage
+### Usage with defaultQuery
 
 For example, let's suppose that we are building an e-commerce store where we have a react component called `ColorPicker` which renders the `colors` passed to it as tiles, allowing us to filter the products by their colors.
 
 ![ColorPicker](https://i.imgur.com/wuKhCTT.png)
 
-```javascript{2}
-<color-picker
-    :colors="['#000', '#666', '#fff']"
-    @change="handleColorChange"
->
+```html
+<color-picker :colors="['#000', '#666', '#fff']" @change="handleColorChange"></color-picker>
 ```
 
 Now, let's assume that we have all these hex-codes stored as `keywords` in an Elasticsearch index. To display each unique color tile, we can run a `terms` aggregations query. The `defaultQuery` prop of ReactiveComponent allows us to do this and pass the results to a child component.
 
 ```html
-<reactive-component
-    componentId="myColorPicker"   // a unique id we will refer to later
-    :defaultQuery=`() => ({
-        aggs: {
-            color: {
-                terms: {
-                    field: 'color'
-                }
-            }
-        }
-    })`
->
-    <div slot-scope="{ aggregations, hits, setQuery }">
-	    <color-picker-wrapper :aggregations="aggregations" :hits="hits" :setQuery="setQuery"/>
-	</div>
-</reactive-component>
+<template>
+	<reactive-component componentId="myColorPicker" :defaultQuery="defaultQuery">
+		<div slot-scope="{ aggregations, hits, setQuery }">
+			<color-picker-wrapper :aggregations="aggregations" :hits="hits" :setQuery="setQuery" />
+		</div>
+	</reactive-component>
+</template>
+<script>
+	export default {
+		name: 'app',
+		methods: {
+			defaultQuery() {
+				return {
+					aggs: {
+						color: {
+							terms: {
+								field: 'color',
+							},
+						},
+					},
+				};
+			},
+		},
+	};
+</script>
 ```
 
 The above snippet runs the `defaultQuery` passed to the ReactiveComponent when the component gets mounted and consequently pass the query results to the `ColorPickerWraper` component (i.e. child component of ReactiveComponent) as the following props: `hits`, `aggregationData` and `aggregations`.
 
-```javascript
+```html
 <template>
-    <div v-if="colors">
-        <color-picker
-            colors="colors"
-            @change=`() => {
-                // handles color change
-                // we will define this in the next step
-            }`
-        />
-    </div>
+	<div v-if="colors">
+		<color-picker colors="colors" @change=`() => { // handles color change // we will define
+		this in the next step }` />
+	</div>
 </template>
 <script>
-export default {
-    props: {
-        aggregations: Object,
-    },
-    computed: {
-        colors: () => {
-            let colors = [];
-            if (
-                // checking for when component gets the aggregation results
-                this.$props.aggregations
-                && this.$props.aggregations.colors
-                && this.$props.aggregations.colors.buckets.length
-            ) {
-                colors = this.$props.aggregations.map(color => color.key);
-            }
-            return colors;
-        },
-    },
-}
+	export default {
+		props: {
+			aggregations: Object,
+		},
+		computed: {
+			colors: () => {
+				let colors = [];
+				if (
+					// checking for when component gets the aggregation results
+					this.$props.aggregations &&
+					this.$props.aggregations.colors &&
+					this.$props.aggregations.colors.buckets.length
+				) {
+					colors = this.$props.aggregations.map(color => color.key);
+				}
+				return colors;
+			},
+		},
+	};
 </script>
 ```
 
@@ -108,50 +109,92 @@ where,
 
 In our current example, we would simply have to call `this.$props.setQuery()` with the updated query and value of the component:
 
-```javascript
+```html
 <template>
-    <div v-if="colors">
-        <color-picker
-            colors="colors"
-            @change="onChange"
-        />
-    </div>
+	<div v-if="colors">
+		<color-picker colors="colors" @change="onChange" />
+	</div>
 </template>
 <script>
-export default {
-    props: {
-        aggregations: Object,
-        setQuery: Function,
-    },
-    methods: {
-        onChange(newColor) {   // handles color change
-            const query = {
-                query: {
-                    term: { color: newColor }
-                }
-            };
+	export default {
+		props: {
+			aggregations: Object,
+			setQuery: Function,
+		},
+		methods: {
+			onChange(newColor) {
+				// handles color change
+				const query = {
+					query: {
+						term: { color: newColor },
+					},
+				};
 
-            this.$props.setQuery({
-                query,
-                value: newColor
-            })
-        }
-    },
-    computed: {
-        colors: () => {
-            let colors = [];
-            if (
-                // checking for when component gets the aggregation results
-                this.$props.aggregations
-                && this.$props.aggregations.colors
-                && this.$props.aggregations.colors.buckets.length
-            ) {
-                colors = this.$props.aggregations.map(color => color.key);
-            }
-            return colors;
-        },
-    },
-}
+				this.$props.setQuery({
+					query,
+					value: newColor,
+				});
+			},
+		},
+		computed: {
+			colors: () => {
+				let colors = [];
+				if (
+					// checking for when component gets the aggregation results
+					this.$props.aggregations &&
+					this.$props.aggregations.colors &&
+					this.$props.aggregations.colors.buckets.length
+				) {
+					colors = this.$props.aggregations.map(color => color.key);
+				}
+				return colors;
+			},
+		},
+	};
+</script>
+```
+
+###Usage with customQuery
+Let's suppose - we are building an e-commerce store for cars which displays a list of cars of a particular brand on their separate page as `example.com/cars/Ford`. Now, we want all the filters on that page (like pricing, type of car, model, year, etc) to only show the data relevant to the given brand (i.e. `Ford`). In this case, `ReactiveComponent` can be used with `customQuery` to achieve the desired behavior easily.
+
+We can then use the given ReactiveComponent to be watched by all the filters (via `react` prop) to avail the desired brand based filtering for all the filters.
+
+```html
+<template>
+	<ReactiveComponent
+		componentId="CarSensor"
+		:defaultQuery="defaultQuery"
+		:customQuery="customQuery"
+	>
+		<div slot-scope="{ aggregations, setQuery }">
+			<CustomComponent :aggregations="aggregations" :setQuery="setQuery" />
+		</div>
+	</ReactiveComponent>
+</template>
+<script>
+	export default {
+		name: 'app',
+		methods: {
+			defaultQuery() {
+				return {
+					aggs: {
+						'brand.keyword': {
+							terms: {
+								field: 'brand.keyword',
+								order: {
+									_count: 'desc',
+								},
+								size: 10,
+							},
+						},
+					},
+				};
+			},
+			customQuery() {
+				return { query: { term: { ['brand.keyword']: 'Ford' } } };
+			},
+		},
+	};
 </script>
 ```
 
@@ -159,19 +202,24 @@ export default {
 
 #### Scope Data Object
 
--   **hits** `Array`
-    `hits` prop is an array of results from the Elasticsearch query of the component.
+-   **loading** `boolean`
+    indicates that the query is still in progress
+-   **error**: `object`
+    An object containing the error info
+-   **data** `Array`
+    `data` prop is an array of parsed results(hits) from the Elasticsearch query of the component.
+-   **rawData** `Array`
+    `rawData` prop is an array of original results(hits) from the Elasticsearch query of the component.
 -   **aggregations** `Object`
     `aggregations` prop contains the results from `aggs` Elasticsearch query of the component.
--   **aggregationData** `Array`
-    `aggregationData` prop contains the results from `composite aggs` Elasticsearch query of the component.
 -   **setQuery** `function`
     `setQuery` function sets the query of the component. It takes an object param of shape:
 
 ```javascript
     {
         query: {}, // query of the component
-        value: ''  // value of the component
+		value: '',  // value of the component
+		options: {}, // query options for e.g size, timeout & includeFields etc.
     }
 ```
 
@@ -233,12 +281,22 @@ export default {
 ## Events
 
 -   **queryChange**
-    is a event which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
--   **allData**
-    event which provides `hits` and `aggregations` as an object properties.
+    is an event which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
+-   **data** `Function`
+    is an event which provides `data`, `rawData`, `aggregationData` and `aggregations` as function params.
 -   **error**
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
 
 ## Examples
+
+###With defaultQuery
+
+<iframe src="https://codesandbox.io/embed/lr707846pl" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+###With customQuery
+
+<iframe src="https://codesandbox.io/embed/github/appbaseio/reactivesearch/tree/next/packages/vue/examples/reactive-component-with-custom-query" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+See storybook for ReactiveComponent on playground.
 
 <a href="https://reactivesearch-vue-playground.netlify.com/?selectedKind=Base%20components%2FReactiveComponent&selectedStory=A%20custom%20component&full=0&addons=1&stories=1&panelRight=0" target="_blank">ReactiveComponent with default props</a>

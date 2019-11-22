@@ -93,15 +93,20 @@ Example uses:
 -   **renderItem** `Function|slot-scope` [optional]
     customize the rendered list via a function or slot-scope which receives the item label, count and isChecked & expects a JSX or String back. For example:
 
-```js
-renderItem={({ label, count }) => (
-    <div>
-        {label}
-        <span style={{ marginLeft: 5, color: 'dodgerblue' }}>
-            {count}
-        </span>
-    </div>
-)}
+```html
+<template>
+	<SingleList :renderItem="renderItem" />
+</template>
+<script>
+	export default {
+		name: 'app',
+		methods: {
+			renderItem({ label, count }) {
+				return `${label} x ${count}`;
+			},
+		},
+	};
+</script>
 ```
 
 or

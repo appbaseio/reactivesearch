@@ -103,7 +103,7 @@ where,
 
 In our current example, we would simply have to call `this.props.setQuery()` with the updated query and value of the component:
 
-```javascript{17-28}
+```javascript
 class ColorPickerWrapper extends React.Component {
 	render() {
 		let colors = [];
