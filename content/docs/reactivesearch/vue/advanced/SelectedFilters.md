@@ -56,6 +56,13 @@ Most ReactiveSearch filter components have a prop `showFilter` (defaults to `tru
 
 As an example, check [MultiList usage](/docs/reactivesearch/vue/list/MultiList#usage) to see how `showFilter` and `filterLabel` can be used.
 
+###Events
+
+-   **change** `function` [optional]
+    Provides access to the current selected values. This enables you to retrieve the selected filters and current search state in a convenient way.
+-   **clear** `function` [optional]
+    a callback function which will be called when a particular filter(value) has been removed from the selected filters, provides the `component` and `value`.
+
 ### Styles
 
 `SelectedFilters` component supports `innerClass` prop with the following keys:
