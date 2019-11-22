@@ -117,19 +117,65 @@ or
 </template>
 ```
 
--   **renderError** `String|Function|slot-scope` [optional]
-    can be used to render an error message in case of any error.
+-   **render** `Function|slot-scope` [optional]
+    an alternative callback function to `renderItem`, where user can define how to render the view based on all the data changes.
+    <br/>
+    It accepts an object with these properties:
 
-```js
-    renderError={error => (
-            <div>
-                Something went wrong!<br/>Error details<br/>{error}
-            </div>
-        )
-    }
+    -   **`loading`**: `boolean`
+        indicates that the query is still in progress
+    -   **`error`**: `object`
+        An object containing the error info
+    -   **`data`**: `array`
+        An array of results obtained from the applied query.
+    -   **`value`**: `array`
+        current selected values.
+    -   **`handleChange`**: `function`
+        A callback function can be used to mark the list value as selected.
+
+You can use render as a slot as shown below:
+
+```html
+<SingleList :showSearch="false" componentId="BookSensor" data-field="original_series.raw">
+	<div class="suggestions" slot="render" slot-scope="{ data, handleChange }">
+		<ul>
+			<li
+				style="{ background-color: highlightedIndex ? 'grey' : 'transparent' }"
+				v-for="suggestion in (data || []).map(s => {
+                            return {
+                                label: s.key,
+                                value: s.key,
+                                key: s._id,
+                            };
+                        })"
+				:key="suggestion._id"
+				v-on:click="handleChange(suggestion.value)"
+			>
+				{{ suggestion.label }}
+			</li>
+		</ul>
+	</div>
+</SingleList>
 ```
 
-or
+Or you can also use render as a function
+
+```html
+<template>
+	<SingleList :render="render" />
+</template>
+<script>
+	export default {
+		name: 'app',
+		methods: {
+			render({ data, handleChange }) {...},
+		},
+	};
+</script>
+```
+
+-   **renderError** `String|Function|slot-scope` [optional]
+    can be used to render an error message in case of any error.
 
 ```html
 <template slot="renderError" slot-scope="error">
@@ -138,7 +184,7 @@ or
 ```
 
 -   **transformData** `Function` [optional]
-    allows transforming the data to render inside the list. You can change the order, remove, or add items, tranform their values with this method. It provides the data as param which is an array of objects of shape { key: <string>, doc_count: <number> } and expects you to return the array of objects of same shape.
+    allows transforming the data to render inside the list. You can change the order, remove, or add items, transform their values with this method. It provides the data as param which is an array of objects of shape { key: <string>, doc_count: <number> } and expects you to return the array of objects of same shape.
 
 ## Demo
 
@@ -168,48 +214,61 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 3. connect with external interfaces using `beforeValueChange`, `valueChange` and `queryChange`,
 4. specify how options should be filtered or updated using `react` prop.
 
-```js
-<single-list
-  ...
-  className="custom-class"
-  :customQuery=`
-    function(value, props) {
-      return {
-        query: {
-            match: {
-                data_field: "this is a test"
-            }
-        }
-      }
-    }`
-  :beforeValueChange=`
-    function(value) {
-      // called before the value is set
-      // returns a promise
-      return new Promise((resolve, reject) => {
-        // update state or component props
-        resolve()
-        // or reject()
-      })
-    }`
-  @valueChange=`
-    function(value) {
-      console.log("current value: ", value)
-      // set the state
-      // use the value with other js code
-    }`
-  @queryChange=`
-    function(prevQuery, nextQuery) {
-      // use the query with other js code
-      console.log('prevQuery', prevQuery);
-      console.log('nextQuery', nextQuery);
-    }`
-  // specify how and which options are filtered using `react` prop.
-  :react=`{
-    "and": ["pricingFilter", "dateFilter"],
-    "or": ["searchFilter"]
-  }`
-/>
+```html
+<template>
+	<single-list
+		...
+		className="custom-class"
+		:customQuery="getCustomQuery"
+		:beforeValueChange="handleBeforeValueChange"
+		@valueChange="handleValueChange"
+		@queryChange="handleQueryChange"
+		:react="react"
+	/>
+</template>
+<script>
+	export default {
+		name: 'app',
+		methods: {
+			getCustomQuery: (value, props) => {
+				return {
+					query: {
+						match: {
+							data_field: 'this is a test',
+						},
+					},
+				};
+			},
+			handleBeforeValueChange: value => {
+				// called before the value is set
+				// returns a promise
+				return new Promise((resolve, reject) => {
+					// update state or component props
+					resolve();
+					// or reject()
+				});
+			},
+			handleValueChange: value => {
+				console.log('current value: ', value);
+				// set the state
+				// use the value with other js code
+			},
+			handleQueryChange: (prevQuery, nextQuery) => {
+				// use the query with other js code
+				console.log('prevQuery', prevQuery);
+				console.log('nextQuery', nextQuery);
+			},
+		},
+		computed: {
+			react() {
+				return {
+					and: ['pricingFilter', 'dateFilter'],
+					or: ['searchFilter'],
+				};
+			},
+		},
+	};
+</script>
 ```
 
 -   **className** `String`
