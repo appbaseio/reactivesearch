@@ -7,4 +7,4 @@
 
 ## Vue
 
--   [1.x (current)](changelogs/CHANGELOG_VUE_v1.md)
+-   [1.x (current)](changelogs/CAHNGELOG_VUE_V1.md)
