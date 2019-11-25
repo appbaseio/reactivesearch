@@ -16,6 +16,7 @@
 		"packages/*",
 		"packages/web/examples/*",
 		"packages/vue/examples/*",
+		"packages/vue/demos/*",
 		"packages/maps/examples/*",
 		"site",
 		"site/demos/*"

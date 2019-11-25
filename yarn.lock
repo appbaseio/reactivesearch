@@ -148,27 +148,6 @@
     react-emotion "^9.0.0"
     react-google-maps "^9.4.5"
 
-"@appbaseio/reactivesearch@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.1.0.tgz#e19b48b3c77e869937b39ccb17bae2e588bdde2b"
-  integrity sha512-nmlSUUie8W80yJzc8iYx8bNmNyeOfXyIEoMQBU+Iw1pKQe9WlHo9mNZ2HRhqGxLmZ7zlR+lkZvR1W+pMLNULLw==
-  dependencies:
-    "@appbaseio/reactivecore" "8.2.16"
-    appbase-js "^4.0.2-beta.08"
-    cross-env "^5.2.0"
-    downshift "^1.31.2"
-    emotion "^9.0.0"
-    emotion-theming "^9.0.0"
-    hoist-non-react-statics "^3.2.1"
-    polished "^1.9.3"
-    prop-types "^15.6.0"
-    react-day-picker "^7.0.5"
-    react-emotion "^9.0.0"
-    react-redux "^6.0.1"
-    rheostat "^2.1.1"
-    url-search-params-polyfill "^7.0.0"
-    xdate "^0.8.2"
-
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"
