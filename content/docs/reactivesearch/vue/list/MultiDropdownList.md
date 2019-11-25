@@ -28,9 +28,14 @@ Example uses:
 
 ### Basic Usage
 
-```js
+<!-- prettier-ignore -->
+```html
 <template>
-	<multi-dropdown-list componentId="CitySensor" dataField="group.group_city.raw" title="Cities" />
+	<multi-dropdown-list
+        componentId="CitySensor"
+        dataField="group.group_city.raw"
+        title="Cities"
+    />
 </template>
 ```
 
@@ -80,49 +85,107 @@ Example uses:
     show count of number of occurences besides an item. Defaults to `true`.
 -   **showSearch** `Boolean` [optional]
     whether to show a searchbox to filter the list items locally. Defaults to false.
+-   **render** `Function|slot-scope` [optional]
+    an alternative callback function to `renderItem`, where user can define how to render the view based on all the data changes.
+    <br/>
+    It accepts an object with these properties:
+    -   **`loading`**: `boolean`
+        indicates that the query is still in progress
+    -   **`error`**: `object`
+        An object containing the error info
+    -   **`data`**: `array`
+        An array of results obtained from the applied query.
+    -   **`value`**: `array`
+        current selected values.
+    -   **`handleChange`**: `function`
+        A callback function can be used to mark the list value as selected.
+    -   **`downshiftProps`**: `object`
+        provides the following control props from `downshift` which can be used to bind list items with click/mouse events.
+        -   **isOpen** `boolean`
+            Whether the menu should be considered open or closed. Some aspects of the downshift component respond differently based on this value (for example, if isOpen is true when the user hits "Enter" on the input field, then the item at the highlightedIndex item is selected).
+        -   **getItemProps** `function`
+            Returns the props you should apply to any menu item elements you render.
+        -   **getItemEvents** `function`
+            Returns the events you should apply to any menu item elements you render.
+        -   **highlightedIndex** `number`
+            The index that should be highlighted.
+
+You can use render as a slot as shown below:
+
+<!-- prettier-ignore -->
+```html
+<multi-dropdown-list
+    :showSearch="false"
+    componentId="BookSensor"
+    data-field="original_series.raw"
+>
+	<div
+		class="suggestions"
+		slot="render"
+		slot-scope="{ data, handleChange, downshiftProps: { isOpen } }"
+	>
+		<ul v-if="isOpen">
+			<li
+				style="{ background-color: highlightedIndex ? 'grey' : 'transparent' }"
+				v-for="suggestion in (data || [])"
+				:key="suggestion._id"
+				v-on:click="handleChange(suggestion.key)"
+			>
+				{{ suggestion.key }}
+			</li>
+		</ul>
+	</div>
+</multi-dropdown-list>
+```
+
 -   **renderItem** `Function|slot-scope` [optional]
     customize the rendered list via a function or slot-scope which receives the item label, count and isChecked & expects a JSX or String back. For example:
 
-```js
-    renderItem={({ label, count }) => (
-        <div>
-            {label}
-            <span style={{ marginLeft: 5, color: 'dodgerblue' }}>
-                {count}
-            </span>
-        </div>
-    )}
-```
-
-or
-
+<!-- prettier-ignore -->
 ```html
-<template slot="renderItem" slot-scope="{ label, count }">
-	<div>
+<multi-dropdown-list>
+	<div
+        slot="renderItem" 
+        slot-scope="{ label, count }" 
+    >
 		{{label}}
 		<span :style="{ marginLeft: 5, color: 'dodgerblue' }">
 			{{count}}
 		</span>
 	</div>
-</template>
+</multi-dropdown-list>
 ```
+
+-   **renderLabel** `Function|slot-scope` [optional]
+    can be used to change the label of the dropdown. Useful for adding highlighting/styling to or translating the label.
+
+    <!-- prettier-ignore -->
+    ```html
+    <multi-dropdown-list>
+    	<div 
+            slot="renderLabel" 
+            slot-scope="items"
+        >
+    		<ul>
+    			<li v-for="item in items">
+    				<div style="{ fontSize: '15px', fontColor: 'blue' }">
+                        {{item}}}
+                    </div>
+    			</li>
+    		</ul>
+    	</div>
+    </multi-dropdown-list>
+    ```
 
 -   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
 
-```js
-    renderError={error => (
-            <div>
-                Something went wrong!<br/>Error details<br/>{error}
-            </div>
-        )
-    }
-```
-
-or
-
+<!-- prettier-ignore -->
 ```html
-<template slot="renderError" slot-scope="error">
+<template 
+    slot="renderError" 
+    slot-scope="error"
+>
 	<div>Something went wrong!<br />Error details<br />{{ error }}</div>
 </template>
 ```
@@ -170,48 +233,61 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 3. connect with external interfaces using `beforeValueChange`, `valueChange` and `queryChange`,
 4. specify how options should be filtered or updated using `react` prop.
 
-```js
-<multi-dropdown-list
-  ...
-  className="custom-class"
-    :customQuery=`
-        function(value, props) {
-            return {
-                query: {
-                    match: {
-                        data_field: "this is a test"
-                    }
-                }
-            }
-    }`
-    :beforeValueChange=`
-        function(value) {
-        // called before the value is set
-        // returns a promise
-        return new Promise((resolve, reject) => {
-            // update state or component props
-            resolve()
-            // or reject()
-        })
-    }`
-    @valueChange=`
-        function(value) {
-        console.log("current value: ", value)
-        // set the state
-        // use the value with other js code
-    }`
-    @queryChange=`
-        function(prevQuery, nextQuery) {
-        // use the query with other js code
-        console.log('prevQuery', prevQuery);
-        console.log('nextQuery', nextQuery);
-        }`
-    // specify how and which options are filtered using `react` prop.
-    :react=`{
-        "and": ["pricingFilter", "dateFilter"],
-        "or": ["searchFilter"]
-    }`
-/>
+```html
+<template>
+	<multi-dropdown-list
+		...
+		className="custom-class"
+		:customQuery="getCustomQuery"
+		:beforeValueChange="handleBeforeValueChange"
+		@valueChange="handleValueChange"
+		@queryChange="handleQueryChange"
+		:react="react"
+	/>
+</template>
+<script>
+	export default {
+		name: 'app',
+		methods: {
+			getCustomQuery: (value, props) => {
+				return {
+					query: {
+						match: {
+							data_field: 'this is a test',
+						},
+					},
+				};
+			},
+			handleBeforeValueChange: value => {
+				// called before the value is set
+				// returns a promise
+				return new Promise((resolve, reject) => {
+					// update state or component props
+					resolve();
+					// or reject()
+				});
+			},
+			handleValueChange: value => {
+				console.log('current value: ', value);
+				// set the state
+				// use the value with other js code
+			},
+			handleQueryChange: (prevQuery, nextQuery) => {
+				// use the query with other js code
+				console.log('prevQuery', prevQuery);
+				console.log('nextQuery', nextQuery);
+			},
+		},
+		computed: {
+			react() {
+				return {
+					and: ['pricingFilter', 'dateFilter'],
+					or: ['searchFilter'],
+				};
+			},
+		},
+	};
+</script>
 ```
 
 -   **className** `String`

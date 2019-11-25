@@ -32,26 +32,26 @@ Example uses:
 
 ### Usage With All Props
 
-```js
+```html
 <template>
-    <multi-list
-        componentId="CitySensor"
-        dataField="group_city.raw"
-        title="Cities"
-        sortBy="asc"
-        queryFormat="or"
-        selectAllLabel="All Cities"
-        placeholder="Search City"
-        filterLabel="City"
-        :showFilter="true"
-        :showCheckbox="true"
-        :showCount="true"
-        :showSearch="true"
-        :defaultSelected="['San Francisco']"
-        :react="{ and: ['CategoryFilter', 'SearchFilter'] }"
-        :size="100"
-        :URLParams="false"
-    />
+	<multi-list
+		componentId="CitySensor"
+		dataField="group_city.raw"
+		title="Cities"
+		sortBy="asc"
+		queryFormat="or"
+		selectAllLabel="All Cities"
+		placeholder="Search City"
+		filterLabel="City"
+		:showFilter="true"
+		:showCheckbox="true"
+		:showCount="true"
+		:showSearch="true"
+		:defaultSelected="['San Francisco']"
+		:react="{ and: ['CategoryFilter', 'SearchFilter'] }"
+		:size="100"
+		:URLParams="false"
+	/>
 </template>
 ```
 
@@ -88,52 +88,80 @@ Example uses:
 -   **renderItem** `Function|slot-scope` [optional]
     customize the rendered list via a function or slot-scope which receives the item label, count and isChecked & expects a JSX or String back. For example:
 
-```js
-renderItem={({ label, count }) => (
-    <div>
-        {label}
-        <span style={{ marginLeft: 5, color: 'dodgerblue' }}>
-            {count}
-        </span>
-    </div>
-)}
-```
-
-or
-
+<!-- prettier-ignore -->
 ```html
-<template slot="renderItem" slot-scope="{ label, count }">
-	<div>
+<multi-list>
+	<div
+        slot="renderItem" 
+        slot-scope="{ label, count }"
+    >
 		{{label}}
 		<span :style="{ marginLeft: 5, color: 'dodgerblue' }">
 			{{count}}
 		</span>
 	</div>
-</template>
+</multi-list>
+```
+
+-   **render** `Function|slot-scope` [optional]
+    an alternative callback function to `renderItem`, where user can define how to render the view based on all the data changes.
+    <br/>
+    It accepts an object with these properties:
+
+    -   **`loading`**: `boolean`
+        indicates that the query is still in progress
+    -   **`error`**: `object`
+        An object containing the error info
+    -   **`data`**: `array`
+        An array of results obtained from the applied query.
+    -   **`value`**: `array`
+        current selected values.
+    -   **`handleChange`**: `function`
+        A callback function can be used to mark the list value as selected.
+
+You can use render as a slot as shown below:
+
+<!-- prettier-ignore -->
+```html
+<multi-list 
+    :showSearch="false" 
+    componentId="BookSensor" 
+    data-field="original_series.raw"
+>
+	<div 
+        class="suggestions" 
+        slot="render" 
+        slot-scope="{ data, handleChange }"
+    >
+		<ul>
+			<li
+				style="{ background-color: highlightedIndex ? 'grey' : 'transparent' }"
+				v-for="suggestion in (data || [])"
+				:key="suggestion._id"
+				v-on:click="handleChange(suggestion.key)"
+			>
+				{{ suggestion.key }}
+			</li>
+		</ul>
+	</div>
+</multi-list>
 ```
 
 -   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
 
-```js
-    renderError={error => (
-            <div>
-                Something went wrong!<br/>Error details<br/>{error}
-            </div>
-        )
-    }
-```
-
-or
-
+<!-- prettier-ignore -->
 ```html
-<template slot="renderError" slot-scope="error">
+<template 
+    slot="renderError" 
+    slot-scope="error"
+>
 	<div>Something went wrong!<br />Error details<br />{{ error }}</div>
 </template>
 ```
 
 -   **transformData** `Function` [optional]
-    allows transforming the data to render inside the list. You can change the order, remove, or add items, tranform their values with this method. It provides the data as param which is an array of objects of shape { key: <string>, doc_count: <number> } and expects you to return the array of objects of same shape.
+    allows transforming the data to render inside the list. You can change the order, remove, or add items, transform their values with this method. It provides the data as param which is an array of objects of shape { key: <string>, doc_count: <number> } and expects you to return the array of objects of same shape.
 -   **showMissing** `Boolean` [optional]
     defaults to `false`. When set to `true` it also retrives the aggregations for missing fields under the label specified by `missingLabel`.
 -   **missingLabel** `String` [optional]
@@ -173,50 +201,61 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection).
 3. connect with external interfaces using `beforeValueChange`, `valueChange` and `queryChange`,
 4. specify how options should be filtered or updated using `react` prop.
 
-```js
-<multi-list
-  ...
-  className="custom-class"
-  :customQuery=`
-    function(value, props) {
-      return {
-        query: {
-            match: {
-                data_field: "this is a test"
-            }
-        }
-      }
-    }
-  `
-  :beforeValueChange=`
-    function(value) {
-      // called before the value is set
-      // returns a promise
-      return new Promise((resolve, reject) => {
-        // update state or component props
-        resolve()
-        // or reject()
-      })
-    }
-  `
-  @valueChange=`
-    function(value) {
-      console.log("current value: ", value)
-      // set the state
-      // use the value with other js code
-    }`
-  @queryChange=`
-    function(prevQuery, nextQuery) {
-      // use the query with other js code
-      console.log('prevQuery', prevQuery);
-      console.log('nextQuery', nextQuery);
-    }`
-  // specify how and which options are filtered using `react` prop.
-  :react=`{
-    "and": ["pricingFilter", "dateFilter"],
-    "or": ["searchFilter"]
-  }`
-/>
+```html
+<template>
+	<multi-list
+		...
+		className="custom-class"
+		:customQuery="getCustomQuery"
+		:beforeValueChange="handleBeforeValueChange"
+		@valueChange="handleValueChange"
+		@queryChange="handleQueryChange"
+		:react="react"
+	/>
+</template>
+<script>
+	export default {
+		name: 'app',
+		methods: {
+			getCustomQuery: (value, props) => {
+				return {
+					query: {
+						match: {
+							data_field: 'this is a test',
+						},
+					},
+				};
+			},
+			handleBeforeValueChange: value => {
+				// called before the value is set
+				// returns a promise
+				return new Promise((resolve, reject) => {
+					// update state or component props
+					resolve();
+					// or reject()
+				});
+			},
+			handleValueChange: value => {
+				console.log('current value: ', value);
+				// set the state
+				// use the value with other js code
+			},
+			handleQueryChange: (prevQuery, nextQuery) => {
+				// use the query with other js code
+				console.log('prevQuery', prevQuery);
+				console.log('nextQuery', nextQuery);
+			},
+		},
+		computed: {
+			react() {
+				return {
+					and: ['pricingFilter', 'dateFilter'],
+					or: ['searchFilter'],
+				};
+			},
+		},
+	};
+</script>
 ```
 
 -   **className** `String`

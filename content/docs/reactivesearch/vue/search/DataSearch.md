@@ -66,11 +66,11 @@ Example uses:
     database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
 -   **aggregationField** `String` [optional]
     One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
-    You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `renderAllSuggestions` slot as shown:
+    You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `render` slot as shown:
 
     ```html
     <template
-    	slot="renderAllSuggestions"
+    	slot="render"
     	slot-scope="{
             ...
             aggregationData
@@ -160,10 +160,96 @@ export default {
     You can pass a callback using `innerRef` which gets passed to the inner input element as [`ref`](https://reactjs.org/docs/refs-and-the-dom.html).
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
+-   **render** `Function|slot-scope` [optional]
+    You can render suggestions in a custom layout by using the `render` as a `prop` or a `slot`.
+    <br/>
+    It accepts an object with these properties:
+    -   **`loading`**: `boolean`
+        indicates that the query is still in progress.
+    -   **`error`**: `object`
+        An object containing the error info.
+    -   **`data`**: `array`
+        An array of parsed suggestions obtained from the applied query.
+    -   **`rawData`**: `array`
+        An array of original suggestions obtained from the applied query.
+    -   **`value`**: `string`
+        current search input value i.e the search query being used to obtain suggestions.
+    -   **`downshiftProps`**: `object`
+        provides the following control props from `downshift` which can be used to bind list items with click/mouse events.
+        -   **isOpen** `boolean`
+            Whether the menu should be considered open or closed. Some aspects of the downshift component respond differently based on this value (for example, if isOpen is true when the user hits "Enter" on the input field, then the item at the highlightedIndex item is selected).
+        -   **getItemProps** `function`
+            Returns the props you should apply to any menu item elements you render.
+        -   **getItemEvents** `function`
+            Returns the events you should apply to any menu item elements you render.
+        -   **highlightedIndex** `number`
+            The index that should be highlighted.
+
+You can use `DataSearch` with `render slot` as shown:
+
+```html
+<DataSearch
+	class="result-list-container"
+	categoryField="authors.raw"
+	componentId="BookSensor"
+	:dataField="['original_title', 'original_title.search']"
+	:URLParams="true"
+>
+	<div
+		class="suggestions"
+		slot="render"
+		slot-scope="{
+            error,
+            loading,
+            downshiftProps: { isOpen, highlightedIndex, getItemProps, getItemEvents },
+            data: suggestions,
+        }"
+	>
+		<ul v-if="isOpen">
+			<li
+				style="{ background-color: highlightedIndex ? 'grey' : 'transparent' }"
+				v-for="suggestion in (suggestions || []).map(s => ({
+								label: s.source.authors,
+								value: s.source.authors,
+								key: s._id,
+							}))"
+				v-bind="getItemProps({ item: suggestion })"
+				v-on="getItemEvents({ item: suggestion })"
+				:key="suggestion._id"
+			>
+				{{ suggestion.label }}
+			</li>
+		</ul>
+	</div>
+</DataSearch>
+```
+
+Or you can also use render as prop.
+
+```html
+<template>
+	<DataSearch :render="render" />
+</template>
+<script>
+	export default {
+		name: 'app',
+		methods: {
+			render({
+				error,
+				loading,
+				downshiftProps: { isOpen, highlightedIndex, getItemProps, getItemEvents },
+				data: suggestions,
+			}) {...},
+		},
+	};
+</script>
+```
+
 -   **renderNoSuggestion** `String|slot-scope` [optional]
     can be used to render a message when there is no suggestions found.
 -   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
+
 ```html
     <template slot="renderError" slot-scope="error">
         <div>
@@ -195,13 +281,11 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 2. update the underlying DB query with `customQuery`,
 3. connect with external interfaces using `beforeValueChange`, `valueChange` and `queryChange`,
 4. specify how search suggestions should be filtered using `react` prop.
-5. use your own function to render suggestions using `renderSuggestion` prop. It expects an object back for each `suggestion` having keys `label` and `value`. The query is run against the `value` key and `label` is used for rendering the suggestions. `label` can be either `String` or JSX. For example,
+5. use your own function to render suggestions using `parseSuggestion` prop. It expects an object back for each `suggestion` having keys `label` and `value`. The query is run against the `value` key and `label` is used for rendering the suggestions. `label` can be either `String` or JSX. For example,
 
 ```html
 <template>
-    <data-search
-        :renderSuggestion="parseSuggestion"
-    />
+	<data-search :parseSuggestion="parseSuggestion" />
 </template>
 <script>
 export default {
@@ -217,27 +301,7 @@ export default {
 </script>
 ```
 
--   it's also possible to take control of rendering individual suggestions with `renderSuggestion` prop or the entire suggestions rendering using the `renderAllSuggestions` prop.
-
-`renderAllSuggestions` can be used as a `slot-scope` or `Function` which receives some parameters which you may use to build your own custom suggestions rendering
-
-```html
-<template
-	slot="renderAllSuggestions"
-	slot-scope="{
-        currentValue,       // the current value in the search
-        isOpen,             // isOpen from downshift
-        getItemProps,       // item props to be passed to suggestions
-		getItemEvents,      // item events to be passed to suggestions
-        highlightedIndex,   // index value which should be highlighted
-        suggestions,        // unmodified suggestions from Elasticsearch
-        parsedSuggestions,  // suggestions parsed by ReactiveSearch
-        aggregationData,    // composite aggregations parsed by ReactiveSearch
-    }"
->
-	...
-</template>
-```
+-   it's also possible to take control of rendering individual suggestions with `parseSuggestion` prop or the entire suggestions rendering using the `render` prop.
 
 The `suggestions` parameter receives all the unparsed suggestions from elasticsearch, however `parsedSuggestions` are also passed which can also be used for suggestions rendering.
 

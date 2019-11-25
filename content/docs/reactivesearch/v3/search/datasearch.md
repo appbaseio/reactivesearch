@@ -158,14 +158,14 @@ Example uses:
 -   **render** `Function` [optional]
     You can render suggestions in a custom layout by using the `render` prop.
     <br/>
-    It accepts an object with these properties: It accepts an object with these properties:
-    -   **`loading`**: `boolean` - **`loading`**: `boolean`
-        indicates that the query is still in progress indicates that the query is still in progress.
-    -   **`error`**: `object` - **`error`**: `object`
-        An object containing the error info An object containing the error info.
-    -   **`data`**: `array` - **`data`**: `array`
-        An array of parsed suggestions obtained from the applied query. An array of parsed suggestions obtained from the applied query.
-    -   **`rawData`**: `array` - **`rawData`**: `array`
+    It accepts an object with these properties:
+    -   **`loading`**: `boolean`
+        indicates that the query is still in progress.
+    -   **`error`**: `object`
+        An object containing the error info.
+    -   **`data`**: `array`
+        An array of parsed suggestions obtained from the applied query.
+    -   **`rawData`**: `array`
         An array of original suggestions obtained from the applied query.
     -   **`value`**: `string`
         current search input value i.e the search query being used to obtain suggestions.
