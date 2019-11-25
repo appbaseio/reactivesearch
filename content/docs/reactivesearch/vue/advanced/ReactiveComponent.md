@@ -25,17 +25,29 @@ For example, let's suppose that we are building an e-commerce store where we hav
 
 ![ColorPicker](https://i.imgur.com/wuKhCTT.png)
 
+<!-- prettier-ignore -->
 ```html
-<color-picker :colors="['#000', '#666', '#fff']" @change="handleColorChange"></color-picker>
+<color-picker 
+    :colors="['#000', '#666', '#fff']" 
+    @change="handleColorChange">
+</color-picker>
 ```
 
 Now, let's assume that we have all these hex-codes stored as `keywords` in an Elasticsearch index. To display each unique color tile, we can run a `terms` aggregations query. The `defaultQuery` prop of ReactiveComponent allows us to do this and pass the results to a child component.
 
+<!-- prettier-ignore -->
 ```html
 <template>
-	<reactive-component componentId="myColorPicker" :defaultQuery="defaultQuery">
+	<reactive-component 
+        componentId="myColorPicker" 
+        :defaultQuery="defaultQuery"
+    >
 		<div slot-scope="{ aggregations, hits, setQuery }">
-			<color-picker-wrapper :aggregations="aggregations" :hits="hits" :setQuery="setQuery" />
+			<color-picker-wrapper 
+                :aggregations="aggregations" 
+                :hits="hits" 
+                :setQuery="setQuery" 
+            />
 		</div>
 	</reactive-component>
 </template>
@@ -61,18 +73,24 @@ Now, let's assume that we have all these hex-codes stored as `keywords` in an El
 
 The above snippet runs the `defaultQuery` passed to the ReactiveComponent when the component gets mounted and consequently pass the query results to the `ColorPickerWraper` component (i.e. child component of ReactiveComponent) as the following props: `hits`, `aggregationData` and `aggregations`.
 
+<!-- prettier-ignore -->
 ```html
 <template>
-	<div v-if="colors">
-		<color-picker colors="colors" @change=`() => { // handles color change // we will define
-		this in the next step }` />
-	</div>
+    <div v-if="colors">
+        <color-picker 
+            colors="colors" 
+            @change="handleColorChange" 
+        />
+    </div>
 </template>
 <script>
 	export default {
 		props: {
 			aggregations: Object,
 		},
+        methods: {
+            handleColorChange() {...}
+        },
 		computed: {
 			colors: () => {
 				let colors = [];
@@ -109,10 +127,14 @@ where,
 
 In our current example, we would simply have to call `this.$props.setQuery()` with the updated query and value of the component:
 
+<!-- prettier-ignore -->
 ```html
 <template>
 	<div v-if="colors">
-		<color-picker colors="colors" @change="onChange" />
+		<color-picker 
+            colors="colors" 
+            @change="onChange" 
+        />
 	</div>
 </template>
 <script>
@@ -159,6 +181,7 @@ Let's suppose - we are building an e-commerce store for cars which displays a li
 
 We can then use the given ReactiveComponent to be watched by all the filters (via `react` prop) to avail the desired brand based filtering for all the filters.
 
+<!-- prettier-ignore -->
 ```html
 <template>
 	<ReactiveComponent
@@ -167,7 +190,10 @@ We can then use the given ReactiveComponent to be watched by all the filters (vi
 		:customQuery="customQuery"
 	>
 		<div slot-scope="{ aggregations, setQuery }">
-			<CustomComponent :aggregations="aggregations" :setQuery="setQuery" />
+			<CustomComponent 
+                :aggregations="aggregations" 
+                :setQuery="setQuery" 
+            />
 		</div>
 	</ReactiveComponent>
 </template>
@@ -238,8 +264,12 @@ We can then use the given ReactiveComponent to be watched by all the filters (vi
     One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
     You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `slot-scope` as shown:
 
+    <!-- prettier-ignore -->
     ```html
-    <reactive-component componentId="myColorPicker" aggregationField="color">
+    <reactive-component 
+        componentId="myColorPicker" 
+        aggregationField="color"
+    >
     	<div slot-scope="{ aggregationData, ...rest }">
     		<color-picker-wrapper
     			:aggregationData="aggregationData"

@@ -81,40 +81,30 @@ Example uses:
 -   **renderItem** `Function|slot-scope` [optional]
     customize the rendered list via a function or slot-scope which receives the item label, count and isChecked & expects a JSX or String back. For example:
 
+<!-- prettier-ignore -->
 ```html
-<template>
-	<SingleDropdownList :renderItem="renderItem" />
-</template>
-<script>
-	export default {
-		name: 'app',
-		methods: {
-			renderItem({ label, count }) {
-				return `${label} x ${count}`;
-			},
-		},
-	};
-</script>
-```
-
-or
-
-```html
-<template slot="renderItem" slot-scope="{ label, count }">
-	<div>
+<SingleDropdownList>
+	<div
+        slot="renderItem" 
+        slot-scope="{ label, count }"
+    >
 		{{label}}
 		<span :style="{ marginLeft: 5, color: 'dodgerblue' }">
 			{{count}}
 		</span>
 	</div>
-</template>
+</SingleDropdownList>
 ```
 
 -   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
 
+<!-- prettier-ignore -->
 ```html
-<template slot="renderError" slot-scope="error">
+<template 
+    slot="renderError" 
+    slot-scope="error"
+>
 	<div>Something went wrong!<br />Error details<br />{{ error }}</div>
 </template>
 ```
@@ -160,8 +150,13 @@ or
 
 You can use render as a slot as shown below:
 
+<!-- prettier-ignore -->
 ```html
-<SingleDropdownList :showSearch="false" componentId="BookSensor" data-field="original_series.raw">
+<SingleDropdownList 
+    :showSearch="false"
+    componentId="BookSensor" 
+    data-field="original_series.raw"
+>
 	<div
 		class="suggestions"
 		slot="render"
@@ -170,56 +165,32 @@ You can use render as a slot as shown below:
 		<ul v-if="isOpen">
 			<li
 				style="{ background-color: highlightedIndex ? 'grey' : 'transparent' }"
-				v-for="suggestion in (data || []).map(s => {
-                        return {
-                            label: s.key,
-                            value: s.key,
-                            key: s._id,
-                        };
-                    })"
+				v-for="suggestion in (data || [])"
 				:key="suggestion._id"
-				v-on:click="handleChange(suggestion.value)"
+				v-on:click="handleChange(suggestion.key)"
 			>
-				{{ suggestion.label }}
+				{{ suggestion.key }}
 			</li>
 		</ul>
 	</div>
 </SingleDropdownList>
 ```
 
-Or you can also use render as a function
-
-```html
-<template>
-	<SingleDropdownList :render="render" />
-</template>
-<script>
-	export default {
-		name: 'app',
-		methods: {
-			render({ data, handleChange, downshiftProps: { isOpen } }) {...},
-		},
-	};
-</script>
-```
-
 -   **renderLabel** `Function|slot-scope` [optional]
     can be used to change the label of the dropdown. Useful for adding highlighting/styling to or translating the label.
 
+    <!-- prettier-ignore -->
     ```html
-    <template>
-    	<SingleDropdownList :renderLabel="renderLabel" />
-    </template>
-    <script>
-    	export default {
-    		name: 'app',
-    		methods: {
-    			renderLabel(item) {
-    				return translation(item);
-    			},
-    		},
-    	};
-    </script>
+    <SingleDropdownList>
+        <div 
+            slot="renderLabel" 
+            slot-scope="item"
+        >
+            <div style="{ fontSize: '15px', fontColor: 'blue' }">
+                {{item}}}
+            </div>   
+        </div>
+    </SingleDropdownList>
     ```
 
 -   **showLoadMore** `Boolean` [optional]

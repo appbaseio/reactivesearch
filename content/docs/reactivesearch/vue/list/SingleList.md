@@ -93,33 +93,19 @@ Example uses:
 -   **renderItem** `Function|slot-scope` [optional]
     customize the rendered list via a function or slot-scope which receives the item label, count and isChecked & expects a JSX or String back. For example:
 
+<!-- prettier-ignore -->
 ```html
-<template>
-	<SingleList :renderItem="renderItem" />
-</template>
-<script>
-	export default {
-		name: 'app',
-		methods: {
-			renderItem({ label, count }) {
-				return `${label} x ${count}`;
-			},
-		},
-	};
-</script>
-```
-
-or
-
-```html
-<template slot="renderItem" slot-scope="{ label, count }">
-	<div>
+<SingleList>
+	<div
+        slot="renderItem" 
+        slot-scope="{ label, count }"
+    >
 		{{label}}
 		<span :style="{ marginLeft: 5, color: 'dodgerblue' }">
 			{{count}}
 		</span>
 	</div>
-</template>
+</SingleList>
 ```
 
 -   **render** `Function|slot-scope` [optional]
@@ -140,50 +126,41 @@ or
 
 You can use render as a slot as shown below:
 
+<!-- prettier-ignore -->
 ```html
-<SingleList :showSearch="false" componentId="BookSensor" data-field="original_series.raw">
-	<div class="suggestions" slot="render" slot-scope="{ data, handleChange }">
+<SingleList 
+    :showSearch="false" 
+    componentId="BookSensor" 
+    data-field="original_series.raw"
+>
+	<div 
+        class="suggestions" 
+        slot="render" 
+        slot-scope="{ data, handleChange }"
+    >
 		<ul>
 			<li
 				style="{ background-color: highlightedIndex ? 'grey' : 'transparent' }"
-				v-for="suggestion in (data || []).map(s => {
-                            return {
-                                label: s.key,
-                                value: s.key,
-                                key: s._id,
-                            };
-                        })"
+				v-for="suggestion in (data || [])"
 				:key="suggestion._id"
-				v-on:click="handleChange(suggestion.value)"
+				v-on:click="handleChange(suggestion.key)"
 			>
-				{{ suggestion.label }}
+				{{ suggestion.key }}
 			</li>
 		</ul>
 	</div>
 </SingleList>
 ```
 
-Or you can also use render as a function
-
-```html
-<template>
-	<SingleList :render="render" />
-</template>
-<script>
-	export default {
-		name: 'app',
-		methods: {
-			render({ data, handleChange }) {...},
-		},
-	};
-</script>
-```
-
 -   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
 
+<!-- prettier-ignore -->
 ```html
-<template slot="renderError" slot-scope="error">
+<template 
+    slot="renderError" 
+    slot-scope="error"
+>
 	<div>Something went wrong!<br />Error details<br />{{ error }}</div>
 </template>
 ```
