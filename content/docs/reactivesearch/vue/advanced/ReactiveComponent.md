@@ -114,10 +114,11 @@ Up until this point, we have figured out how to display the colored tiles by run
 But we also need to be able to filter the products by a color tile when selected by the end-user. This is where `setQuery()` prop comes in handy. It takes an object param of shape:
 
 ```javascript
-{
-    query: {},
-    value: ''
-}
+    {
+        query: {}, // query of the component
+		value: '',  // value of the component
+		options: {}, // query options for e.g size, timeout & includeFields etc.
+    }
 ```
 
 where,
