@@ -188,7 +188,7 @@ export default {
 You can use `DataSearch` with `render slot` as shown:
 
 ```html
-<DataSearch
+<data-search
 	class="result-list-container"
 	categoryField="authors.raw"
 	componentId="BookSensor"
@@ -221,14 +221,14 @@ You can use `DataSearch` with `render slot` as shown:
 			</li>
 		</ul>
 	</div>
-</DataSearch>
+</data-search>
 ```
 
 Or you can also use render as prop.
 
 ```html
 <template>
-	<DataSearch :render="render" />
+	<data-search :render="render" />
 </template>
 <script>
 	export default {
