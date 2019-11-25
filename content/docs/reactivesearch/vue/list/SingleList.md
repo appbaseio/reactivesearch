@@ -95,7 +95,7 @@ Example uses:
 
 <!-- prettier-ignore -->
 ```html
-<SingleList>
+<single-list>
 	<div
         slot="renderItem" 
         slot-scope="{ label, count }"
@@ -105,7 +105,7 @@ Example uses:
 			{{count}}
 		</span>
 	</div>
-</SingleList>
+</single-list>
 ```
 
 -   **render** `Function|slot-scope` [optional]
@@ -128,7 +128,7 @@ You can use render as a slot as shown below:
 
 <!-- prettier-ignore -->
 ```html
-<SingleList 
+<single-list 
     :showSearch="false" 
     componentId="BookSensor" 
     data-field="original_series.raw"
@@ -149,7 +149,7 @@ You can use render as a slot as shown below:
 			</li>
 		</ul>
 	</div>
-</SingleList>
+</single-list>
 ```
 
 -   **renderError** `String|Function|slot-scope` [optional]

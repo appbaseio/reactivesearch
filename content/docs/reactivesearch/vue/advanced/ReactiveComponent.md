@@ -185,7 +185,7 @@ We can then use the given ReactiveComponent to be watched by all the filters (vi
 <!-- prettier-ignore -->
 ```html
 <template>
-	<ReactiveComponent
+	<reactive-component
 		componentId="CarSensor"
 		:defaultQuery="defaultQuery"
 		:customQuery="customQuery"
@@ -196,7 +196,7 @@ We can then use the given ReactiveComponent to be watched by all the filters (vi
                 :setQuery="setQuery" 
             />
 		</div>
-	</ReactiveComponent>
+	</reactive-component>
 </template>
 <script>
 	export default {

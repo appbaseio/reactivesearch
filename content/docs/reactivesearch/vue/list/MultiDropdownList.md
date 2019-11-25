@@ -114,7 +114,7 @@ You can use render as a slot as shown below:
 
 <!-- prettier-ignore -->
 ```html
-<MultiDropdownList
+<multi-dropdown-list
     :showSearch="false"
     componentId="BookSensor"
     data-field="original_series.raw"
@@ -135,7 +135,7 @@ You can use render as a slot as shown below:
 			</li>
 		</ul>
 	</div>
-</MultiDropdownList>
+</multi-dropdown-list>
 ```
 
 -   **renderItem** `Function|slot-scope` [optional]
@@ -143,7 +143,7 @@ You can use render as a slot as shown below:
 
 <!-- prettier-ignore -->
 ```html
-<MultiDropdownList>
+<multi-dropdown-list>
 	<div
         slot="renderItem" 
         slot-scope="{ label, count }" 
@@ -153,7 +153,7 @@ You can use render as a slot as shown below:
 			{{count}}
 		</span>
 	</div>
-</MultiDropdownList>
+</multi-dropdown-list>
 ```
 
 -   **renderLabel** `Function|slot-scope` [optional]
@@ -161,7 +161,7 @@ You can use render as a slot as shown below:
 
     <!-- prettier-ignore -->
     ```html
-    <MultiDropdownList>
+    <multi-dropdown-list>
     	<div 
             slot="renderLabel" 
             slot-scope="items"
@@ -174,7 +174,7 @@ You can use render as a slot as shown below:
     			</li>
     		</ul>
     	</div>
-    </MultiDropdownList>
+    </multi-dropdown-list>
     ```
 
 -   **renderError** `String|Function|slot-scope` [optional]

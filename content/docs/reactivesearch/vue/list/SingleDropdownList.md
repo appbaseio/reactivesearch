@@ -83,7 +83,7 @@ Example uses:
 
 <!-- prettier-ignore -->
 ```html
-<SingleDropdownList>
+<single-dropdown-list>
 	<div
         slot="renderItem" 
         slot-scope="{ label, count }"
@@ -93,7 +93,7 @@ Example uses:
 			{{count}}
 		</span>
 	</div>
-</SingleDropdownList>
+</single-dropdown-list>
 ```
 
 -   **renderError** `String|Function|slot-scope` [optional]
@@ -152,7 +152,7 @@ You can use render as a slot as shown below:
 
 <!-- prettier-ignore -->
 ```html
-<SingleDropdownList 
+<single-dropdown-list 
     :showSearch="false"
     componentId="BookSensor" 
     data-field="original_series.raw"
@@ -173,7 +173,7 @@ You can use render as a slot as shown below:
 			</li>
 		</ul>
 	</div>
-</SingleDropdownList>
+</single-dropdown-list>
 ```
 
 -   **renderLabel** `Function|slot-scope` [optional]
@@ -181,7 +181,7 @@ You can use render as a slot as shown below:
 
     <!-- prettier-ignore -->
     ```html
-    <SingleDropdownList>
+    <single-dropdown-list>
         <div 
             slot="renderLabel" 
             slot-scope="item"
@@ -190,7 +190,7 @@ You can use render as a slot as shown below:
                 {{item}}}
             </div>   
         </div>
-    </SingleDropdownList>
+    </single-dropdown-list>
     ```
 
 -   **showLoadMore** `Boolean` [optional]
