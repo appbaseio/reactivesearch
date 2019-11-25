@@ -25,15 +25,15 @@ Example uses:
 
 ### Basic Usage
 
-```js
+```html
 <template>
     <toggle-button
         componentId="MeetupTops"
         dataField="group_topics.topic_name.raw"
         :data="[
-            {"label": "Social",   "value": "Social"},
-            {"label": "Travel",   "value": "Travel"},
-            {"label": "Outdoors", "value": "Outdoors"}
+            {'label': 'Social',   'value': 'Social'},
+            {'label': 'Travel',   'value': 'Travel'},
+            {'label': 'Outdoors', 'value': 'Outdoors'}
         ]"
     />
 </template>
@@ -41,16 +41,16 @@ Example uses:
 
 ### Usage With All Props
 
-```js
+```html
 <toggle-button
   componentId="MeetupTops"
   dataField="group_topics.topic_name.raw"
   title="Meetups"
   filterLabel="City"
   :data="[
-    {"label": "Social",   "value": "Social"},
-    {"label": "Travel",   "value": "Travel"},
-    {"label": "Outdoors", "value": "Outdoors"}]
+      {'label': 'Social',   'value': 'Social'},
+      {'label': 'Travel',   'value': 'Travel'},
+      {'label': 'Outdoors', 'value': 'Outdoors'}
   ]"
   :defaultValue="['Social']"
   :multiSelect="true"
@@ -106,47 +106,52 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection).
 2. update the underlying DB query with `customQuery`,
 3. connect with external interfaces using `beforeValueChange`, `valueChange` and `queryChange`.
 
-```js
-<toggle-button
-  ...
-  className="custom-class"
-  :customQuery=`
-    function(value, props) {
-      return {
-        query: {
-          match: {
-            data_field: "this is a test"
-          }
-        }
-      }
-    }
-  `
-  :beforeValueChange=`
-    function(value) {
-      // called before the value is set
-      // returns a promise
-      return new Promise((resolve, reject) => {
-        // update state or component props
-        resolve()
-        // or reject()
-      })
-    }
-  `
-  @ValueChange=`
-    function(value) {
-      console.log("current value: ", value)
-      // set the state
-      // use the value with other js code
-    }
-  `
-  @queryChange=`
-    function(prevQuery, nextQuery) {
-      // use the query with other js code
-      console.log('prevQuery', prevQuery);
-      console.log('nextQuery', nextQuery);
-    }
-  `
-/>
+
+```html
+<template>
+	<toogle-button
+		className="custom-class"
+		:customQuery="getCustomQuery"
+		:beforeValueChange="handleBeforeValueChange"
+		@valueChange="handleValueChange"
+		@queryChange="handleQueryChange"
+	/>
+</template>
+<script>
+	export default {
+		name: 'app',
+		methods: {
+			getCustomQuery: (value, props) => {
+				return {
+					query: {
+						match: {
+							data_field: 'this is a test',
+						},
+					},
+				};
+			},
+			handleBeforeValueChange: value => {
+				// called before the value is set
+				// returns a promise
+				return new Promise((resolve, reject) => {
+					// update state or component props
+					resolve();
+					// or reject()
+				});
+			},
+			handleValueChange: value => {
+				console.log('current value: ', value);
+				// set the state
+				// use the value with other js code
+			},
+			handleQueryChange: (prevQuery, nextQuery) => {
+				// use the query with other js code
+				console.log('prevQuery', prevQuery);
+				console.log('nextQuery', nextQuery);
+			},
+		},
+	};
+</script>
 ```
 
 -   **customQuery** `Function`

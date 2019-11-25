@@ -236,13 +236,12 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 ```html
 <template>
 	<multi-dropdown-list
-		...
 		className="custom-class"
 		:customQuery="getCustomQuery"
+		:react="react"
 		:beforeValueChange="handleBeforeValueChange"
 		@valueChange="handleValueChange"
 		@queryChange="handleQueryChange"
-		:react="react"
 	/>
 </template>
 <script>

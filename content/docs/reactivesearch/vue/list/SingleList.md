@@ -26,7 +26,11 @@ Example uses:
 
 ```html
 <template>
-	<single-list componentId="CitySensor" dataField="group.group_city.raw" title="Cities" />
+	<single-list
+		componentId="CitySensor"
+		dataField="group.group_city.raw"
+		title="Cities"
+	/>
 </template>
 ```
 
@@ -199,13 +203,12 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 ```html
 <template>
 	<single-list
-		...
 		className="custom-class"
 		:customQuery="getCustomQuery"
 		:beforeValueChange="handleBeforeValueChange"
+		:react="react"
 		@valueChange="handleValueChange"
 		@queryChange="handleQueryChange"
-		:react="react"
 	/>
 </template>
 <script>

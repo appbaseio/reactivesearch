@@ -26,7 +26,11 @@ Example uses:
 
 ```html
 <template>
-	<multi-list componentId="CitySensor" dataField="group.group_city.raw" title="Cities" />
+	<multi-list
+		componentId="CitySensor"
+		dataField="group.group_city.raw"
+		title="Cities"
+	/>
 </template>
 ```
 
@@ -204,13 +208,12 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection).
 ```html
 <template>
 	<multi-list
-		...
 		className="custom-class"
 		:customQuery="getCustomQuery"
+		:react="react"
 		:beforeValueChange="handleBeforeValueChange"
 		@valueChange="handleValueChange"
 		@queryChange="handleQueryChange"
-		:react="react"
 	/>
 </template>
 <script>
