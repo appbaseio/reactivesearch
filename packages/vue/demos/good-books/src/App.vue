@@ -1,8 +1,8 @@
 <template>
 	<div id="app">
 		<reactive-base
-			app="good-books-ds"
-			credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d"
+			app="awesome-book-store"
+			credentials="Qw9ksHtrv:16bc5344-d5c2-4b0a-8f67-1ba01c522015"
 		>
 			<button class="toggle" @click="switchContainer">
 				{{ showBooks ? 'Show Filter 💣' : 'Show Books 📚' }}
@@ -10,7 +10,7 @@
 			<div class="filters-container" :class="{ hide: showBooks }">
 				<multi-list
 					componentId="Authors"
-					dataField="authors.raw"
+					dataField="authors.keyword"
 					class="filter"
 					title="Select Authors"
 					selectAllLabel="All Authors"
@@ -30,7 +30,7 @@
 
 			<reactive-list
 				componentId="SearchResult"
-				dataField="original_title.raw"
+				dataField="original_title.keyword"
 				className="result-list-container"
 				:class="{ full: showBooks }"
 				:pagination="true"
