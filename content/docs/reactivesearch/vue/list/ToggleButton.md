@@ -81,6 +81,24 @@ Example uses:
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
+-   **renderItem** `Function|slot-scope` [optional]
+    customize the rendered list via a function or slot-scope which receives the item object and isSelected & expects a JSX or String back. For example:
+
+    <!-- prettier-ignore -->
+    ```html
+    <toggle-button>
+        <div
+            slot="renderItem" 
+            slot-scope="{ item }"
+        >
+            {{item.label}}
+            <span :style="{ marginLeft: 5, color: 'dodgerblue' }">
+                {{item.value}}
+            </span>
+        </div>
+    </toggle-button>
+    ```
+
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
 
@@ -105,7 +123,6 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection).
 1. customize the look and feel with `className`,
 2. update the underlying DB query with `customQuery`,
 3. connect with external interfaces using `beforeValueChange`, `valueChange` and `queryChange`.
-
 
 ```html
 <template>
