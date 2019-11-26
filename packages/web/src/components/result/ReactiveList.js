@@ -509,10 +509,10 @@ class ReactiveList extends Component {
 	};
 
 	loadMore = () => {
+		if (this.props.aggregationField && !this.props.afterKey) return;
 		if (this.props.hits && this.props.total !== this.props.hits.length) {
 			const value = this.state.from + this.props.size;
 			const options = { ...getQueryOptions(this.props), ...this.getAggsQuery() };
-
 			this.setState({
 				from: value,
 			});
@@ -523,6 +523,7 @@ class ReactiveList extends Component {
 					from: value,
 				},
 				true,
+				!!this.props.aggregationField,
 			);
 		}
 	};
@@ -684,7 +685,11 @@ class ReactiveList extends Component {
 	};
 	getData = () => {
 		const {
-			results, streamResults, filteredResults, promotedResults, aggregationData,
+			results,
+			streamResults,
+			filteredResults,
+			promotedResults,
+			aggregationData,
 		} = this.getAllData();
 		return {
 			data: this.withClickIds(filteredResults),
@@ -908,7 +913,8 @@ const mapDispatchtoProps = dispatch => ({
 	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
 	updateComponentProps: (component, options) =>
 		dispatch(updateComponentProps(component, options)),
-	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
+	loadMore: (component, options, append, appendAggs) =>
+		dispatch(loadMore(component, options, append, appendAggs)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setPageURL: (component, value, label, showFilter, URLParams) =>
 		dispatch(setValue(component, value, label, showFilter, URLParams)),
