@@ -524,6 +524,7 @@ const ReactiveList = {
 		},
 
 		loadMore() {
+			if (this.aggregationField && !this.afterKey) return;
 			if (this.hits && !this.shouldRenderPagination && this.total !== this.hits.length) {
 				const value = this.$data.from + this.$props.size;
 				const options = { ...getQueryOptions(this.$props), ...this.getAggsQuery() };
@@ -536,6 +537,7 @@ const ReactiveList = {
 						from: value,
 					},
 					true,
+					!!this.aggregationField,
 				);
 			} else if (this.isLoading) {
 				this.isLoading = false;
