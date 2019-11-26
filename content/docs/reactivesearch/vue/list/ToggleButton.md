@@ -82,7 +82,7 @@ Example uses:
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **renderItem** `Function|slot-scope` [optional]
-    customize the rendered list via a function or slot-scope which receives the item object and isSelected & expects a JSX or String back. For example:
+    customize the rendered button via a function or slot-scope which receives the item object and isSelected & expects a JSX or String back. For example:
 
     <!-- prettier-ignore -->
     ```html
