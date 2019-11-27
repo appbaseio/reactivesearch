@@ -23,7 +23,7 @@ const buildPaginationDOM = (props, position) => {
 	let start
 		= position === 'start'
 			? getStartPage(pages, currentPage, showEndPage)
-			: Math.ceil(totalPages - ((pages - 1) / 2)) + 1;
+			: Math.max(2, Math.ceil((totalPages - ((pages - 1) / 2)) + 1));
 	const paginationButtons = [];
 	if (start <= totalPages) {
 		let totalPagesToShow = pages < totalPages ? start + (pages - 1) : totalPages + 1;
@@ -34,10 +34,10 @@ const buildPaginationDOM = (props, position) => {
 					: totalPages + 1;
 		}
 		if (currentPage > (totalPages - pages) + 2) {
-			start = (totalPages - pages) + 2;
+			start = Math.max(2, (totalPages - pages) + 2);
+			totalPagesToShow = start + pages;
 		}
-		if (totalPages <= pages) start = 2;
-		for (let i = start; i < totalPagesToShow; i += 1) {
+		for (let i = start; i < Math.min(totalPages + 1, totalPagesToShow); i += 1) {
 			const primary = currentPage === i - 1;
 			const innerClassName = getClassName(innerClass, 'button');
 			const className
@@ -68,6 +68,17 @@ const buildPaginationDOM = (props, position) => {
 };
 
 class Pagination extends React.PureComponent {
+	buildIntermediatePaginationDom() {
+		const {
+			showEndPage, currentPage, totalPages, pages,
+		} = this.props;
+		if (!showEndPage) return buildPaginationDOM(this.props, 'start');
+		if (currentPage <= (totalPages - pages) + 2 || totalPages <= pages) {
+			return buildPaginationDOM(this.props, 'start');
+		}
+		return null;
+	}
+
 	render() {
 		const {
 			pages,
@@ -150,11 +161,11 @@ class Pagination extends React.PureComponent {
 				{showEndPage && currentPage >= Math.floor(pages / 2) + !!(pages % 2) ? (
 					<span>...</span>
 				) : null}
-				{(currentPage <= (totalPages - pages) + 2 || totalPages <= pages) && buildPaginationDOM(this.props, 'start')}
+				{this.buildIntermediatePaginationDom()}
 				{showEndPage && pages > 2 && currentPage <= totalPages - Math.ceil(pages * 0.75) ? (
 					<span>...</span>
 				) : null}
-				{showEndPage && buildPaginationDOM(this.props, 'end')}
+				{showEndPage && totalPages >= pages && buildPaginationDOM(this.props, 'end')}
 				<Button
 					className={getClassName(innerClass, 'button') || null}
 					disabled={currentPage >= totalPages - 1}
