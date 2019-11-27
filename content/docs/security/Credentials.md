@@ -1,7 +1,7 @@
 ---
-title: 'Development Principles'
+title: 'API Credentials'
 meta_title: 'API Credentials - Core Concepts'
-meta_description: 'API credentials allow secure access to the appbase.io APIs.'
+meta_description: 'API credentials allow secure access to the appbase.io apps and clusters.'
 keywords:
     - concepts
     - appbaseio
@@ -10,7 +10,7 @@ keywords:
 sidebar: 'docs'
 ---
 
-API credentials allow secure access to the appbase.io APIs. They offer a variety of rules to granularly control access to the APIs.
+API credentials allow secure access to the appbase.io apps and clusters. They offer a variety of rules to granularly control access to the APIs.
 
 ## Defaults
 
