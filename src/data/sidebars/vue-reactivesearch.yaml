@@ -9,6 +9,8 @@
               link: /docs/reactivesearch/vue/overview/ReactiveBase/
             - title: Components Overview
               link: /docs/reactivesearch/vue/overview/Components/
+            - title: Showcase
+              link: /docs/reactivesearch/vue/overview/Showcase/
       - group: List Components
         items:
             - title: SingleList

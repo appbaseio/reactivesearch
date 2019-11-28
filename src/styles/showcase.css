@@ -1,0 +1,103 @@
+@import "colors.css";
+
+.showcase {
+	margin: 10px 0;
+}
+
+.showcase-component {
+	padding: 10px;
+	border: 4px double var(--whitegrey);
+	border-radius: 4px;
+	transition: all ease .2s;
+}
+
+.showcase-component:hover {
+	border-color: var(--midlightgrey);
+}
+
+.showcase-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.showcase-component span {
+	font-size: 1.6rem;
+	font-weight: 500;
+	color: var(--midgrey);
+}
+
+.showcase-component .link {
+	transition: all ease .2s;
+	text-decoration: none;
+	color: var(--midlightgrey);
+	border: 0;
+	box-shadow: none;
+}
+
+.showcase-component:hover .link {
+	color: var(--blue);
+}
+
+.showcase input, .showcase button {
+	font-size: 1.5rem !important;
+}
+
+.showcase ul {
+	padding: 0 !important;
+	margin: 5px 0 !important;
+}
+
+.showcase ul > li {
+	margin: 5px 0 !important;
+}
+
+.showcase li > span {
+	font-size: 1.5rem !important;
+}
+
+.showcase-grid {
+	display: grid;
+	margin: 10px 0;
+	grid-gap: 10px;
+}
+
+.grid-2 {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.showcase pre {
+	width: 100%;
+	overflow: scroll;
+	margin: 5px 0 !important;
+}
+
+.showcase a {
+	box-shadow: none;
+}
+
+.showcase a.active {
+	color: white;
+}
+
+.showcase-search > div > div >div {
+	top: calc(50% - 13px);
+}
+
+.showcase-list label {
+	align-items: center !important;
+}
+
+.dropdown-list button > span::before {
+	top: 0.2rem;
+}
+
+.dropdown-list button > div {
+	padding: 5px 0px;
+}
+
+@media(max-width: 768px) {
+	.grid-2 {
+		grid-template-columns: auto;
+	}
+}

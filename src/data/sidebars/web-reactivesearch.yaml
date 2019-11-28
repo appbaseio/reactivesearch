@@ -13,6 +13,8 @@
               link: /docs/reactivesearch/v3/overview/reactivecomponent/
             - title: Components Overview
               link: /docs/reactivesearch/v3/overview/components/
+            - title: Showcase
+              link: /docs/reactivesearch/v3/overview/Showcase/
       - group: List Components
         items:
             - title: SingleList

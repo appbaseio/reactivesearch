@@ -81,8 +81,6 @@ class Post extends React.Component {
 			sideBarLayout.justification = `justify-center`;
 		}
 
-		const isRSDocs = location.pathname.startsWith('/docs/reactivesearch');
-
 		return (
 			<>
 				<Layout>
