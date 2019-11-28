@@ -49,7 +49,7 @@ const Pagination = {
 			let start
 				= position === 'start'
 					? getStartPage(pages, currentPage, showEndPage)
-					: Math.ceil(totalPages - (pages - 1) / 2) + 1;
+					: Math.max(2, Math.ceil(totalPages - (pages - 1) / 2 + 1));
 			const paginationButtons = [];
 			if (start <= totalPages) {
 				let totalPagesToShow = pages < totalPages ? start + (pages - 1) : totalPages + 1;
@@ -60,10 +60,10 @@ const Pagination = {
 							: totalPages + 1;
 				}
 				if (currentPage > totalPages - pages + 2) {
-					start = totalPages - pages + 2;
+					start = Math.max(2, totalPages - pages + 2);
+					totalPagesToShow = start + pages;
 				}
-				if (totalPages <= pages) start = 2;
-				for (let i = start; i < totalPagesToShow; i += 1) {
+				for (let i = start; i < Math.min(totalPages + 1, totalPagesToShow); i += 1) {
 					const activeButton = currentPage === i - 1;
 					const classNameBtn
 						= innerClassName || activeButton
@@ -88,6 +88,15 @@ const Pagination = {
 				}
 			}
 			return paginationButtons;
+		};
+
+		const buildIntermediatePaginationDom = () => {
+			const { showEndPage, currentPage, totalPages, pages } = props;
+			if (!showEndPage) return buildPaginationDOM('start');
+			if (currentPage <= totalPages - pages + 2 || totalPages <= pages) {
+				return buildPaginationDOM('start');
+			}
+			return null;
 		};
 
 		return (
@@ -116,15 +125,13 @@ const Pagination = {
 				&& props.currentPage >= Math.floor(props.pages / 2) + !!(props.pages % 2) ? (
 						<span>...</span>
 					) : null}
-				{(props.currentPage <= props.totalPages - props.pages + 2
-					|| props.totalPages <= props.pages)
-					&& buildPaginationDOM('start')}
+				{buildIntermediatePaginationDom()}
 				{props.showEndPage
 				&& props.pages > 2
 				&& props.currentPage <= props.totalPages - Math.ceil(props.pages * 0.75) ? (
 						<span>...</span>
 					) : null}
-				{props.showEndPage && buildPaginationDOM('end')}
+				{props.showEndPage && props.totalPages >= props.pages && buildPaginationDOM('end')}
 				<Button
 					class={getClassName(props.innerClass, 'button') || ''}
 					disabled={props.currentPage >= props.totalPages - 1}
