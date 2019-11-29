@@ -242,7 +242,8 @@ const ReactiveList = {
 		},
 		total(newVal, oldVal) {
 			if (this.shouldRenderPagination && newVal !== oldVal) {
-				const currentPage = this.$data.total ? 0 : this.$currentPage;
+				let currentPage = this.$data.total ? 0 : this.$currentPage;
+				if (this.defaultPage >= 0) currentPage = this.defaultPage;
 				this.$currentPage = currentPage;
 				this.$emit('pageChange', currentPage + 1, this.totalPages);
 			}
