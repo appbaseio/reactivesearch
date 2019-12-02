@@ -1,26 +1,15 @@
-# reactive-list
+## BookSearch App Using Vue.js And ElasticSearch
 
-## Project setup
-```
-yarn install
-```
+![](https://i.imgur.com/T0aU0OU.png)
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+## Read About It
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+A how to build post is available over [here](https://medium.appbase.io/building-booksearch-application-using-vue-and-elasticsearch-a39615f4d6b3).
 
-### Run your tests
-```
-yarn run test
-```
+## Edit And Play
 
-### Lints and fixes files
-```
-yarn run lint
-```
+<p align="center">
+  <a href="https://codesandbox.io/s/github/appbaseio/reactivesearch/tree/next/packages/vue/demos/good-books" title="Edit on CodeSandbox">
+    <img alt="Edit on CodeSandbox" src="https://codesandbox.io/static/img/play-codesandbox.svg">
+  </a>
+</p>
