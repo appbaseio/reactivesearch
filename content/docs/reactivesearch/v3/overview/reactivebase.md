@@ -57,8 +57,8 @@ This is the first component you will need to add when using `ReactiveSearch`.
     allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`.<br/>
     Check the [analytics recipe](/docs/reactivesearch/v3/advanced/analytics/) for click analytics implementation.
 -   **analyticsConfig** `Object` [optional]
-    allows you to customize the analytics experience when appbase.io is used as a backend.<br/>
-    [Read more](/docs/reactivesearch/v3/advanced/analytics/#configure-the-analytics-experience)
+    allows you to customize the analytics experience when appbase.io is used as a backend.
+    Read more about it over [here](/docs/reactivesearch/v3/advanced/analytics/#configure-the-analytics-experience).
 - **searchStateHeader**
     Defaults to `false`. Allows recording some **advanced** search analytics (and click analytics) when setting to `true` and appbase.io is used as a backend.
     > Note:
