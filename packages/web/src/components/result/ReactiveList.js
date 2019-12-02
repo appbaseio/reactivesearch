@@ -21,7 +21,6 @@ import {
 	parseHits,
 	checkSomePropChange,
 	getOptionsFromQuery,
-	getSearchState,
 	getCompositeAggsQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -40,7 +39,6 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	getValidPropsKeys,
-	ReactReduxContext,
 } from '../../utils';
 import Results from './addons/Results';
 
@@ -85,7 +83,6 @@ class ReactiveList extends Component {
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
 
-	static contextType = ReactReduxContext;
 
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
@@ -629,10 +626,6 @@ class ReactiveList extends Component {
 			headers,
 		} = this.props;
 		const { url, app, credentials } = config;
-		const searchState
-			= this.context && this.context.store
-				? getSearchState(this.context.store.getState(), true)
-				: null;
 		if (config.analytics && searchId) {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
@@ -643,10 +636,6 @@ class ReactiveList extends Component {
 					'X-Search-Id': searchId,
 					'X-Search-Click': true,
 					'X-Search-ClickPosition': searchPosition + 1,
-					...(config.analyticsConfig.searchStateHeader
-						&& searchState && {
-						'X-Search-State': JSON.stringify(searchState),
-					}),
 				},
 			});
 		}

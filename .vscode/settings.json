@@ -2,14 +2,11 @@
 	"files.trimTrailingWhitespace": true,
 	"files.insertFinalNewline": true,
 	"files.trimFinalNewlines": true,
-	"eslint.enable": true,
 	"files.exclude": {
 		"node_modules": true
 	},
-	"editor.formatOnSave": true,
-	"[javascript]": {
-		"editor.formatOnSave": true
-	},
+	// to resolve flow issues - Refer: https://github.com/flowtype/flow-for-vscode#setup
+	"javascript.validate.enable": false,
 	"eslint.autoFixOnSave": true,
 	"editor.codeActionsOnSave": {
 		"source.fixAll.tslint": true

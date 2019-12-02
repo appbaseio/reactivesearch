@@ -21,7 +21,6 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
-	getSearchState,
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -42,7 +41,6 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isIdentical,
-	ReactReduxContext,
 	withClickIds,
 	getValidPropsKeys,
 	handleCaretPosition,
@@ -96,8 +94,6 @@ class DataSearch extends Component {
 			this.setValue(currentValue, true, props, cause, hasMounted);
 		}
 	}
-
-	static contextType = ReactReduxContext;
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
@@ -768,10 +764,6 @@ class DataSearch extends Component {
 			headers,
 		} = this.props;
 		const { url, app, credentials } = config;
-		const searchState
-			= this.context && this.context.store
-				? getSearchState(this.context.store.getState(), true)
-				: null;
 		if (config.analytics && suggestionsSearchId) {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
@@ -780,13 +772,9 @@ class DataSearch extends Component {
 					'Content-Type': 'application/json',
 					Authorization: `Basic ${btoa(credentials)}`,
 					'X-Search-Id': suggestionsSearchId,
-					'X-Search-Click': true,
+					'X-Search-Suggestions-Click': true,
 					...(searchPosition !== undefined && {
-						'X-Search-ClickPosition': searchPosition + 1,
-					}),
-					...(config.analyticsConfig.searchStateHeader
-						&& searchState && {
-						'X-Search-State': JSON.stringify(searchState),
+						'X-Search-Suggestions-ClickPosition': searchPosition + 1,
 					}),
 				},
 			});
