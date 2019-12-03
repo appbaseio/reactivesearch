@@ -5,7 +5,6 @@ import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
 import { connect } from '../../utils/index';
 import types from '../../utils/vueTypes';
-import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -34,7 +33,6 @@ const SingleRange = {
 		customQuery: types.func,
 		data: types.data,
 		dataField: types.stringRequired,
-		defaultSelected: types.string,
 		defaultValue: types.string,
 		value: types.value,
 		filterLabel: types.string,
@@ -62,10 +60,6 @@ const SingleRange = {
 			this.setValue(this.$props.value);
 		} else if (this.$props.defaultValue) {
 			this.setValue(this.$props.defaultValue);
-		} else if (this.$props.defaultSelected) {
-			/* TODO: Remove this before next release */
-			deprecatePropWarning('defaultSelected', 'defaultValue');
-			this.setValue(this.$props.defaultSelected);
 		}
 	},
 
@@ -78,9 +72,6 @@ const SingleRange = {
 		},
 		dataField() {
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
-		},
-		defaultSelected(newVal) {
-			this.setValue(newVal);
 		},
 		defaultValue(newVal) {
 			this.setValue(newVal);
@@ -107,9 +98,9 @@ const SingleRange = {
 				)}
 				<UL class={getClassName(this.$props.innerClass, 'list')}>
 					{this.$props.data.map(item => {
-						const selected
-							= !!this.$data.currentValue
-							&& this.$data.currentValue.label === item.label;
+						const selected =
+							!!this.$data.currentValue &&
+							this.$data.currentValue.label === item.label;
 						return (
 							<li key={item.label} class={`${selected ? 'active' : ''}`}>
 								<Radio
@@ -230,9 +221,9 @@ SingleRange.defaultQuery = (value, props) => {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 });
 
 const mapDispatchtoProps = {
@@ -244,10 +235,7 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 };
 
-const RangeConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(SingleRange);
+const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleRange);
 
 SingleRange.install = function(Vue) {
 	Vue.component(SingleRange.name, RangeConnected);

@@ -32,7 +32,7 @@ const DynamicRangeSlider = {
 		customQuery: types.func,
 		data: types.data,
 		dataField: types.stringRequired,
-		defaultSelected: types.func,
+		defaultValue: types.func,
 		filterLabel: types.string,
 		innerClass: types.style,
 		react: types.react,
@@ -88,8 +88,8 @@ const DynamicRangeSlider = {
 
 	methods: {
 		setDefaultValue({ start, end }) {
-			if (this.$props.defaultSelected) {
-				const { start: defaultStart, end: defaultEnd } = this.$props.defaultSelected(
+			if (this.$props.defaultValue) {
+				const { start: defaultStart, end: defaultEnd } = this.$props.defaultValue(
 					start,
 					end,
 				);
@@ -369,10 +369,7 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 };
 
-const RangeConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(DynamicRangeSlider);
+const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider);
 
 DynamicRangeSlider.install = function(Vue) {
 	Vue.component(DynamicRangeSlider.name, RangeConnected);

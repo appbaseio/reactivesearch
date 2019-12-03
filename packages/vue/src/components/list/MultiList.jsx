@@ -15,7 +15,6 @@ import {
 import types from '../../utils/vueTypes';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
-import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -39,7 +38,6 @@ const {
 const MultiList = {
 	name: 'MultiList',
 	props: {
-		defaultSelected: types.stringArray,
 		defaultValue: types.stringArray,
 		value: types.stringArray,
 		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
@@ -113,10 +111,6 @@ const MultiList = {
 			this.setValue(this.$props.value, true);
 		} else if (this.$props.defaultValue) {
 			this.setValue(this.$props.defaultValue, true);
-		} else if (this.$props.defaultSelected) {
-			/* TODO: Remove this before next release */
-			deprecatePropWarning('defaultSelected', 'defaultValue');
-			this.setValue(this.$props.defaultSelected, true);
 		}
 	},
 	beforeDestroy() {
@@ -141,11 +135,6 @@ const MultiList = {
 		dataField() {
 			this.updateQueryHandlerOptions(this.$props);
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
-		},
-		defaultSelected(newVal, oldVal) {
-			if (!isEqual(oldVal, newVal)) {
-				this.setValue(newVal, true);
-			}
 		},
 		value(newVal, oldVal) {
 			if (!isEqual(oldVal, newVal)) {

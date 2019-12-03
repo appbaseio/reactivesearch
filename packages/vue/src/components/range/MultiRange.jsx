@@ -5,7 +5,6 @@ import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { connect, parseValueArray } from '../../utils/index';
 import types from '../../utils/vueTypes';
-import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -36,7 +35,6 @@ const MultiRange = {
 		customQuery: types.func,
 		data: types.data,
 		dataField: types.stringRequired,
-		defaultSelected: types.stringArray,
 		defaultValue: types.stringArray,
 		value: types.stringArray,
 		filterLabel: types.string,
@@ -77,11 +75,11 @@ const MultiRange = {
 				selectedValues = {};
 			} else if (isDefaultValue) {
 				currentValue = MultiRange.parseValue(item, props);
-				let values = {};
+				const values = {};
 				currentValue.forEach(value => {
 					values[[value.label]] = true;
 				});
-				if(reset) {
+				if (reset) {
 					selectedValues = values;
 				} else {
 					selectedValues = { ...selectedValues, ...values };
@@ -142,9 +140,6 @@ const MultiRange = {
 		dataField() {
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
 		},
-		defaultSelected(newVal) {
-			this.selectItem(newVal, true, undefined, true);
-		},
 		defaultValue(newVal) {
 			this.selectItem(newVal, true, undefined, true);
 		},
@@ -176,10 +171,6 @@ const MultiRange = {
 			this.selectItem(this.$props.value, true);
 		} else if (this.$props.defaultValue) {
 			this.selectItem(this.$props.defaultValue, true);
-		} else if (this.$props.defaultSelected) {
-			/* TODO: Remove this before next release */
-			deprecatePropWarning('defaultSelected', 'defaultValue');
-			this.selectItem(this.$props.defaultSelected, true);
 		}
 	},
 
@@ -293,10 +284,7 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 };
 
-const RangeConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(MultiRange);
+const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(MultiRange);
 
 MultiRange.install = function(Vue) {
 	Vue.component(MultiRange.name, RangeConnected);

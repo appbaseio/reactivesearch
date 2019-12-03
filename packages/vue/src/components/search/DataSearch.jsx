@@ -17,7 +17,6 @@ import SuggestionWrapper from './addons/SuggestionWrapper.jsx';
 import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
-import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -107,7 +106,6 @@ const DataSearch = {
 		aggregationField: types.string,
 		size: VueTypes.number.def(20),
 		debounce: VueTypes.number.def(0),
-		defaultSelected: types.string,
 		defaultValue: types.string,
 		value: types.value,
 		defaultSuggestions: types.suggestions,
@@ -156,10 +154,6 @@ const DataSearch = {
 			this.setValue(this.$props.value, true);
 		} else if (this.$props.defaultValue) {
 			this.setValue(this.$props.defaultValue, true);
-		} else if (this.$props.defaultSelected) {
-			/* TODO: Remove this before next release */
-			deprecatePropWarning('defaultSelected', 'defaultValue');
-			this.setValue(this.$props.defaultSelected, true);
 		}
 	},
 	mounted() {
@@ -197,9 +191,6 @@ const DataSearch = {
 		},
 		queryFormat() {
 			this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
-		},
-		defaultSelected(newVal) {
-			this.setValue(newVal, true, this.$props);
 		},
 		defaultValue(newVal) {
 			this.setValue(newVal, true, this.$props);
