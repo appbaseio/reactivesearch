@@ -24,6 +24,7 @@ import {
 	getClassName,
 	isEqual,
 	getCompositeAggsQuery,
+	withClickIds,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -44,7 +45,6 @@ import {
 	hasCustomRenderer,
 	isIdentical,
 	getValidPropsKeys,
-	withClickIds,
 	handleCaretPosition,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';

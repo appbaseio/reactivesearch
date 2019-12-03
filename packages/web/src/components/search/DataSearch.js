@@ -23,6 +23,7 @@ import {
 	getClassName,
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
+	withClickIds,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -41,7 +42,6 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isIdentical,
-	withClickIds,
 	getValidPropsKeys,
 	handleCaretPosition,
 } from '../../utils';

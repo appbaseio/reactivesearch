@@ -1,13 +1,15 @@
 import configureStore from '@appbaseio/reactivecore';
+import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
 import VueTypes from 'vue-types';
 import Appbase from 'appbase-js';
+import 'url-search-params-polyfill';
+
 import Provider from '../Provider';
 import { composeThemeObject } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import URLParamsProvider from '../URLParamsProvider.jsx';
 import getTheme from '../../styles/theme';
-
-import 'url-search-params-polyfill';
 
 const ReactiveBase = {
 	name: 'ReactiveBase',
@@ -23,6 +25,7 @@ const ReactiveBase = {
 	props: {
 		app: types.stringRequired,
 		analytics: VueTypes.bool.def(false),
+		analyticsConfig: types.analyticsConfig,
 		credentials: types.string,
 		headers: types.headers,
 		queryParams: types.string,
@@ -65,6 +68,13 @@ const ReactiveBase = {
 		headers() {
 			this.updateState(this.$props);
 		},
+		analyticsConfig(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				if (this.store) {
+					this.store.dispatch(updateAnalyticsConfig(newVal));
+				}
+			}
+		},
 	},
 	methods: {
 		updateState(props) {
@@ -87,6 +97,7 @@ const ReactiveBase = {
 				transformRequest: props.transformRequest,
 				transformResponse: props.transformResponse,
 				analytics: props.analytics,
+				analyticsConfig: props.analyticsConfig,
 			};
 			let queryParams = '';
 
