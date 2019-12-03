@@ -53,7 +53,7 @@ While `RangeSlider` only requires the above props to be used, it comes with many
         start: 3000,
         end: 50000
       }"
-		:defaultSelected="{
+		:defaultValue="{
         start: 1,
         end: 5
       }"
@@ -75,7 +75,7 @@ While `RangeSlider` only requires the above props to be used, it comes with many
     an object with `start` and `end` keys and corresponding numeric values denoting the minimum and maximum possible slider values.
 -   **title** `String or JSX` [optional]
     title of the component to be shown in the UI.
--   **defaultSelected** `Object` [optional]
+-   **defaultValue** `Object` [optional]
     an object with `start` and `end` keys and corresponding numeric values denoting the pre-selected range values.
 -   **showFilter** `Boolean` [optional]
     show the selected item as a filter in the selected filters view. Defaults to `true`.

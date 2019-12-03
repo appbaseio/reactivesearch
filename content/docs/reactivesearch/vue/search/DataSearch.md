@@ -39,7 +39,7 @@ Example uses:
 <data-search
   componentId="SearchSensor"
   title="Search"
-  defaultSelected="Songwriting"
+  defaultValue="Songwriting"
   placeholder="Search for cities or venues"
   highlightField="group_city"
   queryFormat="or"
@@ -88,7 +88,7 @@ Example uses:
     Set the path of the `nested` type under which the `dataField` is present. Only applicable only when the field(s) specified in the `dataField` is(are) present under a [`nested` type](https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html) mapping.
 -   **title** `String or JSX` [optional]
     set the title of the component to be shown in the UI.
--   **defaultSelected** `string` [optional]
+-   **defaultValue** `string` [optional]
     preset the search query text in the search box.
 -   **fieldWeights** `Array` [optional]
     set the search weight for the database fields, useful when dataField is an Array of more than one field. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.

@@ -46,7 +46,7 @@ Example uses:
 	dataField="group.group_city.raw"
 	title="Cities"
 	sortBy="count"
-	defaultSelected="London"
+	defaultValue="London"
 	placeholder="Search City"
 	selectAllLabel="All Cities"
 	filterLabel="City"
@@ -72,7 +72,7 @@ Example uses:
     control how many items to display in the List. Defaults to 100.
 -   **sortBy** `String` [optional]
     property that decides on how to sort the list items, accepts one of `count`, `asc` or `desc` as valid values. `count` sorts the list based on the count occurences, with highest value at the top. `asc` sorts the list in the ascending order of the list item (Alphabetical). `desc` sorts the list in the descending order of the term. Defaulted to `count`.
--   **defaultSelected** `string` [optional]
+-   **defaultValue** `string` [optional]
     default selected value pre-selects an option from the list.
 -   **showCount** `Boolean` [optional]
     show count of number of occurences besides an item. Defaults to `true`.
@@ -85,7 +85,7 @@ Example uses:
 ```html
 <single-dropdown-list>
 	<div
-        slot="renderItem" 
+        slot="renderItem"
         slot-scope="{ label, count }"
     >
 		{{label}}
@@ -101,8 +101,8 @@ Example uses:
 
 <!-- prettier-ignore -->
 ```html
-<template 
-    slot="renderError" 
+<template
+    slot="renderError"
     slot-scope="error"
 >
 	<div>Something went wrong!<br />Error details<br />{{ error }}</div>
@@ -152,9 +152,9 @@ You can use render as a slot as shown below:
 
 <!-- prettier-ignore -->
 ```html
-<single-dropdown-list 
+<single-dropdown-list
     :showSearch="false"
-    componentId="BookSensor" 
+    componentId="BookSensor"
     data-field="original_series.raw"
 >
 	<div
@@ -182,13 +182,13 @@ You can use render as a slot as shown below:
     <!-- prettier-ignore -->
     ```html
     <single-dropdown-list>
-        <div 
-            slot="renderLabel" 
+        <div
+            slot="renderLabel"
             slot-scope="item"
         >
             <div style="{ fontSize: '15px', fontColor: 'blue' }">
                 {{item}}}
-            </div>   
+            </div>
         </div>
     </single-dropdown-list>
     ```

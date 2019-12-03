@@ -43,7 +43,7 @@ Example uses:
 		dataField="group.group_city.raw"
 		title="Cities"
 		sortBy="count"
-		defaultSelected="London"
+		defaultValue="London"
 		selectAllLabel="All Cities"
 		placeholder="Search City"
 		filterLabel="City"
@@ -72,7 +72,7 @@ Example uses:
     control how many items to display in the List. Defaults to 100.
 -   **sortBy** `String` [optional]
     sort the list items by one of `count`, `asc`, `desc`. Defaults to `count`, which sorts the list by the frequency of count value, most first.
--   **defaultSelected** `string` [optional]
+-   **defaultValue** `string` [optional]
     pre-select an item from the list.
 -   **selectAllLabel** `String` [optional]
     add an extra `Select all` item to the list with the provided label string.
@@ -101,7 +101,7 @@ Example uses:
 ```html
 <single-list>
 	<div
-        slot="renderItem" 
+        slot="renderItem"
         slot-scope="{ label, count }"
     >
 		{{label}}
@@ -132,14 +132,14 @@ You can use render as a slot as shown below:
 
 <!-- prettier-ignore -->
 ```html
-<single-list 
-    :showSearch="false" 
-    componentId="BookSensor" 
+<single-list
+    :showSearch="false"
+    componentId="BookSensor"
     data-field="original_series.raw"
 >
-	<div 
-        class="suggestions" 
-        slot="render" 
+	<div
+        class="suggestions"
+        slot="render"
         slot-scope="{ data, handleChange }"
     >
 		<ul>
@@ -161,8 +161,8 @@ You can use render as a slot as shown below:
 
 <!-- prettier-ignore -->
 ```html
-<template 
-    slot="renderError" 
+<template
+    slot="renderError"
     slot-scope="error"
 >
 	<div>Something went wrong!<br />Error details<br />{{ error }}</div>

@@ -52,7 +52,7 @@ Example uses:
 		componentId="PriceSensor"
 		dataField="price"
 		title="Prices"
-		defaultSelected="Cheap"
+		defaultValue="Cheap"
 		filterLabel="Price"
 		:data="
             [{'start': 0, 'end': 10, 'label': 'Cheap'},
@@ -79,7 +79,7 @@ Example uses:
     collection of UI `labels` with associated `start` and `end` range values.
 -   **title** `String or JSX` [optional]
     title of the component to be shown in the UI.
--   **defaultSelected** `String` [optional]
+-   **defaultValue** `String` [optional]
     pre-select a label from the `data` array.
 -   **showCheckbox** `Boolean` [optional]
     show checkbox icon for each range item. Defaults to `true`.

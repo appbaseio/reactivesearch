@@ -49,7 +49,7 @@ Example uses:
 	sortBy="count"
 	placeholder="Search City"
 	filterLabel="City"
-	:defaultSelected="['London']"
+	:defaultValue="['London']"
 	:showCount="true"
 	:size="100"
 	:react="{ and: ['CategoryFilter', 'SearchFilter'] }"
@@ -75,7 +75,7 @@ Example uses:
     -   `count` sorts the list based on the count occurences, with highest value at the top.
     -   `asc` sorts the list in the ascending order of the list item (Alphabetical).
     -   `desc` sorts the list in the descending order of the term. Defaulted to `count`.
--   **defaultSelected** `Array` [optional]
+-   **defaultValue** `Array` [optional]
     pre-select one or more options from the dropdown list. Accepts an `Array` object containing the items that should be selected. It is important for the passed value(s) exactly match with the field value(s) as stored in appbase.io app.
 -   **queryFormat** `String` [optional]
     queries the selected items from the list in one of two modes: `or`, `and`.
@@ -145,8 +145,8 @@ You can use render as a slot as shown below:
 ```html
 <multi-dropdown-list>
 	<div
-        slot="renderItem" 
-        slot-scope="{ label, count }" 
+        slot="renderItem"
+        slot-scope="{ label, count }"
     >
 		{{label}}
 		<span :style="{ marginLeft: 5, color: 'dodgerblue' }">
@@ -162,8 +162,8 @@ You can use render as a slot as shown below:
     <!-- prettier-ignore -->
     ```html
     <multi-dropdown-list>
-    	<div 
-            slot="renderLabel" 
+    	<div
+            slot="renderLabel"
             slot-scope="items"
         >
     		<ul>
@@ -182,8 +182,8 @@ You can use render as a slot as shown below:
 
 <!-- prettier-ignore -->
 ```html
-<template 
-    slot="renderError" 
+<template
+    slot="renderError"
     slot-scope="error"
 >
 	<div>Something went wrong!<br />Error details<br />{{ error }}</div>
