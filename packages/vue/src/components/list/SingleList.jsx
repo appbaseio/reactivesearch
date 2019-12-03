@@ -43,7 +43,6 @@ const SingleList = {
 		componentId: types.stringRequired,
 		customQuery: types.func,
 		dataField: types.stringRequired,
-		defaultSelected: types.string,
 		defaultValue: types.string,
 		value: types.value,
 		defaultQuery: types.func,
@@ -110,10 +109,6 @@ const SingleList = {
 			this.setValue(this.$props.value);
 		} else if (this.$props.defaultValue) {
 			this.setValue(this.$props.defaultValue);
-		} else if (this.$props.defaultSelected) {
-			/* TODO: Remove this before next release */
-			deprecatePropWarning('defaultSelected', 'defaultValue');
-			this.setValue(this.$props.defaultSelected);
 		}
 	},
 
@@ -139,9 +134,6 @@ const SingleList = {
 		dataField() {
 			this.updateQueryHandlerOptions(this.$props);
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
-		},
-		defaultSelected(newVal) {
-			this.setValue(newVal);
 		},
 		defaultValue(newVal) {
 			this.setValue(newVal);
