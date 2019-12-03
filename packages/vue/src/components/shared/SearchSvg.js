@@ -3,6 +3,7 @@ export default () => (
 		alt="Search"
 		class="search-icon"
 		height="14"
+		width="10"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 15 15"
 	>

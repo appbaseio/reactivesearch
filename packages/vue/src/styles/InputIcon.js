@@ -13,7 +13,7 @@ const right = css`
 const clear = css`
 	padding-right: 32px;
 	right: 0;
-	top: calc(50% - 3px);
+	top: calc(50% - 2px);
 `;
 
 const InputIcon = styled('div')`
