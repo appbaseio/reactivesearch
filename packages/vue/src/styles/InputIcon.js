@@ -13,7 +13,7 @@ const right = css`
 const clear = css`
 	padding-right: 32px;
 	right: 0;
-	top: calc(50% - 9px);
+	top: calc(50% - 2px);
 `;
 
 const InputIcon = styled('div')`
@@ -29,7 +29,7 @@ const InputIcon = styled('div')`
 		}
 		return null;
 	}};
-	${({ clearIcon }) => clearIcon && clear}};
+	${({ clearIcon }) => clearIcon && clear};
 
 	svg.search-icon {
 		fill: ${({ theme }) => theme.colors.primaryColor};
