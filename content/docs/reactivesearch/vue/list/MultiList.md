@@ -51,7 +51,7 @@ Example uses:
 		:showCheckbox="true"
 		:showCount="true"
 		:showSearch="true"
-		:defaultSelected="['San Francisco']"
+		:defaultValue="['San Francisco']"
 		:react="{ and: ['CategoryFilter', 'SearchFilter'] }"
 		:size="100"
 		:URLParams="false"
@@ -73,7 +73,7 @@ Example uses:
     number of list items to be displayed. Defaults to showing a `100` items. Max value for this prop can be `1000`.
 -   **sortBy** `String` [optional]
     sort the list items by one of `count`, `asc`, or `desc`. Defaults to `count`, which sorts the list by the frequency of count value, most first.
--   **defaultSelected** `Array` [optional]
+-   **defaultValue** `Array` [optional]
     pre-select one or more list items. Accepts an `Array` object containing the items that should be selected. It is important for the passed value(s) to exactly match the field value(s) as stored in the DB.
 -   **queryFormat** `String` [optional]
     queries the selected items from the list in one of two modes: `or`, `and`.
@@ -96,7 +96,7 @@ Example uses:
 ```html
 <multi-list>
 	<div
-        slot="renderItem" 
+        slot="renderItem"
         slot-scope="{ label, count }"
     >
 		{{label}}
@@ -127,14 +127,14 @@ You can use render as a slot as shown below:
 
 <!-- prettier-ignore -->
 ```html
-<multi-list 
-    :showSearch="false" 
-    componentId="BookSensor" 
+<multi-list
+    :showSearch="false"
+    componentId="BookSensor"
     data-field="original_series.raw"
 >
-	<div 
-        class="suggestions" 
-        slot="render" 
+	<div
+        class="suggestions"
+        slot="render"
         slot-scope="{ data, handleChange }"
     >
 		<ul>
@@ -156,8 +156,8 @@ You can use render as a slot as shown below:
 
 <!-- prettier-ignore -->
 ```html
-<template 
-    slot="renderError" 
+<template
+    slot="renderError"
     slot-scope="error"
 >
 	<div>Something went wrong!<br />Error details<br />{{ error }}</div>

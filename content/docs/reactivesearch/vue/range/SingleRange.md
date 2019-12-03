@@ -52,7 +52,7 @@ Example uses:
 		componentId="PriceSensor"
 		dataField="price"
 		title="Prices"
-		defaultSelected="Cheap"
+		defaultValue="Cheap"
 		filterLabel="Price"
 		:data="
             [{'start': 0, 'end': 10, 'label': 'Cheap'},
@@ -79,7 +79,7 @@ Example uses:
     use to set the `nested` mapping field that allows arrays of objects to be indexed in a way that they can be queried independently of each other. Applicable only when dataField is a part of `nested` type.
 -   **title** `String or JSX` [optional]
     title of the component to be shown in the UI.
--   **defaultSelected** `String` [optional]
+-   **defaultValue** `String` [optional]
     pre-select a label from the `data` array.
 -   **showRadio** `Boolean` [optional]
     show radio button icon for each range item. Defaults to `true`.
