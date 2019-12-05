@@ -155,23 +155,24 @@ export default {
 		title: 'Check starter apps',
 		demos: [
 			{
-				src: '../../reactivesearch/images/apps/gitxplore.png',
-				title: 'GitHub Search',
-				href: 'https://codesandbox.io/s/54l2m5rqxl',
+				src: 'https://i.imgur.com/e95xqho.jpg',
+				title: 'Dashboard - Vue',
+				href: 'https://infallible-khorana-f6f19f.netlify.com/',
 				description:
-					'Explore top 30K Github repositories by various filters like stars, forks, and topics.',
-			},
-			{
-				src: '../../reactivesearch/images/apps/goodbooks.png',
-				title: 'Book Search',
-				href: 'https://codesandbox.io/s/y2rvj53koz/',
-				description: 'An e-commerce search experience for a books dataset.',
+					'A configurable dashboard app that comes with the power of data visualization using Vue Charts.',
 			},
 			{
 				src: 'https://i.imgur.com/3DoPCSV.jpg',
 				title: 'Movie App',
 				href: 'https://sleepy-edison-c6bc3b.netlify.com/',
 				description: 'An app showing the use of Vue Router and ReactiveSearch.',
+			},
+			{
+				src: 'https://i.imgur.com/VtEL2OE.png',
+				title: 'Booksearch with Material UI',
+				href: 'https://priceless-blackwell-ae9d4f.netlify.com/',
+				description:
+					'A Material UI styled book search app which can be customized to your dataset.',
 			},
 		],
 	},
@@ -181,8 +182,7 @@ export default {
 			{
 				src: 'https://cdn-images-1.medium.com/max/2000/1*o4yRyTm2pKfa_Flr3W2TPw.png',
 				title: 'Vue.JS Components for building Search UIs',
-				href:
-					'https://medium.appbase.io/vue-js-components-for-building-search-uis-7b2a1b6fe159',
+				href: 'https://medium.com/p/e17a953e72a6',
 				description: 'Introductory article for Reactivesearch Vue.',
 			},
 			{
