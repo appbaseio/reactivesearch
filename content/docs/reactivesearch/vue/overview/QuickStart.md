@@ -16,11 +16,13 @@ nestedSidebar: 'vue-reactivesearch'
 We can either add ReactiveSearch to an existing app or create a boilerplate app with [Vue Cli](https://cli.vuejs.org/guide/installation.html). For this quick start guide, we will use the Vue CLI.
 
 #### Install Vue Cli
+
 ```bash
 yarn global add @vue/cli
 ```
 
 #### Create Project
+
 ```bash
 vue create my-awesome-search && cd my-awesome-search
 ```
@@ -40,6 +42,7 @@ npm install @appbaseio/reactivesearch-vue
 ```
 
 ### Step 2: Register Components
+
 To use ReactiveSearch components you need to register them in your app, you can globally import the components in the `main.js` file of your project.
 
 #### Register all components
@@ -59,6 +62,7 @@ new Vue({
 	template: '<App/>',
 });
 ```
+
 The above imports ReactiveSearch entirely.
 
 #### Only register the components you need (recommended)
@@ -98,31 +102,31 @@ We will update our `src/App.vue` file to add the ReactiveBase component.
 
 ```html
 <template>
-  <div id="app">
-    <reactive-base
-      app="awesome-book-store"
+	<div id="app">
+		<reactive-base
+			app="awesome-book-store"
 			credentials="Qw9ksHtrv:16bc5344-d5c2-4b0a-8f67-1ba01c522015"
-    >
-      <h1>Hello from ReactiveBase 👋</h1>
-    </reactive-base>
-  </div>
+		>
+			<h1>Hello from ReactiveBase 👋</h1>
+		</reactive-base>
+	</div>
 </template>
 
 <script>
-  export default {
-    name: "App",
-  };
+	export default {
+		name: 'App',
+	};
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+	#app {
+		font-family: 'Avenir', Helvetica, Arial, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-align: center;
+		color: #2c3e50;
+		margin-top: 60px;
+	}
 </style>
 ```
 
@@ -156,15 +160,15 @@ Next, we will look at the [**single-range**](/basic-components/singlerange.html)
 
 ```html
 <single-range
-  componentId="Ratings"
-  dataField="average_rating"
-  :data="[
+	componentId="Ratings"
+	dataField="average_rating"
+	:data="[
     { 'start': 0, 'end': 3, 'label': 'Rating < 3' },
     { 'start': 3, 'end': 4, 'label': 'Rating 3 to 4' },
     { 'start': 4, 'end': 5, 'label': 'Rating > 4' }
   ]"
-  title="Book Ratings"
-  class="filter"
+	title="Book Ratings"
+	class="filter"
 />
 ```
 
@@ -176,37 +180,39 @@ Finally, we need a component to show the matching results. [**reactive-list**](/
 
 ```html
 <reactive-list
-  componentId="SearchResult"
-  dataField="original_title.keyword"
-  className="result-list-container"
-  :class="{ full: showBooks }"
-  :pagination="true"
-  :from="0"
-  :size="5"
-  :react="{and: ['Ratings','Authors']}"
+	componentId="SearchResult"
+	dataField="original_title.keyword"
+	className="result-list-container"
+	:class="{ full: showBooks }"
+	:pagination="true"
+	:from="0"
+	:size="5"
+	:react="{and: ['Ratings','Authors']}"
 >
-  <div slot="renderItem" slot-scope="{ item }">
-    <div class="flex book-content" key="item._id">
-      <img :src="item.image" alt="Book Cover" class="book-image" />
-      <div class="flex column justify-center ml20">
-        <div class="book-header">{{ item.original_title }}</div>
-          <div class="flex column justify-space-between">
-              <div>
-                <div>
-                  by <span class="authors-list">{{ item.authors }}</span>
-                </div>
-                <div class="ratings-list flex align-center">
-                  <span class="stars">
-                <i v-for="(item, index) in Array(item.average_rating_rounded).fill('x')" class="fas fa-star" :key="index" />
-              </span>
-              <span class="avg-rating">({{item.average_rating}} avg)</span>
-            </div>
-          </div>
-          <span class="pub-year">Pub {{item.original_publication_year}}</span>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div slot="renderItem" slot-scope="{ item }">
+		<div class="flex book-content" key="item._id">
+			<img :src="item.image" alt="Book Cover" class="book-image" />
+			<div class="flex column justify-center ml20">
+				<div class="book-header">{{ item.original_title }}</div>
+				<div class="flex column justify-space-between">
+					<div>
+						<div>by <span class="authors-list">{{ item.authors }}</span></div>
+						<div class="ratings-list flex align-center">
+							<span class="stars">
+								<i
+									v-for="(item, index) in Array(item.average_rating_rounded).fill('x')"
+									class="fas fa-star"
+									:key="index"
+								/>
+							</span>
+							<span class="avg-rating">({{item.average_rating}} avg)</span>
+						</div>
+					</div>
+					<span class="pub-year">Pub {{item.original_publication_year}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
 </reactive-list>
 ```
 
@@ -220,77 +226,86 @@ Now, we will put all three components together to create the UI view.
 
 ```html
 <template>
-  <div id="app">
-    <reactive-base app="good-books-yj" credentials="gBgUqs2tV:3456f3bf-ea9e-4ebc-9c93-08eb13e5c87c" >
-      <div class="filters-container">
-        <multi-list
-          componentId="Authors"
-          dataField="authors.keyword"
-          class="filter"
-          title="Select Authors"
-          selectAllLabel="All Authors"
-        />
-        <single-range
-          componentId="Ratings"
-          dataField="average_rating"
-          :data="[
+	<div id="app">
+		<reactive-base
+			app="good-books-yj"
+			credentials="gBgUqs2tV:3456f3bf-ea9e-4ebc-9c93-08eb13e5c87c"
+		>
+			<div class="filters-container">
+				<multi-list
+					componentId="Authors"
+					dataField="authors.keyword"
+					class="filter"
+					title="Select Authors"
+					selectAllLabel="All Authors"
+				/>
+				<single-range
+					componentId="Ratings"
+					dataField="average_rating"
+					:data="[
             { 'start': 0, 'end': 3, 'label': 'Rating < 3' },
             { 'start': 3, 'end': 4, 'label': 'Rating 3 to 4' },
             { 'start': 4, 'end': 5, 'label': 'Rating > 4' }
           ]"
-          title="Book Ratings"
-          class="filter"
-        />
-      </div>
-      <reactive-list
-        componentId="SearchResult"
-        dataField="original_title.keyword"
-        className="result-list-container"
-        :pagination="true"
-        :from="0"
-        :size="5"
-        :react="{and: ['Ratings','Authors']}"
-      >
-        <div slot="renderItem" slot-scope="{ item }">
-          <div class="flex book-content" key="item._id">
-            <img :src="item.image" alt="Book Cover" class="book-image" />
-            <div class="flex column justify-center ml20">
-              <div class="book-header">{{ item.original_title }}</div>
-                <div class="flex column justify-space-between">
-                    <div>
-                      <div>
-                        by <span class="authors-list">{{ item.authors }}</span>
-                      </div>
-                      <div class="ratings-list flex align-center">
-                        <span class="stars">
-                      <i v-for="(item, index) in Array(item.average_rating_rounded).fill('x')" class="fas fa-star" :key="index" />
-                    </span>
-                    <span class="avg-rating">({{item.average_rating}} avg)</span>
-                  </div>
-                </div>
-                <span class="pub-year">Pub {{item.original_publication_year}}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </reactive-list>
-    </reactive-base>
-  </div>
+					title="Book Ratings"
+					class="filter"
+				/>
+			</div>
+			<reactive-list
+				componentId="SearchResult"
+				dataField="original_title.keyword"
+				className="result-list-container"
+				:pagination="true"
+				:from="0"
+				:size="5"
+				:react="{and: ['Ratings','Authors']}"
+			>
+				<div slot="renderItem" slot-scope="{ item }">
+					<div class="flex book-content" key="item._id">
+						<img :src="item.image" alt="Book Cover" class="book-image" />
+						<div class="flex column justify-center ml20">
+							<div class="book-header">{{ item.original_title }}</div>
+							<div class="flex column justify-space-between">
+								<div>
+									<div>
+										by <span class="authors-list">{{ item.authors }}</span>
+									</div>
+									<div class="ratings-list flex align-center">
+										<span class="stars">
+											<i
+												v-for="(item, index) in Array(item.average_rating_rounded).fill('x')"
+												class="fas fa-star"
+												:key="index"
+											/>
+										</span>
+										<span class="avg-rating"
+											>({{item.average_rating}} avg)</span
+										>
+									</div>
+								</div>
+								<span class="pub-year">Pub {{item.original_publication_year}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</reactive-list>
+		</reactive-base>
+	</div>
 </template>
 
 <script>
-  export default {
-    name: "app",
-  };
+	export default {
+		name: 'app',
+	};
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
+	#app {
+		font-family: 'Avenir', Helvetica, Arial, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		color: #2c3e50;
+	}
 </style>
 ```
 
@@ -310,21 +325,21 @@ By importing [styles.css](https://github.com/appbaseio/reactivesearch/blob/next/
 
 ```html
 <script>
-import "./styles.css";
+	import './styles.css';
 
-export default {
-  name: "app",
-  data: function() {
-    return {
-      showBooks: window.innerWidth <= 768 ? true : false
-    };
-  },
-  methods: {
-    switchContainer: function() {
-      return (this.showBooks = !this.showBooks);
-    }
-  }
-};
+	export default {
+		name: 'app',
+		data: function() {
+			return {
+				showBooks: window.innerWidth <= 768 ? true : false,
+			};
+		},
+		methods: {
+			switchContainer: function() {
+				return (this.showBooks = !this.showBooks);
+			},
+		},
+	};
 </script>
 ```
 
