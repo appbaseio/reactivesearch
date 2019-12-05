@@ -1,7 +1,7 @@
 export default {
 	name: 'vue',
 	githubCount: '2432',
-	producthunt: 'https://www.producthunt.com/posts/reactivesearch-for-vue',
+	producthunt: 'https://www.producthunt.com/posts/vue-reactivesearch',
 	gettingStart: 'https://docs.appbase.io/docs/reactivesearch/vue/overview/QuickStart/',
 	urls: {
 		github: 'https://github.com/appbaseio/reactivesearch/tree/dev/packages/vue',
