@@ -157,7 +157,7 @@ export default {
 			{
 				src: 'https://i.imgur.com/e95xqho.jpg',
 				title: 'Dashboard - Vue',
-				href: 'https://infallible-khorana-f6f19f.netlify.com/',
+				href: 'https://charts-dashboard-vue.netlify.com/',
 				description:
 					'A configurable dashboard app that comes with the power of data visualization using Vue Charts.',
 			},
