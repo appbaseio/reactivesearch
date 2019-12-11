@@ -53,9 +53,8 @@ const instance = new Searchbase({
 		'topics'
 	]
 });
-searchbox('#git', {}, [
+searchbox('#git', { instance }, [
 	{
-		source: searchbox.sources.hits(instance),
 		templates: {
 			suggestion: function(suggestion) {
 				return `<p class="is-4">${suggestion.label}</p>`;
@@ -147,12 +146,6 @@ value of the underlying input, each dataset will attempt to render suggestions f
 new value.
 
 Datasets can be configured using the following options.
-
--   **source** – The backing data source for suggestions. Expected to be a function
-    with the signature `(query, cb)`. It is expected that the function will
-    compute the suggestion set (i.e. an array of JavaScript objects) for `query`
-    and then invoke `cb` with said set. `cb` can be invoked synchronously or
-    asynchronously.
 
 -   **name** – The name of the dataset. This will be appended to `tt-dataset-` to
     form the class name of the containing DOM element. Must only consist of
@@ -277,6 +270,11 @@ Add the following CSS rules to add a default style:
 
 
 ## Demo
+
+### Demo with basic styles
+
+<iframe src="https://codesandbox.io/embed/github/appbaseio/searchbox/tree/master/examples/searchbar-with-style?fontsize=14&hidenavigation=1&view=preview" title="autocomplete-example" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
 ### Demo with different options applied on Search
 
 <iframe src="https://codesandbox.io/embed/github/appbaseio/searchbox/tree/master/examples/search?fontsize=14&hidenavigation=1&view=preview" title="autocomplete-example" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
