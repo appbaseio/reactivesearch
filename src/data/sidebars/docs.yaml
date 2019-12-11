@@ -34,6 +34,8 @@
               link: /docs/analytics/Implement/
             - title: Integrate Google Analytics
               link: /docs/analytics/GoogleAnalytics/
+            - title: Query Suggestions
+              link: /docs/analytics/QuerySuggestions/
       - group: Security
         icon: security
         items:
