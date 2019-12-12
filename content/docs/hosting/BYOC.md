@@ -131,18 +131,18 @@ Now, let's add TLS certificate to EC2 public DNS / custom domain
 
 ![EC2 Connect Screenshot](https://i.imgur.com/NRW1P6c.png)
 
-**Step 3-** Copy `.pem` file content to `/etc/pki/nginx/server.crt` using `vim`/`nano` editor
+**Step 3-** Copy `.pem` file content to `/etc/nginx/server.crt` using `vim`/`nano` editor
 
 ```bash
 # Open the file
-sudo vim /etc/pki/nginx/server.crt
+sudo vim /etc/nginx/server.crt
 # Paste the code
 cmd/ctrl + v
 # Save the file
 :wq
 ```
 
-**Step 4-** Copy `.key` file content to`/etc/pki/nginx/private/server.key` using similar approach mentioned above.
+**Step 4-** Copy `.key` file content to`/etc/nginx/server.key` using similar approach mentioned above.
 
 **Step 5-** Open `sudo vim /etc/nginx/nginx.conf`.
 
