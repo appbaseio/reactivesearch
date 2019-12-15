@@ -43,6 +43,7 @@ class App extends React.Component {
 			defaultMapStyle: 'Light Monochrome',
 			title: 'Reactive Maps',
 			defaultZoom: 13,
+			size: 100,
 			react: {
 				and: 'GeoDistanceSlider',
 			},
@@ -54,7 +55,7 @@ class App extends React.Component {
 				app="meetup_app"
 				credentials="lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181"
 				type="meetupdata1"
-				mapKey="AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q"
+				mapKey="AIzaSyAKz3UhgSuP872fb-Aw27oPRI7M0eXkA9U"
 			>
 				<div className="row">
 					<div className="col">
@@ -69,10 +70,18 @@ class App extends React.Component {
 								start: 10,
 								end: 300,
 							}}
+							rangeLabels={{
+								start: '10mi',
+								end: '300mi',
+							}}
+							defaultValue={{
+								location: 'London, UK',
+								distance: 10,
+							}}
 						/>
 						<div
 							style={{
-								marginTop: '20px',
+								marginTop: '3rem',
 								marginBottom: '5px',
 								fontSize: '1 rem',
 							}}
@@ -91,9 +100,9 @@ class App extends React.Component {
 					<div className="col">
 						<SelectedFilters />
 						{this.state.mapProvider.value === 'googleMap' ? (
-							<ReactiveGoogleMap componentId="googleMap" {...mapProps} />
+							<ReactiveGoogleMap style={{ height: '90vh' }} componentId="googleMap" {...mapProps} />
 						) : (
-							<ReactiveOpenStreetMap componentId="openstreetMap" {...mapProps} />
+							<ReactiveOpenStreetMap style={{ height: '90vh' }} componentId="openstreetMap" {...mapProps} />
 						)}
 					</div>
 				</div>

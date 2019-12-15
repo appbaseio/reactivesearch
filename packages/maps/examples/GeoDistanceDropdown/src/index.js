@@ -43,6 +43,7 @@ class App extends React.Component {
 			defaultMapStyle: 'Light Monochrome',
 			title: 'Reactive Maps',
 			defaultZoom: 13,
+			size: 100,
 			react: {
 				and: 'GeoDistanceDropdown',
 			},
@@ -54,7 +55,7 @@ class App extends React.Component {
 				app="meetup_app"
 				credentials="lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181"
 				type="meetupdata1"
-				mapKey="AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q"
+				mapKey="AIzaSyAKz3UhgSuP872fb-Aw27oPRI7M0eXkA9U"
 			>
 				<div className="row">
 					<div className="col">
@@ -66,11 +67,15 @@ class App extends React.Component {
 							unit="mi"
 							URLParams
 							data={[
+								{ distance: 10, label: 'Within 10 miles' },
+								{ distance: 50, label: 'Within 50 miles' },
 								{ distance: 100, label: 'Under 100 miles' },
-								{ distance: 200, label: 'Under 200 miles' },
-								{ distance: 500, label: 'Under 500 miles' },
-								{ distance: 1000, label: 'Under 1000 miles' },
+								{ distance: 300, label: 'Under 300 miles' },
 							]}
+							defaultValue={{
+								location: 'London, UK',
+								label: 'Within 10 miles',
+							}}
 						/>
 						<div
 							style={{
@@ -93,9 +98,9 @@ class App extends React.Component {
 					<div className="col">
 						<SelectedFilters />
 						{this.state.mapProvider.value === 'googleMap' ? (
-							<ReactiveGoogleMap componentId="googleMap" {...mapProps} />
+							<ReactiveGoogleMap style={{ height: '90vh' }} componentId="googleMap" {...mapProps} />
 						) : (
-							<ReactiveOpenStreetMap componentId="openstreetMap" {...mapProps} />
+							<ReactiveOpenStreetMap style={{ height: '90vh' }} componentId="openstreetMap" {...mapProps} />
 						)}
 					</div>
 				</div>
