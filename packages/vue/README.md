@@ -25,14 +25,14 @@ yarn add @appbaseio/reactivesearch-vue
 
 ## Documentation
 
-The official docs for the library are at [https://opensource.appbase.io/reactive-manual/vue-web/getting-started/reactivesearch.html](https://opensource.appbase.io/reactive-manual).
+The official docs for the library are at [here](https://docs.appbase.io/docs/reactivesearch/vue/overview/QuickStart).
 
 The components are divided into four sections:
 
-- List based UI components are at [reactive-manual/list-components](https://opensource.appbase.io/reactive-manual/vue-web/list-components/singlelist.html).
-- Range based UI components are at [reactive-manual/range-components](https://opensource.appbase.io/reactive-manual/vue-web/range-components/singlerange.html).
-- Search UI components are at [reactive-manual/search-components](https://opensource.appbase.io/reactive-manual/vue-web/search-components/datasearch.html).
-- Result components are at [reactive-manual/result-components](https://opensource.appbase.io/reactive-manual/vue-web/result-components/resultlist.html).
+- List based UI components are at [here](https://docs.appbase.io/docs/reactivesearch/vue/list/SingleList/).
+- Range based UI components are at [here](https://docs.appbase.io/docs/reactivesearch/vue/range/SingleRange/).
+- Search UI components are at [here](https://docs.appbase.io/docs/reactivesearch/vue/search/DataSearch/).
+- Result components are at [here](https://docs.appbase.io/docs/reactivesearch/vue/result/ReactiveList/).
 
 ## Related tooling and projects
 

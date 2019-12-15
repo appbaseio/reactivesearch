@@ -4,8 +4,16 @@
 
 <details>
     <summary>The following changes have been included in the <code>next</code> branch and will be out in the next release. <b>Click to expand</b></summary>
-    - Make pagination prop as reactive [[2bfa0375]](https://github.com/appbaseio/reactivesearch/commit/2bfa0375)
 </details>
+
+### v1.0.0 [Breaking]
+- Remove deprecated `defaultSelected` prop, use `defaultValue` instead [[af38b6ef]](https://github.com/appbaseio/reactivesearch/commit/af38b6ef)
+- Fix style of DataSearch clear icon [#1266](https://github.com/appbaseio/reactivesearch/issues/1266)
+- Control analytics with `analyticsConfig` prop in `ReactiveBase` [#1262](https://github.com/appbaseio/reactivesearch/iss/1262)
+- Fix pagination when `URLParams` is set to `true` [#1260](https://github.com/appbaseio/reactivesearcs/1260)
+- Fix edge cases for pagination [#1259](https://github.com/appbaseio/reactivesearch/issues/1259)
+- Fix infinite scroll for `aggregationField` in ReactiveList [#1256](https://github.com/appbaseio/reactivesearch/issues/1256)
+- Make pagination prop as reactive [[2bfa0375]](https://github.com/appbaseio/reactivesearch/commit/2bfa0375)
 
 ### v1.0.0-rc.01 [Breaking]
 

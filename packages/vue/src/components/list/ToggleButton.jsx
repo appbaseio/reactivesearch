@@ -4,7 +4,6 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { toggleButtons } from '../../styles/Button';
 import { connect } from '../../utils/index';
-import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -22,7 +21,6 @@ const ToggleButton = {
 		componentId: types.stringRequired,
 		data: types.data,
 		dataField: types.stringRequired,
-		defaultSelected: types.stringOrArray,
 		defaultValue: types.stringOrArray,
 		value: types.stringOrArray,
 		filterLabel: types.string,
@@ -37,11 +35,7 @@ const ToggleButton = {
 	},
 	data() {
 		const props = this.$props;
-		const value = this.selectedValue || props.value || props.defaultValue || props.defaultSelected || [];
-		if (props.defaultSelected) {
-			/* TODO: Remove this before next release */
-			deprecatePropWarning('defaultSelected', 'defaultValue');
-		}
+		const value = this.selectedValue || props.value || props.defaultValue || [];
 		const currentValue = ToggleButton.parseValue(value, props);
 		this.__state = {
 			currentValue,
@@ -71,9 +65,6 @@ const ToggleButton = {
 		this.removeComponent(this.$props.componentId);
 	},
 	watch: {
-		defaultSelected(newVal) {
-			this.setValue(ToggleButton.parseValue(newVal, this.$props));
-		},
 		defaultValue(newVal) {
 			this.setValue(ToggleButton.parseValue(newVal, this.$props));
 		},
@@ -222,8 +213,8 @@ const ToggleButton = {
 					key={item.value}
 					primary={isSelected}
 					large
-					tabIndex={isSelected ? "-1" : "0"}
-					onKeypress={(e) => handleA11yAction(e, () => this.handleClick(item))}
+					tabIndex={isSelected ? '-1' : '0'}
+					onKeypress={e => handleA11yAction(e, () => this.handleClick(item))}
 				>
 					{renderItem ? renderItem({ item, isSelected }) : item.label}
 				</Button>
@@ -300,10 +291,7 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 };
 
-const RcConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(ToggleButton);
+const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(ToggleButton);
 
 ToggleButton.install = function(Vue) {
 	Vue.component(ToggleButton.name, RcConnected);

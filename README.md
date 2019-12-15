@@ -5,16 +5,16 @@
   <br />
 </h2>
 
-<p align="center" style="font-size: 1.2rem">A React and React Native UI components library for Elasticsearch</p>
+<p align="center" style="font-size: 1.2rem">UI components library for Elasticsearch: Available for React, Vue and React Native</p>
 <p align="center">
 Read how to build an e-commerce search UI</p>
 <p align="center">
-a.) <a href="https://codeburst.io/how-to-build-a-yelp-like-search-app-using-react-and-elasticsearch-36a432bf6f92"> with React</a>, or b.) <a href="https://hackernoon.com/building-an-e-commerce-search-app-with-react-native-2c87760a2315">with React Native</a>.</p>
+a.) <a href="https://codeburst.io/how-to-build-a-yelp-like-search-app-using-react-and-elasticsearch-36a432bf6f92"> with React</a>, b.) <a href="https://medium.appbase.io/building-booksearch-application-using-vue-and-elasticsearch-a39615f4d6b3">with Vue</a> or c.) <a href="https://hackernoon.com/building-an-e-commerce-search-app-with-react-native-2c87760a2315">with React Native</a>.</p>
 <br/>
 <p align="center">
-  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/web" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/Uo97x64.png" alt="web" title="web" /></a>
-  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/native" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/jgZp3W2.png" alt="native" title="native" /></a>
-  <a href="https://github.com/appbaseio/reactivesearch/tree/dev/packages/maps" style="padding: 10px; display: inline-block;"><img src="https://i.imgur.com/bNPG50x.png" alt="native" title="native" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/next/packages/web" style="padding: 10px; display: inline;"><img  width="30%" src="https://appbase.io/static/images/onboarding/finish-screen/React@2x.png" alt="web" title="web" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/next/packages/vue" style="padding: 10px; display: inline;"><img   width="30%" src="https://appbase.io/static/images/onboarding/finish-screen/vue@2x.png" alt="vue" title="vue" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/next/packages/native" style="padding: 10px; display: inline;"><img   width="30%" src="https://appbase.io/static/images/onboarding/finish-screen/ReactNative@2x.png" alt="native" title="native" /></a>
 </p>
 
 <hr />

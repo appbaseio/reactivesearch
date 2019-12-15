@@ -14,7 +14,6 @@ import {
 	parseValueArray,
 	getValidPropsKeys,
 } from '../../utils/index';
-import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -56,7 +55,6 @@ const MultiDropdownList = {
 		componentId: types.stringRequired,
 		customQuery: types.func,
 		dataField: types.stringRequired,
-		defaultSelected: types.stringArray,
 		defaultValue: types.stringArray,
 		value: types.stringArray,
 		defaultQuery: types.func,
@@ -113,10 +111,6 @@ const MultiDropdownList = {
 			this.setValue(this.$props.value, true);
 		} else if (this.$props.defaultValue) {
 			this.setValue(this.$props.defaultValue, true);
-		} else if (this.$props.defaultSelected) {
-			/* TODO: Remove this before next release */
-			deprecatePropWarning('defaultSelected', 'defaultValue');
-			this.setValue(this.$props.defaultSelected, true);
 		}
 	},
 
@@ -175,9 +169,6 @@ const MultiDropdownList = {
 		dataField() {
 			this.updateQueryOptions(this.$props);
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
-		},
-		defaultSelected(newVal) {
-			this.setValue(newVal, true);
 		},
 		defaultValue(newVal) {
 			this.setValue(newVal, true);

@@ -22,9 +22,9 @@ import {
 	checkSomePropChange,
 	getOptionsFromQuery,
 	getClassName,
-	getSearchState,
 	isEqual,
 	getCompositeAggsQuery,
+	withClickIds,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -45,8 +45,6 @@ import {
 	hasCustomRenderer,
 	isIdentical,
 	getValidPropsKeys,
-	ReactReduxContext,
-	withClickIds,
 	handleCaretPosition,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
@@ -126,8 +124,6 @@ class CategorySearch extends Component {
 		}
 	}
 
-	static contextType = ReactReduxContext;
-
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
 			this.props.updateComponentProps(this.props.componentId, this.props);
@@ -170,6 +166,7 @@ class CategorySearch extends Component {
 				});
 			}
 		}
+
 
 		checkSomePropChange(
 			this.props,
@@ -909,10 +906,6 @@ class CategorySearch extends Component {
 			headers,
 		} = this.props;
 		const { url, app, credentials } = config;
-		const searchState
-			= this.context && this.context.store
-				? getSearchState(this.context.store.getState(), true)
-				: null;
 		if (config.analytics && suggestionsSearchId) {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
@@ -921,13 +914,9 @@ class CategorySearch extends Component {
 					'Content-Type': 'application/json',
 					Authorization: `Basic ${btoa(credentials)}`,
 					'X-Search-Id': suggestionsSearchId,
-					'X-Search-Click': true,
+					'X-Search-Suggestions-Click': true,
 					...(searchPosition !== undefined && {
-						'X-Search-ClickPosition': searchPosition + 1,
-					}),
-					...(config.analyticsConfig.searchStateHeader
-						&& searchState && {
-						'X-Search-State': JSON.stringify(searchState),
+						'X-Search-Suggestions-ClickPosition': searchPosition + 1,
 					}),
 				},
 			});

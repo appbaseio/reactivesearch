@@ -17,7 +17,6 @@ import SuggestionWrapper from './addons/SuggestionWrapper.jsx';
 import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
-import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -37,6 +36,7 @@ const {
 	checkSomePropChange,
 	isEqual,
 	getCompositeAggsQuery,
+	withClickIds,
 } = helper;
 
 const DataSearch = {
@@ -86,7 +86,7 @@ const DataSearch = {
 			} else if (this.$data.currentValue) {
 				suggestionsList = this.normalizedSuggestions;
 			}
-			return suggestionsList;
+			return withClickIds(suggestionsList);
 		},
 		hasCustomRenderer() {
 			return hasCustomRenderer(this);
@@ -106,7 +106,6 @@ const DataSearch = {
 		aggregationField: types.string,
 		size: VueTypes.number.def(20),
 		debounce: VueTypes.number.def(0),
-		defaultSelected: types.string,
 		defaultValue: types.string,
 		value: types.value,
 		defaultSuggestions: types.suggestions,
@@ -155,10 +154,6 @@ const DataSearch = {
 			this.setValue(this.$props.value, true);
 		} else if (this.$props.defaultValue) {
 			this.setValue(this.$props.defaultValue, true);
-		} else if (this.$props.defaultSelected) {
-			/* TODO: Remove this before next release */
-			deprecatePropWarning('defaultSelected', 'defaultValue');
-			this.setValue(this.$props.defaultSelected, true);
 		}
 	},
 	mounted() {
@@ -196,9 +191,6 @@ const DataSearch = {
 		},
 		queryFormat() {
 			this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
-		},
-		defaultSelected(newVal) {
-			this.setValue(newVal, true, this.$props);
 		},
 		defaultValue(newVal) {
 			this.setValue(newVal, true, this.$props);
@@ -238,6 +230,7 @@ const DataSearch = {
 				aggregationData: this.aggregationData,
 				rawData: this.suggestions || [],
 				value: currentValue,
+				triggerClickAnalytics: this.triggerClickAnalytics,
 			};
 			return getComponent(data, this);
 		},
@@ -365,6 +358,30 @@ const DataSearch = {
 				this.setValue(this.$props.value, true);
 			}
 		},
+		triggerClickAnalytics(searchPosition) {
+			// click analytics would only work client side and after javascript loads
+			const {
+				config,
+				analytics: { suggestionsSearchId },
+				headers,
+			} = this;
+			const { url, app, credentials } = config;
+			if (config.analytics && suggestionsSearchId) {
+				fetch(`${url}/${app}/_analytics`, {
+					method: 'POST',
+					headers: {
+						...headers,
+						'Content-Type': 'application/json',
+						Authorization: `Basic ${btoa(credentials)}`,
+						'X-Search-Id': suggestionsSearchId,
+						'X-Search-Suggestions-Click': true,
+						...(searchPosition !== undefined && {
+							'X-Search-Suggestions-ClickPosition': searchPosition + 1,
+						}),
+					},
+				});
+			}
+		},
 
 		clearValue() {
 			this.isPending = false;
@@ -413,6 +430,8 @@ const DataSearch = {
 			} else {
 				this.$emit('change', suggestion.value, this.triggerQuery);
 			}
+			// Record analytics for selected suggestions
+			this.triggerClickAnalytics(suggestion._click_id);
 			this.onValueSelectedHandler(
 				suggestion.value,
 				causes.SUGGESTION_SELECT,
@@ -805,6 +824,9 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
+	analytics: state.analytics,
+	config: state.config,
+	headers: state.appbaseRef.headers,
 });
 const mapDispatchtoProps = {
 	addComponent,

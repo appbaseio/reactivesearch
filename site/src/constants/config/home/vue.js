@@ -155,23 +155,24 @@ export default {
 		title: 'Check starter apps',
 		demos: [
 			{
-				src: '../../reactivesearch/images/apps/gitxplore.png',
-				title: 'GitHub Search',
-				href: 'https://codesandbox.io/s/54l2m5rqxl',
+				src: 'https://i.imgur.com/e95xqho.jpg',
+				title: 'Dashboard - Vue',
+				href: 'https://charts-dashboard-vue.netlify.com/',
 				description:
-					'Explore top 30K Github repositories by various filters like stars, forks, and topics.',
-			},
-			{
-				src: '../../reactivesearch/images/apps/goodbooks.png',
-				title: 'Book Search',
-				href: 'https://codesandbox.io/s/y2rvj53koz/',
-				description: 'An e-commerce search experience for a books dataset.',
+					'A configurable dashboard app that comes with the power of data visualization using Vue Charts.',
 			},
 			{
 				src: 'https://i.imgur.com/3DoPCSV.jpg',
 				title: 'Movie App',
 				href: 'https://sleepy-edison-c6bc3b.netlify.com/',
 				description: 'An app showing the use of Vue Router and ReactiveSearch.',
+			},
+			{
+				src: 'https://i.imgur.com/VtEL2OE.png',
+				title: 'Booksearch with Material UI',
+				href: 'https://priceless-blackwell-ae9d4f.netlify.com/',
+				description:
+					'A Material UI styled book search app which can be customized to your dataset.',
 			},
 		],
 	},
@@ -181,9 +182,8 @@ export default {
 			{
 				src: 'https://cdn-images-1.medium.com/max/2000/1*o4yRyTm2pKfa_Flr3W2TPw.png',
 				title: 'Vue.JS Components for building Search UIs',
-				href:
-					'https://medium.appbase.io/vue-js-components-for-building-search-uis-7b2a1b6fe159',
-				description: 'Introductory article for Reactivesearch Vue.',
+				href: 'https://medium.com/p/e17a953e72a6',
+				description: 'Announcing ReactiveSearch Vue 1.0 release.',
 			},
 			{
 				src: 'https://cdn-images-1.medium.com/max/2000/1*xX5Q917ujpQsdZp-gy72zw.png',
@@ -191,7 +191,7 @@ export default {
 				href:
 					'https://medium.appbase.io/building-booksearch-application-using-vue-and-elasticsearch-a39615f4d6b3',
 				description:
-					'A 101 post showing how to build real world apps with ReactiveSearch Vue.',
+					'Learn how to build an e-commerce app with Vue ReactiveSearch.',
 			},
 			{
 				src: 'https://cdn-images-1.medium.com/max/1000/1*906R2mDgLnoatUtK6PeQ8g.png',
@@ -199,7 +199,7 @@ export default {
 				href:
 					'https://medium.appbase.io/learn-how-to-build-a-github-search-explorer-app-with-vue-js-c66f61d6e152',
 				description:
-					'A 101 post showing how to build a data-driven search UI with ReactiveSearch Vue.',
+					'Learn how to build a search app to find the most popular Github Repositories.',
 			},
 		],
 	},

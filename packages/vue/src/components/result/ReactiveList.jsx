@@ -242,7 +242,8 @@ const ReactiveList = {
 		},
 		total(newVal, oldVal) {
 			if (this.shouldRenderPagination && newVal !== oldVal) {
-				const currentPage = this.$data.total ? 0 : this.$currentPage;
+				let currentPage = this.$data.total ? 0 : this.$currentPage;
+				if (this.defaultPage >= 0) currentPage = this.defaultPage;
 				this.$currentPage = currentPage;
 				this.$emit('pageChange', currentPage + 1, this.totalPages);
 			}
@@ -524,6 +525,7 @@ const ReactiveList = {
 		},
 
 		loadMore() {
+			if (this.aggregationField && !this.afterKey) return;
 			if (this.hits && !this.shouldRenderPagination && this.total !== this.hits.length) {
 				const value = this.$data.from + this.$props.size;
 				const options = { ...getQueryOptions(this.$props), ...this.getAggsQuery() };
@@ -536,6 +538,7 @@ const ReactiveList = {
 						from: value,
 					},
 					true,
+					!!this.aggregationField,
 				);
 			} else if (this.isLoading) {
 				this.isLoading = false;

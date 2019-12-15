@@ -21,7 +21,6 @@ import {
 	parseHits,
 	checkSomePropChange,
 	getOptionsFromQuery,
-	getSearchState,
 	getCompositeAggsQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -40,7 +39,6 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	getValidPropsKeys,
-	ReactReduxContext,
 } from '../../utils';
 import Results from './addons/Results';
 
@@ -85,7 +83,6 @@ class ReactiveList extends Component {
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
 
-	static contextType = ReactReduxContext;
 
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
@@ -509,10 +506,10 @@ class ReactiveList extends Component {
 	};
 
 	loadMore = () => {
+		if (this.props.aggregationField && !this.props.afterKey) return;
 		if (this.props.hits && this.props.total !== this.props.hits.length) {
 			const value = this.state.from + this.props.size;
 			const options = { ...getQueryOptions(this.props), ...this.getAggsQuery() };
-
 			this.setState({
 				from: value,
 			});
@@ -523,6 +520,7 @@ class ReactiveList extends Component {
 					from: value,
 				},
 				true,
+				!!this.props.aggregationField,
 			);
 		}
 	};
@@ -629,10 +627,6 @@ class ReactiveList extends Component {
 			headers,
 		} = this.props;
 		const { url, app, credentials } = config;
-		const searchState
-			= this.context && this.context.store
-				? getSearchState(this.context.store.getState(), true)
-				: null;
 		if (config.analytics && searchId) {
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
@@ -643,10 +637,6 @@ class ReactiveList extends Component {
 					'X-Search-Id': searchId,
 					'X-Search-Click': true,
 					'X-Search-ClickPosition': searchPosition + 1,
-					...(config.analyticsConfig.searchStateHeader
-						&& searchState && {
-						'X-Search-State': JSON.stringify(searchState),
-					}),
 				},
 			});
 		}
@@ -684,7 +674,11 @@ class ReactiveList extends Component {
 	};
 	getData = () => {
 		const {
-			results, streamResults, filteredResults, promotedResults, aggregationData,
+			results,
+			streamResults,
+			filteredResults,
+			promotedResults,
+			aggregationData,
 		} = this.getAllData();
 		return {
 			data: this.withClickIds(filteredResults),
@@ -908,7 +902,8 @@ const mapDispatchtoProps = dispatch => ({
 	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
 	updateComponentProps: (component, options) =>
 		dispatch(updateComponentProps(component, options)),
-	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
+	loadMore: (component, options, append, appendAggs) =>
+		dispatch(loadMore(component, options, append, appendAggs)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setPageURL: (component, value, label, showFilter, URLParams) =>
 		dispatch(setValue(component, value, label, showFilter, URLParams)),

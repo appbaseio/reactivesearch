@@ -7,7 +7,6 @@ import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
 import { getComponents } from './addons/ssr';
-import { deprecatePropWarning } from '../shared/utils';
 
 const {
 	addComponent,
@@ -49,7 +48,6 @@ const RangeSlider = {
 		customQuery: types.func,
 		data: types.data,
 		dataField: types.stringRequired,
-		defaultSelected: types.range,
 		defaultValue: types.range,
 		value: types.range,
 		filterLabel: types.string,
@@ -71,12 +69,15 @@ const RangeSlider = {
 		},
 
 		handleSlider(values) {
-			const { value } = this.$props
+			const { value } = this.$props;
 
 			if (value === undefined) {
 				this.handleChange(values.currentValue);
 			} else {
-				this.$emit('change', {start: values.currentValue[0], end: values.currentValue[1]});
+				this.$emit('change', {
+					start: values.currentValue[0],
+					end: values.currentValue[1],
+				});
 			}
 		},
 
@@ -136,15 +137,11 @@ const RangeSlider = {
 			this.setReact(this.$props);
 		},
 
-		defaultSelected(newVal) {
-			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
-		},
-
 		defaultValue(newVal) {
 			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
 		},
 
-		value(newVal,oldVal) {
+		value(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				this.handleChange(RangeSlider.parseValue(newVal, this.$props));
 			}
@@ -174,7 +171,7 @@ const RangeSlider = {
 		this.addComponent(this.$props.componentId);
 		this.setReact(this.$props);
 
-		const { defaultSelected, value, defaultValue } = this.$props;
+		const { value, defaultValue } = this.$props;
 		const { selectedValue } = this;
 		if (this.$props.range) {
 			if (Array.isArray(selectedValue)) {
@@ -185,10 +182,6 @@ const RangeSlider = {
 				this.handleChange(RangeSlider.parseValue(value, this.$props));
 			} else if (defaultValue) {
 				this.handleChange(RangeSlider.parseValue(defaultValue, this.$props));
-			} else if (defaultSelected) {
-				/* TODO: Remove this before next release */
-				deprecatePropWarning('defaultSelected', 'defaultValue');
-				this.handleChange(RangeSlider.parseValue(defaultSelected, this.$props));
 			}
 		}
 	},
@@ -223,16 +216,16 @@ const RangeSlider = {
 								<div class="label-container">
 									<label
 										class={
-											getClassName(this.$props.innerClass, 'label')
-											|| 'range-label-left'
+											getClassName(this.$props.innerClass, 'label') ||
+											'range-label-left'
 										}
 									>
 										{this.$props.rangeLabels.start}
 									</label>
 									<label
 										class={
-											getClassName(this.$props.innerClass, 'label')
-											|| 'range-label-right'
+											getClassName(this.$props.innerClass, 'label') ||
+											'range-label-right'
 										}
 									>
 										{this.$props.rangeLabels.end}
@@ -285,8 +278,8 @@ RangeSlider.parseValue = (value, props) => {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId]
-		? state.aggregations[props.componentId][props.dataField]
-		  && state.aggregations[props.componentId][props.dataField].buckets // eslint-disable-line
+		? state.aggregations[props.componentId][props.dataField] &&
+		  state.aggregations[props.componentId][props.dataField].buckets // eslint-disable-line
 		: [],
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
@@ -302,10 +295,7 @@ const mapDispatchtoProps = {
 	setQueryOptions,
 };
 
-const RangeConnected = connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(RangeSlider);
+const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(RangeSlider);
 
 RangeSlider.install = function(Vue) {
 	Vue.component(RangeSlider.name, RangeConnected);

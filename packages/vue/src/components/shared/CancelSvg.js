@@ -3,6 +3,7 @@ export default () => (
 		alt="Clear"
 		class="cancel-icon"
 		height="10"
+		width="8"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 212.982 212.982"
 	>
