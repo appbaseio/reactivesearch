@@ -56,6 +56,30 @@ const searchbase = new SearchBase(props);
     	weight: number;
     };
     ```
+-   **aggregationField** `string` [optional]
+    One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data).
+    It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
+    You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html).
+    You can use `aggregationData` using `onAggregationData` callback or `subscriber` as shown:
+    ```javascript
+    const searchbase = new Searchbase({
+    	index: 'good-book-ds-latest',
+    	url: 'https://scalr.api.appbase.io',
+    	credentials: 'IPM14ICqp:8e573e86-8802-4a27-a7a1-4c7d0c62c186',
+    	dataField: 'original_title',
+    	aggregationField: 'original_title.keyword',
+    });
+    // using callback
+    searchbase.onAggregationData(next, prev) {}
+    // using subscriber
+    searchbase.subscribeToStateChanges(
+        ({aggregations}) => {},
+        'aggregations'
+    );
+    ```
+    <!-- TODO: merge aggs branch of react and vue before merging this -->
+    > See impact of aggregationField with these examples for [React](/docs/reactivesearch/v3/advanced/groupingresults#how) and [Vue](/docs/reactivesearch/vue/advanced/groupingresults#how).
+    
 -   **credentials** `string`
     Basic Auth credentials if required for authentication purposes. It should be a string of the format `username:password`. If you are using an appbase.io app, you will find credentials under your [API credentials page](https://dashboard.appbase.io/app?view=credentials). If you are not using an appbase.io app, credentials may not be necessary - although having an open access to your Elasticsearch cluster is not recommended.
 -   **analytics** `boolean`
