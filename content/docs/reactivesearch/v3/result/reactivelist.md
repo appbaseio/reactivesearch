@@ -77,9 +77,9 @@ Example uses:
     />
     ```
 
-    > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** slot.
+    > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** prop.
 
-    > It is possible to override this query by providing `defaultQuery` or `customQuery`.
+    > It is possible to override this query by providing `defaultQuery`.
 
 -   **excludeFields** `String Array` [optional]
     fields to be excluded in search results.
@@ -319,7 +319,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
         An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
     -   **`promotedData`**: `array`
         An array of promoted results obtained from the applied query. [Read More](docs/search/Rules#part-1-introduction)
-        > Note: 
+        > Note:
         >
         > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerAnalytics to register the click analytics info.
     -   **`rawData`**: `array`
