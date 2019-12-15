@@ -67,7 +67,6 @@ class App extends React.Component {
 			<ReactiveBase
 				app="earthquakes"
 				credentials="dshr057Nz:e18bbbbe-5d55-4234-a17e-4d64fb2222c7"
-				mapKey="AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q"
 			>
 				<div className="row">
 					<div className="col">
@@ -99,9 +98,9 @@ class App extends React.Component {
 					<div className="col">
 						<SelectedFilters />
 						{this.state.mapProvider.value === 'googleMap' ? (
-							<ReactiveGoogleMap componentId="googleMap" {...mapProps} />
+							<ReactiveGoogleMap style={{ height: '90vh' }} componentId="googleMap" {...mapProps} />
 						) : (
-							<ReactiveOpenStreetMap componentId="openstreetMap" {...mapProps} />
+							<ReactiveOpenStreetMap style={{ height: '90vh' }} componentId="openstreetMap" {...mapProps} />
 						)}
 					</div>
 				</div>
