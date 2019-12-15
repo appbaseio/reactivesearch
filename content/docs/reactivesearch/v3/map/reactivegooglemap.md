@@ -145,15 +145,16 @@ renderData={result => ({
     use to display results and map component together. Usage:
 
 ```js
-    renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination) => {
+    renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination, triggerAnalytics) => {
         // hits are the results returned from query.
         // streamHits are the results which are returned only  when stream prop is true.
         // loadMore is used to load more results.
         // renderMap is the function which is used to render Map.
-        // renderPagination is the function which is used to render Pagination like in ReactiveList.
+		// renderPagination is the function which is used to render Pagination like in ReactiveList.
+		// triggerAnalytics is the function which can be called to register click analytics.
         return(
             <>
-                {hits.map(hit => JSON.stringify(hit))}
+                {hits.map(hit => <pre onClick={() => triggerAnalytics(hit._click_id)}>{JSON.stringify(hit)}</pre>)}
                 {renderMap()}
             </>
         )
