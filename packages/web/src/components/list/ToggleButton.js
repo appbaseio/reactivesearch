@@ -242,7 +242,8 @@ class ToggleButton extends Component {
 		});
 	};
 
-	handleClick = (item) => {
+	handleClick = (item, e) => {
+		e.preventDefault();
 		const { value, onChange } = this.props;
 		if (value === undefined) {
 			this.handleToggle(item);
@@ -269,8 +270,8 @@ class ToggleButton extends Component {
 							className={`${getClassName(this.props.innerClass, 'button')} ${
 								isSelected ? 'active' : ''
 							}`}
-							onClick={() => this.handleClick(item)}
-							onKeyPress={e => handleA11yAction(e, () => this.handleClick(item))}
+							onClick={e => this.handleClick(item, e)}
+							onKeyPress={e => handleA11yAction(e, () => this.handleClick(item, e))}
 							key={item.value}
 							tabIndex="0"
 							primary={isSelected}
