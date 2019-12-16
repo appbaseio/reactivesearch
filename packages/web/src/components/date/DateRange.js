@@ -254,6 +254,9 @@ class DateRange extends Component {
 					start: date,
 					end,
 				});
+				this.setState(state => ({
+					startKey: state.startKey === 'on-start' ? 'off-start' : 'on-start',
+				}));
 				// focus the end date DayPicker if its empty
 				if (this.props.autoFocusEnd && autoFocus) {
 					this.endDateRef.getInput().focus();
@@ -291,6 +294,9 @@ class DateRange extends Component {
 					start: currentDate ? currentDate.start : '',
 					end: selectedDay,
 				});
+				this.setState(state => ({
+					endKey: state.endKey === 'on-end' ? 'off-end' : 'on-end',
+				}));
 			}
 		} else if (onChange) {
 			if (this.endDateRef.getInput().value.length === 10) {
