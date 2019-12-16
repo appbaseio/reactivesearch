@@ -1,0 +1,67 @@
+@import 'colors.css';
+
+.container.getting-started {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 20px;
+}
+
+.getting-started .card {
+	padding: 10px;
+	border: 1px solid var(--lightgrey-l2);
+	transition: all ease 0.2s;
+}
+
+.getting-started .card img{
+	width: 100%;
+}
+
+.getting-started .card:hover {
+	box-shadow: 0 5px 4px rgba(0, 0, 0, 0.1);
+}
+
+.getting-started h2 {
+	margin: 20px 0 10px;
+	color: var(--darkgrey);
+	font-size: 2.4rem;
+	line-height: 2rem;
+}
+
+.getting-started p {
+	margin: 10px 0 15px;
+	font-size: 1.4rem;
+	color: var(--middarkgrey);
+}
+
+.getting-started .btn {
+	margin: 10px 0 0;
+	display: block;
+	text-decoration: none;
+	border: 0;
+	box-shadow: none;
+	font-size: 15px;
+	color: var(--blue-d1);
+	cursor: pointer;
+}
+
+.getting-started .btn:hover {
+	text-decoration: none;
+	border: 0;
+	box-shadow: none;
+}
+
+.getting-started .content {
+	padding: 5px;
+}
+
+@media (max-width: 1240px) {
+	.container.getting-started {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@media (max-width: 960px) {
+	.container.getting-started {
+		grid-template-columns: auto;
+	}
+}

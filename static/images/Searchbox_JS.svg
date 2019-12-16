@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="386px" height="386px" viewBox="0 0 386 386" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
+    <title>618900D9-B75D-42C6-BD5A-62C208833521</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="88.9397986%" y1="8.58727888%" x2="12.5198221%" y2="90.3119942%" id="linearGradient-1">
+            <stop stop-color="#F7DF1E" offset="0%"></stop>
+            <stop stop-color="#FBEB6D" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="378" height="378"></rect>
+        <filter x="-1.9%" y="-1.3%" width="103.7%" height="103.7%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.202190897 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Searchbase" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Searchbase-and-Searchbox-icons-2" transform="translate(-608.000000, -59.000000)">
+            <g id="Searchbox_JS" transform="translate(612.000000, 61.000000)">
+                <g id="Mask">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                    <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                </g>
+                <path d="M36.5,122.5 L36.5,187.5 L341.5,187.5 L341.5,122.5 L36.5,122.5 Z" id="Rectangle-18" stroke="#232E44" stroke-width="3"></path>
+                <g id="Group" transform="translate(35.000000, 201.000000)">
+                    <rect id="Rectangle" fill="#000000" opacity="0.100000001" x="0" y="0" width="308" height="56"></rect>
+                    <text id="for-Javascript" font-family="SourceSansPro-Semibold, Source Sans Pro" font-size="28" font-weight="500" fill="#232E44">
+                        <tspan x="59" y="38">for Javascript</tspan>
+                    </text>
+                </g>
+                <g id="Group-3" transform="translate(290.000000, 139.000000)" stroke="#232E44" stroke-width="4">
+                    <ellipse id="Oval-15" cx="13" cy="12.5" rx="13" ry="12.5"></ellipse>
+                    <path d="M22.4934402,22.528296 L32.9397314,32.104063" id="Line-6" stroke-linecap="square"></path>
+                </g>
+                <text id="Searchbox" font-family="SourceSansPro-Semibold, Source Sans Pro" font-size="35" font-weight="500" fill="#232E44">
+                    <tspan x="48" y="167">Searchbox</tspan>
+                </text>
+                <path d="M219.5,133 L219.5,177" id="Line" stroke="#232E44" stroke-width="3" stroke-linecap="square"></path>
+            </g>
+        </g>
+    </g>
+</svg>

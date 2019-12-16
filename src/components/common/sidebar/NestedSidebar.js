@@ -12,7 +12,7 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 	}
 
 	const switchDocs = value => {
-		if (value.value === 'Native') {
+		if (value.value === 'React Native') {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/native/overview/QuickStart/`;
 		} else if (value.value === 'Vue') {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/vue/overview/QuickStart/`;
@@ -20,7 +20,7 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/v3/overview/quickstart/`;
 		} else if (value.value === 'React - v2') {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/v2/overview/QuickStart/`;
-		} else if (value.value === 'SearchBase') {
+		} else if (value.value === 'Searchbase') {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/searchbase/overview/QuickStart/`;
 		} else if (value.value === 'React Searchbox') {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/react-searchbox/quickstart/`;

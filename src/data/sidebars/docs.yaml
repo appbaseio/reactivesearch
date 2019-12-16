@@ -19,11 +19,11 @@
         icon: search
         items:
             - title: Mappings
-              link: /docs/search/Mappings
+              link: /docs/search/Mappings/
             - title: Search Preview
-              link: /docs/search/Preview
+              link: /docs/search/Preview/
             - title: Query Rules
-              link: /docs/search/Rules
+              link: /docs/search/Rules/
       - group: Building Search UI
       - group: Actionable Analytics
         icon: analytics

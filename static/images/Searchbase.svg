@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="386px" height="386px" viewBox="0 0 386 386" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
+    <title>83F84672-A97C-486D-98DF-4DA365DE4651</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="92.5144519%" y1="94.8681451%" x2="4.42792629%" y2="3.9460496%" id="linearGradient-1">
+            <stop stop-color="#FFC567" offset="0%"></stop>
+            <stop stop-color="#FF9900" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="378" height="378"></rect>
+        <filter x="-1.9%" y="-1.3%" width="103.7%" height="103.7%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.202190897 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Searchbase" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Searchbase-and-Searchbox-icons-2" transform="translate(-608.000000, -522.000000)">
+            <g id="Searchbase" transform="translate(612.000000, 524.000000)">
+                <g id="Mask">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                    <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                </g>
+                <text font-family="SourceSansPro-Semibold, Source Sans Pro" font-size="35" font-weight="500" fill="#FFFFFF">
+                    <tspan x="110" y="294">Searchbase</tspan>
+                </text>
+                <g id="blocks-2" transform="translate(91.000000, 75.000000)" fill="#FFFFFF">
+                    <g id="blocks">
+                        <ellipse id="Oval" fill-rule="nonzero" cx="99.221972" cy="5.57256999" rx="16.5369953" ry="5.57256999"></ellipse>
+                        <ellipse id="Oval" fill-rule="nonzero" cx="49.610986" cy="27.86285" rx="16.5369953" ry="5.57256999"></ellipse>
+                        <path d="M24.6290984,35.0514652 L8.68743488,41.8444281 L99.221972,80.3843221 L189.756509,41.8444281 L173.814846,35.0514652 C167.303175,41.8246985 158.147535,45.3170272 148.832958,44.5805599 C133.1173,44.5805599 121.271299,37.3919446 121.271299,27.86285 C121.587547,22.8013032 124.544251,18.2923066 129.032662,16.0267113 L123.432133,13.6416513 C116.875331,19.7564868 108.123385,22.8829565 99.221972,22.29028 C90.3205594,22.8829565 81.5686132,19.7564868 75.0118108,13.6416513 L69.4112817,16.0267113 C73.8996929,18.2923066 76.8563969,22.8013032 77.1726449,27.86285 C77.1726449,37.3919446 65.3266439,44.5805599 49.610986,44.5805599 C40.2964089,45.3170272 31.1407687,41.8246985 24.6290984,35.0514652 Z M99.221972,33.4354199 C114.93763,33.4354199 126.783631,40.6240352 126.783631,50.1531299 C126.783631,59.6822246 114.93763,66.8708399 99.221972,66.8708399 C83.5063141,66.8708399 71.6603131,59.6822246 71.6603131,50.1531299 C71.6603131,40.6240352 83.5063141,33.4354199 99.221972,33.4354199 Z" id="Shape" fill-rule="nonzero"></path>
+                        <ellipse id="Oval" fill-rule="nonzero" cx="148.832958" cy="27.86285" rx="16.5369953" ry="5.57256999"></ellipse>
+                        <ellipse id="Oval" fill-rule="nonzero" cx="99.221972" cy="50.1531299" rx="16.5369953" ry="5.57256999"></ellipse>
+                        <polygon id="Rectangle" points="104.809668 89.2138519 195.918929 50.1531299 196 128.93445 104.809668 172.74967"></polygon>
+                        <polygon id="Shape" fill-rule="nonzero" points="0 132.883504 93.7096402 172.77196 93.7096402 90.130747 0 50.242291"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

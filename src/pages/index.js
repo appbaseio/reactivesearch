@@ -147,6 +147,11 @@ const HomePage = ({ data, location }) => {
 										),
 										chapters: [
 											{
+												title: 'Choose your UI Library',
+												link: '/docs/reactivesearch/gettingstarted',
+												duration: 4,
+											},
+											{
 												title: 'ReactiveSearch QuickStart',
 												link:
 													'/docs/reactivesearch/v3/overview/quickstart/',

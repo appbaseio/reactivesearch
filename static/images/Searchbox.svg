@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="386px" height="386px" viewBox="0 0 386 386" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
+    <title>07DC7659-7A0F-4D75-9B14-FBA366CA22B7</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="3.05084954%" y1="2.41126868%" x2="97.4292243%" y2="98.407242%" id="linearGradient-1">
+            <stop stop-color="#3023AE" offset="0%"></stop>
+            <stop stop-color="#7E72FB" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="378" height="378"></rect>
+        <filter x="-1.9%" y="-1.3%" width="103.7%" height="103.7%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.202190897 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Searchbase" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Searchbase-and-Searchbox-icons-2" transform="translate(-89.000000, -522.000000)">
+            <g id="Searchbox" transform="translate(93.000000, 524.000000)">
+                <g id="Mask">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                    <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                </g>
+                <path d="M36.5,156.5 L36.5,221.5 L341.5,221.5 L341.5,156.5 L36.5,156.5 Z" id="Rectangle-18" stroke="#FFFFFF" stroke-width="3"></path>
+                <ellipse id="Oval-15" stroke="#FFFFFF" stroke-width="4" cx="303" cy="185.5" rx="13" ry="12.5"></ellipse>
+                <path d="M312.49344,195.528296 L322.939731,205.104063" id="Line-6" stroke="#FFFFFF" stroke-width="4" stroke-linecap="square"></path>
+                <text font-family="SourceSansPro-Semibold, Source Sans Pro" font-size="35" font-weight="500" fill="#FFFFFF">
+                    <tspan x="48" y="201">Searchbox</tspan>
+                </text>
+                <path d="M219.5,167 L219.5,211" id="Line" stroke="#FFFFFF" stroke-width="3" stroke-linecap="square"></path>
+            </g>
+        </g>
+    </g>
+</svg>
