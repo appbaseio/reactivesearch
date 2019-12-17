@@ -60,7 +60,7 @@ const searchbase = new SearchBase(props);
     One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data).
     It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
     You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html).
-    You can use `aggregationData` using `onAggregationData` callback or `subscriber` as shown:
+    You can use `aggregationData` using `onAggregationData` callback or `subscriber`.
     ```javascript
     const searchbase = new Searchbase({
     	index: 'good-book-ds-latest',
@@ -77,9 +77,9 @@ const searchbase = new SearchBase(props);
         'aggregations'
     );
     ```
-    <!-- TODO: merge aggs branch of react and vue before merging this -->
+
     > See impact of aggregationField with these examples for [React](/docs/reactivesearch/v3/advanced/groupingresults#how) and [Vue](/docs/reactivesearch/vue/advanced/groupingresults#how).
-    
+
 -   **credentials** `string`
     Basic Auth credentials if required for authentication purposes. It should be a string of the format `username:password`. If you are using an appbase.io app, you will find credentials under your [API credentials page](https://dashboard.appbase.io/app?view=credentials). If you are not using an appbase.io app, credentials may not be necessary - although having an open access to your Elasticsearch cluster is not recommended.
 -   **analytics** `boolean`
@@ -121,7 +121,7 @@ const searchbase = new Searchbase({
 -   **searchOperators** `boolean`
     Defaults to `false`. If set to `true`, then you can use special characters in the search query to enable the advanced search.<br/>
     Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html).
--   **queryFormat** `QueryFormat` 
+-   **queryFormat** `QueryFormat`
     ```ts
     type QueryFormat = 'or' | 'and';
     ```
@@ -364,6 +364,12 @@ These properties are automatically calculated or managed by the `Searchbase` cla
     -   **`time`**: `number` Total time taken by request (in ms)
     -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
     -   **`rawData`**: `Array<Object>`  An array of original hits obtained from the applied query.
+-   **aggregations** `CompositeAggregationResults`
+    It is an object which contains the following details of `composite aggregations` query response.
+    -   **`data`**: `Array<Object>` contains the parsed aggregations
+    -   **`raw`**: `Object` Response returned by ES `composite aggs` query in the raw form.
+    -   **`rawData`**: `Array<Object>`  An array of original aggregations obtained from the applied query.
+    -   **`afterKey`**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the `afterKey` parameter to retrieve the next results.
 -   **analyticsInstance** `Object`
     An instance of the [Appbase.io analytics library](https://github.com/appbaseio/analytics) which can be used to record click events, custom events & conversions for the appbase.io applications. For example, check how it can be used to record a click event.
     ```js
@@ -398,7 +404,7 @@ These properties are automatically calculated or managed by the `Searchbase` cla
     Returns the current mic instance. Can be used to set mic language and other properties of mic
 
 ##Setters
-> Note:   
+> Note:
 > All of the methods accept options as the second parameter which has the following shape:
 >
 ```ts
@@ -468,8 +474,21 @@ can be used to listen for the `value` property changes. <br/>
 ```
 - **onResults** `(next: string, prev: string) => void`;
 can be used to listen for the `results` property changes
-- **onSuggestions:** `(next: string, prev: string) => void`;
+- **onSuggestions** `(next: string, prev: string) => void`;
 can be used to listen for the `suggestions` property changes
+- **onAggregationData** `(next: string, prev: string) => void`;
+can be used to listen for the `aggregations` property changes
+```javascript
+    const searchbase = new Searchbase({
+    	index: 'good-book-ds-latest',
+    	url: 'https://scalr.api.appbase.io',
+    	credentials: 'IPM14ICqp:8e573e86-8802-4a27-a7a1-4c7d0c62c186',
+    	dataField: 'original_title',
+    	aggregationField: 'original_title.keyword',
+    });
+    // using callback
+    searchbase.onAggregationData(next, prev) {}
+```
 - **onError** `(error: any) => void`;
 called when there is an error while fetching results
 - **onSuggestionsError** `(error: any) => void`;
@@ -506,7 +525,7 @@ A common use-case is to subscribe a component or DOM element to a particular pro
 The callback function accepts an object in the following shape:
 ```js
 {
-    [propertyName]: { // property name for example, `results` 
+    [propertyName]: { // property name for example, `results`
         prev: any; // previous value of the property
         next: any; // next value of the property
     }
