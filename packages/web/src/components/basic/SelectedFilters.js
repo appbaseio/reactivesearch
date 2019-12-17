@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withTheme } from 'emotion-theming';
 
 import { setValue, clearValues } from '@appbaseio/reactivecore/lib/actions';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
 import Button, { filters } from '../../styles/Button';
@@ -91,8 +92,11 @@ class SelectedFilters extends Component {
 			.filter(id => this.props.components.includes(id))
 			.some((component) => {
 				const { value } = this.props.selectedValues[component];
+				const isResultComponent
+					= this.props.componentProps[component].componentType
+					=== componentTypes.reactiveList;
 				const isArray = Array.isArray(value);
-				return (isArray && value.length) || (!isArray && value);
+				return ((isArray && value.length) || (!isArray && value)) && !isResultComponent;
 			});
 
 	render() {
@@ -146,6 +150,7 @@ SelectedFilters.propTypes = {
 	render: types.func,
 	title: types.title,
 	onChange: types.func,
+	componentProps: types.props,
 };
 
 SelectedFilters.defaultProps = {
@@ -153,11 +158,13 @@ SelectedFilters.defaultProps = {
 	clearAllLabel: 'Clear All',
 	showClearAll: true,
 	style: {},
+	componentProps: {},
 };
 
 const mapStateToProps = state => ({
 	components: state.components,
 	selectedValues: state.selectedValues,
+	componentProps: state.props,
 });
 
 const mapDispatchtoProps = dispatch => ({
