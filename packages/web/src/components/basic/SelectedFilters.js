@@ -93,8 +93,9 @@ class SelectedFilters extends Component {
 			.some((component) => {
 				const { value } = this.props.selectedValues[component];
 				const isResultComponent
-					= this.props.componentProps[component].componentType
-					=== componentTypes.reactiveList;
+					= this.props.componentProps[component]
+					&& this.props.componentProps[component].componentType
+						=== componentTypes.reactiveList;
 				const isArray = Array.isArray(value);
 				return ((isArray && value.length) || (!isArray && value)) && !isResultComponent;
 			});
