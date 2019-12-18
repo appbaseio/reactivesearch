@@ -61,7 +61,6 @@ class SingleList extends Component {
 			prevAfter: {}, // useful when we want to prevent the showLoadMore results
 			isLastBucket: false,
 		};
-		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 
 		props.addComponent(this.internalComponent);
@@ -220,24 +219,15 @@ class SingleList extends Component {
 	};
 
 	setValue = (nextValue, isDefaultValue = false, props = this.props, hasMounted = true) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
 		let value = nextValue;
 		if (isDefaultValue) {
 			value = nextValue;
 		} else if (nextValue === this.state.currentValue && hasMounted) {
 			value = '';
 		}
-
-		this.locked = true;
-
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				this.updateQuery(value, props);
-				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);
 			};
 

@@ -57,7 +57,6 @@ class MultiDataList extends Component {
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		this.type = 'term';
-		this.locked = false;
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
@@ -203,12 +202,6 @@ class MultiDataList extends Component {
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
 		const { selectAllLabel } = this.props;
 		let { currentValue } = this.state;
 		let finalValues = null;
@@ -259,7 +252,6 @@ class MultiDataList extends Component {
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				this.updateQuery(finalValues, props);
-				this.locked = false;
 				if (props.onValueChange) props.onValueChange(finalValues);
 			};
 

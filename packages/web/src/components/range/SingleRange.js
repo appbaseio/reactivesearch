@@ -40,7 +40,6 @@ class SingleRange extends Component {
 			currentValue,
 		};
 		this.type = 'range';
-		this.locked = false;
 
 		props.addComponent(props.componentId);
 		props.setComponentProps(props.componentId, {
@@ -118,19 +117,12 @@ class SingleRange extends Component {
 	};
 
 	setValue = (value, props = this.props, hasMounted = true) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
 		const currentValue
 			= typeof value === 'string' ? SingleRange.parseValue(value, props) : value;
 
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				this.updateQuery(currentValue, props);
-				this.locked = false;
 				if (props.onValueChange) props.onValueChange(currentValue);
 			};
 

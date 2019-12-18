@@ -53,7 +53,6 @@ class TagCloud extends Component {
 			currentValue,
 			options,
 		};
-		this.locked = false;
 		this.type = 'term';
 		this.internalComponent = `${props.componentId}__internal`;
 
@@ -184,12 +183,6 @@ class TagCloud extends Component {
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
 		let { currentValue } = this.state;
 		let finalValues = null;
 
@@ -221,7 +214,6 @@ class TagCloud extends Component {
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				this.updateQuery(finalValues, props);
-				this.locked = false;
 				if (props.onValueChange) props.onValueChange(finalValues);
 			};
 

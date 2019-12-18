@@ -50,7 +50,6 @@ const DataSearch = {
 			isPending: false,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
-		this.locked = false;
 		return this.__state;
 	},
 	inject: {
@@ -275,13 +274,6 @@ const DataSearch = {
 			return parsedSuggestions;
 		},
 		setValue(value, isDefaultValue = false, props = this.$props, cause) {
-			// ignore state updates when component is locked
-			if (props.beforeValueChange && this.locked) {
-				return;
-			}
-
-			this.locked = true;
-
 			const performUpdate = () => {
 				this.currentValue = value;
 				this.normalizedSuggestions = [];
@@ -306,7 +298,6 @@ const DataSearch = {
 					this.handleTextChange(value);
 				}
 
-				this.locked = false;
 				this.$emit('valueChange', value);
 			};
 

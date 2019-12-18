@@ -78,7 +78,6 @@ const MultiList = {
 					: [],
 			searchTerm: '',
 		};
-		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
 	},
@@ -301,12 +300,6 @@ const MultiList = {
 			}
 		},
 		setValue(value, isDefaultValue = false, props = this.$props) {
-			// ignore state updates when component is locked
-			if (props.beforeValueChange && this.locked) {
-				return;
-			}
-
-			this.locked = true;
 			const { selectAllLabel } = this.$props;
 			let { currentValue } = this.$data;
 			let finalValues = null;
@@ -363,7 +356,6 @@ const MultiList = {
 			const performUpdate = () => {
 				this.currentValue = Object.assign({}, currentValue);
 				this.updateQueryHandler(finalValues, props);
-				this.locked = false;
 				this.$emit('valueChange', finalValues);
 			};
 			checkValueChange(

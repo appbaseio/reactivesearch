@@ -63,7 +63,6 @@ class MultiDropdownList extends Component {
 			after: {}, // for composite aggs
 			isLastBucket: false,
 		};
-		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 
 		props.addComponent(this.internalComponent);
@@ -281,12 +280,6 @@ class MultiDropdownList extends Component {
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
 		const { selectAllLabel } = this.props;
 		let { currentValue } = this.state;
 		let finalValues = null;
@@ -333,7 +326,6 @@ class MultiDropdownList extends Component {
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				this.updateQuery(finalValues, props);
-				this.locked = false;
 				if (props.onValueChange) props.onValueChange(finalValues);
 			};
 

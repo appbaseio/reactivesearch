@@ -75,7 +75,6 @@ const SingleList = {
 					: [],
 			searchTerm: '',
 		};
-		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
 	},
@@ -297,12 +296,6 @@ const SingleList = {
 		},
 
 		setValue(nextValue, props = this.$props) {
-			// ignore state updates when component is locked
-			if (props.beforeValueChange && this.locked) {
-				return;
-			}
-
-			this.locked = true;
 			let value = nextValue;
 
 			if (nextValue === this.$data.currentValue) {
@@ -312,7 +305,6 @@ const SingleList = {
 			const performUpdate = () => {
 				this.currentValue = value;
 				this.updateQueryHandler(value, props);
-				this.locked = false;
 				this.$emit('valueChange', value);
 			};
 

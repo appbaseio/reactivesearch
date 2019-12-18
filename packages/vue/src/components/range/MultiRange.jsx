@@ -25,7 +25,6 @@ const MultiRange = {
 			selectedValues: {},
 		};
 		this.type = 'range';
-		this.locked = false;
 		return this.state;
 	},
 	props: {
@@ -63,11 +62,6 @@ const MultiRange = {
 			}
 		},
 		selectItem(item, isDefaultValue = false, props = this.$props, reset = false) {
-			// ignore state updates when component is locked
-			if (props.beforeValueChange && this.locked) {
-				return;
-			}
-			this.locked = true;
 			let { currentValue, selectedValues } = this;
 
 			if (!item) {
@@ -98,7 +92,6 @@ const MultiRange = {
 				this.currentValue = currentValue;
 				this.selectedValues = selectedValues;
 				this.updateQueryHandler(currentValue, props);
-				this.locked = false;
 				this.$emit('valueChange', Object.keys(selectedValues));
 			};
 
