@@ -60,7 +60,6 @@ class DataSearch extends Component {
 			isOpen: false,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
-		this.locked = false;
 		/**
 		 * To regulate the query execution based on the input handler,
 		 * the component query will only get executed when it sets to `true`.
@@ -362,12 +361,6 @@ class DataSearch extends Component {
 		hasMounted = true,
 		toggleIsOpen = true,
 	) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
 		const performUpdate = () => {
 			if (hasMounted) {
 				this.setState(
@@ -400,7 +393,6 @@ class DataSearch extends Component {
 							// debounce for handling text while typing
 							this.handleTextChange(value);
 						}
-						this.locked = false;
 						if (props.onValueChange) props.onValueChange(value);
 					},
 				);
@@ -409,7 +401,6 @@ class DataSearch extends Component {
 					this.updateDefaultQuery(value, props);
 				}
 				this.updateQuery(value, props);
-				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);
 			}
 		};

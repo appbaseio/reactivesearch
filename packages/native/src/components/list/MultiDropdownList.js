@@ -37,7 +37,6 @@ class MultiDropdownList extends Component {
 			showModal: false,
 		};
 
-		this.locked = false;
 		this.internalComponent = `${this.props.componentId}__internal`;
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
@@ -143,12 +142,6 @@ class MultiDropdownList extends Component {
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
 		const { selectAllLabel } = this.props;
 		let { currentValue } = this.state;
 		let finalValues = null;
@@ -199,7 +192,6 @@ class MultiDropdownList extends Component {
 				},
 				() => {
 					this.updateQuery(finalValues, props);
-					this.locked = false;
 					if (props.onValueChange) props.onValueChange(finalValues);
 				},
 			);

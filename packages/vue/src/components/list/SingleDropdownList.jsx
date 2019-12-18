@@ -44,7 +44,6 @@ const SingleDropdownList = {
 			// for composite aggs
 			isLastBucket: false,
 		};
-		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
 	},
@@ -252,17 +251,9 @@ const SingleDropdownList = {
 		},
 
 		setValue(value, props = this.$props) {
-			// ignore state updates when component is locked
-			if (props.beforeValueChange && this.locked) {
-				return;
-			}
-
-			this.locked = true;
-
 			const performUpdate = () => {
 				this.currentValue = value;
 				this.updateQueryHandler(value, props);
-				this.locked = false;
 				this.$emit('valueChange', value);
 			};
 

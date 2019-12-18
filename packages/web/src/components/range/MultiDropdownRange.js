@@ -47,7 +47,6 @@ class MultiDropdownRange extends Component {
 		};
 
 		this.type = 'range';
-		this.locked = false;
 
 		props.addComponent(props.componentId);
 		props.setComponentProps(props.componentId, {
@@ -155,12 +154,6 @@ class MultiDropdownRange extends Component {
 	selectItem = ({
 		item, isDefaultValue = false, props = this.props, hasMounted = true,
 	}) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
 		let { currentValue } = this.state;
 
 		if (!item) {
@@ -189,7 +182,6 @@ class MultiDropdownRange extends Component {
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				this.updateQuery(currentValue, props);
-				this.locked = false;
 				if (props.onValueChange) props.onValueChange(currentValue);
 			};
 

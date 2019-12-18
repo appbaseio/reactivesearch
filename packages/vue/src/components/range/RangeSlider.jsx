@@ -32,7 +32,6 @@ const RangeSlider = {
 			currentValue: this.$props.range ? [this.$props.range.start, this.$props.range.end] : [],
 			stats: [],
 		};
-		this.locked = false;
 		return state;
 	},
 
@@ -82,15 +81,9 @@ const RangeSlider = {
 		},
 
 		handleChange(currentValue, props = this.$props) {
-			if (props.beforeValueChange && this.locked) {
-				return;
-			}
-
-			this.locked = true;
 			const performUpdate = () => {
 				this.currentValue = currentValue;
 				this.updateQueryHandler([currentValue[0], currentValue[1]], props);
-				this.locked = false;
 				this.$emit('valueChange', { start: currentValue[0], end: currentValue[1] });
 			};
 

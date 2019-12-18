@@ -43,7 +43,6 @@ class SingleDataList extends Component {
 		};
 
 		this.internalComponent = `${props.componentId}__internal`;
-		this.locked = false;
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
@@ -158,12 +157,6 @@ class SingleDataList extends Component {
 	};
 
 	setValue = (nextValue, isDefaultValue = false, props = this.props, hasMounted = true) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
 		let value = nextValue;
 
 		if (isDefaultValue) {
@@ -175,7 +168,6 @@ class SingleDataList extends Component {
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				this.updateQuery(value, props);
-				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);
 			};
 

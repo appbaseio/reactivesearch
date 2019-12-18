@@ -46,7 +46,6 @@ const DynamicRangeSlider = {
 
 	data() {
 		this.internalRangeComponent = `${this.$props.componentId}__range__internal`;
-		this.locked = false;
 
 		return {
 			currentValue: null,
@@ -140,20 +139,15 @@ const DynamicRangeSlider = {
 		},
 
 		handleChange(currentValue) {
-			if (this.$props.beforeValueChange && this.locked) return;
-
 			// Always keep the values within range
 			const normalizedValue = [
 				this.range ? Math.max(this.range.start, currentValue[0]) : currentValue[0],
 				this.range ? Math.min(this.range.end, currentValue[1]) : currentValue[1],
 			];
 
-			this.locked = true;
-
 			const performUpdate = () => {
 				this.currentValue = normalizedValue;
 				this.updateQueryHandler(normalizedValue, this.$props);
-				this.locked = false;
 				this.$emit('valueChange', { start: normalizedValue[0], end: normalizedValue[1] });
 			};
 

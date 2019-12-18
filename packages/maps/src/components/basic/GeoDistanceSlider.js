@@ -40,7 +40,6 @@ class GeoDistanceSlider extends Component {
 		super(props);
 
 		this.type = 'geo_distance';
-		this.locked = false;
 		this.coordinates = null;
 		this.autocompleteService = null;
 
@@ -225,13 +224,6 @@ class GeoDistanceSlider extends Component {
 	}
 
 	setLocation = (currentValue, props = this.props) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
-
 		const performUpdate = () => {
 			this.setState(
 				{
@@ -249,7 +241,6 @@ class GeoDistanceSlider extends Component {
 								});
 							}
 						}
-						this.locked = false;
 					});
 				},
 			);

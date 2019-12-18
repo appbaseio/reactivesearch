@@ -56,7 +56,6 @@ class SingleDropdownList extends Component {
 			after: {}, // for composite aggs
 			isLastBucket: false,
 		};
-		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 
 		props.addComponent(this.internalComponent);
@@ -210,16 +209,9 @@ class SingleDropdownList extends Component {
 	};
 
 	setValue = (value, props = this.props, hasMounted = true) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				this.updateQuery(value, props);
-				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);
 			};
 

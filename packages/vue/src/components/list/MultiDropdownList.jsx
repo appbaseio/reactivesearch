@@ -45,7 +45,6 @@ const MultiDropdownList = {
 			// for composite aggs
 			isLastBucket: false,
 		};
-		this.locked = false;
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
 	},
@@ -273,12 +272,6 @@ const MultiDropdownList = {
 		},
 
 		setValue(value, isDefaultValue = false, props = this.$props) {
-			// ignore state updates when component is locked
-			if (props.beforeValueChange && this.locked) {
-				return;
-			}
-
-			this.locked = true;
 			const { selectAllLabel } = this.$props;
 			let { currentValue } = this.$data;
 			let finalValues = null;
@@ -332,7 +325,6 @@ const MultiDropdownList = {
 			const performUpdate = () => {
 				this.currentValue = currentValue;
 				this.updateQueryHandler(finalValues, props);
-				this.locked = false;
 				this.$emit('valueChange', finalValues);
 			};
 

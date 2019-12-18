@@ -42,7 +42,6 @@ class RatingsFilter extends Component {
 			currentValue,
 		};
 		this.type = 'range';
-		this.locked = false;
 
 		props.addComponent(props.componentId);
 		props.setComponentProps(props.componentId, {
@@ -147,16 +146,9 @@ class RatingsFilter extends Component {
 	setValue = ({
 		value, props = this.props, hasMounted = true, includeUnrated = false,
 	}) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				this.updateQuery(value, props, includeUnrated);
-				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);
 			};
 

@@ -85,7 +85,6 @@ class CategorySearch extends Component {
 		this.isPending = false;
 
 		this.internalComponent = `${props.componentId}__internal`;
-		this.locked = false;
 		this.queryOptions = {
 			size: props.size,
 		};
@@ -436,12 +435,6 @@ class CategorySearch extends Component {
 		hasMounted = true,
 		toggleIsOpen = true,
 	) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
 		const performUpdate = () => {
 			if (hasMounted) {
 				this.setState(
@@ -475,14 +468,12 @@ class CategorySearch extends Component {
 							// debounce for handling text while typing
 							this.handleTextChange(value);
 						}
-						this.locked = false;
 						if (props.onValueChange) props.onValueChange(value);
 					},
 				);
 			} else {
 				this.updateDefaultQuery(value, props);
 				this.updateQuery(value, props, category);
-				this.locked = false;
 				if (props.onValueChange) props.onValueChange(value);
 			}
 		};

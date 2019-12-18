@@ -23,7 +23,6 @@ const SingleRange = {
 			currentValue: null,
 		};
 		this.type = 'range';
-		this.locked = false;
 		return this.__state;
 	},
 	props: {
@@ -135,18 +134,11 @@ const SingleRange = {
 		},
 
 		setValue(value, props = this.$props) {
-			// ignore state updates when component is locked
-			if (props.beforeValueChange && this.locked) {
-				return;
-			}
-
-			this.locked = true;
 			const currentValue = SingleRange.parseValue(value, props);
 
 			const performUpdate = () => {
 				this.currentValue = currentValue;
 				this.updateQueryHandler(currentValue, props);
-				this.locked = false;
 				this.$emit('valueChange', currentValue);
 			};
 

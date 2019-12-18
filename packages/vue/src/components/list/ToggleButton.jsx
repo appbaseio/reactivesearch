@@ -40,7 +40,6 @@ const ToggleButton = {
 		this.__state = {
 			currentValue,
 		};
-		this.locked = false;
 
 		return this.__state;
 	},
@@ -131,17 +130,9 @@ const ToggleButton = {
 		},
 
 		setValue(value, props = this.$props, hasMounted = true) {
-			// ignore state updates when component is locked
-			if (props.beforeValueChange && this.locked) {
-				return;
-			}
-
-			this.locked = true;
-
 			const performUpdate = () => {
 				const handleUpdates = () => {
 					this.updateQuery(value, props);
-					this.locked = false;
 					this.$emit('valueChange', value);
 				};
 

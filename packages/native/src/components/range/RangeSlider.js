@@ -34,7 +34,6 @@ class RangeSlider extends Component {
 			stats: [],
 		};
 
-		this.locked = false;
 		this.internalComponent = `${this.props.componentId}__internal`;
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 	}
@@ -165,12 +164,6 @@ class RangeSlider extends Component {
 	};
 
 	handleChange = (currentValue, props = this.props) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
 		const performUpdate = () => {
 			this.setState(
 				{
@@ -178,7 +171,6 @@ class RangeSlider extends Component {
 				},
 				() => {
 					this.updateQuery([currentValue[0], currentValue[1]], props);
-					this.locked = false;
 					if (props.onValueChange) {
 						props.onValueChange({
 							start: currentValue[0],

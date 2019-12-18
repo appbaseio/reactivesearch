@@ -44,7 +44,6 @@ class DynamicRangeSlider extends Component {
 		this.internalHistogramComponent = `${this.props.componentId}__histogram__internal`;
 		this.internalRangeComponent = `${this.props.componentId}__range__internal`;
 		this.internalMatchAllComponent = `${this.props.componentId}__match_all__internal`;
-		this.locked = false;
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalHistogramComponent);
@@ -257,10 +256,6 @@ class DynamicRangeSlider extends Component {
 	});
 
 	handleChange = (currentValue, props = this.props) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
 		// always keep the values within range
 		let normalizedValue = [
 			currentValue[0] < props.range.start ? props.range.start : currentValue[0],
@@ -269,7 +264,6 @@ class DynamicRangeSlider extends Component {
 		if (props.range.start === null) {
 			normalizedValue = [currentValue[0], currentValue[1]];
 		}
-		this.locked = true;
 		const performUpdate = () => {
 			this.setState(
 				{
@@ -278,7 +272,6 @@ class DynamicRangeSlider extends Component {
 				() => {
 					const normalizedValues = [normalizedValue[0], normalizedValue[1]];
 					this.updateQuery(normalizedValues, props);
-					this.locked = false;
 					if (props.onValueChange) props.onValueChange(normalizedValues);
 				},
 			);

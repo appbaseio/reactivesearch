@@ -40,7 +40,6 @@ class SingleDropdownRange extends Component {
 			currentValue,
 		};
 		this.type = 'range';
-		this.locked = false;
 
 		props.addComponent(props.componentId);
 		props.setComponentProps(props.componentId, {
@@ -119,12 +118,6 @@ class SingleDropdownRange extends Component {
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
-		// ignore state updates when component is locked
-		if (props.beforeValueChange && this.locked) {
-			return;
-		}
-
-		this.locked = true;
 		let currentValue = value;
 		if (isDefaultValue) {
 			currentValue = SingleDropdownRange.parseValue(value, props);
@@ -133,7 +126,6 @@ class SingleDropdownRange extends Component {
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				this.updateQuery(currentValue, props);
-				this.locked = false;
 				if (props.onValueChange) props.onValueChange(currentValue);
 			};
 
