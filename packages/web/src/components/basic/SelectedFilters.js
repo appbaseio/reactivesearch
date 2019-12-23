@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withTheme } from 'emotion-theming';
 
 import { setValue, clearValues } from '@appbaseio/reactivecore/lib/actions';
-import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { componentTypes, CLEAR_ALL } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
 import Button, { filters } from '../../styles/Button';
@@ -18,9 +18,10 @@ class SelectedFilters extends Component {
 
 	extracted(props) {
 		if (props.showClearAll === true) {
-			this._showClearAll = 'always';
+			this._showClearAll = CLEAR_ALL.ALWAYS;
 		} else {
-			this._showClearAll = props.showClearAll === false ? 'never' : props.showClearAll;
+			this._showClearAll
+				= props.showClearAll === false ? CLEAR_ALL.NEVER : props.showClearAll;
 		}
 	}
 
@@ -121,10 +122,11 @@ class SelectedFilters extends Component {
 		const { theme } = this.props;
 		const filtersToRender = this.renderFilters();
 		let hasFilters;
-		if (this._showClearAll === 'always') {
+		if (this._showClearAll === CLEAR_ALL.ALWAYS) {
 			hasFilters = this.hasFilters();
 		} else {
-			hasFilters = this._showClearAll === 'default' ? !!filtersToRender.length : false;
+			hasFilters
+				= this._showClearAll === CLEAR_ALL.DEFAULT ? !!filtersToRender.length : false;
 		}
 
 		return (
