@@ -26,7 +26,12 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect, getRangeQueryWithNullValues, getValidPropsKeys, parseValueArray } from '../../utils';
+import {
+	connect,
+	getRangeQueryWithNullValues,
+	getValidPropsKeys,
+	parseValueArray,
+} from '../../utils';
 
 class MultiRange extends Component {
 	constructor(props) {
@@ -175,8 +180,8 @@ class MultiRange extends Component {
 			const { [item]: del, ...selected } = selectedValues;
 			selectedValues = selected;
 		} else {
-			const currentItem = props.data.find(value => item === value.label);
-			currentValue = [...currentValue, currentItem];
+			const currentItems = props.data.filter(value => item.indexOf(value.label) !== -1);
+			currentValue = [...currentValue, ...currentItems];
 			selectedValues = { ...selectedValues, [item]: true };
 		}
 

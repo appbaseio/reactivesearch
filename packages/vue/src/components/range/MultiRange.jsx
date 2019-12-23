@@ -83,8 +83,8 @@ const MultiRange = {
 				const { [item]: del, ...selected } = selectedValues;
 				selectedValues = selected;
 			} else {
-				const currentItem = props.data.find(value => item === value.label);
-				currentValue = [...currentValue, currentItem];
+				const currentItems = props.data.filter(value => item.indexOf(value.label) !== -1);
+				currentValue = [...currentValue, ...currentItems];
 				selectedValues = { ...selectedValues, [item]: true };
 			}
 

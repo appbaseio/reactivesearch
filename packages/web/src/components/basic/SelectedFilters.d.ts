@@ -10,7 +10,7 @@ export interface SelectedFiltersProps {
 	className?: string;
 	clearAllLabel?: types.title;
 	innerClass?: types.style;
-	showClearAll?: boolean;
+	showClearAll?: types.showClearAll;
 	style?: types.style;
 	theme?: types.style;
 	title?: types.title;

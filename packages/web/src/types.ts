@@ -143,3 +143,5 @@ export interface analyticsConfig {
 	userId: string;
 	customEvents: object;
 }
+
+export type showClearAll = 'never' | 'always' | 'default' | true | false;
