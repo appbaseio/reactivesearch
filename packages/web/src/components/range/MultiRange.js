@@ -95,7 +95,7 @@ class MultiRange extends Component {
 			const { value, onChange } = this.props;
 
 			if (value === undefined) {
-				this.selectItem({ item: this.props.selectedValue || null });
+				this.selectItem({ item: this.props.selectedValue || null, isDefaultValue: true });
 			} else if (onChange) {
 				this.selectItem({
 					item: this.props.selectedValue || null,
