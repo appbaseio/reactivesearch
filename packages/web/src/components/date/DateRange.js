@@ -40,14 +40,14 @@ class DateRange extends Component {
 		if (props.selectedValue) {
 			if (Array.isArray(props.selectedValue)) {
 				currentDate = {
-					start: new Date(props.selectedValue[0]),
-					end: new Date(props.selectedValue[1]),
+					start: new XDate(props.selectedValue[0])[0],
+					end: new XDate(props.selectedValue[1])[0],
 				};
 			} else {
 				const { start, end } = props.selectedValue;
 				currentDate = {
-					start: new Date(start),
-					end: new Date(end),
+					start: new XDate(start)[0],
+					end: new XDate(end)[0],
 				};
 			}
 		}
