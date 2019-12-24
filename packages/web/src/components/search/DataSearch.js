@@ -716,13 +716,23 @@ class DataSearch extends Component {
 	};
 
 	getComponent = (downshiftProps = {}) => {
-		const { error, isLoading, aggregationData } = this.props;
+		const {
+			error, isLoading, aggregationData, promotedResults,
+		} = this.props;
 		const { currentValue } = this.state;
+		let filteredResults = this.parsedSuggestions;
+		if (promotedResults.length) {
+			const ids = promotedResults.map(item => item._id).filter(Boolean);
+			if (ids) {
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+			}
+			filteredResults = [...promotedResults, ...filteredResults];
+		}
 		const data = {
 			error,
 			loading: isLoading,
 			downshiftProps,
-			data: this.parsedSuggestions,
+			data: withClickIds(filteredResults),
 			aggregationData,
 			rawData: this.props.suggestions || [],
 			value: currentValue,
@@ -936,6 +946,7 @@ DataSearch.propTypes = {
 	defaultValue: types.string,
 	value: types.string,
 	defaultSuggestions: types.suggestions,
+	promotedResults: types.hits,
 	downShiftProps: types.props,
 	children: types.func,
 	fieldWeights: types.fieldWeights,
@@ -1014,6 +1025,7 @@ const mapStateToProps = (state, props) => ({
 	analytics: state.analytics,
 	config: state.config,
 	headers: state.appbaseRef.headers,
+	promotedResults: state.promotedResults,
 });
 
 const mapDispatchtoProps = dispatch => ({

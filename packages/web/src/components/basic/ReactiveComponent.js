@@ -207,9 +207,19 @@ class ReactiveComponent extends Component {
 	};
 
 	getData() {
-		const { hits, aggregations, aggregationData } = this.props;
+		const {
+			hits, aggregations, aggregationData, promotedResults,
+		} = this.props;
+		let filteredResults = parseHits(hits);
+		if (promotedResults.length) {
+			const ids = promotedResults.map(item => item._id).filter(Boolean);
+			if (ids) {
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+			}
+			filteredResults = [...promotedResults, ...filteredResults];
+		}
 		return {
-			data: parseHits(hits),
+			data: filteredResults,
 			aggregationData,
 			rawData: hits,
 			aggregations,
@@ -255,6 +265,7 @@ ReactiveComponent.propTypes = {
 	aggregations: types.selectedValues,
 	aggregationData: types.aggregationData,
 	hits: types.data,
+	promotedResults: types.hits,
 	isLoading: types.bool,
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
@@ -287,6 +298,7 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
+	promotedResults: state.promotedResults,
 });
 
 const mapDispatchtoProps = dispatch => ({
