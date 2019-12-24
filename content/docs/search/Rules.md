@@ -200,7 +200,7 @@ search result with `{ "doc_id": "Jle44WgBnfYvZBcA0H66" }`.
 
 Therefore, both these actions get applied to the elasticsearch's response to our original query. The **promoted**
 results will get appended under the `promoted` field and the **hidden** results will be removed from the original
-results. An example `search` response would look similar to this:
+results. Additionally you'll get a field named `hidden` which will tell you the number of hidden results. An example `search` response would look similar to this:
 
 ```json
 {
@@ -240,6 +240,7 @@ results. An example `search` response would look similar to this:
 			"section_order": ["Books", "Movies", "Franchise"],
 			"template_type": "reference"
 		}
-	]
+	],
+    "hidden": 1,
 }
 ```
