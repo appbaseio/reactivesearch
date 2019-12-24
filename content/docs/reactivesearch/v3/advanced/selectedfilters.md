@@ -36,8 +36,15 @@ Example uses:
 
 ### Props
 
--   **showClearAll** `boolean` [optional] (defaults to `true`)
-    When set to `true`, displays an additional button to clear all the filters
+-   **showClearAll** `enum` `('never', 'always', 'default', true, false)` [optional] (defaults to `true`).
+    It behaves according to the following scenarios: <br />
+    - `never`: Clear All button is never shown.
+    - `always`: Clear All button is shown based on values set by components.
+    - `default`: Clear All button is shown for components which have selected values and `showFilter={true}`
+    - `true`: Identical behavior to `always`.
+    - `false`: Identical behavior to `never`.
+
+    > Note: **showFilter** prop doesn't affect Clear All behavior when **showClearAll="always"**.
 -   **clearAllLabel** `string` [optional] (defaults to `'Clear All'`)
     Sets the label for the clear all button.
 -   **onChange** `function` [optional]
