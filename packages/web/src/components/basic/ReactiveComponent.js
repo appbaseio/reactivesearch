@@ -123,12 +123,15 @@ class ReactiveComponent extends Component {
 			this.props.updateComponentProps(this.props.componentId, this.props);
 		});
 		// only consider hits and defaultQuery when customQuery is absent
-		if (
-			this.props.onData
-			&& (!isEqual(prevProps.hits, this.props.hits)
-				|| !isEqual(prevProps.aggregations, this.props.aggregations))
-		) {
-			this.props.onData(this.getData());
+		if (this.props.onData) {
+			checkSomePropChange(
+				this.props,
+				prevProps,
+				['hits', 'aggregations', 'promotedResults'],
+				() => {
+					this.props.onData(this.getData());
+				},
+			);
 		}
 
 		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
