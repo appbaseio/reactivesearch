@@ -733,7 +733,7 @@ const mapStateToProps = (state, props) => ({
 		|| -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	aggregationData: state.compositeAggregations[props.componentId] || [],
-	promotedResults: state.promotedResults,
+	promotedResults: state.promotedResults[props.componentId] || [],
 	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
