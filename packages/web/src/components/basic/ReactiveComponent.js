@@ -301,7 +301,7 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
-	promotedResults: state.promotedResults,
+	promotedResults: state.promotedResults[props.componentId] || [],
 });
 
 const mapDispatchtoProps = dispatch => ({
