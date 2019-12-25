@@ -83,7 +83,6 @@ class ReactiveList extends Component {
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
 
-
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
@@ -421,15 +420,19 @@ class ReactiveList extends Component {
 		};
 	};
 	get stats() {
-		const { total, size, time } = this.props;
+		const {
+			total, size, time, hidden,
+		} = this.props;
 		const { currentPage } = this.state;
-		const { filteredResults } = this.getAllData();
+		const { filteredResults, promotedResults } = this.getAllData();
 		return {
 			numberOfResults: total,
 			numberOfPages: Math.ceil(total / size),
 			time,
+			hidden,
 			currentPage,
 			displayedResults: filteredResults.length,
+			promoted: promotedResults.length,
 		};
 	}
 
@@ -806,6 +809,7 @@ ReactiveList.propTypes = {
 	promotedResults: types.hits,
 	time: types.number,
 	total: types.number,
+	hidden: types.number,
 	config: types.props,
 	analytics: types.props,
 	queryLog: types.props,
@@ -885,6 +889,7 @@ const mapStateToProps = (state, props) => ({
 	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	analytics: state.analytics,
 	config: state.config,
 	queryLog: state.queryLog[props.componentId],

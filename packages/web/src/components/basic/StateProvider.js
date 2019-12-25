@@ -95,6 +95,7 @@ const mapStateToProps = (state, props) => ({
 	aggregations: filterByComponentIds(state.aggregations, props),
 	isLoading: filterByComponentIds(state.isLoading, props),
 	error: filterByComponentIds(state.error, props),
+	promotedResults: filterByComponentIds(state.promotedResults, props),
 });
 
 export default connect(
