@@ -18,6 +18,7 @@ import {
 	checkSomePropChange,
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
+	getResultStats,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -127,7 +128,7 @@ class ReactiveComponent extends Component {
 			checkSomePropChange(
 				this.props,
 				prevProps,
-				['hits', 'aggregations', 'promotedResults'],
+				['hits', 'aggregations', 'promotedResults', 'total', 'time', 'hidden'],
 				() => {
 					this.props.onData(this.getData());
 				},
@@ -209,6 +210,10 @@ class ReactiveComponent extends Component {
 		}
 	};
 
+	get stats() {
+		return getResultStats(this.props);
+	}
+
 	getData() {
 		const {
 			hits, aggregations, aggregationData, promotedResults,
@@ -226,6 +231,7 @@ class ReactiveComponent extends Component {
 			aggregationData,
 			rawData: hits,
 			aggregations,
+			resultStats: this.stats,
 		};
 	}
 
@@ -302,6 +308,9 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults[props.componentId] || [],
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 });
 
 const mapDispatchtoProps = dispatch => ({

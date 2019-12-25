@@ -2,26 +2,27 @@ import React, { Component } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	addComponent,
-	removeComponent,
-	setStreaming,
-	watchComponent,
-	setQueryOptions,
-	updateQuery,
 	loadMore,
-	setValue,
-	setQueryListener,
+	removeComponent,
 	setComponentProps,
+	setQueryListener,
+	setQueryOptions,
+	setStreaming,
+	setValue,
 	updateComponentProps,
+	updateQuery,
+	watchComponent,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
-	isEqual,
-	getQueryOptions,
-	pushToAndClause,
-	getClassName,
-	parseHits,
 	checkSomePropChange,
-	getOptionsFromQuery,
+	getClassName,
 	getCompositeAggsQuery,
+	getOptionsFromQuery,
+	getQueryOptions,
+	isEqual,
+	parseHits,
+	pushToAndClause,
+	getResultStats,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -35,10 +36,10 @@ import { container } from '../../styles/Card';
 import { container as listContainer } from '../../styles/ListItem';
 import {
 	connect,
-	isFunction,
 	getComponent,
-	hasCustomRenderer,
 	getValidPropsKeys,
+	hasCustomRenderer,
+	isFunction,
 } from '../../utils';
 import Results from './addons/Results';
 
@@ -177,7 +178,7 @@ class ReactiveList extends Component {
 			checkSomePropChange(
 				this.props,
 				prevProps,
-				['hits', 'streamHits', 'promotedResults', 'total', 'size', 'time'],
+				['hits', 'streamHits', 'promotedResults', 'total', 'size', 'time', 'hidden'],
 				() => {
 					this.props.onData(this.getData());
 				},
@@ -420,19 +421,12 @@ class ReactiveList extends Component {
 		};
 	};
 	get stats() {
-		const {
-			total, size, time, hidden,
-		} = this.props;
 		const { currentPage } = this.state;
-		const { filteredResults, promotedResults } = this.getAllData();
+		const { filteredResults } = this.getAllData();
 		return {
-			numberOfResults: total,
-			numberOfPages: Math.ceil(total / size),
-			time,
-			hidden,
+			...getResultStats(this.props),
 			currentPage,
 			displayedResults: filteredResults.length,
-			promoted: promotedResults.length,
 		};
 	}
 
