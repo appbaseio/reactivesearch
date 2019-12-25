@@ -889,7 +889,7 @@ const mapStateToProps = (state, props) => ({
 	config: state.config,
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
-	promotedResults: state.promotedResults,
+	promotedResults: state.promotedResults[props.componentId] || [],
 	headers: state.appbaseRef.headers,
 	afterKey:
 		state.aggregations[props.componentId]

@@ -1025,7 +1025,7 @@ const mapStateToProps = (state, props) => ({
 	analytics: state.analytics,
 	config: state.config,
 	headers: state.appbaseRef.headers,
-	promotedResults: state.promotedResults,
+	promotedResults: state.promotedResults[props.componentId] || [],
 });
 
 const mapDispatchtoProps = dispatch => ({
