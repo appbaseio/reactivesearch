@@ -25,12 +25,10 @@ import {
 	isEqual,
 	getCompositeAggsQuery,
 	withClickIds,
-	parseHits,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
@@ -50,6 +48,7 @@ import {
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
+import handleOnSuggestions from './helper';
 
 const Text = withTheme(props => (
 	<span
@@ -410,32 +409,8 @@ class CategorySearch extends Component {
 		];
 	};
 
-	onSuggestions = (searchSuggestions) => {
-		const { parseSuggestion, promotedResults } = this.props;
-		const fields = Array.isArray(this.props.dataField)
-			? this.props.dataField
-			: [this.props.dataField];
+	onSuggestions = searchResults => handleOnSuggestions.call(this, searchResults);
 
-		let newResults = parseHits(searchSuggestions);
-
-		if (promotedResults.length) {
-			const ids = promotedResults.map(item => item._id).filter(Boolean);
-			if (ids) {
-				newResults = newResults.filter(item => !ids.includes(item._id));
-			}
-			newResults = [...promotedResults, ...newResults];
-		}
-
-		const parsedSuggestions = getSuggestions(
-			fields,
-			newResults,
-			this.state.currentValue.toLowerCase(),
-		);
-		if (parseSuggestion) {
-			return parsedSuggestions.map(suggestion => parseSuggestion(suggestion));
-		}
-		return parsedSuggestions;
-	};
 	setValue = (
 		value,
 		isDefaultValue = false,

@@ -5,50 +5,49 @@ import { withTheme } from 'emotion-theming';
 import {
 	addComponent,
 	removeComponent,
-	watchComponent,
-	updateQuery,
-	setQueryOptions,
-	setQueryListener,
 	setComponentProps,
-	updateComponentProps,
+	setQueryListener,
+	setQueryOptions,
 	setSuggestionsSearchValue,
+	updateComponentProps,
+	updateQuery,
+	watchComponent,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
-	debounce,
-	pushToAndClause,
-	checkValueChange,
 	checkPropChange,
 	checkSomePropChange,
+	checkValueChange,
+	debounce,
 	getClassName,
-	getOptionsFromQuery,
 	getCompositeAggsQuery,
+	getOptionsFromQuery,
+	pushToAndClause,
 	withClickIds,
-	parseHits,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
-import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
+import Input, { suggestions, suggestionsContainer } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
 import {
 	connect,
-	isFunction,
 	getComponent,
-	hasCustomRenderer,
-	isIdentical,
 	getValidPropsKeys,
 	handleCaretPosition,
+	hasCustomRenderer,
+	isFunction,
+	isIdentical,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import Mic from './addons/Mic';
+import handleOnSuggestions from './helper';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -334,35 +333,7 @@ class DataSearch extends Component {
 		];
 	};
 
-	onSuggestions = (results) => {
-		const { parseSuggestion, promotedResults } = this.props;
-
-		const fields = Array.isArray(this.props.dataField)
-			? this.props.dataField
-			: [this.props.dataField];
-
-		let newResults = parseHits(results);
-
-		if (promotedResults.length) {
-			const ids = promotedResults.map(item => item._id).filter(Boolean);
-			if (ids) {
-				newResults = newResults.filter(item => !ids.includes(item._id));
-			}
-			newResults = [...promotedResults, ...newResults];
-		}
-
-		const parsedSuggestions = getSuggestions(
-			fields,
-			newResults,
-			this.state.currentValue.toLowerCase(),
-		);
-
-		if (parseSuggestion) {
-			return parsedSuggestions.map(suggestion => parseSuggestion(suggestion));
-		}
-
-		return parsedSuggestions;
-	};
+	onSuggestions = results => handleOnSuggestions.call(this, results);
 
 	setValue = (
 		value,
