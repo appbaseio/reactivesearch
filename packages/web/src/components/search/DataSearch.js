@@ -24,6 +24,7 @@ import {
 	getOptionsFromQuery,
 	pushToAndClause,
 	withClickIds,
+	handleOnSuggestions,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -47,7 +48,6 @@ import {
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import Mic from './addons/Mic';
-import handleOnSuggestions from './helper';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -333,7 +333,7 @@ class DataSearch extends Component {
 		];
 	};
 
-	onSuggestions = results => handleOnSuggestions.call(this, results);
+	onSuggestions = results => handleOnSuggestions(results, this.state.currentValue, this.props);
 
 	setValue = (
 		value,

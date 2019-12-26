@@ -25,6 +25,7 @@ import {
 	isEqual,
 	getCompositeAggsQuery,
 	withClickIds,
+	handleOnSuggestions,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -48,7 +49,6 @@ import {
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
-import handleOnSuggestions from './helper';
 
 const Text = withTheme(props => (
 	<span
@@ -409,7 +409,8 @@ class CategorySearch extends Component {
 		];
 	};
 
-	onSuggestions = searchResults => handleOnSuggestions.call(this, searchResults);
+	onSuggestions = searchResults =>
+		handleOnSuggestions(searchResults, this.state.currentValue, this.props);
 
 	setValue = (
 		value,
