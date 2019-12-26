@@ -25,11 +25,12 @@ import {
 	isEqual,
 	getCompositeAggsQuery,
 	withClickIds,
+	handleOnSuggestions,
+	getResultStats,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
@@ -165,7 +166,6 @@ class CategorySearch extends Component {
 				});
 			}
 		}
-
 
 		checkSomePropChange(
 			this.props,
@@ -410,22 +410,9 @@ class CategorySearch extends Component {
 		];
 	};
 
-	onSuggestions = (searchSuggestions) => {
-		const { parseSuggestion } = this.props;
-		const fields = Array.isArray(this.props.dataField)
-			? this.props.dataField
-			: [this.props.dataField];
+	onSuggestions = searchResults =>
+		handleOnSuggestions(searchResults, this.state.currentValue, this.props);
 
-		const parsedSuggestions = getSuggestions(
-			fields,
-			searchSuggestions,
-			this.state.currentValue.toLowerCase(),
-		);
-		if (parseSuggestion) {
-			return parsedSuggestions.map(suggestion => parseSuggestion(suggestion));
-		}
-		return parsedSuggestions;
-	};
 	setValue = (
 		value,
 		isDefaultValue = false,
@@ -812,13 +799,16 @@ class CategorySearch extends Component {
 	};
 
 	getComponent = (downshiftProps = {}) => {
-		const { error, isLoading, aggregationData } = this.props;
+		const {
+			error, isLoading, aggregationData, promotedResults,
+		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
 			error,
 			loading: isLoading,
 			downshiftProps,
 			data: this.parsedSuggestions,
+			promotedResults,
 			aggregationData,
 			value: currentValue,
 			suggestions: this.state.suggestions,
@@ -826,9 +816,14 @@ class CategorySearch extends Component {
 			categories: this.filteredCategories,
 			rawCategories: this.props.categories,
 			triggerClickAnalytics: this.triggerClickAnalytics,
+			resultStats: this.stats,
 		};
 		return getComponent(data, this.props);
 	};
+
+	get stats() {
+		return getResultStats(this.props);
+	}
 
 	get hasCustomRenderer() {
 		return hasCustomRenderer(this.props);
@@ -1059,6 +1054,7 @@ CategorySearch.propTypes = {
 	setSuggestionsSearchValue: types.funcRequired,
 	options: types.options,
 	categories: types.data,
+	promotedResults: types.hits,
 	selectedValue: types.selectedValue,
 	selectedCategory: types.selectedValue,
 	suggestions: types.suggestions,
@@ -1174,6 +1170,10 @@ const mapStateToProps = (state, props) => ({
 	analytics: state.analytics,
 	config: state.config,
 	headers: state.appbaseRef.headers,
+	promotedResults: state.promotedResults[props.componentId] || [],
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 });
 
 const mapDispatchtoProps = dispatch => ({

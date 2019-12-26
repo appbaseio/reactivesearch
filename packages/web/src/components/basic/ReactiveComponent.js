@@ -18,6 +18,7 @@ import {
 	checkSomePropChange,
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
+	getResultStats,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -123,12 +124,15 @@ class ReactiveComponent extends Component {
 			this.props.updateComponentProps(this.props.componentId, this.props);
 		});
 		// only consider hits and defaultQuery when customQuery is absent
-		if (
-			this.props.onData
-			&& (!isEqual(prevProps.hits, this.props.hits)
-				|| !isEqual(prevProps.aggregations, this.props.aggregations))
-		) {
-			this.props.onData(this.getData());
+		if (this.props.onData) {
+			checkSomePropChange(
+				this.props,
+				prevProps,
+				['hits', 'aggregations', 'promotedResults', 'total', 'time', 'hidden'],
+				() => {
+					this.props.onData(this.getData());
+				},
+			);
 		}
 
 		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
@@ -206,13 +210,29 @@ class ReactiveComponent extends Component {
 		}
 	};
 
+	get stats() {
+		return getResultStats(this.props);
+	}
+
 	getData() {
-		const { hits, aggregations, aggregationData } = this.props;
+		const {
+			hits, aggregations, aggregationData, promotedResults,
+		} = this.props;
+		let filteredResults = parseHits(hits);
+		if (promotedResults.length) {
+			const ids = promotedResults.map(item => item._id).filter(Boolean);
+			if (ids) {
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+			}
+			filteredResults = [...promotedResults, ...filteredResults];
+		}
 		return {
-			data: parseHits(hits),
+			data: filteredResults,
+			promotedResults,
 			aggregationData,
 			rawData: hits,
 			aggregations,
+			resultStats: this.stats,
 		};
 	}
 
@@ -255,6 +275,7 @@ ReactiveComponent.propTypes = {
 	aggregations: types.selectedValues,
 	aggregationData: types.aggregationData,
 	hits: types.data,
+	promotedResults: types.hits,
 	isLoading: types.bool,
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
@@ -287,6 +308,10 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
+	promotedResults: state.promotedResults[props.componentId] || [],
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 });
 
 const mapDispatchtoProps = dispatch => ({

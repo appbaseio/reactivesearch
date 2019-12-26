@@ -24,11 +24,12 @@ import {
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
 	withClickIds,
+	handleOnSuggestions,
+	getResultStats,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import getSuggestions from '@appbaseio/reactivecore/lib/utils/suggestions';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
@@ -333,25 +334,7 @@ class DataSearch extends Component {
 		];
 	};
 
-	onSuggestions = (results) => {
-		const { parseSuggestion } = this.props;
-
-		const fields = Array.isArray(this.props.dataField)
-			? this.props.dataField
-			: [this.props.dataField];
-
-		const parsedSuggestions = getSuggestions(
-			fields,
-			results,
-			this.state.currentValue.toLowerCase(),
-		);
-
-		if (parseSuggestion) {
-			return parsedSuggestions.map(suggestion => parseSuggestion(suggestion));
-		}
-
-		return parsedSuggestions;
-	};
+	onSuggestions = results => handleOnSuggestions(results, this.state.currentValue, this.props);
 
 	setValue = (
 		value,
@@ -716,20 +699,28 @@ class DataSearch extends Component {
 	};
 
 	getComponent = (downshiftProps = {}) => {
-		const { error, isLoading, aggregationData } = this.props;
+		const {
+			error, isLoading, aggregationData, promotedResults,
+		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
 			error,
 			loading: isLoading,
 			downshiftProps,
 			data: this.parsedSuggestions,
+			promotedResults,
 			aggregationData,
 			rawData: this.props.suggestions || [],
 			value: currentValue,
 			triggerClickAnalytics: this.triggerClickAnalytics,
+			resultStats: this.stats,
 		};
 		return getComponent(data, this.props);
 	};
+
+	get stats() {
+		return getResultStats(this.props);
+	}
 
 	get parsedSuggestions() {
 		let suggestionsList = [];
@@ -936,6 +927,7 @@ DataSearch.propTypes = {
 	defaultValue: types.string,
 	value: types.string,
 	defaultSuggestions: types.suggestions,
+	promotedResults: types.hits,
 	downShiftProps: types.props,
 	children: types.func,
 	fieldWeights: types.fieldWeights,
@@ -1014,6 +1006,10 @@ const mapStateToProps = (state, props) => ({
 	analytics: state.analytics,
 	config: state.config,
 	headers: state.appbaseRef.headers,
+	promotedResults: state.promotedResults[props.componentId] || [],
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 });
 
 const mapDispatchtoProps = dispatch => ({

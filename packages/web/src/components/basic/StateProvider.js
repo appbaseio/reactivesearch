@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import { oneOfType, arrayOf, string, bool, func } from 'prop-types';
 import { getSearchState } from '@appbaseio/reactivecore/lib/utils/helper';
+import types from '@appbaseio/reactivecore/lib/utils/types';
+
 import { connect, getComponent } from '../../utils';
 
 const defaultKeys = ['hits', 'value', 'aggregations', 'error'];
@@ -84,6 +86,14 @@ StateProvider.propTypes = {
 	componentIds: oneOfType([string, arrayOf(string)]),
 	includeKeys: arrayOf(string),
 	strict: bool,
+	selectedValues: types.selectedValues,
+	queryLog: types.props,
+	componentProps: types.props,
+	hits: types.hits,
+	aggregations: types.selectedValues,
+	isLoading: types.bool,
+	error: types.title,
+	promotedResults: types.hits,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -95,9 +105,7 @@ const mapStateToProps = (state, props) => ({
 	aggregations: filterByComponentIds(state.aggregations, props),
 	isLoading: filterByComponentIds(state.isLoading, props),
 	error: filterByComponentIds(state.error, props),
+	promotedResults: filterByComponentIds(state.promotedResults, props),
 });
 
-export default connect(
-	mapStateToProps,
-	null,
-)(StateProvider);
+export default connect(mapStateToProps, null)(StateProvider);

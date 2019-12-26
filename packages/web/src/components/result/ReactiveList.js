@@ -22,6 +22,7 @@ import {
 	checkSomePropChange,
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
+	getResultStats,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -82,7 +83,6 @@ class ReactiveList extends Component {
 
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
-
 
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
@@ -178,7 +178,7 @@ class ReactiveList extends Component {
 			checkSomePropChange(
 				this.props,
 				prevProps,
-				['hits', 'streamHits', 'promotedResults', 'total', 'size', 'time'],
+				['hits', 'streamHits', 'promotedResults', 'total', 'size', 'time', 'hidden'],
 				() => {
 					this.props.onData(this.getData());
 				},
@@ -421,13 +421,10 @@ class ReactiveList extends Component {
 		};
 	};
 	get stats() {
-		const { total, size, time } = this.props;
 		const { currentPage } = this.state;
 		const { filteredResults } = this.getAllData();
 		return {
-			numberOfResults: total,
-			numberOfPages: Math.ceil(total / size),
-			time,
+			...getResultStats(this.props),
 			currentPage,
 			displayedResults: filteredResults.length,
 		};
@@ -806,6 +803,7 @@ ReactiveList.propTypes = {
 	promotedResults: types.hits,
 	time: types.number,
 	total: types.number,
+	hidden: types.number,
 	config: types.props,
 	analytics: types.props,
 	queryLog: types.props,
@@ -885,11 +883,12 @@ const mapStateToProps = (state, props) => ({
 	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	analytics: state.analytics,
 	config: state.config,
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
-	promotedResults: state.promotedResults,
+	promotedResults: state.promotedResults[props.componentId] || [],
 	headers: state.appbaseRef.headers,
 	afterKey:
 		state.aggregations[props.componentId]
