@@ -1,58 +1,90 @@
-- groups:
-      - group: Getting Started
-        icon: gettingStarted
-        items:
-            - title: Overview
-              link: /docs/gettingstarted/QuickStart/
-            - title: Why Appbase.io
-              link: /docs/gettingstarted/WhyAppbase/
-      - group: Managing Data
-        icon: importData
-        items:
-            - title: Data Model
-              link: /docs/data/Model/
-            - title: Data Browser
-              link: /docs/data/Browser/
-            - title: Importing Data
-              link: /docs/data/Import/
-      - group: Search Relevancy
-        icon: search
-        items:
-            - title: Mappings
-              link: /docs/search/Mappings/
-            - title: Search Preview
-              link: /docs/search/Preview/
-            - title: Query Rules
-              link: /docs/search/Rules/
-      - group: Building Search UI
-      - group: Actionable Analytics
-        icon: analytics
-        items:
-            - title: Overview
-              link: /docs/analytics/Overview/
-            - title: Implement Analytics
-              link: /docs/analytics/Implement/
-            - title: Integrate Google Analytics
-              link: /docs/analytics/GoogleAnalytics/
-            - title: Query Suggestions
-              link: /docs/analytics/QuerySuggestions/
-      - group: Security
-        icon: security
-        items:
-            - title: API Credentials
-              link: /docs/security/Credentials/
-            - title: Search Template
-              link: /docs/security/Template/
-            - title: Role Based Access Control
-              link: /docs/security/Role/
-      - group: Hosting
-        icon: rocket
-        items:
-            - title: Apps
-              link: /docs/hosting/Apps/
-            - title: Clusters
-              link: /docs/hosting/Cluster/
-            - title: Bring Your Own Cluster
-              link: /docs/hosting/BYOC/
-            - title: Open Distro
-              link: /docs/hosting/OpenDistro/
+---
+-
+  groups:
+    -
+      group: "Getting Started"
+      icon: gettingStarted
+      items:
+        -
+          link: /docs/gettingstarted/QuickStart/
+          title: Overview
+        -
+          link: /docs/gettingstarted/WhyAppbase/
+          title: "Why Appbase.io"
+    -
+      group: "Managing Data"
+      icon: importData
+      items:
+        -
+          link: /docs/data/Model/
+          title: "Data Model"
+        -
+          link: /docs/data/Browser/
+          title: "Data Browser"
+        -
+          link: /docs/data/Import/
+          title: "Importing Data"
+    -
+      group: "Search Relevancy"
+      icon: search
+      items:
+        -
+          link: /docs/search/Mappings/
+          title: Mappings
+        -
+          link: /docs/search/Preview/
+          title: "Search Preview"
+        -
+          link: /docs/search/Rules/
+          title: "Query Rules"
+    -
+      group: "Building Search UI"
+    -
+      group: "Actionable Analytics"
+      icon: analytics
+      items:
+        -
+          link: /docs/analytics/Overview/
+          title: Overview
+        -
+          link: /docs/analytics/Implement/
+          title: "Implement Analytics"
+        -
+          link: /docs/analytics/GoogleAnalytics/
+          title: "Integrate Google Analytics"
+        -
+          link: /docs/analytics/QuerySuggestions/
+          title: "Query Suggestions"
+    -
+      group: Security
+      icon: security
+      items:
+        -
+          link: /docs/security/Credentials/
+          title: "API Credentials"
+        -
+          link: /docs/security/Template/
+          title: "Search Template"
+        -
+          link: /docs/security/Role/
+          title: "Role Based Access Control"
+    -
+      group: Hosting
+      icon: rocket
+      items:
+        -
+          link: /docs/hosting/Apps/
+          title: Apps
+        -
+          link: /docs/hosting/Cluster/
+          title: Clusters
+        -
+        #   items:
+        #     -
+        #       link: /docs/hosting/BYOC/A
+        #       title: Nested page
+          link: /docs/hosting/BYOC/
+          title: "Bring Your Own Cluster"
+        -
+          link: /docs/hosting/OpenDistro/
+          title: "Open Distro"

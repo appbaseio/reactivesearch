@@ -33,7 +33,7 @@ const SidebarNav = ({ sidebar, nestedSidebar, location, style }) => {
 			{sidebarfile.groups.map((group, i) => (
 				<div key={i} className="mt1">
 					{group.items ? (
-						group.items.some(item => item.link === location.pathname) ? (
+						group.items.some(item => item.link === location.pathname || location.pathname.startsWith(item.link)) ? (
 							// Render a sidebar list with children, if any of the nested elements
 							// matches our current location, so the group needs to
 							<>
