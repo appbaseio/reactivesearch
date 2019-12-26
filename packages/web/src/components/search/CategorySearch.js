@@ -25,6 +25,7 @@ import {
 	isEqual,
 	getCompositeAggsQuery,
 	withClickIds,
+	parseHits,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -165,7 +166,6 @@ class CategorySearch extends Component {
 				});
 			}
 		}
-
 
 		checkSomePropChange(
 			this.props,
@@ -411,14 +411,24 @@ class CategorySearch extends Component {
 	};
 
 	onSuggestions = (searchSuggestions) => {
-		const { parseSuggestion } = this.props;
+		const { parseSuggestion, promotedResults } = this.props;
 		const fields = Array.isArray(this.props.dataField)
 			? this.props.dataField
 			: [this.props.dataField];
 
+		let newResults = parseHits(searchSuggestions);
+
+		if (promotedResults.length) {
+			const ids = promotedResults.map(item => item._id).filter(Boolean);
+			if (ids) {
+				newResults = newResults.filter(item => !ids.includes(item._id));
+			}
+			newResults = [...promotedResults, ...newResults];
+		}
+
 		const parsedSuggestions = getSuggestions(
 			fields,
-			searchSuggestions,
+			newResults,
 			this.state.currentValue.toLowerCase(),
 		);
 		if (parseSuggestion) {
@@ -1059,6 +1069,7 @@ CategorySearch.propTypes = {
 	setSuggestionsSearchValue: types.funcRequired,
 	options: types.options,
 	categories: types.data,
+	promotedResults: types.hits,
 	selectedValue: types.selectedValue,
 	selectedCategory: types.selectedValue,
 	suggestions: types.suggestions,
@@ -1174,6 +1185,7 @@ const mapStateToProps = (state, props) => ({
 	analytics: state.analytics,
 	config: state.config,
 	headers: state.appbaseRef.headers,
+	promotedResults: state.promotedResults[props.componentId] || [],
 });
 
 const mapDispatchtoProps = dispatch => ({
