@@ -24,6 +24,7 @@ import {
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
 	withClickIds,
+	parseHits,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -334,15 +335,25 @@ class DataSearch extends Component {
 	};
 
 	onSuggestions = (results) => {
-		const { parseSuggestion } = this.props;
+		const { parseSuggestion, promotedResults } = this.props;
 
 		const fields = Array.isArray(this.props.dataField)
 			? this.props.dataField
 			: [this.props.dataField];
 
+		let newResults = parseHits(results);
+
+		if (promotedResults.length) {
+			const ids = promotedResults.map(item => item._id).filter(Boolean);
+			if (ids) {
+				newResults = newResults.filter(item => !ids.includes(item._id));
+			}
+			newResults = [...promotedResults, ...newResults];
+		}
+
 		const parsedSuggestions = getSuggestions(
 			fields,
-			results,
+			newResults,
 			this.state.currentValue.toLowerCase(),
 		);
 
@@ -716,23 +727,13 @@ class DataSearch extends Component {
 	};
 
 	getComponent = (downshiftProps = {}) => {
-		const {
-			error, isLoading, aggregationData, promotedResults,
-		} = this.props;
+		const { error, isLoading, aggregationData } = this.props;
 		const { currentValue } = this.state;
-		let filteredResults = this.parsedSuggestions;
-		if (promotedResults.length) {
-			const ids = promotedResults.map(item => item._id).filter(Boolean);
-			if (ids) {
-				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-			}
-			filteredResults = [...promotedResults, ...filteredResults];
-		}
 		const data = {
 			error,
 			loading: isLoading,
 			downshiftProps,
-			data: withClickIds(filteredResults),
+			data: this.parsedSuggestions,
 			aggregationData,
 			rawData: this.props.suggestions || [],
 			value: currentValue,
