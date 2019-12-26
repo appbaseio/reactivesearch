@@ -314,7 +314,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
     -   **`error`**: `object`
         An object containing the error info
     -   **`data`**: `array`
-        An array of results obtained from the applied query.
+        An array of results obtained from combining `stream` and `promoted` results along with the `hits` .
     -   **`streamData`**: `array`
         An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
     -   **`promotedData`**: `array`
@@ -336,6 +336,10 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
             Time taken to find total results (in ms)
         -   **`displayedResults`**: `number`
             Number of results displayed in current view
+        -   **`hidden`**: `number`
+            Total number of hidden results found
+        -   **`promoted`**: `number`
+            Total number of promoted results found
     -   **`loadMore`**: `function`
         A callback function to be called to load the next page of results into the view. The callback function is only applicable in the case of infinite loading view (i.e. `infiniteScroll` prop set to `true`).
     -   **`triggerAnalytics`**: `function`

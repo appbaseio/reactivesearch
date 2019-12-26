@@ -156,9 +156,21 @@ Check demo [here](https://codesandbox.io/s/3ylrrr0r5q).
 -   **error**: `object`
     An object containing the error info
 -   **data** `Array`
-    `data` prop is an array of parsed results(hits) from the Elasticsearch query of the component.
+    `data` prop is an array of parsed results(promoted + hits) from the Elasticsearch query of the component.
 -   **rawData** `Array`
     `rawData` prop is an array of original results(hits) from the Elasticsearch query of the component.
+-   **promotedData**: `array`
+    An array of promoted results obtained from the applied query. [Read More](docs/search/Rules#part-1-introduction)
+-   **resultStats**: `object`
+    An object with the following properties which can be helpful to render custom stats:
+    -   **`numberOfResults`**: `number`
+        Total number of results found
+    -   **`time`**: `number`
+        Time taken to find total results (in ms)
+    -   **`hidden`**: `number`
+        Total number of hidden results found
+    -   **`promoted`**: `number`
+        Total number of promoted results found
 -   **aggregations** `Object`
     `aggregations` prop contains the results from `aggs` Elasticsearch query of the component.
 -   **setQuery** `function`
@@ -205,7 +217,7 @@ Check demo [here](https://codesandbox.io/s/3ylrrr0r5q).
 -   **onQueryChange** `Function`
     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **onData** `Function`
-    callback function which provides `data`, `rawData`, `aggregationData` and `aggregations` as function params.
+    callback function which provides `data`, `rawData`, `promotedData`, `aggregationData`, `resultStats` and `aggregations` as function params.
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **filterLabel** `String` [optional]
