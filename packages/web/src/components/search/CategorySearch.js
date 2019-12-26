@@ -26,6 +26,7 @@ import {
 	getCompositeAggsQuery,
 	withClickIds,
 	handleOnSuggestions,
+	getResultStats,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -798,13 +799,16 @@ class CategorySearch extends Component {
 	};
 
 	getComponent = (downshiftProps = {}) => {
-		const { error, isLoading, aggregationData } = this.props;
+		const {
+			error, isLoading, aggregationData, promotedResults,
+		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
 			error,
 			loading: isLoading,
 			downshiftProps,
 			data: this.parsedSuggestions,
+			promotedResults,
 			aggregationData,
 			value: currentValue,
 			suggestions: this.state.suggestions,
@@ -812,9 +816,14 @@ class CategorySearch extends Component {
 			categories: this.filteredCategories,
 			rawCategories: this.props.categories,
 			triggerClickAnalytics: this.triggerClickAnalytics,
+			resultStats: this.stats,
 		};
 		return getComponent(data, this.props);
 	};
+
+	get stats() {
+		return getResultStats(this.props);
+	}
 
 	get hasCustomRenderer() {
 		return hasCustomRenderer(this.props);
@@ -1162,6 +1171,9 @@ const mapStateToProps = (state, props) => ({
 	config: state.config,
 	headers: state.appbaseRef.headers,
 	promotedResults: state.promotedResults[props.componentId] || [],
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 });
 
 const mapDispatchtoProps = dispatch => ({
