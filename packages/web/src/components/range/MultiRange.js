@@ -95,7 +95,7 @@ class MultiRange extends Component {
 			const { value, onChange } = this.props;
 
 			if (value === undefined) {
-				this.selectItem({ item: this.props.selectedValue || null });
+				this.selectItem({ item: this.props.selectedValue || null, isDefaultValue: true });
 			} else if (onChange) {
 				this.selectItem({
 					item: this.props.selectedValue || null,
@@ -180,8 +180,8 @@ class MultiRange extends Component {
 			const { [item]: del, ...selected } = selectedValues;
 			selectedValues = selected;
 		} else {
-			const currentItems = props.data.filter(value => item.indexOf(value.label) !== -1);
-			currentValue = [...currentValue, ...currentItems];
+			const currentItem = props.data.find(value => item === value.label);
+			currentValue = [...currentValue, currentItem];
 			selectedValues = { ...selectedValues, [item]: true };
 		}
 
