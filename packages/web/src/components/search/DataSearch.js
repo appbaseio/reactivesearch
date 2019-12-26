@@ -32,19 +32,19 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
-import Input, { suggestions, suggestionsContainer } from '../../styles/Input';
+import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
 import {
 	connect,
+	isFunction,
 	getComponent,
+	hasCustomRenderer,
+	isIdentical,
 	getValidPropsKeys,
 	handleCaretPosition,
-	hasCustomRenderer,
-	isFunction,
-	isIdentical,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';

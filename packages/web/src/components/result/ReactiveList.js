@@ -36,10 +36,10 @@ import { container } from '../../styles/Card';
 import { container as listContainer } from '../../styles/ListItem';
 import {
 	connect,
-	getComponent,
-	getValidPropsKeys,
-	hasCustomRenderer,
 	isFunction,
+	getComponent,
+	hasCustomRenderer,
+	getValidPropsKeys,
 } from '../../utils';
 import Results from './addons/Results';
 
