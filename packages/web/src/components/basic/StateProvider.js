@@ -86,14 +86,14 @@ StateProvider.propTypes = {
 	componentIds: oneOfType([string, arrayOf(string)]),
 	includeKeys: arrayOf(string),
 	strict: bool,
-	selectedValues: types.selectedValues,
-	queryLog: types.props,
-	componentProps: types.props,
-	hits: types.hits,
-	aggregations: types.selectedValues,
-	isLoading: types.bool,
-	error: types.title,
-	promotedResults: types.hits,
+	selectedValues: types.componentObject,
+	queryLog: types.componentObject,
+	componentProps: types.componentObject,
+	hits: types.componentObject,
+	aggregations: types.componentObject,
+	isLoading: types.componentObject,
+	error: types.componentObject,
+	promotedResults: types.componentObject,
 };
 
 const mapStateToProps = (state, props) => ({

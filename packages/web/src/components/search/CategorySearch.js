@@ -808,7 +808,7 @@ class CategorySearch extends Component {
 			loading: isLoading,
 			downshiftProps,
 			data: this.parsedSuggestions,
-			promotedResults,
+			promotedData: promotedResults,
 			aggregationData,
 			value: currentValue,
 			suggestions: this.state.suggestions,

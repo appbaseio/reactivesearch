@@ -708,7 +708,7 @@ class DataSearch extends Component {
 			loading: isLoading,
 			downshiftProps,
 			data: this.parsedSuggestions,
-			promotedResults,
+			promotedData: promotedResults,
 			aggregationData,
 			rawData: this.props.suggestions || [],
 			value: currentValue,
