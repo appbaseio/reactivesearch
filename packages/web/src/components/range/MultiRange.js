@@ -26,7 +26,12 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect, getRangeQueryWithNullValues, getValidPropsKeys, parseValueArray } from '../../utils';
+import {
+	connect,
+	getRangeQueryWithNullValues,
+	getValidPropsKeys,
+	parseValueArray,
+} from '../../utils';
 
 class MultiRange extends Component {
 	constructor(props) {
