@@ -176,6 +176,10 @@ Example uses:
         Time taken to find total results (in ms)
     -   **`displayedResults`**: `number`
         Number of results displayed in current view
+    -   **`hidden`**: `number`
+        Total number of hidden results found
+    -   **`promoted`**: `number`
+        Total number of promoted results found
     ```js
     renderResultStats = {
     	function(stats) {

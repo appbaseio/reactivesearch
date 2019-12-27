@@ -27,8 +27,8 @@ For example, let's suppose that we are building an e-commerce store where we hav
 
 <!-- prettier-ignore -->
 ```html
-<color-picker 
-    :colors="['#000', '#666', '#fff']" 
+<color-picker
+    :colors="['#000', '#666', '#fff']"
     @change="handleColorChange">
 </color-picker>
 ```
@@ -38,15 +38,15 @@ Now, let's assume that we have all these hex-codes stored as `keywords` in an El
 <!-- prettier-ignore -->
 ```html
 <template>
-	<reactive-component 
-        componentId="myColorPicker" 
+	<reactive-component
+        componentId="myColorPicker"
         :defaultQuery="defaultQuery"
     >
 		<div slot-scope="{ aggregations, hits, setQuery }">
-			<color-picker-wrapper 
-                :aggregations="aggregations" 
-                :hits="hits" 
-                :setQuery="setQuery" 
+			<color-picker-wrapper
+                :aggregations="aggregations"
+                :hits="hits"
+                :setQuery="setQuery"
             />
 		</div>
 	</reactive-component>
@@ -77,9 +77,9 @@ The above snippet runs the `defaultQuery` passed to the ReactiveComponent when t
 ```html
 <template>
     <div v-if="colors">
-        <color-picker 
-            colors="colors" 
-            @change="handleColorChange" 
+        <color-picker
+            colors="colors"
+            @change="handleColorChange"
         />
     </div>
 </template>
@@ -132,9 +132,9 @@ In our current example, we would simply have to call `this.$props.setQuery()` wi
 ```html
 <template>
 	<div v-if="colors">
-		<color-picker 
-            colors="colors" 
-            @change="onChange" 
+		<color-picker
+            colors="colors"
+            @change="onChange"
         />
 	</div>
 </template>
@@ -191,9 +191,9 @@ We can then use the given ReactiveComponent to be watched by all the filters (vi
 		:customQuery="customQuery"
 	>
 		<div slot-scope="{ aggregations, setQuery }">
-			<CustomComponent 
-                :aggregations="aggregations" 
-                :setQuery="setQuery" 
+			<CustomComponent
+                :aggregations="aggregations"
+                :setQuery="setQuery"
             />
 		</div>
 	</reactive-component>
@@ -237,6 +237,18 @@ We can then use the given ReactiveComponent to be watched by all the filters (vi
     `data` prop is an array of parsed results(hits) from the Elasticsearch query of the component.
 -   **rawData** `Array`
     `rawData` prop is an array of original results(hits) from the Elasticsearch query of the component.
+-   **promotedData**: `array`
+    An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules/#part-1-introduction)
+-   **resultStats**: `object`
+    An object with the following properties which can be helpful to render custom stats:
+    -   **`numberOfResults`**: `number`
+        Total number of results found
+    -   **`time`**: `number`
+        Time taken to find total results (in ms)
+    -   **`hidden`**: `number`
+        Total number of hidden results found
+    -   **`promoted`**: `number`
+        Total number of promoted results found
 -   **aggregations** `Object`
     `aggregations` prop contains the results from `aggs` Elasticsearch query of the component.
 -   **setQuery** `function`
@@ -267,8 +279,8 @@ We can then use the given ReactiveComponent to be watched by all the filters (vi
 
     <!-- prettier-ignore -->
     ```html
-    <reactive-component 
-        componentId="myColorPicker" 
+    <reactive-component
+        componentId="myColorPicker"
         aggregationField="color"
     >
     	<div slot-scope="{ aggregationData, ...rest }">
@@ -314,7 +326,7 @@ We can then use the given ReactiveComponent to be watched by all the filters (vi
 -   **queryChange**
     is an event which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **data** `Function`
-    is an event which provides `data`, `rawData`, `aggregationData` and `aggregations` as function params.
+    is an event which provides `data`, `rawData`, `promotedData`, `aggregationData`, `resultStats` and `aggregations` as function params.
 -   **error**
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
 

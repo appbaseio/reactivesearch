@@ -24,6 +24,7 @@ nestedSidebar: 'vue-reactivesearch'
     </state-provider>
 </template>
 ```
+
 Search state is an object with component id as key and state as value.<br/>
 For example:
 
@@ -57,7 +58,7 @@ For example:
 > You can avoid the unnecessary re-renders of `StateProvider` component by defining the componentIds.
 
 -   **includeKeys** `string[]` [optional]
-    defaults set to `['value', 'hits', 'aggregations', 'error']` which means that by default your search state for a particular component will only contains these keys. Although the default search state fulfills most of your common use cases but you can also control it by defining your custom keys with the help of `includeKeys` prop.<br/><br/>
+    Allowed values are `['value', 'hits', 'aggregations', 'error', 'promotedData', 'resultStats']`. Defaults set to`['value', 'hits', 'aggregations', 'error']`which means that by default your search state for a particular component will only contains these keys. Although the default search state fulfills most of your common use cases but you can also control it by defining your custom keys with the help of`includeKeys` prop.<br/><br/>
     For example:
 
 ```html
