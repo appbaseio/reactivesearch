@@ -62,6 +62,9 @@
         -
           link: /docs/security/Credentials/
           title: "API Credentials"
+        - 
+          link: /docs/security/UserManagement/
+          title: User Management
         -
           link: /docs/security/Template/
           title: "Search Template"

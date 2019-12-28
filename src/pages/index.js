@@ -212,6 +212,11 @@ const HomePage = ({ data, location }) => {
 												duration: 5,
 											},
 											{
+												title: 'User Management',
+												link: '/docs/security/UserManagement/',
+												duration: 1,
+											},
+											{
 												title: 'Search Template',
 												link: '/docs/security/Template/',
 												duration: 1,
