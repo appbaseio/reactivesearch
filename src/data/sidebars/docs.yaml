@@ -79,10 +79,10 @@
           link: /docs/hosting/Cluster/
           title: Clusters
         -
-        #   items:
-        #     -
-        #       link: /docs/hosting/BYOC/A
-        #       title: Nested page
+          items:
+            -
+              link: /docs/hosting/BYOC/ConnectToYourElasticSearch
+              title: "Connect to Your ElasticSearch"
           link: /docs/hosting/BYOC/
           title: "Bring Your Own Cluster"
         -
