@@ -266,7 +266,7 @@ The steps described here assumes a that you have [docker](https://docs.docker.co
 
 -   **Step 6:** Configure ElasticSearch URL and ARC ID obtained above.
 
-    > **NOte:** Once you save the configuration, it may take 5-10s to restart the arc service.
+    > **Note:** Once you save the configuration, it may take 5-10s to restart the arc service.
 
 -   **Step 7:** Start using Arc Services using [Arc Dashboard](https://arc-dashboard.appbase.io/). Here you will have to input Arc Cluster URL which will be of the form http(s)://localhost_OR_cluster_url. Enter the username and password values that you configured in _Step 5_.
 
@@ -286,6 +286,6 @@ Follow the steps listed below to successfully create an Arc instance.
 
 **Step 3 -** You will receive an OTP on entered email address. Enter OTP to verify the email address
 
-**Step 4-** You will receive an email with `ARC_ID` which can be used with Arc configuration.
+**Step 4 -** You will receive an email with `ARC_ID` which can be used with Arc configuration.
 
 ---
