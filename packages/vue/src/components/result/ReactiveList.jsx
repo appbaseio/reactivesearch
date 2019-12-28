@@ -37,6 +37,7 @@ const {
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
 	checkSomePropChange,
+	getResultStats,
 } = helper;
 
 const ReactiveList = {
@@ -124,12 +125,10 @@ const ReactiveList = {
 			return this.$listeners && this.$listeners.resultStats;
 		},
 		stats() {
-			const { total, size, time, currentPage } = this;
+			const { currentPage } = this;
 			const { filteredResults } = this.getAllData();
 			return {
-				numberOfResults: total,
-				numberOfPages: Math.ceil(total / size),
-				time,
+				...getResultStats(this),
 				currentPage,
 				displayedResults: filteredResults.length,
 			};
@@ -212,7 +211,22 @@ const ReactiveList = {
 			}
 		},
 		streamHits() {
-			this.$emit('data', this.getAllData());
+			this.$emit('data', this.getData());
+		},
+		promotedResults(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.$emit('data', this.getData());
+			}
+		},
+		hidden(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.$emit('data', this.getData());
+			}
+		},
+		time(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.$emit('data', this.getData());
+			}
 		},
 		hits(newVal, oldVal) {
 			this.$emit('data', this.getAllData());
@@ -733,10 +747,11 @@ const mapStateToProps = (state, props) => ({
 		|| -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	aggregationData: state.compositeAggregations[props.componentId] || [],
-	promotedResults: state.promotedResults,
+	promotedResults: state.promotedResults[props.componentId] || [],
 	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	analytics: state.analytics,
 	config: state.config,
 	error: state.error[props.componentId],

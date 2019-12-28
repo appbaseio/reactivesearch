@@ -73,6 +73,7 @@ const StateProvider = {
 				aggregations: this.aggregations,
 				isLoading: this.isLoading,
 				error: this.error,
+				promotedResults: this.promotedResults,
 			};
 		},
 	},
@@ -112,6 +113,9 @@ const StateProvider = {
 		includeKeys(newVal, oldVal) {
 			this.calculateSearchState(newVal, oldVal);
 		},
+		promotedResults(newVal, oldVal) {
+			this.calculateSearchState(newVal, oldVal);
+		},
 	},
 	methods: {
 		isStateChanged(prevState, nextState) {
@@ -142,6 +146,7 @@ const mapStateToProps = (state, props) => ({
 	aggregations: filterByComponentIds(state.aggregations, props),
 	isLoading: filterByComponentIds(state.isLoading, props),
 	error: filterByComponentIds(state.error, props),
+	promotedResults: filterByComponentIds(state.promotedResults, props),
 });
 
 const StateProviderConnected = connect(mapStateToProps, {})(StateProvider);

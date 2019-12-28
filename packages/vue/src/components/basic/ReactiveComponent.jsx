@@ -11,7 +11,14 @@ const {
 	setQueryOptions,
 	setQueryListener,
 } = Actions;
-const { pushToAndClause, parseHits, isEqual, getCompositeAggsQuery, getOptionsFromQuery } = helper;
+const {
+	pushToAndClause,
+	parseHits,
+	isEqual,
+	getCompositeAggsQuery,
+	getOptionsFromQuery,
+	getResultStats,
+} = helper;
 const ReactiveComponent = {
 	name: 'ReactiveComponent',
 	props: {
@@ -135,6 +142,26 @@ const ReactiveComponent = {
 				this.$emit('data', this.getData());
 			}
 		},
+		promotedResults(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.$emit('data', this.getData());
+			}
+		},
+		hidden(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.$emit('data', this.getData());
+			}
+		},
+		total(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.$emit('data', this.getData());
+			}
+		},
+		time(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.$emit('data', this.getData());
+			}
+		},
 		defaultQuery(newVal, oldVal) {
 			if (newVal && !isEqual(newVal(), oldVal)) {
 				this.$defaultQuery = newVal();
@@ -220,13 +247,28 @@ const ReactiveComponent = {
 			return {};
 		},
 		getData() {
-			const { hits, aggregations, aggregationData } = this;
+			const { hits, aggregations, aggregationData, promotedResults } = this;
+			let filteredResults = parseHits(hits);
+			if (promotedResults.length) {
+				const ids = promotedResults.map(item => item._id).filter(Boolean);
+				if (ids) {
+					filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+				}
+				filteredResults = [...promotedResults, ...filteredResults];
+			}
 			return {
-				data: parseHits(hits),
+				data: filteredResults,
 				aggregationData,
 				rawData: hits,
 				aggregations,
+				promotedData: promotedResults,
+				resultStats: this.stats,
 			};
+		},
+	},
+	computed: {
+		stats() {
+			return getResultStats(this);
 		},
 	},
 };
@@ -242,6 +284,10 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	promotedResults: state.promotedResults[props.componentId] || [],
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 });
 
 const mapDispatchtoProps = {

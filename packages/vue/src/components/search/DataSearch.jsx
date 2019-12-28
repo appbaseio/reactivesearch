@@ -1,4 +1,4 @@
-import { Actions, helper, suggestions as getSuggestions, causes } from '@appbaseio/reactivecore';
+import { Actions, helper, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import {
 	connect,
@@ -37,6 +37,8 @@ const {
 	isEqual,
 	getCompositeAggsQuery,
 	withClickIds,
+	getResultStats,
+	handleOnSuggestions,
 } = helper;
 
 const DataSearch = {
@@ -89,6 +91,9 @@ const DataSearch = {
 		},
 		hasCustomRenderer() {
 			return hasCustomRenderer(this);
+		},
+		stats() {
+			return getResultStats(this);
 		},
 	},
 	props: {
@@ -226,10 +231,12 @@ const DataSearch = {
 				loading: this.isLoading,
 				downshiftProps,
 				data: this.suggestionsList,
+				promotedData: this.promotedResults,
 				aggregationData: this.aggregationData,
 				rawData: this.suggestions || [],
 				value: currentValue,
 				triggerClickAnalytics: this.triggerClickAnalytics,
+				resultStats: this.stats,
 			};
 			return getComponent(data, this);
 		},
@@ -256,22 +263,7 @@ const DataSearch = {
 			}
 		},
 		onSuggestions(results) {
-			const { parseSuggestion } = this.$props;
-			const fields = Array.isArray(this.$props.dataField)
-				? this.$props.dataField
-				: [this.$props.dataField];
-
-			const parsedSuggestions = getSuggestions(
-				fields,
-				results,
-				this.$data.currentValue.toLowerCase(),
-			);
-
-			if (parseSuggestion) {
-				return parsedSuggestions.map(suggestion => parseSuggestion(suggestion));
-			}
-
-			return parsedSuggestions;
+			return handleOnSuggestions(results, this.$data.currentValue, this);
 		},
 		setValue(value, isDefaultValue = false, props = this.$props, cause) {
 			const performUpdate = () => {
@@ -818,6 +810,10 @@ const mapStateToProps = (state, props) => ({
 	analytics: state.analytics,
 	config: state.config,
 	headers: state.appbaseRef.headers,
+	promotedResults: state.promotedResults[props.componentId] || [],
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 });
 const mapDispatchtoProps = {
 	addComponent,
