@@ -173,7 +173,7 @@ export default {
     -   **`rawData`**: `array`
         An array of original suggestions obtained from the applied query.
     -   **`promotedData`**: `array`
-        An array of promoted results obtained from the applied query. [Read More](docs/search/Rules#part-1-introduction)
+        An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
     -   **`resultStats`**: `object`
         An object with the following properties which can be helpful to render custom stats:
         -   **`numberOfResults`**: `number`

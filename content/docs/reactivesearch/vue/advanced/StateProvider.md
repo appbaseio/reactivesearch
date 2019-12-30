@@ -58,7 +58,7 @@ For example:
 > You can avoid the unnecessary re-renders of `StateProvider` component by defining the componentIds.
 
 -   **includeKeys** `string[]` [optional]
-    Allowed values are `['value', 'hits', 'aggregations', 'error', 'promotedData', 'resultStats']`. Defaults set to`['value', 'hits', 'aggregations', 'error']`which means that by default your search state for a particular component will only contains these keys. Although the default search state fulfills most of your common use cases but you can also control it by defining your custom keys with the help of`includeKeys` prop.<br/><br/>
+    defaults set to `['value', 'hits', 'aggregations', 'error']` which means that by default your search state for a particular component will only contains these keys. Although the default search state fulfills most of your common use cases but you can also control it by defining your custom keys with the help of `includeKeys` prop.<br/><br/>
     For example:
 
 ```html
@@ -90,6 +90,23 @@ Here is a list of all the valid keys:
 -   **error** returns the error
 -   **hits** An array of hits obtained from the applied query.
 -   **aggregations** An array of aggregations obtained from the applied query.
+-   **promotedData** An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction).
+-   **resultStats**: `object`
+    An object with the following properties which can be helpful to render custom stats:
+    -   **`numberOfResults`**: `number`
+        Total number of results found
+    -   **`numberOfPages`**: `number`
+        Total number of pages found based on current page size
+    -   **`currentPage`**: `number`
+        Current page number for which data is being rendered
+    -   **`time`**: `number`
+        Time taken to find total results (in ms)
+    -   **`displayedResults`**: `number`
+        Number of results displayed in current view
+    -   **`hidden`**: `number`
+        Total number of hidden results found
+    -   **`promoted`**: `number`
+        Total number of promoted results found
 -   **query** returns the component's query in Elaticsearch Query DSL format.
 -   **react** returns the `react` property of the components
 -   **componentType** string constant to tell the type of the reactivesearch component is being used.
