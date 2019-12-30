@@ -130,6 +130,7 @@ Here is a list of all the valid keys:
         Total number of hidden results found
     -   **`promoted`**: `number`
         Total number of promoted results found
+        > Note <br /> `numberOfPages`, `currentPage` and `displayedResults` are only available for `ReactiveList` component.
 -   **query** returns the component's query in Elaticsearch Query DSL format.
 -   **react** returns the `react` property of the components
 -   **componentType** string constant to tell the type of the reactivesearch component is being used.

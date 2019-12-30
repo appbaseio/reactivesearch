@@ -93,6 +93,7 @@ Here is a list of all the valid keys:
 -   **promotedData** An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction).
 -   **resultStats**: `object`
     An object with the following properties which can be helpful to render custom stats:
+
     -   **`numberOfResults`**: `number`
         Total number of results found
     -   **`numberOfPages`**: `number`
@@ -107,6 +108,9 @@ Here is a list of all the valid keys:
         Total number of hidden results found
     -   **`promoted`**: `number`
         Total number of promoted results found
+
+    > Note <br /> `numberOfPages`, `currentPage` and `displayedResults` are only available for `reactive-list` component.
+
 -   **query** returns the component's query in Elaticsearch Query DSL format.
 -   **react** returns the `react` property of the components
 -   **componentType** string constant to tell the type of the reactivesearch component is being used.
