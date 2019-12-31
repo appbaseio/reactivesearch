@@ -5237,10 +5237,10 @@ app-root-dir@^1.0.2:
   resolved "https://registry.yarnpkg.com/app-root-dir/-/app-root-dir-1.0.2.tgz#38187ec2dea7577fff033ffcb12172692ff6e118"
   integrity sha1-OBh+wt6nV3//Az/8sSFyaS/24Rg=
 
-appbase-js@^4.0.2-beta.08:
-  version "4.0.2-beta.10"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.2-beta.10.tgz#407583fb7cc77aec5a652568558a95dcd0174955"
-  integrity sha512-hEiwmPiuDRwZ7UHtSx1aRcUbpZHpk1+HYg7YH4PQ0lXUwRtt/SxPmqAAMSPISzIBA1rtfEEnAw0CIaYw8bGGSw==
+appbase-js@^4.0.2-beta.11:
+  version "4.0.2-beta.11"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.2-beta.11.tgz#fbc87723983fb869e0cb9d70c7c5d8707164133f"
+  integrity sha512-bRMV12r3GFk2LO9V2/AFON9IzGg7uN1fLl5AtZVh6M8Pn+gIL+G5Z7VaFxU9Q66y13iuEWftxVneNKtkkUhu8g==
   dependencies:
     cross-fetch "^2.2.2"
     json-stable-stringify "^1.0.1"
