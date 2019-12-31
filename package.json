@@ -53,7 +53,7 @@
 	"dependencies": {
 		"@appbaseio/designkit": "^0.9.11",
 		"@appbaseio/reactivemaps": "^3.0.0-beta.2",
-		"@appbaseio/reactivesearch": "^3.0.3",
+		"@appbaseio/reactivesearch": "^3.2.1",
 		"@reach/router": "^1.2.1",
 		"emotion": "9.2.4",
 		"emotion-server": "9.2.4",
