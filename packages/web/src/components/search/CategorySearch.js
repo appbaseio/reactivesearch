@@ -893,10 +893,12 @@ class CategorySearch extends Component {
 		} = this.props;
 		const { url, app, credentials } = config;
 		if (config.analytics && suggestionsSearchId) {
+			const parsedHeaders = headers;
+			delete parsedHeaders['X-Search-Query'];
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
 				headers: {
-					...headers,
+					...parsedHeaders,
 					'Content-Type': 'application/json',
 					Authorization: `Basic ${btoa(credentials)}`,
 					'X-Search-Id': suggestionsSearchId,

@@ -625,10 +625,12 @@ class ReactiveList extends Component {
 		} = this.props;
 		const { url, app, credentials } = config;
 		if (config.analytics && searchId) {
+			const parsedHeaders = headers;
+			delete parsedHeaders['X-Search-Query'];
 			fetch(`${url}/${app}/_analytics`, {
 				method: 'POST',
 				headers: {
-					...headers,
+					...parsedHeaders,
 					'Content-Type': 'application/json',
 					Authorization: `Basic ${btoa(credentials)}`,
 					'X-Search-Id': searchId,
@@ -720,7 +722,6 @@ class ReactiveList extends Component {
 		);
 
 		const base = currentPage * size;
-
 		return (
 			<div style={this.props.style} className={this.props.className}>
 				{this.props.isLoading && this.shouldRenderPagination && this.props.loader}
