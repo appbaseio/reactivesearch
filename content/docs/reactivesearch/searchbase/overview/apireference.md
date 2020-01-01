@@ -342,7 +342,7 @@ These properties are automatically calculated or managed by the `Searchbase` cla
 -   **suggestions** `Results`
     It is an object which contains the following properties of `suggestions` query response.
     -   **`data`**: `Array<Suggestion>`
-    `data` property contains the parsed suggestions results, a `Suggestion` object has the following format:
+    `data` property contains the (promoted data + parsed suggestions) results, a `Suggestion` object has the following format:
         ```ts
         type Suggestion = {
             label: string;
@@ -354,14 +354,18 @@ These properties are automatically calculated or managed by the `Searchbase` cla
     Response returned by ES query in the raw form.
     -   **`numberOfResults`**: `number` Total number of results found
     -   **`time`**: `number` Total time taken by request (in ms)
+    -   **`hidden`**: `number` Total number of hidden results found
+    -   **`promoted`**: `number` Total number of promoted results found
     -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
     -   **`rawData`**: `Array<Object>`  An array of original hits obtained from the applied query.
 -   **results** `Results`
     It is an object which contains the following details of `results` query response.
-    -   **`data`**: `Array<Object>` contains the parsed hits
+    -   **`data`**: `Array<Object>` contains the (promoted data + parsed hits)
     -   **`raw`**: `Object` Response returned by ES query in the raw form.
     -   **`numberOfResults`**: `number` Total number of results found
     -   **`time`**: `number` Total time taken by request (in ms)
+    -   **`hidden`**: `number` Total number of hidden results found
+    -   **`promoted`**: `number` Total number of promoted results found
     -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
     -   **`rawData`**: `Array<Object>`  An array of original hits obtained from the applied query.
 -   **aggregations** `CompositeAggregationResults`

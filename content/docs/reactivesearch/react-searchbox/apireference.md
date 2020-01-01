@@ -205,6 +205,18 @@ Example uses of searchbox UI:
         An array of parsed suggestions obtained from the applied query.
     -   **`rawData`**: `array`
         An array of original suggestions obtained from the applied query.
+    -   **`promotedData`**: `array`
+        An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
+    -   **`resultStats`**: `object`
+        An object with the following properties which can be helpful to render custom stats:
+        -   **`numberOfResults`**: `number`
+            Total number of results found
+        -   **`time`**: `number`
+            Time taken to find total results (in ms)
+        -   **`hidden`**: `number`
+            Total number of hidden results found
+        -   **`promoted`**: `number`
+            Total number of promoted results found
     -   **`value`**: `string`
         current search input value i.e the search query being used to obtain suggestions.
     -   **`downshiftProps`**: `object`

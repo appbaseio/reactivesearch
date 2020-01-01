@@ -251,6 +251,13 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 		getItemEvents,      // item events to be passed to suggestions
         highlightedIndex,   // index value which should be highlighted
         parsedSuggestions,  // suggestions parsed by ReactiveSearch
+        promotedData,       // array of promoted results obtained from applied query
+        resultStats: {
+            numberOfResults,    // Total number of results found
+            time,               // Time taken to find total results (in ms)
+            hidden,             // Time taken to find total results (in ms)
+            promoted,           // Total number of promoted results found
+        }
     }"
 >
 	...
