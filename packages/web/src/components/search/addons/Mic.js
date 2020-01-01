@@ -151,11 +151,15 @@ class Mic extends React.Component {
 	}
 
 	render() {
-		const { iconPosition } = this.props;
+		const { iconPosition, applyClearStyle, showIcon } = this.props;
 		if (this.hasCustomRenderer) {
 			return this.getComponent();
 		}
-		return <MicIcon iconPosition={iconPosition}>{this.Icon}</MicIcon>;
+		return (
+			<MicIcon showIcon={showIcon} showClear={applyClearStyle} iconPosition={iconPosition}>
+				{this.Icon}
+			</MicIcon>
+		);
 	}
 }
 
@@ -174,6 +178,8 @@ Mic.propTypes = {
 	getInstance: types.func,
 	render: types.func,
 	className: types.string,
+	applyClearStyle: types.bool,
+	showIcon: types.bool,
 };
 
 export default Mic;
