@@ -107,20 +107,7 @@ Example uses of searchbox UI:
 
 -   **analytics** `boolean` [optional]
     records search and click analytics when set to true and appbase.io is used as a backend. Defaults to false.
-    Search analytics get recorded with no code changes required. For recording click analytic, you have to call the `triggerClickAnalytics` function (inside `render`) by using the `_click_id` property of the data item as an argument. Example:
-
-    ```js
-    <SearchBox
-    	render={({ data, triggerClickAnalytics }) => {
-    		return data.map(item => (
-    			<div>
-    				key={item._id}
-    				onClick={() => triggerClickAnalytics(item._click_id)}
-    			</div>
-    		));
-    	}}
-    />
-    ```
+    Search analytics get recorded with no code changes required. For recording click analytic, you have to call the `triggerClickAnalytics` function (inside `render`) by using the `_click_id` property of the data item as an argument.
 
 -   **analyticsConfig** `object` [optional]
     Set the `analyticsConfig` prop to customize the analytics experience when appbase.io is used as a backend. It accepts an object which has the following properties:
