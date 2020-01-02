@@ -190,6 +190,60 @@ Datasets can be configured using the following options.
         arguments that may have been forwarded by the source:
         `function laodingTemplate({ query, isLoading }, [forwarded args])`.
 
+	-  **render** -the template use to display custom suggestions with a different container (div element) or different layout.
+	 <br/>
+		It accepts an object with these properties:
+		-   **`data`**: `array`
+			An array of parsed suggestions obtained from the applied query.
+		-   **`rawData`**: `array`
+			An array of original suggestions obtained from the applied query.
+		-   **`promotedData`**: `array`
+			An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
+		-   **`resultStats`**: `object`
+			An object with the following properties which can be helpful to render custom stats:
+			-   **`numberOfResults`**: `number`
+				Total number of results found
+			-   **`time`**: `number`
+				Time taken to find total results (in ms)
+			-   **`hidden`**: `number`
+				Total number of hidden results found
+			-   **`promoted`**: `number`
+				Total number of promoted results found
+		-   **`getItemProps`**: `object`
+			An function which accepts `suggestion` as argument and returns all the required attributes which make the suggestion accessible and functional.
+
+		```js
+			templates: {
+				render: function({
+					data,
+					getItemProps,
+					promotedData,
+					resultStats
+				}) {
+					const suggestionHTML = data
+						.reduce((agg, i) => {
+							return (
+								agg +
+								`
+									<div ${getItemProps(i)}>
+										${i.label}
+									</div>
+								`
+							);
+						}, '');
+					return `
+						<div class="shadow-sm p-2 text-light bg-primary">
+							Search Results
+						</div>
+						${suggestionHTML}
+						<div class="shadow-sm p-2 text-muted bg-light">
+							Found ${resultStats.numberOfResults} in ${resultStats.time}ms
+						</div>
+					`;
+				}
+			}
+		```
+
 -   **debounce** – If set, will postpone the source execution until after `debounce` milliseconds
     have elapsed since the last time it was invoked.
 
