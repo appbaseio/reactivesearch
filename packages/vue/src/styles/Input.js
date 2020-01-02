@@ -82,7 +82,7 @@ const suggestions = (themePreset, theme) => css`
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	max-height: 260px;
+	max-height: 395px;
 	overflow-y: auto;
 
 	&.small {

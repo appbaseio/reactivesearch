@@ -506,18 +506,21 @@ const DataSearch = {
 		},
 
 		renderIcons() {
+			const { iconPosition, showClear, showIcon } = this.$props;
 			return (
 				<div>
-					{this.$data.currentValue && this.$props.showClear && (
+					{this.$data.currentValue && showClear && (
 						<InputIcon
 							onClick={this.clearValue}
 							iconPosition="right"
-							clearIcon={this.$props.iconPosition === 'right'}
+							clearIcon={iconPosition === 'right'}
+							showIcon={showIcon}
+							isClearIcon
 						>
 							{this.renderCancelIcon()}
 						</InputIcon>
 					)}
-					<InputIcon iconPosition={this.$props.iconPosition}>
+					<InputIcon showIcon={showIcon} iconPosition={iconPosition}>
 						{this.renderIcon()}
 					</InputIcon>
 				</div>
