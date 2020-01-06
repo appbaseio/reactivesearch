@@ -96,20 +96,12 @@ Here is a list of all the valid keys:
 
     -   **`numberOfResults`**: `number`
         Total number of results found
-    -   **`numberOfPages`**: `number`
-        Total number of pages found based on current page size
-    -   **`currentPage`**: `number`
-        Current page number for which data is being rendered
     -   **`time`**: `number`
         Time taken to find total results (in ms)
-    -   **`displayedResults`**: `number`
-        Number of results displayed in current view
     -   **`hidden`**: `number`
         Total number of hidden results found
     -   **`promoted`**: `number`
         Total number of promoted results found
-
-    > Note <br /> `numberOfPages`, `currentPage` and `displayedResults` are only available for `reactive-list` component.
 
 -   **query** returns the component's query in Elaticsearch Query DSL format.
 -   **react** returns the `react` property of the components
