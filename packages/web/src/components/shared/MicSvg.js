@@ -20,8 +20,8 @@ const MicSvg = props => (
 		viewBox="0 0 480 480"
 		xmlns="http://www.w3.org/2000/svg"
 		id="el_xS0FRzQjJ"
-		width={26}
-		height={26}
+		width={28}
+		height={28}
 		{...props}
 	>
 		<g id="el_TvxDfTAtKp" fillRule="evenodd">

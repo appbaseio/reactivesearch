@@ -7,7 +7,7 @@ const right = css`
 const MicIcon = styled.div`
 	height: 40px;
 	position: absolute;
-	top: 9px;
+	top: 8px;
 	cursor: pointer;
 	right: 15px;
 	${({ iconPosition, showClear }) => {
