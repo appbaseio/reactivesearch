@@ -24,6 +24,7 @@ nestedSidebar: 'vue-reactivesearch'
     </state-provider>
 </template>
 ```
+
 Search state is an object with component id as key and state as value.<br/>
 For example:
 
@@ -89,6 +90,19 @@ Here is a list of all the valid keys:
 -   **error** returns the error
 -   **hits** An array of hits obtained from the applied query.
 -   **aggregations** An array of aggregations obtained from the applied query.
+-   **promotedData** An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction).
+-   **resultStats**: `object`
+    An object with the following properties which can be helpful to render custom stats:
+
+    -   **`numberOfResults`**: `number`
+        Total number of results found
+    -   **`time`**: `number`
+        Time taken to find total results (in ms)
+    -   **`hidden`**: `number`
+        Total number of hidden results found
+    -   **`promoted`**: `number`
+        Total number of promoted results found
+
 -   **query** returns the component's query in Elaticsearch Query DSL format.
 -   **react** returns the `react` property of the components
 -   **componentType** string constant to tell the type of the reactivesearch component is being used.

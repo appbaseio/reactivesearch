@@ -137,12 +137,14 @@ Example uses:
 -   **render** `Function|slot-scope` [optional]
     A function or slot returning the UI you want to render based on your results. This function receives a list of parameters and expects to return a `JSX`.
     Read more about it [here](#extending).
+
     > Note:
     >
     > Either `renderItem` or `render` is required in ReactiveList for rendering the data.
 
 -   **renderResultStats** `Function|slot-scope` [optional]
     renders custom result stats using a callback function that takes `stats` object as parameter and expects it to return a string or html. `stats` object contains following properties
+
     -   **`numberOfResults`**: `number`
         Total number of results found
     -   **`numberOfPages`**: `number`
@@ -153,6 +155,10 @@ Example uses:
         Time taken to find total results (in ms)
     -   **`displayedResults`**: `number`
         Number of results displayed in current view
+    -   **`hidden`**: `number`
+        Total number of hidden results found
+    -   **`promoted`**: `number`
+        Total number of promoted results found
 
     ```html
     <div
@@ -162,6 +168,7 @@ Example uses:
         Showing {{displayedResults}} of total {{numberOfResults}} in {{time}} ms
     </div>
     ```
+
 -   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
 
@@ -177,6 +184,7 @@ Example uses:
     applies a default query to the result component. This query will be run when no other components are being watched (via React prop), as well as in conjunction with the query generated from the React prop. The function should return a query.
 
 ## Sub Components
+
 -   **ResultCardsWrapper**
     A wrapper component for `ResultCard` components to render a card based layout.
     Read more about the usage [here](/docs/reactivesearch/vue/result/ResultCard#usage).
@@ -249,12 +257,12 @@ export default {
     -   **`error`**: `object`
         An object containing the error info
     -   **`data`**: `array`
-        An array of results obtained from the applied query.
+        An array of results obtained from combining `stream` and `promoted` results along with the `hits` .
     -   **`streamData`**: `array`
         An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
     -   **`promotedData`**: `array`
-        An array of promoted results obtained from the applied query. [Read More](docs/search/Rules#part-1-introduction)
-        > Note: 
+        An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
+        > Note:
         >
         > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerAnalytics to register the click analytics info.
     -   **`rawData`**: `array`
@@ -271,6 +279,10 @@ export default {
             Time taken to find total results (in ms)
         -   **`displayedResults`**: `number`
             Number of results displayed in current view
+        -   **`hidden`**: `number`
+            Total number of hidden results found
+        -   **`promoted`**: `number`
+            Total number of promoted results found
     -   **`loadMore`**: `function`
         A callback function to be called to load the next page of results into the view. The callback function is only applicable in the case of infinite loading view (i.e. `infiniteScroll` prop set to `true`).
     -   **`triggerAnalytics`**: `function`
@@ -318,7 +330,6 @@ export default {
 > Note:
 >
 > The fundamental difference between `pageChange` and `pageClick` is that `pageClick` is only called on a manual interaction with the pagination buttons, whereas, `pageChange` would also be invoked if some other side effects caused the results to update which includes updating filters, queries or changing pages. The behaviour of these two may change in the future versions as we come up with a better API.
-
 
 ## Examples
 

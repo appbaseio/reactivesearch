@@ -191,9 +191,21 @@ Example uses:
     -   **`error`**: `object`
         An object containing the error info.
     -   **`data`**: `array`
-        An array of parsed suggestions (original suggestions + category suggestions) obtained from the applied query.
+        An array of parsed suggestions (original suggestions + category suggestions) along with the `promoted` results from the applied query.
     -   **`aggregationData`**: `array`
-        An array of composite aggregations (shaped in the form of hits) obtained from `composite aggs` query. 
+        An array of composite aggregations (shaped in the form of hits) obtained from `composite aggs` query.
+    -   **`promotedData`**: `array`
+        An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
+    -   **`resultStats`**: `object`
+        An object with the following properties which can be helpful to render custom stats:
+        -   **`numberOfResults`**: `number`
+            Total number of results found
+        -   **`time`**: `number`
+            Time taken to find total results (in ms)
+        -   **`hidden`**: `number`
+            Total number of hidden results found
+        -   **`promoted`**: `number`
+            Total number of promoted results found
     -   **`categories`**: `array`
         An array of parsed category suggestions.
     -   **`rawCategories`**: `array`
@@ -216,7 +228,7 @@ Example uses:
 		value,
 		categories,
 		suggestions,
-        aggregationData,
+		aggregationData,
 		downshiftProps: { isOpen, getItemProps },
 	}) => {
 		if (loading) {
