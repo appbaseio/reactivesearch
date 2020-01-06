@@ -554,9 +554,12 @@ class ReactiveList extends Component {
 	};
 
 	renderResultStats = () => {
-		if (this.props.renderResultStats && this.props.total) {
+		const { hits, promotedResults, total } = this.props;
+
+		const shouldStatsVisible = hits && promotedResults && (hits.length || promotedResults.length);
+		if (this.props.renderResultStats && shouldStatsVisible) {
 			return this.props.renderResultStats(this.stats);
-		} else if (this.props.total) {
+		} else if (total) {
 			return (
 				<p
 					className={`${resultStats} ${getClassName(
