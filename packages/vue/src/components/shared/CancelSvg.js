@@ -6,6 +6,7 @@ export default () => (
 		width="8"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 212.982 212.982"
+		style={{ fill: '#595959' }}
 	>
 		<title>Clear</title>
 		<path
