@@ -12,6 +12,7 @@ import {
 	setComponentProps,
 	updateComponentProps,
 	setSuggestionsSearchValue,
+	recordSuggestionClick,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -597,31 +598,51 @@ class DataSearch extends Component {
 		return null;
 	};
 
-	renderIcons = () => (
-		<div>
-			{this.state.currentValue && this.props.showClear && (
+	renderIcons = () => {
+		const { currentValue } = this.state;
+		const {
+			showIcon,
+			showClear,
+			renderMic,
+			getMicInstance,
+			showVoiceSearch,
+			iconPosition,
+			innerClass,
+		} = this.props;
+		return (
+			<div>
+				{this.state.currentValue && showClear && (
+					<InputIcon
+						onClick={this.clearValue}
+						iconPosition="right"
+						clearIcon={iconPosition === 'right'}
+						showIcon={showIcon}
+						isClearIcon
+					>
+						{this.renderCancelIcon()}
+					</InputIcon>
+				)}
+				{showVoiceSearch && (
+					<Mic
+						getInstance={getMicInstance}
+						render={renderMic}
+						iconPosition={iconPosition}
+						onResult={this.handleVoiceResults}
+						className={getClassName(innerClass, 'mic') || null}
+						applyClearStyle={!!currentValue && showClear}
+						showIcon={showIcon}
+					/>
+				)}
 				<InputIcon
-					onClick={this.clearValue}
-					iconPosition="right"
-					clearIcon={this.props.iconPosition === 'right'}
+					onClick={this.handleSearchIconClick}
+					iconPosition={iconPosition}
+					showIcon={showIcon}
 				>
-					{this.renderCancelIcon()}
+					{this.renderIcon()}
 				</InputIcon>
-			)}
-			{this.props.showVoiceSearch && (
-				<Mic
-					getInstance={this.props.getMicInstance}
-					render={this.props.renderMic}
-					iconPosition={this.props.iconPosition}
-					onResult={this.handleVoiceResults}
-					className={getClassName(this.props.innerClass, 'mic') || null}
-				/>
-			)}
-			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
-				{this.renderIcon()}
-			</InputIcon>
-		</div>
-	);
+			</div>
+		);
+	};
 
 	renderNoSuggestion = (finalSuggestionsList = []) => {
 		const {
@@ -709,7 +730,7 @@ class DataSearch extends Component {
 			downshiftProps,
 			data: this.parsedSuggestions,
 			promotedData: promotedResults,
-			aggregationData,
+			aggregationData: aggregationData || [],
 			rawData: this.props.suggestions || [],
 			value: currentValue,
 			triggerClickAnalytics: this.triggerClickAnalytics,
@@ -740,29 +761,7 @@ class DataSearch extends Component {
 
 	triggerClickAnalytics = (searchPosition) => {
 		// click analytics would only work client side and after javascript loads
-		const {
-			config,
-			analytics: { suggestionsSearchId },
-			headers,
-		} = this.props;
-		const { url, app, credentials } = config;
-		if (config.analytics && suggestionsSearchId) {
-			const parsedHeaders = headers;
-			delete parsedHeaders['X-Search-Query'];
-			fetch(`${url}/${app}/_analytics`, {
-				method: 'POST',
-				headers: {
-					...parsedHeaders,
-					'Content-Type': 'application/json',
-					Authorization: `Basic ${btoa(credentials)}`,
-					'X-Search-Id': suggestionsSearchId,
-					'X-Search-Suggestions-Click': true,
-					...(searchPosition !== undefined && {
-						'X-Search-Suggestions-ClickPosition': searchPosition + 1,
-					}),
-				},
-			});
-		}
+		this.props.triggerAnalytics(searchPosition);
 	};
 
 	withTriggerQuery = (func) => {
@@ -907,11 +906,10 @@ DataSearch.propTypes = {
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	setSuggestionsSearchValue: types.funcRequired,
+	triggerAnalytics: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
 	config: types.props,
-	analytics: types.props,
-	headers: types.headers,
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
@@ -1001,13 +999,11 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
-	aggregationData: state.compositeAggregations[props.componentId] || [],
+	aggregationData: state.compositeAggregations[props.componentId],
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId] || false,
 	error: state.error[props.componentId],
-	analytics: state.analytics,
 	config: state.config,
-	headers: state.appbaseRef.headers,
 	promotedResults: state.promotedResults[props.componentId] || [],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
@@ -1026,6 +1022,7 @@ const mapDispatchtoProps = dispatch => ({
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+	triggerAnalytics: searchPosition => dispatch(recordSuggestionClick(searchPosition)),
 });
 
 const ConnectedComponent = connect(

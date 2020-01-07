@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
 
@@ -31,14 +31,16 @@ import Container from '@appbaseio/reactivesearch/lib/styles/Container';
 import SearchSvg from '@appbaseio/reactivesearch/lib/components/shared/SearchSvg';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
+import GeoCode from './GeoCode';
 
-class GeoDistanceDropdown extends Component {
+class GeoDistanceDropdown extends GeoCode {
 	constructor(props) {
 		super(props);
 
 		this.type = 'geo_distance';
 		this.coordinates = null;
 		this.autocompleteService = null;
+		this.geocoder = new window.google.maps.Geocoder();
 
 		if (props.autoLocation) {
 			this.getUserLocation();
@@ -172,53 +174,6 @@ class GeoDistanceDropdown extends Component {
 		}
 		return query;
 	};
-
-	getUserLocation() {
-		navigator.geolocation.getCurrentPosition((location) => {
-			const coordinates = `${location.coords.latitude}, ${location.coords.longitude}`;
-
-			fetch(
-				`https://maps.googleapis.com/maps/api/geocode/json?key=${
-					this.props.mapKey
-				}&v=weekly&latlng=${coordinates}`,
-			)
-				.then(res => res.json())
-				.then((res) => {
-					if (Array.isArray(res.results) && res.results.length) {
-						const userLocation = res.results[0].formatted_address;
-						this.setState({
-							userLocation,
-						});
-					}
-				})
-				.catch((e) => {
-					console.error(e);
-				});
-		});
-	}
-
-	getCoordinates(value, cb) {
-		if (value) {
-			fetch(
-				`https://maps.googleapis.com/maps/api/geocode/json?key=${
-					this.props.mapKey
-				}&v=weekly&address=${value}`,
-			)
-				.then(res => res.json())
-				.then((res) => {
-					if (Array.isArray(res.results) && res.results.length) {
-						const { location } = res.results[0].geometry;
-						this.coordinates = `${location.lat}, ${location.lng}`;
-					}
-				})
-				.then(() => {
-					if (cb) cb();
-				})
-				.catch((e) => {
-					console.error(e);
-				});
-		}
-	}
 
 	getSelectedLabel = distance => this.props.data.find(item => item.distance === distance);
 
@@ -593,7 +548,4 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
-export default connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(withTheme(GeoDistanceDropdown));
+export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(GeoDistanceDropdown));
