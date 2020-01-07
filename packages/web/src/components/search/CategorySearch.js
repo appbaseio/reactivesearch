@@ -698,31 +698,51 @@ class CategorySearch extends Component {
 		return null;
 	};
 
-	renderIcons = () => (
-		<div>
-			{this.state.currentValue && this.props.showClear && (
+	renderIcons = () => {
+		const { currentValue } = this.state;
+		const {
+			showIcon,
+			showClear,
+			renderMic,
+			getMicInstance,
+			showVoiceSearch,
+			iconPosition,
+			innerClass,
+		} = this.props;
+		return (
+			<div>
+				{this.state.currentValue && showClear && (
+					<InputIcon
+						onClick={this.clearValue}
+						iconPosition="right"
+						clearIcon={iconPosition === 'right'}
+						showIcon={showIcon}
+						isClearIcon
+					>
+						{this.renderCancelIcon()}
+					</InputIcon>
+				)}
+				{showVoiceSearch && (
+					<Mic
+						getInstance={getMicInstance}
+						render={renderMic}
+						iconPosition={iconPosition}
+						onResult={this.handleVoiceResults}
+						className={getClassName(innerClass, 'mic') || null}
+						applyClearStyle={!!currentValue && showClear}
+						showIcon={showIcon}
+					/>
+				)}
 				<InputIcon
-					onClick={this.clearValue}
-					iconPosition="right"
-					clearIcon={this.props.iconPosition === 'right'}
+					onClick={this.handleSearchIconClick}
+					iconPosition={iconPosition}
+					showIcon={showIcon}
 				>
-					{this.renderCancelIcon()}
+					{this.renderIcon()}
 				</InputIcon>
-			)}
-			{this.props.showVoiceSearch && (
-				<Mic
-					getInstance={this.props.getMicInstance}
-					render={this.props.renderMic}
-					iconPosition={this.props.iconPosition}
-					onResult={this.handleVoiceResults}
-					className={getClassName(this.props.innerClass, 'mic') || null}
-				/>
-			)}
-			<InputIcon onClick={this.handleSearchIconClick} iconPosition={this.props.iconPosition}>
-				{this.renderIcon()}
-			</InputIcon>
-		</div>
-	);
+			</div>
+		);
+	};
 
 	renderNoSuggestion = (finalSuggestionsList = []) => {
 		const {
