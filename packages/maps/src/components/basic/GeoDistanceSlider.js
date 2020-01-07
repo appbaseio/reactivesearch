@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
 
@@ -34,14 +34,16 @@ import RangeLabel from '@appbaseio/reactivesearch/lib/components/range/addons/Ra
 import SliderHandle from '@appbaseio/reactivesearch/lib/components/range/addons/SliderHandle';
 import { rangeLabelsContainer } from '@appbaseio/reactivesearch/lib/styles/Label';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
+import GeoCode from './GeoCode';
 
-class GeoDistanceSlider extends Component {
+class GeoDistanceSlider extends GeoCode {
 	constructor(props) {
 		super(props);
 
 		this.type = 'geo_distance';
 		this.coordinates = null;
 		this.autocompleteService = null;
+		this.geocoder = new window.google.maps.Geocoder();
 
 		if (props.autoLocation) {
 			this.getUserLocation();
@@ -175,53 +177,6 @@ class GeoDistanceSlider extends Component {
 
 		return query;
 	};
-
-	getUserLocation() {
-		navigator.geolocation.getCurrentPosition((location) => {
-			const coordinates = `${location.coords.latitude}, ${location.coords.longitude}`;
-
-			fetch(
-				`https://maps.googleapis.com/maps/api/geocode/json?key=${
-					this.props.mapKey
-				}&v=weekly&latlng=${coordinates}`,
-			)
-				.then(res => res.json())
-				.then((res) => {
-					if (Array.isArray(res.results) && res.results.length) {
-						const userLocation = res.results[0].formatted_address;
-						this.setState({
-							userLocation,
-						});
-					}
-				})
-				.catch((e) => {
-					console.error(e);
-				});
-		});
-	}
-
-	getCoordinates(value, cb) {
-		if (value) {
-			fetch(
-				`https://maps.googleapis.com/maps/api/geocode/json?key=${
-					this.props.mapKey
-				}&v=weekly&address=${value}`,
-			)
-				.then(res => res.json())
-				.then((res) => {
-					if (Array.isArray(res.results) && res.results.length) {
-						const { location } = res.results[0].geometry;
-						this.coordinates = `${location.lat}, ${location.lng}`;
-					}
-				})
-				.then(() => {
-					if (cb) cb();
-				})
-				.catch((e) => {
-					console.error(e);
-				});
-		}
-	}
 
 	setLocation = (currentValue, props = this.props) => {
 		const performUpdate = () => {
@@ -613,7 +568,4 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
-export default connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(withTheme(GeoDistanceSlider));
+export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(GeoDistanceSlider));
