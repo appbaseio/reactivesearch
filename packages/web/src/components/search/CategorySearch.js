@@ -13,6 +13,7 @@ import {
 	setComponentProps,
 	updateComponentProps,
 	setSuggestionsSearchValue,
+	recordSuggestionClick,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	debounce,
@@ -886,29 +887,7 @@ class CategorySearch extends Component {
 
 	triggerClickAnalytics = (searchPosition) => {
 		// click analytics would only work client side and after javascript loads
-		const {
-			config,
-			analytics: { suggestionsSearchId },
-			headers,
-		} = this.props;
-		const { url, app, credentials } = config;
-		if (config.analytics && suggestionsSearchId) {
-			const parsedHeaders = headers;
-			delete parsedHeaders['X-Search-Query'];
-			fetch(`${url}/${app}/_analytics`, {
-				method: 'POST',
-				headers: {
-					...parsedHeaders,
-					'Content-Type': 'application/json',
-					Authorization: `Basic ${btoa(credentials)}`,
-					'X-Search-Id': suggestionsSearchId,
-					'X-Search-Suggestions-Click': true,
-					...(searchPosition !== undefined && {
-						'X-Search-Suggestions-ClickPosition': searchPosition + 1,
-					}),
-				},
-			});
-		}
+		this.props.triggerAnalytics(searchPosition);
 	};
 
 	withTriggerQuery = (func) => {
@@ -1065,8 +1044,7 @@ CategorySearch.propTypes = {
 	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
 	config: types.props,
-	analytics: types.props,
-	headers: types.headers,
+	triggerAnalytics: types.funcRequired,
 	// eslint-disable-next-line
 	error: types.any,
 	// component props
@@ -1169,9 +1147,7 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
-	analytics: state.analytics,
 	config: state.config,
-	headers: state.appbaseRef.headers,
 	promotedResults: state.promotedResults[props.componentId] || [],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
@@ -1191,6 +1167,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	triggerAnalytics: searchPosition => dispatch(recordSuggestionClick(searchPosition)),
 });
 
 const ConnectedComponent = connect(
