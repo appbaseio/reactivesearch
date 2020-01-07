@@ -127,8 +127,7 @@ Example uses:
 
 <br />
 
-<iframe height='500' scrolling='no' title='GeoDistanceSlider Example' src='//codepen.io/dhruvdutt/embed/wjBddV/?height=500&theme-id=light&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/dhruvdutt/pen/wjBddV/'>GeoDistanceSlider Example</a> by Dhruvdutt Jadhav (<a href='https://codepen.io/dhruvdutt'>@dhruvdutt</a>) on <a href='https://codepen.io'>CodePen</a>.
-</iframe>
+<iframe src="https://codesandbox.io/embed/elegant-sound-f1wex" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
 ## Styles
 
