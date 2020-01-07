@@ -5,6 +5,9 @@ import { css } from 'emotion';
 import { escapeRegExp } from '../../../utils';
 
 const highlightedStyling = css`
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 	.highlight {
 		font-weight: 600;
 		padding: 0;
