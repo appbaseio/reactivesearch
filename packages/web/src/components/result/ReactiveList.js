@@ -415,7 +415,7 @@ class ReactiveList extends Component {
 			streamResults,
 			filteredResults,
 			promotedResults,
-			aggregationData,
+			aggregationData: aggregationData || [],
 			loadMore: this.loadMore,
 			base,
 			triggerClickAnalytics: this.triggerClickAnalytics,
