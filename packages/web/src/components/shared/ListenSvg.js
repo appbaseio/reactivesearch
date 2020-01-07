@@ -185,7 +185,7 @@ injectGlobal`
 		transform: translate(37.846924px, 0px);
 	}
 	#el_-Vm65Ltfy7 {
-		fill: #0b6aff;
+		fill: #2196F3;
 	}
 	#el_q04iZcSim4 {
 		fill: #d8d8d8;
@@ -202,7 +202,7 @@ injectGlobal`
 		animation-timing-function: cubic-bezier(0.42, 0, 1, 1);
 	}
 	#el_9bggsfQOtU {
-		fill: #0b6aff;
+		fill: #2196F3;
 	}
 	#el_NKxqi9eIym {
 		fill: #d8d8d8;
@@ -219,7 +219,7 @@ injectGlobal`
 		animation-timing-function: cubic-bezier(0.42, 0, 1, 1);
 	}
 	#el_zclQ34fvf7 {
-		fill: #0b6aff;
+		fill: #2196F3;
 	}
 	#el_1OsvRT8HkeZ {
 		fill: #d8d8d8;
@@ -236,7 +236,7 @@ injectGlobal`
 		animation-timing-function: cubic-bezier(0.42, 0, 1, 1);
 	}
 	#el_aa9sjx4H0vA {
-		fill: #0b6aff;
+		fill: #2196F3;
 	}
 	#el_tea114vWg0J {
 		fill: #d8d8d8;
@@ -253,7 +253,7 @@ injectGlobal`
 		animation-timing-function: cubic-bezier(0.42, 0, 1, 1);
 	}
 	#el_z5u6RAFhx7d {
-		fill: #0b6aff;
+		fill: #2196F3;
 	}
 	#el_7nfuWmA5Uhy {
 		fill: #d8d8d8;
@@ -270,7 +270,7 @@ injectGlobal`
 		animation-timing-function: cubic-bezier(0.42, 0, 1, 1);
 	}
 	#el__ZcqlS20zcw {
-		fill: #0b6aff;
+		fill: #2196F3;
 	}
 	#el_8DnEQnD7VWV {
 		fill: #d8d8d8;
@@ -287,7 +287,7 @@ injectGlobal`
 		animation-timing-function: cubic-bezier(0.42, 0, 1, 1);
 	}
 	#el_FYYKCI_u24e {
-		fill: #0b6aff;
+		fill: #2196F3;
 	}
 	#el_XZty4MnTp5Y {
 		fill: #d8d8d8;
@@ -304,7 +304,7 @@ injectGlobal`
 		animation-timing-function: cubic-bezier(0.42, 0, 1, 1);
 	}
 	#el_RMT1KUfbdF8 {
-		fill: #0b6aff;
+		fill: #2196F3;
 	}
 	#el_RgLcovvFiO1 {
 		fill: #d8d8d8;
@@ -317,7 +317,8 @@ const ListenSvg = props => (
 		xmlns="http://www.w3.org/2000/svg"
 		xmlnsXlink="http://www.w3.org/1999/xlink"
 		id="el_hiibMG0x-"
-		width={45}
+		width={28}
+		height={29}
 		{...props}
 	>
 		<defs>
@@ -360,6 +361,7 @@ const ListenSvg = props => (
 					d="M142.731204,111 C137.280427,111 132.719573,114.852 131.82965,120.095 C127.268796,145.24 104.464526,164.5 76.9881611,164.5 C49.5117965,164.5 26.7075263,145.24 22.1466723,120.095 C21.2567496,114.852 16.6958955,111 11.2451187,111 C4.45945784,111 -0.880078594,116.778 0.121084488,123.198 C5.57186127,155.298 32.2695435,180.443 65.8641269,185.044 L65.8641269,207.3 C65.8641269,213.185 70.8699423,218 76.9881611,218 C83.10638,218 88.1121954,213.185 88.1121954,207.3 L88.1121954,185.044 C121.706779,180.443 148.404461,155.298 153.855238,123.198 C154.967641,116.778 149.516864,111 142.731204,111 Z"
 					id="el_uzZNtK32Zi"
 					fillRule="nonzero"
+					style={{ fill: '#2196F3' }}
 				/>
 				<path
 					d="M76.9864699,147.789474 C98.090352,147.789474 115.126016,131.286316 115.126016,110.842105 L115.126016,36.9473684 C115.126016,16.5031579 98.090352,0 76.9864699,0 C55.8825877,0 38.8469239,16.5031579 38.8469239,36.9473684 L38.8469239,110.842105 C38.8469239,131.286316 55.8825877,147.789474 76.9864699,147.789474 Z"

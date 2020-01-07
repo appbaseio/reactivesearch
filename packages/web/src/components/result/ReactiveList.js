@@ -8,6 +8,7 @@ import {
 	setQueryOptions,
 	updateQuery,
 	loadMore,
+	recordResultClick,
 	setValue,
 	setQueryListener,
 	setComponentProps,
@@ -414,7 +415,7 @@ class ReactiveList extends Component {
 			streamResults,
 			filteredResults,
 			promotedResults,
-			aggregationData,
+			aggregationData: aggregationData || [],
 			loadMore: this.loadMore,
 			base,
 			triggerClickAnalytics: this.triggerClickAnalytics,
@@ -620,28 +621,7 @@ class ReactiveList extends Component {
 	};
 
 	triggerClickAnalytics = (searchPosition) => {
-		// click analytics would only work client side and after javascript loads
-		const {
-			config,
-			analytics: { searchId },
-			headers,
-		} = this.props;
-		const { url, app, credentials } = config;
-		if (config.analytics && searchId) {
-			const parsedHeaders = headers;
-			delete parsedHeaders['X-Search-Query'];
-			fetch(`${url}/${app}/_analytics`, {
-				method: 'POST',
-				headers: {
-					...parsedHeaders,
-					'Content-Type': 'application/json',
-					Authorization: `Basic ${btoa(credentials)}`,
-					'X-Search-Id': searchId,
-					'X-Search-Click': true,
-					'X-Search-ClickPosition': searchPosition + 1,
-				},
-			});
-		}
+		this.props.triggerAnalytics(searchPosition);
 	};
 
 	renderSortOptions = () => (
@@ -850,6 +830,7 @@ ReactiveList.propTypes = {
 	sortOptions: types.sortOptions,
 	stream: types.bool,
 	style: types.style,
+	triggerAnalytics: types.funcRequired,
 	URLParams: types.bool,
 	defaultSortOption: types.string,
 	afterKey: types.props,
@@ -882,18 +863,16 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value - 1)
 		|| -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
-	aggregationData: state.compositeAggregations[props.componentId] || [],
+	aggregationData: state.compositeAggregations[props.componentId],
 	isLoading: state.isLoading[props.componentId] || false,
 	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
-	analytics: state.analytics,
 	config: state.config,
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults[props.componentId] || [],
-	headers: state.appbaseRef.headers,
 	afterKey:
 		state.aggregations[props.componentId]
 		&& state.aggregations[props.componentId][props.aggregationField]
@@ -917,6 +896,7 @@ const mapDispatchtoProps = dispatch => ({
 	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
 	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	triggerAnalytics: searchPosition => dispatch(recordResultClick(searchPosition)),
 });
 
 const ConnectedComponent = connect(
