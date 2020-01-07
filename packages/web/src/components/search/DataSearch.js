@@ -710,7 +710,7 @@ class DataSearch extends Component {
 			downshiftProps,
 			data: this.parsedSuggestions,
 			promotedData: promotedResults,
-			aggregationData,
+			aggregationData: aggregationData || [],
 			rawData: this.props.suggestions || [],
 			value: currentValue,
 			triggerClickAnalytics: this.triggerClickAnalytics,

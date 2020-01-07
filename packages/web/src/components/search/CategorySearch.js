@@ -810,7 +810,7 @@ class CategorySearch extends Component {
 			downshiftProps,
 			data: this.parsedSuggestions,
 			promotedData: promotedResults,
-			aggregationData,
+			aggregationData: aggregationData || [],
 			value: currentValue,
 			suggestions: this.state.suggestions,
 			rawSuggestions: this.props.suggestions || [],

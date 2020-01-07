@@ -229,7 +229,7 @@ class ReactiveComponent extends Component {
 		return {
 			data: filteredResults,
 			promotedData: promotedResults,
-			aggregationData,
+			aggregationData: aggregationData || [],
 			rawData: hits,
 			aggregations,
 			resultStats: this.stats,
