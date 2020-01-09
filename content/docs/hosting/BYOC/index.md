@@ -113,7 +113,7 @@ Here are the steps that you can follow to install Arc using AMI
 
 That's all you need to follow in order to deploy an Arc cluster 🚀. Once the EC2 machine is created and _running_ successfully, you can get Public DNS / IP address from the EC2 dashboard. This URL becomes your end point for accessing the Arc services. You can also point your domain to this DNS or IP.
 
-## ![](https://i.imgur.com/PDs8DK0.png)
+![](https://i.imgur.com/PDs8DK0.png)
 
 > **Note:** We highly recommend using the cluster with [TLS security](https://en.wikipedia.org/wiki/Transport_Layer_Security) enabled, as Arc is intended to be used as a frontend for ElasticSearch.
 
