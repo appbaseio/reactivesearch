@@ -323,7 +323,7 @@ class SingleDropdownList extends Component {
 
 	render() {
 		const {
-			showLoadMore, loadMoreLabel, renderError, error,
+			showLoadMore, loadMoreLabel, renderError, error, isLoading,
 		} = this.props;
 		const { isLastBucket } = this.state;
 		let selectAll = [];
@@ -385,7 +385,7 @@ class SingleDropdownList extends Component {
 						showLoadMore
 						&& !isLastBucket && (
 							<div css={loadMoreContainer}>
-								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
+								<Button disabled={isLoading} onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
 							</div>
 						)
 					}
