@@ -31,7 +31,6 @@ class URLParamsProvider extends Component {
 					this.props.setValue(component, JSON.parse(value), label, showFilter, URLParams);
 				} catch (e) {
 					// Do not set value if JSON parsing fails.
-					console.error(e);
 				}
 			});
 		};
