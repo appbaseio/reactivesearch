@@ -62,7 +62,7 @@
         -
           link: /docs/security/Credentials/
           title: "API Credentials"
-        - 
+        -
           link: /docs/security/UserManagement/
           title: User Management
         -
@@ -91,3 +91,16 @@
         -
           link: /docs/hosting/OpenDistro/
           title: "Open Distro"
+    -
+      group: Functions
+      icon: cloud
+      items:
+        -
+          link: /docs/functions/Overview/
+          title: "Overview"
+        -
+          link: /docs/functions/CreateFunction/
+          title: "Create Function"
+        -
+          link: /docs/functions/DeployFunction/
+          title: "Deploy Function"
