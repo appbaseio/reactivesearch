@@ -36,7 +36,7 @@ Let us create a function to promote a result with each search query.
 #### Step 1: Get the template
 
 ```bash
-mkdir promote-result && cd promote result
+mkdir promote-result && cd promote-result
 
 faas template pull https://github.com/openfaas-incubator/node10-express-template
 ```
@@ -110,13 +110,13 @@ functions:
 #### Step 5: Build function
 
 ```bash
-faas-cli build -f promote-result.yaml
+faas-cli build -f promote-result.yml
 ```
 
 #### Step 6: Publish function on docker hub
 
 ```bash
-faas-cli push -f promote-result.yaml
+faas-cli push -f promote-result.yml
 ```
 
 Once your function is published as docker image, you can also make it private from your registry / docker hub.
