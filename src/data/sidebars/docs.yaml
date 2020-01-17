@@ -37,6 +37,9 @@
         -
           link: /docs/search/Rules/
           title: "Query Rules"
+        -
+          link: /docs/search/Functions
+          title: "Functions"
     -
       group: "Building Search UI"
     -
@@ -62,7 +65,7 @@
         -
           link: /docs/security/Credentials/
           title: "API Credentials"
-        - 
+        -
           link: /docs/security/UserManagement/
           title: User Management
         -

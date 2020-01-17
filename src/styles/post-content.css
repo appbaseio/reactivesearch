@@ -616,7 +616,7 @@ Usage (In Ghost editor):
 
 /* Tables */
 .post-content table {
-	display: block;
+	display: table;
 	overflow-x: auto;
 	margin: var(--vr-4) 0 0;
 	width: 100%;
