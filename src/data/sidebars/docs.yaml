@@ -37,6 +37,9 @@
         -
           link: /docs/search/Rules/
           title: "Query Rules"
+        -
+          link: /docs/search/Functions
+          title: "Functions"
     -
       group: "Building Search UI"
     -
@@ -91,16 +94,3 @@
         -
           link: /docs/hosting/OpenDistro/
           title: "Open Distro"
-    -
-      group: Functions
-      icon: cloud
-      items:
-        -
-          link: /docs/functions/Overview/
-          title: "Overview"
-        -
-          link: /docs/functions/CreateFunction/
-          title: "Create Function"
-        -
-          link: /docs/functions/DeployFunction/
-          title: "Deploy Function"
