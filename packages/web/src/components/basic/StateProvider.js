@@ -1,10 +1,10 @@
-import React, { Component, useMemo, useEffect, useRef } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import { oneOfType, arrayOf, string, bool, func } from 'prop-types';
 import { getSearchState } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import { createSelectorHook } from 'react-redux';
-import { connect, getComponent, ReactReduxContext } from '../../utils';
+import { getComponent, ReactReduxContext } from '../../utils';
 
 // Create useSelector custom hook which is binded to Provider's context(ReactReduxContext)
 const useSelector = createSelectorHook(ReactReduxContext);
@@ -25,6 +25,7 @@ const filterByComponentIds = (state, props = {}) => {
 	}
 	if (componentIds instanceof Array) {
 		const filteredState = {};
+		/* eslint-disable-next-line */
 		componentIds.forEach(componentId => {
 			filteredState[componentId] = state[componentId];
 		});
@@ -70,7 +71,6 @@ function StateProvider(props) {
 	}));
 
 	const mergeProps = { ...props, ...populateReduxState };
-
 	const searchState = filterByKeys(
 		getSearchState(filterProps(mergeProps)),
 		mergeProps.includeKeys,
@@ -78,26 +78,42 @@ function StateProvider(props) {
 
 	// preserve searchState's previous state and call it in comparision check
 	const prevState = usePrevious(searchState);
-
 	const stateChangeComparision = JSON.stringify(prevState) !== JSON.stringify(searchState);
 	const shouldUpdate = useMemo(() => !props.strict || stateChangeComparision, [
 		stateChangeComparision,
 	]);
 
-	// prevent extra re-render on change of every respective prop if value remains same towards comparision
+	// prevent extra re-render on change of every respective
+	// prop if value remains same towards comparision
 	const view = useMemo(
 		() => <React.Fragment>{getComponent({ searchState }, mergeProps)}</React.Fragment>,
 		[shouldUpdate],
 	);
 
-	// // Listen for state change and trigger the callback for useEffect
-	React.useEffect(() => {
-		// console.log('Redux state change', prevState);
-
+	const triggerOnChange = (prev, next) => {
 		const { onChange } = props;
 		// call onChange() if it has been defined in parent
-		onChange && onChange(prevState.searchState, this.state.searchState);
+		if (onChange) onChange(prev, next);
+	};
+
+	// Listen for state change and trigger the callback for useEffect
+	useEffect(() => {
+		triggerOnChange(prevState, searchState);
 	}, [prevState]);
+
+	// Clean up code for unmounting
+	useEffect(() => {
+		let isMounted = true;
+
+		if (isMounted) {
+			triggerOnChange(prevState, searchState);
+		}
+
+		return () => {
+			isMounted = false;
+		};
+	}, []);
+
 	return <React.Fragment>{view}</React.Fragment>;
 }
 
@@ -121,52 +137,3 @@ StateProvider.propTypes = {
 	promotedResults: types.componentObject,
 };
 export default StateProvider;
-
-/* Old State Provider component */
-
-// class StateProviders extends Component {
-// 	constructor(props) {
-// 		super(props);
-// 		this.state = {
-// 			searchState: filterByKeys(getSearchState(filterProps(props)), props.includeKeys),
-// 		};
-// 	}
-// 	static getDerivedStateFromProps(props) {
-// 		return {
-// 			searchState: filterByKeys(getSearchState(filterProps(props)), props.includeKeys),
-// 		};
-// 	}
-// 	isStateChanged(prevState, nextState) {
-// 		return JSON.stringify(nextState) !== JSON.stringify(prevState);
-// 	}
-// 	shouldComponentUpdate(nextProps, nextState) {
-// 		// Only apply when componentIds is defined
-// 		if (!nextProps.strict || this.isStateChanged(this.state, nextState)) {
-// 			return true;
-// 		}
-// 		return false;
-// 	}
-// 	componentDidUpdate(prevProps, prevState) {
-// 		const { onChange } = this.props;
-// 		if (onChange && this.isStateChanged(prevState, this.state)) {
-// 			onChange(prevState.searchState, this.state.searchState);
-// 		}
-// 	}
-// 	render() {
-// 		const { searchState } = this.state;
-// 		return getComponent({ searchState }, this.props);
-// 	}
-// }
-// const mapStateToProps = (state, props) => ({
-// 	selectedValues: filterByComponentIds(state.selectedValues, props),
-// 	queryLog: filterByComponentIds(state.queryLog, props),
-// 	dependencyTree: filterByComponentIds(state.dependencyTree, props),
-// 	componentProps: filterByComponentIds(state.props, props),
-// 	hits: filterByComponentIds(state.hits, props),
-// 	aggregations: filterByComponentIds(state.aggregations, props),
-// 	isLoading: filterByComponentIds(state.isLoading, props),
-// 	error: filterByComponentIds(state.error, props),
-// 	promotedResults: filterByComponentIds(state.promotedResults, props),
-// });
-
-// export default connect(mapStateToProps, null)(StateProvider);
