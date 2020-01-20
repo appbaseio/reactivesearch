@@ -471,7 +471,8 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
     is called with the value and the category selected via user interaction. If the search was performed by selecting the 'in all categories' suggestion, category is received as `*`. If it was performed for one of the categorized suggestion, the `category` is received. In other cases (either searching without selecting a suggestion or picking an uncategorized suggestion), `category` is received as `null`. It works only with `autosuggest` and is called whenever a suggestion is selected or a search is performed by pressing **enter** key. It also passes the `cause` of action and the `source` object if the cause of action was `'SUGGESTION_SELECT'`. The source would be `null` if a category based suggestion was selected. The possible causes are:
     -   `'SUGGESTION_SELECT'`
     -   `'ENTER_PRESS'`
-    -   `'CLEAR_VALUE'
+    -   `'CLEAR_VALUE'`
+    -   `'SEARCH_ICON_CLICK'`
 -   **onQueryChange** `Function`
     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **react** `Object`
