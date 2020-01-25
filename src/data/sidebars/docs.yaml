@@ -1,96 +1,75 @@
 ---
--
-  groups:
-    -
-      group: "Getting Started"
-      icon: gettingStarted
-      items:
-        -
-          link: /docs/gettingstarted/QuickStart/
-          title: Overview
-        -
-          link: /docs/gettingstarted/WhyAppbase/
-          title: "Why Appbase.io"
-    -
-      group: "Managing Data"
-      icon: importData
-      items:
-        -
-          link: /docs/data/Model/
-          title: "Data Model"
-        -
-          link: /docs/data/Browser/
-          title: "Data Browser"
-        -
-          link: /docs/data/Import/
-          title: "Importing Data"
-    -
-      group: "Search Relevancy"
-      icon: search
-      items:
-        -
-          link: /docs/search/Mappings/
-          title: Mappings
-        -
-          link: /docs/search/Preview/
-          title: "Search Preview"
-        -
-          link: /docs/search/Rules/
-          title: "Query Rules"
-        -
-          link: /docs/search/Functions
-          title: "Functions"
-    -
-      group: "Building Search UI"
-    -
-      group: "Actionable Analytics"
-      icon: analytics
-      items:
-        -
-          link: /docs/analytics/Overview/
-          title: Overview
-        -
-          link: /docs/analytics/Implement/
-          title: "Implement Analytics"
-        -
-          link: /docs/analytics/GoogleAnalytics/
-          title: "Integrate Google Analytics"
-        -
-          link: /docs/analytics/QuerySuggestions/
-          title: "Query Suggestions"
-    -
-      group: Security
-      icon: security
-      items:
-        -
-          link: /docs/security/Credentials/
-          title: "API Credentials"
-        -
-          link: /docs/security/UserManagement/
-          title: User Management
-        -
-          link: /docs/security/Template/
-          title: "Search Template"
-        -
-          link: /docs/security/Role/
-          title: "Role Based Access Control"
-    -
-      group: Hosting
-      icon: rocket
-      items:
-        -
-          link: /docs/hosting/Apps/
-          title: Apps
-        -
-          link: /docs/hosting/Cluster/
-          title: Clusters
-        -
-          items:
-            -
-              link: /docs/hosting/BYOC/ConnectToYourElasticSearch
-              title: "Connect to Your ElasticSearch"
-          link: /docs/hosting/BYOC/
-          title: "Bring Your Own Cluster"
-        -
-          link: /docs/hosting/OpenDistro/
-          title: "Open Distro"
+- groups:
+      - group: "Getting Started"
+        icon: gettingStarted
+        items:
+            - link: /docs/gettingstarted/QuickStart/
+              title: Overview
+            - link: /docs/gettingstarted/WhyAppbase/
+              title: "Why Appbase.io"
+      - group: "Managing Data"
+        icon: importData
+        items:
+            - link: /docs/data/Model/
+              title: "Data Model"
+            - link: /docs/data/Browser/
+              title: "Data Browser"
+            - link: /docs/data/Import/
+              title: "Importing Data"
+      - group: "Search Relevancy"
+        icon: search
+        items:
+            - link: /docs/search/Mappings/
+              title: Mappings
+            - link: /docs/search/Preview/
+              title: "Search Preview"
+            - link: /docs/search/Rules/
+              title: "Query Rules"
+            - link: /docs/search/Functions
+              title: "Functions"
+              items:
+                  - link: /docs/search/Functions/hosting
+                    title: "Hosting"
+                  - link: /docs/search/Functions/create
+                    title: "Create"
+                  - link: /docs/search/Functions/deploy
+                    title: "Deploy"
+                  - link: /docs/search/Functions/trigger
+                    title: "Set Trigger"
+      - group: "Building Search UI"
+      - group: "Actionable Analytics"
+        icon: analytics
+        items:
+            - link: /docs/analytics/Overview/
+              title: Overview
+            - link: /docs/analytics/Implement/
+              title: "Implement Analytics"
+            - link: /docs/analytics/GoogleAnalytics/
+              title: "Integrate Google Analytics"
+            - link: /docs/analytics/QuerySuggestions/
+              title: "Query Suggestions"
+      - group: Security
+        icon: security
+        items:
+            - link: /docs/security/Credentials/
+              title: "API Credentials"
+            - link: /docs/security/UserManagement/
+              title: User Management
+            - link: /docs/security/Template/
+              title: "Search Template"
+            - link: /docs/security/Role/
+              title: "Role Based Access Control"
+      - group: Hosting
+        icon: rocket
+        items:
+            - link: /docs/hosting/Apps/
+              title: Apps
+            - link: /docs/hosting/Cluster/
+              title: Clusters
+            - items:
+                  - link: /docs/hosting/BYOC/ConnectToYourElasticSearch
+                    title: "Connect to Your ElasticSearch"
+              link: /docs/hosting/BYOC/
+              title: "Bring Your Own Cluster"
+            - link: /docs/hosting/OpenDistro/
+              title: "Open Distro"
