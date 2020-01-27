@@ -35,12 +35,13 @@ In order to create a Query Rule, select `Query Rules` under `Develop` on the das
 ![](https://i.imgur.com/uszkL7s.png)
 
 Creating a rule from dashboard is a two-step process. In the first step you configure the **_If_** condition of the rule.
-Query Rule currently supports four `operators`:
+Query Rule currently supports five `operators`:
 
--   `is`: resembles the docs with **exact** query match
--   `starts_with`: resembles the docs that **starts with** the given query
--   `ends_with`: resembles the docs that **ends with** the given query
--   `contains`: resembles the docs that **contains** the given query
+-   `is`: applied when there is an **exact** query match
+-   `starts_with`: applied when a search query **starts with** the specified query
+-   `ends_with`: applied when a search query **ends with** the specified query
+-   `contains`: applied when a search query **contains** the specified query
+-	`empty_query`: applied when no search query is present. This is often the case when an end user is opening the search UI for the very first time.
 
 For example: After the configuring this step, what we achieve is something similar to:
 **_If_** **search query contains 'Google'**, where the `operator` is `contains` and `query` is `Google`.
