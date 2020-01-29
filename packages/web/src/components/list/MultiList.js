@@ -502,6 +502,7 @@ class MultiList extends Component {
 			loadMoreLabel,
 			renderError,
 			error,
+			isLoading,
 		} = this.props;
 		const { isLastBucket } = this.state;
 
@@ -624,7 +625,7 @@ class MultiList extends Component {
 							: this.props.renderNoResults && this.props.renderNoResults()}
 						{showLoadMore && !isLastBucket && (
 							<div css={loadMoreContainer}>
-								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
+								<Button disabled={isLoading} onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
 							</div>
 						)}
 					</UL>

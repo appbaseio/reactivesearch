@@ -499,7 +499,7 @@ class MultiDropdownList extends Component {
 						showLoadMore
 						&& !isLastBucket && (
 							<div css={loadMoreContainer}>
-								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
+								<Button disabled={isLoading} onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
 							</div>
 						)
 					}
