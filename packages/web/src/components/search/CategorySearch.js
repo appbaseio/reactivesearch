@@ -919,7 +919,7 @@ class CategorySearch extends Component {
 
 	render() {
 		const { currentValue } = this.state;
-		const { theme, themePreset } = this.props;
+		const { theme, themePreset, size } = this.props;
 		const finalSuggestionsList = this.parsedSuggestions;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
@@ -988,7 +988,7 @@ class CategorySearch extends Component {
 												theme,
 											)} ${getClassName(this.props.innerClass, 'list')}`}
 										>
-											{finalSuggestionsList.slice(0, 10).map((item, index) => (
+											{finalSuggestionsList.slice(0, size).map((item, index) => (
 												<li
 													{...getItemProps({ item })}
 													key={`${index + 1}-${item.value}`}
@@ -1145,7 +1145,7 @@ CategorySearch.defaultProps = {
 	strictSelection: false,
 	searchOperators: false,
 	showVoiceSearch: false,
-	size: 20,
+	size: 10,
 };
 
 const mapStateToProps = (state, props) => ({

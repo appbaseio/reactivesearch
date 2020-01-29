@@ -774,7 +774,7 @@ class DataSearch extends Component {
 	render() {
 		const { currentValue } = this.state;
 		const suggestionsList = this.parsedSuggestions;
-		const { theme, themePreset } = this.props;
+		const { theme, themePreset, size } = this.props;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -840,7 +840,7 @@ class DataSearch extends Component {
 											theme,
 										)} ${getClassName(this.props.innerClass, 'list')}`}
 									>
-										{suggestionsList.slice(0, 10).map((item, index) => (
+										{suggestionsList.slice(0, size).map((item, index) => (
 											<li
 												{...getItemProps({ item })}
 												key={`${index + 1}-${item.value}`}
@@ -990,7 +990,7 @@ DataSearch.defaultProps = {
 	showClear: false,
 	strictSelection: false,
 	searchOperators: false,
-	size: 20,
+	size: 10,
 };
 
 const mapStateToProps = (state, props) => ({
