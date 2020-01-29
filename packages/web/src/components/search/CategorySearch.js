@@ -661,6 +661,7 @@ class CategorySearch extends Component {
 		if (currentValue.trim()) {
 			this.isPending = false;
 			this.setValue(currentValue, true);
+			this.onValueSelected(currentValue, causes.SEARCH_ICON_CLICK);
 		}
 	};
 
