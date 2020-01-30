@@ -378,7 +378,7 @@ export default {
 
     > Note:
     >
-    > If you're using Vue Reactivesearch version >= `2.0.0` then `beforeValueChange` can also be defined as a synchronous function. You have to return `truthy` to continue the update or return `falsy` to reject the update. For example:
+    > If you're using Reactivesearch version >= `1.1.0` then `beforeValueChange` can also be defined as a synchronous function. You have to return `truthy` to continue the update or return `falsy` to reject the update. For example:
 
     ```js
     beforeValueChange = value => {
