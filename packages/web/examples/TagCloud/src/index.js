@@ -65,7 +65,7 @@ const Main = () => (
 												</div>
 												<div className="flex wrap meetup-topics">
 													{data.group
-														&& data.group.group_topics
+														&& (data.group.group_topics || [])
 															.slice(0, 4)
 															.map(tag => (
 																<div
