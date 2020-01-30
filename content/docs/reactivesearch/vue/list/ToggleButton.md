@@ -88,7 +88,7 @@ Example uses:
     ```html
     <toggle-button>
         <div
-            slot="renderItem" 
+            slot="renderItem"
             slot-scope="{ item }"
         >
             {{item.label}}
@@ -176,6 +176,19 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection).
     `Note:` customQuery is called on value changes in the **ToggleButton** component as long as the component is a part of `react` dependency of at least one other component.
 -   **beforeValueChange** `Function`
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
+
+    > Note:
+    >
+    > If you're using Vue Reactivesearch version >= `2.0.0` then `beforeValueChange` can also be defined as a synchronous function. You have to return `truthy` to continue the update or return `falsy` to reject the update. For example:
+
+    ```js
+    beforeValueChange = values => {
+    	if (values.includes('Social')) {
+    		return 'falsy';
+    	}
+    	return 'truthy';
+    };
+    ```
 
 ## Events
 

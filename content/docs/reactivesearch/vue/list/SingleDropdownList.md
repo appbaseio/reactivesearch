@@ -288,6 +288,20 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
     `Note:` defaultQuery doesn't get leaked to other components.
 -   **beforeValueChange** `Function`
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
+
+    > Note:
+    >
+    > If you're using Vue Reactivesearch version >= `2.0.0` then `beforeValueChange` can also be defined as a synchronous function. You have to return `truthy` to continue the update or return `falsy` to reject the update. For example:
+
+    ```js
+    beforeValueChange = value => {
+    	if (value === 'Dirk Pitt') {
+    		return 'falsy';
+    	}
+    	return 'truthy';
+    };
+    ```
+
 -   **transformData** `Function` [optional]
     allows transforming the data to render inside the list. You can change the order, remove, or add items, tranform their values with this method. It provides the data as param which is an array of objects of shape `{ key: <string>, doc_count: <number> }` and expects you to return the array of objects of same shape.
 -   **react** `Object`
