@@ -20,6 +20,7 @@ const InputIcon = styled('div')`
 	position: absolute;
 	top: calc(50%);
 	transform: translateY(-50%);
+	cursor: pointer;
 	${({ iconPosition }) => {
 		if (iconPosition === 'left') {
 			return left;

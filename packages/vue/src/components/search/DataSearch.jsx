@@ -265,6 +265,14 @@ const DataSearch = {
 		onSuggestions(results) {
 			return handleOnSuggestions(results, this.$data.currentValue, this);
 		},
+		handleSearchIconClick() {
+			const { currentValue } = this;
+			if (currentValue.trim()) {
+				this.isPending = false;
+				this.setValue(currentValue, true);
+				this.onValueSelectedHandler(currentValue, causes.SEARCH_ICON_CLICK);
+			}
+		},
 		setValue(value, isDefaultValue = false, props = this.$props, cause) {
 			const performUpdate = () => {
 				this.currentValue = value;
@@ -517,7 +525,10 @@ const DataSearch = {
 							{this.renderCancelIcon()}
 						</InputIcon>
 					)}
-					<InputIcon iconPosition={this.$props.iconPosition}>
+					<InputIcon
+						onClick={this.handleSearchIconClick}
+						iconPosition={this.$props.iconPosition}
+					>
 						{this.renderIcon()}
 					</InputIcon>
 				</div>
