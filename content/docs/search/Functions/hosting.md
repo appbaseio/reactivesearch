@@ -19,7 +19,7 @@ Appbase.io uses [OpenFaas](https://docs.openfaas.com) under the hood to create a
 -   It is open source and actively maintained
 -   Can be easily deployed and maintained with kubernetes orchestration
 
-There are two ways to get started with Functions and ElasticSearch
+There are two ways to get started with Functions and Appbase.io
 
 -   [Appbase.io Clusters](https://docs.appbase.io/docs/hosting/Cluster/)
 
@@ -27,7 +27,7 @@ There are two ways to get started with Functions and ElasticSearch
 
 ## Appbase.io Clusters
 
-Supports unctions out of the box for [Production II, III, IV plans](https://appbase.io/clusters/#pricing). All you need to do is [Create Function](/docs/search/Functions/create), [Deploy Function](/docs/search/Functions/deploy) and [Set Triggers](/docs/search/Functions/trigger).
+Supports functions out of the box for [Production II, III, IV plans](https://appbase.io/clusters/#pricing). All you need to do is [Create Function](/docs/search/Functions/create), [Deploy Function](/docs/search/Functions/deploy) and [Set Triggers](/docs/search/Functions/trigger).
 
 ## Self Hosted Appbase.io
 
