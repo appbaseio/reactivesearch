@@ -66,6 +66,10 @@ const DataSearch = {
 				this.updateQueryHandler(this.internalComponent, value, this.$props);
 			} else {
 				this.updateQueryHandler(this.$props.componentId, value, this.$props);
+				const { customQuery } = this.$props;
+				if (customQuery) {
+					customQuery(value, this.$props);
+				}
 			}
 		}, this.$props.debounce);
 		const onQueryChange = (...args) => {
