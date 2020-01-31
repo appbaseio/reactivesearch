@@ -11,62 +11,33 @@ keywords:
 sidebar: 'docs'
 ---
 
-There are two ways to get started with Serverless Functions and ElasticSearch
+## Overview
 
-1. [Appbase.io Clusters](https://docs.appbase.io/docs/hosting/Cluster/)
+Appbase.io uses [OpenFaas](https://docs.openfaas.com) under the hood to create and deploy functions. We use OpenFaas because:
 
-2. [Self hosted Appbase.io](https://github.com/appbaseio/arc-k8s)
+-   It lets you write function in any language
+-   It is open source and actively maintained
+-   Can be easily deployed and maintained with kubernetes orchestration
 
-### 1. Appbase.io Clusters
+There are two ways to get started with Functions and ElasticSearch
 
-Supports serverless functions out of the box for [Production II, III, IV plans](https://appbase.io/clusters/#pricing). All you need to do is [Create Function](/docs/search/Functions/create), [Deploy Function](/docs/search/Functions/deploy) and [Set Triggers](/docs/search/Functions/trigger).
+-   [Appbase.io Clusters](https://docs.appbase.io/docs/hosting/Cluster/)
 
-### 2. Self hosted Appbase.io
+-   [Self Hosted Appbase.io](https://github.com/appbaseio/arc-k8s)
 
-With [self hosted Appbase.io](https://github.com/appbaseio/arc-k8s) and [kubernetes](https://kubernetes.io/) orchestration, you can deploy [OpenFaas](https://github.com/openfaas/faas-netes/blob/master/chart/openfaas/README.md) an open source solution to create and deploy functions.
+## Appbase.io Clusters
 
-Appbase.io uses OpenFaas under the hood because:
-* It lets you write function in any language
-* It is open source and actively maintained
-* Can be easily deploymend and maintained with kubernetes orchestration
+Supports unctions out of the box for [Production II, III, IV plans](https://appbase.io/clusters/#pricing). All you need to do is [Create Function](/docs/search/Functions/create), [Deploy Function](/docs/search/Functions/deploy) and [Set Triggers](/docs/search/Functions/trigger).
 
-### Installation
+## Self Hosted Appbase.io
 
-There are multiple ways to [deploy OpenFaas](https://docs.openfaas.com/deployment/kubernetes/) with kubernetes. The recommended way is using [helm charts](https://helm.sh/docs/topics/charts/) >= v3.
+With [Self Hosted Appbase.io](https://github.com/appbaseio/arc-k8s) and [kubernetes](https://kubernetes.io/) orchestration, you can deploy functions in the same infrastructure as of your ElasticSearch. There are multiple ways to [deploy OpenFaas](https://docs.openfaas.com/deployment/kubernetes/) with kubernetes. The recommended way is using [helm charts](https://helm.sh/docs/topics/charts/).
 
-**Prerequisite**
+### Prerequisite
 
 -   [Kubenertes](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
-    **For linux users:**
-
-    ```
-    curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-
-    chmod +x ./kubectl
-
-    sudo mv ./kubectl /usr/local/bin/kubectl
-    ```
-
-    **For mac users:**
-
-    ```
-    brew install kubectl
-    ```
-
 -   [Helm chart](https://github.com/helm/charts)
-
-    **For linux users:**
-
-    ```
-    curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
-    ```
-
-    **For mac users:**
-
-    ```
-    brew install kubernetes-helm
-    ```
 
 ### Installation steps
 
@@ -107,6 +78,6 @@ If you are exposing your OpenFaas service via LoadBalancer with Basic Authentica
 
     OPENFAAS_GATEWAY="http://username:password@IP_ADDRESS:8080"
 
-> Note: Please check strep 8 [here](https://github.com/appbaseio/arc-k8s) on how to configure Arc Env
+> **Note:** If you are using Self Hosted version of Appbase.io and want to deploy private image of function, you will have to add `OPENFAAS_KUBE_CONFIG` env with the value where your kubernetes config file exists.
 
 That's all, we have successfully deployed and integrated OpenFaas with Appbase.io. Now lets us see how we can [Create Functions](/docs/search/Functions/create).
