@@ -275,14 +275,15 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection).
 
     > Note:
     >
-    > If you're using Reactivesearch version >= `1.1.0` then `beforeValueChange` can also be defined as a synchronous function. You have to return `truthy` to continue the update or return `falsy` to reject the update. For example:
+    > If you're using Reactivesearch version >= `1.1.0` then `beforeValueChange` can also be defined as a synchronous function. You just have to throw an `Error` to reject an update. For example:
 
     ```js
     beforeValueChange = values => {
     	if (values.includes('Dirk Pitt')) {
-    		return 'falsy';
+    		// Reject update
+    		throw Error('Selected values should not include Dirk Pitt.');
     	}
-    	return 'truthy';
+    	// Don't do anything
     };
     ```
 
