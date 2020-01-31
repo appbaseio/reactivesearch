@@ -187,13 +187,14 @@ The other `innerClass` properties are the same as supported by [RangeSlider](/do
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 > Note:
 >
-> If you're using Reactivesearch version >= `3.3.4` then `beforeValueChange` can also be defined as a synchronous function. You have to return `truthy` to continue the update or return `falsy` to reject the update. For example: 
+> If you're using Reactivesearch version >= `3.3.7` then `beforeValueChange` can also be defined as a synchronous function. You just have to throw an `Error` to reject an update. For example: 
     ```js
     beforeValueChange = (value) => {
         if(value.start > 3000) {
-            return 'falsy';
+            // Reject update
+            throw Error("Start value must be greater than 3000");
         }
-        return 'truthy';
+        // Don't do anything
     }
     ```
 -   **onValueChange** `Function`
