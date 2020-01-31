@@ -473,9 +473,6 @@ class CategorySearch extends Component {
 			this.updateDefaultQuery(value, this.props);
 		} else {
 			this.updateQuery(value, this.props);
-			if (this.props.customQuery) {
-				this.props.customQuery(value, this.props);
-			}
 		}
 	}, this.props.debounce);
 
