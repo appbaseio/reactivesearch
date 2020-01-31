@@ -20,11 +20,11 @@ Most filter components in ReactiveSearch provides a `beforeValueChange` prop. It
 
 ```js
 beforeValueChange = value => {
-	if (!value) return 'truthy';
-	if (value.toLowerCase().contains('Social')) {
-		return 'falsy';
+	if (value && value.toLowerCase().contains('Social')) {
+		// Reject update
+		throw Error('Search value should not contain social.');
 	}
-	return 'truthy';
+	// Don't do anything
 };
 ```
 

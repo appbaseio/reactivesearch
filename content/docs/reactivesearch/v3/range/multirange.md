@@ -208,15 +208,16 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
     > Note:
     >
-    > If you're using Reactivesearch version >= `3.3.4` then `beforeValueChange` can also be defined as a synchronous function. You have to return `truthy` to continue the update or return `falsy` to reject the update. For example:
+    > If you're using Reactivesearch version >= `3.3.7` then `beforeValueChange` can also be defined as a synchronous function. You just have to throw an `Error` to reject an update. For example:
 
     ```js
     beforeValueChange = value => {
     	const valueIndex = value.findIndex(val => val.start < 4);
     	if (valueIndex > -1) {
-    		return 'falsy';
+    		// Reject update
+    		throw Error('Rating should be greater than or equal to 4.');
     	}
-    	return 'truthy';
+    	// Don't do anything
     };
     ```
 
