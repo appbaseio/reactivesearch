@@ -187,7 +187,7 @@ The other `innerClass` properties are the same as supported by [RangeSlider](/do
 
     > Note:
     >
-    > If you're using Reactivesearch version >= `3.3.7`, `beforeValueChange` can also be defined as a synchronous function. `value` is updated by default, unless you just have to throw an `Error` to reject the update. For example:
+    > If you're using Reactivesearch version >= `3.3.7`, `beforeValueChange` can also be defined as a synchronous function. `value` is updated by default, unless you throw an `Error` to reject the update. For example:
 
     ```js
     beforeValueChange = value => {
