@@ -32,6 +32,7 @@ const components = {
 		className: 'search',
 		highlight: true,
 		URLParams: true,
+		showVoiceSearch: true,
 	},
 	numberbox: {
 		componentId: 'GuestSensor',
@@ -101,7 +102,15 @@ const components = {
 	},
 };
 
+const Wrapper = props => {
+	return <DataSearch {...props} />;
+};
+
 export default class Main extends Component {
+	state = { mount: false };
+	componentDidMount() {
+		this.setState({ mount: true });
+	}
 	static async getInitialProps({ pathname, query }) {
 		return {
 			store: await initReactivesearch(
@@ -135,7 +144,7 @@ export default class Main extends Component {
 				<ReactiveBase {...components.settings} initialState={this.props.store}>
 					<nav className="nav">
 						<div className="title">Airbeds</div>
-						<DataSearch {...components.datasearch} />
+						{this.state.mount && <Wrapper {...components.datasearch} />}
 					</nav>
 					<div className="left-col">
 						<NumberBox {...components.numberbox} />
