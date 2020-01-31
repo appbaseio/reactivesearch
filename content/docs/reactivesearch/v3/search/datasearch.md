@@ -167,7 +167,7 @@ Example uses:
     -   **`error`**: `object`
         An object containing the error info.
     -   **`data`**: `array`
-        An array of results obtained from combining `promoted` results along with the `hits` .
+        An array of suggestions obtained from combining `promoted` suggestions along with the `hits` .
     -   **`rawData`**: `array`
         An array of original suggestions obtained from the applied query.
     -   **`promotedData`**: `array`
