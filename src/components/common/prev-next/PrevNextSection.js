@@ -29,6 +29,10 @@ const PrevNextSection = ({ sidebar, location, next, nestedSidebar }) => {
 				// Remember the group our items belong to
 				items.group = section.group;
 				flatSidebar.push(items);
+				_.forEach(items.items, subItem => {
+					subItem.group = items.title;
+					flatSidebar.push(subItem);
+				});
 			});
 		});
 
