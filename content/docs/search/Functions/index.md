@@ -66,3 +66,27 @@ Appbase.io Functions run right where your search service is, thus minimizing the
     When you use a hosted serverless service such as AWS Lambda (or even AWS Lambda on edge), you're still adding additional latency b/w your end-user and your search service. Besides, most serverless function services restrict your choice of language, use of 3rd party packages. Appbase.io functions internally communicate over HTTP and thus are language agnostic (you can write JavaScript, Python, Java, Go, ...) and support 3rd party packages as well.
 
 The differences in latencies are further pronounced when your custom logic requires access to a database system. Appbase.io functions provide access to your ElasticSearch instance - this means that you can read and write data to your search cluster into a meta index.
+
+## Hosting
+
+To deploy and run functions Appbase.io uses [OpenFaas](https://docs.openfaas.com), an open source project to let user build and deploy serverless functions on their infrastructure. There are two ways to get started with Functions and Appbase.io
+
+-   [Appbase.io Clusters](https://docs.appbase.io/docs/hosting/Cluster/):
+
+    Supports functions out of the box for [Production II, III, IV plans](https://appbase.io/clusters/#pricing). All you need to do is [Create Function](/docs/search/Functions/create), [Deploy Function](/docs/search/Functions/deploy) and [Set Triggers](/docs/search/Functions/trigger).
+
+-   [Self Hosted Appbase.io](https://github.com/appbaseio/arc-k8s):
+
+    With [Self Hosted Appbase.io](https://github.com/appbaseio/arc-k8s) and [kubernetes](https://kubernetes.io/) orchestration, you can deploy functions in the same infrastructure as of your ElasticSearch. For more information on how to host OpenFaas, please check docs [here](/docs/search/Functions/hosting)
+
+## Create
+
+Creating function is the first step, which let's you write down function in any language of your choice. Here you can add all the business logic that you would like to apply to the ElasticSearch requests. For more information on how to create a function, please refer docs [here](/docs/search/Functions/create)
+
+## Deploy
+
+A function once created can be deployed into your search infrastructure. Deploying a function is essentially the equivalent of putting a container which contains this function and gets dedicated compute and memory resources. Once deployed function is ready to be invoked with your ElasticSearch requests. For more information on how to deploy a function you can read docs [here](/docs/search/Functions/deploy)
+
+## Set Trigger
+
+Setting a trigger lets you define the conditions under which functions should be invoked. You can read more about syntax and available options [here](/docs/search/Functions/trigger).
