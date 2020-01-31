@@ -16,7 +16,7 @@ Most filter components in ReactiveSearch provides a `beforeValueChange` prop. It
 
 > Note:
 >
-> If you're using Reactivesearch version >= `3.3.4` then `beforeValueChange` can also be defined as a synchronous function. You have to return `truthy` to continue the update or return `falsy` to reject the update. Below is an example of using it in DataSearch:
+> If you're using Reactivesearch version >= `3.3.7` then `beforeValueChange` can also be defined as a synchronous function. You just have to throw an `Error` to reject an update. For example with DataSearch:
 
 ```js
 beforeValueChange = value => {
