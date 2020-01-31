@@ -65,7 +65,7 @@ Example uses:
 		and: ['CategoryFilter', 'SearchFilter'],
 	}}
 	URLParams={false}
-    includeNullValues
+	includeNullValues
 />
 ```
 
@@ -103,7 +103,6 @@ Example uses:
     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **includeNullValues** `Boolean` [optional]
     If you have sparse data or document or items not having the value in the specified field or mapping, then this prop enables you to show that data. Defaults to `false`.
-
 
 ## Demo
 
@@ -185,18 +184,21 @@ The other `innerClass` properties are the same as supported by [RangeSlider](/do
     `Note:` customQuery is called on value changes in the **RangeInput** component as long as the component is a part of `react` dependency of at least one other component.
 -   **beforeValueChange** `Function`
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
-> Note:
->
-> If you're using Reactivesearch version >= `3.3.7` then `beforeValueChange` can also be defined as a synchronous function. You just have to throw an `Error` to reject an update. For example: 
+
+    > Note:
+    >
+    > If you're using Reactivesearch version >= `3.3.7` then `beforeValueChange` can also be defined as a synchronous function. You just have to throw an `Error` to reject an update. For example:
+
     ```js
-    beforeValueChange = (value) => {
-        if(value.start > 3000) {
-            // Reject update
-            throw Error("Start value must be greater than 3000");
-        }
-        // Don't do anything
-    }
+    beforeValueChange = value => {
+    	if (value.start > 3000) {
+    		// Reject update
+    		throw Error('Start value must be less than or equal to 3000.');
+    	}
+    	// Don't do anything
+    };
     ```
+
 -   **onValueChange** `Function`
     is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when some range is selected in a "Discounted Price" RangeInput.
 -   **onQueryChange** `Function`
