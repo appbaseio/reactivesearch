@@ -147,6 +147,9 @@ Example uses:
 
 -   **fuzziness** `String or Number` [optional]
     Sets a maximum edit distance on the search parameters, can be **0**, **1**, **2** or **"AUTO"**. Useful for showing the correct results for an incorrect search parameter by taking the fuzziness into account. For example, with a substitution of one character, **fox** can become **box**. Read more about it in the elastic search [docs](https://www.elastic.co/guide/en/elasticsearch/guide/current/fuzziness.html).
+    > Note:
+    >
+    > This prop doesn't work when the value of `queryFormat` prop is set to `and`.
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **showVoiceSearch** `Boolean` [optional]
@@ -428,8 +431,8 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
     takes **value** and **props** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
     `Note:` customQuery is called on value changes in the **DataSearch** component as long as the component is a part of `react` dependency of at least one other component.
 -   **defaultQuery** `Function`
-    is a callback function that takes **value** and **props** as parameters and **returns** the data query to be applied to the source component, as defined in Elasticsearch Query DSL, which doesn't get leaked to other components.<br/>
-    Read more about it [here](/docs/reactivesearch/v3/advanced/customquery#when-to-use-default-query).
+    is a callback function that takes **value** and **props** as parameters and **returns** the data query to be applied to the source component, as defined in Elasticsearch Query DSL, which doesn't get leaked to other components. In simple words, `defaultQuery` prop allows you to modify the query to render the suggestions when `autoSuggest` is enabled.
+    Read more about it [here](/docs/reactivesearch/v3/advanced/customqueries/#when-to-use-default-query).
 -   **beforeValueChange** `Function`
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 -   **onValueChange** `Function`

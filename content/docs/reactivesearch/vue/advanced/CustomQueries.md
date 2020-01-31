@@ -129,9 +129,15 @@ You can also define the query options in custom query:
 
 ### When to use Default Query
 
-`defaultQuery` is ideally used with data-driven components to impact their own data.
+`defaultQuery` is ideally used with data-driven components to impact their own data. It is meant to modify the default query which is used by a component to render the UI. 
+
+Some of the valid use-cases are:
+- To modify the query to render the `suggestions` in search components.
+- To modify the `aggregations` in `list` components.
+- To modify the default `results` in `ReactiveList` component.
 
 For example, in a `SingleList` component showing list of cities you may only want to render cities belonging to India.
+
 
 ```js
 :defaultQuery = `() => ({
