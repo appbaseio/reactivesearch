@@ -11,7 +11,11 @@ keywords:
 sidebar: 'docs'
 ---
 
-Once OpenFaas is deployed and you have created function, you can use Appbase.io to seamlessly deploy and manage functions. Below are the steps you can follow to deploy function
+## Overview
+
+Functions can be deployed with the help of docker images, that are generated while [creating function](/docs/search/Functions/create). Appbase.io Dashboard allows you to seamlessly deploy and manage functions. Below are the steps you can follow to deploy function
+
+## Deployment Procedure
 
 ### Step 1: Login to Appbase.io (Arc Dashboard)
 
@@ -23,15 +27,15 @@ Once OpenFaas is deployed and you have created function, you can use Appbase.io 
 
 After logging into dashboard, you can Navigate to `Develop > Functions` tab from the left side menu.
 
-![](https://www.dropbox.com/s/g9z5srd1ycmaygp/Screenshot%202020-01-16%2008.39.25.png?raw=1)
+![](https://www.dropbox.com/s/bznciixl09uk5yx/Screenshot%202020-01-31%2009.22.26.png?raw=1)
 
 ### Step 3: Click on **Deploy Function**
 
-![](https://www.dropbox.com/s/b6gh3rg0ftvw7t8/Screenshot%202020-01-16%2008.39.25%20copy.png?raw=1)
+![](https://www.dropbox.com/s/p4wzzfr8e9n08z8/Screenshot%202020-01-31%2009.17.34.png?raw=1)
 
 ### Step 4: Add function details
 
-![](https://www.dropbox.com/s/2o9j4hvjwmutchp/Screenshot%202020-01-16%2009.06.29.png?raw=1)
+![](https://www.dropbox.com/s/u1arrqa3nhtriv6/Screenshot%202020-01-31%2009.37.24.png?raw=1)
 
 > **Note:** If you are using Self Hosted version of Appbase.io and want to deploy private image of function, you will have to add `OPENFAAS_KUBE_CONFIG` env with the value where your kubernetes config file exists.
 
