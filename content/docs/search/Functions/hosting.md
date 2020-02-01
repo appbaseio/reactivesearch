@@ -65,6 +65,7 @@ This step is only required if you are exposing OpenFaas gateway via Load Balance
     && helm upgrade openfaas --install openfaas/openfaas \
     --namespace openfaas \
     --set functionNamespace=openfaas-fn \
+	--set basic_auth=false
 
 If you are using Load Balancer to expose OpenFaas Gateway, then you can add `--set serviceType=LoadBalancer` switch in the above command. Similarly if you have enabled basic auth then you need to add `--set basic_auth=true` switch.
 
