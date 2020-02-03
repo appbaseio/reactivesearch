@@ -181,15 +181,15 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
     > Note:
     >
-    > If you're using Reactivesearch version >= `1.1.0` then `beforeValueChange` can also be defined as a synchronous function. You just have to throw an `Error` to reject an update. For example:
+    > If you're using Reactivesearch version >= `1.1.0`, `beforeValueChange` can also be defined as a synchronous function. `value` is updated by default, unless you throw an `Error` to reject the update. For example:
 
     ```js
     beforeValueChange = value => {
+        // The update is accepted by default
     	if (value.start < 4) {
-    		// Reject update
+    		// To reject the update, throw an error
     		throw Error('Rating must be greater than or equal to 4.');
     	}
-    	// Don't do anything
     };
     ```
 
