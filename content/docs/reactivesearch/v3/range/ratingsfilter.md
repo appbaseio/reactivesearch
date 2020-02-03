@@ -204,6 +204,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
     ```js
     beforeValueChange = values => {
+        // The update is accepted by default
     	if (values[0] < 4) {
     		// To reject the update, throw an error
     		throw Error('Rating must be greater than or equal to 4.');
