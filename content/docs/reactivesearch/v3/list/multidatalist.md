@@ -322,6 +322,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
     ```js
     beforeValueChange = values => {
+        // The update is accepted by default
     	if (values.includes('Social')) {
     		// To reject the update, throw an error
     		throw Error('Selected values should not include Social.');

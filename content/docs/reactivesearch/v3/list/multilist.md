@@ -316,6 +316,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
     ```js
     beforeValueChange = values => {
+        // The update is accepted by default
     	if (values.includes('Dirk Pitt')) {
     		// To reject the update, throw an error
     		throw Error('Selected values should not include Dirk Pitt.');
