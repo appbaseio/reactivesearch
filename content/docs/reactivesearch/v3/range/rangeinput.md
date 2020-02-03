@@ -192,6 +192,7 @@ The other `innerClass` properties are the same as supported by [RangeSlider](/do
     ```js
     beforeValueChange = value => {
         // The update is accepted by default
+        // The update is accepted by default
     	if (value.start > 3000) {
     		// To reject the update, throw an error
     		throw Error('Start value must be less than or equal to 3000.');

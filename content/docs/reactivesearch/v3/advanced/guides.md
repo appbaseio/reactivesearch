@@ -16,15 +16,15 @@ Most filter components in ReactiveSearch provides a `beforeValueChange` prop. It
 
 > Note:
 >
-> If you're using Reactivesearch version >= `3.3.7` then `beforeValueChange` can also be defined as a synchronous function. You just have to throw an `Error` to reject an update. For example with DataSearch:
+> If you're using Reactivesearch version >= `3.3.7`, `beforeValueChange` can also be defined as a synchronous function. `value` is updated by default, unless you throw an `Error` to reject the update. For example with DataSearch:
 
 ```js
 beforeValueChange = value => {
+	// The update is accepted by default
 	if (value && value.toLowerCase().contains('Social')) {
-		// Reject update
+		// To reject the update, throw an error
 		throw Error('Search value should not contain social.');
 	}
-	// Don't do anything
 };
 ```
 
