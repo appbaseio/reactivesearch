@@ -26,14 +26,14 @@ Set Trigger allows you to specify when to invoke this function. Function can be 
 
 Here are some examples on how you can set triggers
 
-| Example                                                 | Description                                                    |
-| ------------------------------------------------------- | -------------------------------------------------------------- |
-| `$category matches 'search'`                            | Filters the search requests.                                   |
-| `$category matches 'search' and $acl matches 'msearch'` | Filters the \_msearch requests                                 |
-| `'my-index' in $index`                                  | Filters the requests by my-index                               |
-| `$query startsWith 'iphone'`                            | Filters the requests for which search query starts with iphone |
-| `$filter.year matches 2012`                             | Filters the requests for which year filter is set to 2012      |
-| `$now > 1578485425`                                     | Filters the requests made after Jan 08 2020                    |
+| Example                                                 | Description                                                                                    |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `$category matches 'search'`                            | Triggers when the incoming request is of type `search`.                                        |
+| `$category matches 'search' and $acl matches 'msearch'` | Triggers when the incoming request is of type search and `acl` matches `msearch` specifically. |
+| `'my-index' in $index`                                  | Triggers when at least `my-index` is include in the request                                    |
+| `$query startsWith 'iphone'`                            | Triggers when search query starts with `iphone`                                                |
+| `$filter.year matches 2012`                             | Trigger when filter on year field matches 2012                                                 |
+| `$now > 1578485425`                                     | Trigger when time is greater than Jan 08 2020                                                  |
 
 We use [expr](https://github.com/antonmedv/expr/blob/master/docs/Language-Definition.md) package to evaluate the expressions. Know more about syntax over [here](https://github.com/antonmedv/expr/blob/master/docs/Language-Definition.md).
 

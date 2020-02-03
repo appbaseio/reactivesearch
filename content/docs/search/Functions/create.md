@@ -17,9 +17,11 @@ Appbase.io uses [OpenFaas](https://docs.openfaas.com) under the hood to create a
 
 -   It lets you write function in any language
 -   It is open source and actively maintained
--   Can be easily deploymend and maintained with kubernetes orchestration
+-   Can be easily deployed and maintained with kubernetes orchestration
 
 To create an build functions using [OpenFaas](https://docs.openfaas.com), you need to install [faas-cli](https://docs.openfaas.com/cli/install/), a command line utility to bootstrap, build and deploy functions. Here are the steps which you can follow to install **faas-cli**
+
+**Prerequisite**
 
 For Linux users
 
@@ -29,7 +31,7 @@ For Mac users
 
     brew install faas-cli
 
-Once the faas-cli is installed, we can create functions using OpenFaas [templates](https://docs.openfaas.com/cli/templates/#classic-vs-of-watchdog-templates). OpenFaas have [templates](https://docs.openfaas.com/cli/templates/#classic-vs-of-watchdog-templates) for creating functions in various programming languages.
+Once the `faas-cli` is installed, we can create functions using OpenFaas [templates](https://docs.openfaas.com/cli/templates/#classic-vs-of-watchdog-templates). OpenFaas have [templates](https://docs.openfaas.com/cli/templates/#classic-vs-of-watchdog-templates) for creating functions in various programming languages.
 
 In this documentation we will be using `NodeJS` template to create and publish function. For more templates you can check the [template store](https://docs.openfaas.com/cli/templates/#classic-vs-of-watchdog-templates) by OpenFaas
 

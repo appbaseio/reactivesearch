@@ -60,11 +60,12 @@ Example uses:
 	showFilter={true}
 	filterLabel="Price"
 	URLParams={false}
-    includeNullValues
+	includeNullValues
 />
 ```
 
 ### Usage as a controlled component
+
 ```js
 function Index(props) {
 	const [values, setValues] = useState([]);
@@ -135,7 +136,6 @@ function Index(props) {
     ```
 -   **includeNullValues** `Boolean` [optional]
     If you have sparse data or document or items not having the value in the specified field or mapping, then this prop enables you to show that data. Defaults to `false`.
-
 
 ## Demo
 
@@ -215,6 +215,22 @@ Read more about it [here](/docs/reactivesearch/v3/theming/class).
     `Note:` customQuery is called on value changes in the **MultiDropdownRange** component as long as the component is a part of `react` dependency of at least one other component.
 -   **beforeValueChange** `Function`
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
+
+    > Note:
+    >
+    > If you're using Reactivesearch version >= `3.3.7`, `beforeValueChange` can also be defined as a synchronous function. `value` is updated by default, unless you throw an `Error` to reject the update. For example:
+
+    ```js
+    beforeValueChange = value => {
+        // The update is accepted by default
+    	const valueIndex = value.findIndex(val => val.start < 4);
+    	if (valueIndex > -1) {
+    		// To reject the update, throw an error
+    		throw Error('Rating should be greater than or equal to 4.');
+    	}
+    };
+    ```
+
 -   **onValueChange** `Function`
     is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code(s) when range item(s) is/are selected in a "Prices" MultiDropdownRange.
 -   **onQueryChange** `Function`

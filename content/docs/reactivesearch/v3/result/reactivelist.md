@@ -122,7 +122,7 @@ Example uses:
     when set adds the current page number to the url. Only works when `pagination` is enabled.
 -   **defaultQuery** `Function` [optional]
     applies a default query to the result component. This query will be run when no other components are being watched (via React prop), as well as in conjunction with the query generated from the React prop. The function should return a query.
-    Read more about it [here](/docs/reactivesearch/v3/advanced/customquery#when-to-use-default-query).
+    Read more about it [here](/docs/reactivesearch/v3/advanced/customqueries/#when-to-use-default-query).
 -   **renderItem** `Function` [optional]
     returns a list element object to be rendered based on the `res` data object. This callback function prop is called for each data item rendered in the **ReactiveList** component's view. For example,
     ```js

@@ -105,9 +105,14 @@ this.customQuery=function() {
 
 ### When to use Default Query
 
-`defaultQuery` is ideally used with data-driven components to impact their own data.
+`defaultQuery` is ideally used with data-driven components to impact their own data. It is meant to modify the default query which is used by a component to render the UI. 
 
-For example, in a `SingleList` component showing list of cities you may only want to render cities belonging to India.
+Some of the valid use-cases are:
+- To modify the query to render the `suggestions` in search components.
+- To modify the `aggregations` in `list` components.
+- To modify the default `results` in `ReactiveList` component.
+
+For example, in a `SingleList` component showing a list of cities, you may only want to render cities belonging to India.
 
 ```js
 defaultQuery = {() => {
@@ -122,7 +127,7 @@ defaultQuery = {() => {
 
 ### Defining a Default Query
 
-Some components have a `defaultQuery` prop that accepts a function which has the same specifications as `customQuery`.DefaultQuery is used to apply the query on the source component. Unlike `customQuery`, It doesn't get leaked to other components. It's as if you create an internal component and apply the defaultQuery on it. Ideally, you would use this with components that are data-driven.
+Some components have a `defaultQuery` prop that accepts a function that has the same specifications as `customQuery`.DefaultQuery is used to apply the query on the source component. Unlike `customQuery`, It doesn't get leaked to other components. It's as if you create an internal component and apply the defaultQuery on it. Ideally, you would use this with components that are data-driven.
 
 ```javascript
 <SingleList
@@ -144,7 +149,7 @@ this.defaultQuery=function() {
 }
 ```
 
-You can also define the query options in custom query:
+You can also define the query options in the custom query:
 
 ```javascript
 <SingleList

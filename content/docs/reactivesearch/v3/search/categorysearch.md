@@ -464,10 +464,25 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
     takes **value**, **props** and **category** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
     `Note:` customQuery is called on value changes in the **CategorySearch** component as long as the component is a part of `react` dependency of at least one other component.
 -   **defaultQuery** `Function`
-    takes **value**, **props** and **category** as parameters and **returns** the data query to be applied to the source component, as defined in Elasticsearch Query DSL, which doesn't get leaked to other components.<br/>
-    Read more about it [here](/docs/reactivesearch/v3/advanced/customquery#when-to-use-default-query).
+    takes **value**, **props** and **category** as parameters and **returns** the data query to be applied to the source component, as defined in Elasticsearch Query DSL, which doesn't get leaked to other components. In simple words, `defaultQuery` prop allows you to modify the query to render the suggestions when `autoSuggest` is enabled.
+    Read more about it [here](/docs/reactivesearch/v3/advanced/customqueries/#when-to-use-default-query).
 -   **beforeValueChange** `Function`
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
+
+    > Note:
+    >
+    > If you're using Reactivesearch version >= `3.3.7`, `beforeValueChange` can also be defined as a synchronous function. `value` is updated by default, unless you throw an `Error` to reject the update. For example:
+
+    ```js
+    beforeValueChange = value => {
+        // The update is accepted by default
+    	if (value && value.toLowerCase().contains('Social')) {
+    		// To reject the update, throw an error
+    		throw Error('Search value should not contain social.');
+    	}
+    };
+    ```
+
 -   **onValueChange** `Function`
     is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a user searches for a product in a CategorySearch.
 -   **onValueSelected** `Function`

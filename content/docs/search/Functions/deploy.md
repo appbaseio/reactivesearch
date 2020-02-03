@@ -13,7 +13,9 @@ sidebar: 'docs'
 
 ## Overview
 
-Functions can be deployed with the help of docker images, that are generated while [creating function](/docs/search/Functions/create). Appbase.io Dashboard allows you to seamlessly deploy and manage functions. Below are the steps you can follow to deploy function
+A function once created can be deployed into your search infrastructure. Deploying a function is essentially the equivalent of putting a container which contains this function and gets dedicated compute and memory resources. Appbase.io Dashboard allows you to seamlessly deploy and manage functions. Below are the steps you can follow to deploy function
+
+![](https://www.dropbox.com/s/olwgd2t8ep1mww4/Screenshot%202020-01-31%2023.57.26.png?raw=1)
 
 ## Deployment Procedure
 
