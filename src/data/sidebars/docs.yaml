@@ -44,6 +44,8 @@
               title: Overview
             - link: /docs/analytics/Implement/
               title: "Implement Analytics"
+            - link: /docs/analytics/QueryingAnalytics/
+              title: "Querying Analytics"
             - link: /docs/analytics/GoogleAnalytics/
               title: "Integrate Google Analytics"
             - link: /docs/analytics/QuerySuggestions/

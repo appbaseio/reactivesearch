@@ -134,6 +134,12 @@ const HomePage = ({ data, location }) => {
 												link: '/docs/search/Rules/',
 												duration: 5,
 											},
+											{
+												title: 'Functions',
+												description: 'Extend ElasticSearch with your own functions.',
+												link: '/docs/search/Functions/',
+												duration: 4,
+											},
 										],
 									},
 									'4': {

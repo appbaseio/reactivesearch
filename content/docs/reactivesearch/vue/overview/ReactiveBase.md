@@ -58,7 +58,7 @@ This is the first component you will need to add when using `ReactiveSearch`.
     allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`. Check the [analytics recipe](/advanced/analytics.html) for click analytics implementation.
 -   **analyticsConfig** `Object` [optional]
     allows you to customize the analytics experience when appbase.io is used as a backend.
-    Read more about it over [here](/docs/reactivesearch/vue/advanced/Analytics/#configure-the-analytics-experience).
+    Read more about it over [here](/docs/reactivesearch/vue/advanced/analytics/#configure-the-analytics-experience).
 -	**as** `String` [optional]
 	allows to use a custom html element tag, defaults to `div`.
 
