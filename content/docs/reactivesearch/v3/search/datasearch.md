@@ -238,7 +238,7 @@ Or you can also use render function as children
 ```
 
 -   **renderError** `String or JSX or Function` [optional]
-    can we used to render an error message in case of any error.
+    can be used to render an error message in case of any error.
     ```js
     renderError={(error) => (
             <div>
@@ -248,7 +248,7 @@ Or you can also use render function as children
     }
     ```
 -   **renderNoSuggestion** `String or JSX or Function` [optional]
-    can we used to render a message when there is no suggestions found.
+    can be used to render a message when there is no suggestions found.
     ```js
     renderNoSuggestion={() => (
             <div>
