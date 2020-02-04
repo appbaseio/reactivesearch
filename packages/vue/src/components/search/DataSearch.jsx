@@ -108,7 +108,7 @@ const DataSearch = {
 		customQuery: types.func,
 		dataField: types.dataFieldArray,
 		aggregationField: types.string,
-		size: VueTypes.number.def(20),
+		size: VueTypes.number.def(10),
 		debounce: VueTypes.number.def(0),
 		defaultValue: types.string,
 		value: types.value,
@@ -514,21 +514,21 @@ const DataSearch = {
 		},
 
 		renderIcons() {
+			const { iconPosition, showClear, showIcon } = this.$props;
 			return (
 				<div>
-					{this.$data.currentValue && this.$props.showClear && (
+					{this.$data.currentValue && showClear && (
 						<InputIcon
 							onClick={this.clearValue}
 							iconPosition="right"
-							clearIcon={this.$props.iconPosition === 'right'}
+							clearIcon={iconPosition === 'right'}
+							showIcon={showIcon}
+							isClearIcon
 						>
 							{this.renderCancelIcon()}
 						</InputIcon>
 					)}
-					<InputIcon
-						onClick={this.handleSearchIconClick}
-						iconPosition={this.$props.iconPosition}
-					>
+					<InputIcon onClick={this.handleSearchIconClick} showIcon={showIcon} iconPosition={iconPosition}>
 						{this.renderIcon()}
 					</InputIcon>
 				</div>
@@ -536,7 +536,7 @@ const DataSearch = {
 		},
 	},
 	render() {
-		const { theme } = this.$props;
+		const { theme, size } = this.$props;
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -616,7 +616,7 @@ const DataSearch = {
 												)} ${getClassName(this.$props.innerClass, 'list')}`}
 											>
 												{this.suggestionsList
-													.slice(0, 10)
+													.slice(0, size)
 													.map((item, index) => (
 														<li
 															{...{

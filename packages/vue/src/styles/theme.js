@@ -12,7 +12,8 @@ const light = {
 		primaryTextColor: '#fff',
 		primaryColor: '#0B6AFF',
 		titleColor: '#424242',
-		alertColor: '#d9534f'
+		alertColor: '#d9534f',
+		borderColor: '#595959',
 	}
 };
 
