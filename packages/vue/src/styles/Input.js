@@ -82,7 +82,7 @@ const suggestions = (themePreset, theme) => css`
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	max-height: 260px;
+	max-height: 395px;
 	overflow-y: auto;
 
 	&.small {
@@ -97,8 +97,8 @@ const suggestions = (themePreset, theme) => css`
 		user-select: none;
 
 		& > .trim {
-			display: block;
 			display: -webkit-box;
+			display: block;
 			width: 100%;
 			max-height: 2.3rem;
 			line-height: 1.2rem;
@@ -106,6 +106,7 @@ const suggestions = (themePreset, theme) => css`
 			-webkit-box-orient: vertical;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 
 		&:hover,
@@ -150,8 +151,8 @@ const noSuggestions = (themePreset, theme) => css`
 		user-select: none;
 
 		& > .trim {
-			display: block;
 			display: -webkit-box;
+			display: block;
 			width: 100%;
 			max-height: 2.3rem;
 			line-height: 1.2rem;
@@ -159,6 +160,7 @@ const noSuggestions = (themePreset, theme) => css`
 			-webkit-box-orient: vertical;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 	}
 

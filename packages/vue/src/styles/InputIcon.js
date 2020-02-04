@@ -11,30 +11,27 @@ const right = css`
 `;
 
 const clear = css`
-	padding-right: 32px;
+	padding-right: 29px;
 	right: 0;
-	top: calc(50% - 2px);
 `;
 
 const InputIcon = styled('div')`
 	position: absolute;
-	top: calc(50%);
-	transform: translateY(-50%);
+	top: ${({ isClearIcon }) => (isClearIcon ? '12px' : '13px')};
+	cursor: pointer;
 	${({ iconPosition }) => {
 		if (iconPosition === 'left') {
 			return left;
-		}
-		if (iconPosition === 'right') {
+		} else if (iconPosition === 'right') {
 			return right;
 		}
 		return null;
 	}};
 	${({ clearIcon }) => clearIcon && clear};
-
+	${({ showIcon }) => !showIcon && 'padding-right:10px'};
 	svg.search-icon {
 		fill: ${({ theme }) => theme.colors.primaryColor};
 	}
-
 	svg.cancel-icon {
 		fill: ${({ theme }) => theme.colors.borderColor};
 	}
