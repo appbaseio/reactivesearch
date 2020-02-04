@@ -17,6 +17,7 @@ import SuggestionWrapper from './addons/SuggestionWrapper.jsx';
 import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
+import Mic from './addons/Mic.jsx';
 
 const {
 	addComponent,
@@ -137,6 +138,10 @@ const DataSearch = {
 		URLParams: VueTypes.bool.def(false),
 		strictSelection: VueTypes.bool.def(false),
 		nestedField: types.string,
+		//	mic props
+		showVoiceSearch: types.bool.def(false),
+		getMicInstance: types.func,
+		renderMic: types.func,
 	},
 	beforeMount() {
 		this.addComponent(this.$props.componentId, 'DATASEARCH');
@@ -334,6 +339,22 @@ const DataSearch = {
 				this.$emit('focus', event);
 			}
 		},
+		handleVoiceResults({ results }) {
+			if (
+				results
+				&& results[0]
+				&& results[0].isFinal
+				&& results[0][0]
+				&& results[0][0].transcript
+				&& results[0][0].transcript.trim()
+			) {
+				this.isPending = false;
+				this.setValue(results[0][0].transcript.trim(), true);
+				if (this.$props.autosuggest) {
+					this.isOpen = true;
+				}
+			}
+		},
 		triggerQuery() {
 			const { value } = this.$props;
 			if (value !== undefined) {
@@ -506,20 +527,39 @@ const DataSearch = {
 		},
 
 		renderIcons() {
+			const {
+				iconPosition,
+				showClear,
+				innerClass,
+				getMicInstance,
+				showVoiceSearch,
+				showIcon,
+			} = this.$props;
+			const renderMic = this.$scopedSlots.renderMic || this.$props.renderMic;
+			const { currentValue } = this.$data;
 			return (
 				<div>
-					{this.$data.currentValue && this.$props.showClear && (
+					{currentValue && showClear && (
 						<InputIcon
 							onClick={this.clearValue}
 							iconPosition="right"
-							clearIcon={this.$props.iconPosition === 'right'}
+							clearIcon={iconPosition === 'right'}
 						>
 							{this.renderCancelIcon()}
 						</InputIcon>
 					)}
-					<InputIcon iconPosition={this.$props.iconPosition}>
-						{this.renderIcon()}
-					</InputIcon>
+					{showVoiceSearch && (
+						<Mic
+							getInstance={getMicInstance}
+							render={renderMic}
+							iconPosition={iconPosition}
+							onResult={this.handleVoiceResults}
+							className={getClassName(innerClass, 'mic') || null}
+							applyClearStyle={!!currentValue && showClear}
+							showIcon={showIcon}
+						/>
+					)}
+					<InputIcon iconPosition={iconPosition}>{this.renderIcon()}</InputIcon>
 				</div>
 			);
 		},

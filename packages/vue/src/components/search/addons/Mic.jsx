@@ -1,9 +1,9 @@
-import types from '../../../utils/vueTypes';
 import MicIcon from '../../../styles/MicIcon';
-import { getComponent, hasCustomRenderer } from '../../../utils';
 import MicSvg from '../../shared/MicSvg';
 import MuteSvg from '../../shared/MuteSvg';
 import ListenSvg from '../../shared/ListenSvg';
+import { hasCustomRenderer, getComponent } from '../../../utils/index';
+import types from '../../../utils/vueTypes';
 
 const STATUS = {
 	inactive: 'INACTIVE',
@@ -109,12 +109,12 @@ const Mic = {
 			const { className } = this.$props;
 			switch (status) {
 				case STATUS.active:
-					return <ListenSvg className={className} onClick={this.handleClick} />;
+					return <ListenSvg className={className} nativeOnClick={this.handleClick} />;
 				case STATUS.stopped:
 				case STATUS.denied:
-					return <MuteSvg className={className} onClick={this.handleClick} />;
+					return <MuteSvg className={className} nativeOnClick={this.handleClick} />;
 				default:
-					return <MicSvg className={className} onClick={this.handleClick} />;
+					return <MicSvg className={className} nativeOnClick={this.handleClick} />;
 			}
 		},
 	},
@@ -126,8 +126,8 @@ const Mic = {
 	created() {
 		this.results = [];
 		if (typeof window !== 'undefined') {
-			window.SpeechRecognition =
-				window.webkitSpeechRecognition || window.SpeechRecognition || null;
+			window.SpeechRecognition
+				= window.webkitSpeechRecognition || window.SpeechRecognition || null;
 
 			if (!window.SpeechRecognition) {
 				console.error(

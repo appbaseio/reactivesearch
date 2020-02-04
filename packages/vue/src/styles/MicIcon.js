@@ -4,7 +4,7 @@ const right = css`
 	right: 35px;
 `;
 
-const MicIcon = styled.div`
+const MicIcon = styled('div')`
 	height: 40px;
 	position: absolute;
 	top: 8px;
