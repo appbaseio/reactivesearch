@@ -555,13 +555,15 @@ const DataSearch = {
 							getInstance={getMicInstance}
 							render={renderMic}
 							iconPosition={iconPosition}
-							onResult={this.handleVoiceResults}
+							handleResult={this.handleVoiceResults}
 							className={getClassName(innerClass, 'mic') || null}
 							applyClearStyle={!!currentValue && showClear}
 							showIcon={showIcon}
 						/>
 					)}
-					<InputIcon showIcon={showIcon} iconPosition={iconPosition}>{this.renderIcon()}</InputIcon>
+					<InputIcon showIcon={showIcon} iconPosition={iconPosition}>
+						{this.renderIcon()}
+					</InputIcon>
 				</div>
 			);
 		},

@@ -18,7 +18,7 @@ const Mic = {
 		children: types.title,
 		lang: types.string.def('en-US'),
 		iconPosition: types.string.def('left'),
-		onResult: types.func,
+		handleResult: types.func,
 		onNoMatch: types.func,
 		onError: types.func,
 		getInstance: types.func,
@@ -50,7 +50,7 @@ const Mic = {
 				if (status === STATUS.active) {
 					this.status = STATUS.inactive;
 				}
-				const { onResult, onNoMatch, onError, lang, getInstance } = this.$props;
+				const { handleResult, onNoMatch, onError, lang, getInstance } = this.$props;
 				const { SpeechRecognition } = window;
 				if (this.instance) {
 					this.status = STATUS.inactive;
@@ -71,8 +71,8 @@ const Mic = {
 				};
 				this.instance.onresult = ({ results, timeStamp }) => {
 					this.status = STATUS.inactive;
-					if (onResult) {
-						onResult({ results, timeStamp });
+					if (handleResult) {
+						handleResult({ results, timeStamp });
 					}
 					this.results.push({ results, timeStamp });
 				};
