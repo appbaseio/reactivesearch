@@ -544,6 +544,8 @@ const DataSearch = {
 							onClick={this.clearValue}
 							iconPosition="right"
 							clearIcon={iconPosition === 'right'}
+							showIcon={showIcon}
+							isClearIcon
 						>
 							{this.renderCancelIcon()}
 						</InputIcon>
@@ -559,7 +561,7 @@ const DataSearch = {
 							showIcon={showIcon}
 						/>
 					)}
-					<InputIcon iconPosition={iconPosition}>{this.renderIcon()}</InputIcon>
+					<InputIcon showIcon={showIcon} iconPosition={iconPosition}>{this.renderIcon()}</InputIcon>
 				</div>
 			);
 		},
