@@ -108,7 +108,7 @@ const DataSearch = {
 		customQuery: types.func,
 		dataField: types.dataFieldArray,
 		aggregationField: types.string,
-		size: VueTypes.number.def(20),
+		size: VueTypes.number.def(10),
 		debounce: VueTypes.number.def(0),
 		defaultValue: types.string,
 		value: types.value,
@@ -528,7 +528,7 @@ const DataSearch = {
 		},
 	},
 	render() {
-		const { theme } = this.$props;
+		const { theme, size } = this.$props;
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -608,7 +608,7 @@ const DataSearch = {
 												)} ${getClassName(this.$props.innerClass, 'list')}`}
 											>
 												{this.suggestionsList
-													.slice(0, 10)
+													.slice(0, size)
 													.map((item, index) => (
 														<li
 															{...{
