@@ -54,6 +54,7 @@ Example uses of searchbox UI:
 		{ label: 'Songwriting', value: 'Songwriting' },
 		{ label: 'Musicians', value: 'Musicians' },
 	]}
+	size={10}
 	highlight={true}
 	highlightField="group_city"
 	queryFormat="or"
@@ -137,6 +138,8 @@ Example uses of searchbox UI:
     Set the path of the `nested` type under which the `dataField` is present. Only applicable only when the field(s) specified in the `dataField` is(are) present under a [`nested` type](https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html) mapping.
 -   **title** `String or JSX` [optional]
     set the title of the component to be shown in the UI.
+-   **size** `Number` [optional]
+    number of suggestions and results to show. Defaults to `10`.
 -   **defaultValue** `string` [optional]
     set the initial search query text on mount.
 -   **value** `string` [optional]
