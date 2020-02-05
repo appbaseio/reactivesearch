@@ -43,7 +43,10 @@ const Main = () => (
 					render={({ data }) => (
 						<ReactiveList.ResultListWrapper>
 							{data.map(item => (
-								<ResultList href={data.event.event_url} key={item._id}>
+								<ResultList
+									href={data.event && data.event.event_url}
+									key={item._id}
+								>
 									<ResultList.Image src={item.member.photo} small />
 									<ResultList.Content>
 										<ResultList.Title>
@@ -61,16 +64,17 @@ const Main = () => (
 													{data.group ? data.group.group_city : ''}
 												</div>
 												<div className="flex wrap meetup-topics">
-													{data.group.group_topics
-														.slice(0, 4)
-														.map(tag => (
-															<div
-																className="meetup-topic"
-																key={tag.topic_name}
-															>
-																{tag.topic_name}
-															</div>
-														))}
+													{data.group
+														&& (data.group.group_topics || [])
+															.slice(0, 4)
+															.map(tag => (
+																<div
+																	className="meetup-topic"
+																	key={tag.topic_name}
+																>
+																	{tag.topic_name}
+																</div>
+															))}
 												</div>
 											</div>
 										</ResultList.Description>
