@@ -308,23 +308,7 @@ class ReactiveList extends Component {
 			// usecase:
 			// - query has changed from non-null prev query
 
-			if (this.props.queryLog.from !== this.state.from) {
-				// query's 'from' key doesn't match the state's 'from' key,
-				// i.e. this query change was not triggered by the page change (loadMore)
-				// eslint-disable-next-line
-				this.setState(
-					{
-						currentPage: 0,
-					},
-					() => {
-						this.updatePageURL(0);
-					},
-				);
-
-				if (this.props.onPageChange) {
-					this.props.onPageChange(1, totalPages);
-				}
-			} else if (this.initialFrom && this.initialFrom === this.props.queryLog.from) {
+			if (this.initialFrom && this.initialFrom === this.props.queryLog.from) {
 				// [non-zero] initialFrom matches the current query's from
 				// but the query has changed
 
@@ -363,6 +347,20 @@ class ReactiveList extends Component {
 			&& this.props.defaultPage !== prevProps.defaultPage
 		) {
 			this.setPage(this.props.defaultPage >= 0 ? this.props.defaultPage : 0);
+		}
+
+		if (this.props.total !== prevProps.total) {
+			if (this.state.currentPage + 1 > totalPages) {
+				// eslint-disable-next-line react/no-did-update-set-state
+				this.setState(
+					{
+						currentPage: 0,
+					},
+					() => {
+						this.updatePageURL(0);
+					},
+				);
+			}
 		}
 	}
 
@@ -557,7 +555,8 @@ class ReactiveList extends Component {
 	renderResultStats = () => {
 		const { hits, promotedResults, total } = this.props;
 
-		const shouldStatsVisible = hits && promotedResults && (hits.length || promotedResults.length);
+		const shouldStatsVisible
+			= hits && promotedResults && (hits.length || promotedResults.length);
 		if (this.props.renderResultStats && shouldStatsVisible) {
 			return this.props.renderResultStats(this.stats);
 		} else if (total) {

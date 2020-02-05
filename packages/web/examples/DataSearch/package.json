@@ -7,7 +7,9 @@
 	"dependencies": {
 		"@appbaseio/reactivesearch": "3.3.7",
 		"react": "^16.7.0-alpha.2",
-		"react-dom": "^16.7.0-alpha.2"
+		"react-dom": "^16.7.0-alpha.2",
+		"antd": "^3.26.8",
+		"react-expand-collapse": "^0.2.0"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
