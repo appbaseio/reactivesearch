@@ -2,9 +2,19 @@ import React, { Component } from 'react';
 import { setHeaders, setValue } from '@appbaseio/reactivecore/lib/actions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import Base from '../../styles/Base';
 import { connect } from '../../utils';
+
+function whiteListFilter(props, componentKey) {
+	const { componentType, value } = props.selectedValues[componentKey];
+	if (componentType === undefined || componentType === componentTypes.multiList) {
+		if (Array.isArray(value) && value.length === 0) return false;
+		return !!value;
+	}
+	return false;
+}
 
 class URLParamsProvider extends Component {
 	componentDidMount() {
@@ -43,6 +53,16 @@ class URLParamsProvider extends Component {
 		this.checkForURLParamsChange();
 
 		this.currentSelectedState = this.props.selectedValues;
+
+		function isValidEvent(whiteListedComponents, prevWhiteListedComponents) {
+			if (whiteListedComponents) {
+				return whiteListedComponents.length === 2
+					? whiteListedComponents.length === prevWhiteListedComponents.length
+					: true;
+			}
+			return true;
+		}
+
 		if (!isEqual(this.props.selectedValues, prevProps.selectedValues)) {
 			this.searchString = this.props.getSearchParams
 				? this.props.getSearchParams()
@@ -50,7 +70,12 @@ class URLParamsProvider extends Component {
 			this.params = new URLSearchParams(this.searchString);
 			const currentComponents = Object.keys(this.props.selectedValues);
 			const urlComponents = Array.from(this.params.keys());
-
+			const whiteListedComponents = Object.keys(
+				this.props.selectedValues,
+			).filter(componentKey => whiteListFilter(this.props, componentKey));
+			const prevWhiteListedComponents = Object.keys(
+				prevProps.selectedValues,
+			).filter(componentKey => whiteListFilter(prevProps, componentKey));
 			currentComponents
 				.filter(component => this.props.selectedValues[component].URLParams)
 				.forEach((component) => {
@@ -60,7 +85,10 @@ class URLParamsProvider extends Component {
 						|| this.hasValidValue(prevProps.selectedValues[component])
 					) {
 						const selectedValues = this.props.selectedValues[component];
-						if (selectedValues.URLParams) {
+						if (
+							selectedValues.URLParams
+							&& isValidEvent(whiteListedComponents, prevWhiteListedComponents)
+						) {
 							if (selectedValues.category) {
 								this.setURL(
 									component,
