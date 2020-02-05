@@ -49,6 +49,7 @@ Example uses:
   :showFilter="true"
   :fieldWeights="[1, 3]"
   :fuzziness="0"
+  :size="10"
   :debounce="100"
   :react="{
     and: ['CategoryFilter', 'SearchFilter']
@@ -64,6 +65,8 @@ Example uses:
     unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String or Array`
     database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
+-   **size** `Number` [optional]
+    number of suggestions to show. Defaults to `10`.
 -   **aggregationField** `String` [optional]
     One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
     You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `render` slot as shown:
