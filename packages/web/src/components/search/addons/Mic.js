@@ -19,14 +19,17 @@ class Mic extends React.Component {
 		this.state = {
 			status: STATUS.inactive,
 		};
-		window.SpeechRecognition
-			= window.webkitSpeechRecognition || window.SpeechRecognition || null;
 		this.results = [];
 
-		if (!window.SpeechRecognition) {
-			console.error(
-				'SpeechRecognition is not supported in this browser. Please check the browser compatibility at https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition#Browser_compatibility.',
-			);
+		if (typeof window !== 'undefined') {
+			window.SpeechRecognition
+				= window.webkitSpeechRecognition || window.SpeechRecognition || null;
+
+			if (!window.SpeechRecognition) {
+				console.error(
+					'SpeechRecognition is not supported in this browser. Please check the browser compatibility at https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition#Browser_compatibility.',
+				);
+			}
 		}
 	}
 
@@ -46,7 +49,7 @@ class Mic extends React.Component {
 
 	handleClick = () => {
 		this.results = [];
-		if (window.SpeechRecognition) {
+		if (window && window.SpeechRecognition) {
 			const { status } = this.state;
 			if (status === STATUS.active) {
 				this.setState({
