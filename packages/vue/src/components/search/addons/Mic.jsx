@@ -52,7 +52,7 @@ const Mic = {
 				}
 				const { handleResult, onNoMatch, onError, lang, getInstance } = this.$props;
 				const { SpeechRecognition } = window;
-				if (this.instance) {
+				if (this.instance && this.status !== STATUS.denied) {
 					this.status = STATUS.inactive;
 					this.instance.stop();
 					this.instance = null;
