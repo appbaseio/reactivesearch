@@ -60,7 +60,7 @@ class Mic extends React.Component {
 				onResult, onNoMatch, onError, lang, getInstance,
 			} = this.props;
 			const { SpeechRecognition } = window;
-			if (this.instance) {
+			if (this.instance && status !== STATUS.denied) {
 				this.setState(
 					{
 						status: STATUS.inactive,
