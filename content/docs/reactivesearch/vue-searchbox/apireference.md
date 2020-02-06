@@ -296,6 +296,10 @@ The `suggestions` parameter receives all the unparsed suggestions from elasticse
           // set the state
           // use the value with other js code
         }"
+	@valueSelected="
+        function(value, cause, source) {
+        console.log('current value: ', value)
+    }"
 	@queryChange="
         function(prevQuery, nextQuery) {
           // use the query with other js code
@@ -316,9 +320,14 @@ The `suggestions` parameter receives all the unparsed suggestions from elasticse
     is an event which accepts component's **prevQuery** and **nextQuery** as parameters. It is called every time the component's query changes. This event is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **valueChange**
     is an event which accepts component's current **value** as a parameter. It is called every time the component's value changes. This event is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a list item is selected in a "Discounted Price" SingleList.
+-   **valueSelected**
+    is called with the value selected via user interaction. It works only with `autosuggest` and is called whenever a suggestion is selected or a search is performed by pressing **enter** key. It also passes the `cause` of action and the `source` object if the cause of action was `'SUGGESTION_SELECT'`. The possible causes are:
+    -   `'SUGGESTION_SELECT'`
+    -   `'ENTER_PRESS'`
+    -   `'CLEAR_VALUE'`
+    -   `'SEARCH_ICON_CLICK'`
 -   **suggestions**
     You can use this event to listen for the changes in suggestions.The function receives `suggestions` list.
-
 -   **error**
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
 
