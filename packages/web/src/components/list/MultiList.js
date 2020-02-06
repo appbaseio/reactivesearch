@@ -10,6 +10,7 @@ import {
 	loadMore,
 	setComponentProps,
 	updateComponentProps,
+	setValue,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -445,10 +446,41 @@ class MultiList extends Component {
 
 	handleClick = (e) => {
 		let currentValue = e;
+		const {
+			value,
+			onChange,
+			components,
+			watchers,
+			componentId,
+			setPageURL,
+		} = this.props;
+
+		const dependents = watchers[componentId];
+		const reactiveListIds = Object.keys(components).map((component) => {
+			if (
+				dependents.includes(component)
+				&& components[component]
+				&& components[component].componentType === componentTypes.reactiveList
+				&& components[component].URLParams
+			) {
+				return component;
+			}
+			return false;
+		}).filter(Boolean);
+
+		reactiveListIds.forEach((id) => {
+			setPageURL(
+				id,
+				1,
+				id,
+				false,
+				true,
+			);
+		});
+
 		if (isEvent(e)) {
 			currentValue = e.target.value;
 		}
-		const { value, onChange } = this.props;
 		if (value === undefined) {
 			this.setValue(currentValue);
 		} else if (onChange) {
@@ -643,6 +675,9 @@ MultiList.propTypes = {
 	loadMore: types.funcRequired,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
+	watchers: types.componentObject,
+	components: types.componentObject,
+	setPageURL: types.funcRequired,
 	options: types.options,
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
@@ -720,6 +755,8 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
+	components: state.props,
+	watchers: state.watchMan,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -734,6 +771,8 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	setPageURL: (component, value, label, showFilter, URLParams) =>
+		dispatch(setValue(component, value, label, showFilter, URLParams)),
 });
 
 const ConnectedComponent = connect(

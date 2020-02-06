@@ -312,14 +312,6 @@ class ReactiveList extends Component {
 				// query's 'from' key doesn't match the state's 'from' key,
 				// i.e. this query change was not triggered by the page change (loadMore)
 				// eslint-disable-next-line
-				this.setState(
-					{
-						currentPage: 0,
-					},
-					() => {
-						this.updatePageURL(0);
-					},
-				);
 
 				if (this.props.onPageChange) {
 					this.props.onPageChange(1, totalPages);
@@ -547,7 +539,6 @@ class ReactiveList extends Component {
 						},
 						false,
 					);
-
 					this.updatePageURL(page);
 				},
 			);
