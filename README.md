@@ -28,6 +28,10 @@ a.) <a href="https://codeburst.io/how-to-build-a-yelp-like-search-app-using-reac
 
 <br />
 
+<p>Check out the ReactiveSearch marketplace at <a href="https://reactiveapps.io/" target="_blank">reactiveapps.io</a>.</p>
+
+<br />
+
 ![Banner Image showing all the web UI components we offer](https://i.imgur.com/bJ1QKZS.png)
 
 [Web designer templates for sketch](https://opensource.appbase.io/reactivesearch/resources/ReactiveSearch_Playground.sketch).
