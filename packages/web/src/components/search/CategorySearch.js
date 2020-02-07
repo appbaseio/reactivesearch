@@ -1117,6 +1117,7 @@ CategorySearch.propTypes = {
 	showClear: types.bool,
 	showFilter: types.bool,
 	showVoiceSearch: types.bool,
+	showDistinctSuggestions: types.bool,
 	showIcon: types.bool,
 	style: types.style,
 	title: types.title,
@@ -1146,6 +1147,7 @@ CategorySearch.defaultProps = {
 	strictSelection: false,
 	searchOperators: false,
 	showVoiceSearch: false,
+	showDistinctSuggestions: false,
 	size: 10,
 };
 

@@ -223,7 +223,7 @@ class DataSearch extends Component {
 			? this.props.dataField
 			: [this.props.dataField];
 
-		return getSuggestions(fields, results, this.state.currentValue.toLowerCase());
+		return getSuggestions({ fields, suggestions: results, currentValue: this.state.currentValue.toLowerCase() });
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props) => {

@@ -62,6 +62,7 @@ export interface CategorySearchProps extends CommonProps {
 	clearIcon?: types.children;
 	showClear?: boolean;
 	strictSelection?: boolean;
+	showDistinctSuggestions?: boolean;
 	searchOperators?: boolean;
 	showVoiceSearch?: boolean;
 }
