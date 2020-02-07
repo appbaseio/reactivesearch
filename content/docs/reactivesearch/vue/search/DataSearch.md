@@ -109,6 +109,8 @@ Example uses:
     show a clear text `X` icon. Defaults to `false`.
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+-   **showDistinctSuggestions** `Boolean` [optional]
+    show 1 suggestion per document. Defaults to `false`.
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **clearIcon** `JSX` [optional]

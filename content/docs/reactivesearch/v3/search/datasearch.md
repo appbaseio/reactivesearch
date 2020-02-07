@@ -152,6 +152,8 @@ Example uses:
     > This prop doesn't work when the value of `queryFormat` prop is set to `and`.
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+-   **showDistinctSuggestions** `Boolean` [optional]
+    show 1 suggestion per document. Defaults to `false`.
 -   **showVoiceSearch** `Boolean` [optional]
     show a voice icon in the searchbox to enable users to set voice input. Defaults to `false`.
 -   **searchOperators** `Boolean` [optional]
