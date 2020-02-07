@@ -110,23 +110,35 @@ Example uses:
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **showDistinctSuggestions** `Boolean` [optional]
-    Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `false`. For example:
+    Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `false`.
+	<br/> <br/>
+    **Example** if `showDistinct`  is set to `false`
 
-    ```
-search  => 'wa'
-dataField => ['name', 'address']
-document => {
+**Your Document**
+```json
+{
    "name": "Warn",
    "address": "Washington"
 }
-search resonse
-[{
-...same content
-}
-{
-...same content
-}]
-    ```
+```
+
+**Search Query**
+```
+"wa"
+```
+
+**Component**
+```
+<DataSearch dataField=['name', 'address'] .../>
+```
+
+There will be **2 suggestions** from the same document as we have the search term present in both the fields specified in `dataField`.
+```
+Warn
+Washington
+```
+
+`Note:` Check the above concept in action over [here](https://codesandbox.io/s/musing-allen-qc58z).
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **clearIcon** `JSX` [optional]
