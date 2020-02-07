@@ -66,7 +66,8 @@ class DynamicRangeSlider extends Component {
 		if (
 			!isEqual(this.props.range, prevProps.range)
 			&& this.props.range
-			&& this.props.range.start
+			&& this.props.range.start >= 0
+			&& this.props.range.end > 0
 		) {
 			// when range prop is changed
 			// it will happen due to initial mount (or) due to subscription
