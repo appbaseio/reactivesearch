@@ -176,6 +176,36 @@ Example uses:
     Sets a maximum edit distance on the search parameters, can be **0**, **1**, **2** or **"AUTO"**. Useful for showing the correct results for an incorrect search parameter by taking the fuzziness into account. For example, with a substitution of one character, **fox** can become **box**. Read more about it in the elastic search [docs](https://www.elastic.co/guide/en/elasticsearch/guide/current/fuzziness.html).
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+-   **showDistinctSuggestions** `Boolean` [optional]
+    Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `false`.
+	<br/> <br/>
+    **Example** if `showDistinct`  is set to `false`
+
+**Your Document**
+```json
+{
+   "name": "Warn",
+   "address": "Washington"
+}
+```
+
+**Search Query**
+```
+"wa"
+```
+
+**Component**
+```
+<DataSearch dataField=['name', 'address'] .../>
+```
+
+There will be **2 suggestions** from the same document as we have the search term present in both the fields specified in `dataField`.
+```
+Warn
+Washington
+```
+
+`Note:` Check the above concept in action over [here](https://codesandbox.io/s/musing-allen-qc58z).
 -   **showVoiceSearch** `Boolean` [optional]
     show a voice icon in the searchbox to enable users to set voice input. Defaults to `false`.
 -   **searchOperators** `Boolean` [optional]
