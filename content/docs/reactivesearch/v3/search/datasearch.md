@@ -153,7 +153,23 @@ Example uses:
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **showDistinctSuggestions** `Boolean` [optional]
-    show 1 suggestion per document. Defaults to `false`.
+    Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `false`. For example:
+
+    ```
+search  => 'wa'
+dataField => ['name', 'address']
+document => {
+   "name": "Warn",
+   "address": "Washington"
+}
+search resonse
+[{
+...same content
+}
+{
+...same content
+}]
+    ```
 -   **showVoiceSearch** `Boolean` [optional]
     show a voice icon in the searchbox to enable users to set voice input. Defaults to `false`.
 -   **searchOperators** `Boolean` [optional]
