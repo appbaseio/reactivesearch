@@ -1,10 +1,10 @@
 ---
 title: 'Functions'
-meta_title: 'Appbase Functions'
-meta_description: 'How to use functions with ElasticSearch.'
+meta_title: 'Appbase.io Functions'
+meta_description: 'How to use appbase.io functions with ElasticSearch'
 keywords:
     - concepts
-    - appbase
+    - appbase.io
     - elasticsearch
     - serverless
     - functions
@@ -13,63 +13,61 @@ sidebar: 'docs'
 
 ## Overview
 
-Appbase.io now supports Functions which provides the ability to extend the underlying search functionality either to handle edge cases around search relevance or to implement custom security logic. Functions with Appbase.io can add great value in improving search experience as they run on the same infrastructure where your search is running and in the world of search latency matters.
+Appbase.io Functions (available with **Clusters**) provide the ability to extend the search engine and tailor it for your use-case. You can use it to implement custom security logic, do more with search or handle specific cases around search relevancy. Functions are built with performance and ease of use in mind - it runs on the same infrastructure where your search is hosted. You can define functions in Node.JS, Python, PHP, Go, Ruby, Java or C# and use external packages with no restrictions.
 
-![architecture](https://www.dropbox.com/s/0zckyheks84ass4/Functions%20Flow%20Chart.png?raw=1)
+[See an 8 mins video overview and live demo here ▷](https://youtu.be/ak7nbXxjY-c)
 
-> This is different than running AWS Lambda functions or any such service, because as soon as you introduce third party service it is going to add some latency. We recommend using functions over running anything on your server or third party services for search use cases.
+![Functions Dashboard](https://i.imgur.com/4LPHTlw.png)
+
+> Functions are available with Production II, III and IV clusters plans or with the enterprise plan (for self-hosted).
 
 ## Use Cases
 
 Here are some use cases where functions can help you improve search relevance or security.
 
--   **Create a function based query rule that allows to modify the query:**
-    -   Parse intent from a Natural language query and structure it differently.
-    -   Apply a default filter.
-
-<br />
+-   **Modify the incoming query:**
+    -   Parse intent from a natural language query and restructure it (e.g. rewrite tail queries)
+    -   Apply additional filters based on query intent detection
 
 -   **Build a customized security logic:**
-    -   Add custom JWT authorization for each requests
-    -   Add role based access to the data
-    -   Apply security rules to search only on certain fields/indexes.
-    -   Apply size restrictions.
+    -   Implement a custom security authorization for all incoming requests
+    -   Enforce custom access control policies
+	-   Apply a custom IP rate limit logic to prevent DoS attacks
+	-   Prevent certain kinds of queries from being run
+    -   Apply query size restrictions
 
-<br />
+-   **Extend your index time logic:**
+    -   Enforce additional security checks prior to the data getting indexed
+	-   Parse and enrich the data prior to indexing, e.g. perform OCR and index the parsed contents
 
--   **Create a response transformer that allows to:**
-    -   Modify the shape of the response
-    -   Modify the contents of the response \* Modify the score of the response, e.g. using an overlay based on Machine Learning algorithms.
-
-<br />
-
--   **Create a request transformer that allows to:**
-    -   Modify data before it gets indexed
-    -   Extract text from an image and index image text to provide image search.
+-   **Modify the search response:**
+    -   Define your custom re-scoring function based on external signals to rescore the results
+	-   Add custom data to returned based on either the request or the response context
+	-   Modify the shape of the response
 
 ## Why use Functions
 
 Appbase.io Functions run right where your search service is, thus minimizing the overall latency that your end-users experience.
 
--   **Appbase.io Functions v/s your server**
+-   **Appbase.io Functions v/s your server**  
 
     When you write custom security logic or search extensions on your server, you require a flow that looks like this:
-    <br />
 
     ![](https://www.dropbox.com/s/7j1v8f4pavhrwws/Screenshot%202020-01-31%2015.26.23.png?raw=1)
 
-    <br />
-    Depending on where your server is located geographically, this can add b/w 20ms to 250ms of additional latency. Since Appbase.io functions run on the same infra as your search service, they only add the execution time of your custom logic.
+    Depending on where your server is located geographically, having it as part of the search request flow can contribute anywhere between 10ms to 100ms of additional latency. When your end users are searching, milliseconds matter. By virtue of appbase.io functions running on the same infra as your search service is, there is no added network latency.
+
+    Appbase.io Functions dashboard gives you control over the trigger conditions, ordering, and the ability to enable / disable individual functions.
 
 -   **Appbase.io Functions v/s AWS Lambda**
 
-    When you use a hosted serverless service such as AWS Lambda (or even AWS Lambda on edge), you're still adding additional latency b/w your end-user and your search service. Besides, most serverless function services restrict your choice of language, use of 3rd party packages. Appbase.io functions internally communicate over HTTP and thus are language agnostic (you can write JavaScript, Python, Java, Go, ...) and support 3rd party packages as well.
+    When you use a hosted serverless services such as AWS Lambda (or even AWS Lambda on edge), you're still adding additional latency b/w your end user and your search service. Besides, most serverless function services restrict your choice of language and use of 3rd party packages. Appbase.io Functions are internally deployed as HTTP services and thus are language agnostic (you can write them in Node.JS, Python, Java, Go, PHP, Ruby, or C#) and let you add 3rd party packages without restriction.
 
-The differences in latencies are further pronounced when your custom logic requires access to a database system. Appbase.io functions provide access to your ElasticSearch instance - this means that you can read and write data to your search cluster into a meta index.
+    The differences in latencies are further pronounced when your function logic requires database access. Appbase.io Functions can access the ElasticSearch indices - you can read (or write) data to your search cluster.
 
 ## Hosting
 
-To deploy and run functions Appbase.io uses [OpenFaas](https://docs.openfaas.com), an open source project to let user build and deploy serverless functions on their infrastructure. There are two ways to get started with Functions and Appbase.io
+To deploy and run functions, Appbase.io leverages [OpenFaas](https://docs.openfaas.com), the most popular open-source project for running and deploying serverless functions. There are two ways to get started with Functions and Appbase.io
 
 -   [Appbase.io Clusters](https://docs.appbase.io/docs/hosting/Cluster/):
 
@@ -77,16 +75,16 @@ To deploy and run functions Appbase.io uses [OpenFaas](https://docs.openfaas.com
 
 -   [Self Hosted Appbase.io](https://github.com/appbaseio/arc-k8s):
 
-    With [Self Hosted Appbase.io](https://github.com/appbaseio/arc-k8s) and [kubernetes](https://kubernetes.io/) orchestration, you can deploy functions in the same infrastructure as of your ElasticSearch. For more information on how to host OpenFaas, please check docs [here](/docs/search/Functions/hosting)
+    With [Self Hosted Appbase.io](https://github.com/appbaseio/arc-k8s) and [Kubernetes](https://kubernetes.io/) orchestration, you can deploy functions in the same infrastructure as your search. For more information on how to self-host appbase.io with functions, please checkout our docs [here](/docs/search/Functions/hosting).
 
 ## Create
 
-Creating function is the first step, which let's you write down function in any language of your choice. Here you can add all the business logic that you would like to apply to the ElasticSearch requests. For more information on how to create a function, please refer docs [here](/docs/search/Functions/create)
+Creating a function is the first step. You can start by getting a boilerplate template and your business logic to the handler function. For more information on how to create a function, please refer docs [here](/docs/search/Functions/create)
 
 ## Deploy
 
-A function once created can be deployed into your search infrastructure. Deploying a function is essentially the equivalent of putting a container which contains this function and gets dedicated compute and memory resources. Once deployed function is ready to be invoked with your ElasticSearch requests. For more information on how to deploy a function you can read docs [here](/docs/search/Functions/deploy)
+A function once created can be deployed alongside your search infrastructure as a HTTP service with dedicated compute and memory resources allocated to it. For more information on how to deploy a function you can read docs [here](/docs/search/Functions/deploy).
 
 ## Set Trigger
 
-Setting a trigger lets you define the conditions under which functions should be invoked. You can read more about syntax and available options [here](/docs/search/Functions/trigger).
+Setting a trigger lets you define the conditions which when met would invoke your function. You can read more about the trigger syntax over [here](/docs/search/Functions/trigger).
