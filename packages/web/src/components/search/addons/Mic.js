@@ -86,9 +86,7 @@ class Mic extends React.Component {
 				});
 			};
 			this.instance.onresult = ({ results, timeStamp }) => {
-				this.setState({
-					status: STATUS.inactive,
-				});
+				this.stopMic();
 				if (onResult) {
 					onResult({ results, timeStamp });
 				}
