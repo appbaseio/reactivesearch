@@ -60,7 +60,7 @@ class Mic extends React.Component {
 				onResult, onNoMatch, onError, lang, getInstance,
 			} = this.props;
 			const { SpeechRecognition } = window;
-			if (this.instance) {
+			if (this.instance && status !== STATUS.denied) {
 				this.setState(
 					{
 						status: STATUS.inactive,
@@ -86,9 +86,7 @@ class Mic extends React.Component {
 				});
 			};
 			this.instance.onresult = ({ results, timeStamp }) => {
-				this.setState({
-					status: STATUS.inactive,
-				});
+				this.stopMic();
 				if (onResult) {
 					onResult({ results, timeStamp });
 				}
