@@ -60,6 +60,7 @@ class URLParamsProvider extends Component {
 						|| this.hasValidValue(prevProps.selectedValues[component])
 					) {
 						const selectedValues = this.props.selectedValues[component];
+						const prevValues = prevProps.selectedValues[component];
 						if (selectedValues.URLParams) {
 							if (selectedValues.category) {
 								this.setURL(
@@ -70,7 +71,18 @@ class URLParamsProvider extends Component {
 									}),
 								);
 							} else {
-								this.setURL(component, this.getValue(selectedValues.value));
+								const currentValue = this.getValue(selectedValues.value);
+								const prevValue = prevValues && this.getValue(prevValues.value);
+
+								/*
+									Push to history only if values are different because setting url on
+									same value will lead to 2 same entries in URL history which would cause
+									repeatation on pressing back button.
+								*/
+
+								if (prevValue !== currentValue) {
+									this.setURL(component, this.getValue(selectedValues.value));
+								}
 							}
 						} else {
 							this.params.delete(component);
