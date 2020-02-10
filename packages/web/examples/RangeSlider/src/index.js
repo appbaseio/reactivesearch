@@ -22,6 +22,7 @@ const Main = () => (
 						start: 3000,
 						end: 50000,
 					}}
+					showHistogram
 					rangeLabels={{
 						start: '3K',
 						end: '50K',

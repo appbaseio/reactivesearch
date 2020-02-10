@@ -33,7 +33,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
-import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
+import Input, { suggestionsContainer, Suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import InputIcon from '../../styles/InputIcon';
@@ -797,7 +797,7 @@ class DataSearch extends Component {
 							highlightedIndex,
 							...rest
 						}) => (
-							<div className={suggestionsContainer}>
+							<div css={suggestionsContainer}>
 								<Input
 									aria-label={this.props.componentId}
 									id={`${this.props.componentId}-input`}
@@ -835,12 +835,7 @@ class DataSearch extends Component {
 								{this.renderLoader()}
 								{this.renderError()}
 								{!this.hasCustomRenderer && isOpen && suggestionsList.length ? (
-									<ul
-										className={`${suggestions(
-											themePreset,
-											theme,
-										)} ${getClassName(this.props.innerClass, 'list')}`}
-									>
+									<Suggestions>
 										{suggestionsList.slice(0, size).map((item, index) => (
 											<li
 												{...getItemProps({ item })}
@@ -858,7 +853,7 @@ class DataSearch extends Component {
 												/>
 											</li>
 										))}
-									</ul>
+									</Suggestions>
 								) : (
 									this.renderNoSuggestion(suggestionsList)
 								)}

@@ -51,6 +51,7 @@ class URLParamsProvider extends Component {
 			const currentComponents = Object.keys(this.props.selectedValues);
 			const urlComponents = Array.from(this.params.keys());
 
+
 			currentComponents
 				.filter(component => this.props.selectedValues[component].URLParams)
 				.forEach((component) => {
@@ -70,7 +71,15 @@ class URLParamsProvider extends Component {
 									}),
 								);
 							} else {
-								this.setURL(component, this.getValue(selectedValues.value));
+								const val = this.getValue(selectedValues.value);
+								console.log(val, typeof val);
+								if (val > 1 || typeof val !== 'number') {
+									this.setURL(component, val);
+								} else {
+									console.log("In deletion", component);
+									this.params.delete(component);
+									this.pushToHistory();
+								}
 							}
 						} else {
 							this.params.delete(component);

@@ -137,9 +137,10 @@ class ReactiveBase extends Component {
 
 	render() {
 		const theme = composeThemeObject(getTheme(this.props.themePreset), this.props.theme);
+		console.log(theme)
 		return (
+			<Provider context={ReactReduxContext} store={this.store}>
 			<ThemeProvider theme={theme} key={this.state.key}>
-				<Provider context={ReactReduxContext} store={this.store}>
 					<URLParamsProvider
 						headers={this.props.headers}
 						style={this.props.style}
@@ -150,8 +151,8 @@ class ReactiveBase extends Component {
 					>
 						{this.props.children}
 					</URLParamsProvider>
-				</Provider>
 			</ThemeProvider>
+				</Provider>
 		);
 	}
 }

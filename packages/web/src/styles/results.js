@@ -1,4 +1,4 @@
-import { css } from 'emotion';
+import { css } from '@emotion/core';
 
 const resultStats = css`
 	flex-grow: 1;

@@ -28,12 +28,13 @@
 						"loose": true
 					}
 				],
-				"react"
+				"react",
+				"@emotion/babel-preset-css-prop"
 			],
 			"plugins": [
 				"emotion",
 				"transform-class-properties",
-				"transform-object-rest-spread"
+				"transform-object-rest-spread",
 			]
 		},
 		"es": {
@@ -47,7 +48,8 @@
 						"modules": false
 					}
 				],
-				"react"
+				"react",
+				"@emotion/babel-preset-css-prop"
 			],
 			"plugins": [
 				"emotion",

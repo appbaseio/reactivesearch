@@ -1,5 +1,5 @@
 import React from 'react';
-import { css, cx } from 'react-emotion';
+import { css } from '@emotion/core';
 
 import Flex from '../../../styles/Flex';
 import Highlight from './Highlight';
@@ -31,7 +31,7 @@ const SuggestionItem = ({ currentValue, suggestion }) => {
 							alt=" "
 							height="50px"
 							width="50px"
-							css={{ objectFit: 'contain' }}
+							css={css`object-fit: contain;`}
 						/>
 					</div>
 				)}
@@ -41,12 +41,12 @@ const SuggestionItem = ({ currentValue, suggestion }) => {
 							<Highlight
 								searchWords={currentValue.split(' ')}
 								textToHighlight={title}
-								className={css({ fontSize: '1rem' })}
+								css={css`font-size: 1rem;`}
 							/>
 						</div>
 					)}
 					{description && (
-						<div className={cx('trim', css({ marginTop: 3 }))}>
+						<div css={['trim', css({ marginTop: 3 })]}>
 							<Highlight
 								searchWords={currentValue.split(' ')}
 								textToHighlight={description}

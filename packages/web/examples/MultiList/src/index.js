@@ -18,17 +18,20 @@ class Main extends Component {
 							componentId="BookSensor"
 							dataField="original_series.raw"
 							size={100}
+							URLParams
 						/>
 					</div>
 
 					<div className="col">
 						<SelectedFilters />
 						<ReactiveList
+							URLParams
+							pagination
 							componentId="SearchResult"
 							dataField="original_title.raw"
 							className="result-list-container"
 							from={0}
-							size={5}
+							size={3}
 							renderItem={this.booksReactiveList}
 							react={{
 								and: ['BookSensor'],

@@ -1,5 +1,5 @@
-import { css } from 'emotion';
-import styled from 'react-emotion';
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
 
 export const histogramContainer = css`
 	display: flex;

@@ -1,5 +1,5 @@
-import { css } from 'emotion';
-import styled from 'react-emotion';
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
 
 const alertBorder = ({ theme }) => css`
 	border: 1px solid ${theme.colors.alertColor};
@@ -110,7 +110,7 @@ const noSuggestions = (themePreset, theme) => css`
 	${themePreset === 'dark' && dark(theme)}
 `;
 
-const suggestions = (themePreset, theme) => css`
+const Suggestions = styled.ul`
 	display: block;
 	width: 100%;
 	border: 1px solid #ccc;
@@ -147,8 +147,6 @@ const suggestions = (themePreset, theme) => css`
 			background-color: #eee;
 		}
 	}
-
-	${themePreset === 'dark' && dark(theme)}
 `;
 
 const suggestionsContainer = css`
@@ -159,4 +157,4 @@ const suggestionsContainer = css`
 `;
 
 export default Input;
-export { suggestionsContainer, suggestions, input, noSuggestions };
+export { suggestionsContainer, Suggestions, input, noSuggestions };
