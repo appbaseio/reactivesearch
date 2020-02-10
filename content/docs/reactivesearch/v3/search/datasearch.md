@@ -155,31 +155,30 @@ Example uses:
 -   **showDistinctSuggestions** `Boolean` [optional]
     Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `false`.
 	<br/> <br/>
-    **Example** if `showDistinct`  is set to `false`
+    **Example** if you have `showDistinctSuggestions`  is set to `false` and have following configurations
 
-**Your Document**
-```json
-{
-   "name": "Warn",
-   "address": "Washington"
-}
-```
+	```js
+	// Your document:
+	{
+		"name": "Warn",
+		"address": "Washington"
+	}
 
-**Search Query**
-```
-"wa"
-```
+	// Component:
+	<DataSearch dataField=['name', 'address'] .../>
 
-**Component**
-```
-<DataSearch dataField=['name', 'address'] .../>
-```
+	// Search Query:
+	"wa"
+	```
 
-There will be **2 suggestions** from the same document as we have the search term present in both the fields specified in `dataField`.
-```
-Warn
-Washington
-```
+	Then there will be 2 suggestions from the same document
+	as we have the search term present in both the fields
+	specified in `dataField`.
+
+	```
+	Warn
+	Washington
+	```
 
 `Note:` Check the above concept in action over [here](https://codesandbox.io/s/musing-allen-qc58z).
 
