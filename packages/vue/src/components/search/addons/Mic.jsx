@@ -70,7 +70,7 @@ const Mic = {
 					this.status = STATUS.active;
 				};
 				this.instance.onresult = ({ results, timeStamp }) => {
-					this.status = STATUS.inactive;
+					this.stopMic();
 					if (handleResult) {
 						handleResult({ results, timeStamp });
 					}
