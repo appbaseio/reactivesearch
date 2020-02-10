@@ -50,27 +50,28 @@ Popular hosted OAuth & Identity Providers like [Auth0](https://auth0.com/), [Fir
 
 [Appbase.io dashboard](https://dashboard.appbase.io) provides an intuitive way to enable and configure role based access. In order to setup RBAC, select _Role Based Access_ under _Security_ on the Dashboard's navigation bar.
 
-![](https://www.dropbox.com/s/v7uwupxmh757yvl/Screenshot%202019-06-19%2017.19.46.png?dl=1)
+![](https://www.dropbox.com/s/3nh8ssvvmpvnxcl/Screenshot%202020-02-10%2012.49.24.png?raw=1)
 
 > **NOTE** RBAC feature is available with all the paid plans.
 
 ### This page is divided into 2 sections
 
-#### 1. Configuring JWT Public Key and Role Key
+#### 1. Configuring JWT Public Key and Role Claim
 
 In order to verify JWT signed using RSA256, we need a Public Key provided by the identity provider. Public key must be [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) encoded [PKCS1](https://en.wikipedia.org/wiki/PKCS_1).
 
-You can start by pasting the public key in the text area provided for _Public Key_. Another thing that is required to verify user role, is actual _Role Key_ that would be present in any JWT. This can be configured in _Role Key_ input. The default value for role key is `role`.
+You can start by pasting the public key in the text area provided for _Public Key_. Another thing that is required to verify user role, is actual _Role Claim_ that would be present in any JWT. _Role Claim_ is Key in JWT Object that helps
+in asserting the role information. This can be configured in _Role Claim_ input. The default value for Role Claim is `role`.
 
 **Here is a quick example, using [https://jwt.io/](https://jwt.io/) debugger.**
 
-![](https://www.dropbox.com/s/n1vqfle2t3vrma8/Screenshot%202019-06-19%2017.56.04.png?dl=1)
+![](https://www.dropbox.com/s/1adzl857lcqcfkg/Screenshot%202020-02-10%2012.46.43.png?raw=1)
 
 #### 2. Mapping roles to [API Credentials](/docs/security/Credentials)
 
-Once the _Public Key_ and _Role Key_ is configured, you can set up the actual roles that a user can have in your application in **Map Roles to API Credential** section. Each credentials created in [API Credentials](/docs/security/Credentials) section can have a unique role name, which would be the value encoded in our JWT.
+Once the _Public Key_ and _Role Claim_ is configured, you can set up the actual roles that a user can have in your application in **Map Roles to API Credential** section. Each credentials created in [API Credentials](/docs/security/Credentials) section can have a unique role name, which would be the value encoded in our JWT.
 
-![](https://www.dropbox.com/s/oxxtdl8koww9mro/Screenshot%202019-06-19%2018.25.59.png?dl=1)
+![](https://www.dropbox.com/s/2g4c923eqdqx90w/Screenshot%202020-02-10%2012.50.35.png?raw=1)
 
 As you can see in the above example we have assigned roles to different credentials, i.e. `admin` & `developer`. (_this values have to be unique per application_).
 
