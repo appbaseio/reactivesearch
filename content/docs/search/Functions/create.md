@@ -141,7 +141,7 @@ faas-cli push -f promote-result.yml
 
 Once your function is published as docker image, you can also make it private from your registry / docker hub.
 
-<iframe width="600" height="315" src="https://www.youtube.com/embed/wQZ5_mbbU5I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe style="width: 100%" title="Functions demo" height="315" src="https://www.youtube.com/embed/ak7nbXxjY-c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 > **Note:** If you are using Self Hosted version of Appbase.io and want to deploy private image of function, you will have to add `OPENFAAS_KUBE_CONFIG` env with the value where your kubernetes config file exists.
 
