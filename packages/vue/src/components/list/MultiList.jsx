@@ -350,7 +350,7 @@ const MultiList = {
 					};
 				}
 
-				finalValues = Object.keys(currentValue);
+				finalValues = typeof value === 'object' ? [...value] : Object.keys(currentValue);
 			}
 
 			const performUpdate = () => {
