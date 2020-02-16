@@ -40,7 +40,12 @@ class GeoDistanceDropdown extends GeoCode {
 		this.type = 'geo_distance';
 		this.coordinates = null;
 		this.autocompleteService = null;
-		this.geocoder = new window.google.maps.Geocoder();
+
+		if (props.geocoder) {
+			this.geocoder = props.geocoder;
+		} else {
+			this.geocoder = new window.google.maps.Geocoder();
+		}
 
 		if (props.autoLocation) {
 			this.getUserLocation();
@@ -516,6 +521,7 @@ GeoDistanceDropdown.propTypes = {
 	unit: types.string,
 	URLParams: types.bool,
 	serviceOptions: types.props,
+	geocoder: types.shape,
 };
 
 GeoDistanceDropdown.defaultProps = {
