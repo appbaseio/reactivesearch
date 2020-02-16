@@ -43,7 +43,7 @@ class GeoDistanceDropdown extends GeoCode {
 
 		if (props.geocoder) {
 			this.geocoder = props.geocoder;
-		} else {
+		} else if (typeof window.google === 'object' && typeof window.google.maps === 'object') {
 			this.geocoder = new window.google.maps.Geocoder();
 		}
 
@@ -87,7 +87,9 @@ class GeoDistanceDropdown extends GeoCode {
 	}
 
 	componentDidMount() {
-		this.autocompleteService = new window.google.maps.places.AutocompleteService();
+		if (typeof window.google === 'object' && typeof window.google.maps === 'object') {
+			this.autocompleteService = new window.google.maps.places.AutocompleteService();
+		}
 	}
 
 	componentDidUpdate(prevProps) {
@@ -293,7 +295,7 @@ class GeoDistanceDropdown extends GeoCode {
 				label: this.props.value.label,
 			});
 		}
-		if (value.trim()) {
+		if (value.trim() && typeof window.google === 'object' && typeof window.google.maps === 'object') {
 			if (!this.autocompleteService) {
 				this.autocompleteService = new window.google.maps.places.AutocompleteService();
 			}
