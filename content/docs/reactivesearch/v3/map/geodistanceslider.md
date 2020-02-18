@@ -122,7 +122,21 @@ Example uses:
         </h5>
     )}
     ```
+-   **geocoder** `Object` [optional]
+    give your own geocoder tool to mimic Google Map's one. Usefull if using ReactiveOpenStreetMap only and you want to search arround your positionned data. For example:
 
+    ```
+    geocoder={{geocode: function (data, todo) {
+        if (data.location) {
+            todo([{formatted_address: data.location.lat + ',' + data.location.lng}],'OK');
+        } else if (data.address) {
+            const [tlat,tlng] = data.address.split(',');
+            todo([{geometry: {location: {lat: () => tlat, lng: () => tlng}}}],'OK');
+        } else {
+            todo(null,'Not an address or a location');
+        }
+    }}
+    ```
 ## Demo
 
 <br />
