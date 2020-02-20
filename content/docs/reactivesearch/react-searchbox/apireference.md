@@ -75,6 +75,9 @@ Example uses of searchbox UI:
 -   **credentials** `string` [optional]
     Basic auth credentials for authentication purposes. It should be a string of the format `username:password`.
     If you are using an appbase.io app, you will find credentials under your [API credentials page](https://dashboard.appbase.io/app?view=credentials). If you are not using an appbase.io app, credentials may not be necessary - although having an open access to your Elasticsearch cluster is not recommended.
+-   **enableAppbase** `boolean`
+    enabling this prop allows you to use `reactivesearch-v3` API for making search and result requests. The advantage of this is it solves the security concern of `query injection`. It handles `query rules` and `analytics` in a better way.
+    Read more on [query-rules](/docs/search/Rules/) and [analytics](/docs/reactivesearch/v3/advanced/analytics/).
 -   **dataField** `string | Array<string | DataField>` [required]
     database field(s) to be queried against. Accepts a String or an Array of either String or `DataField` type. The latter is useful for searching across multiple fields with field weights.<br/>
     Think of field weights as a way to apply weighted search. To use field weights, you can define the `dataField` prop as an array of objects of `DataField` type.<br/>
@@ -194,6 +197,8 @@ Example uses of searchbox UI:
         An array of original suggestions obtained from the applied query.
     -   **`promotedData`**: `array`
         An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
+    -   **`customData`**: `Object`
+        An object of custom data obtained from the `reactivesearch-v3` API.
     -   **`resultStats`**: `object`
         An object with the following properties which can be helpful to render custom stats:
         -   **`numberOfResults`**: `number`
