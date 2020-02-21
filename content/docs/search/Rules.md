@@ -1,6 +1,6 @@
 ---
-title: 'Query Rules'
-meta_title: 'Query Rules'
+title: 'Query Rules For Clusters'
+meta_title: 'Query Rules For Clusters'
 meta_description: 'Query Rules are essentially `If-This-Then-That`'
 keywords:
     - concepts
@@ -10,238 +10,84 @@ keywords:
 sidebar: 'docs'
 ---
 
-## Part 1: Introduction
+## Overview
 
-Query Rules are essentially `If-This-Then-That` construct - **_If_** **search query contains 'Google',** **_then_**
-**promote 'Chromebook'.** Query Rules serve a very specific purpose as far as search results and merchandising is
-concerned. When building a commercial search product, customers more often than not require commercializing the product
-based on certain search queries.
+Query Rules let you make precise, predetermined changes to your search results or search queries, thus allowing you to enhance search experience. For example, you can reposition items in a user’s search results or activate filters based on query terms. Rules can also be enabled for a fixed period of time: this makes Rules a great way of implementing sales or promotions. Query Rules are essentially `If-This-Then-That` construct - **_If_** **search query contains 'Google',** **_then_**
+**promote 'Chromebook'.** Query Rules serve a very specific purpose as far as search results and merchandising is concerned. When building a commercial search product, customers more often than not require commercializing the product based on certain search queries.
 
-One of the most common approach to achieve this is to **promote** or **hide** certain search results based on a given
-query. Query Rules automates this process by allowing users to curate `If-This-Then-That` rules. For example, a user can
-create a rule to **promote** an external document or result when a particular search query is fired. The rule is then
-triggered automatically whenever that search query is fired and appends the promoted document along with the search
-results. Similarly, a rule can be created that prevents i.e. **hides** certain results from getting included in the
-actual search results.
+![query rule dashboard](https://www.dropbox.com/s/1n4uznradc78lch/Screenshot%202020-02-20%2011.06.00.png?raw=1)
 
-## Part 2: Query Rules using Dashboard
+> Query rules are available with **Production I, II, III and IV** cluster plans or with the **Enterprise Plan** for Self Hosted Appbase.io.
 
-The dashboard provides an intuitive way to create, manage and configure your Query Rules. In fact, you can visualize
-and tune your search results while you are creating the rule. After the rule is created, you can always tweak it later
-based on your search and merchandising needs.
+## Use Cases
 
-In order to create a Query Rule, select `Query Rules` under `Develop` on the dashboard's navigation bar.
+Here are some use cases where Query Rules can help you improve search relevance
 
-![](https://i.imgur.com/uszkL7s.png)
+-   Dynamically update facets based on query. Example if a user is searching for "laptops", show filters related laptops only
+-   Promote result during discounts / sale on your store
+-   Hide products that are not available
+-   Hide irrelevant results
+-   Replace search term based on data available
 
-Creating a rule from dashboard is a two-step process. In the first step you configure the **_If_** condition of the rule.
-Query Rule currently supports five `operators`:
+## Configure **If** Condition
 
--   `is`: applied when there is an **exact** query match
--   `starts_with`: applied when a search query **starts with** the specified query
--   `ends_with`: applied when a search query **ends with** the specified query
--   `contains`: applied when a search query **contains** the specified query
--	`empty_query`: applied when no search query is present. This is often the case when an end user is opening the search UI for the very first time.
+**If** conditions helps in deciding when to trigger a query rule based on which configured actions will be executed. There are 2 types of trigger
 
-For example: After the configuring this step, what we achieve is something similar to:
-**_If_** **search query contains 'Google'**, where the `operator` is `contains` and `query` is `Google`.
+1.  **Always:**
 
-<!-- If condition image -->
+    This is helpful when you want to execute an action with all the search request. Example you want to always **hide** a product which is no longer available in store.
 
-![](https://i.imgur.com/rzOq63Q.png)
+2.  **Condition**
 
-The second step consists of configuring of actions that are triggered when the **_If_** condition of the query is
-matched. Query Rule currently supports two `actions`:
+    This is helpful when you want to execute an action with specific search / filter condition. Example if query `contains` a specific search term. There are 4 types of search condition which you can configure
 
--   `promote`: appends external docs or results along with the actual search results
--   `hide`: prevents certain results from getting included in the resturned search results
+    -   `Query is`: applied when there is an **exact** query match
+    -   `Query contains`: applied when a search query contains the specified query
+    -   `Query starts with`: applied when a search query starts with the specified query
+    -   `Query ends with`: applied when a search query ends with the specified query
 
-<!-- Then condition image each for promote and hide -->
+    <br />
+    Here, you can also configure filter condition, which can help you set trigger based on filtering field and value. Example, `brand` is `apple`.
 
-![](https://i.imgur.com/biuc4SL.png)
+You can also configure rules for specific `indexes` in your ElasticSearch cluster and for a specific `time period` (example you only want to promote result for a seasonal sale on your ecommerce store ). By default, it is applicable on all the indexes and all the time.
 
-## Part 3: Query Rules using API
+![configure if condition](https://www.dropbox.com/s/3zdnfuzm9bnqln3/Screenshot%202020-02-20%2010.20.25.png?raw=1)
 
-The dashboard provides an easier way to tune and visualize the query rules, however you can also manage them via API.
-The rule can be divided into two main segments:
+## Configure **Then** Actions
 
-1. **_If_** clause:
+**Then** actions help you configure the actions that you want to invoke when triggering conditions are matched. Following are the actions that you can invoke
 
-The **If** clause comprises of both `query` and `operator`. Currently supported `operators` are listed in the
-section above. Whenever a search query matches the **If** clause, it automatically triggers the **Then** clause of the
-rule.
+> Note: Actions are executed in the order in which are the listed in your dashboard. You can drag and drop to change the sequence of executing actions.
 
-```json
-{
-    ..
-    "if": {
-        "query": "harry potter",
-        "operator": "contains"
-    }
-    ...
-}
-```
+### Promote Results
 
-2. **_Then_** clause:
+Helps in promoting result at certain position in your result set. Example when a user searches for `iphone` you want to promote `air pods`.
 
-The **Then** clause comprises of `actions` that are to be executed when a rule is triggered. Currently supported
-`actions` are listed in the section above.
+![promote result](https://www.dropbox.com/s/sxvshcbmwn7u24j/Screenshot%202020-02-20%2010.25.52.png?raw=1)
 
-```json
-{
-    ...
-    "then": {
-        "promote": [
-            {
-                "id": "harry_potter_cheat_sheet",
-                "name": "Harry Potter",
-                "section_order": [
-                    "Books",
-                    "Movies",
-                    "Franchise"
-                ],
-                "template_type": "reference"
-            }
-        ],
-        "hide": [
-            { "doc_id": "Jle44WgBnfYvZBcA0H66" }
-        ]
-    }
-    ...
-}
-```
+### Hide Results
 
-A complete query rule may look similar to:
+Helps in hiding certain results from getting included in the actual search results. Example you want to hide products that not available in the store, or you want to hide results that contains irrelevant data.
 
-```json
-{
-	"id": "contains_harry_potter",
-	"if": {
-		"query": "harry potter",
-		"operator": "contains"
-	},
-	"then": {
-		"promote": [
-			{
-				"id": "harry_potter_cheat_sheet",
-				"name": "Harry Potter",
-				"section_order": ["Books", "Movies", "Franchise"],
-				"template_type": "reference"
-			}
-		],
-		"hide": [{ "doc_id": "Jle44WgBnfYvZBcA0H66" }]
-	}
-}
-```
+![hide result](https://www.dropbox.com/s/ppnhqqwytmxqqw1/Screenshot%202020-02-20%2010.35.40.png?raw=1)
+Custom Data
 
-**Note**: The rule `id` is an optional field, in case it isn't provided, it will be generated automatically
-based on the `query` and `operator`.
+Helps in sending the custom `JSON` data in search response. This will be helpful when you want to send some extra information to frontend, which can help in rendering more specific information.
 
-Now that we have constructed the `rule` object, we can create the query rule by executing the following request:
+![custom data](https://www.dropbox.com/s/nhwr6vglqouxkh5/Screenshot%202020-02-20%2010.44.18.png?raw=1)
 
-```sh
-curl --location --request POST "https://accapi.appbase.io/app/book-store/rule" \
-  --header "Content-Type: application/json" \
-  --data '
-{
-    "id": "contains_harry_potter",
-    "if": {
-        "query": "harry potter",
-        "operator": "contains"
-    },
-    "then": {
-        "promote": [
-            {
-                "id": "harry_potter_cheat_sheet",
-                "name": "Harry Potter",
-                "section_order": [
-                    "Books",
-                    "Movies",
-                    "Franchise"
-                ],
-                "template_type": "reference"
-            }
-        ],
-        "hide": [
-            { "doc_id": "Jle44WgBnfYvZBcA0H66" }
-        ]
-    }
-}
-'
-```
+### Replace Search Term
 
-We can similarly add more rules and update or delete the existing query rules via API. Checkout the Query Rules REST
-API [documentation](https://documenter.getpostman.com/view/2848488/RW81vt5x#723b2a22-e515-4950-adec-ab3b64ccfcd7) for
-more information.
+Helps in replacing the user’s entire search query with another query. Helps in showing relevant results to users, specially when you are aware from the analytics that certain search term is returning no results.
 
-## Part 4: Query Rules Responses
+![replace search term](https://www.dropbox.com/s/p0he4889pkbl1u8/Screenshot%202020-02-20%2010.50.10.png?raw=1)
 
-In order to run the search queries against the query rules, we need to pass in the query value in the `X-Search-Query`
-header. For example:
+### Functions
 
-```sh
-curl -XGET https://${credentials}@scalr.api.appbase.io/movie-store/_msearch \
-  -H 'Content-Type: application/json' \
-  -H 'X-Search-Query: harry potter' \
-  -d '
-{
-    "query": {
-        "match": {
-            "original_title": "harry potter"
-        }
-    }
-}
-'
-```
+Helps in doing more customization with search or handling edge cases around search relevancy. Functions lets you implement any custom action. Example you want to perform natural language processing on search query.
 
-The search query `harry potter` subsequently matches the rule we created in the previous section. What happens is the
-**If** clause i.e. **_If_** **search query contains 'harry potter'** resolves to true, and so the **Then** clause is
-subsequently triggered. Our rule specifies two actions in the **Then** clause: `promote` the given doc and `hide` a
-search result with `{ "doc_id": "Jle44WgBnfYvZBcA0H66" }`.
+![function](https://www.dropbox.com/s/tsrj68q3yixcp2n/Screenshot%202020-02-20%2010.59.35.png?raw=1)
 
-Therefore, both these actions get applied to the elasticsearch's response to our original query. The **promoted**
-results will get appended under the `promoted` field and the **hidden** results will be removed from the original
-results. Additionally you'll get a field named `hidden` which will tell you the number of hidden results. An example `search` response would look similar to this:
+For more information you can read functions [docs](/docs/search/Functions).
 
-```json
-{
-	"took": 8,
-	"timed_out": false,
-	"_shards": {
-		"failed": 0,
-		"skipped": 0,
-		"successful": 3,
-		"total": 3
-	},
-	"hits": {
-		"max_score": 5.4339542,
-		"total": 3,
-		"hits": [
-			{
-				"_id": "AWjmCtx674JxTt-e5Gzs",
-				"_index": "movie-store",
-				"_score": 4.480236,
-				"_source": {
-					"genres": "",
-					"original_language": "English",
-					"original_title": "Harry Potter and the Deathly Hallows: Part 1",
-					"overview": "Harry, Ron and Hermione walk away from their last year at Hogwarts to find and destroy the remaining Horcruxes, putting an end to Voldemort's bid for immortality.",
-					"poster_path": "https://image.tmdb.org/t/p/w185/maP4MTfPCeVD2FZbKTLUgriOW4R.jpg",
-					"release_year": 2010,
-					"tagline": "One Way… One Fate… One Hero."
-				},
-				"_type": "movies"
-			}
-		]
-	},
-	"promoted": [
-		{
-			"id": "harry_potter_cheat_sheet",
-			"name": "Harry Potter",
-			"section_order": ["Books", "Movies", "Franchise"],
-			"template_type": "reference"
-		}
-	],
-    "hidden": 1,
-}
-```
+> Note: a function linked with Query Rule cannot have its own triggering condition.
