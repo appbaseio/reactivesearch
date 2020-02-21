@@ -1,6 +1,6 @@
 ---
-title: 'Query Rules'
-meta_title: 'Query Rules'
+title: 'Query Rules For Clusters'
+meta_title: 'Query Rules For Clusters'
 meta_description: 'Query Rules are essentially `If-This-Then-That`'
 keywords:
     - concepts
@@ -12,7 +12,7 @@ sidebar: 'docs'
 
 ## Overview
 
-Query Rules allows you to enhance search response for specific / all queries. Query Rules let you make precise, predetermined changes to your search results. For example, you can reposition items in a user’s search results or activate filters based on query terms. Rules can also be enabled for a fixed period of time: this makes Rules a great way of implementing sales or promotions. Query Rules are essentially `If-This-Then-That` construct - **_If_** **search query contains 'Google',** **_then_**
+Query Rules let you make precise, predetermined changes to your search results or search queries, thus allowing you to enhance search experience. For example, you can reposition items in a user’s search results or activate filters based on query terms. Rules can also be enabled for a fixed period of time: this makes Rules a great way of implementing sales or promotions. Query Rules are essentially `If-This-Then-That` construct - **_If_** **search query contains 'Google',** **_then_**
 **promote 'Chromebook'.** Query Rules serve a very specific purpose as far as search results and merchandising is concerned. When building a commercial search product, customers more often than not require commercializing the product based on certain search queries.
 
 ![query rule dashboard](https://www.dropbox.com/s/1n4uznradc78lch/Screenshot%202020-02-20%2011.06.00.png?raw=1)
