@@ -82,6 +82,22 @@ Helps in replacing the user’s entire search query with another query. Helps in
 
 ![replace search term](https://www.dropbox.com/s/p0he4889pkbl1u8/Screenshot%202020-02-20%2010.50.10.png?raw=1)
 
+### Remove Words
+
+Removing words is the progressive loosening of query constraints to include more results when none are initially found.
+
+For example, imagine an online smartphone shop that sold a limited inventory of iPhones in only 16GB and 32GB varieties. Users searching for “iphone 5 64gb” would see no results. This is not ideal behavior - it would be far better to show users some iPhone 5 results instead of a blank page.
+
+You can remove multiple words by space separated values. E.g. `iphone samsung`.
+
+![remove words](https://i.imgur.com/ArDcJRn.png)
+
+### Replace Words
+
+Rules offers an alternative. You can now replace words instead of adding new ones. For example, if you make `tv` a synonym for `television`, Rules will replace `tv` with `television` so that only `television` is used to search.
+
+![replace-word](https://i.imgur.com/ps6JH9A.png)
+
 ### Functions
 
 Helps in doing more customization with search or handling edge cases around search relevancy. Functions lets you implement any custom action. Example you want to perform natural language processing on search query.
