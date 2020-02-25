@@ -72,9 +72,12 @@ Example uses of searchbox UI:
 
 -   **url** `string` [required]
     URL for the Elasticsearch cluster. Defaults to `https://scalr.api.appbase.io`
--   **enableAppbase** `boolean`
-    enabling this prop allows you to use `reactivesearch-v3` API for making search and result requests. The advantage of this is it solves the security concern of `query injection`. It handles `query rules` and `analytics` in a better way.
-    Read more on [query-rules](/docs/search/Rules/) and [analytics](/docs/reactivesearch/vue/advanced/Analytics/).
+-   **enableAppbase** `boolean` [optional]
+    enableAppbase is false by default. You can set this to true when you're using appbase.io alongside ElasticSearch. It enables the following features:
+    -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/vue/advanced/Analytics/).
+    -   Query generation happens on server side - protecting against security concerns around query injection.
+    -   Apply query rules and functions for search queries. [Read more](/docs/search/Rules/).
+    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/Role/).
 -   **credentials** `string` [optional]
     Basic auth credentials for authentication purposes. It should be a string of the format `username:password`.
     If you are using an appbase.io app, you will find credentials under your [API credentials page](https://dashboard.appbase.io/app?view=credentials). If you are not using an appbase.io app, credentials may not be necessary - although having an open access to your Elasticsearch cluster is not recommended.

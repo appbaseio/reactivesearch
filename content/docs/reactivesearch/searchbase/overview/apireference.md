@@ -45,9 +45,12 @@ const searchbase = new SearchBase(props);
 
 -   **url** `string` [Required]
     URL for the Elasticsearch cluster
--   **enableAppbase** `boolean`
-    enabling this prop allows you to use `reactivesearch-v3` API for making search and result requests. The advantage of this is it solves the security concern of `query injection`. It handles `query rules` and `analytics` in a better way.
-    Read more on [query-rules](/docs/search/Rules/) and [analytics](/docs/reactivesearch/v3/advanced/analytics/).
+-   **enableAppbase** `boolean` [optional]
+    enableAppbase is false by default. You can set this to true when you're using appbase.io alongside ElasticSearch. It enables the following features:
+    -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/).
+    -   Query generation happens on server side - protecting against security concerns around query injection.
+    -   Apply query rules and functions for search queries. [Read more](/docs/search/Rules/).
+    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/Role/).
 -   **dataField** `string | Array<string | DataField>` [Required]
     index field(s) to be connected to the component’s UI view. DataSearch accepts an Array in addition to String, which is useful for searching across multiple fields with or without field weights.<br/>
     Field weights allow weighted search for the index fields. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.<br/>
@@ -360,6 +363,7 @@ These properties are automatically calculated or managed by the `Searchbase` cla
     -   **`hidden`**: `number` Total number of hidden results found
     -   **`promoted`**: `number` Total number of promoted results found
     -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
+    <!-- TODO: link reactivesearch-v3 docs -->
     -   **`customData`**: `Object` An object of custom data obtained from the `reactivesearch-v3` API.
     -   **`rawData`**: `Array<Object>`  An array of original hits obtained from the applied query.
 -   **results** `Results`
