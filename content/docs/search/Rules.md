@@ -70,7 +70,8 @@ Helps in promoting result at certain position in your result set. Example when a
 Helps in hiding certain results from getting included in the actual search results. Example you want to hide products that not available in the store, or you want to hide results that contains irrelevant data.
 
 ![hide result](https://www.dropbox.com/s/ppnhqqwytmxqqw1/Screenshot%202020-02-20%2010.35.40.png?raw=1)
-Custom Data
+
+### Custom Data
 
 Helps in sending the custom `JSON` data in search response. This will be helpful when you want to send some extra information to frontend, which can help in rendering more specific information.
 
