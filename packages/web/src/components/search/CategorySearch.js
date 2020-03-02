@@ -822,7 +822,7 @@ class CategorySearch extends Component {
 
 	getComponent = (downshiftProps = {}) => {
 		const {
-			error, isLoading, aggregationData, promotedResults,
+			error, isLoading, aggregationData, promotedResults, customData,
 		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
@@ -830,7 +830,8 @@ class CategorySearch extends Component {
 			loading: isLoading,
 			downshiftProps,
 			data: this.parsedSuggestions,
-			promotedData: promotedResults,
+			promotedData: promotedResults || [],
+			customData: customData || {},
 			aggregationData: aggregationData || [],
 			value: currentValue,
 			suggestions: this.state.suggestions,
@@ -1057,6 +1058,7 @@ CategorySearch.propTypes = {
 	options: types.options,
 	categories: types.data,
 	promotedResults: types.hits,
+	customData: types.title,
 	selectedValue: types.selectedValue,
 	selectedCategory: types.selectedValue,
 	suggestions: types.suggestions,
@@ -1171,7 +1173,8 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
 	config: state.config,
-	promotedResults: state.promotedResults[props.componentId] || [],
+	promotedResults: state.promotedResults[props.componentId],
+	customData: state.customData[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,

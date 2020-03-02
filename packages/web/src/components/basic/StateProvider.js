@@ -87,6 +87,7 @@ StateProvider.propTypes = {
 	includeKeys: arrayOf(string),
 	strict: bool,
 	selectedValues: types.componentObject,
+	customData: types.componentObject,
 	queryLog: types.componentObject,
 	componentProps: types.componentObject,
 	hits: types.componentObject,
@@ -106,6 +107,7 @@ const mapStateToProps = (state, props) => ({
 	isLoading: filterByComponentIds(state.isLoading, props),
 	error: filterByComponentIds(state.error, props),
 	promotedResults: filterByComponentIds(state.promotedResults, props),
+	customData: filterByComponentIds(state.customData, props),
 });
 
 export default connect(mapStateToProps, null)(StateProvider);

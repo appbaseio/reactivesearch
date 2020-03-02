@@ -201,7 +201,7 @@ class ReactiveList extends Component {
 			checkSomePropChange(
 				this.props,
 				prevProps,
-				['hits', 'streamHits', 'promotedResults', 'total', 'size', 'time', 'hidden'],
+				['hits', 'streamHits', 'promotedResults', 'customData', 'total', 'size', 'time', 'hidden'],
 				() => {
 					this.props.onData(this.getData());
 				},
@@ -413,7 +413,9 @@ class ReactiveList extends Component {
 
 	// Calculate results
 	getAllData = () => {
-		const { size, promotedResults, aggregationData } = this.props;
+		const {
+			size, promotedResults, aggregationData, customData,
+		} = this.props;
 		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
@@ -437,6 +439,7 @@ class ReactiveList extends Component {
 			streamResults,
 			filteredResults,
 			promotedResults,
+			customData: customData || {},
 			aggregationData: aggregationData || [],
 			loadMore: this.loadMore,
 			base,
@@ -692,6 +695,7 @@ class ReactiveList extends Component {
 			filteredResults,
 			promotedResults,
 			aggregationData,
+			customData,
 		} = this.getAllData();
 		return {
 			data: this.withClickIds(filteredResults),
@@ -699,6 +703,7 @@ class ReactiveList extends Component {
 			streamData: this.withClickIds(streamResults),
 			promotedData: this.withClickIds(promotedResults),
 			rawData: this.withClickIds(results),
+			customData,
 			resultStats: this.stats,
 		};
 	};
@@ -816,6 +821,7 @@ ReactiveList.propTypes = {
 	includeFields: types.includeFields,
 	streamHits: types.hits,
 	promotedResults: types.hits,
+	customData: types.title,
 	time: types.number,
 	total: types.number,
 	hidden: types.number,
@@ -904,6 +910,7 @@ const mapStateToProps = (state, props) => ({
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults[props.componentId] || [],
+	customData: state.customData[props.componentId] || [],
 	afterKey:
 		state.aggregations[props.componentId]
 		&& state.aggregations[props.componentId][props.aggregationField]
