@@ -78,9 +78,14 @@ class MultiList extends Component {
 			componentType: componentTypes.multiList,
 		});
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+		// Update props in store
+		props.updateComponentProps(props.componentId, props, componentTypes.multiList);
+		props.updateComponentProps(this.internalComponent, props, componentTypes.multiList);
+
 		this.updateQueryOptions(props);
 
 		this.setReact(props);
+
 		const hasMounted = false;
 
 		if (currentValueArray.length) {
@@ -90,7 +95,16 @@ class MultiList extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.multiList,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.multiList,
+			);
 		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
@@ -197,7 +211,8 @@ class MultiList extends Component {
 	};
 
 	getOptions = (buckets, props) => {
-		if (props.showLoadMore) {
+		// RS API backend always uses composite aggregations
+		if (props.showLoadMore || props.enableAppbase) {
 			return buckets.map(bucket => ({
 				key: bucket.key[props.dataField],
 				doc_count: bucket.doc_count,
@@ -383,6 +398,7 @@ class MultiList extends Component {
 			Object.keys(this.state.currentValue),
 			this.props,
 			MultiList.generateQueryOptions(this.props, this.state.prevAfter),
+			null,
 		);
 	};
 
@@ -514,14 +530,13 @@ class MultiList extends Component {
 			return isFunction(renderError) ? renderError(error) : renderError;
 		}
 
-		if (!this.hasCustomRenderer && this.state.options.length === 0) {
+		if (!this.hasCustomRenderer && this.state.options && this.state.options.length === 0) {
 			return this.props.renderNoResults ? this.props.renderNoResults() : null;
 		}
 
 		const listItems = this.listItems;
 
 		const isAllChecked = selectAllLabel ? !!this.state.currentValue[selectAllLabel] : false;
-
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -625,7 +640,9 @@ class MultiList extends Component {
 							: this.props.renderNoResults && this.props.renderNoResults()}
 						{showLoadMore && !isLastBucket && (
 							<div css={loadMoreContainer}>
-								<Button disabled={isLoading} onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
+								<Button disabled={isLoading} onClick={this.handleLoadMore}>
+									{loadMoreLabel}
+								</Button>
 							</div>
 						)}
 					</UL>
@@ -679,6 +696,7 @@ MultiList.propTypes = {
 	showCheckbox: types.boolRequired,
 	showCount: types.bool,
 	showSearch: types.bool,
+	enableAppbase: types.bool,
 	size: types.number,
 	sortBy: types.sortByWithCount,
 	style: types.style,
@@ -697,6 +715,7 @@ MultiList.defaultProps = {
 	queryFormat: 'or',
 	showCheckbox: true,
 	showCount: true,
+	enableAppbase: false,
 	showSearch: true,
 	size: 100,
 	sortBy: 'count',
@@ -720,12 +739,13 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),

@@ -85,6 +85,9 @@ class DataSearch extends Component {
 		}
 
 		this.setReact(props);
+		// Update props in store
+		props.updateComponentProps(props.componentId, props, componentTypes.dataSearch);
+		props.updateComponentProps(this.internalComponent, props, componentTypes.dataSearch);
 		const hasMounted = false;
 		const cause = null;
 
@@ -98,7 +101,16 @@ class DataSearch extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.dataSearch,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.dataSearch,
+			);
 		});
 		checkSomePropChange(
 			this.props,

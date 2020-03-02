@@ -81,7 +81,12 @@ class ReactiveList extends Component {
 		this.sortOptionIndex = this.props.defaultSortOption
 			? this.props.sortOptions.findIndex(s => s.label === this.props.defaultSortOption)
 			: 0;
-
+		this.props.updateComponentProps(
+			this.internalComponent,
+			this.props,
+			componentTypes.reactiveList,
+		);
+		this.props.updateComponentProps(props.componentId, this.props, componentTypes.reactiveList);
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 	}
 
@@ -99,13 +104,21 @@ class ReactiveList extends Component {
 		let options = getQueryOptions(this.props);
 		options.from = this.state.from;
 		if (this.props.sortOptions) {
+			const sortField = this.props.sortOptions[this.sortOptionIndex].dataField;
+			const sortBy = this.props.sortOptions[this.sortOptionIndex].sortBy;
 			options.sort = [
 				{
-					[this.props.sortOptions[this.sortOptionIndex].dataField]: {
-						order: this.props.sortOptions[this.sortOptionIndex].sortBy,
+					[sortField]: {
+						order: sortBy,
 					},
 				},
 			];
+			// To handle sort options for RS API
+			this.props.updateComponentProps(
+				this.props.componentId,
+				{ ...this.props, dataField: sortField, sortBy },
+				componentTypes.reactiveList,
+			);
 		} else if (this.props.sortBy) {
 			options.sort = [
 				{
@@ -173,7 +186,16 @@ class ReactiveList extends Component {
 	componentDidUpdate(prevProps) {
 		const totalPages = Math.ceil(this.props.total / this.props.size) || 0;
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.reactiveList,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.reactiveList,
+			);
 		});
 		if (this.props.onData) {
 			checkSomePropChange(
@@ -557,7 +579,8 @@ class ReactiveList extends Component {
 	renderResultStats = () => {
 		const { hits, promotedResults, total } = this.props;
 
-		const shouldStatsVisible = hits && promotedResults && (hits.length || promotedResults.length);
+		const shouldStatsVisible
+			= hits && promotedResults && (hits.length || promotedResults.length);
 		if (this.props.renderResultStats && shouldStatsVisible) {
 			return this.props.renderResultStats(this.stats);
 		} else if (total) {
@@ -587,13 +610,21 @@ class ReactiveList extends Component {
 		// This fixes issue #371 (where sorting a multi-result page with infinite loader breaks)
 		options.from = 0;
 
+		const sortField = this.props.sortOptions[index].dataField;
+		const sortBy = this.props.sortOptions[index].sortBy;
 		options.sort = [
 			{
-				[this.props.sortOptions[index].dataField]: {
-					order: this.props.sortOptions[index].sortBy,
+				[sortField]: {
+					order: sortBy,
 				},
 			},
 		];
+		// To handle sortOptions for RS API
+		this.props.updateComponentProps(
+			this.props.componentId,
+			{ ...this.props, dataField: sortField, sortBy },
+			componentTypes.reactiveList,
+		);
 		this.props.setQueryOptions(this.props.componentId, options, true);
 		this.sortOptionIndex = index;
 

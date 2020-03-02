@@ -72,13 +72,13 @@ class ReactiveBase extends Component {
 		});
 	}
 
-	componentDidCatch() {
+	componentDidCatch(error, errorInfo) {
 		console.error(
 			"An error has occured. You're using Reactivesearch Version:",
 			`${process.env.VERSION || require('../../../package.json').version}.`,
 			'If you think this is a problem with Reactivesearch, please try updating',
 			"to the latest version. If you're already at the latest version, please open",
-			'an issue at https://github.com/appbaseio/reactivesearch/issues',
+			'an issue at https://github.com/appbaseio/reactivesearch/issues', error, errorInfo,
 		);
 	}
 
@@ -101,6 +101,7 @@ class ReactiveBase extends Component {
 			type: this.type,
 			transformRequest: props.transformRequest,
 			analytics: props.appbaseConfig ? props.appbaseConfig.recordAnalytics : props.analytics,
+			enableAppbase: props.enableAppbase,
 			analyticsConfig: appbaseConfig,
 			graphQLUrl: props.graphQLUrl,
 			transformResponse: props.transformResponse,
@@ -184,6 +185,7 @@ ReactiveBase.defaultProps = {
 		emptyQuery: true,
 		suggestionAnalytics: true,
 	},
+	enableAppbase: false,
 	appbaseConfig: {
 		searchStateHeader: false,
 		emptyQuery: true,
@@ -210,6 +212,7 @@ ReactiveBase.propTypes = {
 	className: types.string,
 	initialState: types.children,
 	analytics: types.bool,
+	enableAppbase: types.bool,
 	analyticsConfig: types.analyticsConfig,
 	appbaseConfig: types.appbaseConfig,
 	graphQLUrl: types.string,
