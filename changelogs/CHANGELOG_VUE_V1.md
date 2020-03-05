@@ -6,6 +6,13 @@
     <summary>The following changes have been included in the <code>next</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+### v1.1.0
+- Add support for voice search [#1352](https://github.com/appbaseio/reactivesearch/issues/1352)
+- Update search value on search icon click [#1342](https://github.com/appbaseio/reactivesearch/issues/1342)
+- Add support to display promoted results [#1303](https://github.com/appbaseio/reactivesearch/issues/1303)
+- Fix `size` prop in `DataSearch` [#1344](https://github.com/appbaseio/reactivesearch/issues/1344)
+- Fix `URLParams` behavior in `MultiRange` [#1294](https://github.com/appbaseio/reactivesearch/issues/1294)
+
 ### v1.0.0 [Breaking]
 - Remove deprecated `defaultSelected` prop, use `defaultValue` instead [[af38b6ef]](https://github.com/appbaseio/reactivesearch/commit/af38b6ef)
 - Fix style of DataSearch clear icon [#1266](https://github.com/appbaseio/reactivesearch/issues/1266)
