@@ -213,16 +213,27 @@ export default {
 			}
 
 			const vm = this;
+			let eventCalled = false;
 
 			return {
 				mouseenter() {
 					vm.setHighlightedIndex(newIndex);
 				},
 
+				// for browsers not supporting click event (e.g. firefox android)
 				mousedown(event) {
+					if (eventCalled) return;
+					eventCalled = true;
 					event.stopPropagation();
 					vm.selectItemAtIndex(newIndex);
 				},
+
+				click(event) {
+					if (eventCalled) return;
+					eventCalled = true;
+					event.stopPropagation();
+					vm.selectItemAtIndex(newIndex);
+				}
 			};
 		},
 
