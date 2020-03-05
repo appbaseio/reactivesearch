@@ -129,11 +129,19 @@ export default {
 			if (this.$props.handleChange) {
 				this.$props.handleChange(item);
 			}
+
+			function getInputValue() {
+				if (this.isControlledProp('selectedItem')) {
+					return '';
+				}
+				return typeof item === 'object' ? item.label || '' : item;
+			}
+
 			this.setState({
 				isOpen: false,
 				highlightedIndex: null,
 				selectedItem: item,
-				inputValue: this.isControlledProp('selectedItem') ? '' : item,
+				inputValue: getInputValue.call(this),
 			});
 		},
 
@@ -211,7 +219,7 @@ export default {
 					vm.setHighlightedIndex(newIndex);
 				},
 
-				click(event) {
+				mousedown(event) {
 					event.stopPropagation();
 					vm.selectItemAtIndex(newIndex);
 				},
