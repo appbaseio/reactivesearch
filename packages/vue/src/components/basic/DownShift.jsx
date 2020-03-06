@@ -129,11 +129,19 @@ export default {
 			if (this.$props.handleChange) {
 				this.$props.handleChange(item);
 			}
+
+			function getInputValue() {
+				if (this.isControlledProp('selectedItem')) {
+					return '';
+				}
+				return typeof item === 'object' ? item.label || '' : item;
+			}
+
 			this.setState({
 				isOpen: false,
 				highlightedIndex: null,
 				selectedItem: item,
-				inputValue: this.isControlledProp('selectedItem') ? '' : item,
+				inputValue: getInputValue.call(this),
 			});
 		},
 
@@ -205,16 +213,27 @@ export default {
 			}
 
 			const vm = this;
+			let eventCalled = false;
 
 			return {
 				mouseenter() {
 					vm.setHighlightedIndex(newIndex);
 				},
 
-				click(event) {
+				// for browsers not supporting click event (e.g. firefox android)
+				mousedown(event) {
+					if (eventCalled) return;
+					eventCalled = true;
 					event.stopPropagation();
 					vm.selectItemAtIndex(newIndex);
 				},
+
+				click(event) {
+					if (eventCalled) return;
+					eventCalled = true;
+					event.stopPropagation();
+					vm.selectItemAtIndex(newIndex);
+				}
 			};
 		},
 
