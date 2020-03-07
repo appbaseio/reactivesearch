@@ -6,6 +6,9 @@
     <summary>The following changes have been included in the <code>next</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+### v1.1.1
+- Fix `DataSearch` autosuggest select on android firefox[#1374](https://github.com/appbaseio/reactivesearch/issues/1374)
+
 ### v1.1.0
 - Add support for voice search [#1352](https://github.com/appbaseio/reactivesearch/issues/1352)
 - Update search value on search icon click [#1342](https://github.com/appbaseio/reactivesearch/issues/1342)
