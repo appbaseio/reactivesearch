@@ -7,8 +7,10 @@ import {
 	setQueryOptions,
 	setQueryListener,
 	setComponentProps,
+	setCustomQuery,
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
+
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
@@ -17,6 +19,7 @@ import {
 	checkSomePropChange,
 	getClassName,
 	pushToAndClause,
+	updateCustomQuery,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -41,6 +44,8 @@ class DynamicRangeSlider extends Component {
 			stats: [],
 		};
 
+		// Caution: Don't change the ids unnecessarily.
+		// If it's required then you need to update it in reactivecore(transform.js) too.
 		this.internalHistogramComponent = `${this.props.componentId}__histogram__internal`;
 		this.internalRangeComponent = `${this.props.componentId}__range__internal`;
 		this.internalMatchAllComponent = `${this.props.componentId}__match_all__internal`;
@@ -48,12 +53,21 @@ class DynamicRangeSlider extends Component {
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalHistogramComponent);
 		props.addComponent(this.internalRangeComponent);
-		props.setComponentProps(props.componentId, {
-			...props,
-			componentType: componentTypes.dynamicRangeSlider,
-		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.dynamicRangeSlider);
+		props.setComponentProps(
+			this.internalHistogramComponent,
+			props,
+			componentTypes.dynamicRangeSlider,
+		);
+		props.setComponentProps(
+			this.internalRangeComponent,
+			props,
+			componentTypes.dynamicRangeSlider,
+		);
+		// Set custom query in store
+		updateCustomQuery(props.componentId, props, this.state.currentValue);
 		// get range before executing other queries
 		this.updateRangeQueryOptions(props);
 		this.setReact(props);
@@ -61,7 +75,21 @@ class DynamicRangeSlider extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.dynamicRangeSlider,
+			);
+			this.props.updateComponentProps(
+				this.internalHistogramComponent,
+				this.props,
+				componentTypes.dynamicRangeSlider,
+			);
+			this.props.updateComponentProps(
+				this.internalRangeComponent,
+				this.props,
+				componentTypes.dynamicRangeSlider,
+			);
 		});
 		if (
 			!isEqual(this.props.range, prevProps.range)
@@ -315,6 +343,7 @@ class DynamicRangeSlider extends Component {
 		if (customQuery) {
 			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			updateCustomQuery(props.componentId, props, value);
 		}
 		const {
 			showFilter,
@@ -356,6 +385,7 @@ class DynamicRangeSlider extends Component {
 			props.updateQuery({
 				componentId: this.internalHistogramComponent,
 				query: query(value, props),
+				value,
 			});
 		}
 	};
@@ -489,6 +519,7 @@ DynamicRangeSlider.propTypes = {
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
+	setCustomQuery: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -576,9 +607,11 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props, execute) =>

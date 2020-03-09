@@ -108,6 +108,7 @@ const mapStateToProps = (state, props) => ({
 	error: filterByComponentIds(state.error, props),
 	promotedResults: filterByComponentIds(state.promotedResults, props),
 	customData: filterByComponentIds(state.customData, props),
+	settings: filterByComponentIds(state.settings, props),
 });
 
 export default connect(mapStateToProps, null)(StateProvider);

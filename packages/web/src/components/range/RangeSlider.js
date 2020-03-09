@@ -7,6 +7,7 @@ import {
 	setQueryOptions,
 	setQueryListener,
 	setComponentProps,
+	setCustomQuery,
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -17,6 +18,7 @@ import {
 	checkSomePropChange,
 	getClassName,
 	getOptionsFromQuery,
+	updateCustomQuery,
 	pushToAndClause,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -47,11 +49,13 @@ class RangeSlider extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setComponentProps(props.componentId, {
-			...props,
-			componentType: componentTypes.rangeSlider,
-		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
+
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.rangeSlider);
+		props.setComponentProps(this.internalComponent, props, componentTypes.rangeSlider);
+		// Set custom query in store
+		updateCustomQuery(props.componentId, props, currentValue);
 
 		this.updateQueryOptions(props);
 		this.setReact(props);
@@ -64,7 +68,16 @@ class RangeSlider extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.rangeSlider,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.rangeSlider,
+			);
 		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkSomePropChange(this.props, prevProps, ['showHistogram', 'interval'], () =>
@@ -277,6 +290,7 @@ class RangeSlider extends Component {
 		if (customQuery) {
 			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			updateCustomQuery(props.componentId, props, value);
 		}
 		const {
 			showFilter,
@@ -321,6 +335,7 @@ class RangeSlider extends Component {
 			props.updateQuery({
 				componentId: this.internalComponent,
 				query: query(value, props),
+				value,
 			});
 		}
 	};
@@ -392,6 +407,7 @@ RangeSlider.propTypes = {
 	options: types.options,
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
+	setCustomQuery: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
@@ -454,9 +470,11 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props, execute) =>

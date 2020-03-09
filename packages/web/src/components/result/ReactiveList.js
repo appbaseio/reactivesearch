@@ -13,6 +13,7 @@ import {
 	setQueryListener,
 	setComponentProps,
 	updateComponentProps,
+	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -24,6 +25,7 @@ import {
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
 	getResultStats,
+	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -81,13 +83,9 @@ class ReactiveList extends Component {
 		this.sortOptionIndex = this.props.defaultSortOption
 			? this.props.sortOptions.findIndex(s => s.label === this.props.defaultSortOption)
 			: 0;
-		this.props.updateComponentProps(
-			this.internalComponent,
-			this.props,
-			componentTypes.reactiveList,
-		);
-		this.props.updateComponentProps(props.componentId, this.props, componentTypes.reactiveList);
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+		props.setComponentProps(props.componentId, props, componentTypes.reactiveList);
+		props.setComponentProps(this.internalComponent, props, componentTypes.reactiveList);
 	}
 
 	componentDidMount() {
@@ -158,6 +156,8 @@ class ReactiveList extends Component {
 				},
 				execute,
 			);
+			// Update calculated default query in store
+			updateDefaultQuery(this.props.componentId, this.props);
 		} else {
 			this.props.updateQuery(
 				{
@@ -201,7 +201,16 @@ class ReactiveList extends Component {
 			checkSomePropChange(
 				this.props,
 				prevProps,
-				['hits', 'streamHits', 'promotedResults', 'customData', 'total', 'size', 'time', 'hidden'],
+				[
+					'hits',
+					'streamHits',
+					'promotedResults',
+					'customData',
+					'total',
+					'size',
+					'time',
+					'hidden',
+				],
 				() => {
 					this.props.onData(this.getData());
 				},
@@ -253,6 +262,9 @@ class ReactiveList extends Component {
 				options = { ...options, ...getOptionsFromQuery(this.defaultQuery) };
 				this.props.setQueryOptions(this.props.componentId, options, !query);
 			}
+
+			// Update calculated default query in store
+			updateDefaultQuery(this.props.componentId, this.props);
 
 			this.props.updateQuery(
 				{
@@ -419,6 +431,7 @@ class ReactiveList extends Component {
 		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
+		const parsedPromotedResults = parseHits(promotedResults) || [];
 		let filteredResults = results;
 		const base = currentPage * size;
 		if (streamResults.length) {
@@ -426,19 +439,19 @@ class ReactiveList extends Component {
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 		}
 
-		if (promotedResults.length) {
-			const ids = promotedResults.map(item => item._id).filter(Boolean);
+		if (parsedPromotedResults.length) {
+			const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
 			if (ids) {
 				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 			}
 
-			filteredResults = [...streamResults, ...promotedResults, ...filteredResults];
+			filteredResults = [...streamResults, ...parsedPromotedResults, ...filteredResults];
 		}
 		return {
 			results,
 			streamResults,
 			filteredResults,
-			promotedResults,
+			promotedResults: parsedPromotedResults,
 			customData: customData || {},
 			aggregationData: aggregationData || [],
 			loadMore: this.loadMore,
@@ -809,6 +822,7 @@ ReactiveList.propTypes = {
 	onError: types.func,
 	setPageURL: types.func,
 	setQueryOptions: types.funcRequired,
+	setDefaultQuery: types.funcRequired,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	setStreaming: types.func,
@@ -918,8 +932,10 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	addComponent: component => dispatch(addComponent(component)),
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
 	updateComponentProps: (component, options) =>
 		dispatch(updateComponentProps(component, options)),
 	loadMore: (component, options, append, appendAggs) =>

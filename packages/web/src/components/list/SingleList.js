@@ -8,6 +8,8 @@ import {
 	setQueryOptions,
 	setQueryListener,
 	loadMore,
+	setCustomQuery,
+	setDefaultQuery,
 	setComponentProps,
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
@@ -23,6 +25,8 @@ import {
 	getAggsQuery,
 	getCompositeAggsQuery,
 	updateInternalQuery,
+	updateCustomQuery,
+	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -65,11 +69,13 @@ class SingleList extends Component {
 
 		props.addComponent(this.internalComponent);
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, {
-			...props,
-			componentType: componentTypes.singleList,
-		});
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.singleList);
+		props.setComponentProps(this.internalComponent, props, componentTypes.singleList);
+		// Set custom and default queries in store
+		updateCustomQuery(props.componentId, props, currentValue);
+		updateDefaultQuery(props.componentId, props, currentValue);
 		this.updateQueryOptions(props);
 
 		this.setReact(props);
@@ -82,14 +88,25 @@ class SingleList extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.singleList,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.singleList,
+			);
 		});
 		checkPropChange(prevProps.react, this.props.react, () => this.setReact(this.props));
 
 		checkPropChange(prevProps.options, this.props.options, () => {
-			const { showLoadMore, dataField, options } = this.props;
+			const {
+				showLoadMore, dataField, options, enableAppbase,
+			} = this.props;
 
-			if (showLoadMore) {
+			if (showLoadMore || enableAppbase) {
 				const { buckets } = options[dataField];
 				const after = options[dataField].after_key;
 				const prevAfter = prevProps.options && prevProps.options[dataField].after_key;
@@ -168,7 +185,7 @@ class SingleList extends Component {
 	};
 
 	getOptions = (buckets, props) => {
-		if (props.showLoadMore) {
+		if (props.showLoadMore || props.enableAppbase) {
 			return buckets.map(bucket => ({
 				key: bucket.key[props.dataField],
 				doc_count: bucket.doc_count,
@@ -253,6 +270,7 @@ class SingleList extends Component {
 		if (customQuery) {
 			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, {
 			...SingleList.generateQueryOptions(props, this.state.prevAfter),
@@ -288,7 +306,7 @@ class SingleList extends Component {
 
 	updateQueryOptions = (props, addAfterKey = false) => {
 		// when using composite aggs flush the current options for a fresh query
-		if (props.showLoadMore && !addAfterKey) {
+		if ((props.showLoadMore || props.enableAppbase) && !addAfterKey) {
 			this.setState({
 				options: [],
 			});
@@ -526,9 +544,11 @@ SingleList.propTypes = {
 	options: types.options,
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
+	setCustomQuery: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -599,13 +619,17 @@ const mapStateToProps = (state, props) => ({
 		|| '',
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
+	enableAppbase: state.config.enableAppbase,
 	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),

@@ -8,6 +8,8 @@ import {
 	setQueryOptions,
 	setQueryListener,
 	setComponentProps,
+	setCustomQuery,
+	setDefaultQuery,
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -22,6 +24,8 @@ import {
 	getAggsQuery,
 	getCompositeAggsQuery,
 	updateInternalQuery,
+	updateCustomQuery,
+	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -60,11 +64,13 @@ class SingleDropdownList extends Component {
 
 		props.addComponent(this.internalComponent);
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, {
-			...props,
-			componentType: componentTypes.singleDropdownList,
-		});
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.singleDropdownList);
+		props.setComponentProps(this.internalComponent, props, componentTypes.singleDropdownList);
+		// Set custom and default queries in store
+		updateCustomQuery(props.componentId, props, currentValue);
+		updateDefaultQuery(props.componentId, props, currentValue);
 		this.updateQueryOptions(props);
 
 		this.setReact(props);
@@ -77,13 +83,22 @@ class SingleDropdownList extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.singleDropdownList,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.singleDropdownList,
+			);
 		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
-			const { showLoadMore, dataField } = this.props;
+			const { showLoadMore, enableAppbase, dataField } = this.props;
 			const { options } = this.state;
-			if (showLoadMore) {
+			if (showLoadMore || enableAppbase) {
 				// append options with showLoadMore
 				const { buckets } = this.props.options[dataField];
 				const nextOptions = [
@@ -237,6 +252,7 @@ class SingleDropdownList extends Component {
 		if (customQuery) {
 			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
 		props.updateQuery({
@@ -269,7 +285,7 @@ class SingleDropdownList extends Component {
 
 	updateQueryOptions = (props, addAfterKey = false) => {
 		// when using composite aggs flush the current options for a fresh query
-		if (props.showLoadMore && !addAfterKey) {
+		if ((props.showLoadMore || props.enableAppbase) && !addAfterKey) {
 			this.setState({
 				options: [],
 			});
@@ -405,9 +421,11 @@ SingleDropdownList.propTypes = {
 	options: types.options,
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
+	setCustomQuery: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -479,12 +497,16 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),

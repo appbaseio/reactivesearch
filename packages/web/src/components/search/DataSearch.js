@@ -10,9 +10,12 @@ import {
 	setQueryOptions,
 	setQueryListener,
 	setComponentProps,
+	setCustomQuery,
+	setDefaultQuery,
 	updateComponentProps,
 	setSuggestionsSearchValue,
 	recordSuggestionClick,
+	setCustomHighlightOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -27,6 +30,8 @@ import {
 	withClickIds,
 	handleOnSuggestions,
 	getResultStats,
+	updateCustomQuery,
+	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -70,14 +75,18 @@ class DataSearch extends Component {
 		this.queryOptions = this.getBasicQueryOptions();
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setComponentProps(props.componentId, {
-			...props,
-			componentType: componentTypes.dataSearch,
-		});
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
-
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.dataSearch);
+		props.setComponentProps(this.internalComponent, props, componentTypes.dataSearch);
+		// Set custom and default queries in store
+		updateCustomQuery(props.componentId, props, currentValue);
+		updateDefaultQuery(props.componentId, props, currentValue);
 		if (props.highlight) {
 			const queryOptions = DataSearch.highlightQuery(props) || {};
+			if (props.customHighlight && typeof props.customHighlight === 'function') {
+				props.setCustomHighlightOptions(props.componentId, props.customHighlight(props));
+			}
 			this.queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
 			props.setQueryOptions(props.componentId, queryOptions);
 		} else {
@@ -85,9 +94,6 @@ class DataSearch extends Component {
 		}
 
 		this.setReact(props);
-		// Update props in store
-		props.updateComponentProps(props.componentId, props, componentTypes.dataSearch);
-		props.updateComponentProps(this.internalComponent, props, componentTypes.dataSearch);
 		const hasMounted = false;
 		const cause = null;
 
@@ -118,6 +124,15 @@ class DataSearch extends Component {
 			['highlight', 'dataField', 'highlightField', 'aggregationField'],
 			() => {
 				const queryOptions = DataSearch.highlightQuery(this.props) || {};
+				if (
+					this.props.customHighlight
+					&& typeof this.props.customHighlight === 'function'
+				) {
+					this.props.setCustomHighlightOptions(
+						this.props.componentId,
+						this.props.customHighlight(this.props),
+					);
+				}
 				this.queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
 				this.props.setQueryOptions(this.props.componentId, queryOptions);
 			},
@@ -421,6 +436,8 @@ class DataSearch extends Component {
 				({ query } = defaultQueryTobeSet);
 			}
 			defaultQueryOptions = getOptionsFromQuery(defaultQueryTobeSet);
+			// Update calculated default query in store
+			updateDefaultQuery(props.componentId, props, value);
 		}
 		props.setSuggestionsSearchValue(value);
 		props.setQueryOptions(this.internalComponent, {
@@ -449,6 +466,7 @@ class DataSearch extends Component {
 				query = [queryTobeSet];
 			}
 			customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
+			updateCustomQuery(props.componentId, props, value);
 		}
 
 		// query options should be applied to the source component,
@@ -919,6 +937,9 @@ DataSearch.propTypes = {
 	aggregationData: types.aggregationData,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
+	setCustomQuery: types.funcRequired,
+	setDefaultQuery: types.funcRequired,
+	setCustomHighlightOptions: types.funcRequired,
 	setSuggestionsSearchValue: types.funcRequired,
 	triggerAnalytics: types.funcRequired,
 	error: types.title,
@@ -1029,7 +1050,12 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	setCustomHighlightOptions: (component, options) =>
+		dispatch(setCustomHighlightOptions(component, options)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
 	updateComponentProps: (component, options) =>
 		dispatch(updateComponentProps(component, options)),
