@@ -383,7 +383,7 @@ class CategorySearch extends Component {
 					multi_match: {
 						query: value,
 						fields,
-						type: 'phrase_prefix',
+						type: 'pharse',
 						operator: 'and',
 					},
 				},
@@ -404,7 +404,7 @@ class CategorySearch extends Component {
 				multi_match: {
 					query: value,
 					fields,
-					type: 'phrase_prefix',
+					type: 'pharse',
 					operator: 'or',
 				},
 			},
