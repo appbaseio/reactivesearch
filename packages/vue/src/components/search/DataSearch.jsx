@@ -795,7 +795,7 @@ DataSearch.shouldQuery = (value, dataFields, props) => {
 				multi_match: {
 					query: value,
 					fields,
-					type: 'pharse',
+					type: 'phrase',
 					operator: 'and',
 				},
 			},
@@ -816,7 +816,7 @@ DataSearch.shouldQuery = (value, dataFields, props) => {
 			multi_match: {
 				query: value,
 				fields,
-				type: 'pharse',
+				type: 'phrase',
 				operator: 'or',
 			},
 		},

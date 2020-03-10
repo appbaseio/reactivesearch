@@ -307,7 +307,7 @@ class DataSearch extends Component {
 					multi_match: {
 						query: value,
 						fields,
-						type: 'pharse',
+						type: 'phrase',
 						operator: 'and',
 					},
 				},
@@ -328,7 +328,7 @@ class DataSearch extends Component {
 				multi_match: {
 					query: value,
 					fields,
-					type: 'pharse',
+					type: 'phrase',
 					operator: 'or',
 				},
 			},
