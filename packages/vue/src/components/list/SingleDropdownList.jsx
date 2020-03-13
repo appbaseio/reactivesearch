@@ -328,6 +328,7 @@ const SingleDropdownList = {
 				loading: this.isLoading,
 				value: currentValue,
 				data: items || [],
+				rawData: this.rawData,
 				handleChange: this.handleChange,
 				downshiftProps,
 			};
@@ -393,6 +394,7 @@ const mapStateToProps = (state, props) => ({
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
+	rawData: state.rawData[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
