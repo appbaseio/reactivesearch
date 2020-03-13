@@ -252,6 +252,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
         highlightedIndex,   // index value which should be highlighted
         parsedSuggestions,  // suggestions parsed by ReactiveSearch
         promotedData,       // array of promoted results obtained from applied query
+        rawData,            // object of raw response as-is from elasticsearch query.
         resultStats: {
             numberOfResults,    // Total number of results found
             time,               // Time taken to find total results (in ms)

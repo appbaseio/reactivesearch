@@ -195,8 +195,8 @@ Datasets can be configured using the following options.
 		It accepts an object with these properties:
 		-   **`data`**: `array`
 			An array of parsed suggestions obtained from the applied query.
-		-   **`rawData`**: `array`
-			An array of original suggestions obtained from the applied query.
+		-   **`rawData`**: `object`
+			An object of raw response as-is from elasticsearch query.
 		-   **`promotedData`**: `array`
 			An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
 		-   **`resultStats`**: `object`

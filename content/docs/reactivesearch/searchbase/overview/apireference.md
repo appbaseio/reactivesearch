@@ -357,7 +357,7 @@ These properties are automatically calculated or managed by the `Searchbase` cla
     -   **`hidden`**: `number` Total number of hidden results found
     -   **`promoted`**: `number` Total number of promoted results found
     -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
-    -   **`rawData`**: `Array<Object>`  An array of original hits obtained from the applied query.
+    -   **`rawData`**: `object`  An object of raw response as-is from elasticsearch query.
 -   **results** `Results`
     It is an object which contains the following details of `results` query response.
     -   **`data`**: `Array<Object>` contains the (promoted data + parsed hits)
@@ -367,12 +367,12 @@ These properties are automatically calculated or managed by the `Searchbase` cla
     -   **`hidden`**: `number` Total number of hidden results found
     -   **`promoted`**: `number` Total number of promoted results found
     -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
-    -   **`rawData`**: `Array<Object>`  An array of original hits obtained from the applied query.
+    -   **`rawData`**: `object`  An object of raw response as-is from elasticsearch query.
 -   **aggregations** `CompositeAggregationResults`
     It is an object which contains the following details of `composite aggregations` query response.
     -   **`data`**: `Array<Object>` contains the parsed aggregations
     -   **`raw`**: `Object` Response returned by ES `composite aggs` query in the raw form.
-    -   **`rawData`**: `Array<Object>`  An array of original aggregations obtained from the applied query.
+    -   **`rawData`**: `object`  An object of raw response as-is from elasticsearch query.
     -   **`afterKey`**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the `afterKey` parameter to retrieve the next results.
 -   **analyticsInstance** `Object`
     An instance of the [Appbase.io analytics library](https://github.com/appbaseio/analytics) which can be used to record click events, custom events & conversions for the appbase.io applications. For example, check how it can be used to record a click event.

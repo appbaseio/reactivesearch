@@ -235,8 +235,8 @@ We can then use the given ReactiveComponent to be watched by all the filters (vi
     An object containing the error info
 -   **data** `Array`
     `data` prop is an array of parsed results(hits) from the Elasticsearch query of the component.
--   **rawData** `Array`
-    `rawData` prop is an array of original results(hits) from the Elasticsearch query of the component.
+-   **rawData** `object`
+    An object of raw response as-is from elasticsearch query.
 -   **promotedData**: `array`
     An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules/#part-1-introduction)
 -   **resultStats**: `object`
