@@ -455,6 +455,7 @@ const MultiList = {
 				loading: this.isLoading,
 				value: currentValue,
 				data: itemsToRender,
+				rawData: this.rawData,
 				handleChange: this.handleClick,
 			};
 			return getComponent(data, this);
@@ -556,6 +557,7 @@ const mapStateToProps = (state, props) => ({
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
+	rawData: state.rawData[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]

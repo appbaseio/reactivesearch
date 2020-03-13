@@ -132,6 +132,11 @@ const ReactiveComponent = {
 				this.$emit('data', this.getData());
 			}
 		},
+		rawData(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.$emit('data', this.getData());
+			}
+		},
 		aggregations(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				this.$emit('data', this.getData());
@@ -247,7 +252,7 @@ const ReactiveComponent = {
 			return {};
 		},
 		getData() {
-			const { hits, aggregations, aggregationData, promotedResults } = this;
+			const { hits, aggregations, aggregationData, promotedResults, rawData } = this;
 			let filteredResults = parseHits(hits);
 			if (promotedResults.length) {
 				const ids = promotedResults.map(item => item._id).filter(Boolean);
@@ -259,7 +264,7 @@ const ReactiveComponent = {
 			return {
 				data: filteredResults,
 				aggregationData,
-				rawData: hits,
+				rawData,
 				aggregations,
 				promotedData: promotedResults,
 				resultStats: this.stats,
@@ -278,6 +283,7 @@ const mapStateToProps = (state, props) => ({
 		(state.aggregations[props.componentId] && state.aggregations[props.componentId]) || null,
 	aggregationData: state.compositeAggregations[props.componentId] || [],
 	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	rawData: state.rawData[props.componentId],
 	error: state.error[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 	selectedValue:
