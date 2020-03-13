@@ -326,8 +326,8 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
         > Note:
         >
         > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerAnalytics to register the click analytics info.
-    -   **`rawData`**: `array`
-        An array of original hits obtained from the applied query.
+    -   **`rawData`** `object`
+        An object of raw response as-is from elasticsearch query.
     -   **`resultStats`**: `object`
         An object with the following properties which can be helpful to render custom stats:
         -   **`numberOfResults`**: `number`
