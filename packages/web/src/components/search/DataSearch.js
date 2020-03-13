@@ -722,7 +722,7 @@ class DataSearch extends Component {
 
 	getComponent = (downshiftProps = {}) => {
 		const {
-			error, isLoading, aggregationData, promotedResults,
+			error, isLoading, aggregationData, promotedResults, rawData,
 		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
@@ -732,7 +732,7 @@ class DataSearch extends Component {
 			data: this.parsedSuggestions,
 			promotedData: promotedResults,
 			aggregationData: aggregationData || [],
-			rawData: this.props.suggestions || [],
+			rawData,
 			value: currentValue,
 			triggerClickAnalytics: this.triggerClickAnalytics,
 			resultStats: this.stats,
@@ -903,6 +903,7 @@ DataSearch.propTypes = {
 	options: types.options,
 	selectedValue: types.selectedValue,
 	suggestions: types.suggestions,
+	rawData: types.rawData,
 	aggregationData: types.aggregationData,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
@@ -1002,6 +1003,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId] || false,
