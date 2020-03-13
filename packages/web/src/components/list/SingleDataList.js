@@ -306,6 +306,7 @@ class SingleDataList extends Component {
 			value: currentValue,
 			data: this.listItems,
 			handleChange: this.handleClick,
+			rawData: this.props.rawData,
 		};
 		return getComponent(data, this.props);
 	}
@@ -445,6 +446,7 @@ SingleDataList.propTypes = {
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
 	options: types.options,
+	rawData: types.rawData,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	// component props
@@ -491,6 +493,7 @@ SingleDataList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
+	rawData: state.rawData[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)

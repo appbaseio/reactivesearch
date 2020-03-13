@@ -822,7 +822,7 @@ class CategorySearch extends Component {
 
 	getComponent = (downshiftProps = {}) => {
 		const {
-			error, isLoading, aggregationData, promotedResults,
+			error, isLoading, aggregationData, promotedResults, rawData,
 		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
@@ -830,6 +830,7 @@ class CategorySearch extends Component {
 			loading: isLoading,
 			downshiftProps,
 			data: this.parsedSuggestions,
+			rawData,
 			promotedData: promotedResults,
 			aggregationData: aggregationData || [],
 			value: currentValue,
@@ -1056,6 +1057,7 @@ CategorySearch.propTypes = {
 	setSuggestionsSearchValue: types.funcRequired,
 	options: types.options,
 	categories: types.data,
+	rawData: types.rawData,
 	promotedResults: types.hits,
 	selectedValue: types.selectedValue,
 	selectedCategory: types.selectedValue,
@@ -1157,6 +1159,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.aggregations[props.componentId][props.categoryField]
 			&& state.aggregations[props.componentId][props.categoryField].buckets)
 		|| [],
+	rawData: state.rawData[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)

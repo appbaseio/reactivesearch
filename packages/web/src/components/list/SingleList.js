@@ -375,13 +375,14 @@ class SingleList extends Component {
 	}
 
 	getComponent() {
-		const { error, isLoading } = this.props;
+		const { error, isLoading, rawData } = this.props;
 		const { currentValue } = this.state;
 		const data = {
 			error,
 			loading: isLoading,
 			value: currentValue,
 			data: this.listItems,
+			rawData,
 			handleChange: this.handleClick,
 		};
 		return getComponent(data, this.props);
@@ -505,7 +506,9 @@ class SingleList extends Component {
 							: this.props.renderNoResults && this.props.renderNoResults()}
 						{showLoadMore && !isLastBucket && (
 							<div css={loadMoreContainer}>
-								<Button disabled={isLoading} onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
+								<Button disabled={isLoading} onClick={this.handleLoadMore}>
+									{loadMoreLabel}
+								</Button>
 							</div>
 						)}
 					</UL>
@@ -524,6 +527,7 @@ SingleList.propTypes = {
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	options: types.options,
+	rawData: types.rawData,
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
@@ -589,6 +593,7 @@ SingleList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
+	rawData: state.rawData[props.componentId],
 	options:
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested

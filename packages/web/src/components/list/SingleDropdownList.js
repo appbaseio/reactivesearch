@@ -50,9 +50,8 @@ class SingleDropdownList extends Component {
 
 		this.state = {
 			currentValue: currentValue || '',
-			options: props.options && props.options[dataField]
-				? props.options[dataField].buckets
-				: [],
+			options:
+				props.options && props.options[dataField] ? props.options[dataField].buckets : [],
 			after: {}, // for composite aggs
 			isLastBucket: false,
 		};
@@ -308,13 +307,14 @@ class SingleDropdownList extends Component {
 	}
 
 	getComponent = (items, downshiftProps) => {
-		const { error, isLoading } = this.props;
+		const { error, isLoading, rawData } = this.props;
 		const { currentValue } = this.state;
 		const data = {
 			error,
 			loading: isLoading,
 			value: currentValue,
 			data: items || [],
+			rawData,
 			handleChange: this.handleChange,
 			downshiftProps,
 		};
@@ -385,7 +385,9 @@ class SingleDropdownList extends Component {
 						showLoadMore
 						&& !isLastBucket && (
 							<div css={loadMoreContainer}>
-								<Button disabled={isLoading} onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
+								<Button disabled={isLoading} onClick={this.handleLoadMore}>
+									{loadMoreLabel}
+								</Button>
 							</div>
 						)
 					}
@@ -403,6 +405,7 @@ SingleDropdownList.propTypes = {
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	options: types.options,
+	rawData: types.rawData,
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
@@ -468,6 +471,7 @@ SingleDropdownList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
+	rawData: state.rawData[props.componentId],
 	options:
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
