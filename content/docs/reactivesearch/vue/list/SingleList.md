@@ -123,6 +123,8 @@ Example uses:
         An object containing the error info
     -   **`data`**: `array`
         An array of results obtained from the applied query.
+    -   **`rawData`** `object`
+        An object of raw response as-is from elasticsearch query.
     -   **`value`**: `array`
         current selected values.
     -   **`handleChange`**: `function`
