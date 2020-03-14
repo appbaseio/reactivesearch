@@ -30,7 +30,7 @@ class Main extends Component {
 								};
 
 								const filters = Object.keys(selectedValues).map((component) => {
-									if (!selectedValues[component].value) return null;
+									if (!selectedValues[component].value || !selectedValues[component].value.length>0) return null;
 									return (
 										<button
 											key={component}
