@@ -2,23 +2,23 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivecore@9.0.0":
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.0.0.tgz#ddaa7db5e2041f4390f51ca3b3b32f285ce8a436"
-  integrity sha512-7yt09jWa6cFzdUojIq9bDb7H4RlFqEWMVwCpE9rucMLHWOTDUKuF5j+4NnbmvfMWGFR3wBaQoNR8nkjcitJ7pw==
+"@appbaseio/reactivecore@9.2.7":
+  version "9.2.7"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.2.7.tgz#260d2ff547d476db52210435ab9e8771bfcd66bb"
+  integrity sha512-AA+2YVD4hUgtXsT9doEpNFVA/vr5StOuQwpupKn/ACMuAkrwDghcmPAr2BjVQZbzq+ayV3yOEcnI4tKSgi9P8A==
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
     redux "^4.0.0"
     redux-thunk "^2.3.0"
 
-"@appbaseio/reactivesearch@3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.2.0.tgz#93137372b8a81aca72d0c8b5aca1713b2df5fe1f"
-  integrity sha512-LfpUNCQugZELqWQICExY6Q+AXp1qLiYFyTXt8aCk1uKp98KyHkjsT2DnXAo4txI4h3zimXCKp2pS0Zx2mzKQDA==
+"@appbaseio/reactivesearch@3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.5.0.tgz#322656b9be4f958fc9aec55b7c6913c2cd6828ee"
+  integrity sha512-R0E1gm3SDdbfxJNkXSMVECLBBAP7v5iubuE9SxRQ+6aBrGBFm7Fz3u1Zmo/TN9Y6T3LUnCaOpCrP70TOCJRCuw==
   dependencies:
-    "@appbaseio/reactivecore" "9.0.0"
-    appbase-js "^4.0.2-beta.08"
+    "@appbaseio/reactivecore" "9.2.7"
+    appbase-js "^4.0.2-beta.11"
     cross-env "^5.2.0"
     downshift "^1.31.2"
     emotion "^9.0.0"
@@ -1782,16 +1782,11 @@ acorn-walk@^6.0.1:
   integrity sha512-ugTb7Lq7u4GfWSqqpwE0bGyoBZNMTok/zDBXxfEG0QM50jNlGhIWjRC1pPN7bvV1anhF+bs+/gNcRw+o55Evbg==
 
 acorn@^5.5.3:
-  version "5.7.3"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
-  integrity sha512-T/zvzYRfbVojPWahDsE5evJdHb3oJoQfFbsrKM7w5Zcs++Tr257tia3BmMP8XYVjp1S9RZXQMh7gao96BlqZOw==
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.4.tgz#3e8d8a9947d0599a1796d10225d7432f4a4acf5e"
+  integrity sha512-1D++VG7BhrtvQpNbBzovKNc1FLGGEE/oGe7b9xJm/RFHMBeUaUGpluV9RLjZa47YFdPcDAenEYuq9pQPcMdLJg==
 
-acorn@^6.0.1:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.0.2.tgz#6a459041c320ab17592c6317abbfdf4bbaa98ca4"
-  integrity sha512-GXmKIvbrN3TV7aVqAzVFaMW8F8wzVX7voEBRO3bDA64+EX37YSayggRJP5Xig6HYHBkWKpFg9W5gg6orklubhg==
-
-acorn@^6.0.4, acorn@^6.0.5, acorn@^6.0.7:
+acorn@^6.0.1, acorn@^6.0.4, acorn@^6.0.5, acorn@^6.0.7:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.2.0.tgz#67f0da2fc339d6cfb5d6fb244fd449f33cd8bbe3"
   integrity sha512-8oe72N3WPMjA+2zVG71Ia0nXZ8DpQH+QyyHO+p06jT8eg8FGG3FbcUIi8KziHlAfheJQZeoqbvq1mQSQHXKYLw==
@@ -1901,10 +1896,10 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-appbase-js@^4.0.2-beta.08:
-  version "4.0.2-beta.10"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.2-beta.10.tgz#407583fb7cc77aec5a652568558a95dcd0174955"
-  integrity sha512-hEiwmPiuDRwZ7UHtSx1aRcUbpZHpk1+HYg7YH4PQ0lXUwRtt/SxPmqAAMSPISzIBA1rtfEEnAw0CIaYw8bGGSw==
+appbase-js@^4.0.2-beta.11:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.2.tgz#a2de2ff8ca0f6e3dc14df357533a7b5c452c3e6e"
+  integrity sha512-rLcdjPSHTP42y3NTIlBRyJAFjT3oT516J/loQ/eTojvVUcvSm+40GYD/bPpVgOmGWSXpWMnLxiw82yu5m+nl3Q==
   dependencies:
     cross-fetch "^2.2.2"
     json-stable-stringify "^1.0.1"
