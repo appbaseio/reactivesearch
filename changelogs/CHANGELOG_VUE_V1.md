@@ -6,6 +6,8 @@
     <summary>The following changes have been included in the <code>next</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+### v1.2.0
+- Add rawData to provide an as-is response from es in render prop @ShahAnuj2610 (#1382)
 ### v1.1.1
 - Fix `DataSearch` autosuggest select on android firefox[#1374](https://github.com/appbaseio/reactivesearch/issues/1374)
 
