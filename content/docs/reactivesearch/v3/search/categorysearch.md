@@ -306,6 +306,7 @@ Or you can also use render function as children
                 loading,
                 error,
                 data,
+                rawData,
                 categories,
                 rawCategories,
                 suggestions,
