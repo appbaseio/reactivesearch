@@ -74,6 +74,7 @@ const StateProvider = {
 				isLoading: this.isLoading,
 				error: this.error,
 				promotedResults: this.promotedResults,
+				rawData: this.rawData,
 			};
 		},
 	},
@@ -116,6 +117,9 @@ const StateProvider = {
 		promotedResults(newVal, oldVal) {
 			this.calculateSearchState(newVal, oldVal);
 		},
+		rawData(newVal, oldVal) {
+			this.calculateSearchState(newVal, oldVal);
+		},
 	},
 	methods: {
 		isStateChanged(prevState, nextState) {
@@ -147,6 +151,7 @@ const mapStateToProps = (state, props) => ({
 	isLoading: filterByComponentIds(state.isLoading, props),
 	error: filterByComponentIds(state.error, props),
 	promotedResults: filterByComponentIds(state.promotedResults, props),
+	rawData: filterByComponentIds(state.rawData, props),
 });
 
 const StateProviderConnected = connect(mapStateToProps, {})(StateProvider);

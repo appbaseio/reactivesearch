@@ -239,7 +239,7 @@ const DataSearch = {
 				data: this.suggestionsList,
 				promotedData: this.promotedResults,
 				aggregationData: this.aggregationData,
-				rawData: this.suggestions || [],
+				rawData: this.rawData,
 				value: currentValue,
 				triggerClickAnalytics: this.triggerClickAnalytics,
 				resultStats: this.stats,
@@ -856,6 +856,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId] || [],
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
