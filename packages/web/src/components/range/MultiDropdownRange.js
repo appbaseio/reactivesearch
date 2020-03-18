@@ -8,6 +8,7 @@ import {
 	setQueryListener,
 	setQueryOptions,
 	setComponentProps,
+	setCustomQuery,
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -17,6 +18,7 @@ import {
 	checkPropChange,
 	getClassName,
 	checkSomePropChange,
+	updateCustomQuery,
 	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
@@ -49,11 +51,11 @@ class MultiDropdownRange extends Component {
 		this.type = 'range';
 
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, {
-			...props,
-			componentType: componentTypes.multiDropdownRange,
-		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.multiDropdownRange);
+		// Set custom query in store
+		updateCustomQuery(props.componentId, props, currentValue);
 		this.setReact(props);
 		const hasMounted = false;
 
@@ -69,7 +71,11 @@ class MultiDropdownRange extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.multiDropdownRange,
+			);
 		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
@@ -207,6 +213,7 @@ class MultiDropdownRange extends Component {
 		if (customQuery) {
 			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
 
@@ -266,6 +273,7 @@ MultiDropdownRange.propTypes = {
 	setQueryOptions: types.funcRequired,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
+	setCustomQuery: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -310,9 +318,11 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),

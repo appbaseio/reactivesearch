@@ -8,6 +8,8 @@ import {
 	setQueryListener,
 	setQueryOptions,
 	setComponentProps,
+	setCustomQuery,
+	setDefaultQuery,
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -20,6 +22,8 @@ import {
 	getQueryOptions,
 	getOptionsFromQuery,
 	getAggsQuery,
+	updateCustomQuery,
+	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -46,12 +50,13 @@ class SingleDataList extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setComponentProps(props.componentId, {
-			...props,
-			componentType: componentTypes.singleDataList,
-		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
-
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.singleDataList);
+		props.setComponentProps(this.internalComponent, props, componentTypes.singleDataList);
+		// Set custom and default queries in store
+		updateCustomQuery(props.componentId, props, currentValue);
+		updateDefaultQuery(props.componentId, props, currentValue);
 		this.setReact(props);
 		const hasMounted = false;
 
@@ -68,7 +73,16 @@ class SingleDataList extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.singleDataList,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.singleDataList,
+			);
 		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
@@ -199,6 +213,7 @@ class SingleDataList extends Component {
 		if (customQuery) {
 			({ query } = customQuery(currentValue, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(currentValue, props));
+			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
 
@@ -228,6 +243,7 @@ class SingleDataList extends Component {
 				...queryOptions,
 				...defaultQueryOptions,
 			});
+			updateDefaultQuery(props.componentId, props, value);
 		} else {
 			props.setQueryOptions(this.internalComponent, queryOptions);
 		}
@@ -448,7 +464,9 @@ SingleDataList.propTypes = {
 	options: types.options,
 	rawData: types.rawData,
 	setComponentProps: types.funcRequired,
+	setCustomQuery: types.funcRequired,
 	updateComponentProps: types.funcRequired,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -503,12 +521,16 @@ const mapStateToProps = (state, props) => ({
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),

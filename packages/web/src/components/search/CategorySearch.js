@@ -11,9 +11,12 @@ import {
 	setQueryOptions,
 	setQueryListener,
 	setComponentProps,
+	setCustomQuery,
+	setDefaultQuery,
 	updateComponentProps,
 	setSuggestionsSearchValue,
 	recordSuggestionClick,
+	setCustomHighlightOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	debounce,
@@ -28,6 +31,8 @@ import {
 	withClickIds,
 	handleOnSuggestions,
 	getResultStats,
+	updateCustomQuery,
+	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -92,14 +97,20 @@ class CategorySearch extends Component {
 		};
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setComponentProps(props.componentId, {
-			...props,
-			componentType: componentTypes.categorySearch,
-		});
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.categorySearch);
+		props.setComponentProps(this.internalComponent, props, componentTypes.categorySearch);
+		// Set custom and default queries in store
+		updateCustomQuery(props.componentId, props, currentValue);
+		updateDefaultQuery(props.componentId, props, currentValue);
 
 		if (props.highlight) {
 			const queryOptions = CategorySearch.highlightQuery(props) || {};
+			if (props.customHighlight && typeof props.customHighlight === 'function') {
+				props.setCustomHighlightOptions(props.componentId, props.customHighlight(props));
+			}
 			queryOptions.size = props.size;
 			this.queryOptions = queryOptions;
 			props.setQueryOptions(props.componentId, queryOptions);
@@ -127,7 +138,16 @@ class CategorySearch extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.categorySearch,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.categorySearch,
+			);
 		});
 		checkSomePropChange(
 			this.props,
@@ -135,6 +155,15 @@ class CategorySearch extends Component {
 			['highlight', 'dataField', 'highlightField'],
 			() => {
 				const queryOptions = CategorySearch.highlightQuery(this.props) || {};
+				if (
+					this.props.customHighlight
+					&& typeof this.props.customHighlight === 'function'
+				) {
+					this.props.setCustomHighlightOptions(
+						this.props.componentId,
+						this.props.customHighlight(this.props),
+					);
+				}
 				queryOptions.size = this.props.size;
 				this.queryOptions = queryOptions;
 				this.props.setQueryOptions(this.props.componentId, queryOptions);
@@ -486,6 +515,8 @@ class CategorySearch extends Component {
 				({ query } = defaultQueryTobeSet);
 			}
 			defaultQueryOptions = getOptionsFromQuery(defaultQueryTobeSet);
+			// Update calculated default query in store
+			updateDefaultQuery(props.componentId, props, value);
 		}
 		props.setSuggestionsSearchValue(value);
 		const aggsQuery = this.getCombinedAggsQuery();
@@ -516,6 +547,7 @@ class CategorySearch extends Component {
 				({ query } = customQueryTobeSet);
 			}
 			customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
+			updateCustomQuery(props.componentId, props, value);
 		}
 
 		// query options should be applied to the source component,
@@ -822,7 +854,7 @@ class CategorySearch extends Component {
 
 	getComponent = (downshiftProps = {}) => {
 		const {
-			error, isLoading, aggregationData, promotedResults, rawData,
+			error, isLoading, aggregationData, promotedResults, customData, rawData,
 		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
@@ -830,8 +862,9 @@ class CategorySearch extends Component {
 			loading: isLoading,
 			downshiftProps,
 			data: this.parsedSuggestions,
+			promotedData: promotedResults || [],
+			customData: customData || {},
 			rawData,
-			promotedData: promotedResults,
 			aggregationData: aggregationData || [],
 			value: currentValue,
 			suggestions: this.state.suggestions,
@@ -1059,6 +1092,7 @@ CategorySearch.propTypes = {
 	categories: types.data,
 	rawData: types.rawData,
 	promotedResults: types.hits,
+	customData: types.title,
 	selectedValue: types.selectedValue,
 	selectedCategory: types.selectedValue,
 	suggestions: types.suggestions,
@@ -1068,6 +1102,9 @@ CategorySearch.propTypes = {
 	isLoading: types.bool,
 	config: types.props,
 	triggerAnalytics: types.funcRequired,
+	setCustomQuery: types.funcRequired,
+	setDefaultQuery: types.funcRequired,
+	setCustomHighlightOptions: types.funcRequired,
 	// eslint-disable-next-line
 	error: types.any,
 	// component props
@@ -1174,15 +1211,21 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
 	config: state.config,
-	promotedResults: state.promotedResults[props.componentId] || [],
+	promotedResults: state.promotedResults[props.componentId],
+	customData: state.customData[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 });
 
 const mapDispatchtoProps = dispatch => ({
+	setCustomHighlightOptions: (component, options) =>
+		dispatch(setCustomHighlightOptions(component, options)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
 	updateComponentProps: (component, options) =>
 		dispatch(updateComponentProps(component, options)),
 	addComponent: component => dispatch(addComponent(component)),

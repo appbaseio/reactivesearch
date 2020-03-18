@@ -8,6 +8,7 @@ import {
 	setQueryOptions,
 	setQueryListener,
 	setComponentProps,
+	setCustomQuery,
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
@@ -21,6 +22,7 @@ import {
 	handleA11yAction,
 	getOptionsFromQuery,
 	getAggsQuery,
+	updateCustomQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
@@ -58,11 +60,12 @@ class TagCloud extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setComponentProps(props.componentId, {
-			...props,
-			componentType: componentTypes.tagCloud,
-		});
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.tagCloud);
+		props.setComponentProps(this.internalComponent, props, componentTypes.tagCloud);
+		// Set custom and default queries in store
+		updateCustomQuery(props.componentId, props, currentValue);
 		this.updateQueryOptions(props);
 
 		this.setReact(props);
@@ -75,14 +78,22 @@ class TagCloud extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.tagCloud,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.tagCloud,
+			);
 		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
+			const { buckets } = this.props.options[this.props.dataField];
 			this.setState({
-				options: this.props.options[this.props.dataField]
-					? this.props.options[this.props.dataField].buckets
-					: [],
+				options: this.getOptions(buckets, this.props),
 			});
 		});
 		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
@@ -182,6 +193,17 @@ class TagCloud extends Component {
 		return query;
 	};
 
+	getOptions = (buckets = [], props) => {
+		if (props.enableAppbase) {
+			return buckets.map(bucket => ({
+				key: bucket.key[props.dataField],
+				doc_count: bucket.doc_count,
+			}));
+		}
+
+		return buckets;
+	};
+
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		let { currentValue } = this.state;
 		let finalValues = null;
@@ -239,6 +261,7 @@ class TagCloud extends Component {
 		if (customQuery) {
 			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
 
@@ -345,8 +368,10 @@ TagCloud.propTypes = {
 	options: types.options,
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
+	setCustomQuery: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	error: types.title,
+	enableAppbase: types.bool,
 	isLoading: types.bool,
 	// component props
 	beforeValueChange: types.func,
@@ -405,13 +430,16 @@ const mapStateToProps = (state, props) => {
 			|| null,
 		isLoading: state.isLoading[props.componentId],
 		error: state.error[props.componentId],
+		enableAppbase: state.config.enableAppbase,
 	};
 };
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),

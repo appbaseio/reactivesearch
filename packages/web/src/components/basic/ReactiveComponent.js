@@ -9,6 +9,8 @@ import {
 	setQueryListener,
 	setComponentProps,
 	updateComponentProps,
+	setCustomQuery,
+	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	pushToAndClause,
@@ -19,8 +21,11 @@ import {
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
 	getResultStats,
+	updateCustomQuery,
+	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import { connect, getComponent, hasCustomRenderer, getValidPropsKeys } from '../../utils';
 
@@ -39,6 +44,10 @@ class ReactiveComponent extends Component {
 					false,
 				);
 			}
+			// Update customQuery field for RS API
+			if (obj && obj.query) {
+				props.setCustomQuery(props.componentId, obj.query);
+			}
 			this.props.updateQuery({
 				...obj,
 				componentId: props.componentId,
@@ -53,10 +62,12 @@ class ReactiveComponent extends Component {
 		}
 
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, props);
-		if (this.internalComponent) {
-			props.addComponent(this.internalComponent);
-		}
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.reactiveComponent);
+		props.setComponentProps(this.internalComponent, props, componentTypes.reactiveComponent);
+		// Set custom and default queries in store
+		updateCustomQuery(props.componentId, props, undefined);
+		updateDefaultQuery(props.componentId, props, undefined);
 
 		this.setReact(props);
 
@@ -121,7 +132,16 @@ class ReactiveComponent extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.reactiveComponent,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.reactiveComponent,
+			);
 		});
 		// only consider hits and defaultQuery when customQuery is absent
 		if (this.props.onData) {
@@ -146,7 +166,7 @@ class ReactiveComponent extends Component {
 					false,
 				);
 			} else this.props.setQueryOptions(this.internalComponent, this.getAggsQuery(), false);
-
+			updateDefaultQuery(this.props.componentId, this.props, undefined);
 			this.props.updateQuery({
 				componentId: this.internalComponent,
 				query: query || null,
@@ -166,7 +186,7 @@ class ReactiveComponent extends Component {
 					false,
 				);
 			} else this.props.setQueryOptions(this.props.componentId, this.getAggsQuery(), false);
-
+			updateCustomQuery(this.props.componentId, this.props, undefined);
 			this.props.updateQuery({
 				componentId: this.props.componentId,
 				query: query || null,
@@ -280,6 +300,7 @@ ReactiveComponent.propTypes = {
 	isLoading: types.bool,
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
+	setCustomQuery: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	// component props
 	children: types.func,
@@ -317,9 +338,12 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props, execute) =>

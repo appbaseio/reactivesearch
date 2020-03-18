@@ -8,6 +8,8 @@ import {
 	setQueryListener,
 	setQueryOptions,
 	setComponentProps,
+	setCustomQuery,
+	setDefaultQuery,
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -21,6 +23,8 @@ import {
 	getQueryOptions,
 	getOptionsFromQuery,
 	getAggsQuery,
+	updateCustomQuery,
+	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
@@ -60,12 +64,14 @@ class MultiDataList extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setComponentProps(props.componentId, {
-			...props,
-			componentType: componentTypes.multiDataList,
-		});
 
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.multiDataList);
+		props.setComponentProps(this.internalComponent, props, componentTypes.multiDataList);
+		// Set custom and default queries in store
+		updateCustomQuery(props.componentId, props, currentValue);
+		updateDefaultQuery(props.componentId, props, currentValue);
 
 		this.setReact(props);
 		const hasMounted = false;
@@ -83,7 +89,16 @@ class MultiDataList extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.multiDataList,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.multiDataList,
+			);
 		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
@@ -287,6 +302,7 @@ class MultiDataList extends Component {
 		if (customQuery) {
 			({ query } = customQuery(queryValue, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery((queryValue, props)));
+			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
 
@@ -316,6 +332,7 @@ class MultiDataList extends Component {
 				...queryOptions,
 				...defaultQueryOptions,
 			});
+			updateDefaultQuery(props.componentId, props, value);
 		} else {
 			props.setQueryOptions(this.internalComponent, queryOptions);
 		}
@@ -543,6 +560,8 @@ MultiDataList.propTypes = {
 	options: types.options,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
+	setCustomQuery: types.funcRequired,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -600,12 +619,16 @@ const mapStateToProps = (state, props) => ({
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),

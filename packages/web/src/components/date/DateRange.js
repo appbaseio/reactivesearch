@@ -7,6 +7,7 @@ import {
 	setQueryListener,
 	setQueryOptions,
 	setComponentProps,
+	setCustomQuery,
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -17,6 +18,7 @@ import {
 	getClassName,
 	getOptionsFromQuery,
 	formatDate,
+	updateCustomQuery,
 	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -61,11 +63,11 @@ class DateRange extends Component {
 		const hasMounted = false;
 
 		props.addComponent(props.componentId);
-		props.setComponentProps(props.componentId, {
-			...props,
-			componentType: componentTypes.dateRange,
-		});
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.dateRange);
+		// Set custom query in store
+		updateCustomQuery(props.componentId, props, this.state.currentDate);
 		this.setReact(props);
 
 		if (currentDate) {
@@ -75,7 +77,11 @@ class DateRange extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.dateRange,
+			);
 		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
@@ -364,6 +370,7 @@ class DateRange extends Component {
 				const customQueryObject = customQuery(value, props);
 				query = customQueryObject && customQueryObject.query;
 				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				updateCustomQuery(props.componentId, props, value);
 			}
 			props.setQueryOptions(props.componentId, customQueryOptions);
 			props.updateQuery({
@@ -517,6 +524,7 @@ DateRange.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setComponentProps: types.funcRequired,
+	setCustomQuery: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	// component props
 	autoFocusEnd: types.bool,
@@ -566,9 +574,11 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),

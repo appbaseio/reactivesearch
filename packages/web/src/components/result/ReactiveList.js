@@ -13,6 +13,7 @@ import {
 	setQueryListener,
 	setComponentProps,
 	updateComponentProps,
+	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -24,6 +25,7 @@ import {
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
 	getResultStats,
+	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -81,8 +83,9 @@ class ReactiveList extends Component {
 		this.sortOptionIndex = this.props.defaultSortOption
 			? this.props.sortOptions.findIndex(s => s.label === this.props.defaultSortOption)
 			: 0;
-
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+		props.setComponentProps(props.componentId, props, componentTypes.reactiveList);
+		props.setComponentProps(this.internalComponent, props, componentTypes.reactiveList);
 	}
 
 	componentDidMount() {
@@ -99,13 +102,21 @@ class ReactiveList extends Component {
 		let options = getQueryOptions(this.props);
 		options.from = this.state.from;
 		if (this.props.sortOptions) {
+			const sortField = this.props.sortOptions[this.sortOptionIndex].dataField;
+			const sortBy = this.props.sortOptions[this.sortOptionIndex].sortBy;
 			options.sort = [
 				{
-					[this.props.sortOptions[this.sortOptionIndex].dataField]: {
-						order: this.props.sortOptions[this.sortOptionIndex].sortBy,
+					[sortField]: {
+						order: sortBy,
 					},
 				},
 			];
+			// To handle sort options for RS API
+			this.props.updateComponentProps(
+				this.props.componentId,
+				{ ...this.props, dataField: sortField, sortBy },
+				componentTypes.reactiveList,
+			);
 		} else if (this.props.sortBy) {
 			options.sort = [
 				{
@@ -145,6 +156,8 @@ class ReactiveList extends Component {
 				},
 				execute,
 			);
+			// Update calculated default query in store
+			updateDefaultQuery(this.props.componentId, this.props);
 		} else {
 			this.props.updateQuery(
 				{
@@ -173,13 +186,31 @@ class ReactiveList extends Component {
 	componentDidUpdate(prevProps) {
 		const totalPages = Math.ceil(this.props.total / this.props.size) || 0;
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.reactiveList,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.reactiveList,
+			);
 		});
 		if (this.props.onData) {
 			checkSomePropChange(
 				this.props,
 				prevProps,
-				['hits', 'streamHits', 'promotedResults', 'total', 'size', 'time', 'hidden'],
+				[
+					'hits',
+					'streamHits',
+					'promotedResults',
+					'customData',
+					'total',
+					'size',
+					'time',
+					'hidden',
+				],
 				() => {
 					this.props.onData(this.getData());
 				},
@@ -231,6 +262,9 @@ class ReactiveList extends Component {
 				options = { ...options, ...getOptionsFromQuery(this.defaultQuery) };
 				this.props.setQueryOptions(this.props.componentId, options, !query);
 			}
+
+			// Update calculated default query in store
+			updateDefaultQuery(this.props.componentId, this.props);
 
 			this.props.updateQuery(
 				{
@@ -391,10 +425,13 @@ class ReactiveList extends Component {
 
 	// Calculate results
 	getAllData = () => {
-		const { size, promotedResults, aggregationData } = this.props;
+		const {
+			size, promotedResults, aggregationData, customData,
+		} = this.props;
 		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
+		const parsedPromotedResults = parseHits(promotedResults) || [];
 		let filteredResults = results;
 		const base = currentPage * size;
 		if (streamResults.length) {
@@ -402,19 +439,20 @@ class ReactiveList extends Component {
 			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 		}
 
-		if (promotedResults.length) {
-			const ids = promotedResults.map(item => item._id).filter(Boolean);
+		if (parsedPromotedResults.length) {
+			const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
 			if (ids) {
 				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 			}
 
-			filteredResults = [...streamResults, ...promotedResults, ...filteredResults];
+			filteredResults = [...streamResults, ...parsedPromotedResults, ...filteredResults];
 		}
 		return {
 			results,
 			streamResults,
 			filteredResults,
-			promotedResults,
+			promotedResults: parsedPromotedResults,
+			customData: customData || {},
 			aggregationData: aggregationData || [],
 			loadMore: this.loadMore,
 			base,
@@ -588,13 +626,21 @@ class ReactiveList extends Component {
 		// This fixes issue #371 (where sorting a multi-result page with infinite loader breaks)
 		options.from = 0;
 
+		const sortField = this.props.sortOptions[index].dataField;
+		const sortBy = this.props.sortOptions[index].sortBy;
 		options.sort = [
 			{
-				[this.props.sortOptions[index].dataField]: {
-					order: this.props.sortOptions[index].sortBy,
+				[sortField]: {
+					order: sortBy,
 				},
 			},
 		];
+		// To handle sortOptions for RS API
+		this.props.updateComponentProps(
+			this.props.componentId,
+			{ ...this.props, dataField: sortField, sortBy },
+			componentTypes.reactiveList,
+		);
 		this.props.setQueryOptions(this.props.componentId, options, true);
 		this.sortOptionIndex = index;
 
@@ -661,12 +707,14 @@ class ReactiveList extends Component {
 			filteredResults,
 			promotedResults,
 			aggregationData,
+			customData,
 		} = this.getAllData();
 		return {
 			data: this.withClickIds(filteredResults),
 			aggregationData: this.withClickIds(aggregationData || []),
 			streamData: this.withClickIds(streamResults),
 			promotedData: this.withClickIds(promotedResults),
+			customData,
 			rawData: this.props.rawData,
 			resultStats: this.stats,
 		};
@@ -773,6 +821,7 @@ ReactiveList.propTypes = {
 	onError: types.func,
 	setPageURL: types.func,
 	setQueryOptions: types.funcRequired,
+	setDefaultQuery: types.funcRequired,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	setStreaming: types.func,
@@ -786,6 +835,7 @@ ReactiveList.propTypes = {
 	includeFields: types.includeFields,
 	streamHits: types.hits,
 	promotedResults: types.hits,
+	customData: types.title,
 	time: types.number,
 	total: types.number,
 	hidden: types.number,
@@ -875,6 +925,7 @@ const mapStateToProps = (state, props) => ({
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults[props.componentId] || [],
+	customData: state.customData[props.componentId] || [],
 	afterKey:
 		state.aggregations[props.componentId]
 		&& state.aggregations[props.componentId][props.aggregationField]
@@ -882,8 +933,10 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	addComponent: component => dispatch(addComponent(component)),
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
 	updateComponentProps: (component, options) =>
 		dispatch(updateComponentProps(component, options)),
 	loadMore: (component, options, append, appendAggs) =>

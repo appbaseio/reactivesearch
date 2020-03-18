@@ -9,6 +9,8 @@ import {
 	setQueryListener,
 	loadMore,
 	setComponentProps,
+	setCustomQuery,
+	setDefaultQuery,
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -25,6 +27,8 @@ import {
 	getAggsQuery,
 	getCompositeAggsQuery,
 	updateInternalQuery,
+	updateCustomQuery,
+	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -73,14 +77,19 @@ class MultiList extends Component {
 
 		props.addComponent(props.componentId);
 		props.addComponent(this.internalComponent);
-		props.setComponentProps(props.componentId, {
-			...props,
-			componentType: componentTypes.multiList,
-		});
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.multiList);
+		props.setComponentProps(this.internalComponent, props, componentTypes.multiList);
+		// Set custom and default queries in store
+		updateCustomQuery(props.componentId, props, currentValueArray);
+		updateDefaultQuery(props.componentId, props, currentValueArray);
+
 		this.updateQueryOptions(props);
 
 		this.setReact(props);
+
 		const hasMounted = false;
 
 		if (currentValueArray.length) {
@@ -90,12 +99,23 @@ class MultiList extends Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(this.props.componentId, this.props);
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.multiList,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.multiList,
+			);
 		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
-			const { showLoadMore, dataField, options } = this.props;
-			if (showLoadMore) {
+			const {
+				showLoadMore, enableAppbase, dataField, options,
+			} = this.props;
+			if (showLoadMore || enableAppbase) {
 				const { buckets } = options[dataField];
 				const after = options[dataField].after_key;
 				const prevAfter = prevProps.options && prevProps.options[dataField].after_key;
@@ -197,7 +217,8 @@ class MultiList extends Component {
 	};
 
 	getOptions = (buckets, props) => {
-		if (props.showLoadMore) {
+		// RS API backend always uses composite aggregations
+		if (props.showLoadMore || props.enableAppbase) {
 			return buckets.map(bucket => ({
 				key: bucket.key[props.dataField],
 				doc_count: bucket.doc_count,
@@ -359,6 +380,7 @@ class MultiList extends Component {
 		if (customQuery) {
 			({ query } = customQuery(value, props) || {});
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, {
 			...MultiList.generateQueryOptions(props, this.state.prevAfter),
@@ -383,6 +405,7 @@ class MultiList extends Component {
 			Object.keys(this.state.currentValue),
 			this.props,
 			MultiList.generateQueryOptions(this.props, this.state.prevAfter),
+			null,
 		);
 	};
 
@@ -395,7 +418,7 @@ class MultiList extends Component {
 
 	updateQueryOptions = (props, addAfterKey = false) => {
 		// when using composite aggs flush the current options for a fresh query
-		if (props.showLoadMore && !addAfterKey) {
+		if ((props.showLoadMore || props.enableAppbase) && !addAfterKey) {
 			this.setState({
 				options: [],
 			});
@@ -515,14 +538,13 @@ class MultiList extends Component {
 			return isFunction(renderError) ? renderError(error) : renderError;
 		}
 
-		if (!this.hasCustomRenderer && this.state.options.length === 0) {
+		if (!this.hasCustomRenderer && this.state.options && this.state.options.length === 0) {
 			return this.props.renderNoResults ? this.props.renderNoResults() : null;
 		}
 
 		const listItems = this.listItems;
 
 		const isAllChecked = selectAllLabel ? !!this.state.currentValue[selectAllLabel] : false;
-
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -650,9 +672,11 @@ MultiList.propTypes = {
 	rawData: types.rawData,
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
+	setCustomQuery: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -701,6 +725,7 @@ MultiList.defaultProps = {
 	queryFormat: 'or',
 	showCheckbox: true,
 	showCount: true,
+	enableAppbase: false,
 	showSearch: true,
 	size: 100,
 	sortBy: 'count',
@@ -725,12 +750,16 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options) => dispatch(setComponentProps(component, options)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),

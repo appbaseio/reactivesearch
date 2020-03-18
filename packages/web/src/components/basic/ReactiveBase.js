@@ -27,11 +27,23 @@ class ReactiveBase extends Component {
 	}
 
 	componentDidMount() {
-		const { searchStateHeader } = this.props;
+		const { searchStateHeader, analyticsConfig, analytics } = this.props;
 		// TODO: Remove in 4.0
 		if (searchStateHeader !== undefined) {
 			console.warn(
-				'Warning(ReactiveSearch): The `searchStateHeader` prop has been marked as deprecated, please use the `analyticsConfig` prop instead.',
+				'Warning(ReactiveSearch): The `searchStateHeader` prop has been marked as deprecated, please use the `appbaseConfig` prop instead.',
+			);
+		}
+		// TODO: Remove in 4.0
+		if (analyticsConfig !== undefined) {
+			console.warn(
+				'Warning(ReactiveSearch): The `analyticsConfig` prop has been marked as deprecated, please use the `appbaseConfig` prop instead.',
+			);
+		}
+		// TODO: Remove in 4.0
+		if (analytics !== undefined) {
+			console.warn(
+				'Warning(ReactiveSearch): The `analytics` prop has been marked as deprecated, please set the `recordAnalytics` property as `true` in `appbaseConfig` prop instead.',
 			);
 		}
 	}
@@ -53,15 +65,20 @@ class ReactiveBase extends Component {
 				this.store.dispatch(updateAnalyticsConfig(this.props.analyticsConfig));
 			}
 		});
+		checkSomePropChange(this.props, prevProps, ['appbaseConfig'], () => {
+			if (this.store) {
+				this.store.dispatch(updateAnalyticsConfig(this.props.appbaseConfig));
+			}
+		});
 	}
 
-	componentDidCatch() {
+	componentDidCatch(error, errorInfo) {
 		console.error(
 			"An error has occured. You're using Reactivesearch Version:",
 			`${process.env.VERSION || require('../../../package.json').version}.`,
 			'If you think this is a problem with Reactivesearch, please try updating',
 			"to the latest version. If you're already at the latest version, please open",
-			'an issue at https://github.com/appbaseio/reactivesearch/issues',
+			'an issue at https://github.com/appbaseio/reactivesearch/issues', error, errorInfo,
 		);
 	}
 
@@ -71,12 +88,11 @@ class ReactiveBase extends Component {
 		const credentials
 			= props.url && props.url.trim() !== '' && !props.credentials ? null : props.credentials;
 
-		const analyticsConfig = {
-			...props.analyticsConfig,
-			searchStateHeader:
-				props.searchStateHeader !== undefined
-					? props.searchStateHeader
-					: props.analyticsConfig && props.analyticsConfig.searchStateHeader,
+		const appbaseConfig = {
+			searchStateHeader: props.searchStateHeader, // for backward compatibility
+			...props.analyticsConfig, // TODO: remove in 4.0
+			...props.appbaseConfig,
+
 		};
 		const config = {
 			url: props.url && props.url.trim() !== '' ? props.url : 'https://scalr.api.appbase.io',
@@ -84,8 +100,9 @@ class ReactiveBase extends Component {
 			credentials,
 			type: this.type,
 			transformRequest: props.transformRequest,
-			analytics: props.analytics,
-			analyticsConfig,
+			analytics: props.appbaseConfig ? props.appbaseConfig.recordAnalytics : props.analytics,
+			enableAppbase: props.enableAppbase,
+			analyticsConfig: appbaseConfig,
 			graphQLUrl: props.graphQLUrl,
 			transformResponse: props.transformResponse,
 		};
@@ -168,6 +185,13 @@ ReactiveBase.defaultProps = {
 		emptyQuery: true,
 		suggestionAnalytics: true,
 	},
+	enableAppbase: false,
+	appbaseConfig: {
+		searchStateHeader: false,
+		emptyQuery: true,
+		suggestionAnalytics: true,
+		enableQueryRules: true,
+	},
 };
 
 ReactiveBase.propTypes = {
@@ -188,7 +212,9 @@ ReactiveBase.propTypes = {
 	className: types.string,
 	initialState: types.children,
 	analytics: types.bool,
+	enableAppbase: types.bool,
 	analyticsConfig: types.analyticsConfig,
+	appbaseConfig: types.appbaseConfig,
 	graphQLUrl: types.string,
 	transformResponse: types.func,
 	getSearchParams: types.func,
