@@ -412,7 +412,7 @@ class CategorySearch extends Component {
 					multi_match: {
 						query: value,
 						fields,
-						type: 'phrase_prefix',
+						type: 'phrase',
 						operator: 'and',
 					},
 				},
@@ -433,7 +433,7 @@ class CategorySearch extends Component {
 				multi_match: {
 					query: value,
 					fields,
-					type: 'phrase_prefix',
+					type: 'phrase',
 					operator: 'or',
 				},
 			},
@@ -854,7 +854,7 @@ class CategorySearch extends Component {
 
 	getComponent = (downshiftProps = {}) => {
 		const {
-			error, isLoading, aggregationData, promotedResults, customData,
+			error, isLoading, aggregationData, promotedResults, customData, rawData,
 		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
@@ -864,6 +864,7 @@ class CategorySearch extends Component {
 			data: this.parsedSuggestions,
 			promotedData: promotedResults || [],
 			customData: customData || {},
+			rawData,
 			aggregationData: aggregationData || [],
 			value: currentValue,
 			suggestions: this.state.suggestions,
@@ -1089,6 +1090,7 @@ CategorySearch.propTypes = {
 	setSuggestionsSearchValue: types.funcRequired,
 	options: types.options,
 	categories: types.data,
+	rawData: types.rawData,
 	promotedResults: types.hits,
 	customData: types.title,
 	selectedValue: types.selectedValue,
@@ -1194,6 +1196,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.aggregations[props.componentId][props.categoryField]
 			&& state.aggregations[props.componentId][props.categoryField].buckets)
 		|| [],
+	rawData: state.rawData[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)

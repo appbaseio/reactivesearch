@@ -236,7 +236,7 @@ class ReactiveComponent extends Component {
 
 	getData() {
 		const {
-			hits, aggregations, aggregationData, promotedResults,
+			hits, aggregations, aggregationData, promotedResults, rawData,
 		} = this.props;
 		let filteredResults = parseHits(hits);
 		if (promotedResults.length) {
@@ -250,7 +250,7 @@ class ReactiveComponent extends Component {
 			data: filteredResults,
 			promotedData: promotedResults,
 			aggregationData: aggregationData || [],
-			rawData: hits,
+			rawData,
 			aggregations,
 			resultStats: this.stats,
 		};
@@ -295,6 +295,7 @@ ReactiveComponent.propTypes = {
 	aggregations: types.selectedValues,
 	aggregationData: types.aggregationData,
 	hits: types.data,
+	rawData: types.rawData,
 	promotedResults: types.hits,
 	isLoading: types.bool,
 	selectedValue: types.selectedValue,
@@ -323,6 +324,7 @@ const mapStateToProps = (state, props) => ({
 		(state.aggregations[props.componentId] && state.aggregations[props.componentId]) || null,
 	aggregationData: state.compositeAggregations[props.componentId] || [],
 	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	rawData: state.rawData[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)

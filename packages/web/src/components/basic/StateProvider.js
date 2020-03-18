@@ -95,6 +95,7 @@ StateProvider.propTypes = {
 	isLoading: types.componentObject,
 	error: types.componentObject,
 	promotedResults: types.componentObject,
+	rawData: types.rawData,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -109,6 +110,7 @@ const mapStateToProps = (state, props) => ({
 	promotedResults: filterByComponentIds(state.promotedResults, props),
 	customData: filterByComponentIds(state.customData, props),
 	settings: filterByComponentIds(state.settings, props),
+	rawData: filterByComponentIds(state.rawData, props),
 });
 
 export default connect(mapStateToProps, null)(StateProvider);

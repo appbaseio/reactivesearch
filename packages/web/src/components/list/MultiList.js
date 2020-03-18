@@ -505,7 +505,7 @@ class MultiList extends Component {
 	}
 
 	getComponent() {
-		const { error, isLoading } = this.props;
+		const { error, isLoading, rawData } = this.props;
 		const { currentValue } = this.state;
 		const data = {
 			error,
@@ -513,6 +513,7 @@ class MultiList extends Component {
 			value: currentValue,
 			data: this.listItems,
 			handleChange: this.handleClick,
+			rawData,
 		};
 		return getComponent(data, this.props);
 	}
@@ -668,6 +669,7 @@ MultiList.propTypes = {
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	options: types.options,
+	rawData: types.rawData,
 	selectedValue: types.selectedValue,
 	setComponentProps: types.funcRequired,
 	setCustomQuery: types.funcRequired,
@@ -740,6 +742,7 @@ const mapStateToProps = (state, props) => ({
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
+	rawData: state.rawData[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)

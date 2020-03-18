@@ -239,7 +239,7 @@ const DataSearch = {
 				data: this.suggestionsList,
 				promotedData: this.promotedResults,
 				aggregationData: this.aggregationData,
-				rawData: this.suggestions || [],
+				rawData: this.rawData,
 				value: currentValue,
 				triggerClickAnalytics: this.triggerClickAnalytics,
 				resultStats: this.stats,
@@ -795,7 +795,7 @@ DataSearch.shouldQuery = (value, dataFields, props) => {
 				multi_match: {
 					query: value,
 					fields,
-					type: 'phrase_prefix',
+					type: 'phrase',
 					operator: 'and',
 				},
 			},
@@ -816,7 +816,7 @@ DataSearch.shouldQuery = (value, dataFields, props) => {
 			multi_match: {
 				query: value,
 				fields,
-				type: 'phrase_prefix',
+				type: 'phrase',
 				operator: 'or',
 			},
 		},
@@ -856,6 +856,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId] || [],
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,

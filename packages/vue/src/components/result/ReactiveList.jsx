@@ -254,6 +254,11 @@ const ReactiveList = {
 				this.isLoading = false;
 			}
 		},
+		rawData(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.$emit('data', this.getData());
+			}
+		},
 		total(newVal, oldVal) {
 			if (this.shouldRenderPagination && newVal !== oldVal) {
 				let currentPage = this.$data.total ? 0 : this.$currentPage;
@@ -712,7 +717,6 @@ const ReactiveList = {
 		},
 		getData() {
 			const {
-				results,
 				streamResults,
 				filteredResults,
 				promotedResults,
@@ -723,7 +727,7 @@ const ReactiveList = {
 				aggregationData: this.withClickIds(aggregationData || []),
 				streamData: this.withClickIds(streamResults),
 				promotedData: this.withClickIds(promotedResults),
-				rawData: this.withClickIds(results),
+				rawData: this.rawData,
 				resultStats: this.stats,
 			};
 		},
@@ -746,6 +750,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value - 1)
 		|| -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId] || [],
 	promotedResults: state.promotedResults[props.componentId] || [],
 	streamHits: state.streamHits[props.componentId],

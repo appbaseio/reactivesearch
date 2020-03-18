@@ -411,6 +411,7 @@ class MultiDataList extends Component {
 			value: currentValue,
 			data: this.listItems,
 			handleChange: this.handleClick,
+			rawData: this.props.rawData,
 		};
 		return getComponent(data, this.props);
 	}
@@ -555,6 +556,7 @@ MultiDataList.propTypes = {
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
+	rawData: types.rawData,
 	options: types.options,
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
@@ -607,6 +609,7 @@ MultiDataList.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
+	rawData: state.rawData[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)

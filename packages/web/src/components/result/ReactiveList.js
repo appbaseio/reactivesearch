@@ -703,7 +703,6 @@ class ReactiveList extends Component {
 	};
 	getData = () => {
 		const {
-			results,
 			streamResults,
 			filteredResults,
 			promotedResults,
@@ -715,8 +714,8 @@ class ReactiveList extends Component {
 			aggregationData: this.withClickIds(aggregationData || []),
 			streamData: this.withClickIds(streamResults),
 			promotedData: this.withClickIds(promotedResults),
-			rawData: this.withClickIds(results),
 			customData,
+			rawData: this.props.rawData,
 			resultStats: this.stats,
 		};
 	};
@@ -831,6 +830,7 @@ ReactiveList.propTypes = {
 	watchComponent: types.funcRequired,
 	currentPage: types.number,
 	hits: types.hits,
+	rawData: types.rawData,
 	isLoading: types.bool,
 	includeFields: types.includeFields,
 	streamHits: types.hits,
@@ -914,6 +914,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value - 1)
 		|| -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
 	isLoading: state.isLoading[props.componentId] || false,
 	streamHits: state.streamHits[props.componentId],
