@@ -131,7 +131,7 @@ const DataSearch = {
 		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		react: types.react,
 		showClear: VueTypes.bool.def(true),
-		showDistinctSuggestions: VueTypes.bool.def(false),
+		showDistinctSuggestions: VueTypes.bool.def(true),
 		showFilter: VueTypes.bool.def(true),
 		showIcon: VueTypes.bool.def(true),
 		title: types.title,

@@ -1186,7 +1186,7 @@ CategorySearch.defaultProps = {
 	strictSelection: false,
 	searchOperators: false,
 	showVoiceSearch: false,
-	showDistinctSuggestions: false,
+	showDistinctSuggestions: true,
 	size: 10,
 };
 
