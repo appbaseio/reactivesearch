@@ -1026,7 +1026,7 @@ DataSearch.defaultProps = {
 	style: {},
 	URLParams: false,
 	showClear: false,
-	showDistinctSuggestions: false,
+	showDistinctSuggestions: true,
 	strictSelection: false,
 	searchOperators: false,
 	size: 10,
