@@ -32,7 +32,7 @@
 	"author": "metagrover",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/reactivecore": "9.3.2",
+		"@appbaseio/reactivecore": "9.4.0",
 		"appbase-js": "4.0.2",
 		"cross-env": "^5.2.0",
 		"downshift": "^1.31.2",

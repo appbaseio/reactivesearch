@@ -180,18 +180,7 @@ ReactiveBase.defaultProps = {
 	analytics: false,
 	graphQLUrl: '',
 	as: 'div',
-	analyticsConfig: {
-		searchStateHeader: false,
-		emptyQuery: true,
-		suggestionAnalytics: true,
-	},
 	enableAppbase: false,
-	appbaseConfig: {
-		searchStateHeader: false,
-		emptyQuery: true,
-		suggestionAnalytics: true,
-		enableQueryRules: true,
-	},
 };
 
 ReactiveBase.propTypes = {
