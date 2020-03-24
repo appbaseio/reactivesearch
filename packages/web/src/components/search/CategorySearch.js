@@ -1110,6 +1110,7 @@ CategorySearch.propTypes = {
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
+	enableSynonyms: types.bool,
 	beforeValueChange: types.func,
 	categoryField: types.string,
 	className: types.string,
@@ -1175,6 +1176,7 @@ CategorySearch.defaultProps = {
 	className: null,
 	debounce: 0,
 	downShiftProps: {},
+	enableSynonyms: true,
 	iconPosition: 'left',
 	placeholder: 'Search',
 	queryFormat: 'or',

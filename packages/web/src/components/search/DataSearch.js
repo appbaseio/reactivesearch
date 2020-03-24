@@ -949,6 +949,7 @@ DataSearch.propTypes = {
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
+	enableSynonyms: types.bool,
 	beforeValueChange: types.func,
 	className: types.string,
 	clearIcon: types.children,
@@ -1017,6 +1018,7 @@ DataSearch.defaultProps = {
 	className: null,
 	debounce: 0,
 	downShiftProps: {},
+	enableSynonyms: true,
 	iconPosition: 'left',
 	placeholder: 'Search',
 	queryFormat: 'or',
