@@ -259,6 +259,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
         parsedSuggestions,  // suggestions parsed by ReactiveSearch
         promotedData,       // array of promoted results obtained from applied query
         customData,         // An object of custom data obtained from the `reactivesearch-v3` API
+        rawData,            // object of raw response as-is from elasticsearch query.
         resultStats: {
             numberOfResults,    // Total number of results found
             time,               // Time taken to find total results (in ms)

@@ -224,6 +224,8 @@ Example uses:
         An object containing the error info.
     -   **`data`**: `array`
         An array of parsed suggestions (original suggestions + category suggestions) along with the `promoted` results from the applied query.
+    -   **`rawData`** `object`
+        An object of raw response as-is from elasticsearch query.
     -   **`aggregationData`**: `array`
         An array of composite aggregations (shaped in the form of hits) obtained from `composite aggs` query.
     -   **`promotedData`**: `array`
@@ -304,6 +306,7 @@ Or you can also use render function as children
                 loading,
                 error,
                 data,
+                rawData,
                 categories,
                 rawCategories,
                 suggestions,

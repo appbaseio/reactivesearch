@@ -15,6 +15,8 @@ sidebar: 'docs'
 
 Set Trigger allows you to specify when to invoke this function. Function can be invoked **always** or we can set **filter** based on which it will conditionally invoke the functions for specific requests only. Invoking function **always** can be helpful if we want to trigger function globally for all the incoming / outgoing requests, _example Authorize user_. We can **filter** the invocation using filter expression with environment variables. Following are the supported environment variables for which you can set expressions.
 
+> Note: A function linked with Query Rule cannot have its own triggering condition.
+
 | Variable    | Description                                                                                                                                                   | Example values     |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | `$category` | Category is the classification of the type of the incoming request. It can be one of `docs` , `search` , `indices` , `cat` , `clusters` , `misc`, `analytics` | `search`           |

@@ -223,7 +223,7 @@ You can also see the examples below that show an interactive example of using th
 
 Appbase.io's Zapier integration allows you to import data from over 1500+ apps such as Mailchimp, Sendgrid, Twilio, Google Sheets, Typeform into your appbase.io app or cluster.
 
-> You can start using the integration using this invite link: https://zapier.com/developer/public-invite/33102/02001b9598c3849a50cf1c94ff0cf572/
+> You can start using the integration from here: https://zapier.com/apps/appbaseio/integrations
 
 If you are new to Zapier, it allows connecting apps you use everyday to automate your work and be more productive. You can read more about Zapier over [here](https://zapier.com).
 
