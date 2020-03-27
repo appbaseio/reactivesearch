@@ -107,8 +107,6 @@ Example uses of searchbox UI:
     />
     ```
 
-    <!-- TODO: merge aggs branch of react and vue before merging this -->
-
     > See impact of aggregationField with these example for [React](/docs/reactivesearch/v3/advanced/groupingresults#how).
 
 -   **analytics** `boolean` [optional]
@@ -200,9 +198,8 @@ Example uses of searchbox UI:
         An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
         An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
-        <!-- TODO: link reactivesearch-v3 docs -->
     -   **`customData`**: `Object`
-        An object of custom data obtained from the `reactivesearch-v3` API.
+        An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/rsapi/Overview/).
     -   **`resultStats`**: `object`
         An object with the following properties which can be helpful to render custom stats:
         -   **`numberOfResults`**: `number`
