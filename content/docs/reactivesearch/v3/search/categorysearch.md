@@ -118,6 +118,11 @@ Example uses:
     />
     ```
     > Note: If you're using the controlled behavior than it's your responsibility to call the `triggerQuery` method to update the query i.e execute the search query and update the query results in connected components by `react` prop. It is not mandatory to call the `triggerQuery` in `onChange` you can also call it in other input handlers like `onBlur` or `onKeyPress`.
+-   **enableSynonyms** `bool` [optional]
+    Defaults to `true`, can be used to `disable/enable` the synonyms behavior for the search query. Read more about it [here](/docs/rsapi/APIReference/#enablesynonyms)
+    > Note:
+    >
+    > This property only works with [ReactiveSearch API](/docs/rsapi/Overview/) i.e when `enableAppbase` is set to `true` in `ReactiveBase` component.
 -   **downShiftProps** `Object` [optional]
     allow passing props directly to the underlying `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
 -   **fieldWeights** `Array` [optional]
