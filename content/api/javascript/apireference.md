@@ -328,6 +328,37 @@ appbaseRef
 **Returns**
 Promise.
 
+### reactiveSearchv3()
+ReactiveSearch method allows you to execute the search requests securely with the help of newly launched `ReactiveSearch` API. You can read about `ReactiveSearch` API [here](/docs/rsapi/Overview/).
+```js
+appbaseRef
+	.reactiveSearchv3([{
+		id: "book_search",
+		dataField: ["original_title"],
+		size: 10,
+		value: "harry"
+	}], {
+		userId: "jon@appbase.io"
+	})
+	.then(function(res) {
+		console.log('query result: ', res);
+	})
+	.catch(function(err) {
+		console.log('search error: ', err);
+	});
+```
+
+**Usage**
+
+`appbaseRef.reactiveSearchv3(params)`
+
+-   **params** It accepts two params:
+    - `query`, an array of objects where each object represents a ReactiveSearch query.
+	- `settings`, an object consisting of the properties to control your search experience.
+
+**Returns**
+Promise.
+
 ## STREAMING DATA
 
 ### getStream()
