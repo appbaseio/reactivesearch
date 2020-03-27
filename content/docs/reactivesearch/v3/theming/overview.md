@@ -20,9 +20,9 @@ Themes can be used to change the default styles for all the ReactiveSearch compo
 ```js
 {
 	typography: {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif',
-    fontSize: '16px',
-  },
+    	fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif',
+    	fontSize: '16px',
+	},
 
 	colors: {
 		textColor: '#424242',
