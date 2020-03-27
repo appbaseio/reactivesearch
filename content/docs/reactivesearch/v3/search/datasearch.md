@@ -90,10 +90,10 @@ Example uses:
 -   **value** `string` [optional]
     sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `onChange` prop.
 -   **enableSynonyms** `bool` [optional]
-    Defaults to `true`, can be used to `disable/enable` the synonyms behavior for the search query. Read more about it [here](/docs/rsapi/APIReference/#enablesynonyms)
+    Defaults to `true`, can be used to `disable/enable` the synonyms behavior for the search query. Read more about it [here](/docs/search/reactivesearch-api/APIReference/#enablesynonyms)
     > Note:
     >
-    > This property only works with [ReactiveSearch API](/docs/rsapi/Overview/) i.e when `enableAppbase` is set to `true` in `ReactiveBase` component.
+    > This property only works with [ReactiveSearch API](/docs/search/reactivesearch-api) i.e when `enableAppbase` is set to `true` in `ReactiveBase` component.
 -   **downShiftProps** `Object` [optional]
     allow passing props directly to the underlying `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
 -   **fieldWeights** `Array` [optional]

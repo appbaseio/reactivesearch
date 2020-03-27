@@ -23,6 +23,13 @@
               title: Mappings
             - link: /docs/search/Preview/
               title: "Search Preview"
+            - link: /docs/search/reactivesearch-api
+              title: "ReactiveSearch API"
+              items:
+                  - link: /docs/search/reactivesearch-api/Implement
+                    title: "Implementation"
+                  - link: /docs/search/reactivesearch-api/APIReference
+                    title: "API Reference"
             - link: /docs/search/Rules/
               title: "Query Rules for Clusters"
             - link: /docs/search/AppRules/
@@ -38,15 +45,6 @@
                     title: "Deploy"
                   - link: /docs/search/Functions/trigger
                     title: "Set Trigger"
-      - group: "ReactiveSearch API"
-        icon: search
-        items:
-            - link: /docs/rsapi/Overview/
-              title: "Overview"
-            - link: /docs/rsapi/Implement/
-              title: "Implementation"
-            - link: /docs/rsapi/APIReference/
-              title: "API Reference"
       - group: "Building Search UI"
       - group: "Actionable Analytics"
         icon: analytics

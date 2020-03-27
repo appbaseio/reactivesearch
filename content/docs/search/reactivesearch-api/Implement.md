@@ -202,7 +202,7 @@ Earlier we have discussed an example to define the multiple queries in `RS API`,
 ```
 
 ### Custom and Default Queries
-Although `RS API` covers most of the common use-cases for search but sometimes it may require that you want to customize the query. Query customization is possible with the help of `customQuery` and `defaultQuery` properties. You can read more about it in the ReactiveSearch [API Reference](/docs/rsapi/APIReference).
+Although `RS API` covers most of the common use-cases for search but sometimes it may require that you want to customize the query. Query customization is possible with the help of `customQuery` and `defaultQuery` properties. You can read more about it in the ReactiveSearch [API Reference](/docs/search/reactivesearch-api/APIReference).
 
 
 ## How to implement?
