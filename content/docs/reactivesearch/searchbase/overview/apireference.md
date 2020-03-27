@@ -388,7 +388,7 @@ These properties are automatically calculated or managed by the `Searchbase` cla
     -   **`hidden`**: `number` Total number of hidden results found
     -   **`promoted`**: `number` Total number of promoted results found
     -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
-    -   **`customData`**: `Object` An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/rsapi/Overview/).
+    -   **`customData`**: `Object` An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/search/reactivesearch-api/Overview/).
     -   **`rawData`**: `object`  An object of raw response as-is from elasticsearch query.
 -   **results** `Results`
     It is an object which contains the following details of `results` query response.

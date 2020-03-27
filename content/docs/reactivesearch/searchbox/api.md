@@ -200,7 +200,7 @@ Datasets can be configured using the following options.
 		-   **`promotedData`**: `array`
 			An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
         -   **`customData`**: `object`
-            An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/rsapi/Overview/).
+            An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/search/reactivesearch-api/Overview/).
 		-   **`resultStats`**: `object`
 			An object with the following properties which can be helpful to render custom stats:
 			-   **`numberOfResults`**: `number`
