@@ -38,6 +38,15 @@
                     title: "Deploy"
                   - link: /docs/search/Functions/trigger
                     title: "Set Trigger"
+      - group: "ReactiveSearch API"
+        icon: search
+        items:
+            - link: /docs/rsapi/Overview/
+              title: "Overview"
+            - link: /docs/rsapi/Implement/
+              title: "Implementation"
+            - link: /docs/rsapi/APIReference/
+              title: "API Reference"
       - group: "Building Search UI"
       - group: "Actionable Analytics"
         icon: analytics

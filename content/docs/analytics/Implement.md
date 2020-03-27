@@ -176,7 +176,7 @@ The above endpoints accept the following values as headers:
 ### How to enable / disable Empty Query
 By default, a library like ReactiveSearch shows you a set of results. even if the search hasn't been performed. Technically it calls the `match_all` query which can be considered as an empty query. By default, we record the analytics for empty queries too. You can find out about it in the Appbase.io dashboard with the `<empty_query>` key.
 
-You can disable this behavior in `ReactiveSearch` by defining the `analyticsConfig` prop in the `ReactiveBase` and set the `emptyQuery` as `false`. If you're not using the `ReactiveSearch`, then just don't send the `X-Search-Query` header while performing a `match_all` query.
+You can disable this behavior in `ReactiveSearch` by defining the `appbaseConfig` prop in the `ReactiveBase` and set the `emptyQuery` as `false`.
 
 ## How An Analytics Session Works
 
