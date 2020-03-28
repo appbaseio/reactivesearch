@@ -110,7 +110,7 @@ Example uses:
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **showDistinctSuggestions** `Boolean` [optional]
-    Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `false`.
+    Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
 	<br/> <br/>
     **Example** if you have `showDistinctSuggestions`  is set to `false` and have following configurations
 
