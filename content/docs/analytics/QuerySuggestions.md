@@ -66,6 +66,9 @@ It allows you to define which index/indices should be considered to populate the
 
 By default, we calculate the suggestions for past `30` days which is <strong>configurable</strong>. We recommend to not use a value less than `30` so you have enough data in your index.
 
+### Transform Diacritics
+By default, Appbase doesn't transform(strip) suggestions' keys from their diacritics. However you can control this setting from dashboard, if it's enabled then we'll normalize the suggestions before populating the suggestions index. For an example, "Crème Brulée" becomes "Creme Brulee".
+
 ### External Suggestions
 
 Since analytics is the only source to populate the `.suggestions` index. When you get started, you'll need some kind of starting data which can be helpful to display the suggestions.

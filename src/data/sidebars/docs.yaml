@@ -23,8 +23,17 @@
               title: Mappings
             - link: /docs/search/Preview/
               title: "Search Preview"
+            - link: /docs/search/reactivesearch-api
+              title: "ReactiveSearch API"
+              items:
+                  - link: /docs/search/reactivesearch-api/Implement
+                    title: "Implementation"
+                  - link: /docs/search/reactivesearch-api/APIReference
+                    title: "API Reference"
             - link: /docs/search/Rules/
-              title: "Query Rules"
+              title: "Query Rules for Clusters"
+            - link: /docs/search/AppRules/
+              title: "Query Rules for Apps"
             - link: /docs/search/Functions
               title: "Functions"
               items:

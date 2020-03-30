@@ -65,7 +65,7 @@ This step is only required if you are exposing OpenFaas gateway via Load Balance
     && helm upgrade openfaas --install openfaas/openfaas \
     --namespace openfaas \
     --set functionNamespace=openfaas-fn \
-	--set basic_auth=false
+    --set basic_auth=false
 
 If you are using Load Balancer to expose OpenFaas Gateway, then you can add `--set serviceType=LoadBalancer` switch in the above command. Similarly if you have enabled basic auth then you need to add `--set basic_auth=true` switch.
 
@@ -80,5 +80,7 @@ If you are exposing your OpenFaas service via LoadBalancer with Basic Authentica
     OPENFAAS_GATEWAY="http://username:password@IP_ADDRESS:8080"
 
 > **Note:** If you are using Self Hosted version of Appbase.io and want to deploy private image of function, you will have to add `OPENFAAS_KUBE_CONFIG` env with the value where your kubernetes config file exists.
+
+<iframe title="Hosting demo" style="width:100%" height="315" src="https://www.youtube.com/embed/YR0jSSgfxwI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 That's all, we have successfully deployed and integrated OpenFaas with Appbase.io. Now lets us see how we can [Create Functions](/docs/search/Functions/create).

@@ -49,6 +49,7 @@ Example uses:
   :showFilter="true"
   :fieldWeights="[1, 3]"
   :fuzziness="0"
+  :size="10"
   :debounce="100"
   :react="{
     and: ['CategoryFilter', 'SearchFilter']
@@ -64,6 +65,8 @@ Example uses:
     unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String or Array`
     database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
+-   **size** `Number` [optional]
+    number of suggestions to show. Defaults to `10`.
 -   **aggregationField** `String` [optional]
     One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
     You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `render` slot as shown:
@@ -108,6 +111,35 @@ Example uses:
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **showVoiceSearch** `Boolean` [optional]
     show a voice icon in the searchbox to enable users to set voice input. Defaults to `false`.
+-   **showDistinctSuggestions** `Boolean` [optional]
+    Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
+	<br/> <br/>
+    **Example** if you have `showDistinctSuggestions`  is set to `false` and have following configurations
+
+	```js
+	// Your document:
+	{
+		"name": "Warn",
+		"address": "Washington"
+	}
+
+	// Component:
+	<DataSearch dataField=['name', 'address'] .../>
+
+	// Search Query:
+	"wa"
+	```
+
+	Then there will be 2 suggestions from the same document
+	as we have the search term present in both the fields
+	specified in `dataField`.
+
+	```
+	Warn
+	Washington
+	```
+
+`Note:` Check the above concept in action over [here](https://codesandbox.io/s/musing-allen-qc58z).
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **clearIcon** `JSX` [optional]
@@ -175,8 +207,8 @@ export default {
         An object containing the error info.
     -   **`data`**: `array`
         An array of parsed suggestions obtained from the applied query.
-    -   **`rawData`**: `array`
-        An array of original suggestions obtained from the applied query.
+    -   **`rawData`** `object`
+        An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
         An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
     -   **`resultStats`**: `object`

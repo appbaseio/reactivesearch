@@ -37,6 +37,12 @@ This is the first component you will need to add when using `ReactiveSearch`.
     app credentials as they appear on the dashboard. It should be a string of the format "username:password" and is used for authenticating the app. If you are not using an appbase.io app, credentials may not be necessary - although having an open-access Elasticsearch cluster is not recommended.
 -   **url** `String` [optional]
     URL where the Elasticsearch cluster is hosted, only needed if your app uses a non-appbase.io URL.
+-   **enableAppbase** `boolean` [optional]
+    Defaults to `false`. You can set this to `true` when you're using appbase.io alongside `ElasticSearch`. It enables the following features:
+    -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/).
+    -   Query generation happens on server side - protecting against security concerns around query injection.
+    -   Apply query rules and functions for search queries. [Read more](/docs/search/Rules/).
+    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/Role/).
 -   **headers** `Object` [optional]
     set custom headers to be sent with each server request as key/value pairs. For example:
 
@@ -56,13 +62,20 @@ This is the first component you will need to add when using `ReactiveSearch`.
 -   **analytics** `Boolean` [optional]
     allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`.<br/>
     Check the [analytics recipe](/docs/reactivesearch/v3/advanced/analytics/) for click analytics implementation.
+    > Note:
+    > This prop has been marked as deprecated. Please use the `recordAnalytics` property in the `appbaseConfig` prop instead.
+-   **appbaseConfig** `Object` [optional]
+    allows you to customize the analytics experience when appbase.io is used as a backend.
+    Read more about it over [here](/docs/reactivesearch/v3/advanced/analytics/#configure-the-analytics-experience).
 -   **analyticsConfig** `Object` [optional]
     allows you to customize the analytics experience when appbase.io is used as a backend.
     Read more about it over [here](/docs/reactivesearch/v3/advanced/analytics/#configure-the-analytics-experience).
+    > Note:
+    > This prop has been marked as deprecated. Please use the `appbaseConfig` prop instead.
 - **searchStateHeader**
     Defaults to `false`. Allows recording some **advanced** search analytics (and click analytics) when setting to `true` and appbase.io is used as a backend.
     > Note:
-    > 1. This prop has been marked as deprecated. Please use the `analyticsConfig` prop instead.
+    > 1. This prop has been marked as deprecated. Please use the `appbaseConfig` prop instead.
     > 2. You must use the react version >= 16.6 to make it work with click analytics.
 -   **as** `String` [optional]
     allows to use the custom html element tag, defaults to `div`.

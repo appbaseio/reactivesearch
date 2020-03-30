@@ -89,6 +89,11 @@ Example uses:
     set the initial search query text on mount.
 -   **value** `string` [optional]
     sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `onChange` prop.
+-   **enableSynonyms** `bool` [optional]
+    Defaults to `true`, can be used to `disable/enable` the synonyms behavior for the search query. Read more about it [here](/docs/search/reactivesearch-api/APIReference/#enablesynonyms)
+    > Note:
+    >
+    > This property only works with [ReactiveSearch API](/docs/search/reactivesearch-api) i.e when `enableAppbase` is set to `true` in `ReactiveBase` component.
 -   **downShiftProps** `Object` [optional]
     allow passing props directly to the underlying `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
 -   **fieldWeights** `Array` [optional]
@@ -152,6 +157,36 @@ Example uses:
     > This prop doesn't work when the value of `queryFormat` prop is set to `and`.
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+-   **showDistinctSuggestions** `Boolean` [optional]
+    Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
+	<br/> <br/>
+    **Example** if you have `showDistinctSuggestions`  is set to `false` and have following configurations
+
+	```js
+	// Your document:
+	{
+		"name": "Warn",
+		"address": "Washington"
+	}
+
+	// Component:
+	<DataSearch dataField=['name', 'address'] .../>
+
+	// Search Query:
+	"wa"
+	```
+
+	Then there will be 2 suggestions from the same document
+	as we have the search term present in both the fields
+	specified in `dataField`.
+
+	```
+	Warn
+	Washington
+	```
+
+`Note:` Check the above concept in action over [here](https://codesandbox.io/s/musing-allen-qc58z).
+
 -   **showVoiceSearch** `Boolean` [optional]
     show a voice icon in the searchbox to enable users to set voice input. Defaults to `false`.
 -   **searchOperators** `Boolean` [optional]
@@ -171,8 +206,8 @@ Example uses:
         An object containing the error info.
     -   **`data`**: `array`
         An array of suggestions obtained from combining `promoted` suggestions along with the `hits` .
-    -   **`rawData`**: `array`
-        An array of original suggestions obtained from the applied query.
+    -   **`rawData`** `object`
+        An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
         An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction).
     -   **`resultStats`**: `object`

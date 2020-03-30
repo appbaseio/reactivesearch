@@ -45,6 +45,12 @@ const searchbase = new SearchBase(props);
 
 -   **url** `string` [Required]
     URL for the Elasticsearch cluster
+-   **enableAppbase** `boolean` [optional]
+    enableAppbase is false by default. You can set this to true when you're using appbase.io alongside ElasticSearch. It enables the following features:
+    -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/).
+    -   Query generation happens on server side - protecting against security concerns around query injection.
+    -   Apply query rules and functions for search queries. [Read more](/docs/search/Rules/).
+    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/Role/).
 -   **dataField** `string | Array<string | DataField>` [Required]
     index field(s) to be connected to the component’s UI view. DataSearch accepts an Array in addition to String, which is useful for searching across multiple fields with or without field weights.<br/>
     Field weights allow weighted search for the index fields. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.<br/>
@@ -97,6 +103,31 @@ const searchbase = new Searchbase({
     }
 })
 ```
+-   **showDistinctSuggestions** `Boolean` [optional]
+    Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
+	<br/> <br/>
+    **Example** if you have `showDistinctSuggestions`  is set to `false` and have following configurations
+
+	```js
+	// Your document:
+	{
+		"name": "Warn",
+		"address": "Washington"
+	}
+	// Component:
+	dataField=['name', 'address']
+	// Search Query:
+	"wa"
+	```
+
+	Then there will be 2 suggestions from the same document
+	as we have the search term present in both the fields
+	specified in `dataField`.
+
+	```
+	Warn
+	Washington
+	```
 -   **highlight** `Boolean` [optional]
     whether highlighting should be enabled in the returned results.
 -   **highlightField** `String or Array` [optional]
@@ -357,7 +388,8 @@ These properties are automatically calculated or managed by the `Searchbase` cla
     -   **`hidden`**: `number` Total number of hidden results found
     -   **`promoted`**: `number` Total number of promoted results found
     -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
-    -   **`rawData`**: `Array<Object>`  An array of original hits obtained from the applied query.
+    -   **`customData`**: `Object` An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/search/reactivesearch-api/Overview/).
+    -   **`rawData`**: `object`  An object of raw response as-is from elasticsearch query.
 -   **results** `Results`
     It is an object which contains the following details of `results` query response.
     -   **`data`**: `Array<Object>` contains the (promoted data + parsed hits)
@@ -367,12 +399,13 @@ These properties are automatically calculated or managed by the `Searchbase` cla
     -   **`hidden`**: `number` Total number of hidden results found
     -   **`promoted`**: `number` Total number of promoted results found
     -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
-    -   **`rawData`**: `Array<Object>`  An array of original hits obtained from the applied query.
+    -   **`customData`**: `Object` An object of custom data obtained from the `reactivesearch-v3` API.
+    -   **`rawData`**: `object`  An object of raw response as-is from elasticsearch query.
 -   **aggregations** `CompositeAggregationResults`
     It is an object which contains the following details of `composite aggregations` query response.
     -   **`data`**: `Array<Object>` contains the parsed aggregations
     -   **`raw`**: `Object` Response returned by ES `composite aggs` query in the raw form.
-    -   **`rawData`**: `Array<Object>`  An array of original aggregations obtained from the applied query.
+    -   **`rawData`**: `object`  An object of raw response as-is from elasticsearch query.
     -   **`afterKey`**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the `afterKey` parameter to retrieve the next results.
 -   **analyticsInstance** `Object`
     An instance of the [Appbase.io analytics library](https://github.com/appbaseio/analytics) which can be used to record click events, custom events & conversions for the appbase.io applications. For example, check how it can be used to record a click event.

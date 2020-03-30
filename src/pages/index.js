@@ -128,6 +128,13 @@ const HomePage = ({ data, location }) => {
 												duration: 1,
 											},
 											{
+												title: 'ReactiveSearch API',
+												description:
+													'A declarative API based on ReactiveSearch library to query Elasticsearch securely by protecting against security concerns around query injection.',
+												link: '/docs/search/reactivesearch-api',
+												duration: 1,
+											},
+											{
 												title: 'Query Rules',
 												description:
 													'Data Browser is a WYSIWYG GUI for adding, modifying and viewing your appbase.io apps data.',

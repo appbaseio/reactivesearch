@@ -72,6 +72,12 @@ Example uses of searchbox UI:
 
 -   **url** `string` [required]
     URL for the Elasticsearch cluster. Defaults to `https://scalr.api.appbase.io`
+-   **enableAppbase** `boolean` [optional]
+    enableAppbase is false by default. You can set this to true when you're using appbase.io alongside ElasticSearch. It enables the following features:
+    -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/vue/advanced/Analytics/).
+    -   Query generation happens on server side - protecting against security concerns around query injection.
+    -   Apply query rules and functions for search queries. [Read more](/docs/search/Rules/).
+    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/Role/).
 -   **credentials** `string` [optional]
     Basic auth credentials for authentication purposes. It should be a string of the format `username:password`.
     If you are using an appbase.io app, you will find credentials under your [API credentials page](https://dashboard.appbase.io/app?view=credentials). If you are not using an appbase.io app, credentials may not be necessary - although having an open access to your Elasticsearch cluster is not recommended.
@@ -85,6 +91,31 @@ Example uses of searchbox UI:
     	weight: number;
     };
     ```
+-   **showDistinctSuggestions** `Boolean` [optional]
+    Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
+	<br/> <br/>
+    **Example** if you have `showDistinctSuggestions`  is set to `false` and have following configurations
+
+	```js
+	// Your document:
+	{
+		"name": "Warn",
+		"address": "Washington"
+	}
+	// Component:
+	<vue-searchbox :dataField="['name', 'address']" ... />
+	// Search Query:
+	"wa"
+	```
+
+	Then there will be 2 suggestions from the same document
+	as we have the search term present in both the fields
+	specified in `dataField`.
+
+	```
+	Warn
+	Washington
+	```
 -   **aggregationField** `string` [optional]
     One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data).
     It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
@@ -252,6 +283,8 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
         highlightedIndex,   // index value which should be highlighted
         parsedSuggestions,  // suggestions parsed by ReactiveSearch
         promotedData,       // array of promoted results obtained from applied query
+        customData,         // An object of custom data obtained from the `reactivesearch-v3` API
+        rawData,            // object of raw response as-is from elasticsearch query.
         resultStats: {
             numberOfResults,    // Total number of results found
             time,               // Time taken to find total results (in ms)

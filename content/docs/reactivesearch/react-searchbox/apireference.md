@@ -75,6 +75,12 @@ Example uses of searchbox UI:
 -   **credentials** `string` [optional]
     Basic auth credentials for authentication purposes. It should be a string of the format `username:password`.
     If you are using an appbase.io app, you will find credentials under your [API credentials page](https://dashboard.appbase.io/app?view=credentials). If you are not using an appbase.io app, credentials may not be necessary - although having an open access to your Elasticsearch cluster is not recommended.
+-   **enableAppbase** `boolean` [optional]
+    enableAppbase is false by default. You can set this to true when you're using appbase.io alongside ElasticSearch. It enables the following features:
+    -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/).
+    -   Query generation happens on server side - protecting against security concerns around query injection.
+    -   Apply query rules and functions for search queries. [Read more](/docs/search/Rules/).
+    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/Role/).
 -   **dataField** `string | Array<string | DataField>` [required]
     database field(s) to be queried against. Accepts a String or an Array of either String or `DataField` type. The latter is useful for searching across multiple fields with field weights.<br/>
     Think of field weights as a way to apply weighted search. To use field weights, you can define the `dataField` prop as an array of objects of `DataField` type.<br/>
@@ -85,6 +91,31 @@ Example uses of searchbox UI:
     	weight: number;
     };
     ```
+-   **showDistinctSuggestions** `Boolean` [optional]
+    Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
+	<br/> <br/>
+    **Example** if you have `showDistinctSuggestions`  is set to `false` and have following configurations
+
+	```js
+	// Your document:
+	{
+		"name": "Warn",
+		"address": "Washington"
+	}
+	// Component:
+	<Searchbox dataField=['name', 'address'] ... />
+	// Search Query:
+	"wa"
+	```
+
+	Then there will be 2 suggestions from the same document
+	as we have the search term present in both the fields
+	specified in `dataField`.
+
+	```
+	Warn
+	Washington
+	```
 -   **aggregationField** `string` [optional]
     One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data).
     It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
@@ -100,8 +131,6 @@ Example uses of searchbox UI:
         onAggregationData={(next, prev) => <>}
     />
     ```
-
-    <!-- TODO: merge aggs branch of react and vue before merging this -->
 
     > See impact of aggregationField with these example for [React](/docs/reactivesearch/v3/advanced/groupingresults#how).
 
@@ -190,10 +219,12 @@ Example uses of searchbox UI:
         An object containing the error info.
     -   **`data`**: `array`
         An array of parsed suggestions obtained from the applied query.
-    -   **`rawData`**: `array`
-        An array of original suggestions obtained from the applied query.
+    -   **`rawData`**: `object`
+        An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
         An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
+    -   **`customData`**: `Object`
+        An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/search/reactivesearch-api/Overview/).
     -   **`resultStats`**: `object`
         An object with the following properties which can be helpful to render custom stats:
         -   **`numberOfResults`**: `number`

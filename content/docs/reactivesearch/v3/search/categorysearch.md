@@ -118,6 +118,11 @@ Example uses:
     />
     ```
     > Note: If you're using the controlled behavior than it's your responsibility to call the `triggerQuery` method to update the query i.e execute the search query and update the query results in connected components by `react` prop. It is not mandatory to call the `triggerQuery` in `onChange` you can also call it in other input handlers like `onBlur` or `onKeyPress`.
+-   **enableSynonyms** `bool` [optional]
+    Defaults to `true`, can be used to `disable/enable` the synonyms behavior for the search query. Read more about it [here](/docs/search/reactivesearch-api/APIReference/#enablesynonyms)
+    > Note:
+    >
+    > This property only works with [ReactiveSearch API](/docs/search/reactivesearch-api) i.e when `enableAppbase` is set to `true` in `ReactiveBase` component.
 -   **downShiftProps** `Object` [optional]
     allow passing props directly to the underlying `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
 -   **fieldWeights** `Array` [optional]
@@ -176,6 +181,35 @@ Example uses:
     Sets a maximum edit distance on the search parameters, can be **0**, **1**, **2** or **"AUTO"**. Useful for showing the correct results for an incorrect search parameter by taking the fuzziness into account. For example, with a substitution of one character, **fox** can become **box**. Read more about it in the elastic search [docs](https://www.elastic.co/guide/en/elasticsearch/guide/current/fuzziness.html).
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+-   **showDistinctSuggestions** `Boolean` [optional]
+    Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
+	<br/> <br/>
+    **Example** if you have `showDistinctSuggestions`  is set to `false` and have following configurations
+
+	```js
+	// Your document:
+	{
+		"name": "Warn",
+		"address": "Washington"
+	}
+
+	// Component:
+	<DataSearch dataField=['name', 'address'] .../>
+
+	// Search Query:
+	"wa"
+	```
+
+	Then there will be 2 suggestions from the same document
+	as we have the search term present in both the fields
+	specified in `dataField`.
+
+	```
+	Warn
+	Washington
+	```
+
+`Note:` Check the above concept in action over [here](https://codesandbox.io/s/musing-allen-qc58z).
 -   **showVoiceSearch** `Boolean` [optional]
     show a voice icon in the searchbox to enable users to set voice input. Defaults to `false`.
 -   **searchOperators** `Boolean` [optional]
@@ -195,6 +229,8 @@ Example uses:
         An object containing the error info.
     -   **`data`**: `array`
         An array of parsed suggestions (original suggestions + category suggestions) along with the `promoted` results from the applied query.
+    -   **`rawData`** `object`
+        An object of raw response as-is from elasticsearch query.
     -   **`aggregationData`**: `array`
         An array of composite aggregations (shaped in the form of hits) obtained from `composite aggs` query.
     -   **`promotedData`**: `array`
@@ -275,6 +311,7 @@ Or you can also use render function as children
                 loading,
                 error,
                 data,
+                rawData,
                 categories,
                 rawCategories,
                 suggestions,

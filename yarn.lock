@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@appbaseio/designkit@^0.9.11":
-  version "0.9.11"
-  resolved "https://registry.yarnpkg.com/@appbaseio/designkit/-/designkit-0.9.11.tgz#4b9556b6f540fc0dc812b41c2ba9a59594caafa3"
-  integrity sha512-WH94yZGqUvDK9/WgmLE9mbsEGtfwwPxOQAAXZXQ1Yu99PydS3quakusc50h69V/Yvsv1pmGBMDRCUpymhezJZg==
+"@appbaseio/designkit@^0.9.12":
+  version "0.9.12"
+  resolved "https://registry.yarnpkg.com/@appbaseio/designkit/-/designkit-0.9.12.tgz#805cac433e3e278d8c694a606055380be2b4efd7"
+  integrity sha512-FUYLZr6EOo4Vr5wldeH26pHm4N4soEo2oo6wkaCCUSzW7FAtxjW7FlntAvn36Az5Cs5spIJnaGv++izLeOtUYQ==
   dependencies:
     "@storybook/react" "^3.2.19"
     prop-types "^15.6.0"

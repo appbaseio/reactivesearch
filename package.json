@@ -51,7 +51,7 @@
 		"prettier": "^1.16.4"
 	},
 	"dependencies": {
-		"@appbaseio/designkit": "^0.9.11",
+		"@appbaseio/designkit": "^0.9.12",
 		"@appbaseio/reactivemaps": "^3.0.0-beta.2",
 		"@appbaseio/reactivesearch": "^3.2.1",
 		"@reach/router": "^1.2.1",
