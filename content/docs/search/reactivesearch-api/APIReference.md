@@ -269,6 +269,14 @@ Defaults to `false`. When set to `true` then it also retrieves the aggregations 
 | ------ | --------------------------- | -------- |
 | `bool` | `term`                      | false    |
 
+
+### selectAllLabel
+This property allows you to add a new property in the list with a particular value in such a way that when selected i.e `value` is similar/contains to that label(`selectAllLabel`) then `term` query will make sure that the `field` exists in the `results`.
+
+| Type     | Applicable on query of type | Required |
+| -------- | --------------------------- | -------- |
+| `string` | `term`                      | false    |
+
 ### includeNullValues
 
 If you have sparse data or documents or items not having the value in the specified field or mapping, then this prop enables you to show that data.
