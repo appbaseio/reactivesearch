@@ -94,6 +94,19 @@ Sensor components can be configured to create a combined query context and rende
 -   Styled and scoped components that can be easily extended,
 -   See the [reactivesearch starter app](https://github.com/appbaseio-apps/reactivesearch-starter-app).
 
+### 🆕 ReactiveSearch API: Secure your ElasticSearch Queries
+
+Based on a popular request, we have implemented support for a declarative API based on ReactiveSearch. The API is called [ReactiveSearch API](https://docs.appbase.io/docs/search/reactivesearch-api). It moves the query DSL generation logic to a backend system (an appbase.io service) instead of exposing it directly on the client-side. By strictly enabling only ReactiveSearch API use, you can also prevent script injections.
+
+The main advantages of using it over the ElasticSearch Query DSL are:
+- Query generation happens on the server-side - addressing the primary security concern around query injection.
+- Easy recording of analytics events for search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/)
+- Application of query rules and functions for search queries. [Read more](/docs/search/Rules/)
+
+Using ReactiveSearch API instead of ElasticSearch's query DSL is an opt-in feature. You need to set the `enableAppbase` prop as `true` in your `ReactiveBase` component. This assumes that you are using appbase.io for your backend.
+
+We recommend checking out this [KitchenSink App](https://codesandbox.io/s/eager-sky-cnt66) that demonstrates the use of the `ReactiveSearch API` for all the ReactiveSearch components.
+
 [⬆ Back to Top](#reactive-search)
 
 <br />
