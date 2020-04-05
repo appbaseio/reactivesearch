@@ -94,18 +94,18 @@ Sensor components can be configured to create a combined query context and rende
 -   Styled and scoped components that can be easily extended,
 -   See the [reactivesearch starter app](https://github.com/appbaseio-apps/reactivesearch-starter-app).
 
-### 🆕 Secure your traditional ElasticSearch Query
-We recently launched a brand new API based on the `ReactiveSearch library` named [ReactiveSearch API](https://docs.appbase.io/docs/search/reactivesearch-api) which provides a declarative way to define the ElasticSearch query instead of writing the whole query DSL.
+### 🆕 ReactiveSearch API: Secure your ElasticSearch Queries
 
-The main advantages of using it over the `ElasticSearch Query DSL`:
-- Query generation happens on the server-side - protecting against security concerns around query injection.
-- Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/).
-- Apply query rules and functions for search queries. [Read more](/docs/search/Rules/).
-- Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, field filtering. [Read more](/docs/security/Role/).
+Based on a popular request, we have implemented support for a declarative API based on ReactiveSearch. The API is called [ReactiveSearch API](https://docs.appbase.io/docs/search/reactivesearch-api). It moves the query DSL generation logic to a backend system (an appbase.io service) instead of exposing it directly on the client-side. By strictly enabling only ReactiveSearch API use, you can also prevent script injections.
 
-To make it work with `ReactiveSearch` you just need to set the `enableAppbase` prop as `true` in the `ReactiveBase` component if your `Elstisearch` is hosted with `Appbase.io`.
+The main advantages of using it over the ElasticSearch Query DSL are:
+- Query generation happens on the server-side - addressing the primary security concern around query injection.
+- Easy recording of analytics events for search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/)
+- Application of query rules and functions for search queries. [Read more](/docs/search/Rules/)
 
-We recommend checking out the [KitchenSink App](https://codesandbox.io/s/eager-sky-cnt66) which uses the `ReactiveSearch API` instead of `_msearch` from `ElasticSearch`.
+Using ReactiveSearch API instead of ElasticSearch's query DSL is an opt-in feature. You need to set the `enableAppbase` prop as `true` in your `ReactiveBase` component. This assumes that you are using appbase.io for your backend.
+
+We recommend checking out this [KitchenSink App](https://codesandbox.io/s/eager-sky-cnt66) that demonstrates the use of the `ReactiveSearch API` for all the ReactiveSearch components.
 
 [⬆ Back to Top](#reactive-search)
 
@@ -211,7 +211,7 @@ Please check the [contribution guide](.github/CONTRIBUTING.md).
 
 -   [**arc**](https://github.com/appbaseio/arc) API Gateway for ElasticSearch (Out of the box Security, Rate Limit Features, Record Analytics and Request Logs).
 
--   **searchbox** A lightweight and performance-focused searchbox UI libraries to query and display results from your ElasticSearch app (aka index).
+-   **searchbox** A lightweight and performance focused searchbox UI libraries to query and display results from your ElasticSearch app (aka index).
     -   [**Vanilla**](https://github.com/appbaseio/searchbox) - (~16kB Minified + Gzipped)
     -   [**React**](https://github.com/appbaseio/react-searchbox) - (~30kB Minified + Gzipped)
     -   [**Vue**](https://github.com/appbaseio/vue-searchbox) - (~22kB Minified + Gzipped)
