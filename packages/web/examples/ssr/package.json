@@ -9,7 +9,7 @@
 		"@zeit/next-css": "^1.0.1",
 		"emotion-server": "^9.1.0",
 		"moment": "^2.21.0",
-		"next": "^7.0.2",
+		"next": "^9.3.2",
 		"prop-types": "^15.6.1",
 		"react": "^16.2.0",
 		"react-dom": "^16.2.0"
