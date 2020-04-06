@@ -144,4 +144,14 @@ export interface analyticsConfig {
 	customEvents: object;
 }
 
+export interface appbaseConfig {
+	enableQueryRules: boolean;
+	recordAnalytics: boolean;
+	searchStateHeader: boolean;
+	emptyQuery: boolean;
+	suggestionAnalytics: boolean;
+	userId: string;
+	customEvents: object;
+}
+
 export type showClearAll = 'never' | 'always' | 'default' | true | false;
