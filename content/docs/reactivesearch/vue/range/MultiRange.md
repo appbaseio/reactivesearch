@@ -179,6 +179,21 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 -   **beforeValueChange** `Function`
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 
+    > Note:
+    >
+    > If you're using Reactivesearch version >= `1.1.0`, `beforeValueChange` can also be defined as a synchronous function. `value` is updated by default, unless you throw an `Error` to reject the update. For example:
+
+    ```js
+    beforeValueChange = value => {
+        // The update is accepted by default
+    	const valueIndex = value.findIndex(val => val.start < 4);
+    	if (valueIndex > -1) {
+    		// To reject the update, throw an error
+    		throw Error('Rating should be greater than or equal to 4.');
+    	}
+    };
+    ```
+
 ## Events
 
 -   **queryChange**

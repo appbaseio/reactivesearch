@@ -268,6 +268,21 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
     `Note:` defaultQuery doesn't get leaked to other components.
 -   **beforeValueChange** `Function`
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
+
+    > Note:
+    >
+    > If you're using Reactivesearch version >= `1.1.0`, `beforeValueChange` can also be defined as a synchronous function. `value` is updated by default, unless you throw an `Error` to reject the update. For example:
+
+    ```js
+    beforeValueChange = value => {
+        // The update is accepted by default
+    	if (value === 'In Death') {
+    		// To reject the update, throw an error
+    		throw Error('Selected value should not be equal to In Death.');
+    	}
+    };
+    ```
+
 -   **react** `Object`
     specify dependent components to reactively update **SingleList's** options.
     -   **key** `String`
