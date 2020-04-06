@@ -17,6 +17,14 @@ let DivIcon;
 class ReactiveOpenStreetMap extends Component {
 	static contextType = ReactReduxContext;
 
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			mapRef: null,
+		};
+	}
+
 	componentDidMount() {
 		/* eslint-disable */
 		OpenStreetMap = require('react-leaflet').Map;
@@ -183,6 +191,7 @@ class ReactiveOpenStreetMap extends Component {
 				style={style}
 				zoom={params.zoom}
 				center={[params.center.lat, params.center.lng]}
+				viewport={{}}
 				css={{
 					'.leaflet-div-icon': {
 						width: 'auto !important',
@@ -193,9 +202,15 @@ class ReactiveOpenStreetMap extends Component {
 					},
 				}}
 				touchZoom
-				onDragend={obj => {
-					params.handleOpenStreetOnDragEnd(obj.target.getBounds());
+				ref={(elem) => {
+					if (!this.state.mapRef) {
+						this.setState({
+							mapRef: elem.leafletElement,
+						});
+					}
 				}}
+				onZoomEnd={params.handleZoomChange}
+				onDragend={params.handleOnDragEnd}
 			>
 				<OpenStreetLayer
 					url={this.props.tileServer || 'https://{s}.tile.osm.org/{z}/{x}/{y}.png'}
@@ -208,7 +223,7 @@ class ReactiveOpenStreetMap extends Component {
 	};
 
 	render() {
-		return <ReactiveMap {...this.props} renderMap={this.renderMap} />;
+		return <ReactiveMap {...this.props} renderMap={this.renderMap} mapRef={this.state.mapRef} />;
 	}
 }
 
@@ -244,6 +259,7 @@ ReactiveOpenStreetMap.propTypes = {
 	config: types.props,
 	analytics: types.props,
 	headers: types.headers,
+	mapService: types.string,
 };
 
 ReactiveOpenStreetMap.defaultProps = {
@@ -265,6 +281,7 @@ ReactiveOpenStreetMap.defaultProps = {
 	showMarkerClusters: true,
 	unit: 'mi',
 	defaultRadius: 100,
+	mapService: 'OpenStreetMap'
 };
 
 const mapStateToProps = state => ({

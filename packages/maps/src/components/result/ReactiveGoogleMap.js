@@ -219,6 +219,7 @@ ReactiveGoogleMap.propTypes = {
 	renderMap: types.func,
 	updaterKey: types.number,
 	mapRef: types.any, // eslint-disable-line
+	mapService: types.string,
 };
 
 ReactiveGoogleMap.defaultProps = {
@@ -242,6 +243,7 @@ ReactiveGoogleMap.defaultProps = {
 	showMarkerClusters: true,
 	unit: 'mi',
 	defaultRadius: 100,
+	mapService: 'GoogleMap',
 };
 
 export default ReactiveGoogleMap;

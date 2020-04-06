@@ -421,55 +421,34 @@ class ReactiveMap extends Component {
 	getGeoQuery = (props = this.props) => {
 		this.defaultQuery = props.defaultQuery ? props.defaultQuery() : null;
 
-		if (this.props.mapRef) {
-			const mapBounds = this.props.mapRef.getBounds();
-			const north = mapBounds.getNorthEast().lat();
-			const south = mapBounds.getSouthWest().lat();
-			const east = mapBounds.getNorthEast().lng();
-			const west = mapBounds.getSouthWest().lng();
-			const boundingBoxCoordinates = {
-				top_left: [west, north],
-				bottom_right: [east, south],
-			};
+		const mapBounds = this.props.mapRef && typeof this.props.mapRef.getBounds === 'function' ? this.props.mapRef.getBounds() : false;
 
-			this.setState({
-				mapBoxBounds: boundingBoxCoordinates,
-			});
+		let north;
+		let south;
+		let east;
+		let west;
 
-			const geoQuery = {
-				geo_bounding_box: {
-					[this.props.dataField]: boundingBoxCoordinates,
-				},
-			};
-
-			if (this.defaultQuery) {
-				const { query } = this.defaultQuery;
-
-				if (query) {
-					// adds defaultQuery's query to geo-query
-					// to generate a map query
-
-					return {
-						must: [geoQuery, query],
-					};
-				}
+		if (mapBounds) {
+			switch (this.props.mapService) {
+				case 'GoogleMap':
+					north = mapBounds.getNorthEast().lat();
+					south = mapBounds.getSouthWest().lat();
+					east = mapBounds.getNorthEast().lng();
+					west = mapBounds.getSouthWest().lng();
+					break;
+				case 'OpenStreetMap':
+					north = mapBounds._northEast.lat;
+					south = mapBounds._southWest.lat;
+					east = mapBounds._northEast.lng;
+					west = mapBounds._southWest.lng;
+					break;
+				default:
+					north = null;
+					south = null;
+					east = null;
+					west = null;
 			}
 
-			return geoQuery;
-		}
-
-		// return the defaultQuery (if set) or null when map query not available
-		return this.defaultQuery ? this.defaultQuery.query : null;
-	};
-
-	getOpenStreetGeoQuery = (bounds, props = this.props) => {
-		this.defaultQuery = props.defaultQuery ? props.defaultQuery() : null;
-
-		if (bounds) {
-			const north = bounds._northEast.lat;
-			const south = bounds._southWest.lat;
-			const east = bounds._northEast.lng;
-			const west = bounds._southWest.lng;
 			const boundingBoxCoordinates = {
 				top_left: [west, north],
 				bottom_right: [east, south],
@@ -602,7 +581,7 @@ class ReactiveMap extends Component {
 		}
 
 		if (
-			(!!this.props.mapRef && this.state.preserveCenter)
+			(this.props.mapRef && typeof this.props.mapRef.getCenter === 'function' && this.state.preserveCenter)
 			|| (this.props.stream && this.props.streamHits.length && !this.props.streamAutoCenter)
 		) {
 			const currentCenter = this.props.mapRef.getCenter();
@@ -762,47 +741,26 @@ class ReactiveMap extends Component {
 		if (this.props.mapProps.onDragEnd) this.props.mapProps.onDragEnd();
 	};
 
-	handleOpenStreetOnDragEnd = (bounds) => {
-		if (this.state.searchAsMove) {
-			this.setState(
-				{
-					preserveCenter: true,
-				},
-				() => {
-					this.defaultQuery = this.getOpenStreetGeoQuery(bounds);
-
-					const persistMapQuery = !!this.props.center;
-					const forceExecute = this.state.searchAsMove;
-					this.props.setMapData(
-						this.props.componentId,
-						this.defaultQuery,
-						persistMapQuery,
-						forceExecute,
-					);
-				},
-			);
-		}
-		if (this.props.mapProps.onDragEnd) this.props.mapProps.onDragEnd();
-	};
-
 	handleZoomChange = () => {
-		const zoom = this.props.mapRef.getZoom();
-		if (this.state.searchAsMove) {
-			this.setState(
-				{
+		const zoom = (this.props.mapRef && typeof this.props.mapRef.getZoom === 'function' ? this.props.mapRef.getZoom() : false);
+		if (zoom) {
+			if (this.state.searchAsMove) {
+				this.setState(
+					{
+						zoom,
+						preserveCenter: true,
+					},
+					() => {
+						this.setGeoQuery(true);
+					},
+				);
+			} else {
+				this.setState({
 					zoom,
-					preserveCenter: true,
-				},
-				() => {
-					this.setGeoQuery(true);
-				},
-			);
-		} else {
-			this.setState({
-				zoom,
-			});
+				});
+			}
+			if (this.props.mapProps.onZoomChanged) this.props.mapProps.onZoomChanged();
 		}
-		if (this.props.mapProps.onZoomChanged) this.props.mapProps.onZoomChanged();
 	};
 
 	get shouldRenderLoader() {
@@ -867,7 +825,6 @@ class ReactiveMap extends Component {
 			handleOnDragEnd: this.handleOnDragEnd,
 			handleOnIdle: this.handleOnIdle,
 			handleZoomChange: this.handleZoomChange,
-			handleOpenStreetOnDragEnd: this.handleOpenStreetOnDragEnd,
 		};
 
 		return (
@@ -912,6 +869,7 @@ ReactiveMap.propTypes = {
 	config: types.props,
 	analytics: types.props,
 	headers: types.headers,
+	mapService: types.string,
 	// component props
 	autoCenter: types.bool,
 	center: types.location,
