@@ -4,7 +4,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import { connect, ReactReduxContext } from '@appbaseio/reactivesearch/lib/utils';
 
 import { MapPin, mapPinWrapper } from './addons/styles/MapPin';
-import ReactiveMap from './ReactiveMap';
+import ReactiveMap, { MAP_SERVICES } from './ReactiveMap';
 import { triggerClickAnalytics } from '../utils';
 
 let OpenStreetMap;
@@ -223,7 +223,14 @@ class ReactiveOpenStreetMap extends Component {
 	};
 
 	render() {
-		return <ReactiveMap {...this.props} renderMap={this.renderMap} mapRef={this.state.mapRef} />;
+		return (
+			<ReactiveMap
+				{...this.props}
+				renderMap={this.renderMap}
+				mapRef={this.state.mapRef}
+				mapService={MAP_SERVICES.OPEN_STREET_MAP}
+			/>
+		);
 	}
 }
 
@@ -259,7 +266,6 @@ ReactiveOpenStreetMap.propTypes = {
 	config: types.props,
 	analytics: types.props,
 	headers: types.headers,
-	mapService: types.string,
 };
 
 ReactiveOpenStreetMap.defaultProps = {
@@ -281,7 +287,6 @@ ReactiveOpenStreetMap.defaultProps = {
 	showMarkerClusters: true,
 	unit: 'mi',
 	defaultRadius: 100,
-	mapService: 'OpenStreetMap'
 };
 
 const mapStateToProps = state => ({

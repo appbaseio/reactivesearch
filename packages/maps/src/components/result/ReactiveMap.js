@@ -38,6 +38,11 @@ const MAP_CENTER = {
 	lng: 122.4194,
 };
 
+export const MAP_SERVICES = {
+	GOOGLE_MAP: 'GOOGLE_MAP',
+	OPEN_STREET_MAP: 'OPEN_STREET_MAP',
+};
+
 function getLocationObject(location) {
 	const resultType = Array.isArray(location) ? 'array' : typeof location;
 	switch (resultType) {
@@ -430,13 +435,13 @@ class ReactiveMap extends Component {
 
 		if (mapBounds) {
 			switch (this.props.mapService) {
-				case 'GoogleMap':
+				case MAP_SERVICES.GOOGLE_MAP:
 					north = mapBounds.getNorthEast().lat();
 					south = mapBounds.getSouthWest().lat();
 					east = mapBounds.getNorthEast().lng();
 					west = mapBounds.getSouthWest().lng();
 					break;
-				case 'OpenStreetMap':
+				case MAP_SERVICES.OPEN_STREET_MAP:
 					north = mapBounds._northEast.lat;
 					south = mapBounds._southWest.lat;
 					east = mapBounds._northEast.lng;
@@ -590,9 +595,16 @@ class ReactiveMap extends Component {
 					preserveCenter: false,
 				});
 			}, 100);
+			if (this.props.mapService === MAP_SERVICES.GOOGLE_MAP) {
+				return this.parseLocation({
+					lat: currentCenter.lat(),
+					lng: currentCenter.lng(),
+				});
+			}
+
 			return this.parseLocation({
-				lat: currentCenter.lat(),
-				lng: currentCenter.lng(),
+				lat: currentCenter.lat,
+				lng: currentCenter.lng,
 			});
 		}
 
@@ -869,7 +881,7 @@ ReactiveMap.propTypes = {
 	config: types.props,
 	analytics: types.props,
 	headers: types.headers,
-	mapService: types.string,
+	mapService: types.stringRequired,
 	// component props
 	autoCenter: types.bool,
 	center: types.location,

@@ -6,7 +6,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 
-import ReactiveMap from './ReactiveMap';
+import ReactiveMap, { MAP_SERVICES } from './ReactiveMap';
 import GoogleMapMarkers from './GoogleMapMarkers';
 
 const Standard = require('./addons/styles/Standard');
@@ -172,6 +172,7 @@ class ReactiveGoogleMap extends Component {
 				renderMap={this.renderMap}
 				mapRef={this.state.mapRef}
 				updaterKey={this.state.updaterKey}
+				mapService={MAP_SERVICES.GOOGLE_MAP}
 			/>
 		);
 	}
@@ -219,7 +220,6 @@ ReactiveGoogleMap.propTypes = {
 	renderMap: types.func,
 	updaterKey: types.number,
 	mapRef: types.any, // eslint-disable-line
-	mapService: types.string,
 };
 
 ReactiveGoogleMap.defaultProps = {
@@ -243,7 +243,6 @@ ReactiveGoogleMap.defaultProps = {
 	showMarkerClusters: true,
 	unit: 'mi',
 	defaultRadius: 100,
-	mapService: 'GoogleMap',
 };
 
 export default ReactiveGoogleMap;
