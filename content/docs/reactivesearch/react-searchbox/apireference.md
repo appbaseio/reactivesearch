@@ -41,6 +41,15 @@ Example uses of searchbox UI:
 ```js
 <SearchBox
 	app="good-books-ds"
+	appbaseConfig={{
+        recordAnalytics: true,
+        enableQueryRules: true,
+        userId: '192.168.0.102',
+        customEvents: {
+           platform: "ios",
+           device: "iphoneX"
+        }
+    }}
 	credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d"
 	dataField={[
 		{ field: 'original_title', weight: 1 },
@@ -134,33 +143,13 @@ Example uses of searchbox UI:
 
     > See impact of aggregationField with these example for [React](/docs/reactivesearch/v3/advanced/groupingresults#how).
 
--   **analytics** `boolean` [optional]
-    records search and click analytics when set to true and appbase.io is used as a backend. Defaults to false.
-    Search analytics get recorded with no code changes required. For recording click analytic, you have to call the `triggerClickAnalytics` function (inside `render`) by using the `_click_id` property of the data item as an argument.
+-   **appbaseConfig** `Object` [optional]
+    allows you to customize the analytics experience when appbase.io is used as a backend. It accepts an object which has the following properties:
 
--   **analyticsConfig** `object` [optional]
-    Set the `analyticsConfig` prop to customize the analytics experience when appbase.io is used as a backend. It accepts an object which has the following properties:
-
-    -   **emptyQuery** `Boolean` If `false` then appbase.io will not record the analytics for the empty queries i.e `match_all` queries. Defaults to `true`.
-    -   **suggestionAnalytics** `Boolean` If `false` then appbase.io will not record the click analytics for the suggestions. Defaults to `true`.
-    -   **userId** `String` It allows you to define the user id which will be used to record the appbase.io analytics.
-    -   **customEvents** `Object` It allows you to set the custom events which can be used to build your own analytics on top of the appbase.io analytics. Further, these events can be used to filter the analytics stats from the appbase.io dashboard.
-        <br/>
-        For example in the following code, we're setting up two custom events that will be recorded with each search request.
-
-    ```js
-    <SearchBox
-    	analytics
-    	analyticsConfig={{
-    		customEvents: {
-    			platform: 'ios',
-    			device: 'iphoneX',
-    		},
-    	}}
-    />
-    ```
-
-    > Note: **analyticsConfig** prop will only work when **analytics={true}**
+    - **recordAnalytics** `Boolean` allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`.
+    - **enableQueryRules** `Boolean` If `false`, then appbase.io will not apply the query rules on the search requests. Defaults to `true`.
+    - **userId** `String` It allows you to define the user id to be used to record the appbase.io analytics. Defaults to the client's IP address.
+    - **customEvents** `Object` It allows you to set the custom events which can be used to build your own analytics on top of appbase.io analytics. Further, these events can be used to filter the analytics stats from the appbase.io dashboard.
 
 -   **nestedField** `String` [optional]
     Set the path of the `nested` type under which the `dataField` is present. Only applicable only when the field(s) specified in the `dataField` is(are) present under a [`nested` type](https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html) mapping.
