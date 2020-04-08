@@ -23,6 +23,6 @@
     },
     "scripts": {
         "build": "webpack -p --progress",
-        "start": "webpack-dev-server --hot --inline --progress --colors --port 8000 --open"
+        "start": "webpack-dev-server --hot --inline --progress --colors --port 8001 --open"
     }
 }
