@@ -32,6 +32,7 @@ import SearchSvg from '@appbaseio/reactivesearch/lib/components/shared/SearchSvg
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
 import GeoCode from './GeoCode';
+import { hasGoogleMap } from '../utils';
 
 class GeoDistanceDropdown extends GeoCode {
 	constructor(props) {
@@ -43,7 +44,7 @@ class GeoDistanceDropdown extends GeoCode {
 
 		if (props.geocoder) {
 			this.geocoder = props.geocoder;
-		} else if (typeof window.google === 'object' && typeof window.google.maps === 'object') {
+		} else if (hasGoogleMap()) {
 			this.geocoder = new window.google.maps.Geocoder();
 		}
 
@@ -87,7 +88,7 @@ class GeoDistanceDropdown extends GeoCode {
 	}
 
 	componentDidMount() {
-		if (typeof window.google === 'object' && typeof window.google.maps === 'object') {
+		if (hasGoogleMap()) {
 			this.autocompleteService = new window.google.maps.places.AutocompleteService();
 		}
 	}
@@ -295,7 +296,7 @@ class GeoDistanceDropdown extends GeoCode {
 				label: this.props.value.label,
 			});
 		}
-		if (value.trim() && typeof window.google === 'object' && typeof window.google.maps === 'object') {
+		if (value.trim() && hasGoogleMap()) {
 			if (!this.autocompleteService) {
 				this.autocompleteService = new window.google.maps.places.AutocompleteService();
 			}
@@ -523,7 +524,7 @@ GeoDistanceDropdown.propTypes = {
 	unit: types.string,
 	URLParams: types.bool,
 	serviceOptions: types.props,
-	geocoder: types.shape,
+	geocoder: types.any, // eslint-disable-line
 };
 
 GeoDistanceDropdown.defaultProps = {

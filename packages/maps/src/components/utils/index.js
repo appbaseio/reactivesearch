@@ -25,3 +25,6 @@ export const triggerClickAnalytics = ({ config, analytics, headers, searchPositi
 		});
 	}
 };
+
+export const hasGoogleMap = () =>
+	typeof window.google === 'object' && typeof window.google.maps === 'object';

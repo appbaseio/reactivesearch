@@ -35,6 +35,7 @@ import SliderHandle from '@appbaseio/reactivesearch/lib/components/range/addons/
 import { rangeLabelsContainer } from '@appbaseio/reactivesearch/lib/styles/Label';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
 import GeoCode from './GeoCode';
+import { hasGoogleMap } from '../utils';
 
 class GeoDistanceSlider extends GeoCode {
 	constructor(props) {
@@ -46,7 +47,7 @@ class GeoDistanceSlider extends GeoCode {
 
 		if (props.geocoder) {
 			this.geocoder = props.geocoder;
-		} else if (typeof window.google === 'object' && typeof window.google.maps === 'object') {
+		} else if (hasGoogleMap()) {
 			this.geocoder = new window.google.maps.Geocoder();
 		}
 
@@ -88,7 +89,7 @@ class GeoDistanceSlider extends GeoCode {
 	}
 
 	componentDidMount() {
-		if (typeof window.google === 'object' && typeof window.google.maps === 'object') {
+		if (hasGoogleMap()) {
 			this.autocompleteService = new window.google.maps.places.AutocompleteService();
 		}
 	}
@@ -276,7 +277,7 @@ class GeoDistanceSlider extends GeoCode {
 		} else if (onChange) {
 			onChange({ location: value, distance: this.state.currentDistance });
 		}
-		if (value.trim() && typeof window.google === 'object' && typeof window.google.maps === 'object') {
+		if (value.trim() && hasGoogleMap()) {
 			if (!this.autocompleteService) {
 				this.autocompleteService = new window.google.maps.places.AutocompleteService();
 			}
@@ -538,7 +539,7 @@ GeoDistanceSlider.propTypes = {
 	unit: types.string,
 	URLParams: types.bool,
 	serviceOptions: types.props,
-	geocoder: types.shape,
+	geocoder: types.any, // eslint-disable-line
 };
 
 GeoDistanceSlider.defaultProps = {
