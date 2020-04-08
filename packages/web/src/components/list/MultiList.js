@@ -115,7 +115,7 @@ class MultiList extends Component {
 			const {
 				showLoadMore, enableAppbase, dataField, options,
 			} = this.props;
-			if ((showLoadMore || enableAppbase) && options[dataField]) {
+			if ((showLoadMore || enableAppbase) && options && options[dataField]) {
 				const { buckets } = options[dataField];
 				const after = options[dataField].after_key;
 				const prevAfter = prevProps.options && prevProps.options[dataField].after_key;

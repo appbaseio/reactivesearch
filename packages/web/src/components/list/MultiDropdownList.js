@@ -104,7 +104,7 @@ class MultiDropdownList extends Component {
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, dataField, enableAppbase } = this.props;
 			const { options } = this.state;
-			if ((showLoadMore || enableAppbase) && this.props.options[dataField]) {
+			if ((showLoadMore || enableAppbase) && this.props.options && this.props.options[dataField]) {
 				// append options with showLoadMore
 				const { buckets } = this.props.options[dataField];
 				const nextOptions = [
