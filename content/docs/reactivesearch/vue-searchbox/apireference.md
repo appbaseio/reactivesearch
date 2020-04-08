@@ -44,7 +44,7 @@ Example uses of searchbox UI:
 	:appbaseConfig="{
         recordAnalytics: true,
         enableQueryRules: true,
-        userId: '192.168.0.102',
+        userId: 'jon@appbase.io',
         customEvents: {
            platform: "ios",
            device: "iphoneX"

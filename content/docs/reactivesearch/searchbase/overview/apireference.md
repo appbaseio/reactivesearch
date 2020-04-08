@@ -173,6 +173,10 @@ const searchbase = new Searchbase({
     fields to be included in search results.
 -   **excludeFields** `Array<string>`
     fields to be excluded in search results.
+-   **recordClick** `(objects: Object, isSuggestionClick: boolean = false) => void`
+    Enables recording click analytics of a search request. Pass `isSuggestionClick=true`, if you want to record a suggestion click.
+-   **recordConversions** `(objects: Array<string>) => void`
+    Enables recording a search conversion.
 -   **transformRequest** `(requestOptions: Object) => Promise<Object>`
     Enables transformation of network request before execution. This function will give you the the request object as the param and expect an updated request in return, for execution.<br/>
     For example, we will add the `credentials` property in the request using `transformRequest`.
@@ -316,7 +320,7 @@ const searchbase = new Searchbase({
     appbaseConfig: {
         recordAnalytics: true,
         enableQueryRules: true,
-        userId: '192.168.0.102',
+        userId: 'jon@appbase.io',
         customEvents: {
             platform: "ios",
             device: "iphoneX"
