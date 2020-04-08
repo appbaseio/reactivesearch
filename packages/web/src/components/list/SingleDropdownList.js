@@ -97,7 +97,7 @@ class SingleDropdownList extends Component {
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, enableAppbase, dataField } = this.props;
 			const { options } = this.state;
-			if (showLoadMore || enableAppbase) {
+			if ((showLoadMore || enableAppbase) && this.props.options[dataField]) {
 				// append options with showLoadMore
 				const { buckets } = this.props.options[dataField];
 				const nextOptions = [
