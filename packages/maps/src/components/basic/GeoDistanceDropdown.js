@@ -40,7 +40,12 @@ class GeoDistanceDropdown extends GeoCode {
 		this.type = 'geo_distance';
 		this.coordinates = null;
 		this.autocompleteService = null;
-		this.geocoder = new window.google.maps.Geocoder();
+
+		if (props.geocoder) {
+			this.geocoder = props.geocoder;
+		} else if (typeof window.google === 'object' && typeof window.google.maps === 'object') {
+			this.geocoder = new window.google.maps.Geocoder();
+		}
 
 		if (props.autoLocation) {
 			this.getUserLocation();
@@ -82,7 +87,9 @@ class GeoDistanceDropdown extends GeoCode {
 	}
 
 	componentDidMount() {
-		this.autocompleteService = new window.google.maps.places.AutocompleteService();
+		if (typeof window.google === 'object' && typeof window.google.maps === 'object') {
+			this.autocompleteService = new window.google.maps.places.AutocompleteService();
+		}
 	}
 
 	componentDidUpdate(prevProps) {
@@ -288,7 +295,7 @@ class GeoDistanceDropdown extends GeoCode {
 				label: this.props.value.label,
 			});
 		}
-		if (value.trim()) {
+		if (value.trim() && typeof window.google === 'object' && typeof window.google.maps === 'object') {
 			if (!this.autocompleteService) {
 				this.autocompleteService = new window.google.maps.places.AutocompleteService();
 			}
@@ -516,6 +523,7 @@ GeoDistanceDropdown.propTypes = {
 	unit: types.string,
 	URLParams: types.bool,
 	serviceOptions: types.props,
+	geocoder: types.shape,
 };
 
 GeoDistanceDropdown.defaultProps = {
