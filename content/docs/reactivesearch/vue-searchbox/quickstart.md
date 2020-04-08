@@ -35,6 +35,6 @@ yarn add vue-searchbox
 
 ## Demo
 
-<iframe src="https://codesandbox.io/embed/github/appbaseio/vue-searchbox/tree/master/example" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+<iframe src="https://codesandbox.io/embed/github/appbaseio/searchbox/tree/master/packages/vue-searchbox/examples/basic" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
 Check the docs for API Reference [here](/docs/reactivesearch/vue-searchbox/apireference/)
