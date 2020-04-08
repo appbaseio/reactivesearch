@@ -122,7 +122,7 @@ class SingleList extends Component {
 				}));
 			} else {
 				this.setState({
-					options: options[dataField]
+					options: options && options[dataField]
 						? this.getOptions(options[dataField].buckets, this.props)
 						: [],
 				});

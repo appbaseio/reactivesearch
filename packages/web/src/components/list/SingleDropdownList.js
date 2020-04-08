@@ -119,7 +119,7 @@ class SingleDropdownList extends Component {
 				});
 			} else {
 				this.setState({
-					options: this.props.options[dataField]
+					options: this.props.options && this.props.options[dataField]
 						? this.props.options[dataField].buckets
 						: [],
 				});
