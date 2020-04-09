@@ -45,8 +45,12 @@ class ReactiveComponent extends Component {
 				);
 			}
 			// Update customQuery field for RS API
-			if (obj && obj.query) {
-				props.setCustomQuery(props.componentId, obj.query);
+			if ((obj && obj.query) || options) {
+				const customQuery = { ...options };
+				if (obj && obj.query) {
+					customQuery.query = obj.query;
+				}
+				props.setCustomQuery(props.componentId, customQuery);
 			}
 			this.props.updateQuery({
 				...obj,

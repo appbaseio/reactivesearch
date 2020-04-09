@@ -163,6 +163,22 @@
     string.prototype.repeat "^0.2.0"
     unist-util-visit "^1.1.3"
 
+"@appbaseio/reactivemaps@3.0.0-beta.4":
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.0-beta.4.tgz#e6a2c2424025fdab670c3bf56c368c7496eb1577"
+  integrity sha512-a3vKtmOEqLIysuHL7b+tE6rzn1mmb72WOeaoHHrWlSZeHRb2YvezFcQvq3/GVMNnSjgPzAW5AtCZbuG5jcIUww==
+  dependencies:
+    downshift "^1.31.2"
+    emotion "^9.0.0"
+    emotion-theming "^9.0.0"
+    leaflet "^1.3.4"
+    ngeohash "^0.6.3"
+    prop-types "^15.6.0"
+    react-emotion "^9.0.0"
+    react-google-maps "^9.4.5"
+    react-leaflet "^2.1.3"
+    rheostat "^2.1.1"
+
 "@appbaseio/reactivemaps@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-2.0.1.tgz#ca94c3f9aa43260589792ef009541ac9bb2df644"
@@ -174,6 +190,27 @@
     prop-types "^15.6.0"
     react-emotion "^9.0.0"
     react-google-maps "^9.4.5"
+
+"@appbaseio/reactivesearch@3.7.5":
+  version "3.7.5"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.7.5.tgz#68f35c7adc58b29c83f62653c05c65f5f111ae20"
+  integrity sha512-79iCJ9tGWrMyNCnQZj9BBjzm0mHSe0J0ZOrvEF9Fvk0Ee39H5SuCj45EfrHrHXRczwwWE9sxemxf0YtlsocU0A==
+  dependencies:
+    "@appbaseio/reactivecore" "9.5.0"
+    appbase-js "4.0.2"
+    cross-env "^5.2.0"
+    downshift "^1.31.2"
+    emotion "^9.0.0"
+    emotion-theming "^9.0.0"
+    hoist-non-react-statics "^3.2.1"
+    polished "^1.9.3"
+    prop-types "^15.6.0"
+    react-day-picker "^7.0.5"
+    react-emotion "^9.0.0"
+    react-redux "^6.0.1"
+    rheostat "^2.1.1"
+    url-search-params-polyfill "^7.0.0"
+    xdate "^0.8.2"
 
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
