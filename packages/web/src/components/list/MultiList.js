@@ -115,10 +115,13 @@ class MultiList extends Component {
 			const {
 				showLoadMore, enableAppbase, dataField, options,
 			} = this.props;
-			if (showLoadMore || enableAppbase) {
+			if ((showLoadMore || enableAppbase) && options && options[dataField]) {
 				const { buckets } = options[dataField];
 				const after = options[dataField].after_key;
-				const prevAfter = prevProps.options && prevProps.options[dataField].after_key;
+				const prevAfter
+					= prevProps.options
+					&& prevProps.options[dataField]
+					&& prevProps.options[dataField].after_key;
 				// detect the last bucket by checking if the after key is absent
 				const isLastBucket = !after;
 				this.setState(
@@ -141,9 +144,10 @@ class MultiList extends Component {
 			} else {
 				this.setState(
 					{
-						options: options[dataField]
-							? this.getOptions(options[dataField].buckets, this.props)
-							: [],
+						options:
+							options && options[dataField]
+								? this.getOptions(options[dataField].buckets, this.props)
+								: [],
 					},
 					() => {
 						// this will ensure that the Select-All (or any)

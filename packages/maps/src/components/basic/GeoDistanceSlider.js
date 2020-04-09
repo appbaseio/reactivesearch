@@ -9,6 +9,10 @@ import {
 	updateQuery,
 	setQueryListener,
 	setQueryOptions,
+	setCustomQuery,
+	setDefaultQuery,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -17,9 +21,11 @@ import {
 	checkSomePropChange,
 	getClassName,
 	getOptionsFromQuery,
+	updateCustomQuery,
+	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Rheostat from 'rheostat/lib/Slider';
-
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '@appbaseio/reactivesearch/lib/styles/Title';
@@ -33,8 +39,9 @@ import Slider from '@appbaseio/reactivesearch/lib/styles/Slider';
 import RangeLabel from '@appbaseio/reactivesearch/lib/components/range/addons/RangeLabel';
 import SliderHandle from '@appbaseio/reactivesearch/lib/components/range/addons/SliderHandle';
 import { rangeLabelsContainer } from '@appbaseio/reactivesearch/lib/styles/Label';
-import { connect } from '@appbaseio/reactivesearch/lib/utils';
+import { connect, getValidPropsKeys } from '@appbaseio/reactivesearch/lib/utils';
 import GeoCode from './GeoCode';
+import { hasGoogleMap } from '../utils';
 
 class GeoDistanceSlider extends GeoCode {
 	constructor(props) {
@@ -46,7 +53,7 @@ class GeoDistanceSlider extends GeoCode {
 
 		if (props.geocoder) {
 			this.geocoder = props.geocoder;
-		} else if (typeof window.google === 'object' && typeof window.google.maps === 'object') {
+		} else if (hasGoogleMap()) {
 			this.geocoder = new window.google.maps.Geocoder();
 		}
 
@@ -54,6 +61,10 @@ class GeoDistanceSlider extends GeoCode {
 			this.getUserLocation();
 		}
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
+
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.geoDistanceSlider);
+		props.setComponentProps(this.internalComponent, props, componentTypes.geoDistanceSlider);
 
 		props.addComponent(props.componentId);
 		this.setReact(props);
@@ -80,6 +91,14 @@ class GeoDistanceSlider extends GeoCode {
 			isOpen: false,
 		};
 
+		const value = {
+			coordinates: this.coordinates,
+			distance: currentDistance,
+		};
+		// Set custom and default queries in store
+		updateCustomQuery(props.componentId, props, value);
+		updateDefaultQuery(props.componentId, props, value);
+
 		this.getCoordinates(currentLocation, () => {
 			if (currentDistance) {
 				this.setDistance(currentDistance);
@@ -88,12 +107,25 @@ class GeoDistanceSlider extends GeoCode {
 	}
 
 	componentDidMount() {
-		if (typeof window.google === 'object' && typeof window.google.maps === 'object') {
+		if (hasGoogleMap()) {
 			this.autocompleteService = new window.google.maps.places.AutocompleteService();
 		}
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.geoDistanceSlider,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.geoDistanceSlider,
+			);
+		});
+
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(prevProps));
 
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
@@ -256,6 +288,10 @@ class GeoDistanceSlider extends GeoCode {
 			label: filterLabel,
 			showFilter,
 			URLParams,
+			meta: {
+				coordinates: this.coordinates,
+				distance,
+			},
 		});
 	};
 
@@ -276,7 +312,7 @@ class GeoDistanceSlider extends GeoCode {
 		} else if (onChange) {
 			onChange({ location: value, distance: this.state.currentDistance });
 		}
-		if (value.trim() && typeof window.google === 'object' && typeof window.google.maps === 'object') {
+		if (value.trim() && hasGoogleMap()) {
 			if (!this.autocompleteService) {
 				this.autocompleteService = new window.google.maps.places.AutocompleteService();
 			}
@@ -498,6 +534,9 @@ GeoDistanceSlider.propTypes = {
 	themePreset: types.themePreset,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
+	setComponentProps: types.funcRequired,
+	setCustomQuery: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	// component props
 	autoLocation: types.bool,
 	beforeValueChange: types.func,
@@ -538,7 +577,7 @@ GeoDistanceSlider.propTypes = {
 	unit: types.string,
 	URLParams: types.bool,
 	serviceOptions: types.props,
-	geocoder: types.shape,
+	geocoder: types.any, // eslint-disable-line
 };
 
 GeoDistanceSlider.defaultProps = {
@@ -574,6 +613,12 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(GeoDistanceSlider));

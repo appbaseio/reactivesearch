@@ -925,7 +925,7 @@ const mapStateToProps = (state, props) => ({
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults[props.componentId] || [],
-	customData: state.customData[props.componentId] || [],
+	customData: state.customData[props.componentId],
 	afterKey:
 		state.aggregations[props.componentId]
 		&& state.aggregations[props.componentId][props.aggregationField]
