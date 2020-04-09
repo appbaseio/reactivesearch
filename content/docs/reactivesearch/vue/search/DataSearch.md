@@ -109,6 +109,8 @@ Example uses:
     show a clear text `X` icon. Defaults to `false`.
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+-   **showVoiceSearch** `Boolean` [optional]
+    show a voice icon in the searchbox to enable users to set voice input. Defaults to `false`.
 -   **showDistinctSuggestions** `Boolean` [optional]
     Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
 	<br/> <br/>
@@ -304,6 +306,36 @@ Or you can also use render as prop.
         </div>
     </template>
 ```
+
+-   **getMicInstance** `Function` [optional]
+    You can pass a callback function to get the instance of `SpeechRecognition` object, which can be used to override the default configurations.
+-   **renderMic** `String|Function|slot-scope` [optional]
+    can be used to render the custom mic option.<br/>
+    It accepts an object with the following properties:
+    -   **`handleClick`**: `function`
+        needs to be called when the mic option is clicked.
+    -   **`status`**: `string`
+        is a constant which can have one of these values:<br/>
+        `INACTIVE` - mic is in inactive state i.e not listening<br/>
+        `STOPPED` - mic has been stopped by the user<br/>
+        `ACTIVE` - mic is listening<br/>
+        `DENIED` - permission is not allowed<br/>
+    ```html
+        <template slot="renderMic" slot-scope="{ handleClick, status }">
+            <div v-if="status === `ACTIVE`">
+                <img src="/active_mic.png" onClick={handleClick} />
+            </div>
+            <div v-if="status === `DENIED`">
+                <img src="/denied_mic.png" onClick={handleClick} />
+            </div>
+            <div v-if="status === `STOPPED`">
+                <img src="/mute_mic.png" onClick={handleClick} />
+            </div>
+            <div v-if="typeof status === `undefined`">
+                <img src="/inactive_mic.png" onClick={handleClick} />
+            </div>
+        </template>
+    ```
 
 ## Demo
 
