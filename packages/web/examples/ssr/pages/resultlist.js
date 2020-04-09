@@ -14,7 +14,9 @@ import ListItemView from '../components/ListItemView';
 
 const settings = {
 	app: 'meetup_app',
-	credentials: 'lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181',
+	url:
+		'https://xe6N9nDRV:51ea7a8a-6354-4b5f-83e1-12dce3b7ec47@arc-cluster-appbase-demo-ps1pgt.searchbase.io',
+	enableAppbase: true
 };
 
 const toggleButtonProps = {
