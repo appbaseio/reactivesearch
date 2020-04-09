@@ -9,6 +9,9 @@ import {
 	loadMore,
 	setMapData,
 	setQueryListener,
+	setDefaultQuery,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -16,10 +19,12 @@ import {
 	pushToAndClause,
 	parseHits,
 	getClassName,
+	getResultStats,
+	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-
-import { connect, isFunction, ReactReduxContext } from '@appbaseio/reactivesearch/lib/utils';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { connect, isFunction, ReactReduxContext, getValidPropsKeys } from '@appbaseio/reactivesearch/lib/utils';
 import Pagination from '@appbaseio/reactivesearch/lib/components/result/addons/Pagination';
 import { Checkbox } from '@appbaseio/reactivesearch/lib/styles/FormControlList';
 import geohash from 'ngeohash';
@@ -128,6 +133,9 @@ class ReactiveMap extends Component {
 
 		this.internalComponent = `${props.componentId}__internal`;
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.reactiveMap);
+		props.setComponentProps(this.internalComponent, props, componentTypes.reactiveMap);
 	}
 
 	componentDidMount() {
@@ -165,6 +173,9 @@ class ReactiveMap extends Component {
 			// and execute the defaultQuery along with it
 			const forceExecute = false;
 
+			// Update default query for RS API
+			this.setDefaultQueryForRSAPI();
+
 			this.props.setMapData(
 				this.props.componentId,
 				this.defaultQuery.query,
@@ -186,7 +197,14 @@ class ReactiveMap extends Component {
 				// - kindly note that forceExecute may result in one additional network request
 				//   since it bypasses the gatekeeping
 				const forceExecute = this.state.searchAsMove;
-				this.props.setMapData(this.props.componentId, query, persistMapQuery, forceExecute);
+				// Set meta for `distance` and `coordinates` in selected value
+				const center = this.props.center || this.props.defaultCenter;
+				const coordinatesObject = this.getArrPosition(center);
+				const meta = {
+					distance: `${this.props.defaultRadius}${this.props.unit}`,
+					coordinates: `${coordinatesObject.lat}, ${coordinatesObject.lon}`,
+				};
+				this.props.setMapData(this.props.componentId, query, persistMapQuery, forceExecute, meta);
 			}
 		}
 
@@ -199,6 +217,19 @@ class ReactiveMap extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.reactiveMap,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.reactiveMap,
+			);
+		});
+
 		const updatedState = {};
 		if (
 			this.props.sortBy !== prevProps.sortBy
@@ -222,16 +253,42 @@ class ReactiveMap extends Component {
 			this.props.setQueryOptions(this.props.componentId, options, true);
 		}
 
+		if (this.props.onData) {
+			checkSomePropChange(
+				this.props,
+				prevProps,
+				[
+					'hits',
+					'promotedResults',
+					'customData',
+					'total',
+					'size',
+					'time',
+					'hidden',
+					'streamHits',
+				],
+				() => {
+					this.props.onData(this.getData());
+				},
+			);
+		}
+
 		if (!isEqual(this.props.center, prevProps.center)) {
 			const persistMapQuery = !!this.props.center;
 			// we need to forceExecute the query because the center has changed
 			const forceExecute = true;
-
+			const geoQuery = this.getGeoQuery(this.props);
+			// Update default query for RS API
+			this.setDefaultQueryForRSAPI();
+			const meta = {
+				mapBoxBounds: this.state.mapBoxBounds,
+			};
 			this.props.setMapData(
 				this.props.componentId,
-				this.getGeoQuery(this.props),
+				geoQuery,
 				persistMapQuery,
 				forceExecute,
+				meta,
 			);
 		}
 
@@ -249,7 +306,8 @@ class ReactiveMap extends Component {
 
 			const persistMapQuery = true;
 			const forceExecute = true;
-
+			// Update default query to include the geo bounding box query
+			this.setDefaultQueryForRSAPI();
 			this.props.setMapData(this.props.componentId, query, persistMapQuery, forceExecute);
 		}
 
@@ -343,6 +401,58 @@ class ReactiveMap extends Component {
 		});
 	};
 
+	getAllData = () => {
+		const {
+			size, promotedResults, customData,
+		} = this.props;
+		const { currentPage } = this.state;
+		const results = parseHits(this.props.hits) || [];
+		const streamResults = parseHits(this.props.streamHits) || [];
+		const parsedPromotedResults = parseHits(promotedResults) || [];
+		let filteredResults = results;
+		const base = currentPage * size;
+		if (streamResults.length) {
+			const ids = streamResults.map(item => item._id);
+			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+		}
+
+		if (parsedPromotedResults.length) {
+			const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
+			if (ids) {
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+			}
+
+			filteredResults = [...streamResults, ...parsedPromotedResults, ...filteredResults];
+		}
+		return {
+			results,
+			streamResults,
+			filteredResults,
+			promotedResults: parsedPromotedResults,
+			customData: customData || {},
+			loadMore: this.loadMore,
+			base,
+			triggerClickAnalytics: this.triggerClickAnalytics,
+		};
+	};
+
+	getData = () => {
+		const {
+			streamResults,
+			filteredResults,
+			promotedResults,
+			customData,
+		} = this.getAllData();
+		return {
+			data: this.withClickIds(filteredResults),
+			streamData: this.withClickIds(streamResults),
+			promotedData: this.withClickIds(promotedResults),
+			customData,
+			rawData: this.props.rawData,
+			resultStats: getResultStats(this.props),
+		};
+	};
+
 	setReact = (props) => {
 		const { react } = props;
 		if (react) {
@@ -352,6 +462,32 @@ class ReactiveMap extends Component {
 			props.watchComponent(props.componentId, { and: this.internalComponent });
 		}
 	};
+
+	setDefaultQueryForRSAPI = () => {
+		if (this.props.defaultQuery && typeof this.props.defaultQuery === 'function') {
+			let defaultQuery = this.props.defaultQuery();
+			if (this.state.mapBoxBounds) {
+				const geoQuery = {
+					geo_bounding_box: {
+						[this.props.dataField]: this.state.mapBoxBounds,
+					},
+				};
+				const { query, ...options } = defaultQuery;
+
+				if (query) {
+					// adds defaultQuery's query to geo-query
+					// to generate a map query
+					defaultQuery = {
+						query: {
+							must: [geoQuery, query],
+						},
+						...options,
+					};
+				}
+			}
+			this.props.setDefaultQuery(this.props.componentId, defaultQuery);
+		}
+	}
 
 	getHitsCenter = (hits) => {
 		const data = hits.map(hit => hit[this.props.dataField]);
@@ -497,11 +633,15 @@ class ReactiveMap extends Component {
 
 			const persistMapQuery = !!this.props.center;
 			const forceExecute = this.state.searchAsMove;
+			const meta = {
+				mapBoxBounds: this.state.mapBoxBounds,
+			};
 			this.props.setMapData(
 				this.props.componentId,
 				this.defaultQuery,
 				persistMapQuery,
 				forceExecute,
+				meta,
 			);
 		}
 		this.skipBoundingBox = false;
@@ -852,6 +992,7 @@ class ReactiveMap extends Component {
 							() => this.props.renderMap(mapParams),
 							this.renderPagination,
 							this.triggerAnalytics,
+							this.getData(),
 						) // prettier-ignore
 						: this.props.renderMap(mapParams))}
 			</div>
@@ -865,6 +1006,9 @@ ReactiveMap.propTypes = {
 	loadMore: types.funcRequired,
 	removeComponent: types.funcRequired,
 	setQueryListener: types.funcRequired,
+	setDefaultQuery: types.funcRequired,
+	setComponentProps: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	onQueryChange: types.func,
 	setPageURL: types.func,
 	setQueryOptions: types.funcRequired,
@@ -882,6 +1026,10 @@ ReactiveMap.propTypes = {
 	analytics: types.props,
 	headers: types.headers,
 	mapService: types.stringRequired,
+	promotedResults: types.hits,
+	customData: types.title,
+	hidden: types.number,
+	rawData: types.rawData,
 	// component props
 	autoCenter: types.bool,
 	center: types.location,
@@ -905,6 +1053,7 @@ ReactiveMap.propTypes = {
 	renderError: types.title,
 	onPageChange: types.func,
 	onError: types.func,
+	onData: types.func,
 	onPopoverClick: types.func,
 	pages: types.number,
 	pagination: types.bool,
@@ -943,6 +1092,10 @@ const mapStateToProps = (state, props) => ({
 	config: state.config,
 	headers: state.appbaseRef.headers,
 	analytics: state.analytics,
+	rawData: state.rawData[props.componentId],
+	promotedResults: state.promotedResults[props.componentId] || [],
+	customData: state.customData[props.componentId],
+	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -956,8 +1109,13 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
-	setMapData: (component, geoQuery, persistMapQuery, forceExecute = false) =>
-		dispatch(setMapData(component, geoQuery, persistMapQuery, forceExecute)),
+	setMapData: (component, geoQuery, persistMapQuery, forceExecute = false, meta = {}) =>
+		dispatch(setMapData(component, geoQuery, persistMapQuery, forceExecute, meta)),
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 });
 
 export default connect(

@@ -200,6 +200,7 @@ ReactiveGoogleMap.propTypes = {
 	renderData: types.func,
 	onPageChange: types.func,
 	onPopoverClick: types.func,
+	onData: types.func,
 	pages: types.number,
 	pagination: types.bool,
 	react: types.react,

@@ -115,7 +115,7 @@ class MultiList extends Component {
 			const {
 				showLoadMore, enableAppbase, dataField, options,
 			} = this.props;
-			if (showLoadMore || enableAppbase) {
+			if ((showLoadMore || enableAppbase) && options && options[dataField]) {
 				const { buckets } = options[dataField];
 				const after = options[dataField].after_key;
 				const prevAfter = prevProps.options && prevProps.options[dataField].after_key;
@@ -130,9 +130,9 @@ class MultiList extends Component {
 						options: this.getOptions(buckets, this.props),
 					}),
 					() => {
-						// this will ensure that the Select-All (or any)
-						// value gets handled on the initial load and
-						// consecutive loads
+					// this will ensure that the Select-All (or any)
+					// value gets handled on the initial load and
+					// consecutive loads
 						const { currentValue } = this.state;
 						const value = Object.keys(currentValue).filter(item => currentValue[item]);
 						if (value.length) this.setValue(value, true);
@@ -141,7 +141,7 @@ class MultiList extends Component {
 			} else {
 				this.setState(
 					{
-						options: options[dataField]
+						options: options && options[dataField]
 							? this.getOptions(options[dataField].buckets, this.props)
 							: [],
 					},

@@ -106,7 +106,7 @@ class SingleList extends Component {
 				showLoadMore, dataField, options, enableAppbase,
 			} = this.props;
 
-			if (showLoadMore || enableAppbase) {
+			if ((showLoadMore || enableAppbase) && options && options[dataField]) {
 				const { buckets } = options[dataField];
 				const after = options[dataField].after_key;
 				const prevAfter = prevProps.options && prevProps.options[dataField].after_key;
@@ -122,7 +122,7 @@ class SingleList extends Component {
 				}));
 			} else {
 				this.setState({
-					options: options[dataField]
+					options: options && options[dataField]
 						? this.getOptions(options[dataField].buckets, this.props)
 						: [],
 				});

@@ -252,6 +252,7 @@ ReactiveOpenStreetMap.propTypes = {
 	title: types.string,
 	onError: types.func,
 	onPopoverClick: types.func,
+	onData: types.func,
 	renderError: types.title,
 	react: types.react,
 	renderData: types.func,

@@ -9,6 +9,10 @@ import {
 	updateQuery,
 	setQueryListener,
 	setQueryOptions,
+	setCustomQuery,
+	setDefaultQuery,
+	setComponentProps,
+	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -17,8 +21,10 @@ import {
 	checkPropChange,
 	getClassName,
 	getOptionsFromQuery,
+	updateCustomQuery,
+	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '@appbaseio/reactivesearch/lib/styles/Title';
@@ -30,7 +36,7 @@ import InputIcon from '@appbaseio/reactivesearch/lib/styles/InputIcon';
 import Container from '@appbaseio/reactivesearch/lib/styles/Container';
 import SearchSvg from '@appbaseio/reactivesearch/lib/components/shared/SearchSvg';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
-import { connect } from '@appbaseio/reactivesearch/lib/utils';
+import { connect, getValidPropsKeys } from '@appbaseio/reactivesearch/lib/utils';
 import GeoCode from './GeoCode';
 import { hasGoogleMap } from '../utils';
 
@@ -57,6 +63,11 @@ class GeoDistanceDropdown extends GeoCode {
 
 		props.addComponent(props.componentId);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
+
+		// Update props in store
+		props.setComponentProps(props.componentId, props, componentTypes.geoDistanceDropdown);
+		props.setComponentProps(this.internalComponent, props, componentTypes.geoDistanceDropdown);
+
 		this.setReact(props);
 
 		if (props.value) {
@@ -82,6 +93,15 @@ class GeoDistanceDropdown extends GeoCode {
 			suggestions: [],
 			isOpen: false,
 		};
+
+		const value = {
+			coordinates: this.coordinates,
+			distance: currentDistance,
+		};
+		// Set custom and default queries in store
+		updateCustomQuery(props.componentId, props, value);
+		updateDefaultQuery(props.componentId, props, value);
+
 		this.getCoordinates(currentLocation, () => {
 			this.setDistance(currentDistance);
 		});
@@ -94,6 +114,19 @@ class GeoDistanceDropdown extends GeoCode {
 	}
 
 	componentDidUpdate(prevProps) {
+		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
+			this.props.updateComponentProps(
+				this.props.componentId,
+				this.props,
+				componentTypes.geoDistanceDropdown,
+			);
+			this.props.updateComponentProps(
+				this.internalComponent,
+				this.props,
+				componentTypes.geoDistanceDropdown,
+			);
+		});
+
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
@@ -263,6 +296,10 @@ class GeoDistanceDropdown extends GeoCode {
 			label: filterLabel,
 			showFilter,
 			URLParams,
+			meta: {
+				coordinates: this.coordinates,
+				distance,
+			},
 		});
 	};
 
@@ -488,6 +525,9 @@ GeoDistanceDropdown.propTypes = {
 	themePreset: types.themePreset,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
+	setComponentProps: types.funcRequired,
+	setCustomQuery: types.funcRequired,
+	updateComponentProps: types.funcRequired,
 	// component props
 	autoLocation: types.bool,
 	beforeValueChange: types.func,
@@ -555,6 +595,12 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	setComponentProps: (component, options, componentType) =>
+		dispatch(setComponentProps(component, options, componentType)),
+	updateComponentProps: (component, options) =>
+		dispatch(updateComponentProps(component, options)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(GeoDistanceDropdown));
