@@ -166,7 +166,7 @@ const searchbase = new Searchbase({
     -   **or** returns all the results matching **any** of the search query text's parameters. For example, searching for "bat man" with **or** will return all the results matching either "bat" or "man".
     -   On the other hand with **and**, only results matching both "bat" and "man" will be returned. It returns the results matching **all** of the search query text's parameters.
 -   **size** `number`
-    Number of results to fetch per request.
+    Number of suggestions and results to fetch per request.
 -   **from** `number`
     To define from which page to start the results, it is important to implement pagination.
 -   **includeFields** `Array<string>`
