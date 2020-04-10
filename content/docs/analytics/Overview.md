@@ -14,7 +14,7 @@ sidebar: 'docs'
 
 Appbase.io’s Search Analytics enables businesses to analyze their search volume, conversion opportunities (popular searches), content gaps— in effect helping them understand the ROI impact of search and highlighting areas where it can be improved.
 
-![](/images/analytics.png)
+![Overview](https://i.imgur.com/RS8FhgN.png)
 
 In this competitive world of e-solutions where almost every e-solution has alternatives to choose, it's important to understand the users' needs and act accordingly. A faster and relevant search experience directly contributes to sales. A relevant search experience increases user engagement. The first step in understanding how well your search is engaging and converting is to start measuring the underlying key metrics.
 
@@ -30,7 +30,8 @@ With appbase.io analytics, you can now understand your search’s ROI impact thr
 5. Tailor search for your business needs - You can create custom segments (paid users, mobile users, user on a 3G network) that are meaningful for your business and additionally filter all of the above analytics to glean more specific insights.
 
 ## What are we measuring?
-- Search counts
+- User sessions summary - Total Users, Total Sessions, Bounce Rate and Avg Session Duration
+- Search summary - A Searches > Clicks > Conversions funnel
 - Popular searches
 - No result searches
 - Popular Filters
@@ -39,14 +40,36 @@ With appbase.io analytics, you can now understand your search’s ROI impact thr
 - Popular countries
 
 Here is a glimpse of what you can expect to measure with Appbase.io Analytics.
-![Appbase.io analytics insights](https://i.imgur.com/4ZGfj5S.png)
+![Appbase.io analytics insights](https://i.imgur.com/0upWpoG.png)
 
 
 ## Getting Insights From Analytics
 
 With appbase.io’s analytics views, you can now understand your search’s ROI impact through the funnel of conversions. Drill down into the search analytics, discover content gaps and unlock new monetization opportunities.
 
+#### User Metrics
+
+![alt User Metrics](https://i.imgur.com/d1dEl1S.png)
+
+**Total Users**
+
+Total Users represent the total distinct users who have performed at least one search.
+
+**Total Sessions**
+
+Total Sessions represent the total number of user sessions.
+
+**Bounce Rate**
+
+The bounce rate represents the percentage of user sessions that have bounced relative to the total user sessions. Read more about the bounce rate over [here](/docs/analytics/Implement/#how-is-the-bounce-rate-calculated).
+
+**Avg Session Duration**
+
+Avg Session Duration represents the average time a user is spending on your search. Read more about it over [here](/docs/analytics/Implement/#how-do-we-record-a-user-session).
+
+
 #### Popular Searches
+
 appbase.io shows the most popular search terms in a given time interval. This lets you understand:
 1. Merchandising opportunities — Feature products and monetize your search.
 2. Lost opportunities — Popular searches with low click rates. Perhaps, the results aren’t relevant or some key results are missing.

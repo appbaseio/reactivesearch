@@ -173,8 +173,8 @@ The above endpoints accept the following values as headers:
 ## Advanced Settings
 
 
-### How to enable / disable Empty Query
-By default, a library like ReactiveSearch shows you a set of results. even if the search hasn't been performed. Technically it calls the `match_all` query which can be considered as an empty query. By default, we record the analytics for empty queries too. You can find out about it in the Appbase.io dashboard with the `<empty_query>` key.
+### How To Enable / Disable Empty Query
+By default, a library such as ReactiveSearch shows you a set of initial results even when no search query has been explicitly performed. The initial results are displayed by calling a `match_all` query which can be considered as an empty query. By default, we record the analytics for empty queries too. You can find out about it in the Appbase.io dashboard with the `<empty_query>` key.
 
 You can disable this behavior in `ReactiveSearch` by defining the `appbaseConfig` prop in the `ReactiveBase` and set the `emptyQuery` as `false`.
 
@@ -188,3 +188,34 @@ Don't worry! `ReactiveSearch` handles this for you. You just need to set the `an
 
 - When a user types something in sequence, for example: `b→bo→boo→book`, we understand the context and instead of creating different search sessions, we count it as a search session with search key stored as `book`.
 - By default, the search context is valid for up to `30s`. For example, `b→bo→boo...30 seconds...->book` will be recorded as two different searches with keys as `boo` & `book`.
+
+## How Do We Record A User Session?
+
+- A user session starts when an end-user makes a search request from a web or mobile device.
+- A user session is kept active for up to 30 minutes after the last user interaction. For example, if a user closes a tab and comes back within 30 minutes - the old session is kept active instead of another session getting created.
+- However, when accounting for the session duration, appbase.io uses the user's last interaction time as the end time.
+
+Let's take an example scenario:
+
+=> Bob made the first search request at `10:00`. At this point, a new user session got created for Bob which will remain active till `10:30`,
+
+=> If Bob makes a click, applies a filter or searches again at `10:05`, then the active session time will be extended till `10:35` and the session duration will be recorded as `5 mins` (last interaction time **10:05** - session start time **10:00**).
+
+- A user session is made unique by the `userId` key which defaults to the IP address of the end user. A change in the `userId` of the search request will start a new session.
+
+
+## How Is The Bounce Rate Calculated?
+
+In the context of appbase.io search analytics, a session is marked as `bounced` when a `user` visit the search page (the page which makes at least one search query to appbase.io) and then leaves the session without making any further interactions.
+
+An interaction is defined as:
+- A new search request with a different search term, for example, a user visited the search page and then searched for `books`,
+- A click is made on `suggestions` or `results`,
+- A new filter (aka facet) has been applied on the search,
+- A page is changed.
+
+If any one of these interactions happen, then the session is not considered as a bounce session. The bounce rate is then defined as the percentage of user sessions that have bounced relative to the total user sessions.
+
+> Bounce Rate = ( Total `bounced` user sessions / Total user sessions ) * 100
+
+Bounce rate helps you to understand how engaging your search experience is. If you are seeing a higher bounce rate, it's time to tweak your [search relevancy](/docs/search/Mappings/) settings.
