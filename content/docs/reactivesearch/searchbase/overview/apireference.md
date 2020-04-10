@@ -175,8 +175,38 @@ const searchbase = new Searchbase({
     fields to be excluded in search results.
 -   **recordClick** `(objects: Object, isSuggestionClick: boolean = false) => void`
     Enables recording click analytics of a search request. Pass `isSuggestionClick=true`, if you want to record a suggestion click.
+    ```javascript
+    const searchbase = new Searchbase({
+        index: 'good-book-ds',
+        url: 'https://xe6N9nDRV:51ea7a8a-6354-4b5f-83e1-12dce3b7ec47@arc-cluster-appbase-demo-ps1pgt.searchbase.io',
+        enableAppbase: true,
+        appbaseConfig: {
+            recordAnalytics: true,
+            enableQueryRules: true,
+        },
+        dataField: 'original_title',
+    });
+    // using recordClick
+    searchbase.recordClick({ 'cf827a07-60a6-43ef-ab93-e1f8e1e3e1a8': 2 }, true);
+    ```
+    Here `cf827a07-60a6-43ef-ab93-e1f8e1e3e1a8` is the ES docId and `2` is the click position.
 -   **recordConversions** `(objects: Array<string>) => void`
     Enables recording a search conversion.
+    ```javascript
+    const searchbase = new Searchbase({
+        index: 'good-book-ds',
+        url: 'https://xe6N9nDRV:51ea7a8a-6354-4b5f-83e1-12dce3b7ec47@arc-cluster-appbase-demo-ps1pgt.searchbase.io',
+        enableAppbase: true,
+        appbaseConfig: {
+            recordAnalytics: true,
+            enableQueryRules: true,
+        },
+        dataField: 'original_title',
+    });
+    // using recordConversions
+    searchbase.recordConversions(['cf827a07-60a6-43ef-ab93-e1f8e1e3e1a8']);
+    ```
+    Here `cf827a07-60a6-43ef-ab93-e1f8e1e3e1a8` is the ES docId.
 -   **transformRequest** `(requestOptions: Object) => Promise<Object>`
     Enables transformation of network request before execution. This function will give you the the request object as the param and expect an updated request in return, for execution.<br/>
     For example, we will add the `credentials` property in the request using `transformRequest`.
