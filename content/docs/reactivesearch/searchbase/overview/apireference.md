@@ -203,7 +203,7 @@ const searchbase = new Searchbase({
         },
         dataField: 'original_title',
     });
-    // using recordClick
+    // using recordConversions
     searchbase.recordConversions(['cf827a07-60a6-43ef-ab93-e1f8e1e3e1a8']);
     ```
     Here `cf827a07-60a6-43ef-ab93-e1f8e1e3e1a8` is the ES docId.
