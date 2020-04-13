@@ -201,7 +201,7 @@ class ReactiveMap extends Component {
 				const center = this.props.center || this.props.defaultCenter;
 				const coordinatesObject = this.getArrPosition(center);
 				const meta = {
-					distance: `${this.props.defaultRadius}${this.props.unit}`,
+					distance: this.props.defaultRadius,
 					coordinates: `${coordinatesObject.lat}, ${coordinatesObject.lon}`,
 				};
 				this.props.setMapData(this.props.componentId, query, persistMapQuery, forceExecute, meta);
