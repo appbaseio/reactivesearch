@@ -21,7 +21,7 @@ const Main = () => (
 			<div className="col">
 				<ToggleButton
 					componentId="CitySensor"
-					dataField="group.group_topics.topic_name_raw.raw"
+					dataField="group.group_topics.topic_name_raw.keyword"
 					data={[
 						{ label: 'Social', value: 'Social' },
 						{ label: 'Adventure', value: 'Adventure' },
@@ -33,7 +33,7 @@ const Main = () => (
 				<SelectedFilters />
 				<ResultList
 					componentId="SearchResult"
-					dataField="group.group_topics.topic_name_raw"
+					dataField="group.group_topics.topic_name_raw.keyword"
 					title="Results"
 					sortBy="asc"
 					className="result-list-container"

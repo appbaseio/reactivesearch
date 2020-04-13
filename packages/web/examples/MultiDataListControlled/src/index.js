@@ -25,7 +25,7 @@ const Main = () => {
 					<MultiDataList
 						title="MultiDataList"
 						componentId="CitySensor"
-						dataField="group.group_topics.topic_name_raw.raw"
+						dataField="group.group_topics.topic_name_raw.keyword"
 						data={[
 							{
 								label: 'Open Source',
@@ -52,7 +52,7 @@ const Main = () => {
 					<SelectedFilters />
 					<ReactiveList
 						componentId="SearchResult"
-						dataField="group.group_topics.topic_name_raw"
+						dataField="group.group_topics.topic_name_raw.keyword"
 						title="Results"
 						sortBy="asc"
 						className="result-list-container"

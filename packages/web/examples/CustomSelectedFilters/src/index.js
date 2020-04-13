@@ -22,7 +22,7 @@ class Main extends Component {
 				<div className="row">
 					<div className="col">
 						<DataSearch
-							dataField="original_title.raw"
+							dataField="original_title.keyword"
 							componentId="BookSensor"
 							defaultValue="Artemis Fowl"
 						/>

@@ -22,7 +22,7 @@ const Main = () => (
 				<CategorySearch
 					title="CategorySearch"
 					dataField={['original_title', 'original_title.search']}
-					categoryField="authors.raw"
+					categoryField="authors.keyword"
 					componentId="BookSensor"
 				/>
 			</div>
