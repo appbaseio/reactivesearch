@@ -942,12 +942,7 @@ class ReactiveMap extends Component {
 		}));
 	};
 
-	render() {
-		const style = {
-			width: '100%',
-			height: '100vh',
-			position: 'relative',
-		};
+	get mapParams() {
 		const resultsToRender = this.getResultsToRender();
 		const {
 			showMarkers,
@@ -958,8 +953,7 @@ class ReactiveMap extends Component {
 			markerProps,
 			innerRef,
 		} = this.props;
-
-		const mapParams = {
+		return {
 			resultsToRender,
 			center: this.getCenter(resultsToRender),
 			getPosition: this.getPosition,
@@ -978,6 +972,14 @@ class ReactiveMap extends Component {
 			handleOnIdle: this.handleOnIdle,
 			handleZoomChange: this.handleZoomChange,
 		};
+	}
+
+	render() {
+		const style = {
+			width: '100%',
+			height: '100vh',
+			position: 'relative',
+		};
 
 		return (
 			<div style={{ ...style, ...this.props.style }} className={this.props.className}>
@@ -989,12 +991,12 @@ class ReactiveMap extends Component {
 							this.withClickIds(parseHits(this.props.hits)),
 							this.withClickIds(parseHits(this.props.streamHits)),
 							this.loadMore,
-							() => this.props.renderMap(mapParams),
+							() => this.props.renderMap(this.mapParams),
 							this.renderPagination,
 							this.triggerAnalytics,
 							this.getData(),
 						) // prettier-ignore
-						: this.props.renderMap(mapParams))}
+						: this.props.renderMap(this.mapParams))}
 			</div>
 		);
 	}
