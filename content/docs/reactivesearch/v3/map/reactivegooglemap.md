@@ -145,13 +145,24 @@ renderData={result => ({
     use to display results and map component together. Usage:
 
 ```js
-    renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination, triggerAnalytics) => {
+    renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination, triggerAnalytics, meta) => {
         // hits are the results returned from query.
         // streamHits are the results which are returned only  when stream prop is true.
         // loadMore is used to load more results.
         // renderMap is the function which is used to render Map.
 		// renderPagination is the function which is used to render Pagination like in ReactiveList.
 		// triggerAnalytics is the function which can be called to register click analytics.
+        // meta represents an object which has the following properties:
+        //  promotedData: Represents the promoted results,
+        //  customData: Represents the customData,
+        //  rawData: Raw response from Elasticsearch,
+        //  resultStats: An object with the following properties which can be helpful to render custom stats: 
+        //      numberOfResults: Total number of results found, 
+        //      numberOfPages: Total number of pages found based on current page size, 
+        //      time: Time taken to find total results (in ms),
+        //      displayedResults: Number of results displayed in current view,
+        //      hidden: Total number of hidden results found,
+        //      promoted: Total number of promoted results found.
         return(
             <>
                 {hits.map(hit => <pre onClick={() => triggerAnalytics(hit._click_id)}>{JSON.stringify(hit)}</pre>)}
@@ -175,6 +186,9 @@ renderError={(error) => (
 
 -   **onError** `Function` [optional]
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
+-   **onData** `Function` [optional]
+    gets triggered after data changes, which returns an object with these properties: `data`,
+    `streamData`, `promotedData`, `customData`, `rawData` & `resultStats`.
 
 ## Demo
 
