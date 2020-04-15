@@ -144,7 +144,7 @@ Starting document offset. Defaults to `0`.
 
 | Type  | Applicable on query of type | Required |
 | ----- | --------------------------- | -------- |
-| `int` | `search`                    | false    |
+| `int` | `search`|`geo`|`range`      | false    |
 
 ### queryFormat
 
