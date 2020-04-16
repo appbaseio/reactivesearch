@@ -66,7 +66,8 @@ class App extends React.Component {
 		return (
 			<ReactiveBase
 				app="earthquakes"
-				credentials="dshr057Nz:e18bbbbe-5d55-4234-a17e-4d64fb2222c7"
+				url="https://xe6N9nDRV:51ea7a8a-6354-4b5f-83e1-12dce3b7ec47@arc-cluster-appbase-demo-ps1pgt.searchbase.io"
+				enableAppbase
 			>
 				<div className="row">
 					<div className="col">
