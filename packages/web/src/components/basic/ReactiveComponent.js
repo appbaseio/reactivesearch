@@ -44,16 +44,25 @@ class ReactiveComponent extends Component {
 					false,
 				);
 			}
+
+			let queryToBeSet = obj.query;
+
+			// when enableAppbase is true, Backend throws error because of repeated query in request body
+			if (obj && obj.query && obj.query.query) {
+				queryToBeSet = obj.query.query;
+			}
+
 			// Update customQuery field for RS API
 			if ((obj && obj.query) || options) {
 				const customQuery = { ...options };
 				if (obj && obj.query) {
-					customQuery.query = obj.query;
+					customQuery.query = queryToBeSet;
 				}
 				props.setCustomQuery(props.componentId, customQuery);
 			}
 			this.props.updateQuery({
 				...obj,
+				query: queryToBeSet,
 				componentId: props.componentId,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
