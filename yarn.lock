@@ -163,6 +163,48 @@
     string.prototype.repeat "^0.2.0"
     unist-util-visit "^1.1.3"
 
+"@appbaseio/reactivecore@8.2.17":
+  version "8.2.17"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-8.2.17.tgz#9a77c2ab6211af5d80e93bfeaaac4a6bde39de50"
+  integrity sha512-GU+5i2IvhO5B7catvgO1RpGqFhDVwymdV1wNh18vdyuUsBQXTGz22iyZ1mRuKsyOWiE5yOe3BHm8BWQyC5t4dA==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+
+"@appbaseio/reactivecore@9.1.5":
+  version "9.1.5"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.1.5.tgz#1a3046457435707ddb3f677ae8ca5ac4b3dc212e"
+  integrity sha512-dhcrrsfj7ZGBup1kI1p5jSU8/7ekWXZYvOY3b46VqcZ2Rj1bxi+ceVeasDHJNFnmWR37PSeepGuf9agq1CnqMg==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+
+"@appbaseio/reactivecore@9.5.2":
+  version "9.5.2"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.5.2.tgz#e7cf66042f4b727dc2b1eaaa308e1393e0d85164"
+  integrity sha512-g6MSk+5BYEUJS+f5QSuF1m/tfiZucD05VwZf/fEqJZ2hzV6Xc2ctQsWsjzoH1A2og9ZSvLMrI9scheX8DV8+qw==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
+"@appbaseio/reactivecore@9.5.3":
+  version "9.5.3"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.5.3.tgz#c067066225b5148f19faa01808f19d5d75a95833"
+  integrity sha512-wVwnLIcOAyF737ZTAXt81OjC9qzUP/qoGBBAezoHIvQnfSUpgRJFnucUXwJew4gNTI3zhEpjbKx2k9R8l5yb2Q==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
 "@appbaseio/reactivemaps@3.0.0-beta.4":
   version "3.0.0-beta.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.0-beta.4.tgz#e6a2c2424025fdab670c3bf56c368c7496eb1577"
@@ -190,6 +232,67 @@
     prop-types "^15.6.0"
     react-emotion "^9.0.0"
     react-google-maps "^9.4.5"
+
+"@appbaseio/reactivesearch-vue@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.0.0.tgz#4358b0a0e1b14a6cd84c02da0955e6b5ce23efff"
+  integrity sha512-zWPEv36wJGqltWGCSfQAkRzPG5DWxTa9O5WzcL5acEyM0eJwxZWdXRbpnXLgGZmT9P9iFaqXQ0uGMv7vc8zIVQ==
+  dependencies:
+    "@appbaseio/reactivecore" "8.2.17"
+    "@appbaseio/vue-emotion" "0.4.4"
+    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
+    appbase-js "^4.0.2-beta.08"
+    compute-scroll-into-view "^1.0.11"
+    emotion "9.2.12"
+    polished "^2.2.0"
+    redux "^4.0.0"
+    url-search-params-polyfill "^7.0.0"
+    vue-highlight-words "^1.2.0"
+    vue-no-ssr "^1.1.0"
+    vue-slider-component "^2.8.2"
+    vue-types "^1.3.3"
+
+"@appbaseio/reactivesearch@3.3.7":
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.3.7.tgz#070d130952ae1f44f54bf2c1eb3f270178c08cd5"
+  integrity sha512-NAoeJGJc+iC36Rvm36wnHPerEZIl6SR8nQieG/k4Y7zQdR95VkeqCjudaZKtZyJRfVt/gC1LsKZQL/RvkKBSyw==
+  dependencies:
+    "@appbaseio/reactivecore" "9.1.5"
+    appbase-js "^4.0.2-beta.11"
+    cross-env "^5.2.0"
+    downshift "^1.31.2"
+    emotion "^9.0.0"
+    emotion-theming "^9.0.0"
+    hoist-non-react-statics "^3.2.1"
+    polished "^1.9.3"
+    prop-types "^15.6.0"
+    react-day-picker "^7.0.5"
+    react-emotion "^9.0.0"
+    react-redux "^6.0.1"
+    rheostat "^2.1.1"
+    url-search-params-polyfill "^7.0.0"
+    xdate "^0.8.2"
+
+"@appbaseio/reactivesearch@3.7.10":
+  version "3.7.10"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.7.10.tgz#0003e918c685653cf42efdef41b298c714935637"
+  integrity sha512-dsNPESaTK6YmoR5oZJlgiiNwzmWbgCYueVTNkHbBH/MpVgU2OUtwTs/woC2zTq7RGZsXwH9wzVcLcOBOoEXwcg==
+  dependencies:
+    "@appbaseio/reactivecore" "9.5.2"
+    appbase-js "4.0.2"
+    cross-env "^5.2.0"
+    downshift "^1.31.2"
+    emotion "^9.0.0"
+    emotion-theming "^9.0.0"
+    hoist-non-react-statics "^3.2.1"
+    polished "^1.9.3"
+    prop-types "^15.6.0"
+    react-day-picker "^7.0.5"
+    react-emotion "^9.0.0"
+    react-redux "^6.0.1"
+    rheostat "^2.1.1"
+    url-search-params-polyfill "^7.0.0"
+    xdate "^0.8.2"
 
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
@@ -6061,6 +6164,18 @@ appbase-js@4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.2.tgz#a2de2ff8ca0f6e3dc14df357533a7b5c452c3e6e"
   integrity sha512-rLcdjPSHTP42y3NTIlBRyJAFjT3oT516J/loQ/eTojvVUcvSm+40GYD/bPpVgOmGWSXpWMnLxiw82yu5m+nl3Q==
+  dependencies:
+    cross-fetch "^2.2.2"
+    json-stable-stringify "^1.0.1"
+    querystring "^0.2.0"
+    stream "^0.0.2"
+    url-parser-lite "^0.1.0"
+    ws "^6.1.2"
+
+appbase-js@^4.0.2-beta.08:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.4.tgz#ffd8e3afe563cd5f30601efcc32d54e18c6e7828"
+  integrity sha512-h4KScox8gwVbpOA1YA9pbjDsZ9qtx8D7YuRcV5VeoVa9oTOMetPGIbzvaUHuDKFuYDuLvQpFrX7FIBtVK+JObQ==
   dependencies:
     cross-fetch "^2.2.2"
     json-stable-stringify "^1.0.1"
@@ -27930,7 +28045,7 @@ rgba-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/rgba-regex/-/rgba-regex-1.0.0.tgz#43374e2e2ca0968b0ef1523460b7d730ff22eeb3"
   integrity sha1-QzdOLiyglosO8VI0YLfXMP8i7rM=
 
-rheostat@^2.1.1:
+rheostat@2.2.0, rheostat@^2.1.1:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/rheostat/-/rheostat-2.2.0.tgz#d6b388e21f9c6bf5753a8e9518a8eea3467287d2"
   integrity sha512-cO6MvZ3fXtgP7NH7smWZhZczropunZJ50cdCLdlXR5Rhw0FNRaMM23Wx4NJjs5TGta3jOec39A/L0Lg8h8bPRQ==
