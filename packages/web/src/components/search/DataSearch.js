@@ -903,7 +903,6 @@ class DataSearch extends Component {
 							aria-label={this.props.componentId}
 							className={getClassName(this.props.innerClass, 'input') || null}
 							placeholder={this.props.placeholder}
-							value={this.state.currentValue ? this.state.currentValue : ''}
 							onChange={this.onInputChange}
 							onBlur={this.withTriggerQuery(this.props.onBlur)}
 							onFocus={this.withTriggerQuery(this.props.onFocus)}
