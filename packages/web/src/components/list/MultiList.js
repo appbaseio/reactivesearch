@@ -44,9 +44,9 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isEvent,
-	isIdentical,
 	getValidPropsKeys,
 	parseValueArray,
+	isQueryIdentical,
 } from '../../utils';
 
 class MultiList extends Component {
@@ -161,12 +161,12 @@ class MultiList extends Component {
 			}
 		});
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+		if (!isQueryIdentical(this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			this.updateQuery([], this.props);
 		}
 
-		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
+		if (!isQueryIdentical(this.props, prevProps, 'customQuery')) {
 			this.updateQuery(Object.keys(this.state.currentValue), this.props);
 		}
 
