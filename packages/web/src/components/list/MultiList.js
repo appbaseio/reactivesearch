@@ -92,9 +92,7 @@ class MultiList extends Component {
 
 		const hasMounted = false;
 
-		if (currentValueArray.length) {
-			this.setValue(currentValueArray, true, props, hasMounted);
-		}
+		this.setValue(currentValueArray, true, props, hasMounted);
 	}
 
 	componentDidUpdate(prevProps) {
