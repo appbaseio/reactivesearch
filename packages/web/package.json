@@ -35,7 +35,7 @@
 		"@appbaseio/reactivecore": "9.5.5",
 		"appbase-js": "4.0.2",
 		"cross-env": "^5.2.0",
-		"downshift": "^5.1.1",
+		"downshift": "^1.31.2",
 		"emotion": "^9.0.0",
 		"emotion-theming": "^9.0.0",
 		"hoist-non-react-statics": "^3.2.1",
