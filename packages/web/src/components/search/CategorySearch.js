@@ -50,9 +50,9 @@ import {
 	isFunction,
 	getComponent,
 	hasCustomRenderer,
-	isIdentical,
 	getValidPropsKeys,
 	handleCaretPosition,
+	isQueryIdentical,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -171,12 +171,12 @@ class CategorySearch extends Component {
 		);
 
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+		if (!isQueryIdentical(this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery(this.state.currentValue, this.props);
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 
-		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
+		if (!isQueryIdentical(this.props, prevProps, 'customQuery')) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 
@@ -854,7 +854,12 @@ class CategorySearch extends Component {
 
 	getComponent = (downshiftProps = {}) => {
 		const {
-			error, isLoading, aggregationData, promotedResults, customData, rawData,
+			error,
+			isLoading,
+			aggregationData,
+			promotedResults,
+			customData,
+			rawData,
 		} = this.props;
 		const { currentValue } = this.state;
 		const data = {

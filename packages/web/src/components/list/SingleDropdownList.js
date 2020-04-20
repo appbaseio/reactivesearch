@@ -40,8 +40,8 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isEvent,
-	isIdentical,
 	getValidPropsKeys,
+	isQueryIdentical,
 } from '../../utils';
 
 class SingleDropdownList extends Component {
@@ -97,7 +97,11 @@ class SingleDropdownList extends Component {
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, enableAppbase, dataField } = this.props;
 			const { options } = this.state;
-			if ((showLoadMore || enableAppbase) && this.props.options && this.props.options[dataField]) {
+			if (
+				(showLoadMore || enableAppbase)
+				&& this.props.options
+				&& this.props.options[dataField]
+			) {
 				// append options with showLoadMore
 				const { buckets } = this.props.options[dataField];
 				const nextOptions = [
@@ -119,9 +123,10 @@ class SingleDropdownList extends Component {
 				});
 			} else {
 				this.setState({
-					options: this.props.options && this.props.options[dataField]
-						? this.props.options[dataField].buckets
-						: [],
+					options:
+						this.props.options && this.props.options[dataField]
+							? this.props.options[dataField].buckets
+							: [],
 				});
 			}
 		});
@@ -130,13 +135,13 @@ class SingleDropdownList extends Component {
 		);
 
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+		if (!isQueryIdentical(this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			// Clear the component value
 			this.updateQuery('', this.props);
 		}
 
-		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
+		if (!isQueryIdentical(this.props, prevProps, 'customQuery')) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 

@@ -136,7 +136,7 @@ export function escapeRegExp(string) {
  * @param {Object} prevProps
  * @param {'defaultQuery' | 'customQuery'} key
  */
-export const isQueryIdentical = (props, prevProps, key) => {
+export const isQueryIdentical = (props = {}, prevProps = {}, key) => {
 	if (!key) return true;
 	if (typeof props[key] !== 'function' || typeof prevProps[key] !== 'function') return true;
 	return isEqual(props[key](props.value, props), prevProps[key](prevProps.value, prevProps));
