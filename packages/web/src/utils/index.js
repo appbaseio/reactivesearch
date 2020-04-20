@@ -138,8 +138,6 @@ export function escapeRegExp(string) {
  */
 export const isQueryIdentical = (props, prevProps, key) => {
 	if (!key) return true;
-	return isEqual(
-		props[key](props.value, props),
-		prevProps[key](prevProps.value, prevProps),
-	);
+	if (typeof props[key] !== 'function' || typeof prevProps[key] !== 'function') return true;
+	return isEqual(props[key](props.value, props), prevProps[key](prevProps.value, prevProps));
 };
