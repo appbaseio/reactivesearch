@@ -5,7 +5,6 @@ import { setValue, clearValues } from '@appbaseio/reactivecore/lib/actions';
 import { componentTypes, CLEAR_ALL } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
-import { updateQuery } from '@appbaseio/reactivecore/lib/actions/query';
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
@@ -33,20 +32,8 @@ class SelectedFilters extends Component {
 	};
 
 	remove = (component, value = null) => {
-		const { onClear, componentProps } = this.props;
-
-		if (
-			componentProps && componentProps[component] && componentProps[component].componentType && componentProps[component].componentType === 'REACTIVECOMPONENT'
-		) {
-			// To make SelectedFilters work with ReactiveComponent we update the query to null
-			// TODO: Add support for a query to be executed when Filter is cleared.
-			this.props.updateQuery({
-				query: null,
-				componentId: component,
-			});
-		} else {
-			this.props.setValue(component, null);
-		}
+		const { onClear } = this.props;
+		this.props.setValue(component, null);
 		if (onClear) {
 			onClear(component, value);
 		}
@@ -184,7 +171,6 @@ SelectedFilters.propTypes = {
 	render: types.func,
 	title: types.title,
 	onChange: types.func,
-	updateQuery: types.func,
 	componentProps: types.props,
 };
 
@@ -205,7 +191,6 @@ const mapStateToProps = state => ({
 const mapDispatchtoProps = dispatch => ({
 	clearValues: () => dispatch(clearValues()),
 	setValue: (component, value) => dispatch(setValue(component, value)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
 const ConnectedComponent = connect(
