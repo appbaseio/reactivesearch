@@ -8,6 +8,7 @@ import {
 	ReactiveList,
 	ResultCard,
 } from '@appbaseio/reactivesearch';
+import { GeoDistanceSlider } from '@appbaseio/reactivemaps';
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
 
 import './styles/airbnb.css';
@@ -16,6 +17,7 @@ const components = {
 	settings: {
 		app: 'airbeds-test-app',
 		credentials: 'X8RsOu0Lp:9b4fe1a4-58c6-4089-a042-505d86d9da30',
+		mapKey: 'AIzaSyAKz3UhgSuP872fb-Aw27oPRI7M0eXkA9U',
 		type: 'listing',
 		theme: {
 			colors: {
@@ -101,6 +103,21 @@ const components = {
 	},
 };
 
+const geoSliderProps = {
+	componentId: 'locationUI',
+	dataField: 'location.coordinates',
+	range: {
+		start: 0,
+		end: 20,
+	},
+};
+
+const geoMapProps = {
+	componentId: 'MapUI',
+	dataField: 'location.coordinates',
+	title: 'Venue Location Map',
+};
+
 export default class Main extends Component {
 	static async getInitialProps({ pathname, query }) {
 		return {
@@ -122,6 +139,10 @@ export default class Main extends Component {
 						...components.resultcard,
 						source: ReactiveList,
 					},
+					{
+						...geoSliderProps,
+						source: GeoDistanceSlider,
+					},
 				],
 				query,
 				components.settings,
@@ -139,6 +160,7 @@ export default class Main extends Component {
 					</nav>
 					<div className="left-col">
 						<NumberBox {...components.numberbox} />
+						<GeoDistanceSlider {...geoSliderProps} />
 						{/* <RangeSlider {...components.rangeslider} /> */}
 					</div>
 

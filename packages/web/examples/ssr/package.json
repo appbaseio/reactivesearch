@@ -6,6 +6,7 @@
 	"license": "Apache-2.0",
 	"dependencies": {
 		"@appbaseio/reactivesearch": "3.7.12",
+		"@appbaseio/reactivemaps": "3.0.0-beta.6",
 		"@zeit/next-css": "^1.0.1",
 		"emotion-server": "^9.1.0",
 		"moment": "^2.21.0",
