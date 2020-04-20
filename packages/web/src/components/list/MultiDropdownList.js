@@ -42,9 +42,9 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isEvent,
-	isIdentical,
 	getValidPropsKeys,
 	parseValueArray,
+	isQueryIdentical,
 } from '../../utils';
 
 class MultiDropdownList extends Component {
@@ -104,7 +104,11 @@ class MultiDropdownList extends Component {
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, dataField, enableAppbase } = this.props;
 			const { options } = this.state;
-			if ((showLoadMore || enableAppbase) && this.props.options && this.props.options[dataField]) {
+			if (
+				(showLoadMore || enableAppbase)
+				&& this.props.options
+				&& this.props.options[dataField]
+			) {
 				// append options with showLoadMore
 				const { buckets } = this.props.options[dataField];
 				const nextOptions = [
@@ -137,9 +141,10 @@ class MultiDropdownList extends Component {
 			} else {
 				this.setState(
 					{
-						options: this.props.options && this.props.options[dataField]
-							? this.props.options[dataField].buckets
-							: [],
+						options:
+							this.props.options && this.props.options[dataField]
+								? this.props.options[dataField].buckets
+								: [],
 					},
 					() => {
 						// this will ensure that the Select-All (or any)
@@ -153,12 +158,12 @@ class MultiDropdownList extends Component {
 			}
 		});
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+		if (!isQueryIdentical(this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			this.updateQuery([], this.props);
 		}
 
-		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
+		if (!isQueryIdentical(this.props, prevProps, 'customQuery')) {
 			this.updateQuery(Object.keys(this.state.currentValue), this.props);
 		}
 
