@@ -95,9 +95,9 @@ class SingleDropdownList extends Component {
 		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
-			const { showLoadMore, enableAppbase, dataField } = this.props;
+			const { showLoadMore, dataField } = this.props;
 			const { options } = this.state;
-			if ((showLoadMore || enableAppbase) && this.props.options && this.props.options[dataField]) {
+			if (showLoadMore && this.props.options && this.props.options[dataField]) {
 				// append options with showLoadMore
 				const { buckets } = this.props.options[dataField];
 				const nextOptions = [
@@ -284,7 +284,7 @@ class SingleDropdownList extends Component {
 
 	updateQueryOptions = (props, addAfterKey = false) => {
 		// when using composite aggs flush the current options for a fresh query
-		if ((props.showLoadMore || props.enableAppbase) && !addAfterKey) {
+		if (props.showLoadMore && !addAfterKey) {
 			this.setState({
 				options: [],
 			});
@@ -428,7 +428,6 @@ SingleDropdownList.propTypes = {
 	updateComponentProps: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
-	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -501,7 +500,6 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

@@ -103,10 +103,10 @@ class SingleList extends Component {
 
 		checkPropChange(prevProps.options, this.props.options, () => {
 			const {
-				showLoadMore, dataField, options, enableAppbase,
+				showLoadMore, dataField, options,
 			} = this.props;
 
-			if ((showLoadMore || enableAppbase) && options && options[dataField]) {
+			if (showLoadMore && options && options[dataField]) {
 				const { buckets } = options[dataField];
 				const after = options[dataField].after_key;
 				const prevAfter
@@ -189,7 +189,7 @@ class SingleList extends Component {
 	};
 
 	getOptions = (buckets, props) => {
-		if (props.showLoadMore || props.enableAppbase) {
+		if (props.showLoadMore) {
 			return buckets.map(bucket => ({
 				key: bucket.key[props.dataField],
 				doc_count: bucket.doc_count,
@@ -310,7 +310,7 @@ class SingleList extends Component {
 
 	updateQueryOptions = (props, addAfterKey = false) => {
 		// when using composite aggs flush the current options for a fresh query
-		if ((props.showLoadMore || props.enableAppbase) && !addAfterKey) {
+		if (props.showLoadMore && !addAfterKey) {
 			this.setState({
 				options: [],
 			});
@@ -556,7 +556,6 @@ SingleList.propTypes = {
 	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
-	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -628,7 +627,6 @@ const mapStateToProps = (state, props) => ({
 		|| '',
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 	error: state.error[props.componentId],
 });
 
