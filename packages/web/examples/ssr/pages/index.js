@@ -98,6 +98,19 @@ const components = {
 			listItem: 'list-item',
 			image: 'image',
 		},
+		sortOptions: [
+			{
+				label: 'Bed Type',
+				dataField: 'bed_type',
+				sortBy: 'asc',
+			},
+			{
+				label: 'Bedrooms',
+				dataField: 'bedrooms',
+				sortBy: 'asc',
+			},
+		],
+		defaultSortOption: 'Bedrooms',
 	},
 };
 
