@@ -561,7 +561,6 @@ MultiDataList.propTypes = {
 	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -619,7 +618,6 @@ const mapStateToProps = (state, props) => ({
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

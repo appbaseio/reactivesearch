@@ -113,9 +113,9 @@ class MultiList extends Component {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const {
-				showLoadMore, enableAppbase, dataField, options,
+				showLoadMore, dataField, options,
 			} = this.props;
-			if ((showLoadMore || enableAppbase) && options && options[dataField]) {
+			if (showLoadMore && options && options[dataField]) {
 				const { buckets } = options[dataField];
 				const after = options[dataField].after_key;
 				const prevAfter
@@ -221,8 +221,7 @@ class MultiList extends Component {
 	};
 
 	getOptions = (buckets, props) => {
-		// RS API backend always uses composite aggregations
-		if (props.showLoadMore || props.enableAppbase) {
+		if (props.showLoadMore) {
 			return buckets.map(bucket => ({
 				key: bucket.key[props.dataField],
 				doc_count: bucket.doc_count,
@@ -422,7 +421,7 @@ class MultiList extends Component {
 
 	updateQueryOptions = (props, addAfterKey = false) => {
 		// when using composite aggs flush the current options for a fresh query
-		if ((props.showLoadMore || props.enableAppbase) && !addAfterKey) {
+		if (props.showLoadMore && !addAfterKey) {
 			this.setState({
 				options: [],
 			});
@@ -680,7 +679,6 @@ MultiList.propTypes = {
 	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
-	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -729,7 +727,6 @@ MultiList.defaultProps = {
 	queryFormat: 'or',
 	showCheckbox: true,
 	showCount: true,
-	enableAppbase: false,
 	showSearch: true,
 	size: 100,
 	sortBy: 'count',
@@ -754,7 +751,6 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({
