@@ -139,12 +139,12 @@ class DataSearch extends Component {
 		);
 
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isQueryIdentical(this.props, prevProps, 'defaultQuery')) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery(this.state.currentValue, this.props);
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 
-		if (!isQueryIdentical(this.props, prevProps, 'customQuery')) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'customQuery')) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 

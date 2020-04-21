@@ -158,12 +158,12 @@ class MultiDropdownList extends Component {
 			}
 		});
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isQueryIdentical(this.props, prevProps, 'defaultQuery')) {
+		if (!isQueryIdentical([], this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			this.updateQuery([], this.props);
 		}
 
-		if (!isQueryIdentical(this.props, prevProps, 'customQuery')) {
+		if (!isQueryIdentical(Object.keys(this.state.currentValue), this.props, prevProps, 'customQuery')) {
 			this.updateQuery(Object.keys(this.state.currentValue), this.props);
 		}
 
