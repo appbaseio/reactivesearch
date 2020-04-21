@@ -170,6 +170,10 @@ class MultiList extends Component {
 			this.updateQuery(Object.keys(this.state.currentValue), this.props);
 		}
 
+		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
+			this.updateQueryOptions(this.props),
+		);
+
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQueryOptions(this.props);
 			this.updateQuery(Object.keys(this.state.currentValue), this.props);
