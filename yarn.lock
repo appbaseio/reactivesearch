@@ -174,10 +174,10 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivemaps@3.0.0-beta.5":
-  version "3.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.0-beta.5.tgz#f85592c378880c79e9c51918fa654b2fee8e3dfb"
-  integrity sha512-SJCjjXorlAOnqMSnjLgGfFQeoxPpSY00pz6fo4ZsUmIBi/Ir4Ns3CMyNdp0tEsecdeQK5JLIW+FwAzVtkqHN6g==
+"@appbaseio/reactivemaps@3.0.0-beta.4":
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.0-beta.4.tgz#e6a2c2424025fdab670c3bf56c368c7496eb1577"
+  integrity sha512-a3vKtmOEqLIysuHL7b+tE6rzn1mmb72WOeaoHHrWlSZeHRb2YvezFcQvq3/GVMNnSjgPzAW5AtCZbuG5jcIUww==
   dependencies:
     downshift "^1.31.2"
     emotion "^9.0.0"
