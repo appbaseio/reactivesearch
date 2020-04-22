@@ -36,7 +36,15 @@ class ReactiveComponent extends Component {
 		this.defaultQuery = null;
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 
-		this.setQuery = ({ options, ...obj }) => {
+		this.setQuery = (data) => {
+			if (!data) {
+				console.error(
+					'setQuery accepts the arguments of shape { query, options, value }.',
+				);
+				return;
+			}
+
+			const { options, ...obj } = data;
 			if (options) {
 				props.setQueryOptions(
 					props.componentId,
