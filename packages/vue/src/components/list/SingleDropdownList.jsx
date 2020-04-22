@@ -1,4 +1,5 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import types from '../../utils/vueTypes';
 import { getAggsQuery, getCompositeAggsQuery } from './utils';
@@ -12,6 +13,8 @@ import {
 	isFunction,
 	connect,
 	getValidPropsKeys,
+	updateCustomQuery,
+	updateDefaultQuery,
 } from '../../utils/index';
 
 const {
@@ -22,6 +25,9 @@ const {
 	setQueryOptions,
 	setQueryListener,
 	updateComponentProps,
+	setComponentProps,
+	setCustomQuery,
+	setDefaultQuery,
 } = Actions;
 const {
 	getQueryOptions,
@@ -86,13 +92,27 @@ const SingleDropdownList = {
 		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
 			this.$emit('error', e);
 		});
+		// Update props in store
+		this.setComponentProps(this.componentId, this.$props, componentTypes.singleDropdownList);
+		this.setComponentProps(this.internalComponent, this.$props, componentTypes.singleDropdownList);
+		// Set custom and default queries in store
+		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
+		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 	},
 	mounted() {
 		const propsKeys = getValidPropsKeys(this.$props);
-		this.updateComponentProps(this.componentId, this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(this.componentId, this.$props);
+				this.updateComponentProps(
+					this.componentId,
+					this.$props,
+					componentTypes.singleDropdownList,
+				);
+				this.updateComponentProps(
+					this.internalComponent,
+					this.$props,
+					componentTypes.singleDropdownList,
+				);
 			});
 		});
 	},
@@ -276,6 +296,7 @@ const SingleDropdownList = {
 			if (customQuery) {
 				({ query } = customQuery(value, props) || {});
 				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
 			}
 			this.setQueryOptions(props.componentId, customQueryOptions);
 			this.updateQuery({
@@ -412,6 +433,9 @@ const mapDispatchtoProps = {
 	updateQuery,
 	watchComponent,
 	updateComponentProps,
+	setComponentProps,
+	setCustomQuery,
+	setDefaultQuery,
 };
 
 const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList);

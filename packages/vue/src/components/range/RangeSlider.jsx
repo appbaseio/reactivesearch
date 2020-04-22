@@ -1,8 +1,9 @@
 import VueTypes from 'vue-types';
 import { Actions, helper } from '@appbaseio/reactivecore';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import NoSSR from 'vue-no-ssr';
 import Container from '../../styles/Container';
-import { connect } from '../../utils/index';
+import { connect, updateCustomQuery, getValidPropsKeys } from '../../utils/index';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
@@ -15,9 +16,18 @@ const {
 	updateQuery,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	setCustomQuery,
+	updateComponentProps,
 } = Actions;
 
-const { checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
+const {
+	checkValueChange,
+	getClassName,
+	getOptionsFromQuery,
+	isEqual,
+	checkSomePropChange,
+} = helper;
 
 const RangeSlider = {
 	name: 'RangeSlider',
@@ -105,6 +115,12 @@ const RangeSlider = {
 			if (customQuery) {
 				({ query } = customQuery(value, props) || {});
 				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				updateCustomQuery(
+					this.componentId,
+					this.setCustomQuery,
+					this.$props,
+					this.currentValue,
+				);
 			}
 			const {
 				showFilter,
@@ -158,8 +174,23 @@ const RangeSlider = {
 			);
 		}
 		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		// Update props in store
+		this.setComponentProps(this.componentId, this.$props, componentTypes.rangeSlider);
+		// Set custom query in store
+		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
-
+	mounted() {
+		const propsKeys = getValidPropsKeys(this.$props);
+		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
+			checkSomePropChange(newVal, oldVal, propsKeys, () => {
+				this.updateComponentProps(
+					this.componentId,
+					this.$props,
+					componentTypes.rangeSlider,
+				);
+			});
+		});
+	},
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
 		this.setReact(this.$props);
@@ -286,6 +317,9 @@ const mapDispatchtoProps = {
 	watchComponent,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	setCustomQuery,
+	updateComponentProps,
 };
 
 const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(RangeSlider);

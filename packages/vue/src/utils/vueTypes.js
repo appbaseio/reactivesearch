@@ -140,10 +140,15 @@ const types = {
 		suggestionAnalytics: VueTypes.bool,
 		userId: VueTypes.string,
 		customEvents: VueTypes.object,
-	}).def({
-		searchStateHeader: false,
-		emptyQuery: true,
-		suggestionAnalytics: true,
+	}),
+	appbaseConfig: VueTypes.shape({
+		enableQueryRules: VueTypes.bool,
+		recordAnalytics: VueTypes.bool,
+		searchStateHeader: VueTypes.bool,
+		emptyQuery: VueTypes.bool,
+		suggestionAnalytics: VueTypes.bool,
+		userId: VueTypes.string,
+		customEvents: VueTypes.object,
 	}),
 };
 

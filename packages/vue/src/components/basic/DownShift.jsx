@@ -17,6 +17,7 @@ export default {
 		internal_inputValue: '',
 		internal_selectedItem: null,
 		internal_highlightedIndex: null,
+		internal_eventsCalled: {},
 	}),
 	computed: {
 		mergedState() {
@@ -213,8 +214,9 @@ export default {
 			}
 
 			const vm = this;
-			let eventCalled = false;
-
+			setTimeout(() => {
+				vm.internal_eventsCalled[index] = false
+			}, 0)
 			return {
 				mouseenter() {
 					vm.setHighlightedIndex(newIndex);
@@ -222,15 +224,15 @@ export default {
 
 				// for browsers not supporting click event (e.g. firefox android)
 				mousedown(event) {
-					if (eventCalled) return;
-					eventCalled = true;
+					if (vm.internal_eventsCalled[index]) return;
+					vm.internal_eventsCalled[index] = true
 					event.stopPropagation();
 					vm.selectItemAtIndex(newIndex);
 				},
 
 				click(event) {
-					if (eventCalled) return;
-					eventCalled = true;
+					if (vm.internal_eventsCalled[index]) return;
+					vm.internal_eventsCalled[index] = true
 					event.stopPropagation();
 					vm.selectItemAtIndex(newIndex);
 				}

@@ -1,5 +1,6 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
 import ResultListWrapper from './addons/ResultListWrapper.jsx';
@@ -10,6 +11,7 @@ import {
 	hasCustomRenderer,
 	getComponent,
 	getValidPropsKeys,
+	updateDefaultQuery,
 } from '../../utils/index';
 import Flex from '../../styles/Flex';
 import types from '../../utils/vueTypes';
@@ -25,7 +27,9 @@ const {
 	loadMore,
 	setValue,
 	setQueryListener,
+	setComponentProps,
 	updateComponentProps,
+	setDefaultQuery,
 } = Actions;
 
 const {
@@ -80,6 +84,8 @@ const ReactiveList = {
 			this.$emit('error', e);
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, onError);
+		this.setComponentProps(this.componentId, this.$props, componentTypes.reactiveList);
+		this.setComponentProps(this.internalComponent, this.$props, componentTypes.reactiveList);
 	},
 	props: {
 		currentPage: VueTypes.number.def(0),
@@ -195,7 +201,8 @@ const ReactiveList = {
 					},
 					true,
 				); // reset page because of query change
-
+				// Update calculated default query in store
+				updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props);
 				this.$currentPage = 0;
 				this.from = 0;
 			}
@@ -290,7 +297,6 @@ const ReactiveList = {
 	mounted() {
 		this.addComponent(this.internalComponent);
 		this.addComponent(this.$props.componentId);
-
 		if (this.$props.stream) {
 			this.setStreaming(this.$props.componentId, true);
 		}
@@ -299,13 +305,21 @@ const ReactiveList = {
 		options.from = this.$data.from;
 
 		if (this.$props.sortOptions) {
+			const sortField = this.$props.sortOptions[this.sortOptionIndex].dataField;
+			const { sortBy } = this.$props.sortOptions[this.sortOptionIndex];
 			options.sort = [
 				{
-					[this.$props.sortOptions[0].dataField]: {
-						order: this.$props.sortOptions[0].sortBy,
+					[sortField]: {
+						order: sortBy,
 					},
 				},
 			];
+			// To handle sort options for RS API
+			this.updateComponentProps(
+				this.componentId,
+				{ ...this.$props, dataField: sortField, sortBy },
+				componentTypes.reactiveList,
+			);
 		} else if (this.$props.sortBy) {
 			options.sort = [
 				{
@@ -325,6 +339,8 @@ const ReactiveList = {
 			if (this.$defaultQuery.sort) {
 				options.sort = this.$defaultQuery.sort;
 			}
+			// Update calculated default query in store
+			updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props);
 		}
 		// execute is set to false at the time of mount
 		const { sort, ...query } = this.$defaultQuery || {};
@@ -364,10 +380,10 @@ const ReactiveList = {
 		}
 
 		const propsKeys = getValidPropsKeys(this.$props);
-		this.updateComponentProps(this.componentId, this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(this.componentId, this.$props);
+				this.updateComponentProps(this.componentId, this.$props, componentTypes.reactiveList);
+				this.updateComponentProps(this.internalComponent, this.$props, componentTypes.reactiveList);
 			});
 		});
 	},
@@ -630,13 +646,21 @@ const ReactiveList = {
 			// This fixes issue #371 (where sorting a multi-result page with infinite loader breaks)
 			const options = getQueryOptions(this.$props);
 			options.from = 0;
+			const sortField = this.$props.sortOptions[index].dataField;
+			const { sortBy } = this.$props.sortOptions[index];
 			options.sort = [
 				{
-					[this.$props.sortOptions[index].dataField]: {
-						order: this.$props.sortOptions[index].sortBy,
+					[sortField]: {
+						order: sortBy,
 					},
 				},
 			];
+			// To handle sort options for RS API
+			this.updateComponentProps(
+				this.componentId,
+				{ ...this.$props, dataField: sortField, sortBy },
+				componentTypes.reactiveList,
+			);
 			this.setQueryOptions(this.$props.componentId, options, true);
 			this.$currentPage = 0;
 			this.from = 0;
@@ -686,9 +710,10 @@ const ReactiveList = {
 		},
 		// Shape of the object to be returned in onData & render
 		getAllData() {
-			const { size, promotedResults, aggregationData, currentPage, hits, streamHits } = this;
+			const { size, promotedResults, aggregationData, customData, currentPage, hits, streamHits } = this;
 			const results = parseHits(hits) || [];
 			const streamResults = parseHits(streamHits) || [];
+			const parsedPromotedResults = parseHits(promotedResults) || [];
 			let filteredResults = results;
 			const base = currentPage * size;
 			if (streamResults.length) {
@@ -696,19 +721,20 @@ const ReactiveList = {
 				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 			}
 
-			if (promotedResults.length) {
-				const ids = promotedResults.map(item => item._id).filter(Boolean);
+			if (parsedPromotedResults.length) {
+				const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
 				if (ids) {
 					filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 				}
 
-				filteredResults = [...streamResults, ...promotedResults, ...filteredResults];
+				filteredResults = [...streamResults, ...parsedPromotedResults, ...filteredResults];
 			}
 			return {
 				results,
 				streamResults,
 				filteredResults,
-				promotedResults,
+				customData: customData || {},
+				promotedResults: parsedPromotedResults,
 				aggregationData,
 				loadMore: this.loadMore,
 				base,
@@ -721,6 +747,7 @@ const ReactiveList = {
 				filteredResults,
 				promotedResults,
 				aggregationData,
+				customData,
 			} = this.getAllData();
 			return {
 				data: this.withClickIds(filteredResults),
@@ -729,6 +756,7 @@ const ReactiveList = {
 				promotedData: this.withClickIds(promotedResults),
 				rawData: this.rawData,
 				resultStats: this.stats,
+				customData,
 			};
 		},
 		getComponent() {
@@ -753,6 +781,7 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId] || [],
 	promotedResults: state.promotedResults[props.componentId] || [],
+	customData: state.customData[props.componentId],
 	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
@@ -775,7 +804,9 @@ const mapDispatchtoProps = {
 	setStreaming,
 	updateQuery,
 	watchComponent,
+	setComponentProps,
 	updateComponentProps,
+	setDefaultQuery,
 };
 // Only used for SSR
 ReactiveList.generateQueryOptions = props => {

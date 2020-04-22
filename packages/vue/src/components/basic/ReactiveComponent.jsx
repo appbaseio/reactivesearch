@@ -1,6 +1,7 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
-import { connect } from '../../utils/index';
+import { connect, updateCustomQuery, updateDefaultQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
 import types from '../../utils/vueTypes';
 
 const {
@@ -10,6 +11,10 @@ const {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	setCustomQuery,
+	setDefaultQuery,
+	setComponentProps,
+	updateComponentProps,
 } = Actions;
 const {
 	pushToAndClause,
@@ -18,6 +23,7 @@ const {
 	getCompositeAggsQuery,
 	getOptionsFromQuery,
 	getResultStats,
+	checkSomePropChange,
 } = helper;
 const ReactiveComponent = {
 	name: 'ReactiveComponent',
@@ -42,6 +48,12 @@ const ReactiveComponent = {
 		this.setQueryListener(props.componentId, onQueryChange, e => {
 			this.$emit('error', e);
 		});
+
+		// Update props in store
+		this.setComponentProps(this.componentId, this.$props, componentTypes.reactiveComponent);
+		// Set custom query in store
+		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, undefined);
+
 
 		const { customQuery, componentId, filterLabel, showFilter, URLParams } = props;
 
@@ -76,6 +88,14 @@ const ReactiveComponent = {
 					false,
 				);
 			}
+			// Update customQuery field for RS API
+			if ((obj && obj.query) || options) {
+				const customQueryCalc = { ...options };
+				if (obj && obj.query) {
+					customQueryCalc.query = obj.query;
+				}
+				this.setCustomQuery(props.componentId, customQueryCalc);
+			}
 			this.updateQuery({
 				...obj,
 				componentId: props.componentId,
@@ -89,17 +109,38 @@ const ReactiveComponent = {
 			this.internalComponent = `${props.componentId}__internal`;
 		}
 	},
+	mounted() {
+		const propsKeys = getValidPropsKeys(this.$props);
+		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
+			checkSomePropChange(newVal, oldVal, propsKeys, () => {
+				this.updateComponentProps(
+					this.componentId,
+					this.$props,
+					componentTypes.reactiveComponent,
+				);
+				if (this.internalComponent) {
+					this.updateComponentProps(
+						this.internalComponent,
+						this.$props,
+						componentTypes.reactiveComponent,
+					);
+				}
+			});
+		});
+	},
 
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
 
 		if (this.internalComponent) {
 			this.addComponent(this.internalComponent);
+			this.setComponentProps(this.internalComponent, this.$props, componentTypes.reactiveComponent);
 		}
 
 		this.setReact(this.$props); // set query for internal component
 
 		if (this.internalComponent && this.$props.defaultQuery) {
+			updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, undefined);
 			this.$defaultQuery = this.$props.defaultQuery();
 			const { query, ...queryOptions } = this.$defaultQuery || {};
 
@@ -168,7 +209,7 @@ const ReactiveComponent = {
 			}
 		},
 		defaultQuery(newVal, oldVal) {
-			if (newVal && !isEqual(newVal(), oldVal)) {
+			if (newVal && !isQueryIdentical(newVal, oldVal, undefined, this.$props)) {
 				this.$defaultQuery = newVal();
 				const { query, ...queryOptions } = this.$defaultQuery || {};
 
@@ -179,7 +220,8 @@ const ReactiveComponent = {
 						false,
 					);
 				} else this.setQueryOptions(this.internalComponent, this.getAggsQuery(), false);
-
+				// Update default query for RS API
+				updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, undefined);
 				this.updateQuery({
 					componentId: this.internalComponent,
 					query: query || null,
@@ -187,7 +229,7 @@ const ReactiveComponent = {
 			}
 		},
 		customQuery(newVal, oldVal) {
-			if (newVal && !isEqual(newVal, oldVal)) {
+			if (newVal && !isQueryIdentical(newVal, oldVal, undefined, this.$props)) {
 				const { componentId } = this.$props;
 				this.$customQuery = newVal(this.$props);
 				const { query, ...queryOptions } = this.$customQuery || {};
@@ -199,6 +241,9 @@ const ReactiveComponent = {
 						false,
 					);
 				} else this.setQueryOptions(componentId, this.getAggsQuery(), false);
+
+				// Update custom query for RS API
+				updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, undefined);
 
 				this.updateQuery({
 					componentId,
@@ -303,6 +348,10 @@ const mapDispatchtoProps = {
 	setQueryListener,
 	updateQuery,
 	watchComponent,
+	setCustomQuery,
+	setDefaultQuery,
+	setComponentProps,
+	updateComponentProps,
 };
 const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(ReactiveComponent);
 

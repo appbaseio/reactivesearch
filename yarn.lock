@@ -6113,6 +6113,18 @@ appbase-js@^4.0.2-beta.11:
     url-parser-lite "^0.1.0"
     ws "^6.1.2"
 
+appbase-js@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.4.tgz#ffd8e3afe563cd5f30601efcc32d54e18c6e7828"
+  integrity sha512-h4KScox8gwVbpOA1YA9pbjDsZ9qtx8D7YuRcV5VeoVa9oTOMetPGIbzvaUHuDKFuYDuLvQpFrX7FIBtVK+JObQ==
+  dependencies:
+    cross-fetch "^2.2.2"
+    json-stable-stringify "^1.0.1"
+    querystring "^0.2.0"
+    stream "^0.0.2"
+    url-parser-lite "^0.1.0"
+    ws "^6.1.2"
+
 append-transform@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/append-transform/-/append-transform-0.4.0.tgz#d76ebf8ca94d276e247a36bad44a4b74ab611991"

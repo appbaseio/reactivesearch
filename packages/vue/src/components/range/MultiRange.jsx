@@ -1,9 +1,10 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect, parseValueArray } from '../../utils/index';
+import { connect, parseValueArray, updateCustomQuery, getValidPropsKeys } from '../../utils/index';
 import types from '../../utils/vueTypes';
 
 const {
@@ -13,9 +14,18 @@ const {
 	updateQuery,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	setCustomQuery,
+	updateComponentProps,
 } = Actions;
 
-const { isEqual, checkValueChange, getClassName, getOptionsFromQuery } = helper;
+const {
+	isEqual,
+	checkValueChange,
+	getClassName,
+	getOptionsFromQuery,
+	checkSomePropChange,
+} = helper;
 const MultiRange = {
 	name: 'MultiRange',
 	data() {
@@ -110,6 +120,12 @@ const MultiRange = {
 			if (customQuery) {
 				({ query } = customQuery(value, props) || {});
 				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				updateCustomQuery(
+					this.componentId,
+					this.setCustomQuery,
+					this.$props,
+					this.currentValue,
+				);
 			}
 
 			this.setQueryOptions(props.componentId, customQueryOptions);
@@ -153,8 +169,19 @@ const MultiRange = {
 			this.$emit('queryChange', ...args);
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		// Update props in store
+		this.setComponentProps(this.componentId, this.$props, componentTypes.multiRange);
+		// Set custom query in store
+		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
-
+	mounted() {
+		const propsKeys = getValidPropsKeys(this.$props);
+		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
+			checkSomePropChange(newVal, oldVal, propsKeys, () => {
+				this.updateComponentProps(this.componentId, this.$props, componentTypes.multiRange);
+			});
+		});
+	},
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
 		this.setReact(this.$props);
@@ -181,9 +208,9 @@ const MultiRange = {
 				)}
 				<UL class={getClassName(this.$props.innerClass, 'list')}>
 					{this.$props.data.map(item => {
-						const selected
-							= !!this.$data.currentValue
-							&& this.$data.currentValue.label === item.label;
+						const selected =
+							!!this.$data.currentValue &&
+							this.$data.currentValue.label === item.label;
 						return (
 							<li key={item.label} class={`${selected ? 'active' : ''}`}>
 								<Checkbox
@@ -263,9 +290,9 @@ MultiRange.defaultQuery = (values, props) => {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 });
 
 const mapDispatchtoProps = {
@@ -275,6 +302,9 @@ const mapDispatchtoProps = {
 	watchComponent,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	setCustomQuery,
+	updateComponentProps,
 };
 
 const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(MultiRange);
