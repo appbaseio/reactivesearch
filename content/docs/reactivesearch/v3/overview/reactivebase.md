@@ -10,7 +10,7 @@ keywords:
 sidebar: 'docs'
 nestedSidebar: 'web-reactivesearch'
 ---
-
+ 
 **ReactiveBase** is a container component that wraps all the `ReactiveSearch` components together. It binds the backend app (data source) with the UI view components (elements wrapped within ReactiveBase), allowing a UI component to be reactively updated every time there is a change in the data source or in other UI components.
 
 This is the first component you will need to add when using `ReactiveSearch`.
@@ -59,14 +59,14 @@ This is the first component you will need to add when using `ReactiveSearch`.
 </ReactiveBase>
 ```
 
+-   **appbaseConfig** `Object` [optional]
+    allows you to customize the analytics experience when appbase.io is used as a backend.
+    Read more about it over [here](/docs/reactivesearch/v3/advanced/analytics/#configure-the-analytics-experience).
 -   **analytics** `Boolean` [optional]
     allows recording search analytics (and click analytics) when set to `true` and appbase.io is used as a backend. Defaults to `false`.<br/>
     Check the [analytics recipe](/docs/reactivesearch/v3/advanced/analytics/) for click analytics implementation.
     > Note:
     > This prop has been marked as deprecated. Please use the `recordAnalytics` property in the `appbaseConfig` prop instead.
--   **appbaseConfig** `Object` [optional]
-    allows you to customize the analytics experience when appbase.io is used as a backend.
-    Read more about it over [here](/docs/reactivesearch/v3/advanced/analytics/#configure-the-analytics-experience).
 -   **analyticsConfig** `Object` [optional]
     allows you to customize the analytics experience when appbase.io is used as a backend.
     Read more about it over [here](/docs/reactivesearch/v3/advanced/analytics/#configure-the-analytics-experience).

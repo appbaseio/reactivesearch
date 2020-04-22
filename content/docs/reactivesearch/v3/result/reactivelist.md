@@ -326,6 +326,8 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
         > Note:
         >
         > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerAnalytics to register the click analytics info.
+    -   **`customData`** `object`
+        Custom data set in the query rule when appbase.io is used as backend. [Read More](/docs/search/Rules/#custom-data)
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`resultStats`**: `object`

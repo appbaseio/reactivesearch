@@ -265,6 +265,8 @@ export default {
         > Note:
         >
         > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerAnalytics to register the click analytics info.
+    -   **`customData`** `object`
+        Custom data set in the query rule when appbase.io is used as backend. [Read More](/docs/search/Rules/#custom-data)
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`resultStats`**: `object`
@@ -322,7 +324,7 @@ export default {
 
 -   **data** `Function` [optional]
     gets triggered after data changes, which returns an object with these properties: `data`,
-    `streamData`, `promotedData`, `rawData` & `resultStats`.
+    `streamData`, `promotedData`, `rawData`, `customData` & `resultStats`.
 
 -   **error**
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
