@@ -36,7 +36,15 @@ class ReactiveComponent extends Component {
 		this.defaultQuery = null;
 		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 
-		this.setQuery = ({ options, ...obj }) => {
+		this.setQuery = (data) => {
+			if (!data) {
+				console.error(
+					'setQuery accepts the arguments of shape { query, options, value }.',
+				);
+				return;
+			}
+
+			const { options, ...obj } = data;
 			if (options) {
 				props.setQueryOptions(
 					props.componentId,
@@ -44,16 +52,25 @@ class ReactiveComponent extends Component {
 					false,
 				);
 			}
+
+			let queryToBeSet = obj.query;
+
+			// when enableAppbase is true, Backend throws error because of repeated query in request body
+			if (obj && obj.query && obj.query.query) {
+				queryToBeSet = obj.query.query;
+			}
+
 			// Update customQuery field for RS API
 			if ((obj && obj.query) || options) {
 				const customQuery = { ...options };
 				if (obj && obj.query) {
-					customQuery.query = obj.query;
+					customQuery.query = queryToBeSet;
 				}
 				props.setCustomQuery(props.componentId, customQuery);
 			}
 			this.props.updateQuery({
 				...obj,
+				query: queryToBeSet,
 				componentId: props.componentId,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
