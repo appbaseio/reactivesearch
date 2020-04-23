@@ -237,4 +237,5 @@ GoogleMapMarker.propTypes = {
 
 export default connect(
 	mapStateToProps,
+	null,
 )(GoogleMapMarker);
