@@ -2,10 +2,10 @@ import { helper } from '@appbaseio/reactivecore';
 
 const { getAggsOrder } = helper;
 
-const extractQuery = (defaultQuery) => {
+const extractQuery = props => {
 	const queryToBeReturned = {};
-	if (defaultQuery) {
-		const evaluateQuery = defaultQuery();
+	if (props.defaultQuery) {
+		const evaluateQuery = props.defaultQuery([], props);
 		if (evaluateQuery) {
 			if (evaluateQuery.query) {
 				queryToBeReturned.query = evaluateQuery.query;
@@ -19,9 +19,7 @@ const extractQuery = (defaultQuery) => {
 };
 const getAggsQuery = (query, props) => {
 	const clonedQuery = query;
-	const {
-		dataField, size, sortBy, showMissing, missingLabel,
-	} = props;
+	const { dataField, size, sortBy, showMissing, missingLabel } = props;
 	clonedQuery.size = 0;
 	clonedQuery.aggs = {
 		[dataField]: {
@@ -44,15 +42,13 @@ const getAggsQuery = (query, props) => {
 			},
 		};
 	}
-	return { ...clonedQuery, ...extractQuery(props.defaultQuery) };
+	return { ...clonedQuery, ...extractQuery(props) };
 };
 
 const getCompositeAggsQuery = (query, props, after) => {
 	const clonedQuery = query;
 	// missing label not available in composite aggs
-	const {
-		dataField, size, sortBy, showMissing,
-	} = props;
+	const { dataField, size, sortBy, showMissing } = props;
 
 	// composite aggs only allows asc and desc
 	const order = sortBy === 'count' ? {} : { order: sortBy };
@@ -88,7 +84,7 @@ const getCompositeAggsQuery = (query, props, after) => {
 			},
 		};
 	}
-	return { ...clonedQuery, ...extractQuery(props.defaultQuery) };
+	return { ...clonedQuery, ...extractQuery(props) };
 };
 
 export { getAggsQuery, getCompositeAggsQuery };
