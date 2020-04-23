@@ -4,7 +4,7 @@ import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import { connect, updateCustomQuery, getValidPropsKeys } from '../../utils/index';
+import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
 import types from '../../utils/vueTypes';
 
 const {
@@ -111,6 +111,11 @@ const SingleRange = {
 				this.setValue(newVal);
 			}
 		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQueryHandler(this.$data.currentValue, this.$props);
+			}
+		},
 	},
 
 	render() {
@@ -199,7 +204,7 @@ const SingleRange = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'SINGLERANGE',
+				componentType: componentTypes.singleRange,
 			});
 		},
 
