@@ -4,7 +4,7 @@ import types from '../../utils/vueTypes';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { toggleButtons } from '../../styles/Button';
-import { connect, updateCustomQuery, getValidPropsKeys } from '../../utils/index';
+import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
 
 const {
 	addComponent,
@@ -128,6 +128,11 @@ const ToggleButton = {
 				}
 			}
 		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQuery(this.$data.currentValue, this.$props);
+			}
+		},
 	},
 	methods: {
 		handleToggle(value, isDefaultValue = false, props = this.$props, hasMounted = true) {
@@ -206,7 +211,7 @@ const ToggleButton = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'TOGGLEBUTTON',
+				componentType: componentTypes.toggleButton,
 			});
 		},
 
