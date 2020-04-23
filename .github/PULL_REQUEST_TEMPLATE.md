@@ -3,6 +3,9 @@
 
 - [ ] Describe the proposed changes and how it'll improve the library experience.
 - [ ] Please make sure that there is no linting errors in the code.
+- [ ] Add loom video / gif / screenshot.
+- [ ] List the pages that this PR can affect.
+- [ ] If it is global change, try to add any side effects that it could have.
 - [ ] Create a PR to add/update the docs (if needed) at [here](https://github.com/appbaseio/Docs).
 - [ ] Create a PR to add/update the storybook (if needed) at [here](https://github.com/appbaseio/playground).
 
