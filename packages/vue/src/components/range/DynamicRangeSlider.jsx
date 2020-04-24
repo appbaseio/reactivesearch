@@ -80,7 +80,7 @@ const DynamicRangeSlider = {
 			this.componentId,
 			this.setCustomQuery,
 			this.$props,
-			this.state.currentValue,
+			this.currentValue,
 		);
 	},
 	mounted() {
