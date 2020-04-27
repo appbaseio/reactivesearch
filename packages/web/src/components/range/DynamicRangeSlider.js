@@ -225,11 +225,9 @@ class DynamicRangeSlider extends Component {
 
 		if (query && props.nestedField) {
 			return {
-				query: {
-					nested: {
-						path: props.nestedField,
-						query,
-					},
+				nested: {
+					path: props.nestedField,
+					query,
 				},
 			};
 		}
@@ -269,15 +267,28 @@ class DynamicRangeSlider extends Component {
 		return props.interval;
 	};
 
-	histogramQuery = (props, range) => ({
-		[props.dataField]: {
-			histogram: {
-				field: props.dataField,
-				interval: this.getValidInterval(props, range),
-				offset: range.start,
+	histogramQuery = (props, range) => {
+		const query = {
+			[props.dataField]: {
+				histogram: {
+					field: props.dataField,
+					interval: this.getValidInterval(props, range),
+					offset: range.start,
+				},
 			},
-		},
-	});
+		};
+		if (props.nestedField) {
+			return {
+				inner: {
+					aggs: query,
+					nested: {
+						path: props.nestedField,
+					},
+				},
+			};
+		}
+		return query;
+	};
 
 	rangeQuery = props => ({
 		min: { min: { field: props.dataField } },
@@ -564,16 +575,17 @@ DynamicRangeSlider.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => {
-	let options
-		= state.aggregations[props.componentId]
-		&& state.aggregations[props.componentId][props.dataField];
+	let aggregation = state.aggregations[props.componentId];
+	if (props.nestedField) {
+		aggregation
+			= state.aggregations[props.componentId] && state.aggregations[props.componentId].inner;
+	}
+	let options = aggregation && aggregation[props.dataField];
 	let range = state.aggregations[`${props.componentId}__range__internal`];
 	if (props.nestedField) {
 		options
-			= options
-			&& state.aggregations[props.componentId][props.dataField][props.nestedField]
-			&& state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
-				? state.aggregations[props.componentId][props.dataField][props.nestedField].buckets
+			= options && aggregation[props.dataField] && aggregation[props.dataField].buckets
+				? aggregation[props.dataField].buckets
 				: [];
 		range
 			= range
@@ -585,8 +597,8 @@ const mapStateToProps = (state, props) => {
 				: null;
 	} else {
 		options
-			= options && state.aggregations[props.componentId][props.dataField].buckets
-				? state.aggregations[props.componentId][props.dataField].buckets
+			= options && aggregation[props.dataField].buckets
+				? aggregation[props.dataField].buckets
 				: [];
 		range
 			= range && state.aggregations[`${props.componentId}__range__internal`].min

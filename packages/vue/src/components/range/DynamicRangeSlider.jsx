@@ -1,8 +1,9 @@
 import VueTypes from 'vue-types';
 import NoSSR from 'vue-no-ssr';
 import { Actions, helper } from '@appbaseio/reactivecore';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Container from '../../styles/Container';
-import { connect } from '../../utils/index';
+import { connect, updateCustomQuery, getValidPropsKeys } from '../../utils/index';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
@@ -15,9 +16,18 @@ const {
 	updateQuery,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	setCustomQuery,
+	updateComponentProps,
 } = Actions;
 
-const { checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
+const {
+	checkValueChange,
+	getClassName,
+	getOptionsFromQuery,
+	isEqual,
+	checkSomePropChange,
+} = helper;
 
 const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
@@ -58,8 +68,38 @@ const DynamicRangeSlider = {
 			this.$emit('queryChange', ...args);
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		// Update props in store
+		this.setComponentProps(this.componentId, this.$props, componentTypes.dynamicRangeSlider);
+		this.setComponentProps(
+			this.internalRangeComponent,
+			this.$props,
+			componentTypes.dynamicRangeSlider,
+		);
+		// Set custom query in store
+		updateCustomQuery(
+			this.componentId,
+			this.setCustomQuery,
+			this.$props,
+			this.state.currentValue,
+		);
 	},
-
+	mounted() {
+		const propsKeys = getValidPropsKeys(this.$props);
+		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
+			checkSomePropChange(newVal, oldVal, propsKeys, () => {
+				this.updateComponentProps(
+					this.componentId,
+					this.$props,
+					componentTypes.dynamicRangeSlider,
+				);
+				this.updateComponentProps(
+					this.internalRangeComponent,
+					this.$props,
+					componentTypes.dynamicRangeSlider,
+				);
+			});
+		});
+	},
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
 		this.addComponent(this.$props.internalRangeComponent);
@@ -171,6 +211,7 @@ const DynamicRangeSlider = {
 				customQueryOptions = getOptionsFromQuery(
 					this.$props.customQuery(value, this.$props),
 				);
+				updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, value);
 			}
 
 			const { start, end } = this.range || { start: value[0], end: value[1] };
@@ -259,16 +300,16 @@ const DynamicRangeSlider = {
 							<div class="label-container">
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label')
-										|| 'range-label-left'
+										getClassName(this.$props.innerClass, 'label') ||
+										'range-label-left'
 									}
 								>
 									{this.labels.start}
 								</label>
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label')
-										|| 'range-label-right'
+										getClassName(this.$props.innerClass, 'label') ||
+										'range-label-right'
 									}
 								>
 									{this.labels.end}
@@ -321,26 +362,26 @@ const mapStateToProps = (state, props) => {
 	let range = state.aggregations[`${props.componentId}__range__internal`];
 
 	if (props.nestedField) {
-		options
-			= options
-			&& componentId[props.dataField][props.nestedField]
-			&& componentId[props.dataField][props.nestedField].buckets
+		options =
+			options &&
+			componentId[props.dataField][props.nestedField] &&
+			componentId[props.dataField][props.nestedField].buckets
 				? componentId[props.dataField][props.nestedField].buckets
 				: [];
-		range
-			= range && internalRange[props.nestedField].min
+		range =
+			range && internalRange[props.nestedField].min
 				? {
-					start: internalRange[props.nestedField].min.value,
-					end: internalRange[props.nestedField].max.value,
+						start: internalRange[props.nestedField].min.value,
+						end: internalRange[props.nestedField].max.value,
 				  }
 				: null;
 	} else {
-		options
-			= options && componentId[props.dataField].buckets
+		options =
+			options && componentId[props.dataField].buckets
 				? componentId[props.dataField].buckets
 				: [];
-		range
-			= range && internalRange.min
+		range =
+			range && internalRange.min
 				? { start: internalRange.min.value, end: internalRange.max.value }
 				: null;
 	}
@@ -361,6 +402,9 @@ const mapDispatchtoProps = {
 	watchComponent,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	setCustomQuery,
+	updateComponentProps,
 };
 
 const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider);

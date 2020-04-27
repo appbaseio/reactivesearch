@@ -3,7 +3,6 @@ import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerW
 import { InfoWindow, Marker } from 'react-google-maps';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import { setMarkerOnTop, setOpenMarkers } from '@appbaseio/reactivecore/lib/actions';
 import { connect, ReactReduxContext } from '@appbaseio/reactivesearch/lib/utils';
 
 import { MapPin, MapPinArrow, mapPinWrapper } from './addons/styles/MapPin';
@@ -210,16 +209,9 @@ class GoogleMapMarker extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	markerOnTop: state.markerOnTop,
-	openMarkers: state.openMarkers,
 	config: state.config,
 	headers: state.appbaseRef.headers,
 	analytics: state.analytics,
-});
-
-const mapDispatchToProps = dispatch => ({
-	setMarkerOnTop: markerId => dispatch(setMarkerOnTop(markerId)),
-	setOpenMarkers: openMarkers => dispatch(setOpenMarkers(openMarkers)),
 });
 
 GoogleMapMarker.propTypes = {
@@ -245,5 +237,5 @@ GoogleMapMarker.propTypes = {
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
+	null,
 )(GoogleMapMarker);

@@ -1,11 +1,15 @@
 import { Actions, helper, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
 	connect,
 	getComponent,
 	hasCustomRenderer,
 	isFunction,
 	getValidPropsKeys,
+	updateCustomQuery,
+	updateDefaultQuery,
+	isQueryIdentical,
 } from '../../utils/index';
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
@@ -27,6 +31,10 @@ const {
 	setQueryOptions,
 	setQueryListener,
 	updateComponentProps,
+	setComponentProps,
+	setCustomQuery,
+	setDefaultQuery,
+	setCustomHighlightOptions,
 } = Actions;
 const {
 	debounce,
@@ -75,6 +83,12 @@ const DataSearch = {
 		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
 			this.$emit('error', e);
 		});
+		// Update props in store
+		this.setComponentProps(this.componentId, this.$props, componentTypes.dataSearch);
+		this.setComponentProps(this.internalComponent, this.$props, componentTypes.dataSearch);
+		// Set custom and default queries in store
+		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
+		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 	},
 	computed: {
 		suggestionsList() {
@@ -107,6 +121,7 @@ const DataSearch = {
 		componentId: types.stringRequired,
 		customHighlight: types.func,
 		customQuery: types.func,
+		defaultQuery: types.func,
 		dataField: types.dataFieldArray,
 		aggregationField: types.string,
 		size: VueTypes.number.def(10),
@@ -114,6 +129,7 @@ const DataSearch = {
 		defaultValue: types.string,
 		value: types.value,
 		defaultSuggestions: types.suggestions,
+		enableSynonyms: types.bool.def(true),
 		fieldWeights: types.fieldWeights,
 		filterLabel: types.string,
 		fuzziness: types.fuzziness,
@@ -148,6 +164,9 @@ const DataSearch = {
 		this.addComponent(this.$props.componentId, 'DATASEARCH');
 		this.addComponent(this.internalComponent);
 		if (this.$props.highlight) {
+			if (this.customHighlight && typeof this.customHighlight === 'function') {
+				this.setCustomHighlightOptions(this.componentId, this.customHighlight(this.$props));
+			}
 			const queryOptions = DataSearch.highlightQuery(this.$props) || {};
 			this.queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
 			this.setQueryOptions(this.$props.componentId, this.queryOptions);
@@ -168,10 +187,18 @@ const DataSearch = {
 	},
 	mounted() {
 		const propsKeys = getValidPropsKeys(this.$props);
-		this.updateComponentProps(this.componentId, this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(this.componentId, this.$props);
+				this.updateComponentProps(
+					this.componentId,
+					this.$props,
+					componentTypes.dataSearch,
+				);
+				this.updateComponentProps(
+					this.internalComponent,
+					this.$props,
+					componentTypes.dataSearch,
+				);
 			});
 		});
 	},
@@ -210,6 +237,16 @@ const DataSearch = {
 				this.setValue(newVal, true, this.$props);
 			}
 		},
+		defaultQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateDefaultQueryHandler(this.$data.currentValue, this.$props);
+			}
+		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQueryHandler(this.componentId, this.$data.currentValue, this.$props);
+			}
+		},
 		suggestions(newVal) {
 			if (Array.isArray(newVal) && this.$data.currentValue.trim().length) {
 				// shallow check allows us to set suggestions even if the next set
@@ -226,6 +263,15 @@ const DataSearch = {
 	},
 	methods: {
 		updateQueryOptions() {
+			if (
+				this.customHighlight
+				&& typeof this.customHighlight === 'function'
+			) {
+				this.setCustomHighlightOptions(
+					this.componentId,
+					this.customHighlight(this.$props),
+				);
+			}
 			const queryOptions = DataSearch.highlightQuery(this.$props) || {};
 			this.queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
 			this.setQueryOptions(this.$props.componentId, this.queryOptions);
@@ -240,6 +286,7 @@ const DataSearch = {
 				promotedData: this.promotedResults,
 				aggregationData: this.aggregationData,
 				rawData: this.rawData,
+				customData: this.customData,
 				value: currentValue,
 				triggerClickAnalytics: this.triggerClickAnalytics,
 				resultStats: this.stats,
@@ -309,7 +356,29 @@ const DataSearch = {
 
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
-
+		updateDefaultQueryHandler(value, props) {
+			let defaultQueryOptions;
+			let query = DataSearch.defaultQuery(value, props);
+			if (this.defaultQuery) {
+				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
+				if (defaultQueryToBeSet.query) {
+					({ query } = defaultQueryToBeSet);
+				}
+				defaultQueryOptions = getOptionsFromQuery(defaultQueryToBeSet);
+				// Update calculated default query in store
+				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
+			}
+			this.setQueryOptions(this.internalComponent, {
+				...this.queryOptions,
+				...defaultQueryOptions,
+			});
+			this.updateQuery({
+				componentId: this.internalComponent,
+				query,
+				value,
+				componentType: componentTypes.dataSearch,
+			});
+		},
 		updateQueryHandler(componentId, value, props) {
 			const { customQuery, filterLabel, showFilter, URLParams } = props;
 
@@ -323,6 +392,7 @@ const DataSearch = {
 					query = [queryTobeSet];
 				}
 				customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
+				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
 				this.setQueryOptions(componentId, {
 					...this.queryOptions,
 					...customQueryOptions,
@@ -865,6 +935,7 @@ const mapStateToProps = (state, props) => ({
 	config: state.config,
 	headers: state.appbaseRef.headers,
 	promotedResults: state.promotedResults[props.componentId] || [],
+	customData: state.customData[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
@@ -877,6 +948,10 @@ const mapDispatchtoProps = {
 	watchComponent,
 	setQueryListener,
 	updateComponentProps,
+	setComponentProps,
+	setCustomQuery,
+	setDefaultQuery,
+	setCustomHighlightOptions,
 };
 const DSConnected = connect(mapStateToProps, mapDispatchtoProps)(DataSearch);
 

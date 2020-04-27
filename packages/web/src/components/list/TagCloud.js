@@ -48,7 +48,7 @@ class TagCloud extends Component {
 
 		const options
 			= props.options && props.options[props.dataField]
-				? this.getOptions(props.options[props.dataField].buckets, props)
+				? props.options[props.dataField].buckets
 				: [];
 
 		this.state = {
@@ -93,7 +93,7 @@ class TagCloud extends Component {
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { buckets } = this.props.options[this.props.dataField];
 			this.setState({
-				options: this.getOptions(buckets, this.props),
+				options: buckets,
 			});
 		});
 		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
@@ -182,26 +182,13 @@ class TagCloud extends Component {
 
 		if (query && props.nestedField) {
 			return {
-				query: {
-					nested: {
-						path: props.nestedField,
-						query,
-					},
+				nested: {
+					path: props.nestedField,
+					query,
 				},
 			};
 		}
 		return query;
-	};
-
-	getOptions = (buckets = [], props) => {
-		if (props.enableAppbase) {
-			return buckets.map(bucket => ({
-				key: bucket.key[props.dataField],
-				doc_count: bucket.doc_count,
-			}));
-		}
-
-		return buckets;
 	};
 
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
@@ -371,7 +358,6 @@ TagCloud.propTypes = {
 	setCustomQuery: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	error: types.title,
-	enableAppbase: types.bool,
 	isLoading: types.bool,
 	// component props
 	beforeValueChange: types.func,
@@ -430,7 +416,6 @@ const mapStateToProps = (state, props) => {
 			|| null,
 		isLoading: state.isLoading[props.componentId],
 		error: state.error[props.componentId],
-		enableAppbase: state.config.enableAppbase,
 	};
 };
 

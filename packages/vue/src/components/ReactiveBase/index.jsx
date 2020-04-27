@@ -22,10 +22,21 @@ const ReactiveBase = {
 	created() {
 		this.setStore(this.$props);
 	},
+	mounted() {
+		const { analyticsConfig } = this;
+		// TODO: Remove in 2.0
+		if (analyticsConfig !== undefined) {
+			console.warn(
+				'Warning(ReactiveSearch): The `analyticsConfig` prop has been marked as deprecated, please use the `appbaseConfig` prop instead.',
+			);
+		}
+	},
 	props: {
 		app: types.stringRequired,
-		analytics: VueTypes.bool.def(false),
+		analytics: VueTypes.bool,
 		analyticsConfig: types.analyticsConfig,
+		appbaseConfig: types.appbaseConfig,
+		enableAppbase: types.bool.def(false),
 		credentials: types.string,
 		headers: types.headers,
 		queryParams: types.string,
@@ -75,6 +86,13 @@ const ReactiveBase = {
 				}
 			}
 		},
+		appbaseConfig(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				if (this.store) {
+					this.store.dispatch(updateAnalyticsConfig(newVal));
+				}
+			}
+		}
 	},
 	methods: {
 		updateState(props) {
@@ -86,6 +104,10 @@ const ReactiveBase = {
 				= props.url && props.url.trim() !== '' && !props.credentials
 					? null
 					: props.credentials;
+			const appbaseConfig = {
+				...props.analyticsConfig,
+				...props.appbaseConfig,
+			}
 			const config = {
 				url:
 					props.url && props.url.trim() !== ''
@@ -96,8 +118,9 @@ const ReactiveBase = {
 				type: props.type ? props.type : '*',
 				transformRequest: props.transformRequest,
 				transformResponse: props.transformResponse,
-				analytics: props.analytics,
-				analyticsConfig: props.analyticsConfig,
+				enableAppbase: props.enableAppbase,
+				analytics: props.appbaseConfig ? props.appbaseConfig.recordAnalytics : props.analytics,
+				analyticsConfig: appbaseConfig,
 			};
 			let queryParams = '';
 

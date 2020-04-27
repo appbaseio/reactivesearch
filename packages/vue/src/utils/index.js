@@ -1,5 +1,8 @@
 import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
+import { helper } from '@appbaseio/reactivecore';
 import connectToStore from './connector';
+
+const { updateDefaultQuery: defaultQueryUtil, updateCustomQuery: customQueryUtil, isEqual } = helper;
 
 // TODO
 // import { storeKey } from '@appbaseio/reactivecore';
@@ -64,3 +67,25 @@ export const getValidPropsKeys = (props = {}) =>
 
 export const isEvent = candidate =>
 	!!(candidate && candidate.stopPropagation && candidate.preventDefault);
+
+export const updateDefaultQuery = (componentId, setDefaultQuery, props, value) => {
+	defaultQueryUtil(componentId, {...props, setDefaultQuery}, value)
+}
+
+export const updateCustomQuery = (componentId, setCustomQuery, props, value) => {
+	customQueryUtil(componentId, {...props, setCustomQuery}, value)
+}
+
+/**
+ * @param {Function} newVal
+ * @param {Function} oldVal
+ * @param {any} value
+ * @param {Object} props
+ */
+export const isQueryIdentical = (newVal, oldVal, value, props) => {
+	if (typeof newVal !== 'function' || typeof oldVal !== 'function') return true;
+	// to not call original defaultQuery and customQuery, as here we are only comparing
+	const prevQuery = () => oldVal;
+	const nextQuery = () => newVal;
+	return isEqual(nextQuery(value, props), prevQuery(value, props));
+};
