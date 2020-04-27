@@ -160,15 +160,13 @@ Example uses:
 	dataField={['title', 'text']}
 	highlight
 	customHighlight={props => ({
-		highlight: {
-			pre_tags: ['<mark>'],
-			post_tags: ['</mark>'],
-			fields: {
-				text: {},
-				title: {},
-			},
-			number_of_fragments: 0,
-		},
+        pre_tags: ['<mark>'],
+        post_tags: ['</mark>'],
+        fields: {
+            text: {},
+            title: {}
+        },
+        number_of_fragments: 0
 	})}
 />
 ```
