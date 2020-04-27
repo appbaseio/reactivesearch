@@ -31,7 +31,8 @@ class App extends Component {
 			<Container>
 				<ReactiveBase
 					app="ph-dataset"
-					credentials="NPWzzJQT0:e367967e-9005-4b8a-94b2-28d1f8b49d1d"
+					url="https://xe6N9nDRV:51ea7a8a-6354-4b5f-83e1-12dce3b7ec47@arc-cluster-appbase-demo-ps1pgt.searchbase.io"
+					enableAppbase
 					type="ph-dataset"
 					theme={theme}
 				>

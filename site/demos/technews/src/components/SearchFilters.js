@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-	DataSearch,
-	SingleDropdownList,
-	SingleDropdownRange,
-} from '@appbaseio/reactivesearch';
+import { DataSearch, SingleDropdownList, SingleDropdownRange } from '@appbaseio/reactivesearch';
 
 import Flex, { FlexChild } from '../styles/Flex';
 
@@ -15,15 +11,13 @@ const SearchFilters = () => (
 				dataField={['title', 'text']}
 				highlight
 				customHighlight={() => ({
-					highlight: {
-						pre_tags: ['<mark>'],
-						post_tags: ['</mark>'],
-						fields: {
-							text: {},
-							title: {},
-						},
-						number_of_fragments: 0,
+					pre_tags: ['<mark>'],
+					post_tags: ['</mark>'],
+					fields: {
+						text: {},
+						title: {},
 					},
+					number_of_fragments: 0,
 				})}
 			/>
 		</FlexChild>
