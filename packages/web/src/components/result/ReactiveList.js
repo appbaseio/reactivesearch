@@ -676,7 +676,7 @@ class ReactiveList extends Component {
 			className={`${sortOptions} ${getClassName(this.props.innerClass, 'sortOptions')}`}
 			name="sort-options"
 			onChange={this.handleSortChange}
-			defaultValue={this.sortOptionIndex}
+			value={this.sortOptionIndex}
 		>
 			{this.props.sortOptions.map((sort, index) => (
 				<option key={sort.label} value={index}>
