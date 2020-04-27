@@ -97,11 +97,7 @@ class SingleDropdownList extends Component {
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, dataField } = this.props;
 			const { options } = this.state;
-			if (
-				showLoadMore
-				&& this.props.options
-				&& this.props.options[dataField]
-			) {
+			if (showLoadMore && this.props.options && this.props.options[dataField]) {
 				// append options with showLoadMore
 				const { buckets } = this.props.options[dataField];
 				const nextOptions = [
@@ -135,7 +131,7 @@ class SingleDropdownList extends Component {
 		);
 
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isQueryIdentical('', this.props, prevProps, 'defaultQuery')) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			// Clear the component value
 			this.updateQuery('', this.props);
@@ -276,15 +272,19 @@ class SingleDropdownList extends Component {
 			queryOptions,
 			this.state.currentValue,
 			this.props,
-			SingleDropdownList.generateQueryOptions(this.props, this.state.prevAfter),
+			SingleDropdownList.generateQueryOptions(
+				this.props,
+				this.state.prevAfter,
+				this.state.currentValue,
+			),
 		);
 	};
 
-	static generateQueryOptions(props, after) {
+	static generateQueryOptions(props, after, value) {
 		const queryOptions = getQueryOptions(props);
 		return props.showLoadMore
-			? getCompositeAggsQuery(queryOptions, props, after)
-			: getAggsQuery(queryOptions, props);
+			? getCompositeAggsQuery(value, queryOptions, props, after)
+			: getAggsQuery(value, queryOptions, props);
 	}
 
 	updateQueryOptions = (props, addAfterKey = false) => {
@@ -298,6 +298,7 @@ class SingleDropdownList extends Component {
 		const queryOptions = SingleDropdownList.generateQueryOptions(
 			props,
 			addAfterKey ? this.state.after : {},
+			this.state.currentValue,
 		);
 		if (props.defaultQuery) {
 			this.updateDefaultQuery(queryOptions);

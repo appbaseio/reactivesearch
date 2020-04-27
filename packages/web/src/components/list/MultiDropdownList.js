@@ -104,11 +104,7 @@ class MultiDropdownList extends Component {
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, dataField } = this.props;
 			const { options } = this.state;
-			if (
-				showLoadMore
-				&& this.props.options
-				&& this.props.options[dataField]
-			) {
+			if (showLoadMore && this.props.options && this.props.options[dataField]) {
 				// append options with showLoadMore
 				const { buckets } = this.props.options[dataField];
 				const nextOptions = [
@@ -157,14 +153,16 @@ class MultiDropdownList extends Component {
 				);
 			}
 		});
+		const valueArray
+			= typeof this.state.currentValue === 'object' ? Object.keys(this.state.currentValue) : [];
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isQueryIdentical([], this.props, prevProps, 'defaultQuery')) {
+		if (!isQueryIdentical(valueArray, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			this.updateQuery([], this.props);
 		}
 
-		if (!isQueryIdentical(Object.keys(this.state.currentValue), this.props, prevProps, 'customQuery')) {
-			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+		if (!isQueryIdentical(valueArray, this.props, prevProps, 'customQuery')) {
+			this.updateQuery(valueArray, this.props);
 		}
 
 		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
@@ -173,10 +171,10 @@ class MultiDropdownList extends Component {
 
 		checkPropChange(this.props.dataField, prevProps.dataField, () => {
 			this.updateQueryOptions(this.props);
-			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+			this.updateQuery(valueArray, this.props);
 		});
 
-		let selectedValue = Object.keys(this.state.currentValue);
+		let selectedValue = valueArray;
 		const { selectAllLabel } = this.props;
 
 		if (selectAllLabel) {
@@ -198,7 +196,7 @@ class MultiDropdownList extends Component {
 			} else if (onChange) {
 				onChange(this.props.selectedValue || null);
 			} else {
-				const selectedListItems = Object.keys(this.state.currentValue);
+				const selectedListItems = valueArray;
 				this.setValue(selectedListItems, true);
 			}
 		}
@@ -390,15 +388,20 @@ class MultiDropdownList extends Component {
 			queryOptions,
 			Object.keys(this.state.currentValue),
 			this.props,
-			MultiDropdownList.generateQueryOptions(this.props, this.state.prevAfter),
+			MultiDropdownList.generateQueryOptions(
+				this.props,
+				this.state.prevAfter,
+				this.state.currentValue,
+			),
 		);
 	};
 
-	static generateQueryOptions(props, after) {
+	static generateQueryOptions(props, after, value = {}) {
 		const queryOptions = getQueryOptions(props);
+		const valueArray = Object.keys(value);
 		return props.showLoadMore
-			? getCompositeAggsQuery(queryOptions, props, after)
-			: getAggsQuery(queryOptions, props);
+			? getCompositeAggsQuery(valueArray, queryOptions, props, after)
+			: getAggsQuery(valueArray, queryOptions, props);
 	}
 
 	updateQueryOptions = (props, addAfterKey = false) => {
@@ -412,6 +415,7 @@ class MultiDropdownList extends Component {
 		const queryOptions = MultiDropdownList.generateQueryOptions(
 			props,
 			addAfterKey ? this.state.after : {},
+			this.state.currentValue,
 		);
 		if (props.defaultQuery) {
 			this.updateDefaultQuery(queryOptions);
