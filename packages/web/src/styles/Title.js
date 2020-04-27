@@ -1,4 +1,4 @@
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 
 const Title = styled('h2')`
 	margin: 0 0 8px;

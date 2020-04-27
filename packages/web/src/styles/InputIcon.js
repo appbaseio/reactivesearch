@@ -1,4 +1,5 @@
-import styled, { css } from 'react-emotion';
+import styled from '@emotion/styled';
+import { css } from '@emotion/core';
 
 const left = css`
 	padding-left: 12px;
