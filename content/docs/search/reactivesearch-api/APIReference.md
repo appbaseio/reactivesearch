@@ -144,7 +144,18 @@ Starting document offset. Defaults to `0`.
 
 | Type  | Applicable on query of type | Required |
 | ----- | --------------------------- | -------- |
-| `int` | `search`|`geo`|`range`      | false    |
+| `int` | `search`,`geo`,`range`      | false    |
+
+### pagination
+This property allows you to implement the `pagination` for `term` type of queries. If `pagination` is set to `true` then appbase will use the [composite aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html) of Elasticsearch instead of [terms aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html).
+
+| Type  | Applicable on query of type | Required |
+| ----- | --------------------------- | -------- |
+| `bool` | `term`                     | false    |
+
+> Note: 
+> 1. Sort by as `count` doesn't work with composite aggregations i.e when `pagination` is set to `true`.
+> 2. The [missingLabel](/docs/search/reactivesearch-api/APIReference#missinglabel) property also won't work when composite aggregations have been used.
 
 ### queryFormat
 
@@ -201,7 +212,7 @@ This property can be used to sort the results in a particular format. The valid 
 
 > Note:
 >
-> Please note that the `count` value is only applicable to the `term` type of queries.
+> Please note that the `count` value is only applicable to the `term` type of queries when [pagination](/docs/search/reactivesearch-api/APIReference#pagination) is set to `true` or [aggregationField](/docs/search/reactivesearch-api/APIReference#aggregationfield) is defined..
 
 ### react
 
@@ -269,6 +280,14 @@ Defaults to `false`. When set to `true` then it also retrieves the aggregations 
 | ------ | --------------------------- | -------- |
 | `bool` | `term`                      | false    |
 
+### missingLabel
+Defaults to `N/A`. It allows you to specify a custom label to show when [showMissing](/docs/search/reactivesearch-api/APIReference#showmissing) is set to `true`.
+
+| Type     | Applicable on query of type | Required |
+| -------- | --------------------------- | -------- |
+| `string` | `term`                      | false    |
+
+> Note: This property doesn't work when [pagination](/docs/search/reactivesearch-api/APIReference#pagination) is set to `true`.
 
 ### selectAllLabel
 This property allows you to add a new property in the list with a particular value in such a way that when selected i.e `value` is similar/contains to that label(`selectAllLabel`) then `term` query will make sure that the `field` exists in the `results`.
