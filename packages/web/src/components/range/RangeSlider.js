@@ -163,11 +163,9 @@ class RangeSlider extends Component {
 
 		if (query && props.nestedField) {
 			return {
-				query: {
-					nested: {
-						path: props.nestedField,
-						query,
-					},
+				nested: {
+					path: props.nestedField,
+					query,
 				},
 			};
 		}
@@ -206,15 +204,28 @@ class RangeSlider extends Component {
 		return props.interval;
 	};
 
-	histogramQuery = props => ({
-		[props.dataField]: {
-			histogram: {
-				field: props.dataField,
-				interval: this.getValidInterval(props),
-				offset: props.range.start,
+	histogramQuery = (props) => {
+		const query = {
+			[props.dataField]: {
+				histogram: {
+					field: props.dataField,
+					interval: this.getValidInterval(props),
+					offset: props.range.start,
+				},
 			},
-		},
-	});
+		};
+		if (props.nestedField) {
+			return {
+				inner: {
+					aggs: query,
+					nested: {
+						path: props.nestedField,
+					},
+				},
+			};
+		}
+		return query;
+	};
 
 	handleChange = (currentValue, props = this.props, hasMounted = true) => {
 		const performUpdate = () => {
@@ -459,15 +470,21 @@ RangeSlider.defaultProps = {
 	includeNullValues: false,
 };
 
-const mapStateToProps = (state, props) => ({
-	options: state.aggregations[props.componentId]
-		? state.aggregations[props.componentId][props.dataField]
-		  && state.aggregations[props.componentId][props.dataField].buckets // eslint-disable-line
-		: [],
-	selectedValue: state.selectedValues[props.componentId]
-		? state.selectedValues[props.componentId].value
-		: null,
-});
+const mapStateToProps = (state, props) => {
+	const aggregation
+		= props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].inner
+			: state.aggregations[props.componentId];
+
+	return {
+		options: aggregation
+			? aggregation[props.dataField] && aggregation[props.dataField].buckets
+			: [],
+		selectedValue: state.selectedValues[props.componentId]
+			? state.selectedValues[props.componentId].value
+			: null,
+	};
+};
 
 const mapDispatchtoProps = dispatch => ({
 	setComponentProps: (component, options, componentType) =>
