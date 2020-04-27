@@ -176,6 +176,19 @@ class ReactiveComponent extends Component {
 			);
 		}
 
+		checkPropChange(this.props.selectedValue, prevProps.selectedValue, () => {
+			/*
+				Reset query when SelectedFilters are clicked. Note: `selectedValue` becomes null.
+			*/
+
+			if (this.props.selectedValue === null) {
+				this.props.updateQuery({
+					componentId: this.props.componentId,
+					query: null,
+				});
+			}
+		});
+
 		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
 			this.defaultQuery = this.props.defaultQuery();
 			const { query, ...queryOptions } = this.defaultQuery || {};
