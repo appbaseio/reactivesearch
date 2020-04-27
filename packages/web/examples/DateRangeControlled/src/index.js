@@ -15,7 +15,7 @@ import './index.css';
 class Main extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = { date: { start: new Date(), end: new Date() } };
 	}
 
 	dateQuery(value) {
@@ -53,10 +53,11 @@ class Main extends Component {
 						<DateRange
 							value={this.state.date}
 							onChange={(value) => {
+								// setting end date equal to start date
 								this.setState({
 									date: {
 										start: value.start,
-										end: value.end,
+										end: value.start,
 									},
 								});
 							}}
