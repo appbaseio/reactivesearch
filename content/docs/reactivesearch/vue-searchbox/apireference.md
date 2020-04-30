@@ -84,7 +84,7 @@ Example uses of searchbox UI:
     URL for the Elasticsearch cluster. Defaults to `https://scalr.api.appbase.io`
 -   **enableAppbase** `boolean` [optional]
     enableAppbase is false by default. You can set this to true when you're using appbase.io alongside ElasticSearch. It enables the following features:
-    -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/vue/advanced/analytics/).
+    -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/vue/advanced/Analytics/).
     -   Query generation happens on server side - protecting against security concerns around query injection.
     -   Apply query rules and functions for search queries. [Read more](/docs/search/Rules/).
     -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/Role/).
