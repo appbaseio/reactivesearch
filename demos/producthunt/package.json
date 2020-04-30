@@ -16,7 +16,7 @@
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
         "emotion": "*",
-        "react-emotion": "*"
+        "react-emotion": "^9.2.12"
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",

@@ -14,7 +14,7 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 		<FlexChild margin="10px">
 			<MultiDropdownList
 				componentId="language"
-				dataField="language.raw"
+				dataField="language.keyword"
 				title="Language"
 				placeholder="Select languages"
 			/>
@@ -22,7 +22,7 @@ const SearchFilters = ({ currentTopics, setTopics, visible }) => (
 		<FlexChild margin="10px">
 			<MultiDropdownList
 				componentId="topics"
-				dataField="topics.raw"
+				dataField="topics.keyword"
 				title="Repo Topics"
 				placeholder="Select topics"
 				size={1000}
