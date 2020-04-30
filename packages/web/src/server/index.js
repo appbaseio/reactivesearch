@@ -53,7 +53,8 @@ function getQuery(component, value, componentType) {
 	// get custom or default query of sensor components
 	const currentValue = parseValue(value, component);
 	if (component.customQuery) {
-		return component.customQuery(currentValue, component);
+		const customQuery = component.customQuery(currentValue, component);
+		return customQuery && customQuery.query;
 	}
 	return component.source.defaultQuery
 		? component.source.defaultQuery(currentValue, component)
