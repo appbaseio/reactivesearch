@@ -15,7 +15,8 @@ import './styles/airbnb.css';
 const components = {
 	settings: {
 		app: 'airbeds-test-app',
-		credentials: 'X8RsOu0Lp:9b4fe1a4-58c6-4089-a042-505d86d9da30',
+		url: 'https://xe6N9nDRV:51ea7a8a-6354-4b5f-83e1-12dce3b7ec47@arc-cluster-appbase-demo-ps1pgt.searchbase.io',
+		enableAppbase: true,
 		type: 'listing',
 		theme: {
 			colors: {

@@ -1,16 +1,17 @@
 import React from 'react';
 import { ReactiveBase, DataSearch } from '@appbaseio/reactivesearch';
-import { GeoDistanceDropdown, ReactiveMap } from '@appbaseio/reactivemaps';
+import { GeoDistanceDropdown, ReactiveGoogleMap } from '@appbaseio/reactivemaps';
 
 import { header, filters, listContainer, mapContainer } from '../styles';
 
 export default () => (
 	<div>
 		<ReactiveBase
-			app="meetup_app"
-			credentials="lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181"
+			app="meetup_dataset"
+			url="https://xe6N9nDRV:51ea7a8a-6354-4b5f-83e1-12dce3b7ec47@arc-cluster-appbase-demo-ps1pgt.searchbase.io"
+			enableAppbase
 			type="meetupdata1"
-			mapKey="AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q"
+			mapKey="AIzaSyAKz3UhgSuP872fb-Aw27oPRI7M0eXkA9U"
 			theme={{
 				typography: {
 					fontFamily: 'Varela Round',
@@ -54,7 +55,7 @@ export default () => (
 				</div>
 			</div>
 
-			<ReactiveMap
+			<ReactiveGoogleMap
 				componentId="map"
 				dataField="location"
 				defaultZoom={13}
@@ -69,7 +70,7 @@ export default () => (
 					top: '168px',
 				}}
 				showMarkerClusters={false}
-				onAllData={(hits, streamHits, loadMore, renderMap, renderPagination) => (
+				renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination) => (
 					<div style={{ display: 'flex' }}>
 						<div id="list" className={listContainer}>
 							{hits.map(data => (
@@ -93,7 +94,7 @@ export default () => (
 						<div className={mapContainer}>{renderMap()}</div>
 					</div>
 				)}
-				onData={data => ({
+				renderData={data => ({
 					label: (
 						<span
 							style={{

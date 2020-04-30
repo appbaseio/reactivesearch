@@ -9,12 +9,14 @@ import ListItemView from '../components/ListItemView';
 
 const settings = {
 	app: 'meetup_app',
-	credentials: 'lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181',
+	url:
+		'https://xe6N9nDRV:51ea7a8a-6354-4b5f-83e1-12dce3b7ec47@arc-cluster-appbase-demo-ps1pgt.searchbase.io',
+	enableAppbase: true
 };
 
 const toggleButtonProps = {
 	componentId: 'CitySensor',
-	dataField: 'group.group_topics.topic_name_raw.raw',
+	dataField: 'group.group_topics.topic_name_raw.keyword',
 	data: [
 		{ label: 'Social', value: 'Social' },
 		{ label: 'Adventure', value: 'Adventure' },
@@ -25,7 +27,7 @@ const toggleButtonProps = {
 
 const resultListProps = {
 	componentId: 'SearchResult',
-	dataField: 'group.group_topics.topic_name_raw',
+	dataField: 'group.group_topics.topic_name_raw.keyword',
 	title: 'Results',
 	sortBy: 'asc',
 	className: 'result-list-container',

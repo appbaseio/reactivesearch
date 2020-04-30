@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ReactiveBase } from '@appbaseio/reactivesearch';
-import { ReactiveMap } from '@appbaseio/reactivemaps';
+import { ReactiveGoogleMap } from '@appbaseio/reactivemaps';
 
 import './index.css';
 
@@ -33,14 +33,15 @@ class Main extends React.Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="meetup_app"
-				credentials="lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181"
+				app="meetup_dataset"
+				url="https://xe6N9nDRV:51ea7a8a-6354-4b5f-83e1-12dce3b7ec47@arc-cluster-appbase-demo-ps1pgt.searchbase.io"
+				enableAppbase
 				type="meetupdata1"
-				mapKey="AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q"
+				mapKey="AIzaSyAKz3UhgSuP872fb-Aw27oPRI7M0eXkA9U"
 			>
 				<h2>Polylines on ReactiveMap</h2>
 				{this.renderInfo()}
-				<ReactiveMap
+				<ReactiveGoogleMap
 					componentId="map"
 					dataField="location"
 					title="Reactive Maps"
@@ -50,7 +51,7 @@ class Main extends React.Component {
 					size={50}
 					defaultZoom={3}
 					center={{ lat: 0, lng: -180 }}
-					onAllData={(hits, streamHits, loadMore, renderMap) => {
+					renderAllData={(hits, streamHits, loadMore, renderMap) => {
 						if (this.mapRef) {
 							const { map } = this.mapRef;
 							const flightPath = new window.google.maps.Polyline({

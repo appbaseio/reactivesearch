@@ -12,7 +12,11 @@ import {
 import './index.css';
 
 const Main = () => (
-	<ReactiveBase app="meetup_app" credentials="lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181">
+	<ReactiveBase
+		app="meetup_app"
+		url="https://xe6N9nDRV:51ea7a8a-6354-4b5f-83e1-12dce3b7ec47@arc-cluster-appbase-demo-ps1pgt.searchbase.io"
+		enableAppbase
+	>
 		<div className="row">
 			<div className="col">
 				<TagCloud
@@ -27,7 +31,7 @@ const Main = () => (
 				<SelectedFilters />
 				<ReactiveList
 					componentId="SearchResult"
-					dataField="group.group_topics.topic_name_raw"
+					dataField="group.group_topics.topic_name_raw.keyword"
 					title="Results"
 					sortBy="asc"
 					className="result-list-container"
