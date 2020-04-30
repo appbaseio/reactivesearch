@@ -198,9 +198,9 @@ Datasets can be configured using the following options.
 		-   **`rawData`**: `object`
 			An object of raw response as-is from elasticsearch query.
 		-   **`promotedData`**: `array`
-			An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
+			An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/)
         -   **`customData`**: `object`
-            An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/search/reactivesearch-api/Overview/).
+            An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/search/reactivesearch-api/).
 		-   **`resultStats`**: `object`
 			An object with the following properties which can be helpful to render custom stats:
 			-   **`numberOfResults`**: `number`

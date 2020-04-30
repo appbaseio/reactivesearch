@@ -21,4 +21,4 @@ Many users also reported security as a big concern for them when using ReactiveS
 To address these issues effectively, we have introduced a new declarative API - the `ReactiveSearch API`. ReactiveSearch API is 100% compatible with the declarative ReactiveSearch library. When using ReactiveSearch API, you:
 1. use the same declarative props that you're familiar with when using the ReactiveSearch library. This prevents query injections (as you can whitelist all your search queries to only be passed via the ReactiveSearch API)
 2. Encapsulate your search business logic away from your search UIs.
-3. Extend by setting [query rules](/docs/search/Rules) and [functions](/docs/search/Functions) that validate, enrich or modify the incoming search requests made via declarative APIs.
+3. Extend by setting [query rules](/docs/search/rules/) and [functions](/docs/search/functions/) that validate, enrich or modify the incoming search requests made via declarative APIs.

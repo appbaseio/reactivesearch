@@ -54,7 +54,7 @@ All the records are structured in the following format:
 
 To interact with our app instance, we'll make HTTP REST API requests. The semantics should remain the same for any 3rd party HTTP library as well.
 
-This is the common code which exists in all examples. Here, we simply create `url` based on [`app`](/concepts/datamodel.html#app-span-stylefont-weight-200aka-indexspan), [`type`](/concepts/datamodel.html#type), a `payload` containing request body and set headers with `credentials`.
+This is the common code which exists in all examples. Here, we simply create `url` based on [`app`](/docs/data/model/#app-span-stylefont-weight-200aka-indexspan), a `payload` containing request body and set headers with `credentials`.
 
 ```go
 

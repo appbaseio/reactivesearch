@@ -84,7 +84,7 @@ It also supports an `innerStyle` prop with the following keys
 -   `icon`
 -   `input`
 
-Read more about it [here](/docs/reactivesearch/native/advanced/Style#innerstyle)
+Read more about it [here](/docs/reactivesearch/native/advanced/Style/#innerstyle)
 
 ## Extending
 

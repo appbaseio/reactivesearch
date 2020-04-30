@@ -113,7 +113,7 @@ This is how the app should look after running the `yarn start` command.
 
 ### Step 3: Adding Filters and Map Components
 
-For this app, we will be using [SingleList](/docs/reactivesearch/v3/list/singlelist) component for filtering the dataset. And [ReactiveGoogleMap](/docs/reactivesearch/v3/map/reactivegooglemap/) component for showing the search results.
+For this app, we will be using [SingleList](/docs/reactivesearch/v3/list/singlelist/) component for filtering the dataset. And [ReactiveGoogleMap](/docs/reactivesearch/v3/map/reactivegooglemap/) component for showing the search results.
 Lets add them within the ReactiveBase component. But before we do that, we will look at the important props for each.
 
 ```jsx

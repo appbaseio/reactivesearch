@@ -232,7 +232,7 @@ Finally, you can now run the dev server and catch the SSR in action.
 
 You can also use ReactiveSearch with [react-dom/server](https://reactjs.org/docs/react-dom-server.html). Check out the [example app](https://github.com/appbaseio/reactivesearch/tree/dev/packages/web/examples/ssr-with-react-dom) for a detailed setup.
 
-The concept remains the same, after gettting a request, we'll use `initReactiveSearch` to compute the results and populate ReactiveSearch's redux store. We'll use [renderToString](https://reactjs.org/docs/react-dom-server.html#rendertostring) from `react-dom/server` and [renderStylesToString](https://emotion.sh/docs/ssr#renderstylestostring) from `emotion-server` to generate a html paint for our app. For example:
+The concept remains the same, after gettting a request, we'll use `initReactiveSearch` to compute the results and populate ReactiveSearch's redux store. We'll use [renderToString](https://reactjs.org/docs/react-dom-server.html#rendertostring) from `react-dom/server` and [renderStylesToString](https://emotion.sh/docs/ssr/#renderstylestostring) from `emotion-server` to generate a html paint for our app. For example:
 
 ```js
 const html = renderStylesToString(

@@ -13,9 +13,9 @@ nestedSidebar: 'vue-reactivesearch'
 
 Read more about `aggregationField` prop for different components:
 
--   [**DataSearch**](/docs/reactivesearch/vue/search/DataSearch#props)
--   [**ReactiveList**](/docs/reactivesearch/vue/result/ReactiveList#props)
--   [**ReactiveComponent**](/docs/reactivesearch/vue/advanced/ReactiveComponent#props)
+-   [**DataSearch**](/docs/reactivesearch/vue/search/DataSearch/#props)
+-   [**ReactiveList**](/docs/reactivesearch/vue/result/ReactiveList/#props)
+-   [**ReactiveComponent**](/docs/reactivesearch/vue/advanced/ReactiveComponent/#props)
 
 ## Why?
 

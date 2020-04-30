@@ -10,7 +10,7 @@ keywords:
 sidebar: 'api-reference'
 ---
 
-In the previous article [`Golang Quickstart`](/go/quickstart), we saw how to index new data and stream both individual data as well as query results. Now, we shall go ahead and explore some complex queries with `ElasticSearch` using our [`go-appbase` library](https://godoc.org/github.com/appbaseio/go-appbase/).
+In the previous article [`Golang Quickstart`](/api/go/quickstart/), we saw how to index new data and stream both individual data as well as query results. Now, we shall go ahead and explore some complex queries with `ElasticSearch` using our [`go-appbase` library](https://godoc.org/github.com/appbaseio/go-appbase/).
 
 For this tutorial, we will use an app called `gitxplore-live`. The credentials for this app are `2FPZ2UJQW:1c50c6df-4652-4d74-906b-7bc0a6a731b6`.
 

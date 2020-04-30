@@ -210,7 +210,7 @@ export default {
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
-        An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
+        An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/)
     -   **`resultStats`**: `object`
         An object with the following properties which can be helpful to render custom stats:
         -   **`numberOfResults`**: `number`

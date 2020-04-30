@@ -17,7 +17,7 @@ nestedSidebar: 'web-reactivesearch'
 
 > Note
 >
-> It is similar to a [SingleList](/docs/reactivesearch/v3/list/singlelist), except it is suited for numeric data.
+> It is similar to a [SingleList](/docs/reactivesearch/v3/list/singlelist/), except it is suited for numeric data.
 
 Example uses:
 
@@ -81,7 +81,7 @@ Example uses:
 -   **value** `String` [optional]
     controls the current value of the component. It selects the item from the data (on mount and on update). Use this prop in conjunction with `onChange` function.
 -   **onChange** `function` [optional]
-    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
 -   **showRadio** `Boolean` [optional]
     show radio button icon for each range item. Defaults to `true`.
 -   **showFilter** `Boolean` [optional]

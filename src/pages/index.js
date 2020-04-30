@@ -51,13 +51,13 @@ const HomePage = ({ data, location }) => {
 												title: 'Overview',
 												description:
 													'Overview and Quickstart with appbase.io',
-												link: '/docs/gettingstarted/QuickStart/',
+												link: '/docs/gettingstarted/quickstart/',
 												duration: 3,
 											},
 											{
 												title: 'Why Appbase.io',
 												description: 'Benefits of using appbase.io',
-												link: '/docs/gettingstarted/WhyAppbase/',
+												link: '/docs/gettingstarted/why/',
 												duration: 6,
 											},
 										],
@@ -77,21 +77,21 @@ const HomePage = ({ data, location }) => {
 												title: 'Data Model',
 												description:
 													'Take a look at the data model of Appbaseio',
-												link: '/docs/data/Model/',
+												link: '/docs/data/model/',
 												duration: 2,
 											},
 											{
 												title: 'Data Browser',
 												description:
 													'Data Browser is a WYSIWYG GUI for adding, modifying and viewing your appbase.io apps data.',
-												link: '/docs/data/Browser/',
+												link: '/docs/data/browser/',
 												duration: 4,
 											},
 											{
 												title: 'Importing Data',
 												description:
 													'Import through GUI and command line sources such as Dashboard, ABC CLI, Rest APIs, and Zapier.',
-												link: '/docs/data/Import/',
+												link: '/docs/data/import/',
 												duration: 9,
 											},
 											// {
@@ -114,18 +114,10 @@ const HomePage = ({ data, location }) => {
 										),
 										chapters: [
 											{
-												title: 'Mappings',
-												description:
-													'Mappings define how the JSON data indexed into appbase.io is stored as.',
-												link: '/docs/search/Mappings/',
+												title: 'Search Relevancy',
+												description: 'Controls for search relevancy.',
+												link: '/docs/search/relevancy/',
 												duration: 3,
-											},
-											{
-												title: 'Search Preview',
-												description:
-													'Search Preview offers a drag and drop interface for building and testing your search UX visually.',
-												link: '/docs/search/Preview/',
-												duration: 1,
 											},
 											{
 												title: 'ReactiveSearch API',
@@ -138,13 +130,14 @@ const HomePage = ({ data, location }) => {
 												title: 'Query Rules',
 												description:
 													'Data Browser is a WYSIWYG GUI for adding, modifying and viewing your appbase.io apps data.',
-												link: '/docs/search/Rules/',
+												link: '/docs/search/rules/',
 												duration: 5,
 											},
 											{
 												title: 'Functions',
-												description: 'Extend ElasticSearch with your own functions.',
-												link: '/docs/search/Functions/',
+												description:
+													'Extend ElasticSearch with your own functions.',
+												link: '/docs/search/functions/',
 												duration: 4,
 											},
 										],
@@ -198,12 +191,12 @@ const HomePage = ({ data, location }) => {
 										chapters: [
 											{
 												title: 'Analytics',
-												link: '/docs/analytics/Overview/',
+												link: '/docs/analytics/overview/',
 												duration: 1,
 											},
 											{
 												title: 'Implement Analytics',
-												link: '/docs/analytics/Implement/',
+												link: '/docs/analytics/implement/',
 												duration: 2,
 											},
 										],
@@ -221,22 +214,22 @@ const HomePage = ({ data, location }) => {
 										chapters: [
 											{
 												title: 'Credentials',
-												link: '/docs/security/Credentials/',
+												link: '/docs/security/credentials/',
 												duration: 5,
 											},
 											{
 												title: 'User Management',
-												link: '/docs/security/UserManagement/',
+												link: '/docs/security/user-management/',
 												duration: 1,
 											},
 											{
 												title: 'Search Template',
-												link: '/docs/security/Template/',
+												link: '/docs/security/template/',
 												duration: 1,
 											},
 											{
 												title: 'Role Based Access',
-												link: '/docs/security/Role/',
+												link: '/docs/security/role/',
 												duration: 4,
 											},
 										],
@@ -248,29 +241,29 @@ const HomePage = ({ data, location }) => {
 										),
 										chapters: [
 											{
-												title: 'Apps',
-												link: '/docs/hosting/Apps',
-												duration: 1,
-												description:
-													'Apps let you get the best of ElasticSearch without running a dedicated cluster.',
-											},
-											{
 												title: 'Clusters',
-												link: '/docs/hosting/Cluster/',
+												link: '/docs/hosting/clusters/',
 												duration: 5,
 												description:
 													'Fully managed ElasticSearch clusters available in over 16 global regions.',
 											},
 											{
+												title: 'Apps',
+												link: '/docs/hosting/apps',
+												duration: 1,
+												description:
+													'Apps let you get the best of ElasticSearch without running a dedicated cluster.',
+											},
+											{
 												title: 'Bring your own Cluster',
-												link: '/docs/hosting/BYOC/',
+												link: '/docs/hosting/byoc/',
 												duration: 10,
 												description:
 													'Run appbase.io with your own ElasticSearch cluster hosted anywhere.',
 											},
 											{
 												title: 'Open Distro for ElasticSearch',
-												link: '/docs/hosting/OpenDistro/',
+												link: '/docs/hosting/open-distro/',
 												duration: 2,
 												description:
 													'Run Open Distro for ElasticSearch with Appbase.io Clusters.',

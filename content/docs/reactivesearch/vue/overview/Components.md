@@ -91,4 +91,4 @@ Result components are used for displaying the results (aka hits).
 
 ### SelectedFilters
 
-**[SelectedFilters](/docs/reactivesearch/vue/base/SelectedFilters/)** is a selection component to render the selected values from other components with a "Clear All" option.
+**[SelectedFilters](/docs/reactivesearch/vue/advanced/SelectedFilters/)** is a selection component to render the selected values from other components with a "Clear All" option.

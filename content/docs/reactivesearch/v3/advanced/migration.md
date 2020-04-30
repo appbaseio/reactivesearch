@@ -319,7 +319,7 @@ customQuery = {() => {
 
 ### ReactiveMaps
 
-In **v3**, we have added support for [OpenStreetMaps](https://www.openstreetmap.org) along with [GoogleMaps](https://www.google.com/maps). To optimize the final build based on the map that you would like to integrate, we are now exporting [`ReactiveGoogleMap`](/docs/reactivesearch/v3/map/reactivegooglemap#props) and [`ReactiveOpenStreetMap`](/docs/reactivesearch/v3/map/reactiveopenstreetmap#props) instead of `ReactiveMap`. This helps with tree shaking, by removing unnecessary imports based on the map that you are using. Most of the props for `ReactiveGoogleMap` remains same as `ReactiveMap` from `v2`, there are few additional props introduced for `ReactiveOpenStreetMap` based on its library requirement, you can check [here](/docs/reactivesearch/v3/map/reactiveopenstreetmap#props).
+In **v3**, we have added support for [OpenStreetMaps](https://www.openstreetmap.org) along with [GoogleMaps](https://www.google.com/maps). To optimize the final build based on the map that you would like to integrate, we are now exporting [`ReactiveGoogleMap`](/docs/reactivesearch/v3/map/reactivegooglemap/#props) and [`ReactiveOpenStreetMap`](/docs/reactivesearch/v3/map/reactiveopenstreetmap/#props) instead of `ReactiveMap`. This helps with tree shaking, by removing unnecessary imports based on the map that you are using. Most of the props for `ReactiveGoogleMap` remains same as `ReactiveMap` from `v2`, there are few additional props introduced for `ReactiveOpenStreetMap` based on its library requirement, you can check [here](/docs/reactivesearch/v3/map/reactiveopenstreetmap/#props).
 
 **v2**:
 

@@ -14,7 +14,7 @@ With the release of version 3.x.x of reactivesearch, we have changed the way cer
 
 ## Controlled components
 
-[As reactjs docs put this brilliantly:](https://reactjs.org/docs/glossary.html#controlled-vs-uncontrolled-components)
+[As reactjs docs put this brilliantly:](https://reactjs.org/docs/glossary.html/#controlled-vs-uncontrolled-components)
 
 > An input form element whose value is controlled by React is called a controlled component. When a user enters data into a controlled component a change event handler is triggered and **your code** decides whether the input is valid (by re-rendering with the updated value). If you do not re-render then the form element will remain unchanged.
 
@@ -49,7 +49,7 @@ class App extends React.Component {
 
 ## Uncontrolled components
 
-We now support `defaultValue` prop to enable uncontrolled behavior on reactivesearch components. [React docs define uncontrolled components as:](https://reactjs.org/docs/glossary.html#controlled-vs-uncontrolled-components)
+We now support `defaultValue` prop to enable uncontrolled behavior on reactivesearch components. [React docs define uncontrolled components as:](https://reactjs.org/docs/glossary.html/#controlled-vs-uncontrolled-components)
 
 > An uncontrolled component works like form elements do outside of React. When a user inputs data into a form field (an input box, dropdown, etc) the updated information is reflected without React needing to do anything. However, this also means that you can’t force the field to have a certain value.
 

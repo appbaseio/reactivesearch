@@ -138,7 +138,7 @@ This is how the app should look after running the `yarn run serve` command.
 
 ### Step 4: Adding Filters and Result Components
 
-For this app, we will be using [multi-list](/docs/reactivesearch/vue/search/MultiList/) and [single-range](/docs/reactivesearch/vue/basic/SingleRange/) components for filtering the data-set. And [reactive-list](/docs/reactivesearch/vue/search/ReactiveList/) component for showing the search results.
+For this app, we will be using [multi-list](/docs/reactivesearch/vue/list/MultiList/) and [single-range](/docs/reactivesearch/vue/range/SingleRange/) components for filtering the data-set. And [reactive-list](/docs/reactivesearch/vue/result/ReactiveList/) component for showing the search results.
 
 Lets add them within the ReactiveBase component. But before we do that, we will look at the important props for each.
 
@@ -152,11 +152,11 @@ Lets add them within the ReactiveBase component. But before we do that, we will 
 />
 ```
 
-The [**multi-list**](/docs/reactivesearch/vue/search/MultiList/) creates a multiple selections based list UI component that is connected to a database field and shows items using the `author.keyword` field in the data-set. Here is how it will look visually.
+The [**multi-list**](/docs/reactivesearch/vue/list/MultiList/) creates a multiple selections based list UI component that is connected to a database field and shows items using the `author.keyword` field in the data-set. Here is how it will look visually.
 
 ![](https://i.imgur.com/WOvQKGj.png)
 
-Next, we will look at the [**single-range**](/basic-components/singlerange.html) component for creating a ratings based filter.
+Next, we will look at the [**single-range**](/docs/reactivesearch/vue/range/SingleRange/) component for creating a ratings based filter.
 
 ```html
 <single-range

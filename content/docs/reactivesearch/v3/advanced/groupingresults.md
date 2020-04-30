@@ -13,10 +13,10 @@ nestedSidebar: 'web-reactivesearch'
 
 Read more about `aggregationField` prop for different components:
 
--   [**DataSearch**](/docs/reactivesearch/v3/search/datasearch#props)
--   [**CategorySearch**](/docs/reactivesearch/v3/search/categorysearch#props)
--   [**ReactiveList**](/docs/reactivesearch/v3/result/reactivelist#props)
--   [**ReactiveComponent**](/docs/reactivesearch/v3/advanced/reactivecomponent#props)
+-   [**DataSearch**](/docs/reactivesearch/v3/search/datasearch/#props)
+-   [**CategorySearch**](/docs/reactivesearch/v3/search/categorysearch/#props)
+-   [**ReactiveList**](/docs/reactivesearch/v3/result/reactivelist/#props)
+-   [**ReactiveComponent**](/docs/reactivesearch/v3/advanced/reactivecomponent/#props)
 
 ## Why?
 

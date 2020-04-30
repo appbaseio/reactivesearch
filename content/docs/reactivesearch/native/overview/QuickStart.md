@@ -121,7 +121,7 @@ Lets add them within the ReactiveBase component. But before we do that, lets loo
 
 The [**DataSearch**](/docs/reactivesearch/native/components/DataSearch/) component we describe above creates a searchbox UI component that queries on the specifield `dataField`(s) in the dataset.
 
-Next, we need a component to show the matching results. [**ReactiveList**](/docs/reactivesearch/native/components/ReactiveList) does exactly this.
+Next, we need a component to show the matching results. [**ReactiveList**](/docs/reactivesearch/native/components/ReactiveList/) does exactly this.
 
 ```js
 <ReactiveList

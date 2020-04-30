@@ -77,7 +77,7 @@ While `DynamicRangeSlider` only requires the above props to be used, it comes wi
 -   **value** `Object` [optional]
     controls the current value of the component.It selects the item from the dynamic range (on mount and on update).Use this prop in conjunction with `onChange` function.
 -   **onChange** `function` [optional]
-    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
 -   **rangeLabels** `Function` [optional]
     a function that accepts `min` and `max` range values as parameters and returns an object representing labels with `start` and `end` keys.
 -   **showFilter** `Boolean` [optional]

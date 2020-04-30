@@ -196,7 +196,7 @@ You can use render as a slot as shown below:
 -   `label`
 -   `count`
 
-Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection).
+Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 ## Extending
 

@@ -108,7 +108,7 @@ Example uses:
 ```
 
 -   **onChange** `function` [optional]
-    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
     ```js
     <CategorySearch
     	value={this.state.value}
@@ -119,10 +119,10 @@ Example uses:
     ```
     > Note: If you're using the controlled behavior than it's your responsibility to call the `triggerQuery` method to update the query i.e execute the search query and update the query results in connected components by `react` prop. It is not mandatory to call the `triggerQuery` in `onChange` you can also call it in other input handlers like `onBlur` or `onKeyPress`.
 -   **enableSynonyms** `bool` [optional]
-    Defaults to `true`, can be used to `disable/enable` the synonyms behavior for the search query. Read more about it [here](/docs/search/reactivesearch-api/APIReference/#enablesynonyms)
+    Defaults to `true`, can be used to `disable/enable` the synonyms behavior for the search query. Read more about it [here](/docs/search/reactivesearch-api/reference/#enablesynonyms)
     > Note:
     >
-    > This property only works with [ReactiveSearch API](/docs/search/reactivesearch-api) i.e when `enableAppbase` is set to `true` in `ReactiveBase` component.
+    > This property only works with [ReactiveSearch API](/docs/search/reactivesearch-api/) i.e when `enableAppbase` is set to `true` in `ReactiveBase` component.
 -   **downShiftProps** `Object` [optional]
     allow passing props directly to the underlying `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
 -   **fieldWeights** `Array` [optional]
@@ -234,7 +234,7 @@ Example uses:
     -   **`aggregationData`**: `array`
         An array of composite aggregations (shaped in the form of hits) obtained from `composite aggs` query.
     -   **`promotedData`**: `array`
-        An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
+        An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/)
     -   **`resultStats`**: `object`
         An object with the following properties which can be helpful to render custom stats:
         -   **`numberOfResults`**: `number`

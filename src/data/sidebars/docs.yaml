@@ -3,84 +3,86 @@
       - group: "Getting Started"
         icon: gettingStarted
         items:
-            - link: /docs/gettingstarted/QuickStart/
+            - link: /docs/gettingstarted/quickstart/
               title: Overview
-            - link: /docs/gettingstarted/WhyAppbase/
+            - link: /docs/gettingstarted/why/
               title: "Why Appbase.io"
       - group: "Managing Data"
         icon: importData
         items:
-            - link: /docs/data/Model/
+            - link: /docs/data/model/
               title: "Data Model"
-            - link: /docs/data/Browser/
-              title: "Data Browser"
-            - link: /docs/data/Import/
+            - link: /docs/data/import/
               title: "Importing Data"
+            - link: /docs/data/browser/
+              title: "Data Browser"
+            - link: /docs/data/mappings/
+              title: "Mappings"
       - group: "Search Relevancy"
         icon: search
         items:
-            - link: /docs/search/Mappings/
-              title: Mappings
-            - link: /docs/search/Preview/
-              title: "Search Preview"
-            - link: /docs/search/reactivesearch-api
+            - link: /docs/search/relevancy/
+              title: "Search Relevancy"
+            - link: /docs/search/reactivesearch-api/
               title: "ReactiveSearch API"
               items:
-                  - link: /docs/search/reactivesearch-api/Implement
-                    title: "Implementation"
-                  - link: /docs/search/reactivesearch-api/APIReference
-                    title: "API Reference"
-            - link: /docs/search/Rules/
+                - link: /docs/search/reactivesearch-api/implement
+                  title: "Implementation"
+                - link: /docs/search/reactivesearch-api/reference
+                  title: "API Reference"
+            - link: /docs/search/rules/
               title: "Query Rules for Clusters"
-            - link: /docs/search/AppRules/
+            - link: /docs/search/apprules/
               title: "Query Rules for Apps"
-            - link: /docs/search/Functions
+            - link: /docs/search/functions/
               title: "Functions"
               items:
-                  - link: /docs/search/Functions/hosting
-                    title: "Hosting"
-                  - link: /docs/search/Functions/create
-                    title: "Create"
-                  - link: /docs/search/Functions/deploy
-                    title: "Deploy"
-                  - link: /docs/search/Functions/trigger
-                    title: "Set Trigger"
+                - link: /docs/search/functions/hosting
+                  title: "Hosting"
+                - link: /docs/search/functions/create
+                  title: "Create"
+                - link: /docs/search/functions/deploy
+                  title: "Deploy"
+                - link: /docs/search/functions/trigger
+                  title: "Set Trigger"
       - group: "Building Search UI"
       - group: "Actionable Analytics"
         icon: analytics
         items:
-            - link: /docs/analytics/Overview/
+            - link: /docs/analytics/overview/
               title: Overview
-            - link: /docs/analytics/Implement/
+            - link: /docs/analytics/implement/
               title: "Implement Analytics"
-            - link: /docs/analytics/QueryingAnalytics/
+            - link: /docs/analytics/querying-analytics/
               title: "Querying Analytics"
-            - link: /docs/analytics/GoogleAnalytics/
+            - link: /docs/analytics/google-analytics/
               title: "Integrate Google Analytics"
-            - link: /docs/analytics/QuerySuggestions/
+            - link: /docs/analytics/query-suggestions/
               title: "Query Suggestions"
+            - link: /docs/analytics/curated-insights/
+              title: "Curated Insights"
       - group: Security
         icon: security
         items:
-            - link: /docs/security/Credentials/
+            - link: /docs/security/credentials/
               title: "API Credentials"
-            - link: /docs/security/UserManagement/
+            - link: /docs/security/user-management/
               title: User Management
-            - link: /docs/security/Template/
+            - link: /docs/security/template/
               title: "Search Template"
-            - link: /docs/security/Role/
+            - link: /docs/security/role/
               title: "Role Based Access Control"
       - group: Hosting
         icon: rocket
         items:
-            - link: /docs/hosting/Apps/
-              title: Apps
-            - link: /docs/hosting/Cluster/
+            - link: /docs/hosting/clusters/
               title: Clusters
-            - items:
-                  - link: /docs/hosting/BYOC/ConnectToYourElasticSearch
-                    title: "Connect to Your ElasticSearch"
-              link: /docs/hosting/BYOC/
+            - link: /docs/hosting/apps/
+              title: Apps
+            - link: /docs/hosting/byoc/
               title: "Bring Your Own Cluster"
-            - link: /docs/hosting/OpenDistro/
+              items:
+              - link: /docs/hosting/byoc/connect-to-your-elasticsearch/
+                title: "Connect to Your ElasticSearch"
+            - link: /docs/hosting/open-distro/
               title: "Open Distro"

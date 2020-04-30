@@ -11,11 +11,11 @@ sidebar: 'docs'
 nestedSidebar: 'web-reactivesearch'
 ---
 
-ReactiveSearch components can also be styled using inline-styles. Each component supports a `style` prop which accepts an object. Find more info on the [react docs](https://reactjs.org/docs/dom-elements.html#style).
+ReactiveSearch components can also be styled using inline-styles. Each component supports a `style` prop which accepts an object. Find more info on the [react docs](https://reactjs.org/docs/dom-elements.html/#style).
 
 > Note
 >
-> Using the `style` attribute as the primary means of styling elements is generally [not recommended](https://reactjs.org/docs/dom-elements.html#style). ReactiveSearch components also support `className` prop allowing you to style them using CSS classes.
+> Using the `style` attribute as the primary means of styling elements is generally [not recommended](https://reactjs.org/docs/dom-elements.html/#style). ReactiveSearch components also support `className` prop allowing you to style them using CSS classes.
 
 ## Usage
 

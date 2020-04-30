@@ -54,7 +54,7 @@ All the records are structured in the following format:
 
 To interact with our app instance, we'll use <a href="http://php.net/curl" target="_blank">`cURL`</a> library from PHP to make HTTP REST API requests. The semantics should remain the same for any other HTTP library as well.
 
-This is the common code which exists in all examples. Here, we simply create a `$curl` object and set request options with `url`, `credentials`, [`app`](/concepts/datamodel.html#app-span-stylefont-weight-200aka-indexspan), [`type`](/concepts/datamodel.html#type) and the query request.
+This is the common code which exists in all examples. Here, we simply create a `$curl` object and set request options with `url`, `credentials`, [`app`](/docs/data/model/#app-span-stylefont-weight-200aka-indexspan) and the query request.
 
 ```php
 

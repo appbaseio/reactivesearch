@@ -67,7 +67,7 @@ Most ReactiveSearch filter components have a prop `showFilter` (defaults to `tru
 >
 > The `showFilter` and `filterLabel` prop updates are only reflected if the underlying query of the associated component has changed.
 
-As an example, check [MultiList usage](/docs/reactivesearch/v3/list/multilist#usage) to see how `showFilter` and `filterLabel` can be used.
+As an example, check [MultiList usage](/docs/reactivesearch/v3/list/multilist/#usage) to see how `showFilter` and `filterLabel` can be used.
 
 ### Demo
 

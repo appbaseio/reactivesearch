@@ -108,6 +108,13 @@ const plugins = [
 			color: `#3eb0ef`,
 		},
 	},
+
+	{
+		resolve: 'gatsby-transformer-remark',
+		options: {
+			plugins: ['gatsby-remark-autolink-headers', 'gatsby-remark-check-links'],
+		},
+	},
 ];
 
 module.exports = {

@@ -43,8 +43,8 @@ This is the first component you will need to add when using `ReactiveSearch`.
     Defaults to `false`. You can set this to `true` when you're using appbase.io alongside `ElasticSearch`. It enables the following features:
     -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/vue/advanced/analytics/).
     -   Query generation happens on server side - protecting against security concerns around query injection.
-    -   Apply query rules and functions for search queries. [Read more](/docs/search/Rules/).
-    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/Role/).
+    -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).
+    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/role/).
 -   **headers** `Object` [optional]
     set custom headers to be sent with each server request as key/value pairs. For example:
 

@@ -34,7 +34,7 @@ Themes can be used to change the default styles for all the ReactiveSearch compo
 };
 ```
 
-[ReactiveBase](/getting-started/reactivebase.html) also supports a `themePreset` prop which defaults to `light` with the above defaults. You may pass a `themePreset` of `dark` which applies the following defaults instead:
+[ReactiveBase](/docs/reactivesearch/v3/overview/reactivebase/) also supports a `themePreset` prop which defaults to `light` with the above defaults. You may pass a `themePreset` of `dark` which applies the following defaults instead:
 
 ```js
 {

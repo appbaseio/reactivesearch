@@ -113,8 +113,8 @@ Here is a list of all the valid keys:
 -   **error** returns the error
 -   **hits** An array of hits obtained from the applied query.
 -   **aggregations** An array of aggregations obtained from the applied query.
--   **promotedData** An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction).
--   **customData** Custom data set in the query rule when appbase.io is used as backend. [Read More](/docs/search/Rules/#custom-data)
+-   **promotedData** An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/).
+-   **customData** Custom data set in the query rule when appbase.io is used as backend. [Read More](/docs/search/rules/#custom-data)
 -   **resultStats**: `object`
     An object with the following properties which can be helpful to render custom stats:
 

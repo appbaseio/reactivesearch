@@ -30,6 +30,7 @@
 		"serve": "gatsby build && NODE_ENV=production gatsby serve",
 		"build": "gatsby build",
 		"start": "gatsby develop",
+		"prestart": "gatsby clean",
 		"lint": "eslint . --ext .js --cache"
 	},
 	"devDependencies": {
@@ -71,6 +72,7 @@
 		"gatsby-plugin-remove-serviceworker": "1.0.0",
 		"gatsby-plugin-sharp": "2.0.28",
 		"gatsby-remark-autolink-headers": "2.0.16",
+		"gatsby-remark-check-links": "^2.1.0",
 		"gatsby-remark-code-titles": "1.1.0-rc.0",
 		"gatsby-remark-embed-snippet": "3.2.4",
 		"gatsby-remark-external-links": "0.0.4",

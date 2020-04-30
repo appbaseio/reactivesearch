@@ -71,7 +71,7 @@ Example uses:
 -   **value** `Object` [optional]
     controls the current value of the component.It selects the range based on the data provided (on mount and on update).Use this prop in conjunction with `onChange` function.
 -   **onChange** `function` [optional]
-    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
 -   **focused** `Boolean` [optional]
     whether to display the calendar view on initial load. Defaults to `true`.
 -   **autoFocusEnd** `Boolean` [optional]

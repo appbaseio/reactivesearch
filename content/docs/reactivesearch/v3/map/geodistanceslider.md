@@ -85,7 +85,7 @@ Example uses:
 -   **value** `Object` [optional]
     controls the current value of the component. It sets the location & distance (on mount and on update). Use this prop in conjunction with `onChange` function.
 -   **onChange** `function` [optional]
-    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
 -   **showIcon** `Boolean` [optional]
     whether to display a search or custom icon in the input box. Defaults to `true`.
 -   **iconPosition** `String` [optional]
@@ -230,7 +230,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 -   **onQueryChange** `Function`
     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **react** `Object`
-    specify dependent components to reactively update **GeoDistanceSlider's** options. Read more about it [here](/docs/reactivesearch/v3/advanced/react/).
+    specify dependent components to reactively update **GeoDistanceSlider's** options. Read more about it [here](/docs/reactivesearch/v3/advanced/reactprop/).
     -   **key** `String`
         one of `and`, `or`, `not` defines the combining clause.
         -   **and** clause implies that the results will be filtered by matches from **all** of the associated component states.

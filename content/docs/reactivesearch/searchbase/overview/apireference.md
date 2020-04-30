@@ -49,8 +49,8 @@ const searchbase = new SearchBase(props);
     enableAppbase is false by default. You can set this to true when you're using appbase.io alongside ElasticSearch. It enables the following features:
     -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/).
     -   Query generation happens on server side - protecting against security concerns around query injection.
-    -   Apply query rules and functions for search queries. [Read more](/docs/search/Rules/).
-    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/Role/).
+    -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).
+    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/role/).
 -   **dataField** `string | Array<string | DataField>` [Required]
     index field(s) to be connected to the component’s UI view. DataSearch accepts an Array in addition to String, which is useful for searching across multiple fields with or without field weights.<br/>
     Field weights allow weighted search for the index fields. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.<br/>
@@ -84,7 +84,7 @@ const searchbase = new SearchBase(props);
     );
     ```
 
-    > See impact of aggregationField with these examples for [React](/docs/reactivesearch/v3/advanced/groupingresults#how) and [Vue](/docs/reactivesearch/vue/advanced/groupingresults#how).
+    > See impact of aggregationField with these examples for [React](/docs/reactivesearch/v3/advanced/groupingresults/#how) and [Vue](/docs/reactivesearch/vue/advanced/groupingresults/#how).
 
 -   **credentials** `string`
     Basic Auth credentials if required for authentication purposes. It should be a string of the format `username:password`. If you are using an appbase.io app, you will find credentials under your [API credentials page](https://dashboard.appbase.io/app?view=credentials). If you are not using an appbase.io app, credentials may not be necessary - although having an open access to your Elasticsearch cluster is not recommended.
@@ -436,7 +436,7 @@ These properties are automatically calculated or managed by the `Searchbase` cla
     -   **`hidden`**: `number` Total number of hidden results found
     -   **`promoted`**: `number` Total number of promoted results found
     -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
-    -   **`customData`**: `Object` An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/search/reactivesearch-api/Overview/).
+    -   **`customData`**: `Object` An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/search/reactivesearch-api/).
     -   **`rawData`**: `object`  An object of raw response as-is from elasticsearch query.
 -   **results** `Results`
     It is an object which contains the following details of `results` query response.
@@ -528,7 +528,7 @@ can be used to set the `value` property
 ##Callback of change events
 You can define the following events callback to listen for the search state changes. The callback function accepts the updated value as the first param and the previous value as the second param. These callback functions may be used in the following scenarios:
 1. Perform side-effects e.g. make a network request,
-2. Update the UI. However it is recommended to use the [`subscribeToStateChanges`](#subsrcibe-to-the-properties-changes) to update the UI which uses `Searchbase` properties.
+2. Update the UI. However it is recommended to use the `subscribeToStateChanges` to update the UI which uses `Searchbase` properties.
 
 
 - **onValueChange** `(next: string, prev: string) => void`

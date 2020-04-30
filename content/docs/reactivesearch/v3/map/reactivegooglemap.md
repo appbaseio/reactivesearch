@@ -101,7 +101,7 @@ Example uses:
 -   **stream** `Boolean` [optional]
     whether to stream new result (aka realtime view) updates in the UI. Defaults to `false`.
 -   **react** `Object`
-    specify dependent components to reactively update **GeoDistanceDropdown's** options. Read more about it [here](/advanced/react.html).
+    specify dependent components to reactively update **GeoDistanceDropdown's** options. Read more about it [here](/docs/reactivesearch/v3/advanced/reactprop/).
     -   **key** `String`
         one of `and`, `or`, `not` defines the combining clause.
         -   **and** clause implies that the results will be filtered by matches from **all** of the associated component states.
@@ -156,9 +156,9 @@ renderData={result => ({
         //  promotedData: Represents the promoted results,
         //  customData: Represents the customData,
         //  rawData: Raw response from Elasticsearch,
-        //  resultStats: An object with the following properties which can be helpful to render custom stats: 
-        //      numberOfResults: Total number of results found, 
-        //      numberOfPages: Total number of pages found based on current page size, 
+        //  resultStats: An object with the following properties which can be helpful to render custom stats:
+        //      numberOfResults: Total number of results found,
+        //      numberOfPages: Total number of pages found based on current page size,
         //      time: Time taken to find total results (in ms),
         //      displayedResults: Number of results displayed in current view,
         //      hidden: Total number of hidden results found,

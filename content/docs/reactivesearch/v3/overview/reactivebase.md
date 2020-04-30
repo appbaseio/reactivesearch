@@ -10,7 +10,7 @@ keywords:
 sidebar: 'docs'
 nestedSidebar: 'web-reactivesearch'
 ---
- 
+
 **ReactiveBase** is a container component that wraps all the `ReactiveSearch` components together. It binds the backend app (data source) with the UI view components (elements wrapped within ReactiveBase), allowing a UI component to be reactively updated every time there is a change in the data source or in other UI components.
 
 This is the first component you will need to add when using `ReactiveSearch`.
@@ -41,8 +41,8 @@ This is the first component you will need to add when using `ReactiveSearch`.
     Defaults to `false`. You can set this to `true` when you're using appbase.io alongside `ElasticSearch`. It enables the following features:
     -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/).
     -   Query generation happens on server side - protecting against security concerns around query injection.
-    -   Apply query rules and functions for search queries. [Read more](/docs/search/Rules/).
-    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/Role/).
+    -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).
+    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/role/).
 -   **headers** `Object` [optional]
     set custom headers to be sent with each server request as key/value pairs. For example:
 
@@ -80,9 +80,9 @@ This is the first component you will need to add when using `ReactiveSearch`.
 -   **as** `String` [optional]
     allows to use the custom html element tag, defaults to `div`.
 -   **theme** `Object` [optional]
-    allows over-writing of default styles by providing the respective key/values. You can read more about its usage [here](/theming/themes.html)
+    allows over-writing of default styles by providing the respective key/values. You can read more about its usage [here](/docs/reactivesearch/v3/theming/overview/)
 -   **themePreset** `String` [optional]
-    allows over-writing of default styles by providing a preset value. Supported values are `light` (default) and `dark`. You can read more about its usage [here](/theming/themes.html)
+    allows over-writing of default styles by providing a preset value. Supported values are `light` (default) and `dark`. You can read more about its usage [here](/docs/reactivesearch/v3/theming/overview/)
 -   **getSearchParams** `Function` [optional]
     Enables you to customize the evaluation of query-params-string from the url (or) any other source. If this function is not set, the library will use `window.location.search` as the search query-params-string for parsing selected-values. This can come handy if the URL is using hash values.
 -   **setSearchParams** `Function` [optional]

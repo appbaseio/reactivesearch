@@ -17,7 +17,7 @@ nestedSidebar: 'web-reactivesearch'
 
 > Note
 >
-> It is exactly like the [MultiRange](/docs/reactivesearch/v3/range/multirange) component but displayed in a dropdown, ideal for showing additional UI filters while conserving screen space
+> It is exactly like the [MultiRange](/docs/reactivesearch/v3/range/multirange/) component but displayed in a dropdown, ideal for showing additional UI filters while conserving screen space
 
 Example uses:
 
@@ -114,7 +114,7 @@ function Index(props) {
 -   **value** `Array` [optional]
     controls the current value of the component.It selects the item from the data (on mount and on update).Use this prop in conjunction with `onChange` function.
 -   **onChange** `function` [optional]
-    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
 -   **placeholder** `String` [optional]
     placeholder to be displayed in the select box. It'll be only applicable when no value is selected. Defaults to `Select a value`.
 -   **searchPlaceholder** `String` [optional]
@@ -152,7 +152,7 @@ function Index(props) {
 -   `list`
 -   `icon`
 
-Read more about it [here](/docs/reactivesearch/v3/theming/class).
+Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
 ## Extending
 

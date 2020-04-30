@@ -81,7 +81,7 @@ Example uses:
 -   **value** `String` [optional]
     controls the current value of the component. It selects the item from the data (on mount and on update). Use this prop in conjunction with `onChange` function.
 -   **onChange** `function` [optional]
-    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
 -   **placeholder** `String` [optional]
     placeholder to be displayed in the select box. It'll be only applicable when no value is selected. Defaults to `Select a value`.
 -   **searchPlaceholder** `String` [optional]

@@ -11,7 +11,7 @@ sidebar: 'docs'
 nestedSidebar: 'vue-searchbox-reactivesearch'
 ---
 
-[vue-searchbox](https://github.com/appbaseio/vue-searchbox) - It offers a lightweight (~22KB: Minified + Gzipped) and performance focused searchbox UI component to query and display results from your ElasticSearch app (aka index) using declarative props. It is an alternative to using the [DataSearch component](/docs/reactivesearch/vue/search/DataSearch) from Vue ReactiveSearch.
+[vue-searchbox](https://github.com/appbaseio/vue-searchbox) - It offers a lightweight (~22KB: Minified + Gzipped) and performance focused searchbox UI component to query and display results from your ElasticSearch app (aka index) using declarative props. It is an alternative to using the [DataSearch component](/docs/reactivesearch/vue/search/DataSearch/) from Vue ReactiveSearch.
 
 ##Installation
 

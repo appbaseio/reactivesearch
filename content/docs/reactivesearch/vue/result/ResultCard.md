@@ -10,7 +10,7 @@ keywords:
 sidebar: 'docs'
 nestedSidebar: 'vue-reactivesearch'
 ---
- 
+
 ![Imgur](https://i.imgur.com/mKcFEnV.png)
 
 `ResultCard` creates a card UI component for a particular result item, it can be used with `ReactiveList` to display results in a card layout, suited for data that have an associated image.
@@ -22,7 +22,7 @@ Example uses:
 
 > Note
 >
-> An alternative layout to ResultCard is a [**ResultList**](/docs/reactivesearch/vue/result/ResultList), which displays result data in a list format.
+> An alternative layout to ResultCard is a [**ResultList**](/docs/reactivesearch/vue/result/ResultList/), which displays result data in a list format.
 
 ## Usage
 

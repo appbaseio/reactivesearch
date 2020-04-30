@@ -243,10 +243,10 @@ Example uses:
 
 -   **ResultCardsWrapper**
     A wrapper component for `ResultCard` components to render a card based layout.
-    Read more about the usage [here](/docs/reactivesearch/v3/result/resultcard#usage).
+    Read more about the usage [here](/docs/reactivesearch/v3/result/resultcard/#usage).
 -   **ResultListWrapper**
     A wrapper component for `ResultList` components to render a list based layout.
-    Read more about the usage [here](/docs/reactivesearch/v3/result/resultlist#usage).
+    Read more about the usage [here](/docs/reactivesearch/v3/result/resultlist/#usage).
 
 ## Demo
 
@@ -322,12 +322,12 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
     -   **`streamData`**: `array`
         An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
     -   **`promotedData`**: `array`
-        An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
+        An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/)
         > Note:
         >
         > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerAnalytics to register the click analytics info.
     -   **`customData`** `object`
-        Custom data set in the query rule when appbase.io is used as backend. [Read More](/docs/search/Rules/#custom-data)
+        Custom data set in the query rule when appbase.io is used as backend. [Read More](/docs/search/rules/#custom-data)
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`resultStats`**: `object`
@@ -399,7 +399,7 @@ Or you can also use render function as children
 
 > Note
 >
-> The `streamResults` parameter will be `[]` unless `stream` prop is set to `true`. Check the [handling streaming](/docs/reactivesearch/v3/advanced/guides#handling-stream-updates) guide for more info.
+> The `streamResults` parameter will be `[]` unless `stream` prop is set to `true`. Check the [handling streaming](/docs/reactivesearch/v3/advanced/guides/#handling-stream-updates) guide for more info.
 
 -   **onQueryChange** `Function`
     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.

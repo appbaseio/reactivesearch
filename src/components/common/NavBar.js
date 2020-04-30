@@ -84,7 +84,7 @@ const NavBar = ({ theme }) => {
 														Clients
 													</h2> */}
 														<Link
-															to="/docs/gettingstarted/QuickStart/"
+															to="/docs/gettingstarted/quickstart/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
@@ -94,7 +94,7 @@ const NavBar = ({ theme }) => {
 															Getting Started
 														</Link>
 														<Link
-															to="/docs/data/Model/"
+															to="/docs/data/model/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
@@ -106,7 +106,7 @@ const NavBar = ({ theme }) => {
 													</div>
 													<div>
 														<Link
-															to="/docs/search/Preview/"
+															to="/docs/search/relevancy/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
@@ -126,7 +126,7 @@ const NavBar = ({ theme }) => {
 															Building Search UI
 														</Link>
 														<Link
-															to="/docs/hosting/Cluster/"
+															to="/docs/hosting/clusters/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
@@ -138,7 +138,7 @@ const NavBar = ({ theme }) => {
 													</div>
 													<div>
 														<Link
-															to="/docs/analytics/Overview"
+															to="/docs/analytics/overview"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
@@ -148,7 +148,7 @@ const NavBar = ({ theme }) => {
 															Actionable Analytics
 														</Link>
 														<Link
-															to="/docs/security/Credentials"
+															to="/docs/security/credentials"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon

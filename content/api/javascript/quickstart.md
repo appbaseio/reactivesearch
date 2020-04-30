@@ -231,8 +231,8 @@ appbaseRef.searchStream({
 }
 ```
 
-`Note:` Like `getStream()`, `searchStream()` subscribes to the new matches. For fetching existing search results, check out [`search()`](/javascript/api-reference.html#search).
+`Note:` Like `getStream()`, `searchStream()` subscribes to the new matches. For fetching existing search results, check out [`search()`](/api/javascript/apireference/#search).
 
-**v0.10.0** introduces a new method [`searchStreamToURL()`](/javascript/api-reference.html#searchstreamtourl) that streams results directly to a URL instead of streaming back.
+**v0.10.0** introduces a new method [`searchStreamToURL()`](/api/javascript/apireference/#searchstreamtourl) that streams results directly to a URL instead of streaming back.
 
 In this tutorial, we have learnt how to index new data and stream both individual data and results of an expressive query.

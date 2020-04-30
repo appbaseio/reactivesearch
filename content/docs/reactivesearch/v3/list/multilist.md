@@ -310,7 +310,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
     `Note:` When extending with customQuery, the `queryFormat` prop has no affect.
 -   **defaultQuery** `Function`
     takes **value** and **props** as parameters and **returns** the data query to be applied to the source component, as defined in Elasticsearch Query DSL, which doesn't get leaked to other components.
-    Read more about it [here](/advanced/customquery/#when-to-use-default-query).
+    Read more about it [here](/docs/reactivesearch/v3/advanced/customqueries/#when-to-use-default-query).
 -   **beforeValueChange** `Function`
     is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called every time before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 

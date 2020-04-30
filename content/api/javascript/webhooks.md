@@ -12,7 +12,7 @@ sidebar: 'api-reference'
 
 > Note <i class="fa fa-info-circle"></i>
 >
-> Introduced in [appbase-js](https://github.com/appbaseio/appbase-js) `v0.10.0`. Read the [getting started guide](/javascript/quickstart.html) for some familiarity with the JS lib.
+> Introduced in [appbase-js](https://github.com/appbaseio/appbase-js) `v0.10.0`. Read the [getting started guide](/api/javascript/quickstart/) for some familiarity with the JS lib.
 
 Webhooks (aka streaming to a URL) allows you to set up integrations which respond to events in appbase.io. Webhooks can be used to send transaction emails, post on a slack channel when a new user signs up, update the pricing plan when the data storage crosses a threshold.
 

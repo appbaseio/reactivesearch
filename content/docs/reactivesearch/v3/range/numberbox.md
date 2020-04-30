@@ -65,7 +65,7 @@ Example uses:
 -   **value** `Number` [optional]
     controls the current value of the component (on mount and on update).Use this prop in conjunction with `onChange` function.
 -   **onChange** `function` [optional]
-    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
 -   **labelPosition** `String` [optional]
     position where label is shown, one of "left", "top", "right", "bottom". Defaults to `left`.
 -   **queryFormat** `String` [optional]

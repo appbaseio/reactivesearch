@@ -86,7 +86,7 @@ Example uses:
 |   `header` |  [Header](http://docs.nativebase.io/Components.html#header-def-headref) component from **native-base**   |
 |    `title` |            [Title](http://docs.nativebase.io/Components.html) component from **native-base**             |
 |     `text` |      [Text](http://facebook.github.io/react-native/docs/text.html) component from **react-native**       |
-|    `modal` | [Modal](https://facebook.github.io/react-native/docs/modal.html#docsNav) component from **react-native** |
+|    `modal` | [Modal](https://facebook.github.io/react-native/docs/modal.html/#docsNav) component from **react-native** |
 | `listView` |  [ListView](https://facebook.github.io/react-native/docs/listview.html) component from **react-native**  |
 
 ## Demo
@@ -112,7 +112,7 @@ It also supports an `innerStyle` prop with the following keys:
 -   `title`
 -   `checkbox`
 
-Read more about it [here](/docs/reactivesearch/native/advanced/Style#innerstyle)
+Read more about it [here](/docs/reactivesearch/native/advanced/Style/#innerstyle)
 
 ## Extending
 

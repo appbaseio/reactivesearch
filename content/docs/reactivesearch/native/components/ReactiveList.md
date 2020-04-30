@@ -122,7 +122,7 @@ It also supports an `innerStyle` prop with the following keys:
 -   `button`
 -   `icon`
 
-Read more about it [here](/docs/reactivesearch/native/advanced/Style#innerstyle)
+Read more about it [here](/docs/reactivesearch/native/advanced/Style/#innerstyle)
 
 ## Extending
 

@@ -66,7 +66,7 @@ Here `TabComponent` is responsible to render the Tabs UI and handle the switchin
     `value` contains the current value of the component (which can be set via `setQuery()` function). This is used for URLParams and SelectedFilters.
 
 **SelectedFilters with ReactiveComponent**
-For showing selected filters we will use [`SelectedFilters`](/base-components/selectedfilters.html). When we use `ReactiveComponent` we will need to maintain `SelectedFilters` value manually. To clear the selected value of `ReactiveComponent` use `onClear` prop on `SelectedFilter` and pass `null` in `setQuery`.
+For showing selected filters we will use [`SelectedFilters`](/docs/reactivesearch/v3/advanced/selectedfilters/). When we use `ReactiveComponent` we will need to maintain `SelectedFilters` value manually. To clear the selected value of `ReactiveComponent` use `onClear` prop on `SelectedFilter` and pass `null` in `setQuery`.
 
 **ReactiveComponent and React context**
 If the CustomComponent contains multiple react components which need to access ElasticSearch data we can take use of react [`context`](https://reactjs.org/docs/context.html) in order to pass data through the component tree without having to pass props down manually at every level. We can refactor the above example to use multiple child components and pass the data using context. You can check the refactored app demo [here](https://codesandbox.io/s/o9popzr47y).
@@ -131,7 +131,7 @@ You can also take advantage of various ReactiveSearch components static method f
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **react** `Object`
-    `react` prop is available in components whose data view should reactively update when on or more dependent components change their states, e.g. [`ReactiveMap`](/map-components/reactivemap.html), [`ReactiveList`](/basic-components/reactivelist.html).
+    `react` prop is available in components whose data view should reactively update when on or more dependent components change their states, e.g. [`ReactiveMap`](/docs/reactivesearch/v3/map/reactivegooglemap/), [`ReactiveList`](/docs/reactivesearch/v3/result/reactivelist/).
 
     -   **key** `String`
         one of `and`, `or`, `not` defines the combining clause.

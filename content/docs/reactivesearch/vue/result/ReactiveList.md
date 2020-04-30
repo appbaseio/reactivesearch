@@ -187,10 +187,10 @@ Example uses:
 
 -   **ResultCardsWrapper**
     A wrapper component for `ResultCard` components to render a card based layout.
-    Read more about the usage [here](/docs/reactivesearch/vue/result/ResultCard#usage).
+    Read more about the usage [here](/docs/reactivesearch/vue/result/ResultCard/#usage).
 -   **ResultListWrapper**
     A wrapper component for `ResultList` components to render a list based layout.
-    Read more about the usage [here](/docs/reactivesearch/vue/result/ResultList#usage).
+    Read more about the usage [here](/docs/reactivesearch/vue/result/ResultList/#usage).
 
 ## Demo
 
@@ -261,12 +261,12 @@ export default {
     -   **`streamData`**: `array`
         An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
     -   **`promotedData`**: `array`
-        An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
+        An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/)
         > Note:
         >
         > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerAnalytics to register the click analytics info.
     -   **`customData`** `object`
-        Custom data set in the query rule when appbase.io is used as backend. [Read More](/docs/search/Rules/#custom-data)
+        Custom data set in the query rule when appbase.io is used as backend. [Read More](/docs/search/rules/#custom-data)
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`resultStats`**: `object`
@@ -310,7 +310,7 @@ export default {
 
 > Note
 >
-> The `streamResults` parameter will be `[]` unless `stream` prop is set to `true`. Check the [handling streaming](/docs/reactivesearch/vue/advanced/Guides#handling-stream-updates) guide for more info.
+> The `streamResults` parameter will be `[]` unless `stream` prop is set to `true`. Check the [handling streaming](/docs/reactivesearch/vue/advanced/Guides/#handling-stream-updates) guide for more info.
 
 ## Events
 

@@ -160,7 +160,7 @@ Check demo [here](https://codesandbox.io/s/3ylrrr0r5q).
 -   **rawData** `Object`
     An object of raw response as-is from elasticsearch query.
 -   **promotedData**: `array`
-    An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction).
+    An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/).
 -   **resultStats**: `object`
     An object with the following properties which can be helpful to render custom stats:
     -   **`numberOfResults`**: `number`
@@ -223,7 +223,7 @@ Check demo [here](https://codesandbox.io/s/3ylrrr0r5q).
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **react** `Object`
-    `react` prop is available in components whose data view should reactively update when on or more dependent components change their states, e.g. [`ReactiveMap`](/docs/reactivesearch/v3/map/reactivemap/), [`ReactiveList`](/docs/reactivesearch/v3/result/reactivelist/).
+    `react` prop is available in components whose data view should reactively update when on or more dependent components change their states, e.g. [`ReactiveMap`](/docs/reactivesearch/v3/map/reactivegooglemap/), [`ReactiveList`](/docs/reactivesearch/v3/result/reactivelist/).
 
     -   **key** `String`
         one of `and`, `or`, `not` defines the combining clause.

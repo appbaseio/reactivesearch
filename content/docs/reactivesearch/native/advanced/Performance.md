@@ -35,7 +35,7 @@ For everything to work smoothly, you need to make sure that your application dis
 
 ### 2. Profile everything
 
-You can use the built-in profiler to get detailed information about work done in the JavaScript thread and main thread side-by-side. Read more about it [here](https://facebook.github.io/react-native/docs/performance.html#profiling).
+You can use the built-in profiler to get detailed information about work done in the JavaScript thread and main thread side-by-side. Read more about it [here](https://facebook.github.io/react-native/docs/performance.html/#profiling).
 
 ### 3. Spy MessageQueue
 

@@ -13,7 +13,7 @@ nestedSidebar: 'vue-searchbox-reactivesearch'
 
 ![Image to be displayed](https://i.imgur.com/I6hHgoP.png)
 
-`Vue SearchBox` offers a lightweight (~22KB: Minified + Gzipped) and performance focused searchbox UI component to query and display results from your ElasticSearch app (aka index) using declarative props. It is an alternative to using the [DataSearch component](/docs/reactivesearch/vue/search/DataSearch) from Vue ReactiveSearch.
+`Vue SearchBox` offers a lightweight (~22KB: Minified + Gzipped) and performance focused searchbox UI component to query and display results from your ElasticSearch app (aka index) using declarative props. It is an alternative to using the [DataSearch component](/docs/reactivesearch/vue/search/DataSearch/) from Vue ReactiveSearch.
 
 ### When to Use Vue SearchBox
 
@@ -84,10 +84,10 @@ Example uses of searchbox UI:
     URL for the Elasticsearch cluster. Defaults to `https://scalr.api.appbase.io`
 -   **enableAppbase** `boolean` [optional]
     enableAppbase is false by default. You can set this to true when you're using appbase.io alongside ElasticSearch. It enables the following features:
-    -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/vue/advanced/Analytics/).
+    -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/vue/advanced/analytics/).
     -   Query generation happens on server side - protecting against security concerns around query injection.
-    -   Apply query rules and functions for search queries. [Read more](/docs/search/Rules/).
-    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/Role/).
+    -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).
+    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/role/).
 -   **credentials** `string` [optional]
     Basic auth credentials for authentication purposes. It should be a string of the format `username:password`.
     If you are using an appbase.io app, you will find credentials under your [API credentials page](https://dashboard.appbase.io/app?view=credentials). If you are not using an appbase.io app, credentials may not be necessary - although having an open access to your Elasticsearch cluster is not recommended.
@@ -144,7 +144,7 @@ Example uses of searchbox UI:
 
     <!-- TODO: merge aggs branch of react and vue before merging this -->
 
-    > See impact of aggregationField with these example for [Vue](/docs/reactivesearch/vue/advanced/groupingresults#how).
+    > See impact of aggregationField with these example for [Vue](/docs/reactivesearch/vue/advanced/groupingresults/#how).
 
 -   **appbaseConfig** `Object` [optional]
     allows you to customize the analytics experience when appbase.io is used as a backend. It accepts an object which has the following properties:

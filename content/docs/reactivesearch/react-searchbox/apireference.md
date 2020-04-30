@@ -13,7 +13,7 @@ nestedSidebar: 'react-searchbox-reactivesearch'
 
 ![Image to be displayed](https://i.imgur.com/toQyZW6.png)
 
-`React SearchBox` offers a lightweight (~30KB: Minified + Gzipped) and performance focused searchbox UI component to query and display results from your ElasticSearch app (aka index) using declarative props. It is an alternative to using the [DataSearch component](/docs/reactivesearch/v3/search/datasearch) from ReactiveSearch.
+`React SearchBox` offers a lightweight (~30KB: Minified + Gzipped) and performance focused searchbox UI component to query and display results from your ElasticSearch app (aka index) using declarative props. It is an alternative to using the [DataSearch component](/docs/reactivesearch/v3/search/datasearch/) from ReactiveSearch.
 
 ### When to Use React SearchBox
 
@@ -89,8 +89,8 @@ Example uses of searchbox UI:
     enableAppbase is false by default. You can set this to true when you're using appbase.io alongside ElasticSearch. It enables the following features:
     -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/).
     -   Query generation happens on server side - protecting against security concerns around query injection.
-    -   Apply query rules and functions for search queries. [Read more](/docs/search/Rules/).
-    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/Role/).
+    -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).
+    -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/role/).
 -   **dataField** `string | Array<string | DataField>` [required]
     database field(s) to be queried against. Accepts a String or an Array of either String or `DataField` type. The latter is useful for searching across multiple fields with field weights.<br/>
     Think of field weights as a way to apply weighted search. To use field weights, you can define the `dataField` prop as an array of objects of `DataField` type.<br/>
@@ -142,7 +142,7 @@ Example uses of searchbox UI:
     />
     ```
 
-    > See impact of aggregationField with these example for [React](/docs/reactivesearch/v3/advanced/groupingresults#how).
+    > See impact of aggregationField with these example for [React](/docs/reactivesearch/v3/advanced/groupingresults/#how).
 
 -   **appbaseConfig** `Object` [optional]
     allows you to customize the analytics experience when appbase.io is used as a backend. It accepts an object which has the following properties:
@@ -214,9 +214,9 @@ Example uses of searchbox UI:
     -   **`rawData`**: `object`
         An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
-        An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules#part-1-introduction)
+        An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/)
     -   **`customData`**: `Object`
-        An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/search/reactivesearch-api/Overview/).
+        An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/search/reactivesearch-api/).
     -   **`resultStats`**: `object`
         An object with the following properties which can be helpful to render custom stats:
         -   **`numberOfResults`**: `number`
@@ -329,7 +329,7 @@ Or you can also use render function as children
     ```
 
 -   **onChange** `function` [optional]
-    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html#controlled-components) behavior.
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
 
     ```js
     <SearchBox

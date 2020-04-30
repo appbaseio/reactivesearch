@@ -114,7 +114,7 @@ Example uses:
 -   `title`
 -   `button`
 
-Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection).
+Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 ## Extending
 

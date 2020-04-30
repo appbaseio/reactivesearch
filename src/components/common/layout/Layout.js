@@ -13,7 +13,7 @@ const DefaultLayout = ({ children, bodyClass, mainClass, header, headerDividerSt
 	<>
 		<Helmet>
 			<html lang="en" className="fs-base" />
-			<title>Appbase Documentation</title>
+			<title>Appbase.io Docs - Search stack for ElasticSearch</title>
 			<body className={`${bodyClass} flex flex-column whitney f7 fw4 darkgrey readability`} />
 		</Helmet>
 

@@ -238,7 +238,7 @@ We can then use the given ReactiveComponent to be watched by all the filters (vi
 -   **rawData** `object`
     An object of raw response as-is from elasticsearch query.
 -   **promotedData**: `array`
-    An array of promoted results obtained from the applied query. [Read More](/docs/search/Rules/#part-1-introduction)
+    An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/)
 -   **resultStats**: `object`
     An object with the following properties which can be helpful to render custom stats:
     -   **`numberOfResults`**: `number`
@@ -300,7 +300,7 @@ We can then use the given ReactiveComponent to be watched by all the filters (vi
 -   **defaultQuery** `Function`
     **returns** the default query to be applied to the component, as defined in Elasticsearch Query DSL.
 -   **react** `Object`
-    `react` prop is available in components whose data view should reactively update when on or more dependent components change their states, e.g. [`ReactiveList`](/docs/reactivesearch/vue/result/ReactiveList).
+    `react` prop is available in components whose data view should reactively update when on or more dependent components change their states, e.g. [`ReactiveList`](/docs/reactivesearch/vue/result/ReactiveList/).
 
     -   **key** `String`
         one of `and`, `or`, `not` defines the combining clause.
