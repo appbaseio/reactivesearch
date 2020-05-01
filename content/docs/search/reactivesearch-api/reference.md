@@ -239,11 +239,11 @@ This property can be used to sort the results in a particular format. The valid 
 
 | Type     | Applicable on query of type | Required |
 | -------- | --------------------------- | -------- |
-| `string` | `all`                       | false    |
+| `string` | `all`*                      | false    |
 
 > Note:
 >
-> Please note that the `count` value is only applicable to the `term` type of queries when [pagination](/docs/search/reactivesearch-api/reference/#pagination) is set to `true` or [aggregationField](/docs/search/reactivesearch-api/reference/#aggregationfield) is defined..
+> Please note that the `count` value can only be applied when the query type is of `term`. In addition, the [pagination](/docs/search/reactivesearch-api/reference/#pagination) property for the query needs to be set to `false` (default behavior). When pagination is `true`, a composite aggregation is used under the hood, which doesn't support ordering by count.
 
 ### react
 
