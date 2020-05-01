@@ -1228,8 +1228,8 @@ const mapDispatchtoProps = dispatch => ({
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
 	setComponentProps: (component, options, componentType) =>
 		dispatch(setComponentProps(component, options, componentType)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props, execute) =>

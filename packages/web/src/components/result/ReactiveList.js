@@ -937,8 +937,8 @@ const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	setComponentProps: (component, options, componentType) =>
 		dispatch(setComponentProps(component, options, componentType)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 	loadMore: (component, options, append, appendAggs) =>
 		dispatch(loadMore(component, options, append, appendAggs)),
 	removeComponent: component => dispatch(removeComponent(component)),
