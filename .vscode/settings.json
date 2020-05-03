@@ -5,6 +5,7 @@
 	"files.exclude": {
 		"node_modules": true
 	},
+	"files.eol": "\n",
 	// to resolve flow issues - Refer: https://github.com/flowtype/flow-for-vscode#setup
 	"javascript.validate.enable": false,
 	"editor.codeActionsOnSave": {
