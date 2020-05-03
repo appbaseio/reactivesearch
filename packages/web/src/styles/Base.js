@@ -20,5 +20,4 @@ const Base = styled(({ as: T = 'div', ...props }) => <T {...props} />)`
 		box-sizing: border-box;
 	}
 `;
-
 export default Base;
