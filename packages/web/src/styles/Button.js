@@ -1,4 +1,5 @@
-import { css } from '@emotion/core';
+import { css } from 'emotion';
+import { css as cssCore } from '@emotion/core';
 import styled from '@emotion/styled';
 import { darken, lighten, rgba } from 'polished';
 
@@ -71,13 +72,13 @@ const numberBoxContainer = css`
 	}
 `;
 
-const loadMoreContainer = css({
+const loadMoreContainer = cssCore({
 	margin: '5px 0',
 	display: 'flex',
 	justifyContent: 'center',
 });
 
-const primary = ({ theme }) => css`
+const primary = ({ theme }) => cssCore`
 	background-color: ${theme.colors.primaryColor};
 	color: ${theme.colors.primaryTextColor};
 
@@ -87,12 +88,12 @@ const primary = ({ theme }) => css`
 	}
 `;
 
-const large = () => css`
+const large = () => cssCore`
 	min-height: 40px;
 	padding: 10px 20px;
 `;
 
-const disabled = ({ theme }) => css`
+const disabled = ({ theme }) => cssCore`
 	background-color: ${theme.colors.backgroundColor
 		? lighten(0.1, theme.colors.backgroundColor)
 		: '#fafafa'};
@@ -137,7 +138,7 @@ const Button = styled('a')`
 
 	${props => (props.primary ? primary : null)};
 	${props => (props.disabled ? disabled : null)};
-	${props => props.large && large};
+	${props => props.large && large()};
 `;
 
 export { pagination, filters, toggleButtons, numberBoxContainer, loadMoreContainer };
