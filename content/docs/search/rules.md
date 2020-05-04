@@ -53,6 +53,40 @@ You can also configure rules for specific `indexes` in your ElasticSearch cluste
 
 ![configure if condition](https://www.dropbox.com/s/3zdnfuzm9bnqln3/Screenshot%202020-02-20%2010.20.25.png?raw=1)
 
+### Advanced Editor
+
+Query Rules also comes with an advanced editor that allows writing truly expressive trigger conditions. A condition is of the form "`$field` `$operator` `$value`". It also allows combining conditions with AND/OR and ( ... ) clauses.
+
+![](http://recordit.co/yuOlGhAZQj.gif)
+
+A condition can be expressed using one of the following operators. Each operator operates on the `$field` and `$value`.
+
+| Operator Name | Description                       |
+|---------------|-----------------------------------|
+| `exactlyMatches` | The field's value set by the search query should exactly match the provided value. |
+| `doesNotMatch` | The field's value set by the search query should not match the provided value. |
+| `contains` | The provided value is contained within the field's value set by the search query. |
+| `doesNotContain` | The provided value is not contained within the field's value set by the search query. |
+| `startsWith` | The field's value as set by the search query starts with the provided value. |
+| `doesNotStartWith` | The field's value as set by the search query does not start with the provided value. |
+| `endsWith` | The field's value as set by the search query ends with the provided value. |
+| `doesNotEndWith` | The field's value as set by the search query does not end with the provided value. |
+| `regularExpressionMatch` | Provide a regular expression to match the field's value as set by the search query with the provided value. |
+
+Here are some example conditions:
+
+1. `$query exactlyMatches "iphone x"`
+
+2. `$query contains "iphone x" AND $query doesNotContain "iphone 8"`
+
+3. `$query contains "smart phone" AND brand exactlyMatches "apple"`
+
+4. `$query contains "smart phone" AND (brand exactlyMatches "apple" OR brand exactlyMatches "samsung")`
+
+
+> Note:
+> [regexone](https://regexone.com/) is a great place to learn about regular expressions. [regexr](https://regexr.com) is a great online util to test your regular expressions.
+
 ## Configure **Then** Actions
 
 **Then** actions help you configure the actions that you want to invoke when triggering conditions are matched. Following are the actions that you can invoke
