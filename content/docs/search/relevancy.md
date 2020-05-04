@@ -14,6 +14,9 @@ A relevant search meets an end user's expectations every single time. However, b
 
 Appbase.io now offers **Search Relevancy** - a control plane containing a suite of GUIs that enable user to improve their search relevancy settings without requiring any guesswork. Combined with Actionable Analytics, Search Relevancy enables you to optimize your search's relevance in a data-driven manner.
 
+[![](https://i.imgur.com/1uywifE.jpg)](https://youtu.be/pES6u-GG3hc)
+👆Watch this 4-mins video to see it in action
+
 > **Note:** Search Relevancy control plane and APIs are available for all Production and Enterprise plan users.
 
 ## Language Settings
