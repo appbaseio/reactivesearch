@@ -123,7 +123,7 @@ const HomePage = ({ data, location }) => {
 												title: 'ReactiveSearch API',
 												description:
 													'A declarative API based on ReactiveSearch library to query Elasticsearch securely by protecting against security concerns around query injection.',
-												link: '/docs/search/reactivesearch-api',
+												link: '/docs/search/reactivesearch-api/',
 												duration: 1,
 											},
 											{
