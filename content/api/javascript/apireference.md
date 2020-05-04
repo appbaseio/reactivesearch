@@ -353,8 +353,8 @@ appbaseRef
 `appbaseRef.reactiveSearchv3(params)`
 
 -   **params** It accepts two params:
-    - `query`, an array of objects where each object represents a ReactiveSearch query. Read more at [here](/docs/search/reactivesearch-api/reference#query-properties)
-	- `settings`, an object consisting of the properties to control your search experience. Read more at [here](/docs/search/reactivesearch-api/reference#settings-properties)
+    - `query`, an array of objects where each object represents a ReactiveSearch query. Read more at [here](/docs/search/reactivesearch-api/reference/#query-properties)
+	- `settings`, an object consisting of the properties to control your search experience. Read more at [here](/docs/search/reactivesearch-api/reference/#settings-properties)
 
 **Returns**
 Promise.
