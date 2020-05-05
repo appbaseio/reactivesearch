@@ -14,11 +14,9 @@ const STATUS = {
 };
 
 class Mic extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			status: STATUS.inactive,
-		};
+	constructor(props) {
+		super(props);
+		let status = STATUS.inactive;
 		this.results = [];
 
 		if (typeof window !== 'undefined') {
@@ -26,11 +24,15 @@ class Mic extends React.Component {
 				= window.webkitSpeechRecognition || window.SpeechRecognition || null;
 
 			if (!window.SpeechRecognition) {
+				status = STATUS.denied;
 				console.error(
 					'SpeechRecognition is not supported in this browser. Please check the browser compatibility at https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition#Browser_compatibility.',
 				);
 			}
 		}
+		this.state = {
+			status,
+		};
 	}
 
 	stopMic = () => {
