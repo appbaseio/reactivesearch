@@ -755,7 +755,7 @@ class CategorySearch extends Component {
 						{this.renderCancelIcon()}
 					</InputIcon>
 				)}
-				{showVoiceSearch && (
+				{this.shouldMicRender(showVoiceSearch) && (
 					<Mic
 						getInstance={getMicInstance}
 						render={renderMic}
@@ -776,6 +776,12 @@ class CategorySearch extends Component {
 			</div>
 		);
 	};
+
+	shouldMicRender(showVoiceSearch) {
+		// checks for SSR
+		if (typeof window === 'undefined') return false;
+		return showVoiceSearch && (window.webkitSpeechRecognition || window.SpeechRecognition);
+	}
 
 	renderNoSuggestion = (finalSuggestionsList = []) => {
 		const {
@@ -854,7 +860,12 @@ class CategorySearch extends Component {
 
 	getComponent = (downshiftProps = {}) => {
 		const {
-			error, isLoading, aggregationData, promotedResults, customData, rawData,
+			error,
+			isLoading,
+			aggregationData,
+			promotedResults,
+			customData,
+			rawData,
 		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
