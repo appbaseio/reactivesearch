@@ -425,7 +425,7 @@ RangeSlider.propTypes = {
 	className: types.string,
 	componentId: types.stringRequired,
 	customQuery: types.func,
-	dataField: types.stringRequired,
+	dataField: types.dataFieldValidator,
 	defaultValue: types.range,
 	value: types.range,
 	filterLabel: types.string,

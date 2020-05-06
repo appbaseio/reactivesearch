@@ -688,7 +688,7 @@ MultiList.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	defaultQuery: types.func,
-	dataField: types.stringRequired,
+	dataField: types.dataFieldValidator,
 	nestedField: types.string,
 	defaultValue: types.stringArray,
 	value: types.stringArray,

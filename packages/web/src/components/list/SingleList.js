@@ -561,7 +561,7 @@ SingleList.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	defaultQuery: types.func,
-	dataField: types.stringRequired,
+	dataField: types.dataFieldValidator,
 	defaultValue: types.string,
 	value: types.string,
 	filterLabel: types.string,

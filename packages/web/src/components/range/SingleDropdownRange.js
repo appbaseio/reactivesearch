@@ -225,7 +225,7 @@ SingleDropdownRange.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	data: types.data,
-	dataField: types.stringRequired,
+	dataField: types.dataFieldValidator,
 	defaultValue: types.string,
 	value: types.string,
 	filterLabel: types.string,

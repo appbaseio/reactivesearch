@@ -261,7 +261,7 @@ RatingsFilter.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	data: types.data,
-	dataField: types.stringRequired,
+	dataField: types.dataFieldValidator,
 	defaultValue: types.range,
 	dimmedIcon: element,
 	value: types.range,

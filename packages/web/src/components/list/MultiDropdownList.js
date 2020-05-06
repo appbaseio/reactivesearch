@@ -547,7 +547,7 @@ MultiDropdownList.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	defaultQuery: types.func,
-	dataField: types.stringRequired,
+	dataField: types.dataFieldValidator,
 	defaultValue: types.stringArray,
 	value: types.stringArray,
 	filterLabel: types.string,

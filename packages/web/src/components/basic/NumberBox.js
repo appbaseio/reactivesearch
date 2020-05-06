@@ -251,7 +251,7 @@ NumberBox.propTypes = {
 	className: types.string,
 	componentId: types.stringRequired,
 	data: types.dataNumberBox,
-	dataField: types.stringRequired,
+	dataField: types.dataFieldValidator,
 	defaultValue: types.number,
 	value: types.number,
 	innerClass: types.style,

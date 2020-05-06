@@ -848,7 +848,7 @@ ReactiveList.propTypes = {
 	className: types.string,
 	componentId: types.stringRequired,
 	children: types.func,
-	dataField: types.stringRequired,
+	dataField: types.dataFieldValidator,
 	aggregationField: types.string,
 	aggregationData: types.aggregationData,
 	defaultPage: types.number,

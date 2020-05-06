@@ -536,7 +536,7 @@ DynamicRangeSlider.propTypes = {
 	className: types.string,
 	componentId: types.stringRequired,
 	customQuery: types.func,
-	dataField: types.stringRequired,
+	dataField: types.dataFieldValidator,
 	defaultValue: types.func,
 	value: types.func,
 	filterLabel: types.string,

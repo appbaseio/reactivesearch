@@ -567,7 +567,7 @@ MultiDataList.propTypes = {
 	customQuery: types.func,
 	defaultQuery: types.func,
 	data: types.data,
-	dataField: types.stringRequired,
+	dataField: types.dataFieldValidator,
 	defaultValue: types.stringArray,
 	value: types.stringArray,
 	filterLabel: types.string,

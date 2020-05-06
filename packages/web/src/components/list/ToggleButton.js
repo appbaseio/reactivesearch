@@ -298,7 +298,7 @@ ToggleButton.propTypes = {
 	className: types.string,
 	componentId: types.stringRequired,
 	data: types.data,
-	dataField: types.stringRequired,
+	dataField: types.dataFieldValidator,
 	defaultValue: types.stringOrArray,
 	value: types.stringOrArray,
 	filterLabel: types.string,

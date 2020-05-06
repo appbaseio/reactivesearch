@@ -311,7 +311,7 @@ MultiRange.propTypes = {
 	componentId: types.stringRequired,
 	customQuery: types.func,
 	data: types.data,
-	dataField: types.stringRequired,
+	dataField: types.dataFieldValidator,
 	defaultValue: types.stringArray,
 	value: types.stringArray,
 	filterLabel: types.filterLabel,
