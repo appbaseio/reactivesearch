@@ -1,0 +1,52 @@
+---
+title: 'Analytics Insights'
+meta_title: 'Appbase.io analytics insights'
+meta_description: 'Appbase.io insights is a monthly insights report into improving your search performance compiled by our team of search experts.'
+keywords:
+    - concepts
+    - appbase
+    - analytics
+    - implement
+    - insights
+    - business
+sidebar: 'docs'
+---
+
+### Analytics Insights
+Analytics Insights provides tips and tricks for your business based on the recent activities of your business. Apbbase.io tracks the search activity of your users and discovers the important changes in your analytics data and from that, we prepare a list of insights with the recommendations so you can take meaningful action to improve your search experience.
+
+Analytics Insights helps you to quickly assess that <b>what is going correct and what went wrong</b>. If something is not going well for your business and there is room to improve then we provide a set of recommendations for that particular insight so you can take the next steps.
+
+### Each Insight Explained
+Let us explain the most important insights and their purposes.
+
+#### No Results Searches
+This insight helps you to find how many searches have been performed by users for which you have no results. A higher value for no result searches is not a good sign for business because you may lose customers traction.
+
+#### Low Clicks
+Low clicks mean that people are not finding the exact thing for which they're searching.
+
+#### Higher Click Position
+If the click position is higher than it means that your users are having difficulty finding the desired results at the top.
+
+#### Popular Searches
+This insight helps you to find the total number of popular searches made by users. A higher value indicates that your business is doing really well.
+
+#### Long Tail Searches
+Long-tail searches insight represents that users have to type more to search the results i.e the suggestions which you're showing in search are not much useful.
+
+#### Higher Bounce Rate
+The bounce rate represents how many users are visiting your search page and leaving it without interacting with the search. Higher bounce insight is reported when the bounce rate becomes more than 50%. 
+
+#### High Response Time
+If you see that insight then it means that you're search is slow and required some additional infrastructure.
+
+### Insights via API
+
+You can also get insights by using API.
+
+Check the API reference over [here](https://arc-api.appbase.io/?version=latest#4bb9a282-586d-4e1b-aa46-79359665769c).
+
+```bash
+curl --location --request GET 'http://{{user}}:{{password}}@{{host}}/_analytics/insights'
+```

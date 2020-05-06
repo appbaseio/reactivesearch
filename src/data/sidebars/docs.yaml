@@ -51,6 +51,8 @@
         items:
             - link: /docs/analytics/overview/
               title: Overview
+            - link: /docs/analytics/insights/
+              title: "Analytics Insights"
             - link: /docs/analytics/implement/
               title: "Implement Analytics"
             - link: /docs/analytics/querying-analytics/
