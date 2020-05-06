@@ -1,5 +1,4 @@
-import { css } from 'emotion';
-import { css as cssCore } from '@emotion/core';
+import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { darken, lighten, rgba } from 'polished';
 
@@ -72,13 +71,13 @@ const numberBoxContainer = css`
 	}
 `;
 
-const loadMoreContainer = cssCore({
+const loadMoreContainer = css({
 	margin: '5px 0',
 	display: 'flex',
 	justifyContent: 'center',
 });
 
-const primary = ({ theme }) => cssCore`
+const primary = ({ theme }) => css`
 	background-color: ${theme.colors.primaryColor};
 	color: ${theme.colors.primaryTextColor};
 
@@ -88,12 +87,12 @@ const primary = ({ theme }) => cssCore`
 	}
 `;
 
-const large = () => cssCore`
+const large = () => css`
 	min-height: 40px;
 	padding: 10px 20px;
 `;
 
-const disabled = ({ theme }) => cssCore`
+const disabled = ({ theme }) => css`
 	background-color: ${theme.colors.backgroundColor
 		? lighten(0.1, theme.colors.backgroundColor)
 		: '#fafafa'};
