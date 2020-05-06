@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import React, { Component } from 'react';
 
 import {
@@ -24,7 +25,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-
+import { jsx } from '@emotion/core';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { toggleButtons } from '../../styles/Button';
@@ -253,10 +254,10 @@ class ToggleButton extends Component {
 		return (
 			<Container
 				style={this.props.style}
-				className={`${toggleButtons} ${this.props.className || ''}`}
+				css={[toggleButtons, this.props.className || '']}
 			>
 				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, 'title') || null}>
+					<Title css={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
 					</Title>
 				)}
@@ -266,7 +267,7 @@ class ToggleButton extends Component {
 					);
 					return (
 						<Button
-							className={`${getClassName(this.props.innerClass, 'button')} ${
+							css={`${getClassName(this.props.innerClass, 'button')} ${
 								isSelected ? 'active' : ''
 							}`}
 							onClick={e => this.handleClick(item, e)}
