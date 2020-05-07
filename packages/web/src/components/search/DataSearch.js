@@ -499,7 +499,11 @@ class DataSearch extends Component {
 
 	clearValue = () => {
 		this.isPending = false;
+		const { onChange } = this.props;
 		this.setValue('', true);
+		if (onChange) {
+			onChange('', this.triggerQuery);
+		}
 		this.onValueSelected(null, causes.CLEAR_VALUE);
 	};
 
