@@ -266,7 +266,7 @@ class TagCloud extends Component {
 	static generateQueryOptions(props) {
 		const queryOptions = getQueryOptions(props);
 		queryOptions.size = 0;
-		return getAggsQuery(queryOptions, props);
+		return getAggsQuery('', queryOptions, props);
 	}
 
 	updateQueryOptions = (props) => {
