@@ -180,6 +180,27 @@
     react-leaflet "^2.1.3"
     rheostat "^2.1.1"
 
+"@appbaseio/reactivesearch@3.8.0":
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.8.0.tgz#cc454e63d828c394b591976649da708eb47d1259"
+  integrity sha512-VyFnbYtooXCEbZzgl+GS+NHoBB7cUZ6HUSHjpD6D2xZXQ9A3uKsFLuFpLMFsRkDGkW/BI129rxNyVgpR5TRQGw==
+  dependencies:
+    "@appbaseio/reactivecore" "9.5.7"
+    appbase-js "^4.0.4"
+    cross-env "^5.2.0"
+    downshift "^1.31.2"
+    emotion "^9.0.0"
+    emotion-theming "^9.0.0"
+    hoist-non-react-statics "^3.2.1"
+    polished "^1.9.3"
+    prop-types "^15.6.0"
+    react-day-picker "^7.0.5"
+    react-emotion "^9.0.0"
+    react-redux "^6.0.1"
+    rheostat "^2.1.1"
+    url-search-params-polyfill "^7.0.0"
+    xdate "^0.8.2"
+
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"
@@ -5472,6 +5493,18 @@ appbase-js@^4.0.2-beta.11, appbase-js@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.4.tgz#ffd8e3afe563cd5f30601efcc32d54e18c6e7828"
   integrity sha512-h4KScox8gwVbpOA1YA9pbjDsZ9qtx8D7YuRcV5VeoVa9oTOMetPGIbzvaUHuDKFuYDuLvQpFrX7FIBtVK+JObQ==
+  dependencies:
+    cross-fetch "^2.2.2"
+    json-stable-stringify "^1.0.1"
+    querystring "^0.2.0"
+    stream "^0.0.2"
+    url-parser-lite "^0.1.0"
+    ws "^6.1.2"
+
+appbase-js@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.6.tgz#3adec9d14ca63d3e06c921e18376d9e885d0697b"
+  integrity sha512-QVi+jB157ZF6GOElbpVQRLefD6bXc6YqOfFRCtW0eIIXwyEXtGIZbOkaBiXKl6jzM+vJ6Q4pbR8/cCForSw0TQ==
   dependencies:
     cross-fetch "^2.2.2"
     json-stable-stringify "^1.0.1"

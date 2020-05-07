@@ -968,7 +968,7 @@ DataSearch.propTypes = {
 	customHighlight: types.func,
 	customQuery: types.func,
 	defaultQuery: types.func,
-	dataField: types.dataFieldArray,
+	dataField: types.dataFieldValidator,
 	aggregationField: types.string,
 	size: types.number,
 	debounce: types.number,
