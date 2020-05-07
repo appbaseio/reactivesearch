@@ -89,7 +89,7 @@ class DateRange extends Component {
 			this.handleDateChange(this.props.value, false, this.props);
 		} else {
 			const { currentDate } = this.state;
-			const { selectedValue } = this.props;
+			const { selectedValue, value, onChange } = this.props;
 			// comparing array format of selectedValue with object form of the state if not null
 			if (
 				!isEqual(
@@ -103,16 +103,20 @@ class DateRange extends Component {
 				)
 				&& !isEqual(prevProps.selectedValue, selectedValue)
 			) {
-				this.handleDateChange(
-					selectedValue
-						? {
-							start: this.props.selectedValue[0] || '',
-							end: this.props.selectedValue[1] || '',
-						} // prettier-ignore
-						: null,
-					true,
-					this.props,
-				);
+				const modDate = selectedValue
+					? {
+						start: this.props.selectedValue[0] || '',
+						end: this.props.selectedValue[1] || '',
+					} // prettier-ignore
+					: { start: '', end: '' };
+				if (
+					(value === undefined || (value && value.start === '' && value.end === ''))
+					&& !onChange
+				) {
+					this.handleDateChange(modDate, true, this.props);
+				} else if (onChange) {
+					onChange(modDate);
+				}
 			}
 		}
 
@@ -214,7 +218,7 @@ class DateRange extends Component {
 		if (this.state.currentDate && this.state.currentDate.start !== '') {
 			const { value, onChange } = this.props;
 
-			if (value === undefined) {
+			if (value === undefined && !onChange) {
 				this.handleStartDate('', false); // resets the day picker component
 			} else if (onChange) {
 				onChange({ start: '', end: this.state.currentDate.end });
@@ -233,7 +237,7 @@ class DateRange extends Component {
 			this.handleEndDate(''); // resets the day picker component
 			const { value, onChange } = this.props;
 
-			if (value === undefined) {
+			if (value === undefined && !onChange) {
 				this.handleEndDate('', false); // resets the day picker component
 			} else if (onChange) {
 				onChange({ start: this.state.currentDate.start, end: '' });
@@ -251,7 +255,7 @@ class DateRange extends Component {
 		const { currentDate } = this.state;
 		const end = currentDate ? currentDate.end : '';
 		const { value, onChange } = this.props;
-		if (value === undefined) {
+		if ((value === undefined || (value && value.start === '')) && !onChange) {
 			if (this.startDateRef.getInput().value.length === 10) {
 				this.handleDateChange({
 					start: date,
@@ -275,6 +279,11 @@ class DateRange extends Component {
 				if (this.props.autoFocusEnd && autoFocus) {
 					this.endDateRef.getInput().focus();
 				}
+				// this will trigger a remount on the date component
+				// since DayPickerInput doesn't respect the controlled behavior setting on its own
+				this.setState(state => ({
+					startKey: state.startKey === 'on-start' ? 'off-start' : 'on-start',
+				}));
 			}
 		} else {
 			// this will trigger a remount on the date component
@@ -290,7 +299,7 @@ class DateRange extends Component {
 		const { value, onChange } = this.props;
 		const start = currentDate ? currentDate.start : '';
 
-		if (value === undefined) {
+		if ((value === undefined || (value && value.end === '')) && !onChange) {
 			if (this.endDateRef.getInput().value.length === 10) {
 				this.handleDayMouseEnter(selectedDay);
 				this.handleDateChange({
@@ -308,6 +317,11 @@ class DateRange extends Component {
 					end: selectedDay,
 				});
 			}
+			// this will trigger a remount on the date component
+			// since DayPickerInput doesn't respect the controlled behavior setting on its own
+			this.setState(state => ({
+				endKey: state.endKey === 'on-end' ? 'off-end' : 'on-end',
+			}));
 		} else {
 			// this will trigger a remount on the date component
 			// since DayPickerInput doesn't respect the controlled behavior setting on its own

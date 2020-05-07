@@ -499,7 +499,11 @@ class DataSearch extends Component {
 
 	clearValue = () => {
 		this.isPending = false;
+		const { onChange } = this.props;
 		this.setValue('', true);
+		if (onChange) {
+			onChange('', this.triggerQuery);
+		}
 		this.onValueSelected(null, causes.CLEAR_VALUE);
 	};
 
@@ -596,6 +600,7 @@ class DataSearch extends Component {
 	};
 
 	handleVoiceResults = ({ results }) => {
+		const { autosuggest } = this.props;
 		if (
 			results
 			&& results[0]
@@ -605,8 +610,8 @@ class DataSearch extends Component {
 			&& results[0][0].transcript.trim()
 		) {
 			this.isPending = false;
-			this.setValue(results[0][0].transcript.trim(), true);
-			if (this.props.autosuggest) {
+			this.setValue(results[0][0].transcript.trim(), !autosuggest);
+			if (autosuggest) {
 				this._inputRef.focus();
 				this.setState({
 					isOpen: true,
