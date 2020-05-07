@@ -32,7 +32,7 @@ const Main = () => (
 			<div className="col" style={{ backgroundColor: '#fafafa' }}>
 				<ReactiveList
 					componentId="SearchResult"
-					dataField="original_title.raw"
+					dataField="original_title"
 					size={10}
 					pagination
 					URLParams

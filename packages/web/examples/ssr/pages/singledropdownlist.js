@@ -20,14 +20,14 @@ const settings = {
 
 const singleDropdownListProps = {
 	componentId: 'BookSensor',
-	dataField: 'original_series.raw',
+	dataField: 'original_series.keyword',
 	defaultValue: 'In Death',
 	size: 100,
 };
 
 const reactiveListProps = {
 	componentId: 'SearchResult',
-	dataField: 'original_title.raw',
+	dataField: 'original_title',
 	className: 'result-list-container',
 	from: 0,
 	size: 5,

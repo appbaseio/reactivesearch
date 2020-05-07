@@ -22,7 +22,7 @@ const Main = () => (
 				<TagCloud
 					title="TagCloud"
 					componentId="CitySensor"
-					dataField="group.group_city.raw"
+					dataField="group.group_city.keyword"
 					multiSelect
 					size={50}
 				/>

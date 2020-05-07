@@ -18,7 +18,7 @@ class Main extends Component {
 						<MultiDropdownList
 							title="MultiDropdownList"
 							componentId="BookSensor"
-							dataField="original_series.raw"
+							dataField="original_series.keyword"
 							size={100}
 						/>
 					</div>
@@ -26,7 +26,7 @@ class Main extends Component {
 					<div className="col">
 						<ReactiveList
 							componentId="SearchResult"
-							dataField="original_title.raw"
+							dataField="original_title"
 							className="result-list-container"
 							size={5}
 							renderItem={this.booksReactiveList}

@@ -34,7 +34,7 @@ const ratingsFilterProps = {
 
 const reactiveListProps = {
 	componentId: 'SearchResult',
-	dataField: 'original_title.raw',
+	dataField: 'original_title',
 	from: 0,
 	size: 10,
 	renderItem: data => <BookCard key={data._id} data={data} />,

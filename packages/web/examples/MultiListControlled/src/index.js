@@ -48,7 +48,7 @@ function Main() {
 				<div className="col">
 					<MultiList
 						componentId="BookSensor"
-						dataField="original_series.raw"
+						dataField="original_series.keyword"
 						size={100}
 						value={values}
 						onChange={setValues}
@@ -59,7 +59,7 @@ function Main() {
 					<SelectedFilters />
 					<ReactiveList
 						componentId="SearchResult"
-						dataField="original_title.raw"
+						dataField="original_title"
 						className="result-list-container"
 						from={0}
 						size={5}

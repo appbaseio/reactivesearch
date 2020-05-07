@@ -18,7 +18,7 @@ export default () => (
 		<div className="row">
 			<div className="col">
 				<DataSearch
-					dataField="original_title.raw"
+					dataField="original_title"
 					componentId="BookSensor"
 					defaultValue="Artemis Fowl"
 				/>

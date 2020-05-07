@@ -22,7 +22,6 @@ const Main = () => (
 				<DataSearch
 					title="DataSearch"
 					dataField={['original_title', 'original_title.search']}
-					categoryField="authors.raw"
 					componentId="BookSensor"
 					URLParams
 				/>

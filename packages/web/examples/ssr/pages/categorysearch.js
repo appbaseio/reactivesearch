@@ -20,14 +20,14 @@ const settings = {
 
 const categorySearchProps = {
 	dataField: ['original_title', 'original_title.search'],
-	categoryField: 'authors.raw',
+	categoryField: 'authors.keyword',
 	componentId: 'BookSensor',
 	defaultValue: 'Harry',
 };
 
 const reactiveListProps = {
 	componentId: 'SearchResult',
-	dataField: 'original_title.raw',
+	dataField: 'original_title',
 	className: 'result-list-container',
 	from: 0,
 	size: 5,

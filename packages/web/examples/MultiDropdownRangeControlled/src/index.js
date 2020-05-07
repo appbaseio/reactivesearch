@@ -50,7 +50,7 @@ const Main = () => {
 					<SelectedFilters />
 					<ReactiveList
 						componentId="SearchResult"
-						dataField="original_title.raw"
+						dataField="original_title"
 						from={0}
 						size={10}
 						react={{

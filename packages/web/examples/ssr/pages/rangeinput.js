@@ -32,7 +32,7 @@ const rangeInputProps = {
 
 const reactiveListProps = {
 	componentId: 'SearchResult',
-	dataField: 'original_title.raw',
+	dataField: 'original_title.keyword',
 	from: 0,
 	size: 10,
 	renderItem: data => <BookCard key={data._id} data={data} />,
