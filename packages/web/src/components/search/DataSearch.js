@@ -48,9 +48,9 @@ import {
 	isFunction,
 	getComponent,
 	hasCustomRenderer,
-	isIdentical,
 	getValidPropsKeys,
 	handleCaretPosition,
+	isQueryIdentical,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -139,12 +139,12 @@ class DataSearch extends Component {
 		);
 
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery(this.state.currentValue, this.props);
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 
-		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'customQuery')) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 

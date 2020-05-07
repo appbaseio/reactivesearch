@@ -42,9 +42,9 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isEvent,
-	isIdentical,
 	getValidPropsKeys,
 	parseValueArray,
+	isQueryIdentical,
 } from '../../utils';
 
 class MultiDropdownList extends Component {
@@ -137,9 +137,10 @@ class MultiDropdownList extends Component {
 			} else {
 				this.setState(
 					{
-						options: this.props.options && this.props.options[dataField]
-							? this.props.options[dataField].buckets
-							: [],
+						options:
+							this.props.options && this.props.options[dataField]
+								? this.props.options[dataField].buckets
+								: [],
 					},
 					() => {
 						// this will ensure that the Select-All (or any)
@@ -152,14 +153,16 @@ class MultiDropdownList extends Component {
 				);
 			}
 		});
+		const valueArray
+			= typeof this.state.currentValue === 'object' ? Object.keys(this.state.currentValue) : [];
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+		if (!isQueryIdentical(valueArray, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			this.updateQuery([], this.props);
 		}
 
-		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
-			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+		if (!isQueryIdentical(valueArray, this.props, prevProps, 'customQuery')) {
+			this.updateQuery(valueArray, this.props);
 		}
 
 		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
@@ -168,10 +171,10 @@ class MultiDropdownList extends Component {
 
 		checkPropChange(this.props.dataField, prevProps.dataField, () => {
 			this.updateQueryOptions(this.props);
-			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+			this.updateQuery(valueArray, this.props);
 		});
 
-		let selectedValue = Object.keys(this.state.currentValue);
+		let selectedValue = valueArray;
 		const { selectAllLabel } = this.props;
 
 		if (selectAllLabel) {
@@ -193,7 +196,7 @@ class MultiDropdownList extends Component {
 			} else if (onChange) {
 				onChange(this.props.selectedValue || null);
 			} else {
-				const selectedListItems = Object.keys(this.state.currentValue);
+				const selectedListItems = valueArray;
 				this.setValue(selectedListItems, true);
 			}
 		}
@@ -383,15 +386,20 @@ class MultiDropdownList extends Component {
 			queryOptions,
 			Object.keys(this.state.currentValue),
 			this.props,
-			MultiDropdownList.generateQueryOptions(this.props, this.state.prevAfter),
+			MultiDropdownList.generateQueryOptions(
+				this.props,
+				this.state.prevAfter,
+				this.state.currentValue,
+			),
 		);
 	};
 
-	static generateQueryOptions(props, after) {
+	static generateQueryOptions(props, after, value = {}) {
 		const queryOptions = getQueryOptions(props);
+		const valueArray = Object.keys(value);
 		return props.showLoadMore
-			? getCompositeAggsQuery(queryOptions, props, after)
-			: getAggsQuery(queryOptions, props);
+			? getCompositeAggsQuery(valueArray, queryOptions, props, after)
+			: getAggsQuery(valueArray, queryOptions, props);
 	}
 
 	updateQueryOptions = (props, addAfterKey = false) => {
@@ -405,6 +413,7 @@ class MultiDropdownList extends Component {
 		const queryOptions = MultiDropdownList.generateQueryOptions(
 			props,
 			addAfterKey ? this.state.after : {},
+			this.state.currentValue,
 		);
 		if (props.defaultQuery) {
 			this.updateDefaultQuery(queryOptions);

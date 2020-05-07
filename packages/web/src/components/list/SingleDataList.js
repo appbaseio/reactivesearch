@@ -24,6 +24,7 @@ import {
 	getAggsQuery,
 	updateCustomQuery,
 	updateDefaultQuery,
+	updateInternalQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -32,7 +33,14 @@ import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import { connect, getComponent, hasCustomRenderer, isEvent, getValidPropsKeys } from '../../utils';
+import {
+	connect,
+	getComponent,
+	hasCustomRenderer,
+	isEvent,
+	getValidPropsKeys,
+	isQueryIdentical,
+} from '../../utils';
 
 class SingleDataList extends Component {
 	constructor(props) {
@@ -105,6 +113,16 @@ class SingleDataList extends Component {
 				this.updateStateOptions(this.props.options[this.props.dataField].buckets);
 			}
 		});
+
+		// Treat defaultQuery and customQuery as reactive props
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'defaultQuery')) {
+			this.updateDefaultQuery();
+			this.updateQuery('', this.props);
+		}
+
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'customQuery')) {
+			this.updateQuery(this.state.currentValue, this.props);
+		}
 
 		if (this.props.value !== prevProps.value) {
 			this.setValue(this.props.value);
@@ -198,6 +216,17 @@ class SingleDataList extends Component {
 		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
+	updateDefaultQuery = (queryOptions) => {
+		updateInternalQuery(
+			this.internalComponent,
+			queryOptions,
+			this.state.currentValue,
+			this.props,
+			SingleDataList.generateQueryOptions(this.props, this.state),
+			null,
+		);
+	};
+
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
 		let customQueryOptions;
@@ -229,7 +258,7 @@ class SingleDataList extends Component {
 	static generateQueryOptions(props, state) {
 		const queryOptions = getQueryOptions(props);
 		const includes = state.options.map(item => item.value);
-		return getAggsQuery(queryOptions, props, includes);
+		return getAggsQuery(state.currentValue, queryOptions, props, includes);
 	}
 
 	updateQueryOptions = (props) => {
