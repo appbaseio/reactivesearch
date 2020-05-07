@@ -25,6 +25,7 @@ import {
 	getAggsQuery,
 	updateCustomQuery,
 	updateDefaultQuery,
+	updateInternalQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
@@ -41,6 +42,7 @@ import {
 	isEvent,
 	getValidPropsKeys,
 	parseValueArray,
+	isQueryIdentical,
 } from '../../utils';
 
 class MultiDataList extends Component {
@@ -88,6 +90,8 @@ class MultiDataList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		const valueArray
+			= typeof this.state.currentValue === 'object' ? Object.keys(this.state.currentValue) : [];
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
 			this.props.updateComponentProps(
 				this.props.componentId,
@@ -103,7 +107,7 @@ class MultiDataList extends Component {
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
-			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+			this.updateQuery(valueArray, this.props);
 
 			if (this.props.showCount) {
 				this.updateQueryOptions(this.props);
@@ -122,7 +126,17 @@ class MultiDataList extends Component {
 			}
 		});
 
-		let selectedValue = Object.keys(this.state.currentValue);
+		// Treat defaultQuery and customQuery as reactive props
+		if (!isQueryIdentical(valueArray, this.props, prevProps, 'defaultQuery')) {
+			this.updateDefaultQuery();
+			this.updateQuery([], this.props);
+		}
+
+		if (!isQueryIdentical(valueArray, this.props, prevProps, 'customQuery')) {
+			this.updateQuery(valueArray, this.props);
+		}
+
+		let selectedValue = valueArray;
 		const { selectAllLabel } = this.props;
 
 		if (selectAllLabel) {
@@ -144,7 +158,7 @@ class MultiDataList extends Component {
 			} else if (onChange) {
 				onChange(this.props.selectedValue || null);
 			} else {
-				const selectedListItems = Object.keys(this.state.currentValue);
+				const selectedListItems = valueArray;
 				this.setValue(selectedListItems, true);
 			}
 		}
@@ -283,6 +297,19 @@ class MultiDataList extends Component {
 		checkValueChange(props.componentId, finalValues, props.beforeValueChange, performUpdate);
 	};
 
+	updateDefaultQuery = (queryOptions) => {
+		const valueArray
+			= typeof this.state.currentValue === 'object' ? Object.keys(this.state.currentValue) : [];
+		updateInternalQuery(
+			this.internalComponent,
+			queryOptions,
+			valueArray,
+			this.props,
+			MultiDataList.generateQueryOptions(this.props, this.state),
+			null,
+		);
+	};
+
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
 		let customQueryOptions;
@@ -317,8 +344,10 @@ class MultiDataList extends Component {
 
 	static generateQueryOptions(props, state) {
 		const queryOptions = getQueryOptions(props);
+		const valueArray
+			= typeof state.currentValue === 'object' ? Object.keys(state.currentValue) : [];
 		const includes = state.options.map(item => item.value);
-		return getAggsQuery(queryOptions, props, includes);
+		return getAggsQuery(valueArray, queryOptions, props, includes);
 	}
 
 	updateQueryOptions = (props) => {

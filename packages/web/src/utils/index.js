@@ -130,3 +130,18 @@ export function parseValueArray(originalArr = [], currentValue) {
 export function escapeRegExp(string) {
 	return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
+
+/**
+ * @param value
+ * @param {Object} props
+ * @param {Object} prevProps
+ * @param {'defaultQuery' | 'customQuery'} key
+ */
+export const isQueryIdentical = (value = null, props = {}, prevProps = {}, key) => {
+	if (!key) return true;
+	if (typeof props[key] !== 'function' || typeof prevProps[key] !== 'function') return true;
+	// to not call original defaultQuery and customQuery, as here we are only comparing
+	const prevQuery = () => prevProps[key];
+	const nextQuery = () => props[key];
+	return isEqual(nextQuery(value, props), prevQuery(value, prevProps));
+};

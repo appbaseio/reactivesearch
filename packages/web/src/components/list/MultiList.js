@@ -44,9 +44,9 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isEvent,
-	isIdentical,
 	getValidPropsKeys,
 	parseValueArray,
+	isQueryIdentical,
 } from '../../utils';
 
 class MultiList extends Component {
@@ -112,9 +112,7 @@ class MultiList extends Component {
 		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
-			const {
-				showLoadMore, dataField, options,
-			} = this.props;
+			const { showLoadMore, dataField, options } = this.props;
 			if (showLoadMore && options && options[dataField]) {
 				const { buckets } = options[dataField];
 				const after = options[dataField].after_key;
@@ -160,14 +158,16 @@ class MultiList extends Component {
 				);
 			}
 		});
+		const valueArray
+			= typeof this.state.currentValue === 'object' ? Object.keys(this.state.currentValue) : [];
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+		if (!isQueryIdentical(valueArray, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			this.updateQuery([], this.props);
 		}
 
-		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
-			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+		if (!isQueryIdentical(valueArray, this.props, prevProps, 'customQuery')) {
+			this.updateQuery(valueArray, this.props);
 		}
 
 		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
@@ -176,10 +176,10 @@ class MultiList extends Component {
 
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQueryOptions(this.props);
-			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+			this.updateQuery(valueArray, this.props);
 		});
 
-		let selectedValue = Object.keys(this.state.currentValue);
+		let selectedValue = valueArray;
 		const { selectAllLabel } = this.props;
 
 		if (selectAllLabel) {
@@ -201,7 +201,7 @@ class MultiList extends Component {
 			} else if (onChange) {
 				onChange(this.props.selectedValue || null);
 			} else {
-				const selectedListItems = Object.keys(this.state.currentValue);
+				const selectedListItems = valueArray;
 				this.setValue(selectedListItems, true);
 			}
 		}
@@ -388,7 +388,7 @@ class MultiList extends Component {
 			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, {
-			...MultiList.generateQueryOptions(props, this.state.prevAfter),
+			...MultiList.generateQueryOptions(props, this.state.prevAfter, this.state.currentValue),
 			...customQueryOptions,
 		});
 
@@ -409,16 +409,21 @@ class MultiList extends Component {
 			queryOptions,
 			Object.keys(this.state.currentValue),
 			this.props,
-			MultiList.generateQueryOptions(this.props, this.state.prevAfter),
+			MultiList.generateQueryOptions(
+				this.props,
+				this.state.prevAfter,
+				this.state.currentValue,
+			),
 			null,
 		);
 	};
 
-	static generateQueryOptions(props, after) {
+	static generateQueryOptions(props, after, value = {}) {
 		const queryOptions = getQueryOptions(props);
+		const valueArray = Object.keys(value);
 		return props.showLoadMore
-			? getCompositeAggsQuery(queryOptions, props, after)
-			: getAggsQuery(queryOptions, props);
+			? getCompositeAggsQuery(valueArray, queryOptions, props, after)
+			: getAggsQuery(valueArray, queryOptions, props);
 	}
 
 	updateQueryOptions = (props, addAfterKey = false) => {
@@ -432,6 +437,7 @@ class MultiList extends Component {
 		const queryOptions = MultiList.generateQueryOptions(
 			props,
 			addAfterKey ? this.state.after : {},
+			this.state.currentValue,
 		);
 		if (props.defaultQuery) {
 			this.updateDefaultQuery(queryOptions);
@@ -448,7 +454,11 @@ class MultiList extends Component {
 	};
 
 	handleLoadMore = () => {
-		const queryOptions = MultiList.generateQueryOptions(this.props, this.state.after);
+		const queryOptions = MultiList.generateQueryOptions(
+			this.props,
+			this.state.after,
+			this.state.currentValue,
+		);
 		this.props.loadMore(this.props.componentId, queryOptions);
 	};
 

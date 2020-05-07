@@ -42,8 +42,8 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isEvent,
-	isIdentical,
 	getValidPropsKeys,
+	isQueryIdentical,
 } from '../../utils';
 
 // showLoadMore is experimental API and works only with ES6
@@ -102,9 +102,7 @@ class SingleList extends Component {
 		checkPropChange(prevProps.react, this.props.react, () => this.setReact(this.props));
 
 		checkPropChange(prevProps.options, this.props.options, () => {
-			const {
-				showLoadMore, dataField, options,
-			} = this.props;
+			const { showLoadMore, dataField, options } = this.props;
 
 			if (showLoadMore && options && options[dataField]) {
 				const { buckets } = options[dataField];
@@ -134,13 +132,13 @@ class SingleList extends Component {
 		});
 
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			// Clear the component value
 			this.updateQuery('', this.props);
 		}
 
-		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'customQuery')) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 
@@ -275,7 +273,11 @@ class SingleList extends Component {
 			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, {
-			...SingleList.generateQueryOptions(props, this.state.prevAfter),
+			...SingleList.generateQueryOptions(
+				props,
+				this.state.prevAfter,
+				this.state.currentValue,
+			),
 			...customQueryOptions,
 		});
 		props.updateQuery({
@@ -295,15 +297,19 @@ class SingleList extends Component {
 			queryOptions,
 			this.state.currentValue,
 			this.props,
-			SingleList.generateQueryOptions(this.props, this.state.prevAfter),
+			SingleList.generateQueryOptions(
+				this.props,
+				this.state.prevAfter,
+				this.state.currentValue,
+			),
 		);
 	};
 
-	static generateQueryOptions(props, after) {
+	static generateQueryOptions(props, after, value) {
 		const queryOptions = getQueryOptions(props);
 		return props.showLoadMore
-			? getCompositeAggsQuery(queryOptions, props, after)
-			: getAggsQuery(queryOptions, props);
+			? getCompositeAggsQuery(value, queryOptions, props, after)
+			: getAggsQuery(value, queryOptions, props);
 	}
 
 	updateQueryOptions = (props, addAfterKey = false) => {
@@ -317,6 +323,7 @@ class SingleList extends Component {
 		const queryOptions = SingleList.generateQueryOptions(
 			props,
 			addAfterKey ? this.state.after : {},
+			this.state.currentValue,
 		);
 		if (props.defaultQuery) {
 			this.updateDefaultQuery(queryOptions);
@@ -333,7 +340,11 @@ class SingleList extends Component {
 	};
 
 	handleLoadMore = () => {
-		const queryOptions = SingleList.generateQueryOptions(this.props, this.state.after);
+		const queryOptions = SingleList.generateQueryOptions(
+			this.props,
+			this.state.after,
+			this.state.currentValue,
+		);
 		this.props.loadMore(this.props.componentId, queryOptions);
 	};
 
