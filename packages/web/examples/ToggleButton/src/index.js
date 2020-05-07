@@ -33,7 +33,7 @@ const Main = () => (
 				<SelectedFilters />
 				<ResultList
 					componentId="SearchResult"
-					dataField="group.group_topics.topic_name_raw.keyword"
+					dataField="group.group_topics.topic_name_raw"
 					title="Results"
 					sortBy="asc"
 					className="result-list-container"
