@@ -31,7 +31,13 @@
 		"build": "gatsby build",
 		"start": "gatsby develop",
 		"prestart": "gatsby clean",
-		"lint": "eslint . --ext .js --cache"
+		"lint": "eslint . --ext .js --cache",
+		"test": "gatsby clean && yarn build"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "yarn test"
+		}
 	},
 	"devDependencies": {
 		"autoprefixer": "9.5.0",
@@ -44,6 +50,7 @@
 		"eslint-plugin-prettier": "^3.0.1",
 		"eslint-plugin-react": "^7.12.4",
 		"ghost-spirit": "0.0.50",
+		"husky": "^4.2.5",
 		"postcss-color-mod-function": "3.0.3",
 		"postcss-css-variables": "0.12.0",
 		"postcss-custom-media": "7.0.7",
