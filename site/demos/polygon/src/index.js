@@ -34,7 +34,7 @@ class Main extends React.Component {
 		return (
 			<ReactiveBase
 				app="meetup_dataset"
-				url="https://xe6N9nDRV:51ea7a8a-6354-4b5f-83e1-12dce3b7ec47@arc-cluster-appbase-demo-ps1pgt.searchbase.io"
+				url="https://IkwcRqior:cda6348c-37c9-40f6-a144-de3cb18b57a0@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
 				enableAppbase
 				type="meetupdata1"
 				mapKey="AIzaSyAKz3UhgSuP872fb-Aw27oPRI7M0eXkA9U"
