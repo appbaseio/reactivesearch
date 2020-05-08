@@ -122,7 +122,7 @@ const DataSearch = {
 		customHighlight: types.func,
 		customQuery: types.func,
 		defaultQuery: types.func,
-		dataField: types.dataFieldArray,
+		dataField: VueTypes.oneOfType([VueTypes.string, VueTypes.arrayOf(VueTypes.string)]),
 		aggregationField: types.string,
 		size: VueTypes.number.def(10),
 		debounce: VueTypes.number.def(0),
@@ -189,11 +189,7 @@ const DataSearch = {
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(
-					this.componentId,
-					this.$props,
-					componentTypes.dataSearch,
-				);
+				this.updateComponentProps(this.componentId, this.$props, componentTypes.dataSearch);
 				this.updateComponentProps(
 					this.internalComponent,
 					this.$props,
@@ -207,6 +203,12 @@ const DataSearch = {
 		this.removeComponent(this.internalComponent);
 	},
 	watch: {
+		$props: {
+			immediate: true,
+			handler() {
+				this.validateDataField();
+			},
+		},
 		highlight() {
 			this.updateQueryOptions();
 		},
@@ -262,15 +264,31 @@ const DataSearch = {
 		},
 	},
 	methods: {
+		validateDataField() {
+			const propName = 'dataField';
+			const componentName = 'DataSearch';
+			const props = this.$props;
+			const requiredError = `${propName} supplied to ${componentName} is required. Validation failed.`;
+			const propValue = props[propName];
+			if (this.config && !this.config.enableAppbase) {
+				if (!propValue) {
+					console.error(requiredError);
+					return;
+				}
+				if (typeof propValue !== 'string' && !Array.isArray(propValue)) {
+					console.error(
+						`Invalid ${propName} supplied to ${componentName}. Validation failed.`,
+					);
+					return;
+				}
+				if (Array.isArray(propValue) && propValue.length === 0) {
+					console.error(requiredError);
+				}
+			}
+		},
 		updateQueryOptions() {
-			if (
-				this.customHighlight
-				&& typeof this.customHighlight === 'function'
-			) {
-				this.setCustomHighlightOptions(
-					this.componentId,
-					this.customHighlight(this.$props),
-				);
+			if (this.customHighlight && typeof this.customHighlight === 'function') {
+				this.setCustomHighlightOptions(this.componentId, this.customHighlight(this.$props));
 			}
 			const queryOptions = DataSearch.highlightQuery(this.$props) || {};
 			this.queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
@@ -640,7 +658,11 @@ const DataSearch = {
 							showIcon={showIcon}
 						/>
 					)}
-					<InputIcon onClick={this.handleSearchIconClick} showIcon={showIcon} iconPosition={iconPosition}>
+					<InputIcon
+						onClick={this.handleSearchIconClick}
+						showIcon={showIcon}
+						iconPosition={iconPosition}
+					>
 						{this.renderIcon()}
 					</InputIcon>
 				</div>
