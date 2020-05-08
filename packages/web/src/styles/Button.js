@@ -87,7 +87,7 @@ const primary = ({ theme }) => css`
 	}
 `;
 
-const large = () => css`
+const large = css`
 	min-height: 40px;
 	padding: 10px 20px;
 `;
@@ -137,7 +137,7 @@ const Button = styled('a')`
 
 	${props => (props.primary ? primary : null)};
 	${props => (props.disabled ? disabled : null)};
-	${props => props.large && large()};
+	${props => props.large && large};
 `;
 
 export { pagination, filters, toggleButtons, numberBoxContainer, loadMoreContainer };
