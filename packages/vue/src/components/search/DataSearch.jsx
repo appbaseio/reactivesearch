@@ -266,7 +266,7 @@ const DataSearch = {
 	methods: {
 		validateDataField() {
 			const propName = 'dataField';
-			const componentName = 'DataSearch';
+			const componentName = DataSearch.name;
 			const props = this.$props;
 			const requiredError = `${propName} supplied to ${componentName} is required. Validation failed.`;
 			const propValue = props[propName];
