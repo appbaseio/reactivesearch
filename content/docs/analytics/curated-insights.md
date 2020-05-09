@@ -14,7 +14,7 @@ sidebar: 'docs'
 
 Curated Insights is a biweekly or monthly report created by appbase.io's team of search experts. It provides insights that are hard to glean just from the analytics data itself.
 
-A curated insights provides insights into the following areas:
+A curated insights report provides insights into the following areas:
 
 ### Search Ranking Strategy
 
