@@ -201,9 +201,9 @@ Now that all our configurations are complete, in order to access all the Arc Ser
 
 ### Using Docker
 
-We have containerized Arc with its configuring dashboard into one docker compose file. This setup enables you to run Arc with single command, i.e. `docker-compose up -d` 😎.
+Run appbase.io via a single [docker compose file](https://github.com/appbaseio/arc-dockerized/blob/master/docker-compose-with-elasticsearch.yaml). This setup enables you to run appbase.io and ElasticSearch together with single command, i.e. `docker-compose up -d` 😎.
 
-Dockerize setup for Arc comes with 3 different services
+The dockerized setup is composed of the following services:
 
 #### Arc
 
@@ -219,11 +219,15 @@ This service comes with simple user interface which allows you to set credential
 
 This service helps in setting up reverse proxy for Arc Service and serving Configuration service. It also helps in serving data using with TLS certificate, which is recommended for production.
 
+#### ElasticSearch
+
+An open-source single-node ElasticSearch cluster is run. This is optional: You can use the [docker compose file here](https://github.com/appbaseio/arc-dockerized/blob/master/docker-compose.yaml) to run without ElasticSearch.
+
 ## Quick Start 🚀
 
 The steps described here assumes a that you have [docker](https://docs.docker.com/install/) installed.
 
--   **Step 1:** Get Arc ID following the steps mentioned [here](/docs/hosting/byoc/#using-ami)
+-   **Step 1:** Get Arc ID following the steps mentioned [here](/docs/hosting/byoc/#how-to-create-arc-instance)
 
 -   **Step 2:** Clone the repository
 
@@ -258,7 +262,7 @@ The steps described here assumes a that you have [docker](https://docs.docker.co
 
     🔥 Thats all, our containers should be up and running. Next, let us configure the environment variables required by Arc service.
 
--   **Step 4:** Open configuration service URL in your browser, i.e. http://localhost_OR_cluster_url.
+-   **Step 4:** Open configuration service URL in your browser, i.e. http://localhost (or https://your-domain.com as configured in your nginx settings).
 
     > **Note:** If you are running this setup on an virtual machine, make sure ports `80` and `443` are set in your inbound rules for the cluster.
 
