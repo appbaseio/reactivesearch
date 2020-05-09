@@ -209,6 +209,11 @@ const HomePage = ({ data, location }) => {
 												link: '/docs/analytics/query-suggestions/',
 												duration: 4,
 											},
+											{
+												title: 'Curated Insights',
+												link: '/docs/analytics/curated-insights/',
+												duration: 2,
+											},
 										],
 									},
 									'6': {
