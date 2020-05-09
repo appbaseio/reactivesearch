@@ -51,7 +51,7 @@ const searchbase = new SearchBase(props);
     -   Query generation happens on server side - protecting against security concerns around query injection.
     -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).
     -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/role/).
--   **dataField** `string | Array<string | DataField>` [Required]
+-   **dataField** `string | Array<string | DataField>` [optional*]
     index field(s) to be connected to the component’s UI view. DataSearch accepts an Array in addition to String, which is useful for searching across multiple fields with or without field weights.<br/>
     Field weights allow weighted search for the index fields. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.<br/>
     You can define the `dataField` as an array of objects of the `DataField` type to set the field weights.<br/>
@@ -62,6 +62,11 @@ const searchbase = new SearchBase(props);
     	weight: number;
     };
     ```
+
+    >   Note:
+    >   This prop is optional only when `enableAppbase` is set to `true`.
+    >
+
 -   **aggregationField** `string` [optional]
     One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data).
     It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.

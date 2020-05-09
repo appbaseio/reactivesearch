@@ -63,8 +63,13 @@ Example uses:
 
 -   **componentId** `String`
     unique identifier of the component, can be referenced in other components' `react` prop.
--   **dataField** `String or Array`
+-   **dataField** `String or Array` [optional*]
     database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
+
+    >   Note:
+    >   This prop is optional only when `enableAppbase` prop is set to `true` in `ReactiveBase` component.
+    >
+
 -   **size** `Number` [optional]
     number of suggestions to show. Defaults to `10`.
 -   **aggregationField** `String` [optional]
