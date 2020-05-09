@@ -79,7 +79,7 @@ class HomeHeader extends React.Component {
 						<div className="graphic">
 							<img src="images/home-search-relevancy@3x.png" />
 							<p className={`${Spirit.p} middarkgrey text-center`}>
-								Set Search relevancy
+								Set Search Relevancy
 							</p>
 						</div>
 						<div className="graphic">

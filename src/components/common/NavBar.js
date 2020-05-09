@@ -138,7 +138,7 @@ const NavBar = ({ theme }) => {
 													</div>
 													<div>
 														<Link
-															to="/docs/analytics/overview"
+															to="/docs/analytics/overview/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
@@ -148,14 +148,14 @@ const NavBar = ({ theme }) => {
 															Actionable Analytics
 														</Link>
 														<Link
-															to="/docs/security/credentials"
+															to="/docs/security/credentials/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
 																name="security"
 																className="dropdown-content-icon mr2"
 															/>
-															Security
+															Security Credentials
 														</Link>
 													</div>
 												</div>
