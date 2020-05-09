@@ -199,6 +199,16 @@ const HomePage = ({ data, location }) => {
 												link: '/docs/analytics/implement/',
 												duration: 2,
 											},
+											{
+												title: 'Querying Analytics',
+												link: '/docs/analytics/querying-analytics/',
+												duration: 1,
+											},
+											{
+												title: 'Query Suggestions',
+												link: '/docs/analytics/query-suggestions/',
+												duration: 4,
+											},
 										],
 									},
 									'6': {
