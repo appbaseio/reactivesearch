@@ -9,7 +9,7 @@ export default () => (
 	<div className={container}>
 		<ReactiveBase
 			app="airbeds-test-app"
-			url="https://IkwcRqior:cda6348c-37c9-40f6-a144-de3cb18b57a0@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+			url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
 			enableAppbase
 			type="listing"
 			theme={{
