@@ -26,11 +26,17 @@ This insight helps you to find how many searches have been performed by users fo
 #### Low Clicks
 Low clicks mean that people are not finding the exact thing for which they're searching.
 
+#### Low Suggestions Clicks
+If you have low suggestions clicks then it indicates that your search is not showing relevant suggestions to the users.
+
 #### Higher Click Position
 If the click position is higher than it means that your users are having difficulty finding the desired results at the top.
 
 #### Popular Searches
 This insight helps you to find the total number of popular searches made by users. A higher value indicates that your business is doing really well.
+
+#### Popular Searches with Low Clicks
+If something is popular among users but you're not getting clicks then it means that your results for popular searches are not relevant.
 
 #### Long Tail Searches
 Long-tail searches insight represents that users have to type more to search the results i.e the suggestions which you're showing in search are not much useful.
@@ -40,6 +46,12 @@ The bounce rate represents how many users are visiting your search page and leav
 
 #### High Response Time
 If you see that insight then it means that you're search is slow and required some additional infrastructure.
+
+#### Client-side Errors
+Client-side errors indicate that your search requests are getting failed because of bad requests from the client-side.
+
+#### Server Errors
+Internal server errors indicate an issue with the underlying ElasticSearch service.
 
 ### Insights via API
 
