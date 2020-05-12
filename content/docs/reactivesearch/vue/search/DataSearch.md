@@ -324,7 +324,7 @@ Or you can also use render as prop.
     -   **`error`**: `object`
         An object containing the error info.
     -   **`suggestions`**: `object`
-        Query suggestions based on search value.
+        An array of query suggestions obtained based on search value.
     -   **`value`**: `string`
         current search input value i.e the search query being used to obtain suggestions.
     -   **`downshiftProps`**: `object`
