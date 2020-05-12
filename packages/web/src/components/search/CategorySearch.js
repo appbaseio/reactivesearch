@@ -824,6 +824,7 @@ class CategorySearch extends Component {
 			customData,
 			rawData,
 			querySuggestions,
+			showDistinctSuggestions,
 		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
@@ -842,7 +843,11 @@ class CategorySearch extends Component {
 			rawCategories: this.props.categories,
 			triggerClickAnalytics: this.triggerClickAnalytics,
 			resultStats: this.stats,
-			querySuggestions: getTopSuggestions(querySuggestions),
+			querySuggestions: getTopSuggestions(
+				querySuggestions,
+				currentValue,
+				showDistinctSuggestions,
+			),
 		};
 		if (isQuerySuggestionsRender) {
 			return getQuerySuggestionsComponent(

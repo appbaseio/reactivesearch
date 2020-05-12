@@ -728,6 +728,7 @@ class DataSearch extends Component {
 			customData,
 			rawData,
 			querySuggestions,
+			showDistinctSuggestions,
 		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
@@ -742,7 +743,11 @@ class DataSearch extends Component {
 			value: currentValue,
 			triggerClickAnalytics: this.triggerClickAnalytics,
 			resultStats: this.stats,
-			querySuggestions: getTopSuggestions(querySuggestions),
+			querySuggestions: getTopSuggestions(
+				querySuggestions,
+				currentValue,
+				showDistinctSuggestions,
+			),
 		};
 		if (isQuerySuggestionsRender) {
 			return getQuerySuggestionsComponent(
@@ -1096,11 +1101,7 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(
 	withTheme(props => (
-		<ComponentWrapper
-			{...props}
-			internalComponent
-			componentType={componentTypes.dataSearch}
-		>
+		<ComponentWrapper {...props} internalComponent componentType={componentTypes.dataSearch}>
 			{() => <DataSearch ref={props.myForwardedRef} {...props} />}
 		</ComponentWrapper>
 	)),
