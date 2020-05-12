@@ -89,3 +89,22 @@ export const isQueryIdentical = (newVal, oldVal, value, props) => {
 	const nextQuery = () => newVal;
 	return isEqual(nextQuery(value, props), prevQuery(value, props));
 };
+
+/**
+ * Extracts the renderQuerySuggestions prop from props or slot and returns a valid JSX element
+ * @param {Object} data
+ * @param _ref
+ */
+export const getQuerySuggestionsComponent = (data = {}, _ref = {}) => {
+	const { renderQuerySuggestions } = _ref.$scopedSlots || _ref.$props;
+	if (renderQuerySuggestions) return renderQuerySuggestions(data);
+	return null;
+};
+/**
+ * To determine whether a component has renderQuerySuggestions prop or slot defined or not
+ * @returns {Boolean}
+ */
+export const hasQuerySuggestionsRenderer = (_ref = {}) => {
+	const { renderQuerySuggestions } = _ref.$scopedSlots || _ref.$props;
+	return Boolean(renderQuerySuggestions);
+};
