@@ -300,7 +300,21 @@ Or you can also use render function as children
     ```
 
 -   **renderQuerySuggestions** `String or JSX or Function` [optional]
-    can be used to format or render query suggestions on top of suggestions. Below is an example to render query suggestions in green color.
+You can render query suggestions in a custom layout by using the `renderQuerySuggestions` prop.
+    <br/>
+    It accepts an object with these properties:
+    -   **`loading`**: `boolean`
+        indicates that the query is still in progress.
+    -   **`error`**: `object`
+        An object containing the error info.
+    -   **`suggestions`**: `array`
+        An array of query suggestions obtained based on search value.
+    -   **`value`**: `string`
+        current search input value i.e the search query being used to obtain suggestions.
+    -   **`downshiftProps`**: `object`
+        provides all the control props from `downshift` which can be used to bind list items with click/mouse events.
+        Read more about it [here](https://github.com/downshift-js/downshift#children-function).
+
     ```javascript
     <DataSearch
         dataField={['original_title', 'original_title.search']}
