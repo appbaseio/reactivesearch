@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
 
-import {
-	addComponent,
-	removeComponent,
-	watchComponent,
-	updateQuery,
-	setQueryOptions,
-	setQueryListener,
-	setComponentProps,
-	setCustomQuery,
-	updateComponentProps,
-} from '@appbaseio/reactivecore/lib/actions';
+import { updateQuery, setQueryOptions, setCustomQuery } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	getQueryOptions,
-	pushToAndClause,
 	checkValueChange,
 	checkPropChange,
 	checkSomePropChange,
@@ -24,6 +13,7 @@ import {
 	getAggsQuery,
 	updateCustomQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -32,7 +22,8 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Title from '../../styles/Title';
 import TagList from '../../styles/TagList';
 import Container from '../../styles/Container';
-import { connect, isFunction, getValidPropsKeys } from '../../utils';
+import { connect, isFunction } from '../../utils';
+import ComponentWrapper from '../basic/ComponentWrapper';
 
 class TagCloud extends Component {
 	constructor(props) {
@@ -56,19 +47,11 @@ class TagCloud extends Component {
 			options,
 		};
 		this.type = 'term';
-		this.internalComponent = `${props.componentId}__internal`;
-
-		props.addComponent(props.componentId);
-		props.addComponent(this.internalComponent);
-		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
-		// Update props in store
-		props.setComponentProps(props.componentId, props, componentTypes.tagCloud);
-		props.setComponentProps(this.internalComponent, props, componentTypes.tagCloud);
+		this.internalComponent = getInternalComponentID(props.componentId);
 		// Set custom and default queries in store
 		updateCustomQuery(props.componentId, props, currentValue);
 		this.updateQueryOptions(props);
 
-		this.setReact(props);
 		const hasMounted = false;
 
 		if (currentValueArray.length) {
@@ -77,19 +60,6 @@ class TagCloud extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.tagCloud,
-			);
-			this.props.updateComponentProps(
-				this.internalComponent,
-				this.props,
-				componentTypes.tagCloud,
-			);
-		});
-		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { buckets } = this.props.options[this.props.dataField];
 			this.setState({
@@ -133,23 +103,6 @@ class TagCloud extends Component {
 			}
 		}
 	}
-
-	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
-		this.props.removeComponent(this.internalComponent);
-	}
-
-	setReact = (props) => {
-		const { react } = props;
-		if (react) {
-			const newReact = pushToAndClause(react, this.internalComponent);
-			props.watchComponent(props.componentId, newReact);
-		} else {
-			props.watchComponent(props.componentId, {
-				and: this.internalComponent,
-			});
-		}
-	};
 
 	static defaultQuery = (value, props) => {
 		let query = null;
@@ -312,7 +265,10 @@ class TagCloud extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				<TagList role="menu" className={getClassName(this.props.innerClass, 'list') || null}>
+				<TagList
+					role="menu"
+					className={getClassName(this.props.innerClass, 'list') || null}
+				>
 					{this.state.options.map((item) => {
 						// eslint-disable-next-line
 						const size = (item.doc_count / highestCount) * (max - min) + min;
@@ -346,17 +302,11 @@ class TagCloud extends Component {
 }
 
 TagCloud.propTypes = {
-	addComponent: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
 	options: types.options,
 	selectedValue: types.selectedValue,
-	setComponentProps: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	updateComponentProps: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
 	// component props
@@ -420,24 +370,21 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
-	updateComponentProps: (component, options, componentType) =>
-		dispatch(updateComponentProps(component, options, componentType)),
-	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
+
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => <TagCloud ref={props.myForwardedRef} {...props} />);
+)(props => (
+	<ComponentWrapper {...props} internalComponent componentType={componentTypes.tagCloud}>
+		{() => <TagCloud ref={props.myForwardedRef} {...props} />}
+	</ComponentWrapper>
+));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (

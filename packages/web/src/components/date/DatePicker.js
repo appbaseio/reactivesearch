@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
-import {
-	addComponent,
-	removeComponent,
-	watchComponent,
-	updateQuery,
-	setQueryListener,
-	setQueryOptions,
-	setComponentProps,
-	setCustomQuery,
-	updateComponentProps,
-} from '@appbaseio/reactivecore/lib/actions';
+import { updateQuery, setQueryOptions, setCustomQuery } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
-	checkPropChange,
 	checkSomePropChange,
 	getClassName,
 	formatDate,
@@ -31,7 +20,8 @@ import DateContainer from '../../styles/DateContainer';
 import Title from '../../styles/Title';
 import Flex from '../../styles/Flex';
 import CancelSvg from '../shared/CancelSvg';
-import { connect, getValidPropsKeys } from '../../utils';
+import { connect } from '../../utils';
+import ComponentWrapper from '../basic/ComponentWrapper';
 
 class DatePicker extends Component {
 	constructor(props) {
@@ -43,13 +33,8 @@ class DatePicker extends Component {
 			key: 'on',
 		};
 
-		props.addComponent(props.componentId);
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
-		// Update props in store
-		props.setComponentProps(props.componentId, props, componentTypes.datePicker);
 		// Set custom query in store
 		updateCustomQuery(props.componentId, props, currentDate);
-		this.setReact(props);
 		const hasMounted = false;
 
 		if (currentDate) {
@@ -58,14 +43,6 @@ class DatePicker extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.datePicker,
-			);
-		});
-		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () =>
 			this.updateQuery(
 				this.state.currentDate ? this.formatInputDate(this.state.currentDate) : null,
@@ -80,16 +57,6 @@ class DatePicker extends Component {
 			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
 		) {
 			this.handleDateChange(this.props.selectedValue || '', true, this.props);
-		}
-	}
-
-	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
-	}
-
-	setReact(props) {
-		if (props.react) {
-			props.watchComponent(props.componentId, props.react);
 		}
 	}
 
@@ -274,15 +241,9 @@ class DatePicker extends Component {
 }
 
 DatePicker.propTypes = {
-	addComponent: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
-	setComponentProps: types.funcRequired,
-	updateComponentProps: types.funcRequired,
 	setCustomQuery: types.funcRequired,
 	// component props
 	className: types.string,
@@ -328,24 +289,23 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
-	updateComponentProps: (component, options, componentType) =>
-		dispatch(updateComponentProps(component, options, componentType)),
-	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
+
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(withTheme(props => <DatePicker ref={props.myForwardedRef} {...props} />));
+)(
+	withTheme(props => (
+		<ComponentWrapper {...props} componentType={componentTypes.datePicker}>
+			{() => <DatePicker ref={props.myForwardedRef} {...props} />}
+		</ComponentWrapper>
+	)),
+);
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (

@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
 
 import {
-	addComponent,
-	removeComponent,
-	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener,
 	loadMore,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
-	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
+import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
 	isEqual,
 	getQueryOptions,
-	pushToAndClause,
 	checkValueChange,
 	checkPropChange,
 	checkSomePropChange,
@@ -44,10 +38,10 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isEvent,
-	getValidPropsKeys,
 	parseValueArray,
 	isQueryIdentical,
 } from '../../utils';
+import ComponentWrapper from '../basic/ComponentWrapper';
 
 class MultiList extends Component {
 	constructor(props) {
@@ -73,22 +67,13 @@ class MultiList extends Component {
 			prevAfter: {}, // useful when we want to prevent the showLoadMore results
 			isLastBucket: false,
 		};
-		this.internalComponent = `${props.componentId}__internal`;
+		this.internalComponent = getInternalComponentID(props.componentId);
 
-		props.addComponent(props.componentId);
-		props.addComponent(this.internalComponent);
-		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
-
-		// Update props in store
-		props.setComponentProps(props.componentId, props, componentTypes.multiList);
-		props.setComponentProps(this.internalComponent, props, componentTypes.multiList);
 		// Set custom and default queries in store
 		updateCustomQuery(props.componentId, props, currentValueArray);
 		updateDefaultQuery(props.componentId, props, currentValueArray);
 
 		this.updateQueryOptions(props);
-
-		this.setReact(props);
 
 		const hasMounted = false;
 
@@ -98,19 +83,6 @@ class MultiList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.multiList,
-			);
-			this.props.updateComponentProps(
-				this.internalComponent,
-				this.props,
-				componentTypes.multiList,
-			);
-		});
-		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, dataField, options } = this.props;
 			if (showLoadMore && options && options[dataField]) {
@@ -206,23 +178,6 @@ class MultiList extends Component {
 			}
 		}
 	}
-
-	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
-		this.props.removeComponent(this.internalComponent);
-	}
-
-	setReact = (props) => {
-		const { react } = props;
-		if (react) {
-			const newReact = pushToAndClause(react, this.internalComponent);
-			props.watchComponent(props.componentId, newReact);
-		} else {
-			props.watchComponent(props.componentId, {
-				and: this.internalComponent,
-			});
-		}
-	};
 
 	getOptions = (buckets, props) => {
 		if (props.showLoadMore) {
@@ -676,19 +631,14 @@ class MultiList extends Component {
 }
 
 MultiList.propTypes = {
-	addComponent: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	loadMore: types.funcRequired,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
+
 	options: types.options,
 	rawData: types.rawData,
 	selectedValue: types.selectedValue,
-	setComponentProps: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
 	// component props
@@ -766,26 +716,22 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
-	updateComponentProps: (component, options, componentType) =>
-		dispatch(updateComponentProps(component, options, componentType)),
-	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
+
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	loadMore: (component, aggsQuery) => dispatch(loadMore(component, aggsQuery, true, true)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => <MultiList ref={props.myForwardedRef} {...props} />);
+)(props => (
+	<ComponentWrapper {...props} internalComponent componentType={componentTypes.multiList}>
+		{() => <MultiList ref={props.myForwardedRef} {...props} />}
+	</ComponentWrapper>
+));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
