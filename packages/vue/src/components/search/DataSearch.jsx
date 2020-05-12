@@ -285,7 +285,11 @@ const DataSearch = {
 				value: currentValue,
 				triggerClickAnalytics: this.triggerClickAnalytics,
 				resultStats: this.stats,
-				querySuggestions: getTopSuggestions(this.querySuggestions),
+				querySuggestions: getTopSuggestions(
+					this.querySuggestions,
+					this.currentValue,
+					this.showDistinctSuggestions,
+				),
 			};
 			if (isQuerySuggestionsRender) {
 				return getQuerySuggestionsComponent(
