@@ -96,7 +96,10 @@ Example uses:
     Defaults to `true`, can be used to `disable/enable` the synonyms behavior for the search query. Read more about it [here](/docs/search/reactivesearch-api/reference/#enablesynonyms)
     > Note:
     >
-    > This property only works with [ReactiveSearch API](/docs/search/reactivesearch-api/) i.e when `enableAppbase` is set to `true` in `ReactiveBase` component.
+    > This property only works with [ReactiveSearch API](/docs/search/reactivesearch-api/) i.e when `enableAppbase` is set to `true` in `ReactiveBase` component.                                                                                                                                                                                                              >
+
+-   **enableQuerySuggestions** `bool` [optional]
+    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
 -   **downShiftProps** `Object` [optional]
     allow passing props directly to the underlying `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
 -   **fieldWeights** `Array` [optional]
@@ -295,6 +298,43 @@ Or you can also use render function as children
         )
     }
     ```
+
+-   **renderQuerySuggestions** `String or JSX or Function` [optional]
+    can be used to format or render query suggestions on top of suggestions. Below is an example to render query suggestions in green color.
+    ```javascript
+    <DataSearch
+        dataField={['original_title', 'original_title.search']}
+        componentId="BookSensor"
+        enableQuerySuggestions
+        renderQuerySuggestions={({
+            value,
+            suggestions,
+            downshiftProps: { isOpen, getItemProps, highlightedIndex },
+        }) =>
+            isOpen &&
+            Boolean(value.length) && (
+                <div>
+                    {(suggestions || []).map((suggestion, index) => (
+                        <div
+                            style={{
+                                padding: 10,
+                                background:
+                                    index === highlightedIndex
+                                        ? '#eee'
+                                        : 'transparent',
+                                color: 'green',
+                            }}
+                            key={suggestion.value}
+                            {...getItemProps({ item: suggestion })}
+                        >
+                            {suggestion.value}
+                        </div>
+                    ))}
+                </div>
+            )
+        }
+    />
+```
 -   **getMicInstance** `Function` [optional]
     You can pass a callback function to get the instance of `SpeechRecognition` object, which can be used to override the default configurations.
 -   **renderMic** `String or JSX or Function` [optional]
