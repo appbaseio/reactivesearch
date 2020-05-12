@@ -54,7 +54,8 @@ import {
 	getValidPropsKeys,
 	handleCaretPosition,
 	isQueryIdentical,
-	hasQuerySuggestionsRenderer, getQuerySuggestionsComponent,
+	hasQuerySuggestionsRenderer,
+	getQuerySuggestionsComponent,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
