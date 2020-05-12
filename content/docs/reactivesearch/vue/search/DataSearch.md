@@ -264,11 +264,6 @@ You can use `DataSearch` with `render slot` as shown:
 		<ul v-if="isOpen">
 			<li
 				style="{ background-color: highlightedIndex ? 'grey' : 'transparent' }"
-				v-for="suggestion in (suggestions || []).map(s => ({
-								label: s.source.authors,
-								value: s.source.authors,
-								key: s._id,
-							}))"
 				v-bind="getItemProps({ item: suggestion })"
 				v-on="getItemEvents({ item: suggestion })"
 				:key="suggestion._id"
