@@ -776,7 +776,6 @@ ReactiveList.propTypes = {
 	setStreaming: types.func,
 	searchState: types.dateObject,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
 	currentPage: types.number,
 	hits: types.hits,
 	rawData: types.rawData,
