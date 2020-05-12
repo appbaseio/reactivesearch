@@ -1,21 +1,10 @@
 import React, { Component } from 'react';
 
-import {
-	addComponent,
-	removeComponent,
-	watchComponent,
-	updateQuery,
-	setQueryListener,
-	setQueryOptions,
-	setComponentProps,
-	setCustomQuery,
-	updateComponentProps,
-} from '@appbaseio/reactivecore/lib/actions';
+import { updateQuery, setQueryOptions, setCustomQuery } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
 	checkValueChange,
-	checkPropChange,
 	checkSomePropChange,
 	getClassName,
 	handleA11yAction,
@@ -30,7 +19,8 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import StarRating from './addons/StarRating';
 import { ratingsList } from '../../styles/ratingsList';
-import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
+import ComponentWrapper from '../basic/ComponentWrapper';
+import { connect, getRangeQueryWithNullValues } from '../../utils';
 
 class RatingsFilter extends Component {
 	constructor(props) {
@@ -44,15 +34,9 @@ class RatingsFilter extends Component {
 			currentValue,
 		};
 		this.type = 'range';
-
-		props.addComponent(props.componentId);
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
-		// Update props in store
-		props.setComponentProps(props.componentId, props, componentTypes.ratingsFilter);
 		// Set custom query in store
 		updateCustomQuery(props.componentId, props, currentValue);
 
-		this.setReact(props);
 		const hasMounted = false;
 
 		if (currentValue) {
@@ -66,15 +50,6 @@ class RatingsFilter extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.ratingsFilter,
-			);
-		});
-		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
-
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
@@ -99,16 +74,6 @@ class RatingsFilter extends Component {
 					includeUnrated: this.getIncludeUnratedFromData(this.state.currentValue),
 				});
 			}
-		}
-	}
-
-	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
-	}
-
-	setReact(props) {
-		if (props.react) {
-			props.watchComponent(props.componentId, props.react);
 		}
 	}
 
@@ -245,15 +210,9 @@ class RatingsFilter extends Component {
 }
 
 RatingsFilter.propTypes = {
-	addComponent: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
-	setComponentProps: types.funcRequired,
-	updateComponentProps: types.funcRequired,
 	setCustomQuery: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
@@ -294,17 +253,8 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
-	updateComponentProps: (component, options, componentType) =>
-		dispatch(updateComponentProps(component, options, componentType)),
-	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
 });
@@ -312,7 +262,11 @@ const mapDispatchtoProps = dispatch => ({
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => <RatingsFilter ref={props.myForwardedRef} {...props} />);
+)(props => (
+	<ComponentWrapper {...props} componentType={componentTypes.ratingsFilter}>
+		{() => <RatingsFilter ref={props.myForwardedRef} {...props} />}
+	</ComponentWrapper>
+));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (

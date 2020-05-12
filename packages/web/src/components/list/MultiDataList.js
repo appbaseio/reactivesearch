@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
-
 import {
-	addComponent,
-	removeComponent,
-	watchComponent,
 	updateQuery,
-	setQueryListener,
 	setQueryOptions,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
-	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
@@ -18,7 +11,6 @@ import {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
-	pushToAndClause,
 	checkSomePropChange,
 	getQueryOptions,
 	getOptionsFromQuery,
@@ -28,7 +20,7 @@ import {
 	updateInternalQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-
+import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
@@ -40,10 +32,10 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isEvent,
-	getValidPropsKeys,
 	parseValueArray,
 	isQueryIdentical,
 } from '../../utils';
+import ComponentWrapper from '../basic/ComponentWrapper';
 
 class MultiDataList extends Component {
 	constructor(props) {
@@ -61,29 +53,17 @@ class MultiDataList extends Component {
 			searchTerm: '',
 			options: props.data || [],
 		};
-		this.internalComponent = `${props.componentId}__internal`;
+		this.internalComponent = getInternalComponentID(props.componentId);
 		this.type = 'term';
-
-		props.addComponent(props.componentId);
-		props.addComponent(this.internalComponent);
-
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
-		// Update props in store
-		props.setComponentProps(props.componentId, props, componentTypes.multiDataList);
-		props.setComponentProps(this.internalComponent, props, componentTypes.multiDataList);
 		// Set custom and default queries in store
 		updateCustomQuery(props.componentId, props, currentValue);
 		updateDefaultQuery(props.componentId, props, currentValue);
 
-		this.setReact(props);
 		const hasMounted = false;
 
 		if (props.showCount) {
 			this.updateQueryOptions(props);
 		}
-
-		this.setReact(props);
-
 		if (currentValueArray.length) {
 			this.setValue(currentValueArray, true, props, hasMounted);
 		}
@@ -92,19 +72,6 @@ class MultiDataList extends Component {
 	componentDidUpdate(prevProps) {
 		const valueArray
 			= typeof this.state.currentValue === 'object' ? Object.keys(this.state.currentValue) : [];
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.multiDataList,
-			);
-			this.props.updateComponentProps(
-				this.internalComponent,
-				this.props,
-				componentTypes.multiDataList,
-			);
-		});
-		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(valueArray, this.props);
@@ -161,24 +128,6 @@ class MultiDataList extends Component {
 				const selectedListItems = valueArray;
 				this.setValue(selectedListItems, true);
 			}
-		}
-	}
-
-	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
-		this.props.removeComponent(this.internalComponent);
-	}
-
-	setReact(props) {
-		const { react } = this.props;
-
-		if (react) {
-			const newReact = pushToAndClause(react, this.internalComponent);
-			props.watchComponent(props.componentId, newReact);
-		} else {
-			props.watchComponent(props.componentId, {
-				and: this.internalComponent,
-			});
 		}
 	}
 
@@ -576,17 +525,12 @@ class MultiDataList extends Component {
 }
 
 MultiDataList.propTypes = {
-	addComponent: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
 	rawData: types.rawData,
 	options: types.options,
-	setComponentProps: types.funcRequired,
-	updateComponentProps: types.funcRequired,
+
 	setCustomQuery: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
@@ -648,25 +592,22 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
-	updateComponentProps: (component, options, componentType) =>
-		dispatch(updateComponentProps(component, options, componentType)),
-	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
+
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => <MultiDataList ref={props.myForwardedRef} {...props} />);
+)(props => (
+	<ComponentWrapper {...props} internalComponent componentType={componentTypes.multiDataList}>
+		{() => <MultiDataList ref={props.myForwardedRef} {...props} />}
+	</ComponentWrapper>
+));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (

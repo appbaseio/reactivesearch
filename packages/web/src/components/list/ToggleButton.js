@@ -1,21 +1,10 @@
 import React, { Component } from 'react';
 
-import {
-	addComponent,
-	removeComponent,
-	watchComponent,
-	updateQuery,
-	setQueryListener,
-	setQueryOptions,
-	setComponentProps,
-	setCustomQuery,
-	updateComponentProps,
-} from '@appbaseio/reactivecore/lib/actions';
+import { updateQuery, setQueryOptions, setCustomQuery } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
-	checkPropChange,
 	checkSomePropChange,
 	getClassName,
 	getOptionsFromQuery,
@@ -28,7 +17,8 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { toggleButtons } from '../../styles/Button';
-import { connect, getValidPropsKeys } from '../../utils';
+import { connect } from '../../utils';
+import ComponentWrapper from '../basic/ComponentWrapper';
 
 class ToggleButton extends Component {
 	constructor(props) {
@@ -41,13 +31,8 @@ class ToggleButton extends Component {
 			currentValue,
 		};
 
-		props.addComponent(props.componentId);
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
-		// Update props in store
-		props.setComponentProps(props.componentId, props, componentTypes.toggleButton);
 		// Set custom query in store
 		updateCustomQuery(props.componentId, props, currentValue);
-		this.setReact(props);
 		const hasMounted = false;
 
 		if (currentValue.length) {
@@ -56,17 +41,6 @@ class ToggleButton extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.toggleButton,
-			);
-		});
-		checkPropChange(this.props.react, prevProps.react, () => {
-			this.setReact(this.props);
-		});
-
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
@@ -117,10 +91,6 @@ class ToggleButton extends Component {
 				}
 			}
 		}
-	}
-
-	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
 	}
 
 	static parseValue = (value, props) => {
@@ -179,12 +149,6 @@ class ToggleButton extends Component {
 
 		this.setValue(finalValue, props, hasMounted);
 	};
-
-	setReact(props) {
-		if (props.react) {
-			props.watchComponent(props.componentId, props.react);
-		}
-	}
 
 	setValue = (value, props = this.props, hasMounted = true) => {
 		const performUpdate = () => {
@@ -284,16 +248,10 @@ class ToggleButton extends Component {
 }
 
 ToggleButton.propTypes = {
-	addComponent: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
-	setComponentProps: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	updateComponentProps: types.funcRequired,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -331,24 +289,21 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
-	updateComponentProps: (component, options, componentType) =>
-		dispatch(updateComponentProps(component, options, componentType)),
-	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
+
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => <ToggleButton ref={props.myForwardedRef} {...props} />);
+)(props => (
+	<ComponentWrapper {...props} componentType={componentTypes.toggleButton}>
+		{() => <ToggleButton ref={props.myForwardedRef} {...props} />}
+	</ComponentWrapper>
+));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (

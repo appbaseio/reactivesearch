@@ -3,16 +3,10 @@ import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
 
 import {
-	addComponent,
-	removeComponent,
-	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
-	updateComponentProps,
 	setSuggestionsSearchValue,
 	recordSuggestionClick,
 	setCustomHighlightOptions,
@@ -20,9 +14,7 @@ import {
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	debounce,
-	pushToAndClause,
 	checkValueChange,
-	checkPropChange,
 	checkSomePropChange,
 	getClassName,
 	getOptionsFromQuery,
@@ -33,6 +25,7 @@ import {
 	updateCustomQuery,
 	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -48,13 +41,13 @@ import {
 	isFunction,
 	getComponent,
 	hasCustomRenderer,
-	getValidPropsKeys,
 	handleCaretPosition,
 	isQueryIdentical,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import Mic from './addons/Mic';
+import ComponentWrapper from '../basic/ComponentWrapper';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -66,19 +59,13 @@ class DataSearch extends Component {
 			suggestions: [],
 			isOpen: false,
 		};
-		this.internalComponent = `${props.componentId}__internal`;
+		this.internalComponent = getInternalComponentID(props.componentId);
 		/**
 		 * To regulate the query execution based on the input handler,
 		 * the component query will only get executed when it sets to `true`.
 		 * */
 		this.isPending = false;
 		this.queryOptions = this.getBasicQueryOptions();
-		props.addComponent(props.componentId);
-		props.addComponent(this.internalComponent);
-		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
-		// Update props in store
-		props.setComponentProps(props.componentId, props, componentTypes.dataSearch);
-		props.setComponentProps(this.internalComponent, props, componentTypes.dataSearch);
 		// Set custom and default queries in store
 		updateCustomQuery(props.componentId, props, currentValue);
 		updateDefaultQuery(props.componentId, props, currentValue);
@@ -93,7 +80,6 @@ class DataSearch extends Component {
 			props.setQueryOptions(props.componentId, this.queryOptions);
 		}
 
-		this.setReact(props);
 		const hasMounted = false;
 		const cause = null;
 
@@ -106,18 +92,6 @@ class DataSearch extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.dataSearch,
-			);
-			this.props.updateComponentProps(
-				this.internalComponent,
-				this.props,
-				componentTypes.dataSearch,
-			);
-		});
 		checkSomePropChange(
 			this.props,
 			prevProps,
@@ -147,8 +121,6 @@ class DataSearch extends Component {
 		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'customQuery')) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
-
-		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
 		if (Array.isArray(this.props.suggestions) && this.state.currentValue.trim().length) {
 			// shallow check allows us to set suggestions even if the next set
@@ -206,11 +178,6 @@ class DataSearch extends Component {
 		}
 	}
 
-	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
-		this.props.removeComponent(this.internalComponent);
-	}
-
 	// returns size and aggs property
 	getBasicQueryOptions = () => {
 		const { aggregationField, size } = this.props;
@@ -219,18 +186,6 @@ class DataSearch extends Component {
 			queryOptions.aggs = getCompositeAggsQuery({}, this.props, null, true).aggs;
 		}
 		return queryOptions;
-	};
-
-	setReact = (props) => {
-		const { react } = props;
-		if (react) {
-			const newReact = pushToAndClause(react, this.internalComponent);
-			props.watchComponent(props.componentId, newReact);
-		} else {
-			props.watchComponent(props.componentId, {
-				and: this.internalComponent,
-			});
-		}
 	};
 
 	static highlightQuery = (props) => {
@@ -941,19 +896,13 @@ class DataSearch extends Component {
 }
 
 DataSearch.propTypes = {
-	addComponent: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
 	options: types.options,
 	selectedValue: types.selectedValue,
 	suggestions: types.suggestions,
 	rawData: types.rawData,
 	aggregationData: types.aggregationData,
-	setComponentProps: types.funcRequired,
-	updateComponentProps: types.funcRequired,
 	setCustomQuery: types.funcRequired,
 	setDefaultQuery: types.funcRequired,
 	setCustomHighlightOptions: types.funcRequired,
@@ -1070,29 +1019,30 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
 	setCustomHighlightOptions: (component, options) =>
 		dispatch(setCustomHighlightOptions(component, options)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
-	updateComponentProps: (component, options, componentType) =>
-		dispatch(updateComponentProps(component, options, componentType)),
-	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	triggerAnalytics: searchPosition => dispatch(recordSuggestionClick(searchPosition)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(withTheme(props => <DataSearch ref={props.myForwardedRef} {...props} />));
+)(
+	withTheme(props => (
+		<ComponentWrapper
+			{...props}
+			internalComponent
+			componentType={componentTypes.dataSearch}
+		>
+			{() => <DataSearch ref={props.myForwardedRef} {...props} />}
+		</ComponentWrapper>
+	)),
+);
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (

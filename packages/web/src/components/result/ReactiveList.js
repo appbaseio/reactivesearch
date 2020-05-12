@@ -1,24 +1,19 @@
 import React, { Component } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
+import { withTheme } from 'emotion-theming';
 import {
-	addComponent,
-	removeComponent,
 	setStreaming,
-	watchComponent,
 	setQueryOptions,
 	updateQuery,
 	loadMore,
 	recordResultClick,
 	setValue,
-	setQueryListener,
-	setComponentProps,
 	updateComponentProps,
 	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
 	getQueryOptions,
-	pushToAndClause,
 	getClassName,
 	parseHits,
 	checkSomePropChange,
@@ -29,7 +24,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-
+import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import Pagination from './addons/Pagination';
 import PoweredBy from './addons/PoweredBy';
 
@@ -42,9 +37,9 @@ import {
 	isFunction,
 	getComponent,
 	hasCustomRenderer,
-	getValidPropsKeys,
 } from '../../utils';
 import Results from './addons/Results';
+import ComponentWrapper from '../basic/ComponentWrapper';
 
 class ReactiveList extends Component {
 	static ResultCardsWrapper = ({ children, ...rest }) => (
@@ -79,22 +74,13 @@ class ReactiveList extends Component {
 			from: this.initialFrom,
 			currentPage,
 		};
-		this.internalComponent = `${props.componentId}__internal`;
+		this.internalComponent = getInternalComponentID(props.componentId);
 		this.sortOptionIndex = this.props.defaultSortOption
 			? this.props.sortOptions.findIndex(s => s.label === this.props.defaultSortOption)
 			: 0;
-		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
-		props.setComponentProps(props.componentId, props, componentTypes.reactiveList);
-		props.setComponentProps(this.internalComponent, props, componentTypes.reactiveList);
 	}
 
 	componentDidMount() {
-		this.props.addComponent(this.internalComponent);
-		this.props.addComponent(this.props.componentId);
-		this.props.setComponentProps(this.props.componentId, {
-			...this.props,
-			componentType: componentTypes.reactiveList,
-		});
 		if (this.props.stream) {
 			this.props.setStreaming(this.props.componentId, true);
 		}
@@ -168,9 +154,6 @@ class ReactiveList extends Component {
 			);
 		}
 
-		// query will be executed here
-		this.setReact(this.props);
-
 		this.domNode = window;
 		if (this.showInfiniteScroll) {
 			const { scrollTarget } = this.props;
@@ -185,18 +168,6 @@ class ReactiveList extends Component {
 
 	componentDidUpdate(prevProps) {
 		const totalPages = Math.ceil(this.props.total / this.props.size) || 0;
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.reactiveList,
-			);
-			this.props.updateComponentProps(
-				this.internalComponent,
-				this.props,
-				componentTypes.reactiveList,
-			);
-		});
 		if (this.props.onData) {
 			checkSomePropChange(
 				this.props,
@@ -291,9 +262,6 @@ class ReactiveList extends Component {
 			this.props.setStreaming(this.props.componentId, this.props.stream);
 		}
 
-		if (!isEqual(prevProps.react, this.props.react)) {
-			this.setReact(this.props);
-		}
 		if (this.shouldRenderPagination) {
 			// called when page is changed
 			if (this.props.isLoading && (this.props.hits || prevProps.hits)) {
@@ -401,9 +369,6 @@ class ReactiveList extends Component {
 	}
 
 	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
-		this.props.removeComponent(this.internalComponent);
-
 		if (this.domNode) {
 			this.domNode.removeEventListener('scroll', this.scrollHandler);
 		}
@@ -478,18 +443,6 @@ class ReactiveList extends Component {
 	get hasCustomRenderer() {
 		return hasCustomRenderer(this.props);
 	}
-
-	setReact = (props) => {
-		const { react } = props;
-		if (react) {
-			const newReact = pushToAndClause(react, this.internalComponent);
-			props.watchComponent(props.componentId, newReact);
-		} else {
-			props.watchComponent(props.componentId, {
-				and: this.internalComponent,
-			});
-		}
-	};
 
 	scrollToTop = () => {
 		if (this.domNode === window) {
@@ -813,16 +766,12 @@ class ReactiveList extends Component {
 }
 
 ReactiveList.propTypes = {
-	addComponent: types.funcRequired,
 	loadMore: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	onQueryChange: types.func,
 	onError: types.func,
 	setPageURL: types.func,
 	setQueryOptions: types.funcRequired,
 	setDefaultQuery: types.funcRequired,
-	setComponentProps: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	setStreaming: types.func,
 	searchState: types.dateObject,
@@ -934,30 +883,32 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchtoProps = dispatch => ({
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
-	addComponent: component => dispatch(addComponent(component)),
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
 	updateComponentProps: (component, options, componentType) =>
 		dispatch(updateComponentProps(component, options, componentType)),
 	loadMore: (component, options, append, appendAggs) =>
 		dispatch(loadMore(component, options, append, appendAggs)),
-	removeComponent: component => dispatch(removeComponent(component)),
 	setPageURL: (component, value, label, showFilter, URLParams) =>
 		dispatch(setValue(component, value, label, showFilter, URLParams)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
 	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	triggerAnalytics: searchPosition => dispatch(recordResultClick(searchPosition)),
 });
+
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => <ReactiveList ref={props.myForwardedRef} {...props} />);
+)(withTheme(props => (
+	<ComponentWrapper
+		internalComponent
+		componentType={componentTypes.reactiveList}
+		{...props}
+	>
+		{() => <ReactiveList ref={props.myForwardedRef} {...props} />}
+	</ComponentWrapper>
+)));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (

@@ -1,21 +1,10 @@
 import React, { Component } from 'react';
 
-import {
-	addComponent,
-	removeComponent,
-	watchComponent,
-	updateQuery,
-	setQueryListener,
-	setQueryOptions,
-	setComponentProps,
-	setCustomQuery,
-	updateComponentProps,
-} from '@appbaseio/reactivecore/lib/actions';
+import { updateQuery, setQueryOptions, setCustomQuery } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
-	checkPropChange,
 	checkSomePropChange,
 	getClassName,
 	updateCustomQuery,
@@ -24,11 +13,11 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
+import { connect, getRangeQueryWithNullValues } from '../../utils';
+import ComponentWrapper from '../basic/ComponentWrapper';
 
 class SingleRange extends Component {
 	constructor(props) {
@@ -42,14 +31,8 @@ class SingleRange extends Component {
 			currentValue,
 		};
 		this.type = 'range';
-
-		props.addComponent(props.componentId);
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
-		// Update props in store
-		props.setComponentProps(props.componentId, props, componentTypes.singleRange);
 		// Set custom query in store
 		updateCustomQuery(props.componentId, props, currentValue);
-		this.setReact(props);
 		const hasMounted = false;
 
 		if (currentValue) {
@@ -58,15 +41,6 @@ class SingleRange extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.singleRange,
-			);
-		});
-		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
-
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
@@ -85,16 +59,6 @@ class SingleRange extends Component {
 			} else {
 				this.setValue(this.state.currentValue);
 			}
-		}
-	}
-
-	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
-	}
-
-	setReact(props) {
-		if (props.react) {
-			props.watchComponent(props.componentId, props.react);
 		}
 	}
 
@@ -226,15 +190,9 @@ class SingleRange extends Component {
 }
 
 SingleRange.propTypes = {
-	addComponent: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
-	setComponentProps: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	updateComponentProps: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -276,17 +234,8 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
-	updateComponentProps: (component, options, componentType) =>
-		dispatch(updateComponentProps(component, options, componentType)),
-	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
 });
@@ -294,7 +243,11 @@ const mapDispatchtoProps = dispatch => ({
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => <SingleRange ref={props.myForwardedRef} {...props} />);
+)(props => (
+	<ComponentWrapper {...props} componentType={componentTypes.singleRange}>
+		{() => <SingleRange ref={props.myForwardedRef} {...props} />}
+	</ComponentWrapper>
+));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
