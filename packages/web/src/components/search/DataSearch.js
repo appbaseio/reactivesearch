@@ -32,6 +32,7 @@ import {
 	getResultStats,
 	updateCustomQuery,
 	updateDefaultQuery,
+	getTopSuggestions,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
@@ -47,9 +48,11 @@ import {
 	connect,
 	isFunction,
 	getComponent,
-	hasCustomRenderer,
+	getQuerySuggestionsComponent,
 	getValidPropsKeys,
 	handleCaretPosition,
+	hasCustomRenderer,
+	hasQuerySuggestionsRenderer,
 	isQueryIdentical,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
@@ -761,7 +764,7 @@ class DataSearch extends Component {
 		return null;
 	};
 
-	getComponent = (downshiftProps = {}) => {
+	getComponent = (downshiftProps = {}, isQuerySuggestionsRender = false) => {
 		const {
 			error,
 			isLoading,
@@ -769,6 +772,7 @@ class DataSearch extends Component {
 			promotedResults,
 			customData,
 			rawData,
+			querySuggestions,
 		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
@@ -783,7 +787,20 @@ class DataSearch extends Component {
 			value: currentValue,
 			triggerClickAnalytics: this.triggerClickAnalytics,
 			resultStats: this.stats,
+			querySuggestions: getTopSuggestions(querySuggestions),
 		};
+		if (isQuerySuggestionsRender) {
+			return getQuerySuggestionsComponent(
+				{
+					downshiftProps,
+					suggestions: data.querySuggestions,
+					value: currentValue,
+					loading: isLoading,
+					error,
+				},
+				this.props,
+			);
+		}
 		return getComponent(data, this.props);
 	};
 
@@ -822,7 +839,17 @@ class DataSearch extends Component {
 	render() {
 		const { currentValue } = this.state;
 		const suggestionsList = this.parsedSuggestions;
-		const { theme, themePreset, size } = this.props;
+		const {
+			theme,
+			themePreset,
+			size,
+			querySuggestions,
+			enableQuerySuggestions,
+			showDistinctSuggestions,
+		} = this.props;
+		const topSuggestions = enableQuerySuggestions
+			? getTopSuggestions(querySuggestions, currentValue, showDistinctSuggestions)
+			: [];
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -888,14 +915,44 @@ class DataSearch extends Component {
 											theme,
 										)} ${getClassName(this.props.innerClass, 'list')}`}
 									>
+										{hasQuerySuggestionsRenderer(this.props)
+											? this.getComponent(
+												{
+													getInputProps,
+													getItemProps,
+													isOpen,
+													highlightedIndex,
+													...rest,
+												},
+												true,
+											)
+											: topSuggestions.map((sugg, index) => (
+												<li
+													{...getItemProps({ item: sugg })}
+													key={`${index + 1}-${sugg.value}`}
+													style={{
+														backgroundColor: this.getBackgroundColor(
+															highlightedIndex,
+															index,
+														),
+													}}
+												>
+													<SuggestionItem
+														currentValue={currentValue}
+														suggestion={sugg}
+													/>
+												</li>
+											))}
 										{suggestionsList.slice(0, size).map((item, index) => (
 											<li
 												{...getItemProps({ item })}
-												key={`${index + 1}-${item.value}`}
+												key={`${index + topSuggestions.length + 1}-${
+													item.value
+												}`}
 												style={{
 													backgroundColor: this.getBackgroundColor(
 														highlightedIndex,
-														index,
+														index + topSuggestions.length,
 													),
 												}}
 											>
@@ -966,6 +1023,7 @@ DataSearch.propTypes = {
 	autoFocus: types.bool,
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
+	enableQuerySuggestions: types.bool,
 	beforeValueChange: types.func,
 	className: types.string,
 	clearIcon: types.children,
@@ -1007,8 +1065,10 @@ DataSearch.propTypes = {
 	onValueSelected: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
+	querySuggestions: types.hits,
 	react: types.react,
 	render: types.func,
+	renderQuerySuggestions: types.func,
 	renderError: types.title,
 	parseSuggestion: types.func,
 	renderNoSuggestion: types.title,
@@ -1035,6 +1095,7 @@ DataSearch.defaultProps = {
 	debounce: 0,
 	downShiftProps: {},
 	enableSynonyms: true,
+	enableQuerySuggestions: false,
 	iconPosition: 'left',
 	placeholder: 'Search',
 	queryFormat: 'or',
@@ -1067,6 +1128,7 @@ const mapStateToProps = (state, props) => ({
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
+	querySuggestions: state.querySuggestions[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
