@@ -1,5 +1,5 @@
 import React from 'react';
-import { css, cx } from 'react-emotion';
+import { css } from '@emotion/core';
 
 import Flex from '../../../styles/Flex';
 import Highlight from './Highlight';
@@ -46,7 +46,7 @@ const SuggestionItem = ({ currentValue, suggestion }) => {
 						</div>
 					)}
 					{description && (
-						<div className={cx('trim', css({ marginTop: 3 }))}>
+						<div css={['trim', css({ marginTop: 3 })]}>
 							<Highlight
 								searchWords={currentValue.split(' ')}
 								textToHighlight={description}
