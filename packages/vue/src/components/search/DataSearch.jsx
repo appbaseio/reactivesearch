@@ -295,7 +295,7 @@ const DataSearch = {
 				return getQuerySuggestionsComponent(
 					{
 						downshiftProps,
-						suggestions: data.querySuggestions,
+						data: data.querySuggestions,
 						value: currentValue,
 						loading: this.isLoading,
 						error: this.error,
