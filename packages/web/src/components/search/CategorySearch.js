@@ -25,6 +25,7 @@ import {
 	getResultStats,
 	updateCustomQuery,
 	updateDefaultQuery,
+	getTopSuggestions,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
@@ -44,6 +45,8 @@ import {
 	hasCustomRenderer,
 	handleCaretPosition,
 	isQueryIdentical,
+	hasQuerySuggestionsRenderer,
+	getQuerySuggestionsComponent,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -812,7 +815,7 @@ class CategorySearch extends Component {
 		return null;
 	};
 
-	getComponent = (downshiftProps = {}) => {
+	getComponent = (downshiftProps = {}, isQuerySuggestionsRender = false) => {
 		const {
 			error,
 			isLoading,
@@ -838,7 +841,20 @@ class CategorySearch extends Component {
 			rawCategories: this.props.categories,
 			triggerClickAnalytics: this.triggerClickAnalytics,
 			resultStats: this.stats,
+			querySuggestions: this.topSuggestions,
 		};
+		if (isQuerySuggestionsRender) {
+			return getQuerySuggestionsComponent(
+				{
+					downshiftProps,
+					data: this.topSuggestions,
+					value: currentValue,
+					loading: isLoading,
+					error,
+				},
+				this.props,
+			);
+		}
 		return getComponent(data, this.props);
 	};
 
@@ -903,6 +919,14 @@ class CategorySearch extends Component {
 			finalSuggestionsList = [...categorySuggestions, ...suggestionsList];
 		}
 		return withClickIds(finalSuggestionsList);
+	}
+
+	get topSuggestions() {
+		const { enableQuerySuggestions, querySuggestions, showDistinctSuggestions } = this.props;
+		const { currentValue } = this.state;
+		return enableQuerySuggestions
+			? getTopSuggestions(querySuggestions, currentValue, showDistinctSuggestions)
+			: [];
 	}
 
 	triggerClickAnalytics = (searchPosition) => {
@@ -988,14 +1012,44 @@ class CategorySearch extends Component {
 												theme,
 											)} ${getClassName(this.props.innerClass, 'list')}`}
 										>
+											{hasQuerySuggestionsRenderer(this.props)
+												? this.getComponent(
+													{
+														getInputProps,
+														getItemProps,
+														isOpen,
+														highlightedIndex,
+														...rest,
+													},
+													true,
+												)
+												: this.topSuggestions.map((sugg, index) => (
+													<li
+														{...getItemProps({ item: sugg })}
+														key={`${index + 1}-${sugg.value}`}
+														style={{
+															backgroundColor: this.getBackgroundColor(
+																highlightedIndex,
+																index,
+															),
+														}}
+													>
+														<SuggestionItem
+															currentValue={currentValue}
+															suggestion={sugg}
+														/>
+													</li>
+												))}
 											{finalSuggestionsList.slice(0, size).map((item, index) => (
 												<li
 													{...getItemProps({ item })}
-													key={`${index + 1}-${item.value}`}
+													key={`${index + this.topSuggestions.length + 1}-${
+														item.value
+													}`}
 													style={{
 														backgroundColor: this.getBackgroundColor(
 															highlightedIndex,
-															index,
+															this.topSuggestions.length + index,
 														),
 													}}
 												>
@@ -1070,6 +1124,7 @@ CategorySearch.propTypes = {
 	autoFocus: types.bool,
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
+	enableQuerySuggestions: types.bool,
 	beforeValueChange: types.func,
 	categoryField: types.string,
 	className: types.string,
@@ -1109,8 +1164,10 @@ CategorySearch.propTypes = {
 	onValueSelected: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
+	querySuggestions: types.hits,
 	react: types.react,
 	renderError: types.title,
+	renderQuerySuggestions: types.func,
 	parseSuggestion: types.func,
 	renderNoSuggestion: types.title,
 	showClear: types.bool,
@@ -1136,6 +1193,7 @@ CategorySearch.defaultProps = {
 	debounce: 0,
 	downShiftProps: {},
 	enableSynonyms: true,
+	enableQuerySuggestions: false,
 	iconPosition: 'left',
 	placeholder: 'Search',
 	queryFormat: 'or',
@@ -1177,6 +1235,7 @@ const mapStateToProps = (state, props) => ({
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
+	querySuggestions: state.querySuggestions[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
