@@ -823,8 +823,6 @@ class CategorySearch extends Component {
 			promotedResults,
 			customData,
 			rawData,
-			querySuggestions,
-			showDistinctSuggestions,
 		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
@@ -843,17 +841,13 @@ class CategorySearch extends Component {
 			rawCategories: this.props.categories,
 			triggerClickAnalytics: this.triggerClickAnalytics,
 			resultStats: this.stats,
-			querySuggestions: getTopSuggestions(
-				querySuggestions,
-				currentValue,
-				showDistinctSuggestions,
-			),
+			querySuggestions: this.topSuggestions,
 		};
 		if (isQuerySuggestionsRender) {
 			return getQuerySuggestionsComponent(
 				{
 					downshiftProps,
-					data: data.querySuggestions,
+					data: this.topSuggestions,
 					value: currentValue,
 					loading: isLoading,
 					error,
@@ -927,6 +921,14 @@ class CategorySearch extends Component {
 		return withClickIds(finalSuggestionsList);
 	}
 
+	get topSuggestions() {
+		const { enableQuerySuggestions, querySuggestions, showDistinctSuggestions } = this.props;
+		const { currentValue } = this.state;
+		return enableQuerySuggestions
+			? getTopSuggestions(querySuggestions, currentValue, showDistinctSuggestions)
+			: [];
+	}
+
 	triggerClickAnalytics = (searchPosition) => {
 		// click analytics would only work client side and after javascript loads
 		this.props.triggerAnalytics(searchPosition);
@@ -941,18 +943,8 @@ class CategorySearch extends Component {
 
 	render() {
 		const { currentValue } = this.state;
-		const {
-			theme,
-			themePreset,
-			size,
-			enableQuerySuggestions,
-			querySuggestions,
-			showDistinctSuggestions,
-		} = this.props;
+		const { theme, themePreset, size } = this.props;
 		const finalSuggestionsList = this.parsedSuggestions;
-		const topSuggestions = enableQuerySuggestions
-			? getTopSuggestions(querySuggestions, currentValue, showDistinctSuggestions)
-			: [];
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -1031,7 +1023,7 @@ class CategorySearch extends Component {
 													},
 													true,
 												)
-												: topSuggestions.map((sugg, index) => (
+												: this.topSuggestions.map((sugg, index) => (
 													<li
 														{...getItemProps({ item: sugg })}
 														key={`${index + 1}-${sugg.value}`}
@@ -1051,11 +1043,13 @@ class CategorySearch extends Component {
 											{finalSuggestionsList.slice(0, size).map((item, index) => (
 												<li
 													{...getItemProps({ item })}
-													key={`${index + topSuggestions.length + 1}-${item.value}`}
+													key={`${index + this.topSuggestions.length + 1}-${
+														item.value
+													}`}
 													style={{
 														backgroundColor: this.getBackgroundColor(
 															highlightedIndex,
-															topSuggestions.length + index,
+															this.topSuggestions.length + index,
 														),
 													}}
 												>

@@ -727,8 +727,6 @@ class DataSearch extends Component {
 			promotedResults,
 			customData,
 			rawData,
-			querySuggestions,
-			showDistinctSuggestions,
 		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
@@ -743,17 +741,13 @@ class DataSearch extends Component {
 			value: currentValue,
 			triggerClickAnalytics: this.triggerClickAnalytics,
 			resultStats: this.stats,
-			querySuggestions: getTopSuggestions(
-				querySuggestions,
-				currentValue,
-				showDistinctSuggestions,
-			),
+			querySuggestions: this.topSuggestions,
 		};
 		if (isQuerySuggestionsRender) {
 			return getQuerySuggestionsComponent(
 				{
 					downshiftProps,
-					data: data.querySuggestions,
+					data: this.topSuggestions,
 					value: currentValue,
 					loading: isLoading,
 					error,
@@ -784,6 +778,14 @@ class DataSearch extends Component {
 		return hasCustomRenderer(this.props);
 	}
 
+	get topSuggestions() {
+		const { enableQuerySuggestions, querySuggestions, showDistinctSuggestions } = this.props;
+		const { currentValue } = this.state;
+		return enableQuerySuggestions
+			? getTopSuggestions(querySuggestions, currentValue, showDistinctSuggestions)
+			: [];
+	}
+
 	triggerClickAnalytics = (searchPosition) => {
 		// click analytics would only work client side and after javascript loads
 		this.props.triggerAnalytics(searchPosition);
@@ -803,13 +805,7 @@ class DataSearch extends Component {
 			theme,
 			themePreset,
 			size,
-			querySuggestions,
-			enableQuerySuggestions,
-			showDistinctSuggestions,
 		} = this.props;
-		const topSuggestions = enableQuerySuggestions
-			? getTopSuggestions(querySuggestions, currentValue, showDistinctSuggestions)
-			: [];
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -886,7 +882,7 @@ class DataSearch extends Component {
 												},
 												true,
 											)
-											: topSuggestions.map((sugg, index) => (
+											: this.topSuggestions.map((sugg, index) => (
 												<li
 													{...getItemProps({ item: sugg })}
 													key={`${index + 1}-${sugg.value}`}
@@ -906,13 +902,13 @@ class DataSearch extends Component {
 										{suggestionsList.slice(0, size).map((item, index) => (
 											<li
 												{...getItemProps({ item })}
-												key={`${index + topSuggestions.length + 1}-${
+												key={`${index + this.topSuggestions.length + 1}-${
 													item.value
 												}`}
 												style={{
 													backgroundColor: this.getBackgroundColor(
 														highlightedIndex,
-														index + topSuggestions.length,
+														index + this.topSuggestions.length,
 													),
 												}}
 											>
