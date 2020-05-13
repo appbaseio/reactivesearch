@@ -853,7 +853,7 @@ class CategorySearch extends Component {
 			return getQuerySuggestionsComponent(
 				{
 					downshiftProps,
-					suggestions: data.querySuggestions,
+					data: data.querySuggestions,
 					value: currentValue,
 					loading: isLoading,
 					error,
