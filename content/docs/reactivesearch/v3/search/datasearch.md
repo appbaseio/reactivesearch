@@ -100,6 +100,9 @@ Example uses:
 
 -   **enableQuerySuggestions** `bool` [optional]
     Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+
+    > Query Suggestions only work when `enableAppbase` prop is `true`.
+
 -   **downShiftProps** `Object` [optional]
     allow passing props directly to the underlying `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
 -   **fieldWeights** `Array` [optional]
@@ -212,6 +215,8 @@ Example uses:
         An object containing the error info.
     -   **`data`**: `array`
         An array of suggestions obtained from combining `promoted` suggestions along with the `hits` .
+    -   **`querySuggestions`**: `array`
+        An array of query suggestions obtained based on search value.
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
@@ -307,7 +312,7 @@ You can render query suggestions in a custom layout by using the `renderQuerySug
         indicates that the query is still in progress.
     -   **`error`**: `object`
         An object containing the error info.
-    -   **`suggestions`**: `array`
+    -   **`data`**: `array`
         An array of query suggestions obtained based on search value.
     -   **`value`**: `string`
         current search input value i.e the search query being used to obtain suggestions.
@@ -322,7 +327,7 @@ You can render query suggestions in a custom layout by using the `renderQuerySug
         enableQuerySuggestions
         renderQuerySuggestions={({
             value,
-            suggestions,
+            data: suggestions,
             downshiftProps: { isOpen, getItemProps, highlightedIndex },
         }) =>
             isOpen &&
