@@ -107,6 +107,16 @@ const DataSearch = {
 			}
 			return withClickIds(suggestionsList);
 		},
+		topSuggestions() {
+			const {
+				enableQuerySuggestions,
+				querySuggestions,
+				showDistinctSuggestions,
+			} = this.$props;
+			return enableQuerySuggestions
+				? getTopSuggestions(querySuggestions, this.currentValue, showDistinctSuggestions)
+				: [];
+		},
 		hasCustomRenderer() {
 			return hasCustomRenderer(this);
 		},
@@ -285,17 +295,13 @@ const DataSearch = {
 				value: currentValue,
 				triggerClickAnalytics: this.triggerClickAnalytics,
 				resultStats: this.stats,
-				querySuggestions: getTopSuggestions(
-					this.querySuggestions,
-					this.currentValue,
-					this.showDistinctSuggestions,
-				),
+				querySuggestions: this.topSuggestions,
 			};
 			if (isQuerySuggestionsRender) {
 				return getQuerySuggestionsComponent(
 					{
 						downshiftProps,
-						data: data.querySuggestions,
+						data: this.topSuggestions,
 						value: currentValue,
 						loading: this.isLoading,
 						error: this.error,
@@ -664,10 +670,7 @@ const DataSearch = {
 		},
 	},
 	render() {
-		const { theme, size, enableQuerySuggestions, showDistinctSuggestions } = this.$props;
-		const topSuggestions = enableQuerySuggestions
-			? getTopSuggestions(this.querySuggestions, this.currentValue, showDistinctSuggestions)
-			: [];
+		const { theme, size } = this.$props;
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -756,7 +759,7 @@ const DataSearch = {
 														},
 														true,
 												  )
-													: topSuggestions.map((sugg, index) => (
+													: this.topSuggestions.map((sugg, index) => (
 														<li
 															{...{
 																domProps: getItemProps({
@@ -796,11 +799,13 @@ const DataSearch = {
 															}}
 															key={`${index
 															+ 1
-															+ topSuggestions.length}-${item.value}`}
+															+ this.topSuggestions.length}-${
+																item.value
+															}`}
 															style={{
 																backgroundColor: this.getBackgroundColor(
 																	highlightedIndex,
-																	index + topSuggestions.length,
+																	index + this.topSuggestions.length,
 																),
 															}}
 														>
