@@ -75,7 +75,8 @@ Example uses:
 -   **enableQuerySuggestions** `bool` [optional]
     Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
 
-    > Note
+    > Note:
+    >
     > Query Suggestions only work when `enableAppbase` prop is `true`.
 
 -   **aggregationField** `String` [optional]
