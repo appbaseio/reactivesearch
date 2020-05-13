@@ -218,6 +218,8 @@ export default {
         An object containing the error info.
     -   **`data`**: `array`
         An array of parsed suggestions obtained from the applied query.
+    -   **`querySuggestions`**: `array`
+        An array of query suggestions obtained based on search value.
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
