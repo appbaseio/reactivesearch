@@ -17,6 +17,8 @@ Analytics Insights provides tips and tricks for your business based on the recen
 
 Analytics Insights helps you to quickly assess that <b>what is going correct and what went wrong</b>. If something is not going well for your business and there is room to improve then we provide a set of recommendations for that particular insight so you can take the next steps.
 
+<div style="height: 0; padding-bottom: calc(51.81% + 35px); position:relative; width: 100%;"><iframe allow="autoplay; gyroscope;" allowfullscreen height="100%" referrerpolicy="strict-origin" src="https://www.kapwing.com/e/5ebbc3276baaa5001357bf40" style="border:0; height:100%; left:0; overflow:hidden; position:absolute; top:0; width:100%" title="Embedded content made with Kapwing" width="100%"></iframe></div>
+
 ### Each Insight Explained
 Let us explain the most important insights and their purposes.
 
