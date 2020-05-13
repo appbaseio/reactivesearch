@@ -91,7 +91,7 @@ Example uses of searchbox UI:
 -   **credentials** `string` [optional]
     Basic auth credentials for authentication purposes. It should be a string of the format `username:password`.
     If you are using an appbase.io app, you will find credentials under your [API credentials page](https://dashboard.appbase.io/app?view=credentials). If you are not using an appbase.io app, credentials may not be necessary - although having an open access to your Elasticsearch cluster is not recommended.
--   **dataField** `string | Array<string | DataField>` [required]
+-   **dataField** `string | Array<string | DataField>` [optional*]
     database field(s) to be queried against. Accepts a String or an Array of either String or `DataField` type. The latter is useful for searching across multiple fields with field weights.<br/>
     Think of field weights as a way to apply weighted search. To use field weights, you can define the `dataField` prop as an array of objects of `DataField` type.<br/>
     The `DataField` type has the following shape:
@@ -101,6 +101,11 @@ Example uses of searchbox UI:
     	weight: number;
     };
     ```
+
+    >   Note:
+    >   This prop is optional only when `enableAppbase` prop is set to `true`.
+    >
+
 -   **showDistinctSuggestions** `Boolean` [optional]
     Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
 	<br/> <br/>
