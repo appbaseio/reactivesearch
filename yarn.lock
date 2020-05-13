@@ -5665,10 +5665,10 @@ appbase-js@^4.0.2-beta.11, appbase-js@^4.0.4:
     url-parser-lite "^0.1.0"
     ws "^6.1.2"
 
-appbase-js@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.6.tgz#3adec9d14ca63d3e06c921e18376d9e885d0697b"
-  integrity sha512-QVi+jB157ZF6GOElbpVQRLefD6bXc6YqOfFRCtW0eIIXwyEXtGIZbOkaBiXKl6jzM+vJ6Q4pbR8/cCForSw0TQ==
+appbase-js@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.1.0.tgz#b2f3e1bd52e1c5f687016cde2f20d2454f7202db"
+  integrity sha512-jQ1yioK8VMg0JyfjsrKRY75OVlTZzH0p9kP7CqadIZuSr5Fkkg982cQZfdcRRxMjAV/2CNIAfwWyzXMsDNuDeQ==
   dependencies:
     cross-fetch "^2.2.2"
     json-stable-stringify "^1.0.1"
