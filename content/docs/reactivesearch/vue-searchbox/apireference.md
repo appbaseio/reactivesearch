@@ -88,6 +88,12 @@ Example uses of searchbox UI:
     -   Query generation happens on server side - protecting against security concerns around query injection.
     -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).
     -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/role/).
+-   **enableQuerySuggestions** `bool` [optional]
+    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+
+    > Note:
+    >
+    > Query Suggestions only work when `enableAppbase` prop is `true`.
 -   **credentials** `string` [optional]
     Basic auth credentials for authentication purposes. It should be a string of the format `username:password`.
     If you are using an appbase.io app, you will find credentials under your [API credentials page](https://dashboard.appbase.io/app?view=credentials). If you are not using an appbase.io app, credentials may not be necessary - although having an open access to your Elasticsearch cluster is not recommended.
@@ -211,6 +217,64 @@ Example uses of searchbox UI:
     can be used to render a message when there is no suggestions found.
 -   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
+-   **renderQuerySuggestions** `Function|slot-scope` [optional]
+    You can render query suggestions in a custom layout by using the `renderQuerySuggestions` as a `prop` or a `slot`.
+    <br/>
+    It accepts an object with these properties:
+    -   **`loading`**: `boolean`
+        indicates that the query is still in progress.
+    -   **`error`**: `object`
+        An object containing the error info.
+    -   **`data`**: `array`
+        An array of query suggestions obtained based on search value.
+    -   **`value`**: `string`
+        current search input value i.e the search query being used to obtain suggestions.
+    -   **`downshiftProps`**: `object`
+        provides the following control props from `downshift` which can be used to bind list items with click/mouse events.
+        -   **isOpen** `boolean`
+            Whether the menu should be considered open or closed. Some aspects of the downshift component respond differently based on this value (for example, if isOpen is true when the user hits "Enter" on the input field, then the item at the highlightedIndex item is selected).
+        -   **getItemProps** `function`
+            Returns the props you should apply to any menu item elements you render.
+        -   **getItemEvents** `function`
+            Returns the events you should apply to any menu item elements you render.
+        -   **highlightedIndex** `number`
+            The index that should be highlighted.
+
+You can use `vue-searchbox` with `renderQuerySuggestions slot` as shown:
+
+```html
+<vue-searchbox
+	:dataField="['original_title', 'original_title.search']"
+    :enableQuerySuggestions="true"
+>
+	<div
+		class="suggestions"
+		slot="renderQuerySuggestions"
+		slot-scope="{
+            error,
+            loading,
+            downshiftProps: { isOpen, highlightedIndex, getItemProps, getItemEvents },
+            data: suggestions,
+        }"
+	>
+		<ul v-if="isOpen">
+			<li
+				style="{ background-color: highlightedIndex ? 'grey' : 'transparent', color: 'green' }"
+				v-for="suggestion in (suggestions || []).map(s => ({
+								label: s.source.authors,
+								value: s.source.authors,
+								key: s._id,
+							}))"
+				v-bind="getItemProps({ item: suggestion })"
+				v-on="getItemEvents({ item: suggestion })"
+				:key="suggestion._id"
+			>
+				{{ suggestion.label }}
+			</li>
+		</ul>
+	</div>
+</vue-searchbox>
+```
 
 ```html
 <vue-searchbox
