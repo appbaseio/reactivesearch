@@ -74,6 +74,10 @@ Example uses:
     number of suggestions to show. Defaults to `10`.
 -   **enableQuerySuggestions** `bool` [optional]
     Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+
+    > Note
+    > Query Suggestions only work when `enableAppbase` prop is `true`.
+
 -   **aggregationField** `String` [optional]
     One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
     You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `render` slot as shown:
@@ -318,7 +322,7 @@ Or you can also use render as prop.
         indicates that the query is still in progress.
     -   **`error`**: `object`
         An object containing the error info.
-    -   **`suggestions`**: `object`
+    -   **`data`**: `array`
         An array of query suggestions obtained based on search value.
     -   **`value`**: `string`
         current search input value i.e the search query being used to obtain suggestions.
@@ -342,6 +346,7 @@ You can use `DataSearch` with `renderQuerySuggestions slot` as shown:
 	componentId="BookSensor"
 	:dataField="['original_title', 'original_title.search']"
 	:URLParams="true"
+    :enableQuerySuggestions="true"
 >
 	<div
 		class="suggestions"
@@ -350,7 +355,7 @@ You can use `DataSearch` with `renderQuerySuggestions slot` as shown:
             error,
             loading,
             downshiftProps: { isOpen, highlightedIndex, getItemProps, getItemEvents },
-            suggestions,
+            data: suggestions,
         }"
 	>
 		<ul v-if="isOpen">
