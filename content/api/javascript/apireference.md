@@ -359,6 +359,38 @@ appbaseRef
 **Returns**
 Promise.
 
+### getQuerySuggestions()
+This method allows you to execute search on `.suggestions` index. It is useful to curate search suggestions based on actual search queries that you are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+Example:
+```javascript
+appbaseRef
+	.getQuerySuggestions([{
+		id: "book_search",
+		dataField: ["key", "key.autosuggest", "key.search"],
+		size: 5,
+		value: "harry"
+	}], {
+		userId: "jon@appbase.io"
+	})
+	.then(function(res) {
+		console.log('suggestions result: ', res);
+	})
+	.catch(function(err) {
+		console.log('suggestions error: ', err);
+	});
+```
+
+**Usage**
+
+`appbaseRef.getQuerySuggestions(params)`
+
+-   **params** It accepts two params:
+    - `query`, an array of objects where each object represents a ReactiveSearch query. Read more at [here](/docs/search/reactivesearch-api/reference/#query-properties)
+	- `settings`, an object consisting of the properties to control your search experience. Read more at [here](/docs/search/reactivesearch-api/reference/#settings-properties)
+
+**Returns**
+Promise.
+
 ## STREAMING DATA
 
 ### getStream()

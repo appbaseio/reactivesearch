@@ -96,7 +96,15 @@ Example uses:
     Defaults to `true`, can be used to `disable/enable` the synonyms behavior for the search query. Read more about it [here](/docs/search/reactivesearch-api/reference/#enablesynonyms)
     > Note:
     >
-    > This property only works with [ReactiveSearch API](/docs/search/reactivesearch-api/) i.e when `enableAppbase` is set to `true` in `ReactiveBase` component.
+    > This property only works with [ReactiveSearch API](/docs/search/reactivesearch-api/) i.e when `enableAppbase` is set to `true` in `ReactiveBase` component.                                                                                                                                                                                                              >
+
+-   **enableQuerySuggestions** `bool` [optional]
+    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+
+    > Note:
+    >
+    > Query Suggestions only work when `enableAppbase` prop is `true`.
+
 -   **downShiftProps** `Object` [optional]
     allow passing props directly to the underlying `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
 -   **fieldWeights** `Array` [optional]
@@ -209,6 +217,8 @@ Example uses:
         An object containing the error info.
     -   **`data`**: `array`
         An array of suggestions obtained from combining `promoted` suggestions along with the `hits` .
+    -   **`querySuggestions`**: `array`
+        An array of query suggestions obtained based on search value.
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
@@ -295,6 +305,57 @@ Or you can also use render function as children
         )
     }
     ```
+
+-   **renderQuerySuggestions** `String or JSX or Function` [optional]
+You can render query suggestions in a custom layout by using the `renderQuerySuggestions` prop.
+    <br/>
+    It accepts an object with these properties:
+    -   **`loading`**: `boolean`
+        indicates that the query is still in progress.
+    -   **`error`**: `object`
+        An object containing the error info.
+    -   **`data`**: `array`
+        An array of query suggestions obtained based on search value.
+    -   **`value`**: `string`
+        current search input value i.e the search query being used to obtain suggestions.
+    -   **`downshiftProps`**: `object`
+        provides all the control props from `downshift` which can be used to bind list items with click/mouse events.
+        Read more about it [here](https://github.com/downshift-js/downshift#children-function).
+
+    ```javascript
+    <DataSearch
+        dataField={['original_title', 'original_title.search']}
+        componentId="BookSensor"
+        enableQuerySuggestions
+        renderQuerySuggestions={({
+            value,
+            data: suggestions,
+            downshiftProps: { isOpen, getItemProps, highlightedIndex },
+        }) =>
+            isOpen &&
+            Boolean(value.length) && (
+                <div>
+                    {(suggestions || []).map((suggestion, index) => (
+                        <div
+                            style={{
+                                padding: 10,
+                                background:
+                                    index === highlightedIndex
+                                        ? '#eee'
+                                        : 'transparent',
+                                color: 'green',
+                            }}
+                            key={suggestion.value}
+                            {...getItemProps({ item: suggestion })}
+                        >
+                            {suggestion.value}
+                        </div>
+                    ))}
+                </div>
+            )
+        }
+    />
+```
 -   **getMicInstance** `Function` [optional]
     You can pass a callback function to get the instance of `SpeechRecognition` object, which can be used to override the default configurations.
 -   **renderMic** `String or JSX or Function` [optional]
