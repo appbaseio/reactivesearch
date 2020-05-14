@@ -195,6 +195,8 @@ Datasets can be configured using the following options.
 		It accepts an object with these properties:
 		-   **`data`**: `array`
 			An array of parsed suggestions obtained from the applied query.
+		-   **`querySuggestions`**: `array`
+		    An array of parsed query suggestions based on search result.
 		-   **`rawData`**: `object`
 			An object of raw response as-is from elasticsearch query.
 		-   **`promotedData`**: `array`
@@ -246,6 +248,41 @@ Datasets can be configured using the following options.
 				}
 			}
 		```
+
+    -  **renderQuerySuggestions** - the template use to display custom query suggestions with a different container (div element) or different layout.
+  	 <br/>
+  		It accepts an object with these properties:
+  		-   **`data`**: `array`
+  			An array of parsed query suggestions obtained from the applied query.
+  		-   **`getItemProps`**: `object`
+  			An function which accepts `suggestion` as argument and returns all the required attributes which make the suggestion accessible and functional.
+
+        ```javascript
+        templates: {
+                    renderQuerySuggestions: function({
+                        data,
+                        getItemProps,
+                    }) {
+                        const suggestionHTML = data
+                            .reduce((agg, i) => {
+                                return (
+                                    agg +
+                                    `
+                                        <div ${getItemProps(i)}>
+                                            ${i.label}
+                                        </div>
+                                    `
+                                );
+                            }, '');
+                        return `
+                            <div class="shadow-sm p-2 text-light bg-primary">
+                                Query Suggestion Results
+                            </div>
+                            ${suggestionHTML}
+                        `;
+                    }
+                }
+        ```
 
 -   **debounce** – If set, will postpone the source execution until after `debounce` milliseconds
     have elapsed since the last time it was invoked.
