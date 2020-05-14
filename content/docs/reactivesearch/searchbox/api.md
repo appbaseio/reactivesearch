@@ -252,10 +252,10 @@ Datasets can be configured using the following options.
     -  **renderQuerySuggestions** - the template use to display custom query suggestions with a different container (div element) or different layout.
   	 <br/>
   		It accepts an object with these properties:
-  		-   **`data`**: `array`
-  			An array of parsed query suggestions obtained from the applied query.
-  		-   **`getItemProps`**: `object`
-  			An function which accepts `suggestion` as argument and returns all the required attributes which make the suggestion accessible and functional.
+        -   **`data`**: `array`
+            An array of parsed query suggestions obtained from the applied query.
+        -   **`getItemProps`**: `object`
+            An function which accepts `suggestion` as argument and returns all the required attributes which make the suggestion accessible and functional.
 
         ```javascript
         templates: {
