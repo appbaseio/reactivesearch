@@ -5,7 +5,7 @@
 			credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d"
 		>
 			<DataSearch
-				categoryField="authors.raw"
+				categoryField="authors.keyword"
 				componentId="BookSensorSearch"
 				:dataField="['original_title', 'original_title.search']"
 				:URLParams="true"
@@ -25,12 +25,12 @@
 			/>
 			<SingleList
 				componentId="Authors"
-				data-field="authors.raw"
+				data-field="authors.keyword"
 				class="single-list-container"
 			/>
 			<ReactiveList
 				componentId="SearchResult"
-				data-field="original_title.raw"
+				data-field="original_title.keyword"
 				class="result-list-container"
 				:pagination="true"
 				:from="0"

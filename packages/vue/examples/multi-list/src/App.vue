@@ -6,13 +6,13 @@
 		>
 			<MultiList
 				componentId="Authors"
-				dataField="authors.raw"
+				dataField="authors.keyword"
 				className="multi-list-container"
 				:showCount="true"
 			/>
 			<ReactiveList
 				componentId="SearchResult"
-				dataField="original_title.raw"
+				dataField="original_title.keyword"
 				className="result-list-container"
 				:pagination="true"
 				:from="0"

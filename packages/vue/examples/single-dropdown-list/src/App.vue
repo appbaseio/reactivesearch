@@ -4,10 +4,10 @@
 			app="good-books-ds"
 			credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d"
 		>
-			<SingleDropdownList componentId="BookSensor" dataField="original_series.raw" />
+			<SingleDropdownList componentId="BookSensor" dataField="original_series.keyword" />
 			<ReactiveList
 				componentId="SearchResult"
-				dataField="original_title.raw"
+				dataField="original_title.keyword"
 				className="result-list-container"
 				:pagination="true"
 				:from="0"

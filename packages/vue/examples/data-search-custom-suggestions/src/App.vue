@@ -6,7 +6,7 @@
 		>
 			<DataSearch
 				class="result-list-container"
-				categoryField="authors.raw"
+				categoryField="authors.keyword"
 				componentId="BookSensor"
 				:dataField="['original_title', 'original_title.search']"
 				:URLParams="true"
@@ -40,7 +40,7 @@
 			</DataSearch>
 			<ReactiveList
 				componentId="SearchResult"
-				data-field="original_title.raw"
+				data-field="original_title.keyword"
 				class="result-list-container"
 				:pagination="true"
 				:from="0"

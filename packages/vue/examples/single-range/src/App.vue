@@ -17,7 +17,7 @@
 			/>
 			<ReactiveList
 				componentId="SearchResult"
-				dataField="original_title.raw"
+				dataField="original_title.keyword"
 				className="result-list-container"
 				:pagination="true"
 				:from="0"
