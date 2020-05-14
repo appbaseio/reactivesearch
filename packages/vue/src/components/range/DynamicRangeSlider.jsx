@@ -80,10 +80,11 @@ const DynamicRangeSlider = {
 			this.componentId,
 			this.setCustomQuery,
 			this.$props,
-			this.state.currentValue,
+			this.currentValue,
 		);
 	},
 	mounted() {
+		this.setReact();
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
@@ -111,7 +112,6 @@ const DynamicRangeSlider = {
 
 		// get range before executing other queries
 		this.updateRangeQueryOptions();
-		this.setReact();
 	},
 
 	beforeUpdate() {

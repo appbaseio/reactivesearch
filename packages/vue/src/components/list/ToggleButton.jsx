@@ -61,7 +61,6 @@ const ToggleButton = {
 			this.handleToggle(this.$data.currentValue, true, props, hasMounted);
 		}
 		this.addComponent(props.componentId);
-		this.setReact(props);
 	},
 	created() {
 		const onQueryChange = (...args) => {
@@ -76,6 +75,7 @@ const ToggleButton = {
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
 	mounted() {
+		this.setReact(this.$props);
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {

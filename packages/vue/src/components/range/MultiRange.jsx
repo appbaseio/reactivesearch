@@ -175,6 +175,7 @@ const MultiRange = {
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
 	mounted() {
+		this.setReact(this.$props);
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
@@ -184,7 +185,6 @@ const MultiRange = {
 	},
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
-		this.setReact(this.$props);
 		if (this.selectedValue) {
 			this.selectItem(this.selectedValue, true);
 		} else if (this.$props.value) {
