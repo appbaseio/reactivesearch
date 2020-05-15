@@ -72,6 +72,13 @@ Example uses:
 
 -   **size** `Number` [optional]
     number of suggestions to show. Defaults to `10`.
+-   **enableQuerySuggestions** `bool` [optional]
+    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+
+    > Note:
+    >
+    > Query Suggestions only work when `enableAppbase` prop is `true`.
+
 -   **aggregationField** `String` [optional]
     One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
     You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `render` slot as shown:
@@ -212,6 +219,8 @@ export default {
         An object containing the error info.
     -   **`data`**: `array`
         An array of parsed suggestions obtained from the applied query.
+    -   **`querySuggestions`**: `array`
+        An array of query suggestions obtained based on search value.
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
@@ -262,11 +271,6 @@ You can use `DataSearch` with `render slot` as shown:
 		<ul v-if="isOpen">
 			<li
 				style="{ background-color: highlightedIndex ? 'grey' : 'transparent' }"
-				v-for="suggestion in (suggestions || []).map(s => ({
-								label: s.source.authors,
-								value: s.source.authors,
-								key: s._id,
-							}))"
 				v-bind="getItemProps({ item: suggestion })"
 				v-on="getItemEvents({ item: suggestion })"
 				:key="suggestion._id"
@@ -312,6 +316,69 @@ Or you can also use render as prop.
     </template>
 ```
 
+
+-   **renderQuerySuggestions** `Function|slot-scope` [optional]
+    You can render query suggestions in a custom layout by using the `renderQuerySuggestions` as a `prop` or a `slot`.
+    <br/>
+    It accepts an object with these properties:
+    -   **`loading`**: `boolean`
+        indicates that the query is still in progress.
+    -   **`error`**: `object`
+        An object containing the error info.
+    -   **`data`**: `array`
+        An array of query suggestions obtained based on search value.
+    -   **`value`**: `string`
+        current search input value i.e the search query being used to obtain suggestions.
+    -   **`downshiftProps`**: `object`
+        provides the following control props from `downshift` which can be used to bind list items with click/mouse events.
+        -   **isOpen** `boolean`
+            Whether the menu should be considered open or closed. Some aspects of the downshift component respond differently based on this value (for example, if isOpen is true when the user hits "Enter" on the input field, then the item at the highlightedIndex item is selected).
+        -   **getItemProps** `function`
+            Returns the props you should apply to any menu item elements you render.
+        -   **getItemEvents** `function`
+            Returns the events you should apply to any menu item elements you render.
+        -   **highlightedIndex** `number`
+            The index that should be highlighted.
+
+You can use `DataSearch` with `renderQuerySuggestions slot` as shown:
+
+```html
+<data-search
+	class="result-list-container"
+	categoryField="authors.raw"
+	componentId="BookSensor"
+	:dataField="['original_title', 'original_title.search']"
+	:URLParams="true"
+    :enableQuerySuggestions="true"
+>
+	<div
+		class="suggestions"
+		slot="renderQuerySuggestions"
+		slot-scope="{
+            error,
+            loading,
+            downshiftProps: { isOpen, highlightedIndex, getItemProps, getItemEvents },
+            data: suggestions,
+        }"
+	>
+		<ul v-if="isOpen">
+			<li
+				style="{ background-color: highlightedIndex ? 'grey' : 'transparent', color: 'green' }"
+				v-for="suggestion in (suggestions || []).map(s => ({
+								label: s.source.authors,
+								value: s.source.authors,
+								key: s._id,
+							}))"
+				v-bind="getItemProps({ item: suggestion })"
+				v-on="getItemEvents({ item: suggestion })"
+				:key="suggestion._id"
+			>
+				{{ suggestion.label }}
+			</li>
+		</ul>
+	</div>
+</data-search>
+```
 -   **getMicInstance** `Function` [optional]
     You can pass a callback function to get the instance of `SpeechRecognition` object, which can be used to override the default configurations.
 -   **renderMic** `String|Function|slot-scope` [optional]
