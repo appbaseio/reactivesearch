@@ -16,6 +16,7 @@ import {
 	getValidPropsKeys,
 	updateCustomQuery,
 	updateDefaultQuery,
+	isQueryIdentical,
 } from '../../utils/index';
 
 const {
@@ -96,12 +97,17 @@ const MultiDropdownList = {
 		});
 		// Update props in store
 		this.setComponentProps(this.componentId, this.$props, componentTypes.multiDropdownList);
-		this.setComponentProps(this.internalComponent, this.$props, componentTypes.multiDropdownList);
+		this.setComponentProps(
+			this.internalComponent,
+			this.$props,
+			componentTypes.multiDropdownList,
+		);
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 	},
 	mounted() {
+		this.setReact(this.$props);
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
@@ -122,7 +128,6 @@ const MultiDropdownList = {
 		this.addComponent(this.internalComponent);
 		this.addComponent(this.$props.componentId);
 		this.updateQueryOptions(this.$props);
-		this.setReact(this.$props);
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue, true);
@@ -195,6 +200,16 @@ const MultiDropdownList = {
 		value(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				this.setValue(newVal, true);
+			}
+		},
+		defaultQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateDefaultQueryHandler(this.$data.currentValue, this.$props);
+			}
+		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQueryHandler(this.componentId, this.$data.currentValue, this.$props);
 			}
 		},
 	},
@@ -356,6 +371,27 @@ const MultiDropdownList = {
 			);
 		},
 
+		updateDefaultQueryHandler(value, props) {
+			let defaultQueryOptions;
+			let query = MultiDropdownList.defaultQuery(value, props);
+			if (this.defaultQuery) {
+				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
+				if (defaultQueryToBeSet.query) {
+					({ query } = defaultQueryToBeSet);
+				}
+				defaultQueryOptions = getOptionsFromQuery(defaultQueryToBeSet);
+				// Update calculated default query in store
+				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
+			}
+			this.setQueryOptions(this.internalComponent, defaultQueryOptions);
+			this.updateQuery({
+				componentId: this.internalComponent,
+				query,
+				value,
+				componentType: componentTypes.multiDropdownList,
+			});
+		},
+
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = MultiDropdownList.defaultQuery(value, props);
@@ -373,7 +409,7 @@ const MultiDropdownList = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'MULTIDROPDOWNLIST',
+				componentType: componentTypes.multiDropdownList,
 			});
 		},
 

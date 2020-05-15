@@ -15,6 +15,7 @@ import {
 	getValidPropsKeys,
 	updateCustomQuery,
 	updateDefaultQuery,
+	isQueryIdentical,
 } from '../../utils/index';
 
 const {
@@ -94,12 +95,17 @@ const SingleDropdownList = {
 		});
 		// Update props in store
 		this.setComponentProps(this.componentId, this.$props, componentTypes.singleDropdownList);
-		this.setComponentProps(this.internalComponent, this.$props, componentTypes.singleDropdownList);
+		this.setComponentProps(
+			this.internalComponent,
+			this.$props,
+			componentTypes.singleDropdownList,
+		);
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 	},
 	mounted() {
+		this.setReact(this.$props);
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
@@ -120,7 +126,6 @@ const SingleDropdownList = {
 		this.addComponent(this.internalComponent);
 		this.addComponent(this.$props.componentId);
 		this.updateQueryOptions(this.$props);
-		this.setReact(this.$props);
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
@@ -185,6 +190,16 @@ const SingleDropdownList = {
 		selectedValue(newVal) {
 			if (this.$data.currentValue !== newVal) {
 				this.setValue(newVal || '');
+			}
+		},
+		defaultQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateDefaultQueryHandler(this.$data.currentValue, this.$props);
+			}
+		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQueryHandler(this.componentId, this.$data.currentValue, this.$props);
 			}
 		},
 	},
@@ -289,6 +304,27 @@ const SingleDropdownList = {
 			}
 		},
 
+		updateDefaultQueryHandler(value, props) {
+			let defaultQueryOptions;
+			let query = SingleDropdownList.defaultQuery(value, props);
+			if (this.defaultQuery) {
+				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
+				if (defaultQueryToBeSet.query) {
+					({ query } = defaultQueryToBeSet);
+				}
+				defaultQueryOptions = getOptionsFromQuery(defaultQueryToBeSet);
+				// Update calculated default query in store
+				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
+			}
+			this.setQueryOptions(this.internalComponent, defaultQueryOptions);
+			this.updateQuery({
+				componentId: this.internalComponent,
+				query,
+				value,
+				componentType: componentTypes.singleDropdownList,
+			});
+		},
+
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = SingleDropdownList.defaultQuery(value, props);
@@ -306,7 +342,7 @@ const SingleDropdownList = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'SINGLEDROPDOWNLIST',
+				componentType: componentTypes.singleDropdownList,
 			});
 		},
 

@@ -457,22 +457,39 @@ class ReactiveList extends Component {
 	static generateQueryOptions = (props) => {
 		// simulate default (includeFields and excludeFields) props to generate consistent query
 		const options = getQueryOptions({ includeFields: ['*'], excludeFields: [], ...props });
-		options.from = props.currentPage ? (props.currentPage - 1) * (props.size || 10) : 0;
-		options.size = props.size || 10;
+		const {
+			size, dataField, defaultSortOption, sortOptions: sortOptionsNew, currentPage, sortBy,
+		} = props;
+		options.from = currentPage ? (currentPage - 1) * (size || 10) : 0;
+		options.size = size || 10;
 
-		if (props.sortOptions) {
-			options.sort = [
-				{
-					[props.sortOptions[0].dataField]: {
-						order: props.sortOptions[0].sortBy,
-					},
+		const getSortOption = () => {
+			if (defaultSortOption) {
+				const sortOption = sortOptionsNew.find(option => (option.label === defaultSortOption));
+				if (sortOption) {
+					return {
+						[sortOption.dataField]: {
+							order: sortOption.sortBy,
+						},
+					};
+				}
+			}
+			return {
+				[sortOptionsNew[0].dataField]: {
+					order: sortOptionsNew[0].sortBy,
 				},
+			};
+		};
+
+		if (sortOptionsNew) {
+			options.sort = [
+				getSortOption(),
 			];
-		} else if (props.sortBy) {
+		} else if (sortBy) {
 			options.sort = [
 				{
-					[props.dataField]: {
-						order: props.sortBy,
+					[dataField]: {
+						order: sortBy,
 					},
 				},
 			];
