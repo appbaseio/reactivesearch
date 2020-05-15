@@ -213,6 +213,86 @@ Example uses of searchbox UI:
 *   **URLParams** `Boolean` [optional]
     enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
 
+-   **render** `Function|slot-scope` [optional]
+    You can render suggestions in a custom layout by using the `render` as a `prop` or a `slot`.
+    <br/>
+    It accepts an object with these properties:
+    -   **`loading`**: `boolean`
+        indicates that the query is still in progress.
+    -   **`error`**: `object`
+        An object containing the error info.
+    -   **`data`**: `array`
+        An array of parsed suggestions obtained from the applied query.
+    -   **`querySuggestions`**: `array`
+        An array of query suggestions obtained based on search value.
+    -   **`rawData`** `object`
+        An object of raw response as-is from elasticsearch query.
+    -   **`promotedData`**: `array`
+        An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/)
+    -   **`resultStats`**: `object`
+        An object with the following properties which can be helpful to render custom stats:
+        -   **`numberOfResults`**: `number`
+            Total number of results found
+        -   **`time`**: `number`
+            Time taken to find total results (in ms)
+        -   **`hidden`**: `number`
+            Total number of hidden results found
+        -   **`promoted`**: `number`
+            Total number of promoted results found
+    -   **`value`**: `string`
+        current search input value i.e the search query being used to obtain suggestions.
+    -   **`downshiftProps`**: `object`
+        provides the following control props from `downshift` which can be used to bind list items with click/mouse events.
+        -   **isOpen** `boolean`
+            Whether the menu should be considered open or closed. Some aspects of the downshift component respond differently based on this value (for example, if isOpen is true when the user hits "Enter" on the input field, then the item at the highlightedIndex item is selected).
+        -   **getItemProps** `function`
+            Returns the props you should apply to any menu item elements you render.
+        -   **getItemEvents** `function`
+            Returns the events you should apply to any menu item elements you render.
+        -   **highlightedIndex** `number`
+            The index that should be highlighted.
+
+You can use `vue-searchbox` with `render slot` as shown:
+
+```html
+<vue-searchbox
+    app="good-books-clone"
+    url="https://arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+    credentials="IkwcRqior:cda6348c-37c9-40f6-a144-de3cb18b57a0"
+    :dataField="['original_title', 'original_title.search']"
+    :showVoiceSearch="true"
+    :enable-appbase="true"
+    :enable-query-suggestions="true"
+>
+	<div
+		class="suggestions"
+		slot="render"
+		slot-scope="{
+            error,
+            loading,
+            downshiftProps: { isOpen, highlightedIndex, getItemProps, getItemEvents },
+            data: suggestions,
+        }"
+	>
+		<ul v-if="isOpen">
+			<li
+				style="{ background-color: highlightedIndex ? 'grey' : 'transparent' }"
+                v-for="suggestion in (suggestions || []).map(s => ({
+                    label: s.source.authors,
+                    value: s.source.authors,
+                    key: s._id,
+                }))"
+				v-bind="getItemProps({ item: suggestion })"
+				v-on="getItemEvents({ item: suggestion })"
+				:key="suggestion._id"
+			>
+				{{ suggestion.label }}
+			</li>
+		</ul>
+	</div>
+</vue-searchbox>
+```
+
 -   **renderNoSuggestion** `String|slot-scope` [optional]
     can be used to render a message when there is no suggestions found.
 -   **renderError** `String|Function|slot-scope` [optional]
@@ -260,11 +340,7 @@ You can use `vue-searchbox` with `renderQuerySuggestions slot` as shown:
 		<ul v-if="isOpen">
 			<li
 				style="{ background-color: highlightedIndex ? 'grey' : 'transparent', color: 'green' }"
-				v-for="suggestion in (suggestions || []).map(s => ({
-								label: s.source.authors,
-								value: s.source.authors,
-								key: s._id,
-							}))"
+				v-for="suggestion in (suggestions || [])"
 				v-bind="getItemProps({ item: suggestion })"
 				v-on="getItemEvents({ item: suggestion })"
 				:key="suggestion._id"
@@ -328,35 +404,6 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
     source: suggestion._source  // for onValueSelected to work with renderSuggestion
   })"
 />
-```
-
--   it's also possible to take control of rendering individual suggestions with `renderSuggestion` prop or the entire suggestions rendering using the `renderAllSuggestions` prop.
-
-`renderAllSuggestions` can be used as a `slot-scope` or `Function` which receives some parameters which you may use to build your own custom suggestions rendering
-
-```html
-<template
-	slot="renderAllSuggestions"
-	slot-scope="{
-        currentValue,       // the current value in the search
-        isOpen,             // isOpen from downshift
-        getItemProps,       // item props to be passed to suggestions
-		getItemEvents,      // item events to be passed to suggestions
-        highlightedIndex,   // index value which should be highlighted
-        parsedSuggestions,  // suggestions parsed by ReactiveSearch
-        promotedData,       // array of promoted results obtained from applied query
-        customData,         // An object of custom data obtained from the `reactivesearch-v3` API
-        rawData,            // object of raw response as-is from elasticsearch query.
-        resultStats: {
-            numberOfResults,    // Total number of results found
-            time,               // Time taken to find total results (in ms)
-            hidden,             // Time taken to find total results (in ms)
-            promoted,           // Total number of promoted results found
-        }
-    }"
->
-	...
-</template>
 ```
 
 The `suggestions` parameter receives all the unparsed suggestions from elasticsearch, however `parsedSuggestions` are also passed which can also be used for suggestions rendering.
