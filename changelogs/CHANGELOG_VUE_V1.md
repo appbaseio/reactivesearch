@@ -6,8 +6,20 @@
     <summary>The following changes have been included in the <code>next</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+### v1.4.0
+
+Make dataField optional for DataSearch for rs-api @ShahAnuj2610 (#1448)
+Make defaultQuery and customQuery reactive @ShahAnuj2610 (#1435)
+Add first class support for query suggestions @ShahAnuj2610 (#1459)
+Avoid redundant queries on mount @ShahAnuj2610 (#1463)
+Fix dynamic range slider when enableAppbase is true @bietkul [[b2320802]](https://github.com/appbaseio/reactivesearch/commit/b2320802)
+
+### v1.3.0
+- Reactivesearch API Integration @bietkul https://github.com/appbaseio/reactivesearch/commit/de4d7d562a52fd03f51d29a23b339166ba3fa748
+
 ### v1.2.0
 - Add rawData to provide an as-is response from es in render prop @ShahAnuj2610 (#1382)
+
 ### v1.1.1
 - Fix `DataSearch` autosuggest select on android firefox[#1374](https://github.com/appbaseio/reactivesearch/issues/1374)
 
