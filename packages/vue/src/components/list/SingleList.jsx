@@ -13,6 +13,7 @@ import {
 	getValidPropsKeys,
 	updateCustomQuery,
 	updateDefaultQuery,
+	isQueryIdentical,
 } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Radio } from '../../styles/FormControlList';
@@ -99,14 +100,11 @@ const SingleList = {
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 	},
 	mounted() {
+		this.setReact(this.$props);
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(
-					this.componentId,
-					this.$props,
-					componentTypes.singleList,
-				);
+				this.updateComponentProps(this.componentId, this.$props, componentTypes.singleList);
 				this.updateComponentProps(
 					this.internalComponent,
 					this.$props,
@@ -119,7 +117,6 @@ const SingleList = {
 		this.addComponent(this.internalComponent);
 		this.addComponent(this.$props.componentId);
 		this.updateQueryHandlerOptions(this.$props);
-		this.setReact(this.$props);
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
@@ -164,6 +161,16 @@ const SingleList = {
 		selectedValue(newVal) {
 			if (this.$data.currentValue !== newVal) {
 				this.setValue(newVal || '');
+			}
+		},
+		defaultQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateDefaultQueryHandler(this.$data.currentValue, this.$props);
+			}
+		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQueryHandler(this.componentId, this.$data.currentValue, this.$props);
 			}
 		},
 	},
@@ -331,6 +338,27 @@ const SingleList = {
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
 
+		updateDefaultQueryHandler(value, props) {
+			let defaultQueryOptions;
+			let query = SingleList.defaultQuery(value, props);
+			if (this.defaultQuery) {
+				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
+				if (defaultQueryToBeSet.query) {
+					({ query } = defaultQueryToBeSet);
+				}
+				defaultQueryOptions = getOptionsFromQuery(defaultQueryToBeSet);
+				// Update calculated default query in store
+				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
+			}
+			this.setQueryOptions(this.internalComponent, defaultQueryOptions);
+			this.updateQuery({
+				componentId: this.internalComponent,
+				query,
+				value,
+				componentType: componentTypes.singleList,
+			});
+		},
+
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = SingleList.defaultQuery(value, props);
@@ -348,7 +376,7 @@ const SingleList = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'SINGLELIST',
+				componentType: componentTypes.singleList,
 			});
 		},
 

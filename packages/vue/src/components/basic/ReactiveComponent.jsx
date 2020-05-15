@@ -110,6 +110,7 @@ const ReactiveComponent = {
 		}
 	},
 	mounted() {
+		this.setReact(this.$props); // set query for internal component
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
@@ -136,8 +137,6 @@ const ReactiveComponent = {
 			this.addComponent(this.internalComponent);
 			this.setComponentProps(this.internalComponent, this.$props, componentTypes.reactiveComponent);
 		}
-
-		this.setReact(this.$props); // set query for internal component
 
 		if (this.internalComponent && this.$props.defaultQuery) {
 			updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, undefined);

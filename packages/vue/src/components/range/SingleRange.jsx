@@ -4,7 +4,7 @@ import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import { connect, updateCustomQuery, getValidPropsKeys } from '../../utils/index';
+import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
 import types from '../../utils/vueTypes';
 
 const {
@@ -64,6 +64,7 @@ const SingleRange = {
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
 	mounted() {
+		this.setReact(this.$props);
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
@@ -77,7 +78,6 @@ const SingleRange = {
 	},
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
-		this.setReact(this.$props);
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
@@ -109,6 +109,11 @@ const SingleRange = {
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {
 				this.setValue(newVal);
+			}
+		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQueryHandler(this.$data.currentValue, this.$props);
 			}
 		},
 	},
@@ -199,7 +204,7 @@ const SingleRange = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'SINGLERANGE',
+				componentType: componentTypes.singleRange,
 			});
 		},
 

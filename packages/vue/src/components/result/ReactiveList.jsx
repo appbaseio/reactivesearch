@@ -12,6 +12,7 @@ import {
 	getComponent,
 	getValidPropsKeys,
 	updateDefaultQuery,
+	isQueryIdentical,
 } from '../../utils/index';
 import Flex from '../../styles/Flex';
 import types from '../../utils/vueTypes';
@@ -175,10 +176,10 @@ const ReactiveList = {
 			}
 		},
 		defaultQuery(newVal, oldVal) {
-			if (newVal && !isEqual(newVal(), oldVal)) {
+			if (!isQueryIdentical(newVal, oldVal, null, this.$props)) {
 				let options = getQueryOptions(this.$props);
 				options.from = 0;
-				this.$defaultQuery = newVal();
+				this.$defaultQuery = newVal(null, this.$props);
 				const { sort, ...query } = this.$defaultQuery;
 
 				if (sort) {
@@ -382,8 +383,16 @@ const ReactiveList = {
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(this.componentId, this.$props, componentTypes.reactiveList);
-				this.updateComponentProps(this.internalComponent, this.$props, componentTypes.reactiveList);
+				this.updateComponentProps(
+					this.componentId,
+					this.$props,
+					componentTypes.reactiveList,
+				);
+				this.updateComponentProps(
+					this.internalComponent,
+					this.$props,
+					componentTypes.reactiveList,
+				);
 			});
 		});
 	},
@@ -710,7 +719,15 @@ const ReactiveList = {
 		},
 		// Shape of the object to be returned in onData & render
 		getAllData() {
-			const { size, promotedResults, aggregationData, customData, currentPage, hits, streamHits } = this;
+			const {
+				size,
+				promotedResults,
+				aggregationData,
+				customData,
+				currentPage,
+				hits,
+				streamHits,
+			} = this;
 			const results = parseHits(hits) || [];
 			const streamResults = parseHits(streamHits) || [];
 			const parsedPromotedResults = parseHits(promotedResults) || [];
