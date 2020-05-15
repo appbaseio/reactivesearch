@@ -2,7 +2,8 @@
 	<div id="app">
 		<ReactiveBase
 			app="algolia-movies"
-			credentials="HpM7YCrz4:17b7d153-c649-4088-a7aa-8679c72d770f"
+			url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+			:enable-appbase="true"
 		>
 			<MultiList
 				componentId="Authors"

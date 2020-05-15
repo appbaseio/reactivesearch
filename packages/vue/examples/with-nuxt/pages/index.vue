@@ -2,10 +2,11 @@
 	<div id="app">
 		<ReactiveBase
 			app="good-books-ds"
-			credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d"
+      url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+      :enable-appbase="true"
 		>
 			<DataSearch
-				categoryField="authors.raw"
+				categoryField="authors.keyword"
 				componentId="BookSensorSearch"
 				:dataField="['original_title', 'original_title.search']"
 				:URLParams="true"
@@ -25,12 +26,12 @@
 			/>
 			<SingleList
 				componentId="Authors"
-				data-field="authors.raw"
+				data-field="authors.keyword"
 				class="single-list-container"
 			/>
 			<ReactiveList
 				componentId="SearchResult"
-				data-field="original_title.raw"
+				data-field="original_title.keyword"
 				class="result-list-container"
 				:pagination="true"
 				:from="0"
