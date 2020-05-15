@@ -4,7 +4,13 @@ import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect, parseValueArray, updateCustomQuery, getValidPropsKeys } from '../../utils/index';
+import {
+	connect,
+	parseValueArray,
+	updateCustomQuery,
+	getValidPropsKeys,
+	isQueryIdentical,
+} from '../../utils/index';
 import types from '../../utils/vueTypes';
 
 const {
@@ -137,7 +143,7 @@ const MultiRange = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'MULTIRANGE',
+				componentType: componentTypes.multiRange,
 			});
 		},
 	},
@@ -160,6 +166,11 @@ const MultiRange = {
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {
 				this.selectItem(newVal);
+			}
+		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQueryHandler(this.$data.currentValue, this.$props);
 			}
 		},
 	},
@@ -208,9 +219,9 @@ const MultiRange = {
 				)}
 				<UL class={getClassName(this.$props.innerClass, 'list')}>
 					{this.$props.data.map(item => {
-						const selected =
-							!!this.$data.currentValue &&
-							this.$data.currentValue.label === item.label;
+						const selected
+							= !!this.$data.currentValue
+							&& this.$data.currentValue.label === item.label;
 						return (
 							<li key={item.label} class={`${selected ? 'active' : ''}`}>
 								<Checkbox
@@ -290,9 +301,9 @@ MultiRange.defaultQuery = (values, props) => {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 });
 
 const mapDispatchtoProps = {

@@ -3,7 +3,7 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import NoSSR from 'vue-no-ssr';
 import Container from '../../styles/Container';
-import { connect, updateCustomQuery, getValidPropsKeys } from '../../utils/index';
+import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
@@ -137,7 +137,7 @@ const RangeSlider = {
 				label: props.filterLabel,
 				showFilter: showFilter && !isInitialValue,
 				URLParams: props.URLParams,
-				componentType: 'RANGESLIDER',
+				componentType: componentTypes.rangeSlider,
 			});
 		},
 	},
@@ -159,6 +159,12 @@ const RangeSlider = {
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {
 				this.handleChange(RangeSlider.parseValue(newVal, this.$props));
+			}
+		},
+
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQueryHandler(this.$data.currentValue, this.$props);
 			}
 		},
 	},
@@ -240,16 +246,16 @@ const RangeSlider = {
 								<div class="label-container">
 									<label
 										class={
-											getClassName(this.$props.innerClass, 'label') ||
-											'range-label-left'
+											getClassName(this.$props.innerClass, 'label')
+											|| 'range-label-left'
 										}
 									>
 										{this.$props.rangeLabels.start}
 									</label>
 									<label
 										class={
-											getClassName(this.$props.innerClass, 'label') ||
-											'range-label-right'
+											getClassName(this.$props.innerClass, 'label')
+											|| 'range-label-right'
 										}
 									>
 										{this.$props.rangeLabels.end}
@@ -302,8 +308,8 @@ RangeSlider.parseValue = (value, props) => {
 
 const mapStateToProps = (state, props) => ({
 	options: state.aggregations[props.componentId]
-		? state.aggregations[props.componentId][props.dataField] &&
-		  state.aggregations[props.componentId][props.dataField].buckets // eslint-disable-line
+		? state.aggregations[props.componentId][props.dataField]
+		  && state.aggregations[props.componentId][props.dataField].buckets // eslint-disable-line
 		: [],
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value

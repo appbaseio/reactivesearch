@@ -14,6 +14,7 @@ import {
 	getValidPropsKeys,
 	updateCustomQuery,
 	updateDefaultQuery,
+	isQueryIdentical,
 } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Checkbox } from '../../styles/FormControlList';
@@ -106,11 +107,7 @@ const MultiList = {
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(
-					this.componentId,
-					this.$props,
-					componentTypes.multiList,
-				);
+				this.updateComponentProps(this.componentId, this.$props, componentTypes.multiList);
 				this.updateComponentProps(
 					this.internalComponent,
 					this.$props,
@@ -177,6 +174,16 @@ const MultiList = {
 			}
 			if (!isEqual(selectedValue, newVal)) {
 				this.setValue(newVal || [], true);
+			}
+		},
+		defaultQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateDefaultQueryHandler(this.$data.currentValue, this.$props);
+			}
+		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQueryHandler(this.componentId, this.$data.currentValue, this.$props);
 			}
 		},
 	},
@@ -386,6 +393,27 @@ const MultiList = {
 			);
 		},
 
+		updateDefaultQueryHandler(value, props) {
+			let defaultQueryOptions;
+			let query = MultiList.defaultQuery(value, props);
+			if (this.defaultQuery) {
+				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
+				if (defaultQueryToBeSet.query) {
+					({ query } = defaultQueryToBeSet);
+				}
+				defaultQueryOptions = getOptionsFromQuery(defaultQueryToBeSet);
+				// Update calculated default query in store
+				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
+			}
+			this.setQueryOptions(this.internalComponent, defaultQueryOptions);
+			this.updateQuery({
+				componentId: this.internalComponent,
+				query,
+				value,
+				componentType: componentTypes.multiList,
+			});
+		},
+
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = MultiList.defaultQuery(value, props);
@@ -404,7 +432,7 @@ const MultiList = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'MULTILIST',
+				componentType: componentTypes.multiList,
 			});
 		},
 

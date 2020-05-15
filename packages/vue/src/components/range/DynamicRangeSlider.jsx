@@ -3,7 +3,7 @@ import NoSSR from 'vue-no-ssr';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Container from '../../styles/Container';
-import { connect, updateCustomQuery, getValidPropsKeys } from '../../utils/index';
+import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
@@ -227,7 +227,7 @@ const DynamicRangeSlider = {
 				label: this.$props.filterLabel,
 				showFilter: this.$props.showFilter && !isInitialValue,
 				URLParams: this.$props.URLParams,
-				componentType: 'DYNAMICRANGESLIDER',
+				componentType: componentTypes.dynamicRangeSlider,
 			});
 		},
 	},
@@ -266,6 +266,11 @@ const DynamicRangeSlider = {
 
 			this.handleChange([newStart, newEnd]);
 		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQueryHandler(this.$data.currentValue);
+			}
+		},
 	},
 
 	render() {
@@ -300,16 +305,16 @@ const DynamicRangeSlider = {
 							<div class="label-container">
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label') ||
-										'range-label-left'
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-left'
 									}
 								>
 									{this.labels.start}
 								</label>
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label') ||
-										'range-label-right'
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-right'
 									}
 								>
 									{this.labels.end}
@@ -362,26 +367,26 @@ const mapStateToProps = (state, props) => {
 	let range = state.aggregations[`${props.componentId}__range__internal`];
 
 	if (props.nestedField) {
-		options =
-			options &&
-			componentId[props.dataField][props.nestedField] &&
-			componentId[props.dataField][props.nestedField].buckets
+		options
+			= options
+			&& componentId[props.dataField][props.nestedField]
+			&& componentId[props.dataField][props.nestedField].buckets
 				? componentId[props.dataField][props.nestedField].buckets
 				: [];
-		range =
-			range && internalRange[props.nestedField].min
+		range
+			= range && internalRange[props.nestedField].min
 				? {
-						start: internalRange[props.nestedField].min.value,
-						end: internalRange[props.nestedField].max.value,
+					start: internalRange[props.nestedField].min.value,
+					end: internalRange[props.nestedField].max.value,
 				  }
 				: null;
 	} else {
-		options =
-			options && componentId[props.dataField].buckets
+		options
+			= options && componentId[props.dataField].buckets
 				? componentId[props.dataField].buckets
 				: [];
-		range =
-			range && internalRange.min
+		range
+			= range && internalRange.min
 				? { start: internalRange.min.value, end: internalRange.max.value }
 				: null;
 	}
