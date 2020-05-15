@@ -91,6 +91,12 @@ Example uses of searchbox UI:
     -   Query generation happens on server side - protecting against security concerns around query injection.
     -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).
     -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/role/).
+-   **enableQuerySuggestions** `bool` [optional]
+    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+
+    > Note:
+    >
+    > Query Suggestions only work when `enableAppbase` prop is `true`.
 -   **dataField** `string | Array<string | DataField>` [optional*]
     database field(s) to be queried against. Accepts a String or an Array of either String or `DataField` type. The latter is useful for searching across multiple fields with field weights.<br/>
     Think of field weights as a way to apply weighted search. To use field weights, you can define the `dataField` prop as an array of objects of `DataField` type.<br/>
@@ -216,6 +222,8 @@ Example uses of searchbox UI:
         An object containing the error info.
     -   **`data`**: `array`
         An array of parsed suggestions obtained from the applied query.
+    -   **`querySuggestions`**: `array`
+        An array of query suggestions obtained based on search value.
     -   **`rawData`**: `object`
         An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
@@ -283,6 +291,55 @@ Or you can also use render function as children
         }
 </SearchBox>
 ```
+-   **renderQuerySuggestions** `String or JSX or Function` [optional]
+You can render query suggestions in a custom layout by using the `renderQuerySuggestions` prop.
+    <br/>
+    It accepts an object with these properties:
+    -   **`loading`**: `boolean`
+        indicates that the query is still in progress.
+    -   **`error`**: `object`
+        An object containing the error info.
+    -   **`data`**: `array`
+        An array of query suggestions obtained based on search value.
+    -   **`value`**: `string`
+        current search input value i.e the search query being used to obtain suggestions.
+    -   **`downshiftProps`**: `object`
+        provides all the control props from `downshift` which can be used to bind list items with click/mouse events.
+        Read more about it [here](https://github.com/downshift-js/downshift#children-function).
+
+    ```javascript
+    <SearchBox
+        dataField={['original_title', 'original_title.search']}
+        enableQuerySuggestions
+        renderQuerySuggestions={({
+            value,
+            data: suggestions,
+            downshiftProps: { isOpen, getItemProps, highlightedIndex },
+        }) =>
+            isOpen &&
+            Boolean(value.length) && (
+                <div>
+                    {(suggestions || []).map((suggestion, index) => (
+                        <div
+                            style={{
+                                padding: 10,
+                                background:
+                                    index === highlightedIndex
+                                        ? '#eee'
+                                        : 'transparent',
+                                color: 'green',
+                            }}
+                            key={suggestion.value}
+                            {...getItemProps({ item: suggestion })}
+                        >
+                            {suggestion.value}
+                        </div>
+                    ))}
+                </div>
+            )
+        }
+    />
+    ```
 
 -   **renderError** `String or JSX or Function` [optional]
     can be used to render an error message in case of any error.

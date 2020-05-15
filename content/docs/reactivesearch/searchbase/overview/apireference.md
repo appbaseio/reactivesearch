@@ -51,6 +51,12 @@ const searchbase = new SearchBase(props);
     -   Query generation happens on server side - protecting against security concerns around query injection.
     -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).
     -   Apply additional security controls to requests: authenticate via RBAC (via JWTs) or Basic Auth, ACL based access control, IP based rate limits, IP/HTTP Referers whitelisting, fields filtering. [Read more](/docs/security/role/).
+-   **enableQuerySuggestions** `bool` [optional]
+    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+
+    > Note:
+    >
+    > Query Suggestions only work when `enableAppbase` prop is `true`.
 -   **dataField** `string | Array<string | DataField>` [optional*]
     index field(s) to be connected to the component’s UI view. DataSearch accepts an Array in addition to String, which is useful for searching across multiple fields with or without field weights.<br/>
     Field weights allow weighted search for the index fields. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.<br/>
@@ -443,6 +449,21 @@ These properties are automatically calculated or managed by the `Searchbase` cla
     -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
     -   **`customData`**: `Object` An object of custom data obtained from the `reactivesearch-v3` API. [Read More](/docs/search/reactivesearch-api/).
     -   **`rawData`**: `object`  An object of raw response as-is from elasticsearch query.
+-   **querySuggestions** `Results`
+    It is an object which contains the following properties of `query suggestions` response.
+    -   **`data`**: `Array<Suggestion>`
+    `data` property contains the query suggestions, a `Suggestion` object has the following format:
+        ```ts
+        type Suggestion = {
+            label: string;
+            value: string;
+            source?: any;
+        };
+        ```
+    -   **`raw`**: `Object` Response returned by ES query in the raw form.
+    -   **`numberOfResults`**: `number` Total number of results found
+    -   **`time`**: `number` Total time taken by request (in ms)
+    -   **`rawData`**: `object`  An object of raw response as-is from elasticsearch query.
 -   **results** `Results`
     It is an object which contains the following details of `results` query response.
     -   **`data`**: `Array<Object>` contains the (promoted data + parsed hits)
@@ -552,6 +573,8 @@ can be used to listen for the `value` property changes. <br/>
 can be used to listen for the `results` property changes
 - **onSuggestions** `(next: string, prev: string) => void`;
 can be used to listen for the `suggestions` property changes
+- **onQuerySuggestions** `(next: string, prev: string) => void`;
+can be used to listen for the `query suggestions` property changes
 - **onAggregationData** `(next: string, prev: string) => void`;
 can be used to listen for the `aggregations` property changes
 ```javascript
