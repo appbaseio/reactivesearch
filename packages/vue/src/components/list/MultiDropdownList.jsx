@@ -102,6 +102,7 @@ const MultiDropdownList = {
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 	},
 	mounted() {
+		this.setReact(this.$props);
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
@@ -122,7 +123,6 @@ const MultiDropdownList = {
 		this.addComponent(this.internalComponent);
 		this.addComponent(this.$props.componentId);
 		this.updateQueryOptions(this.$props);
-		this.setReact(this.$props);
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue, true);

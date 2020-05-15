@@ -175,8 +175,6 @@ const DataSearch = {
 			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		}
 
-		this.setReact(this.$props);
-
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue, true);
 		} else if (this.$props.value) {
@@ -186,6 +184,7 @@ const DataSearch = {
 		}
 	},
 	mounted() {
+		this.setReact(this.$props);
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {

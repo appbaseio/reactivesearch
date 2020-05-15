@@ -180,6 +180,7 @@ const RangeSlider = {
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
 	mounted() {
+		this.setReact(this.$props);
 		const propsKeys = getValidPropsKeys(this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
@@ -193,7 +194,6 @@ const RangeSlider = {
 	},
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
-		this.setReact(this.$props);
 
 		const { value, defaultValue } = this.$props;
 		const { selectedValue } = this;
