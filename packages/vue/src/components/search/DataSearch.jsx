@@ -108,13 +108,13 @@ const DataSearch = {
 			return withClickIds(suggestionsList);
 		},
 		topSuggestions() {
-			const {
-				enableQuerySuggestions,
-				querySuggestions,
-				showDistinctSuggestions,
-			} = this.$props;
+			const { enableQuerySuggestions, showDistinctSuggestions } = this.$props;
 			return enableQuerySuggestions
-				? getTopSuggestions(querySuggestions, this.currentValue, showDistinctSuggestions)
+				? getTopSuggestions(
+					this.querySuggestions,
+					this.currentValue,
+					showDistinctSuggestions,
+				  )
 				: [];
 		},
 		hasCustomRenderer() {
