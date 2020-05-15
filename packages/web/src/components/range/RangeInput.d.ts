@@ -4,6 +4,7 @@ import * as types from '../../types';
 
 export interface RangeInputProps extends CommonProps {
 	className?: string;
+	dataField: string;
 	defaultValue?: types.range;
 	value?: types.range;
 	innerClass?: types.style;

@@ -70,7 +70,6 @@ class DynamicRangeSlider extends Component {
 		updateCustomQuery(props.componentId, props, this.state.currentValue);
 		// get range before executing other queries
 		this.updateRangeQueryOptions(props);
-		this.setReact(props);
 	}
 
 	componentDidUpdate(prevProps) {
@@ -164,6 +163,10 @@ class DynamicRangeSlider extends Component {
 				stats: options,
 			});
 		});
+	}
+
+	componentDidMount() {
+		this.setReact(this.props);
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {

@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
-import {
-	addComponent,
-	removeComponent,
-	watchComponent,
-	updateQuery,
-	setQueryListener,
-	setQueryOptions,
-	setComponentProps,
-	setCustomQuery,
-	updateComponentProps,
-} from '@appbaseio/reactivecore/lib/actions';
+import { updateQuery, setQueryOptions, setCustomQuery } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	checkValueChange,
-	checkPropChange,
 	getClassName,
 	getOptionsFromQuery,
 	formatDate,
@@ -30,9 +19,10 @@ import { withTheme } from 'emotion-theming';
 import DateContainer from '../../styles/DateContainer';
 import Title from '../../styles/Title';
 import Flex from '../../styles/Flex';
-import { connect, getValidPropsKeys } from '../../utils';
+import { connect } from '../../utils';
 
 import CancelSvg from '../shared/CancelSvg';
+import ComponentWrapper from '../basic/ComponentWrapper';
 
 class DateRange extends Component {
 	constructor(props) {
@@ -62,13 +52,8 @@ class DateRange extends Component {
 		};
 		const hasMounted = false;
 
-		props.addComponent(props.componentId);
-		props.setQueryListener(props.componentId, props.onQueryChange, null);
-		// Update props in store
-		props.setComponentProps(props.componentId, props, componentTypes.dateRange);
 		// Set custom query in store
 		updateCustomQuery(props.componentId, props, this.state.currentDate);
-		this.setReact(props);
 
 		if (currentDate) {
 			this.handleDateChange(currentDate, false, props, hasMounted);
@@ -76,15 +61,6 @@ class DateRange extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.dateRange,
-			);
-		});
-		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
-
 		if (!isEqual(this.props.value, prevProps.value)) {
 			this.handleDateChange(this.props.value, false, this.props);
 		} else {
@@ -132,16 +108,6 @@ class DateRange extends Component {
 				this.props,
 			),
 		);
-	}
-
-	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
-	}
-
-	setReact(props) {
-		if (props.react) {
-			props.watchComponent(props.componentId, props.react);
-		}
 	}
 
 	formatInputDate = (date) => {
@@ -528,16 +494,10 @@ class DateRange extends Component {
 }
 
 DateRange.propTypes = {
-	addComponent: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
-	setComponentProps: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	updateComponentProps: types.funcRequired,
 	// component props
 	autoFocusEnd: types.bool,
 	beforeValueChange: types.func,
@@ -586,24 +546,23 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
-	updateComponentProps: (component, options, componentType) =>
-		dispatch(updateComponentProps(component, options, componentType)),
-	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
+
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(withTheme(props => <DateRange ref={props.myForwardedRef} {...props} />));
+)(
+	withTheme(props => (
+		<ComponentWrapper {...props} componentType={componentTypes.dateRange}>
+			{() => <DateRange ref={props.myForwardedRef} {...props} />}
+		</ComponentWrapper>
+	)),
+);
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (

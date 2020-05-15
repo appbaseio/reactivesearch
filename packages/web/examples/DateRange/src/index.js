@@ -40,7 +40,7 @@ class Main extends Component {
 		return (
 			<ReactiveBase
 				app="airbeds-test-app"
-				url="https://xe6N9nDRV:51ea7a8a-6354-4b5f-83e1-12dce3b7ec47@arc-cluster-appbase-demo-ps1pgt.searchbase.io"
+				url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
 				enableAppbase
 				type="listing"
 			>
