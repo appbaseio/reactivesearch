@@ -101,17 +101,6 @@ const SingleList = {
 	},
 	mounted() {
 		this.setReact(this.$props);
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(this.componentId, this.$props, componentTypes.singleList);
-				this.updateComponentProps(
-					this.internalComponent,
-					this.$props,
-					componentTypes.singleList,
-				);
-			});
-		});
 	},
 	beforeMount() {
 		this.addComponent(this.internalComponent);
@@ -132,6 +121,20 @@ const SingleList = {
 		this.removeComponent(this.internalComponent);
 	},
 	watch: {
+		$props: {
+			deep: true,
+			handler(newVal) {
+				const propsKeys = getValidPropsKeys(newVal);
+				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
+					this.updateComponentProps(this.componentId, newVal, componentTypes.singleList);
+					this.updateComponentProps(
+						this.internalComponent,
+						newVal,
+						componentTypes.singleList,
+					);
+				});
+			},
+		},
 		react() {
 			this.setReact(this.$props);
 		},
@@ -520,6 +523,7 @@ const mapStateToProps = (state, props) => ({
 		|| '',
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
+	componentProps: state.props[props.componentId],
 });
 
 const mapDispatchtoProps = {
