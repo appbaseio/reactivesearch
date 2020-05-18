@@ -200,17 +200,6 @@ const DataSearch = {
 	},
 	mounted() {
 		this.setReact(this.$props);
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(this.componentId, this.$props, componentTypes.dataSearch);
-				this.updateComponentProps(
-					this.internalComponent,
-					this.$props,
-					componentTypes.dataSearch,
-				);
-			});
-		});
 	},
 	beforeDestroy() {
 		this.removeComponent(this.$props.componentId);
@@ -219,8 +208,18 @@ const DataSearch = {
 	watch: {
 		$props: {
 			immediate: true,
-			handler() {
+			deep: true,
+			handler(newVal) {
 				this.validateDataField();
+				const propsKeys = getValidPropsKeys(newVal);
+				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
+					this.updateComponentProps(this.componentId, newVal, componentTypes.dataSearch);
+					this.updateComponentProps(
+						this.internalComponent,
+						newVal,
+						componentTypes.dataSearch,
+					);
+				});
 			},
 		},
 		highlight() {
@@ -1029,6 +1028,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	querySuggestions: state.querySuggestions[props.componentId],
+	componentProps: state.props[props.componentId],
 });
 const mapDispatchtoProps = {
 	addComponent,

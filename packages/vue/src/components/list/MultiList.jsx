@@ -104,17 +104,6 @@ const MultiList = {
 	},
 	mounted() {
 		this.setReact(this.$props);
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(this.componentId, this.$props, componentTypes.multiList);
-				this.updateComponentProps(
-					this.internalComponent,
-					this.$props,
-					componentTypes.multiList,
-				);
-			});
-		});
 	},
 	beforeMount() {
 		this.addComponent(this.internalComponent);
@@ -134,6 +123,20 @@ const MultiList = {
 		this.removeComponent(this.internalComponent);
 	},
 	watch: {
+		$props: {
+			deep: true,
+			handler(newVal) {
+				const propsKeys = getValidPropsKeys(newVal);
+				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
+					this.updateComponentProps(this.componentId, newVal, componentTypes.multiList);
+					this.updateComponentProps(
+						this.internalComponent,
+						newVal,
+						componentTypes.multiList,
+					);
+				});
+			},
+		},
 		react() {
 			this.setReact(this.$props);
 		},
@@ -614,6 +617,7 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
+	componentProps: state.props[props.componentId],
 });
 
 const mapDispatchtoProps = {

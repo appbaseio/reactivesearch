@@ -76,30 +76,10 @@ const DynamicRangeSlider = {
 			componentTypes.dynamicRangeSlider,
 		);
 		// Set custom query in store
-		updateCustomQuery(
-			this.componentId,
-			this.setCustomQuery,
-			this.$props,
-			this.currentValue,
-		);
+		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
 	mounted() {
 		this.setReact();
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(
-					this.componentId,
-					this.$props,
-					componentTypes.dynamicRangeSlider,
-				);
-				this.updateComponentProps(
-					this.internalRangeComponent,
-					this.$props,
-					componentTypes.dynamicRangeSlider,
-				);
-			});
-		});
 	},
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
@@ -240,6 +220,24 @@ const DynamicRangeSlider = {
 	},
 
 	watch: {
+		$props: {
+			deep: true,
+			handler(newVal) {
+				const propsKeys = getValidPropsKeys(newVal);
+				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
+					this.updateComponentProps(
+						this.componentId,
+						newVal,
+						componentTypes.dynamicRangeSlider,
+					);
+					this.updateComponentProps(
+						this.internalRangeComponent,
+						newVal,
+						componentTypes.dynamicRangeSlider,
+					);
+				});
+			},
+		},
 		react() {
 			this.setReact();
 		},
@@ -397,6 +395,7 @@ const mapStateToProps = (state, props) => {
 		selectedValue: state.selectedValues[props.componentId]
 			? state.selectedValues[props.componentId].value
 			: null,
+		componentProps: state.props[props.componentId],
 	};
 };
 
