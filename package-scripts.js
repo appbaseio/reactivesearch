@@ -45,9 +45,11 @@ module.exports = {
 		'upgrade-maps': {
 			description: 'Updates the ReactiveMaps version in all over the mono-repo.',
 			// To update reactivemaps version
-			default: `${path.resolve(
+			'version-update': `${path.resolve(
 				`${__dirname}/scripts/version-update.sh`,
 			)} "@appbaseio/reactivemaps" ${mapRSVersion.version} ${__dirname}`,
+			'build-demos': `${path.resolve(`${__dirname}/scripts/build-demos.sh`)} ${__dirname}`,
+			default: series.nps('upgrade-maps.version-update', 'upgrade-maps.build-demos'),
 		},
 	},
 };
