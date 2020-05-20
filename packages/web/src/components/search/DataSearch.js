@@ -852,6 +852,7 @@ class DataSearch extends Component {
 										onKeyUp: this.withTriggerQuery(this.props.onKeyUp),
 									})}
 									themePreset={themePreset}
+									type={this.props.type}
 								/>
 								{this.renderIcons()}
 								{this.hasCustomRenderer
@@ -1031,6 +1032,7 @@ DataSearch.propTypes = {
 	title: types.title,
 	theme: types.style,
 	themePreset: types.themePreset,
+	type: types.string,
 	URLParams: types.bool,
 	strictSelection: types.bool,
 	searchOperators: types.bool,
