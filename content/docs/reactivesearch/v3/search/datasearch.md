@@ -111,6 +111,8 @@ Example uses:
     set the search weight for the database fields, useful when dataField is an Array of more than one field. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.
 -   **placeholder** `String` [optional]
     set placeholder text to be shown in the component's input field. Defaults to "Search".
+-   **type** `String` [optional]
+    set the searchbox input field type attribute.
 -   **showIcon** `Boolean` [optional]
     whether to display a search or custom icon in the input box. Defaults to `true`.
 -   **iconPosition** `String` [optional]
