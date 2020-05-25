@@ -44,7 +44,6 @@
 		"polished": "^1.9.3",
 		"prop-types": "^15.6.0",
 		"react-day-picker": "^7.0.5",
-		"react-emotion": "^10.0.0",
 		"react-redux": "^6.0.1",
 		"rheostat": "^2.1.1",
 		"url-search-params-polyfill": "^7.0.0",

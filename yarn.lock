@@ -25139,11 +25139,6 @@ react-element-to-jsx-string@^14.0.2:
     "@base2/pretty-print-object" "1.0.0"
     is-plain-object "3.0.0"
 
-react-emotion@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-10.0.0.tgz#03adf5a93f9dc41396401551566adf9668a2418e"
-  integrity sha512-HMEH1I0m4AxJzG31ii/g227WhR0RBlRdr2M4C0n7yg9s3SiAPGB7lxvc/EoE8ixU9PLeOlBOb/n0wo42tGu99Q==
-
 react-emotion@^9.0.0, react-emotion@^9.2.12:
   version "9.2.12"
   resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-9.2.12.tgz#74d1494f89e22d0b9442e92a33ca052461955c83"
