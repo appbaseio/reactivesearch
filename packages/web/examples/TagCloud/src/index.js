@@ -12,13 +12,17 @@ import {
 import './index.css';
 
 const Main = () => (
-	<ReactiveBase app="meetup_app" credentials="lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181">
+	<ReactiveBase
+		app="meetup_app"
+		url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+		enableAppbase
+	>
 		<div className="row">
 			<div className="col">
 				<TagCloud
 					title="TagCloud"
 					componentId="CitySensor"
-					dataField="group.group_city.raw"
+					dataField="group.group_city.keyword"
 					multiSelect
 					size={50}
 				/>
@@ -27,7 +31,7 @@ const Main = () => (
 				<SelectedFilters />
 				<ReactiveList
 					componentId="SearchResult"
-					dataField="group.group_topics.topic_name_raw"
+					dataField="group.group_topics.topic_name_raw.keyword"
 					title="Results"
 					sortBy="asc"
 					className="result-list-container"
@@ -43,16 +47,13 @@ const Main = () => (
 					render={({ data }) => (
 						<ReactiveList.ResultListWrapper>
 							{data.map(item => (
-								<ResultList
-									href={data.event && data.event.event_url}
-									key={item._id}
-								>
+								<ResultList href={item.event.event_url} key={item._id}>
 									<ResultList.Image src={item.member.photo} small />
 									<ResultList.Content>
 										<ResultList.Title>
 											<div className="meetup-title">
-												{data.member ? data.member.member_name : ''} is
-												going to ${data.event ? data.event.event_name : ''}
+												{item.member ? item.member.member_name : ''} is
+												going to ${item.event ? item.event.event_name : ''}
 											</div>
 										</ResultList.Title>
 										<ResultList.Description>
@@ -61,20 +62,19 @@ const Main = () => (
 													<span className="location">
 														<i className="fas fa-map-marker-alt" />
 													</span>
-													{data.group ? data.group.group_city : ''}
+													{item.group ? item.group.group_city : ''}
 												</div>
 												<div className="flex wrap meetup-topics">
-													{data.group
-														&& (data.group.group_topics || [])
-															.slice(0, 4)
-															.map(tag => (
-																<div
-																	className="meetup-topic"
-																	key={tag.topic_name}
-																>
-																	{tag.topic_name}
-																</div>
-															))}
+													{item.group.group_topics
+														.slice(0, 4)
+														.map(tag => (
+															<div
+																className="meetup-topic"
+																key={tag.topic_name}
+															>
+																{tag.topic_name}
+															</div>
+														))}
 												</div>
 											</div>
 										</ResultList.Description>

@@ -37,8 +37,9 @@ class App extends Component {
 		return (
 			<Container>
 				<ReactiveBase
-					app="gitxplore-latest-app"
-					credentials="LsxvulCKp:a500b460-73ff-4882-8d34-9df8064b3b38"
+					app="gitxplore-app"
+					url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+					enableAppbase
 					theme={theme}
 					themePreset="dark"
 				>
@@ -47,7 +48,7 @@ class App extends Component {
 						<FlexChild className={resultsContainer}>
 							<DataSearch
 								componentId="repo"
-								dataField={['name', 'description', 'name.raw', 'fullname', 'owner', 'topics']}
+								dataField={['name', 'description', 'name.keyword', 'fullname', 'owner', 'topics']}
 								placeholder="Search Repos"
 								iconPosition="left"
 								URLParams

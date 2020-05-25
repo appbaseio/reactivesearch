@@ -96,12 +96,12 @@ Sensor components can be configured to create a combined query context and rende
 
 ### 🆕 ReactiveSearch API: Secure your ElasticSearch Queries
 
-Based on a popular request, we have implemented support for a declarative API based on ReactiveSearch. The API is called [ReactiveSearch API](https://docs.appbase.io/docs/search/reactivesearch-api). It moves the query DSL generation logic to a backend system (an appbase.io service) instead of exposing it directly on the client-side. By strictly enabling only ReactiveSearch API use, you can also prevent script injections.
+Based on a popular request, we have implemented support for a declarative API based on ReactiveSearch. The API is called [ReactiveSearch API](https://docs.appbase.io/docs/search/reactivesearch-api/). It moves the query DSL generation logic to a backend system (an appbase.io service) instead of exposing it directly on the client-side. By strictly enabling only ReactiveSearch API use, you can also prevent script injections.
 
 The main advantages of using it over the ElasticSearch Query DSL are:
 - Query generation happens on the server-side - addressing the primary security concern around query injection.
-- Easy recording of analytics events for search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/)
-- Application of query rules and functions for search queries. [Read more](/docs/search/Rules/)
+- Easy recording of analytics events for search and clicks. [Read more](https://docs.appbase.io/docs/reactivesearch/v3/advanced/analytics/)
+- Application of query rules and functions for search queries. [Read more](https://docs.appbase.io/docs/search/rules/)
 
 Using ReactiveSearch API instead of ElasticSearch's query DSL is an opt-in feature. You need to set the `enableAppbase` prop as `true` in your `ReactiveBase` component. This assumes that you are using appbase.io for your backend.
 
@@ -189,7 +189,6 @@ The official docs for the Web library are at [docs.appbase.io/docs/reactivesearc
 
 The components are divided into four sections:
 
--   Generic UI components are at [reactivesearch/v3/base](https://docs.appbase.io/docs/reactivesearch/v3/base/selectedfilters/).
 -   List based UI components are at [reactivesearch/v3/list](https://docs.appbase.io/docs/reactivesearch/v3/list/singlelist/).
 -   Range based UI components are at [reactivesearch/v3/range](https://docs.appbase.io/docs/reactivesearch/v3/range/singlerange/).
 -   Search UI components are at [reactivesearch/v3/search](https://docs.appbase.io/docs/reactivesearch/v3/search/datasearch/).

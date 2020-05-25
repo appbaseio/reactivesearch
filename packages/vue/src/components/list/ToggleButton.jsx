@@ -1,9 +1,10 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '../../utils/vueTypes';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { toggleButtons } from '../../styles/Button';
-import { connect } from '../../utils/index';
+import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
 
 const {
 	addComponent,
@@ -12,8 +13,18 @@ const {
 	watchComponent,
 	setQueryListener,
 	setQueryOptions,
+	updateComponentProps,
+	setComponentProps,
+	setCustomQuery,
 } = Actions;
-const { isEqual, checkValueChange, getClassName, getOptionsFromQuery, handleA11yAction } = helper;
+const {
+	isEqual,
+	checkValueChange,
+	getClassName,
+	getOptionsFromQuery,
+	handleA11yAction,
+	checkSomePropChange,
+} = helper;
 
 const ToggleButton = {
 	name: 'ToggleButton',
@@ -50,7 +61,6 @@ const ToggleButton = {
 			this.handleToggle(this.$data.currentValue, true, props, hasMounted);
 		}
 		this.addComponent(props.componentId);
-		this.setReact(props);
 	},
 	created() {
 		const onQueryChange = (...args) => {
@@ -58,6 +68,23 @@ const ToggleButton = {
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
 			this.$emit('error', e);
+		});
+		// Update props in store
+		this.setComponentProps(this.componentId, this.$props, componentTypes.toggleButton);
+		// Set custom query in store
+		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
+	},
+	mounted() {
+		this.setReact(this.$props);
+		const propsKeys = getValidPropsKeys(this.$props);
+		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
+			checkSomePropChange(newVal, oldVal, propsKeys, () => {
+				this.updateComponentProps(
+					this.componentId,
+					this.$props,
+					componentTypes.toggleButton,
+				);
+			});
 		});
 	},
 	beforeDestroy() {
@@ -99,6 +126,11 @@ const ToggleButton = {
 				) {
 					this.handleToggle(this.selectedValue || [], true, this.$props);
 				}
+			}
+		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQuery(this.$data.currentValue, this.$props);
 			}
 		},
 	},
@@ -168,6 +200,7 @@ const ToggleButton = {
 					props.componentId,
 					getOptionsFromQuery(customQuery(value, props)),
 				);
+				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
 			}
 
 			this.updateQueryHandler({
@@ -178,7 +211,7 @@ const ToggleButton = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'TOGGLEBUTTON',
+				componentType: componentTypes.toggleButton,
 			});
 		},
 
@@ -280,6 +313,9 @@ const mapDispatchtoProps = {
 	watchComponent,
 	setQueryListener,
 	setQueryOptions,
+	updateComponentProps,
+	setComponentProps,
+	setCustomQuery,
 };
 
 const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(ToggleButton);

@@ -12,12 +12,12 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "@appbaseio/reactivemaps": "^2.0.1",
-        "@appbaseio/reactivesearch": "3.7.12",
+        "@appbaseio/reactivemaps": "3.0.0-beta.9",
+        "@appbaseio/reactivesearch": "3.9.4",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
         "emotion": "*",
-        "react-emotion": "*"
+        "react-emotion": "^9.2.12"
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",

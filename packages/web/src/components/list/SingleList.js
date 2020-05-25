@@ -1,22 +1,15 @@
 import React, { Component } from 'react';
 
 import {
-	addComponent,
-	removeComponent,
-	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener,
 	loadMore,
 	setCustomQuery,
 	setDefaultQuery,
-	setComponentProps,
-	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	getQueryOptions,
-	pushToAndClause,
 	checkValueChange,
 	checkPropChange,
 	checkSomePropChange,
@@ -31,6 +24,7 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Button, { loadMoreContainer } from '../../styles/Button';
@@ -42,9 +36,9 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isEvent,
-	isIdentical,
-	getValidPropsKeys,
+	isQueryIdentical,
 } from '../../utils';
+import ComponentWrapper from '../basic/ComponentWrapper';
 
 // showLoadMore is experimental API and works only with ES6
 class SingleList extends Component {
@@ -65,20 +59,13 @@ class SingleList extends Component {
 			prevAfter: {}, // useful when we want to prevent the showLoadMore results
 			isLastBucket: false,
 		};
-		this.internalComponent = `${props.componentId}__internal`;
+		this.internalComponent = getInternalComponentID(props.componentId);
 
-		props.addComponent(this.internalComponent);
-		props.addComponent(props.componentId);
-		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
-		// Update props in store
-		props.setComponentProps(props.componentId, props, componentTypes.singleList);
-		props.setComponentProps(this.internalComponent, props, componentTypes.singleList);
 		// Set custom and default queries in store
 		updateCustomQuery(props.componentId, props, currentValue);
 		updateDefaultQuery(props.componentId, props, currentValue);
 		this.updateQueryOptions(props);
 
-		this.setReact(props);
 		const hasMounted = false;
 
 		if (currentValue) {
@@ -87,24 +74,8 @@ class SingleList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.singleList,
-			);
-			this.props.updateComponentProps(
-				this.internalComponent,
-				this.props,
-				componentTypes.singleList,
-			);
-		});
-		checkPropChange(prevProps.react, this.props.react, () => this.setReact(this.props));
-
 		checkPropChange(prevProps.options, this.props.options, () => {
-			const {
-				showLoadMore, dataField, options,
-			} = this.props;
+			const { showLoadMore, dataField, options } = this.props;
 
 			if (showLoadMore && options && options[dataField]) {
 				const { buckets } = options[dataField];
@@ -134,13 +105,13 @@ class SingleList extends Component {
 		});
 
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			// Clear the component value
 			this.updateQuery('', this.props);
 		}
 
-		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'customQuery')) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 
@@ -170,23 +141,6 @@ class SingleList extends Component {
 			}
 		}
 	}
-
-	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
-		this.props.removeComponent(this.internalComponent);
-	}
-
-	setReact = (props) => {
-		const { react } = props;
-		if (react) {
-			const newReact = pushToAndClause(react, this.internalComponent);
-			props.watchComponent(props.componentId, newReact);
-		} else {
-			props.watchComponent(props.componentId, {
-				and: this.internalComponent,
-			});
-		}
-	};
 
 	getOptions = (buckets, props) => {
 		if (props.showLoadMore) {
@@ -228,11 +182,9 @@ class SingleList extends Component {
 		}
 		if (query && props.nestedField) {
 			return {
-				query: {
-					nested: {
-						path: props.nestedField,
-						query,
-					},
+				nested: {
+					path: props.nestedField,
+					query,
 				},
 			};
 		}
@@ -277,7 +229,11 @@ class SingleList extends Component {
 			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, {
-			...SingleList.generateQueryOptions(props, this.state.prevAfter),
+			...SingleList.generateQueryOptions(
+				props,
+				this.state.prevAfter,
+				this.state.currentValue,
+			),
 			...customQueryOptions,
 		});
 		props.updateQuery({
@@ -297,15 +253,19 @@ class SingleList extends Component {
 			queryOptions,
 			this.state.currentValue,
 			this.props,
-			SingleList.generateQueryOptions(this.props, this.state.prevAfter),
+			SingleList.generateQueryOptions(
+				this.props,
+				this.state.prevAfter,
+				this.state.currentValue,
+			),
 		);
 	};
 
-	static generateQueryOptions(props, after) {
+	static generateQueryOptions(props, after, value) {
 		const queryOptions = getQueryOptions(props);
 		return props.showLoadMore
-			? getCompositeAggsQuery(queryOptions, props, after)
-			: getAggsQuery(queryOptions, props);
+			? getCompositeAggsQuery(value, queryOptions, props, after)
+			: getAggsQuery(value, queryOptions, props);
 	}
 
 	updateQueryOptions = (props, addAfterKey = false) => {
@@ -319,6 +279,7 @@ class SingleList extends Component {
 		const queryOptions = SingleList.generateQueryOptions(
 			props,
 			addAfterKey ? this.state.after : {},
+			this.state.currentValue,
 		);
 		if (props.defaultQuery) {
 			this.updateDefaultQuery(queryOptions);
@@ -335,7 +296,11 @@ class SingleList extends Component {
 	};
 
 	handleLoadMore = () => {
-		const queryOptions = SingleList.generateQueryOptions(this.props, this.state.after);
+		const queryOptions = SingleList.generateQueryOptions(
+			this.props,
+			this.state.after,
+			this.state.currentValue,
+		);
 		this.props.loadMore(this.props.componentId, queryOptions);
 	};
 
@@ -541,19 +506,13 @@ class SingleList extends Component {
 }
 
 SingleList.propTypes = {
-	addComponent: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	loadMore: types.funcRequired,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
 	options: types.options,
 	rawData: types.rawData,
 	selectedValue: types.selectedValue,
-	setComponentProps: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
 	// component props
@@ -631,26 +590,23 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
-	updateComponentProps: (component, options, componentType) =>
-		dispatch(updateComponentProps(component, options, componentType)),
-	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
+
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	loadMore: (component, aggsQuery) => dispatch(loadMore(component, aggsQuery, true, true)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => <SingleList ref={props.myForwardedRef} {...props} />);
+)(props => (
+	<ComponentWrapper {...props} internalComponent componentType={componentTypes.singleList}>
+		{() => <SingleList ref={props.myForwardedRef} {...props} />}
+	</ComponentWrapper>
+));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (

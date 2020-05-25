@@ -1,22 +1,15 @@
 import React, { Component } from 'react';
 
 import {
-	addComponent,
-	removeComponent,
-	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
-	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
 	getQueryOptions,
-	pushToAndClause,
 	checkValueChange,
 	checkPropChange,
 	checkSomePropChange,
@@ -31,20 +24,20 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-
+import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/Dropdown';
+import ComponentWrapper from '../basic/ComponentWrapper';
 import {
 	connect,
 	isFunction,
 	getComponent,
 	hasCustomRenderer,
 	isEvent,
-	isIdentical,
-	getValidPropsKeys,
 	parseValueArray,
+	isQueryIdentical,
 } from '../../utils';
 
 class MultiDropdownList extends Component {
@@ -66,20 +59,13 @@ class MultiDropdownList extends Component {
 			after: {}, // for composite aggs
 			isLastBucket: false,
 		};
-		this.internalComponent = `${props.componentId}__internal`;
+		this.internalComponent = getInternalComponentID(props.componentId);
 
-		props.addComponent(this.internalComponent);
-		props.addComponent(props.componentId);
-		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
-		// Update props in store
-		props.setComponentProps(props.componentId, props, componentTypes.multiDropdownList);
-		props.setComponentProps(this.internalComponent, props, componentTypes.multiDropdownList);
 		// Set custom and default queries in store
 		updateCustomQuery(props.componentId, props, currentValue);
 		updateDefaultQuery(props.componentId, props, currentValue);
 		this.updateQueryOptions(props);
 
-		this.setReact(props);
 		const hasMounted = false;
 
 		if (currentValueArray.length) {
@@ -88,19 +74,6 @@ class MultiDropdownList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.multiDropdownList,
-			);
-			this.props.updateComponentProps(
-				this.internalComponent,
-				this.props,
-				componentTypes.multiDropdownList,
-			);
-		});
-		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, dataField } = this.props;
 			const { options } = this.state;
@@ -137,9 +110,10 @@ class MultiDropdownList extends Component {
 			} else {
 				this.setState(
 					{
-						options: this.props.options && this.props.options[dataField]
-							? this.props.options[dataField].buckets
-							: [],
+						options:
+							this.props.options && this.props.options[dataField]
+								? this.props.options[dataField].buckets
+								: [],
 					},
 					() => {
 						// this will ensure that the Select-All (or any)
@@ -152,14 +126,16 @@ class MultiDropdownList extends Component {
 				);
 			}
 		});
+		const valueArray
+			= typeof this.state.currentValue === 'object' ? Object.keys(this.state.currentValue) : [];
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+		if (!isQueryIdentical(valueArray, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			this.updateQuery([], this.props);
 		}
 
-		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
-			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+		if (!isQueryIdentical(valueArray, this.props, prevProps, 'customQuery')) {
+			this.updateQuery(valueArray, this.props);
 		}
 
 		checkSomePropChange(this.props, prevProps, ['size', 'sortBy'], () =>
@@ -168,10 +144,10 @@ class MultiDropdownList extends Component {
 
 		checkPropChange(this.props.dataField, prevProps.dataField, () => {
 			this.updateQueryOptions(this.props);
-			this.updateQuery(Object.keys(this.state.currentValue), this.props);
+			this.updateQuery(valueArray, this.props);
 		});
 
-		let selectedValue = Object.keys(this.state.currentValue);
+		let selectedValue = valueArray;
 		const { selectAllLabel } = this.props;
 
 		if (selectAllLabel) {
@@ -193,28 +169,11 @@ class MultiDropdownList extends Component {
 			} else if (onChange) {
 				onChange(this.props.selectedValue || null);
 			} else {
-				const selectedListItems = Object.keys(this.state.currentValue);
+				const selectedListItems = valueArray;
 				this.setValue(selectedListItems, true);
 			}
 		}
 	}
-
-	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
-		this.props.removeComponent(this.internalComponent);
-	}
-
-	setReact = (props) => {
-		const { react } = props;
-		if (react) {
-			const newReact = pushToAndClause(react, this.internalComponent);
-			props.watchComponent(props.componentId, newReact);
-		} else {
-			props.watchComponent(props.componentId, {
-				and: this.internalComponent,
-			});
-		}
-	};
 
 	static defaultQuery = (value, props) => {
 		let query = null;
@@ -282,11 +241,9 @@ class MultiDropdownList extends Component {
 
 		if (query && props.nestedField) {
 			return {
-				query: {
-					nested: {
-						path: props.nestedField,
-						query,
-					},
+				nested: {
+					path: props.nestedField,
+					query,
 				},
 			};
 		}
@@ -385,15 +342,20 @@ class MultiDropdownList extends Component {
 			queryOptions,
 			Object.keys(this.state.currentValue),
 			this.props,
-			MultiDropdownList.generateQueryOptions(this.props, this.state.prevAfter),
+			MultiDropdownList.generateQueryOptions(
+				this.props,
+				this.state.prevAfter,
+				this.state.currentValue,
+			),
 		);
 	};
 
-	static generateQueryOptions(props, after) {
+	static generateQueryOptions(props, after, value = {}) {
 		const queryOptions = getQueryOptions(props);
+		const valueArray = Object.keys(value);
 		return props.showLoadMore
-			? getCompositeAggsQuery(queryOptions, props, after)
-			: getAggsQuery(queryOptions, props);
+			? getCompositeAggsQuery(valueArray, queryOptions, props, after)
+			: getAggsQuery(valueArray, queryOptions, props);
 	}
 
 	updateQueryOptions = (props, addAfterKey = false) => {
@@ -407,6 +369,7 @@ class MultiDropdownList extends Component {
 		const queryOptions = MultiDropdownList.generateQueryOptions(
 			props,
 			addAfterKey ? this.state.after : {},
+			this.state.currentValue,
 		);
 		if (props.defaultQuery) {
 			this.updateDefaultQuery(queryOptions);
@@ -528,18 +491,12 @@ class MultiDropdownList extends Component {
 }
 
 MultiDropdownList.propTypes = {
-	addComponent: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
 	options: types.options,
 	rawData: types.rawData,
 	selectedValue: types.selectedValue,
-	setComponentProps: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
 	// component props
@@ -619,25 +576,20 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
-	updateComponentProps: (component, options, componentType) =>
-		dispatch(updateComponentProps(component, options, componentType)),
-	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => <MultiDropdownList ref={props.myForwardedRef} {...props} />);
+)(props => (
+	<ComponentWrapper {...props} internalComponent componentType={componentTypes.multiDropdownList}>
+		{() => <MultiDropdownList ref={props.myForwardedRef} {...props} />}
+	</ComponentWrapper>
+));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (

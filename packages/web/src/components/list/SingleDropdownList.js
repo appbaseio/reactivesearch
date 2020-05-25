@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
 
 import {
-	addComponent,
-	removeComponent,
-	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
-	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	getQueryOptions,
-	pushToAndClause,
 	checkValueChange,
 	checkPropChange,
 	checkSomePropChange,
@@ -28,6 +21,7 @@ import {
 	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Title from '../../styles/Title';
@@ -40,9 +34,9 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isEvent,
-	isIdentical,
-	getValidPropsKeys,
+	isQueryIdentical,
 } from '../../utils';
+import ComponentWrapper from '../basic/ComponentWrapper';
 
 class SingleDropdownList extends Component {
 	constructor(props) {
@@ -59,20 +53,13 @@ class SingleDropdownList extends Component {
 			after: {}, // for composite aggs
 			isLastBucket: false,
 		};
-		this.internalComponent = `${props.componentId}__internal`;
+		this.internalComponent = getInternalComponentID(props.componentId);
 
-		props.addComponent(this.internalComponent);
-		props.addComponent(props.componentId);
-		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
-		// Update props in store
-		props.setComponentProps(props.componentId, props, componentTypes.singleDropdownList);
-		props.setComponentProps(this.internalComponent, props, componentTypes.singleDropdownList);
 		// Set custom and default queries in store
 		updateCustomQuery(props.componentId, props, currentValue);
 		updateDefaultQuery(props.componentId, props, currentValue);
 		this.updateQueryOptions(props);
 
-		this.setReact(props);
 		const hasMounted = false;
 
 		if (currentValue) {
@@ -81,19 +68,6 @@ class SingleDropdownList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.singleDropdownList,
-			);
-			this.props.updateComponentProps(
-				this.internalComponent,
-				this.props,
-				componentTypes.singleDropdownList,
-			);
-		});
-		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, dataField } = this.props;
 			const { options } = this.state;
@@ -119,9 +93,10 @@ class SingleDropdownList extends Component {
 				});
 			} else {
 				this.setState({
-					options: this.props.options && this.props.options[dataField]
-						? this.props.options[dataField].buckets
-						: [],
+					options:
+						this.props.options && this.props.options[dataField]
+							? this.props.options[dataField].buckets
+							: [],
 				});
 			}
 		});
@@ -130,13 +105,13 @@ class SingleDropdownList extends Component {
 		);
 
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			// Clear the component value
 			this.updateQuery('', this.props);
 		}
 
-		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'customQuery')) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 
@@ -162,23 +137,6 @@ class SingleDropdownList extends Component {
 			}
 		}
 	}
-
-	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
-		this.props.removeComponent(this.internalComponent);
-	}
-
-	setReact = (props) => {
-		const { react } = props;
-		if (react) {
-			const newReact = pushToAndClause(react, this.internalComponent);
-			props.watchComponent(props.componentId, newReact);
-		} else {
-			props.watchComponent(props.componentId, {
-				and: this.internalComponent,
-			});
-		}
-	};
 
 	static defaultQuery = (value, props) => {
 		let query = null;
@@ -210,11 +168,9 @@ class SingleDropdownList extends Component {
 
 		if (query && props.nestedField) {
 			return {
-				query: {
-					nested: {
-						path: props.nestedField,
-						query,
-					},
+				nested: {
+					path: props.nestedField,
+					query,
 				},
 			};
 		}
@@ -271,15 +227,19 @@ class SingleDropdownList extends Component {
 			queryOptions,
 			this.state.currentValue,
 			this.props,
-			SingleDropdownList.generateQueryOptions(this.props, this.state.prevAfter),
+			SingleDropdownList.generateQueryOptions(
+				this.props,
+				this.state.prevAfter,
+				this.state.currentValue,
+			),
 		);
 	};
 
-	static generateQueryOptions(props, after) {
+	static generateQueryOptions(props, after, value) {
 		const queryOptions = getQueryOptions(props);
 		return props.showLoadMore
-			? getCompositeAggsQuery(queryOptions, props, after)
-			: getAggsQuery(queryOptions, props);
+			? getCompositeAggsQuery(value, queryOptions, props, after)
+			: getAggsQuery(value, queryOptions, props);
 	}
 
 	updateQueryOptions = (props, addAfterKey = false) => {
@@ -293,6 +253,7 @@ class SingleDropdownList extends Component {
 		const queryOptions = SingleDropdownList.generateQueryOptions(
 			props,
 			addAfterKey ? this.state.after : {},
+			this.state.currentValue,
 		);
 		if (props.defaultQuery) {
 			this.updateDefaultQuery(queryOptions);
@@ -414,18 +375,12 @@ class SingleDropdownList extends Component {
 }
 
 SingleDropdownList.propTypes = {
-	addComponent: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
 	options: types.options,
 	rawData: types.rawData,
 	selectedValue: types.selectedValue,
-	setComponentProps: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	updateComponentProps: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
 	// component props
@@ -503,25 +458,26 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
-	updateComponentProps: (component, options, componentType) =>
-		dispatch(updateComponentProps(component, options, componentType)),
-	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
+
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
+
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => <SingleDropdownList ref={props.myForwardedRef} {...props} />);
+)(props => (
+	<ComponentWrapper
+		{...props}
+		internalComponent
+		componentType={componentTypes.singleDropdownList}
+	>
+		{() => <SingleDropdownList ref={props.myForwardedRef} {...props} />}
+	</ComponentWrapper>
+));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (

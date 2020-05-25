@@ -74,7 +74,7 @@ class Mic extends React.Component {
 			}
 			this.instance = new SpeechRecognition();
 			this.instance.continuous = true;
-			this.instance.interimResults = true;
+			this.instance.interimResults = false;
 			this.instance.lang = lang;
 			if (getInstance) {
 				getInstance(this.instance);

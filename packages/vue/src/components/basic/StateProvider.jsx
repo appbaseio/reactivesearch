@@ -120,6 +120,12 @@ const StateProvider = {
 		rawData(newVal, oldVal) {
 			this.calculateSearchState(newVal, oldVal);
 		},
+		customData(newVal, oldVal) {
+			this.calculateSearchState(newVal, oldVal);
+		},
+		settings(newVal, oldVal) {
+			this.calculateSearchState(newVal, oldVal);
+		},
 	},
 	methods: {
 		isStateChanged(prevState, nextState) {
@@ -151,6 +157,8 @@ const mapStateToProps = (state, props) => ({
 	isLoading: filterByComponentIds(state.isLoading, props),
 	error: filterByComponentIds(state.error, props),
 	promotedResults: filterByComponentIds(state.promotedResults, props),
+	customData: filterByComponentIds(state.customData, props),
+	settings: filterByComponentIds(state.settings, props),
 	rawData: filterByComponentIds(state.rawData, props),
 });
 

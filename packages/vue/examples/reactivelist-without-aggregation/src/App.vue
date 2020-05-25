@@ -1,12 +1,13 @@
 <template>
 	<div id="app">
 		<ReactiveBase
-			app="carstore-dataset-latest"
-			credentials="B86d2y2OE:4fecb2c5-5c5f-49e5-9e0b-0faba74597c6"
+			app="carstore-dataset"
+			url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+			:enable-appbase="true"
 		>
 			<ReactiveList
 				componentId="SearchResult"
-				dataField="brand.raw"
+				dataField="brand.keyword"
 				className="result-list-container"
 			>
 				<div slot="render" slot-scope="{ data }">

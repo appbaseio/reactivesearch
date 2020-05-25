@@ -32,7 +32,8 @@ class App extends Component {
 			<Container>
 				<ReactiveBase
 					app="carstore-dataset"
-					credentials="4HWI27QmA:58c731f7-79ab-4f55-a590-7e15c7e36721"
+					url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+					enableAppbase
 					theme={theme}
 				>
 					<Header />

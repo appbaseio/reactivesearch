@@ -1,11 +1,15 @@
 <template>
 	<div id="app">
-		<ReactiveBase app="meetup_app" credentials="lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181">
+		<ReactiveBase
+			app="meetup_dataset"
+			url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+			:enable-appbase="true"
+		>
 			<div class="row">
 				<div class="col">
 					<ToggleButton
 						componentId="CitySensor"
-						dataField="group.group_topics.topic_name_raw.raw"
+						dataField="group.group_topics.topic_name_raw.keyword"
 						:data="[
 							{ label: 'Social', value: 'Social' },
 							{ label: 'Adventure', value: 'Adventure' },
@@ -17,7 +21,7 @@
 					<SelectedFilters componentId="CitySensor" />
 					<ReactiveList
 						componentId="SearchResult"
-						dataField="group.group_topics.topic_name_raw"
+						dataField="group.group_topics.topic_name_raw.keyword"
 						title="Results"
 						sortBy="asc"
 						class="result-list-container"

@@ -14,12 +14,14 @@ import ListItemView from '../components/ListItemView';
 
 const settings = {
 	app: 'meetup_app',
-	credentials: 'lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181',
+	url:
+		'https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io',
+	enableAppbase: true
 };
 
 const singleDataListProps = {
 	componentId: 'CitySensor',
-	dataField: 'group.group_topics.topic_name_raw.raw',
+	dataField: 'group.group_topics.topic_name_raw.keyword',
 	data: [
 		{ label: 'Open Source', value: 'Open Source' },
 		{ label: 'Social', value: 'Social' },
@@ -31,7 +33,7 @@ const singleDataListProps = {
 
 const resultListProps = {
 	componentId: 'SearchResult',
-	dataField: 'group.group_topics.topic_name_raw',
+	dataField: 'group.group_topics.topic_name_raw.keyword',
 	title: 'Results',
 	sortBy: 'asc',
 	className: 'result-list-container',

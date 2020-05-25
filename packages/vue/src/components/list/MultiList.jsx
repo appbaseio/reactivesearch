@@ -1,4 +1,5 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
@@ -11,6 +12,9 @@ import {
 	getComponent,
 	isFunction,
 	getValidPropsKeys,
+	updateCustomQuery,
+	updateDefaultQuery,
+	isQueryIdentical,
 } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import { UL, Checkbox } from '../../styles/FormControlList';
@@ -23,6 +27,9 @@ const {
 	updateQuery,
 	setQueryOptions,
 	setQueryListener,
+	setComponentProps,
+	setCustomQuery,
+	setDefaultQuery,
 	updateComponentProps,
 } = Actions;
 const {
@@ -88,13 +95,24 @@ const MultiList = {
 		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
 			this.$emit('error', e);
 		});
+		// Update props in store
+		this.setComponentProps(this.componentId, this.$props, componentTypes.multiList);
+		this.setComponentProps(this.internalComponent, this.$props, componentTypes.multiList);
+		// Set custom and default queries in store
+		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
+		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 	},
 	mounted() {
+		this.setReact(this.$props);
 		const propsKeys = getValidPropsKeys(this.$props);
-		this.updateComponentProps(this.componentId, this.$props);
 		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
 			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(this.componentId, this.$props);
+				this.updateComponentProps(this.componentId, this.$props, componentTypes.multiList);
+				this.updateComponentProps(
+					this.internalComponent,
+					this.$props,
+					componentTypes.multiList,
+				);
 			});
 		});
 	},
@@ -102,7 +120,6 @@ const MultiList = {
 		this.addComponent(this.internalComponent);
 		this.addComponent(this.$props.componentId);
 		this.updateQueryHandlerOptions(this.$props);
-		this.setReact(this.$props);
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
@@ -157,6 +174,16 @@ const MultiList = {
 			}
 			if (!isEqual(selectedValue, newVal)) {
 				this.setValue(newVal || [], true);
+			}
+		},
+		defaultQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateDefaultQueryHandler(this.$data.currentValue, this.$props);
+			}
+		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQueryHandler(this.componentId, this.$data.currentValue, this.$props);
 			}
 		},
 	},
@@ -366,6 +393,27 @@ const MultiList = {
 			);
 		},
 
+		updateDefaultQueryHandler(value, props) {
+			let defaultQueryOptions;
+			let query = MultiList.defaultQuery(value, props);
+			if (this.defaultQuery) {
+				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
+				if (defaultQueryToBeSet.query) {
+					({ query } = defaultQueryToBeSet);
+				}
+				defaultQueryOptions = getOptionsFromQuery(defaultQueryToBeSet);
+				// Update calculated default query in store
+				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
+			}
+			this.setQueryOptions(this.internalComponent, defaultQueryOptions);
+			this.updateQuery({
+				componentId: this.internalComponent,
+				query,
+				value,
+				componentType: componentTypes.multiList,
+			});
+		},
+
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = MultiList.defaultQuery(value, props);
@@ -373,6 +421,7 @@ const MultiList = {
 			if (customQuery) {
 				({ query } = customQuery(value, props) || {});
 				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
 			}
 			this.setQueryOptions(props.componentId, customQueryOptions);
 
@@ -383,7 +432,7 @@ const MultiList = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'MULTILIST',
+				componentType: componentTypes.multiList,
 			});
 		},
 
@@ -575,6 +624,9 @@ const mapDispatchtoProps = {
 	updateQuery,
 	watchComponent,
 	updateComponentProps,
+	setComponentProps,
+	setCustomQuery,
+	setDefaultQuery,
 };
 
 const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(MultiList);

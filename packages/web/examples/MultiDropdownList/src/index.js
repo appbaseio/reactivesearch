@@ -15,13 +15,14 @@ class Main extends Component {
 		return (
 			<ReactiveBase
 				app="good-books-ds"
-				credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d"
+				url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+				enableAppbase
 			>
 				<div className="row">
 					<div className="col">
 						<MultiDropdownList
 							componentId="BookSensor"
-							dataField="original_series.raw"
+							dataField="original_series.keyword"
 							size={100}
 						/>
 					</div>
@@ -30,7 +31,7 @@ class Main extends Component {
 						<SelectedFilters />
 						<ReactiveList
 							componentId="SearchResult"
-							dataField="original_title.raw"
+							dataField="original_title"
 							className="result-list-container"
 							from={0}
 							size={5}

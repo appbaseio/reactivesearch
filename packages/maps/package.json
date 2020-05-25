@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivemaps",
-	"version": "3.0.0-beta.6",
+	"version": "3.0.0-beta.9",
 	"description": "React Components for building map UIs",
 	"main": "lib/index.js",
 	"files": [
@@ -12,7 +12,9 @@
 		"build": "babel src --out-dir lib",
 		"build:umd": "webpack --progress -p --config webpack.config.umd.js",
 		"stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
-		"prepublish": "yarn run build"
+		"prepublish": "yarn run build",
+		"version-upgrade": "nps upgrade-maps -c ../../package-scripts.js",
+		"postpublish": "yarn run version-upgrade"
 	},
 	"repository": {
 		"type": "git",
@@ -33,12 +35,12 @@
 		"rheostat": "^2.1.1"
 	},
 	"peerDependencies": {
-		"@appbaseio/reactivesearch": "3.7.10",
+		"@appbaseio/reactivesearch": ">=3.8.3",
 		"react": ">=15",
 		"react-dom": ">=15"
 	},
 	"devDependencies": {
-		"@appbaseio/reactivesearch": "3.7.10",
+		"@appbaseio/reactivesearch": ">=3.8.3",
 		"babel-cli": "^6.26.0",
 		"babel-core": "^6.26.0",
 		"babel-loader": "^7.1.2",

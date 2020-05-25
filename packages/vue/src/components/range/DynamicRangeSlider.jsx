@@ -1,8 +1,9 @@
 import VueTypes from 'vue-types';
 import NoSSR from 'vue-no-ssr';
 import { Actions, helper } from '@appbaseio/reactivecore';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Container from '../../styles/Container';
-import { connect } from '../../utils/index';
+import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
@@ -15,9 +16,18 @@ const {
 	updateQuery,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	setCustomQuery,
+	updateComponentProps,
 } = Actions;
 
-const { checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
+const {
+	checkValueChange,
+	getClassName,
+	getOptionsFromQuery,
+	isEqual,
+	checkSomePropChange,
+} = helper;
 
 const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
@@ -58,8 +68,39 @@ const DynamicRangeSlider = {
 			this.$emit('queryChange', ...args);
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		// Update props in store
+		this.setComponentProps(this.componentId, this.$props, componentTypes.dynamicRangeSlider);
+		this.setComponentProps(
+			this.internalRangeComponent,
+			this.$props,
+			componentTypes.dynamicRangeSlider,
+		);
+		// Set custom query in store
+		updateCustomQuery(
+			this.componentId,
+			this.setCustomQuery,
+			this.$props,
+			this.currentValue,
+		);
 	},
-
+	mounted() {
+		this.setReact();
+		const propsKeys = getValidPropsKeys(this.$props);
+		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
+			checkSomePropChange(newVal, oldVal, propsKeys, () => {
+				this.updateComponentProps(
+					this.componentId,
+					this.$props,
+					componentTypes.dynamicRangeSlider,
+				);
+				this.updateComponentProps(
+					this.internalRangeComponent,
+					this.$props,
+					componentTypes.dynamicRangeSlider,
+				);
+			});
+		});
+	},
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
 		this.addComponent(this.$props.internalRangeComponent);
@@ -71,7 +112,6 @@ const DynamicRangeSlider = {
 
 		// get range before executing other queries
 		this.updateRangeQueryOptions();
-		this.setReact();
 	},
 
 	beforeUpdate() {
@@ -171,6 +211,7 @@ const DynamicRangeSlider = {
 				customQueryOptions = getOptionsFromQuery(
 					this.$props.customQuery(value, this.$props),
 				);
+				updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, value);
 			}
 
 			const { start, end } = this.range || { start: value[0], end: value[1] };
@@ -186,7 +227,7 @@ const DynamicRangeSlider = {
 				label: this.$props.filterLabel,
 				showFilter: this.$props.showFilter && !isInitialValue,
 				URLParams: this.$props.URLParams,
-				componentType: 'DYNAMICRANGESLIDER',
+				componentType: componentTypes.dynamicRangeSlider,
 			});
 		},
 	},
@@ -224,6 +265,11 @@ const DynamicRangeSlider = {
 			const newEnd = currentEnd === oldEnd ? newValue.end : currentEnd;
 
 			this.handleChange([newStart, newEnd]);
+		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQueryHandler(this.$data.currentValue);
+			}
 		},
 	},
 
@@ -361,6 +407,9 @@ const mapDispatchtoProps = {
 	watchComponent,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	setCustomQuery,
+	updateComponentProps,
 };
 
 const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider);

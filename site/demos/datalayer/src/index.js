@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ReactiveBase } from '@appbaseio/reactivesearch';
-import { ReactiveMap } from '@appbaseio/reactivemaps';
+import { ReactiveGoogleMap } from '@appbaseio/reactivemaps';
 
 import './index.css';
 
@@ -30,14 +30,15 @@ class Main extends React.Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="meetup_app"
-				credentials="lW70IgSjr:87c5ae16-73fb-4559-a29e-0a02760d2181"
+				app="meetup_dataset"
+				url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+				enableAppbase
 				type="meetupdata1"
-				mapKey="AIzaSyBQdVcKCe0q_vOBDUvJYpzwGpt_d_uTj4Q"
+				mapKey="AIzaSyAKz3UhgSuP872fb-Aw27oPRI7M0eXkA9U"
 			>
 				<h2>Data Layer on ReactiveMap</h2>
 				{this.renderInfo()}
-				<ReactiveMap
+				<ReactiveGoogleMap
 					componentId="map"
 					dataField="location"
 					title="Reactive Maps"
@@ -49,11 +50,11 @@ class Main extends React.Component {
 					defaultQuery={() => ({
 						query: {
 							terms: {
-								'group.group_city.raw': [...texas, ...california],
+								'group.group_city.keyword': [...texas, ...california],
 							},
 						},
 					})}
-					onAllData={(hits, streamHits, loadMore, renderMap) => {
+					renderAllData={(hits, streamHits, loadMore, renderMap) => {
 						if (this.mapRef) {
 							const { map } = this.mapRef;
 							const count = {

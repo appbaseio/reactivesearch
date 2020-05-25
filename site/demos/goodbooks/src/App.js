@@ -30,7 +30,8 @@ class App extends Component {
 		return (
 			<ReactiveBase
 				app="good-books-ds"
-				credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d"
+				url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+				enableAppbase
 			>
 				<div className="navbar">
 					<div className="logo">
@@ -106,7 +107,7 @@ class App extends Component {
 						/>
 						<MultiList
 							componentId="authorFilter"
-							dataField="authors.raw"
+							dataField="authors.keyword"
 							title="Authors"
 							size={100}
 							showCheckbox={false}
@@ -119,7 +120,7 @@ class App extends Component {
 						/>
 					</div>
 					<div className="mainBar">
-						<SelectedFilters />
+						<SelectedFilters showClearAll="default" />
 						<ReactiveList
 							componentId="results"
 							dataField="original_title"
@@ -140,12 +141,12 @@ class App extends Component {
 									label: 'Ratings (High to low)',
 								},
 								{
-									dataField: 'original_title.raw',
+									dataField: 'original_title.keyword',
 									sortBy: 'asc',
 									label: 'Title A->Z',
 								},
 								{
-									dataField: 'original_title.raw',
+									dataField: 'original_title.keyword',
 									sortBy: 'desc',
 									label: 'Title Z->A',
 								},

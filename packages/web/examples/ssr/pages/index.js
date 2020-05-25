@@ -15,7 +15,8 @@ import './styles/airbnb.css';
 const components = {
 	settings: {
 		app: 'airbeds-test-app',
-		credentials: 'X8RsOu0Lp:9b4fe1a4-58c6-4089-a042-505d86d9da30',
+		url: 'https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io',
+		enableAppbase: true,
 		type: 'listing',
 		theme: {
 			colors: {
@@ -98,6 +99,19 @@ const components = {
 			listItem: 'list-item',
 			image: 'image',
 		},
+		sortOptions: [
+			{
+				label: 'Bed Type',
+				dataField: 'bed_type',
+				sortBy: 'asc',
+			},
+			{
+				label: 'Bedrooms',
+				dataField: 'bedrooms',
+				sortBy: 'asc',
+			},
+		],
+		defaultSortOption: 'Bedrooms',
 	},
 };
 

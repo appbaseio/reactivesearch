@@ -104,12 +104,12 @@ const Results = ({ toggleTopic, currentTopics }) => (
 			},
 			{
 				label: 'A to Z',
-				dataField: 'owner.raw',
+				dataField: 'owner.keyword',
 				sortBy: 'asc',
 			},
 			{
 				label: 'Z to A',
-				dataField: 'owner.raw',
+				dataField: 'owner.keyword',
 				sortBy: 'desc',
 			},
 			{

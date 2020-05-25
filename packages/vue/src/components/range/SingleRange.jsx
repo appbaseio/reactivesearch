@@ -1,9 +1,10 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import { connect } from '../../utils/index';
+import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
 import types from '../../utils/vueTypes';
 
 const {
@@ -13,8 +14,17 @@ const {
 	updateQuery,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	setCustomQuery,
+	updateComponentProps,
 } = Actions;
-const { isEqual, checkValueChange, getClassName, getOptionsFromQuery } = helper;
+const {
+	isEqual,
+	checkValueChange,
+	getClassName,
+	getOptionsFromQuery,
+	checkSomePropChange,
+} = helper;
 
 const SingleRange = {
 	name: 'SingleRange',
@@ -48,10 +58,26 @@ const SingleRange = {
 			this.$emit('queryChange', ...args);
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		// Update props in store
+		this.setComponentProps(this.componentId, this.$props, componentTypes.singleRange);
+		// Set custom query in store
+		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
+	},
+	mounted() {
+		this.setReact(this.$props);
+		const propsKeys = getValidPropsKeys(this.$props);
+		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
+			checkSomePropChange(newVal, oldVal, propsKeys, () => {
+				this.updateComponentProps(
+					this.componentId,
+					this.$props,
+					componentTypes.singleRange,
+				);
+			});
+		});
 	},
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
-		this.setReact(this.$props);
 
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
@@ -85,6 +111,11 @@ const SingleRange = {
 				this.setValue(newVal);
 			}
 		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.updateQueryHandler(this.$data.currentValue, this.$props);
+			}
+		},
 	},
 
 	render() {
@@ -97,9 +128,9 @@ const SingleRange = {
 				)}
 				<UL class={getClassName(this.$props.innerClass, 'list')}>
 					{this.$props.data.map(item => {
-						const selected =
-							!!this.$data.currentValue &&
-							this.$data.currentValue.label === item.label;
+						const selected
+							= !!this.$data.currentValue
+							&& this.$data.currentValue.label === item.label;
 						return (
 							<li key={item.label} class={`${selected ? 'active' : ''}`}>
 								<Radio
@@ -157,6 +188,12 @@ const SingleRange = {
 			if (customQuery) {
 				({ query } = customQuery(value, props) || {});
 				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				updateCustomQuery(
+					this.componentId,
+					this.setCustomQuery,
+					this.$props,
+					this.currentValue,
+				);
 			}
 			this.setQueryOptions(props.componentId, customQueryOptions);
 
@@ -167,7 +204,7 @@ const SingleRange = {
 				label: props.filterLabel,
 				showFilter: props.showFilter,
 				URLParams: props.URLParams,
-				componentType: 'SINGLERANGE',
+				componentType: componentTypes.singleRange,
 			});
 		},
 
@@ -213,9 +250,9 @@ SingleRange.defaultQuery = (value, props) => {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 });
 
 const mapDispatchtoProps = {
@@ -225,6 +262,9 @@ const mapDispatchtoProps = {
 	watchComponent,
 	setQueryListener,
 	setQueryOptions,
+	setComponentProps,
+	setCustomQuery,
+	updateComponentProps,
 };
 
 const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleRange);

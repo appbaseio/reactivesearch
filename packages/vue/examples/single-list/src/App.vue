@@ -2,16 +2,17 @@
 	<div id="app">
 		<ReactiveBase
 			app="good-books-ds"
-			credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d"
+			url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+			:enable-appbase="true"
 		>
 			<SingleList
 				componentId="Authors"
-				dataField="authors.raw"
+				dataField="authors.keyword"
 				className="single-list-container"
 			/>
 			<ReactiveList
 				componentId="SearchResult"
-				dataField="original_title.raw"
+				dataField="original_title.keyword"
 				className="result-list-container"
 				:pagination="true"
 				:from="0"

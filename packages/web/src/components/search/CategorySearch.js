@@ -4,25 +4,17 @@ import { withTheme } from 'emotion-theming';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import {
-	addComponent,
-	removeComponent,
-	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
-	updateComponentProps,
 	setSuggestionsSearchValue,
 	recordSuggestionClick,
 	setCustomHighlightOptions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	debounce,
-	pushToAndClause,
 	checkValueChange,
-	checkPropChange,
 	checkSomePropChange,
 	getOptionsFromQuery,
 	getClassName,
@@ -33,9 +25,10 @@ import {
 	getResultStats,
 	updateCustomQuery,
 	updateDefaultQuery,
+	getTopSuggestions,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-
+import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
@@ -50,12 +43,14 @@ import {
 	isFunction,
 	getComponent,
 	hasCustomRenderer,
-	isIdentical,
-	getValidPropsKeys,
 	handleCaretPosition,
+	isQueryIdentical,
+	hasQuerySuggestionsRenderer,
+	getQuerySuggestionsComponent,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
+import ComponentWrapper from '../basic/ComponentWrapper';
 
 const Text = withTheme(props => (
 	<span
@@ -91,17 +86,10 @@ class CategorySearch extends Component {
 		 * */
 		this.isPending = false;
 
-		this.internalComponent = `${props.componentId}__internal`;
+		this.internalComponent = getInternalComponentID(props.componentId);
 		this.queryOptions = {
 			size: props.size,
 		};
-		props.addComponent(props.componentId);
-		props.addComponent(this.internalComponent);
-		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
-
-		// Update props in store
-		props.setComponentProps(props.componentId, props, componentTypes.categorySearch);
-		props.setComponentProps(this.internalComponent, props, componentTypes.categorySearch);
 		// Set custom and default queries in store
 		updateCustomQuery(props.componentId, props, currentValue);
 		updateDefaultQuery(props.componentId, props, currentValue);
@@ -118,7 +106,6 @@ class CategorySearch extends Component {
 			props.setQueryOptions(props.componentId, this.queryOptions);
 		}
 
-		this.setReact(props);
 		const aggsQuery = this.getCombinedAggsQuery();
 		props.setQueryOptions(this.internalComponent, aggsQuery, false);
 		const hasMounted = false;
@@ -137,18 +124,6 @@ class CategorySearch extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-				componentTypes.categorySearch,
-			);
-			this.props.updateComponentProps(
-				this.internalComponent,
-				this.props,
-				componentTypes.categorySearch,
-			);
-		});
 		checkSomePropChange(
 			this.props,
 			prevProps,
@@ -171,16 +146,14 @@ class CategorySearch extends Component {
 		);
 
 		// Treat defaultQuery and customQuery as reactive props
-		if (!isIdentical(this.props.defaultQuery, prevProps.defaultQuery)) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery(this.state.currentValue, this.props);
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 
-		if (!isIdentical(this.props.customQuery, prevProps.customQuery)) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'customQuery')) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
-
-		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
 
 		if (Array.isArray(this.props.suggestions) && this.state.currentValue.trim().length) {
 			// shallow check allows us to set suggestions even if the next set
@@ -264,11 +237,6 @@ class CategorySearch extends Component {
 		}
 	}
 
-	componentWillUnmount() {
-		this.props.removeComponent(this.props.componentId);
-		this.props.removeComponent(this.internalComponent);
-	}
-
 	getAggsQuery = field => ({
 		aggs: {
 			[field]: {
@@ -287,18 +255,6 @@ class CategorySearch extends Component {
 			aggsQuery.aggs = { ...aggsQuery.aggs, ...compositeAggsQuery.aggs };
 		}
 		return aggsQuery;
-	};
-
-	setReact = (props) => {
-		const { react } = props;
-		if (react) {
-			const newReact = pushToAndClause(react, this.internalComponent);
-			props.watchComponent(props.componentId, newReact);
-		} else {
-			props.watchComponent(props.componentId, {
-				and: this.internalComponent,
-			});
-		}
 	};
 
 	static highlightQuery = (props) => {
@@ -698,6 +654,7 @@ class CategorySearch extends Component {
 	};
 
 	handleVoiceResults = ({ results }) => {
+		const { autosuggest } = this.props;
 		if (
 			results
 			&& results[0]
@@ -707,8 +664,8 @@ class CategorySearch extends Component {
 			&& results[0][0].transcript.trim()
 		) {
 			this.isPending = false;
-			this.setValue(results[0][0].transcript.trim(), true);
-			if (this.props.autosuggest) {
+			this.setValue(results[0][0].transcript.trim(), !autosuggest);
+			if (autosuggest) {
 				this._inputRef.focus();
 				this.setState({
 					isOpen: true,
@@ -755,7 +712,7 @@ class CategorySearch extends Component {
 						{this.renderCancelIcon()}
 					</InputIcon>
 				)}
-				{showVoiceSearch && (
+				{this.shouldMicRender(showVoiceSearch) && (
 					<Mic
 						getInstance={getMicInstance}
 						render={renderMic}
@@ -776,6 +733,12 @@ class CategorySearch extends Component {
 			</div>
 		);
 	};
+
+	shouldMicRender(showVoiceSearch) {
+		// checks for SSR
+		if (typeof window === 'undefined') return false;
+		return showVoiceSearch && (window.webkitSpeechRecognition || window.SpeechRecognition);
+	}
 
 	renderNoSuggestion = (finalSuggestionsList = []) => {
 		const {
@@ -852,9 +815,14 @@ class CategorySearch extends Component {
 		return null;
 	};
 
-	getComponent = (downshiftProps = {}) => {
+	getComponent = (downshiftProps = {}, isQuerySuggestionsRender = false) => {
 		const {
-			error, isLoading, aggregationData, promotedResults, customData, rawData,
+			error,
+			isLoading,
+			aggregationData,
+			promotedResults,
+			customData,
+			rawData,
 		} = this.props;
 		const { currentValue } = this.state;
 		const data = {
@@ -873,7 +841,20 @@ class CategorySearch extends Component {
 			rawCategories: this.props.categories,
 			triggerClickAnalytics: this.triggerClickAnalytics,
 			resultStats: this.stats,
+			querySuggestions: this.topSuggestions,
 		};
+		if (isQuerySuggestionsRender) {
+			return getQuerySuggestionsComponent(
+				{
+					downshiftProps,
+					data: this.topSuggestions,
+					value: currentValue,
+					loading: isLoading,
+					error,
+				},
+				this.props,
+			);
+		}
 		return getComponent(data, this.props);
 	};
 
@@ -938,6 +919,14 @@ class CategorySearch extends Component {
 			finalSuggestionsList = [...categorySuggestions, ...suggestionsList];
 		}
 		return withClickIds(finalSuggestionsList);
+	}
+
+	get topSuggestions() {
+		const { enableQuerySuggestions, querySuggestions, showDistinctSuggestions } = this.props;
+		const { currentValue } = this.state;
+		return enableQuerySuggestions
+			? getTopSuggestions(querySuggestions, currentValue, showDistinctSuggestions)
+			: [];
 	}
 
 	triggerClickAnalytics = (searchPosition) => {
@@ -1023,14 +1012,44 @@ class CategorySearch extends Component {
 												theme,
 											)} ${getClassName(this.props.innerClass, 'list')}`}
 										>
+											{hasQuerySuggestionsRenderer(this.props)
+												? this.getComponent(
+													{
+														getInputProps,
+														getItemProps,
+														isOpen,
+														highlightedIndex,
+														...rest,
+													},
+													true,
+												)
+												: this.topSuggestions.map((sugg, index) => (
+													<li
+														{...getItemProps({ item: sugg })}
+														key={`${index + 1}-${sugg.value}`}
+														style={{
+															backgroundColor: this.getBackgroundColor(
+																highlightedIndex,
+																index,
+															),
+														}}
+													>
+														<SuggestionItem
+															currentValue={currentValue}
+															suggestion={sugg}
+														/>
+													</li>
+												))}
 											{finalSuggestionsList.slice(0, size).map((item, index) => (
 												<li
 													{...getItemProps({ item })}
-													key={`${index + 1}-${item.value}`}
+													key={`${index + this.topSuggestions.length + 1}-${
+														item.value
+													}`}
 													style={{
 														backgroundColor: this.getBackgroundColor(
 															highlightedIndex,
-															index,
+															this.topSuggestions.length + index,
 														),
 													}}
 												>
@@ -1081,12 +1100,8 @@ class CategorySearch extends Component {
 }
 
 CategorySearch.propTypes = {
-	addComponent: types.funcRequired,
-	removeComponent: types.funcRequired,
-	setQueryListener: types.funcRequired,
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-	watchComponent: types.funcRequired,
 	setSuggestionsSearchValue: types.funcRequired,
 	options: types.options,
 	categories: types.data,
@@ -1097,8 +1112,6 @@ CategorySearch.propTypes = {
 	selectedCategory: types.selectedValue,
 	suggestions: types.suggestions,
 	aggregationData: types.aggregationData,
-	setComponentProps: types.funcRequired,
-	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
 	config: types.props,
 	triggerAnalytics: types.funcRequired,
@@ -1111,6 +1124,7 @@ CategorySearch.propTypes = {
 	autoFocus: types.bool,
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
+	enableQuerySuggestions: types.bool,
 	beforeValueChange: types.func,
 	categoryField: types.string,
 	className: types.string,
@@ -1119,7 +1133,7 @@ CategorySearch.propTypes = {
 	customHighlight: types.func,
 	customQuery: types.func,
 	defaultQuery: types.func,
-	dataField: types.dataFieldArray,
+	dataField: types.dataFieldValidator,
 	aggregationField: types.string,
 	size: types.number,
 	debounce: types.number,
@@ -1150,8 +1164,10 @@ CategorySearch.propTypes = {
 	onValueSelected: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
+	querySuggestions: types.hits,
 	react: types.react,
 	renderError: types.title,
+	renderQuerySuggestions: types.func,
 	parseSuggestion: types.func,
 	renderNoSuggestion: types.title,
 	showClear: types.bool,
@@ -1177,6 +1193,7 @@ CategorySearch.defaultProps = {
 	debounce: 0,
 	downShiftProps: {},
 	enableSynonyms: true,
+	enableQuerySuggestions: false,
 	iconPosition: 'left',
 	placeholder: 'Search',
 	queryFormat: 'or',
@@ -1218,6 +1235,7 @@ const mapStateToProps = (state, props) => ({
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
+	querySuggestions: state.querySuggestions[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -1226,25 +1244,26 @@ const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
-	setComponentProps: (component, options, componentType) =>
-		dispatch(setComponentProps(component, options, componentType)),
-	updateComponentProps: (component, options) =>
-		dispatch(updateComponentProps(component, options)),
-	addComponent: component => dispatch(addComponent(component)),
-	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
-	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
-		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	triggerAnalytics: searchPosition => dispatch(recordSuggestionClick(searchPosition)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(withTheme(props => <CategorySearch ref={props.myForwardedRef} {...props} />));
+)(
+	withTheme(props => (
+		<ComponentWrapper
+			{...props}
+			internalComponent
+			componentType={componentTypes.categorySearch}
+		>
+			{() => <CategorySearch ref={props.myForwardedRef} {...props} />}
+		</ComponentWrapper>
+	)),
+);
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
