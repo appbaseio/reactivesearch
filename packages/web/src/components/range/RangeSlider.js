@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
 import { updateQuery, setQueryOptions, setCustomQuery } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -339,7 +341,7 @@ class RangeSlider extends Component {
 					/>
 				)}
 				{this.props.rangeLabels && this.props.showSlider && (
-					<div className={rangeLabelsContainer}>
+					<div css={rangeLabelsContainer}>
 						<RangeLabel
 							align="left"
 							className={getClassName(this.props.innerClass, 'label') || null}

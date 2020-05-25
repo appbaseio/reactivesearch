@@ -1,6 +1,6 @@
-import React from 'react';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import PropTypes from 'prop-types';
-import { css } from 'emotion';
 
 import { escapeRegExp } from '../../../utils';
 
@@ -22,7 +22,7 @@ const Highlight = (props) => {
 	const stringToReplace = modSearchWords.join('|');
 	return (
 		<div
-			className={highlightedStyling}
+			css={highlightedStyling}
 			dangerouslySetInnerHTML={{
 				__html: textToHighlight.replace(
 					new RegExp(stringToReplace, 'ig'),

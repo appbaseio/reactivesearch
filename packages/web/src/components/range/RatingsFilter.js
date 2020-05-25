@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
 
 import { updateQuery, setQueryOptions, setCustomQuery } from '@appbaseio/reactivecore/lib/actions';
@@ -174,7 +176,7 @@ class RatingsFilter extends Component {
 						{this.props.title}
 					</Title>
 				)}
-				<ul className={ratingsList}>
+				<ul css={ratingsList}>
 					{this.props.data.map((item) => {
 						const {
 							start, end, label, ...rest

@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
 import {
 	addComponent,
@@ -501,7 +503,7 @@ class DynamicRangeSlider extends Component {
 						/>
 					)}
 				/>
-				<div className={rangeLabelsContainer}>
+				<div css={rangeLabelsContainer}>
 					<RangeLabel
 						align="left"
 						className={getClassName(this.props.innerClass, 'label') || null}
