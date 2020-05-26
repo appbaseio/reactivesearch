@@ -7,7 +7,7 @@
 	"dependencies": {
 		"@appbaseio/reactivesearch": "3.9.4",
 		"@zeit/next-css": "^1.0.1",
-		"emotion-server": "^9.1.0",
+		"emotion-server": "^10.0.27",
 		"moment": "^2.21.0",
 		"next": "^9.3.2",
 		"prop-types": "^15.6.1",
@@ -20,7 +20,7 @@
 		"babel-eslint": "^8.2.2",
 		"babel-loader": "^7.1.4",
 		"babel-plugin-direct-import": "^0.5.0",
-		"babel-plugin-emotion": "^9.0.1",
+		"babel-plugin-emotion": "^10.0.33",
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"babel-preset-env": "^1.6.1",
