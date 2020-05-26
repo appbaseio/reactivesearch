@@ -38,7 +38,6 @@
 		"appbase-js": "^4.1.0",
 		"cross-env": "^5.2.0",
 		"downshift": "^1.31.2",
-		"emotion": "^10.0.27",
 		"emotion-theming": "^10.0.27",
 		"hoist-non-react-statics": "^3.2.1",
 		"polished": "^1.9.3",
