@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
+import { Component } from 'react';
 import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
 
@@ -143,9 +145,9 @@ class Dropdown extends Component {
 				isOpen={this.state.isOpen}
 				itemToString={i => i && i[this.props.labelField]}
 				render={({
-					getButtonProps, getItemProps, isOpen, highlightedIndex, ...rest
+					getRootProps, getButtonProps, getItemProps, isOpen, highlightedIndex, ...rest
 				}) => (
-					<div className={suggestionsContainer}>
+					<div {...getRootProps({ css: suggestionsContainer }, { suppressRefError: true })}>
 						<Select
 							{...getButtonProps()}
 							className={getClassName(this.props.innerClass, 'select') || null}
@@ -169,7 +171,8 @@ class Dropdown extends Component {
 								getButtonProps, getItemProps, isOpen, highlightedIndex, ...rest,
 							}) : isOpen && itemsToRender.length ? (
 								<ul
-									className={`${suggestions(themePreset, theme)} ${
+									css={suggestions(themePreset, theme)}
+									className={`${
 										this.props.small ? 'small' : ''
 									} ${getClassName(this.props.innerClass, 'list')}`}
 								>

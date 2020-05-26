@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
+import { Component } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { connect, ReactReduxContext } from '@appbaseio/reactivesearch/lib/utils';
@@ -79,7 +81,7 @@ class ReactiveOpenStreetMap extends Component {
 					if ('label' in data) {
 						openStreetMarkerProps.icon = new DivIcon({
 							html: ReactDOMServer.renderToStaticMarkup(
-								<div className={mapPinWrapper}>
+								<div css={mapPinWrapper}>
 									<MapPin css={{ height: 'auto' }}>{data.label}</MapPin>
 									<div
 										css={{
@@ -247,7 +249,6 @@ ReactiveOpenStreetMap.propTypes = {
 	defaultPin: types.string,
 	innerClass: types.style,
 	markers: types.children,
-	showMarkers: types.bool,
 	tileServer: types.string,
 	title: types.string,
 	onError: types.func,

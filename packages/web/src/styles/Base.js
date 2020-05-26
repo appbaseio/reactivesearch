@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 
 const Base = styled(({ as: T = 'div', ...props }) => <T {...props} />)`
 	font-family: ${({ theme }) => theme.typography.fontFamily};

@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React from 'react';
 import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
 import { InfoWindow, Marker } from 'react-google-maps';
@@ -155,7 +157,7 @@ class GoogleMapMarker extends React.Component {
 						{...markerProps}
 						{...customMarkerProps}
 					>
-						<div className={mapPinWrapper}>
+						<div css={mapPinWrapper}>
 							<MapPin>{data.label}</MapPin>
 							<MapPinArrow />
 							{onPopoverClick ? this.renderPopover(marker, true) : null}
@@ -178,7 +180,7 @@ class GoogleMapMarker extends React.Component {
 						{...markerProps}
 						{...customMarkerProps}
 					>
-						<div className={mapPinWrapper}>
+						<div css={mapPinWrapper}>
 							{data.custom}
 							{onPopoverClick ? this.renderPopover(marker, true) : null}
 						</div>

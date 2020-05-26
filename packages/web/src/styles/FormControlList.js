@@ -1,5 +1,5 @@
-import { css } from 'emotion';
-import styled from 'react-emotion';
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
 import { lighten } from 'polished';
 
 const item = {

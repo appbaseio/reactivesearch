@@ -1,5 +1,5 @@
-import { css } from 'emotion';
-import styled from 'react-emotion';
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
 import { darken, lighten, rgba } from 'polished';
 
 const filters = ({ colors: { borderColor } }) => css`
@@ -87,7 +87,7 @@ const primary = ({ theme }) => css`
 	}
 `;
 
-const large = () => css`
+const large = css`
 	min-height: 40px;
 	padding: 10px 20px;
 `;

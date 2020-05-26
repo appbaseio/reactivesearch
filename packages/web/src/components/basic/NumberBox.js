@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
 
 import { updateQuery, setQueryOptions, setCustomQuery } from '@appbaseio/reactivecore/lib/actions';
@@ -174,7 +176,7 @@ class NumberBox extends Component {
 				<Flex
 					labelPosition={this.props.labelPosition}
 					justifyContent="space-between"
-					className={numberBoxContainer}
+					css={numberBoxContainer}
 				>
 					<span className={getClassName(this.props.innerClass, 'label') || null}>
 						{this.props.data.label}

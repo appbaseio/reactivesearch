@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { withTheme } from 'emotion-theming';
@@ -43,12 +45,12 @@ import ComponentWrapper from '../basic/ComponentWrapper';
 
 class ReactiveList extends Component {
 	static ResultCardsWrapper = ({ children, ...rest }) => (
-		<div className={container} {...rest}>
+		<div css={container} {...rest}>
 			{children}
 		</div>
 	);
 	static ResultListWrapper = ({ children, ...rest }) => (
-		<div className={listContainer} {...rest}>
+		<div css={listContainer} {...rest}>
 			{children}
 		</div>
 	);
@@ -572,10 +574,11 @@ class ReactiveList extends Component {
 		} else if (total) {
 			return (
 				<p
-					className={`${resultStats} ${getClassName(
+					css={resultStats}
+					className={getClassName(
 						this.props.innerClass,
 						'resultStats',
-					)}`}
+					)}
 				>
 					{this.props.total} results found in {this.props.time}ms
 				</p>
@@ -643,7 +646,8 @@ class ReactiveList extends Component {
 
 	renderSortOptions = () => (
 		<select
-			className={`${sortOptions} ${getClassName(this.props.innerClass, 'sortOptions')}`}
+			css={sortOptions}
+			className={getClassName(this.props.innerClass, 'sortOptions')}
 			name="sort-options"
 			onChange={this.handleSortChange}
 			value={this.sortOptionIndex}

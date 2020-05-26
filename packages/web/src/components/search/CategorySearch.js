@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
 import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
@@ -960,15 +962,16 @@ class CategorySearch extends Component {
 						isOpen={this.state.isOpen}
 						itemToString={i => i}
 						render={({
+							getRootProps,
 							getInputProps,
 							getItemProps,
 							isOpen,
 							highlightedIndex,
 							...rest
 						}) => (
-							<div className={suggestionsContainer}>
+							<div {...getRootProps({ css: suggestionsContainer }, { suppressRefError: true })}>
 								<Input
-									innerRef={(c) => {
+									ref={(c) => {
 										this._inputRef = c;
 									}}
 									aria-label={this.props.componentId}
@@ -1007,10 +1010,8 @@ class CategorySearch extends Component {
 									&& isOpen
 									&& finalSuggestionsList.length ? (
 										<ul
-											className={`${suggestions(
-												themePreset,
-												theme,
-											)} ${getClassName(this.props.innerClass, 'list')}`}
+											css={suggestions(themePreset, theme)}
+											className={getClassName(this.props.innerClass, 'list')}
 										>
 											{hasQuerySuggestionsRenderer(this.props)
 												? this.getComponent(
@@ -1070,9 +1071,9 @@ class CategorySearch extends Component {
 						{...this.props.downShiftProps}
 					/>
 				) : (
-					<div className={suggestionsContainer}>
+					<div css={suggestionsContainer}>
 						<Input
-							innerRef={(c) => {
+							ref={(c) => {
 								this._inputRef = c;
 							}}
 							aria-label={this.props.componentId}

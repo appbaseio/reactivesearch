@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
 import { withTheme } from 'emotion-theming';
 
@@ -132,8 +134,8 @@ class SelectedFilters extends Component {
 		return (
 			<Container
 				style={this.props.style}
-				className={`${filters(theme)}
-				${this.props.className || ''}`}
+				css={filters(theme)}
+				className={`${this.props.className || ''}`}
 			>
 				{this.props.title && hasFilters && (
 					<Title className={getClassName(this.props.innerClass, 'title') || null}>

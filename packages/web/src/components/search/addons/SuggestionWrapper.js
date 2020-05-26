@@ -1,4 +1,5 @@
-import React from 'react';
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { noSuggestions } from '../../../styles/Input';
@@ -7,10 +8,11 @@ const SuggestionWrapper = ({
 	theme, themePreset, children, innerClassName, innerClass,
 }) => (
 	<div
-		className={`${noSuggestions(themePreset, theme)} ${getClassName(
+		css={noSuggestions(themePreset, theme)}
+		className={getClassName(
 			innerClass,
 			innerClassName || '',
-		)}`}
+		)}
 	>
 		<li>{children}</li>
 	</div>

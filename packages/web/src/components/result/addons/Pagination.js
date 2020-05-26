@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React from 'react';
 import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -131,7 +133,7 @@ class Pagination extends React.PureComponent {
 			};
 		}
 		return (
-			<div className={`${pagination} ${getClassName(innerClass, 'pagination')}`}>
+			<div css={pagination} className={getClassName(innerClass, 'pagination')}>
 				<Button
 					className={getClassName(innerClass, 'button') || null}
 					disabled={currentPage === 0}

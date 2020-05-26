@@ -1,5 +1,5 @@
-import styled from 'react-emotion';
-import { css } from 'emotion';
+import styled from '@emotion/styled';
+import { css } from '@emotion/core';
 import { lighten } from 'polished';
 
 const leftLabel = css`

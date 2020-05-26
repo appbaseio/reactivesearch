@@ -1,5 +1,5 @@
-import React from 'react';
-import { css, cx } from 'react-emotion';
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 
 import Flex from '../../../styles/Flex';
 import Highlight from './Highlight';
@@ -41,12 +41,12 @@ const SuggestionItem = ({ currentValue, suggestion }) => {
 							<Highlight
 								searchWords={currentValue.split(' ')}
 								textToHighlight={title}
-								className={css({ fontSize: '1rem' })}
+								css={{ fontSize: '1rem' }}
 							/>
 						</div>
 					)}
 					{description && (
-						<div className={cx('trim', css({ marginTop: 3 }))}>
+						<div className="trim" css={{ marginTop: 3 }}>
 							<Highlight
 								searchWords={currentValue.split(' ')}
 								textToHighlight={description}

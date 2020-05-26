@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { element } from 'prop-types';
@@ -8,7 +10,7 @@ import { starRow, whiteStar } from '../../../styles/ratingsList';
 function StarRating(props) {
 	const { icon, dimmedIcon } = props;
 	return (
-		<div className={starRow}>
+		<div css={starRow}>
 			{Array(props.stars)
 				.fill('')
 				.map((_, index) =>
@@ -24,7 +26,7 @@ function StarRating(props) {
 					(dimmedIcon ? (
 						<React.Fragment key={index}>{dimmedIcon}</React.Fragment> // eslint-disable-line
 					) : (
-						<Star key={index} className={whiteStar} /> // eslint-disable-line
+						<Star key={index} css={whiteStar} /> // eslint-disable-line
 					)),
 				)}
 		</div>

@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
 import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
@@ -821,20 +823,21 @@ class DataSearch extends Component {
 						isOpen={this.state.isOpen}
 						itemToString={i => i}
 						render={({
+							getRootProps,
 							getInputProps,
 							getItemProps,
 							isOpen,
 							highlightedIndex,
 							...rest
 						}) => (
-							<div className={suggestionsContainer}>
+							<div {...getRootProps({ css: suggestionsContainer }, { suppressRefError: true })}>
 								<Input
 									aria-label={this.props.componentId}
 									id={`${this.props.componentId}-input`}
 									showIcon={this.props.showIcon}
 									showClear={this.props.showClear}
 									iconPosition={this.props.iconPosition}
-									innerRef={(c) => {
+									ref={(c) => {
 										this._inputRef = c;
 									}}
 									{...getInputProps({
@@ -866,10 +869,11 @@ class DataSearch extends Component {
 								{this.renderError()}
 								{!this.hasCustomRenderer && isOpen && suggestionsList.length ? (
 									<ul
-										className={`${suggestions(
+										css={suggestions(
 											themePreset,
 											theme,
-										)} ${getClassName(this.props.innerClass, 'list')}`}
+										)}
+										className={getClassName(this.props.innerClass, 'list')}
 									>
 										{hasQuerySuggestionsRenderer(this.props)
 											? this.getComponent(
@@ -927,7 +931,7 @@ class DataSearch extends Component {
 						{...this.props.downShiftProps}
 					/>
 				) : (
-					<div className={suggestionsContainer}>
+					<div css={suggestionsContainer}>
 						<Input
 							aria-label={this.props.componentId}
 							className={getClassName(this.props.innerClass, 'input') || null}

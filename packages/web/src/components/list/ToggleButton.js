@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
 
 import { updateQuery, setQueryOptions, setCustomQuery } from '@appbaseio/reactivecore/lib/actions';
@@ -215,7 +217,8 @@ class ToggleButton extends Component {
 		return (
 			<Container
 				style={this.props.style}
-				className={`${toggleButtons} ${this.props.className || ''}`}
+				css={toggleButtons}
+				className={`${this.props.className || ''}`}
 			>
 				{this.props.title && (
 					<Title className={getClassName(this.props.innerClass, 'title') || null}>
