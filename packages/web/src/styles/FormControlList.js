@@ -89,11 +89,11 @@ const formItem = ({ theme }) => css`
 			justify-content: space-between;
 			line-height: 1.3rem;
 
-			& > span:first-child {
+			& > span:first-of-type {
 				padding-right: 5px;
 			}
 
-			& > span:nth-child(2) {
+			& > span:nth-of-type(2) {
 				color: ${lighten(0.35, theme.colors.textColor)};
 			}
 		}

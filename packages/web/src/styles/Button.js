@@ -12,7 +12,7 @@ const filters = ({ colors: { borderColor } }) => css`
 		font-size: 0.85rem;
 		position: relative;
 
-		span:first-child {
+		span:first-of-type {
 			max-width: 260px;
 			white-space: nowrap;
 			overflow: hidden;
@@ -20,7 +20,7 @@ const filters = ({ colors: { borderColor } }) => css`
 			margin-right: 26px;
 		}
 
-		span:last-child {
+		span:last-of-type {
 			display: flex;
 			height: 100%;
 			top: 0;
@@ -34,7 +34,7 @@ const filters = ({ colors: { borderColor } }) => css`
 
 		&:hover,
 		&:focus {
-			span:first-child {
+			span:first-of-type {
 				text-decoration: line-through;
 			}
 		}
