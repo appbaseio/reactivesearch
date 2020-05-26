@@ -1,4 +1,5 @@
-import React from 'react';
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
 
@@ -433,9 +434,9 @@ class GeoDistanceDropdown extends GeoCode {
 				isOpen={this.state.isOpen}
 				itemToString={i => i}
 				render={({
-					getInputProps, getItemProps, isOpen, highlightedIndex,
+					getRootProps, getInputProps, getItemProps, isOpen, highlightedIndex,
 				}) => (
-					<div className={suggestionsContainer}>
+					<div {...getRootProps({ css: suggestionsContainer }, { suppressRefError: true })}>
 						<Input
 							showIcon={this.props.showIcon}
 							iconPosition={this.props.iconPosition}
@@ -458,10 +459,11 @@ class GeoDistanceDropdown extends GeoCode {
 						</InputIcon>
 						{isOpen && this.state.suggestions.length ? (
 							<ul
-								className={`${suggestions(themePreset, theme)} ${getClassName(
+								css={suggestions(themePreset, theme)}
+								className={getClassName(
 									this.props.innerClass,
 									'list',
-								)}`}
+								)}
 							>
 								{suggestionsList.slice(0, 11).map((item, index) => (
 									<li
