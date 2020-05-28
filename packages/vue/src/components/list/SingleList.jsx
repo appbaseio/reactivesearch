@@ -478,6 +478,11 @@ SingleList.defaultQuery = (value, props) => {
 		};
 	}
 	if (value) {
+		query = {
+			term: {
+				[props.dataField]: value,
+			},
+		};
 		if (props.showMissing && props.missingLabel === value) {
 			query = {
 				bool: {
@@ -487,11 +492,6 @@ SingleList.defaultQuery = (value, props) => {
 				},
 			};
 		}
-		query = {
-			term: {
-				[props.dataField]: value,
-			},
-		};
 	}
 
 	if (query && props.nestedField) {
