@@ -6,7 +6,7 @@ import Container from '../../styles/Container';
 import Title from '../../styles/Title';
 import { connect } from '../../utils/index';
 
-const { patchValue, clearValues } = Actions;
+const { setValue, clearValues } = Actions;
 const { getClassName, handleA11yAction } = helper;
 
 const SelectedFilters = {
@@ -28,6 +28,8 @@ const SelectedFilters = {
 			return this.$scopedSlots.default({
 				components: this.components,
 				selectedValues: this.selectedValues,
+				clearValues: this.clearValues,
+				setValue: this.patchValue,
 			});
 		}
 		const filtersToRender = this.renderFilters();
@@ -144,7 +146,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchtoProps = {
 	clearValuesAction: clearValues,
-	patchValue,
+	patchValue: setValue,
 };
 
 const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(SelectedFilters);
