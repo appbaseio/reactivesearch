@@ -560,6 +560,9 @@ MultiDropdownList.defaultProps = {
 	loadMoreLabel: 'Load More',
 };
 
+// Add componentType for SSR
+MultiDropdownList.componentType = componentTypes.multiDropdownList;
+
 const mapStateToProps = (state, props) => ({
 	options:
 		props.nestedField && state.aggregations[props.componentId]

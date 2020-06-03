@@ -877,6 +877,9 @@ ReactiveList.defaultProps = {
 	defaultSortOption: null,
 };
 
+// Add componentType for SSR
+ReactiveList.componentType = componentTypes.reactiveList;
+
 const mapStateToProps = (state, props) => ({
 	defaultPage:
 		(state.selectedValues[props.componentId]

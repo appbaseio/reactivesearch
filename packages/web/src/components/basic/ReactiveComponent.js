@@ -290,6 +290,9 @@ ReactiveComponent.propTypes = {
 	onData: types.func,
 };
 
+// Add componentType for SSR
+ReactiveComponent.componentType = componentTypes.reactiveComponent;
+
 const mapStateToProps = (state, props) => ({
 	aggregations:
 		(state.aggregations[props.componentId] && state.aggregations[props.componentId]) || null,

@@ -803,11 +803,7 @@ class DataSearch extends Component {
 	render() {
 		const { currentValue } = this.state;
 		const suggestionsList = this.parsedSuggestions;
-		const {
-			theme,
-			themePreset,
-			size,
-		} = this.props;
+		const { theme, themePreset, size } = this.props;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -830,7 +826,12 @@ class DataSearch extends Component {
 							highlightedIndex,
 							...rest
 						}) => (
-							<div {...getRootProps({ css: suggestionsContainer }, { suppressRefError: true })}>
+							<div
+								{...getRootProps(
+									{ css: suggestionsContainer },
+									{ suppressRefError: true },
+								)}
+							>
 								<Input
 									aria-label={this.props.componentId}
 									id={`${this.props.componentId}-input`}
@@ -869,10 +870,7 @@ class DataSearch extends Component {
 								{this.renderError()}
 								{!this.hasCustomRenderer && isOpen && suggestionsList.length ? (
 									<ul
-										css={suggestions(
-											themePreset,
-											theme,
-										)}
+										css={suggestions(themePreset, theme)}
 										className={getClassName(this.props.innerClass, 'list')}
 									>
 										{hasQuerySuggestionsRenderer(this.props)
@@ -1064,6 +1062,9 @@ DataSearch.defaultProps = {
 	searchOperators: false,
 	size: 10,
 };
+
+// Add componentType for SSR
+DataSearch.componentType = componentTypes.dataSearch;
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:

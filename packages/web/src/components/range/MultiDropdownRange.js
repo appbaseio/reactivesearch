@@ -266,6 +266,9 @@ MultiDropdownRange.defaultProps = {
 	includeNullValues: false,
 };
 
+// Add componentType for SSR
+MultiDropdownRange.componentType = componentTypes.multiDropdownRange;
+
 const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value

@@ -574,6 +574,9 @@ SingleList.defaultProps = {
 	loadMoreLabel: 'Load More',
 };
 
+// Add componentType for SSR
+SingleList.componentType = componentTypes.singleList;
+
 const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	options:

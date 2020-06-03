@@ -226,6 +226,9 @@ SingleRange.defaultProps = {
 	includeNullValues: false,
 };
 
+// Add componentType for SSR
+SingleRange.componentType = componentTypes.singleRange;
+
 const mapStateToProps = (state, props) => ({
 	selectedValue:
 		(state.selectedValues[props.componentId]

@@ -210,6 +210,10 @@ SingleDropdownRange.defaultProps = {
 	includeNullValues: false,
 };
 
+
+// Add componentType for SSR
+SingleDropdownRange.componentType = componentTypes.singleDropdownRange;
+
 const mapStateToProps = (state, props) => ({
 	selectedValue:
 		(state.selectedValues[props.componentId]

@@ -485,6 +485,10 @@ SingleDataList.defaultProps = {
 	showCount: false,
 };
 
+
+// Add componentType for SSR
+SingleDataList.componentType = componentTypes.singleDataList;
+
 const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	selectedValue:

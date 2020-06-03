@@ -298,6 +298,9 @@ MultiRange.defaultProps = {
 	includeNullValues: false,
 };
 
+// Add componentType for SSR
+MultiRange.componentType = componentTypes.multiRange;
+
 const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value

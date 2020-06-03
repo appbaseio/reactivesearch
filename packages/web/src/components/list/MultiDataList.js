@@ -578,6 +578,9 @@ MultiDataList.defaultProps = {
 	showCount: false,
 };
 
+// Add componentType for SSR
+MultiDataList.componentType = componentTypes.multiDataList;
+
 const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	selectedValue:
@@ -594,9 +597,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
-
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 

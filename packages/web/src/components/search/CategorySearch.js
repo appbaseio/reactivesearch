@@ -1210,6 +1210,9 @@ CategorySearch.defaultProps = {
 	size: 10,
 };
 
+// Add componentType for SSR
+CategorySearch.componentType = componentTypes.categorySearch;
+
 const mapStateToProps = (state, props) => ({
 	categories:
 		(state.aggregations[props.componentId]

@@ -349,6 +349,9 @@ TagCloud.defaultProps = {
 	URLParams: false,
 };
 
+// Add componentType for SSR
+TagCloud.componentType = componentTypes.tagCloud;
+
 const mapStateToProps = (state, props) => {
 	let options = {};
 	if (props.nestedField) {
@@ -371,9 +374,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
-
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
-
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 

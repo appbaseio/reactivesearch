@@ -579,6 +579,9 @@ DynamicRangeSlider.defaultProps = {
 	includeNullValues: false,
 };
 
+// Add componentType for SSR
+DynamicRangeSlider.componentType = componentTypes.dynamicRangeSlider;
+
 const mapStateToProps = (state, props) => {
 	let aggregation = state.aggregations[props.componentId];
 	if (props.nestedField) {
