@@ -25,7 +25,10 @@ const SelectedFilters = {
 	},
 	render() {
 		if (this.$scopedSlots.default) {
-			return this.$scopedSlots.default(this.$props);
+			return this.$scopedSlots.default({
+				components: this.components,
+				selectedValues: this.selectedValues,
+			});
 		}
 		const filtersToRender = this.renderFilters();
 		const hasValues = !!filtersToRender.length;
