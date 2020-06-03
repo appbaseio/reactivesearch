@@ -149,6 +149,15 @@ const MultiRange = {
 	},
 
 	watch: {
+		$props: {
+			deep: true,
+			handler(newVal) {
+				const propsKeys = getValidPropsKeys(newVal);
+				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
+					this.updateComponentProps(this.componentId, newVal, componentTypes.multiRange);
+				});
+			},
+		},
 		react() {
 			this.setReact(this.$props);
 		},
@@ -187,12 +196,6 @@ const MultiRange = {
 	},
 	mounted() {
 		this.setReact(this.$props);
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(this.componentId, this.$props, componentTypes.multiRange);
-			});
-		});
 	},
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
@@ -304,6 +307,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	componentProps: state.props[props.componentId],
 });
 
 const mapDispatchtoProps = {

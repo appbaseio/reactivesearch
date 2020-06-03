@@ -1,7 +1,13 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
-import { connect, updateCustomQuery, updateDefaultQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
+import {
+	connect,
+	updateCustomQuery,
+	updateDefaultQuery,
+	getValidPropsKeys,
+	isQueryIdentical,
+} from '../../utils/index';
 import types from '../../utils/vueTypes';
 
 const {
@@ -53,7 +59,6 @@ const ReactiveComponent = {
 		this.setComponentProps(this.componentId, this.$props, componentTypes.reactiveComponent);
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, undefined);
-
 
 		const { customQuery, componentId, filterLabel, showFilter, URLParams } = props;
 
@@ -111,23 +116,6 @@ const ReactiveComponent = {
 	},
 	mounted() {
 		this.setReact(this.$props); // set query for internal component
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(
-					this.componentId,
-					this.$props,
-					componentTypes.reactiveComponent,
-				);
-				if (this.internalComponent) {
-					this.updateComponentProps(
-						this.internalComponent,
-						this.$props,
-						componentTypes.reactiveComponent,
-					);
-				}
-			});
-		});
 	},
 
 	beforeMount() {
@@ -135,7 +123,11 @@ const ReactiveComponent = {
 
 		if (this.internalComponent) {
 			this.addComponent(this.internalComponent);
-			this.setComponentProps(this.internalComponent, this.$props, componentTypes.reactiveComponent);
+			this.setComponentProps(
+				this.internalComponent,
+				this.$props,
+				componentTypes.reactiveComponent,
+			);
 		}
 
 		if (this.internalComponent && this.$props.defaultQuery) {
@@ -167,6 +159,26 @@ const ReactiveComponent = {
 	},
 
 	watch: {
+		$props: {
+			deep: true,
+			handler(newVal) {
+				const propsKeys = getValidPropsKeys(newVal);
+				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
+					this.updateComponentProps(
+						this.componentId,
+						newVal,
+						componentTypes.reactiveComponent,
+					);
+					if (this.internalComponent) {
+						this.updateComponentProps(
+							this.internalComponent,
+							newVal,
+							componentTypes.reactiveComponent,
+						);
+					}
+				});
+			},
+		},
 		hits(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				this.$emit('data', this.getData());
@@ -338,6 +350,7 @@ const mapStateToProps = (state, props) => ({
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
+	componentProps: state.props[props.componentId],
 });
 
 const mapDispatchtoProps = {
