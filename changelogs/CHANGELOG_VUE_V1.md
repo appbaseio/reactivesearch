@@ -6,13 +6,17 @@
     <summary>The following changes have been included in the <code>next</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+### v1.4.1
+- Fix pagination in ReactiveList with URLParams when `enableAppbase` is set to true @bietkul [[f52bda55]](https://github.com/appbaseio/reactivecore/commit/f52bda55)
+- Fix props watcher for all components @ShahAnuj2610 (#1467)
+
 ### v1.4.0
 
-Make dataField optional for DataSearch for rs-api @ShahAnuj2610 (#1448)
-Make defaultQuery and customQuery reactive @ShahAnuj2610 (#1435)
-Add first class support for query suggestions @ShahAnuj2610 (#1459)
-Avoid redundant queries on mount @ShahAnuj2610 (#1463)
-Fix dynamic range slider when enableAppbase is true @bietkul [[b2320802]](https://github.com/appbaseio/reactivesearch/commit/b2320802)
+- Make dataField optional for DataSearch for rs-api @ShahAnuj2610 (#1448)
+- Make defaultQuery and customQuery reactive @ShahAnuj2610 (#1435)
+- Add first class support for query suggestions @ShahAnuj2610 (#1459)
+- Avoid redundant queries on mount @ShahAnuj2610 (#1463)
+- Fix dynamic range slider when enableAppbase is true @bietkul [[b2320802]](https://github.com/appbaseio/reactivesearch/commit/b2320802)
 
 ### v1.3.0
 - Reactivesearch API Integration @bietkul https://github.com/appbaseio/reactivesearch/commit/de4d7d562a52fd03f51d29a23b339166ba3fa748
