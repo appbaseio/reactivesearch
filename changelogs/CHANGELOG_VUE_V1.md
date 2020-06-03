@@ -6,6 +6,9 @@
     <summary>The following changes have been included in the <code>next</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+### v1.4.2
+- Provide value actions to custom renderer in SelectedFilters component @bietkul [[667c41c6]](https://github.com/appbaseio/reactivesearch/commit/667c41c6)
+
 ### v1.4.1
 - Fix pagination in ReactiveList with URLParams when `enableAppbase` is set to true @bietkul [[f52bda55]](https://github.com/appbaseio/reactivecore/commit/f52bda55)
 - Fix props watcher for all components @ShahAnuj2610 (#1467)
