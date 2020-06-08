@@ -14,7 +14,7 @@ import './index.css';
 const Main = () => (
 	<ReactiveBase
 		app="good-books-ds"
-		url="https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io"
+		url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@arc-cluster-appbase-demo-6pjy6z.searchbase.io"
 		enableAppbase
 	>
 		<div className="row">
