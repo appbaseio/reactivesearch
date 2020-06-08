@@ -236,6 +236,10 @@ class DataSearch extends Component {
 				finalQuery = {
 					simple_query_string: DataSearch.shouldQuery(value, fields, props),
 				};
+			} else if (props.enableQueryString) {
+				finalQuery = {
+					query_string: DataSearch.shouldQuery(value, fields, props),
+				};
 			} else {
 				finalQuery = {
 					bool: {
@@ -272,7 +276,7 @@ class DataSearch extends Component {
 				}`,
 		);
 
-		if (props.searchOperators) {
+		if (props.searchOperators || props.enableQueryString) {
 			return {
 				query: value,
 				fields,
@@ -978,6 +982,7 @@ DataSearch.propTypes = {
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
 	enableQuerySuggestions: types.bool,
+	enableQueryString: types.bool,
 	beforeValueChange: types.func,
 	className: types.string,
 	clearIcon: types.children,
@@ -1050,6 +1055,7 @@ DataSearch.defaultProps = {
 	downShiftProps: {},
 	enableSynonyms: true,
 	enableQuerySuggestions: false,
+	enableQueryString: false,
 	iconPosition: 'left',
 	placeholder: 'Search',
 	queryFormat: 'or',
