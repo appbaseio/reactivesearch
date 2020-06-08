@@ -108,21 +108,6 @@ const MultiDropdownList = {
 	},
 	mounted() {
 		this.setReact(this.$props);
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(
-					this.componentId,
-					this.$props,
-					componentTypes.multiDropdownList,
-				);
-				this.updateComponentProps(
-					this.internalComponent,
-					this.$props,
-					componentTypes.multiDropdownList,
-				);
-			});
-		});
 	},
 	beforeMount() {
 		this.addComponent(this.internalComponent);
@@ -144,6 +129,24 @@ const MultiDropdownList = {
 	},
 
 	watch: {
+		$props: {
+			deep: true,
+			handler(newVal) {
+				const propsKeys = getValidPropsKeys(newVal);
+				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
+					this.updateComponentProps(
+						this.componentId,
+						newVal,
+						componentTypes.multiDropdownList,
+					);
+					this.updateComponentProps(
+						this.internalComponent,
+						newVal,
+						componentTypes.multiDropdownList,
+					);
+				});
+			},
+		},
 		react() {
 			this.setReact(this.$props);
 		},
@@ -188,6 +191,9 @@ const MultiDropdownList = {
 			});
 		},
 		size() {
+			this.updateQueryOptions(this.$props);
+		},
+		sortBy() {
 			this.updateQueryOptions(this.$props);
 		},
 		dataField() {
@@ -567,6 +573,7 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
+	componentProps: state.props[props.componentId],
 });
 
 const mapDispatchtoProps = {

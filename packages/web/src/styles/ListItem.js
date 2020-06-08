@@ -56,7 +56,7 @@ const ListItem = styled('a')`
 			: '#fdfefd')};
 	}
 
-	&:last-child {
+	&:last-of-type {
 		border: 0;
 	}
 

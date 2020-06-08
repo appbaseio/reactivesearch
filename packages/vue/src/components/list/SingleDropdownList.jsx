@@ -106,21 +106,6 @@ const SingleDropdownList = {
 	},
 	mounted() {
 		this.setReact(this.$props);
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(
-					this.componentId,
-					this.$props,
-					componentTypes.singleDropdownList,
-				);
-				this.updateComponentProps(
-					this.internalComponent,
-					this.$props,
-					componentTypes.singleDropdownList,
-				);
-			});
-		});
 	},
 	beforeMount() {
 		this.addComponent(this.internalComponent);
@@ -141,6 +126,24 @@ const SingleDropdownList = {
 		this.removeComponent(this.internalComponent);
 	},
 	watch: {
+		$props: {
+			deep: true,
+			handler(newVal) {
+				const propsKeys = getValidPropsKeys(newVal);
+				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
+					this.updateComponentProps(
+						this.componentId,
+						newVal,
+						componentTypes.singleDropdownList,
+					);
+					this.updateComponentProps(
+						this.internalComponent,
+						newVal,
+						componentTypes.singleDropdownList,
+					);
+				});
+			},
+		},
 		react() {
 			this.setReact(this.$props);
 		},
@@ -173,6 +176,9 @@ const SingleDropdownList = {
 			});
 		},
 		size() {
+			this.updateQueryOptions(this.$props);
+		},
+		sortBy() {
 			this.updateQueryOptions(this.$props);
 		},
 		dataField() {
@@ -459,6 +465,7 @@ const mapStateToProps = (state, props) => ({
 		|| '',
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
+	componentProps: state.props[props.componentId],
 });
 
 const mapDispatchtoProps = {
