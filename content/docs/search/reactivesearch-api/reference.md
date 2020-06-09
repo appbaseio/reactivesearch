@@ -280,7 +280,15 @@ It can be used to set the custom highlight settings. You can read the `Elasticse
 
 ### searchOperators
 
-Defaults to `false`. If set to `true` than you can use special characters in the search query to enable an advanced search behavior. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html).
+Defaults to `false`. If set to `true` then you can use special characters in the search query to enable an advanced search behavior. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html).
+
+| Type   | Applicable on query of type | Required |
+| ------ | --------------------------- | -------- |
+| `bool` | `search`                    | false    |
+
+### queryString
+
+Defaults to `false`. If set to `true` then it allows you to create a complex search that includes wildcard characters, searches across multiple fields, and more. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html).
 
 | Type   | Applicable on query of type | Required |
 | ------ | --------------------------- | -------- |

@@ -120,7 +120,7 @@ Example uses:
     	}}
     />
     ```
-    > Note: If you're using the controlled behavior than it's your responsibility to call the `triggerQuery` method to update the query i.e execute the search query and update the query results in connected components by `react` prop. It is not mandatory to call the `triggerQuery` in `onChange` you can also call it in other input handlers like `onBlur` or `onKeyPress`.
+    > Note: If you're using the controlled behavior then it's your responsibility to call the `triggerQuery` method to update the query i.e execute the search query and update the query results in connected components by `react` prop. It is not mandatory to call the `triggerQuery` in `onChange` you can also call it in other input handlers like `onBlur` or `onKeyPress`.
 -   **enableSynonyms** `bool` [optional]
     Defaults to `true`, can be used to `disable/enable` the synonyms behavior for the search query. Read more about it [here](/docs/search/reactivesearch-api/reference/#enablesynonyms)
     > Note:
@@ -224,8 +224,10 @@ Example uses:
 -   **showVoiceSearch** `Boolean` [optional]
     show a voice icon in the searchbox to enable users to set voice input. Defaults to `false`.
 -   **searchOperators** `Boolean` [optional]
-    Defaults to `false`. If set to `true`, ou can use special characters in the search query to enable an advanced search behavior.<br/>
+    Defaults to `false`. If set to `true`, then you can use special characters in the search query to enable an advanced search behavior.<br/>
     Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html).
+-   **enableQueryString** `Boolean` [optional]
+    Defaults to `false`. If set to `true` then it allows you to create a complex search that includes wildcard characters, searches across multiple fields, and more. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html).
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **URLParams** `Boolean` [optional]
