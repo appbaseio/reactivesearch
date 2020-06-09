@@ -423,7 +423,7 @@ class DataSearch extends Component {
 			const customQueryTobeSet = customQuery(value, props) || {};
 			const queryTobeSet = customQueryTobeSet.query;
 			if (queryTobeSet) {
-				query = [queryTobeSet];
+				query = queryTobeSet;
 			}
 			customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
 			updateCustomQuery(props.componentId, props, value);

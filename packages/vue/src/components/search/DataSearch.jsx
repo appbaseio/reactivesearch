@@ -433,7 +433,7 @@ const DataSearch = {
 				const customQueryTobeSet = customQuery(value, props);
 				const queryTobeSet = customQueryTobeSet.query;
 				if (queryTobeSet) {
-					query = [queryTobeSet];
+					query = queryTobeSet;
 				}
 				customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
