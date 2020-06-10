@@ -24,7 +24,7 @@ const SearchFilters = () => (
 		<FlexChild flex={1}>
 			<SingleDropdownList
 				componentId="category"
-				dataField="p_type"
+				dataField="p_type.keyword"
 				placeholder="Select Category"
 				react={{
 					and: 'title',
@@ -34,7 +34,7 @@ const SearchFilters = () => (
 		<FlexChild flex={1}>
 			<SingleDropdownRange
 				componentId="time"
-				dataField="time"
+				dataField="time.keyword"
 				data={[
 					{ start: 'now-6M', end: 'now', label: 'Last 6 months' },
 					{ start: 'now-1y', end: 'now', label: 'Last year' },

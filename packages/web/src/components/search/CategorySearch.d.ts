@@ -19,6 +19,7 @@ export interface CategorySearchProps extends CommonProps {
 	defaultQuery?: (...args: any[]) => any;
 	enableSynonyms?: boolean;
 	enableQuerySuggestions?: boolean;
+	enableQueryString?: boolean;
 	getMicInstance?: (...args: any[]) => any;
 	renderMic?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;

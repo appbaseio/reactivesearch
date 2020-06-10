@@ -145,6 +145,24 @@ const ReactiveList = {
 		},
 	},
 	watch: {
+		$props: {
+			deep: true,
+			handler(newVal) {
+				const propsKeys = getValidPropsKeys(newVal);
+				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
+					this.updateComponentProps(
+						this.componentId,
+						newVal,
+						componentTypes.reactiveList,
+					);
+					this.updateComponentProps(
+						this.internalComponent,
+						newVal,
+						componentTypes.reactiveList,
+					);
+				});
+			},
+		},
 		sortOptions(newVal, oldVal) {
 			if (!isEqual(oldVal, newVal)) {
 				this.updateQueryOptions(this.$props);
@@ -379,22 +397,6 @@ const ReactiveList = {
 		if (!this.shouldRenderPagination) {
 			window.addEventListener('scroll', this.scrollHandler);
 		}
-
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(
-					this.componentId,
-					this.$props,
-					componentTypes.reactiveList,
-				);
-				this.updateComponentProps(
-					this.internalComponent,
-					this.$props,
-					componentTypes.reactiveList,
-				);
-			});
-		});
 	},
 
 	beforeDestroy() {
@@ -810,6 +812,7 @@ const mapStateToProps = (state, props) => ({
 		state.aggregations[props.componentId]
 		&& state.aggregations[props.componentId][props.aggregationField]
 		&& state.aggregations[props.componentId][props.aggregationField].after_key,
+	componentProps: state.props[props.componentId],
 });
 const mapDispatchtoProps = {
 	addComponent,
