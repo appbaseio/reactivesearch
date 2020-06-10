@@ -85,11 +85,8 @@ export const updateCustomQuery = (componentId, setCustomQuery, props, value) => 
 export const isQueryIdentical = (newVal, oldVal, value, props) => {
 	if (typeof newVal !== 'function' || typeof oldVal !== 'function') return true;
 	// to not call original defaultQuery and customQuery, as here we are only comparing
-	const prevQuery = () => oldVal;
-	const nextQuery = () => newVal;
-	return isEqual(nextQuery(value, props), prevQuery(value, props));
+	return isEqual(oldVal(value, props), newVal(value, props));
 };
-
 /**
  * Extracts the renderQuerySuggestions prop from props or slot and returns a valid JSX element
  * @param {Object} data
