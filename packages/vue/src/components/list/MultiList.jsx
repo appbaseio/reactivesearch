@@ -638,4 +638,8 @@ const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(MultiList);
 MultiList.install = function(Vue) {
 	Vue.component(MultiList.name, ListConnected);
 };
+
+// Add componentType for SSR
+MultiList.componentType = componentTypes.multiList;
+
 export default MultiList;

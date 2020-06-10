@@ -370,4 +370,8 @@ const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(ReactiveCompone
 ReactiveComponent.install = function(Vue) {
 	Vue.component(ReactiveComponent.name, RcConnected);
 };
+
+// Add componentType for SSR
+ReactiveComponent.componentType = componentTypes.reactiveComponent;
+
 export default ReactiveComponent;

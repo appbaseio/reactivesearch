@@ -594,4 +594,8 @@ const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(MultiDropdown
 MultiDropdownList.install = function(Vue) {
 	Vue.component(MultiDropdownList.name, ListConnected);
 };
+
+// Add componentType for SSR
+MultiDropdownList.componentType = componentTypes.multiDropdownList;
+
 export default MultiDropdownList;

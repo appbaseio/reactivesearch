@@ -862,4 +862,7 @@ ReactiveList.install = function(Vue) {
 	Vue.component(ResultListWrapper.name, ResultListWrapper);
 	Vue.component(ResultCardsWrapper.name, ResultCardsWrapper);
 };
+// Add componentType for SSR
+ReactiveList.componentType = componentTypes.reactiveList;
+
 export default ReactiveList;

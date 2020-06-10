@@ -1048,4 +1048,7 @@ const DSConnected = connect(mapStateToProps, mapDispatchtoProps)(DataSearch);
 DataSearch.install = function(Vue) {
 	Vue.component(DataSearch.name, DSConnected);
 };
+// Add componentType for SSR
+DataSearch.componentType = componentTypes.dataSearch;
+
 export default DataSearch;

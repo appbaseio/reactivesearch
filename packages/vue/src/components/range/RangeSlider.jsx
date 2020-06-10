@@ -333,4 +333,8 @@ const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(RangeSlider)
 RangeSlider.install = function(Vue) {
 	Vue.component(RangeSlider.name, RangeConnected);
 };
+
+// Add componentType for SSR
+RangeSlider.componentType = componentTypes.rangeSlider;
+
 export default RangeSlider;

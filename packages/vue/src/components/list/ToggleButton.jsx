@@ -327,4 +327,7 @@ const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(ToggleButton);
 ToggleButton.install = function(Vue) {
 	Vue.component(ToggleButton.name, RcConnected);
 };
+// Add componentType for SSR
+ToggleButton.componentType = componentTypes.toggleButton;
+
 export default ToggleButton;

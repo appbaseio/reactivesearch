@@ -544,4 +544,8 @@ const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleList);
 SingleList.install = function(Vue) {
 	Vue.component(SingleList.name, ListConnected);
 };
+
+// Add componentType for SSR
+SingleList.componentType = componentTypes.singleList;
+
 export default SingleList;

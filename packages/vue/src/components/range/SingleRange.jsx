@@ -272,4 +272,7 @@ const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleRange)
 SingleRange.install = function(Vue) {
 	Vue.component(SingleRange.name, RangeConnected);
 };
+// Add componentType for SSR
+SingleRange.componentType = componentTypes.singleRange;
+
 export default SingleRange;

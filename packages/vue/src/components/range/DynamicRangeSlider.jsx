@@ -416,4 +416,8 @@ const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(DynamicRange
 DynamicRangeSlider.install = function(Vue) {
 	Vue.component(DynamicRangeSlider.name, RangeConnected);
 };
+
+// Add componentType for SSR
+DynamicRangeSlider.componentType = componentTypes.dynamicRangeSlider;
+
 export default DynamicRangeSlider;

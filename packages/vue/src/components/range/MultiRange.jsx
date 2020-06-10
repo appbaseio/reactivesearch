@@ -327,4 +327,7 @@ const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(MultiRange);
 MultiRange.install = function(Vue) {
 	Vue.component(MultiRange.name, RangeConnected);
 };
+// Add componentType for SSR
+MultiRange.componentType = componentTypes.multiRange;
+
 export default MultiRange;

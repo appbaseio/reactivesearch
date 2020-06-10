@@ -486,4 +486,8 @@ const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleDropdow
 SingleDropdownList.install = function(Vue) {
 	Vue.component(SingleDropdownList.name, ListConnected);
 };
+
+// Add componentType for SSR
+SingleDropdownList.componentType = componentTypes.singleDropdownList;
+
 export default SingleDropdownList;
