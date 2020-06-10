@@ -6,21 +6,28 @@ import queryOptionsReducer from '@appbaseio/reactivecore/lib/reducers/queryOptio
 import dependencyTreeReducer from '@appbaseio/reactivecore/lib/reducers/dependencyTreeReducer';
 import { buildQuery, pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
 import fetchGraphQL from '@appbaseio/reactivecore/lib/utils/graphQL';
+import { componentTypes, validProps } from '@appbaseio/reactivecore/lib/utils/constants';
+import {
+	getRSQuery,
+	extractPropsFromState,
+	getDependentQueries,
+} from '@appbaseio/reactivecore/lib/utils/transform';
+import { isPropertyDefined } from '@appbaseio/reactivecore/lib/actions/utils';
 
-const componentsWithHighlightQuery = ['DataSearch', 'CategorySearch'];
+const componentsWithHighlightQuery = [componentTypes.dataSearch, componentTypes.categorySearch];
 
 const componentsWithOptions = [
-	'ReactiveList',
-	'ReactiveMap',
-	'SingleList',
-	'MultiList',
-	'TagCloud',
+	componentTypes.reactiveList,
+	componentTypes.reactiveMap,
+	componentTypes.singleList,
+	componentTypes.multiList,
+	componentTypes.tagCloud,
 	...componentsWithHighlightQuery,
 ];
 
-const componentsWithoutFilters = ['NumberBox', 'RatingsFilter'];
+const componentsWithoutFilters = [componentTypes.numberBox, componentTypes.ratingsFilter];
 
-const resultComponents = ['ReactiveList', 'ReactiveMap'];
+const resultComponents = [componentTypes.reactiveList, componentTypes.reactiveMap];
 
 function getValue(state, id, defaultValue) {
 	if (!state) return defaultValue;
@@ -79,26 +86,48 @@ export default function initReactivesearch(componentCollection, searchState, set
 			transformResponse: settings.transformResponse || null,
 			graphQLUrl: settings.graphQLUrl || '',
 			headers: settings.headers || {},
+			analyticsConfig: settings.appbaseConfig || null,
 		};
 		const appbaseRef = Appbase(config);
 
 		let components = [];
 		let selectedValues = {};
+		const internalValues = {};
 		let queryList = {};
 		let queryLog = {};
 		let queryOptions = {};
 		let dependencyTree = {};
 		let finalQuery = [];
+		let appbaseQuery = {}; // Use object to prevent duplicate query added by react prop
 		let orderOfQueries = [];
 		let hits = {};
 		let aggregations = {};
 		let state = {};
+		const customQueries = {};
+		const defaultQueries = {};
+		const componentProps = {};
 
 		componentCollection.forEach((component) => {
-			const componentType = component.source.name;
+			const componentType = component.source.componentType;
 			components = [...components, component.componentId];
-
+			// Set component props
+			const compProps = {};
+			Object.keys(component).forEach((key) => {
+				if (validProps.includes(key)) {
+					compProps[key] = component[key];
+				}
+			});
+			// Set component type in component props
+			compProps.componentType = componentType;
+			componentProps[component.componentId] = compProps;
 			let isInternalComponentPresent = false;
+			// Set custom and default queries
+			if (component.customQuery && typeof component.customQuery === 'function') {
+				customQueries[component.componentId] = component.customQuery(component.value, compProps);
+			}
+			if (component.defaultQuery && typeof component.defaultQuery === 'function') {
+				defaultQueries[component.componentId] = component.defaultQuery(component.value, compProps);
+			}
 			const isResultComponent = resultComponents.includes(componentType);
 			const internalComponent = `${component.componentId}__internal`;
 			const label = component.filterLabel || component.componentId;
@@ -221,6 +250,18 @@ export default function initReactivesearch(componentCollection, searchState, set
 			}
 		});
 
+		state = {
+			components,
+			dependencyTree,
+			queryList,
+			queryOptions,
+			selectedValues,
+			internalValues,
+			props: componentProps,
+			customQueries,
+			defaultQueries,
+		};
+
 		// [5] Generate finalQuery for search
 		componentCollection.forEach((component) => {
 			// eslint-disable-next-line
@@ -254,24 +295,38 @@ export default function initReactivesearch(componentCollection, searchState, set
 					[component.componentId]: currentQuery,
 				};
 
-				finalQuery = [
-					...finalQuery,
-					{
-						preference: component.componentId,
-					},
-					currentQuery,
-				];
+				if (settings.enableAppbase) {
+					const query = getRSQuery(
+						component.componentId,
+						extractPropsFromState(
+							state,
+							component.componentId,
+							queryOptions && queryOptions[component.componentId]
+								? { from: queryOptions[component.componentId].from }
+								: null,
+						),
+					);
+					if (query) {
+						// Apply dependent queries
+						appbaseQuery = {
+							...appbaseQuery,
+							...{ [component.componentId]: query },
+							...getDependentQueries(state, component.componentId, orderOfQueries),
+						};
+					}
+				} else {
+					finalQuery = [
+						...finalQuery,
+						{
+							preference: component.componentId,
+						},
+						currentQuery,
+					];
+				}
 			}
 		});
 
-		state = {
-			components,
-			dependencyTree,
-			queryList,
-			queryOptions,
-			selectedValues,
-			queryLog,
-		};
+		state.queryLog = queryLog;
 
 		const handleTransformResponse = (res, component) => {
 			if (config.transformResponse && typeof config.transformResponse === 'function') {
@@ -319,6 +374,67 @@ export default function initReactivesearch(componentCollection, searchState, set
 			});
 		};
 
+		const handleRSResponse = (res) => {
+			const promotedResults = {};
+			const rawData = {};
+			const customData = {};
+			const allPromises = orderOfQueries.map(
+				component =>
+					new Promise((responseResolve, responseReject) => {
+						handleTransformResponse(res[component], component)
+							.then((response) => {
+								if (response) {
+									if (response.promoted) {
+										promotedResults[component] = response.promoted.map(
+											promoted => ({
+												...promoted.doc,
+												_position: promoted.position,
+											}),
+										);
+									}
+									rawData[component] = response;
+									// Update custom data
+									if (response.customData) {
+										customData[component] = response.customData;
+									}
+
+									if (response.aggregations) {
+										aggregations = {
+											...aggregations,
+											[component]: response.aggregations,
+										};
+									}
+									hits = {
+										...hits,
+										[component]: {
+											hits: response.hits.hits,
+											total:
+												typeof response.hits.total === 'object'
+													? response.hits.total.value
+													: response.hits.total,
+											time: response.took,
+										},
+									};
+									responseResolve();
+								}
+							})
+							.catch(err => responseReject(err));
+					}),
+			);
+
+			Promise.all(allPromises).then(() => {
+				state = {
+					...state,
+					hits,
+					aggregations,
+					promotedResults,
+					customData,
+					rawData,
+				};
+				resolve(state);
+			});
+		};
+
 		if (config.graphQLUrl) {
 			const handleTransformRequest = (res) => {
 				if (config.transformRequest && typeof config.transformRequest === 'function') {
@@ -342,6 +458,30 @@ export default function initReactivesearch(componentCollection, searchState, set
 							handleResponse(res);
 						})
 						.catch(err => reject(err));
+				})
+				.catch(err => reject(err));
+		} else if (settings.enableAppbase && Object.keys(appbaseQuery).length) {
+			finalQuery = Object.keys(appbaseQuery).map(c => appbaseQuery[c]);
+			// Call RS API
+			const rsAPISettings = {};
+			if (config.analyticsConfig) {
+				rsAPISettings.recordAnalytics = isPropertyDefined(config.analyticsConfig.recordAnalytics)
+					? config.analyticsConfig.recordAnalytics
+					: undefined;
+				rsAPISettings.userId = isPropertyDefined(config.analyticsConfig.userId)
+					? config.analyticsConfig.userId
+					: undefined;
+				rsAPISettings.enableQueryRules = isPropertyDefined(config.analyticsConfig.enableQueryRules)
+					? config.analyticsConfig.enableQueryRules
+					: undefined;
+				rsAPISettings.customEvents = isPropertyDefined(config.analyticsConfig.customEvents)
+					? config.analyticsConfig.customEvents
+					: undefined;
+			}
+			appbaseRef
+				.reactiveSearchv3(finalQuery, rsAPISettings)
+				.then((res) => {
+					handleRSResponse(res);
 				})
 				.catch(err => reject(err));
 		} else {
