@@ -33,7 +33,6 @@ var walk = function(dir,done) {
 walk("$var", function(err, results) {
     if (err) throw err;
     var filesToUpdate = results.filter(item => item.includes("package.json")).filter(item => !item.includes("node_modules") && !item.includes("/."));
-    console.log(filesToUpdate)
     filesToUpdate.forEach(file => {
         var jsonFile = require(file);
         if(true && jsonFile.dependencies && jsonFile.dependencies["$1"]){
