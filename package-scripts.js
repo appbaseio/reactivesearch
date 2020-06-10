@@ -49,7 +49,14 @@ module.exports = {
 				`${__dirname}/scripts/version-update.sh`,
 			)} "@appbaseio/reactivemaps" ${mapRSVersion.version} ${__dirname}`,
 			'build-demos': `${path.resolve(`${__dirname}/scripts/build-demos.sh`)} ${__dirname}`,
-			default: series.nps('upgrade-maps.version-update', 'upgrade-maps.build-demos'),
+			'deploy-storybook': `${path.resolve(
+				`${__dirname}/scripts/deploy-storybook.sh`,
+			)} ${__dirname}`,
+			default: series.nps(
+				'upgrade-maps.version-update',
+				'upgrade-maps.build-demos',
+				'upgrade-maps.deploy-storybook',
+			),
 		},
 	},
 };
