@@ -301,7 +301,7 @@ class CategorySearch extends Component {
 				finalQuery = {
 					simple_query_string: CategorySearch.shouldQuery(value, fields, props),
 				};
-			} else if (props.enableQueryString) {
+			} else if (props.queryString) {
 				finalQuery = {
 					query_string: CategorySearch.shouldQuery(value, fields, props),
 				};
@@ -352,7 +352,7 @@ class CategorySearch extends Component {
 				}`,
 		);
 
-		if (props.searchOperators || props.enableQueryString) {
+		if (props.searchOperators || props.queryString) {
 			return {
 				query: value,
 				fields,
@@ -1130,7 +1130,7 @@ CategorySearch.propTypes = {
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
 	enableQuerySuggestions: types.bool,
-	enableQueryString: types.bool,
+	queryString: types.bool,
 	beforeValueChange: types.func,
 	categoryField: types.string,
 	className: types.string,
@@ -1200,7 +1200,6 @@ CategorySearch.defaultProps = {
 	downShiftProps: {},
 	enableSynonyms: true,
 	enableQuerySuggestions: false,
-	enableQueryString: false,
 	iconPosition: 'left',
 	placeholder: 'Search',
 	queryFormat: 'or',
