@@ -169,6 +169,8 @@ const searchbase = new Searchbase({
 -   **searchOperators** `boolean`
     Defaults to `false`. If set to `true`, then you can use special characters in the search query to enable the advanced search.<br/>
     Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html).
+-   **queryString** `Boolean` [optional]
+    Defaults to `false`. If set to `true` than it allows you to create a complex search that includes wildcard characters, searches across multiple fields, and more. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html).
 -   **queryFormat** `QueryFormat`
     ```ts
     type QueryFormat = 'or' | 'and';

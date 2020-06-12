@@ -210,6 +210,8 @@ Example uses of searchbox UI:
 -   **searchOperators** `Boolean` [optional]
     Defaults to `false`. If set to `true`, ou can use special characters in the search query to enable an advanced search behavior.<br/>
     Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html).
+-   **queryString** `Boolean` [optional]
+    Defaults to `false`. If set to `true` than it allows you to create a complex search that includes wildcard characters, searches across multiple fields, and more. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html).
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **render** `Function` [optional]
