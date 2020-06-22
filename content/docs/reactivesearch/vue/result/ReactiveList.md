@@ -26,13 +26,11 @@ Example uses:
 
 ```html
 <template>
-    <reactive-list
-        :react="{ and: ['CitySensor', 'SearchSensor']}"
-    >
-         <div slot="renderItem" slot-scope="{ item }">
-            {{ item.title }}
-         </div>
-    </reactive-list>
+	<reactive-list :react="{ and: ['CitySensor', 'SearchSensor']}">
+		<div slot="renderItem" slot-scope="{ item }">
+			{{ item.title }}
+		</div>
+	</reactive-list>
 </template>
 ```
 
@@ -40,17 +38,17 @@ Example uses:
 
 ```html
 <reactive-list
-    componentId="SearchResult"
-    dataField="ratings"
-    paginationAt="bottom"
-    loader="Loading Results.."
-    sortBy="desc"
-    :stream="true"
-    :pagination="false"
-    :pages="5"
-    :size="10"
-    :showResultStats="true"
-    :react="{ and: ['CitySensor', 'SearchSensor'] }"
+	componentId="SearchResult"
+	dataField="ratings"
+	paginationAt="bottom"
+	loader="Loading Results.."
+	sortBy="desc"
+	:stream="true"
+	:pagination="false"
+	:pages="5"
+	:size="10"
+	:showResultStats="true"
+	:react="{ and: ['CitySensor', 'SearchSensor'] }"
 />
 ```
 
@@ -161,11 +159,8 @@ Example uses:
         Total number of promoted results found
 
     ```html
-    <div
-        slot="renderResultStats"
-        slot-scope="{ numberOfResults, time, displayedResults }"
-    >
-        Showing {{displayedResults}} of total {{numberOfResults}} in {{time}} ms
+    <div slot="renderResultStats" slot-scope="{ numberOfResults, time, displayedResults }">
+    	Showing {{displayedResults}} of total {{numberOfResults}} in {{time}} ms
     </div>
     ```
 
@@ -225,22 +220,19 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 ```html
 <template>
-    <reactive-list
-        className="custom-class"
-        @queryChange="handleQueryChange"
-    />
+	<reactive-list className="custom-class" @queryChange="handleQueryChange" />
 </template>
 <script>
-export default {
-	name: 'app',
-	methods: {
-		handleQueryChange: (prevQuery, nextQuery) => {
-            // use the query with other js code
-            console.log('prevQuery', prevQuery);
-            console.log('nextQuery', nextQuery);
-        }
-	},
-};
+	export default {
+		name: 'app',
+		methods: {
+			handleQueryChange: (prevQuery, nextQuery) => {
+				// use the query with other js code
+				console.log('prevQuery', prevQuery);
+				console.log('nextQuery', nextQuery);
+			},
+		},
+	};
 </script>
 ```
 
@@ -289,22 +281,21 @@ export default {
         A callback function to be called to load the next page of results into the view. The callback function is only applicable in the case of infinite loading view (i.e. `infiniteScroll` prop set to `true`).
     -   **`triggerAnalytics`**: `function`
         A function which can be called to register a click analytics. [Read More](docs/reactivesearch/v3/advanced/analytics/)
+    -   **`setPage`**: `function`
+        A function which will allow to dispatch a page change event when using custom pagination. It accepts `pageNumber` as its parameter.
 
 ```html
 <reactive-list>
-    <div slot="render" slot-scope="{ loading, error, data }">
-        <div v-if="loading">Fetching Results.</div>
-        <div v-if="Boolean(error)">Something went wrong! Error details {JSON.stringify(error)}</div>
-        <ul
-            v-bind:key="result._id"
-            v-for="result in data"
-        >
-            <li>
-                {result.title}
-                <!-- Render UI -->
-            </li>
-        </ul>
-    </div>
+	<div slot="render" slot-scope="{ loading, error, data }">
+		<div v-if="loading">Fetching Results.</div>
+		<div v-if="Boolean(error)">Something went wrong! Error details {JSON.stringify(error)}</div>
+		<ul v-bind:key="result._id" v-for="result in data">
+			<li>
+				{result.title}
+				<!-- Render UI -->
+			</li>
+		</ul>
+	</div>
 </reactive-list>
 ```
 
