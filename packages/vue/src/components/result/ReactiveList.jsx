@@ -785,6 +785,7 @@ const ReactiveList = {
 				loading: isLoading,
 				loadMore: this.loadMore,
 				triggerAnalytics: this.triggerClickAnalytics,
+				setPage: this.setPage,
 				...this.getData(),
 			};
 			return getComponent(data, this);
