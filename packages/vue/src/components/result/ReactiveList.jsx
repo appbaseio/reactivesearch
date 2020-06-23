@@ -84,6 +84,9 @@ const ReactiveList = {
 		const onError = e => {
 			this.$emit('error', e);
 		};
+		this.sortOptionIndex = this.defaultSortOption
+			? this.sortOptions.findIndex(s => s.label === this.defaultSortOption)
+			: 0;
 		this.setQueryListener(this.$props.componentId, onQueryChange, onError);
 		this.setComponentProps(this.componentId, this.$props, componentTypes.reactiveList);
 		this.setComponentProps(this.internalComponent, this.$props, componentTypes.reactiveList);
@@ -97,6 +100,7 @@ const ReactiveList = {
 		dataField: types.stringRequired,
 		aggregationField: types.string,
 		defaultQuery: types.func,
+		defaultSortOption: types.string,
 		excludeFields: types.excludeFields.def([]),
 		innerClass: types.style,
 		listClass: VueTypes.string.def(''),
@@ -666,6 +670,7 @@ const ReactiveList = {
 					},
 				},
 			];
+			this.sortOptionIndex = index;
 			// To handle sort options for RS API
 			this.updateComponentProps(
 				this.componentId,
@@ -703,6 +708,7 @@ const ReactiveList = {
 					class={`${sortOptions} ${getClassName(this.$props.innerClass, 'sortOptions')}`}
 					name="sort-options"
 					onChange={this.handleSortChange}
+					value={this.sortOptionIndex}
 				>
 					{this.$props.sortOptions.map((sort, index) => (
 						<option key={sort.label} value={index}>
@@ -833,22 +839,39 @@ const mapDispatchtoProps = {
 ReactiveList.generateQueryOptions = props => {
 	// simulate default (includeFields and excludeFields) props to generate consistent query
 	const options = getQueryOptions({ includeFields: ['*'], excludeFields: [], ...props });
-	options.from = props.currentPage ? (props.currentPage - 1) * (props.size || 10) : 0;
-	options.size = props.size || 10;
+	const {
+		size, dataField, defaultSortOption, sortOptions: sortOptionsNew, currentPage, sortBy,
+	} = props;
+	options.from = currentPage ? (currentPage - 1) * (size || 10) : 0;
+	options.size = size || 10;
 
-	if (props.sortOptions) {
-		options.sort = [
-			{
-				[props.sortOptions[0].dataField]: {
-					order: props.sortOptions[0].sortBy,
-				},
+	const getSortOption = () => {
+		if (defaultSortOption) {
+			const sortOption = sortOptionsNew.find(option => (option.label === defaultSortOption));
+			if (sortOption) {
+				return {
+					[sortOption.dataField]: {
+						order: sortOption.sortBy,
+					},
+				};
+			}
+		}
+		return {
+			[sortOptionsNew[0].dataField]: {
+				order: sortOptionsNew[0].sortBy,
 			},
+		};
+	};
+
+	if (sortOptionsNew) {
+		options.sort = [
+			getSortOption(),
 		];
-	} else if (props.sortBy) {
+	} else if (sortBy) {
 		options.sort = [
 			{
-				[props.dataField]: {
-					order: props.sortBy,
+				[dataField]: {
+					order: sortBy,
 				},
 			},
 		];
@@ -856,6 +879,7 @@ ReactiveList.generateQueryOptions = props => {
 
 	return options;
 };
+
 export const RLConnected = connect(mapStateToProps, mapDispatchtoProps)(ReactiveList);
 
 ReactiveList.install = function(Vue) {
