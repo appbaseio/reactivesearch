@@ -99,6 +99,8 @@ Example uses:
     -   `label` - label to be displayed in the UI.
     -   `dataField` - data field to use for applying the sorting criteria on.
     -   `sortBy` - specified as either `asc` or `desc`.
+-   **defaultSortOption** `String` [optional]
+    accepts the label of the desired sort option to set default sort value from given `sortOptions` array.
 -   **size** `Number` [optional]
     number of results to show per view. Defaults to 10.
 -   **loader** `String|slot-scope` [optional]
