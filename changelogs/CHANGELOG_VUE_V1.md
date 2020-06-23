@@ -6,6 +6,14 @@
     <summary>The following changes have been included in the <code>next</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+### v1.5.0
+- Add support for `defaultSortOption` in ReactiveList component @bietkul [[d6178b89]](https://github.com/appbaseio/reactivesearch/commit/d6178b89)
+- Expose `setPage` method in `render` slot for ReactiveList component that is helpful to build custom pagination @lakhansamani (#1498)
+
+### v1.4.3
+- Fix custom query in `DataSearch` component @bietkul [[050b2efa]](https://github.com/appbaseio/reactivesearch/commit/050b2efa)
+- Fix SSR support when `enableAppbase` is set to `true` @bietkul [[bfced0db]](https://github.com/appbaseio/reactivesearch/commit/bfced0db)
+
 ### v1.4.2
 - Provide value actions to custom renderer in SelectedFilters component @bietkul [[667c41c6]](https://github.com/appbaseio/reactivesearch/commit/667c41c6)
 
