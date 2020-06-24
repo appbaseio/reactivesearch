@@ -6,6 +6,9 @@
     <summary>The following changes have been included in the <code>next</code> branch and will be out in the next release. <b>Click to expand</b></summary>
 </details>
 
+### v1.5.1
+- Fix `currentPage` value in `resultStats` property for `ReactiveList` component @lakhansamani (#1500)
+
 ### v1.5.0
 - Add support for `defaultSortOption` in ReactiveList component @bietkul [[d6178b89]](https://github.com/appbaseio/reactivesearch/commit/d6178b89)
 - Expose `setPage` method in `render` slot for ReactiveList component that is helpful to build custom pagination @lakhansamani (#1498)
