@@ -52,6 +52,7 @@
 					</div>
 					<div class="pagination-wrapper">
 						<paginate
+							:value="resultStats.currentPage + 1"
 							:page-count="resultStats.numberOfPages"
 							:click-handler="(page) => setPage(page-1)"
 							:prev-text="'Prev'"

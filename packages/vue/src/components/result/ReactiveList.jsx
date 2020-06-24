@@ -136,11 +136,10 @@ const ReactiveList = {
 			return this.$listeners && this.$listeners.resultStats;
 		},
 		stats() {
-			const { currentPage } = this;
 			const { filteredResults } = this.getAllData();
 			return {
 				...getResultStats(this),
-				currentPage,
+				currentPage: this.$currentPage,
 				displayedResults: filteredResults.length,
 			};
 		},
