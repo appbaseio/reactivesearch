@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch-vue",
-	"version": "1.5.1",
+	"version": "1.5.2",
 	"private": false,
 	"main": "dist/@appbaseio/reactivesearch-vue.cjs.js",
 	"jsnext:main": "dist/@appbaseio/reactivesearch-vue.es.js",
@@ -33,7 +33,7 @@
 		"dist"
 	],
 	"dependencies": {
-		"@appbaseio/reactivecore": "9.6.10",
+		"@appbaseio/reactivecore": "9.6.11",
 		"@appbaseio/vue-emotion": "0.4.4",
 		"@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
 		"appbase-js": "^4.1.0",
