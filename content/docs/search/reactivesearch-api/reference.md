@@ -52,7 +52,7 @@ database field(s) to be queried against. Accepts an `Array`, useful for applying
 
 ### fieldWeights
 
-To set the search weight for the database fields, useful when you are using more than one [dataField](/docs/search/reactivesearch-api/reference/#datafield). This prop accepts an array of integers. A higher number implies a higher relevance weight for the corresponding field in the search results.
+To set the search weight for the database fields, useful when you are using more than one [dataField](/docs/search/reactivesearch-api/reference/#datafield). This prop accepts an array of `floats`. A higher number implies a higher relevance weight for the corresponding field in the search results.
 
 For example, the below query has two data fields defined and each field has a different field weight.
 
