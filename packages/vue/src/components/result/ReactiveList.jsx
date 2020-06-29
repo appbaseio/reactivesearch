@@ -53,15 +53,15 @@ const ReactiveList = {
 	},
 	data() {
 		const props = this.$props;
-		let $currentPage = 0;
+		let currentPageState = 0;
 		if (props.currentPage) {
-			$currentPage = Math.max(props.currentPage - 1, 0);
+			currentPageState = Math.max(props.currentPage - 1, 0);
 		}
 
 		this.__state = {
-			from: $currentPage * props.size,
+			from: currentPageState * props.size,
 			isLoading: true,
-			$currentPage,
+			currentPageState,
 		};
 		return this.__state;
 	},
@@ -73,8 +73,8 @@ const ReactiveList = {
 			);
 		}
 		if (this.defaultPage >= 0) {
-			this.$currentPage = this.defaultPage;
-			this.from = this.$currentPage * this.$props.size;
+			this.currentPageState = this.defaultPage;
+			this.from = this.currentPageState * this.$props.size;
 		}
 		this.isLoading = true;
 		this.internalComponent = `${this.$props.componentId}__internal`;
@@ -88,8 +88,8 @@ const ReactiveList = {
 			? this.sortOptions.findIndex(s => s.label === this.defaultSortOption)
 			: 0;
 		this.setQueryListener(this.$props.componentId, onQueryChange, onError);
-		this.setComponentProps(this.componentId, this.$props, componentTypes.reactiveList);
-		this.setComponentProps(this.internalComponent, this.$props, componentTypes.reactiveList);
+		this.setComponentProps(this.componentId, { ...this.$props, from: this.from}, componentTypes.reactiveList);
+		this.setComponentProps(this.internalComponent, { ...this.$props, from: this.from}, componentTypes.reactiveList);
 	},
 	props: {
 		currentPage: VueTypes.number.def(0),
@@ -139,7 +139,7 @@ const ReactiveList = {
 			const { filteredResults } = this.getAllData();
 			return {
 				...getResultStats(this),
-				currentPage: this.$currentPage,
+				currentPage: this.currentPageState,
 				displayedResults: filteredResults.length,
 			};
 		},
@@ -225,7 +225,7 @@ const ReactiveList = {
 				); // reset page because of query change
 				// Update calculated default query in store
 				updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props);
-				this.$currentPage = 0;
+				this.currentPageState = 0;
 				this.from = 0;
 			}
 		},
@@ -263,7 +263,7 @@ const ReactiveList = {
 				// called when page is changed
 				if (this.isLoading && (oldVal || newVal)) {
 					if (this.hasPageChangeListener) {
-						this.$emit('pageChange', this.$currentPage + 1, this.totalPages);
+						this.$emit('pageChange', this.currentPageState + 1, this.totalPages);
 					} else {
 						window.scrollTo(0, 0);
 					}
@@ -290,9 +290,9 @@ const ReactiveList = {
 		},
 		total(newVal, oldVal) {
 			if (this.shouldRenderPagination && newVal !== oldVal) {
-				let currentPage = this.$data.total ? 0 : this.$currentPage;
+				let currentPage = this.$data.total ? 0 : this.currentPageState;
 				if (this.defaultPage >= 0) currentPage = this.defaultPage;
-				this.$currentPage = currentPage;
+				this.currentPageState = currentPage;
 				this.$emit('pageChange', currentPage + 1, this.totalPages);
 			}
 		},
@@ -311,7 +311,7 @@ const ReactiveList = {
 			} // handle window url history change (on native back and forth interactions)
 		},
 		defaultPage(newVal) {
-			if (this.$currentPage !== newVal && this.defaultPage !== newVal) {
+			if (this.currentPageState !== newVal && this.defaultPage !== newVal) {
 				this.setPage(newVal >= 0 ? newVal : 0);
 			}
 		},
@@ -443,7 +443,7 @@ const ReactiveList = {
 						<Pagination
 							pages={this.$props.pages}
 							totalPages={this.totalPages}
-							currentPage={this.$currentPage}
+							currentPage={this.currentPageState}
 							setPage={this.setPage}
 							innerClass={this.$props.innerClass}
 						/>
@@ -461,7 +461,7 @@ const ReactiveList = {
 							renderItem({
 								item,
 								triggerClickAnalytics: () =>
-									this.triggerClickAnalytics(this.$currentPage * size + index),
+									this.triggerClickAnalytics(this.currentPageState * size + index),
 							}),
 						)}
 					</div>
@@ -484,7 +484,7 @@ const ReactiveList = {
 						<Pagination
 							pages={this.$props.pages}
 							totalPages={Math.ceil(this.$data.total / this.$props.size)}
-							currentPage={this.$currentPage}
+							currentPage={this.currentPageState}
 							setPage={this.setPage}
 							showEndPage={this.$props.showEndPage}
 							innerClass={this.$props.innerClass}
@@ -595,14 +595,14 @@ const ReactiveList = {
 		},
 		setPage(page) {
 			// pageClick will be called every time a pagination button is clicked
-			if (page !== this.$currentPage) {
+			if (page !== this.currentPageState) {
 				this.$emit('pageClick', page + 1);
 				const value = this.$props.size * page;
 				const options = getQueryOptions(this.$props);
 				options.from = this.$data.from;
 				this.from = value;
 				this.isLoading = true;
-				this.$currentPage = page;
+				this.currentPageState = page;
 				this.loadMoreAction(
 					this.$props.componentId,
 					{
@@ -677,7 +677,7 @@ const ReactiveList = {
 				componentTypes.reactiveList,
 			);
 			this.setQueryOptions(this.$props.componentId, options, true);
-			this.$currentPage = 0;
+			this.currentPageState = 0;
 			this.from = 0;
 		},
 		triggerClickAnalytics(searchPosition) {

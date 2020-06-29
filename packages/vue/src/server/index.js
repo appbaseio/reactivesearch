@@ -117,9 +117,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 					compProps[key] = component[key];
 				}
 			});
-			// Set component type in component props
-			compProps.componentType = componentType;
-			componentProps[component.componentId] = compProps;
 			let isInternalComponentPresent = false;
 			// Set custom and default queries
 			if (component.customQuery && typeof component.customQuery === 'function') {
@@ -203,11 +200,14 @@ export default function initReactivesearch(componentCollection, searchState, set
 								currentPage = selectedValues[component.componentId].value - 1 || 0;
 							}
 							const resultSize = component.size || 10;
+							const from = currentPage * resultSize;
+							// Update props for RS API
+							compProps.from = from;
 							mainQueryOptions = {
 								...mainQueryOptions,
 								...highlightQuery,
 								size: resultSize,
-								from: currentPage * resultSize,
+								from,
 							};
 						}
 						queryOptions = queryOptionsReducer(queryOptions, {
@@ -248,6 +248,9 @@ export default function initReactivesearch(componentCollection, searchState, set
 					query: getQuery(component, value, componentType),
 				});
 			}
+			// Set component type in component props
+			compProps.componentType = componentType;
+			componentProps[component.componentId] = compProps;
 		});
 
 		state = {
