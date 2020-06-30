@@ -102,7 +102,9 @@ class ReactiveList extends Component {
 			// To handle sort options for RS API
 			this.props.updateComponentProps(
 				this.props.componentId,
-				{ ...this.props, dataField: sortField, sortBy },
+				{
+					...this.props, dataField: sortField, sortBy, ...this.absProps,
+				},
 				componentTypes.reactiveList,
 			);
 		} else if (this.props.sortBy) {
@@ -435,6 +437,15 @@ class ReactiveList extends Component {
 			displayedResults: filteredResults.length,
 		};
 	}
+	// Returns the props without default props to apply search relevancy settings for RS API
+	get absProps() {
+		const { includeFields, excludeFields, size } = this.props;
+		return {
+			includeFields: includeFields || undefined,
+			excludeFields: excludeFields || undefined,
+			size: size || undefined,
+		};
+	}
 
 	get showInfiniteScroll() {
 		// Pagination has higher priority then infinite scroll
@@ -611,7 +622,9 @@ class ReactiveList extends Component {
 		// To handle sortOptions for RS API
 		this.props.updateComponentProps(
 			this.props.componentId,
-			{ ...this.props, dataField: sortField, sortBy },
+			{
+				...this.props, dataField: sortField, sortBy, ...this.absProps,
+			},
 			componentTypes.reactiveList,
 		);
 		this.props.setQueryOptions(this.props.componentId, options, true);
