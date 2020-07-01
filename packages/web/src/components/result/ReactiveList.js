@@ -34,12 +34,7 @@ import Flex from '../../styles/Flex';
 import { resultStats, sortOptions } from '../../styles/results';
 import { container } from '../../styles/Card';
 import { container as listContainer } from '../../styles/ListItem';
-import {
-	connect,
-	isFunction,
-	getComponent,
-	hasCustomRenderer,
-} from '../../utils';
+import { connect, isFunction, getComponent, hasCustomRenderer } from '../../utils';
 import Results from './addons/Results';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
@@ -102,9 +97,7 @@ class ReactiveList extends Component {
 			// To handle sort options for RS API
 			this.props.updateComponentProps(
 				this.props.componentId,
-				{
-					...this.props, dataField: sortField, sortBy, ...this.absProps,
-				},
+				Object.assign({}, this.props, { dataField: sortField }, { sortBy }, this.absProps),
 				componentTypes.reactiveList,
 			);
 		} else if (this.props.sortBy) {
@@ -439,7 +432,7 @@ class ReactiveList extends Component {
 	}
 	// Returns the props without default props to apply search relevancy settings for RS API
 	get absProps() {
-		const { includeFields, excludeFields, size } = this.props;
+		const { originalProps: { includeFields, excludeFields, size } } = this.props;
 		return {
 			includeFields: includeFields || undefined,
 			excludeFields: excludeFields || undefined,
@@ -471,14 +464,21 @@ class ReactiveList extends Component {
 		// simulate default (includeFields and excludeFields) props to generate consistent query
 		const options = getQueryOptions({ includeFields: ['*'], excludeFields: [], ...props });
 		const {
-			size, dataField, defaultSortOption, sortOptions: sortOptionsNew, currentPage, sortBy,
+			size,
+			dataField,
+			defaultSortOption,
+			sortOptions: sortOptionsNew,
+			currentPage,
+			sortBy,
 		} = props;
 		options.from = currentPage ? (currentPage - 1) * (size || 10) : 0;
 		options.size = size || 10;
 
 		const getSortOption = () => {
 			if (defaultSortOption) {
-				const sortOption = sortOptionsNew.find(option => (option.label === defaultSortOption));
+				const sortOption = sortOptionsNew.find(
+					option => option.label === defaultSortOption,
+				);
 				if (sortOption) {
 					return {
 						[sortOption.dataField]: {
@@ -495,9 +495,7 @@ class ReactiveList extends Component {
 		};
 
 		if (sortOptionsNew) {
-			options.sort = [
-				getSortOption(),
-			];
+			options.sort = [getSortOption()];
 		} else if (sortBy) {
 			options.sort = [
 				{
@@ -584,13 +582,7 @@ class ReactiveList extends Component {
 			return this.props.renderResultStats(this.stats);
 		} else if (total) {
 			return (
-				<p
-					css={resultStats}
-					className={getClassName(
-						this.props.innerClass,
-						'resultStats',
-					)}
-				>
+				<p css={resultStats} className={getClassName(this.props.innerClass, 'resultStats')}>
 					{this.props.total} results found in {this.props.time}ms
 				</p>
 			);
@@ -622,9 +614,7 @@ class ReactiveList extends Component {
 		// To handle sortOptions for RS API
 		this.props.updateComponentProps(
 			this.props.componentId,
-			{
-				...this.props, dataField: sortField, sortBy, ...this.absProps,
-			},
+			Object.assign({}, this.props, { dataField: sortField }, { sortBy }, this.absProps),
 			componentTypes.reactiveList,
 		);
 		this.props.setQueryOptions(this.props.componentId, options, true);
@@ -867,6 +857,8 @@ ReactiveList.propTypes = {
 	URLParams: types.bool,
 	defaultSortOption: types.string,
 	afterKey: types.props,
+	// eslint-disable-next-line
+	originalProps: types.object,
 };
 
 ReactiveList.defaultProps = {
@@ -888,6 +880,7 @@ ReactiveList.defaultProps = {
 	renderNoResults: () => 'No Results found.',
 	scrollOnChange: true,
 	defaultSortOption: null,
+	originalProps: {},
 };
 
 // Add componentType for SSR
@@ -932,19 +925,25 @@ const mapDispatchtoProps = dispatch => ({
 	triggerAnalytics: searchPosition => dispatch(recordResultClick(searchPosition)),
 });
 
-
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(withTheme(props => (
-	<ComponentWrapper
-		internalComponent
-		componentType={componentTypes.reactiveList}
-		{...props}
-	>
-		{() => <ReactiveList ref={props.myForwardedRef} {...props} />}
-	</ComponentWrapper>
-)));
+)(
+	withTheme(props => (
+		<ComponentWrapper internalComponent componentType={componentTypes.reactiveList} {...props}>
+			{() => {
+				const { includeFields, excludeFields, size } = props;
+				return (<ReactiveList
+					ref={props.myForwardedRef}
+					{...props}
+					originalProps={{
+						includeFields, excludeFields, size,
+					}}
+				/>);
+			}}
+		</ComponentWrapper>
+	)),
+);
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
