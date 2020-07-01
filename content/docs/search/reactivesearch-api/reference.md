@@ -286,6 +286,8 @@ Defaults to `false`. If set to `true` then you can use special characters in the
 | ------ | --------------------------- | -------- |
 | `bool` | `search`                    | false    |
 
+> Note: If both properties `searchOperators` and `queryString` are set to `true` then `queryString` will have the priority over `searchOperators`.
+
 ### queryString
 
 Defaults to `false`. If set to `true` than it allows you to create a complex search that includes wildcard characters, searches across multiple fields, and more. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html).
@@ -293,6 +295,8 @@ Defaults to `false`. If set to `true` than it allows you to create a complex sea
 | Type   | Applicable on query of type | Required |
 | ------ | --------------------------- | -------- |
 | `bool` | `search`                    | false    |
+
+> Note: If both properties `searchOperators` and `queryString` are set to `true` then `queryString` will have the priority over `searchOperators`.
 
 ### includeFields
 
