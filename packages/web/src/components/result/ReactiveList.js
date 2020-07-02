@@ -858,7 +858,7 @@ ReactiveList.propTypes = {
 	defaultSortOption: types.string,
 	afterKey: types.props,
 	// eslint-disable-next-line
-	originalProps: types.object,
+	originalProps: types.any,
 };
 
 ReactiveList.defaultProps = {
