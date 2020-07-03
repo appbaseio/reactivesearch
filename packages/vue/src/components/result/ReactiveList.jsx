@@ -114,7 +114,7 @@ const ReactiveList = {
 		pagination: VueTypes.bool.def(false),
 		paginationAt: types.paginationAt.def('bottom'),
 		react: types.react,
-		scrollOnChange: VueTypes.bool.def(false),
+		scrollOnChange: VueTypes.bool.def(true),
 		showResultStats: VueTypes.bool.def(true),
 		showEndPage: VueTypes.bool.def(false),
 		size: VueTypes.number.def(10),
