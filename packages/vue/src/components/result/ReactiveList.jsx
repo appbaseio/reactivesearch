@@ -266,7 +266,9 @@ const ReactiveList = {
 					if (this.hasPageChangeListener) {
 						this.$emit('pageChange', this.currentPageState + 1, this.totalPages);
 					} else {
-						window.scrollTo(0, 0);
+						if (this.scrollOnChange) {
+							window.scrollTo(0, 0);
+						}
 					}
 					this.isLoading = false;
 				}
