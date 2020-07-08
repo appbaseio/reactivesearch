@@ -114,6 +114,7 @@ const ReactiveList = {
 		pagination: VueTypes.bool.def(false),
 		paginationAt: types.paginationAt.def('bottom'),
 		react: types.react,
+		scrollOnChange: VueTypes.bool.def(true),
 		showResultStats: VueTypes.bool.def(true),
 		showEndPage: VueTypes.bool.def(false),
 		size: VueTypes.number.def(10),
@@ -265,7 +266,9 @@ const ReactiveList = {
 					if (this.hasPageChangeListener) {
 						this.$emit('pageChange', this.currentPageState + 1, this.totalPages);
 					} else {
-						window.scrollTo(0, 0);
+						if (this.scrollOnChange) {
+							window.scrollTo(0, 0);
+						}
 					}
 					this.isLoading = false;
 				}
@@ -275,7 +278,9 @@ const ReactiveList = {
 
 					if (newVal.length < oldVal.length) {
 						// query has changed
-						window.scrollTo(0, 0);
+						if (this.scrollOnChange) {
+							window.scrollTo(0, 0);
+						}
 						this.from = 0;
 					}
 				}
