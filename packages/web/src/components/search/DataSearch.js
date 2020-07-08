@@ -369,6 +369,16 @@ class DataSearch extends Component {
 							this.handleTextChange(value);
 						}
 						if (props.onValueChange) props.onValueChange(value);
+						// Set the already fetched suggestions if query is same as used last to fetch the hits
+						if (value === props.lastUsedQuery) {
+							this.setState({
+								suggestions: this.onSuggestions(this.props.suggestions),
+							});
+							// invoke on suggestions
+							if (this.props.onSuggestions) {
+								this.props.onSuggestions(this.props.suggestions);
+							}
+						}
 					},
 				);
 			} else {
@@ -975,6 +985,7 @@ DataSearch.propTypes = {
 	error: types.title,
 	isLoading: types.bool,
 	config: types.props,
+	lastUsedQuery: types.string,
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
@@ -1089,6 +1100,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	querySuggestions: state.querySuggestions[props.componentId],
+	lastUsedQuery: state.queryToHits[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({

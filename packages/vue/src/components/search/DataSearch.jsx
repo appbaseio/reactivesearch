@@ -396,6 +396,12 @@ const DataSearch = {
 				}
 
 				this.$emit('valueChange', value);
+				// Set the already fetched suggestions if query is same as used last to fetch the hits
+				if (value === this.lastUsedQuery) {
+					this.suggestions = this.onSuggestions(this.suggestions)
+					// invoke on suggestions
+					this.$emit('suggestions', this.suggestions);
+				}
 			};
 
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
@@ -1029,6 +1035,7 @@ const mapStateToProps = (state, props) => ({
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	querySuggestions: state.querySuggestions[props.componentId],
 	componentProps: state.props[props.componentId],
+	lastUsedQuery: state.queryToHits[props.componentId],
 });
 const mapDispatchtoProps = {
 	addComponent,
