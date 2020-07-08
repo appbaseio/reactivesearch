@@ -232,13 +232,13 @@ class DataSearch extends Component {
 				fields = [props.dataField];
 			}
 
-			if (props.searchOperators) {
-				finalQuery = {
-					simple_query_string: DataSearch.shouldQuery(value, fields, props),
-				};
-			} else if (props.queryString) {
+			if (props.queryString) {
 				finalQuery = {
 					query_string: DataSearch.shouldQuery(value, fields, props),
+				};
+			} else if (props.searchOperators) {
+				finalQuery = {
+					simple_query_string: DataSearch.shouldQuery(value, fields, props),
 				};
 			} else {
 				finalQuery = {
