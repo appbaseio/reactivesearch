@@ -165,6 +165,11 @@ class SingleList extends Component {
 				},
 			};
 		} else if (value) {
+			query = {
+				term: {
+					[props.dataField]: value,
+				},
+			};
 			if (props.showMissing && props.missingLabel === value) {
 				query = {
 					bool: {
@@ -174,11 +179,6 @@ class SingleList extends Component {
 					},
 				};
 			}
-			query = {
-				term: {
-					[props.dataField]: value,
-				},
-			};
 		}
 		if (query && props.nestedField) {
 			return {
