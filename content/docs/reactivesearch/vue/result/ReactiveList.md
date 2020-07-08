@@ -92,6 +92,8 @@ Example uses:
     number of user selectable pages to be displayed when pagination is enabled. Defaults to 5.
 -   **currentPage** `Number` [optional]
     can be used to set the default page number for initial render.
+-   **scrollOnChange** `Boolean` [optional]
+    can be used to control the scroll to top behavior when new results found. Defaults to `true`.
 -   **sortBy** `String` [optional]
     sort the results by either `asc` or `desc` order. It is an alternative to `sortOptions`, both can't be used together.
 -   **sortOptions** `Object Array` [optional]
