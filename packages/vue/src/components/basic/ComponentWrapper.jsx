@@ -1,18 +1,22 @@
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
-import {
-	pushToAndClause,
-	checkPropChange,
-	checkSomePropChange,
-} from '@appbaseio/reactivecore/lib/utils/helper';
+import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import {
+
+const {
 	addComponent,
 	removeComponent,
 	watchComponent,
 	setQueryListener,
 	setComponentProps,
 	updateComponentProps,
-} from '@appbaseio/reactivecore/lib/actions';
+} = Actions;
+
+const {
+	pushToAndClause,
+	checkPropChange,
+	checkSomePropChange,
+} = helper;
+
 import { connect, getValidPropsKeys, getCamelCase } from '../../utils/index';
 
 /**
