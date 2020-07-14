@@ -3,6 +3,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import types from '../../utils/vueTypes';
 import { getAggsQuery, getCompositeAggsQuery } from './utils';
+import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
@@ -12,33 +13,24 @@ import {
 	hasCustomRenderer,
 	isFunction,
 	connect,
-	getValidPropsKeys,
 	updateCustomQuery,
 	updateDefaultQuery,
 	isQueryIdentical,
 } from '../../utils/index';
 
 const {
-	addComponent,
-	removeComponent,
-	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener,
-	updateComponentProps,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
 } = Actions;
 const {
 	getQueryOptions,
-	pushToAndClause,
 	checkValueChange,
 	checkPropChange,
 	getClassName,
 	getOptionsFromQuery,
 	isEqual,
-	checkSomePropChange,
 } = helper;
 const SingleDropdownList = {
 	name: 'SingleDropdownList',
@@ -87,29 +79,11 @@ const SingleDropdownList = {
 		nestedField: types.string,
 	},
 	created() {
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
-			this.$emit('error', e);
-		});
-		// Update props in store
-		this.setComponentProps(this.componentId, this.$props, componentTypes.singleDropdownList);
-		this.setComponentProps(
-			this.internalComponent,
-			this.$props,
-			componentTypes.singleDropdownList,
-		);
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 	},
-	mounted() {
-		this.setReact(this.$props);
-	},
 	beforeMount() {
-		this.addComponent(this.internalComponent);
-		this.addComponent(this.$props.componentId);
 		this.updateQueryOptions(this.$props);
 
 		if (this.selectedValue) {
@@ -120,33 +94,7 @@ const SingleDropdownList = {
 			this.setValue(this.$props.defaultValue);
 		}
 	},
-
-	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
-		this.removeComponent(this.internalComponent);
-	},
 	watch: {
-		$props: {
-			deep: true,
-			handler(newVal) {
-				const propsKeys = getValidPropsKeys(newVal);
-				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
-					this.updateComponentProps(
-						this.componentId,
-						newVal,
-						componentTypes.singleDropdownList,
-					);
-					this.updateComponentProps(
-						this.internalComponent,
-						newVal,
-						componentTypes.singleDropdownList,
-					);
-				});
-			},
-		},
-		react() {
-			this.setReact(this.$props);
-		},
 		options(newVal, oldVal) {
 			checkPropChange(oldVal, newVal, () => {
 				const { showLoadMore, dataField } = this.$props;
@@ -278,19 +226,6 @@ const SingleDropdownList = {
 	},
 
 	methods: {
-		setReact(props) {
-			const { react } = props;
-
-			if (react) {
-				const newReact = pushToAndClause(react, this.internalComponent);
-				this.watchComponent(props.componentId, newReact);
-			} else {
-				this.watchComponent(props.componentId, {
-					and: this.internalComponent,
-				});
-			}
-		},
-
 		setValue(value, props = this.$props) {
 			const performUpdate = () => {
 				this.currentValue = value;
@@ -469,19 +404,17 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = {
-	addComponent,
-	removeComponent,
 	setQueryOptions,
-	setQueryListener,
 	updateQuery,
-	watchComponent,
-	updateComponentProps,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
 };
 
-const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList);
+
+const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList), {
+	componentType: componentTypes.singleDropdownList,
+	internalComponent: true,
+});
 
 SingleDropdownList.install = function(Vue) {
 	Vue.component(SingleDropdownList.name, ListConnected);

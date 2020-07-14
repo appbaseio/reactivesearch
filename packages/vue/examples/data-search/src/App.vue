@@ -7,7 +7,6 @@
 		>
 			<DataSearch
 				className="result-list-container"
-				categoryField="authors.keyword"
 				componentId="BookSensor"
 				:dataField="['original_title', 'original_title.search']"
 				:URLParams="true"

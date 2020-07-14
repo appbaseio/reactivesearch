@@ -3,28 +3,12 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '../../utils/vueTypes';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
+import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import Button, { toggleButtons } from '../../styles/Button';
-import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
+import { connect, updateCustomQuery, isQueryIdentical } from '../../utils/index';
 
-const {
-	addComponent,
-	removeComponent,
-	updateQuery,
-	watchComponent,
-	setQueryListener,
-	setQueryOptions,
-	updateComponentProps,
-	setComponentProps,
-	setCustomQuery,
-} = Actions;
-const {
-	isEqual,
-	checkValueChange,
-	getClassName,
-	getOptionsFromQuery,
-	handleA11yAction,
-	checkSomePropChange,
-} = helper;
+const { updateQuery, setQueryOptions, setCustomQuery } = Actions;
+const { isEqual, checkValueChange, getClassName, getOptionsFromQuery, handleA11yAction } = helper;
 
 const ToggleButton = {
 	name: 'ToggleButton',
@@ -60,45 +44,14 @@ const ToggleButton = {
 		if (this.$data.currentValue.length) {
 			this.handleToggle(this.$data.currentValue, true, props, hasMounted);
 		}
-		this.addComponent(props.componentId);
 	},
 	created() {
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
-			this.$emit('error', e);
-		});
-		// Update props in store
-		this.setComponentProps(this.componentId, this.$props, componentTypes.toggleButton);
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
-	mounted() {
-		this.setReact(this.$props);
-	},
-	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
-	},
 	watch: {
-		$props: {
-			deep: true,
-			handler(newVal) {
-				const propsKeys = getValidPropsKeys(newVal);
-				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
-					this.updateComponentProps(
-						this.componentId,
-						newVal,
-						componentTypes.toggleButton,
-					);
-				});
-			},
-		},
 		defaultValue(newVal) {
 			this.setValue(ToggleButton.parseValue(newVal, this.$props));
-		},
-		react() {
-			this.setReact(this.$props);
 		},
 		dataField() {
 			this.updateQuery(this.$data.currentValue, this.$props);
@@ -311,18 +264,14 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = {
-	addComponent,
-	removeComponent,
 	updateQueryHandler: updateQuery,
-	watchComponent,
-	setQueryListener,
 	setQueryOptions,
-	updateComponentProps,
-	setComponentProps,
 	setCustomQuery,
 };
 
-const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(ToggleButton);
+const RcConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(ToggleButton), {
+	componentType: componentTypes.toggleButton,
+});
 
 ToggleButton.install = function(Vue) {
 	Vue.component(ToggleButton.name, RcConnected);

@@ -2,36 +2,15 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
+import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import {
-	connect,
-	parseValueArray,
-	updateCustomQuery,
-	getValidPropsKeys,
-	isQueryIdentical,
-} from '../../utils/index';
+import { connect, parseValueArray, updateCustomQuery, isQueryIdentical } from '../../utils/index';
 import types from '../../utils/vueTypes';
 
-const {
-	addComponent,
-	removeComponent,
-	watchComponent,
-	updateQuery,
-	setQueryListener,
-	setQueryOptions,
-	setComponentProps,
-	setCustomQuery,
-	updateComponentProps,
-} = Actions;
+const { updateQuery, setQueryOptions, setCustomQuery } = Actions;
 
-const {
-	isEqual,
-	checkValueChange,
-	getClassName,
-	getOptionsFromQuery,
-	checkSomePropChange,
-} = helper;
+const { isEqual, checkValueChange, getClassName, getOptionsFromQuery } = helper;
 const MultiRange = {
 	name: 'MultiRange',
 	data() {
@@ -62,11 +41,6 @@ const MultiRange = {
 		nestedField: types.string,
 	},
 	methods: {
-		setReact(props) {
-			if (props.react) {
-				this.watchComponent(props.componentId, props.react);
-			}
-		},
 		handleClick(e) {
 			const { value } = this.$props;
 
@@ -149,18 +123,6 @@ const MultiRange = {
 	},
 
 	watch: {
-		$props: {
-			deep: true,
-			handler(newVal) {
-				const propsKeys = getValidPropsKeys(newVal);
-				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
-					this.updateComponentProps(this.componentId, newVal, componentTypes.multiRange);
-				});
-			},
-		},
-		react() {
-			this.setReact(this.$props);
-		},
 		dataField() {
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
 		},
@@ -185,20 +147,10 @@ const MultiRange = {
 	},
 
 	created() {
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, null);
-		// Update props in store
-		this.setComponentProps(this.componentId, this.$props, componentTypes.multiRange);
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
-	mounted() {
-		this.setReact(this.$props);
-	},
 	beforeMount() {
-		this.addComponent(this.$props.componentId);
 		if (this.selectedValue) {
 			this.selectItem(this.selectedValue, true);
 		} else if (this.$props.value) {
@@ -207,11 +159,6 @@ const MultiRange = {
 			this.selectItem(this.$props.defaultValue, true);
 		}
 	},
-
-	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
-	},
-
 	render() {
 		return (
 			<Container class={this.$props.className}>
@@ -311,18 +258,14 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = {
-	addComponent,
-	removeComponent,
 	updateQuery,
-	watchComponent,
-	setQueryListener,
 	setQueryOptions,
-	setComponentProps,
 	setCustomQuery,
-	updateComponentProps,
 };
 
-const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(MultiRange);
+const RangeConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiRange), {
+	componentType: componentTypes.multiRange,
+});
 
 MultiRange.install = function(Vue) {
 	Vue.component(MultiRange.name, RangeConnected);

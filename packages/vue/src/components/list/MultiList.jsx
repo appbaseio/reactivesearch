@@ -1,6 +1,7 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
+import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
@@ -11,7 +12,6 @@ import {
 	hasCustomRenderer,
 	getComponent,
 	isFunction,
-	getValidPropsKeys,
 	updateCustomQuery,
 	updateDefaultQuery,
 	isQueryIdentical,
@@ -21,26 +21,12 @@ import { UL, Checkbox } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
 
 const {
-	addComponent,
-	removeComponent,
-	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
-	updateComponentProps,
 } = Actions;
-const {
-	isEqual,
-	getQueryOptions,
-	pushToAndClause,
-	checkValueChange,
-	getClassName,
-	getOptionsFromQuery,
-	checkSomePropChange,
-} = helper;
+const { isEqual, getQueryOptions, checkValueChange, getClassName, getOptionsFromQuery } = helper;
 
 const MultiList = {
 	name: 'MultiList',
@@ -89,25 +75,11 @@ const MultiList = {
 		return this.__state;
 	},
 	created() {
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
-			this.$emit('error', e);
-		});
-		// Update props in store
-		this.setComponentProps(this.componentId, this.$props, componentTypes.multiList);
-		this.setComponentProps(this.internalComponent, this.$props, componentTypes.multiList);
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 	},
-	mounted() {
-		this.setReact(this.$props);
-	},
 	beforeMount() {
-		this.addComponent(this.internalComponent);
-		this.addComponent(this.$props.componentId);
 		this.updateQueryHandlerOptions(this.$props);
 
 		if (this.selectedValue) {
@@ -118,28 +90,7 @@ const MultiList = {
 			this.setValue(this.$props.defaultValue, true);
 		}
 	},
-	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
-		this.removeComponent(this.internalComponent);
-	},
 	watch: {
-		$props: {
-			deep: true,
-			handler(newVal) {
-				const propsKeys = getValidPropsKeys(newVal);
-				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
-					this.updateComponentProps(this.componentId, newVal, componentTypes.multiList);
-					this.updateComponentProps(
-						this.internalComponent,
-						newVal,
-						componentTypes.multiList,
-					);
-				});
-			},
-		},
-		react() {
-			this.setReact(this.$props);
-		},
 		options(newVal) {
 			this.modifiedOptions = newVal[this.$props.dataField]
 				? newVal[this.$props.dataField].buckets
@@ -317,18 +268,6 @@ const MultiList = {
 	},
 
 	methods: {
-		setReact(props) {
-			const { react } = props;
-
-			if (react) {
-				const newReact = pushToAndClause(react, this.internalComponent);
-				this.watchComponent(props.componentId, newReact);
-			} else {
-				this.watchComponent(props.componentId, {
-					and: this.internalComponent,
-				});
-			}
-		},
 		setValue(value, isDefaultValue = false, props = this.$props) {
 			const { selectAllLabel } = this.$props;
 			let { currentValue } = this.$data;
@@ -621,19 +560,16 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = {
-	addComponent,
-	removeComponent,
 	setQueryOptions,
-	setQueryListener,
 	updateQuery,
-	watchComponent,
-	updateComponentProps,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
 };
 
-const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(MultiList);
+const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiList), {
+	componentType: componentTypes.multiList,
+	internalComponent: true,
+});
 
 MultiList.install = function(Vue) {
 	Vue.component(MultiList.name, ListConnected);

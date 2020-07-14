@@ -5,32 +5,13 @@ import {
 	connect,
 	updateCustomQuery,
 	updateDefaultQuery,
-	getValidPropsKeys,
 	isQueryIdentical,
 } from '../../utils/index';
+import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import types from '../../utils/vueTypes';
 
-const {
-	addComponent,
-	removeComponent,
-	watchComponent,
-	updateQuery,
-	setQueryOptions,
-	setQueryListener,
-	setCustomQuery,
-	setDefaultQuery,
-	setComponentProps,
-	updateComponentProps,
-} = Actions;
-const {
-	pushToAndClause,
-	parseHits,
-	isEqual,
-	getCompositeAggsQuery,
-	getOptionsFromQuery,
-	getResultStats,
-	checkSomePropChange,
-} = helper;
+const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
+const { parseHits, isEqual, getCompositeAggsQuery, getOptionsFromQuery, getResultStats } = helper;
 const ReactiveComponent = {
 	name: 'ReactiveComponent',
 	props: {
@@ -48,15 +29,6 @@ const ReactiveComponent = {
 		const props = this.$props;
 		this.internalComponent = null;
 		this.$defaultQuery = null;
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-		};
-		this.setQueryListener(props.componentId, onQueryChange, e => {
-			this.$emit('error', e);
-		});
-
-		// Update props in store
-		this.setComponentProps(this.componentId, this.$props, componentTypes.reactiveComponent);
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, undefined);
 
@@ -114,22 +86,7 @@ const ReactiveComponent = {
 			this.internalComponent = `${props.componentId}__internal`;
 		}
 	},
-	mounted() {
-		this.setReact(this.$props); // set query for internal component
-	},
-
 	beforeMount() {
-		this.addComponent(this.$props.componentId);
-
-		if (this.internalComponent) {
-			this.addComponent(this.internalComponent);
-			this.setComponentProps(
-				this.internalComponent,
-				this.$props,
-				componentTypes.reactiveComponent,
-			);
-		}
-
 		if (this.internalComponent && this.$props.defaultQuery) {
 			updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, undefined);
 			this.$defaultQuery = this.$props.defaultQuery();
@@ -149,36 +106,7 @@ const ReactiveComponent = {
 			});
 		}
 	},
-
-	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
-
-		if (this.internalComponent) {
-			this.removeComponent(this.internalComponent);
-		}
-	},
-
 	watch: {
-		$props: {
-			deep: true,
-			handler(newVal) {
-				const propsKeys = getValidPropsKeys(newVal);
-				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
-					this.updateComponentProps(
-						this.componentId,
-						newVal,
-						componentTypes.reactiveComponent,
-					);
-					if (this.internalComponent) {
-						this.updateComponentProps(
-							this.internalComponent,
-							newVal,
-							componentTypes.reactiveComponent,
-						);
-					}
-				});
-			},
-		},
 		hits(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				this.$emit('data', this.getData());
@@ -262,9 +190,6 @@ const ReactiveComponent = {
 				});
 			}
 		},
-		react() {
-			this.setReact(this.$props);
-		},
 	},
 
 	render() {
@@ -285,22 +210,6 @@ const ReactiveComponent = {
 	},
 
 	methods: {
-		setReact(props) {
-			const { react } = props;
-
-			if (react) {
-				if (this.internalComponent) {
-					const newReact = pushToAndClause(react, this.internalComponent);
-					this.watchComponent(props.componentId, newReact);
-				} else {
-					this.watchComponent(props.componentId, react);
-				}
-			} else if (this.internalComponent) {
-				this.watchComponent(props.componentId, {
-					and: this.internalComponent,
-				});
-			}
-		},
 		getAggsQuery() {
 			if (this.aggregationField) {
 				return { aggs: getCompositeAggsQuery({}, this.$props, null, true).aggs };
@@ -354,18 +263,18 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = {
-	addComponent,
-	removeComponent,
 	setQueryOptions,
-	setQueryListener,
 	updateQuery,
-	watchComponent,
 	setCustomQuery,
 	setDefaultQuery,
-	setComponentProps,
-	updateComponentProps,
 };
-const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(ReactiveComponent);
+
+const RcConnected = ComponentWrapper(
+	connect(mapStateToProps, mapDispatchtoProps)(ReactiveComponent),
+	{
+		componentType: componentTypes.reactiveComponent,
+	},
+);
 
 ReactiveComponent.install = function(Vue) {
 	Vue.component(ReactiveComponent.name, RcConnected);

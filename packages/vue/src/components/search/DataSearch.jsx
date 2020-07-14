@@ -6,7 +6,6 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	isFunction,
-	getValidPropsKeys,
 	updateCustomQuery,
 	updateDefaultQuery,
 	isQueryIdentical,
@@ -19,6 +18,7 @@ import InputIcon from '../../styles/InputIcon';
 import Downshift from '../basic/DownShift.jsx';
 import Container from '../../styles/Container';
 import types from '../../utils/vueTypes';
+import ComponentWrapper from '../basic/ComponentWrapper.jsx'
 import SuggestionWrapper from './addons/SuggestionWrapper.jsx';
 import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
@@ -26,25 +26,17 @@ import CancelSvg from '../shared/CancelSvg';
 import Mic from './addons/Mic.jsx';
 
 const {
-	addComponent,
-	removeComponent,
-	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener,
-	updateComponentProps,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
 	setCustomHighlightOptions,
 } = Actions;
 const {
 	debounce,
-	pushToAndClause,
 	checkValueChange,
 	getClassName,
 	getOptionsFromQuery,
-	checkSomePropChange,
 	isEqual,
 	getCompositeAggsQuery,
 	withClickIds,
@@ -80,15 +72,6 @@ const DataSearch = {
 				this.updateQueryHandler(this.$props.componentId, value, this.$props);
 			}
 		}, this.$props.debounce);
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
-			this.$emit('error', e);
-		});
-		// Update props in store
-		this.setComponentProps(this.componentId, this.$props, componentTypes.dataSearch);
-		this.setComponentProps(this.internalComponent, this.$props, componentTypes.dataSearch);
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -176,8 +159,6 @@ const DataSearch = {
 		renderMic: types.func,
 	},
 	beforeMount() {
-		this.addComponent(this.$props.componentId, 'DATASEARCH');
-		this.addComponent(this.internalComponent);
 		if (this.$props.highlight) {
 			if (this.customHighlight && typeof this.customHighlight === 'function') {
 				this.setCustomHighlightOptions(this.componentId, this.customHighlight(this.$props));
@@ -198,30 +179,7 @@ const DataSearch = {
 			this.setValue(this.$props.defaultValue, true);
 		}
 	},
-	mounted() {
-		this.setReact(this.$props);
-	},
-	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
-		this.removeComponent(this.internalComponent);
-	},
 	watch: {
-		$props: {
-			immediate: true,
-			deep: true,
-			handler(newVal) {
-				this.validateDataField();
-				const propsKeys = getValidPropsKeys(newVal);
-				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
-					this.updateComponentProps(this.componentId, newVal, componentTypes.dataSearch);
-					this.updateComponentProps(
-						this.internalComponent,
-						newVal,
-						componentTypes.dataSearch,
-					);
-				});
-			},
-		},
 		highlight() {
 			this.updateQueryOptions();
 		},
@@ -231,9 +189,6 @@ const DataSearch = {
 		},
 		highlightField() {
 			this.updateQueryOptions();
-		},
-		react() {
-			this.setReact(this.$props);
 		},
 		fieldWeights() {
 			this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
@@ -345,19 +300,6 @@ const DataSearch = {
 				queryOptions.aggs = getCompositeAggsQuery({}, this.$props, null, true).aggs;
 			}
 			return queryOptions;
-		},
-
-		setReact(props) {
-			const { react } = this.$props;
-
-			if (react) {
-				const newReact = pushToAndClause(react, this.internalComponent);
-				this.watchComponent(props.componentId, newReact);
-			} else {
-				this.watchComponent(props.componentId, {
-					and: this.internalComponent,
-				});
-			}
 		},
 		onSuggestions(results) {
 			return handleOnSuggestions(results, this.$data.currentValue, this);
@@ -1038,19 +980,16 @@ const mapStateToProps = (state, props) => ({
 	lastUsedQuery: state.queryToHits[props.componentId],
 });
 const mapDispatchtoProps = {
-	addComponent,
-	removeComponent,
 	setQueryOptions,
 	updateQuery,
-	watchComponent,
-	setQueryListener,
-	updateComponentProps,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
 	setCustomHighlightOptions,
 };
-const DSConnected = connect(mapStateToProps, mapDispatchtoProps)(DataSearch);
+const DSConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(DataSearch), {
+	componentType: componentTypes.dataSearch,
+	internalComponent: true
+});
 
 DataSearch.install = function(Vue) {
 	Vue.component(DataSearch.name, DSConnected);

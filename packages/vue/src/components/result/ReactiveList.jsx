@@ -3,6 +3,7 @@ import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
+import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import ResultListWrapper from './addons/ResultListWrapper.jsx';
 import ResultCardsWrapper from './addons/ResultCardsWrapper.jsx';
 import {
@@ -10,7 +11,6 @@ import {
 	isFunction,
 	hasCustomRenderer,
 	getComponent,
-	getValidPropsKeys,
 	updateDefaultQuery,
 	isQueryIdentical,
 } from '../../utils/index';
@@ -19,16 +19,11 @@ import types from '../../utils/vueTypes';
 import { resultStats, sortOptions } from '../../styles/results';
 
 const {
-	addComponent,
-	removeComponent,
 	setStreaming,
-	watchComponent,
 	setQueryOptions,
 	updateQuery,
 	loadMore,
 	setValue,
-	setQueryListener,
-	setComponentProps,
 	updateComponentProps,
 	setDefaultQuery,
 } = Actions;
@@ -36,12 +31,10 @@ const {
 const {
 	isEqual,
 	getQueryOptions,
-	pushToAndClause,
 	getClassName,
 	parseHits,
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
-	checkSomePropChange,
 	getResultStats,
 } = helper;
 
@@ -78,18 +71,19 @@ const ReactiveList = {
 		}
 		this.isLoading = true;
 		this.internalComponent = `${this.$props.componentId}__internal`;
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-		};
-		const onError = e => {
-			this.$emit('error', e);
-		};
 		this.sortOptionIndex = this.defaultSortOption
 			? this.sortOptions.findIndex(s => s.label === this.defaultSortOption)
 			: 0;
-		this.setQueryListener(this.$props.componentId, onQueryChange, onError);
-		this.setComponentProps(this.componentId, { ...this.$props, from: this.from}, componentTypes.reactiveList);
-		this.setComponentProps(this.internalComponent, { ...this.$props, from: this.from}, componentTypes.reactiveList);
+		this.updateComponentProps(
+			this.componentId,
+			{ from: this.from },
+			componentTypes.reactiveList,
+		);
+		this.updateComponentProps(
+			this.internalComponent,
+			{ from: this.from },
+			componentTypes.reactiveList,
+		);
 	},
 	props: {
 		currentPage: VueTypes.number.def(0),
@@ -149,24 +143,6 @@ const ReactiveList = {
 		},
 	},
 	watch: {
-		$props: {
-			deep: true,
-			handler(newVal) {
-				const propsKeys = getValidPropsKeys(newVal);
-				checkSomePropChange(newVal, this.componentProps, propsKeys, () => {
-					this.updateComponentProps(
-						this.componentId,
-						newVal,
-						componentTypes.reactiveList,
-					);
-					this.updateComponentProps(
-						this.internalComponent,
-						newVal,
-						componentTypes.reactiveList,
-					);
-				});
-			},
-		},
 		sortOptions(newVal, oldVal) {
 			if (!isEqual(oldVal, newVal)) {
 				this.updateQueryOptions(this.$props);
@@ -235,11 +211,6 @@ const ReactiveList = {
 				this.setStreaming(this.$props.componentId, newVal);
 			}
 		},
-		react(newVal, oldVal) {
-			if (!isEqual(newVal, oldVal)) {
-				this.setReact(this.$props);
-			}
-		},
 		streamHits() {
 			this.$emit('data', this.getData());
 		},
@@ -265,10 +236,8 @@ const ReactiveList = {
 				if (this.isLoading && (oldVal || newVal)) {
 					if (this.hasPageChangeListener) {
 						this.$emit('pageChange', this.currentPageState + 1, this.totalPages);
-					} else {
-						if (this.scrollOnChange) {
-							window.scrollTo(0, 0);
-						}
+					} else if (this.scrollOnChange) {
+						window.scrollTo(0, 0);
 					}
 					this.isLoading = false;
 				}
@@ -322,8 +291,6 @@ const ReactiveList = {
 		},
 	},
 	mounted() {
-		this.addComponent(this.internalComponent);
-		this.addComponent(this.$props.componentId);
 		if (this.$props.stream) {
 			this.setStreaming(this.$props.componentId, true);
 		}
@@ -344,7 +311,7 @@ const ReactiveList = {
 			// To handle sort options for RS API
 			this.updateComponentProps(
 				this.componentId,
-				{ ...this.$props, dataField: sortField, sortBy },
+				{ dataField: sortField, sortBy },
 				componentTypes.reactiveList,
 			);
 		} else if (this.$props.sortBy) {
@@ -371,9 +338,6 @@ const ReactiveList = {
 		}
 		// execute is set to false at the time of mount
 		const { sort, ...query } = this.$defaultQuery || {};
-		// to avoid firing (multiple) partial queries.
-		// Hence we are building the query in parts here
-		// and only executing it with setReact() at core
 
 		const execute = false;
 		this.setQueryOptions(
@@ -400,16 +364,12 @@ const ReactiveList = {
 			);
 		} // query will be executed here
 
-		this.setReact(this.$props);
-
 		if (!this.shouldRenderPagination) {
 			window.addEventListener('scroll', this.scrollHandler);
 		}
 	},
 
 	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
-		this.removeComponent(this.internalComponent);
 		window.removeEventListener('scroll', this.scrollHandler);
 	},
 
@@ -466,7 +426,9 @@ const ReactiveList = {
 							renderItem({
 								item,
 								triggerClickAnalytics: () =>
-									this.triggerClickAnalytics(this.currentPageState * size + index),
+									this.triggerClickAnalytics(
+										this.currentPageState * size + index,
+									),
 							}),
 						)}
 					</div>
@@ -555,18 +517,6 @@ const ReactiveList = {
 				).aggs;
 			}
 			return queryOptions;
-		},
-		setReact(props) {
-			const { react } = props;
-
-			if (react) {
-				const newReact = pushToAndClause(react, this.internalComponent);
-				this.watchComponent(props.componentId, newReact);
-			} else {
-				this.watchComponent(props.componentId, {
-					and: this.internalComponent,
-				});
-			}
 		},
 
 		scrollHandler() {
@@ -678,7 +628,7 @@ const ReactiveList = {
 			// To handle sort options for RS API
 			this.updateComponentProps(
 				this.componentId,
-				{ ...this.$props, dataField: sortField, sortBy },
+				{ dataField: sortField, sortBy },
 				componentTypes.reactiveList,
 			);
 			this.setQueryOptions(this.$props.componentId, options, true);
@@ -826,16 +776,11 @@ const mapStateToProps = (state, props) => ({
 	componentProps: state.props[props.componentId],
 });
 const mapDispatchtoProps = {
-	addComponent,
 	loadMoreAction: loadMore,
-	removeComponent,
 	setPageURL: setValue,
 	setQueryOptions,
-	setQueryListener,
 	setStreaming,
 	updateQuery,
-	watchComponent,
-	setComponentProps,
 	updateComponentProps,
 	setDefaultQuery,
 };
@@ -844,14 +789,19 @@ ReactiveList.generateQueryOptions = props => {
 	// simulate default (includeFields and excludeFields) props to generate consistent query
 	const options = getQueryOptions({ includeFields: ['*'], excludeFields: [], ...props });
 	const {
-		size, dataField, defaultSortOption, sortOptions: sortOptionsNew, currentPage, sortBy,
+		size,
+		dataField,
+		defaultSortOption,
+		sortOptions: sortOptionsNew,
+		currentPage,
+		sortBy,
 	} = props;
 	options.from = currentPage ? (currentPage - 1) * (size || 10) : 0;
 	options.size = size || 10;
 
 	const getSortOption = () => {
 		if (defaultSortOption) {
-			const sortOption = sortOptionsNew.find(option => (option.label === defaultSortOption));
+			const sortOption = sortOptionsNew.find(option => option.label === defaultSortOption);
 			if (sortOption) {
 				return {
 					[sortOption.dataField]: {
@@ -868,9 +818,7 @@ ReactiveList.generateQueryOptions = props => {
 	};
 
 	if (sortOptionsNew) {
-		options.sort = [
-			getSortOption(),
-		];
+		options.sort = [getSortOption()];
 	} else if (sortBy) {
 		options.sort = [
 			{
@@ -884,7 +832,13 @@ ReactiveList.generateQueryOptions = props => {
 	return options;
 };
 
-export const RLConnected = connect(mapStateToProps, mapDispatchtoProps)(ReactiveList);
+export const RLConnected = ComponentWrapper(
+	connect(mapStateToProps, mapDispatchtoProps)(ReactiveList),
+	{
+		componentType: componentTypes.reactiveList,
+		internalComponent: true,
+	},
+);
 
 ReactiveList.install = function(Vue) {
 	Vue.component(ReactiveList.name, RLConnected);
