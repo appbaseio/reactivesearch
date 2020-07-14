@@ -35,7 +35,7 @@ Example uses:
 	componentId="MapUI"
 	dataField="location"
 	title="Venue Location Map"
-	size={100}
+	size={10}
 	defaultZoom={13}
 	defaultCenter={{ lat: 37.74, lng: -122.45 }}
 	showMapStyles={true}
@@ -63,7 +63,7 @@ Example uses:
 -   **dataField** `String`
     DB data field to be connected to the component's UI view, usually of a geopoint (i.e. location) data type and used for rendering the markers on the map.
 -   **size** `Number` [optional]
-    number of results to show in the map view, can be a number in the range [1, 1000]. Defaults to 100.
+    number of results to show in the map view, can be a number in the range [1, 1000]. Defaults to 10.
 -   **defaultZoom** `Number` [optional]
     preset map's zoom level, accepts integer values between [0, 20]. 0 is the minimum zoom level, where you can see the entire globe. 20 is the maximum zoom level. Defaults to 13.
 -   **defaultCenter** `Object` [optional]
