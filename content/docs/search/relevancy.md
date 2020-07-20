@@ -131,9 +131,22 @@ Index Settings lets you configure the shards and replica settings for your index
 
 ![](https://imgur.com/4Be2CSz.png)
 
-**Manage Shards:** Allows you to change your shard size by re-indexing in place.
+**Manage Shards:** Allows you to change your index's shard size by re-indexing in place.
+
+How to think about sharding:
+
+Each shard is a self-contained index. An Elasticsearch index is just a logical grouping of the physical shards.
+
+1. Data within different shards can be processed parallely when executing a search query. The higher the number of shards, the faster the search can execute given that CPU cores and memory are sufficiently available.
+2. At the same time, shards come with a significant overhead. There is a soft limit of 1,000 shards per data node. You want to keep the total shards per node below this limit.
 
 **Manage Replicas:** Allows you to update your index replica settings.
+
+A 1-replica setup implies all the primary shards are replicated, resulting in twice the number of net shards. Replication makes your search high availabile by ensuring redundancy of data. A no-replica setup implies no redundancy. In case of a node failover, data residing in the shards of the node will become unavailable.
+
+A good rule of thumb is to have a 1-replica setup whenever you have at least two nodes in the cluster. For an even higher redundancy, you can opt for a 2-replica setup.
+
+You can read more about shards and replicas over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/scalability.html).
 
 ## Schema
 
