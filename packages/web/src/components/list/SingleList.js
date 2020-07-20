@@ -248,15 +248,17 @@ class SingleList extends Component {
 	};
 
 	updateDefaultQuery = (queryOptions) => {
+		const { currentValue } = this.state;
+		updateDefaultQuery(this.props.componentId, this.props, currentValue);
 		updateInternalQuery(
 			this.internalComponent,
 			queryOptions,
-			this.state.currentValue,
+			currentValue,
 			this.props,
 			SingleList.generateQueryOptions(
 				this.props,
 				this.state.prevAfter,
-				this.state.currentValue,
+				currentValue,
 			),
 		);
 	};

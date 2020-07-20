@@ -359,10 +359,13 @@ class MultiList extends Component {
 	};
 
 	updateDefaultQuery = (queryOptions) => {
+		const value = Object.keys(this.state.currentValue);
+		// Update default query for RS API
+		updateDefaultQuery(this.props.componentId, this.props, value);
 		updateInternalQuery(
 			this.internalComponent,
 			queryOptions,
-			Object.keys(this.state.currentValue),
+			value,
 			this.props,
 			MultiList.generateQueryOptions(
 				this.props,

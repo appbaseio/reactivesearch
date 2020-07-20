@@ -222,15 +222,18 @@ class SingleDropdownList extends Component {
 	};
 
 	updateDefaultQuery = (queryOptions) => {
+		const { currentValue } = this.state;
+		// Update default query for RS API
+		updateDefaultQuery(this.props.componentId, this.props, currentValue);
 		updateInternalQuery(
 			this.internalComponent,
 			queryOptions,
-			this.state.currentValue,
+			currentValue,
 			this.props,
 			SingleDropdownList.generateQueryOptions(
 				this.props,
 				this.state.prevAfter,
-				this.state.currentValue,
+				currentValue,
 			),
 		);
 	};

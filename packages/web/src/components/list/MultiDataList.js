@@ -249,6 +249,8 @@ class MultiDataList extends Component {
 	updateDefaultQuery = (queryOptions) => {
 		const valueArray
 			= typeof this.state.currentValue === 'object' ? Object.keys(this.state.currentValue) : [];
+		// Update default query for RS API
+		updateDefaultQuery(this.props.componentId, this.props, valueArray);
 		updateInternalQuery(
 			this.internalComponent,
 			queryOptions,
