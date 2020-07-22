@@ -282,6 +282,9 @@ DatePicker.defaultProps = {
 	queryFormat: 'epoch_millis',
 };
 
+// Add componentType for SSR
+DatePicker.componentType = componentTypes.datePicker;
+
 const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
@@ -290,9 +293,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
-
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 

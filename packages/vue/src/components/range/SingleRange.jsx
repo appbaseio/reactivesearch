@@ -1,30 +1,15 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
+import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
+import { connect, updateCustomQuery, isQueryIdentical } from '../../utils/index';
 import types from '../../utils/vueTypes';
 
-const {
-	addComponent,
-	removeComponent,
-	watchComponent,
-	updateQuery,
-	setQueryListener,
-	setQueryOptions,
-	setComponentProps,
-	setCustomQuery,
-	updateComponentProps,
-} = Actions;
-const {
-	isEqual,
-	checkValueChange,
-	getClassName,
-	getOptionsFromQuery,
-	checkSomePropChange,
-} = helper;
+const { updateQuery, setQueryOptions, setCustomQuery } = Actions;
+const { isEqual, checkValueChange, getClassName, getOptionsFromQuery } = helper;
 
 const SingleRange = {
 	name: 'SingleRange',
@@ -54,31 +39,10 @@ const SingleRange = {
 		nestedField: types.string,
 	},
 	created() {
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, null);
-		// Update props in store
-		this.setComponentProps(this.componentId, this.$props, componentTypes.singleRange);
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
-	mounted() {
-		this.setReact(this.$props);
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(
-					this.componentId,
-					this.$props,
-					componentTypes.singleRange,
-				);
-			});
-		});
-	},
 	beforeMount() {
-		this.addComponent(this.$props.componentId);
-
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
 		} else if (this.$props.value) {
@@ -87,14 +51,7 @@ const SingleRange = {
 			this.setValue(this.$props.defaultValue);
 		}
 	},
-
-	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
-	},
 	watch: {
-		react() {
-			this.setReact(this.$props);
-		},
 		dataField() {
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
 		},
@@ -158,12 +115,6 @@ const SingleRange = {
 	},
 
 	methods: {
-		setReact(props) {
-			if (props.react) {
-				this.watchComponent(props.componentId, props.react);
-			}
-		},
-
 		setValue(value, props = this.$props) {
 			const currentValue = SingleRange.parseValue(value, props);
 
@@ -253,23 +204,23 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	componentProps: state.props[props.componentId],
 });
 
 const mapDispatchtoProps = {
-	addComponent,
-	removeComponent,
 	updateQuery,
-	watchComponent,
-	setQueryListener,
 	setQueryOptions,
-	setComponentProps,
 	setCustomQuery,
-	updateComponentProps,
 };
 
-const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleRange);
+const RangeConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleRange), {
+	componentType: componentTypes.singleRange,
+});
 
 SingleRange.install = function(Vue) {
 	Vue.component(SingleRange.name, RangeConnected);
 };
+// Add componentType for SSR
+SingleRange.componentType = componentTypes.singleRange;
+
 export default SingleRange;

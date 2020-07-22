@@ -247,6 +247,9 @@ RatingsFilter.defaultProps = {
 	includeNullValues: false,
 };
 
+// Add componentType for SSR
+RatingsFilter.componentType = componentTypes.ratingsFilter;
+
 const mapStateToProps = (state, props) => ({
 	selectedValue:
 		(state.selectedValues[props.componentId]

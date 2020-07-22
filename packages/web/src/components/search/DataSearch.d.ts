@@ -15,6 +15,7 @@ export interface DataSearchProps extends CommonProps {
 	renderMic?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;
 	enableSynonyms?: boolean;
+	queryString?: boolean;
 	enableQuerySuggestions?: boolean;
 	aggregationField?: string;
 	size?: number;

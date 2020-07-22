@@ -237,6 +237,9 @@ NumberBox.defaultProps = {
 	URLParams: false,
 };
 
+// Add componentType for SSR
+NumberBox.componentType = componentTypes.numberBox;
+
 const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value

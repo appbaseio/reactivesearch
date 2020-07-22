@@ -171,10 +171,13 @@ class SingleDataList extends Component {
 	};
 
 	updateDefaultQuery = (queryOptions) => {
+		const { currentValue } = this.state;
+		// Update default query for RS API
+		updateDefaultQuery(this.props.componentId, this.props, currentValue);
 		updateInternalQuery(
 			this.internalComponent,
 			queryOptions,
-			this.state.currentValue,
+			currentValue,
 			this.props,
 			SingleDataList.generateQueryOptions(this.props, this.state),
 			null,
@@ -484,6 +487,10 @@ SingleDataList.defaultProps = {
 	URLParams: false,
 	showCount: false,
 };
+
+
+// Add componentType for SSR
+SingleDataList.componentType = componentTypes.singleDataList;
 
 const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],

@@ -232,7 +232,11 @@ class DataSearch extends Component {
 				fields = [props.dataField];
 			}
 
-			if (props.searchOperators) {
+			if (props.queryString) {
+				finalQuery = {
+					query_string: DataSearch.shouldQuery(value, fields, props),
+				};
+			} else if (props.searchOperators) {
 				finalQuery = {
 					simple_query_string: DataSearch.shouldQuery(value, fields, props),
 				};
@@ -272,7 +276,7 @@ class DataSearch extends Component {
 				}`,
 		);
 
-		if (props.searchOperators) {
+		if (props.searchOperators || props.queryString) {
 			return {
 				query: value,
 				fields,
@@ -365,6 +369,16 @@ class DataSearch extends Component {
 							this.handleTextChange(value);
 						}
 						if (props.onValueChange) props.onValueChange(value);
+						// Set the already fetched suggestions if query is same as used last to fetch the hits
+						if (value === props.lastUsedQuery) {
+							this.setState({
+								suggestions: this.onSuggestions(this.props.suggestions),
+							});
+							// invoke on suggestions
+							if (this.props.onSuggestions) {
+								this.props.onSuggestions(this.props.suggestions);
+							}
+						}
 					},
 				);
 			} else {
@@ -423,7 +437,7 @@ class DataSearch extends Component {
 			const customQueryTobeSet = customQuery(value, props) || {};
 			const queryTobeSet = customQueryTobeSet.query;
 			if (queryTobeSet) {
-				query = [queryTobeSet];
+				query = queryTobeSet;
 			}
 			customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
 			updateCustomQuery(props.componentId, props, value);
@@ -803,11 +817,7 @@ class DataSearch extends Component {
 	render() {
 		const { currentValue } = this.state;
 		const suggestionsList = this.parsedSuggestions;
-		const {
-			theme,
-			themePreset,
-			size,
-		} = this.props;
+		const { theme, themePreset, size } = this.props;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -830,7 +840,12 @@ class DataSearch extends Component {
 							highlightedIndex,
 							...rest
 						}) => (
-							<div {...getRootProps({ css: suggestionsContainer }, { suppressRefError: true })}>
+							<div
+								{...getRootProps(
+									{ css: suggestionsContainer },
+									{ suppressRefError: true },
+								)}
+							>
 								<Input
 									aria-label={this.props.componentId}
 									id={`${this.props.componentId}-input`}
@@ -869,10 +884,7 @@ class DataSearch extends Component {
 								{this.renderError()}
 								{!this.hasCustomRenderer && isOpen && suggestionsList.length ? (
 									<ul
-										css={suggestions(
-											themePreset,
-											theme,
-										)}
+										css={suggestions(themePreset, theme)}
 										className={getClassName(this.props.innerClass, 'list')}
 									>
 										{hasQuerySuggestionsRenderer(this.props)
@@ -973,11 +985,13 @@ DataSearch.propTypes = {
 	error: types.title,
 	isLoading: types.bool,
 	config: types.props,
+	lastUsedQuery: types.string,
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
 	enableQuerySuggestions: types.bool,
+	queryString: types.bool,
 	beforeValueChange: types.func,
 	className: types.string,
 	clearIcon: types.children,
@@ -1065,6 +1079,9 @@ DataSearch.defaultProps = {
 	size: 10,
 };
 
+// Add componentType for SSR
+DataSearch.componentType = componentTypes.dataSearch;
+
 const mapStateToProps = (state, props) => ({
 	selectedValue:
 		(state.selectedValues[props.componentId]
@@ -1083,6 +1100,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	querySuggestions: state.querySuggestions[props.componentId],
+	lastUsedQuery: state.queryToHits[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({

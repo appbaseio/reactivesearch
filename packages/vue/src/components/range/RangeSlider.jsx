@@ -3,31 +3,16 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import NoSSR from 'vue-no-ssr';
 import Container from '../../styles/Container';
-import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
+import { connect, updateCustomQuery, isQueryIdentical } from '../../utils/index';
+import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
 import { getComponents } from './addons/ssr';
 
-const {
-	addComponent,
-	removeComponent,
-	watchComponent,
-	updateQuery,
-	setQueryListener,
-	setQueryOptions,
-	setComponentProps,
-	setCustomQuery,
-	updateComponentProps,
-} = Actions;
+const { updateQuery, setQueryOptions, setCustomQuery } = Actions;
 
-const {
-	checkValueChange,
-	getClassName,
-	getOptionsFromQuery,
-	isEqual,
-	checkSomePropChange,
-} = helper;
+const { checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
 
 const RangeSlider = {
 	name: 'RangeSlider',
@@ -71,12 +56,6 @@ const RangeSlider = {
 	},
 
 	methods: {
-		setReact(props) {
-			if (props.react) {
-				this.watchComponent(props.componentId, props.react);
-			}
-		},
-
 		handleSlider(values) {
 			const { value } = this.$props;
 
@@ -142,10 +121,6 @@ const RangeSlider = {
 		},
 	},
 	watch: {
-		react() {
-			this.setReact(this.$props);
-		},
-
 		defaultValue(newVal) {
 			this.handleChange(RangeSlider.parseValue(newVal, this.$props));
 		},
@@ -170,37 +145,16 @@ const RangeSlider = {
 	},
 
 	created() {
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-		};
 		if (!this.$props.range) {
 			console.error(
 				'%crange is not defined. Read more about this at https://opensource.appbase.io/reactive-manual/vue/range-components/rangeslider.html#props',
 				'font-size: 12.5px;',
 			);
 		}
-		this.setQueryListener(this.$props.componentId, onQueryChange, null);
-		// Update props in store
-		this.setComponentProps(this.componentId, this.$props, componentTypes.rangeSlider);
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
-	mounted() {
-		this.setReact(this.$props);
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(
-					this.componentId,
-					this.$props,
-					componentTypes.rangeSlider,
-				);
-			});
-		});
-	},
 	beforeMount() {
-		this.addComponent(this.$props.componentId);
-
 		const { value, defaultValue } = this.$props;
 		const { selectedValue } = this;
 		if (this.$props.range) {
@@ -215,11 +169,6 @@ const RangeSlider = {
 			}
 		}
 	},
-
-	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
-	},
-
 	render() {
 		return (
 			<Container class={this.$props.className}>
@@ -314,23 +263,24 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
+	componentProps: state.props[props.componentId],
 });
 
 const mapDispatchtoProps = {
-	addComponent,
-	removeComponent,
 	updateQuery,
-	watchComponent,
-	setQueryListener,
 	setQueryOptions,
-	setComponentProps,
 	setCustomQuery,
-	updateComponentProps,
 };
 
-const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(RangeSlider);
+const RangeConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(RangeSlider), {
+	componentType: componentTypes.rangeSlider,
+});
 
 RangeSlider.install = function(Vue) {
 	Vue.component(RangeSlider.name, RangeConnected);
 };
+
+// Add componentType for SSR
+RangeSlider.componentType = componentTypes.rangeSlider;
+
 export default RangeSlider;

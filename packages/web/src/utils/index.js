@@ -141,9 +141,7 @@ export const isQueryIdentical = (value = null, props = {}, prevProps = {}, key) 
 	if (!key) return true;
 	if (typeof props[key] !== 'function' || typeof prevProps[key] !== 'function') return true;
 	// to not call original defaultQuery and customQuery, as here we are only comparing
-	const prevQuery = () => prevProps[key];
-	const nextQuery = () => props[key];
-	return isEqual(nextQuery(value, props), prevQuery(value, prevProps));
+	return isEqual(props[key](value, props), prevProps[key](value, prevProps));
 };
 
 /**

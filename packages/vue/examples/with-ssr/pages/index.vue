@@ -1,44 +1,49 @@
 <template>
-	<div class="container">
-		<ReactiveBase v-bind="components.settings" :initialState="store">
-			<nav class="nav">
-				<div class="title">Airbeds</div>
-				<DataSearch v-bind="components.datasearch" />
-			</nav>
-			<ReactiveList v-bind="components.result">
-				<div slot="render" slot-scope="{ data }">
-					<ResultCardsWrapper>
-						<ResultCard
-							v-bind:key="result._id"
-							v-for="result in data"
-							:href="result.listing_url"
-						>
-							<ResultCardImage :src="result.image" />
-							<ResultCardTitle>
-								{{ result.name }}
-							</ResultCardTitle>
-							<ResultCardDescription>
-								<div className="price">{{ result.price }}</div>
-								<p className="info">
-									{{ result.room_type }} · {{ result.accommodates }} guests
-								</p>
-							</ResultCardDescription>
-						</ResultCard>
-					</ResultCardsWrapper>
-				</div>
-			</ReactiveList>
-		</ReactiveBase>
-	</div>
+  <div class="container">
+    <ReactiveBase
+      v-bind="components.settings"
+      :initial-state="store">
+      <nav class="nav">
+        <div class="title">Airbeds</div>
+        <DataSearch v-bind="components.datasearch" />
+      </nav>
+      <ReactiveList v-bind="components.result">
+        <div
+          slot="render"
+          slot-scope="{ data }">
+          <ResultCardsWrapper>
+            <ResultCard
+              v-for="result in data"
+              :key="result._id"
+              :href="result.listing_url"
+            >
+              <ResultCardImage :src="result.image" />
+              <ResultCardTitle>
+                {{ result.name }}
+              </ResultCardTitle>
+              <ResultCardDescription>
+                <div className="price">{{ result.price }}</div>
+                <p className="info">
+                  {{ result.room_type }} · {{ result.accommodates }} guests
+                </p>
+              </ResultCardDescription>
+            </ResultCard>
+          </ResultCardsWrapper>
+        </div>
+      </ReactiveList>
+    </ReactiveBase>
+  </div>
 </template>
 
 <script>
-import './styles/airbnb.css';
 import { initReactivesearch, DataSearch, ReactiveList } from '@appbaseio/reactivesearch-vue';
+import './styles/airbnb.css';
+
 
 const components = {
 	settings: {
 		app: 'airbeds-test-app',
-		url: 'https://1e47b838a035:767b5a1a-03cb-4c5f-a536-4f399c24134b@arc-cluster-appbase-tryout-k8dsnj.searchbase.io',
+		url: 'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@arc-cluster-appbase-demo-6pjy6z.searchbase.io',
 		enableAppbase: true,
 		theme: {
 			colors: {
@@ -48,7 +53,7 @@ const components = {
 	},
 	datasearch: {
 		componentId: 'SearchSensor',
-		dataField: 'name',
+		dataField: ['name', 'name.search'],
 		autosuggest: false,
 		placeholder: 'Search by house names',
 		iconPosition: 'left',
@@ -76,13 +81,13 @@ const components = {
 };
 
 export default {
-	name: 'app',
-	data: function() {
+	name: 'App',
+	data() {
 		return {
 			components,
 		};
 	},
-	async asyncData({ params, query }) {
+	async asyncData({ query }) {
 		try {
 			const store = await initReactivesearch(
 				[

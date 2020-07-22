@@ -222,15 +222,18 @@ class SingleDropdownList extends Component {
 	};
 
 	updateDefaultQuery = (queryOptions) => {
+		const { currentValue } = this.state;
+		// Update default query for RS API
+		updateDefaultQuery(this.props.componentId, this.props, currentValue);
 		updateInternalQuery(
 			this.internalComponent,
 			queryOptions,
-			this.state.currentValue,
+			currentValue,
 			this.props,
 			SingleDropdownList.generateQueryOptions(
 				this.props,
 				this.state.prevAfter,
-				this.state.currentValue,
+				currentValue,
 			),
 		);
 	};
@@ -442,6 +445,9 @@ SingleDropdownList.defaultProps = {
 	loadMoreLabel: 'Load More',
 };
 
+// Add componentType for SSR
+SingleDropdownList.componentType = componentTypes.singleDropdownList;
+
 const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	options:
@@ -460,9 +466,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
-
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
-
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 

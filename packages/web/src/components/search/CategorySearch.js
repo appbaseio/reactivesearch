@@ -297,7 +297,12 @@ class CategorySearch extends Component {
 			} else {
 				fields = [props.dataField];
 			}
-			if (props.searchOperators) {
+
+			if (props.queryString) {
+				finalQuery = {
+					query_string: CategorySearch.shouldQuery(value, fields, props),
+				};
+			} else if (props.searchOperators) {
 				finalQuery = {
 					simple_query_string: CategorySearch.shouldQuery(value, fields, props),
 				};
@@ -348,7 +353,7 @@ class CategorySearch extends Component {
 				}`,
 		);
 
-		if (props.searchOperators) {
+		if (props.searchOperators || props.queryString) {
 			return {
 				query: value,
 				fields,
@@ -1126,6 +1131,7 @@ CategorySearch.propTypes = {
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
 	enableQuerySuggestions: types.bool,
+	queryString: types.bool,
 	beforeValueChange: types.func,
 	categoryField: types.string,
 	className: types.string,
@@ -1209,6 +1215,9 @@ CategorySearch.defaultProps = {
 	showDistinctSuggestions: true,
 	size: 10,
 };
+
+// Add componentType for SSR
+CategorySearch.componentType = componentTypes.categorySearch;
 
 const mapStateToProps = (state, props) => ({
 	categories:

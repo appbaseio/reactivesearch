@@ -165,6 +165,11 @@ class SingleList extends Component {
 				},
 			};
 		} else if (value) {
+			query = {
+				term: {
+					[props.dataField]: value,
+				},
+			};
 			if (props.showMissing && props.missingLabel === value) {
 				query = {
 					bool: {
@@ -174,11 +179,6 @@ class SingleList extends Component {
 					},
 				};
 			}
-			query = {
-				term: {
-					[props.dataField]: value,
-				},
-			};
 		}
 		if (query && props.nestedField) {
 			return {
@@ -248,15 +248,17 @@ class SingleList extends Component {
 	};
 
 	updateDefaultQuery = (queryOptions) => {
+		const { currentValue } = this.state;
+		updateDefaultQuery(this.props.componentId, this.props, currentValue);
 		updateInternalQuery(
 			this.internalComponent,
 			queryOptions,
-			this.state.currentValue,
+			currentValue,
 			this.props,
 			SingleList.generateQueryOptions(
 				this.props,
 				this.state.prevAfter,
-				this.state.currentValue,
+				currentValue,
 			),
 		);
 	};
@@ -573,6 +575,9 @@ SingleList.defaultProps = {
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
 };
+
+// Add componentType for SSR
+SingleList.componentType = componentTypes.singleList;
 
 const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],

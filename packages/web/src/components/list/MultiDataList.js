@@ -249,6 +249,8 @@ class MultiDataList extends Component {
 	updateDefaultQuery = (queryOptions) => {
 		const valueArray
 			= typeof this.state.currentValue === 'object' ? Object.keys(this.state.currentValue) : [];
+		// Update default query for RS API
+		updateDefaultQuery(this.props.componentId, this.props, valueArray);
 		updateInternalQuery(
 			this.internalComponent,
 			queryOptions,
@@ -275,7 +277,7 @@ class MultiDataList extends Component {
 		let query = MultiDataList.defaultQuery(queryValue, props);
 		if (customQuery) {
 			({ query } = customQuery(queryValue, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery((queryValue, props)));
+			customQueryOptions = getOptionsFromQuery(customQuery(queryValue, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions);
@@ -578,6 +580,9 @@ MultiDataList.defaultProps = {
 	showCount: false,
 };
 
+// Add componentType for SSR
+MultiDataList.componentType = componentTypes.multiDataList;
+
 const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	selectedValue:
@@ -594,9 +599,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
-
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 

@@ -10,36 +10,17 @@ import {
 	hasCustomRenderer,
 	isEvent,
 	isFunction,
-	getValidPropsKeys,
 	updateCustomQuery,
 	updateDefaultQuery,
 	isQueryIdentical,
 } from '../../utils/index';
+import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import types from '../../utils/vueTypes';
 import { UL, Radio } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
 
-const {
-	addComponent,
-	removeComponent,
-	watchComponent,
-	updateQuery,
-	setQueryOptions,
-	setQueryListener,
-	updateComponentProps,
-	setComponentProps,
-	setCustomQuery,
-	setDefaultQuery,
-} = Actions;
-const {
-	getQueryOptions,
-	pushToAndClause,
-	checkValueChange,
-	getClassName,
-	getOptionsFromQuery,
-	isEqual,
-	checkSomePropChange,
-} = helper;
+const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
+const { getQueryOptions, checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
 
 const SingleList = {
 	name: 'SingleList',
@@ -86,36 +67,11 @@ const SingleList = {
 		return this.__state;
 	},
 	created() {
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
-			this.$emit('error', e);
-		});
-		// Update props in store
-		this.setComponentProps(this.componentId, this.$props, componentTypes.singleList);
-		this.setComponentProps(this.internalComponent, this.$props, componentTypes.singleList);
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 	},
-	mounted() {
-		this.setReact(this.$props);
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(this.componentId, this.$props, componentTypes.singleList);
-				this.updateComponentProps(
-					this.internalComponent,
-					this.$props,
-					componentTypes.singleList,
-				);
-			});
-		});
-	},
 	beforeMount() {
-		this.addComponent(this.internalComponent);
-		this.addComponent(this.$props.componentId);
 		this.updateQueryHandlerOptions(this.$props);
 
 		if (this.selectedValue) {
@@ -126,15 +82,7 @@ const SingleList = {
 			this.setValue(this.$props.defaultValue);
 		}
 	},
-
-	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
-		this.removeComponent(this.internalComponent);
-	},
 	watch: {
-		react() {
-			this.setReact(this.$props);
-		},
 		options(newVal) {
 			this.modifiedOptions = newVal[this.$props.dataField]
 				? newVal[this.$props.dataField].buckets
@@ -309,19 +257,6 @@ const SingleList = {
 	},
 
 	methods: {
-		setReact(props) {
-			const { react } = props;
-
-			if (react) {
-				const newReact = pushToAndClause(react, this.internalComponent);
-				this.watchComponent(props.componentId, newReact);
-			} else {
-				this.watchComponent(props.componentId, {
-					and: this.internalComponent,
-				});
-			}
-		},
-
 		setValue(nextValue, props = this.$props) {
 			let value = nextValue;
 
@@ -478,6 +413,11 @@ SingleList.defaultQuery = (value, props) => {
 		};
 	}
 	if (value) {
+		query = {
+			term: {
+				[props.dataField]: value,
+			},
+		};
 		if (props.showMissing && props.missingLabel === value) {
 			query = {
 				bool: {
@@ -487,11 +427,6 @@ SingleList.defaultQuery = (value, props) => {
 				},
 			};
 		}
-		query = {
-			term: {
-				[props.dataField]: value,
-			},
-		};
 	}
 
 	if (query && props.nestedField) {
@@ -520,24 +455,26 @@ const mapStateToProps = (state, props) => ({
 		|| '',
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
+	componentProps: state.props[props.componentId],
 });
 
 const mapDispatchtoProps = {
-	addComponent,
-	removeComponent,
 	setQueryOptions,
-	setQueryListener,
 	updateQuery,
-	watchComponent,
-	updateComponentProps,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
 };
 
-const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(SingleList);
+const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleList), {
+	componentType: componentTypes.singleList,
+	internalComponent: true,
+});
 
 SingleList.install = function(Vue) {
 	Vue.component(SingleList.name, ListConnected);
 };
+
+// Add componentType for SSR
+SingleList.componentType = componentTypes.singleList;
+
 export default SingleList;

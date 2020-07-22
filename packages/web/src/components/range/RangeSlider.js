@@ -417,6 +417,9 @@ RangeSlider.defaultProps = {
 	includeNullValues: false,
 };
 
+// Add componentType for SSR
+RangeSlider.componentType = componentTypes.rangeSlider;
+
 const mapStateToProps = (state, props) => {
 	const aggregation
 		= props.nestedField && state.aggregations[props.componentId]

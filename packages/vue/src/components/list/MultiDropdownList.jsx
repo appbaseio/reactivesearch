@@ -2,9 +2,10 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import types from '../../utils/vueTypes';
-import { getAggsQuery, getCompositeAggsQuery } from './utils';
+import { getAggsQuery, getCompositeAggsQuery } from './utils'
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
+import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
 import {
@@ -13,33 +14,24 @@ import {
 	getComponent,
 	isFunction,
 	parseValueArray,
-	getValidPropsKeys,
 	updateCustomQuery,
 	updateDefaultQuery,
 	isQueryIdentical,
 } from '../../utils/index';
 
 const {
-	addComponent,
-	removeComponent,
-	watchComponent,
 	updateQuery,
 	setQueryOptions,
-	setQueryListener,
-	updateComponentProps,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
 } = Actions;
 const {
 	isEqual,
 	getQueryOptions,
-	pushToAndClause,
 	checkValueChange,
 	checkPropChange,
 	getClassName,
 	getOptionsFromQuery,
-	checkSomePropChange,
 } = helper;
 const MultiDropdownList = {
 	name: 'MultiDropdownList',
@@ -89,44 +81,11 @@ const MultiDropdownList = {
 		nestedField: types.string,
 	},
 	created() {
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, e => {
-			this.$emit('error', e);
-		});
-		// Update props in store
-		this.setComponentProps(this.componentId, this.$props, componentTypes.multiDropdownList);
-		this.setComponentProps(
-			this.internalComponent,
-			this.$props,
-			componentTypes.multiDropdownList,
-		);
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 	},
-	mounted() {
-		this.setReact(this.$props);
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(
-					this.componentId,
-					this.$props,
-					componentTypes.multiDropdownList,
-				);
-				this.updateComponentProps(
-					this.internalComponent,
-					this.$props,
-					componentTypes.multiDropdownList,
-				);
-			});
-		});
-	},
 	beforeMount() {
-		this.addComponent(this.internalComponent);
-		this.addComponent(this.$props.componentId);
 		this.updateQueryOptions(this.$props);
 
 		if (this.selectedValue) {
@@ -137,16 +96,7 @@ const MultiDropdownList = {
 			this.setValue(this.$props.defaultValue, true);
 		}
 	},
-
-	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
-		this.removeComponent(this.internalComponent);
-	},
-
 	watch: {
-		react() {
-			this.setReact(this.$props);
-		},
 		selectedValue(newVal) {
 			let selectedValue = Object.keys(this.$data.currentValue);
 			if (this.$props.selectAllLabel) {
@@ -188,6 +138,9 @@ const MultiDropdownList = {
 			});
 		},
 		size() {
+			this.updateQueryOptions(this.$props);
+		},
+		sortBy() {
 			this.updateQueryOptions(this.$props);
 		},
 		dataField() {
@@ -283,18 +236,6 @@ const MultiDropdownList = {
 	},
 
 	methods: {
-		setReact(props) {
-			const { react } = props;
-
-			if (react) {
-				const newReact = pushToAndClause(react, this.internalComponent);
-				this.watchComponent(props.componentId, newReact);
-			} else {
-				this.watchComponent(props.componentId, {
-					and: this.internalComponent,
-				});
-			}
-		},
 
 		handleChange(item) {
 			const { value } = this.$props;
@@ -567,24 +508,27 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
+	componentProps: state.props[props.componentId],
 });
 
 const mapDispatchtoProps = {
-	addComponent,
-	removeComponent,
 	setQueryOptions,
-	setQueryListener,
 	updateQuery,
-	watchComponent,
-	updateComponentProps,
-	setComponentProps,
 	setCustomQuery,
 	setDefaultQuery,
 };
 
-const ListConnected = connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList);
+
+const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList), {
+	componentType: componentTypes.multiDropdownList,
+	internalComponent: true,
+});
 
 MultiDropdownList.install = function(Vue) {
 	Vue.component(MultiDropdownList.name, ListConnected);
 };
+
+// Add componentType for SSR
+MultiDropdownList.componentType = componentTypes.multiDropdownList;
+
 export default MultiDropdownList;

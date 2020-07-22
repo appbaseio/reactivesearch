@@ -2,7 +2,11 @@ import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
 import { helper } from '@appbaseio/reactivecore';
 import connectToStore from './connector';
 
-const { updateDefaultQuery: defaultQueryUtil, updateCustomQuery: customQueryUtil, isEqual } = helper;
+const {
+	updateDefaultQuery: defaultQueryUtil,
+	updateCustomQuery: customQueryUtil,
+	isEqual,
+} = helper;
 
 // TODO
 // import { storeKey } from '@appbaseio/reactivecore';
@@ -69,12 +73,12 @@ export const isEvent = candidate =>
 	!!(candidate && candidate.stopPropagation && candidate.preventDefault);
 
 export const updateDefaultQuery = (componentId, setDefaultQuery, props, value) => {
-	defaultQueryUtil(componentId, {...props, setDefaultQuery}, value)
-}
+	defaultQueryUtil(componentId, { ...props, setDefaultQuery }, value);
+};
 
 export const updateCustomQuery = (componentId, setCustomQuery, props, value) => {
-	customQueryUtil(componentId, {...props, setCustomQuery}, value)
-}
+	customQueryUtil(componentId, { ...props, setCustomQuery }, value);
+};
 
 /**
  * @param {Function} newVal
@@ -85,11 +89,8 @@ export const updateCustomQuery = (componentId, setCustomQuery, props, value) => 
 export const isQueryIdentical = (newVal, oldVal, value, props) => {
 	if (typeof newVal !== 'function' || typeof oldVal !== 'function') return true;
 	// to not call original defaultQuery and customQuery, as here we are only comparing
-	const prevQuery = () => oldVal;
-	const nextQuery = () => newVal;
-	return isEqual(nextQuery(value, props), prevQuery(value, props));
+	return isEqual(oldVal(value, props), newVal(value, props));
 };
-
 /**
  * Extracts the renderQuerySuggestions prop from props or slot and returns a valid JSX element
  * @param {Object} data
@@ -107,4 +108,18 @@ export const getQuerySuggestionsComponent = (data = {}, _ref = {}) => {
 export const hasQuerySuggestionsRenderer = (_ref = {}) => {
 	const { renderQuerySuggestions } = _ref.$scopedSlots || _ref.$props;
 	return Boolean(renderQuerySuggestions);
+};
+
+/**
+ * To get the camel case string from kebab case
+ * @returns {string}
+ */
+export const getCamelCase = (str = '') => {
+	const arr = str.split('-');
+	const capital = arr.map((item, index) =>
+		index ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase() : item,
+	);
+	// ^-- change here.
+	const capitalString = capital.join('');
+	return capitalString || '';
 };

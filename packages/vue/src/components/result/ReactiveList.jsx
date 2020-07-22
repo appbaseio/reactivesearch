@@ -3,6 +3,7 @@ import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
+import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import ResultListWrapper from './addons/ResultListWrapper.jsx';
 import ResultCardsWrapper from './addons/ResultCardsWrapper.jsx';
 import {
@@ -10,7 +11,6 @@ import {
 	isFunction,
 	hasCustomRenderer,
 	getComponent,
-	getValidPropsKeys,
 	updateDefaultQuery,
 	isQueryIdentical,
 } from '../../utils/index';
@@ -19,16 +19,11 @@ import types from '../../utils/vueTypes';
 import { resultStats, sortOptions } from '../../styles/results';
 
 const {
-	addComponent,
-	removeComponent,
 	setStreaming,
-	watchComponent,
 	setQueryOptions,
 	updateQuery,
 	loadMore,
 	setValue,
-	setQueryListener,
-	setComponentProps,
 	updateComponentProps,
 	setDefaultQuery,
 } = Actions;
@@ -36,12 +31,10 @@ const {
 const {
 	isEqual,
 	getQueryOptions,
-	pushToAndClause,
 	getClassName,
 	parseHits,
 	getOptionsFromQuery,
 	getCompositeAggsQuery,
-	checkSomePropChange,
 	getResultStats,
 } = helper;
 
@@ -53,15 +46,15 @@ const ReactiveList = {
 	},
 	data() {
 		const props = this.$props;
-		let $currentPage = 0;
+		let currentPageState = 0;
 		if (props.currentPage) {
-			$currentPage = Math.max(props.currentPage - 1, 0);
+			currentPageState = Math.max(props.currentPage - 1, 0);
 		}
 
 		this.__state = {
-			from: $currentPage * props.size,
+			from: currentPageState * props.size,
 			isLoading: true,
-			$currentPage,
+			currentPageState,
 		};
 		return this.__state;
 	},
@@ -73,20 +66,24 @@ const ReactiveList = {
 			);
 		}
 		if (this.defaultPage >= 0) {
-			this.$currentPage = this.defaultPage;
-			this.from = this.$currentPage * this.$props.size;
+			this.currentPageState = this.defaultPage;
+			this.from = this.currentPageState * this.$props.size;
 		}
 		this.isLoading = true;
 		this.internalComponent = `${this.$props.componentId}__internal`;
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-		};
-		const onError = e => {
-			this.$emit('error', e);
-		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, onError);
-		this.setComponentProps(this.componentId, this.$props, componentTypes.reactiveList);
-		this.setComponentProps(this.internalComponent, this.$props, componentTypes.reactiveList);
+		this.sortOptionIndex = this.defaultSortOption
+			? this.sortOptions.findIndex(s => s.label === this.defaultSortOption)
+			: 0;
+		this.updateComponentProps(
+			this.componentId,
+			{ from: this.from },
+			componentTypes.reactiveList,
+		);
+		this.updateComponentProps(
+			this.internalComponent,
+			{ from: this.from },
+			componentTypes.reactiveList,
+		);
 	},
 	props: {
 		currentPage: VueTypes.number.def(0),
@@ -97,6 +94,7 @@ const ReactiveList = {
 		dataField: types.stringRequired,
 		aggregationField: types.string,
 		defaultQuery: types.func,
+		defaultSortOption: types.string,
 		excludeFields: types.excludeFields.def([]),
 		innerClass: types.style,
 		listClass: VueTypes.string.def(''),
@@ -110,6 +108,7 @@ const ReactiveList = {
 		pagination: VueTypes.bool.def(false),
 		paginationAt: types.paginationAt.def('bottom'),
 		react: types.react,
+		scrollOnChange: VueTypes.bool.def(true),
 		showResultStats: VueTypes.bool.def(true),
 		showEndPage: VueTypes.bool.def(false),
 		size: VueTypes.number.def(10),
@@ -132,11 +131,10 @@ const ReactiveList = {
 			return this.$listeners && this.$listeners.resultStats;
 		},
 		stats() {
-			const { currentPage } = this;
 			const { filteredResults } = this.getAllData();
 			return {
 				...getResultStats(this),
-				currentPage,
+				currentPage: this.currentPageState,
 				displayedResults: filteredResults.length,
 			};
 		},
@@ -204,18 +202,13 @@ const ReactiveList = {
 				); // reset page because of query change
 				// Update calculated default query in store
 				updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props);
-				this.$currentPage = 0;
+				this.currentPageState = 0;
 				this.from = 0;
 			}
 		},
 		stream(newVal, oldVal) {
 			if (oldVal !== newVal) {
 				this.setStreaming(this.$props.componentId, newVal);
-			}
-		},
-		react(newVal, oldVal) {
-			if (!isEqual(newVal, oldVal)) {
-				this.setReact(this.$props);
 			}
 		},
 		streamHits() {
@@ -242,8 +235,8 @@ const ReactiveList = {
 				// called when page is changed
 				if (this.isLoading && (oldVal || newVal)) {
 					if (this.hasPageChangeListener) {
-						this.$emit('pageChange', this.$currentPage + 1, this.totalPages);
-					} else {
+						this.$emit('pageChange', this.currentPageState + 1, this.totalPages);
+					} else if (this.scrollOnChange) {
 						window.scrollTo(0, 0);
 					}
 					this.isLoading = false;
@@ -254,7 +247,9 @@ const ReactiveList = {
 
 					if (newVal.length < oldVal.length) {
 						// query has changed
-						window.scrollTo(0, 0);
+						if (this.scrollOnChange) {
+							window.scrollTo(0, 0);
+						}
 						this.from = 0;
 					}
 				}
@@ -269,9 +264,9 @@ const ReactiveList = {
 		},
 		total(newVal, oldVal) {
 			if (this.shouldRenderPagination && newVal !== oldVal) {
-				let currentPage = this.$data.total ? 0 : this.$currentPage;
+				let currentPage = this.$data.total ? 0 : this.currentPageState;
 				if (this.defaultPage >= 0) currentPage = this.defaultPage;
-				this.$currentPage = currentPage;
+				this.currentPageState = currentPage;
 				this.$emit('pageChange', currentPage + 1, this.totalPages);
 			}
 		},
@@ -290,14 +285,12 @@ const ReactiveList = {
 			} // handle window url history change (on native back and forth interactions)
 		},
 		defaultPage(newVal) {
-			if (this.$currentPage !== newVal && this.defaultPage !== newVal) {
+			if (this.currentPageState !== newVal && this.defaultPage !== newVal) {
 				this.setPage(newVal >= 0 ? newVal : 0);
 			}
 		},
 	},
 	mounted() {
-		this.addComponent(this.internalComponent);
-		this.addComponent(this.$props.componentId);
 		if (this.$props.stream) {
 			this.setStreaming(this.$props.componentId, true);
 		}
@@ -318,7 +311,7 @@ const ReactiveList = {
 			// To handle sort options for RS API
 			this.updateComponentProps(
 				this.componentId,
-				{ ...this.$props, dataField: sortField, sortBy },
+				{ dataField: sortField, sortBy },
 				componentTypes.reactiveList,
 			);
 		} else if (this.$props.sortBy) {
@@ -345,9 +338,6 @@ const ReactiveList = {
 		}
 		// execute is set to false at the time of mount
 		const { sort, ...query } = this.$defaultQuery || {};
-		// to avoid firing (multiple) partial queries.
-		// Hence we are building the query in parts here
-		// and only executing it with setReact() at core
 
 		const execute = false;
 		this.setQueryOptions(
@@ -374,32 +364,12 @@ const ReactiveList = {
 			);
 		} // query will be executed here
 
-		this.setReact(this.$props);
-
 		if (!this.shouldRenderPagination) {
 			window.addEventListener('scroll', this.scrollHandler);
 		}
-
-		const propsKeys = getValidPropsKeys(this.$props);
-		this.$watch(propsKeys.join('.'), (newVal, oldVal) => {
-			checkSomePropChange(newVal, oldVal, propsKeys, () => {
-				this.updateComponentProps(
-					this.componentId,
-					this.$props,
-					componentTypes.reactiveList,
-				);
-				this.updateComponentProps(
-					this.internalComponent,
-					this.$props,
-					componentTypes.reactiveList,
-				);
-			});
-		});
 	},
 
 	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
-		this.removeComponent(this.internalComponent);
 		window.removeEventListener('scroll', this.scrollHandler);
 	},
 
@@ -438,7 +408,7 @@ const ReactiveList = {
 						<Pagination
 							pages={this.$props.pages}
 							totalPages={this.totalPages}
-							currentPage={this.$currentPage}
+							currentPage={this.currentPageState}
 							setPage={this.setPage}
 							innerClass={this.$props.innerClass}
 						/>
@@ -456,7 +426,9 @@ const ReactiveList = {
 							renderItem({
 								item,
 								triggerClickAnalytics: () =>
-									this.triggerClickAnalytics(this.$currentPage * size + index),
+									this.triggerClickAnalytics(
+										this.currentPageState * size + index,
+									),
 							}),
 						)}
 					</div>
@@ -479,7 +451,7 @@ const ReactiveList = {
 						<Pagination
 							pages={this.$props.pages}
 							totalPages={Math.ceil(this.$data.total / this.$props.size)}
-							currentPage={this.$currentPage}
+							currentPage={this.currentPageState}
 							setPage={this.setPage}
 							showEndPage={this.$props.showEndPage}
 							innerClass={this.$props.innerClass}
@@ -546,18 +518,6 @@ const ReactiveList = {
 			}
 			return queryOptions;
 		},
-		setReact(props) {
-			const { react } = props;
-
-			if (react) {
-				const newReact = pushToAndClause(react, this.internalComponent);
-				this.watchComponent(props.componentId, newReact);
-			} else {
-				this.watchComponent(props.componentId, {
-					and: this.internalComponent,
-				});
-			}
-		},
 
 		scrollHandler() {
 			if (
@@ -590,14 +550,14 @@ const ReactiveList = {
 		},
 		setPage(page) {
 			// pageClick will be called every time a pagination button is clicked
-			if (page !== this.$currentPage) {
+			if (page !== this.currentPageState) {
 				this.$emit('pageClick', page + 1);
 				const value = this.$props.size * page;
 				const options = getQueryOptions(this.$props);
 				options.from = this.$data.from;
 				this.from = value;
 				this.isLoading = true;
-				this.$currentPage = page;
+				this.currentPageState = page;
 				this.loadMoreAction(
 					this.$props.componentId,
 					{
@@ -664,14 +624,15 @@ const ReactiveList = {
 					},
 				},
 			];
+			this.sortOptionIndex = index;
 			// To handle sort options for RS API
 			this.updateComponentProps(
 				this.componentId,
-				{ ...this.$props, dataField: sortField, sortBy },
+				{ dataField: sortField, sortBy },
 				componentTypes.reactiveList,
 			);
 			this.setQueryOptions(this.$props.componentId, options, true);
-			this.$currentPage = 0;
+			this.currentPageState = 0;
 			this.from = 0;
 		},
 		triggerClickAnalytics(searchPosition) {
@@ -701,6 +662,7 @@ const ReactiveList = {
 					class={`${sortOptions} ${getClassName(this.$props.innerClass, 'sortOptions')}`}
 					name="sort-options"
 					onChange={this.handleSortChange}
+					value={this.sortOptionIndex}
 				>
 					{this.$props.sortOptions.map((sort, index) => (
 						<option key={sort.label} value={index}>
@@ -783,6 +745,7 @@ const ReactiveList = {
 				loading: isLoading,
 				loadMore: this.loadMore,
 				triggerAnalytics: this.triggerClickAnalytics,
+				setPage: this.setPage,
 				...this.getData(),
 			};
 			return getComponent(data, this);
@@ -810,18 +773,14 @@ const mapStateToProps = (state, props) => ({
 		state.aggregations[props.componentId]
 		&& state.aggregations[props.componentId][props.aggregationField]
 		&& state.aggregations[props.componentId][props.aggregationField].after_key,
+	componentProps: state.props[props.componentId],
 });
 const mapDispatchtoProps = {
-	addComponent,
 	loadMoreAction: loadMore,
-	removeComponent,
 	setPageURL: setValue,
 	setQueryOptions,
-	setQueryListener,
 	setStreaming,
 	updateQuery,
-	watchComponent,
-	setComponentProps,
 	updateComponentProps,
 	setDefaultQuery,
 };
@@ -829,22 +788,42 @@ const mapDispatchtoProps = {
 ReactiveList.generateQueryOptions = props => {
 	// simulate default (includeFields and excludeFields) props to generate consistent query
 	const options = getQueryOptions({ includeFields: ['*'], excludeFields: [], ...props });
-	options.from = props.currentPage ? (props.currentPage - 1) * (props.size || 10) : 0;
-	options.size = props.size || 10;
+	const {
+		size,
+		dataField,
+		defaultSortOption,
+		sortOptions: sortOptionsNew,
+		currentPage,
+		sortBy,
+	} = props;
+	options.from = currentPage ? (currentPage - 1) * (size || 10) : 0;
+	options.size = size || 10;
 
-	if (props.sortOptions) {
-		options.sort = [
-			{
-				[props.sortOptions[0].dataField]: {
-					order: props.sortOptions[0].sortBy,
-				},
+	const getSortOption = () => {
+		if (defaultSortOption) {
+			const sortOption = sortOptionsNew.find(option => option.label === defaultSortOption);
+			if (sortOption) {
+				return {
+					[sortOption.dataField]: {
+						order: sortOption.sortBy,
+					},
+				};
+			}
+		}
+		return {
+			[sortOptionsNew[0].dataField]: {
+				order: sortOptionsNew[0].sortBy,
 			},
-		];
-	} else if (props.sortBy) {
+		};
+	};
+
+	if (sortOptionsNew) {
+		options.sort = [getSortOption()];
+	} else if (sortBy) {
 		options.sort = [
 			{
-				[props.dataField]: {
-					order: props.sortBy,
+				[dataField]: {
+					order: sortBy,
 				},
 			},
 		];
@@ -852,11 +831,21 @@ ReactiveList.generateQueryOptions = props => {
 
 	return options;
 };
-export const RLConnected = connect(mapStateToProps, mapDispatchtoProps)(ReactiveList);
+
+export const RLConnected = ComponentWrapper(
+	connect(mapStateToProps, mapDispatchtoProps)(ReactiveList),
+	{
+		componentType: componentTypes.reactiveList,
+		internalComponent: true,
+	},
+);
 
 ReactiveList.install = function(Vue) {
 	Vue.component(ReactiveList.name, RLConnected);
 	Vue.component(ResultListWrapper.name, ResultListWrapper);
 	Vue.component(ResultCardsWrapper.name, ResultCardsWrapper);
 };
+// Add componentType for SSR
+ReactiveList.componentType = componentTypes.reactiveList;
+
 export default ReactiveList;
