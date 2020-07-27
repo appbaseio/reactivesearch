@@ -29,7 +29,7 @@ const SelectedFilters = {
 				components: this.components,
 				selectedValues: this.selectedValues,
 				clearValues: this.clearValues,
-				setValue: this.patchValue,
+				setValue: this.setValue,
 			});
 		}
 		const filtersToRender = this.renderFilters();
@@ -63,7 +63,7 @@ const SelectedFilters = {
 
 	methods: {
 		remove(component, value = null) {
-			this.patchValue(component, { value: null });
+			this.setValue(component, null);
 			this.$emit('clear', component, value);
 		},
 		clearValues() {
@@ -146,7 +146,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchtoProps = {
 	clearValuesAction: clearValues,
-	patchValue: setValue,
+	setValue,
 };
 
 const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(SelectedFilters);
