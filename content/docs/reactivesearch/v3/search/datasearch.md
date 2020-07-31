@@ -209,6 +209,10 @@ Example uses:
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
+-   **excludeFields** `String Array` [optional]
+    fields to be excluded in the suggestion's query when `autoSuggest` is true.
+-   **includeFields** `String Array` [optional]
+    fields to be included in the suggestion's query when `autoSuggest` is true.
 -   **render** `Function` [optional]
     You can render suggestions in a custom layout by using the `render` prop.
     <br/>

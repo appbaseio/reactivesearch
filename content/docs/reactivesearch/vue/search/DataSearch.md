@@ -72,6 +72,10 @@ Example uses:
 
 -   **size** `Number` [optional]
     number of suggestions to show. Defaults to `10`.
+-   **excludeFields** `String Array` [optional]
+    fields to be excluded in the suggestion's query when `autoSuggest` is true.
+-   **includeFields** `String Array` [optional]
+    fields to be included in the suggestion's query when `autoSuggest` is true.
 -   **enableQuerySuggestions** `bool` [optional]
     Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
 
