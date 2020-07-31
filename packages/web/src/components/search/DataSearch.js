@@ -53,6 +53,7 @@ import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import Mic from './addons/Mic';
 import ComponentWrapper from '../basic/ComponentWrapper';
+import { getQueryOptions } from '../../../../reactivecore/src/utils/helper';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -185,8 +186,8 @@ class DataSearch extends Component {
 
 	// returns size and aggs property
 	getBasicQueryOptions = () => {
-		const { aggregationField, size } = this.props;
-		const queryOptions = { size };
+		const { aggregationField } = this.props;
+		const queryOptions = getQueryOptions(this.props);
 		if (aggregationField) {
 			queryOptions.aggs = getCompositeAggsQuery({}, this.props, null, true).aggs;
 		}
@@ -1010,6 +1011,7 @@ DataSearch.propTypes = {
 	customData: types.title,
 	downShiftProps: types.props,
 	children: types.func,
+	excludeFields: types.excludeFields,
 	fieldWeights: types.fieldWeights,
 	filterLabel: types.string,
 	fuzziness: types.fuzziness,
@@ -1018,6 +1020,7 @@ DataSearch.propTypes = {
 	icon: types.children,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
+	includeFields: types.includeFields,
 	loader: types.title,
 	nestedField: types.string,
 	onError: types.func,
@@ -1064,7 +1067,9 @@ DataSearch.defaultProps = {
 	downShiftProps: {},
 	enableSynonyms: true,
 	enableQuerySuggestions: false,
+	excludeFields: [],
 	iconPosition: 'left',
+	includeFields: ['*'],
 	placeholder: 'Search',
 	queryFormat: 'or',
 	showFilter: true,
