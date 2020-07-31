@@ -1,6 +1,7 @@
 import { Actions, helper, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { getQueryOptions } from '@appbaseio/reactivecore/lib/utils/helper';
 import {
 	connect,
 	getComponent,
@@ -24,7 +25,6 @@ import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import Mic from './addons/Mic.jsx';
-import { getQueryOptions } from '@appbaseio/reactivecore/lib/utils/helper';
 
 const {
 	updateQuery,
@@ -68,7 +68,7 @@ const DataSearch = {
 		this.currentValue = this.selectedValue || '';
 		this.handleTextChange = debounce(value => {
 			if (this.$props.autosuggest) {
-				this.updateQueryHandler(this.internalComponent, value, this.$props);
+				this.updateDefaultQueryHandler(value, this.$props);
 			} else {
 				this.updateQueryHandler(this.$props.componentId, value, this.$props);
 			}
@@ -322,7 +322,7 @@ const DataSearch = {
 				if (isDefaultValue) {
 					if (this.$props.autosuggest) {
 						this.isOpen = false;
-						this.updateQueryHandler(this.internalComponent, value, props);
+						this.updateDefaultQueryHandler(value, this.$props);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
 
