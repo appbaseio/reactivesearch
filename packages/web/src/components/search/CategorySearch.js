@@ -53,6 +53,7 @@ import {
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import ComponentWrapper from '../basic/ComponentWrapper';
+import { getQueryOptions } from '../../../../reactivecore/src/utils/helper';
 
 const Text = withTheme(props => (
 	<span
@@ -89,9 +90,7 @@ class CategorySearch extends Component {
 		this.isPending = false;
 
 		this.internalComponent = getInternalComponentID(props.componentId);
-		this.queryOptions = {
-			size: props.size,
-		};
+		this.queryOptions = getQueryOptions(props);
 		// Set custom and default queries in store
 		updateCustomQuery(props.componentId, props, currentValue);
 		updateDefaultQuery(props.componentId, props, currentValue);
@@ -1148,6 +1147,7 @@ CategorySearch.propTypes = {
 	value: types.categorySearchValue,
 	defaultSuggestions: types.suggestions,
 	downShiftProps: types.props,
+	excludeFields: types.excludeFields,
 	fieldWeights: types.fieldWeights,
 	filterLabel: types.string,
 	fuzziness: types.fuzziness,
@@ -1155,6 +1155,7 @@ CategorySearch.propTypes = {
 	highlightField: types.stringOrArray,
 	icon: types.children,
 	iconPosition: types.iconPosition,
+	includeFields: types.includeFields,
 	innerClass: types.style,
 	loader: types.title,
 	nestedField: types.string,
@@ -1201,7 +1202,9 @@ CategorySearch.defaultProps = {
 	downShiftProps: {},
 	enableSynonyms: true,
 	enableQuerySuggestions: false,
+	excludeFields: [],
 	iconPosition: 'left',
+	includeFields: ['*'],
 	placeholder: 'Search',
 	queryFormat: 'or',
 	showClear: false,
