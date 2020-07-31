@@ -11,6 +11,7 @@ export interface DataSearchProps extends CommonProps {
 	customHighlight?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
 	defaultQuery?: (...args: any[]) => any;
+	excludeFields?: Array<string>;
 	getMicInstance?: (...args: any[]) => any;
 	renderMic?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;
@@ -31,6 +32,7 @@ export interface DataSearchProps extends CommonProps {
 	highlightField?: types.stringOrArray;
 	icon?: types.children;
 	iconPosition?: types.iconPosition;
+	includeFields?: Array<string>;
 	innerClass?: types.style;
 	nestedField?: string;
 	onBlur?: (...args: any[]) => any;

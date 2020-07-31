@@ -19,6 +19,7 @@ export interface CategorySearchProps extends CommonProps {
 	defaultQuery?: (...args: any[]) => any;
 	enableSynonyms?: boolean;
 	enableQuerySuggestions?: boolean;
+	excludeFields?: Array<string>;
 	queryString?: boolean;
 	getMicInstance?: (...args: any[]) => any;
 	renderMic?: (...args: any[]) => any;
@@ -37,6 +38,7 @@ export interface CategorySearchProps extends CommonProps {
 	highlightField?: types.stringOrArray;
 	icon?: types.children;
 	iconPosition?: types.iconPosition;
+	includeFields?: Array<string>;
 	innerClass?: types.style;
 	nestedField?: string;
 	onBlur?: (...args: any[]) => any;
