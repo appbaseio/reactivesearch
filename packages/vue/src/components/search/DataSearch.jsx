@@ -24,6 +24,7 @@ import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import Mic from './addons/Mic.jsx';
+import { getQueryOptions } from '@appbaseio/reactivecore/lib/utils/helper';
 
 const {
 	updateQuery,
@@ -123,6 +124,7 @@ const DataSearch = {
 		size: VueTypes.number.def(10),
 		debounce: VueTypes.number.def(0),
 		defaultValue: types.string,
+		excludeFields: types.excludeFields.def([]),
 		value: types.value,
 		defaultSuggestions: types.suggestions,
 		enableSynonyms: types.bool.def(true),
@@ -134,6 +136,7 @@ const DataSearch = {
 		highlightField: types.stringOrArray,
 		icon: types.children,
 		iconPosition: VueTypes.oneOf(['left', 'right']).def('left'),
+		includeFields: types.includeFields.def(['*']),
 		innerClass: types.style,
 		innerRef: types.func,
 		render: types.func,
@@ -294,8 +297,8 @@ const DataSearch = {
 		},
 		// returns size and aggs property
 		getBasicQueryOptions() {
-			const { aggregationField, size } = this.$props;
-			const queryOptions = { size };
+			const { aggregationField } = this.$props;
+			const queryOptions = getQueryOptions(this.$props);
 			if (aggregationField) {
 				queryOptions.aggs = getCompositeAggsQuery({}, this.$props, null, true).aggs;
 			}
