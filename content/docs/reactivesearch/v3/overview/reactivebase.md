@@ -38,7 +38,7 @@ This is the first component you will need to add when using `ReactiveSearch`.
 -   **url** `String` [optional]
     URL where the Elasticsearch cluster is hosted, only needed if your app uses a non-appbase.io URL.
 -   **enableAppbase** `boolean` [optional]
-    Defaults to `false`. You can set this to `true` when you're using appbase.io alongside `ElasticSearch`. It enables the following features:
+    Defaults to `false`. You can set this to `true` when you're using appbase.io alongside `Elasticsearch`. It enables the following features:
     -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/).
     -   Query generation happens on server side - protecting against security concerns around query injection.
     -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).
@@ -126,7 +126,7 @@ You can also modify the request `URL` in that way:
 The above example will change the default `_msearch` request to `_search` request.
 
 -   **graphQLUrl** `String` [optional]
-    Allows user to query from GraphqQL server instead of `ElasticSearch` REST api. [graphql-compose-elasticsearch](https://github.com/graphql-compose/graphql-compose-elasticsearch) helps in transforming `GraphQL` queries into `ElasticSearch` rest api. Here is an example of `GraphQL` server which acts as proxy for `ElasticSearch`.
+    Allows user to query from GraphqQL server instead of `Elasticsearch` REST api. [graphql-compose-elasticsearch](https://github.com/graphql-compose/graphql-compose-elasticsearch) helps in transforming `GraphQL` queries into `Elasticsearch` rest api. Here is an example of `GraphQL` server which acts as proxy for `Elasticsearch`.
     -   [GraphQL Server for books application](https://github.com/appbaseio-apps/graphql-elasticsearch-server)
 -   **tranformResponse** `Function` [optional]
     Enables transformation of search network response before rendering them. This asynchronous function will give you elasticsearch response object and componentId as params and expects an updated response in return in the similar structure of elasticsearch. You can use `componentId` to conditionally transform response for a particular reactivesearch component only.

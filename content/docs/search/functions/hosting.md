@@ -1,7 +1,7 @@
 ---
 title: 'Functions Hosting'
 meta_title: 'Appbase Functions'
-meta_description: 'How to use functions with ElasticSearch.'
+meta_description: 'How to use functions with Elasticsearch.'
 keywords:
     - concepts
     - appbase
@@ -31,7 +31,7 @@ Supports functions out of the box for [Production II, III, IV plans](https://app
 
 ## Self Hosted Appbase.io
 
-With [Self Hosted Appbase.io](https://github.com/appbaseio/arc-k8s) and [kubernetes](https://kubernetes.io/) orchestration, you can deploy functions in the same infrastructure as of your ElasticSearch. There are multiple ways to [deploy OpenFaas](https://docs.openfaas.com/deployment/kubernetes/) with kubernetes. The recommended way is using [helm charts](https://helm.sh/docs/topics/charts/).
+With [Self Hosted Appbase.io](https://github.com/appbaseio/arc-k8s) and [kubernetes](https://kubernetes.io/) orchestration, you can deploy functions in the same infrastructure as of your Elasticsearch. There are multiple ways to [deploy OpenFaas](https://docs.openfaas.com/deployment/kubernetes/) with kubernetes. The recommended way is using [helm charts](https://helm.sh/docs/topics/charts/).
 
 ### Prerequisite
 

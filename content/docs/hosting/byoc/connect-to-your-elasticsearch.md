@@ -1,16 +1,16 @@
 ---
-title: 'Securely Connect to Your ElasticSearch Cluster'
-meta_title: 'Securely connect Appbase.io BYOC with your ElasticSearch Cluster'
-meta_description: 'Securely connect Appbase.io BYOC with your ElasticSearch Cluster running on cloud providers like AWS ElasticSearch or self-hosted ElasticSearch running on Docker or Kubernetes.'
+title: 'Securely Connect to Your Elasticsearch Cluster'
+meta_title: 'Securely connect Appbase.io BYOC with your Elasticsearch Cluster'
+meta_description: 'Securely connect Appbase.io BYOC with your Elasticsearch Cluster running on cloud providers like AWS Elasticsearch or self-hosted Elasticsearch running on Docker or Kubernetes.'
 keywords:
     - clusters
     - appbaseio
     - appbase
-    - ElasticSearch
+    - Elasticsearch
 sidebar: 'docs'
 ---
 
-You can use Appbase.io to supercharge your ElasticSearch cluster that is deployed on a 3rd party service such as AWS ElasticSearch service. There are 2 major ways to securely connect to your ElasticSearch cluster when using Appbase.io [Bring Your Own Cluster (BYOC) option](/docs/hosting/byoc/).
+You can use Appbase.io to supercharge your Elasticsearch cluster that is deployed on a 3rd party service such as AWS Elasticsearch service. There are 2 major ways to securely connect to your Elasticsearch cluster when using Appbase.io [Bring Your Own Cluster (BYOC) option](/docs/hosting/byoc/).
 
 ## 1. Basic Authentication
 
@@ -18,7 +18,7 @@ You can use Appbase.io to supercharge your ElasticSearch cluster that is deploye
 
 ### Example
 
-Here is an example how you can use ElasticSearch URL with Basic Authentication, while using [BYOC](docs/hosting/BYOC/)
+Here is an example how you can use Elasticsearch URL with Basic Authentication, while using [BYOC](docs/hosting/BYOC/)
 
 **Step 1 -** Go to the **[Create Cluster Page](https://dashboard.appbase.io/clusters/new/my-cluster)**.
 
@@ -28,23 +28,23 @@ You should see the above screen.
 
 **Step 2 -** Select the pricing plan. Read more about pricing plans over [here](https://arc-site.netlify.com/pricing/).
 
-**Step 3 -** Select the region. It is recommended that you pick a region closest to where your ElasticSearch cluster is running.
+**Step 3 -** Select the region. It is recommended that you pick a region closest to where your Elasticsearch cluster is running.
 
 **Step 4 -** Enter a name for your Appbase instance.
 
-**Step 5 -** Enter the ElasticSearch URL with Basic Auth credentials added to it. Use the `Verify Connection` button to ensure that this URL is accessible.
+**Step 5 -** Enter the Elasticsearch URL with Basic Auth credentials added to it. Use the `Verify Connection` button to ensure that this URL is accessible.
 
 ![](https://i.imgur.com/bnxZMGP.png)
 
 ## 2. IP Whitelisting
 
-IP whitelisting allows you to create lists of trusted IP addresses or IP ranges from which your users can access your domains. This method is really helpful when your cluster is hosted using [AWS ElasticSearch](https://aws.amazon.com/elasticsearch-service/) which does not support Basic Authentication.
+IP whitelisting allows you to create lists of trusted IP addresses or IP ranges from which your users can access your domains. This method is really helpful when your cluster is hosted using [AWS Elasticsearch](https://aws.amazon.com/elasticsearch-service/) which does not support Basic Authentication.
 
 ### Example
 
-Here is a quick example of how you can connect your AWS ElasticSearch cluster with Appbase.io. Assuming you already have AWS ElasticSearch Cluster in place, you can follow the steps below:
+Here is a quick example of how you can connect your AWS Elasticsearch cluster with Appbase.io. Assuming you already have AWS Elasticsearch Cluster in place, you can follow the steps below:
 
-**Step 1 -** Temporarily modify Access Policy of your AWS ElasticSearch cluster to Allow open access to the domain. This is done to verify and connect to your ElasticSearch domain from Appbase.io.
+**Step 1 -** Temporarily modify Access Policy of your AWS Elasticsearch cluster to Allow open access to the domain. This is done to verify and connect to your Elasticsearch domain from Appbase.io.
 
 ![aws-policy](https://i.imgur.com/rMpevVE.png)
 
@@ -56,15 +56,15 @@ You should see the above screen.
 
 **Step 3 -** Select the pricing plan. Read more about pricing plans over [here](https://arc-site.netlify.com/pricing/).
 
-**Step 4 -** Select the region. It is recommended that you pick a region closest to where your ElasticSearch cluster is running.
+**Step 4 -** Select the region. It is recommended that you pick a region closest to where your Elasticsearch cluster is running.
 
 **Step 5 -** Enter a name for your Appbase.io cluster instance.
 
-**Step 6 -** Get the AWS ElasticSearch Cluster endpoint from AWS ElasticSearch dashboard.
+**Step 6 -** Get the AWS Elasticsearch Cluster endpoint from AWS Elasticsearch dashboard.
 
 ![aws-url](https://i.imgur.com/ncieFAJ.png)
 
-**Step 7 -** Enter the AWS ElasticSearch Cluster URL
+**Step 7 -** Enter the AWS Elasticsearch Cluster URL
 
 ![](https://i.imgur.com/j7mTsUQ.png)
 
@@ -78,17 +78,17 @@ Open Cluster Details page, by clicking on **View Details** button and copy the C
 
 ![](https://i.imgur.com/Dx1pRLG.png)
 
-**Step 9 -** Whitelist Appbase.io Cluster IP for AWS ElasticSearch instance.
+**Step 9 -** Whitelist Appbase.io Cluster IP for AWS Elasticsearch instance.
 
--   Navigate to AWS ElasticSearch cluster details page
+-   Navigate to AWS Elasticsearch cluster details page
 -   Navigate to Modify Access Policy
 -   Select Allow access to domain from specific IP(s)
 -   Paste Appbase.io Cluster IP
 
 ![](https://i.imgur.com/SS63gRQ.png)
 
-That's all! 🎉 Now your ElasticSearch Cluster URL is only accessible to the Appbase.io instance. You can use Appbase.io URL to perform various ElasticSearch operations securely.
+That's all! 🎉 Now your Elasticsearch Cluster URL is only accessible to the Appbase.io instance. You can use Appbase.io URL to perform various Elasticsearch operations securely.
 
 ![](https://i.imgur.com/rlpOIj0.png)
 
-Appbase.io provides fine-grained access control based security credentials which can now be used instead of your ElasticSearch Cluster URL for performing search requests from a web / mobile client application. You can read more about Appbase.io security controls over [here](/docs/security/credentials/).
+Appbase.io provides fine-grained access control based security credentials which can now be used instead of your Elasticsearch Cluster URL for performing search requests from a web / mobile client application. You can read more about Appbase.io security controls over [here](/docs/security/credentials/).

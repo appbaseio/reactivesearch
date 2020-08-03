@@ -1,7 +1,7 @@
 ---
 title: 'Data Model'
-meta_title: 'Data Model with ElasticSearch and appbase.io'
-meta_description: 'How to model data with ElasticSearch and appbase.io'
+meta_title: 'Data Model with Elasticsearch and appbase.io'
+meta_description: 'How to model data with Elasticsearch and appbase.io'
 keywords:
     - dataschema
     - appbase
@@ -10,26 +10,26 @@ keywords:
 sidebar: 'docs'
 ---
 
-Appbase.io offers two different ways to use ElasticSearch: [Clusters](https://appbase.io/clusters) and [Apps](https://appbase.io/apps). In this post, we will provide a primer on how to model data in ElasticSearch.
+Appbase.io offers two different ways to use Elasticsearch: [Clusters](https://appbase.io/clusters) and [Apps](https://appbase.io/apps). In this post, we will provide a primer on how to model data in Elasticsearch.
 
 ![](https://i.imgur.com/aaxqnN2.png)
 
-The appbase.io stack supercharges ElasticSearch with a streamlined development experience, provides actionable analytics to measure the business impact of search, and enterprise grade security.
+The appbase.io stack supercharges Elasticsearch with a streamlined development experience, provides actionable analytics to measure the business impact of search, and enterprise grade security.
 
-As far as data modeling is concerned, it's ElasticSearch all the way!
+As far as data modeling is concerned, it's Elasticsearch all the way!
 
 ## Cluster
 
-An [appbase.io cluster](/docs/hosting/clusters/) is equivalent to an ElasticSearch cluster. You can use appbase.io to:
-- deploy ElasticSearch and appbase.io together as a hosted service or,
-- deploy appbase.io along with [your own ElasticSearch cluster](/docs/hosting/byoc/).
+An [appbase.io cluster](/docs/hosting/clusters/) is equivalent to an Elasticsearch cluster. You can use appbase.io to:
+- deploy Elasticsearch and appbase.io together as a hosted service or,
+- deploy appbase.io along with [your own Elasticsearch cluster](/docs/hosting/byoc/).
 
-ElasticSearch is a distributed search and analytics engine built on top of Apache Lucene.
+Elasticsearch is a distributed search and analytics engine built on top of Apache Lucene.
 
 
 ## App <span style="font-weight: 200;">aka Index</span>
 
-A cluster is composed of apps (aka indexes). [An app in appbase.io](https://appbase.io/apps) is equivalent to an index in ElasticSearch.
+A cluster is composed of apps (aka indexes). [An app in appbase.io](https://appbase.io/apps) is equivalent to an index in Elasticsearch.
 
 An app (or index) is an optimized collection of documents that are related to each other.
 
@@ -50,7 +50,7 @@ A document is a collection of fields. Each field has a data type (known as a map
 }
 ```
 
-Depending on the data types, ElasticSearch uses specialized data structures for indexing each field. Apart from data types themselves, ElasticSearch being a search engine has a notion of **analysis**.
+Depending on the data types, Elasticsearch uses specialized data structures for indexing each field. Apart from data types themselves, Elasticsearch being a search engine has a notion of **analysis**.
 
 A field that contains analyzed text uses a data structure called an [**inverted index**](https://en.wikipedia.org/wiki/Inverted_index), which is designed to allow very fast full-text searches. An inverted index (unlike a forward index) creates a map of every unique word to its location within the document(s) the word occurs in as well as its frequency of occurrence across the entire index.
 
@@ -66,7 +66,7 @@ Since the notion of analysis is relevant for search engines, a user may wish to 
 
 In addition, you may also want to analyze the same field in different ways for better relevance.
 
-ElasticSearch supports creation of [multi fields](https://www.elastic.co/guide/en/elasticsearch/reference/current/multi-fields.html) for both of these scenarios.
+Elasticsearch supports creation of [multi fields](https://www.elastic.co/guide/en/elasticsearch/reference/current/multi-fields.html) for both of these scenarios.
 
 Appbase.io takes an opinionated approach to handle both search and aggregations scenarios in a universal manner.
 
@@ -83,7 +83,7 @@ When setting the use-case as `Search` within appbase.io's [Schema UI](/docs/sear
 
 ## Querying
 
-Once data is indexed, it can be queried using the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html).
+Once data is indexed, it can be queried using the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html).
 
 Here's an example of a `match` query:
 
@@ -102,8 +102,8 @@ GET /:index/_search
 
 This query will return all the documents whose field `type` contains the value "data".
 
-ElasticSearch uses an imperative Query DSL, like most search engines two. This requires users to learn the process of analysis, setting mappings and the JSON Query DSL of ElasticSearch to be able to effectively leverage ElasticSearch. Further, this typically needs to be exposed over a REST API -- allowing a client to specify Query DSL is a security risk as it allows script injections and DoS scenarios.
+Elasticsearch uses an imperative Query DSL, like most search engines two. This requires users to learn the process of analysis, setting mappings and the JSON Query DSL of Elasticsearch to be able to effectively leverage Elasticsearch. Further, this typically needs to be exposed over a REST API -- allowing a client to specify Query DSL is a security risk as it allows script injections and DoS scenarios.
 
-Appbase.io offers a declarative Query API for querying ElasticSearch to address these issues - [ReactiveSearch API](/docs/search/reactivesearch-api/). This same API is used by UI libraries such as [ReactiveSearch](https://github.com/appbaseio/reactivesearch) and [Searchbox](https://github.com/appbaseio/searchbox) - which are used by thousands of projects for building their Search UIs.
+Appbase.io offers a declarative Query API for querying Elasticsearch to address these issues - [ReactiveSearch API](/docs/search/reactivesearch-api/). This same API is used by UI libraries such as [ReactiveSearch](https://github.com/appbaseio/reactivesearch) and [Searchbox](https://github.com/appbaseio/searchbox) - which are used by thousands of projects for building their Search UIs.
 
-Whenever possible, we recommend using ReactiveSearch API over ElasticSearch's Query DSL to build search apps with predictable performance that are easier to write and safe by design.
+Whenever possible, we recommend using ReactiveSearch API over Elasticsearch's Query DSL to build search apps with predictable performance that are easier to write and safe by design.

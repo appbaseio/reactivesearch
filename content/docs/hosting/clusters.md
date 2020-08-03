@@ -1,16 +1,16 @@
 ---
 title: 'Clusters'
 meta_title: 'Clusters'
-meta_description: 'Appbase.io Clusters provide a fully managed ElasticSearch cluster in 16 global geographic regions.'
+meta_description: 'Appbase.io Clusters provide a fully managed Elasticsearch cluster in 16 global geographic regions.'
 keywords:
     - clusters
     - appbaseio
     - appbase
-    - ElasticSearch
+    - Elasticsearch
 sidebar: 'docs'
 ---
 
-You can run dedicated ElasticSearch clusters to meet your business needs using [Appbase.io](https://appbase.io/clusters/) clusters. Clusters offer fully managed ElasticSearch hosting that's powered via Kubernetes and available in over 16+ global geographic regions. You can visualize your ElasticSearch data with either Kibana or Grafana and choose from any of the plugins available as part of the ElasticSearch ecosystem. You also get the following Appbase.io features out of the box:
+You can run dedicated Elasticsearch clusters to meet your business needs using [Appbase.io](https://appbase.io/clusters/) clusters. Clusters offer fully managed Elasticsearch hosting that's powered via Kubernetes and available in over 16+ global geographic regions. You can visualize your Elasticsearch data with either Kibana or Grafana and choose from any of the plugins available as part of the Elasticsearch ecosystem. You also get the following Appbase.io features out of the box:
   - [Realtime Search](https://appbase.io/usecases/realtime-search/),
   - [Data Browser](/docs/data/browser/),
   - [Search Relevancy](/docs/search/relevancy/),
@@ -29,19 +29,15 @@ Following are the steps that you can follow, to create a new cluster:
 
 -   Go to [cluster pages](https://dashboard.appbase.io/clusters) and click [Create New Cluster](https://dashboard.appbase.io/clusters/new). Enter the following details for cluster creation:
 
-    -   Select Cluster Pricing Plans. You can get more details about Pricing Plans [here](https://appbase.io/clusters#pricing).
+    -   Select a plan. You can check out the pricing plan details over [here](https://appbase.io/pricing).
 
     -   Input the desired name for cluster.
 
-    -   Select ElasticSearch flavour, i.e. [Open Source ElasticSearch Distribution](https://github.com/elastic/elasticsearch) or [Open Distro for ElasticSearch](https://opendistro.github.io/for-elasticsearch/).
+    -   Select Elasticsearch flavour, i.e. [Open Source Elasticsearch Distribution](https://github.com/elastic/elasticsearch) or [Open Distro for Elasticsearch](https://opendistro.github.io/for-elasticsearch/).
 
-    -   Select addons to be deployed. Example Kibana/Grafana, Appbase.io's GUI dashboard, ElasticSearch HQ for browsing data + analytics + security features.
+    -   Select addons to be deployed. Example Kibana/Grafana, Appbase.io's GUI dashboard, Elasticsearch HQ for browsing data + analytics + security features.
 
-    -   Select the plugins to be installed that are available as part of ElasticSearch ecosystem
-        <br/>
-        <div style="border: 1px solid #dfdfdf; border-radius: 5px;overflow:hidden"><img src="https://www.dropbox.com/s/08cb5r4qcnj35x3/cluster_original.gif?raw=1" alt="cluster creation gif" style="width:100%;" /></div>
-
-> Note - You can also install any other custom plugins after the cluster is created. For more details on how to update plugins via ElasticSearch configurations you can check [here](#accessing-elasticsearch-logs-metrics-and-advanced-editing)
+> Note - You can also install any other custom plugins after the cluster is created. For more details on how to update plugins via Elasticsearch configurations you can check [here](#accessing-elasticsearch-logs-metrics-and-advanced-editing)
 
 ## Tracking Deployment Status
 
@@ -49,13 +45,13 @@ Once the cluster creation starts, it takes around 5-10 minutes for a cluster to 
 
 <div style="border: 1px solid #dfdfdf; border-radius: 5px;overflow:hidden;margin-top:10px;"><img src="https://www.dropbox.com/s/hm0lqxllzwe50kk/Screenshot%202019-08-08%2018.37.08.png?raw=1" alt="cluster creation gif" style="width:100%;" /></div>
 
-Once the cluster is created and ElasticSearch is deployed successfully, you will be able to **View Details** of the cluster.
+Once the cluster is created and Elasticsearch is deployed successfully, you will be able to **View Details** of the cluster.
 
 There you might come across messages which specifies that other addon deployments are still in progress. For accessing all the features, you can wait till all the _deployment in progress_ messages disappear.
 
 <div style="border: 1px solid #dfdfdf; border-radius: 5px;overflow:hidden;margin-top:10px;"><img src="https://www.dropbox.com/s/mw5sg478mtwwg9q/Screenshot%202019-08-08%2018.44.26.png?raw=1" alt="cluster creation gif" style="width:100%;" /></div>
 
-## Managing A Deployed ElasticSearch Cluster
+## Managing A Deployed Elasticsearch Cluster
 
 Once the cluster is deployed, you can maintain cluster by
 
@@ -86,7 +82,7 @@ Using this Dashboard you can create/delete indexes or you can explore and manage
 
 ### Scaling Cluster
 
-At any given point you can scale the cluster by adding/removing ElasticSearch nodes.
+At any given point you can scale the cluster by adding/removing Elasticsearch nodes.
 
 <div style="border: 1px solid #dfdfdf; border-radius: 5px;overflow:hidden;margin-top:10px;"><img src="https://www.dropbox.com/s/bm2ohlvwlu7ez6y/Screenshot%202019-08-08%2018.48.58.png?raw=1" alt="cluster creation gif" style="width:100%;" /></div>
 
@@ -96,9 +92,9 @@ With the help of Sharing feature you can share cluster access with your team and
 
  <div style="border: 1px solid #dfdfdf; border-radius: 5px;overflow:hidden;margin-top:10px;"><img src="https://i.imgur.com/ce4q4g6.png" /></div>
 
-### Accessing ElasticSearch Logs, Metrics and Advanced Editing
+### Accessing Elasticsearch Logs, Metrics and Advanced Editing
 
-As we deploy ElasticSearch using a Kubernetes orchestration, it allows user to access Kubernetes dashboard and monitor various resource deployed on the cluster.
+As we deploy Elasticsearch using a Kubernetes orchestration, it allows user to access Kubernetes dashboard and monitor various resource deployed on the cluster.
 
 You can open kubernetes dashboard by click on the link available in Dashboard section of your cluster details page.
 
@@ -114,24 +110,24 @@ For information on how kubernetes system works and how resources are managed you
 
 <div style="border: 1px solid #dfdfdf; border-radius: 5px;overflow:hidden;margin-top:10px;"><img src="https://www.dropbox.com/s/g77abqqtxf7a7s7/Screenshot%202019-08-08%2018.44.43.png?raw=1" alt="cluster creation gif" style="width:100%;" /></div>
 
-**Accessing ElasticSearch logs**
+**Accessing Elasticsearch logs**
 
-ElasticSearch logs can be really helpful from debugging point of view. They can also help us know the deployment status of various plugins and various operations performed on the clusters.
+Elasticsearch logs can be really helpful from debugging point of view. They can also help us know the deployment status of various plugins and various operations performed on the clusters.
 
 You can follow this steps to access the logs
 
 -   Open kubernetes dashboard
 -   Navigate to **Workloads** > **Stateful Set**
 -   Select **elasticsearch** from the Stateful Sets
--   Open ElasticSearch Logs by clicking on **Logs** option in top right menu
+-   Open Elasticsearch Logs by clicking on **Logs** option in top right menu
 
 <div style="border: 1px solid #dfdfdf; border-radius: 5px;overflow:hidden;margin-top:10px;"><img src="https://i.imgur.com/It1aHo0.gif " alt="cluster creation gif" style="width:100%;" /></div>
 
 **Advanced Editing**
 
-You have no restrictions with respect to editing any part of the ElasticSearch configuration. For example, you can install a custom plugin or updated your ElasticSearch cluster's version. You can also deploy your own docker image to run alongside ElasticSearch.
+You have no restrictions with respect to editing any part of the Elasticsearch configuration. For example, you can install a custom plugin or updated your Elasticsearch cluster's version. You can also deploy your own docker image to run alongside Elasticsearch.
 
-For example in order to limit access of cluster on limited sites you can edit _[CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)_ configuration for ElasticSearch cluster.
+For example in order to limit access of cluster on limited sites you can edit _[CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)_ configuration for Elasticsearch cluster.
 
 -   Open kubernetes dashboard
 -   Navigate to **Workloads** > **Stateful Sets**
@@ -141,4 +137,4 @@ For example in order to limit access of cluster on limited sites you can edit _[
 
     <div style="border: 1px solid #dfdfdf; border-radius: 5px;overflow:hidden;margin-top:10px;"><img src="https://i.imgur.com/A3IIPeL.gif" alt="cluster creation gif" style="width:100%;" /></div>
 
-> Note: Editing Stateful Sets will automatically restart pods and will apply configuration to all the ElasticSearch pods in the cluster.
+> Note: Editing Stateful Sets will automatically restart pods and will apply configuration to all the Elasticsearch pods in the cluster.

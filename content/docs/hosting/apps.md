@@ -6,13 +6,13 @@ keywords:
     - clusters
     - appbaseio
     - appbase
-    - ElasticSearch
+    - Elasticsearch
 sidebar: 'docs'
 ---
 
-An **App** in appbase.io is equivalent to an index in ElasticSearch. Appbase.io Apps allow you to get the best of Elasticsearch without the cost of running a full cluster. You can read more about them over [here](https://appbase.io/apps/).
+An **App** in appbase.io is equivalent to an index in Elasticsearch. Appbase.io Apps allow you to get the best of Elasticsearch without the cost of running a full cluster. You can read more about them over [here](https://appbase.io/apps/).
 
-In addition to being powered by ElasticSearch, apps come with the following features out of the box:
+In addition to being powered by Elasticsearch, apps come with the following features out of the box:
 
 -   A dashboard UI for importing data,
 -   Build and test search relevancy with zero lines of code,
@@ -42,7 +42,7 @@ Out of the box features available for apps:
 
 #### Development Experience 🕵️‍♂️
 
--   **[Import Data](/docs/data/import/)** allows importing data into ElasticSearch from sources such as `JSON`, `CSV`, `SQL` or another ElasticSearch index. [The CLI tool](https://github.com/appbaseio/abc) supports more sources such as `MongoDB`, `Firestore`, `Kafka`, `Redis` to name a few.
+-   **[Import Data](/docs/data/import/)** allows importing data into Elasticsearch from sources such as `JSON`, `CSV`, `SQL` or another Elasticsearch index. [The CLI tool](https://github.com/appbaseio/abc) supports more sources such as `MongoDB`, `Firestore`, `Kafka`, `Redis` to name a few.
 -   **[Search Relevancy](/docs/search/relevancy/)** allows configuring and testing search relevancy settings through a set of GUIs.
 -   **[Query Rules](/docs/search/rules/)** allows setting "If This, Then That" style rules to extend the search engine.
 -   **[ReactiveSearch](/docs/reactivesearch/v3/overview/quickstart/)** allows creating search UIs for React, Vue, Vanilla JS, React Native using industry-leading search UI components.
@@ -66,7 +66,7 @@ Out of the box features available for apps:
 
 #### Enterprise Grade Security 🔐
 
--   [**API Credentials**](/docs/security/credentials/) provides Basic Authentication based security keys with fine-grained security rules to control access. It also allows you to set IP restriction and API access limit for your ElasticSearch data.
+-   [**API Credentials**](/docs/security/credentials/) provides Basic Authentication based security keys with fine-grained security rules to control access. It also allows you to set IP restriction and API access limit for your Elasticsearch data.
 -   [**Role Based Access Control**](/docs/security/role/) allows securing search apps with Javascript Web Tokens created via an identity provider of your choice.
 
 ![](https://i.imgur.com/UlF6rv8.png)

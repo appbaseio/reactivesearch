@@ -21,7 +21,7 @@ It can't:
 
 -   Configure mappings, change analyzers, or capture snapshots. These are provided by Elasticsearch client libraries. We recommend the golang [elastic](https://olivere.github.io/elastic/) library by Olivere.
 
-[Appbase.io - the database service](https://appbase.io) is opinionated about cluster setup and hence doesn't support the ElasticSearch devops APIs. See [rest.appbase.io](https://rest.appbase.io) for a full reference on the supported APIs.
+[Appbase.io - the database service](https://appbase.io) is opinionated about cluster setup and hence doesn't support the Elasticsearch devops APIs. See [rest.appbase.io](https://rest.appbase.io) for a full reference on the supported APIs.
 
 This is a quick start guide to whet the appetite with the possibilities of data streams. The full client API reference can be found [here](https://godoc.org/github.com/appbaseio/go-appbase/).
 
@@ -93,7 +93,7 @@ where `type: 'books'` indicates the collection (or table) inside which the data 
 
 > Note <span class="fa fa-info-circle"></span>
 >
-> appbase.io uses the same APIs and data modeling conventions as [ElasticSearch](https://www.elastic.co/products/elasticsearch). A **type** is equivalent to a collection in MongoDB or a table in SQL, and a **document** is similar to the document in MongoDB or a row in SQL.
+> appbase.io uses the same APIs and data modeling conventions as [Elasticsearch](https://www.elastic.co/products/elasticsearch). A **type** is equivalent to a collection in MongoDB or a table in SQL, and a **document** is similar to the document in MongoDB or a row in SQL.
 
 ## GETing or Streaming Data
 

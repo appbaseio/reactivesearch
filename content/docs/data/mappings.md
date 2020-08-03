@@ -10,9 +10,9 @@ keywords:
 sidebar: 'docs'
 ---
 
-Mapping is the process of defining how a JSON document and the fields it contains are stored and indexed in ElasticSearch. There are various [field types](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html) offered by ElasticSearch which you can assign to the fields that will be stored in ElasticSearch.
+Mapping is the process of defining how a JSON document and the fields it contains are stored and indexed in Elasticsearch. There are various [field types](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html) offered by Elasticsearch which you can assign to the fields that will be stored in Elasticsearch.
 
-Mappings are immutable in ElasticSearch. Once a mapping type is assigned to a field, it can be only modified by re-indexing the data with the new mapping type.
+Mappings are immutable in Elasticsearch. Once a mapping type is assigned to a field, it can be only modified by re-indexing the data with the new mapping type.
 
 Appbase.io's [Schema UI](/docs/search/relevancy/#schema) (earlier called App Settings) lets you do the following:
 - Add a new field and set its data type,

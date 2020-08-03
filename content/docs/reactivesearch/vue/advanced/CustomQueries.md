@@ -211,4 +211,4 @@ You can also define the query options in custom query:
 
 You need to write a custom query but haven't worked with Elasticsearch. Okay, as a super quick primer, Elasticsearch is a data store search engine with a NoSQL JSON data model.
 
-The docs link above is a good way to explore ElasticSearch in depth. Another alternative to get started with the query syntax is [Mirage](https://opensource.appbase.io/mirage), a GUI for composing Elasticsearch queries.
+The docs link above is a good way to explore Elasticsearch in depth. Another alternative to get started with the query syntax is [Mirage](https://opensource.appbase.io/mirage), a GUI for composing Elasticsearch queries.

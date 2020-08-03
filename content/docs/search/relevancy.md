@@ -1,7 +1,7 @@
 ---
 title: 'Search Relevancy'
-meta_title: 'Appbase.io Dashboard - Search Relevancy Controls for ElasticSearch'
-meta_description: 'Appbase.io offers a control plane for tuning search relevancy of your ElasticSearch queries.'
+meta_title: 'Appbase.io Dashboard - Search Relevancy Controls for Elasticsearch'
+meta_description: 'Appbase.io offers a control plane for tuning search relevancy of your Elasticsearch queries.'
 keywords:
     - concepts
     - appbase.io
@@ -10,7 +10,7 @@ keywords:
 sidebar: 'docs'
 ---
 
-A relevant search meets an end user's expectations every single time. However, both measuring and optimizing the search relevancy with ElasticSearch requires one to be an expert search engine user, and even then, it continues to be an ongoing effort that takes months to yield fruitful results.
+A relevant search meets an end user's expectations every single time. However, both measuring and optimizing the search relevancy with Elasticsearch requires one to be an expert search engine user, and even then, it continues to be an ongoing effort that takes months to yield fruitful results.
 
 Appbase.io now offers **Search Relevancy** - a control plane containing a suite of GUIs that enable user to improve their search relevancy settings without requiring any guesswork. Combined with Actionable Analytics, Search Relevancy enables you to optimize your search's relevance in a data-driven manner.
 
@@ -31,7 +31,7 @@ Appbase.io offers support for 38 languages with the default relevancy configured
 
 When you select a primary language that's different from Universal, the universal analyzer continues to work with it. This way, you can benefit from a multi-lingual search.
 
-\* The following languages require additional analyzer plugins to be installed in your ElasticSearch cluster.
+\* The following languages require additional analyzer plugins to be installed in your Elasticsearch cluster.
 
 
 | Language | Plugin Required | Context |
@@ -61,7 +61,7 @@ Search Settings allow you to control your search query settings.
 
 The UI view lets you control and set the fields that have a search use-case and a variable field weight that's used to boost a match at search time.
 
-By default, when appbase.io is used to import data for an ElasticSearch index, it sets the search use-case and the appropriate indexing and search analyzers for all the `text` fields. As a user, you can change the fields that are searchable.
+By default, when appbase.io is used to import data for an Elasticsearch index, it sets the search use-case and the appropriate indexing and search analyzers for all the `text` fields. As a user, you can change the fields that are searchable.
 
 #### Other Options
 

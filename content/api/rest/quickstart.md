@@ -62,7 +62,7 @@ curl -XPUT https://$credentials@scalr.api.appbase.io/$app/books/1 -d '{
 
 > Note <i class="fa fa-info-circle"></i>
 >
-> appbase.io uses the same APIs as [ElasticSearch](https://www.elastic.co/products/elasticsearch). A **type** is equivalent to a _collection in MongoDB_ or a _table in SQL_, and a document is similar to the document in MongoDB or a _row in SQL_.
+> appbase.io uses the same APIs as [Elasticsearch](https://www.elastic.co/products/elasticsearch). A **type** is equivalent to a _collection in MongoDB_ or a _table in SQL_, and a document is similar to the document in MongoDB or a _row in SQL_.
 
 ## GETing or Streaming Data
 
@@ -143,7 +143,7 @@ In the new document update, we can see the price change (5595 -> 6034) being ref
 
 ## Streaming Search
 
-Streaming document updates seems straightforward, can we apply rich filters and queries to our streams? Yes, we can. We can specify any ElasticSearch Query DSL request, and get responses via streams.
+Streaming document updates seems straightforward, can we apply rich filters and queries to our streams? Yes, we can. We can specify any Elasticsearch Query DSL request, and get responses via streams.
 
 We will see it here with a `match_all` query request.
 

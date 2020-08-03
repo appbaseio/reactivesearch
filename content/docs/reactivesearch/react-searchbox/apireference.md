@@ -1,7 +1,7 @@
 ---
 title: 'QuickStart'
 meta_title: 'QuickStart to React SearchBox'
-meta_description: 'React SearchBox is a lightweight react searchbox UI component to query your ElasticSearch app.'
+meta_description: 'React SearchBox is a lightweight react searchbox UI component to query your Elasticsearch app.'
 keywords:
     - quickstart
     - react-searchbox
@@ -13,7 +13,7 @@ nestedSidebar: 'react-searchbox-reactivesearch'
 
 ![Image to be displayed](https://i.imgur.com/toQyZW6.png)
 
-`React SearchBox` offers a lightweight (~30KB: Minified + Gzipped) and performance focused searchbox UI component to query and display results from your ElasticSearch app (aka index) using declarative props. It is an alternative to using the [DataSearch component](/docs/reactivesearch/v3/search/datasearch/) from ReactiveSearch.
+`React SearchBox` offers a lightweight (~30KB: Minified + Gzipped) and performance focused searchbox UI component to query and display results from your Elasticsearch app (aka index) using declarative props. It is an alternative to using the [DataSearch component](/docs/reactivesearch/v3/search/datasearch/) from ReactiveSearch.
 
 ### When to Use React SearchBox
 
@@ -86,7 +86,7 @@ Example uses of searchbox UI:
     Basic auth credentials for authentication purposes. It should be a string of the format `username:password`.
     If you are using an appbase.io app, you will find credentials under your [API credentials page](https://dashboard.appbase.io/app?view=credentials). If you are not using an appbase.io app, credentials may not be necessary - although having an open access to your Elasticsearch cluster is not recommended.
 -   **enableAppbase** `boolean` [optional]
-    enableAppbase is false by default. You can set this to true when you're using appbase.io alongside ElasticSearch. It enables the following features:
+    enableAppbase is false by default. You can set this to true when you're using appbase.io alongside Elasticsearch. It enables the following features:
     -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/).
     -   Query generation happens on server side - protecting against security concerns around query injection.
     -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).

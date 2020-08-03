@@ -1,7 +1,7 @@
 ---
 title: 'ReactiveComponent'
 meta_title: 'ReactiveComponent'
-meta_description: 'ReactiveComponent lets you connect any React UI component with an ElasticSearch query or an aggregation seamlessly.'
+meta_description: 'ReactiveComponent lets you connect any React UI component with an Elasticsearch query or an aggregation seamlessly.'
 keywords:
     - reactivesearch
     - reactivecomponent
@@ -11,11 +11,11 @@ sidebar: 'docs'
 nestedSidebar: 'web-reactivesearch'
 ---
 
-ReactiveComponent lets you connect any React UI component with an ElasticSearch query or an aggregation seamlessly. It can be used as a standalone component to integrate ElasticSearch queries into your frontend UI declaratively. It can also be used in conjunction with other ReactiveSearch components. Read more [here](/docs/reactivesearch/v3/advanced/reactivecomponent/).
+ReactiveComponent lets you connect any React UI component with an Elasticsearch query or an aggregation seamlessly. It can be used as a standalone component to integrate Elasticsearch queries into your frontend UI declaratively. It can also be used in conjunction with other ReactiveSearch components. Read more [here](/docs/reactivesearch/v3/advanced/reactivecomponent/).
 
 > How does this work?
 >
-> `ReactiveComponent` supports a defaultQuery prop, which can take any ElasticSearch Query DSL object, and provides a callback onData prop which is called on successful query execution by ElasticSearch and can be used to create a side-effect in your app. There is also a render prop which can be used to render any React UI component of your choice which will have access to the hits and aggregations from the defaultQuery.
+> `ReactiveComponent` supports a defaultQuery prop, which can take any Elasticsearch Query DSL object, and provides a callback onData prop which is called on successful query execution by Elasticsearch and can be used to create a side-effect in your app. There is also a render prop which can be used to render any React UI component of your choice which will have access to the hits and aggregations from the defaultQuery.
 
 ### Usage
 
@@ -69,7 +69,7 @@ Here `TabComponent` is responsible to render the Tabs UI and handle the switchin
 For showing selected filters we will use [`SelectedFilters`](/docs/reactivesearch/v3/advanced/selectedfilters/). When we use `ReactiveComponent` we will need to maintain `SelectedFilters` value manually. To clear the selected value of `ReactiveComponent` use `onClear` prop on `SelectedFilter` and pass `null` in `setQuery`.
 
 **ReactiveComponent and React context**
-If the CustomComponent contains multiple react components which need to access ElasticSearch data we can take use of react [`context`](https://reactjs.org/docs/context.html) in order to pass data through the component tree without having to pass props down manually at every level. We can refactor the above example to use multiple child components and pass the data using context. You can check the refactored app demo [here](https://codesandbox.io/s/o9popzr47y).
+If the CustomComponent contains multiple react components which need to access Elasticsearch data we can take use of react [`context`](https://reactjs.org/docs/context.html) in order to pass data through the component tree without having to pass props down manually at every level. We can refactor the above example to use multiple child components and pass the data using context. You can check the refactored app demo [here](https://codesandbox.io/s/o9popzr47y).
 
 **ReactiveComponent with Ant Design Component**
 You can also easily connect component from design system to index data using `ReactiveComponent`. Check the example [here](https://codesandbox.io/s/mmkjv990nj) which connects `Dropdown` component of `Antd` with index data.

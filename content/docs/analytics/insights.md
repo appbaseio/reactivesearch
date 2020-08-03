@@ -53,7 +53,7 @@ If you see that insight then it means that you're search is slow and required so
 Client-side errors indicate that your search requests are getting failed because of bad requests from the client-side.
 
 #### Server Errors
-Internal server errors indicate an issue with the underlying ElasticSearch service.
+Internal server errors indicate an issue with the underlying Elasticsearch service.
 
 ### Insights via API
 

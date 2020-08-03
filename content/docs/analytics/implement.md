@@ -14,17 +14,17 @@ In this page, you will learn about how to implement Appbase.io analytics for you
 
 ### Prerequite: Deploying Appbase.io
 
-Appbase.io Analytics requires a deployment of appbase.io alongside your ElasticSearch cluster. You can deploy appbase.io as:
+Appbase.io Analytics requires a deployment of appbase.io alongside your Elasticsearch cluster. You can deploy appbase.io as:
 1. A hosted offering: (Recommended) for a complete end-to-end managed experience. [Learn More](https://appbase.io/clusters/)
-2. Deploy as a Docker image: Run anywhere, including with your Kubernetes ElasticSearch cluster. [Learn More](https://docs.appbase.io/docs/hosting/byoc/#using-docker)
-3. Amazon Machine Image (AMI): Deploy within your VPC alongside AWS ElasticSearch. [Learn More](https://docs.appbase.io/docs/hosting/byoc/#using-ami)
+2. Deploy as a Docker image: Run anywhere, including with your Kubernetes Elasticsearch cluster. [Learn More](https://docs.appbase.io/docs/hosting/byoc/#using-docker)
+3. Amazon Machine Image (AMI): Deploy within your VPC alongside AWS Elasticsearch. [Learn More](https://docs.appbase.io/docs/hosting/byoc/#using-ami)
 
-![Diagram showing how appbase.io works with ElasticSearch](/images/byoc.png)
+![Diagram showing how appbase.io works with Elasticsearch](/images/byoc.png)
 
 
 ## How To Track Analytics
 
-Appbase.io offers turnkey search analytics for ElasticSearch. No matter how your search is implemented today, it's easy to integrate analytics in a matter of minutes.
+Appbase.io offers turnkey search analytics for Elasticsearch. No matter how your search is implemented today, it's easy to integrate analytics in a matter of minutes.
 
 
 ### With Appbase.io UI Libraries

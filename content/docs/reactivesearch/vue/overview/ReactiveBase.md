@@ -40,7 +40,7 @@ This is the first component you will need to add when using `ReactiveSearch`.
 -   **url** `String` [optional]
     URL where Elasticsearch cluster is hosted, only needed if your app uses a non appbase.io URL.
 -   **enableAppbase** `boolean` [optional]
-    Defaults to `false`. You can set this to `true` when you're using appbase.io alongside `ElasticSearch`. It enables the following features:
+    Defaults to `false`. You can set this to `true` when you're using appbase.io alongside `Elasticsearch`. It enables the following features:
     -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/vue/advanced/analytics/).
     -   Query generation happens on server side - protecting against security concerns around query injection.
     -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).

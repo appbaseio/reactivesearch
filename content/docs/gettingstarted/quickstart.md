@@ -9,7 +9,7 @@ keywords:
 sidebar: 'docs'
 ---
 
-[Appbase.io](https://appbase.io) provides the search stack for building modern apps - a hosted (or managed) developer-first search service. It supercharges [ElasticSearch](https://github.com/elastic/elasticsearch), an Apache 2.0 licensed search engine: to offer a streamlined development experience, out of the box actionable analytics and enterprise grade security.
+[Appbase.io](https://appbase.io) provides the search stack for building modern apps - a hosted (or managed) developer-first search service. It supercharges [Elasticsearch](https://github.com/elastic/elasticsearch), an Apache 2.0 licensed search engine: to offer a streamlined development experience, out of the box actionable analytics and enterprise grade security.
 
 With appbase.io, you can:
 
@@ -32,7 +32,7 @@ With appbase.io, you can:
 
 The appbase.io API is interoperable with the Elasticsearch API and builds on top of it. With the [apps](https://appbase.io/apps) product, there are some API endpoints that we don't allow access to. Full list of supported endpoints is documented at https://rest.appbase.io.
 
-We also offer [hosted or managed clusters](https://appbase.io/clusters), where we maintain 100% compatibility with the Apache 2.0 licensed ElasticSearch and support every ElasticSearch release starting v5.6.
+We also offer [hosted or managed clusters](https://appbase.io/clusters), where we maintain 100% compatibility with the Apache 2.0 licensed Elasticsearch and support every Elasticsearch release starting v5.6.
 
 ## Out of the Box Features
 
@@ -69,4 +69,4 @@ appbase.io offers the following advantages over running your own Elasticsearch c
 | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Clusters](/docs/hosting/clusters/)          | Free 14-day trial. Flexibility of deploying in 16 regions across North America, South America, Europe, Asia and Australia                                                                                        |
 | [Apps](/docs/hosting/apps/)                  | Easy to get started. No credit card required. Multi-tenant setup                                                                                                                                                 |
-| [Bring Your Own Cluster](/docs/hosting/byoc/) | Already have an ElasticSearch cluster with AWS or Elastic Cloud or hosting it yourself? You can provision the appbase.io docker container or image as a hosted service from the dashboard or deploy it yourself. |
+| [Bring Your Own Cluster](/docs/hosting/byoc/) | Already have an Elasticsearch cluster with AWS or Elastic Cloud or hosting it yourself? You can provision the appbase.io docker container or image as a hosted service from the dashboard or deploy it yourself. |

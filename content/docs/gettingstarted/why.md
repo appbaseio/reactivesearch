@@ -9,7 +9,7 @@ keywords:
 sidebar: 'docs'
 ---
 
-[Appbase.io](https://appbase.io) provides the search stack for building modern apps - a hosted (or managed) developer-first search service. It supercharges ElasticSearch, an Apache 2.0 licensed search engine: to offer a streamlined development experience, out of the box actionable analytics and enterprise grade security.
+[Appbase.io](https://appbase.io) provides the search stack for building modern apps - a hosted (or managed) developer-first search service. It supercharges Elasticsearch, an Apache 2.0 licensed search engine: to offer a streamlined development experience, out of the box actionable analytics and enterprise grade security.
 
 > In this article, we highlight the key benefits of using appbase.io.
 
@@ -23,7 +23,7 @@ Appbaseio.io's dashboard provides a powerful interface for developing search app
 
 #### Development Experience 🕵️‍♂️
 
--   **[Import Data](/docs/data/import/)** allows importing data into ElasticSearch from sources such as `JSON`, `CSV`, `SQL` or another ElasticSearch index. [The CLI tool](https://github.com/appbaseio/abc) supports more sources such as `MongoDB`, `Firestore`, `Kafka`, `Redis` to name a few.
+-   **[Import Data](/docs/data/import/)** allows importing data into Elasticsearch from sources such as `JSON`, `CSV`, `SQL` or another Elasticsearch index. [The CLI tool](https://github.com/appbaseio/abc) supports more sources such as `MongoDB`, `Firestore`, `Kafka`, `Redis` to name a few.
 -   **[Search Relevancy](/docs/search/relevancy/)** allows configuring and testing search relevancy settings through a set of GUIs.
 -   **[Query Rules](/docs/search/rules/)** allows setting "If This, Then That" style rules to extend the search engine.
 -   **[ReactiveSearch](/docs/reactivesearch/v3/overview/quickstart/)** allows creating search UIs for React, Vue, Vanilla JS, React Native using industry-leading search UI components.
@@ -47,7 +47,7 @@ Appbaseio.io's dashboard provides a powerful interface for developing search app
 
 #### Enterprise Grade Security 🔐
 
--   [**API Credentials**](/docs/security/credentials/) provides Basic Authentication based security keys with fine-grained security rules to control access. It also allows you to set IP restriction and API access limit for your ElasticSearch data.
+-   [**API Credentials**](/docs/security/credentials/) provides Basic Authentication based security keys with fine-grained security rules to control access. It also allows you to set IP restriction and API access limit for your Elasticsearch data.
 -   [**Role Based Access Control**](/docs/security/role/) allows securing search apps with Javascript Web Tokens created via an identity provider of your choice.
 
 ![](https://i.imgur.com/UlF6rv8.png)
@@ -89,15 +89,15 @@ You can get more details about Appbase.io Cluster pricing over [here](https://ap
 
 Since appbase.io clusters are deployed and managed using a Kubernetes based orchestration, you can easily view the usage of various resources like CPU, memory, and storage. For more information, you can read the docs for [clusters over here](/docs/hosting/clusters/).
 
-### Managed ElasticSearch
+### Managed Elasticsearch
 
-Another advantage of our managed ElasticSearch offering is full access to the underlying APIs without restriction. Other ElasticSearch providers like AWS limit access to your ElasticSearch API.
+Another advantage of our managed Elasticsearch offering is full access to the underlying APIs without restriction. Other Elasticsearch providers like AWS limit access to your Elasticsearch API.
 
-Along with full access to the underlying APIs, you also have full access to the ElasticSearch configuration and plugins that are installed. You can always add more plugins of your choice by updating the configurations via Stateful Set Configuration on Kubernetes.
+Along with full access to the underlying APIs, you also have full access to the Elasticsearch configuration and plugins that are installed. You can always add more plugins of your choice by updating the configurations via Stateful Set Configuration on Kubernetes.
 
-### Ability to choose your ElasticSearch Distro
+### Ability to choose your Elasticsearch Distro
 
-We also let you deploy an ElasticSearch flavor of your own choice. You can either install the Apache 2.0 licensed distribution of [ElasticSearch](https://github.com/elastic/elasticsearch) or use [Open Distro for ElasticSearch](https://opendistro.github.io/for-elasticsearch/) which comes with additional security enhancements.
+We also let you deploy an Elasticsearch flavor of your own choice. You can either install the Apache 2.0 licensed distribution of [Elasticsearch](https://github.com/elastic/elasticsearch) or use [Open Distro for Elasticsearch](https://opendistro.github.io/for-elasticsearch/) which comes with additional security enhancements.
 
 ## Deployment Options
 
@@ -113,4 +113,4 @@ Deploy your own dedicated Elasticsearch clusters to meet your business needs. It
 
 ### Bring Your Own Cluster
 
-Already using an ElasticSearch cluster with AWS, Elastic Cloud or hosting it yourself? You can deploy appbase.io as a cloud-native software. Read more about Bring Your Own Cluster over [here](/docs/hosting/byoc/).
+Already using an Elasticsearch cluster with AWS, Elastic Cloud or hosting it yourself? You can deploy appbase.io as a cloud-native software. Read more about Bring Your Own Cluster over [here](/docs/hosting/byoc/).

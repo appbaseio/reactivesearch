@@ -177,7 +177,7 @@ Instead of what would typically be an imperative query DSL, we are using a decla
 
 ### How do multiple queries work?
 
-It's simple to define multiple queries with the `ReactiveSearch API` endpoint. Check the example below which executes two different queries in a single API request. This is the equivalent of using the `msearch` API of ElasticSearch.
+It's simple to define multiple queries with the `ReactiveSearch API` endpoint. Check the example below which executes two different queries in a single API request. This is the equivalent of using the `msearch` API of Elasticsearch.
 
 ```js
 {

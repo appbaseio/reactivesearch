@@ -1,7 +1,7 @@
 ---
 title: 'QuickStart'
 meta_title: 'QuickStart to SearchBox'
-meta_description: 'Searchbox is a lightweight searchbox UI component to query your ElasticSearch app.'
+meta_description: 'Searchbox is a lightweight searchbox UI component to query your Elasticsearch app.'
 keywords:
     - quickstart
     - searchbox
@@ -12,7 +12,7 @@ nestedSidebar: 'searchbox'
 ---
 
 
-`SearchBox` offers a lightweight and performance focused searchbox UI component to query and display results from your ElasticSearch app (aka index).
+`SearchBox` offers a lightweight and performance focused searchbox UI component to query and display results from your Elasticsearch app (aka index).
 
 ## Installation
 

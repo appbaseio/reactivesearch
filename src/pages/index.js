@@ -65,7 +65,7 @@ const HomePage = ({ data, location }) => {
 									'2': {
 										title: 'Managing Data',
 										subtitle:
-											"Appbase's data schema, data browser and how to import data to ElasticSearch.",
+											"Appbase's data schema, data browser and how to import data to Elasticsearch.",
 										icon: (
 											<Icon
 												name="importData"
@@ -136,7 +136,7 @@ const HomePage = ({ data, location }) => {
 											{
 												title: 'Functions',
 												description:
-													'Extend ElasticSearch with your own functions.',
+													'Extend Elasticsearch with your own functions.',
 												link: '/docs/search/functions/',
 												duration: 4,
 											},
@@ -260,28 +260,28 @@ const HomePage = ({ data, location }) => {
 												link: '/docs/hosting/clusters/',
 												duration: 5,
 												description:
-													'Fully managed ElasticSearch clusters available in over 16 global regions.',
+													'Fully managed Elasticsearch clusters available in over 16 global regions.',
 											},
 											{
 												title: 'Apps',
 												link: '/docs/hosting/apps',
 												duration: 1,
 												description:
-													'Apps let you get the best of ElasticSearch without running a dedicated cluster.',
+													'Apps let you get the best of Elasticsearch without running a dedicated cluster.',
 											},
 											{
 												title: 'Bring your own Cluster',
 												link: '/docs/hosting/byoc/',
 												duration: 10,
 												description:
-													'Run appbase.io with your own ElasticSearch cluster hosted anywhere.',
+													'Run appbase.io with your own Elasticsearch cluster hosted anywhere.',
 											},
 											{
-												title: 'Open Distro for ElasticSearch',
+												title: 'Open Distro for Elasticsearch',
 												link: '/docs/hosting/open-distro/',
 												duration: 2,
 												description:
-													'Run Open Distro for ElasticSearch with Appbase.io Clusters.',
+													'Run Open Distro for Elasticsearch with Appbase.io Clusters.',
 											},
 										],
 									},

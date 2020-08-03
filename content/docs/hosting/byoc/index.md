@@ -1,23 +1,23 @@
 ---
 title: 'Bring Your Own Cluster'
 meta_title: 'Bring Your Own Cluster'
-meta_description: 'Run Appbase.io with for your own ElasticSearch cluster hosted elsewhere.'
+meta_description: 'Run Appbase.io with for your own Elasticsearch cluster hosted elsewhere.'
 keywords:
     - clusters
     - appbaseio
     - appbase
-    - ElasticSearch
+    - Elasticsearch
 sidebar: 'docs'
 ---
 
-Already have ElasticSearch hosted with AWS, Elastic Cloud or planning to hosting it yourself?
-You can now access all of Appbase.io features such as [search preview](/docs/search/relevancy/#test-search-relevancy), [actionable analytics](/docs/analytics/overview/) and [granular security](/docs/security/credentials/) with an ElasticSearch cluster hosted anywhere with the `Bring Your Own Cluster` deployment mode.
+Already have Elasticsearch hosted with AWS, Elastic Cloud or planning to hosting it yourself?
+You can now access all of Appbase.io features such as [search preview](/docs/search/relevancy/#test-search-relevancy), [actionable analytics](/docs/analytics/overview/) and [granular security](/docs/security/credentials/) with an Elasticsearch cluster hosted anywhere with the `Bring Your Own Cluster` deployment mode.
 
 > 🆕 We're making Appbase.io available as a cloud-native software under the codename [Arc](https://arc-dashboard.appbase.io).
 
 ![](/images/byoc.png)
 
-This diagram highlights how Arc works. It directly interacts with an underlying ElasticSearch cluster and acts as an API gateway for clients to interact with. Arc supercharges your ElasticSearch cluster with a streamlined development experience, out of the box search analytics and fine-grained security features.
+This diagram highlights how Arc works. It directly interacts with an underlying Elasticsearch cluster and acts as an API gateway for clients to interact with. Arc supercharges your Elasticsearch cluster with a streamlined development experience, out of the box search analytics and fine-grained security features.
 
 ## Quickstart Recipes
 
@@ -40,7 +40,7 @@ You can install [Arc](https://arc-dashboard.appbase.io) on any server environmen
 
 ### Using Appbase.io
 
-Appbase.io dashboard offers the most seamless experience for running your Arc with your own ElasticSearch cluster.
+Appbase.io dashboard offers the most seamless experience for running your Arc with your own Elasticsearch cluster.
 
 **Step 1 -** Go to the **[Create Cluster Link](https://dashboard.appbase.io/clusters/new/my-cluster)**. You will be redirected to sign up or login if you aren't already logged in.
 
@@ -50,13 +50,13 @@ You should see the above screen.
 
 **Step 2 -** Select the pricing plan. Read more about pricing plans over [here](https://arc-site.netlify.com/pricing/).
 
-**Step 3 -** Select the region to add Arc to. It is recommended that you pick a region closest to where your ElasticSearch cluster is running.
+**Step 3 -** Select the region to add Arc to. It is recommended that you pick a region closest to where your Elasticsearch cluster is running.
 
-**Step 4 -** Enter a name for your Arc instance. And enter the ElasticSearch URL. Use the `Verify Connection` button to ensure that this URL is accessible.
+**Step 4 -** Enter a name for your Arc instance. And enter the Elasticsearch URL. Use the `Verify Connection` button to ensure that this URL is accessible.
 
 ![](https://i.imgur.com/NO5lcvl.png)
 
-> **Note:** We recommend either having an open ElasticSearch access policy or one based on Basic Authentication till the Arc instance is deployed.
+> **Note:** We recommend either having an open Elasticsearch access policy or one based on Basic Authentication till the Arc instance is deployed.
 
 **Step 5 -** Hit **Create Cluster** button and hang tight till your cluster is deployed.
 
@@ -78,16 +78,16 @@ This will give you access to all the Appbase.io features such as:
 
 ![](https://i.imgur.com/OPQiXA8.png)
 
-#### **Accessing ElasticSearch Data using REST API**
+#### **Accessing Elasticsearch Data using REST API**
 
-You can access the [ElasticSearch REST](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html) APIs via the Arc Instance URL. You can either use the master credentials or create additional API keys with fine-grained access permissions.
+You can access the [Elasticsearch REST](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html) APIs via the Arc Instance URL. You can either use the master credentials or create additional API keys with fine-grained access permissions.
 ![](https://i.imgur.com/Q3onHwn.png)
 
-#### **Changing ElasticSearch URL**
+#### **Changing Elasticsearch URL**
 
-You can update your ElasticSearch cluster URL at any point using the Appbase.io dashboard. All you need to do is just enter new URL and hit `Update Cluster Settings`.
+You can update your Elasticsearch cluster URL at any point using the Appbase.io dashboard. All you need to do is just enter new URL and hit `Update Cluster Settings`.
 
-> **Note:** Make sure your new ElasticSearch cluster URL has open access till the deployment is completed.
+> **Note:** Make sure your new Elasticsearch cluster URL has open access till the deployment is completed.
 
 ![](https://i.imgur.com/Pb2midX.png)
 
@@ -115,7 +115,7 @@ That's all you need to follow in order to deploy an Arc cluster 🚀. Once the E
 
 ![](https://i.imgur.com/PDs8DK0.png)
 
-> **Note:** We highly recommend using the cluster with [TLS security](https://en.wikipedia.org/wiki/Transport_Layer_Security) enabled, as Arc is intended to be used as a frontend for ElasticSearch.
+> **Note:** We highly recommend using the cluster with [TLS security](https://en.wikipedia.org/wiki/Transport_Layer_Security) enabled, as Arc is intended to be used as a frontend for Elasticsearch.
 
 #### **Adding TLS Certificate**
 
@@ -171,7 +171,7 @@ You can start configuring Arc by clicking on _configure page_ link OR opening `h
 
 ![](https://i.imgur.com/OkyeFJS.png)
 
-**Step 2:** Once you login, you can reset your username and password. Enter the your ElasticSearch URL, ARC_ID obtained while setting [Arc instance](/docs/hosting/byoc/#how-to-create-arc-instance) and save the details.
+**Step 2:** Once you login, you can reset your username and password. Enter the your Elasticsearch URL, ARC_ID obtained while setting [Arc instance](/docs/hosting/byoc/#how-to-create-arc-instance) and save the details.
 
 ![](https://i.imgur.com/iVmzscW.png)
 
@@ -201,15 +201,15 @@ Now that all our configurations are complete, in order to access all the Arc Ser
 
 ### Using Docker
 
-Run appbase.io via a single [docker compose file](https://github.com/appbaseio/arc-dockerized/blob/master/docker-compose-with-elasticsearch.yaml). This setup enables you to run appbase.io and ElasticSearch together with single command, i.e. `docker-compose up -d` 😎.
+Run appbase.io via a single [docker compose file](https://github.com/appbaseio/arc-dockerized/blob/master/docker-compose-with-elasticsearch.yaml). This setup enables you to run appbase.io and Elasticsearch together with single command, i.e. `docker-compose up -d` 😎.
 
 The dockerized setup is composed of the following services:
 
 #### Arc
 
-Allows you to access all appbase.io features like search preview, actionable analytics and granular security with any ElasticSearch cluster hosted anywhere.
+Allows you to access all appbase.io features like search preview, actionable analytics and granular security with any Elasticsearch cluster hosted anywhere.
 
-> **Note:** Make sure your arc container have complete access to ElasticSearch. You can use ElasticSearch URL with Basic Auth in configuring dashboard or IP restricted ElasticSearch URL where IP of your ARC cluster hosted using docker setup is white listed.
+> **Note:** Make sure your arc container have complete access to Elasticsearch. You can use Elasticsearch URL with Basic Auth in configuring dashboard or IP restricted Elasticsearch URL where IP of your ARC cluster hosted using docker setup is white listed.
 
 #### Configure
 
@@ -219,9 +219,9 @@ This service comes with simple user interface which allows you to set credential
 
 This service helps in setting up reverse proxy for Arc Service and serving Configuration service. It also helps in serving data using with TLS certificate, which is recommended for production.
 
-#### ElasticSearch
+#### Elasticsearch
 
-An open-source single-node ElasticSearch cluster is run. This is optional: You can use the [docker compose file here](https://github.com/appbaseio/arc-dockerized/blob/master/docker-compose.yaml) to run without ElasticSearch.
+An open-source single-node Elasticsearch cluster is run. This is optional: You can use the [docker compose file here](https://github.com/appbaseio/arc-dockerized/blob/master/docker-compose.yaml) to run without Elasticsearch.
 
 ## Quick Start 🚀
 
@@ -254,7 +254,7 @@ The steps described here assumes a that you have [docker](https://docs.docker.co
     docker-compose up -d
     ```
 
-    2 - **Install Arc + ElasticSearch _(If you want to deploy Arc Along with ElasticSearch.)_**
+    2 - **Install Arc + Elasticsearch _(If you want to deploy Arc Along with Elasticsearch.)_**
 
     ```
     docker-compose -f docker-compose-with-elasticsearch.yaml up -d
@@ -268,7 +268,7 @@ The steps described here assumes a that you have [docker](https://docs.docker.co
 
 -   **Step 5:** Set username and password credentials.
 
--   **Step 6:** Configure ElasticSearch URL and ARC ID obtained above.
+-   **Step 6:** Configure Elasticsearch URL and ARC ID obtained above.
 
     > **Note:** Once you save the configuration, it may take 5-10s to restart the arc service.
 

@@ -1,7 +1,7 @@
 ---
 title: 'API Reference'
 meta_title: 'API Reference for SearchBase'
-meta_description: 'SearchBase is a lightweight and platform agnostic search library for ElasticSearch.'
+meta_description: 'SearchBase is a lightweight and platform agnostic search library for Elasticsearch.'
 keywords:
     - apireference
     - searchbase
@@ -11,7 +11,7 @@ sidebar: 'docs'
 nestedSidebar: 'searchbase-reactivesearch'
 ---
 
-[searchbase](https://github.com/appbaseio/searchbase) - A lightweight & platform agnostic search library for ElasticSearch.
+[searchbase](https://github.com/appbaseio/searchbase) - A lightweight & platform agnostic search library for Elasticsearch.
 
 > Note:
 >
@@ -46,7 +46,7 @@ const searchbase = new SearchBase(props);
 -   **url** `string` [Required]
     URL for the Elasticsearch cluster
 -   **enableAppbase** `boolean` [optional]
-    enableAppbase is false by default. You can set this to true when you're using appbase.io alongside ElasticSearch. It enables the following features:
+    enableAppbase is false by default. You can set this to true when you're using appbase.io alongside Elasticsearch. It enables the following features:
     -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/v3/advanced/analytics/).
     -   Query generation happens on server side - protecting against security concerns around query injection.
     -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).
@@ -233,7 +233,7 @@ const searchbase = new Searchbase({
     });
     ```
 -   **transformResponse** `(response: any) => Promise<any>`
-    Enables transformation of search network response before rendering them. It is an asynchronous function which will accept an ElasticSearch response object as param and is expected to return an updated response as the return value.<br/>
+    Enables transformation of search network response before rendering them. It is an asynchronous function which will accept an Elasticsearch response object as param and is expected to return an updated response as the return value.<br/>
     For example:
 ```js
     const searchbase = new Searchbase({
@@ -482,7 +482,7 @@ These properties are automatically calculated or managed by the `Searchbase` cla
     -   **`rawData`**: `object`  An object of raw response as-is from elasticsearch query.
     -   **`afterKey`**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the `afterKey` parameter to retrieve the next results.
 -   **query** `Object`
-    The ElasticSearch query that is to be executed
+    The Elasticsearch query that is to be executed
 -   **suggestionsQuery** `Object`
     The query executed for getting suggestions
 -   **requestPending** `boolean`

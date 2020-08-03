@@ -1,7 +1,7 @@
 ---
 title: 'Searchbox'
 meta_title: 'API Reference to Searchbox'
-meta_description: 'Searchbox is a lightweight searchbox UI component to query your ElasticSearch app.'
+meta_description: 'Searchbox is a lightweight searchbox UI component to query your Elasticsearch app.'
 keywords:
     - quickstart
     - searchbox
@@ -13,7 +13,7 @@ nestedSidebar: 'searchbox'
 
 ![Image to be displayed](https://i.imgur.com/rxOM8Ut.png)
 
-`SearchBox` offers a lightweight and performance focused searchbox UI component to query and display results from your ElasticSearch app (aka index).
+`SearchBox` offers a lightweight and performance focused searchbox UI component to query and display results from your Elasticsearch app (aka index).
 
 Example uses of searchbox UI:
 

@@ -1,7 +1,7 @@
 ---
 title: 'Functions'
 meta_title: 'Appbase.io Functions'
-meta_description: 'How to use appbase.io functions with ElasticSearch'
+meta_description: 'How to use appbase.io functions with Elasticsearch'
 keywords:
     - concepts
     - appbase.io
@@ -63,7 +63,7 @@ Appbase.io Functions run right where your search service is, thus minimizing the
 
     When you use a hosted serverless services such as AWS Lambda (or even AWS Lambda on edge), you're still adding additional latency b/w your end user and your search service. Besides, most serverless function services restrict your choice of language and use of 3rd party packages. Appbase.io Functions are internally deployed as HTTP services and thus are language agnostic (you can write them in Node.JS, Python, Java, Go, PHP, Ruby, or C#) and let you add 3rd party packages without restriction.
 
-    The differences in latencies are further pronounced when your function logic requires database access. Appbase.io Functions can access the ElasticSearch indices - you can read (or write) data to your search cluster.
+    The differences in latencies are further pronounced when your function logic requires database access. Appbase.io Functions can access the Elasticsearch indices - you can read (or write) data to your search cluster.
 
 ## Hosting
 

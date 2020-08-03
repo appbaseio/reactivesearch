@@ -1,7 +1,7 @@
 ---
 title: 'ReactiveSearch API: Overview'
 meta_title: 'ReactiveSearch API - Overview'
-meta_description: 'ReactiveSearch API offers a declarative interface to querying ElasticSearch, prevents query injections and lets you extend the API via Query Rules and Functions.'
+meta_description: 'ReactiveSearch API offers a declarative interface to querying Elasticsearch, prevents query injections and lets you extend the API via Query Rules and Functions.'
 keywords:
     - concepts
     - appbase
@@ -16,7 +16,7 @@ At Appbase.io, we're determined to help our users build a better search experien
 
 Many users also reported security as a big concern for them when using ReactiveSearch directly with an Elasticsearch backend:
 1. There is a possibility for an attacker to do a query injection.
-2. ReactiveSearch, by querying ElasticSearch directly exposed their search business logic and queries.
+2. ReactiveSearch, by querying Elasticsearch directly exposed their search business logic and queries.
 
 To address these issues effectively, we have introduced a new declarative API - the `ReactiveSearch API`. ReactiveSearch API is 100% compatible with the declarative ReactiveSearch library. When using ReactiveSearch API, you:
 1. use the same declarative props that you're familiar with when using the ReactiveSearch library. This prevents query injections (as you can whitelist all your search queries to only be passed via the ReactiveSearch API)

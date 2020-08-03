@@ -59,7 +59,7 @@ const GettingStarted = props => {
 						<h2>Searchbox</h2>
 						<p>
 							Vanilla JS searchbox UI component to query and display results from your
-							ElasticSearch app (aka index)
+							Elasticsearch app (aka index)
 						</p>
 						<a className="btn" href="/docs/reactivesearch/searchbox/Quickstart/">
 							Start with Searchbox
@@ -72,7 +72,7 @@ const GettingStarted = props => {
 						<h2>React Searchbox</h2>
 						<p>
 							React searchbox UI component to query and display results from your
-							ElasticSearch app (aka index) using declarative props.
+							Elasticsearch app (aka index) using declarative props.
 						</p>
 						<a className="btn" href="/docs/reactivesearch/react-searchbox/quickstart/">
 							Start with React Searchbox
@@ -85,7 +85,7 @@ const GettingStarted = props => {
 						<h2>Vue Searchbox</h2>
 						<p>
 							Vue searchbox UI component to query and display results from your
-							ElasticSearch app (aka index) using declarative props.
+							Elasticsearch app (aka index) using declarative props.
 						</p>
 						<a className="btn" href="/docs/reactivesearch/vue-searchbox/quickstart/">
 							Start with Vue Searchbox
@@ -100,7 +100,7 @@ const GettingStarted = props => {
 					/>
 					<div className="content">
 						<h2>REST API</h2>
-						<p>Appbase.io REST API (ElasticSearch compatible)</p>
+						<p>Appbase.io REST API (Elasticsearch compatible)</p>
 						<a className="btn" href="/api/rest/quickstart/">
 							Start with REST API
 						</a>

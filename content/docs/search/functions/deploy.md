@@ -1,7 +1,7 @@
 ---
 title: 'Deploy Function'
 meta_title: 'Appbase Functions'
-meta_description: 'How to use functions with ElasticSearch.'
+meta_description: 'How to use functions with Elasticsearch.'
 keywords:
     - concepts
     - appbase

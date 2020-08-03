@@ -266,7 +266,7 @@ Returns the current app's mapping scheme as an object.
 
 ### search()
 
-Search for matching documents in a type. It's a convenience method for ElasticSearch's `/_search` endpoint. For subscribing to realtime updates on the search query, check out `searchStream()`.
+Search for matching documents in a type. It's a convenience method for Elasticsearch's `/_search` endpoint. For subscribing to realtime updates on the search query, check out `searchStream()`.
 
 ```js
 appbaseRef
@@ -293,14 +293,14 @@ appbaseRef
 -   **params** `Object` <br>A JavaScript object containing the query `type` and `body`.
 
         	- **type** ``String`` <br>Document type
-        	- **body** ``Object`` <br>A JSON object specifying a valid query in the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
+        	- **body** ``Object`` <br>A JSON object specifying a valid query in the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
 
 **Returns**
 Promise.
 
 ### msearch()
 
-Multi Search to allow execution of several search requests with same API. It's a convenience method for ElasticSearch's `/_msearch` endpoint.
+Multi Search to allow execution of several search requests with same API. It's a convenience method for Elasticsearch's `/_msearch` endpoint.
 
 ```js
 appbaseRef
@@ -483,7 +483,7 @@ appbaseRef.searchStream(
 -   **params** `Object` <br>A JavaScript object containing the query `type` and `body`
 
         	- **type** ``String`` <br>Document type
-        	- **body** ``Object`` <br>A JSON object specifying a valid query in the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
+        	- **body** ``Object`` <br>A JSON object specifying a valid query in the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
 
 > Note <span class="fa fa-info-circle"></span>
 >
@@ -546,7 +546,7 @@ appbaseRef.searchStreamToURL(
 -   **queryParams** `Object` <br>A JavaScript object containing the query `type` and `body`
 
         	- **type** ``String`` <br>Document type
-        	- **body** ``Object`` <br>A JSON object specifying a valid query in the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
+        	- **body** ``Object`` <br>A JSON object specifying a valid query in the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
 
 -   **urlParams** `Object` - A JavaScript object containing the `url` to which data would be streamed on a query match. It supports optional fields to attach JSON (or string) payloads, control the frequency and number of updates.
 

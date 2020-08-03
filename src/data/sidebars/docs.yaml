@@ -85,6 +85,6 @@
               title: "Bring Your Own Cluster"
               items:
               - link: /docs/hosting/byoc/connect-to-your-elasticsearch/
-                title: "Connect to Your ElasticSearch"
+                title: "Connect to Your Elasticsearch"
             - link: /docs/hosting/open-distro/
               title: "Open Distro"

@@ -20,9 +20,9 @@ It can:
 
 It can't:
 
--   Configure mappings, change analyzers, or capture snapshots. All these are provided by [elasticsearch.js](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html) - the official ElasticSearch JS client library.
+-   Configure mappings, change analyzers, or capture snapshots. All these are provided by [elasticsearch.js](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html) - the official Elasticsearch JS client library.
 
-[Appbase.io - the database service](https://appbase.io) is opinionated about cluster setup and hence doesn't support the ElasticSearch devops APIs. See [rest.appbase.io](https://rest.appbase.io) for a full reference on the supported APIs.
+[Appbase.io - the database service](https://appbase.io) is opinionated about cluster setup and hence doesn't support the Elasticsearch devops APIs. See [rest.appbase.io](https://rest.appbase.io) for a full reference on the supported APIs.
 
 This is a quick start guide to whet the appetite with the possibilities of data streams.
 
@@ -110,7 +110,7 @@ The `index()` method (and all the other `appbase` methods except streaming metho
 
 > Note <span class="fa fa-info-circle"></span>
 >
-> appbase.io uses the same APIs and data modeling conventions as [ElasticSearch](https://www.elastic.co/products/elasticsearch). A **type** is equivalent to a collection in MongoDB or a table in SQL, and a **document** is similar to the document in MongoDB and equivalent to a row in SQL.
+> appbase.io uses the same APIs and data modeling conventions as [Elasticsearch](https://www.elastic.co/products/elasticsearch). A **type** is equivalent to a collection in MongoDB or a table in SQL, and a **document** is similar to the document in MongoDB and equivalent to a row in SQL.
 
 ## GETing or Streaming Data
 

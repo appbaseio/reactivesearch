@@ -37,7 +37,7 @@ This table below can help you choose the right method for your use-case:
 
 |                   | **Ease of Use** | **Supports Automation** | **Importing Large Dataset** | **Data Sources Supported**                                     |
 | ----------------- | --------------- | ----------------------- | --------------------------- | -------------------------------------------------------------- |
-| **Dashboard GUI** | ✔️              | ✖️️️                    | ✔️                          | CSV, JSON, ElasticSearch and SQL.                              |
+| **Dashboard GUI** | ✔️              | ✖️️️                    | ✔️                          | CSV, JSON, Elasticsearch and SQL.                              |
 | **ABC CLI**       | ✔️\*            | ✔️\*                    | ✔️                          | Everything above plus MongoDB, Firestore, Kafka, Redis, Neo4J. |
 | **REST API**      | ✖️️️            | ✔️\*                    | ✔️                          | No restrictions.                                               |
 | **Zapier**        | ✔️              | ✔️                      | ✖️                          | Typeform, Google Sheets, Twilio, and over 1500+ other apps.    |
@@ -54,7 +54,7 @@ Dashboard offers a GUI for importing data visually. It supports the following fo
 
 1. **JSON / JSONL** - You can bring in any JSON or newline limited JSON files (or hosted URLs) to be imported using the Importer view of the dashboard.
 2. **CSV** - You can also bring in a CSV file (or hosted URL) to be imported.
-3. **ElasticSearch** - You can import an index from an ElasticSearch cluster hosted anywhere into your appbase.io app or cluster.
+3. **Elasticsearch** - You can import an index from an Elasticsearch cluster hosted anywhere into your appbase.io app or cluster.
    ![](https://i.imgur.com/id7clAb.png)
 4. **SQL** - You can import a SQL database from Postgres, MySQL or Microsoft SQL Server into your appbase.io app or cluster.
    ![](https://i.imgur.com/itWUcXM.png)
@@ -188,7 +188,7 @@ Read more about it over [here](https://github.com/appbaseio/abc/blob/dev/docs/im
 
 ## REST API
 
-Appbase.io, by extension of ElasticSearch's REST API offers two ways to index data:
+Appbase.io, by extension of Elasticsearch's REST API offers two ways to index data:
 
 1. Document Index / Document Update endpoint - Read more about this in the doc and see an example code snippet [here](https://rest.appbase.io/?version=latest#81149466-4ba5-8214-56f6-6a0d2f3bebcc).
 2. Bulk Index endpoint - Read more in the doc and see an example code snippet [here](https://rest.appbase.io/?version=latest#1162c8a2-733f-aee0-1c57-63fc3979feeb).

@@ -49,7 +49,7 @@ Here are some use cases where Query Rules can help you improve search relevance
     <br />
     Here, you can also configure filter conditions, which can help you set triggers based on filtering field and value. For example, `brand` is `apple`.
 
-You can also configure rules for specific `indexes` in your ElasticSearch cluster and for a specific `time period` (example you only want to promote result for a seasonal sale on your e-commerce store ). By default, it is applicable on all the indexes and all the time.
+You can also configure rules for specific `indexes` in your Elasticsearch cluster and for a specific `time period` (example you only want to promote result for a seasonal sale on your e-commerce store ). By default, it is applicable on all the indexes and all the time.
 
 ![configure if condition](https://www.dropbox.com/s/3zdnfuzm9bnqln3/Screenshot%202020-02-20%2010.20.25.png?raw=1)
 
@@ -118,14 +118,14 @@ It helps in replacing the user’s entire search query with another query. Helps
 ![replace search term](https://www.dropbox.com/s/p0he4889pkbl1u8/Screenshot%202020-02-20%2010.50.10.png?raw=1)
 
 ### Replace Search Query
-This action gives you more control over the search query in a way that you can modify the whole query by using the [ElasticSearch's Query String](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html) syntax.
+This action gives you more control over the search query in a way that you can modify the whole query by using the [Elasticsearch's Query String](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html) syntax.
 
 For example, the following query returns all the documents for which  `height` and `width` matches `10` and `20` respectively.
 
 ```bash
 height:10 + width:20
 ```
-The above is just an example of ElasticSearch query string syntax where values are fixed. You can also use the variable values captured from the `query` value as per the regular expression defined in the trigger expression.
+The above is just an example of Elasticsearch query string syntax where values are fixed. You can also use the variable values captured from the `query` value as per the regular expression defined in the trigger expression.
 
 For example, let's define the trigger expression with the help of the `advanced editor`.
 

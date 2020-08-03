@@ -33,7 +33,7 @@ const APIPage = () => {
 								ReactiveSearch
 							</h2>
 							<p className={`${Spirit.small} midgrey-l2 mt2`}>
-								UI components library for ElasticSearch
+								UI components library for Elasticsearch
 							</p>
 						</div>
 						<div className={sectionStyles.cardContainer}>
@@ -65,7 +65,7 @@ const APIPage = () => {
 							</h2>
 							<p className={`${Spirit.small} midgrey-l2 mt2`}>
 								Lightweight and performance focused searchbox UI component to query
-								and display results from your ElasticSearch app (aka index).
+								and display results from your Elasticsearch app (aka index).
 							</p>
 						</div>
 						<div className={sectionStyles.cardContainer}>

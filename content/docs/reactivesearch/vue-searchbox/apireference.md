@@ -1,7 +1,7 @@
 ---
 title: 'QuickStart'
 meta_title: 'QuickStart to Vue SearchBox'
-meta_description: 'Vue SearchBox is a lightweight vue searchbox UI component to query your ElasticSearch app.'
+meta_description: 'Vue SearchBox is a lightweight vue searchbox UI component to query your Elasticsearch app.'
 keywords:
     - quickstart
     - vue-searchbox
@@ -13,7 +13,7 @@ nestedSidebar: 'vue-searchbox-reactivesearch'
 
 ![Image to be displayed](https://i.imgur.com/I6hHgoP.png)
 
-`Vue SearchBox` offers a lightweight (~22KB: Minified + Gzipped) and performance focused searchbox UI component to query and display results from your ElasticSearch app (aka index) using declarative props. It is an alternative to using the [DataSearch component](/docs/reactivesearch/vue/search/DataSearch/) from Vue ReactiveSearch.
+`Vue SearchBox` offers a lightweight (~22KB: Minified + Gzipped) and performance focused searchbox UI component to query and display results from your Elasticsearch app (aka index) using declarative props. It is an alternative to using the [DataSearch component](/docs/reactivesearch/vue/search/DataSearch/) from Vue ReactiveSearch.
 
 ### When to Use Vue SearchBox
 
@@ -83,7 +83,7 @@ Example uses of searchbox UI:
 -   **url** `string` [required]
     URL for the Elasticsearch cluster. Defaults to `https://scalr.api.appbase.io`
 -   **enableAppbase** `boolean` [optional]
-    enableAppbase is false by default. You can set this to true when you're using appbase.io alongside ElasticSearch. It enables the following features:
+    enableAppbase is false by default. You can set this to true when you're using appbase.io alongside Elasticsearch. It enables the following features:
     -   Recording of analytics events - search and clicks. [Read more](/docs/reactivesearch/vue/advanced/analytics/).
     -   Query generation happens on server side - protecting against security concerns around query injection.
     -   Apply query rules and functions for search queries. [Read more](/docs/search/rules/).
