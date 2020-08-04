@@ -28,6 +28,7 @@ import {
 	updateCustomQuery,
 	updateDefaultQuery,
 	getTopSuggestions,
+	getQueryOptions,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
@@ -53,7 +54,6 @@ import {
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import ComponentWrapper from '../basic/ComponentWrapper';
-import { getQueryOptions } from '../../../../reactivecore/src/utils/helper';
 
 const Text = withTheme(props => (
 	<span
