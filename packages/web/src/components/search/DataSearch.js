@@ -27,6 +27,7 @@ import {
 	updateCustomQuery,
 	updateDefaultQuery,
 	getTopSuggestions,
+	getQueryOptions,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -53,7 +54,6 @@ import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import Mic from './addons/Mic';
 import ComponentWrapper from '../basic/ComponentWrapper';
-import { getQueryOptions } from '../../../../reactivecore/src/utils/helper';
 
 class DataSearch extends Component {
 	constructor(props) {
