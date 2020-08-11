@@ -482,10 +482,13 @@ const ReactiveList = {
 			options.from = this.$data.from;
 
 			if (props.sortOptions) {
+				const sortOptionIndex = props.defaultSortOption
+					? props.sortOptions.findIndex(s => s.label === props.defaultSortOption)
+					: 0;
 				options.sort = [
 					{
-						[props.sortOptions[0].dataField]: {
-							order: props.sortOptions[0].sortBy,
+						[props.sortOptions[sortOptionIndex].dataField]: {
+							order: props.sortOptions[sortOptionIndex].sortBy,
 						},
 					},
 				];
