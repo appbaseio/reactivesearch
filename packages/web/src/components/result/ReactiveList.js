@@ -511,7 +511,7 @@ class ReactiveList extends Component {
 
 	scrollHandler = () => {
 		let renderLoader
-			= window.innerHeight + window.pageYOffset + 300 >= document.body.offsetHeight;
+			= window.innerHeight + window.pageYOffset + 300 >= document.body.scrollHeight;
 		if (this.props.scrollTarget) {
 			renderLoader
 				= this.domNode.clientHeight + this.domNode.scrollTop + 300
