@@ -525,7 +525,7 @@ const ReactiveList = {
 		scrollHandler() {
 			if (
 				!this.isLoading
-				&& window.innerHeight + window.pageYOffset + 300 >= document.body.offsetHeight
+				&& window.innerHeight + window.pageYOffset + 300 >= document.body.scrollHeight
 			) {
 				this.loadMore();
 			}
