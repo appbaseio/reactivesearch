@@ -21,7 +21,7 @@ This diagram highlights how Arc works. It directly interacts with an underlying 
 
 ## Quickstart Recipes
 
-You can install [Arc](https://arc-dashboard.appbase.io) on any server environment. We have created quickstart recipes to make the installation process seamless for the following platforms:
+You can install [Arc](https://dash.appbase.io) on any server environment. We have created quickstart recipes to make the installation process seamless for the following platforms:
 
 <div class="grid-integrations-index mt4 mt6-l f8">
 	<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem; height: 120px;width:120px;" href="#using-appbaseio">
@@ -189,19 +189,21 @@ curl -u="USERNAME:PASSWORD" http://EC2-PUBLIC-[IP/DNS]
 
 #### **Accessing Arc Dashboard**
 
-Now that all our configurations are complete, in order to access all the Arc Services, let us sign in to the [Arc dashboard](https://arc-dashboard.appbase.io/login).
+Now that all our configurations are complete, in order to access all the Arc Services, let us sign in to the [Arc dashboard](https://dash.appbase.io/login).
 
--   **Step 1 -** Sign in into [Arc dashboard](https://arc-dashboard.appbase.io/login) using your EC2 Public IP / Domain with Username and Password configured above.
+-   **Step 1 -** Sign in into [Arc dashboard](https://dash.appbase.io/login) using your EC2 Public IP / Domain with Username and Password configured above.
 
 ![](https://i.imgur.com/qVSHx0F.png)
 
-🔥 Hurray! You can now start accessing all the Appbase.io services using [Arc Dashboard](https://arc-dashboard.appbase.io).
+🔥 Hurray! You can now start accessing all the Appbase.io services using [Arc Dashboard](https://dash.appbase.io).
 
 ---
 
 ### Using Docker
 
 Run appbase.io via a single [docker compose file](https://github.com/appbaseio/arc-dockerized/blob/master/docker-compose-with-elasticsearch.yaml). This setup enables you to run appbase.io and Elasticsearch together with single command, i.e. `docker-compose up -d` 😎.
+
+> **Note:** If you're looking to run appbase.io with Kubernetes instead, check out our blog post on the same over [here](https://medium.appbase.io/deploy-elasticsearch-and-appbase-io-with-kubernetes-gke-in-10-steps-e1b7d0987adc).
 
 The dockerized setup is composed of the following services:
 
@@ -272,17 +274,17 @@ The steps described here assumes a that you have [docker](https://docs.docker.co
 
     > **Note:** Once you save the configuration, it may take 5-10s to restart the arc service.
 
--   **Step 7:** Start using Arc Services using [Arc Dashboard](https://arc-dashboard.appbase.io/). Here you will have to input Arc Cluster URL which will be of the form http(s)://localhost_OR_cluster_url. Enter the username and password values that you configured in _Step 5_.
+-   **Step 7:** Start using Arc Services using [Arc Dashboard](https://dash.appbase.io/). Here you will have to input Arc Cluster URL which will be of the form http(s)://localhost_OR_cluster_url. Enter the username and password values that you configured in _Step 5_.
 
 ---
 
 ### How to create Arc instance?
 
-Creating an Arc instance will enable you to access [Arc Dashboard](https://arc-dashboard.appbase.io). While following instance creation process, you will get an `ARC_ID`. This will be helpful while configuring Arc, with any of the deployment options listed below.
+Creating an Arc instance will enable you to access [Arc Dashboard](https://dash.appbase.io). While following instance creation process, you will get an `ARC_ID`. This will be helpful while configuring Arc, with any of the deployment options listed below.
 
 Follow the steps listed below to successfully create an Arc instance.
 
-**Step 1 -** Go to [Arc Dashboard](https://arc-dashboard.appbase.io/install).
+**Step 1 -** Go to [Arc Dashboard](https://dash.appbase.io/install).
 
 ![](https://i.imgur.com/YZubabh.png)
 
