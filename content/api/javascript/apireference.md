@@ -76,9 +76,9 @@ appbaseRef
 
 -   **params** `Object` <br>A JavaScript object containing the type, id and the JSON data to be indexed
 
-                                         - **type** ``String`` <br>The type (aka collection) under which the data will be indexed
-                                         - **body** ``Object`` <br>Data to be indexed, a valid JSON object
-                                         - **id** ``String`` <br>Unique ID for the JSON data. ``id`` is auto generated if not specified
+    -   **type** `String` <br>The type (aka collection) under which the data will be indexed
+    -   **body** `Object` <br>Data to be indexed, a valid JSON object
+    -   **id** `String` <br>Unique ID for the JSON data. `id` is auto generated if not specified
 
 ### update()
 
@@ -110,9 +110,9 @@ appbaseRef
 
 -   **params** `Object` <br>A JavaScript object containing the type, id, and the partial JSON data to be updated
 
-                                         - **type** ``String`` <br>The type (aka collection) under which the data will be indexed
-                                         - **body.doc** ``Object`` <br>Partial doc JSON to be updated (all the JSON data can only reside under the body.doc field)
-                                         - **id** ``String`` <br>Unique ID of the JSON document to be updated. ``id`` here is mandatory and should match an existing object.
+    -   **type** `String` <br>The type (aka collection) under which the data will be indexed
+    -   **body.doc** `Object` <br>Partial doc JSON to be updated (all the JSON data can only reside under the body.doc field)
+    -   **id** `String` <br>Unique ID of the JSON document to be updated. `id` here is mandatory and should match an existing object.
 
 ### delete()
 
@@ -138,8 +138,8 @@ appbaseRef
 
 -   **params** `Object` <br>A JavaScript object containing the `type` and `id` of the JSON object to be deleted
 
-                                         - **type** ``String`` <br>The type (aka collection) of the object to be deleted
-                                         - **id** ``String`` <br>Unique ID for the JSON data
+    -   **type** `String` <br>The type (aka collection) of the object to be deleted
+    -   **id** `String` <br>Unique ID for the JSON data
 
 ### bulk()
 
@@ -186,8 +186,8 @@ appbaseRef
 
 -   **params** `Object` <br>A JavaScript object containing the `body` and optionally a default `type` to be used for actions
 
-                                         - **body** ``Array`` <br>A JavaScript array of actions to be performed written as a sequence of action#1, data#1, action#2, data#2, ... action#n, data#n
-                                         - **type** ``String`` <br>Default document type for actions that don't provide one
+    -   **body** `Array` <br>A JavaScript array of actions to be performed written as a sequence of action#1, data#1, action#2, data#2, ... action#n, data#n
+    -   **type** `String` <br>Default document type for actions that don't provide one
 
 ## GETTING DATA
 
@@ -288,8 +288,8 @@ appbaseRef
 
 -   **params** `Object` <br>A JavaScript object containing the query `type` and `body`.
 
-                                         - **type** ``String`` <br>Document type
-                                         - **body** ``Object`` <br>A JSON object specifying a valid query in the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
+    -   **type** `String` <br>Document type
+    -   **body** `Object` <br>A JSON object specifying a valid query in the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
 
 **Returns**
 Promise.
@@ -318,8 +318,8 @@ appbaseRef
 
 -   **params** `Object` <br>A JavaScript object containing the query `type` and `body`.
 
-                                         - **type** ``String`` <br>Document type
-                                         - **body** ``Array`` <br>An array specifying search requests in header followed by body order for each request.
+    -   **type** `String` <br>Document type
+    -   **body** `Array` <br>An array specifying search requests in header followed by body order for each request.
 
 **Returns**
 Promise.
@@ -431,8 +431,8 @@ appbaseRef.getStream(
 
 -   **params** `Object` <br>A JavaScript object containing the `type` and `id` of the document to be streamed.
 
-                                         - **type** ``String`` <br>Document type
-                                         - **id** ``String`` <br>Document ID (The ID is always a ``String`` value)
+    -   **type** `String` <br>Document type
+    -   **id** `String` <br>Document ID (The ID is always a `String` value)
 
 > Note <span class="fa fa-info-circle"></span>
 >
@@ -492,8 +492,8 @@ appbaseRef.searchStream(
 
 -   **params** `Object` <br>A JavaScript object containing the query `type` and `body`
 
-                                         - **type** ``String`` <br>Document type
-                                         - **body** ``Object`` <br>A JSON object specifying a valid query in the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
+    -   **type** `String` <br>Document type
+    -   **body** `Object` <br>A JSON object specifying a valid query in the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
 
 > Note <span class="fa fa-info-circle"></span>
 >
@@ -555,16 +555,16 @@ appbaseRef.searchStreamToURL(
 
 -   **queryParams** `Object` <br>A JavaScript object containing the query `type` and `body`
 
-                                         - **type** ``String`` <br>Document type
-                                         - **body** ``Object`` <br>A JSON object specifying a valid query in the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
+    -   **type** `String` <br>Document type
+    -   **body** `Object` <br>A JSON object specifying a valid query in the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
 
 -   **urlParams** `Object` - A JavaScript object containing the `url` to which data would be streamed on a query match. It supports optional fields to attach JSON (or string) payloads, control the frequency and number of updates.
 
-                                         - **url** ``String`` <br>A URL string
-                                         - **body** ``Object`` <br>A JSON object to be sent to the URL (used as an alternative to **string_body**)
-                                         - **string_body** ``String`` <br>A raw string to be sent to the URL (used as an alternative to **body**)
-                                         - **count** ``Number`` <br># of times the result-request should be sent before terminating the webhook
-                                         - **interval** ``Number`` <br>Wait duration in seconds before the next result-request
+    -   **url** `String` <br>A URL string
+    -   **body** `Object` <br>A JSON object to be sent to the URL (used as an alternative to **string_body**)
+    -   **string_body** `String` <br>A raw string to be sent to the URL (used as an alternative to **body**)
+    -   **count** `Number` <br># of times the result-request should be sent before terminating the webhook
+    -   **interval** `Number` <br>Wait duration in seconds before the next result-request
 
 > Note <span class="fa fa-info-circle"></span>
 >
