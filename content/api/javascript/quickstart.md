@@ -24,19 +24,26 @@ It can't:
 
 [Appbase.io - the database service](https://appbase.io) is opinionated about cluster setup and hence doesn't support the Elasticsearch devops APIs. See [rest.appbase.io](https://rest.appbase.io) for a full reference on the supported APIs.
 
-This is a quick start guide to whet the appetite with the possibilities of data streams.
+## Create Cluster OR Use Existing Elasticsearch
 
-## Creating an App
+You can run dedicated Elasticsearch clusters with Appbase.io services to meet your search requirements using [Appbase.io clusters](/docs/hosting/clusters/).
 
-![](https://i.imgur.com/r6hWKAG.gif)
+-   Log in to[Appbase Dashboard](https://dashboard.appbase.io), and create a new cluster.
+-   Copy the URL of your cluster for further actions
 
-Log in to <span class="fa fa-external-link"></span> [appbase.io dashboard](https://dashboard.appbase.io/), and create a new app.
+You can read more about how to [create cluster](/docs/hosting/clusters/) and its [pricing](https://appbase.io/pricing/).
 
-For this tutorial, we will use an app called `newstreamingapp`. The credentials for this app are `meqRf8KJC:65cc161a-22ad-40c5-aaaf-5c082d5dcfda`.
+## Creating an Index
+
+This gif shows how to create an index on appbase.io cluster, which we will need for this quickstart guide.
+
+![](https://www.dropbox.com/s/qa5nazj2ajaskr6/wky0vrsPPB.gif?raw=1)
+
+For this tutorial, we will use an index called `good-books-demo`. The credentials for this index are `376aa692e5ab:8472bf31-b18a-454d-bd39-257c07d02854`.
 
 > Note <i class="fa fa-info-circle"></i>
 >
-> appbase.io uses **HTTP Basic Auth**, a widely used protocol for a username:password based authentication.
+> Appbase.io uses _HTTP Basic Auth_, a widely used protocol for simple username/password authentication. It also support creating various API credentials with different access. You can read more about access control in [docs](/docs/security/credentials/).
 
 ## Install appbase-js
 
@@ -58,9 +65,9 @@ To write data or stream updates from [appbase.io](https://appbase.io), we need t
 
 ```js
 var appbaseRef = Appbase({
-	url: 'https://scalr.api.appbase.io',
-	app: 'newstreamingapp',
-	credentials: 'meqRf8KJC:65cc161a-22ad-40c5-aaaf-5c082d5dcfda',
+	url: 'https://appbase-demo-ansible-abxiydt-arc.searchbase.io',
+	app: 'good-books-demo',
+	credentials: 'c84fb24cbe08:db2a25b5-1267-404f-b8e6-cf0754953c68',
 });
 ```
 
@@ -68,8 +75,9 @@ var appbaseRef = Appbase({
 
 ```js
 var appbaseRef = Appbase({
-	url: 'https://meqRf8KJC:65cc161a-22ad-40c5-aaaf-5c082d5dcfda@scalr.api.appbase.io',
-	app: 'newstreamingapp',
+	url:
+		'https://c84fb24cbe08:db2a25b5-1267-404f-b8e6-cf0754953c68@appbase-demo-ansible-abxiydt-arc.searchbase.io',
+	app: 'good-books-demo',
 });
 ```
 
@@ -92,7 +100,7 @@ var jsonObject = {
 ```js
 appbaseRef
 	.index({
-		type: 'books',
+		type: '_doc',
 		id: 'X1',
 		body: jsonObject,
 	})
@@ -104,15 +112,13 @@ appbaseRef
 	});
 ```
 
-where `type: 'books'` indicate the collection (or table) inside which the data will be stored and the`id: '1'` is an optional unique identifier.
-
-The `index()` method (and all the other `appbase` methods except streaming methods) return a promise.
+The `index()` method (and all the other `appbase` methods) return a promise.
 
 > Note <span class="fa fa-info-circle"></span>
 >
-> appbase.io uses the same APIs and data modeling conventions as [Elasticsearch](https://www.elastic.co/products/elasticsearch). A **type** is equivalent to a collection in MongoDB or a table in SQL, and a **document** is similar to the document in MongoDB and equivalent to a row in SQL.
+> appbase.io uses the same APIs and data modeling conventions as [Elasticsearch](https://www.elastic.co/products/elasticsearch).
 
-## GETing or Streaming Data
+## GET Data
 
 Unlike typical databases that support GET operations (or Read) for fetching data and queries, Appbase.io operates on both GET and stream modes.
 
@@ -122,32 +128,30 @@ Now that we are able to store data, let's try to get the data back from [appbase
 
 ```js
 appbaseRef.get({
-	type: "books",
-	id: "X1"
+ type: "_doc",
+ id: "X1"
 }).then(function(response) {
-	console.log(response)
+ console.log(response)
 }).catch(function(error) {
-	console.log(error)
+ console.log(error)
 })
 
 /* get() response */
 {
-	"_index": "newstreamingapp",
-	"_type": "books",
-	"_id": "X1",
-	"_version": 5,
-	"found": true,
-	"_source": {
-		"department_name": "Books",
-		"department_name_analyzed": "Books",
-		"department_id": 1,
-		"name": "A Fake Book on Network Routing",
-		"price": 5595
-	}
+ "_index": "good-books-demo",
+ "_type": "books",
+ "_id": "X1",
+ "_version": 5,
+ "found": true,
+ "_source": {
+  "department_name": "Books",
+  "department_name_analyzed": "Books",
+  "department_id": 1,
+  "name": "A Fake Book on Network Routing",
+  "price": 5595
+ }
 }
 ```
-
-Even though `get()` returns a single document data, appbase.io returns it as a stream object with the 'data' event handler.
 
 ### Subscribing to a Document Stream
 
@@ -156,7 +160,7 @@ Let's say that we are interested in subscribing to all the state changes that ha
 ```js
 appbaseRef.getStream(
 	{
-		type: 'books',
+		type: '_doc',
 		id: 'X1',
 	},
 	function(response) {
@@ -168,71 +172,37 @@ appbaseRef.getStream(
 );
 ```
 
-Don't be surprised if you don't see anything printed, `getStream()` only returns when new updates are made to the document.
+## Search Queries
 
-### Observe the updates in realtime
+`search` method helps you query the Elasticsearch with query DSL as its body.
 
-Let's see live updates in action. We will modify the book price in our original `jsonObject` variable from 5595 to 6034 and apply `index()` again.
-
-For brevity, we will not show the `index()` operation here.
+For example, here we are trying to run `match_all` query that returns all the documents.
 
 ```js
-/* getStream() response */
-{
-	"_type": "books",
-	"_id": "X1",
-	"_source": {
-		"department_id": 1,
-		"department_name": "Books",
-		"department_name_analyzed": "Books",
-		"name": "A Fake Book on Network Routing",
-		"price": 6034
-	}
-}
-```
-
-In the new document update, we can see the price change (5595 -> 6034) being reflected. Subsequent changes will be streamed as JSON objects.
-
-`Note:` Appbase always streams the final state of an object, and not the diff b/w the old state and the new state. You can compute diffs on the client side by persisting the state using a composition of (\_type, \_id) fields.
-
-## Streaming Rich Queries
-
-Streaming document updates are great for building messaging systems or notification feeds on individual objects. What if we were interested in continuously listening to a broader set of data changes? The `searchStream()` method scratches this itch perfectly.
-
-In the example below, we will see it in action with a `match_all` query that returns any time a new document is added to the type 'books' or when any of the existing documents are modified.
-
-```js
-appbaseRef.searchStream({
-	type: "books",
-	body: {
-		query: {
-			match_all: {}
-		}
-	}
+appbaseRef.search({
+ body: {
+  query: {
+   match_all: {}
+  }
+ }
 }, function(response) {
-	console.log("searchStream(), new match: ", response);
-}, function(error) {
-	console.log("caught a searchStream() error: ", error)
+ console.log(response);
+}, function("search() response: ", error) {
+ console.log("caught a error: ", error)
 })
 
 /* Response when a new data matches */
 {
-	"_type": "books",
-	"_id": "X1",
-	"_version": 5,
-	"found": true,
-	"_source": {
-		"department_name": "Books",
-		"department_name_analyzed": "Books",
-		"department_id": 1,
-		"name": "A Fake Book on Network Routing",
-		"price": 6034
-	}
+ "_type": "books",
+ "_id": "X1",
+ "_version": 5,
+ "found": true,
+ "_source": {
+  "department_name": "Books",
+  "department_name_analyzed": "Books",
+  "department_id": 1,
+  "name": "A Fake Book on Network Routing",
+  "price": 6034
+ }
 }
 ```
-
-`Note:` Like `getStream()`, `searchStream()` subscribes to the new matches. For fetching existing search results, check out [`search()`](/api/javascript/apireference/#search).
-
-**v0.10.0** introduces a new method [`searchStreamToURL()`](/api/javascript/apireference/#searchstreamtourl) that streams results directly to a URL instead of streaming back.
-
-In this tutorial, we have learnt how to index new data and stream both individual data and results of an expressive query.

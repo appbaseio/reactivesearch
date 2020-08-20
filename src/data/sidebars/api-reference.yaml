@@ -15,13 +15,6 @@
               link: /api/rest/quickstart/
             - title: ABC - Appbase via command line
               link: /api/rest/abc/
-      - group: Golang
-        icon: go-bw
-        items:
-            - title: QuickStart
-              link: /api/go/quickstart/
-            - title: Queries with Go
-              link: /api/go/queries/
       - group: Interactive Examples
         icon: github
         items:
