@@ -55,7 +55,7 @@ RESPONSE
 }
 ```
 
-## Storing Data
+## Indexing Data
 
 Let's insert a JSON object. We add a JSON document `1` with a PUT request.
 
@@ -69,9 +69,6 @@ curl -XPUT https://$credentials@$url/$index/_doc/1 -d '{
 }'
 ```
 
-> Note <i class="fa fa-info-circle"></i>
->
-> appbase.io uses the same APIs as [Elasticsearch](https://www.elastic.co/products/elasticsearch). A **type** is equivalent to a _collection in MongoDB_ or a _table in SQL_, and a document is similar to the document in MongoDB or a _row in SQL_.
 
 ## GET Data
 
@@ -95,22 +92,6 @@ curl -N https://$credentials@$url/$index/_doc/1
   "price": 5595
  }
 }
-```
-
-.
-
-### Modify the Document
-
-Let's modify the book price to 6034.
-
-```bash
-curl -XPUT https://$credentials@$url/$index/_doc/1 --data-binary '{
- "price": 6034,
- "department_name": "Books",
- "department_name_analyzed": "Books",
- "department_id": 1,
- "name": "A Fake Book on Network Routing"
-}'
 ```
 
 ## Search
