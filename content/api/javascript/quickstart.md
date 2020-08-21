@@ -15,8 +15,7 @@ sidebar: 'api-reference'
 It can:
 
 -   Index new documents or update / delete existing ones.
--   Stream updates to documents, queries or filters over `websockets`.
--   Work universally on Node.JS, Browser, and React Native.
+-   Work universally with Node.JS, Browser, and React Native.
 
 It can't:
 
@@ -31,7 +30,7 @@ You can start by creating an [Elasticsearch cluster with appbase.io](/docs/hosti
 -   Log in to[Appbase Dashboard](https://dashboard.appbase.io), and create a new cluster.
 -   Copy the URL of your cluster for further actions
 
-You can read see the different options for creating a cluster and their pricing over [here](https://appbase.io/pricing/)
+You can read see the different options for creating a cluster and their pricing over [here](https://appbase.io/pricing/).
 
 ## Creating an Index
 
@@ -120,10 +119,6 @@ The `index()` method (and all the other `appbase` methods) return a promise.
 
 ## GET Data
 
-Unlike typical databases that support GET operations (or Read) for fetching data and queries, Appbase.io operates on both GET and stream modes.
-
-### Getting a Document Back
-
 Now that we are able to store data, let's try to get the data back from [appbase.io](https://appbase.io) with the `get()` method.
 
 ```js
@@ -151,25 +146,6 @@ appbaseRef.get({
   "price": 5595
  }
 }
-```
-
-### Subscribing to a Document Stream
-
-Let's say that we are interested in subscribing to all the state changes that happen on a document. Here, we would use the `getStream()` method over `get()`, which keeps returning new changes made to the document.
-
-```js
-appbaseRef.getStream(
-	{
-		type: '_doc',
-		id: 'X1',
-	},
-	function(response) {
-		console.log('new document update: ', response);
-	},
-	function(error) {
-		console.log('getStream() failed with: ', error);
-	},
-);
 ```
 
 ## Search Queries
