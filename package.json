@@ -60,8 +60,8 @@
 	},
 	"dependencies": {
 		"@appbaseio/designkit": "^0.9.12",
-		"@appbaseio/reactivemaps": "^3.0.0-beta.2",
-		"@appbaseio/reactivesearch": "^3.2.1",
+		"@appbaseio/reactivemaps": "^3.0.0-beta.10",
+		"@appbaseio/reactivesearch": "^3.12.2",
 		"@reach/router": "^1.2.1",
 		"emotion": "9.2.4",
 		"emotion-server": "9.2.4",
