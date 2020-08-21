@@ -16,12 +16,12 @@ Interactive examples with PHP
 
 Before we start using the appbase.io REST API, we’ll need to set up an appbase.io app.
 
-For this tutorial, we have used a <a href="https://opensource.appbase.io/dejavu/live/#?input_state=XQAAAAKLAQAAAAAAAAA9iIqnY-B2BnTZGEQz6wkFsW71dAzA7YYc-SS2NBdZOu2iiqUDTwzb8SRY-P60qxz_ZFKoJgMwEJushaRl-FxMxQqDCBLVG-xBlA5HfOZXDzUuGnntd_Zw9u4C0YdVJQ8HvMJrVO8AfQy73d9wq7TjySsVRv-NAKU5ZUw4jxU0ynrQflgPkDLN6AGDv4jeOi8Ir9BBSZ-bdv4J2oq7eCzLoC-gl9qTZsTRLHsXPhHvClG5we6nqctwdPgHqEWqj25nG0qo1RkmJYY_ZTF4XEJcMQyIw-2Rck0OE-ZTR7g8d3ste2uR2u9JbeJj9fjtjVNDltaQGN8jaAdUVVriYpB2CzgXN__Rv9tA&editable=false" target="_blank">sample app</a> containing some dummy housing records. All the examples use this app. You can also clone this app (to create your own private app) directly by clicking "Clone this app" in the <a href="https://opensource.appbase.io/dejavu/live/#?input_state=XQAAAAKLAQAAAAAAAAA9iIqnY-B2BnTZGEQz6wkFsW71dAzA7YYc-SS2NBdZOu2iiqUDTwzb8SRY-P60qxz_ZFKoJgMwEJushaRl-FxMxQqDCBLVG-xBlA5HfOZXDzUuGnntd_Zw9u4C0YdVJQ8HvMJrVO8AfQy73d9wq7TjySsVRv-NAKU5ZUw4jxU0ynrQflgPkDLN6AGDv4jeOi8Ir9BBSZ-bdv4J2oq7eCzLoC-gl9qTZsTRLHsXPhHvClG5we6nqctwdPgHqEWqj25nG0qo1RkmJYY_ZTF4XEJcMQyIw-2Rck0OE-ZTR7g8d3ste2uR2u9JbeJj9fjtjVNDltaQGN8jaAdUVVriYpB2CzgXN__Rv9tA&editable=false" target="_blank">data browser view of the app here</a>.
+For this tutorial, we have used a <a href="https://dejavu.appbase.io/?appname=docs-demo&url=https://3f7ed293fbe0:47ff004a-4722-49fe-bc48-0ff0286e4de0@appbase-demo-ansible-abxiydt-arc.searchbase.io&mode=edit" target="_blank">sample app</a> containing some dummy housing records. All the examples use this app. You can also clone this app (to create your own private app) directly by clicking "Clone this app" in the <a href="https://dejavu.appbase.io/?appname=docs-demo&url=https://3f7ed293fbe0:47ff004a-4722-49fe-bc48-0ff0286e4de0@appbase-demo-ansible-abxiydt-arc.searchbase.io&mode=edit" target="_blank">data browser view of the app here</a>.
 
 <br/>
 
-<a target="_blank" href="https://opensource.appbase.io/dejavu/live/#?input_state=XQAAAAKLAQAAAAAAAAA9iIqnY-B2BnTZGEQz6wkFsW71dAzA7YYc-SS2NBdZOu2iiqUDTwzb8SRY-P60qxz_ZFKoJgMwEJushaRl-FxMxQqDCBLVG-xBlA5HfOZXDzUuGnntd_Zw9u4C0YdVJQ8HvMJrVO8AfQy73d9wq7TjySsVRv-NAKU5ZUw4jxU0ynrQflgPkDLN6AGDv4jeOi8Ir9BBSZ-bdv4J2oq7eCzLoC-gl9qTZsTRLHsXPhHvClG5we6nqctwdPgHqEWqj25nG0qo1RkmJYY_ZTF4XEJcMQyIw-2Rck0OE-ZTR7g8d3ste2uR2u9JbeJj9fjtjVNDltaQGN8jaAdUVVriYpB2CzgXN__Rv9tA&editable=false">
-<img alt="Dataset" src="https://i.imgur.com/erNycvVg.png" />
+<a target="_blank" href="https://dejavu.appbase.io/?appname=docs-demo&url=https://3f7ed293fbe0:47ff004a-4722-49fe-bc48-0ff0286e4de0@appbase-demo-ansible-abxiydt-arc.searchbase.io&mode=edit">
+<img alt="Dataset" src="https://www.dropbox.com/s/qyedkg0s463ug59/Screenshot%202020-08-21%20at%201.17.57%20AM.png?raw=1" />
 </a>
 
 All the records are structured in the following format:
@@ -62,7 +62,7 @@ $curl = curl_init();
 
 curl_setopt_array($curl, array(
   // Request URL containing app, type and id or method
-  CURLOPT_URL => "https://scalr.api.appbase.io/{{app}}/{{type}}/{{id/method}}",
+  CURLOPT_URL => "https://appbase-demo-ansible-abxiydt-arc.searchbase.io/{{app}}/{{type}}/{{id/method}}",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -134,7 +134,7 @@ Let's now learn to index multiple documents in one request. For this, we'll use 
 
 <br/>
 
-<iframe height="600px" width="100%" src="<iframe height="600px" width="100%" src="https://repl.it/@lakhansamani/Appbaseio-Go-Bulk-Index-Data?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+<iframe height="400px" width="100%" src="https://repl.it/@lakhansamani/Appbaseio-PHP-bulk?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
 
 > Note <i class="fa fa-info-circle"></i>
 >

@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 
+import Button from '@appbaseio/designkit/lib/atoms/Button';
 import { Spirit } from '../../styles/spirit-styles';
 import Logo from './Logo';
 import DropdownLink from './DropdownLink';
 import Icon from './Icon';
 import Search from './search/HomeSearch';
 import MobileNav from './MobileNav';
-import Button from '@appbaseio/designkit/lib/atoms/Button';
 
 const NavBar = ({ theme }) => {
 	// Theme definitions
@@ -309,16 +309,6 @@ const NavBar = ({ theme }) => {
 																className="dropdown-content-icon mr2"
 															/>
 															Javascript
-														</Link>
-														<Link
-															to="/api/go/quickstart/"
-															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
-														>
-															<Icon
-																name="go-bw"
-																className="dropdown-content-icon mr2"
-															/>
-															Golang
 														</Link>
 														<Link
 															to="/api/rest/quickstart/"
