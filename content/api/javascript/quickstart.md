@@ -24,14 +24,14 @@ It can't:
 
 [Appbase.io - the database service](https://appbase.io) is opinionated about cluster setup and hence doesn't support the Elasticsearch devops APIs. See [rest.appbase.io](https://rest.appbase.io) for a full reference on the supported APIs.
 
-## Create Cluster OR Use Existing Elasticsearch
+## Create Cluster
 
-You can run dedicated Elasticsearch clusters with Appbase.io services to meet your search requirements using [Appbase.io clusters](/docs/hosting/clusters/).
+You can start by creating an [Elasticsearch cluster with appbase.io](/docs/hosting/clusters/) or [bring your Elasticsearch cluster](/docs/hosting/byoc/) or [self-host appbase.io](https://docs.appbase.io/docs/hosting/byoc/#quickstart-recipes).
 
 -   Log in to[Appbase Dashboard](https://dashboard.appbase.io), and create a new cluster.
 -   Copy the URL of your cluster for further actions
 
-You can read more about how to [create cluster](/docs/hosting/clusters/) and its [pricing](https://appbase.io/pricing/).
+You can read see the different options for creating a cluster and their pricing over [here](https://appbase.io/pricing/)
 
 ## Creating an Index
 
