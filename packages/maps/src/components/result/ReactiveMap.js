@@ -12,6 +12,7 @@ import {
 	setDefaultQuery,
 	setComponentProps,
 	updateComponentProps,
+	recordResultClick,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -28,7 +29,6 @@ import { connect, isFunction, ReactReduxContext, getValidPropsKeys } from '@appb
 import Pagination from '@appbaseio/reactivesearch/lib/components/result/addons/Pagination';
 import { Checkbox } from '@appbaseio/reactivesearch/lib/styles/FormControlList';
 import geohash from 'ngeohash';
-import { triggerClickAnalytics } from '../utils';
 
 const Standard = require('./addons/styles/Standard');
 const BlueEssence = require('./addons/styles/BlueEssence');
@@ -919,17 +919,17 @@ class ReactiveMap extends Component {
 		return this.props.loader && this.props.isLoading;
 	}
 
-	triggerAnalytics = (searchPosition) => {
+	triggerAnalytics = (searchPosition, documentId) => {
 		// click analytics would only work client side and after javascript loads
-		const { config, analytics, headers } = this.props;
-
-		triggerClickAnalytics({
-			config,
-			headers,
-			analytics,
-			searchPosition,
-			context: this.context,
-		});
+		let docId = documentId;
+		if (!docId) {
+			const { data } = this.getData();
+			const hitData = data.find(hit => hit._click_id === searchPosition);
+			if (hitData && hitData._id) {
+				docId = hitData._id;
+			}
+		}
+		this.props.triggerAnalytics(searchPosition, docId);
 	};
 
 	withClickIds = (hits) => {
@@ -1032,6 +1032,7 @@ ReactiveMap.propTypes = {
 	customData: types.title,
 	hidden: types.number,
 	rawData: types.rawData,
+	triggerAnalytics: types.funcRequired,
 	// component props
 	autoCenter: types.bool,
 	center: types.location,
@@ -1118,6 +1119,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setComponentProps(component, options, componentType)),
 	updateComponentProps: (component, options) =>
 		dispatch(updateComponentProps(component, options)),
+	triggerAnalytics: (searchPosition, docId) => dispatch(recordResultClick(searchPosition, docId)),
 });
 
 export default connect(
