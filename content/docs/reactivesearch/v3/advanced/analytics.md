@@ -26,7 +26,7 @@ Click analytics have to be wired into the result components. Its supported in `R
 />
 ```
 
-When rendering your component using `render` you have to call the `triggerAnalytics` function by using the `_click_id` property of the result items as an argument.
+When rendering your component using `render` you have to call the `triggerAnalytics` function by using the `_click_id` property of the result items as an argument. This method also supports the document id(optional) as the second param. If document id is not set then ReactiveSearch will calculate it based on the click position.
 Example:
 
 ```jsx
@@ -51,7 +51,7 @@ Example:
 
 ## Click Analytics in Map Component
 
-When rendering results using `renderAllData` in `ReactiveGoogleMap` you may have to call the `triggerAnalytics` function by using the `_click_id` property of the result items as an argument. Example:
+When rendering results using `renderAllData` in `ReactiveGoogleMap` you may have to call the `triggerAnalytics` function by using the `_click_id` property of the result items as an argument. This method also supports the document id(optional) as the second param. If document id is not set then ReactiveSearch will calculate it based on the click position. Example:
 
 ```jsx
 <ReactiveGoogleMap

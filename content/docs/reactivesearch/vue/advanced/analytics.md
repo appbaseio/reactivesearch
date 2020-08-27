@@ -15,7 +15,7 @@ You can take advantage of search and click analytics when using [Appbase.io](htt
 
 ## Click Analytics
 
-Click analytics have to be wired into the result components. Its supported in `ReactiveList`.When using `ReactiveList`, the `renderItem` or `renderAllData` prop|slot-scope receives an extra property to make click analytics work which you have to invoke with `onClick`.
+Click analytics have to be wired into the result components. Its supported in `ReactiveList`.When using `ReactiveList`, the `renderItem` or `render` prop|slot-scope receives an extra property to make click analytics work which you have to invoke with `onClick`. This method also supports the document id(optional) as the second param. If document id is not set then ReactiveSearch will calculate it based on the click position.
 
 ```html
 <reactive-list
@@ -26,19 +26,20 @@ Click analytics have to be wired into the result components. Its supported in `R
 >
 ```
 
-When rendering your component using `renderAllData({ results, streamResults, loadMore, base, triggerClickAnalytics })` you have to call the `triggerClickAnalytics` after adding the `base` value to the `index` (`base` is calculated internally from `currentPage * size`). `index` is assumed to start from `0`. Example:
+When rendering your component using `render` you have to call the `triggerClickAnalytics` function by using the `_click_id` property of the result items as an argument. This method also supports the document id(optional) as the second param. If document id is not set then ReactiveSearch will calculate it based on the click position. Example:
+
 
 ```html
 <reactive-list
     ...
-    <div slot="renderAllData" slot-scope=`
-        { results, streamResults, loadMore, base, triggerClickAnalytics }
+    <div slot="render" slot-scope=`
+        { data, triggerClickAnalytics }
     `>
         <div
-            v-for="(result, index) in results"
-            @click="() => triggerClickAnalytics(base + index)"
+            v-for="(item, index) in data"
+            @click="() => triggerClickAnalytics(item._click_id)"
         >
-            {{ result.title }}
+            {{ item.title }}
         </div>
     </div>
 >
