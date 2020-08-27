@@ -26,6 +26,7 @@ const {
 	setValue,
 	updateComponentProps,
 	setDefaultQuery,
+	recordResultClick,
 } = Actions;
 
 const {
@@ -638,27 +639,17 @@ const ReactiveList = {
 			this.currentPageState = 0;
 			this.from = 0;
 		},
-		triggerClickAnalytics(searchPosition) {
-			// click analytics would only work client side and after javascript loads
-			const {
-				config,
-				analytics: { searchId },
-			} = this;
-			const { url, app, credentials } = config;
-			if (config.analytics && searchId) {
-				fetch(`${url}/${app}/_analytics`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Basic ${btoa(credentials)}`,
-						'X-Search-Id': searchId,
-						'X-Search-Click': true,
-						'X-Search-ClickPosition': searchPosition + 1,
-					},
-				});
+		triggerClickAnalytics(searchPosition, documentId) {
+			let docId = documentId;
+			if (!docId) {
+				const { data } = this.getData();
+				const hitData = data.find(hit => hit._click_id === searchPosition);
+				if (hitData && hitData._id) {
+					docId = hitData._id;
+				}
 			}
+			this.recordResultClick(searchPosition, docId);
 		},
-
 		renderSortOptions() {
 			return (
 				<select
@@ -786,6 +777,7 @@ const mapDispatchtoProps = {
 	updateQuery,
 	updateComponentProps,
 	setDefaultQuery,
+	recordResultClick
 };
 // Only used for SSR
 ReactiveList.generateQueryOptions = props => {

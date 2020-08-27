@@ -32,6 +32,7 @@ const {
 	setCustomQuery,
 	setDefaultQuery,
 	setCustomHighlightOptions,
+	recordSuggestionClick,
 } = Actions;
 const {
 	debounce,
@@ -436,29 +437,16 @@ const DataSearch = {
 				this.setValue(this.$props.value, true);
 			}
 		},
-		triggerClickAnalytics(searchPosition) {
+		triggerClickAnalytics(searchPosition, documentId) {
 			// click analytics would only work client side and after javascript loads
-			const {
-				config,
-				analytics: { suggestionsSearchId },
-				headers,
-			} = this;
-			const { url, app, credentials } = config;
-			if (config.analytics && suggestionsSearchId) {
-				fetch(`${url}/${app}/_analytics`, {
-					method: 'POST',
-					headers: {
-						...headers,
-						'Content-Type': 'application/json',
-						Authorization: `Basic ${btoa(credentials)}`,
-						'X-Search-Id': suggestionsSearchId,
-						'X-Search-Suggestions-Click': true,
-						...(searchPosition !== undefined && {
-							'X-Search-Suggestions-ClickPosition': searchPosition + 1,
-						}),
-					},
-				});
+			let docId = documentId;
+			if (!docId) {
+				const hitData = this.suggestionsList.find(hit => hit._click_id === searchPosition);
+				if (hitData && hitData.source && hitData.source._id) {
+					docId = hitData.source._id;
+				}
 			}
+			this.recordSuggestionClick(searchPosition, docId);
 		},
 
 		clearValue() {
@@ -503,13 +491,13 @@ const DataSearch = {
 
 		onSuggestionSelected(suggestion) {
 			const { value } = this.$props;
+			// Record analytics for selected suggestions
+			this.triggerClickAnalytics(suggestion._click_id);
 			if (value === undefined) {
 				this.setValue(suggestion.value, true, this.$props, causes.SUGGESTION_SELECT);
 			} else {
 				this.$emit('change', suggestion.value, this.triggerQuery);
 			}
-			// Record analytics for selected suggestions
-			this.triggerClickAnalytics(suggestion._click_id);
 			this.onValueSelectedHandler(
 				suggestion.value,
 				causes.SUGGESTION_SELECT,
@@ -988,6 +976,7 @@ const mapDispatchtoProps = {
 	setCustomQuery,
 	setDefaultQuery,
 	setCustomHighlightOptions,
+	recordSuggestionClick,
 };
 const DSConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(DataSearch), {
 	componentType: componentTypes.dataSearch,
