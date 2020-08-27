@@ -643,8 +643,16 @@ class ReactiveList extends Component {
 		}
 	};
 
-	triggerClickAnalytics = (searchPosition) => {
-		this.props.triggerAnalytics(searchPosition);
+	triggerClickAnalytics = (searchPosition, documentId) => {
+		let docId = documentId;
+		if (!docId) {
+			const { data } = this.getData();
+			const hitData = data.find(hit => hit._click_id === searchPosition);
+			if (hitData && hitData._id) {
+				docId = hitData._id;
+			}
+		}
+		this.props.triggerAnalytics(searchPosition, docId);
 	};
 
 	renderSortOptions = () => (
@@ -922,7 +930,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryOptions(component, props, execute)),
 	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
 	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
-	triggerAnalytics: searchPosition => dispatch(recordResultClick(searchPosition)),
+	triggerAnalytics: (searchPosition, docId) => dispatch(recordResultClick(searchPosition, docId)),
 });
 
 const ConnectedComponent = connect(

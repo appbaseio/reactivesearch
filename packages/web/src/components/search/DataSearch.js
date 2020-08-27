@@ -803,9 +803,15 @@ class DataSearch extends Component {
 			: [];
 	}
 
-	triggerClickAnalytics = (searchPosition) => {
-		// click analytics would only work client side and after javascript loads
-		this.props.triggerAnalytics(searchPosition);
+	triggerClickAnalytics = (searchPosition, documentId) => {
+		let docId = documentId;
+		if (!docId) {
+			const hitData = this.parsedSuggestions.find(hit => hit._click_id === searchPosition);
+			if (hitData && hitData.source && hitData.source._id) {
+				docId = hitData.source._id;
+			}
+		}
+		this.props.triggerAnalytics(searchPosition, docId);
 	};
 
 	withTriggerQuery = (func) => {
@@ -1116,7 +1122,8 @@ const mapDispatchtoProps = dispatch => ({
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	triggerAnalytics: searchPosition => dispatch(recordSuggestionClick(searchPosition)),
+	triggerAnalytics: (searchPosition, documentId) =>
+		dispatch(recordSuggestionClick(searchPosition, documentId)),
 });
 
 const ConnectedComponent = connect(
