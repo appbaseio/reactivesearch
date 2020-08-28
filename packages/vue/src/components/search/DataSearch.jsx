@@ -208,7 +208,7 @@ const DataSearch = {
 		},
 		value(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
-				this.setValue(newVal, true, this.$props);
+				this.setValue(newVal, true, this.$props, undefined, false);
 			}
 		},
 		defaultQuery(newVal, oldVal) {
@@ -316,13 +316,15 @@ const DataSearch = {
 				this.onValueSelectedHandler(currentValue, causes.SEARCH_ICON_CLICK);
 			}
 		},
-		setValue(value, isDefaultValue = false, props = this.$props, cause) {
+		setValue(value, isDefaultValue = false, props = this.$props, cause, toggleIsOpen = true) {
 			const performUpdate = () => {
 				this.currentValue = value;
 				this.normalizedSuggestions = [];
 				if (isDefaultValue) {
 					if (this.$props.autosuggest) {
-						this.isOpen = false;
+						if (toggleIsOpen) {
+							this.isOpen = false;
+						}
 						this.updateDefaultQueryHandler(value, this.$props);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
@@ -480,7 +482,6 @@ const DataSearch = {
 			}
 
 			const { value } = this.$props;
-
 			if (value === undefined) {
 				this.setValue(inputValue);
 			} else {
