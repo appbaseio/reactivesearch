@@ -69,7 +69,7 @@ Example uses:
     >   Note:
     >   This prop is optional only when `enableAppbase` prop is set to `true` in `ReactiveBase` component.
     >
-
+ 
 -   **size** `Number` [optional]
     number of suggestions to show. Defaults to `10`.
 -   **excludeFields** `String Array` [optional]
@@ -109,6 +109,8 @@ Example uses:
     set the title of the component to be shown in the UI.
 -   **defaultValue** `string` [optional]
     preset the search query text in the search box.
+-   **value** `string` [optional]
+    sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `change` event.
 -   **fieldWeights** `Array` [optional]
     set the search weight for the database fields, useful when dataField is an Array of more than one field. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.
 -   **placeholder** `String` [optional]
@@ -550,6 +552,40 @@ export default {
 
 ## Events
 
+- **change** `function` [optional]
+    is an event that accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This event is useful to control the value updates of search input.
+
+    ```jsx
+    <template>
+        <data-search
+            value="value"
+            @change="handleChange"
+        />
+    </template>
+
+    <script>
+    export default {
+	    name: 'app',
+        data() {
+            return {
+                value: ""
+            }
+        },
+        methods: {
+            handleChange(value, triggerQuery, event) {
+                this.value = value;
+                // Trigger the search query to update the dependent components
+                triggerQuery()
+            }
+        }
+    };
+    </script>
+    ```
+
+> Note:
+>
+> If you're using the controlled behavior than it's your responsibility to call the `triggerQuery` method to update the query i.e execute the search query and update the query results in connected components by `react` prop. It is not mandatory to call the `triggerQuery` in `onChange` you can also call it in other input handlers like `onBlur` or `onKeyPress`.
+
 -   **queryChange**
     is an event which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This event is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **valueChange**
@@ -570,6 +606,11 @@ The following events to the underlying `input` element:
 -   **keyPress**
 -   **keyDown**
 -   **keyUp**
+
+> Note:
+>
+> 1. All these events accepts the `triggerQuery` as a second parameter which can be used to trigger the `DataSearch` query with the current selected value (useful to customize the search query execution).
+> 2. There is a known [issue](https://github.com/appbaseio/reactivesearch/issues/1087) with `keyPress` when `autosuggest` is set to true. It is recommended to use `keyDown` for the consistency.
 
 ## Examples
 
