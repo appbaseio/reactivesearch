@@ -263,14 +263,6 @@ const ReactiveList = {
 				this.$emit('data', this.getData());
 			}
 		},
-		total(newVal, oldVal) {
-			if (this.shouldRenderPagination && newVal !== oldVal) {
-				let currentPage = this.$data.total ? 0 : this.currentPageState;
-				if (this.defaultPage >= 0) currentPage = this.defaultPage;
-				this.currentPageState = currentPage;
-				this.$emit('pageChange', currentPage + 1, this.totalPages);
-			}
-		},
 		currentPage(newVal, oldVal) {
 			if (oldVal !== newVal && newVal > 0 && newVal <= this.totalPages) {
 				this.setPage(newVal - 1);
@@ -296,6 +288,17 @@ const ReactiveList = {
 			this.setStreaming(this.$props.componentId, true);
 		}
 
+		if(this.defaultPage < 0 && this.currentPage > 0) {
+			if (this.$props.URLParams) {
+				this.setPageURL(
+					this.$props.componentId,
+					this.currentPage,
+					this.$props.componentId,
+					false,
+					true,
+				);
+			}
+		}
 		let options = getQueryOptions(this.$props);
 		options.from = this.$data.from;
 
@@ -570,7 +573,6 @@ const ReactiveList = {
 					},
 					false,
 				);
-
 				if (this.$props.URLParams) {
 					this.setPageURL(
 						this.$props.componentId,

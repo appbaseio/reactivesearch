@@ -16,7 +16,6 @@
 				dataField="original_title.keyword"
 				className="result-list-container"
 				:pagination="true"
-				:from="0"
 				:size="5"
 				:react="{ and: ['BookSensor'] }"
 			>
