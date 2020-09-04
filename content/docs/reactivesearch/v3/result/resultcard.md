@@ -75,6 +75,9 @@ const { ResultCardsWrapper } = ReactiveList;
 
 ## Props
 
+-   **id** `string|number` [optional]
+The `_id` property of the elasticsearch hit object. This prop is required to track the impressions for search results. [Read More](docs/reactivesearch/v3/advanced/analytics#track-impressions-for-search-results)
+
 -   **target** `string` [optional]
     This prop is equivalent to the `target` attribute of html `a` tags. It defaults to `_blank`.
 -   **href** `string` [optional]

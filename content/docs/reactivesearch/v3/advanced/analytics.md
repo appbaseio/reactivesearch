@@ -11,7 +11,7 @@ sidebar: 'docs'
 nestedSidebar: 'web-reactivesearch'
 ---
 
-You can take advantage of search and click analytics when using [Appbase.io](https://appbase.io) as a backend with ReactiveSearch. Search analytics work out of the box with `analytics` prop in `ReactiveBase`. This recipe explains how to implement click analytics for your app.
+You can take advantage of search and click analytics when using [Appbase.io](https://appbase.io) as a backend with ReactiveSearch. Search analytics work out of the box with `analytics` prop in `ReactiveBase`. This recipe explains how to implement click analytics and track impressions for your app.
 
 ## Click Analytics
 
@@ -89,6 +89,70 @@ Similarily, in `OpenStreetMap`:
         )
     }
 />
+```
+
+## Track Impressions for Search Results
+
+Impressions tracking is tied to the result components. You may have to do some extra setup in the `ReactiveList` component to track the impressions. Please follow the following instructions for different kind of use-cases.
+
+1. If you're using the `renderItem` method to render the results then no extra setup is required.
+2. If you're using the `render` method for the results UI then you have to define the `id` property for each result element. The value of `id` property must be the `_id` value from the elasticsearch hit object. 
+
+For an example,
+
+```jsx
+<ReactiveList
+	render={({ data }) => {
+		return (
+			<ul>
+				{data.map(hit => (
+                    /* Set the id property on list element to track the impressions */
+					<li id={hit._id}>
+						{hit.title}
+						{/* Render UI */}
+					</li>
+				))}
+			</ul>
+		);
+	}}
+/>
+```
+3. If you're using `render` method with `ResultCard` or `ResultList` components then you have to define the `id` prop for those components.
+
+For an example,
+
+```jsx
+<ReactiveList
+    componentId="SearchResult"
+>
+    {({ data }) => (
+        <ResultCardsWrapper>
+            {
+                data.map(item => (
+                    /* Set the id property on ResultCard to track the impressions */
+                    <ResultCard id={item._id} key={item._id}>
+                        <ResultCard.Title
+                            dangerouslySetInnerHTML={{
+                                __html: item.original_title
+                            }}
+                        />
+                        <ResultCard.Description>
+                            <div>
+                                <div>by {item.authors}</div>
+                                <div>
+                                    ({item.average_rating} avg)
+                                </div>
+                            </div>
+                            <span>
+                                Pub {item.original_publication_year}
+                            </span>
+                        </ResultCard.Description>
+                    </ResultCard>
+                ))
+            }
+        </ResultCardsWrapper>
+    )}
+</ReactiveList>
 ```
 
 ## Configure the analytics experience
