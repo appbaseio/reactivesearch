@@ -12,10 +12,16 @@ class Results extends React.Component {
 			<div
 				className={`${this.props.listClass} ${getClassName(this.props.innerClass, 'list')}`}
 			>
-				{this.props.filteredResults.map((item, index) =>
-					this.props.renderItem(item, () => {
-						this.props.triggerClickAnalytics(this.props.base + index);
-					}),
+				{this.props.filteredResults.map((item, index) => (
+					// Add document id to track the `impressions`
+					<span id={item._id}>
+						{
+							this.props.renderItem(item, () => {
+								this.props.triggerClickAnalytics(this.props.base + index);
+							})
+						}
+					</span>
+				),
 				)}
 			</div>
 		);

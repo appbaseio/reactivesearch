@@ -8,6 +8,7 @@ declare namespace ResultListTree {
 		href?: string;
 		children: React.ReactNode;
 		small?: boolean;
+		id?: string|number;
 	}
 
 	interface ImageProps extends React.HTMLAttributes<HTMLDivElement> {

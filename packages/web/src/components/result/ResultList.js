@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { oneOfType } from 'prop-types';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import ListItem from '../../styles/ListItem';
@@ -38,11 +39,12 @@ class ResultList extends Component {
 
 	render() {
 		const {
-			children, href, target, ...props
+			children, id, href, target, ...props
 		} = this.props;
 		const { hasImage, isSmall } = this.state;
 		return (
 			<ListItem
+				id={id}
 				href={href}
 				image={hasImage}
 				small={isSmall}
@@ -60,6 +62,7 @@ ResultList.propTypes = {
 	children: types.children,
 	target: types.stringRequired,
 	href: types.string,
+	id: oneOfType([types.string, types.number]),
 };
 
 ResultList.defaultProps = {
