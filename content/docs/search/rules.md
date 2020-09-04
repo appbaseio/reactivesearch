@@ -12,12 +12,12 @@ sidebar: 'docs'
 
 ## Overview
 
-Query Rules let you make precise, predetermined changes to your search results or search queries, thus allowing you to enhance the search experience. For example, you can reposition items in a user’s search results or activate filters based on query terms. Rules can also be enabled for a fixed period of time: this makes Rules a great way of implementing sales or promotions. Query Rules are essentially `If-This-Then-That` construct - **_If_** **search query contains 'Google',** **_then_**
-**promote 'Chromebook'.** Query Rules serve a very specific purpose as far as search results and merchandising is concerned. When building a commercial search product, customers more often than not require commercializing the product based on certain search queries.
+Query Rules enable you to cover the search relevance blind spots by creating "If this, then that" style rules tailored to your business use-case. For example, you can use query rules to promote an item, modify the search query, or show dynamic facets based on different kinds of search queries. Query Rules can also be enabled for a fixed period of time: this makes Query Rules a great way for implementing seasonal sales and promotions. Query Rules can be visualized as `If-This-Then-That`, e.g. **_If_** **search query contains 'Google',** **_then_**
+**promote 'Chromebook'.** When building an e-commerce search experience, customers more often than not require customizing their product search based on different criteria.
 
 ![query rule dashboard](https://www.dropbox.com/s/1n4uznradc78lch/Screenshot%202020-02-20%2011.06.00.png?raw=1)
 
-> Query rules are available with **Production I, II, III, and IV** cluster plans or with the **Enterprise Plan** for Self Hosted Appbase.io.
+> Query rules are available with the **Production** and **Enterprise** plans.
 
 ## Use Cases
 
