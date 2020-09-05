@@ -41,7 +41,7 @@ const Main = () => (
 					render={({ data }) => (
 						<ReactiveList.ResultCardsWrapper>
 							{data.map(item => (
-								<ResultCard id={item.id} key={item.id}>
+								<ResultCard id={item._id} key={item._id}>
 									<ResultCard.Image src={item.image} />
 									<ResultCard.Title>
 										<div

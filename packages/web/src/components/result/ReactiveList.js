@@ -718,7 +718,7 @@ class ReactiveList extends Component {
 
 	render() {
 		const {
-			renderItem, size, error, renderPagination,
+			renderItem, size, error, renderPagination, analytics,
 		} = this.props;
 		const { currentPage } = this.state;
 		const { filteredResults } = this.getAllData();
@@ -759,6 +759,7 @@ class ReactiveList extends Component {
 
 				<Results
 					base={base}
+					analytics={analytics}
 					hasCustomRender={this.hasCustomRenderer}
 					getComponent={this.getComponent}
 					listClass={this.props.listClass}
@@ -806,7 +807,6 @@ ReactiveList.propTypes = {
 	setDefaultQuery: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	setStreaming: types.func,
-	searchState: types.dateObject,
 	updateQuery: types.funcRequired,
 	currentPage: types.number,
 	hits: types.hits,
@@ -820,7 +820,7 @@ ReactiveList.propTypes = {
 	total: types.number,
 	hidden: types.number,
 	config: types.props,
-	analytics: types.props,
+	analytics: types.bool,
 	queryLog: types.props,
 	error: types.title,
 	headers: types.headers,
@@ -876,6 +876,7 @@ ReactiveList.defaultProps = {
 	pages: 5,
 	infiniteScroll: true,
 	pagination: false,
+	analytics: false,
 	paginationAt: 'bottom',
 	showEndPage: false,
 	includeFields: ['*'],
@@ -901,6 +902,7 @@ const mapStateToProps = (state, props) => ({
 		|| -1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
+	analytics: state.config && state.config.analytics,
 	aggregationData: state.compositeAggregations[props.componentId],
 	isLoading: state.isLoading[props.componentId] || false,
 	streamHits: state.streamHits[props.componentId],

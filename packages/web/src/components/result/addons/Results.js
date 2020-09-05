@@ -1,32 +1,40 @@
 import React from 'react';
 import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import ImpressionTracker from './ImpressionTracker';
 
-class Results extends React.Component {
-	render() {
-		if (this.props.hasCustomRender) {
-			return this.props.getComponent();
-		}
-
-		return (
-			<div
-				className={`${this.props.listClass} ${getClassName(this.props.innerClass, 'list')}`}
-			>
-				{this.props.filteredResults.map((item, index) => (
+const Results = ({
+	filteredResults,
+	hasCustomRender,
+	listClass,
+	innerClass,
+	renderItem,
+	getComponent,
+	triggerClickAnalytics,
+	base,
+	analytics,
+}) => {
+	const resultElement = () =>
+		(hasCustomRender ? (
+			getComponent()
+		) : (
+			<div className={`${listClass} ${getClassName(innerClass, 'list')}`}>
+				{filteredResults.map((item, index) => (
 					// Add document id to track the `impressions`
 					<span id={item._id}>
-						{
-							this.props.renderItem(item, () => {
-								this.props.triggerClickAnalytics(this.props.base + index);
-							})
-						}
+						{renderItem(item, () => {
+							triggerClickAnalytics(base + index);
+						})}
 					</span>
-				),
-				)}
+				))}
 			</div>
-		);
+		));
+	// If analytics is set to true then render with impression tracker
+	if (analytics) {
+		return <ImpressionTracker hits={filteredResults}>{resultElement()}</ImpressionTracker>;
 	}
-}
+	return resultElement();
+};
 
 Results.propTypes = {
 	hasCustomRender: types.boolRequired,
@@ -37,6 +45,7 @@ Results.propTypes = {
 	listClass: types.string,
 	filteredResults: types.hits,
 	triggerClickAnalytics: types.func,
+	analytics: types.bool,
 };
 
 export default Results;
