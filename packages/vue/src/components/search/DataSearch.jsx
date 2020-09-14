@@ -139,7 +139,7 @@ const DataSearch = {
 		iconPosition: VueTypes.oneOf(['left', 'right']).def('left'),
 		includeFields: types.includeFields.def(['*']),
 		innerClass: types.style,
-		innerRef: types.func,
+		innerRef: types.string,
 		render: types.func,
 		renderQuerySuggestions: types.func,
 		parseSuggestion: types.func,
@@ -667,7 +667,7 @@ const DataSearch = {
 										showIcon={this.$props.showIcon}
 										showClear={this.$props.showClear}
 										iconPosition={this.$props.iconPosition}
-										innerRef={this.$props.innerRef}
+										ref={this.$props.innerRef}
 										class={getClassName(this.$props.innerClass, 'input')}
 										placeholder={this.$props.placeholder}
 										{...{
