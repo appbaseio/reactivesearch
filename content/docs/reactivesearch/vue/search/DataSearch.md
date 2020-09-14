@@ -212,7 +212,26 @@ export default {
     >
     > This prop doesn't work when the value of `queryFormat` prop is set to `and`.
 -   **innerRef** `Function` [optional]
-    You can pass a callback using `innerRef` which gets passed to the inner input element as [`ref`](https://reactjs.org/docs/refs-and-the-dom.html).
+    The `innerRef` prop along with the `ref` prop can be used to access the reference of the `input` element that can be used to access/manipulate the native events or values for input element. For, an example the below snippet changes the `type` of the `input` element to `search` from the `text`.
+
+```html
+<template>
+    <data-search
+        componentId="BookSensor"
+		dataField="['original_title', 'original_title.search']"
+        ref="data-search"
+		innerRef="input"
+    />
+</template>
+<script>
+export default {
+	name: 'app',
+	mounted() {
+		this.$refs['data-search'].$children[0].$refs['input'].type = "search"
+	}
+};
+</script>
+```
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **render** `Function|slot-scope` [optional]
