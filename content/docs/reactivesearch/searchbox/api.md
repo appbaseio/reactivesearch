@@ -36,10 +36,10 @@ Example uses of searchbox UI:
 **index.js**
 
 ```js
-import Searchbase from '@appbaseio/searchbase';
+import SearchBase from '@appbaseio/searchbase';
 import searchbox from '@appbaseio/searchbox';
 
-const instance = new Searchbase({
+const instance = new SearchBase({
 	index: 'gitxplore-latest-app',
 	credentials: 'LsxvulCKp:a500b460-73ff-4882-8d34-9df8064b3b38',
 	url: 'https://scalr.api.appbase.io',

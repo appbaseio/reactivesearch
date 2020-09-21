@@ -100,10 +100,10 @@ We populate the suggestions in `.suggestions` index, to use the query suggestion
 ### Usage Example With Searchbox
 
 ```js
-import Searchbase from '@appbaseio/searchbase';
+import SearchBase from '@appbaseio/searchbase';
 import searchbox from '@appbaseio/searchbox';
 
-const instance = new Searchbase({
+const instance = new SearchBase({
 	index: '.suggestions',
 	credentials: `CLUSTER_CREDENTIALS`,
 	url: 'CLUSTER_URL',

@@ -1,7 +1,7 @@
 ---
 title: 'Integrations'
 meta_title: 'Integration with React JS'
-meta_description: 'SearchBase is a lightweight & platform agnostic search library with some common utilities.'
+meta_description: 'searchbase is a lightweight and platform agnostic library that provides scaffolding to create search experiences powered by Elasticsearch.'
 keywords:
     - integrations
     - searchbase
@@ -12,9 +12,10 @@ sidebar: 'docs'
 nestedSidebar: 'searchbase-reactivesearch'
 ---
 
-[searchbase](https://github.com/appbaseio/searchbase) - A lightweight & platform agnostic search library with some common utilities.
+[searchbase](https://github.com/appbaseio/searchbox/tree/master/packages/searchbase) is a lightweight and platform agnostic library that provides scaffolding to create search experiences powered by Elasticsearch.
 
-##Initialization
+## Initialization
+
 You can initialize `SearchBase` in the `constructor` or `componentDidMount`
 
 ```js
@@ -24,9 +25,14 @@ constructor(props) {
     const url = URL;
     const credentials = CRED;
 
-    this.searchBase = new Searchbase({
+    this.searchBase = new SearchBase({
       index,
       url,
+      credentials
+    });
+
+    // Register search component
+    const searchComponent = this.searchBase.register('search-component', {
       dataField: [
         'name',
         'description',
@@ -35,48 +41,53 @@ constructor(props) {
         'owner',
         'topics'
       ],
-      credentials
     });
 
     // Pre-load results
-    this.searchBase.triggerQuery();
+    this.searchComponent.triggerDefaultQuery();
 
-    this.searchBase.subscribeToStateChanges(() => {
-      this.forceUpdate();
-    });
+    // Subscribe to results update
+    this.searchComponent.subscribeToStateChanges((change) => {
+      this.setState({
+        results: change.results.next,
+      })
+    }, ['results']);
 }
 ```
 
-##Change Events
+## Change Events
 
 ```js
 handleSelect = value => {
-	this.searchBase.setValue(value, {
-		triggerQuery: true,
-	});
+  // Fetch results on selection
+	this.searchComponent.setValue(value, {
+    triggerDefaultQuery: true,
+  });
 };
 
 handleChange = e => {
-	this.searchBase.setValue(e.target.value, {
-		triggerSuggestionsQuery: true,
+  // Just update value on change
+	this.searchComponent.setValue(e.target.value, {
+    triggerDefaultQuery: false,
 	});
 };
 ```
 
-##Renderers
-###Input Render
+## Renderers
+
+### Input Render
 
 ```js
-<input type="text" value={this.searchBase.value} onChange={this.handleChange} />
+<input type="text" value={this.searchComponent.value} onChange={this.handleChange} />
 ```
 
-###Suggestions Render
+### Suggestions Render
 
 ```js
 <section style={{ margin: 20 }}>
 	<b>Suggestions</b>
-	{this.searchBase.suggestionsRequestPending && <div>Loading suggestions...</div>}
-	{this.searchBase.suggestions.data.map(i => {
+	{this.searchComponent.requestPending && <div>Loading suggestions...</div>}
+	{this.searchComponent.results.data.map(i => {
 		return (
 			<div onClick={() => this.handleSelect(i.value)} key={i.label}>
 				{i.label}
@@ -86,19 +97,18 @@ handleChange = e => {
 </section>
 ```
 
-###Results Render
+### Results Render
 
 ```js
 <section style={{ margin: 20 }}>
 	<b>Results</b>
-	{this.searchBase.requestPending && <div>Loading results...</div>}
 	{this.searchBase.results.data.map(i => {
 		return <div key={i._id}>{i.name}</div>;
 	})}
 </section>
 ```
 
-##Demo
+## Demo
 <br />
 
 <iframe src="https://codesandbox.io/embed/github/appbaseio/searchbase/tree/master/packages/searchbase/examples/with-react" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>

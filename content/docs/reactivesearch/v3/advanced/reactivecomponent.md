@@ -205,7 +205,7 @@ Check demo [here](https://codesandbox.io/s/3ylrrr0r5q).
     />
     ```
 
-    > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** prop.
+    > If you are using an app with elastic search version less than 6, then defining this prop will result in error.
 
     > It is possible to override this query by providing `defaultQuery` or `customQuery`.
 
