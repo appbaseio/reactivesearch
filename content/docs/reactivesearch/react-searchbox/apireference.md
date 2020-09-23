@@ -1,7 +1,7 @@
 ---
 title: 'API Reference'
 meta_title: 'API Reference for React SearchBox'
-meta_description: 'React Searchbox is a lightweight library that provides scaffolding to create search experiences powered by Elasticsearch.'
+meta_description: 'react-searchbox is a lightweight library that provides scaffolding to create search experiences powered by Elasticsearch.'
 keywords:
     - quickstart
     - react-searchbox

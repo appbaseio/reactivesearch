@@ -1,7 +1,7 @@
 ---
 title: 'QuickStart'
 meta_title: 'QuickStart to React SearchBox'
-meta_description: 'React SearchBox is a lightweight UI library that provides scaffolding to create search experiences powered by Elasticsearch.'
+meta_description: 'react-searchbox is a lightweight library that provides scaffolding to create search experiences powered by Elasticsearch.'
 keywords:
     - quickstart
     - react-searchbox

@@ -54,6 +54,8 @@ const searchComponent = new SearchComponent(properties);
 
 #### To configure the ReactiveSearch API
 
+The following properties can be used to configure the appbase.io [ReactiveSearch API](/docs/search/reactivesearch-api/):
+
 -   **id** `string` [Required]
     unique identifier of the component, can be referenced in other components' `react` prop.
 
@@ -510,13 +512,16 @@ These properties are automatically calculated or managed by the `SearchBase` cla
 -   **requestPending** `boolean`
     Useful for getting the status of the API, whether it has been executed or not
 
+-  **requestStatus** `string`
+    Represents the current state of the request, can have values as `INACTIVE`, `PENDING` or `ERROR`.
+
 -   **micStatus** `MicStatusField`
     Returns the current status of the mic. Can be `INACTIVE`, `ACTIVE` or `DENIED`
 
 -   **micActive** `boolean`
     Returns `true` if mic is active
 
--   **minInactive** `boolean`
+-   **micInactive** `boolean`
     Returns `true` if mic is inactive
 
 -   **micDenied** `boolean`
