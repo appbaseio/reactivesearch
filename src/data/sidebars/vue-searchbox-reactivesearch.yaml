@@ -1,5 +1,11 @@
 - items:
-  - title: Getting Started
-    link: /docs/reactivesearch/vue-searchbox/quickstart/
-  - title: API Reference
-    link: /docs/reactivesearch/vue-searchbox/apireference/
+      - title: Getting Started
+        link: /docs/reactivesearch/vue-searchbox/quickstart/
+      - title: API Reference
+        link: /docs/reactivesearch/vue-searchbox/apireference/
+      - title: SearchBase
+        link: /docs/reactivesearch/vue-searchbox/searchbase/
+      - title: SearchBox
+        link: /docs/reactivesearch/vue-searchbox/searchbox/
+      - title: SearchComponent
+        link: /docs/reactivesearch/vue-searchbox/searchcomponent/

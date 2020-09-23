@@ -1,13 +1,13 @@
 ---
 title: 'SearchBox API Reference'
-meta_title: 'Documentation for React SearchBox'
+meta_title: 'Documentation for Vue SearchBox'
 meta_description: 'SearchBox offers a lightweight and performance focused searchbox UI component to query and display results from your Elasticsearch cluster.'
 keywords:
-    - react-searchbox
+    - vue-searchbox
     - search library
     - elasticsearch
 sidebar: 'docs'
-nestedSidebar: 'react-searchbox-reactivesearch'
+nestedSidebar: 'vue-searchbox-reactivesearch'
 ---
 
 ## How does it work?
@@ -20,15 +20,15 @@ SearchBox offers a lightweight and performance focused searchbox UI component to
 
 The below props are only needed if you're not using the `SearchBox` component under [SearchBase](docs/reactivesearch/searchbase/overview/searchbase/) provider. These props can also be used to override the global environment defined in the [SearchBase](docs/reactivesearch/searchbase/overview/searchbase/) component.
 
--   **index** `string` [Required]
+-   **index** `string` [required]
     Refers to an index of the Elasticsearch cluster.
 
     `Note:` Multiple indexes can be connected to by specifying comma-separated index names.
 
--   **url** `string` [Required]
+-   **url** `string` [required]
     URL for the Elasticsearch cluster
 
--   **credentials** `string` [Required]
+-   **credentials** `string` [required]
     Basic Auth credentials if required for authentication purposes. It should be a string of the format `username:password`. If you are using an appbase.io cluster, you will find credentials under the `Security > API credentials` section of the appbase.io dashboard. If you are not using an appbase.io cluster, credentials may not be necessary - although having open access to your Elasticsearch cluster is not recommended.
 
 -   **appbaseConfig** `Object`
@@ -43,7 +43,7 @@ The below props are only needed if you're not using the `SearchBox` component un
 
 The following properties can be used to configure the appbase.io [ReactiveSearch API](/docs/search/reactivesearch-api/):
 
--   **id** `string` [Required]
+-   **id** `string` [required]
     unique identifier of the component, can be referenced in other components' `react` prop.
 
 -   **dataField** `string | Array<string | DataField>`
@@ -79,16 +79,16 @@ The following properties can be used to configure the appbase.io [ReactiveSearch
 
 An example of a `react` clause where all three clauses are used and values are `Object`, `Array` and `string`.
 
-```jsx
-<SearchBox
+```html
+<search-box
     id="search-component"
-    dataField={["original_title", "original_title.search"]}
-    react={{
+    :dataField="['original_title', 'original_title.search']"
+    :react="{
 		and: {
 			or: ['CityComp', 'TopicComp'],
 			not: 'BlacklistComp',
 		},
-	}}
+	}"
 />
 ```
 
@@ -115,13 +115,25 @@ Here, we are specifying that the suggestions should update whenever one of the b
     You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html).
     You can use `aggregationData` using `onAggregationData` callback or `subscriber`.
 
-```jsx
-<SearchBox
-    id="search-component"
-    dataField={["original_title", "original_title.search"]}
-    aggregationField="original_title.keyword"
-    onAggregationData={(next, prev) => {}}
-/>
+```html
+<template>
+    <search-box
+        id="result-component"
+        :dataField="['original_title', 'original_title.search']"
+        aggregationField="original_title.keyword"
+        @aggregationData="handleAggregationData"
+    />
+</template>
+<script>
+export default App {
+    name: 'App',
+    methods: {
+        handleAggregationData(prev, next) {
+            console.log("aggregations", prev, next)
+        }
+    }
+}
+</script>
 ```
 
 -   **highlight** `boolean` [optional]
@@ -233,6 +245,268 @@ Here, we are specifying that the suggestions should update whenever one of the b
 
 -   **showVoiceSearch** `Boolean` Enable voice search for searchbox
 
+### Customize style
+
+-   **innerClass** `Object` `SearchBox` component supports an `innerClass` prop to provide styles to the sub-components of `SearchBox`. These are the supported keys:
+
+    -   `title`
+    -   `input`
+    -   `list`
+
+-   **className** `String`
+    CSS class to be injected on the component container.
+
+-   **style** `Object`
+    CSS styles to be applied to the **SearchBox** component. 
+
+
+### To customize the query execution
+
+-   **headers** `Object`
+    set custom headers to be sent with each server request as key/value pairs. For example:
+
+```html
+<search-box
+    id="search-component"
+    :dataField="['original_title', 'original_title.search']"
+    :headers="{
+		secret: 'searchbase-is-awesome',
+	}"
+/>
+```
+
+-   **transformRequest** `(requestOptions: Object) => Promise<Object>`
+    Enables transformation of network request before execution. This function will give you the request object as the param and expect an updated request in return, for execution.<br/>
+    For example, we will add the `credentials` property in the request using `transformRequest`.
+
+```html
+<template>
+    <search-box
+        id="search-component"
+        :dataField="['original_title', 'original_title.search']"
+        :transformRequest="transformRequest"
+    />
+</template>
+<script>
+export default {
+    name: "App",
+    methods: {
+        transformRequest(elasticsearchResponse) {
+            return Promise.resolve({
+                ...request,
+                credentials: include,
+            })
+        }
+    }
+}
+</script>
+```
+
+
+-   **transformResponse** `(response: any) => Promise<any>`
+    Enables transformation of search network response before rendering them. It is an asynchronous function which will accept an Elasticsearch response object as param and is expected to return an updated response as the return value.<br/>
+    For example:
+
+```html
+<template>
+    <search-box
+        id="search-component"
+        :dataField="['original_title', 'original_title.search']"
+        :transformResponse="transformResponse"
+    />
+</template>
+<script>
+    export default {
+        name: "App",
+        methods: {
+            async transformResponse(elasticsearchResponse) {
+                const ids = elasticsearchResponse.hits.hits.map(item => item._id);
+                const extraInformation = await getExtraInformation(ids);
+                const hits = elasticsearchResponse.hits.hits.map(item => {
+                    const extraInformationItem = extraInformation.find(
+                        otherItem => otherItem._id === item._id,
+                    );
+                    return {
+                        ...item,
+                        ...extraInformationItem,
+                    };
+                });
+
+                return {
+                    ...elasticsearchResponse,
+                    hits: {
+                        ...elasticsearchResponse.hits,
+                        hits,
+                    },
+                };
+            }
+        }
+    }
+</script>
+```
+
+> Note
+>
+> `transformResponse` function is expected to return data in the following structure.
+
+```json
+    {
+        // Elasticsearch hits response
+        hits: {
+            hits: [...],
+            total: 100
+        },
+        // Elasticsearch aggregations response
+        aggregations: {
+
+        }
+        took: 1
+    }
+```
+
+-   **defaultQuery**: `(component: SearchComponent) => Object`
+    is a callback function that takes [SearchComponent](docs/reactivesearch/searchbase/overview/searchcomponent/) instance as parameter and **returns** the data query to be applied to the suggestions, as defined in Elasticsearch Query DSL, which doesn't get leaked to other components. In simple words, `defaultQuery` is used with data-driven components to impact their own data.
+
+    For example, set the `timeout` to `1s` for suggestion query.
+
+```html
+<template>
+    <search-box
+        id="search-component"
+        :dataField="['original_title', 'original_title.search']"
+        :defaultQuery="defaultQuery"  
+    />
+</template>
+<script>
+    export default App {
+        name: 'App',
+        methods: {
+            defaultQuery() {
+                return {
+                    "timeout": "1s"
+                }
+            }
+        }
+    }
+</script>
+```
+
+-   **customQuery**: `(component: SearchComponent) => Object`
+    takes [SearchComponent](docs/reactivesearch/searchbase/overview/searchcomponent/) instance as parameter and **returns** the query to be applied to the dependent components by `react` prop, as defined in Elasticsearch Query DSL.
+
+    For example, the following example has two components `search-component`(to render the suggestions) and `result-component`(to render the results). The `result-component` depends on the `search-component` to update the results based on the selected suggestion. The `search-component` has the `customQuery` prop defined that will not affect the query for suggestions(that is how `customQuery` is different from `defaultQuery`) but it'll affect the query for `result-component` because of the `react` dependency on `search-component`.
+
+```html
+<template>
+    <search-base
+        index="gitxplore-app"
+        url="https://@arc-cluster-appbase-demo-6pjy6z.searchbase.io"
+        credentials="a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61"
+    >
+        <search-box
+            id="search-component"
+            :dataField="['original_title', 'original_title.search']"
+            :customQuery="customQuery"
+        />
+        <search-component
+            id="result-component"
+            dataField="original_title"
+            :react="{
+                and: ['search-component']
+            }"
+        />
+    </search-base>
+</template>
+<script>
+    export default App {
+        name: 'App',
+        methods: {
+            customQuery() {
+                return {
+                    timeout: '1s',
+                    query: {
+                        match_phrase_prefix: {
+                            fieldName: {
+                                query: 'hello world',
+                                max_expansions: 10,
+                            },
+                        },
+                    },
+                }
+            }
+        }
+    }
+</script>
+```
+
+### Miscellaneous
+
+-   **getMicInstance** `Function` You can pass a callback function to get the instance of `SpeechRecognition` object, which can be used to override the default configurations for voice search.
+
+-  **beforeValueChange** `Function`
+    is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called every-time before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
+    For example:
+```html
+<template>
+    <search-box
+        id="search-component"
+        :dataField="['original_title', 'original_title.search']"
+        :beforeValueChange="beforeValueChange"
+    />
+</template>
+<script>
+    export default App {
+        name: 'App',
+        methods: {
+            beforeValueChange(value) {
+                // called before the value is set
+                // returns a promise
+                return new Promise((resolve, reject) => {
+                    // update state or component props
+                    resolve();
+                    // or reject()
+                });
+            }
+        }
+    }
+</script>
+```
+
+-   **URLParams** `Boolean` enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
+ 
+-   **defaultValue** `string` set the initial search query text on mount.
+
+## Events
+
+-   **valueChange** is an event which accepts component's current **value** as a parameter. It is called every-time the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a user searches for a product in a SearchBox.
+
+-   **valueSelected** An event which gets triggered on selecting a value from suggestions
+
+-  **error** gets triggered in case of an error while fetching suggestions
+
+-  **results** can be used to listen for the suggestions changes
+
+-   **queryChange**
+    is an event which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
+    
+-   **blur** is an event handler for input blur event
+
+-   **keyPress** is an event handler for keypress event
+
+-   **keyUp** is an event handler for keyup event
+
+-   **focus** is an event handler for input focus event
+
+-   **keyDown** is an event handler for keydown event
+
+-   **aggregationData** can be used to listen for the `aggregationData` property changes
+    - **data**: `Array<Object>` contains the parsed aggregations
+    - **raw**: `Object` Response returned by ES composite aggs query in the raw form.
+    - **rawData**: `Object` An object of raw response as-is from elasticsearch query.
+    - **afterKey**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the afterKey parameter to retrieve the next
+
+## Slots
+
 -   **render** `Function` You can render suggestions in a custom layout by using the `render` prop.
     <br/>
     It accepts an object with these properties:
@@ -332,7 +606,6 @@ Here, we are specifying that the suggestions should update whenever one of the b
     stateChanges?: boolean // defaults to `true`
 };
 ```
-
 -   **triggerDefaultQuery**
     `true` executes the query for a particular component
 -   **triggerCustomQuery**
@@ -355,7 +628,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
     -   **`setDefaultQuery`** `( defaultQuery: function, options?: Options ) => void` can be used to set the `defaultQuery` property.
     -   **`setCustomQuery`** `( customQuery: function, options?: Options ) => void` can be used to set the `customQuery` property.
 
--   **renderQuerySuggestions** `Function` You can render query suggestions in a custom layout by using the `renderQuerySuggestions` prop.
+-   **renderQuerySuggestions** `slot` You can render query suggestions in a custom layout by using the `renderQuerySuggestions` named slot.
     <br/>
     It accepts an object with these properties:
 
@@ -371,235 +644,18 @@ Here, we are specifying that the suggestions should update whenever one of the b
         provides all the control props from `downshift` which can be used to bind list items with click/mouse events.
         Read more about it [here](https://github.com/downshift-js/downshift#children-function).
 
--   **renderError** `Function`
+-   **renderError** `slot`
     can be used to render an error message in case of any error.
 
 ```jsx
-<SearchBox
-    renderError={(error) => (
-            <div>
-                Something went wrong!<br/>Error details<br/>{JSON.stringify(error)}
-            </div>
-        )
-    }
+<search-box slot="renderError" slot-scope="error">
+    <div>
+        Something went wrong!<br/>Error details<br/>{JSON.stringify(error)}
+    </div>
+</search-box>
 />
 ```
-
--   **renderNoSuggestion** `string|JSX`
+-   **renderNoSuggestion** `slot`
     can be used to render a message in case of no list items.
 
--   **renderMic** `Function`can be used to render the custom mic option
-
-### Customize style
-
--   **innerClass** `Object` `SearchBox` component supports an `innerClass` prop to provide styles to the sub-components of `SearchBox`. These are the supported keys:
-
-    -   `title`
-    -   `input`
-    -   `list`
-
--   **className** `String`
-    CSS class to be injected on the component container.
-
--   **style** `Object`
-    CSS styles to be applied to the **SearchBox** component.
-
-### Controlled behavior
-
--   **defaultValue** `string` set the initial search query text on mount.
-
--   **value** `string` [optional]
-    sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `onChange` prop.
-
--   **onChange** `Function` is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes.
-
-### Callbacks for change events
-
--   **onValueChange** `Function` is a callback function which accepts component's current **value** as a parameter. It is called every-time the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a user searches for a product in a SearchBox.
-
--   **onValueSelected** `Function` A function callback which executes on selecting a value from result set
-
--  **onError** `Function` gets triggered in case of an error while fetching results
-
--  **onResults** `Function` can be used to listen for the suggestions changes
-
--   **onQueryChange** `Function`
-    is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
-    
--   **onBlur** `Function` is a callback handler for input blur event
-
--   **onKeyPress** `Function` is a callback handler for keypress event
-
--   **onKeyUp** `Function` is a callback handler for keyup event
-
--   **onFocus** `Function` is a callback handler for input focus event
-
--   **onKeyDown** `Function` is a callback handler for keydown event
-
--   **onAggregationData** `Function` can be used to listen for the `aggregationData` property changes
-    - **data**: `Array<Object>` contains the parsed aggregations
-    - **raw**: `Object` Response returned by ES composite aggs query in the raw form.
-    - **rawData**: `Object` An object of raw response as-is from elasticsearch query.
-    - **afterKey**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the afterKey parameter to retrieve the next
-
-### To customize the query execution
-
--   **headers** `Object`
-    set custom headers to be sent with each server request as key/value pairs. For example:
-
-```jsx
-<SearchBox
-    id="search-component"
-    dataField={["original_title", "original_title.search"]}
-/>
-```
-
--   **transformRequest** `(requestOptions: Object) => Promise<Object>`
-    Enables transformation of network request before execution. This function will give you the request object as the param and expect an updated request in return, for execution.<br/>
-    For example, we will add the `credentials` property in the request using `transformRequest`.
-
-```jsx
-<SearchBox
-    id="search-component"
-    dataField={["original_title", "original_title.search"]}
-    transformRequest= {request =>
-        Promise.resolve({
-            ...request,
-            credentials: include,
-        })
-    }
-/>
-```
-
--   **transformResponse** `(response: any) => Promise<any>`
-    Enables transformation of search network response before rendering them. It is an asynchronous function which will accept an Elasticsearch response object as param and is expected to return an updated response as the return value.<br/>
-    For example:
-
-```jsx
-<SearchBox
-    id="search-component"
-    dataField={["original_title", "original_title.search"]}
-    transformResponse={async elasticsearchResponse => {
-		const ids = elasticsearchResponse.hits.hits.map(item => item._id);
-		const extraInformation = await getExtraInformation(ids);
-		const hits = elasticsearchResponse.hits.hits.map(item => {
-			const extraInformationItem = extraInformation.find(
-				otherItem => otherItem._id === item._id,
-			);
-			return {
-				...item,
-				...extraInformationItem,
-			};
-		});
-
-		return {
-			...elasticsearchResponse,
-			hits: {
-				...elasticsearchResponse.hits,
-				hits,
-			},
-		};
-	}}
-/>
-```
-
-> Note
->
-> `transformResponse` function is expected to return data in the following structure.
-
-```json
-    {
-        // Elasticsearch hits response
-        hits: {
-            hits: [...],
-            total: 100
-        },
-        // Elasticsearch aggregations response
-        aggregations: {
-
-        }
-        took: 1
-    }
-```
-
--   **defaultQuery**: `(component: SearchComponent) => Object`
-    is a callback function that takes [SearchComponent](docs/reactivesearch/searchbase/overview/searchcomponent/) instance as parameter and **returns** the data query to be applied to the suggestions, as defined in Elasticsearch Query DSL, which doesn't get leaked to other components. In simple words, `defaultQuery` is used with data-driven components to impact their own data.
-
-    For example, set the `timeout` to `1s` for suggestion query.
-
-```jsx
-<SearchBox
-    id="search-component"
-    dataField={["original_title", "original_title.search"]}
-    defaultQuery={() => {
-        "timeout": "1s"
-    }}
-/>
-```
-
--   **customQuery**: `(component: SearchComponent) => Object`
-    takes [SearchComponent](docs/reactivesearch/searchbase/overview/searchcomponent/) instance as parameter and **returns** the query to be applied to the dependent components by `react` prop, as defined in Elasticsearch Query DSL.
-
-    For example, the following example has two components `search-component`(to render the suggestions) and `result-component`(to render the results). The `result-component` depends on the `search-component` to update the results based on the selected suggestion. The `search-component` has the `customQuery` prop defined that will not affect the query for suggestions(that is how `customQuery` is different from `defaultQuery`) but it'll affect the query for `result-component` because of the `react` dependency on `search-component`.
-
-```jsx
-<SearchBase
-    index="gitxplore-app"
-    url="https://@arc-cluster-appbase-demo-6pjy6z.searchbase.io"
-    credentials="a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61"
-/>
-    <SearchBox
-        id="search-component"
-        dataField={["original_title", "original_title.search"]}
-        customQuery={
-            () => ({
-                timeout: '1s',
-                query: {
-                    match_phrase_prefix: {
-                        fieldName: {
-                            query: 'hello world',
-                            max_expansions: 10,
-                        },
-                    },
-                },
-            })
-        }
-    />
-    <SearchComponent
-        id="result-component"
-        dataField="original_title"
-        react={{
-            and: ['search-component']
-        }}
-    />
-```
-
-### Miscellaneous
-
--   **getMicInstance** `Function` You can pass a callback function to get the instance of `SpeechRecognition` object, which can be used to override the default configurations for voice search.
-
--  **beforeValueChange** `Function`
-    is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called every-time before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
-    For example:
-
-```jsx
-<SearchBox
-    id="search-component"
-    dataField={["original_title", "original_title.search"]}
-    beforeValueChange={
-        function(value) {
-            // called before the value is set
-            // returns a promise
-            return new Promise((resolve, reject) => {
-                // update state or component props
-                resolve();
-                // or reject()
-            });
-        }
-    }
-/>
-```
-
--   **URLParams** `Boolean` enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
- 
-
+-   **renderMic** `slot`can be used to render the custom mic option
