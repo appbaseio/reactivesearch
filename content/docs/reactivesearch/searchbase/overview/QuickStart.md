@@ -30,6 +30,10 @@ To use the umd build, add the following script in your `index.html` file.
 
 ## Basic Usage
 
+You can watch this video for an intro to Searchbase and follow along to build out the example search UI.
+
+[![](https://i.imgur.com/rf2aQDp.png)](https://youtu.be/MYHpBlqigho)
+
 ### A simple example
 
 The following example creates a single component of type `search` to render the results based on the input value.

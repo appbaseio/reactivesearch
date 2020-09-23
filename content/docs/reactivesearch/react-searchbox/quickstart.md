@@ -31,6 +31,10 @@ yarn add @appbaseio/react-searchbox
 
 ## Basic usage
 
+You can watch this video for an intro to React Searchbox and follow along to build out the example search UI.
+
+[![](https://i.imgur.com/t1ZiGv6.png)](https://youtu.be/J-TgM1owdgA)
+
 ### A simple example
 
 The following example renders an autosuggestion search bar(`search-component`) with one custom component(`result-component`) to render the results. The `result-component` watches the `search-component` for input changes and updates its UI when the user selects a suggestion.
