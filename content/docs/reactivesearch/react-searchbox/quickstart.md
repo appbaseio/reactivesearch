@@ -271,7 +271,7 @@ export default () => (
 
 ## Advanced Usage
 
-In this example, we have shown how to use react-table to display the search results
+In this example, we have shown usage of the `react-table` library to display the search results in a tabular format. You can similarly integrate any kind of UI component - be it grid, charts, lists, sliders with the help of [`SearchComponent`](/docs/reactivesearch/react-searchbox/searchcomponent/).
 
 <iframe src="https://codesandbox.io/embed/github/appbaseio/searchbox/tree/master/packages/react-searchbox/examples/with-react-table" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
