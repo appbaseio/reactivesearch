@@ -31,6 +31,10 @@ yarn add @appbaseio/vue-searchbox
 
 ## Basic usage
 
+You can watch this video for an intro to Vue Searchbox and follow along to build out the example search UI.
+
+[![](https://i.imgur.com/MwYRfX8.png)](https://youtu.be/oDLwzf4E6ps)
+
 ### A simple example
 
 The following example renders an autosuggestion search bar(`search-component`) with one custom component(`result-component`) to render the results. The `result-component` watches the `search-component` for input changes and updates its UI when the user selects a suggestion.
@@ -51,7 +55,7 @@ The following example renders an autosuggestion search bar(`search-component`) w
       }
     }"
   >
-  <!-- An auto-complete search box to display the suggestions and filter the 
+  <!-- An auto-complete search box to display the suggestions and filter the
     results based on the selected value -->
   <Search-box
       id="search-component"
