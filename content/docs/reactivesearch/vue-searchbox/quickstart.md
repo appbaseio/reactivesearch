@@ -337,10 +337,12 @@ export default {
 
 ```
 
-## Demo
-
-The following demo explains the `vue-searchbox` integration to build a basic search experience with a facet.
-
 <iframe src="https://codesandbox.io/embed/github/appbaseio/searchbox/tree/master/packages/vue-searchbox/examples/demo" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+## Advanced Usage
+
+In this example, we have shown how to use `vue-table` to display the search results
+
+<iframe src="https://codesandbox.io/embed/github/appbaseio/searchbox/tree/master/packages/vue-searchbox/examples/with-vue-table" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
 You can check out the docs for API Reference over [here](/docs/reactivesearch/vue-searchbox/apireference/).
