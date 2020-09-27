@@ -1,7 +1,7 @@
 ---
-title: 'Query Suggestions'
-meta_title: 'Leverage Analytics Data - Query Suggestions'
-meta_description: 'A short guide on how to setup query suggestions.'
+title: 'Popular Suggestions'
+meta_title: 'Leverage Analytics Data - Popular Suggestions'
+meta_description: 'A short guide on how to setup popular suggestions.'
 keywords:
     - concepts
     - appbase
@@ -14,9 +14,9 @@ sidebar: 'docs'
 
 ## Overview
 
-Providing suggestions helps users type longer queries, a good suggestion ensures the best results. It is easy to build an auto-complete experience with appbase.io but <strong>query suggestions</strong> allows you to display more specific and popular suggestions.
+Providing suggestions helps users type longer queries, a good suggestion ensures the best results. It is easy to build an auto-complete experience with appbase.io but <strong>popular suggestions</strong> allows you to display more specific and popular query suggestions.
 
-We extract query suggestions from the Appbase analytics and store them in a separate index named `.suggestions`. We populate this index on a daily basis so that your users will see fresh and relevant suggestions at all the times. Below is the representation of how a query suggestion is stored.
+We extract popular suggestions from the Appbase analytics and store them in a separate index named `.suggestions`. We populate this index on a daily basis so that your users will see fresh and relevant suggestions at all the times. Below is the representation of how a popular suggestion is stored.
 
 ```json
 {
@@ -29,21 +29,21 @@ Here, the `key` represents the suggestion name and `count` represents the number
 
 > Note:
 >
-> Query suggestions is available as an enterprise feature. You need to have at least `Production-I` plan or an `Arc Enterprise` plan to avail this. 
+> popular suggestions is available as an enterprise feature. You need to have at least `Production-I` plan or an `Arc Enterprise` plan to avail this.
 
 ### When to use it?
 
-Query Suggestions is useful to curate search suggestions based on actual search queries that your users are making. This can be used by itself or alongside suggestions based on the product data to provide an augmented search experience.
+Popular Suggestions is useful to curate search suggestions based on actual search queries that your users are making. This can be used by itself or alongside suggestions based on the product data to provide an augmented search experience.
 
-Because query suggestions roll up the search queries based on the unique occurrences in a period relevant to you, the suggestions index created this way is very fast. In addition to the automated job of popularising the query suggestions index daily, you can also add external suggestions from other sources.
+Because popular suggestions roll up the search queries based on the unique occurrences in a period relevant to you, the suggestions index created this way is very fast. In addition to the automated job of popularising the popular suggestions index daily, you can also add external suggestions from other sources.
 
 
-## Query Suggestions Preferences
+## Popular Suggestions Preferences
 
 <!-- TODO: Add screenshot of Suggestions UI -->
-![alt Query suggestions GUI](https://i.imgur.com/6EYqFtj.png)
+![alt popular suggestions GUI](https://i.imgur.com/6EYqFtj.png)
 
-You can set the preferences for query suggestions from appbase.io dashboard's <strong>Query Suggestions GUI</strong> under `Develop` section. These help optimize the behavior of suggestions for your specific use-case.
+You can set the preferences for popular suggestions from appbase.io dashboard's <strong>Popular Suggestions GUI</strong> under `Develop` section. These help optimize the behavior of suggestions for your specific use-case.
 
 
 ### Filter by minimum count
@@ -74,7 +74,7 @@ By default, Appbase doesn't transform(strip) suggestions' keys from their diacri
 Since analytics is the only source to populate the `.suggestions` index. When you get started, you'll need some kind of starting data which can be helpful to display the suggestions.
 
 You can define the external suggestions in the JSON format, each suggestion must have the `key` and `count` keys. The value of the `count` key determines the popularity of a particular suggestion.
-You can check the below example of external query suggestions:
+You can check the below example of external popular suggestions:
 
 ```json
 [
@@ -93,9 +93,9 @@ You can check the below example of external query suggestions:
 ]
 ```
 
-## How to query suggestions
+## How to popular suggestions
 
-We populate the suggestions in `.suggestions` index, to use the query suggestions you just need to use the `.suggestions` index to get the hits.
+We populate the suggestions in `.suggestions` index, to use the popular suggestions you just need to use the `.suggestions` index to get the hits.
 
 ### Usage Example With Searchbox
 

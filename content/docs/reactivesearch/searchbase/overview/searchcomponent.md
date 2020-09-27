@@ -215,7 +215,7 @@ Here, we are specifying that the result component should update whenever one of 
 #### To customize the AutoSuggestions
 
 -   **enableQuerySuggestions** `boolean` [optional]
-    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 
 -   **showDistinctSuggestions** `boolean` [optional]
     Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as the searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
@@ -496,7 +496,7 @@ These properties are automatically calculated or managed by the `SearchBase` cla
     -   **`afterKey`**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the `afterKey` parameter to retrieve the next results. This property will only be present for `composite` aggregations.
 
 -   **suggestions** `() => Array<Object>`
-    This method can be used to get the parsed suggestions from the `results`. If `enableQuerySuggestions` property is set to `true` then the query suggestions will get appended at the top with a top-level property named `_query_suggestion` as `true`. The `suggestion` object will have the following shape:
+    This method can be used to get the parsed suggestions from the `results`. If `enableQuerySuggestions` property is set to `true` then the popular suggestions will get appended at the top with a top-level property named `_query_suggestion` as `true`. The `suggestion` object will have the following shape:
 
     ```ts
     {
@@ -646,7 +646,7 @@ The following methods can be used to trigger the queries for components.
 -   **triggerDefaultQuery** `(options?: types.Option): Promise<any>`
     This method can be used to execute the default query for a particular component.
     For examples,
-    
+
     - to display the `suggestions` or `results` for a `search` type of component,
     - to display the filter options(`aggregations`) for a `term` type of component
 

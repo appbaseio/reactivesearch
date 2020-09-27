@@ -69,7 +69,7 @@ Example uses:
     >   Note:
     >   This prop is optional only when `enableAppbase` prop is set to `true` in `ReactiveBase` component.
     >
- 
+
 -   **size** `Number` [optional]
     number of suggestions to show. Defaults to `10`.
 -   **excludeFields** `String Array` [optional]
@@ -77,11 +77,11 @@ Example uses:
 -   **includeFields** `String Array` [optional]
     fields to be included in the suggestion's query when `autoSuggest` is true.
 -   **enableQuerySuggestions** `bool` [optional]
-    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 
     > Note:
     >
-    > Query Suggestions only work when `enableAppbase` prop is `true`.
+    > Popular Suggestions only work when `enableAppbase` prop is `true`.
 
 -   **aggregationField** `String` [optional]
     One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
@@ -245,7 +245,7 @@ export default {
     -   **`data`**: `array`
         An array of parsed suggestions obtained from the applied query.
     -   **`querySuggestions`**: `array`
-        An array of query suggestions obtained based on search value.
+        An array of popular suggestions obtained based on search value.
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
@@ -343,7 +343,7 @@ Or you can also use render as prop.
 
 
 -   **renderQuerySuggestions** `Function|slot-scope` [optional]
-    You can render query suggestions in a custom layout by using the `renderQuerySuggestions` as a `prop` or a `slot`.
+    You can render popular suggestions in a custom layout by using the `renderQuerySuggestions` as a `prop` or a `slot`.
     <br/>
     It accepts an object with these properties:
     -   **`loading`**: `boolean`
@@ -351,7 +351,7 @@ Or you can also use render as prop.
     -   **`error`**: `object`
         An object containing the error info.
     -   **`data`**: `array`
-        An array of query suggestions obtained based on search value.
+        An array of popular suggestions obtained based on search value.
     -   **`value`**: `string`
         current search input value i.e the search query being used to obtain suggestions.
     -   **`downshiftProps`**: `object`

@@ -175,9 +175,9 @@ There are two types of synonyms supported:
 > **Fun Fact:** Synonyms set are case insensitive and they can also span multiple words.
 
 
-## Query Suggestions
+## Popular Suggestions
 
-Query Suggestions is a daily populated index by appbase.io based on search analytics. The Query Suggestions UI lets you set preferences for how this index should get populated. You can read more about it over [here](/docs/analytics/query-suggestions/).
+Popular Suggestions is a daily populated index by appbase.io based on search analytics. The Popular Suggestions UI lets you set preferences for how this index should get populated. You can read more about it over [here](/docs/analytics/popular-suggestions/).
 
 ![](http://imgur.com/jL40KPa.png)
 
