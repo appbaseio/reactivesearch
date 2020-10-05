@@ -93,7 +93,7 @@ You can check the below example of external popular suggestions:
 ]
 ```
 
-## How to popular suggestions
+## How to query popular suggestions
 
 We populate the suggestions in `.suggestions` index, to use the popular suggestions you just need to use the `.suggestions` index to get the hits.
 
