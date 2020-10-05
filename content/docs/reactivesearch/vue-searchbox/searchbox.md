@@ -15,7 +15,7 @@ nestedSidebar: 'vue-searchbox-reactivesearch'
 SearchBox offers a lightweight and performance focused searchbox UI component to query and display results from your Elasticsearch cluster.
 
 ## Props
- 
+
 ### Configure appbase.io environment
 
 The below props are only needed if you're not using the `SearchBox` component under [SearchBase](docs/reactivesearch/searchbase/overview/searchbase/) provider. These props can also be used to override the global environment defined in the [SearchBase](docs/reactivesearch/searchbase/overview/searchbase/) component.
@@ -172,7 +172,7 @@ export default App {
 ### To customize the AutoSuggestions
 
 -   **enableQuerySuggestions** `Boolean`
-    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 
 -   **showDistinctSuggestions** `Boolean` Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as
     searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
@@ -257,7 +257,7 @@ export default App {
     CSS class to be injected on the component container.
 
 -   **style** `Object`
-    CSS styles to be applied to the **SearchBox** component. 
+    CSS styles to be applied to the **SearchBox** component.
 
 
 ### To customize the query execution
@@ -374,7 +374,7 @@ export default {
     <search-box
         id="search-component"
         :dataField="['original_title', 'original_title.search']"
-        :defaultQuery="defaultQuery"  
+        :defaultQuery="defaultQuery"
     />
 </template>
 <script>
@@ -473,7 +473,7 @@ export default {
 ```
 
 -   **URLParams** `Boolean` enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
- 
+
 -   **defaultValue** `string` set the initial search query text on mount.
 
 ## Events
@@ -488,7 +488,7 @@ export default {
 
 -   **queryChange**
     is an event which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
-    
+
 -   **blur** is an event handler for input blur event
 
 -   **keyPress** is an event handler for keypress event
@@ -515,7 +515,7 @@ export default {
     -   **`error`**: `Object`
         An object containing the error info.
      -  **`suggestions`** `() => Array<Object>`
-        This method can be used to get the parsed suggestions from the `results`. If `enableQuerySuggestions` property is set to `true` then the query suggestions will get appended at the top with a top-level property named `_query_suggestion` as `true`. The `suggestion` object will have the following shape:
+        This method can be used to get the parsed suggestions from the `results`. If `enableQuerySuggestions` property is set to `true` then the popular suggestions will get appended at the top with a top-level property named `_query_suggestion` as `true`. The `suggestion` object will have the following shape:
 
         ```ts
         {
@@ -544,7 +544,7 @@ export default {
         -   **`raw`**: `Object` Response returned by ES `composite aggs` query in the raw form.
         -   **`rawData`**: `Object` An object of raw response as-is from elasticsearch query.
         -   **`afterKey`**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the `afterKey` parameter to retrieve the next results. This property will only be present for `composite` aggregations.
-    
+
     -   **`value`**
         current search input value i.e the search query being used to obtain suggestions.
 
@@ -612,7 +612,7 @@ export default {
     `true` executes the query for the dependent components (dependencies defined in the `react` property)
 -   **stateChanges**
     `true` invokes the subscribed functions to `subscribeToStateChanges` method, i.e trigger the re-render after making changes
-    
+
      -   **`handleMicClick`** `(micOptions: Object, options: Options): Promise<any>` can be used to handle the custom voice search implementation
     -   **`triggerDefaultQuery`** `(options): Promise<any>` can be used to trigger the `customQuery` programmatically
     -   **`triggerCustomQuery`** `(options): Promise<any>` can be used to trigger the `defaultQuery` programmatically
@@ -628,7 +628,7 @@ export default {
     -   **`setDefaultQuery`** `( defaultQuery: function, options?: Options ) => void` can be used to set the `defaultQuery` property.
     -   **`setCustomQuery`** `( customQuery: function, options?: Options ) => void` can be used to set the `customQuery` property.
 
--   **renderQuerySuggestions** `slot` You can render query suggestions in a custom layout by using the `renderQuerySuggestions` named slot.
+-   **renderQuerySuggestions** `slot` You can render popular suggestions in a custom layout by using the `renderQuerySuggestions` named slot.
     <br/>
     It accepts an object with these properties:
 
@@ -637,7 +637,7 @@ export default {
     -   **`error`**: `Object`
         An object containing the error info.
     -   **`data`**: `array`
-        An array of query suggestions obtained based on search value.
+        An array of popular suggestions obtained based on search value.
     -   **`value`**: `string`
         current search input value i.e the search query being used to obtain suggestions.
     -   **`downshiftProps`**: `Object`

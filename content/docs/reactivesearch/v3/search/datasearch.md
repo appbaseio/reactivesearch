@@ -99,11 +99,11 @@ Example uses:
     > This property only works with [ReactiveSearch API](/docs/search/reactivesearch-api/) i.e when `enableAppbase` is set to `true` in `ReactiveBase` component.                                                                                                                                                                                                              >
 
 -   **enableQuerySuggestions** `bool` [optional]
-    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 
     > Note:
     >
-    > Query Suggestions only work when `enableAppbase` prop is `true`.
+    > Popular Suggestions only work when `enableAppbase` prop is `true`.
 
 -   **downShiftProps** `Object` [optional]
     allow passing props directly to the underlying `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
@@ -224,7 +224,7 @@ Example uses:
     -   **`data`**: `array`
         An array of suggestions obtained from combining `promoted` suggestions along with the `hits` .
     -   **`querySuggestions`**: `array`
-        An array of query suggestions obtained based on search value.
+        An array of popular suggestions obtained based on search value.
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
@@ -313,7 +313,7 @@ Or you can also use render function as children
     ```
 
 -   **renderQuerySuggestions** `String or JSX or Function` [optional]
-You can render query suggestions in a custom layout by using the `renderQuerySuggestions` prop.
+You can render popular suggestions in a custom layout by using the `renderQuerySuggestions` prop.
     <br/>
     It accepts an object with these properties:
     -   **`loading`**: `boolean`
@@ -321,7 +321,7 @@ You can render query suggestions in a custom layout by using the `renderQuerySug
     -   **`error`**: `object`
         An object containing the error info.
     -   **`data`**: `array`
-        An array of query suggestions obtained based on search value.
+        An array of popular suggestions obtained based on search value.
     -   **`value`**: `string`
         current search input value i.e the search query being used to obtain suggestions.
     -   **`downshiftProps`**: `object`

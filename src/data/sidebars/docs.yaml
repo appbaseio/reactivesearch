@@ -59,8 +59,8 @@
               title: "Querying Analytics"
             - link: /docs/analytics/google-analytics/
               title: "Integrate Google Analytics"
-            - link: /docs/analytics/query-suggestions/
-              title: "Query Suggestions"
+            - link: /docs/analytics/popular-suggestions/
+              title: "Popular Suggestions"
             - link: /docs/analytics/curated-insights/
               title: "Curated Insights"
       - group: Security

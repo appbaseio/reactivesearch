@@ -205,8 +205,8 @@ const HomePage = ({ data, location }) => {
 												duration: 1,
 											},
 											{
-												title: 'Query Suggestions',
-												link: '/docs/analytics/query-suggestions/',
+												title: 'Popular Suggestions',
+												link: '/docs/analytics/popular-suggestions/',
 												duration: 4,
 											},
 											{

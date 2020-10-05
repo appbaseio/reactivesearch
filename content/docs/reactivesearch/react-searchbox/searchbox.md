@@ -15,7 +15,7 @@ nestedSidebar: 'react-searchbox-reactivesearch'
 SearchBox offers a lightweight and performance focused searchbox UI component to query and display results from your Elasticsearch cluster.
 
 ## Props
- 
+
 ### Configure appbase.io environment
 
 The below props are only needed if you're not using the `SearchBox` component under [SearchBase](docs/reactivesearch/searchbase/overview/searchbase/) provider. These props can also be used to override the global environment defined in the [SearchBase](docs/reactivesearch/searchbase/overview/searchbase/) component.
@@ -160,7 +160,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
 ### To customize the AutoSuggestions
 
 -   **enableQuerySuggestions** `Boolean`
-    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 
 -   **showDistinctSuggestions** `Boolean` Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as
     searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
@@ -241,7 +241,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
     -   **`error`**: `Object`
         An object containing the error info.
      -  **`suggestions`** `() => Array<Object>`
-        This method can be used to get the parsed suggestions from the `results`. If `enableQuerySuggestions` property is set to `true` then the query suggestions will get appended at the top with a top-level property named `_query_suggestion` as `true`. The `suggestion` object will have the following shape:
+        This method can be used to get the parsed suggestions from the `results`. If `enableQuerySuggestions` property is set to `true` then the popular suggestions will get appended at the top with a top-level property named `_query_suggestion` as `true`. The `suggestion` object will have the following shape:
 
         ```ts
         {
@@ -270,7 +270,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
         -   **`raw`**: `Object` Response returned by ES `composite aggs` query in the raw form.
         -   **`rawData`**: `Object` An object of raw response as-is from elasticsearch query.
         -   **`afterKey`**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the `afterKey` parameter to retrieve the next results. This property will only be present for `composite` aggregations.
-    
+
     -   **`value`**
         current search input value i.e the search query being used to obtain suggestions.
 
@@ -339,7 +339,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
     `true` executes the query for the dependent components (dependencies defined in the `react` property)
 -   **stateChanges**
     `true` invokes the subscribed functions to `subscribeToStateChanges` method, i.e trigger the re-render after making changes
-    
+
      -   **`handleMicClick`** `(micOptions: Object, options: Options): Promise<any>` can be used to handle the custom voice search implementation
     -   **`triggerDefaultQuery`** `(options): Promise<any>` can be used to trigger the `customQuery` programmatically
     -   **`triggerCustomQuery`** `(options): Promise<any>` can be used to trigger the `defaultQuery` programmatically
@@ -355,7 +355,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
     -   **`setDefaultQuery`** `( defaultQuery: function, options?: Options ) => void` can be used to set the `defaultQuery` property.
     -   **`setCustomQuery`** `( customQuery: function, options?: Options ) => void` can be used to set the `customQuery` property.
 
--   **renderQuerySuggestions** `Function` You can render query suggestions in a custom layout by using the `renderQuerySuggestions` prop.
+-   **renderQuerySuggestions** `Function` You can render popular suggestions in a custom layout by using the `renderQuerySuggestions` prop.
     <br/>
     It accepts an object with these properties:
 
@@ -364,7 +364,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
     -   **`error`**: `Object`
         An object containing the error info.
     -   **`data`**: `array`
-        An array of query suggestions obtained based on search value.
+        An array of popular suggestions obtained based on search value.
     -   **`value`**: `string`
         current search input value i.e the search query being used to obtain suggestions.
     -   **`downshiftProps`**: `Object`
@@ -425,7 +425,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
 
 -   **onQueryChange** `Function`
     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
-    
+
 -   **onBlur** `Function` is a callback handler for input blur event
 
 -   **onKeyPress** `Function` is a callback handler for keypress event
@@ -601,5 +601,5 @@ Here, we are specifying that the suggestions should update whenever one of the b
 ```
 
 -   **URLParams** `Boolean` enable creating a URL query string param based on the search query text value. This is useful for sharing URLs with the component state. Defaults to `false`.
- 
+
 

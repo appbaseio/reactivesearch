@@ -364,7 +364,7 @@ Promise.
 
 ### getQuerySuggestions()
 
-This method allows you to execute search on `.suggestions` index. It is useful to curate search suggestions based on actual search queries that you are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+This method allows you to execute search on `.suggestions` index. It is useful to curate search suggestions based on actual search queries that you are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 Example:
 
 ```javascript

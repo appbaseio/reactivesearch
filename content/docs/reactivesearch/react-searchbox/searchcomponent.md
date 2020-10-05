@@ -9,7 +9,7 @@ keywords:
 sidebar: 'docs'
 nestedSidebar: 'react-searchbox-reactivesearch'
 ---
-  
+
 ## How does it work?
 
 `SearchComponent` component represents a search component that can be used to build different kinds of search components. It uses the [SearchComponent](docs/reactivesearch/searchbase/overview/searchcomponent/) class from [SearchBase](docs/reactivesearch/searchbase/overview/QuickStart/) to integrate the UI components with Elasticsearch. Some of the use-cases are:
@@ -44,7 +44,7 @@ The below props are only needed if you're not using the `SearchComponent` compon
     -   **enableQueryRules** `boolean` If `false`, then appbase.io will not apply the query rules on the search requests. Defaults to `true`.
     -   **userId** `string` It allows you to define the user id to be used to record the appbase.io analytics. Defaults to the client's IP address.
     -   **customEvents** `Object` It allows you to set the custom events which can be used to build your own analytics on top of appbase.io analytics. Further, these events can be used to filter the analytics stats from the appbase.io dashboard.
- 
+
 ### To configure the ReactiveSearch API
 
 The following properties can be used to configure the appbase.io [ReactiveSearch API](/docs/search/reactivesearch-api/):
@@ -199,7 +199,7 @@ Here, we are specifying that the results should update whenever one of the black
 #### To customize the AutoSuggestions
 
 -   **enableQuerySuggestions** `boolean` [optional]
-    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/query-suggestions/).
+    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 
 -   **showDistinctSuggestions** `boolean` [optional]
     Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as the searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
@@ -442,14 +442,14 @@ It is an object which contains the following details of `suggestions` query resp
     -   **`customData`**: `Object` An object of custom data obtained from the ReactiveSearch API.
     -   **`rawData`**: `Object` An object of raw response as-is from elasticsearch query.
 -   **suggestions** `() => Array<Object>`
-    This method can be used to get the parsed suggestions from the `results`. If `enableQuerySuggestions` property is set to `true` then the query suggestions will get appended at the top with a top-level property named `_query_suggestion` as `true`. The `suggestion` object will have the following shape:
+    This method can be used to get the parsed suggestions from the `results`. If `enableQuerySuggestions` property is set to `true` then the popular suggestions will get appended at the top with a top-level property named `_query_suggestion` as `true`. The `suggestion` object will have the following shape:
 
 ```ts
 {
     label: string;
     value: string;
     source: Object;
-} 
+}
 ```
 -   **aggregationData** `Aggregations`
 It is an object which contains the following details of `aggregations` query response.
