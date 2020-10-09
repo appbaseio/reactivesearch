@@ -95,10 +95,24 @@ Similarily, in `OpenStreetMap`:
 
 Impressions tracking is tied to the result components. You may have to do some extra setup in the `ReactiveList` component to track the impressions. Please follow the following instructions for different kind of use-cases.
 
-1. If you're using the `renderItem` method to render the results then no extra setup is required.
-2. If you're using the `render` method for the results UI then you have to define the `id` property for each result element. The value of `id` property must be the `_id` value from the elasticsearch hit object. 
+2. If you're using the `render` or `renderItem` method for the results UI then you have to define the `id` property for each result element. The value of `id` property must be the `_id` value from the elasticsearch hit object. 
 
-For an example,
+For an example, the following example uses the `renderItem` method
+```jsx
+<ReactiveList
+	renderItem={(data) => {
+		return (
+            /* Set the id property on list element to track the impressions */
+            <li id={hit._id} key={hit._id}>
+                {hit.title}
+                {/* Render UI */}
+            </li>
+        )
+	}}
+/>
+```
+
+Check this example with the `render` method
 
 ```jsx
 <ReactiveList
@@ -107,7 +121,7 @@ For an example,
 			<ul>
 				{data.map(hit => (
                     /* Set the id property on list element to track the impressions */
-					<li id={hit._id}>
+					<li id={hit._id} key={hit._id}>
 						{hit.title}
 						{/* Render UI */}
 					</li>
@@ -117,7 +131,7 @@ For an example,
 	}}
 />
 ```
-3. If you're using `render` method with `ResultCard` or `ResultList` components then you have to define the `id` prop for those components.
+2. If you're using `render` method with `ResultCard` or `ResultList` components then you have to define the `id` prop for those components.
 
 For an example,
 
