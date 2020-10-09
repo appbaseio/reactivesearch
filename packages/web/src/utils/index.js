@@ -145,24 +145,27 @@ export const isQueryIdentical = (value = null, props = {}, prevProps = {}, key) 
 };
 
 /**
- * To determine whether a component has renderQuerySuggestions prop defined or not
+ * To determine whether a component has renderPopularSuggestions prop defined or not
  * @returns {Boolean}
  */
-export const hasQuerySuggestionsRenderer = (props = {}) => {
-	const { renderQuerySuggestions } = props;
-	return isFunction(renderQuerySuggestions);
+export const hasPopularSuggestionsRenderer = (props = {}) => {
+	// TODO: Remove renderQuerySuggestions in v4
+	const { renderQuerySuggestions, renderPopularSuggestions } = props;
+	return isFunction(renderPopularSuggestions || renderQuerySuggestions);
 };
 
 /**
- * Extracts the renderQuerySuggestions prop from props and returns a valid React element
+ * Extracts the renderPopularSuggestions prop from props and returns a valid React element
  * @param {Object} data
  * @param {Object} props
  */
-export const getQuerySuggestionsComponent = (data = {}, props = {}) => {
-	const { renderQuerySuggestions } = props;
+export const getPopularSuggestionsComponent = (data = {}, props = {}) => {
+	// TODO: Remove renderQuerySuggestions in v4
+	const { renderQuerySuggestions, renderPopularSuggestions } = props;
+	const renderFunc = renderPopularSuggestions || renderQuerySuggestions;
 	// Render function as render prop
-	if (isFunction(renderQuerySuggestions)) {
-		return renderQuerySuggestions(data);
+	if (isFunction(renderFunc)) {
+		return renderFunc(data);
 	}
 	return null;
 };

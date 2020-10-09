@@ -44,10 +44,10 @@ import {
 	connect,
 	isFunction,
 	getComponent,
-	getQuerySuggestionsComponent,
+	getPopularSuggestionsComponent,
 	handleCaretPosition,
 	hasCustomRenderer,
-	hasQuerySuggestionsRenderer,
+	hasPopularSuggestionsRenderer,
 	isQueryIdentical,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
@@ -94,6 +94,22 @@ class DataSearch extends Component {
 				props.onChange(currentValue, this.triggerQuery);
 			}
 			this.setValue(currentValue, true, props, cause, hasMounted);
+		}
+	}
+
+	componentDidMount() {
+		const { enableQuerySuggestions, renderQuerySuggestions } = this.props;
+		// TODO: Remove in 4.0
+		if (enableQuerySuggestions !== undefined) {
+			console.warn(
+				'Warning(ReactiveSearch): The `enableQuerySuggestions` prop has been marked as deprecated, please use the `enablePopularSuggestions` prop instead.',
+			);
+		}
+		// TODO: Remove in 4.0
+		if (renderQuerySuggestions !== undefined) {
+			console.warn(
+				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
+			);
 		}
 	}
 
@@ -736,7 +752,7 @@ class DataSearch extends Component {
 		return null;
 	};
 
-	getComponent = (downshiftProps = {}, isQuerySuggestionsRender = false) => {
+	getComponent = (downshiftProps = {}, isPopularSuggestionsRender = false) => {
 		const {
 			error,
 			isLoading,
@@ -758,10 +774,12 @@ class DataSearch extends Component {
 			value: currentValue,
 			triggerClickAnalytics: this.triggerClickAnalytics,
 			resultStats: this.stats,
+			// TODO: Remove in v4
 			querySuggestions: this.topSuggestions,
+			popularSuggestions: this.topSuggestions,
 		};
-		if (isQuerySuggestionsRender) {
-			return getQuerySuggestionsComponent(
+		if (isPopularSuggestionsRender) {
+			return getPopularSuggestionsComponent(
 				{
 					downshiftProps,
 					data: this.topSuggestions,
@@ -796,10 +814,12 @@ class DataSearch extends Component {
 	}
 
 	get topSuggestions() {
-		const { enableQuerySuggestions, querySuggestions, showDistinctSuggestions } = this.props;
+		const {
+			enableQuerySuggestions, enablePopularSuggestions, popularSuggestions, showDistinctSuggestions,
+		} = this.props;
 		const { currentValue } = this.state;
-		return enableQuerySuggestions
-			? getTopSuggestions(querySuggestions, currentValue, showDistinctSuggestions)
+		return (enableQuerySuggestions || enablePopularSuggestions)
+			? getTopSuggestions(popularSuggestions, currentValue, showDistinctSuggestions)
 			: [];
 	}
 
@@ -894,7 +914,7 @@ class DataSearch extends Component {
 										css={suggestions(themePreset, theme)}
 										className={getClassName(this.props.innerClass, 'list')}
 									>
-										{hasQuerySuggestionsRenderer(this.props)
+										{hasPopularSuggestionsRenderer(this.props)
 											? this.getComponent(
 												{
 													getInputProps,
@@ -997,7 +1017,9 @@ DataSearch.propTypes = {
 	autoFocus: types.bool,
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
+	// TODO: Remove in v4
 	enableQuerySuggestions: types.bool,
+	enablePopularSuggestions: types.bool,
 	queryString: types.bool,
 	beforeValueChange: types.func,
 	className: types.string,
@@ -1042,10 +1064,12 @@ DataSearch.propTypes = {
 	onValueSelected: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
-	querySuggestions: types.hits,
+	popularSuggestions: types.hits,
 	react: types.react,
 	render: types.func,
+	// TODO: Remove in v4
 	renderQuerySuggestions: types.func,
+	renderPopularSuggestions: types.func,
 	renderError: types.title,
 	parseSuggestion: types.func,
 	renderNoSuggestion: types.title,
@@ -1072,7 +1096,7 @@ DataSearch.defaultProps = {
 	debounce: 0,
 	downShiftProps: {},
 	enableSynonyms: true,
-	enableQuerySuggestions: false,
+	enablePopularSuggestions: false,
 	excludeFields: [],
 	iconPosition: 'left',
 	includeFields: ['*'],
@@ -1110,7 +1134,7 @@ const mapStateToProps = (state, props) => ({
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
-	querySuggestions: state.querySuggestions[props.componentId],
+	popularSuggestions: state.querySuggestions[props.componentId],
 	lastUsedQuery: state.queryToHits[props.componentId],
 });
 

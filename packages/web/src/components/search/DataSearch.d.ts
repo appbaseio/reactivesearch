@@ -17,7 +17,9 @@ export interface DataSearchProps extends CommonProps {
 	dataField?: types.dataFieldArray;
 	enableSynonyms?: boolean;
 	queryString?: boolean;
+	// TODO: Remove in v4
 	enableQuerySuggestions?: boolean;
+	enablePopularSuggestions?: boolean;
 	aggregationField?: string;
 	size?: number;
 	debounce?: number;
@@ -49,7 +51,9 @@ export interface DataSearchProps extends CommonProps {
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	render?: (data: any) => any;
+	// TODO: Remove in v4
 	renderQuerySuggestions?: (data: any) => any;
+	renderPopularSuggestions?: (data: any) => any;
 	parseSuggestion?: (...args: any[]) => any;
 	renderNoSuggestion?: types.title;
 	renderError?: types.title;

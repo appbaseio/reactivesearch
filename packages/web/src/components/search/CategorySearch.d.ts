@@ -18,7 +18,9 @@ export interface CategorySearchProps extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	defaultQuery?: (...args: any[]) => any;
 	enableSynonyms?: boolean;
+	// TODO: Remove in v4
 	enableQuerySuggestions?: boolean;
+	enablePopularSuggestions?: boolean;
 	excludeFields?: Array<string>;
 	queryString?: boolean;
 	getMicInstance?: (...args: any[]) => any;
@@ -55,7 +57,9 @@ export interface CategorySearchProps extends CommonProps {
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	render?: (data: any) => any;
+	// TODO: Remove in v4
 	renderQuerySuggestions?: (data: any) => any;
+	renderPopularSuggestions?: (data: any) => any;
 	parseSuggestion?: (...args: any[]) => any;
 	renderError?: types.title;
 	renderNoSuggestion?: types.title;

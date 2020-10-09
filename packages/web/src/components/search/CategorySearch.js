@@ -48,8 +48,8 @@ import {
 	hasCustomRenderer,
 	handleCaretPosition,
 	isQueryIdentical,
-	hasQuerySuggestionsRenderer,
-	getQuerySuggestionsComponent,
+	hasPopularSuggestionsRenderer,
+	getPopularSuggestionsComponent,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -235,6 +235,22 @@ class CategorySearch extends Component {
 					this.state.currentCategory,
 				);
 			}
+		}
+	}
+
+	componentDidMount() {
+		const { enableQuerySuggestions, renderQuerySuggestions } = this.props;
+		// TODO: Remove in 4.0
+		if (enableQuerySuggestions !== undefined) {
+			console.warn(
+				'Warning(ReactiveSearch): The `enableQuerySuggestions` prop has been marked as deprecated, please use the `enablePopularSuggestions` prop instead.',
+			);
+		}
+		// TODO: Remove in 4.0
+		if (renderQuerySuggestions !== undefined) {
+			console.warn(
+				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
+			);
 		}
 	}
 
@@ -847,10 +863,12 @@ class CategorySearch extends Component {
 			rawCategories: this.props.categories,
 			triggerClickAnalytics: this.triggerClickAnalytics,
 			resultStats: this.stats,
+			// TODO: Remove in v4
 			querySuggestions: this.topSuggestions,
+			popularSuggestions: this.topSuggestions,
 		};
 		if (isQuerySuggestionsRender) {
-			return getQuerySuggestionsComponent(
+			return getPopularSuggestionsComponent(
 				{
 					downshiftProps,
 					data: this.topSuggestions,
@@ -928,10 +946,12 @@ class CategorySearch extends Component {
 	}
 
 	get topSuggestions() {
-		const { enableQuerySuggestions, querySuggestions, showDistinctSuggestions } = this.props;
+		const {
+			enableQuerySuggestions, enablePopularSuggestions, popularSuggestions, showDistinctSuggestions,
+		} = this.props;
 		const { currentValue } = this.state;
-		return enableQuerySuggestions
-			? getTopSuggestions(querySuggestions, currentValue, showDistinctSuggestions)
+		return (enableQuerySuggestions || enablePopularSuggestions)
+			? getTopSuggestions(popularSuggestions, currentValue, showDistinctSuggestions)
 			: [];
 	}
 
@@ -1023,7 +1043,7 @@ class CategorySearch extends Component {
 											css={suggestions(themePreset, theme)}
 											className={getClassName(this.props.innerClass, 'list')}
 										>
-											{hasQuerySuggestionsRenderer(this.props)
+											{hasPopularSuggestionsRenderer(this.props)
 												? this.getComponent(
 													{
 														getInputProps,
@@ -1136,6 +1156,8 @@ CategorySearch.propTypes = {
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
 	enableQuerySuggestions: types.bool,
+	// TODO: Remove in v4
+	enablePopularSuggestions: types.bool,
 	queryString: types.bool,
 	beforeValueChange: types.func,
 	categoryField: types.string,
@@ -1178,10 +1200,12 @@ CategorySearch.propTypes = {
 	onValueSelected: types.func,
 	placeholder: types.string,
 	queryFormat: types.queryFormatSearch,
-	querySuggestions: types.hits,
+	popularSuggestions: types.hits,
 	react: types.react,
 	renderError: types.title,
+	// TODO: Remove in v4
 	renderQuerySuggestions: types.func,
+	renderPopularSuggestions: types.func,
 	parseSuggestion: types.func,
 	renderNoSuggestion: types.title,
 	showClear: types.bool,
@@ -1207,7 +1231,7 @@ CategorySearch.defaultProps = {
 	debounce: 0,
 	downShiftProps: {},
 	enableSynonyms: true,
-	enableQuerySuggestions: false,
+	enablePopularSuggestions: false,
 	excludeFields: [],
 	iconPosition: 'left',
 	includeFields: ['*'],
@@ -1254,7 +1278,7 @@ const mapStateToProps = (state, props) => ({
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
-	querySuggestions: state.querySuggestions[props.componentId],
+	popularSuggestions: state.querySuggestions[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
