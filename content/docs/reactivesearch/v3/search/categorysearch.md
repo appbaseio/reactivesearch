@@ -126,8 +126,9 @@ Example uses:
     > Note:
     >
     > This property only works with [ReactiveSearch API](/docs/search/reactivesearch-api/) i.e when `enableAppbase` is set to `true` in `ReactiveBase` component.
-
 -   **enableQuerySuggestions** `bool` [optional]
+    This prop has been marked as deprecated starting `v3.12.6`. Please use the `enablePopularSuggestions` prop instead.
+-   **enablePopularSuggestions** `bool` [optional]
     Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 
     > Note:
@@ -246,8 +247,10 @@ Example uses:
         An object containing the error info.
     -   **`data`**: `array`
         An array of parsed suggestions (original suggestions + category suggestions) along with the `promoted` results from the applied query.
-    -   **`querySuggestions`**: `array`
+    -   **`popularSuggestions`**: `array`
         An array of popular suggestions obtained based on search value.
+    -   **`querySuggestions`**: `array`
+        This prop has been marked as deprecated starting `v3.12.6`. Please use the `popularSuggestions` prop instead.
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`aggregationData`**: `array`
@@ -366,8 +369,10 @@ Or you can also use render function as children
         )
     }
     ```
-
 -   **renderQuerySuggestions** `String or JSX or Function` [optional]
+    This prop has been marked as deprecated starting `v3.12.6`. Please use the `renderPopularSuggestions` prop instead.
+
+-   **renderPopularSuggestions** `String or JSX or Function` [optional]
     You can render popular suggestions in a custom layout by using the `renderQuerySuggestions` prop.
         <br/>
     It accepts an object with these properties:
@@ -384,39 +389,39 @@ Or you can also use render function as children
         Read more about it [here](https://github.com/downshift-js/downshift#children-function).
 
     ```javascript
-    <DataSearch
-        dataField={['original_title', 'original_title.search']}
-        componentId="BookSensor"
-        enableQuerySuggestions
-        renderQuerySuggestions={({
-            value,
-            data: suggestions,
-            downshiftProps: { isOpen, getItemProps, highlightedIndex },
-        }) =>
-            isOpen &&
-            Boolean(value.length) && (
-                <div>
-                    {(suggestions || []).map((suggestion, index) => (
-                        <div
-                            style={{
-                                padding: 10,
-                                background:
-                                    index === highlightedIndex
-                                        ? '#eee'
-                                        : 'transparent',
-                                color: 'green',
-                            }}
-                            key={suggestion.value}
-                            {...getItemProps({ item: suggestion })}
-                        >
-                            {suggestion.value}
-                        </div>
-                    ))}
-                </div>
-            )
-        }
-    />
-```
+        <DataSearch
+            dataField={['original_title', 'original_title.search']}
+            componentId="BookSensor"
+            enablePopularSuggestions
+            renderPopularSuggestions={({
+                value,
+                data: suggestions,
+                downshiftProps: { isOpen, getItemProps, highlightedIndex },
+            }) =>
+                isOpen &&
+                Boolean(value.length) && (
+                    <div>
+                        {(suggestions || []).map((suggestion, index) => (
+                            <div
+                                style={{
+                                    padding: 10,
+                                    background:
+                                        index === highlightedIndex
+                                            ? '#eee'
+                                            : 'transparent',
+                                    color: 'green',
+                                }}
+                                key={suggestion.value}
+                                {...getItemProps({ item: suggestion })}
+                            >
+                                {suggestion.value}
+                            </div>
+                        ))}
+                    </div>
+                )
+            }
+        />
+    ```
 -   **getMicInstance** `Function` [optional]
     You can pass a callback function to get the instance of `SpeechRecognition` object, which can be used to override the default configurations.
 -   **renderMic** `String or JSX or Function` [optional]

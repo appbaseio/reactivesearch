@@ -77,6 +77,8 @@ Example uses:
 -   **includeFields** `String Array` [optional]
     fields to be included in the suggestion's query when `autoSuggest` is true.
 -   **enableQuerySuggestions** `bool` [optional]
+    This prop has been marked as deprecated starting `v1.7.8`. Please use the `enablePopularSuggestions` prop instead.
+-   **enablePopularSuggestions** `bool` [optional]
     Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 
     > Note:
@@ -244,8 +246,10 @@ export default {
         An object containing the error info.
     -   **`data`**: `array`
         An array of parsed suggestions obtained from the applied query.
-    -   **`querySuggestions`**: `array`
+    -   **`popularSuggestions`**: `array`
         An array of popular suggestions obtained based on search value.
+    -   **`querySuggestions`**: `array`
+        This prop has been marked as deprecated starting `v1.7.8`. Please use the `popularSuggestions` prop instead.
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
@@ -340,9 +344,10 @@ Or you can also use render as prop.
         </div>
     </template>
 ```
-
-
 -   **renderQuerySuggestions** `Function|slot-scope` [optional]
+    This prop has been marked as deprecated starting `v1.7.8`. Please use the `renderPopularSuggestions` prop instead.
+
+-   **renderPopularSuggestions** `Function|slot-scope` [optional]
     You can render popular suggestions in a custom layout by using the `renderQuerySuggestions` as a `prop` or a `slot`.
     <br/>
     It accepts an object with these properties:
@@ -374,11 +379,11 @@ You can use `DataSearch` with `renderQuerySuggestions slot` as shown:
 	componentId="BookSensor"
 	:dataField="['original_title', 'original_title.search']"
 	:URLParams="true"
-    :enableQuerySuggestions="true"
+    :enablePopularSuggestions="true"
 >
 	<div
 		class="suggestions"
-		slot="renderQuerySuggestions"
+		slot="renderPopularSuggestions"
 		slot-scope="{
             error,
             loading,
