@@ -19,14 +19,9 @@ const Results = ({
 			getComponent()
 		) : (
 			<div className={`${listClass} ${getClassName(innerClass, 'list')}`}>
-				{filteredResults.map((item, index) => (
-					// Add document id to track the `impressions`
-					<span id={item._id}>
-						{renderItem(item, () => {
-							triggerClickAnalytics(base + index);
-						})}
-					</span>
-				))}
+				{filteredResults.map((item, index) => renderItem(item, () => {
+					triggerClickAnalytics(base + index);
+				}))}
 			</div>
 		));
 	// If analytics is set to true then render with impression tracker
