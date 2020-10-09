@@ -36,6 +36,11 @@ import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
 import { connect, getRangeQueryWithNullValues, getValidPropsKeys } from '../../utils';
 
+const formatRange = (range = {}) => ({
+	start: Math.floor(range.start),
+	end: Math.ceil(range.end),
+});
+
 class DynamicRangeSlider extends Component {
 	constructor(props) {
 		super(props);
@@ -102,10 +107,7 @@ class DynamicRangeSlider extends Component {
 			// it will happen due to initial mount (or) due to subscription
 			this.updateQueryOptions(this.props, this.props.range);
 			// floor and ceil to take edge cases into account
-			this.updateRange({
-				start: Math.floor(this.props.range.start),
-				end: Math.ceil(this.props.range.end),
-			});
+			this.updateRange(formatRange(this.props.range));
 
 			const value = this.props.value || this.props.defaultValue;
 
@@ -117,9 +119,10 @@ class DynamicRangeSlider extends Component {
 				const { start, end } = value(this.props.range.start, this.props.range.end);
 				this.handleChange([start, end]);
 			} else {
+				const range = formatRange(this.props.range);
 				this.handleChange([
-					Math.floor(this.props.range.start),
-					Math.ceil(this.props.range.end),
+					range.start,
+					range.end,
 				]);
 			}
 		} else if (
@@ -615,6 +618,9 @@ const mapStateToProps = (state, props) => {
 					end: state.aggregations[`${props.componentId}__range__internal`].max.value,
 				} // prettier-ignore
 				: null;
+	}
+	if (range) {
+		range = formatRange(range);
 	}
 	return {
 		options,
