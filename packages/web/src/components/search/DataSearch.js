@@ -358,7 +358,6 @@ class DataSearch extends Component {
 				this.setState(
 					{
 						currentValue: value,
-						suggestions: [],
 					},
 					() => {
 						if (isDefaultValue) {
@@ -566,7 +565,7 @@ class DataSearch extends Component {
 
 	handleStateChange = (changes) => {
 		const { isOpen, type } = changes;
-		if (type === Downshift.stateChangeTypes.mouseUp) {
+		if (type === Downshift.stateChangeTypes.mouseUp && isOpen !== undefined) {
 			this.setState({
 				isOpen,
 			});
