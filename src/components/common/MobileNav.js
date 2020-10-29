@@ -15,6 +15,9 @@ const getValue = () => {
 		if (path && path.startsWith('/docs/reactivesearch/vue-searchbox')) {
 			return 'Vue SearchBox';
 		}
+		if (path && path.startsWith('/docs/reactivesearch/ui-integrations')) {
+			return 'UI Integrations';
+		}
 		if (path && path.startsWith('/docs/reactivesearch/vue')) {
 			return 'Vue';
 		}
@@ -51,6 +54,8 @@ const getFileName = value => {
 			return 'react-searchbox-reactivesearch';
 		case 'Vue SearchBox':
 			return 'vue-searchbox-reactivesearch';
+		case 'UI Integrations':
+			return 'ui-integrations-reactivesearch';
 		default:
 			return 'web-reactivesearch';
 	}
@@ -68,6 +73,8 @@ const getVersionName = value => {
 			return 'SearchBase';
 		case 'React SearchBox':
 			return 'React SearchBox';
+		case 'UI Integrations':
+			return 'UI Integrations';
 		default:
 			return 'v3';
 	}
@@ -149,7 +156,7 @@ class MobileNav extends React.Component {
 						<ReactDropdown
 							options={[
 								'React - v3',
-								'React - v2',
+								'UI Integrations',
 								'Native',
 								'Vue',
 								'SearchBase',

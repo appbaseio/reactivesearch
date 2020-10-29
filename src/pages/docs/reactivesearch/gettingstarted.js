@@ -16,7 +16,20 @@ const GettingStarted = props => {
 			<div className="container getting-started">
 				<div className="card">
 					<img
-						src="https://appbase.io/static/images/onboarding/finish-screen/React@2x.png"
+						src="/images/react.jpeg"
+						alt="React"
+					/>
+					<div className="content">
+						<h2>UI Integrations</h2>
+						<p>UI Integrations enables creating a storefront / site search UI visually.</p>
+						<a className="btn" href="/docs/reactivesearch/ui-integrations/Overview">
+							Start with UI Integrations
+						</a>
+					</div>
+				</div>
+				<div className="card">
+					<img
+						src="/images/react.jpeg"
 						alt="React"
 					/>
 					<div className="content">
@@ -29,7 +42,7 @@ const GettingStarted = props => {
 				</div>
 				<div className="card">
 					<img
-						src="https://appbase.io/static/images/onboarding/finish-screen/ReactNative@2x.png"
+						src="/images/react-native.jpeg"
 						alt="React Native"
 					/>
 					<div className="content">
@@ -42,7 +55,7 @@ const GettingStarted = props => {
 				</div>
 				<div className="card">
 					<img
-						src="https://appbase.io/static/images/onboarding/finish-screen/vue@2x.png"
+						src="/images/vue.png"
 						alt="Vue"
 					/>
 					<div className="content">
@@ -95,7 +108,7 @@ const GettingStarted = props => {
 
 				<div className="card">
 					<img
-						src="https://appbase.io/static/images/onboarding/finish-screen/REST@2x.png"
+						src="/images/REST.png"
 						alt="REST API"
 					/>
 					<div className="content">
@@ -108,7 +121,7 @@ const GettingStarted = props => {
 				</div>
 				<div className="card">
 					<img
-						src="https://appbase.io/static/images/onboarding/finish-screen/android@2x.png"
+						src="/images/android.jpeg"
 						alt="Android Library"
 					/>
 					<div className="content">
@@ -126,7 +139,7 @@ const GettingStarted = props => {
 				</div>
 				<div className="card">
 					<img
-						src="https://appbase.io/static/images/onboarding/finish-screen/swift@2x.png"
+						src="/images/swift.jpeg"
 						alt="Swift Library"
 					/>
 					<div className="content">
