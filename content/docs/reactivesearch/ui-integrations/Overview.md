@@ -1,5 +1,5 @@
 ---
-title: 'Overview'
+title: 'UI Integrations'
 meta_title: 'UI Integrations: Overview'
 meta_description: 'UI Integrations lets you visually build a search UI with no-code. The resulting code can be exported to your favorite E-Commerce Platform or your site.'
 keywords:
@@ -93,7 +93,7 @@ Custom Messages tab lets you customize the text and messaging that appears at va
 While some of these messages are on-screen for a brief period of time, it is considered a good Ux practice to have them set up. They can be used to guide your users to finding relevant search results.
 
 
-### Exporting Code
+### Exporting Code to Shopify
 
 ![Export code](https://i.imgur.com/kfNSBky.png)
 
@@ -112,9 +112,7 @@ Once installed, you can head to the store and see the appbase.io generated searc
 ![Final Result](https://i.imgur.com/rG6VNpv.png)
 
 
----
-
-### Exporting Code To Other Platforms
+### Exporting Code to other Platforms
 
 While we offer a first-class support for Shopify, one can export the generated storefront search code to any other platform of choice, such as Magento, Wordpress, Webflow, Wix. You can also install into a site.
 
