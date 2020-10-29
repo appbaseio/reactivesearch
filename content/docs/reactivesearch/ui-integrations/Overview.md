@@ -20,7 +20,7 @@ You will be able to check the visual preview at any time by clicking on the **St
 
 You can watch this 5-mins video to follow along the process of creating a storefront search and installing into a Shopify store.
 
-[![Watch 5-min video for Shopify](https://i.imgur.com/VMW4pIw.jpg)]((https://www.youtube.com/watch?v=5pdcNUha2iA))
+[![Watch 5-min video for Shopify](https://i.imgur.com/VMW4pIw.jpg)](https://www.youtube.com/watch?v=5pdcNUha2iA)
 
 
 ### E-Commerce Platform
