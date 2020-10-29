@@ -16,11 +16,11 @@ nestedSidebar: 'ui-integrations-reactivesearch'
 
 [Appbase.io](http://appbase.io) now comes with **UI Integrations** - a built-in visual search UI builder that gives developers and business teams freedom to alter search layout and settings in realtime. This WYSIWYG storefront search preview can be easily integrated with your favorite E-Commerce platform or site.
 
-You will be able to check the visual preview at any time by clicking on the **Storefront Preview** button.
-
 You can watch this 5-mins video to follow along the process of creating a storefront search and installing into a Shopify store.
 
 [![Watch 5-min video for Shopify](https://i.imgur.com/VMW4pIw.jpg)](https://www.youtube.com/watch?v=5pdcNUha2iA)
+
+> Note: **UI Integrations** feature is available with appbase.io Production and Enterprise plans.
 
 
 ### E-Commerce Platform
