@@ -41,7 +41,7 @@ Because popular suggestions roll up the search queries based on the unique occur
 ## Popular Suggestions Preferences
 
 <!-- TODO: Add screenshot of Suggestions UI -->
-![alt popular suggestions GUI](https://i.imgur.com/6EYqFtj.png)
+![alt popular suggestions GUI](https://i.imgur.com/c8xefH1.png)
 
 You can set the preferences for popular suggestions from appbase.io dashboard's <strong>Popular Suggestions GUI</strong> under `Develop` section. These help optimize the behavior of suggestions for your specific use-case.
 
@@ -53,6 +53,10 @@ It lets you define the minimum count value which means that only those suggestio
 ### Filter by minimum hits
 
 By default, the suggestions index only includes queries that return at least five results in the source index. You can configure this limit from the dashboard.
+
+### Filter by minimum characters
+
+By default, the suggestions index only includes queries that has at least three characters in the source index. This option allows you to customize the minimum number of characters allowed in search queries.
 
 ### Blacklist queries
 
