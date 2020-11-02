@@ -30,9 +30,7 @@ With appbase.io, you can:
 
 ## API Intro
 
-The appbase.io API is interoperable with the Elasticsearch API and builds on top of it. With the [apps](https://appbase.io/apps) product, there are some API endpoints that we don't allow access to. Full list of supported endpoints is documented at https://rest.appbase.io.
-
-We also offer [hosted or managed clusters](https://appbase.io/clusters), where we maintain 100% compatibility with the Apache 2.0 licensed Elasticsearch and support every Elasticsearch release starting v5.6.
+The appbase.io API is interoperable with the Elasticsearch API and builds on top of it. We offer [hosted or managed clusters](https://www.appbase.io/#hosting), where we maintain 100% compatibility with the Apache 2.0 licensed Elasticsearch and support every Elasticsearch release starting v5.6.
 
 ## Out of the Box Features
 
@@ -50,14 +48,10 @@ appbase.io offers the following advantages over running your own Elasticsearch c
 
 ## Choose your hosting
 
-<div class="grid-integrations-index mt4 mt6-l f8">
+<div class="grid-integrations-index mt6 mt6-l f8">
 	<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem;height: 120px;width:120px;" href="/docs/hosting/clusters">
 		<img class="w10 mb1" src="/images/clusters.png" />
 		Clusters
-	</a>
-	<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc tooltip-wrapper" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem; height: 120px;width:120px;" href="/docs/hosting/apps">
-		<img class="w10 mb1" src="/images/apps.png" />
-		Apps
 	</a>
 	<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem; height: 120px;width:120px;" href="/docs/hosting/byoc">
 		<img class="w10 mb1" src="/images/arc.svg" />
@@ -68,5 +62,4 @@ appbase.io offers the following advantages over running your own Elasticsearch c
 | Hosting                                     | Description                                                                                                                                                                                                      |
 | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Clusters](/docs/hosting/clusters/)          | Free 14-day trial. Flexibility of deploying in 16 regions across North America, South America, Europe, Asia and Australia                                                                                        |
-| [Apps](/docs/hosting/apps/)                  | Easy to get started. No credit card required. Multi-tenant setup                                                                                                                                                 |
 | [Bring Your Own Cluster](/docs/hosting/byoc/) | Already have an Elasticsearch cluster with AWS or Elastic Cloud or hosting it yourself? You can provision the appbase.io docker container or image as a hosted service from the dashboard or deploy it yourself. |
