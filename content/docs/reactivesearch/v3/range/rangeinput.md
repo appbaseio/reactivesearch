@@ -87,6 +87,18 @@ Example uses:
     controls the current value of the component.It selects the data from the range (on mount and on update). Use this prop in conjunction with `onChange` function.
 -   **onChange** `function` [optional]
     is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
+-   **validateRange** `function` [optional]
+    is a callback function that can be used to validate the range input values before applying it. This function accepts an array of numbers where first element represents the `start` range and second element represents the `end` range. The following example prevents the users to type negative value for start range input.
+```js
+    <RangeInput
+        validateRange={[start, end] => {
+            if(start < 0) {
+                return false
+            }
+            return end
+        }}
+    />
+```
 -   **rangeLabels** `Object` [optional]
     an object with `start` and `end` keys and corresponding `String` labels to show labels near the ends of the `RangeInput` component.
 -   **showFilter** `Boolean` [optional]
