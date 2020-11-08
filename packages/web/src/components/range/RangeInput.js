@@ -21,6 +21,10 @@ class RangeInput extends Component {
 				end: props.selectedValue[1],
 			};
 		}
+		if (!this.shouldUpdate(value)) {
+			// assign the range if not valid
+			value = props.range;
+		}
 		this.state = {
 			start: value.start,
 			end: value.end,
@@ -41,7 +45,6 @@ class RangeInput extends Component {
 
 	handleInputChange = (e) => {
 		const { name, value } = e.target;
-
 		if (Number.isNaN(value)) {
 			// set errors for invalid inputs
 			if (name === 'start') {
@@ -73,12 +76,14 @@ class RangeInput extends Component {
 		};
 
 		const { value: valueProp, onChange } = this.props;
-		if (valueProp === undefined) {
-			this.setState({
-				[name]: value,
-			});
-		} else if (onChange) {
-			onChange(currentValue);
+		if (this.shouldUpdate(currentValue)) {
+			if (valueProp === undefined) {
+				this.setState({
+					[name]: value,
+				});
+			} else if (onChange) {
+				onChange(currentValue);
+			}
 		}
 	};
 
@@ -91,6 +96,14 @@ class RangeInput extends Component {
 			start: this.isControlled ? this.props.value.start : this.state.start,
 			end: this.isControlled ? this.props.value.end : this.state.end,
 		};
+	}
+
+	shouldUpdate = (value = {}) => {
+		const { validateRange } = this.props;
+		if (validateRange) {
+			return validateRange([value.start, value.end]);
+		}
+		return true;
 	}
 
 	handleSliderChange = (sliderValue) => {
@@ -180,6 +193,7 @@ class RangeInput extends Component {
 RangeInput.propTypes = {
 	className: types.string,
 	defaultValue: types.range,
+	validateRange: types.func,
 	value: types.range,
 	selectedValue: types.selectedValue,
 	innerClass: types.style,

@@ -31,7 +31,10 @@ class RangeSlider extends Component {
 
 		const { selectedValue, defaultValue, value } = props;
 		const valueToParse = selectedValue || value || defaultValue;
-		const currentValue = RangeSlider.parseValue(valueToParse, props);
+		let currentValue = RangeSlider.parseValue(valueToParse, props);
+		if (!this.shouldUpdate(currentValue)) {
+			currentValue = [props.range.start, props.range.end];
+		}
 		this.state = {
 			currentValue,
 			stats: [],
@@ -218,24 +221,26 @@ class RangeSlider extends Component {
 	};
 
 	handleSlider = ({ values }) => {
-		if (!isEqual(values, this.state.currentValue)) {
-			const { value, onChange } = this.props;
+		if (this.shouldUpdate(values)) {
+			if (!isEqual(values, this.state.currentValue)) {
+				const { value, onChange } = this.props;
 
-			if (value === undefined) {
-				this.handleChange(values);
-			} else if (onChange) {
-				// force re-rendering to avail the currentValue
-				// in rheostat component since it doesn't respect
-				// the controlled behavior properly
-				this.forceUpdate();
-				onChange(values);
-			} else {
-				// since value prop is set & onChange is not defined
-				// we need to reset the slider position
-				// to the original 'value' prop
-				this.setState({
-					currentValue: this.state.currentValue,
-				});
+				if (value === undefined) {
+					this.handleChange(values);
+				} else if (onChange) {
+					// force re-rendering to avail the currentValue
+					// in rheostat component since it doesn't respect
+					// the controlled behavior properly
+					this.forceUpdate();
+					onChange(values);
+				} else {
+					// since value prop is set & onChange is not defined
+					// we need to reset the slider position
+					// to the original 'value' prop
+					this.setState({
+						currentValue: this.state.currentValue,
+					});
+				}
 			}
 		}
 	};
@@ -303,6 +308,14 @@ class RangeSlider extends Component {
 			});
 		}
 	};
+
+	shouldUpdate = (value) => {
+		const { validateRange } = this.props;
+		if (validateRange) {
+			return validateRange(value);
+		}
+		return true;
+	}
 
 	render() {
 		return (
@@ -398,6 +411,7 @@ RangeSlider.propTypes = {
 	title: types.title,
 	URLParams: types.bool,
 	includeNullValues: types.bool,
+	validateRange: types.func,
 };
 
 RangeSlider.defaultProps = {

@@ -9,6 +9,7 @@ export interface RangeInputProps extends CommonProps {
 	value?: types.range;
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
+	validateRange?: (value: Array<number>) => boolean;
 	onChange?: (...args: any[]) => any;
 	range: types.range;
 	stepValue?: number;

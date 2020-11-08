@@ -16,6 +16,7 @@ export interface RangeSliderProps extends CommonProps {
 	onDrag?: (...args: any[]) => any;
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
+	validateRange?: (value: Array<number>) => boolean;
 	range?: types.range;
 	rangeLabels?: types.rangeLabels;
 	react?: types.react;
