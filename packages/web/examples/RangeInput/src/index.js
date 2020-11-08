@@ -24,6 +24,7 @@ const Main = () => (
 						start: '3K',
 						end: '50K',
 					}}
+					URLParams
 				/>
 			</div>
 

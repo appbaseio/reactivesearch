@@ -14,7 +14,13 @@ class RangeInput extends Component {
 	constructor(props) {
 		super(props);
 
-		const value = props.selectedValue || props.value || props.defaultValue || props.range;
+		let value = props.value || props.defaultValue || props.range;
+		if (props.selectedValue) {
+			value = {
+				start: props.selectedValue[0],
+				end: props.selectedValue[1],
+			};
+		}
 		this.state = {
 			start: value.start,
 			end: value.end,
@@ -196,8 +202,11 @@ RangeInput.defaultProps = {
 	includeNullValues: false,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
+	selectedValue: state.selectedValues[props.componentId]
+		? state.selectedValues[props.componentId].value
+		: null,
 });
 
 const ConnectedComponent = connect(
