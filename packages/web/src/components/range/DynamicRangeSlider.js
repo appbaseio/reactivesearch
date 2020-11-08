@@ -79,6 +79,33 @@ class DynamicRangeSlider extends Component {
 		this.updateRangeQueryOptions(props);
 	}
 
+	static getDerivedStateFromProps(props, state) {
+		// Update the current value based on range to avoid the unnecessary API calls
+		if (!state.currentValue && props.range) {
+			const range = formatRange(props.range);
+			if (props.selectedValue) {
+				// selected value must be in limit
+				if (
+					props.selectedValue[0] >= range.start
+					&& props.selectedValue[1] <= range.end
+				) {
+					return {
+						currentValue: null,
+					};
+				}
+				return {
+					currentValue: [range.start, range.end],
+				};
+			} else if (!isEqual(state.currentValue, [range.start, range.end])) {
+				// Just set the value for visibility don't apply as query or filter
+				return {
+					currentValue: [range.start, range.end],
+				};
+			}
+		}
+		return null;
+	}
+
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
 			this.props.updateComponentProps(
@@ -109,21 +136,13 @@ class DynamicRangeSlider extends Component {
 			// floor and ceil to take edge cases into account
 			this.updateRange(formatRange(this.props.range));
 
-			const value = this.props.value || this.props.defaultValue;
 
 			// only listen to selectedValue initially, after the
 			// component has mounted and range is received
-			if (this.props.selectedValue && !this.state.currentValue) {
+			if (this.props.selectedValue) {
 				this.handleChange(this.props.selectedValue);
-			} else if (value) {
-				const { start, end } = value(this.props.range.start, this.props.range.end);
-				this.handleChange([start, end]);
 			} else {
-				const range = formatRange(this.props.range);
-				this.handleChange([
-					range.start,
-					range.end,
-				]);
+				this.handleChange();
 			}
 		} else if (
 			this.props.range
@@ -141,7 +160,7 @@ class DynamicRangeSlider extends Component {
 			&& prevProps.selectedValue
 		) {
 			// when the filter is reset
-			this.handleChange([this.props.range.start, this.props.range.end]);
+			this.handleChange();
 		}
 
 		checkPropChange(this.props.react, prevProps.react, () => {
@@ -304,21 +323,25 @@ class DynamicRangeSlider extends Component {
 	});
 
 	handleChange = (currentValue, props = this.props) => {
-		// always keep the values within range
-		let normalizedValue = [
-			currentValue[0] < props.range.start ? props.range.start : currentValue[0],
-			currentValue[1] > props.range.end ? props.range.end : currentValue[1],
-		];
-		if (props.range.start === null) {
-			normalizedValue = [currentValue[0], currentValue[1]];
+		let normalizedValue = null;
+		if (currentValue) {
+			// always keep the values within range
+			normalizedValue = [
+				currentValue[0] < props.range.start ? props.range.start : currentValue[0],
+				currentValue[1] > props.range.end ? props.range.end : currentValue[1],
+			];
+			if (props.range.start === null) {
+				normalizedValue = [currentValue[0], currentValue[1]];
+			}
 		}
+		const normalizedValues = normalizedValue ? [normalizedValue[0], normalizedValue[1]] : null;
 		const performUpdate = () => {
 			this.setState(
 				{
 					currentValue: normalizedValue,
 				},
 				() => {
-					const normalizedValues = [normalizedValue[0], normalizedValue[1]];
+					// Only update the queries for dependent components when range is changed by input
 					this.updateQuery(normalizedValues, props);
 					if (props.onValueChange) props.onValueChange(normalizedValues);
 				},
@@ -326,10 +349,7 @@ class DynamicRangeSlider extends Component {
 		};
 		checkValueChange(
 			props.componentId,
-			{
-				start: normalizedValue[0],
-				end: normalizedValue[1],
-			},
+			normalizedValues,
 			props.beforeValueChange,
 			performUpdate,
 		);
@@ -366,22 +386,20 @@ class DynamicRangeSlider extends Component {
 		}
 		const {
 			showFilter,
-			range: { start, end },
 		} = props;
-		const [currentStart, currentEnd] = value;
-		// check if the slider is at its initial position
-		const isInitialValue = currentStart === start && currentEnd === end;
 		props.setQueryOptions(props.componentId, customQueryOptions);
 
-		props.updateQuery({
-			componentId: props.componentId,
-			query,
-			value,
-			label: props.filterLabel,
-			showFilter: showFilter && !isInitialValue,
-			URLParams: props.URLParams,
-			componentType: componentTypes.dynamicRangeSlider,
-		});
+		props.updateQuery(
+			{
+				componentId: props.componentId,
+				query,
+				value,
+				label: props.filterLabel,
+				showFilter,
+				URLParams: props.URLParams,
+				componentType: componentTypes.dynamicRangeSlider,
+			},
+		);
 	};
 
 	updateQueryOptions = (props, range) => {
@@ -644,7 +662,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryOptions(component, props, execute)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 });
 
