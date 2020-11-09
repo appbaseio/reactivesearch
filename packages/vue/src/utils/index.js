@@ -92,13 +92,14 @@ export const isQueryIdentical = (newVal, oldVal, value, props) => {
 	return isEqual(oldVal(value, props), newVal(value, props));
 };
 /**
- * Extracts the renderQuerySuggestions prop from props or slot and returns a valid JSX element
+ * Extracts the renderPopularSuggestions prop from props or slot and returns a valid JSX element
  * @param {Object} data
  * @param _ref
  */
 export const getQuerySuggestionsComponent = (data = {}, _ref = {}) => {
-	const { renderQuerySuggestions } = _ref.$scopedSlots || _ref.$props;
-	if (renderQuerySuggestions) return renderQuerySuggestions(data);
+	const { renderQuerySuggestions, renderPopularSuggestions } = _ref.$scopedSlots || _ref.$props;
+	const render = renderPopularSuggestions || renderPopularSuggestions
+	if (render) return render(data);
 	return null;
 };
 /**
@@ -106,8 +107,8 @@ export const getQuerySuggestionsComponent = (data = {}, _ref = {}) => {
  * @returns {Boolean}
  */
 export const hasQuerySuggestionsRenderer = (_ref = {}) => {
-	const { renderQuerySuggestions } = _ref.$scopedSlots || _ref.$props;
-	return Boolean(renderQuerySuggestions);
+	const { renderQuerySuggestions, renderPopularSuggestions } = _ref.$scopedSlots || _ref.$props;
+	return Boolean(renderPopularSuggestions) || Boolean(renderQuerySuggestions);
 };
 
 /**

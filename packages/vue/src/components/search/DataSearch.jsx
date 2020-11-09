@@ -66,6 +66,19 @@ const DataSearch = {
 		},
 	},
 	created() {
+		const { enableQuerySuggestions, renderQuerySuggestions } = this.$props;
+		// TODO: Remove in 2.0
+		if (enableQuerySuggestions) {
+			console.warn(
+				'Warning(ReactiveSearch): The `enableQuerySuggestions` prop has been marked as deprecated, please use the `enablePopularSuggestions` prop instead.',
+			);
+		}
+		// TODO: Remove in 2.0
+		if (renderQuerySuggestions) {
+			console.warn(
+				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
+			);
+		}
 		this.currentValue = this.selectedValue || '';
 		this.handleTextChange = debounce(value => {
 			if (this.$props.autosuggest) {
@@ -93,8 +106,8 @@ const DataSearch = {
 			return withClickIds(suggestionsList);
 		},
 		topSuggestions() {
-			const { enableQuerySuggestions, showDistinctSuggestions } = this.$props;
-			return enableQuerySuggestions
+			const { enableQuerySuggestions, enablePopularSuggestions, showDistinctSuggestions } = this.$props;
+			return enableQuerySuggestions || enablePopularSuggestions
 				? getTopSuggestions(
 					this.querySuggestions,
 					this.currentValue,
@@ -130,6 +143,7 @@ const DataSearch = {
 		defaultSuggestions: types.suggestions,
 		enableSynonyms: types.bool.def(true),
 		enableQuerySuggestions: VueTypes.bool.def(false),
+		enablePopularSuggestions: VueTypes.bool.def(false),
 		fieldWeights: types.fieldWeights,
 		filterLabel: types.string,
 		fuzziness: types.fuzziness,
@@ -142,6 +156,7 @@ const DataSearch = {
 		innerRef: types.string,
 		render: types.func,
 		renderQuerySuggestions: types.func,
+		renderPopularSuggestions: types.func,
 		parseSuggestion: types.func,
 		renderNoSuggestion: types.title,
 		renderError: types.title,
@@ -281,6 +296,7 @@ const DataSearch = {
 				triggerClickAnalytics: this.triggerClickAnalytics,
 				resultStats: this.stats,
 				querySuggestions: this.topSuggestions,
+				popularSuggestions: this.topSuggestions,
 			};
 			if (isQuerySuggestionsRender) {
 				return getQuerySuggestionsComponent(
