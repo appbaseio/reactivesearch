@@ -171,7 +171,7 @@ export default App {
 
 ### To customize the AutoSuggestions
 
--   **enableQuerySuggestions** `Boolean`
+-   **enablePopularSuggestions** `Boolean`
     Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 
 -   **showDistinctSuggestions** `Boolean` Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as
@@ -515,7 +515,7 @@ export default {
     -   **`error`**: `Object`
         An object containing the error info.
      -  **`suggestions`** `() => Array<Object>`
-        This method can be used to get the parsed suggestions from the `results`. If `enableQuerySuggestions` property is set to `true` then the popular suggestions will get appended at the top with a top-level property named `_query_suggestion` as `true`. The `suggestion` object will have the following shape:
+        This method can be used to get the parsed suggestions from the `results`. If `enablePopularSuggestions` property is set to `true` then the popular suggestions will get appended at the top with a top-level property named `_popular_suggestion` as `true`. The `suggestion` object will have the following shape:
 
         ```ts
         {
@@ -585,7 +585,7 @@ export default {
     -   **`customHighlight`** `Object` as defined in props
     -   **`enableSynonyms`** `boolean` as defined in props
     -   **`queryString`** `string` as defined in props
-    -   **`enableQuerySuggestions`** `boolean` as defined in props
+    -   **`enablePopularSuggestions`** `boolean` as defined in props
     -   **`showDistinctSuggestions`** `boolean` as defined in props
     -   **`defaultQuery`** represents the current value of `defaultQuery` property
     -   **`customQuery`**  represents the current value of `customQuery` property
@@ -628,7 +628,7 @@ export default {
     -   **`setDefaultQuery`** `( defaultQuery: function, options?: Options ) => void` can be used to set the `defaultQuery` property.
     -   **`setCustomQuery`** `( customQuery: function, options?: Options ) => void` can be used to set the `customQuery` property.
 
--   **renderQuerySuggestions** `slot` You can render popular suggestions in a custom layout by using the `renderQuerySuggestions` named slot.
+-   **renderPopularSuggestions** `slot` You can render popular suggestions in a custom layout by using the `renderPopularSuggestions` named slot.
     <br/>
     It accepts an object with these properties:
 

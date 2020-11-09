@@ -90,7 +90,7 @@ The following example renders an autosuggestion search bar(`search-component`) w
       showVoiceSearch
       URLParams
       className="custom-class"
-      enableQuerySuggestions
+      enablePopularSuggestions
       iconPosition="left"
       :style="{ padding: 10 }"
       @valueChange="handleValue"

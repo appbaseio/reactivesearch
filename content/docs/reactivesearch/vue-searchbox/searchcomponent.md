@@ -212,7 +212,7 @@ export default App {
 
 #### To customize the AutoSuggestions
 
--   **enableQuerySuggestions** `boolean` [optional]
+-   **enablePopularSuggestions** `boolean` [optional]
     Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 
 -   **showDistinctSuggestions** `boolean` [optional]
@@ -508,7 +508,7 @@ It is an object which contains the following details of `suggestions` query resp
     -   **`customData`**: `Object` An object of custom data obtained from the ReactiveSearch API.
     -   **`rawData`**: `Object` An object of raw response as-is from elasticsearch query.
 -   **suggestions** `() => Array<Object>`
-    This method can be used to get the parsed suggestions from the `results`. If `enableQuerySuggestions` property is set to `true` then the popular suggestions will get appended at the top with a top-level property named `_query_suggestion` as `true`. The `suggestion` object will have the following shape:
+    This method can be used to get the parsed suggestions from the `results`. If `enablePopularSuggestions` property is set to `true` then the popular suggestions will get appended at the top with a top-level property named `_popular_suggestion` as `true`. The `suggestion` object will have the following shape:
 
 ```ts
 {
@@ -566,7 +566,7 @@ Returns the current mic instance. Can be used to set mic language and other prop
 -   **customHighlight** `Object` as defined in props
 -   **enableSynonyms** `boolean` as defined in props
 -   **queryString** `string` as defined in props
--   **enableQuerySuggestions** `boolean` as defined in props
+-   **enablePopularSuggestions** `boolean` as defined in props
 -   **showDistinctSuggestions** `boolean` as defined in props
 -   **defaultQuery** represents the current value of `defaultQuery` property
 -   **customQuery**  represents the current value of `customQuery` property
