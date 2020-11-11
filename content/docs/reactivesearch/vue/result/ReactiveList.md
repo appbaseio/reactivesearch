@@ -262,7 +262,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
         An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/)
         > Note:
         >
-        > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerAnalytics to register the click analytics info.
+        > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerClickAnalytics to register the click analytics info.
     -   **`customData`** `object`
         Custom data set in the query rule when appbase.io is used as backend. [Read More](/docs/search/rules/#custom-data)
     -   **`rawData`** `object`
@@ -285,8 +285,8 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
             Total number of promoted results found
     -   **`loadMore`**: `function`
         A callback function to be called to load the next page of results into the view. The callback function is only applicable in the case of infinite loading view (i.e. `infiniteScroll` prop set to `true`).
-    -   **`triggerAnalytics`**: `function`
-        A function which can be called to register a click analytics. [Read More](docs/reactivesearch/v3/advanced/analytics/)
+    -   **`triggerClickAnalytics`**: `function`
+        A function which can be called to register a click analytics. [Read More](/docs/reactivesearch/vue/advanced/analytics/)
     -   **`setPage`**: `function`
         A function which will allow to dispatch a page change event when using custom pagination. It accepts `pageNumber` as its parameter.
 

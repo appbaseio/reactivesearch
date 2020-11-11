@@ -37,7 +37,7 @@ When rendering your component using `render` you have to call the `triggerClickA
     `>
         <div
             v-for="(item, index) in data"
-            @click="() => triggerClickAnalytics(item._click_id)"
+            @click="triggerClickAnalytics(item._click_id)"
         >
             {{ item.title }}
         </div>

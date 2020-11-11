@@ -161,13 +161,13 @@ renderError={(error) => (
 - **renderAllData** `function` [optional]
     use to display results and map component together. Usage:
 ```js
-    renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination, triggerAnalytics, meta) => {
+    renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination, triggerClickAnalytics, meta) => {
         // hits are the results returned from query.
         // streamHits are the results which are returned only  when stream prop is true.
         // loadMore is used to load more results.
         // renderMap is the function which is used to render Map.
         // renderPagination is the function which is used to render Pagination like in ReactiveList.
-		// triggerAnalytics is the function which can be called to register click analytics.
+		// triggerClickAnalytics is the function which can be called to register click analytics.
         // meta represents an object which has the following properties:
         //  promotedData: Represents the promoted results,
         //  customData: Represents the customData,
@@ -181,7 +181,7 @@ renderError={(error) => (
         //      promoted: Total number of promoted results found.
         return(
             <>
-                {hits.map(hit => <pre onClick={() => triggerAnalytics(hit._click_id)}>{JSON.stringify(hit)}</pre>)}
+                {hits.map(hit => <pre onClick={() => triggerClickAnalytics(hit._click_id)}>{JSON.stringify(hit)}</pre>)}
                 {renderMap()}
             </>
         )

@@ -327,7 +327,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
         An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/)
         > Note:
         >
-        > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerAnalytics to register the click analytics info.
+        > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerClickAnalytics to register the click analytics info.
     -   **`customData`** `object`
         Custom data set in the query rule when appbase.io is used as backend. [Read More](/docs/search/rules/#custom-data)
     -   **`rawData`** `object`
@@ -350,7 +350,7 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
             Total number of promoted results found
     -   **`loadMore`**: `function`
         A callback function to be called to load the next page of results into the view. The callback function is only applicable in the case of infinite loading view (i.e. `infiniteScroll` prop set to `true`).
-    -   **`triggerAnalytics`**: `function`
+    -   **`triggerClickAnalytics`**: `function`
         A function which can be called to register a click analytics. [Read More](docs/reactivesearch/v3/advanced/analytics/)
 
 ```js
@@ -391,7 +391,7 @@ Or you can also use render function as children
             rawData,
             resultStats,
             handleLoadMore,
-            triggerAnalytics
+            triggerClickAnalytics
         }) => (
             // return UI to be rendered
         )

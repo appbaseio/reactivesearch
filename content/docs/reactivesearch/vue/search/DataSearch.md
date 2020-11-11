@@ -276,6 +276,8 @@ export default {
             Returns the events you should apply to any menu item elements you render.
         -   **highlightedIndex** `number`
             The index that should be highlighted.
+    -   **triggerClickAnalytics**: `object`
+        method can be used to register click analytics for suggestions. It accepts two arguments, click position and document ID (required only if you're using `rawData` to render suggestions).
 
 You can use `DataSearch` with `render slot` as shown:
 
