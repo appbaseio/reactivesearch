@@ -710,7 +710,9 @@ class ReactiveList extends Component {
 			error,
 			loading: isLoading,
 			loadMore: this.loadMore,
+			// TODO: Remove in v4
 			triggerAnalytics: this.triggerClickAnalytics,
+			triggerClickAnalytics: this.triggerClickAnalytics,
 			...this.getData(),
 		};
 		return getComponent(data, this.props);
