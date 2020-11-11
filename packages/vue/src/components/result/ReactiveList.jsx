@@ -740,7 +740,9 @@ const ReactiveList = {
 				error,
 				loading: isLoading,
 				loadMore: this.loadMore,
+				// TODO: Remove in v2
 				triggerAnalytics: this.triggerClickAnalytics,
+				triggerClickAnalytics: this.triggerClickAnalytics,
 				setPage: this.setPage,
 				...this.getData(),
 			};
