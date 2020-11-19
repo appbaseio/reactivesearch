@@ -432,6 +432,99 @@ This property can be used to control (enable/disable) the synonyms behavior for 
 | ------ | --------------------------- | -------- |
 | `bool` | `search`                    | false    |
 
+### rankFeature
+This property allows you to define the [Elasticsearch rank feature query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-rank-feature-query.html#query-dsl-rank-feature-query) to boost the relevance score of documents based on the `rank_feature` fields.
+
+| Type   | Applicable on query of type | Required |
+| ------ | --------------------------- | -------- |
+| `object` | `search`                  | false    |
+
+The `rankFeature` object must be in the following shape:
+```ts
+{
+    "field_name": {
+        "boost": 1.0,
+        "function_name": "function_object"
+    }
+}
+```
+- `field_name` It represents the `dataField` that has the `rank_feature` or `rank_features` mapping.
+- `boost` [optional] A floating point number (shouldn't be negative) that is used to decrease (if the value is between 0 and 1) or increase relevance scores (if the value is greater than 1). Defaults to 1.
+- `function_name` To calculate relevance scores based on rank feature fields, the rank_feature query supports the following mathematical functions:
+    - [saturation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-rank-feature-query.html#rank-feature-query-saturation)
+    - [log](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-rank-feature-query.html#rank-feature-query-logarithm)
+    - [sigmoid](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-rank-feature-query.html#rank-feature-query-sigmoid)
+- `function_object` The function object can be used to override the default values for functions.
+    - `saturation` function supports the `pivot` property that must be greater than zero.
+    - `log` function supports the `scaling_factor` property
+    - `sigmoid` function supports `pivot` and `exponent`[must be positive] properties
+
+The following example uses a rank feature field named `pagerank` with `saturation` function.
+
+```js
+    {
+        "id": "search",
+        "dataField": ["content"],
+        "value": "2016",
+        "rankFeature": {
+            "pagerank": {
+                "saturation": {
+                    "pivot": 2
+                }
+            }
+        }
+    }
+```
+
+The following example uses the `boost` property to boost the relevance score based on the `pagerank` field.
+
+```js
+    {
+        "id": "search",
+        "dataField": ["content"],
+        "value": "2016",
+        "rankFeature": {
+            "pagerank": {
+                "boost": 2.0
+            }
+        }
+    }
+```
+
+The following example uses all three functions (`saturation`, `log` and `sigmoid`) to boost the relevance scores.
+
+```js
+    {
+    "query": [
+        {
+            "id": "search",
+            "dataField": [
+                "content"
+            ],
+            "value": "2016",
+            "rankFeature": {
+                "pagerank": {
+                    "saturation": {
+                        "pivot": 2
+                    }
+                },
+                "url_length": {
+                    "log": {
+                        "scaling_factor": 1
+                    }
+                },
+                "topics.sports": {
+                    "sigmoid": {
+                        "pivot": 2,
+                        "exponent": 1
+                    }
+                }
+            }
+        }
+    ]
+}
+```
+
 ## Settings Properties
 
 ### recordAnalytics
