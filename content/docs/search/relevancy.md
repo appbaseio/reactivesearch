@@ -55,13 +55,60 @@ Outside of the choice of the primary language, an index can also be configured w
 
 ## Search Settings
 
-Search Settings allow you to control your search query settings.
+Search Settings enables you to control search query and relevance settings.
 
 ![](https://i.imgur.com/pCRaMAe.png)
 
 The UI view lets you control and set the fields that have a search use-case and a variable field weight that's used to boost a match at search time.
 
 By default, when appbase.io is used to import data for an Elasticsearch index, it sets the search use-case and the appropriate indexing and search analyzers for all the `text` fields. As a user, you can change the fields that are searchable.
+
+#### Advanced Settings
+
+For each field, you can toggle the advanced settings view to granularly control how the field gets searched.
+
+![](https://i.imgur.com/SFZzWKc.png)
+
+Available options to search a field include:
+- `keyword`: Searches on the exact value of the field. You typically want to enable this and provide it the highest weight.
+- `autosuggest`: Searches on the prefix value of the field. Enable this when you want users to do an autocomplete/suggestions search on the field. You should set a relatively lower weight for it.
+- `search`: Searches on an infix value of the field. Enable this when you want users to be able to find results by entering partial values. You should set a relatively lower weight for it.
+- `language`: Searches on the language analyzed value (as set in language settings) for the field. You should set a relatively moderate weight for it.
+- `synonyms`: Enable this when you want users to be able to find results when searching for synonym pairs as set in the Synonyms view. You should set a relatively lower weight for it.
+- `delimiter`: Searches for values with non-alphanumeric characters effectively. Enable this if you have those values for the field. You should set a relatively moderate weight for it.
+
+By default, all of these options are searched against. The search relevance weights are preset for these options, but you can also set them manually. By disabling an option depending on the field's search use-case, you can also improve the search latency performance.
+
+#### Relevance Tuning with Rank Feature
+
+
+**What is a rank feature**: A [rank_feature](https://www.elastic.co/guide/en/elasticsearch/reference/current/rank-feature.html) field works similarly to a regular float field from the outside, but indexes data in a way that allows Elasticsearch to run queries efficiently when it is used for ranking. Appbase.io natively supports applying additional relevance tuning using rank feature.
+
+You can add a rank_feature field from the [Schema UI view](#schema).
+
+Then from the **Search Settings** view, you can configure the rank feature based relevance tuning parameters.
+
+![](https://i.imgur.com/6BaJtOa.png)
+
+If the relevance tuning were defined as above, the new relevance score would be computed as:
+
+`new_relevance = search_based_relevance + 1.0*saturation(rank) + 2.0*log(popularity, 5)`
+
+The following options are supported with rank feature based relevance tuning.
+
+- **Boost** [optional] - A floating point number (shouldn't be negative) that is used to decrease (if the value is between 0 and 1) or increase relevance scores (if the value is greater than 1). Defaults to 1.
+- **Function** - `Saturation`, `Logarithm`, and `Sigmoid` functions are supported. Each function takes input parameters that define how they influence the relevance scores.
+  - `Saturation`: The saturation function gives a score equal to S / (S + pivot), where S is the value of the rank feature field and pivot is a configurable pivot value so that the result will be less than 0.5 if S is less than pivot and greater than 0.5 otherwise. Scores are always (0,1).
+      - `Pivot`: This function expects pivot as an input parameter. When not set explicitly, a default value equal to the approximate geometric mean of all rank feature values in the index is set.
+  - `Logarithm`: The log function gives a score equal to log(scaling_factor + S), where S is the value of the rank feature field and scaling_factor is a configurable scaling factor. Scores are unbounded.
+      - `Scaling Factor`: This function expects scaling factor as an input parameter. It should be a positive floating number value.
+  - `Sigmoid`: The sigmoid function is an extension of the saturation function and adds a configurable exponent. Scores are computed as S^exp^ / (S^exp^ + pivot^exp^). Like for the saturation function, pivot is the value of S that gives a score of 0.5 and scores are (0,1).
+      - `Pivot`: This function expects pivot as an input parameter. When not set explicitly, a default value equal to the approximate geometric mean of all rank feature values in the index is set.
+      - `Exponent`: The exponent must be positive and is typically in [0.5, 1]. A good value should be computed via training. If you don’t have the opportunity to do so, we recommend you use the saturation function instead.
+
+You can read more about rank_feature query over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-rank-feature-query.html).
+
+
 
 #### Other Options
 
@@ -85,6 +132,7 @@ Allowing typo-tolerance beyond 2 isn't recommended as that can yield a lot of fa
 
 **Enable Synonyms:** Enabling synonyms lets you set a dictionary of synonyms that is used at search time to map to the indexed content. This setting is disabled by default.
 
+**Enable N-grams:** appbase.io adds an n-grams tokenizer to enable partial infix matching of search terms, but this comes with a substantial storage increase. By disabling n-grams, you can make significant storage savings.
 
 ## Aggregation Settings
 
