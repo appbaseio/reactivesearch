@@ -84,7 +84,7 @@ You can install ABC CLI from the [latest Github release](https://github.com/appb
 
 You can also install this via docker using:
 
-> : `docker pull appbaseio/abc`
+> `docker pull appbaseio/abc`
 
 It is possible to import data from various database sources. See the snippets below that show the import command for each of the supported database.
 
@@ -190,8 +190,8 @@ Read more about it over [here](https://github.com/appbaseio/abc/blob/dev/docs/im
 
 Appbase.io, by extension of Elasticsearch's REST API offers two ways to index data:
 
-1. Document Index / Document Update endpoint - Read more about this in the doc and see an example code snippet [here](https://rest.appbase.io/?version=latest#81149466-4ba5-8214-56f6-6a0d2f3bebcc).
-2. Bulk Index endpoint - Read more in the doc and see an example code snippet [here](https://rest.appbase.io/?version=latest#1162c8a2-733f-aee0-1c57-63fc3979feeb).
+1. Document Index / Document Update endpoint - Read more about this in the doc and see an example code snippet [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html).
+2. Bulk Index endpoint - Read more in the doc and see an example code snippet [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html).
 
 You can also see the examples below that show an interactive example of using the bulk API for JavaScript, Go, Python and PHP:
 
