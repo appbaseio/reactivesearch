@@ -126,7 +126,7 @@ Let's now learn to index multiple documents in one request. For this, we'll use 
 
 <br/>
 
-<iframe height="600px" width="100%" src="<iframe height="600px" width="100%" src="https://repl.it/@lakhansamani/Appbaseio-Go-Bulk-Index-Data?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+<iframe height="600px" width="100%" src="<iframe height="600px" width="100%" src="https://repl.it/@lakhansamani/Appbaseio-Go-Bulk-Index-Data-1?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
 
 > Note <i class="fa fa-info-circle"></i>
 >
