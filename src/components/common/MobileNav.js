@@ -30,6 +30,9 @@ const getValue = () => {
 		if (path && path.startsWith('/docs/reactivesearch/react-searchbox')) {
 			return 'React SearchBox';
 		}
+		if (path && path.startsWith('/docs/reactivesearch/react-native-searchbox')) {
+			return 'React Native SearchBox';
+		}
 		if (path && path.startsWith('/docs/reactivesearch/searchbox')) {
 			return 'Searchbox';
 		}
@@ -52,6 +55,8 @@ const getFileName = value => {
 			return 'searchbox';
 		case 'React Searchbox':
 			return 'react-searchbox-reactivesearch';
+		case 'React Native Searchbox':
+			return 'react-native-searchbox-reactivesearch';
 		case 'Vue SearchBox':
 			return 'vue-searchbox-reactivesearch';
 		case 'UI Integrations':
@@ -161,6 +166,7 @@ class MobileNav extends React.Component {
 								'Vue',
 								'SearchBase',
 								'React SearchBox',
+								'React Native SearchBox',
 								'Vue SearchBox',
 							]}
 							value={rs}

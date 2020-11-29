@@ -24,6 +24,8 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/searchbase/overview/QuickStart/`;
 		} else if (value.value === 'React Searchbox') {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/react-searchbox/quickstart/`;
+		} else if (value.value === 'React Native Searchbox') {
+			window.location.href = `${window.location.origin}/docs/reactivesearch/react-native-searchbox/quickstart/`;
 		} else if (value.value === 'Searchbox') {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/searchbox/Quickstart/`;
 		} else if (value.value === 'Vue Searchbox') {
@@ -51,6 +53,9 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 		}
 		if (location.pathname.startsWith('/docs/reactivesearch/react-searchbox')) {
 			return 'React Searchbox';
+		}
+		if (location.pathname.startsWith('/docs/reactivesearch/react-native-searchbox')) {
+			return 'React Native Searchbox';
 		}
 		if (location.pathname.startsWith('/docs/reactivesearch/searchbox')) {
 			return 'Searchbox';
@@ -130,11 +135,12 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 					'React - v3',
 					'Vue',
 					'UI Integrations',
-					'React Native',
 					'Searchbox',
 					'React Searchbox',
+					'React Native Searchbox',
 					'Vue Searchbox',
 					'Searchbase',
+					'React Native',
 				]}
 				value={getValue()}
 				className="version-switcher shadow-3 br2"

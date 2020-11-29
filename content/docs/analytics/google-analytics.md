@@ -69,7 +69,7 @@ If you want to track your searchbox and you are using the [data-search](https://
 />
 ```
 
-###React SearchBox
+### React SearchBox
 Check the API docs for `React SearchBox` over [here](https://docs.appbase.io/docs/reactivesearch/react-searchbox/apireference/).
 
 ```js

@@ -37,6 +37,7 @@ Appbase.io offers turnkey search analytics for Elasticsearch. No matter how your
 | **`ReactiveSearch`** | `Vue`       | [Learn More](/docs/reactivesearch/vue/advanced/analytics/)  |
 | **`SearchBox`**      | `VanillaJS` | [Learn More](/docs/reactivesearch/searchbox/api/)  |
 | **`SearchBox`**      | `React`     | [Learn More](/docs/reactivesearch/react-searchbox/apireference/)  |
+| **`SearchBox`**      | `React Native`     | [Learn More](/docs/reactivesearch/react-native-searchbox/apireference/)  |
 | **`SearchBox`**      | `Vue`       | [Learn More](/docs/reactivesearch/vue-searchbox/apireference/)  |
 | **`SearchBase`**     | `VanillaJS` | [Learn More](/docs/reactivesearch/searchbase/overview/apireference/)  |
 

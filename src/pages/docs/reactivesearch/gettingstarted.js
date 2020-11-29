@@ -15,10 +15,7 @@ const GettingStarted = props => {
 			<p>You can choose from these UI components libraries for building your search UI.</p>
 			<div className="container getting-started">
 				<div className="card">
-					<img
-						src="/images/ui-integrations.png"
-						alt="React"
-					/>
+					<img src="/images/ui-integrations.png" alt="React" />
 					<div className="content">
 						<h2>UI Integrations</h2>
 						<p>Create a storefront / site search UI visually with no code</p>
@@ -28,10 +25,7 @@ const GettingStarted = props => {
 					</div>
 				</div>
 				<div className="card">
-					<img
-						src="/images/react.jpeg"
-						alt="React"
-					/>
+					<img src="/images/react.jpeg" alt="React" />
 					<div className="content">
 						<h2>React</h2>
 						<p>React UI components for building data-driven search experiences</p>
@@ -41,10 +35,7 @@ const GettingStarted = props => {
 					</div>
 				</div>
 				<div className="card">
-					<img
-						src="/images/react-native.jpeg"
-						alt="React Native"
-					/>
+					<img src="/images/react-native.jpeg" alt="React Native" />
 					<div className="content">
 						<h2>React Native</h2>
 						<p>React Native UI components for data-driven search experiences</p>
@@ -54,10 +45,7 @@ const GettingStarted = props => {
 					</div>
 				</div>
 				<div className="card">
-					<img
-						src="/images/vue.png"
-						alt="Vue"
-					/>
+					<img src="/images/vue.png" alt="Vue" />
 					<div className="content">
 						<h2>Vue</h2>
 						<p>Vue UI components for building data-driven search experiences</p>
@@ -93,6 +81,22 @@ const GettingStarted = props => {
 					</div>
 				</div>
 				<div className="card">
+					<img src="/images/Searchbox_React@1x.png" alt="React Native Searchbox" />
+					<div className="content">
+						<h2>React Native Searchbox</h2>
+						<p>
+							React native searchbox UI component to query and display results from
+							your Elasticsearch app (aka index) using declarative props.
+						</p>
+						<a
+							className="btn"
+							href="/docs/reactivesearch/react-native-searchbox/quickstart/"
+						>
+							Start with React Native Searchbox
+						</a>
+					</div>
+				</div>
+				<div className="card">
 					<img src="/images/Searchbox_Vue@1x.png" alt="Vue Searchbox" />
 					<div className="content">
 						<h2>Vue Searchbox</h2>
@@ -107,10 +111,7 @@ const GettingStarted = props => {
 				</div>
 
 				<div className="card">
-					<img
-						src="/images/REST.png"
-						alt="REST API"
-					/>
+					<img src="/images/REST.png" alt="REST API" />
 					<div className="content">
 						<h2>REST API</h2>
 						<p>Appbase.io REST API (Elasticsearch compatible)</p>
@@ -120,10 +121,7 @@ const GettingStarted = props => {
 					</div>
 				</div>
 				<div className="card">
-					<img
-						src="/images/android.jpeg"
-						alt="Android Library"
-					/>
+					<img src="/images/android.jpeg" alt="Android Library" />
 					<div className="content">
 						<h2>Android Library</h2>
 						<p>Elasticsearch and appbase.io library for Android (and Java)</p>
@@ -138,10 +136,7 @@ const GettingStarted = props => {
 					</div>
 				</div>
 				<div className="card">
-					<img
-						src="/images/swift.jpeg"
-						alt="Swift Library"
-					/>
+					<img src="/images/swift.jpeg" alt="Swift Library" />
 					<div className="content">
 						<h2>Swift Library</h2>
 						<p>Elasticsearch and appbase.io library for Swift iOS / MacOS</p>

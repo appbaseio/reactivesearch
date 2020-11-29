@@ -170,10 +170,10 @@ const HomePage = ({ data, location }) => {
 												duration: 8,
 											},
 											{
-												title: 'Native ReactiveSearch QuickStart',
+												title: 'Searchbox Native QuickStart',
 												description: '',
 												link:
-													'/docs/reactivesearch/native/overview/QuickStart/',
+													'/docs/reactivesearch/react-native-searchbox/quickstart/',
 												duration: 6,
 											},
 										],
