@@ -13,15 +13,13 @@ sidebar: 'docs'
 Already have Elasticsearch hosted with AWS, Elastic Cloud or planning to hosting it yourself?
 You can now access all of Appbase.io features such as [search preview](/docs/search/relevancy/#test-search-relevancy), [actionable analytics](/docs/analytics/overview/) and [granular security](/docs/security/credentials/) with an Elasticsearch cluster hosted anywhere with the `Bring Your Own Cluster` deployment mode.
 
-> 🆕 We're making Appbase.io available as a cloud-native software under the codename [Arc](https://arc-dashboard.appbase.io).
-
 ![](/images/byoc.png)
 
-This diagram highlights how Arc works. It directly interacts with an underlying Elasticsearch cluster and acts as an API gateway for clients to interact with. Arc supercharges your Elasticsearch cluster with a streamlined development experience, out of the box search analytics and fine-grained security features.
+This diagram highlights how Appbase.io works. It directly interacts with an underlying Elasticsearch cluster and acts as an API gateway for clients to interact with. Appbase.io supercharges your Elasticsearch cluster with a streamlined development experience, out of the box search analytics and fine-grained security features.
 
 ## Quickstart Recipes
 
-You can install [Arc](https://dash.appbase.io) on any server environment. We have created quickstart recipes to make the installation process seamless for the following platforms:
+You can install [Appbase.io](https://dash.appbase.io) on any server environment. We have created quickstart recipes to make the installation process seamless for the following platforms:
 
 <div class="grid-integrations-index mt4 mt6-l f8">
 	<a class="bg-white shadow-2 box-shadow-hover shadow-2-hover  br4 db flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc" style="box-shadow: 0 0 5px rgba(0,0,0,.02), 0 5px 22px -8px rgba(0,0,0,.1);    word-break: normal;cursor: pointer; padding: 2rem; height: 120px;width:120px;" href="#using-appbaseio">
@@ -40,7 +38,7 @@ You can install [Arc](https://dash.appbase.io) on any server environment. We hav
 
 ### Using Appbase.io
 
-Appbase.io dashboard offers the most seamless experience for running your Arc with your own Elasticsearch cluster.
+Appbase.io dashboard offers the most seamless experience for running Appbase.io with your own Elasticsearch cluster.
 
 **Step 1 -** Go to the **[Create Cluster Link](https://dashboard.appbase.io/clusters/new/my-cluster)**. You will be redirected to sign up or login if you aren't already logged in.
 
@@ -50,23 +48,23 @@ You should see the above screen.
 
 **Step 2 -** Select the pricing plan. Read more about pricing plans over [here](https://arc-site.netlify.com/pricing/).
 
-**Step 3 -** Select the region to add Arc to. It is recommended that you pick a region closest to where your Elasticsearch cluster is running.
+**Step 3 -** Select the region to add Appbase.io to. It is recommended that you pick a region closest to where your Elasticsearch cluster is running.
 
-**Step 4 -** Enter a name for your Arc instance. And enter the Elasticsearch URL. Use the `Verify Connection` button to ensure that this URL is accessible.
+**Step 4 -** Enter a name for your Appbase.io instance. And enter the Elasticsearch URL. Use the `Verify Connection` button to ensure that this URL is accessible.
 
 ![](https://i.imgur.com/NO5lcvl.png)
 
-> **Note:** We recommend either having an open Elasticsearch access policy or one based on Basic Authentication till the Arc instance is deployed.
+> **Note:** We recommend either having an open Elasticsearch access policy or one based on Basic Authentication till the Appbase.io instance is deployed.
 
 **Step 5 -** Hit **Create Cluster** button and hang tight till your cluster is deployed.
 
-That's all! It take around 5-10 mins for your Arc instance to be deployed. Once the deployment is complete, you will be able to see it in your **Clusters List** with a `Bring your own cluster` tag.
+That's all! It take around 5-10 mins for your Appbase.io instance to be deployed. Once the deployment is complete, you will be able to see it in your **Clusters List** with a `Bring your own cluster` tag.
 
-> **Note:** If you have IP based restriction for your cluster, now you can whitelist the Arc Cluster IP and restrict direct access to your cluster. [Read More](/docs/hosting/byoc/connect-to-your-elasticsearch/)
+> **Note:** If you have IP based restriction for your cluster, now you can whitelist the Appbase.io Cluster IP and restrict direct access to your cluster. [Read More](/docs/hosting/byoc/connect-to-your-elasticsearch/)
 
-#### **Accessing Arc Dashboard**
+#### **Accessing Appbase.io Dashboard**
 
-Now that the Arc Cluster is deployed, we can access the **Arc Dashboard** using the **Explore Cluster** Action on the **Clusters Details** page.
+Now that the Appbase.io Cluster is deployed, we can access the **Dashboard** using the **Explore Cluster** Action on the **Clusters Details** page.
 
 ![](https://i.imgur.com/uIfTi2G.png)
 
@@ -80,7 +78,7 @@ This will give you access to all the Appbase.io features such as:
 
 #### **Accessing Elasticsearch Data using REST API**
 
-You can access the [Elasticsearch REST](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html) APIs via the Arc Instance URL. You can either use the master credentials or create additional API keys with fine-grained access permissions.
+You can access the [Elasticsearch REST](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html) APIs via the Appbase.io Instance URL. You can either use the master credentials or create additional API keys with fine-grained access permissions.
 ![](https://i.imgur.com/Q3onHwn.png)
 
 #### **Changing Elasticsearch URL**
@@ -99,23 +97,23 @@ With Appbase.io Dashboard, you can easily share the cluster with your team membe
 
 ### Using AMI
 
-Now you can deploy Arc using Amazon Machine Image (AMI) on the AWS Marketplace. With the AMI, you can install Arc with one click on an AWS EC2 instance.
+Now you can deploy Appbase.io using Amazon Machine Image (AMI) on the AWS Marketplace. With the AMI, you can install Appbase.io with one click on an AWS EC2 instance.
 
-Here are the steps that you can follow to install Arc using AMI
+Here are the steps that you can follow to install Appbase.io using AMI
 
-**Step 1 -** Create an [Arc instance](/docs/hosting/byoc/#how-to-create-arc-instance).
+**Step 1 -** Create an [Appbase.io instance](/docs/hosting/byoc/#how-to-create-appbase-io-instance).
 
-**Step 2 -** Select Arc AMI from [AWS Marketplace](https://aws.amazon.com/marketplace/pp/B081K85XFZ?qid=1574427631010)
+**Step 2 -** Select Appbase.io AMI from [AWS Marketplace](https://aws.amazon.com/marketplace/pp/B081K85XFZ?qid=1574427631010)
 
 ![](https://i.imgur.com/ILM9BaS.png)
 
-**Step 3 -** Select an EC2 Instance for Deploying Arc. We recommend using the [t2 medium](https://aws.amazon.com/ec2/pricing/on-demand/) instance size.
+**Step 3 -** Select an EC2 Instance for Deploying Appbase.io. We recommend using the [t2 medium](https://aws.amazon.com/ec2/pricing/on-demand/) instance size.
 
-That's all you need to follow in order to deploy an Arc cluster 🚀. Once the EC2 machine is created and _running_ successfully, you can get Public DNS / IP address from the EC2 dashboard. This URL becomes your end point for accessing the Arc services. You can also point your domain to this DNS or IP.
+That's all you need to follow in order to deploy an Appbase.io cluster 🚀. Once the EC2 machine is created and _running_ successfully, you can get Public DNS / IP address from the EC2 dashboard. This URL becomes your end point for accessing the Appbase.io services. You can also point your domain to this DNS or IP.
 
 ![](https://i.imgur.com/PDs8DK0.png)
 
-> **Note:** We highly recommend using the cluster with [TLS security](https://en.wikipedia.org/wiki/Transport_Layer_Security) enabled, as Arc is intended to be used as a frontend for Elasticsearch.
+> **Note:** We highly recommend using the cluster with [TLS security](https://en.wikipedia.org/wiki/Transport_Layer_Security) enabled, as Appbase.io is intended to be used as a frontend for Elasticsearch.
 
 #### **Adding TLS Certificate**
 
@@ -159,27 +157,27 @@ cmd/ctrl + v
 sudo systemctl restart nginx
 ```
 
-#### **Configuring Arc**
+#### **Configuring Appbase.io**
 
 Once your EC2 machine is up and running, you can open the EC2 public DNS. You might come across following page initially.
 
 ![](https://i.imgur.com/huRzI3e.png)
 
-You can start configuring Arc by clicking on _configure page_ link OR opening `http://public-dns/configure` URI directly.
+You can start configuring Appbase.io by clicking on _configure page_ link OR opening `http://public-dns/configure` URI directly.
 
-**Step 1:** Setup Arc credentials. This are the master credentials that will be used for accessing the Arc Service from Arc Dashboard. Your initial user name is `ec2-user` and your initial password is your EC2 instance id.
+**Step 1:** Setup Appbase.io credentials. This are the master credentials that will be used for accessing the Appbase.io Service from the Dashboard. Your initial user name is `ec2-user` and your initial password is your EC2 instance id.
 
 ![](https://i.imgur.com/OkyeFJS.png)
 
-**Step 2:** Once you login, you can reset your username and password. Enter the your Elasticsearch URL, ARC_ID obtained while setting [Arc instance](/docs/hosting/byoc/#how-to-create-arc-instance) and save the details.
+**Step 2:** Once you login, you can reset your username and password. Enter the your Elasticsearch URL, APPBASE_ID obtained while setting [Appbase.io instance](/docs/hosting/byoc/#how-to-create-arc-instance) and save the details.
 
 ![](https://i.imgur.com/iVmzscW.png)
 
-Hold tight for 5-10s till the Arc service restarts with your new configurations.
+Hold tight for 5-10s till the Appbase.io service restarts with your new configurations.
 
-#### **Getting Arc URL**
+#### **Getting Appbase.io URL**
 
-Once EC2 machine is up and running, your EC2 public DNS becomes the Arc URL. This can be used with the configured `USERNAME` and `PASSWORD` to test the Arc connection.
+Once EC2 machine is up and running, your EC2 public DNS becomes the Appbase.io URL. This can be used with the configured `USERNAME` and `PASSWORD` to test the Appbase.io connection.
 
 **Example**
 
@@ -187,15 +185,15 @@ Once EC2 machine is up and running, your EC2 public DNS becomes the Arc URL. Thi
 curl -u="USERNAME:PASSWORD" http://EC2-PUBLIC-[IP/DNS]
 ```
 
-#### **Accessing Arc Dashboard**
+#### **Accessing Appbase.io Dashboard**
 
-Now that all our configurations are complete, in order to access all the Arc Services, let us sign in to the [Arc dashboard](https://dash.appbase.io/login).
+Now that all our configurations are complete, in order to access all the Appbase.io Services, let us sign in to the [Appbase.io dashboard](https://dash.appbase.io/login).
 
--   **Step 1 -** Sign in into [Arc dashboard](https://dash.appbase.io/login) using your EC2 Public IP / Domain with Username and Password configured above.
+-   **Step 1 -** Sign in into [Appbase.io dashboard](https://dash.appbase.io/login) using your EC2 Public IP / Domain with Username and Password configured above.
 
 ![](https://i.imgur.com/qVSHx0F.png)
 
-🔥 Hurray! You can now start accessing all the Appbase.io services using [Arc Dashboard](https://dash.appbase.io).
+🔥 Hurray! You can now start accessing all the Appbase.io services using [Appbase.io Dashboard](https://dash.appbase.io).
 
 ---
 
@@ -207,7 +205,7 @@ Run appbase.io via a single [docker compose file](https://github.com/appbaseio/a
 
 The dockerized setup is composed of the following services:
 
-#### Arc
+#### Appbase.io
 
 Allows you to access all appbase.io features like search preview, actionable analytics and granular security with any Elasticsearch cluster hosted anywhere.
 
@@ -219,7 +217,7 @@ This service comes with simple user interface which allows you to set credential
 
 #### Nginx
 
-This service helps in setting up reverse proxy for Arc Service and serving Configuration service. It also helps in serving data using with TLS certificate, which is recommended for production.
+This service helps in setting up reverse proxy for Appbase.io Service and serving Configuration service. It also helps in serving data using with TLS certificate, which is recommended for production.
 
 #### Elasticsearch
 
@@ -229,7 +227,7 @@ An open-source single-node Elasticsearch cluster is run. This is optional: You c
 
 The steps described here assumes a that you have [docker](https://docs.docker.com/install/) installed.
 
--   **Step 1:** Get Arc ID following the steps mentioned [here](/docs/hosting/byoc/#how-to-create-arc-instance)
+-   **Step 1:** Get Appbase ID following the steps mentioned [here](/docs/hosting/byoc/#how-to-create-arc-instance)
 
 -   **Step 2:** Clone the repository
 
@@ -239,9 +237,9 @@ The steps described here assumes a that you have [docker](https://docs.docker.co
 
 -   **Step 3:** Build and run docker containers
 
-    We highly recommend using Arc with [SSL](https://en.wikipedia.org/wiki/Transport_Layer_Security) so that we can easily bind this with the Arc Dashboard. To simplify the process of docker build, test and deployment, we have created 2 versions:
+    We highly recommend using Appbase.io with [SSL](https://en.wikipedia.org/wiki/Transport_Layer_Security) so that we can easily bind this with the Appbase.io Dashboard. To simplify the process of docker build, test and deployment, we have created 2 versions:
 
-    1 - **Install Arc + Nginx with SSL setup _(Recommended for production)_**
+    1 - **Install Appbase.io + Nginx with SSL setup _(Recommended for production)_**
 
     -   Change [SSL](https://en.wikipedia.org/wiki/Transport_Layer_Security) certificate and keys with production files. Please obtain [SSL](https://en.wikipedia.org/wiki/Transport_Layer_Security) certificate and key for your domain using [Let's Encrypt](https://letsencrypt.org/) or any other provider. Update the files in [nginx/certs](https://github.com/appbaseio/arc-dockerized/tree/master/nginx/certs).
     -   In case you are using different name than mentioned in [nginx/certs](https://github.com/appbaseio/arc-dockerized/tree/master/nginx/certs) folder, please update them in the `docker-compose.yaml` file as well.
@@ -256,13 +254,13 @@ The steps described here assumes a that you have [docker](https://docs.docker.co
     docker-compose up -d
     ```
 
-    2 - **Install Arc + Elasticsearch _(If you want to deploy Arc Along with Elasticsearch.)_**
+    2 - **Install Appbase.io + Elasticsearch _(If you want to deploy Appbase.io Along with Elasticsearch.)_**
 
     ```
     docker-compose -f docker-compose-with-elasticsearch.yaml up -d
     ```
 
-    🔥 Thats all, our containers should be up and running. Next, let us configure the environment variables required by Arc service.
+    🔥 Thats all, our containers should be up and running. Next, let us configure the environment variables required by Appbase.io service.
 
 -   **Step 4:** Open configuration service URL in your browser, i.e. http://localhost (or https://your-domain.com as configured in your nginx settings).
 
@@ -274,17 +272,17 @@ The steps described here assumes a that you have [docker](https://docs.docker.co
 
     > **Note:** Once you save the configuration, it may take 5-10s to restart the arc service.
 
--   **Step 7:** Start using Arc Services using [Arc Dashboard](https://dash.appbase.io/). Here you will have to input Arc Cluster URL which will be of the form http(s)://localhost_OR_cluster_url. Enter the username and password values that you configured in _Step 5_.
+-   **Step 7:** Start using Appbase.io Services using [Appbase.io Dashboard](https://dash.appbase.io/). Here you will have to input Appbase.io Cluster URL which will be of the form http(s)://localhost_OR_cluster_url. Enter the username and password values that you configured in _Step 5_.
 
 ---
 
-### How to create Arc instance?
+### How to create Appbase.io instance?
 
-Creating an Arc instance will enable you to access [Arc Dashboard](https://dash.appbase.io). While following instance creation process, you will get an `ARC_ID`. This will be helpful while configuring Arc, with any of the deployment options listed below.
+Creating an Appbae.io instance will enable you to access [Appbase.io Dashboard](https://dash.appbase.io). While following instance creation process, you will get an `ARC_ID`. This will be helpful while configuring Appbase.io, with any of the deployment options listed below.
 
-Follow the steps listed below to successfully create an Arc instance.
+Follow the steps listed below to successfully create an Appbase.io instance.
 
-**Step 1 -** Go to [Arc Dashboard](https://dash.appbase.io/install).
+**Step 1 -** Go to [Appbase.io Dashboard](https://dash.appbase.io/install).
 
 ![](https://i.imgur.com/YZubabh.png)
 
@@ -292,6 +290,6 @@ Follow the steps listed below to successfully create an Arc instance.
 
 **Step 3 -** You will receive an OTP on entered email address. Enter OTP to verify the email address
 
-**Step 4 -** You will receive an email with `ARC_ID` which can be used with Arc configuration.
+**Step 4 -** You will receive an email with `APPBASE_ID` which can be used with Appbase.io configuration.
 
 ---
