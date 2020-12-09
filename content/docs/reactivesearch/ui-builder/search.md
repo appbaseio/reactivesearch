@@ -1,33 +1,34 @@
 ---
-title: 'UI Integrations'
-meta_title: 'UI Integrations: Overview'
-meta_description: 'UI Integrations lets you visually build a search UI with no-code. The resulting code can be exported to your favorite E-Commerce Platform or your site.'
+title: 'Search UI Builder'
+meta_title: 'NoCode UI Builder For Search'
+meta_description: 'Visually build a search UI with NoCode. Export to your favorite E-Commerce Platform or your own site.'
 keywords:
+	- ui-builder
     - ui-integrations
     - overview
     - storefront search builder
     - elasticsearch
 sidebar: 'docs'
-nestedSidebar: 'ui-integrations-reactivesearch'
+nestedSidebar: 'ui-builder-reactivesearch'
 ---
 
 ## Overview
 
 
-[Appbase.io](http://appbase.io) now comes with **UI Integrations** - a built-in visual search UI builder that gives developers and business teams freedom to alter search layout and settings in realtime. This WYSIWYG storefront search preview can be easily integrated with your favorite E-Commerce platform or site.
+[Appbase.io](http://appbase.io) now comes with **UI Builder** - a built-in visual search UI builder that gives developers and business teams freedom to alter search layout and settings in realtime. This WYSIWYG storefront search preview can be easily integrated with your favorite E-Commerce platform or site.
 
 You can watch this 5-mins video to follow along the process of creating a storefront search and installing into a Shopify store.
 
 [![Watch 5-min video for Shopify](https://i.imgur.com/VMW4pIw.jpg)](https://www.youtube.com/watch?v=5pdcNUha2iA)
 
-> Note: **UI Integrations** feature is available with appbase.io Production and Enterprise plans.
+> Note: **UI Builder** feature is available with appbase.io Production and Enterprise plans.
 
 
 ### E-Commerce Platform
 
 ![Choose Platform](https://i.imgur.com/tjFux2H.png)
 
-You can choose the `E-Commerce Platform` for which you are building the search UI for. The Shopify option comes with presets specific to Shopify's schema. You can also import data from a Shopify store into appbase.io via the `Develop > Import` tab. However, you can use UI Integrations to build a site search for other platforms such as Magento, Wordpress, Webflow, Wix and can even be integrated into your own site.
+You can choose the `E-Commerce Platform` for which you are building the search UI for. The Shopify option comes with presets specific to Shopify's schema. You can also import data from a Shopify store into appbase.io via the `Develop > Import` tab. However, you can use UI Builder to build a site search for other platforms such as Magento, Wordpress, Webflow, Wix and it can even be integrated into your own site.
 
 ![Store Info](https://i.imgur.com/kh8g8v3.png)
 

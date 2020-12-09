@@ -30,8 +30,8 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/searchbox/Quickstart/`;
 		} else if (value.value === 'Vue Searchbox') {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/vue-searchbox/quickstart/`;
-		} else if (value.value === 'UI Integrations') {
-			window.location.href = `${window.location.origin}/docs/reactivesearch/ui-integrations/Overview/`;
+		} else if (value.value === 'UI Builder') {
+			window.location.href = `${window.location.origin}/docs/reactivesearch/ui-builder/Search/`;
 		}
 	};
 
@@ -60,8 +60,8 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 		if (location.pathname.startsWith('/docs/reactivesearch/searchbox')) {
 			return 'Searchbox';
 		}
-		if (location.pathname.startsWith('/docs/reactivesearch/ui-integrations')) {
-			return 'UI Integrations';
+		if (location.pathname.startsWith('/docs/reactivesearch/ui-builder')) {
+			return 'UI Builder';
 		}
 
 		return 'React - v3';

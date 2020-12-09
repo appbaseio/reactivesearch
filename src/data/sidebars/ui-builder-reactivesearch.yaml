@@ -1,0 +1,5 @@
+- items:
+  - title: Search
+    link: /docs/reactivesearch/ui-builder/search/
+  - title: Recommendations
+    link: /docs/reactivesearch/ui-builder/recommendations/

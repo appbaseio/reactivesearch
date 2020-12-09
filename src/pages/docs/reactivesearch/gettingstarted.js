@@ -17,10 +17,10 @@ const GettingStarted = props => {
 				<div className="card">
 					<img src="/images/ui-integrations.png" alt="React" />
 					<div className="content">
-						<h2>UI Integrations</h2>
+						<h2>UI Builder</h2>
 						<p>Create a storefront / site search UI visually with no code</p>
-						<a className="btn" href="/docs/reactivesearch/ui-integrations/Overview">
-							Start with UI Integrations
+						<a className="btn" href="/docs/reactivesearch/ui-builder/Search">
+							Start with UI Builder
 						</a>
 					</div>
 				</div>

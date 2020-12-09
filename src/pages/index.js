@@ -299,7 +299,7 @@ const HomePage = ({ data, location }) => {
 						<p
 							className={`${Spirit.h4} mt2 midgrey flex flex-column flex-row-ns justify-between items-center-ns`}
 						>
-							Getting started guides for your favourite libraries and frameworks
+							Getting started guides for your favorite libraries and frameworks
 						</p>
 						<div className="grid-integrations-index mt4 mt6-l f8">
 							<Box
@@ -421,11 +421,11 @@ const HomePage = ({ data, location }) => {
 								<h3>Tutorials</h3>
 								<p>Go from scratch to a full app with these tutorial guides.</p>
 							</Card>
-							<Card href=" https://appbase.io/pricing/#support">
+							<Card href=" https://appbase.io/pricing/#premium-support">
 								<img src={`${imagePrefix}/Support.png`} alt="Support" />
 								<h3>Support</h3>
 								<p>
-									Get first-class support from appbase.io team for your search
+									Get dedicated support from the appbase.io team for your search
 									app.
 								</p>
 							</Card>
@@ -451,9 +451,9 @@ const HomePage = ({ data, location }) => {
 										<Icon name="stackoverflow" />
 									</a>
 									<a
-										href="https://gitter.im/appbaseio/reactivesearch"
+										href="https://github.com/appbaseio/reactivesearch/discussions"
 										target="_blank"
-										title="Gitter"
+										title="Github Discussions"
 										rel="noopener noreferrer"
 									>
 										<Icon name="gitter" />

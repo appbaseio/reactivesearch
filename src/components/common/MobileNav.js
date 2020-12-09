@@ -15,8 +15,8 @@ const getValue = () => {
 		if (path && path.startsWith('/docs/reactivesearch/vue-searchbox')) {
 			return 'Vue SearchBox';
 		}
-		if (path && path.startsWith('/docs/reactivesearch/ui-integrations')) {
-			return 'UI Integrations';
+		if (path && path.startsWith('/docs/reactivesearch/ui-builder')) {
+			return 'UI Builder';
 		}
 		if (path && path.startsWith('/docs/reactivesearch/vue')) {
 			return 'Vue';
@@ -59,8 +59,8 @@ const getFileName = value => {
 			return 'react-native-searchbox-reactivesearch';
 		case 'Vue SearchBox':
 			return 'vue-searchbox-reactivesearch';
-		case 'UI Integrations':
-			return 'ui-integrations-reactivesearch';
+		case 'UI Builder':
+			return 'ui-builder-reactivesearch';
 		default:
 			return 'web-reactivesearch';
 	}

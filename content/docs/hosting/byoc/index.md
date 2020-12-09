@@ -46,7 +46,7 @@ Appbase.io dashboard offers the most seamless experience for running Appbase.io 
 
 You should see the above screen.
 
-**Step 2 -** Select the pricing plan. Read more about pricing plans over [here](https://arc-site.netlify.com/pricing/).
+**Step 2 -** Select the pricing plan. Read more about pricing plans over [here](https://www.appbase.io/pricing/self-host).
 
 **Step 3 -** Select the region to add Appbase.io to. It is recommended that you pick a region closest to where your Elasticsearch cluster is running.
 
@@ -101,7 +101,7 @@ Now you can deploy Appbase.io using Amazon Machine Image (AMI) on the AWS Market
 
 Here are the steps that you can follow to install Appbase.io using AMI
 
-**Step 1 -** Create an [Appbase.io instance](/docs/hosting/byoc/#how-to-create-appbase-io-instance).
+**Step 1 -** Create an [Appbase.io instance](/docs/hosting/byoc/#how-to-create-appbaseio-instance).
 
 **Step 2 -** Select Appbase.io AMI from [AWS Marketplace](https://aws.amazon.com/marketplace/pp/B081K85XFZ?qid=1574427631010)
 
@@ -169,7 +169,7 @@ You can start configuring Appbase.io by clicking on _configure page_ link OR ope
 
 ![](https://i.imgur.com/OkyeFJS.png)
 
-**Step 2:** Once you login, you can reset your username and password. Enter the your Elasticsearch URL, APPBASE_ID obtained while setting [Appbase.io instance](/docs/hosting/byoc/#how-to-create-arc-instance) and save the details.
+**Step 2:** Once you login, you can reset your username and password. Enter the your Elasticsearch URL, APPBASE_ID obtained while setting [Appbase.io instance](/docs/hosting/byoc/#how-to-create-appbaseio-instance) and save the details.
 
 ![](https://i.imgur.com/iVmzscW.png)
 
@@ -209,11 +209,11 @@ The dockerized setup is composed of the following services:
 
 Allows you to access all appbase.io features like search preview, actionable analytics and granular security with any Elasticsearch cluster hosted anywhere.
 
-> **Note:** Make sure your arc container have complete access to Elasticsearch. You can use Elasticsearch URL with Basic Auth in configuring dashboard or IP restricted Elasticsearch URL where IP of your ARC cluster hosted using docker setup is white listed.
+> **Note:** Make sure your appbase.io container has complete access to Elasticsearch. You can use Elasticsearch URL with Basic Auth in configuring dashboard or IP restricted Elasticsearch URL where IP of your appbase.io cluster hosted using docker setup is white listed.
 
 #### Configure
 
-This service comes with simple user interface which allows you to set credentials and other environment variables. Also it watches for environment variable file changes, so that if any variable in file is changed it can restart arc service.
+This service comes with simple user interface which allows you to set credentials and other environment variables. Also it watches for environment variable file changes: if any variable in the file is changed, it can hot-reload the appbase.io service.
 
 #### Nginx
 
@@ -227,7 +227,7 @@ An open-source single-node Elasticsearch cluster is run. This is optional: You c
 
 The steps described here assumes a that you have [docker](https://docs.docker.com/install/) installed.
 
--   **Step 1:** Get Appbase ID following the steps mentioned [here](/docs/hosting/byoc/#how-to-create-arc-instance)
+-   **Step 1:** Get Appbase ID following the steps mentioned [here](/docs/hosting/byoc/#how-to-create-appbaseio-instance)
 
 -   **Step 2:** Clone the repository
 
@@ -268,9 +268,9 @@ The steps described here assumes a that you have [docker](https://docs.docker.co
 
 -   **Step 5:** Set username and password credentials.
 
--   **Step 6:** Configure Elasticsearch URL and ARC ID obtained above.
+-   **Step 6:** Configure Elasticsearch URL and Appbase ID obtained above.
 
-    > **Note:** Once you save the configuration, it may take 5-10s to restart the arc service.
+    > **Note:** Once you save the configuration, it may take 5-10s to restart the appbase.io service.
 
 -   **Step 7:** Start using Appbase.io Services using [Appbase.io Dashboard](https://dash.appbase.io/). Here you will have to input Appbase.io Cluster URL which will be of the form http(s)://localhost_OR_cluster_url. Enter the username and password values that you configured in _Step 5_.
 

@@ -6,47 +6,53 @@ const Footer = () => (
 		<AppFooter
 			linksConfig={[
 				{
-					title: 'Products',
+					title: 'Product',
 					list: [
 						{
-							title: 'Apps',
+							title: 'Relevant Search',
 							openWithTab: true,
-							href: 'https://appbase.io/apps',
+							href: 'https://appbase.io/product/search',
 						},
 						{
-							title: 'Clusters',
+							title: 'Actionable Analytics',
 							openWithTab: true,
-							href: 'https://appbase.io/clusters',
+							href: 'https://appbase.io/product/analytics',
 						},
 						{
-							title: 'Tools',
+							title: 'Access Control',
 							openWithTab: true,
-							href: 'https://appbase.io/tools',
+							href: 'https://appbase.io/product/access-control',
 						},
+						{
+							title: 'Search UI',
+							openWithTab: true,
+							href: 'https://appbase.io/product/search-ui/',
+						},
+
 					],
 				},
 				{
-					title: 'Features',
+					title: 'Integrations',
 					list: [
 						{
-							title: 'Search Preview',
+							title: 'AWS Elasticsearch',
 							openWithTab: true,
-							href: 'https://appbase.io/features/search',
+							href: 'https://appbase.io/solutions/aws-elasticsearch',
 						},
 						{
-							title: 'Analytics',
+							title: 'Heroku',
 							openWithTab: true,
-							href: 'https://appbase.io/features/analytics',
+							href: 'https://appbase.io/solutions/heroku-elasticsearch',
 						},
 						{
-							title: 'Security',
+							title: 'Docker',
 							openWithTab: true,
-							href: 'https://appbase.io/features/security',
+							href: 'https://appbase.io/solutions/elasticsearch-with-docker',
 						},
 						{
-							title: 'Apps vs Clusters',
+							title: 'Kubernetes',
 							openWithTab: true,
-							href: 'https://appbase.io/features/price-comparison',
+							href: 'https://appbase.io/solutions/elasticsearch-with-kubernetes',
 						},
 					],
 				},
@@ -54,9 +60,14 @@ const Footer = () => (
 					title: 'Use Cases',
 					list: [
 						{
-							title: 'Realtime Search',
+							title: 'E-Commerce',
 							openWithTab: true,
-							href: 'https://appbase.io/usecases/realtime-search',
+							href: 'https://appbase.io/solutions/ecommerce-search',
+						},
+						{
+							title: 'SaaS Search',
+							openWithTab: true,
+							href: 'https://appbase.io/solutions/saas-search/',
 						},
 						{
 							title: 'Geo Apps',
@@ -64,15 +75,16 @@ const Footer = () => (
 							href: 'https://appbase.io/usecases/geo-apps',
 						},
 						{
-							title: 'Feeds',
+							title: 'Mobile Search',
 							openWithTab: true,
-							href: 'https://appbase.io/usecases/feeds',
+							href: 'https://appbase.io/usecases/mobile-search/',
 						},
 						{
-							title: 'Why Appbase.io',
+							title: 'Realtime Search',
 							openWithTab: true,
-							href: 'https://appbase.io/usecases/why-appbase',
+							href: 'https://appbase.io/usecases/realtime-search',
 						},
+
 					],
 				},
 				{
