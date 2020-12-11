@@ -15,7 +15,7 @@ const GettingStarted = props => {
 			<p>You can choose from these UI components libraries for building your search UI.</p>
 			<div className="container getting-started">
 				<div className="card">
-					<img src="/images/ui-integrations.png" alt="React" />
+					<img src="/images/ui-builder.png" alt="UI Builder" />
 					<div className="content">
 						<h2>UI Builder</h2>
 						<p>Create a storefront / site search UI visually with no code</p>
@@ -31,16 +31,6 @@ const GettingStarted = props => {
 						<p>React UI components for building data-driven search experiences</p>
 						<a className="btn" href="/docs/reactivesearch/v3/overview/quickstart/">
 							Start with React
-						</a>
-					</div>
-				</div>
-				<div className="card">
-					<img src="/images/react-native.jpeg" alt="React Native" />
-					<div className="content">
-						<h2>React Native</h2>
-						<p>React Native UI components for data-driven search experiences</p>
-						<a className="btn" href="/docs/reactivesearch/native/overview/QuickStart/">
-							Start with React Native
 						</a>
 					</div>
 				</div>
@@ -81,7 +71,7 @@ const GettingStarted = props => {
 					</div>
 				</div>
 				<div className="card">
-					<img src="/images/Searchbox_React@1x.png" alt="React Native Searchbox" />
+					<img src="/images/Searchbox_react_native.png" alt="React Native Searchbox" />
 					<div className="content">
 						<h2>React Native Searchbox</h2>
 						<p>
