@@ -1012,10 +1012,10 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-appbase-js@^4.0.2-beta.06:
-  version "4.0.2-beta.7"
-  resolved "https://registry.npmjs.org/appbase-js/-/appbase-js-4.0.2-beta.7.tgz#428df6f5a33f8a67904bfc74d7cea5fe9ebdd594"
-  integrity sha512-iclgiBeb9pq8/cpi9dvFgD4N2+jnpNW5xNwqgrN2vC0zihEx+C/K83CNYjocLr5+2zNBRPYhhGge5VixKxtg1g==
+appbase-js@^4.0.2-beta.11:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.1.2.tgz#a4879176b2cb40db64f5ed0c451066d3fa60ca92"
+  integrity sha512-CS30q6Hmd6k2CXgd1Zwz6s2szsZb0A4AzDIR+MGz4r8BVcJQoeIv4PTOq0QqUCu4OXZatCMEWFe84WUfBiqjCA==
   dependencies:
     cross-fetch "^2.2.2"
     json-stable-stringify "^1.0.1"
@@ -3260,9 +3260,9 @@ inherits@2, inherits@2.0.4, inherits@^2.0.3, inherits@~2.0.3:
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
 ini@~1.3.0:
-  version "1.3.5"
-  resolved "https://registry.npmjs.org/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
-  integrity sha512-RZY5huIKCMRWDUqZlEi72f/lmXKMvuszcMBduliQ3nnWbx9X/ZBQO7DijMEYS9EhHBb2qacRUMtC7svLwe0lcw==
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.7.tgz#a09363e1911972ea16d7a8851005d84cf09a9a84"
+  integrity sha512-iKpRpXP+CrP2jyrxvg1kMUpXDyRUFDWurxbnVT1vQPx+Wz9uCYsMIqYuSBLV+PAaZG/d7kRLKRFc9oDMsH+mFQ==
 
 inquirer@^3.0.6:
   version "3.3.0"
@@ -4989,8 +4989,9 @@ react-native-keyboard-aware-scroll-view@0.8.0:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
-"react-native-maps@github:expo/react-native-maps#v0.22.1-exp.0":
+react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
+  uid e6f98ff7272e5d0a7fe974a41f28593af2d77bb2
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 
 react-native-reanimated@1.0.0-alpha.11:
