@@ -209,9 +209,14 @@ class DataSearch extends Component {
 	// returns size and aggs property
 	getBasicQueryOptions = () => {
 		const { aggregationField } = this.props;
+		const { currentValue } = this.state;
 		const queryOptions = getQueryOptions(this.props);
 		if (aggregationField) {
-			queryOptions.aggs = getCompositeAggsQuery({}, this.props, null, true).aggs;
+			queryOptions.aggs = getCompositeAggsQuery({
+				value: currentValue,
+				props: this.props,
+				showTopHits: true,
+			}).aggs;
 		}
 		return queryOptions;
 	};

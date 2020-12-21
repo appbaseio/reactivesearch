@@ -202,7 +202,11 @@ class ReactiveComponent extends Component {
 
 	getAggsQuery = () => {
 		if (this.props.aggregationField) {
-			return getCompositeAggsQuery({}, this.props, null, true);
+			return getCompositeAggsQuery({
+				props: this.props,
+				showTopHits: true,
+				value: this.props.value,
+			});
 		}
 		return {};
 	};

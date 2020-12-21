@@ -275,7 +275,11 @@ class CategorySearch extends Component {
 		const { categoryField, aggregationField } = this.props;
 		const aggsQuery = this.getAggsQuery(categoryField);
 		if (aggregationField) {
-			const compositeAggsQuery = getCompositeAggsQuery({}, this.props, null, true);
+			const compositeAggsQuery = getCompositeAggsQuery({
+				value: null,
+				props: this.props,
+				showTopHits: true,
+			});
 			aggsQuery.aggs = { ...aggsQuery.aggs, ...compositeAggsQuery.aggs };
 		}
 		return aggsQuery;
