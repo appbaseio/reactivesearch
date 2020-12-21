@@ -13,6 +13,7 @@ import {
 	setSuggestionsSearchValue,
 	recordSuggestionClick,
 	setCustomHighlightOptions,
+	loadPopularSuggestions,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	debounce,
@@ -239,7 +240,12 @@ class CategorySearch extends Component {
 	}
 
 	componentDidMount() {
-		const { enableQuerySuggestions, renderQuerySuggestions } = this.props;
+		const {
+			enableQuerySuggestions,
+			renderQuerySuggestions,
+			fetchPopularSuggestions,
+			componentId,
+		} = this.props;
 		// TODO: Remove in 4.0
 		if (enableQuerySuggestions !== undefined) {
 			console.warn(
@@ -252,6 +258,7 @@ class CategorySearch extends Component {
 				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
 			);
 		}
+		fetchPopularSuggestions(componentId);
 	}
 
 	getAggsQuery = field => ({
@@ -944,13 +951,23 @@ class CategorySearch extends Component {
 		return withClickIds(finalSuggestionsList);
 	}
 
+
 	get topSuggestions() {
 		const {
-			enableQuerySuggestions, enablePopularSuggestions, popularSuggestions, showDistinctSuggestions,
+			enableQuerySuggestions,
+			enablePopularSuggestions,
+			popularSuggestions,
+			showDistinctSuggestions,
+			defaultPopularSuggestions,
 		} = this.props;
 		const { currentValue } = this.state;
-		return (enableQuerySuggestions || enablePopularSuggestions)
-			? getTopSuggestions(popularSuggestions, currentValue, showDistinctSuggestions)
+		return enableQuerySuggestions || enablePopularSuggestions
+			? getTopSuggestions(
+				// use default popular suggestions if value is empty
+				currentValue ? popularSuggestions : defaultPopularSuggestions,
+				currentValue,
+				showDistinctSuggestions,
+			)
 			: [];
 	}
 
@@ -976,6 +993,7 @@ class CategorySearch extends Component {
 		const { currentValue } = this.state;
 		const { theme, themePreset, size } = this.props;
 		const finalSuggestionsList = this.parsedSuggestions;
+		const hasSuggestions = finalSuggestionsList.length || this.topSuggestions.length;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -1037,7 +1055,7 @@ class CategorySearch extends Component {
 									})}
 								{!this.hasCustomRenderer
 									&& isOpen
-									&& finalSuggestionsList.length ? (
+									&& hasSuggestions ? (
 										<ul
 											css={suggestions(themePreset, theme)}
 											className={getClassName(this.props.innerClass, 'list')}
@@ -1133,6 +1151,8 @@ CategorySearch.propTypes = {
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
 	setSuggestionsSearchValue: types.funcRequired,
+	fetchPopularSuggestions: types.funcRequired,
+	defaultPopularSuggestions: types.suggestions,
 	options: types.options,
 	categories: types.data,
 	rawData: types.rawData,
@@ -1147,6 +1167,7 @@ CategorySearch.propTypes = {
 	triggerAnalytics: types.funcRequired,
 	setCustomQuery: types.funcRequired,
 	setDefaultQuery: types.funcRequired,
+	time: types.number,
 	setCustomHighlightOptions: types.funcRequired,
 	// eslint-disable-next-line
 	error: types.any,
@@ -1246,6 +1267,8 @@ CategorySearch.defaultProps = {
 	showVoiceSearch: false,
 	showDistinctSuggestions: true,
 	size: 10,
+	defaultPopularSuggestions: [],
+	time: 0,
 };
 
 // Add componentType for SSR
@@ -1274,9 +1297,10 @@ const mapStateToProps = (state, props) => ({
 	config: state.config,
 	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
-	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time),
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
+	defaultPopularSuggestions: state.defaultPopularSuggestions[props.componentId],
 	popularSuggestions: state.querySuggestions[props.componentId],
 });
 
@@ -1291,6 +1315,7 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	triggerAnalytics: (searchPosition, documentId) =>
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
+	fetchPopularSuggestions: component => dispatch(loadPopularSuggestions(component)),
 });
 
 const ConnectedComponent = connect(
