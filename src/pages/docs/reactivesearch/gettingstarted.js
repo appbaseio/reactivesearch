@@ -19,7 +19,7 @@ const GettingStarted = props => {
 					<div className="content">
 						<h2>UI Builder</h2>
 						<p>Create a storefront / site search UI visually with no code</p>
-						<a className="btn" href="/docs/reactivesearch/ui-builder/Search">
+						<a className="btn" href="/docs/reactivesearch/ui-builder/search">
 							Start with UI Builder
 						</a>
 					</div>
