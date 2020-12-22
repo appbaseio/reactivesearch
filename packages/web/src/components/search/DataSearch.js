@@ -885,6 +885,7 @@ class DataSearch extends Component {
 							getItemProps,
 							isOpen,
 							highlightedIndex,
+							setHighlightedIndex,
 							...rest
 						}) => (
 							<div
@@ -912,6 +913,10 @@ class DataSearch extends Component {
 										onChange: this.onInputChange,
 										onBlur: this.withTriggerQuery(this.props.onBlur),
 										onFocus: this.handleFocus,
+										onClick: () => {
+											// clear highlighted index
+											setHighlightedIndex(null);
+										},
 										onKeyPress: this.withTriggerQuery(this.props.onKeyPress),
 										onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
 										onKeyUp: this.withTriggerQuery(this.props.onKeyUp),
@@ -925,6 +930,7 @@ class DataSearch extends Component {
 										getItemProps,
 										isOpen,
 										highlightedIndex,
+										setHighlightedIndex,
 										...rest,
 									})}
 								{this.renderLoader()}

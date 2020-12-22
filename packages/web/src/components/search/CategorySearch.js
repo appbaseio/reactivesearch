@@ -1018,6 +1018,7 @@ class CategorySearch extends Component {
 							getItemProps,
 							isOpen,
 							highlightedIndex,
+							setHighlightedIndex,
 							...rest
 						}) => (
 							<div {...getRootProps({ css: suggestionsContainer }, { suppressRefError: true })}>
@@ -1043,6 +1044,10 @@ class CategorySearch extends Component {
 										onKeyPress: this.withTriggerQuery(this.props.onKeyPress),
 										onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
 										onKeyUp: this.withTriggerQuery(this.props.onKeyUp),
+										onClick: () => {
+											// clear highlighted index
+											setHighlightedIndex(null);
+										},
 									})}
 									themePreset={themePreset}
 								/>
@@ -1055,6 +1060,7 @@ class CategorySearch extends Component {
 										getItemProps,
 										isOpen,
 										highlightedIndex,
+										setHighlightedIndex,
 										...rest,
 									})}
 								{!this.hasCustomRenderer
