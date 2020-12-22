@@ -934,6 +934,25 @@ class DataSearch extends Component {
 										css={suggestions(themePreset, theme)}
 										className={getClassName(this.props.innerClass, 'list')}
 									>
+										{suggestionsList.slice(0, size).map((item, index) => (
+											<li
+												{...getItemProps({ item })}
+												key={`${index + this.topSuggestions.length + 1}-${
+													item.value
+												}`}
+												style={{
+													backgroundColor: this.getBackgroundColor(
+														highlightedIndex,
+														index + this.topSuggestions.length,
+													),
+												}}
+											>
+												<SuggestionItem
+													currentValue={currentValue}
+													suggestion={item}
+												/>
+											</li>
+										))}
 										{hasPopularSuggestionsRenderer(this.props)
 											? this.getComponent(
 												{
@@ -962,25 +981,6 @@ class DataSearch extends Component {
 													/>
 												</li>
 											))}
-										{suggestionsList.slice(0, size).map((item, index) => (
-											<li
-												{...getItemProps({ item })}
-												key={`${index + this.topSuggestions.length + 1}-${
-													item.value
-												}`}
-												style={{
-													backgroundColor: this.getBackgroundColor(
-														highlightedIndex,
-														index + this.topSuggestions.length,
-													),
-												}}
-											>
-												<SuggestionItem
-													currentValue={currentValue}
-													suggestion={item}
-												/>
-											</li>
-										))}
 									</ul>
 								) : (
 									this.renderNoSuggestion(suggestionsList)

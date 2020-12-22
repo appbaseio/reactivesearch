@@ -1064,6 +1064,27 @@ class CategorySearch extends Component {
 											css={suggestions(themePreset, theme)}
 											className={getClassName(this.props.innerClass, 'list')}
 										>
+											{finalSuggestionsList.slice(0, size).map((item, index) => (
+												<li
+													{...getItemProps({ item })}
+													key={`${index + this.topSuggestions.length + 1}-${
+														item.value
+													}`}
+													style={{
+														backgroundColor: this.getBackgroundColor(
+															highlightedIndex,
+															this.topSuggestions.length + index,
+														),
+													}}
+												>
+													<Text primary={!!item.category}>
+														<SuggestionItem
+															currentValue={currentValue}
+															suggestion={item}
+														/>
+													</Text>
+												</li>
+											))}
 											{hasPopularSuggestionsRenderer(this.props)
 												? this.getComponent(
 													{
@@ -1092,27 +1113,6 @@ class CategorySearch extends Component {
 														/>
 													</li>
 												))}
-											{finalSuggestionsList.slice(0, size).map((item, index) => (
-												<li
-													{...getItemProps({ item })}
-													key={`${index + this.topSuggestions.length + 1}-${
-														item.value
-													}`}
-													style={{
-														backgroundColor: this.getBackgroundColor(
-															highlightedIndex,
-															this.topSuggestions.length + index,
-														),
-													}}
-												>
-													<Text primary={!!item.category}>
-														<SuggestionItem
-															currentValue={currentValue}
-															suggestion={item}
-														/>
-													</Text>
-												</li>
-											))}
 										</ul>
 									) : (
 										this.renderNoSuggestion(finalSuggestionsList)
