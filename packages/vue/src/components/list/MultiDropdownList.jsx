@@ -2,7 +2,7 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import types from '../../utils/vueTypes';
-import { getAggsQuery, getCompositeAggsQuery } from './utils'
+import { getAggsQuery } from './utils'
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
@@ -32,6 +32,7 @@ const {
 	checkPropChange,
 	getClassName,
 	getOptionsFromQuery,
+	getCompositeAggsQuery,
 } = helper;
 const MultiDropdownList = {
 	name: 'MultiDropdownList',
@@ -357,7 +358,11 @@ const MultiDropdownList = {
 		generateQueryOptions(props, after) {
 			const queryOptions = getQueryOptions(props);
 			return props.showLoadMore
-				? getCompositeAggsQuery(queryOptions, props, after)
+				? getCompositeAggsQuery({
+					query: queryOptions,
+					props,
+					after,
+				})
 				: getAggsQuery(queryOptions, props);
 		},
 
@@ -492,7 +497,9 @@ MultiDropdownList.defaultQuery = (value, props) => {
 MultiDropdownList.generateQueryOptions = (props, after) => {
 	const queryOptions = getQueryOptions(props);
 	return props.showLoadMore
-		? getCompositeAggsQuery(queryOptions, props, after)
+		? getCompositeAggsQuery({
+			query: queryOptions, props, after
+		})
 		: getAggsQuery(queryOptions, props);
 };
 const mapStateToProps = (state, props) => ({

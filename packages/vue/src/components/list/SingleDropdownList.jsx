@@ -2,7 +2,7 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import types from '../../utils/vueTypes';
-import { getAggsQuery, getCompositeAggsQuery } from './utils';
+import { getAggsQuery } from './utils';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
@@ -31,6 +31,7 @@ const {
 	getClassName,
 	getOptionsFromQuery,
 	isEqual,
+	getCompositeAggsQuery
 } = helper;
 const SingleDropdownList = {
 	name: 'SingleDropdownList',
@@ -290,7 +291,9 @@ const SingleDropdownList = {
 		generateQueryOptions(props, after) {
 			const queryOptions = getQueryOptions(props);
 			return props.showLoadMore
-				? getCompositeAggsQuery(queryOptions, props, after)
+				? getCompositeAggsQuery({
+					query: queryOptions, props, after
+				})
 				: getAggsQuery(queryOptions, props);
 		},
 
@@ -383,7 +386,9 @@ SingleDropdownList.defaultQuery = (value, props) => {
 SingleDropdownList.generateQueryOptions = (props, after) => {
 	const queryOptions = getQueryOptions(props);
 	return props.showLoadMore
-		? getCompositeAggsQuery(queryOptions, props, after)
+		? getCompositeAggsQuery({
+			query: queryOptions, props, after
+		})
 		: getAggsQuery(queryOptions, props);
 };
 

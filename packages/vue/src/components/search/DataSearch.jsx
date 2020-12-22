@@ -317,7 +317,9 @@ const DataSearch = {
 			const { aggregationField } = this.$props;
 			const queryOptions = getQueryOptions(this.$props);
 			if (aggregationField) {
-				queryOptions.aggs = getCompositeAggsQuery({}, this.$props, null, true).aggs;
+				queryOptions.aggs = getCompositeAggsQuery({
+					props: this.$props, showTopHits:  true
+				}).aggs;
 			}
 			return queryOptions;
 		},
