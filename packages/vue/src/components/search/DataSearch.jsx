@@ -33,6 +33,7 @@ const {
 	setDefaultQuery,
 	setCustomHighlightOptions,
 	recordSuggestionClick,
+	loadPopularSuggestions,
 } = Actions;
 const {
 	debounce,
@@ -79,6 +80,7 @@ const DataSearch = {
 				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
 			);
 		}
+		this.loadPopularSuggestions(this.$props.componentId)
 		this.currentValue = this.selectedValue || '';
 		this.handleTextChange = debounce(value => {
 			if (this.$props.autosuggest) {
@@ -109,7 +111,8 @@ const DataSearch = {
 			const { enableQuerySuggestions, enablePopularSuggestions, showDistinctSuggestions } = this.$props;
 			return enableQuerySuggestions || enablePopularSuggestions
 				? getTopSuggestions(
-					this.querySuggestions,
+					// use default popular suggestions if value is empty
+					this.currentValue ? this.querySuggestions : this.defaultPopularSuggestions,
 					this.currentValue,
 					showDistinctSuggestions,
 				  )
@@ -655,6 +658,7 @@ const DataSearch = {
 	},
 	render() {
 		const { theme, size } = this.$props;
+		const hasSuggestions = this.suggestionsList.length || this.topSuggestions.length;
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -714,6 +718,7 @@ const DataSearch = {
 											}),
 										}}
 										themePreset={this.themePreset}
+										autocomplete='off'
 									/>
 									{this.renderIcons()}
 									{this.hasCustomRenderer
@@ -726,13 +731,43 @@ const DataSearch = {
 									{this.renderErrorComponent()}
 									{!this.hasCustomRenderer
 									&& isOpen
-									&& this.suggestionsList.length ? (
+									&& hasSuggestions ? (
 											<ul
 												class={`${suggestions(
 													this.themePreset,
 													theme,
 												)} ${getClassName(this.$props.innerClass, 'list')}`}
 											>
+												{this.suggestionsList
+													.slice(0, size)
+													.map((item, index) => (
+														<li
+															{...{
+																domProps: getItemProps({ item }),
+															}}
+															{...{
+																on: getItemEvents({
+																	item,
+																}),
+															}}
+															key={`${index
+															+ 1
+															+ this.topSuggestions.length}-${
+																item.value
+															}`}
+															style={{
+																backgroundColor: this.getBackgroundColor(
+																	highlightedIndex,
+																	index + this.topSuggestions.length,
+																),
+															}}
+														>
+															<SuggestionItem
+																currentValue={this.currentValue}
+																suggestion={item}
+															/>
+														</li>
+													))}
 												{hasQuerySuggestionsRenderer(this)
 													? this.getComponent(
 														{
@@ -769,36 +804,6 @@ const DataSearch = {
 															/>
 														</li>
 												  ))}
-												{this.suggestionsList
-													.slice(0, size)
-													.map((item, index) => (
-														<li
-															{...{
-																domProps: getItemProps({ item }),
-															}}
-															{...{
-																on: getItemEvents({
-																	item,
-																}),
-															}}
-															key={`${index
-															+ 1
-															+ this.topSuggestions.length}-${
-																item.value
-															}`}
-															style={{
-																backgroundColor: this.getBackgroundColor(
-																	highlightedIndex,
-																	index + this.topSuggestions.length,
-																),
-															}}
-														>
-															<SuggestionItem
-																currentValue={this.currentValue}
-																suggestion={item}
-															/>
-														</li>
-													))}
 											</ul>
 										) : (
 											this.renderNoSuggestions(this.suggestionsList)
@@ -986,18 +991,20 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	querySuggestions: state.querySuggestions[props.componentId],
+	defaultPopularSuggestions: state.defaultPopularSuggestions[props.componentId],
 	componentProps: state.props[props.componentId],
 	lastUsedQuery: state.queryToHits[props.componentId],
 });
-const mapDispatchtoProps = {
+const mapDispatchToProps = {
 	setQueryOptions,
 	updateQuery,
 	setCustomQuery,
 	setDefaultQuery,
 	setCustomHighlightOptions,
 	recordSuggestionClick,
+	loadPopularSuggestions
 };
-const DSConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(DataSearch), {
+const DSConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(DataSearch), {
 	componentType: componentTypes.dataSearch,
 	internalComponent: true
 });
