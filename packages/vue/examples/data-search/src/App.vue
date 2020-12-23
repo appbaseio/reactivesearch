@@ -10,6 +10,7 @@
 				componentId="BookSensor"
 				:dataField="['original_title', 'original_title.search']"
 				:URLParams="true"
+				:enablePhraseSuggestions="true"
 			/>
 			<ReactiveList
 				componentId="SearchResult"

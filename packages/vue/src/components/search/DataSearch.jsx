@@ -172,6 +172,7 @@ const DataSearch = {
 		URLParams: VueTypes.bool.def(false),
 		strictSelection: VueTypes.bool.def(false),
 		nestedField: types.string,
+		enablePhraseSuggestions: VueTypes.bool.def(false),
 		//	mic props
 		showVoiceSearch: types.bool.def(false),
 		getMicInstance: types.func,
