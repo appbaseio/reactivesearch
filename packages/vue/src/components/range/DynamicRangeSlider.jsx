@@ -83,7 +83,7 @@ const DynamicRangeSlider = {
 	},
 	beforeMount() {
 		this.addComponent(this.$props.componentId);
-		this.addComponent(this.$props.internalRangeComponent);
+		this.addComponent(this.internalRangeComponent);
 		if (Array.isArray(this.selectedValue)) {
 			this.handleChange(this.selectedValue);
 		} else if (this.selectedValue) {

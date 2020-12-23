@@ -12,6 +12,7 @@ import {
 	setSuggestionsSearchValue,
 	recordSuggestionClick,
 	setCustomHighlightOptions,
+	loadPopularSuggestions,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -98,7 +99,12 @@ class DataSearch extends Component {
 	}
 
 	componentDidMount() {
-		const { enableQuerySuggestions, renderQuerySuggestions } = this.props;
+		const {
+			enableQuerySuggestions,
+			renderQuerySuggestions,
+			fetchPopularSuggestions,
+			componentId,
+		} = this.props;
 		// TODO: Remove in 4.0
 		if (enableQuerySuggestions !== undefined) {
 			console.warn(
@@ -111,6 +117,7 @@ class DataSearch extends Component {
 				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
 			);
 		}
+		fetchPopularSuggestions(componentId);
 	}
 
 	componentDidUpdate(prevProps) {
@@ -133,7 +140,6 @@ class DataSearch extends Component {
 				this.props.setQueryOptions(this.props.componentId, queryOptions);
 			},
 		);
-
 		// Treat defaultQuery and customQuery as reactive props
 		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery(this.state.currentValue, this.props);
@@ -203,9 +209,14 @@ class DataSearch extends Component {
 	// returns size and aggs property
 	getBasicQueryOptions = () => {
 		const { aggregationField } = this.props;
+		const { currentValue } = this.state;
 		const queryOptions = getQueryOptions(this.props);
 		if (aggregationField) {
-			queryOptions.aggs = getCompositeAggsQuery({}, this.props, null, true).aggs;
+			queryOptions.aggs = getCompositeAggsQuery({
+				value: currentValue,
+				props: this.props,
+				showTopHits: true,
+			}).aggs;
 		}
 		return queryOptions;
 	};
@@ -814,11 +825,20 @@ class DataSearch extends Component {
 
 	get topSuggestions() {
 		const {
-			enableQuerySuggestions, enablePopularSuggestions, popularSuggestions, showDistinctSuggestions,
+			enableQuerySuggestions,
+			enablePopularSuggestions,
+			popularSuggestions,
+			showDistinctSuggestions,
+			defaultPopularSuggestions,
 		} = this.props;
 		const { currentValue } = this.state;
-		return (enableQuerySuggestions || enablePopularSuggestions)
-			? getTopSuggestions(popularSuggestions, currentValue, showDistinctSuggestions)
+		return enableQuerySuggestions || enablePopularSuggestions
+			? getTopSuggestions(
+				// use default popular suggestions if value is empty
+				currentValue ? popularSuggestions : defaultPopularSuggestions,
+				currentValue,
+				showDistinctSuggestions,
+			)
 			: [];
 	}
 
@@ -844,6 +864,7 @@ class DataSearch extends Component {
 		const { currentValue } = this.state;
 		const suggestionsList = this.parsedSuggestions;
 		const { theme, themePreset, size } = this.props;
+		const hasSuggestions = suggestionsList.length || this.topSuggestions.length;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -864,6 +885,7 @@ class DataSearch extends Component {
 							getItemProps,
 							isOpen,
 							highlightedIndex,
+							setHighlightedIndex,
 							...rest
 						}) => (
 							<div
@@ -891,6 +913,10 @@ class DataSearch extends Component {
 										onChange: this.onInputChange,
 										onBlur: this.withTriggerQuery(this.props.onBlur),
 										onFocus: this.handleFocus,
+										onClick: () => {
+											// clear highlighted index
+											setHighlightedIndex(null);
+										},
 										onKeyPress: this.withTriggerQuery(this.props.onKeyPress),
 										onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
 										onKeyUp: this.withTriggerQuery(this.props.onKeyUp),
@@ -904,15 +930,35 @@ class DataSearch extends Component {
 										getItemProps,
 										isOpen,
 										highlightedIndex,
+										setHighlightedIndex,
 										...rest,
 									})}
 								{this.renderLoader()}
 								{this.renderError()}
-								{!this.hasCustomRenderer && isOpen && suggestionsList.length ? (
+								{!this.hasCustomRenderer && isOpen && hasSuggestions ? (
 									<ul
 										css={suggestions(themePreset, theme)}
 										className={getClassName(this.props.innerClass, 'list')}
 									>
+										{suggestionsList.slice(0, size).map((item, index) => (
+											<li
+												{...getItemProps({ item })}
+												key={`${index + this.topSuggestions.length + 1}-${
+													item.value
+												}`}
+												style={{
+													backgroundColor: this.getBackgroundColor(
+														highlightedIndex,
+														index + this.topSuggestions.length,
+													),
+												}}
+											>
+												<SuggestionItem
+													currentValue={currentValue}
+													suggestion={item}
+												/>
+											</li>
+										))}
 										{hasPopularSuggestionsRenderer(this.props)
 											? this.getComponent(
 												{
@@ -941,25 +987,6 @@ class DataSearch extends Component {
 													/>
 												</li>
 											))}
-										{suggestionsList.slice(0, size).map((item, index) => (
-											<li
-												{...getItemProps({ item })}
-												key={`${index + this.topSuggestions.length + 1}-${
-													item.value
-												}`}
-												style={{
-													backgroundColor: this.getBackgroundColor(
-														highlightedIndex,
-														index + this.topSuggestions.length,
-													),
-												}}
-											>
-												<SuggestionItem
-													currentValue={currentValue}
-													suggestion={item}
-												/>
-											</li>
-										))}
 									</ul>
 								) : (
 									this.renderNoSuggestion(suggestionsList)
@@ -998,9 +1025,11 @@ class DataSearch extends Component {
 DataSearch.propTypes = {
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
+	fetchPopularSuggestions: types.funcRequired,
 	options: types.options,
 	selectedValue: types.selectedValue,
 	suggestions: types.suggestions,
+	defaultPopularSuggestions: types.suggestions,
 	rawData: types.rawData,
 	aggregationData: types.aggregationData,
 	setCustomQuery: types.funcRequired,
@@ -1012,6 +1041,7 @@ DataSearch.propTypes = {
 	isLoading: types.bool,
 	config: types.props,
 	lastUsedQuery: types.string,
+	time: types.number,
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
@@ -1113,6 +1143,8 @@ DataSearch.defaultProps = {
 	searchOperators: false,
 	size: 10,
 	enablePredictiveSuggestions: false,
+	defaultPopularSuggestions: [],
+	time: 0,
 };
 
 // Add componentType for SSR
@@ -1132,10 +1164,11 @@ const mapStateToProps = (state, props) => ({
 	config: state.config,
 	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
-	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	time: state.hits[props.componentId] && state.hits[props.componentId].time,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	popularSuggestions: state.querySuggestions[props.componentId],
+	defaultPopularSuggestions: state.defaultPopularSuggestions[props.componentId],
 	lastUsedQuery: state.queryToHits[props.componentId],
 });
 
@@ -1149,6 +1182,7 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	triggerAnalytics: (searchPosition, documentId) =>
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
+	fetchPopularSuggestions: component => dispatch(loadPopularSuggestions(component)),
 });
 
 const ConnectedComponent = connect(

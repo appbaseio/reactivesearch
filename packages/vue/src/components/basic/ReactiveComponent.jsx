@@ -212,7 +212,13 @@ const ReactiveComponent = {
 	methods: {
 		getAggsQuery() {
 			if (this.aggregationField) {
-				return { aggs: getCompositeAggsQuery({}, this.$props, null, true).aggs };
+				return { aggs: getCompositeAggsQuery(
+					{
+						props:this.$props,
+						showTopHits: true,
+						value: this.selectedValue,
+					}
+				).aggs };
 			}
 			return {};
 		},

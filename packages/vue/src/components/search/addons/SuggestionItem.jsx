@@ -27,13 +27,13 @@ const SuggestionItem = {
 		suggestion: types.any,
 	},
 	render() {
-		const { label, value, title, description, image, isPhrasedSuggestion } = this.suggestion;
+		const { label, value, title, description, image, isPredictiveSuggestion } = this.suggestion;
 
 		if (label) {
 			// label has highest precedence
 			return typeof label === 'string' ? (
 				<div class="trim">
-					{isPhrasedSuggestion ? (
+					{isPredictiveSuggestion ? (
 						<PhrasedSuggestion domPropsInnerHTML={label} />
 					) : (
 						<Highlight

@@ -17,7 +17,8 @@ const extractQuery = props => {
 	}
 	return queryToBeReturned;
 };
-const getAggsQuery = (query, props) => {
+// eslint-disable-next-line import/prefer-default-export
+export const getAggsQuery = (query, props) => {
 	const clonedQuery = query;
 	const { dataField, size, sortBy, showMissing, missingLabel } = props;
 	clonedQuery.size = 0;
@@ -44,47 +45,3 @@ const getAggsQuery = (query, props) => {
 	}
 	return { ...clonedQuery, ...extractQuery(props) };
 };
-
-const getCompositeAggsQuery = (query, props, after) => {
-	const clonedQuery = query;
-	// missing label not available in composite aggs
-	const { dataField, size, sortBy, showMissing } = props;
-
-	// composite aggs only allows asc and desc
-	const order = sortBy === 'count' ? {} : { order: sortBy };
-
-	clonedQuery.aggs = {
-		[dataField]: {
-			composite: {
-				sources: [
-					{
-						[dataField]: {
-							terms: {
-								field: dataField,
-								...order,
-								...(showMissing ? { missing_bucket: true } : {}),
-							},
-						},
-					},
-				],
-				size,
-				...after,
-			},
-		},
-	};
-	clonedQuery.size = 0;
-
-	if (props.nestedField) {
-		clonedQuery.aggs = {
-			reactivesearch_nested: {
-				nested: {
-					path: props.nestedField,
-				},
-				aggs: clonedQuery.aggs,
-			},
-		};
-	}
-	return { ...clonedQuery, ...extractQuery(props) };
-};
-
-export { getAggsQuery, getCompositeAggsQuery };

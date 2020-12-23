@@ -376,10 +376,11 @@ class ReactiveList extends Component {
 		const queryOptions = { size };
 		if (aggregationField) {
 			queryOptions.aggs = getCompositeAggsQuery(
-				{},
-				this.props,
-				afterKey ? { after: afterKey } : null,
-				true,
+				{
+					props: this.props,
+					after: afterKey ? { after: afterKey } : null,
+					showTopHits: true,
+				},
 			).aggs;
 		}
 		return queryOptions;

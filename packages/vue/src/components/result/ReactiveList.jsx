@@ -517,10 +517,11 @@ const ReactiveList = {
 			const queryOptions = { size };
 			if (aggregationField) {
 				queryOptions.aggs = getCompositeAggsQuery(
-					{},
-					this.$props,
-					afterKey ? { after: afterKey } : null,
-					true,
+					{
+						props: this.$props,
+						after: afterKey || null,
+						showTopHits: true,
+					}
 				).aggs;
 			}
 			return queryOptions;

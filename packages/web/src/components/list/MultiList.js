@@ -380,7 +380,12 @@ class MultiList extends Component {
 		const queryOptions = getQueryOptions(props);
 		const valueArray = Object.keys(value);
 		return props.showLoadMore
-			? getCompositeAggsQuery(valueArray, queryOptions, props, after)
+			? getCompositeAggsQuery({
+				value: valueArray,
+				query: queryOptions,
+				props,
+				after,
+			})
 			: getAggsQuery(valueArray, queryOptions, props);
 	}
 

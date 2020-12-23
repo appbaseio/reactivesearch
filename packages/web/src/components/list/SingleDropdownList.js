@@ -241,7 +241,12 @@ class SingleDropdownList extends Component {
 	static generateQueryOptions(props, after, value) {
 		const queryOptions = getQueryOptions(props);
 		return props.showLoadMore
-			? getCompositeAggsQuery(value, queryOptions, props, after)
+			? getCompositeAggsQuery({
+				value,
+				query: queryOptions,
+				props,
+				after,
+			})
 			: getAggsQuery(value, queryOptions, props);
 	}
 

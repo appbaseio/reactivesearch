@@ -43,14 +43,14 @@ const Main = () => (
 						<ReactiveList.ResultCardsWrapper>
 							{aggregationData.map(item => (
 								<ResultCard key={item._id}>
-									<ResultCard.Image src={item._source.image} />
+									<ResultCard.Image src={item.image} />
 									<ResultCard.Title
 										dangerouslySetInnerHTML={{
-											__html: item._source.brand,
+											__html: item.brand,
 										}}
 									/>
 									<ResultCard.Description>
-										{`${item._source.brand} ${'★'.repeat(item._source.rating)}`}
+										{`${item.brand} ${'★'.repeat(item.rating)}`}
 									</ResultCard.Description>
 								</ResultCard>
 							))}

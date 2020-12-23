@@ -6,7 +6,7 @@ import Highlight from './Highlight';
 
 const SuggestionItem = ({ currentValue, suggestion }) => {
 	const {
-		label, value, title, description, image, isPhrasedSuggestion,
+		label, value, title, description, image, isPredictiveSuggestion,
 	} = suggestion;
 	if (label) {
 		// label has highest precedence
@@ -16,7 +16,7 @@ const SuggestionItem = ({ currentValue, suggestion }) => {
 					autoEscape
 					searchWords={currentValue.split(' ')}
 					textToHighlight={label}
-					hasPhrasedSuggestions={Boolean(isPhrasedSuggestion)}
+					hasPhrasedSuggestions={Boolean(isPredictiveSuggestion)}
 				/>
 			</div>
 		) : (
