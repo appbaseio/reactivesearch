@@ -24,7 +24,6 @@ const Main = () => (
 					dataField={['original_title', 'original_title.search']}
 					componentId="BookSensor"
 					URLParams
-					enablePredictiveSuggestions
 				/>
 			</div>
 
