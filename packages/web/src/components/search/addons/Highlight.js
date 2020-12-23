@@ -18,7 +18,7 @@ const highlightedStyling = css`
 
 const Highlight = (props) => {
 	const {
-		textToHighlight, searchWords, autoEscape, hasPhrasedSuggestions,
+		textToHighlight, searchWords, autoEscape, hasPredictiveSuggestion,
 	} = props;
 	const modSearchWords = searchWords.map(word => (autoEscape ? escapeRegExp(word) : word));
 	const stringToReplace = modSearchWords.join('|');
@@ -26,7 +26,7 @@ const Highlight = (props) => {
 		<div
 			css={highlightedStyling}
 			dangerouslySetInnerHTML={{
-				__html: hasPhrasedSuggestions ? textToHighlight : textToHighlight.replace(
+				__html: hasPredictiveSuggestion ? textToHighlight : textToHighlight.replace(
 					new RegExp(stringToReplace, 'ig'),
 					matched => `<mark class="highlight">${matched}</mark>`,
 				),
@@ -39,14 +39,14 @@ Highlight.propTypes = {
 	searchWords: PropTypes.arrayOf(PropTypes.string),
 	textToHighlight: PropTypes.string,
 	autoEscape: PropTypes.bool,
-	hasPhrasedSuggestions: PropTypes.bool,
+	hasPredictiveSuggestion: PropTypes.bool,
 };
 
 Highlight.defaultProps = {
 	searchWords: [],
 	textToHighlight: '',
 	autoEscape: false,
-	hasPhrasedSuggestions: false,
+	hasPredictiveSuggestion: false,
 };
 
 export default Highlight;

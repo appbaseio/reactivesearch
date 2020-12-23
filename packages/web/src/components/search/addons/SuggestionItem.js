@@ -16,7 +16,7 @@ const SuggestionItem = ({ currentValue, suggestion }) => {
 					autoEscape
 					searchWords={currentValue.split(' ')}
 					textToHighlight={label}
-					hasPhrasedSuggestions={Boolean(isPredictiveSuggestion)}
+					hasPredictiveSuggestion={Boolean(isPredictiveSuggestion)}
 				/>
 			</div>
 		) : (
