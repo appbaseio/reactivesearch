@@ -16,7 +16,7 @@ nestedSidebar: 'ui-builder-reactivesearch'
 
 The Recommendations UI builder offers a NoCode interface for creating Recommendations widgets by popularity, similarity, recency. A user can also choose to feature the recommendations.
 
-![](https://i.imgur.com/3uq5Ndm.png)
+![](https://i.imgur.com/OxD7Z6i.jpg)
 
 ### E-Commerce Platform
 
@@ -34,10 +34,13 @@ There are three types of recommendations UI that you can create:
 	![](https://i.imgur.com/TgUgVNG.png)
 - **Most Recent Products** - This recommendation UI shows the most recently added products to your users. It requires you to set a timestamp field that it will use to sort the most recent products.
 	![](https://i.imgur.com/ZNTaWpa.png)
-- **Similar to this Product** - This recommendation UI is meant to be displayed on a product page. It recommends other products to your users based on the similarity in the `DataField`. E.g. Users browsing a sneaker (product type) from Adidas (specific product) should be recommended other shoes from other brands.
-	![](https://i.imgur.com/E2x6vpX.png)
+- **Similar to this Product** - This recommendation UI is meant to be displayed on a product page. It recommends other products to your users based on the similarity in the `Similar To Field`'s value. E.g. Users browsing a sneaker (product type) from Adidas (specific product) should be recommended other shoes from other brands.
+	![](https://i.imgur.com/yoJDYO8.png)
 	The Similar To recommendation allows you (the developer) to define the product URL pattern. It extracts the value of the current product's data field based on this and then fetches other similar products.
-
+- **Featured Products** - This recommendation UI shows featured products (aka curated products). You can set the products to feature from the UI itself.
+	![](https://i.imgur.com/Joa0WiK.png)
+	You can manage the featured products through curation from a searchable interface of the entire set of documents.
+	![](https://i.imgur.com/qJBlgrK.png)
 
 ### Settings
 
