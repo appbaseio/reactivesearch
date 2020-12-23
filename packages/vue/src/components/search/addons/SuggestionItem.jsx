@@ -11,7 +11,7 @@ const highlightStyle = {
 	color: 'inherit',
 };
 
-const PhrasedSuggestion = styled('span')`
+const PredictiveSuggestion = styled('span')`
 	.highlight {
 		background: transparent;
 		color: inherit;
@@ -34,7 +34,7 @@ const SuggestionItem = {
 			return typeof label === 'string' ? (
 				<div class="trim">
 					{isPredictiveSuggestion ? (
-						<PhrasedSuggestion domPropsInnerHTML={label} />
+						<PredictiveSuggestion domPropsInnerHTML={label} />
 					) : (
 						<Highlight
 							searchWords={this.currentValue.split(' ')}
