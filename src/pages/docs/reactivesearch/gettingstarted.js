@@ -18,7 +18,7 @@ const GettingStarted = props => {
 					<img src="/images/ui-builder.png" alt="UI Builder" />
 					<div className="content">
 						<h2>UI Builder</h2>
-						<p>Create a storefront / site search UI visually with no code</p>
+						<p>Create a storefront / site search UI or recommendations widget NoCode</p>
 						<a className="btn" href="/docs/reactivesearch/ui-builder/search">
 							Start with UI Builder
 						</a>
