@@ -1114,6 +1114,7 @@ DataSearch.propTypes = {
 	URLParams: types.bool,
 	strictSelection: types.bool,
 	searchOperators: types.bool,
+	enablePredictiveSuggestions: types.bool,
 	// Mic props
 	getMicInstance: types.func,
 	renderMic: types.func,
@@ -1141,6 +1142,7 @@ DataSearch.defaultProps = {
 	strictSelection: false,
 	searchOperators: false,
 	size: 10,
+	enablePredictiveSuggestions: false,
 	defaultPopularSuggestions: [],
 	time: 0,
 };

@@ -1253,6 +1253,7 @@ CategorySearch.propTypes = {
 	// Mic props
 	getMicInstance: types.func,
 	renderMic: types.func,
+	enablePredictiveSuggestions: types.bool,
 };
 
 CategorySearch.defaultProps = {
@@ -1279,6 +1280,7 @@ CategorySearch.defaultProps = {
 	size: 10,
 	defaultPopularSuggestions: [],
 	time: 0,
+	enablePredictiveSuggestions: false,
 };
 
 // Add componentType for SSR

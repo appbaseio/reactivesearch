@@ -1,5 +1,5 @@
 import Highlight from 'vue-highlight-words';
-import { css, cx } from '@appbaseio/vue-emotion';
+import styled, { css, cx } from '@appbaseio/vue-emotion';
 import types from '../../../utils/vueTypes';
 
 import Flex from '../../../styles/Flex';
@@ -11,6 +11,15 @@ const highlightStyle = {
 	color: 'inherit',
 };
 
+const PredictiveSuggestion = styled('span')`
+	.highlight {
+		background: transparent;
+		color: inherit;
+		font-weight: 600;
+		padding: 0;
+	}
+`
+
 const SuggestionItem = {
 	name: 'SuggestionItem',
 	props: {
@@ -18,17 +27,22 @@ const SuggestionItem = {
 		suggestion: types.any,
 	},
 	render() {
-		const { label, value, title, description, image } = this.suggestion;
+		const { label, value, title, description, image, isPredictiveSuggestion } = this.suggestion;
+
 		if (label) {
 			// label has highest precedence
 			return typeof label === 'string' ? (
 				<div class="trim">
-					<Highlight
-						searchWords={this.currentValue.split(' ')}
-						textToHighlight={label}
-						autoEscape
-						highlightStyle={highlightStyle}
-					/>
+					{isPredictiveSuggestion ? (
+						<PredictiveSuggestion domPropsInnerHTML={label} />
+					) : (
+						<Highlight
+							searchWords={this.currentValue.split(' ')}
+							textToHighlight={label}
+							autoEscape
+							highlightStyle={highlightStyle}
+						/>
+					)}
 				</div>
 			) : (
 				label
