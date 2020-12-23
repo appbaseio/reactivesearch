@@ -1084,6 +1084,7 @@ DataSearch.propTypes = {
 	URLParams: types.bool,
 	strictSelection: types.bool,
 	searchOperators: types.bool,
+	enablePhraseSuggestions: types.bool,
 	// Mic props
 	getMicInstance: types.func,
 	renderMic: types.func,
@@ -1111,6 +1112,7 @@ DataSearch.defaultProps = {
 	strictSelection: false,
 	searchOperators: false,
 	size: 10,
+	enablePhraseSuggestions: false,
 };
 
 // Add componentType for SSR

@@ -69,6 +69,7 @@ export interface DataSearchProps extends CommonProps {
 	searchOperators?: boolean;
 	showVoiceSearch?: boolean;
 	showDistinctSuggestions?: boolean;
+	enablePhraseSuggestions?: boolean;
 }
 declare const DataSearch: React.ComponentClass<DataSearchProps>;
 
