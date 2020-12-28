@@ -3,7 +3,7 @@ title: 'Recommendations UI Builder'
 meta_title: 'NoCode Recommendations UI Builder'
 meta_description: 'Build a recommendations UI with NoCode. Export to your favorite E-Commerce Platform or your own site.'
 keywords:
-	- ui-builder
+    - ui-builder
     - ui-integrations
     - overview
     - recommendations-ui
@@ -16,7 +16,9 @@ nestedSidebar: 'ui-builder-reactivesearch'
 
 The Recommendations UI builder offers a NoCode interface for creating Recommendations widgets by popularity, similarity, recency. A user can also choose to feature the recommendations.
 
-![](https://i.imgur.com/OxD7Z6i.jpg)
+[![UI Builder: Recommendations](https://i.imgur.com/30sCpl8.jpg)](https://youtu.be/2x0_Tk00uOQ)
+
+[Click to watch the 7-mins video](https://youtu.be/2x0_Tk00uOQ).
 
 ### E-Commerce Platform
 
