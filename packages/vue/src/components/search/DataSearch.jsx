@@ -683,6 +683,7 @@ const DataSearch = {
 
 								isOpen,
 								highlightedIndex,
+								setHighlightedIndex,
 							}) => (
 								<div class={suggestionsContainer}>
 									<Input
@@ -708,6 +709,9 @@ const DataSearch = {
 												onKeyUp: e => {
 													this.$emit('keyUp', e, this.triggerQuery);
 												},
+												onClick: e => {
+													setHighlightedIndex(null);
+												}
 											}),
 										}}
 										{...{

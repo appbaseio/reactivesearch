@@ -283,7 +283,7 @@ export default {
 			};
 		},
 
-		getInputEvents({ onInput, onBlur, onFocus, onKeyPress, onKeyDown, onKeyUp }) {
+		getInputEvents({ onInput, onBlur, onFocus, onKeyPress, onKeyDown, onKeyUp, onClick }) {
 			return {
 				input: event => {
 					this.setState({
@@ -324,6 +324,7 @@ export default {
 					// TODO: implement isMouseDown
 					// this.reset()
 				},
+				click: onClick
 			};
 		},
 
@@ -331,22 +332,19 @@ export default {
 			const {
 				getItemProps,
 				getItemEvents,
-
 				getInputProps,
 				getInputEvents,
-
 				getButtonProps,
+				setHighlightedIndex
 			} = this;
 
 			return {
 				getItemProps,
 				getItemEvents,
-
 				getInputProps,
 				getInputEvents,
-
 				getButtonProps,
-
+				setHighlightedIndex,
 				...this.mergedState,
 			};
 		},
