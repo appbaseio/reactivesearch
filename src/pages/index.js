@@ -384,7 +384,7 @@ const HomePage = ({ data, location }) => {
 							>
 								<img
 									className="w10 mb1"
-									src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Swift_logo.svg/1138px-Swift_logo.svg.png"
+									src="/images/swift-logo.png"
 									alt="Swift"
 								/>
 								Swift
