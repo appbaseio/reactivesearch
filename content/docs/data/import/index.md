@@ -1,6 +1,6 @@
 ---
 title: 'Importing Data'
-meta_title: 'Appbase - Dashboard'
+meta_title: 'Importing data into appbase.io'
 meta_description: 'Import through GUI and command line sources such as Dashboard, ABC CLI, Rest APIs, and Zapier.'
 keywords:
     - dataschema
@@ -54,16 +54,19 @@ Dashboard offers a GUI for importing data visually. It supports the following fo
 
 1. **JSON / JSONL** - You can bring in any JSON or newline limited JSON files (or hosted URLs) to be imported using the Importer view of the dashboard.
 2. **CSV** - You can also bring in a CSV file (or hosted URL) to be imported.
-3. **Elasticsearch** - You can import an index from an Elasticsearch cluster hosted anywhere into your appbase.io app or cluster.
+3. **Elasticsearch** - You can import an index from an Elasticsearch cluster hosted anywhere into your appbase.io cluster's index.
    ![](https://i.imgur.com/id7clAb.png)
-4. **SQL** - You can import a SQL database from Postgres, MySQL or Microsoft SQL Server into your appbase.io app or cluster.
+4. **SQL** - You can import a SQL database from Postgres, MySQL or Microsoft SQL Server into your appbase.io cluster's index.
    ![](https://i.imgur.com/itWUcXM.png)
+5. **Shopify** - You can import data from a Shopify store into your appbase.io cluster's index. With Shopify, we support options for syncing product, collections, product-collection relationships, meta fields and named tags (a faster alternative to meta fields). Read more about importing from Shopify over [here](/docs/data/import/from-shopify/).
+	<br/>
+	<img src="https://i.imgur.com/Bm1AmXj.png" alt="Support for sync preferences" width="500"/>
 
-You can try the Importer UI live over [here](https://dashboard.appbase.io/app/?view=import).
+You can try the Importer UI live by going to `Explore Cluster > Develop > Import` tab within your dashboard.
 
 Below is a GIF showing the import process for a JSON file.
 
-![](http://g.recordit.co/3pUmi0KC3n.gif)
+![](https://i.imgur.com/m0cDMWt.gif)
 
 ---
 

@@ -31,7 +31,7 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 		} else if (value.value === 'Vue Searchbox') {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/vue-searchbox/quickstart/`;
 		} else if (value.value === 'UI Builder') {
-			window.location.href = `${window.location.origin}/docs/reactivesearch/ui-builder/Search/`;
+			window.location.href = `${window.location.origin}/docs/reactivesearch/ui-builder/search/`;
 		}
 	};
 
@@ -134,7 +134,7 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 				options={[
 					'React - v3',
 					'Vue',
-					'UI Integrations',
+					'UI Builder',
 					'Searchbox',
 					'React Searchbox',
 					'React Native Searchbox',

@@ -78,8 +78,8 @@ const getVersionName = value => {
 			return 'SearchBase';
 		case 'React SearchBox':
 			return 'React SearchBox';
-		case 'UI Integrations':
-			return 'UI Integrations';
+		case 'UI Builder':
+			return 'UI Builder';
 		default:
 			return 'v3';
 	}
@@ -161,7 +161,7 @@ class MobileNav extends React.Component {
 						<ReactDropdown
 							options={[
 								'React - v3',
-								'UI Integrations',
+								'UI Builder',
 								'Native',
 								'Vue',
 								'SearchBase',

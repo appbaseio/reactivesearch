@@ -34,6 +34,14 @@ You can choose the `E-Commerce Platform` for which you are building the search U
 
 Next, in the `Store info` tab, you can set the default currency for your store.
 
+### Importing Data
+
+appbase.io natively supports indexing data from a Shopify store via our dashboard.
+
+<br/>
+<img src="https://i.imgur.com/Bm1AmXj.png" alt="Support for sync preferences" width="500"/>
+
+You can read more about the different preferences and how it works over [here](/docs/data/import/from-shopify/).
 
 ### Layout and Design
 
