@@ -231,7 +231,7 @@ const SingleDropdownList = {
 			const performUpdate = () => {
 				this.currentValue = value;
 				this.updateQueryHandler(value, props);
-				this.$emit('valueChange', value);
+				this.$emit('value-change', value);
 			};
 
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
