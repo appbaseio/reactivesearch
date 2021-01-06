@@ -465,7 +465,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 1. customize the look and feel with `className`,
 2. update the underlying DB query with `customQuery`,
-3. connect with external interfaces using `beforeValueChange`, `valueChange` and `queryChange`,
+3. connect with external interfaces using `beforeValueChange`, `value-change` and `query-change`,
 4. specify how search suggestions should be filtered using `react` prop.
 5. use your own function to render suggestions using `parseSuggestion` prop. It expects an object back for each `suggestion` having keys `label` and `value`. The query is run against the `value` key and `label` is used for rendering the suggestions. `label` can be either `String` or JSX. For example,
 
@@ -501,8 +501,8 @@ The `suggestions` parameter receives all the unparsed suggestions from elasticse
             and: ['pricingFilter', 'dateFilter'],
             or: ['searchFilter']
         }"
-        @valueChange="handleValueChange"
-        @queryChange="handleQueryChange"
+        @value-change="handleValueChange"
+        @query-change="handleQueryChange"
 />
 </template>
 <script>
@@ -615,11 +615,11 @@ export default {
 >
 > If you're using the controlled behavior than it's your responsibility to call the `triggerQuery` method to update the query i.e execute the search query and update the query results in connected components by `react` prop. It is not mandatory to call the `triggerQuery` in `onChange` you can also call it in other input handlers like `onBlur` or `onKeyPress`.
 
--   **queryChange**
+-   **query-change**
     is an event which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This event is handy in cases where you want to generate a side-effect whenever the component's query would change.
--   **valueChange**
+-   **value-change**
     is an event which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This event is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a list item is selected in a "Discounted Price" SingleList.
--   **valueSelected**
+-   **value-selected**
     is called when a search is performed either by pressing **enter** key or the input is blurred.
 
 -   **suggestions**
@@ -632,14 +632,14 @@ The following events to the underlying `input` element:
 
 -   **blur**
 -   **focus**
--   **keyPress**
--   **keyDown**
--   **keyUp**
+-   **key-press**
+-   **key-down**
+-   **key-up**
 
 > Note:
 >
 > 1. All these events accepts the `triggerQuery` as a second parameter which can be used to trigger the `DataSearch` query with the current selected value (useful to customize the search query execution).
-> 2. There is a known [issue](https://github.com/appbaseio/reactivesearch/issues/1087) with `keyPress` when `autosuggest` is set to true. It is recommended to use `keyDown` for the consistency.
+> 2. There is a known [issue](https://github.com/appbaseio/reactivesearch/issues/1087) with `key-press` when `autosuggest` is set to true. It is recommended to use `key-down` for the consistency.
 
 ## Examples
 

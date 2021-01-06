@@ -31,7 +31,7 @@ beforeValueChange = value => {
 
 > Note
 >
-> Most of the time your needs can be solved using `valueChange` event. If you absolutely need `beforeValueChange` you should ensure that you don't pass a function which takes a very long time to resolve the promise. The component goes in a **locked** state when using `beforeValueChange` and before the promise is resolved. This means all the state updates are suspended for the component.
+> Most of the time your needs can be solved using `value-change` event. If you absolutely need `beforeValueChange` you should ensure that you don't pass a function which takes a very long time to resolve the promise. The component goes in a **locked** state when using `beforeValueChange` and before the promise is resolved. This means all the state updates are suspended for the component.
 
 ## Handling stream updates
 

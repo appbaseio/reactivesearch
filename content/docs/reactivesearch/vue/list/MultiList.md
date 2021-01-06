@@ -204,7 +204,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 1. customize the look and feel with `className`,
 2. update the underlying DB query with `customQuery`,
-3. connect with external interfaces using `beforeValueChange`, `valueChange` and `queryChange`,
+3. connect with external interfaces using `beforeValueChange`, `value-change` and `query-change`,
 4. specify how options should be filtered or updated using `react` prop.
 
 ```html
@@ -214,8 +214,8 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 		:customQuery="getCustomQuery"
 		:react="react"
 		:beforeValueChange="handleBeforeValueChange"
-		@valueChange="handleValueChange"
-		@queryChange="handleQueryChange"
+		@value-change="handleValueChange"
+		@query-change="handleQueryChange"
 	/>
 </template>
 <script>
@@ -303,9 +303,9 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 ## Events
 
--   **queryChange**
+-   **query-change**
     is an event which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This event is handy in cases where you want to generate a side-effect whenever the component's query would change.
--   **valueChange**
+-   **value-change**
     is an event which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This event is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code when a list item is selected in a "Discounted Price" SingleList.
 
 -   **error**
