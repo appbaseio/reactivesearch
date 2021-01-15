@@ -188,6 +188,8 @@ const ReactiveList = {
 				if (queryOptions) {
 					options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
 				}
+				// Update calculated default query in store
+				updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props);
 				this.setQueryOptions(
 					this.$props.componentId,
 					{ ...options, ...this.getAggsQuery() },
@@ -201,8 +203,6 @@ const ReactiveList = {
 					},
 					true,
 				); // reset page because of query change
-				// Update calculated default query in store
-				updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props);
 				this.currentPageState = 0;
 				this.from = 0;
 			}
