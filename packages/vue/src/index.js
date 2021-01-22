@@ -1,7 +1,3 @@
-// Add polyfills to support in IE
-// eslint-disable-next-line
-import { polyfills } from '@appbaseio/reactivecore';
-
 import ReactiveList from './components/result/ReactiveList.jsx';
 import ReactiveBase from './components/ReactiveBase/index.jsx';
 import DataSearch from './components/search/DataSearch.jsx';
