@@ -358,10 +358,11 @@ export default {
 			Object.keys(stateToSet).map(key => {
 				// eslint-disable-next-line
 				this.isControlledProp(key)
-					? this.$emit(`${key}-change`, stateToSet[key])
+					? this.$emit(`${key}Change`, stateToSet[key]) && this.$emit(`${key}-change`, stateToSet[key])
 					: (this[`internal_${key}`] = stateToSet[key]);
 			});
 
+			this.$emit('stateChange', this.mergedState);
 			this.$emit('state-change', this.mergedState);
 		},
 	},

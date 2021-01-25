@@ -82,6 +82,7 @@ const MultiRange = {
 				this.currentValue = currentValue;
 				this.selectedValues = selectedValues;
 				this.updateQueryHandler(currentValue, props);
+				this.$emit('valueChange', Object.keys(selectedValues));
 				this.$emit('value-change', Object.keys(selectedValues));
 			};
 
