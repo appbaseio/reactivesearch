@@ -140,7 +140,7 @@ class MultiDropdownRange extends Component {
 			currentValue = currentValue.filter(value => value.label !== item.label);
 			const { [item.label]: del, ...selectedValues } = this.selectedValues;
 			this.selectedValues = selectedValues;
-		} else {
+		} else if (item.label) {
 			currentValue = [...currentValue, item];
 			this.selectedValues = {
 				...this.selectedValues,
