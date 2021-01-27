@@ -215,8 +215,8 @@ export default {
 
 			const vm = this;
 			setTimeout(() => {
-				vm.internal_eventsCalled[index] = false
-			}, 0)
+				vm.internal_eventsCalled[index] = false;
+			}, 0);
 			return {
 				mouseenter() {
 					vm.setHighlightedIndex(newIndex);
@@ -225,17 +225,17 @@ export default {
 				// for browsers not supporting click event (e.g. firefox android)
 				mousedown(event) {
 					if (vm.internal_eventsCalled[index]) return;
-					vm.internal_eventsCalled[index] = true
+					vm.internal_eventsCalled[index] = true;
 					event.stopPropagation();
 					vm.selectItemAtIndex(newIndex);
 				},
 
 				click(event) {
 					if (vm.internal_eventsCalled[index]) return;
-					vm.internal_eventsCalled[index] = true
+					vm.internal_eventsCalled[index] = true;
 					event.stopPropagation();
 					vm.selectItemAtIndex(newIndex);
-				}
+				},
 			};
 		},
 
@@ -324,7 +324,7 @@ export default {
 					// TODO: implement isMouseDown
 					// this.reset()
 				},
-				click: onClick
+				click: onClick,
 			};
 		},
 
@@ -335,7 +335,7 @@ export default {
 				getInputProps,
 				getInputEvents,
 				getButtonProps,
-				setHighlightedIndex
+				setHighlightedIndex,
 			} = this;
 
 			return {
@@ -355,14 +355,17 @@ export default {
 
 		setState(stateToSet) {
 			// eslint-disable-next-line
-			Object.keys(stateToSet).map(key => {
+			Object.keys(stateToSet).forEach(key => {
 				// eslint-disable-next-line
-				this.isControlledProp(key)
-					? this.$emit(`${key}Change`, stateToSet[key])
-					: (this[`internal_${key}`] = stateToSet[key]);
+				if (this.isControlledProp(key)) {
+					this.$emit(`${key}Change`, stateToSet[key]);
+					this.$emit(`${key}-change`, stateToSet[key]);
+				} else {
+					this[`internal_${key}`] = stateToSet[key];
+				}
 			});
-
 			this.$emit('stateChange', this.mergedState);
+			this.$emit('state-change', this.mergedState);
 		},
 	},
 

@@ -237,6 +237,7 @@ const ReactiveList = {
 				if (this.isLoading && (oldVal || newVal)) {
 					if (this.hasPageChangeListener) {
 						this.$emit('pageChange', this.currentPageState + 1, this.totalPages);
+						this.$emit('page-change', this.currentPageState + 1, this.totalPages);
 					} else if (this.scrollOnChange) {
 						window.scrollTo(0, 0);
 					}
@@ -560,6 +561,7 @@ const ReactiveList = {
 			// pageClick will be called every time a pagination button is clicked
 			if (page !== this.currentPageState) {
 				this.$emit('pageClick', page + 1);
+				this.$emit('page-click', page + 1);
 				const value = this.$props.size * page;
 				const options = getQueryOptions(this.$props);
 				options.from = this.$data.from;

@@ -366,6 +366,7 @@ const DataSearch = {
 				}
 
 				this.$emit('valueChange', value);
+				this.$emit('value-change', value);
 				// Set the already fetched suggestions if query is same as used last to fetch the hits
 				if (value === this.lastUsedQuery) {
 					this.suggestions = this.onSuggestions(this.suggestions)
@@ -491,7 +492,11 @@ const DataSearch = {
 				this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
 			}
 			// Need to review
-			this.$emit('keyDown', event, this.triggerQuery);
+			if (this.$props.onKeyDown) {
+				// TODO: Remove camelCase events in 2.0
+				this.$emit('keyDown', event, this.triggerQuery);
+				this.$emit('key-down', event, this.triggerQuery);
+			}
 		},
 
 		onInputChange(e) {
@@ -528,6 +533,7 @@ const DataSearch = {
 
 		onValueSelectedHandler(currentValue = this.$data.currentValue, ...cause) {
 			this.$emit('valueSelected', currentValue, ...cause);
+			this.$emit('value-selected', currentValue, ...cause);
 		},
 
 		handleStateChange(changes) {
@@ -701,11 +707,13 @@ const DataSearch = {
 												onFocus: this.handleFocus,
 												onKeyPress: e => {
 													this.$emit('keyPress', e, this.triggerQuery);
+													this.$emit('key-press', e, this.triggerQuery);
 												},
 												onKeyDown: e =>
 													this.handleKeyDown(e, highlightedIndex),
 												onKeyUp: e => {
 													this.$emit('keyUp', e, this.triggerQuery);
+													this.$emit('key-up', e, this.triggerQuery);
 												},
 												onClick: e => {
 													setHighlightedIndex(null);
@@ -827,6 +835,7 @@ const DataSearch = {
 									},
 									keypress: e => {
 										this.$emit('keyPress', e, this.triggerQuery);
+										this.$emit('key-press', e, this.triggerQuery);
 									},
 									input: this.onInputChange,
 									focus: e => {
@@ -834,9 +843,11 @@ const DataSearch = {
 									},
 									keydown: e => {
 										this.$emit('keyDown', e, this.triggerQuery);
+										this.$emit('key-down', e, this.triggerQuery);
 									},
 									keyup: e => {
 										this.$emit('keyUp', e, this.triggerQuery);
+										this.$emit('key-up', e, this.triggerQuery);
 									},
 								},
 							}}
