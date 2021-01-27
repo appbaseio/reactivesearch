@@ -26,6 +26,10 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/react-searchbox/quickstart/`;
 		} else if (value.value === 'React Native Searchbox') {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/react-native-searchbox/quickstart/`;
+		} else if (value.value === 'Flutter Searchbox') {
+			window.location.href = `${window.location.origin}/docs/reactivesearch/flutter-searchbox/quickstart/`;
+		} else if (value.value === 'Searchbase Dart') {
+			window.location.href = `${window.location.origin}/docs/reactivesearch/searchbase-dart/quickstart/`;
 		} else if (value.value === 'Searchbox') {
 			window.location.href = `${window.location.origin}/docs/reactivesearch/searchbox/Quickstart/`;
 		} else if (value.value === 'Vue Searchbox') {
@@ -48,14 +52,20 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 		if (location.pathname.startsWith('/docs/reactivesearch/native')) {
 			return 'React Native';
 		}
-		if (location.pathname.startsWith('/docs/reactivesearch/searchbase')) {
-			return 'Searchbase';
-		}
 		if (location.pathname.startsWith('/docs/reactivesearch/react-searchbox')) {
 			return 'React Searchbox';
 		}
 		if (location.pathname.startsWith('/docs/reactivesearch/react-native-searchbox')) {
 			return 'React Native Searchbox';
+		}
+		if (location.pathname.startsWith('/docs/reactivesearch/searchbase-dart')) {
+			return 'Searchbase Dart';
+		}
+		if (location.pathname.startsWith('/docs/reactivesearch/flutter-searchbox')) {
+			return 'Flutter Searchbox';
+		}
+		if (location.pathname.startsWith('/docs/reactivesearch/searchbase')) {
+			return 'Searchbase';
 		}
 		if (location.pathname.startsWith('/docs/reactivesearch/searchbox')) {
 			return 'Searchbox';
@@ -137,10 +147,11 @@ const NestedSidebar = ({ nestedSidebar, location }) => {
 					'UI Builder',
 					'Searchbox',
 					'React Searchbox',
-					'React Native Searchbox',
 					'Vue Searchbox',
+					'React Native Searchbox',
+					'Flutter Searchbox',
 					'Searchbase',
-					'React Native',
+					'Searchbase Dart',
 				]}
 				value={getValue()}
 				className="version-switcher shadow-3 br2"

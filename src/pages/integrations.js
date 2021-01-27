@@ -27,14 +27,14 @@ const APIPage = () => {
 				</section>
 
 				<div className={`${Spirit.page.l} pb-vw4 pb-vw3-ns pt-vw4 pt-vw3-ns`}>
-
-				<div className="grid-12 mt-vw4 mt20-ns">
+					<div className="grid-12 mt-vw4 mt20-ns">
 						<div className={sectionStyles.headingContainer}>
 							<h2 id="client-libraries" className={`${Spirit.h3} pt20 nt18`}>
 								Searchbox
 							</h2>
 							<p className={`${Spirit.small} midgrey-l2 mt2`}>
-								Lightweight and performance focused searchbox UI component for appbase.io
+								Lightweight and performance focused searchbox UI component for
+								appbase.io
 							</p>
 						</div>
 						<div className={sectionStyles.cardContainer}>
@@ -62,6 +62,12 @@ const APIPage = () => {
 							>
 								React Native
 							</APICard>
+							<APICard
+								to="/docs/reactivesearch/flutter-searchbox/quickstart/"
+								img="data:image/svg+xml;base64,PHN2ZyBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxOTk5IDI0NzQuMiIgdmlld0JveD0iMCAwIDE5OTkgMjQ3NC4yIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48bGluZWFyR3JhZGllbnQgaWQ9ImEiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoMzgwLjQwNDIgLTM4MC40MTc1IC01My4xMDQgLTUzLjEwMjEgOTA4MjI4LjMxMjUgLTcwMDA1OS41KSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSItMjExNS4wMDI5IiB4Mj0iLTIxMTUuMDAyOSIgeTE9IjE5MzAuNzQwNyIgeTI9IjE5MjkuNzQwNyI+PHN0b3Agb2Zmc2V0PSIuMiIgc3RvcC1vcGFjaXR5PSIuMTUiLz48c3RvcCBvZmZzZXQ9Ii44NSIgc3RvcC1jb2xvcj0iIzYxNjE2MSIgc3RvcC1vcGFjaXR5PSIuMDEiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iYiIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCg1NjUuMjkxIDAgMCAtMzgwLjk1NzEgMTE5NjY5NC4yNSA3NDM0NzYuNTYyNSkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iLTIxMTUuMjY4OCIgeDI9Ii0yMTE0LjI2ODgiIHkxPSIxOTQ2LjM1NjMiIHkyPSIxOTQ2LjM1NjMiPjxzdG9wIG9mZnNldD0iLjIiIHN0b3Atb3BhY2l0eT0iLjU1Ii8+PHN0b3Agb2Zmc2V0PSIuODUiIHN0b3AtY29sb3I9IiM2MTYxNjEiIHN0b3Atb3BhY2l0eT0iLjAxIi8+PC9saW5lYXJHcmFkaWVudD48cGF0aCBkPSJtMzgxIDE2MTgtMzgxLTM4MSAxMjM3LjEtMTIzN2g3NjEuOW0wIDExNDEuNWgtNzYxLjlsLTI4NS40IDI4NS40IDM4MSAzODEiIGZpbGw9IiM0MmE1ZjUiIGZpbGwtb3BhY2l0eT0iLjgiLz48cGF0aCBkPSJtOTUxLjcgMjE4OC44IDI4NS40IDI4NS40aDc2MS45bC02NjYuMy02NjYuMyIgZmlsbD0iIzBkNDdhMSIvPjxwYXRoIGQ9Im01NzEuNiAxODA4LjEgMzgwLjQtMzgwLjUgMzgwLjQgMzgwLjQtMzgwLjQgMzgwLjV6IiBmaWxsPSIjNDJhNWY1Ii8+PHBhdGggZD0ibTk1MiAyMTg4LjUgMzgwLjQtMzgwLjQgNTMuMSA1My4xLTM4MC40IDM4MC40eiIgZmlsbD0idXJsKCNhKSIvPjxwYXRoIGQ9Im05NTEuNyAyMTg4LjggNTY1LjMtMTk1LjMtMTg0LjMtMTg1LjciIGZpbGw9InVybCgjYikiLz48L3N2Zz4="
+							>
+								Flutter
+							</APICard>
 						</div>
 					</div>
 
@@ -71,7 +77,8 @@ const APIPage = () => {
 								ReactiveSearch
 							</h2>
 							<p className={`${Spirit.small} midgrey-l2 mt2`}>
-								Search, Facets and Results UI components for appbase.io and Elasticsearch
+								Search, Facets and Results UI components for appbase.io and
+								Elasticsearch
 							</p>
 						</div>
 						<div className={sectionStyles.cardContainer}>

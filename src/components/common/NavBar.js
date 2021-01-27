@@ -276,16 +276,6 @@ const NavBar = ({ theme }) => {
 															React
 														</Link>
 														<Link
-															to="/docs/reactivesearch/react-native-searchbox/quickstart/"
-															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
-														>
-															<Icon
-																name="react-bw"
-																className="dropdown-content-icon mr2"
-															/>
-															React Native
-														</Link>
-														<Link
 															to="/docs/reactivesearch/vue-searchbox/quickstart/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
@@ -296,14 +286,24 @@ const NavBar = ({ theme }) => {
 															Vue
 														</Link>
 														<Link
-															to="/docs/reactivesearch/searchbase/overview/QuickStart/"
+															to="/docs/reactivesearch/react-native-searchbox/quickstart/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
-																name="js-bw"
+																name="react-bw"
 																className="dropdown-content-icon mr2"
 															/>
-															Headless
+															React Native
+														</Link>
+														<Link
+															to="/docs/reactivesearch/flutter-searchbox/quickstart"
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+														>
+															<Icon
+																name="flutter"
+																className="dropdown-content-icon mr2"
+															/>
+															Flutter
 														</Link>
 													</div>
 													<div>

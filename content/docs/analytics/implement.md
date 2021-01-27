@@ -37,9 +37,12 @@ Appbase.io offers turnkey search analytics for Elasticsearch. No matter how your
 | **`ReactiveSearch`** | `Vue`       | [Learn More](/docs/reactivesearch/vue/advanced/analytics/)  |
 | **`SearchBox`**      | `VanillaJS` | [Learn More](/docs/reactivesearch/searchbox/api/)  |
 | **`SearchBox`**      | `React`     | [Learn More](/docs/reactivesearch/react-searchbox/apireference/)  |
-| **`SearchBox`**      | `React Native`     | [Learn More](/docs/reactivesearch/react-native-searchbox/apireference/)  |
 | **`SearchBox`**      | `Vue`       | [Learn More](/docs/reactivesearch/vue-searchbox/apireference/)  |
+| **`SearchBox`**      | `React Native`     | [Learn More](/docs/reactivesearch/react-native-searchbox/apireference/)  |
+| **`SearchBox`**      | `Flutter`       | [Learn More](/docs/reactivesearch/flutter-searchbox/quickstart/)  |
 | **`SearchBase`**     | `VanillaJS` | [Learn More](/docs/reactivesearch/searchbase/overview/apireference/)  |
+| **`SearchBase`**     | `Dart`       | [Learn More](/docs/reactivesearch/searchbase-dart/quickstart/)  |
+
 
 ### With any JavaScript
 If you're not using any of the above search UI libraries or need more freedom to record clicks and conversions from any place in your application, then we recommend using [analytics.js](https://github.com/appbaseio/analytics). Analytics.js can be used to integrate Appbase.io analytics with any JavaScript based solution (client or server) and it covers all aspects of Appbase.io analytics from recording a search event to recording custom events and clicks. You can read more about it [here](https://github.com/appbaseio/analytics.js#api-reference).

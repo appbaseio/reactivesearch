@@ -1,7 +1,7 @@
 ---
 title: 'SearchComponent API Reference'
 meta_title: 'Documentation for SearchComponent'
-meta_description: '`SearchComponent` component represents a search component that can be used to bind a UI component with different kinds of search queries (term, range, geo, search).'
+meta_description: 'SearchComponent represents a search component that can be used to build different kinds of search components.'
 keywords:
     - vue-searchbox
     - search library
@@ -12,13 +12,13 @@ nestedSidebar: 'vue-searchbox-reactivesearch'
 
 ## How does it work?
 
-`SearchComponent` component represents a search component that can be used to bind a UI component with different kinds of search queries (term, range, geo, search).' It uses the [SearchComponent](docs/reactivesearch/searchbase/overview/searchcomponent/) class from [SearchBase](docs/reactivesearch/searchbase/overview/QuickStart/) to integrate the UI components with Elasticsearch. Some of the use-cases are:
+`SearchComponent` represents a search component that component can be used to bind to different kinds of search UI widgets. It uses the [SearchComponent](docs/reactivesearch/searchbase/overview/searchcomponent/) class from [SearchBase](docs/reactivesearch/searchbase/overview/QuickStart/) to bind any UI component to be able to query appbase.io declaratively. Some examples of components you can bind this with:
 
 -   a category filter component,
 -   a search bar component,
 -   a price range component,
 -   a location filter component,
--   a component to render the search results etc.
+-   a component to render the search results.
 
 ## Props
 

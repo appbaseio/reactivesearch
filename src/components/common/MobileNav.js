@@ -24,9 +24,6 @@ const getValue = () => {
 		if (path && path.startsWith('/docs/reactivesearch/native')) {
 			return 'Native';
 		}
-		if (path && path.startsWith('/docs/reactivesearch/searchbase')) {
-			return 'SearchBase';
-		}
 		if (path && path.startsWith('/docs/reactivesearch/react-searchbox')) {
 			return 'React SearchBox';
 		}
@@ -35,6 +32,15 @@ const getValue = () => {
 		}
 		if (path && path.startsWith('/docs/reactivesearch/searchbox')) {
 			return 'Searchbox';
+		}
+		if (path && path.startsWith('/docs/reactivesearch/searchbase-dart')) {
+			return 'Searchbase Dart';
+		}
+		if (path && path.startsWith('/docs/reactivesearch/flutter-searchbox')) {
+			return 'Flutter Searchbox';
+		}
+		if (path && path.startsWith('/docs/reactivesearch/searchbase')) {
+			return 'SearchBase';
 		}
 	}
 
@@ -59,6 +65,10 @@ const getFileName = value => {
 			return 'react-native-searchbox-reactivesearch';
 		case 'Vue SearchBox':
 			return 'vue-searchbox-reactivesearch';
+		case 'Flutter Searchbox':
+			return 'flutter-searchbox';
+		case 'Searchbase Dart':
+			return 'searchbase-dart';
 		case 'UI Builder':
 			return 'ui-builder-reactivesearch';
 		default:
@@ -168,6 +178,8 @@ class MobileNav extends React.Component {
 								'React SearchBox',
 								'React Native SearchBox',
 								'Vue SearchBox',
+								'Searchbase Dart',
+								'Flutter Searchbox',
 							]}
 							value={rs}
 							className="version-switcher shadow-3 br2"
