@@ -658,6 +658,7 @@ const ReactiveList = {
 				<select
 					class={`${sortOptions} ${getClassName(this.$props.innerClass, 'sortOptions')}`}
 					name="sort-options"
+					aria-label="Sort options"
 					onChange={this.handleSortChange}
 					value={this.sortOptionIndex}
 				>
