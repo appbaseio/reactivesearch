@@ -326,6 +326,7 @@ const MultiList = {
 				this.currentValue = Object.assign({}, currentValue);
 				this.updateQueryHandler(finalValues, props);
 				this.$emit('valueChange', finalValues);
+				this.$emit('value-change', finalValues);
 			};
 			checkValueChange(
 				props.componentId,

@@ -122,6 +122,7 @@ const ToggleButton = {
 				const handleUpdates = () => {
 					this.updateQuery(value, props);
 					this.$emit('valueChange', value);
+					this.$emit('value-change', value);
 				};
 
 				if (hasMounted) {
