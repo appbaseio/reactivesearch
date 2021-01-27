@@ -491,9 +491,7 @@ const DataSearch = {
 				this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
 			}
 			// Need to review
-			if (this.$props.onKeyDown) {
-				this.$emit('keyDown', event);
-			}
+			this.$emit('keyDown', event, this.triggerQuery);
 		},
 
 		onInputChange(e) {
