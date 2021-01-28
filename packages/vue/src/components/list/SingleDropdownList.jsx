@@ -64,6 +64,7 @@ const SingleDropdownList = {
 		render: types.func,
 		renderItem: types.func,
 		renderError: types.title,
+		renderNoResults: VueTypes.any,
 		transformData: types.func,
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
@@ -209,6 +210,7 @@ const SingleDropdownList = {
 					hasCustomRenderer={this.hasCustomRenderer}
 					customRenderer={this.getComponent}
 					renderItem={renderItemCalc}
+					renderNoResults={this.$scopedSlots.renderNoResults || this.$props.renderNoResults}
 					themePreset={this.themePreset}
 					showSearch={this.$props.showSearch}
 					transformData={this.$props.transformData}

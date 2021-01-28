@@ -5,6 +5,7 @@ import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import types from '../../utils/vueTypes';
 import Select, { Tick } from '../../styles/Select';
 import Chevron from '../../styles/Chevron';
+import { isFunction } from '../../utils/index';
 
 const { getClassName } = helper;
 const Dropdown = {
@@ -32,6 +33,7 @@ const Dropdown = {
 		hasCustomRenderer: types.bool,
 		customRenderer: types.func,
 		renderItem: types.func,
+		renderNoResults: VueTypes.any,
 		handleChange: types.func,
 		transformData: types.func,
 		selectedItem: types.selectedValue,
@@ -62,6 +64,26 @@ const Dropdown = {
 		if (transformData) {
 			itemsToRender = transformData(itemsToRender);
 		}
+
+		var filteredItemsToRender = itemsToRender.filter(item => {
+			if (String(item[labelField]).length) {
+				if (
+					this.$props.showSearch
+					&& this.$data.searchTerm
+				) {
+					return String(item[labelField])
+						.toLowerCase()
+						.includes(
+							this.$data.searchTerm.toLowerCase(),
+						);
+				}
+
+				return true;
+			}
+
+			return false;
+		})
+
 		return (
 			<Downshift
 				isOpen={this.$data.isOpen}
@@ -133,26 +155,9 @@ const Dropdown = {
 											themePreset={themePreset}
 										/>
 									) : null}
-									{itemsToRender
-										.filter(item => {
-											if (String(item[labelField]).length) {
-												if (
-													this.$props.showSearch
-													&& this.$data.searchTerm
-												) {
-													return String(item[labelField])
-														.toLowerCase()
-														.includes(
-															this.$data.searchTerm.toLowerCase(),
-														);
-												}
-
-												return true;
-											}
-
-											return false;
-										})
-										.map((item, index) => {
+									{(!hasCustomRenderer && filteredItemsToRender.length === 0 )
+										? this.renderNoResult() :
+											filteredItemsToRender.map((item, index) => {
 											let selected
 												= this.$props.multi // MultiDropdownList
 												&& ((selectedItem && !!selectedItem[item[keyField]]) // MultiDropdownRange
@@ -308,6 +313,16 @@ const Dropdown = {
 			}
 
 			return value;
+		},
+
+		renderNoResult() {
+			const renderNoResults
+				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+			return (
+				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
+					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
+				</p>
+			);
 		},
 	},
 };
