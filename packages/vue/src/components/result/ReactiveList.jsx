@@ -184,7 +184,7 @@ const ReactiveList = {
 				let options = getQueryOptions(this.$props);
 				options.from = 0;
 				this.$defaultQuery = newVal(null, this.$props);
-				const { sort, ...query } = this.$defaultQuery;
+				const { sort, query } = this.$defaultQuery ||  {};
 
 				if (sort) {
 					options.sort = this.$defaultQuery.sort;
@@ -347,7 +347,7 @@ const ReactiveList = {
 			updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props);
 		}
 		// execute is set to false at the time of mount
-		const { sort, ...query } = this.$defaultQuery || {};
+		const { query } = this.$defaultQuery || {};
 
 		const execute = false;
 		this.setQueryOptions(
