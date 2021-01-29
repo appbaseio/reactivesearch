@@ -70,7 +70,6 @@ const ReactiveList = {
 			this.currentPageState = this.defaultPage;
 			this.from = this.currentPageState * this.$props.size;
 		}
-		this.isLoading = true;
 		this.internalComponent = `${this.$props.componentId}__internal`;
 		this.sortOptionIndex = this.defaultSortOption
 			? this.sortOptions.findIndex(s => s.label === this.defaultSortOption)
@@ -246,12 +245,9 @@ const ReactiveList = {
 					} else if (this.scrollOnChange) {
 						window.scrollTo(0, 0);
 					}
-					this.isLoading = false;
 				}
 			} else if (oldVal && newVal) {
 				if (oldVal.length !== newVal.length || newVal.length === this.$props.total) {
-					this.isLoading = false;
-
 					if (newVal.length < oldVal.length) {
 						// query has changed
 						if (this.scrollOnChange) {
@@ -260,8 +256,6 @@ const ReactiveList = {
 						this.from = 0;
 					}
 				}
-			} else if ((!oldVal || !oldVal.length) && newVal) {
-				this.isLoading = false;
 			}
 		},
 		rawData(newVal, oldVal) {
@@ -551,7 +545,8 @@ const ReactiveList = {
 				const value = this.$data.from + this.$props.size;
 				const options = { ...getQueryOptions(this.$props), ...this.getAggsQuery() };
 				this.from = value;
-				this.isLoading = true;
+				// Update default query to support pagination for aggregationField
+				updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props);
 				this.loadMoreAction(
 					this.$props.componentId,
 					{
@@ -561,8 +556,6 @@ const ReactiveList = {
 					true,
 					!!this.aggregationField,
 				);
-			} else if (this.isLoading) {
-				this.isLoading = false;
 			}
 		},
 		setPage(page) {
@@ -574,7 +567,6 @@ const ReactiveList = {
 				const options = getQueryOptions(this.$props);
 				options.from = this.$data.from;
 				this.from = value;
-				this.isLoading = true;
 				this.currentPageState = page;
 				this.loadMoreAction(
 					this.$props.componentId,
@@ -784,6 +776,7 @@ const mapStateToProps = (state, props) => ({
 		&& state.aggregations[props.componentId][props.aggregationField]
 		&& state.aggregations[props.componentId][props.aggregationField].after_key,
 	componentProps: state.props[props.componentId],
+	isLoading: state.isLoading[props.componentId] || false,
 });
 const mapDispatchtoProps = {
 	loadMoreAction: loadMore,
