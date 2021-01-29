@@ -107,6 +107,7 @@ const ReactiveList = {
 		renderResultStats: types.func,
 		pages: VueTypes.number.def(5),
 		pagination: VueTypes.bool.def(false),
+		infiniteScroll: VueTypes.bool.def(true),
 		paginationAt: types.paginationAt.def('bottom'),
 		react: types.react,
 		scrollOnChange: VueTypes.bool.def(true),
@@ -142,6 +143,10 @@ const ReactiveList = {
 		hasCustomRender() {
 			return hasCustomRenderer(this);
 		},
+		showInfiniteScroll() {
+			// Pagination has higher priority then infinite scroll
+			return this.infiniteScroll && !this.shouldRenderPagination;
+		}
 	},
 	watch: {
 		sortOptions(newVal, oldVal) {
@@ -269,7 +274,7 @@ const ReactiveList = {
 				this.setPage(newVal - 1);
 			}
 		},
-		pagination(newVal, oldVal) {
+		infiniteScroll(newVal, oldVal) {
 			if (newVal !== oldVal) {
 				if (!newVal) {
 					window.addEventListener('scroll', this.scrollHandler);
@@ -369,13 +374,15 @@ const ReactiveList = {
 			);
 		} // query will be executed here
 
-		if (!this.shouldRenderPagination) {
+		if (this.showInfiniteScroll) {
 			window.addEventListener('scroll', this.scrollHandler);
 		}
 	},
 
 	beforeDestroy() {
-		window.removeEventListener('scroll', this.scrollHandler);
+		if(this.showInfiniteScroll) {
+			window.removeEventListener('scroll', this.scrollHandler);
+		}
 	},
 
 	render() {
@@ -396,6 +403,7 @@ const ReactiveList = {
 			<div style={this.$props.style} class={this.$props.className}>
 				{this.isLoading
 					&& this.shouldRenderPagination
+					&& this.showInfiniteScroll
 					&& (this.$scopedSlots.loader || this.$props.loader)}
 				{this.renderErrorComponent()}
 				<Flex
