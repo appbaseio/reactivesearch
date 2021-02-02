@@ -320,7 +320,9 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
     -   **`error`**: `object`
         An object containing the error info
     -   **`data`**: `array`
-        An array of results obtained from combining `stream` and `promoted` results along with the `hits` .
+        An array of results obtained from combining `stream` and `promoted` results along with the `hits`.
+    -   **`aggregationData`** `array`
+        An array of aggregations buckets. Each bucket would have a `top_hits` property if you're using Elasticsearch top hits aggregations in `defaultQuery` prop.
     -   **`streamData`**: `array`
         An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
     -   **`promotedData`**: `array`

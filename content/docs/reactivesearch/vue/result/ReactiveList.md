@@ -86,6 +86,8 @@ Example uses:
     whether to stream new result updates in the UI. Defaults to `false`. `stream: true` is appended to the streaming hit objects, which can be used to selectively react to streaming changes (eg. showing fade in animation on new streaming hits, Twitter/Facebook like streams, showing the count of new feed items available like _2 New Tweets_)
 -   **pagination** `Boolean` [optional]
     pagination <> infinite scroll switcher. Defaults to `false`, i.e. an infinite scroll based view. When set to `true`, a pagination based list view with page numbers will appear.
+-   **infiniteScroll** `Boolean` [optional]
+    Defaults to `true`, When set to `true`, an infinite scroll based view will appear.
 -   **paginationAt** `String` [optional]
     Determines the position where to show the pagination, only applicable when **pagination** prop is set to `true`. Accepts one of `top`, `bottom` or `both` as valid values. Defaults to `bottom`.
 -   **pages** `Number` [optional]
@@ -256,6 +258,8 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
         An object containing the error info
     -   **`data`**: `array`
         An array of results obtained from combining `stream` and `promoted` results along with the `hits` .
+    -   **`aggregationData`** `array`
+        An array of aggregations buckets. Each bucket would have a `top_hits` property if you're using Elasticsearch top hits aggregations in `defaultQuery` prop.
     -   **`streamData`**: `array`
         An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
     -   **`promotedData`**: `array`
