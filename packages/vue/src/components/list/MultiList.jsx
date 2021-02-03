@@ -309,9 +309,15 @@ const MultiList = {
 					currentValue = {
 						...rest,
 					};
+
 				} else {
-					currentValue[value] = true;
+					if (Array.isArray(value)) {
+						value.forEach( val => currentValue[val] = true );
+					} else {
+						currentValue[value] = true;
+					}
 				}
+
 				if (selectAllLabel && selectAllLabel in currentValue) {
 					const { [selectAllLabel]: del, ...obj } = currentValue;
 					currentValue = {
