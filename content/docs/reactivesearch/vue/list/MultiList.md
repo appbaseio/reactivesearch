@@ -26,11 +26,7 @@ Example uses:
 
 ```html
 <template>
-	<multi-list
-		componentId="CitySensor"
-		dataField="group.group_city.raw"
-		title="Cities"
-	/>
+	<multi-list componentId="CitySensor" dataField="group.group_city.raw" title="Cities" />
 </template>
 ```
 
@@ -166,6 +162,35 @@ You can use render as a slot as shown below:
 </template>
 ```
 
+-   **renderNoResults** `String|Function|slot-scope` [optional]
+    show custom message or component when no results found.
+
+<!-- prettier-ignore -->
+```html
+<template
+    slot="renderNoResults"
+>
+	<h4>No Results Found!</h4>
+</template>
+
+<!-- or -->
+
+<MultiList
+	...
+	:renderNoResults="renderNoResults"
+/>
+
+export default {
+	...,
+	method: {
+		renderNoResults() {
+			return 'Try Again';
+		}
+	},
+}
+
+```
+
 -   **transformData** `Function` [optional]
     allows transforming the data to render inside the list. You can change the order, remove, or add items, transform their values with this method. It provides the data as param which is an array of objects of shape { key: <string>, doc_count: <number> } and expects you to return the array of objects of same shape.
 -   **showMissing** `Boolean` [optional]
@@ -281,7 +306,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
     ```js
     beforeValueChange = values => {
-        // The update is accepted by default
+    	// The update is accepted by default
     	if (values.includes('Dirk Pitt')) {
     		// To reject the update, throw an error
     		throw Error('Selected values should not include Dirk Pitt.');
