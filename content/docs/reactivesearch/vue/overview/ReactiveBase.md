@@ -75,6 +75,10 @@ This is the first component you will need to add when using `ReactiveSearch`.
     > This prop has been marked as deprecated. Please use the `appbaseConfig` prop instead.
 -	**as** `String` [optional]
 	allows to use a custom html element tag, defaults to `div`.
+-   **getSearchParams** `Function` [optional]
+    Enables you to customize the evaluation of query-params-string from the url (or) any other source. If this function is not set, the library will use `window.location.search` as the search query-params-string for parsing selected-values. This can come handy if the URL is using hash values.
+-   **setSearchParams** `Function` [optional]
+    Enables you to customize setting of the query params string in the url by providing the updated query-params-string as the function parameter. If this function is not set, the library will set the `window.history` via `pushState` method.
 
 ### Connect to Elasticsearch
 
