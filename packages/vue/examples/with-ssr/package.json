@@ -11,7 +11,7 @@
 		"generate": "nuxt generate"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "1.9.0",
+		"@appbaseio/reactivesearch-vue": "1.10.0",
 		"@commitlint/cli": "^7.5.2",
 		"cross-env": "^5.2.0",
 		"eslint-plugin-import": "^2.14.0",
