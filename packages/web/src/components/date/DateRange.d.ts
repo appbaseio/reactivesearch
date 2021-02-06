@@ -5,6 +5,7 @@ import * as types from '../../types';
 export interface DateRangeProps extends CommonProps {
 	autoFocusEnd?: boolean;
 	dataField: string;
+	customQuery?: (...args: any[]) => any;
 	dayPickerInputProps?: types.props;
 	defaultValue?: types.dateObject;
 	value?: types.dateObject;
