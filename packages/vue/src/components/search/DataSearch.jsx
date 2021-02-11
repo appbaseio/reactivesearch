@@ -907,55 +907,94 @@ DataSearch.defaultQuery = (value, props) => {
 	return finalQuery;
 };
 DataSearch.shouldQuery = (value, dataFields, props) => {
-	const fields = dataFields.map(
-		(field, index) =>
-			`${field}${
-				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-					? `^${props.fieldWeights[index]}`
-					: ''
-			}`,
-	);
-
-	if (props.queryFormat === 'and') {
-		return [
-			{
-				multi_match: {
-					query: value,
-					fields,
-					type: 'cross_fields',
-					operator: 'and',
-				},
-			},
-			{
-				multi_match: {
-					query: value,
-					fields,
-					type: 'phrase',
-					operator: 'and',
-				},
-			},
-		];
+	const finalQuery = [];
+	const phrasePrefixFields = [];
+	const fields = dataFields.map((field, index) => {
+		const queryField = `${field}${
+			Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+				? `^${props.fieldWeights[index]}`
+				: ''
+		}`;
+		if (
+			!(
+				field.endsWith('.keyword')
+				|| field.endsWith('.autosuggest')
+				|| field.endsWith('.search')
+			)
+		) {
+			phrasePrefixFields.push(queryField);
+		}
+		return queryField;
+	});
+	if (props.searchOperators || props.queryString) {
+		return {
+			query: value,
+			fields,
+			default_operator: props.queryFormat,
+		};
 	}
 
-	return [
-		{
+	if (props.queryFormat === 'and') {
+		finalQuery.push({
 			multi_match: {
 				query: value,
 				fields,
-				type: 'best_fields',
-				operator: 'or',
-				fuzziness: props.fuzziness ? props.fuzziness : 0,
+				type: 'cross_fields',
+				operator: 'and',
 			},
-		},
-		{
+		});
+		finalQuery.push({
 			multi_match: {
 				query: value,
 				fields,
 				type: 'phrase',
+				operator: 'and',
+			},
+		});
+		if (phrasePrefixFields.length > 0) {
+			finalQuery.push({
+				multi_match: {
+					query: value,
+					fields: phrasePrefixFields,
+					type: 'phrase_prefix',
+					operator: 'and',
+				},
+			});
+		}
+		return finalQuery;
+	}
+
+	finalQuery.push({
+		multi_match: {
+			query: value,
+			fields,
+			type: 'best_fields',
+			operator: 'or',
+			fuzziness: props.fuzziness ? props.fuzziness : 0,
+		},
+	});
+
+	finalQuery.push({
+		multi_match: {
+			query: value,
+			fields,
+			type: 'phrase',
+			operator: 'or',
+		},
+	});
+
+	if (phrasePrefixFields.length > 0) {
+		finalQuery.push({
+			multi_match: {
+				query: value,
+				fields: phrasePrefixFields,
+				type: 'phrase_prefix',
 				operator: 'or',
 			},
-		},
-	];
+		});
+	}
+
+	return finalQuery;
 };
 DataSearch.highlightQuery = props => {
 	if (props.customHighlight) {

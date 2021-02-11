@@ -11,3 +11,4 @@ vue-playground
 vue
 .expo/
 packages/reactivecore/coverage/
+packages/web/src/components/search/
