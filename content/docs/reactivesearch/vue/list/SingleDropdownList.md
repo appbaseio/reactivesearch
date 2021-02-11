@@ -318,7 +318,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 <!-- or -->
 
-<SingleDropdownList
+<single-dropdown-list
 	...
 	:renderNoResults="renderNoResults"
 />
