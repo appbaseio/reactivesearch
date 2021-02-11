@@ -13,8 +13,9 @@ import './index.css';
 
 const Main = () => (
 	<ReactiveBase
-		app="carstore-dataset-latest"
-		credentials="B86d2y2OE:4fecb2c5-5c5f-49e5-9e0b-0faba74597c6"
+		app="carstore-dataset"
+		url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@arc-cluster-appbase-demo-6pjy6z.searchbase.io"
+		enableAppbase
 	>
 		<div className="row">
 			<div className="col">
@@ -24,6 +25,7 @@ const Main = () => (
 					aggregationField="brand.keyword"
 					componentId="BookSensor"
 					URLParams
+					size={5}
 				/>
 			</div>
 
@@ -35,13 +37,15 @@ const Main = () => (
 					aggregationField="brand.keyword"
 					size={10}
 					className="result-list-container"
-					pagination
 					react={{
 						and: 'BookSensor',
 					}}
-					render={({ data }) => (
+					scrollOnChange={false}
+					showResultStats={false}
+					renderNoResults={() => null}
+					render={({ aggregationData }) => (
 						<ReactiveList.ResultCardsWrapper>
-							{data.map(item => (
+							{aggregationData.map(item => (
 								<ResultCard key={item._id}>
 									<ResultCard.Image src={item.image} />
 									<ResultCard.Title
