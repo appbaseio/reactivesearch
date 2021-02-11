@@ -661,7 +661,6 @@ class ReactiveList extends Component {
 			css={sortOptions}
 			className={getClassName(this.props.innerClass, 'sortOptions')}
 			name="sort-options"
-			aria-label="Sort options"
 			onChange={this.handleSortChange}
 			value={this.sortOptionIndex}
 		>

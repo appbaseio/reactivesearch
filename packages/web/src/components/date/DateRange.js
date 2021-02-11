@@ -61,7 +61,7 @@ class DateRange extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (!isEqual(JSON.stringify(this.props.value), JSON.stringify(prevProps.value))) {
+		if (!isEqual(this.props.value, prevProps.value)) {
 			this.handleDateChange(this.props.value, false, this.props);
 		} else {
 			const { currentDate } = this.state;
