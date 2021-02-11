@@ -205,7 +205,7 @@ You can use render as a slot as shown below:
 
 <!-- or -->
 
-<MultiDropdownList
+<multi-dropdown-list
 	...
 	:renderNoResults="renderNoResults"
 />
