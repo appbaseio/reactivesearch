@@ -50,6 +50,8 @@ const ReactiveBase = {
 		transformRequest: types.func,
 		transformResponse: types.func,
 		as: VueTypes.string.def('div'),
+		getSearchParams: types.func,
+		setSearchParams: types.func,
 	},
 	provide() {
 		return {
@@ -187,6 +189,8 @@ const ReactiveBase = {
 					headers={headers}
 					style={style}
 					className={className}
+					getSearchParams={this.getSearchParams}
+					setSearchParams={this.setSearchParams}
 				>
 					{children}
 				</URLParamsProvider>

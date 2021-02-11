@@ -122,6 +122,7 @@ const SingleRange = {
 				this.currentValue = currentValue;
 				this.updateQueryHandler(currentValue, props);
 				this.$emit('valueChange', currentValue);
+				this.$emit('value-change', currentValue);
 			};
 
 			checkValueChange(

@@ -74,6 +74,7 @@ const RangeSlider = {
 				this.currentValue = currentValue;
 				this.updateQueryHandler([currentValue[0], currentValue[1]], props);
 				this.$emit('valueChange', { start: currentValue[0], end: currentValue[1] });
+				this.$emit('value-change', { start: currentValue[0], end: currentValue[1] });
 			};
 
 			checkValueChange(

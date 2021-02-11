@@ -48,6 +48,7 @@ const MultiList = {
 		render: types.func,
 		renderItem: types.func,
 		renderError: types.title,
+		renderNoResults: VueTypes.any,
 		transformData: types.func,
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
@@ -160,6 +161,19 @@ const MultiList = {
 		if (this.$props.transformData) {
 			itemsToRender = this.$props.transformData(itemsToRender);
 		}
+
+		var filteredItemsToRender = itemsToRender.filter(item => {
+			if (String(item.key).length) {
+				if (this.$props.showSearch && this.$data.searchTerm) {
+					return String(item.key)
+						.toLowerCase()
+						.includes(this.$data.searchTerm.toLowerCase());
+					}
+					return true;
+				}
+				return false;
+			});
+
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -199,21 +213,9 @@ const MultiList = {
 								</label>
 							</li>
 						) : null}
-						{itemsToRender
-							.filter(item => {
-								if (String(item.key).length) {
-									if (this.$props.showSearch && this.$data.searchTerm) {
-										return String(item.key)
-											.toLowerCase()
-											.includes(this.$data.searchTerm.toLowerCase());
-									}
-
-									return true;
-								}
-
-								return false;
-							})
-							.map(item => (
+						{(!this.hasCustomRenderer && filteredItemsToRender.length === 0
+						&& !this.isLoading ) ? this.renderNoResult() :
+						filteredItemsToRender.map(item => (
 								<li
 									key={item.key}
 									class={`${this.$data.currentValue[item.key] ? 'active' : ''}`}
@@ -309,9 +311,15 @@ const MultiList = {
 					currentValue = {
 						...rest,
 					};
+
 				} else {
-					currentValue[value] = true;
+					if (Array.isArray(value)) {
+						value.forEach( val => currentValue[val] = true );
+					} else {
+						currentValue[value] = true;
+					}
 				}
+
 				if (selectAllLabel && selectAllLabel in currentValue) {
 					const { [selectAllLabel]: del, ...obj } = currentValue;
 					currentValue = {
@@ -326,6 +334,7 @@ const MultiList = {
 				this.currentValue = Object.assign({}, currentValue);
 				this.updateQueryHandler(finalValues, props);
 				this.$emit('valueChange', finalValues);
+				this.$emit('value-change', finalValues);
 			};
 			checkValueChange(
 				props.componentId,
@@ -450,6 +459,16 @@ const MultiList = {
 				handleChange: this.handleClick,
 			};
 			return getComponent(data, this);
+		},
+
+		renderNoResult() {
+			const renderNoResults
+				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+			return (
+				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
+					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
+				</p>
+			);
 		},
 	},
 	computed: {

@@ -73,9 +73,9 @@ class MultiList extends Component {
 		updateCustomQuery(props.componentId, props, currentValueArray);
 		updateDefaultQuery(props.componentId, props, currentValueArray);
 
-		this.updateQueryOptions(props);
-
 		const hasMounted = false;
+
+		this.updateQueryOptions(props, false, hasMounted);
 
 		if (currentValueArray.length) {
 			this.setValue(currentValueArray, true, props, hasMounted);
@@ -389,12 +389,19 @@ class MultiList extends Component {
 			: getAggsQuery(valueArray, queryOptions, props);
 	}
 
-	updateQueryOptions = (props, addAfterKey = false) => {
+	updateQueryOptions = (props, addAfterKey = false, hasMounted = true) => {
 		// when using composite aggs flush the current options for a fresh query
 		if (props.showLoadMore && !addAfterKey) {
-			this.setState({
-				options: [],
-			});
+			if (hasMounted) {
+				this.setState({
+					options: [],
+				});
+			} else {
+				this.state = { 
+					...this.state || {},
+					options: [],
+				};
+			}
 		}
 		// for a new query due to other changes don't append after to get fresh results
 		const queryOptions = MultiList.generateQueryOptions(

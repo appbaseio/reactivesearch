@@ -66,6 +66,7 @@ const DynamicRangeSlider = {
 	created() {
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
+			this.$emit('query-change', ...args);
 		};
 		this.setQueryListener(this.$props.componentId, onQueryChange, null);
 		// Update props in store
@@ -169,6 +170,7 @@ const DynamicRangeSlider = {
 				this.currentValue = normalizedValue;
 				this.updateQueryHandler(normalizedValue, this.$props);
 				this.$emit('valueChange', { start: normalizedValue[0], end: normalizedValue[1] });
+				this.$emit('value-change', { start: normalizedValue[0], end: normalizedValue[1] });
 			};
 
 			checkValueChange(

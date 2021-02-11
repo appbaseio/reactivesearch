@@ -70,7 +70,6 @@ const ReactiveList = {
 			this.currentPageState = this.defaultPage;
 			this.from = this.currentPageState * this.$props.size;
 		}
-		this.isLoading = true;
 		this.internalComponent = `${this.$props.componentId}__internal`;
 		this.sortOptionIndex = this.defaultSortOption
 			? this.sortOptions.findIndex(s => s.label === this.defaultSortOption)
@@ -107,6 +106,7 @@ const ReactiveList = {
 		renderResultStats: types.func,
 		pages: VueTypes.number.def(5),
 		pagination: VueTypes.bool.def(false),
+		infiniteScroll: VueTypes.bool.def(true),
 		paginationAt: types.paginationAt.def('bottom'),
 		react: types.react,
 		scrollOnChange: VueTypes.bool.def(true),
@@ -142,6 +142,10 @@ const ReactiveList = {
 		hasCustomRender() {
 			return hasCustomRenderer(this);
 		},
+		showInfiniteScroll() {
+			// Pagination has higher priority then infinite scroll
+			return this.infiniteScroll && !this.shouldRenderPagination;
+		}
 	},
 	watch: {
 		sortOptions(newVal, oldVal) {
@@ -179,7 +183,7 @@ const ReactiveList = {
 				let options = getQueryOptions(this.$props);
 				options.from = 0;
 				this.$defaultQuery = newVal(null, this.$props);
-				const { sort, ...query } = this.$defaultQuery;
+				const { sort, query } = this.$defaultQuery ||  {};
 
 				if (sort) {
 					options.sort = this.$defaultQuery.sort;
@@ -237,15 +241,13 @@ const ReactiveList = {
 				if (this.isLoading && (oldVal || newVal)) {
 					if (this.hasPageChangeListener) {
 						this.$emit('pageChange', this.currentPageState + 1, this.totalPages);
+						this.$emit('page-change', this.currentPageState + 1, this.totalPages);
 					} else if (this.scrollOnChange) {
 						window.scrollTo(0, 0);
 					}
-					this.isLoading = false;
 				}
 			} else if (oldVal && newVal) {
 				if (oldVal.length !== newVal.length || newVal.length === this.$props.total) {
-					this.isLoading = false;
-
 					if (newVal.length < oldVal.length) {
 						// query has changed
 						if (this.scrollOnChange) {
@@ -254,8 +256,6 @@ const ReactiveList = {
 						this.from = 0;
 					}
 				}
-			} else if ((!oldVal || !oldVal.length) && newVal) {
-				this.isLoading = false;
 			}
 		},
 		rawData(newVal, oldVal) {
@@ -268,7 +268,7 @@ const ReactiveList = {
 				this.setPage(newVal - 1);
 			}
 		},
-		pagination(newVal, oldVal) {
+		infiniteScroll(newVal, oldVal) {
 			if (newVal !== oldVal) {
 				if (!newVal) {
 					window.addEventListener('scroll', this.scrollHandler);
@@ -341,7 +341,7 @@ const ReactiveList = {
 			updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props);
 		}
 		// execute is set to false at the time of mount
-		const { sort, ...query } = this.$defaultQuery || {};
+		const { query } = this.$defaultQuery || {};
 
 		const execute = false;
 		this.setQueryOptions(
@@ -368,13 +368,15 @@ const ReactiveList = {
 			);
 		} // query will be executed here
 
-		if (!this.shouldRenderPagination) {
+		if (this.showInfiniteScroll) {
 			window.addEventListener('scroll', this.scrollHandler);
 		}
 	},
 
 	beforeDestroy() {
-		window.removeEventListener('scroll', this.scrollHandler);
+		if(this.showInfiniteScroll) {
+			window.removeEventListener('scroll', this.scrollHandler);
+		}
 	},
 
 	render() {
@@ -395,6 +397,7 @@ const ReactiveList = {
 			<div style={this.$props.style} class={this.$props.className}>
 				{this.isLoading
 					&& this.shouldRenderPagination
+					&& this.showInfiniteScroll
 					&& (this.$scopedSlots.loader || this.$props.loader)}
 				{this.renderErrorComponent()}
 				<Flex
@@ -542,7 +545,8 @@ const ReactiveList = {
 				const value = this.$data.from + this.$props.size;
 				const options = { ...getQueryOptions(this.$props), ...this.getAggsQuery() };
 				this.from = value;
-				this.isLoading = true;
+				// Update default query to support pagination for aggregationField
+				updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props);
 				this.loadMoreAction(
 					this.$props.componentId,
 					{
@@ -552,19 +556,17 @@ const ReactiveList = {
 					true,
 					!!this.aggregationField,
 				);
-			} else if (this.isLoading) {
-				this.isLoading = false;
 			}
 		},
 		setPage(page) {
 			// pageClick will be called every time a pagination button is clicked
 			if (page !== this.currentPageState) {
 				this.$emit('pageClick', page + 1);
+				this.$emit('page-click', page + 1);
 				const value = this.$props.size * page;
 				const options = getQueryOptions(this.$props);
 				options.from = this.$data.from;
 				this.from = value;
-				this.isLoading = true;
 				this.currentPageState = page;
 				this.loadMoreAction(
 					this.$props.componentId,
@@ -658,6 +660,7 @@ const ReactiveList = {
 				<select
 					class={`${sortOptions} ${getClassName(this.$props.innerClass, 'sortOptions')}`}
 					name="sort-options"
+					aria-label="Sort options"
 					onChange={this.handleSortChange}
 					value={this.sortOptionIndex}
 				>
@@ -773,6 +776,7 @@ const mapStateToProps = (state, props) => ({
 		&& state.aggregations[props.componentId][props.aggregationField]
 		&& state.aggregations[props.componentId][props.aggregationField].after_key,
 	componentProps: state.props[props.componentId],
+	isLoading: state.isLoading[props.componentId] || false,
 });
 const mapDispatchtoProps = {
 	loadMoreAction: loadMore,

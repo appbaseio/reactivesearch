@@ -55,6 +55,7 @@ const ComponentWrapper = (
 		this.addComponent(this.componentId);
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
+			this.$emit('query-change', ...args);
 		};
 		const onError = e => {
 			this.$emit('error', e);

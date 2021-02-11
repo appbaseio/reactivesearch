@@ -366,6 +366,7 @@ const DataSearch = {
 				}
 
 				this.$emit('valueChange', value);
+				this.$emit('value-change', value);
 				// Set the already fetched suggestions if query is same as used last to fetch the hits
 				if (value === this.lastUsedQuery) {
 					this.suggestions = this.onSuggestions(this.suggestions)
@@ -492,7 +493,9 @@ const DataSearch = {
 			}
 			// Need to review
 			if (this.$props.onKeyDown) {
-				this.$emit('keyDown', event);
+				// TODO: Remove camelCase events in 2.0
+				this.$emit('keyDown', event, this.triggerQuery);
+				this.$emit('key-down', event, this.triggerQuery);
 			}
 		},
 
@@ -530,6 +533,7 @@ const DataSearch = {
 
 		onValueSelectedHandler(currentValue = this.$data.currentValue, ...cause) {
 			this.$emit('valueSelected', currentValue, ...cause);
+			this.$emit('value-selected', currentValue, ...cause);
 		},
 
 		handleStateChange(changes) {
@@ -703,11 +707,13 @@ const DataSearch = {
 												onFocus: this.handleFocus,
 												onKeyPress: e => {
 													this.$emit('keyPress', e, this.triggerQuery);
+													this.$emit('key-press', e, this.triggerQuery);
 												},
 												onKeyDown: e =>
 													this.handleKeyDown(e, highlightedIndex),
 												onKeyUp: e => {
 													this.$emit('keyUp', e, this.triggerQuery);
+													this.$emit('key-up', e, this.triggerQuery);
 												},
 												onClick: e => {
 													setHighlightedIndex(null);
@@ -829,6 +835,7 @@ const DataSearch = {
 									},
 									keypress: e => {
 										this.$emit('keyPress', e, this.triggerQuery);
+										this.$emit('key-press', e, this.triggerQuery);
 									},
 									input: this.onInputChange,
 									focus: e => {
@@ -836,9 +843,11 @@ const DataSearch = {
 									},
 									keydown: e => {
 										this.$emit('keyDown', e, this.triggerQuery);
+										this.$emit('key-down', e, this.triggerQuery);
 									},
 									keyup: e => {
 										this.$emit('keyUp', e, this.triggerQuery);
+										this.$emit('key-up', e, this.triggerQuery);
 									},
 								},
 							}}
@@ -898,55 +907,94 @@ DataSearch.defaultQuery = (value, props) => {
 	return finalQuery;
 };
 DataSearch.shouldQuery = (value, dataFields, props) => {
-	const fields = dataFields.map(
-		(field, index) =>
-			`${field}${
-				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-					? `^${props.fieldWeights[index]}`
-					: ''
-			}`,
-	);
-
-	if (props.queryFormat === 'and') {
-		return [
-			{
-				multi_match: {
-					query: value,
-					fields,
-					type: 'cross_fields',
-					operator: 'and',
-				},
-			},
-			{
-				multi_match: {
-					query: value,
-					fields,
-					type: 'phrase',
-					operator: 'and',
-				},
-			},
-		];
+	const finalQuery = [];
+	const phrasePrefixFields = [];
+	const fields = dataFields.map((field, index) => {
+		const queryField = `${field}${
+			Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+				? `^${props.fieldWeights[index]}`
+				: ''
+		}`;
+		if (
+			!(
+				field.endsWith('.keyword')
+				|| field.endsWith('.autosuggest')
+				|| field.endsWith('.search')
+			)
+		) {
+			phrasePrefixFields.push(queryField);
+		}
+		return queryField;
+	});
+	if (props.searchOperators || props.queryString) {
+		return {
+			query: value,
+			fields,
+			default_operator: props.queryFormat,
+		};
 	}
 
-	return [
-		{
+	if (props.queryFormat === 'and') {
+		finalQuery.push({
 			multi_match: {
 				query: value,
 				fields,
-				type: 'best_fields',
-				operator: 'or',
-				fuzziness: props.fuzziness ? props.fuzziness : 0,
+				type: 'cross_fields',
+				operator: 'and',
 			},
-		},
-		{
+		});
+		finalQuery.push({
 			multi_match: {
 				query: value,
 				fields,
 				type: 'phrase',
+				operator: 'and',
+			},
+		});
+		if (phrasePrefixFields.length > 0) {
+			finalQuery.push({
+				multi_match: {
+					query: value,
+					fields: phrasePrefixFields,
+					type: 'phrase_prefix',
+					operator: 'and',
+				},
+			});
+		}
+		return finalQuery;
+	}
+
+	finalQuery.push({
+		multi_match: {
+			query: value,
+			fields,
+			type: 'best_fields',
+			operator: 'or',
+			fuzziness: props.fuzziness ? props.fuzziness : 0,
+		},
+	});
+
+	finalQuery.push({
+		multi_match: {
+			query: value,
+			fields,
+			type: 'phrase',
+			operator: 'or',
+		},
+	});
+
+	if (phrasePrefixFields.length > 0) {
+		finalQuery.push({
+			multi_match: {
+				query: value,
+				fields: phrasePrefixFields,
+				type: 'phrase_prefix',
 				operator: 'or',
 			},
-		},
-	];
+		});
+	}
+
+	return finalQuery;
 };
 DataSearch.highlightQuery = props => {
 	if (props.customHighlight) {
