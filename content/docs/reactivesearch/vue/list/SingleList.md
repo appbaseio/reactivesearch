@@ -180,7 +180,7 @@ You can use render as a slot as shown below:
 
 <!-- or -->
 
-<SingleList
+<single-list
 	...
 	:renderNoResults="renderNoResults"
 />
