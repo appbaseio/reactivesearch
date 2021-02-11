@@ -39,6 +39,7 @@ const SingleList = {
 		react: types.react,
 		render: types.func,
 		renderItem: types.func,
+		renderNoResults: VueTypes.any,
 		transformData: types.func,
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
@@ -123,7 +124,7 @@ const SingleList = {
 		},
 	},
 	render() {
-		const { selectAllLabel, renderItem, renderError } = this.$props;
+		const { selectAllLabel, renderItem, renderError, renderNoResults } = this.$props;
 		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
 		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
 
@@ -139,6 +140,18 @@ const SingleList = {
 		if (this.$props.transformData) {
 			itemsToRender = this.$props.transformData(itemsToRender);
 		}
+
+		var filteredItemsToRender = itemsToRender.filter(item => {
+			if (String(item.key).length) {
+				if (this.$props.showSearch && this.$data.searchTerm) {
+					return String(item.key)
+						.toLowerCase()
+						.includes(this.$data.searchTerm.toLowerCase());
+					}
+					return true;
+				}
+				return false;
+			});
 
 		return (
 			<Container class={this.$props.className}>
@@ -181,20 +194,9 @@ const SingleList = {
 								</label>
 							</li>
 						) : null}
-						{itemsToRender
-							.filter(item => {
-								if (String(item.key).length) {
-									if (this.$props.showSearch && this.$data.searchTerm) {
-										return String(item.key)
-											.toLowerCase()
-											.includes(this.$data.searchTerm.toLowerCase());
-									}
-
-									return true;
-								}
-
-								return false;
-							})
+						{(!this.hasCustomRenderer && filteredItemsToRender.length === 0
+						&& !this.isLoading ) ? this.renderNoResult() :
+						filteredItemsToRender
 							.map(item => (
 								<li
 									key={item.key}
@@ -388,6 +390,16 @@ const SingleList = {
 			} else {
 				this.$emit('change', currentValue);
 			}
+		},
+
+		renderNoResult() {
+			const renderNoResults
+				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+			return (
+				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
+					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
+				</p>
+			);
 		},
 	},
 	computed: {

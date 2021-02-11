@@ -66,6 +66,7 @@ const MultiDropdownList = {
 		render: types.func,
 		renderItem: types.func,
 		renderError: types.title,
+		renderNoResults: VueTypes.any,
 		transformData: types.func,
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
@@ -220,6 +221,7 @@ const MultiDropdownList = {
 					showCount={this.$props.showCount}
 					themePreset={this.themePreset}
 					renderItem={renderItemCalc}
+					renderNoResults={this.$scopedSlots.renderNoResults || this.$props.renderNoResults}
 					showSearch={this.$props.showSearch}
 					transformData={this.$props.transformData}
 					footer={
