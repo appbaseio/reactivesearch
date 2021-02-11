@@ -175,7 +175,7 @@ You can use render as a slot as shown below:
 
 <!-- or -->
 
-<MultiList
+<multi-list
 	...
 	:renderNoResults="renderNoResults"
 />
