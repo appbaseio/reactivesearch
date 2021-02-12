@@ -24,6 +24,7 @@ const Main = () => (
 					dataField={['original_title', 'original_title.search']}
 					componentId="BookSensor"
 					URLParams
+					loader="loading suggestions"
 				/>
 			</div>
 
