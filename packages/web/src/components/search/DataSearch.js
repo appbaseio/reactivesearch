@@ -427,15 +427,22 @@ class DataSearch extends Component {
 							this.handleTextChange(value);
 						}
 						if (props.onValueChange) props.onValueChange(value);
-						// Set the already fetched suggestions if query is same as used last to fetch the hits
-						if (value === props.lastUsedQuery) {
-							this.setState({
-								suggestions: this.onSuggestions(this.props.suggestions),
-							});
+						const suggestionChangeHandler = () => {
 							// invoke on suggestions
 							if (this.props.onSuggestions) {
 								this.props.onSuggestions(this.props.suggestions);
 							}
+						};
+						// Set the already fetched suggestions if query is same as used last to fetch the hits
+						if (value === props.lastUsedQuery) {
+							this.setState({
+								suggestions: this.onSuggestions(this.props.suggestions),
+							}, suggestionChangeHandler);
+						} else if (!value) {
+							// reset suggestions
+							this.setState({
+								suggestions: [],
+							}, suggestionChangeHandler);
 						}
 					},
 				);
@@ -964,8 +971,8 @@ class DataSearch extends Component {
 										setHighlightedIndex,
 										...rest,
 									})}
-								{this.renderLoader()}
-								{this.renderError()}
+								{isOpen && this.renderLoader()}
+								{isOpen && this.renderError()}
 								{!this.hasCustomRenderer && isOpen && hasSuggestions ? (
 									<ul
 										css={suggestions(themePreset, theme)}
@@ -1190,7 +1197,7 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
 	themePreset: state.config.themePreset,
-	isLoading: state.isLoading[props.componentId] || false,
+	isLoading: !!state.isLoading[`${props.componentId}_active`],
 	error: state.error[props.componentId],
 	config: state.config,
 	promotedResults: state.promotedResults[props.componentId],

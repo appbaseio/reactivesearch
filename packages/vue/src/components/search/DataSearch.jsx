@@ -341,7 +341,6 @@ const DataSearch = {
 		setValue(value, isDefaultValue = false, props = this.$props, cause, toggleIsOpen = true) {
 			const performUpdate = () => {
 				this.currentValue = value;
-				this.normalizedSuggestions = [];
 				if (isDefaultValue) {
 					if (this.$props.autosuggest) {
 						if (toggleIsOpen) {
@@ -369,7 +368,12 @@ const DataSearch = {
 				this.$emit('value-change', value);
 				// Set the already fetched suggestions if query is same as used last to fetch the hits
 				if (value === this.lastUsedQuery) {
-					this.suggestions = this.onSuggestions(this.suggestions)
+					this.suggestions = this.onSuggestions(this.suggestions);
+					// invoke on suggestions
+					this.$emit('suggestions', this.suggestions);
+				} else if(!value) {
+					// reset suggestions
+					this.suggestions = [];
 					// invoke on suggestions
 					this.$emit('suggestions', this.suggestions);
 				}
@@ -1032,7 +1036,7 @@ const mapStateToProps = (state, props) => ({
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId] || [],
-	isLoading: state.isLoading[props.componentId],
+	isLoading: !!state.isLoading[`${props.componentId}_active`],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	analytics: state.analytics,

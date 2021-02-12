@@ -1082,8 +1082,8 @@ class CategorySearch extends Component {
 									themePreset={themePreset}
 								/>
 								{this.renderIcons()}
-								{this.renderLoader()}
-								{this.renderError()}
+								{isOpen && this.renderLoader()}
+								{isOpen && this.renderError()}
 								{this.hasCustomRenderer
 									&& this.getComponent({
 										getInputProps,
@@ -1334,7 +1334,7 @@ const mapStateToProps = (state, props) => ({
 	suggestions: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	aggregationData: state.compositeAggregations[props.componentId] || [],
 	themePreset: state.config.themePreset,
-	isLoading: state.isLoading[props.componentId],
+	isLoading: !!state.isLoading[`${props.componentId}_active`],
 	error: state.error[props.componentId],
 	config: state.config,
 	promotedResults: state.promotedResults[props.componentId],
