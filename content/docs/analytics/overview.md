@@ -18,7 +18,6 @@ Appbase.io’s Search Analytics enables businesses to analyze their search volum
 
 In this competitive world of e-solutions where almost every e-solution has alternatives to choose, it's important to understand the users' needs and act accordingly. A faster and relevant search experience directly contributes to sales. A relevant search experience increases user engagement. The first step in understanding how well your search is engaging and converting is to start measuring the underlying key metrics.
 
-
 ## What can analytics help you with?
 
 With appbase.io analytics, you can now understand your search’s ROI impact through the funnel of conversions. Drill down into the search analytics, discover content gaps and unlock new monetization opportunities. Here are the key use-cases for analytics:
@@ -30,18 +29,20 @@ With appbase.io analytics, you can now understand your search’s ROI impact thr
 5. Tailor search for your business needs - You can create custom segments (paid users, mobile users, user on a 3G network) that are meaningful for your business and additionally filter all of the above analytics to glean more specific insights.
 
 ## What are we measuring?
-- User sessions summary - Total Users, Total Sessions, Bounce Rate and Avg Session Duration
-- Search summary - A Searches > Clicks > Conversions funnel
-- Popular searches
-- No result searches
-- Popular Filters
-- Popular Results
-- Distinct count of IP address/users
-- Popular countries
+
+-   User sessions summary - Total Users, Total Sessions, Bounce Rate and Avg Session Duration
+-   Search summary - A Searches > Clicks > Conversions funnel
+-   Popular searches
+-   No result searches
+-   Popular Filters
+-   Popular Results
+-   Recent Searches
+-   Recent Results
+-   Distinct count of IP address/users
+-   Popular countries
 
 Here is a glimpse of what you can expect to measure with Appbase.io Analytics.
 ![Appbase.io analytics insights](https://i.imgur.com/SHpc00t.png)
-
 
 ## Getting Insights From Analytics
 
@@ -67,10 +68,10 @@ The bounce rate represents the percentage of user sessions that have bounced rel
 
 Avg Session Duration represents the average time a user is spending on your search. Read more about it over [here](/docs/analytics/implement/#how-do-we-record-a-user-session).
 
-
 #### Popular Searches
 
 appbase.io shows the most popular search terms in a given time interval. This lets you understand:
+
 1. Merchandising opportunities — Feature products and monetize your search.
 2. Lost opportunities — Popular searches with low click rates. Perhaps, the results aren’t relevant or some key results are missing.
 
@@ -102,6 +103,18 @@ Popular Results give insights into the total search impressions, clicks and conv
 
 ![Appbase.io Dashboard: Popular Results](https://miro.medium.com/max/1928/1*UsZGiftLRcHX5n6IMMeJqA.png)
 
+#### Recent Searches
+
+Recent Searches give insights into the total queries made for the recent search terms.
+
+![Appbase.io Dashboard: Recent Searches](https://www.dropbox.com/s/3qobm3ae91ujua4/RecentSearches.png?raw=1)
+
+#### Recent Results
+
+Recent Results give insights into the total search impressions and source info for the recent result items.
+
+![Appbase.io Dashboard: Recent Results](https://www.dropbox.com/s/1glxjkqpe4wcnpk/RecentResults.png?raw=1)
+
 #### Geography Visualization
 
 Geography Visualization gives insights into where your users are. You can use this info to ensure that your search experience is optimized for your users in different geographies.
@@ -114,15 +127,14 @@ The request distribution view helps you to understand the status of your request
 
 ![Request Distribution](https://miro.medium.com/max/2310/1*7cvY5otY_6mHw_PILe7BoA.png)
 
-
 #### Search Latency
 
 Search Latency view lets you visualize your query distribution and show you slow performing queries.
 
 ![Search Latency](https://miro.medium.com/max/2062/1*Tq_4WZAQFeqTNTHArmmS0g.png)
 
-
 #### Tracking Custom Events With Analytics
+
 Custom Analytics allows you to go one step further by recording additional events when recording analytics. These events can now be filtered from within all the above search views giving you an extra layer of context about your users.
 
 > By tracking custom events, you can slice and tailor analytics for your business needs.
