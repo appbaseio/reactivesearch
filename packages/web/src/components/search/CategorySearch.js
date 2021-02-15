@@ -315,12 +315,12 @@ class CategorySearch extends Component {
 
 	static defaultQuery = (value, props, category) => {
 		let finalQuery = null;
-		let fields;
+		let fields = [];
 
 		if (value) {
 			if (Array.isArray(props.dataField)) {
 				fields = props.dataField;
-			} else {
+			} else if (props.dataField) {
 				fields = [props.dataField];
 			}
 
@@ -372,7 +372,7 @@ class CategorySearch extends Component {
 	static shouldQuery = (value, dataFields, props) => {
 		const finalQuery = [];
 		const phrasePrefixFields = [];
-		const fields = dataFields.map((field, index) => {
+		const fields = (dataFields || []).map((field, index) => {
 			const queryField = `${field}${
 				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
 					? `^${props.fieldWeights[index]}`
