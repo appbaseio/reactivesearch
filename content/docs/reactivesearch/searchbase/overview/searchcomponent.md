@@ -75,6 +75,14 @@ The following properties can be used to configure the appbase.io [ReactiveSearch
     };
     ```
 
+-   **enablePredictiveSuggestions** `bool` [optional]
+    Defaults to `false`. When set to `true`, it predicts the next relevant words from a field's value based on the search query typed by the user. When set to `false` (default), the entire field's value would be displayed. This may not be desirable for long-form fields (where average words per field value is greater than 4 and may not fit in a single line).
+
+    ```ts
+    // pass this prop as true in searchComponent to enable predictive suggestions
+    enablePredictiveSuggestions: true,
+    ```
+
 -   **value** `any`
     Represents the value for a particular query [type](/docs/search/reactivesearch-api/reference/#type). Depending on the query type, the value format would differ. You can refer to the different value formats over [here](/docs/search/reactivesearch-api/reference/#value).
 
@@ -512,7 +520,7 @@ These properties are automatically calculated or managed by the `SearchBase` cla
 -   **requestPending** `boolean`
     Useful for getting the status of the API, whether it has been executed or not
 
--  **requestStatus** `string`
+-   **requestStatus** `string`
     Represents the current state of the request, can have values as `INACTIVE`, `PENDING` or `ERROR`.
 
 -   **micStatus** `MicStatusField`
@@ -647,8 +655,8 @@ The following methods can be used to trigger the queries for components.
     This method can be used to execute the default query for a particular component.
     For examples,
 
-    - to display the `suggestions` or `results` for a `search` type of component,
-    - to display the filter options(`aggregations`) for a `term` type of component
+    -   to display the `suggestions` or `results` for a `search` type of component,
+    -   to display the filter options(`aggregations`) for a `term` type of component
 
 -   **triggerCustomQuery** `(options?: types.Option): Promise<any>`
     This method can be used to execute queries for the dependent components.

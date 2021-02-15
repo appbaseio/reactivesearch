@@ -108,7 +108,6 @@ The following example creates three components:
 
 The result component watches for changes to the search and language filter components (see the `react` property). It reacts to the inputs and filter selection changes by triggering an `Elasticsearch` query to update results.
 
-
 The language filter component is also watching for changes to the search. For example, if somebody searches for `angular` then the language filter will show `javascript` as an option.
 
 > Note: This example is using the `SearchBase` class instead of the `SearchComponent`(that we used in the previous example) class because here we're using multiple components that can have dependencies on each other.
@@ -127,6 +126,8 @@ const searchbase = new SearchBase({
 
 // Register search component => To render the suggestions
 const searchComponent = searchbase.register('search-component', {
+	// pass this prop as true to enable predictive suggestions
+	enablePredictiveSuggestions: true,
 	dataField: ['name', 'description', 'name.raw', 'fullname', 'owner', 'topics'],
 });
 
