@@ -47,6 +47,8 @@
               link: /docs/reactivesearch/vue/result/ResultCard/
       - group: Theming
         items:
+            - title: Themes
+              link: /docs/reactivesearch/vue/theming/Overview/
             - title: Customizing Style
               link: /docs/reactivesearch/vue/theming/Style/
             - title: Classname Injection

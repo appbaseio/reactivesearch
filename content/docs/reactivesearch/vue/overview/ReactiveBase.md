@@ -19,10 +19,7 @@ This is the first component you will need to add when using `ReactiveSearch`.
 
 ```html
 <template>
-	<reactive-base
-        app="appname"
-        credentials="abcdef123:abcdef12-ab12-ab12-ab12-abcdef123456"
-    >
+	<reactive-base app="appname" credentials="abcdef123:abcdef12-ab12-ab12-ab12-abcdef123456">
 		<component1 .. />
 		<component2 .. />
 	</reactive-base>
@@ -60,6 +57,7 @@ This is the first component you will need to add when using `ReactiveSearch`.
 	</reactive-base>
 </template>
 ```
+
 -   **appbaseConfig** `Object` [optional]
     allows you to customize the analytics experience when appbase.io is used as a backend.
     Read more about it over [here](/docs/reactivesearch/vue/advanced/analytics/#configure-the-analytics-experience).
@@ -73,12 +71,126 @@ This is the first component you will need to add when using `ReactiveSearch`.
     Read more about it over [here](/docs/reactivesearch/vue/advanced/analytics/#configure-the-analytics-experience).
     > Note:
     > This prop has been marked as deprecated. Please use the `appbaseConfig` prop instead.
--	**as** `String` [optional]
-	allows to use a custom html element tag, defaults to `div`.
+-   **as** `String` [optional]
+    allows to use a custom html element tag, defaults to `div`.
 -   **getSearchParams** `Function` [optional]
     Enables you to customize the evaluation of query-params-string from the url (or) any other source. If this function is not set, the library will use `window.location.search` as the search query-params-string for parsing selected-values. This can come handy if the URL is using hash values.
 -   **setSearchParams** `Function` [optional]
     Enables you to customize setting of the query params string in the url by providing the updated query-params-string as the function parameter. If this function is not set, the library will set the `window.history` via `pushState` method.
+-   **theme** `Object` [optional]
+    allows over-writing of default styles by providing the respective key/values. You can read more about its usage [here](/docs/reactivesearch/vue/theming/Overview/)
+-   **transformRequest** `Function` [optional]
+    Enables transformation of network request before execution. This function will give you the request object as the param and expect an updated request in return, for execution. Note that this is an experimental API and will likely change in the future.
+    > Note:
+    >
+    > From v3.0.1 it is possible to define `transformRequest` as an `async` method which will return a promise which resolves the modified request options.
+
+If you need to include credentials (credentials are cookies, authorization headers or TLS client certificates), you can do it this way:
+
+```html
+<template>
+	<reactive-base
+		app="appname"
+		:transformRequest="(props)=> ({
+            ...props,
+            credentials: 'include',
+        })"
+	>
+		<component1 .. />
+		<component2 .. />
+	</reactive-base>
+</template>
+```
+
+You can also modify the request `URL` in that way:
+
+```html
+<template>
+	<reactive-base
+		app="appname"
+		:transformRequest="(props)=> ({
+            ...props,
+            url: props.url.replace('_msearch', '_search'),
+        })"
+	>
+		<component1 .. />
+		<component2 .. />
+	</reactive-base>
+</template>
+```
+
+The above example will change the default `_msearch` request to `_search` request.
+
+-   **tranformResponse** `Function` [optional]
+    Enables transformation of search network response before rendering them. This asynchronous function will give you elasticsearch response object and componentId as params and expects an updated response in return in the similar structure of elasticsearch. You can use `componentId` to conditionally transform response for a particular reactivesearch component only.
+
+```html
+<template>
+	<reactive-base
+		app="appname"
+		credentials="abcdef123:abcdef12-ab12-ab12-ab12-abcdef123456"
+		:headers="{ secret: 'reactivesearch-is-awesome' }"
+		:transformResponse="transformResponse"
+	>
+		<component1 .. />
+		<component2 .. />
+	</reactive-base>
+</template>
+<script>
+	...,
+	methods: {
+	    getExtraInformation(ids) {
+	        ...
+	    },
+	    async transformResponse(elasticsearchResponse, _componentId) {
+	            const ids = elasticsearchResponse.responses[0].hits.hits.map(
+	                item => item._id
+	            );
+	            const extraInformation = await this.getExtraInformation(ids);
+	            const hits = elasticsearchResponse.responses[0].hits.hits.map(
+	                (item) => {
+	                    const extraInformationItem = extraInformation.find(
+	                        otherItem => otherItem._id === item._id
+	                    );
+	                    return {
+	                        ...item,
+	                        ...extraInformationItem
+	                    };
+	                }
+	            );
+	            return {
+	                response: [
+	                    {
+	                        ...elasticsearchResponse.responses[0],
+	                        hits: {
+	                            ...elasticsearchResponse.responses[0].hits,
+	                            hits
+	                        }
+	                    }
+	                ]
+	            };
+	        }
+	}
+</script>
+```
+
+> Note
+>
+> `transformResponse` function is expected to return data in following structure.
+
+```json
+{
+    response: [
+        {
+            hits: {
+                hits: [...],
+                total: 100
+            },
+            took: 1
+        }
+    ]
+}
+```
 
 ### Connect to Elasticsearch
 
@@ -90,10 +202,7 @@ ReactiveSearch works out of the box with an Elasticsearch index hosted anywhere.
 
 ```html
 <template>
-	<reactive-base
-        app="appname"
-        url="http://your-elasticsearch-cluster"
-    >
+	<reactive-base app="appname" url="http://your-elasticsearch-cluster">
 		<component1 .. />
 		<component2 .. />
 	</reactive-base>
