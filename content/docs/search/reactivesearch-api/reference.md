@@ -188,6 +188,18 @@ This property allows you to implement the `pagination` for `term` type of querie
 > 1. Sort by as `count` doesn't work with composite aggregations i.e when `pagination` is set to `true`.
 > 2. The [missingLabel](/docs/search/reactivesearch-api/reference/#missinglabel) property also won't work when composite aggregations have been used.
 
+### aggregationSize
+
+To set the number of buckets to be returned by aggregations.
+
+| Type  | Applicable on query of type | Required |
+| ----- | --------------------------- | -------- |
+| `int` | `term`                      | false    |
+
+> Note:
+> 1. This property can also be used for `search` type of queries when `aggregationField` is set.
+> 2. This is a new feature and only available for appbase versions >= 7.41.0.
+
 ### queryFormat
 
 Sets the query format, can be `or` or `and`. Defaults to `or`.
