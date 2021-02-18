@@ -510,10 +510,20 @@ class DataSearch extends Component {
 
 		// query options should be applied to the source component,
 		// not on internal component, hence using `this.props.componentId` here
-		props.setQueryOptions(props.componentId, {
-			...this.queryOptions,
-			...customQueryOptions,
-		});
+		if ('value' in props) {
+			// do NOT execute a query if the component is controlled. That's the user's responsibility.
+			props.setQueryOptionsNoExecute(props.componentId, {
+				...this.queryOptions,
+				...customQueryOptions,
+			});
+		} else {
+			// execute the query on an uncontrolled component
+			props.setQueryOptions(props.componentId, {
+				...this.queryOptions,
+				...customQueryOptions,
+			});
+		}
+
 		if (!this.isPending) {
 			props.updateQuery({
 				componentId: props.componentId,
@@ -1217,6 +1227,7 @@ const mapDispatchtoProps = dispatch => ({
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryOptionsNoExecute: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	triggerAnalytics: (searchPosition, documentId) =>
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
