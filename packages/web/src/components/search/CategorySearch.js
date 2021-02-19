@@ -570,12 +570,12 @@ class CategorySearch extends Component {
 
 		if (!this.isPending) {
 			// execute the query on an uncontrolled component
-      // query options should be applied to the source component,
-      // not on internal component, hence using `this.props.componentId` here
-      props.setQueryOptions(props.componentId, {
-        ...this.queryOptions,
-        ...customQueryOptions,
-      });
+			// query options should be applied to the source component,
+			// not on internal component, hence using `this.props.componentId` here
+			props.setQueryOptions(props.componentId, {
+				...this.queryOptions,
+				...customQueryOptions,
+			});
 			props.updateQuery({
 				componentId: props.componentId,
 				query,
