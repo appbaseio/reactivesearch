@@ -209,6 +209,10 @@ Check demo [here](https://codesandbox.io/s/3ylrrr0r5q).
 
     > It is possible to override this query by providing `defaultQuery` or `customQuery`.
 
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
+
+    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
 -   **defaultQuery** `Function`
     **returns** the default query to be applied to the component, as defined in Elasticsearch Query DSL.
 -   **customQuery** `Function`

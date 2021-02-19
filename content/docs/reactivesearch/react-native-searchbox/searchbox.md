@@ -124,6 +124,12 @@ Here, we are specifying that the suggestions should update whenever one of the b
 />
 ```
 
+
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
+
+    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
+
 -   **highlight** `boolean` [optional]
     whether highlighting should be enabled in the returned results.
 
@@ -162,8 +168,8 @@ Here, we are specifying that the suggestions should update whenever one of the b
 -   **enablePopularSuggestions** `Boolean`
     Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 -   **maxPopularSuggestions** `Number` can be used to configure the size of popular suggestions. The default value is `5`.
--   **enableRecentSearches** `Boolean` Defaults to `false`. If set to `true` then users will see the top recent searches as the default suggestions. Appbase.io recommends defining a unique id for each user to personalize the recent searches. 
-> Note: Please note that this feature only works when `recordAnalytics` is set to `true` in `appbaseConfig`. 
+-   **enableRecentSearches** `Boolean` Defaults to `false`. If set to `true` then users will see the top recent searches as the default suggestions. Appbase.io recommends defining a unique id for each user to personalize the recent searches.
+> Note: Please note that this feature only works when `recordAnalytics` is set to `true` in `appbaseConfig`.
 
 For example,
 ```js
@@ -177,7 +183,7 @@ For example,
             userId: 'jon@appbase.io',
         }}
     >
-        <SearchBox 
+        <SearchBox
             id="search-component"
             dataField={[
                 {
@@ -260,7 +266,7 @@ For example,
         }
 />
 ```
--   **render** `Function` 
+-   **render** `Function`
     You can render suggestions in a custom layout by using the `render` prop.
     <br/>
     It accepts an object with these properties:
@@ -320,7 +326,7 @@ For example,
 
 -   **goBackIcon**: `any`
     This prop allows to override the [Icon props](https://reactnativeelements.com/docs/icon#props) or use a custom component. Use `null` or `false` to hide the icon.
-  
+
 ### Customize style
 
 -   **theme** `Object`

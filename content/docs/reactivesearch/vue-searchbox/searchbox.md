@@ -135,7 +135,10 @@ Here, we are specifying that the suggestions should update whenever one of the b
 	}
 </script>
 ```
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
 
+    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
 -   **highlight** `boolean` [optional]
     whether highlighting should be enabled in the returned results.
 

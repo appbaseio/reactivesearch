@@ -83,7 +83,10 @@ Example uses:
     > If you are using an app with elastic search version less than 6, than defining this prop will result in error and you need to handle it manually using **renderError** prop.
 
     > It is possible to override this query by providing `defaultQuery` or `customQuery`.
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
 
+    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
 -   **nestedField** `String` [optional]
     Set the path of the `nested` type under which the `dataField` is present. Only applicable only when the field(s) specified in the `dataField` is(are) present under a [`nested` type](https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html) mapping.
 -   **title** `String or JSX` [optional]

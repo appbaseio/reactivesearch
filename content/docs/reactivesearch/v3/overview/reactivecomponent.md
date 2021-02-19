@@ -116,7 +116,10 @@ You can also take advantage of various ReactiveSearch components static method f
     > If you are using an app with elastic search version less than 6, then defining this prop will result in error.
 
     > It is possible to override this query by providing `defaultQuery` or `customQuery`.
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
 
+    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
 -   **defaultQuery** `Function`
     **returns** the default query to be applied to the component, as defined in Elasticsearch Query DSL.
 -   **customQuery** `Function`

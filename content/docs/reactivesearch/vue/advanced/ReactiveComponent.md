@@ -296,7 +296,10 @@ We can then use the given ReactiveComponent to be watched by all the filters (vi
     > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to catch this error using **error** event.
 
     > It is possible to override this query by providing `defaultQuery`.
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
 
+    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
 -   **defaultQuery** `Function`
     **returns** the default query to be applied to the component, as defined in Elasticsearch Query DSL.
 -   **react** `Object`

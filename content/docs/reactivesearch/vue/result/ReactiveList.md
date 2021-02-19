@@ -77,7 +77,10 @@ Example uses:
     > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** slot.
 
     > It is possible to override this query by providing `defaultQuery`.
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
 
+    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
 -   **excludeFields** `String Array` [optional]
     fields to be excluded in search results.
 -   **includeFields** `String Array` [optional]
