@@ -508,23 +508,14 @@ class DataSearch extends Component {
 			updateCustomQuery(props.componentId, props, value);
 		}
 
-		// query options should be applied to the source component,
-		// not on internal component, hence using `this.props.componentId` here
-		if ('value' in props) {
-			// do NOT execute a query if the component is controlled. That's the user's responsibility.
-			props.setQueryOptionsNoExecute(props.componentId, {
-				...this.queryOptions,
-				...customQueryOptions,
-			});
-		} else {
+		if (!this.isPending) {
 			// execute the query on an uncontrolled component
+      // query options should be applied to the source component,
+      // not on internal component, hence using `this.props.componentId` here
 			props.setQueryOptions(props.componentId, {
 				...this.queryOptions,
 				...customQueryOptions,
 			});
-		}
-
-		if (!this.isPending) {
 			props.updateQuery({
 				componentId: props.componentId,
 				query,
